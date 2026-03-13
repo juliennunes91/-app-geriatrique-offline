@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>GeriaAssist - Décision Pharmaco-Clinique (Expert)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body { background-color: #f8f9fa; font-size: 0.95rem; }
+        .alert-stopp { border-left: 5px solid #dc3545; }
+        .alert-start { border-left: 5px solid #198754; }
+        .alert-frail { border-left: 5px solid #6c757d; background-color: #e9ecef; }
+        .alert-ignored { border: 2px dashed #6c757d; background-color: #f8f9fa; color: #6c757d; }
+        .alert-interact { border-left: 5px solid #fd7e14; background-color: #fff3cd; }
+        .alert-remedies { border-left: 5px solid #0dcaf0; background-color: #cff4fc; }
+        .section-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .tag-badge { font-size: 0.9em; padding: 8px; margin: 3px; display: inline-block; cursor: pointer; }
+        .tag-badge:hover { opacity: 0.8; text-decoration: line-through; }
+        summary { outline: none; user-select: none; }
+        summary::-webkit-details-marker { display: none; }
+        .tooltip-custom { cursor: help; border-bottom: 1px dotted #000; text-decoration: underline dotted #0dcaf0; }
+        
+        .autocomplete-container { position: relative; width: 100%; }
+        .autocomplete-list { 
+            position: absolute; top: 100%; left: 0; right: 0; 
+            background: white; border: 1px solid #ccc; 
+            border-radius: 0 0 4px 4px; z-index: 1000;
+            max-height: 120px; overflow-y: auto; 
+            display: none; padding: 0; margin: 0; list-style: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .autocomplete-list li { padding: 8px 12px; cursor: pointer; font-size: 0.9em; border-bottom: 1px solid #eee; }
+        .autocomplete-list li:hover { background-color: #f0f8ff; }
+        .autocomplete-list li:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-primary m-0">🏥 GeriaAssist - Décision Pharmaco-Clinique</h2>
+            <div>
+                <button class="btn btn-outline-info shadow-sm me-2" data-bs-toggle="modal" data-bs-target="#legendModal">ℹ️ Légende</button>
+                <button class="btn btn-outline-primary shadow-sm" onclick="copierSynthese()" id="btnCopier" style="display:none;">📋 Copier</button>
+                <button class="btn btn-outline-danger shadow-sm ms-2" onclick="exporterPDF()" id="btnPdf" style="display:none;">📄 PDF</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="section-box">
+                    <h4>1. Profil & Biologie</h4>
+                    <div class="row g-2 mb-2">
+                        <div class="col-3"><label class="fw-bold small">Âge</label><input type="number" id="patientAge" class="form-control px-1" value="80" oninput="calculerDFG()"></div>
+                        <div class="col-3"><label class="fw-bold small">Sexe</label><select id="patientSexe" class="form-select px-1" onchange="calculerDFG()"><option value="F">F</option><option value="M">M</option></select></div>
+                        <div class="col-3"><label class="fw-bold small">Poids <span class="fw-normal text-muted">(kg)</span></label><input type="number" id="patientPoids" class="form-control px-1" oninput="calculerDFG()"></div>
+                        <div class="col-3"><label class="fw-bold small">IMC <span class="fw-normal text-muted">(kg/m²)</span></label><input type="number" id="patientBmi" class="form-control px-1"></div>
+                        
+                        <div class="col-4"><label class="fw-bold small text-primary">Créat <span class="fw-normal text-secondary">(µmol/L)</span></label><input type="number" id="bioCreat" class="form-control border-primary" oninput="calculerDFG()"></div>
+                        <div class="col-8">
+                            <label class="fw-bold small">DFGe estimé <span class="fw-normal text-muted">(ml/min)</span></label>
+                            <div class="input-group">
+                                <input type="number" id="patientDFG" class="form-control fw-bold" value="45" oninput="document.getElementById('dfgMethodSelect').value='manuel'; this.className='form-control fw-bold';">
+                                <select class="form-select" id="dfgMethodSelect" onchange="calculerDFG(false)" style="max-width: 130px; font-size: 0.8em; padding: 0.25rem;">
+                                    <option value="manuel">Manuel</option>
+                                    <option value="cg">Cockcroft</option>
+                                    <option value="ckdepi">CKD-EPI 2021</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <details class="mb-2 p-2 border rounded bg-light">
+                        <summary class="fw-bold text-primary" style="cursor: pointer;">➕ Afficher l'Iono et Biologie complète</summary>
+                        <div class="row g-2 mt-2">
+                            <div class="col-4"><label class="small text-muted fw-bold">Kaliémie <span class="fw-normal" style="font-size:0.85em;">(mmol/L)</span></label><input type="number" step="0.1" id="patientK" class="form-control form-control-sm" value="4.0"></div>
+                            <div class="col-4"><label class="small text-muted fw-bold">Natrémie <span class="fw-normal" style="font-size:0.85em;">(mmol/L)</span></label><input type="number" id="patientNa" class="form-control form-control-sm" value="140"></div>
+                            <div class="col-4"><label class="small fw-bold text-info">Albumine sg <span class="fw-normal text-secondary" style="font-size:0.85em;">(g/L)</span></label><input type="number" id="bioAlbumSg" class="form-control form-control-sm border-info" placeholder="ex: 38"></div>
+                            
+                            <div class="col-4"><label class="small text-muted">Urée <span class="fw-normal" style="font-size:0.85em;">(mmol/L)</span></label><input type="number" id="bioUree" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">Magnésium <span class="fw-normal" style="font-size:0.85em;">(mmol/L)</span></label><input type="number" step="0.01" id="bioMg" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">Calcémie <span class="fw-normal" style="font-size:0.85em;">(mmol/L)</span></label><input type="number" step="0.01" id="bioCa" class="form-control form-control-sm"></div>
+                            
+                            <div class="col-4"><label class="small text-muted">Uricémie <span class="fw-normal" style="font-size:0.85em;">(µmol/L)</span></label><input type="number" id="bioUric" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">Hb (NFS) <span class="fw-normal" style="font-size:0.85em;">(g/dL)</span></label><input type="number" step="0.1" id="bioHb" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">Plaquettes <span class="fw-normal" style="font-size:0.85em;">(G/L)</span></label><input type="number" id="bioPlaq" class="form-control form-control-sm"></div>
+                            
+                            <div class="col-4"><label class="small text-muted">Ferritine <span class="fw-normal" style="font-size:0.85em;">(µg/L)</span></label><input type="number" id="bioFer" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">CST <span class="fw-normal" style="font-size:0.85em;">(%)</span></label><input type="number" id="bioCst" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">Vit. B12 <span class="fw-normal" style="font-size:0.85em;">(pmol/L)</span></label><input type="number" id="bioB12" class="form-control form-control-sm"></div>
+                            
+                            <div class="col-4"><label class="small text-muted">Vit. B9 <span class="fw-normal" style="font-size:0.85em;">(nmol/L)</span></label><input type="number" id="bioB9" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">Vitamine D <span class="fw-normal" style="font-size:0.85em;">(ng/mL)</span></label><input type="number" id="bioVitD" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">CPK <span class="fw-normal" style="font-size:0.85em;">(UI/L)</span></label><input type="number" id="bioCpk" class="form-control form-control-sm"></div>
+                            
+                            <div class="col-3"><label class="small text-muted">ASAT <span class="fw-normal" style="font-size:0.7em;">(UI/L)</span></label><input type="number" id="bioAsat" class="form-control form-control-sm"></div>
+                            <div class="col-3"><label class="small text-muted">ALAT <span class="fw-normal" style="font-size:0.7em;">(UI/L)</span></label><input type="number" id="bioAlat" class="form-control form-control-sm"></div>
+                            <div class="col-3"><label class="small text-muted">PAL <span class="fw-normal" style="font-size:0.7em;">(UI/L)</span></label><input type="number" id="bioPal" class="form-control form-control-sm"></div>
+                            <div class="col-3"><label class="small text-muted">GGT <span class="fw-normal" style="font-size:0.7em;">(UI/L)</span></label><input type="number" id="bioGgt" class="form-control form-control-sm"></div>
+                            
+                            <div class="col-4"><label class="small text-muted">TSH <span class="fw-normal" style="font-size:0.85em;">(mUI/L)</span></label><input type="number" step="0.1" id="bioTsh" class="form-control form-control-sm"></div>
+                            <div class="col-2"><label class="small text-muted">FT4 <span class="fw-normal" style="font-size:0.85em;">(pmol/L)</span></label><input type="number" step="0.1" id="bioFt4" class="form-control form-control-sm"></div>
+                            <div class="col-2"><label class="small text-muted">FT3 <span class="fw-normal" style="font-size:0.85em;">(pmol/L)</span></label><input type="number" step="0.1" id="bioFt3" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">NT-proBNP <span class="fw-normal" style="font-size:0.85em;">(pg/mL)</span></label><input type="number" id="bioBnp" class="form-control form-control-sm"></div>
+                            
+                            <div class="col-4"><label class="small text-muted">LDL-C <span class="fw-normal" style="font-size:0.85em;">(g/L)</span></label><input type="number" step="0.1" id="bioLdl" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">HDL <span class="fw-normal" style="font-size:0.85em;">(g/L)</span></label><input type="number" step="0.1" id="bioHdl" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">Triglycérides <span class="fw-normal" style="font-size:0.85em;">(g/L)</span></label><input type="number" step="0.1" id="bioTg" class="form-control form-control-sm"></div>
+                            
+                            <div class="col-12"><label class="small text-muted">CRP <span class="fw-normal" style="font-size:0.85em;">(mg/L)</span></label><input type="number" id="bioCrp" class="form-control form-control-sm"></div>
+                        </div>
+                    </details>
+
+                    <details class="mb-3 p-2 border rounded bg-light">
+                        <summary class="fw-bold text-success" style="cursor: pointer;">🧮 Paramètres cliniques pour Scores</summary>
+                        <div class="row g-2 mt-2">
+                            <div class="col-6"><label class="small text-muted fw-bold">Score Fragilité (CFS)</label><select id="scoreCFS" class="form-select form-select-sm" onchange="checkFrail()"><option value="0">Non évalué</option><option value="1">1 - Très en forme</option><option value="2">2 - En forme</option><option value="3">3 - Gère bien</option><option value="4">4 - Vulnérable</option><option value="5">5 - Légèrement fragile</option><option value="6">6 - Modérément fragile</option><option value="7">7 - Sévèrement fragile</option><option value="8">8 - Très sév. fragile</option><option value="9">9 - Phase terminale</option></select></div>
+                            <div class="col-6"><label class="small text-muted fw-bold">QTc de base (ms)</label><input type="number" id="bioQtc" class="form-control form-control-sm" placeholder="ex: 430"></div>
+                            
+                            <div class="col-12 mt-3">
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkStent"><label class="form-check-label small fw-bold text-primary">Stent coronaire récent (< 6 mois)</label></div>
+                                <h6 class="small fw-bold text-primary border-bottom pb-1 mb-2 mt-2">Habitudes de vie & État général</h6>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAlcool"><label class="form-check-label small">Alcool excessif</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAnorexie"><label class="form-check-label small">Anorexie / Dénutrition sévère</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTabac"><label class="form-check-label small fw-bold" style="color: #d97706;">🚬 Fumeur actif (Tabagisme)</label></div>
+
+                                <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Antécédents Cardiovasculaires</h6>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAvc"><label class="form-check-label small fw-bold">ATCD d'AVC / AIT</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTvp"><label class="form-check-label small fw-bold">ATCD d'EP / TVP</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSaignement"><label class="form-check-label small fw-bold text-danger">ATCD de Saignement majeur</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkBrady"><label class="form-check-label small">Bradycardie sévère (< 45 bpm)</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkHtaNonControlee"><label class="form-check-label small">HTA non contrôlée (>160 mmHg)</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkArret"><label class="form-check-label small">Post-Arrêt Cardiaque / Cardioversion FA</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkScaAigu"><label class="form-check-label small">Syndrome Coronarien Aigu (IDM récent)</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkLqts"><label class="form-check-label small">Syndrome du QT Long Congénital</label></div>
+
+                                <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Insuffisances d'Organes & État Aigu</h6>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDialyse"><label class="form-check-label small">Hémodialyse</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkFoie"><label class="form-check-label small">Hépatopathie sévère / Cirrhose</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSepsis"><label class="form-check-label small">Sepsis / Maladie aiguë en cours</label></div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <div class="form-check form-switch mb-3 border p-2 bg-white rounded">
+                        <input class="form-check-input" type="checkbox" id="patientFragile">
+                        <label class="form-check-label fw-bold text-danger">Patient Très Fragile (STOPPFrail)</label>
+                    </div>
+
+                    <h4>2. Comorbidités</h4>
+                    <div class="autocomplete-container mb-2">
+                        <div class="input-group">
+                            <input class="form-control" type="text" id="inputComorb" placeholder="Taper une pathologie..." autocomplete="off">
+                            <button class="btn btn-outline-secondary" onclick="addComorbManual()">Ajouter</button>
+                        </div>
+                        <ul class="autocomplete-list" id="listComorb"></ul>
+                    </div>
+                    <div id="selectedComorbs" class="mb-3"></div>
+
+                    <h4>3. Médicaments</h4>
+                    <div class="autocomplete-container mb-2">
+                        <div class="input-group">
+                            <input class="form-control" type="text" id="inputMed" placeholder="DCI, Princeps..." autocomplete="off">
+                            <button class="btn btn-outline-secondary" onclick="addMedManual()">Ajouter</button>
+                        </div>
+                        <ul class="autocomplete-list" id="listMed"></ul>
+                    </div>
+                    <div id="selectedMeds" class="mb-3"></div>
+
+                    <button class="btn btn-primary w-100 mt-3" onclick="analyserPrescription()">Lancer l'Analyse Clinique</button>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="section-box">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item"><button class="nav-link text-success fw-bold active" data-bs-toggle="tab" data-bs-target="#tab-scores">🧮 Calcs & Scores</button></li>
+                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-eviter">⚠️ À Éviter</button></li>
+                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-initier">➕ Omissions</button></li>
+                        <li class="nav-item"><button class="nav-link text-warning fw-bold" data-bs-toggle="tab" data-bs-target="#tab-interact">⚡ Interact</button></li>
+                        <li class="nav-item"><button class="nav-link text-danger fw-bold" data-bs-toggle="tab" data-bs-target="#tab-auc">📈 PK (AUC)</button></li>
+                        <li class="nav-item"><button class="nav-link text-warning" style="color:#d63384!important;" data-bs-toggle="tab" data-bs-target="#tab-ansm">🇫🇷 ANSM</button></li>
+                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-bio">🧪 Bio</button></li>
+                        <li class="nav-item"><button class="nav-link text-info fw-bold" data-bs-toggle="tab" data-bs-target="#tab-usage">💡 Doses</button></li>
+                        <li class="nav-item"><button class="nav-link text-primary fw-bold" data-bs-toggle="tab" data-bs-target="#tab-suivi">👁️ Suivi</button></li>
+                    </ul>
+                    <div class="tab-content mt-3" id="myTabContent">
+                        <div class="tab-pane fade show active" id="tab-scores"><div id="alertes-scores" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-eviter"><div id="alertes-eviter" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-initier"><div id="alertes-initier" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-interact"><div id="alertes-interact" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-auc"><div id="alertes-auc" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-ansm"><div id="alertes-ansm" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-bio"><div id="alertes-bio" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-usage"><div id="alertes-usage" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-suivi"><div id="alertes-suivi" class="text-muted">Cliquez sur Analyser...</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="legendModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-light">
+            <h5 class="modal-title text-primary fw-bold">ℹ️ Lexique & Signification des Alertes</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="legendContainer">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="data.js"></script>
+    <script src="ddi_data.js"></script>
+    <script src="gpt_ddi_data_filtered.js"></script>
+    <script src="atb_data.js"></script>
+    <script src="guidelines_data.js"></script>
+    <script src="anticholinergics_data.js"></script>
+    <script src="ansm_ddi_data.js"></script>
+    <script src="ddi_auc_data.js"></script>
+    
+    <script src="app_legend.js"></script>
+    <script src="suivi_data.js"></script>
+    <script src="app_core.js"></script>
+    <script src="app_ui.js"></script>
+    <script src="app_analysis.js"></script>
+</body>
+</html>

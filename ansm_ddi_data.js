@@ -1,0 +1,11582 @@
+const ANSM_DDI_DB = [
+  {
+    "d1": "ABATACEPT",
+    "d2": "VACCINS VIVANTS ATTÉNUÉS",
+    "level": "Association DECONSEILLEE",
+    "desc": "ainsi que pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée, éventuellement mortelle."
+  },
+  {
+    "d1": "ABIRATERONE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution notable des concentrations plasmatiques de l’abiratérone, avec risque de moindre efficacité."
+  },
+  {
+    "d1": "ABIRATERONE",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par l'abiratérone.Chez l'insuffisant cardiaque, risque d'augmentation des effets indésirables du métoprolol, par diminution de son métabolisme hépatique par l'abiratérone."
+  },
+  {
+    "d1": "ABIRATERONE",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la propafénone pendant le traitement par l'abiratérone.Risque d'augmentation des effets indésirables de la propafénone, par diminution de son métabolisme hépatique par l'abiratérone."
+  },
+  {
+    "d1": "ABROCITINIB",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de l’abrocitinib de moitié en cas de traitement par le fluconazole.Risque de majoration des effets indésirables de l’abrocitinib par diminution de son métabolisme."
+  },
+  {
+    "d1": "ABROCITINIB",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de l’abrocitinib de moitié en cas de traitement par la fluvoxamine.Risque de majoration des effets indésirables de l’abrocitinib par diminution de son métabolisme."
+  },
+  {
+    "d1": "ACETAZOLAMIDE",
+    "d2": "ACIDE ACETYLSALICYLIQUE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration des effets indésirables, et notamment de l'acidose métabolique, de l'acide acétylsalicylique à doses élevées et de l'acétazolamide, par diminution de l'élimination de l'acide acétylsalicylique par l'acétazolamide."
+  },
+  {
+    "d1": "ACETAZOLAMIDE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, contrôle des concentrations plasmatiques de carbamazépine et réduction éventuelle de sa posologie.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage."
+  },
+  {
+    "d1": "ACETAZOLAMIDE",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Diminution de la lithémie avec risque de baisse de l’efficacité thérapeutique."
+  },
+  {
+    "d1": "ACETAZOLAMIDE",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "ACIDE ACETYLSALICYLIQUE",
+    "d2": "ACETAZOLAMIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration des effets indésirables, et notamment de l'acidose métabolique, de l'acide acétylsalicylique à doses élevées et de l'acétazolamide, par diminution de l'élimination de l'acide acétylsalicylique par l'acétazolamide."
+  },
+  {
+    "d1": "ACIDE ACETYLSALICYLIQUE",
+    "d2": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Pour des doses anti-inflammatoires d'acide acétylsalicylique (>= 1g par prise et/ou >= 3g par jour) ou pour des doses antalgiques ou antipyrétiques (>= 500 mg par prise et/ou < 3g par jour) : Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, sous diurétiques, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Par ailleurs, réduction de l'effet antihypertenseur."
+  },
+  {
+    "d1": "ACIDE ACETYLSALICYLIQUE",
+    "d2": "DEFERASIROX",
+    "level": "A prendre en compte",
+    "desc": "A prendre en compte : - Pour des doses anti-inflammatoires d'acide acétylsalicylique ( 1g par prise et/ou 3g par jour) - Pour des doses antalgiques ou antipyrétiques d'acide acétylsalicylique ( 500 mg par prise et/ou <3g par jour) et ( 500 mg par prise et/ou <3g par jour)Majoration du risque ulcérogène et hémorragique digestif."
+  },
+  {
+    "d1": "ACIDE ACETYLSALICYLIQUE",
+    "d2": "DIURÉTIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Pour des doses anti-inflammatoires d'acide acétylsalicylique (>= 1g par prise et/ou >= 3g par jour) ou pour des doses antalgiques ou antipyrétiques (>= 500 mg par prise et/ou < 3g par jour) : Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Par ailleurs, réduction de l'effet antihypertenseur."
+  },
+  {
+    "d1": "ACIDE ACETYLSALICYLIQUE",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Pour des doses anti-inflammatoires d'acide acétylsalicylique (>= 1g par prise et/ou >= 3g par jour) ou pour des doses antalgiques ou antipyrétiques (>= 500 mg par prise et/ou < 3g par jour) : Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, sous diurétiques, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Par ailleurs, réduction de l'effet antihypertenseur."
+  },
+  {
+    "d1": "ACIDE ACETYLSALICYLIQUE",
+    "d2": "NICORANDIL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration du risque ulcérogène et hémorragique digestif."
+  },
+  {
+    "d1": "ACIDE ACETYLSALICYLIQUE",
+    "d2": "TICLOPIDINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Majoration du risque hémorragique par addition des activités antiagrégantes plaquettaires."
+  },
+  {
+    "d1": "ACIDE ASCORBIQUE",
+    "d2": "CICLOSPORINE",
+    "level": "A prendre en compte",
+    "desc": "Risque de diminution des concentrations sanguines de la ciclosporine, notamment en cas d’association avec la vitamine E."
+  },
+  {
+    "d1": "ACIDE ASCORBIQUE",
+    "d2": "DÉFÉROXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d'hémochromatose, ne donner de la vitamine C qu'après avoir commencé le traitement par la déféroxamine. Surveiller la fonction cardiaque en cas d'association.Avec l'acide ascorbique à fortes doses et par voie IV : anomalies de la fonction cardiaque, voire insuffisance cardiaque aiguë (en général réversible à l'arrêt de la vitamine C)."
+  },
+  {
+    "d1": "ACIDE CHOLIQUE",
+    "d2": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "level": "CONTRE-INDICATION",
+    "desc": "Effet antagoniste du barbiturique."
+  },
+  {
+    "d1": "ACIDE CLODRONIQUE",
+    "d2": "ESTRAMUSTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique au cours de l’association.Risque d’augmentation des concentrations plasmatiques d’estramustine par le clodronate."
+  },
+  {
+    "d1": "ACIDE FUSIDIQUE",
+    "d2": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "level": "CONTRE-INDICATION",
+    "desc": "Arrêter le traitement par l'inhibiteur de l'HMG Co-A réductase avant d'initier un traitement par acide fusidique ou utiliser un autre antibiotique.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse."
+  },
+  {
+    "d1": "ADRÉNALINE (VOIE BUCCO-DENTAIRE OU SOUS-CUTANÉE)",
+    "d2": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "level": "Précaution d'emploi",
+    "desc": "Limiter l'apport, par exemple : moins de 0,1 mg d'adrénaline en 10 minutes ou 0,3 mg en 1 heure chez l'adulte.Troubles du rythme ventriculaire graves par augmentation de l'excitabilité cardiaque."
+  },
+  {
+    "d1": "ADRÉNALINE (VOIE BUCCO-DENTAIRE OU SOUS-CUTANÉE)",
+    "d2": "ANTIDÉPRESSEURS IMIPRAMINIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Limiter l'apport, par exemple : moins de 0,1 mg d'adrénaline en 10 minutes ou 0,3 mg en 1 heure chez l'adulte.Troubles du rythme ventriculaire graves par augmentation de l'excitabilité cardiaque."
+  },
+  {
+    "d1": "ADRÉNALINE (VOIE BUCCO-DENTAIRE OU SOUS-CUTANÉE)",
+    "d2": "IMAO IRRÉVERSIBLES",
+    "level": "Précaution d'emploi",
+    "desc": "Limiter l'apport, par exemple : moins de 0,1 mg d'adrénaline en 10 minutes ou 0,3 mg en 1 heure chez l'adulte.Troubles du rythme ventriculaire graves par augmentation de l'excitabilité cardiaque."
+  },
+  {
+    "d1": "ADRÉNALINE (VOIE BUCCO-DENTAIRE OU SOUS-CUTANÉE)",
+    "d2": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Limiter l'apport, par exemple : moins de 0,1 mg d'adrénaline en 10 minutes ou 0,3 mg en 1 heure chez l'adulte.Troubles du rythme ventriculaire graves par augmentation de l'excitabilité cardiaque."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer l'amiodarone le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatiques d’afatinib par augmentation de son absorption par l'amiodarone."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer la ciclosporine le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par la ciclosporine."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer l'érythromycine le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par l'érythromycine."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association et 1 à 2 semaines après leur arrêt.Diminution des concentrations plasmatiques de l’afatinib par augmentation de son métabolisme par ces substances."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer l'inhibiteur de protéases le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatiques d’afatinib par augmentation de son absorption par l'inhibiteur de protéases."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer l'itraconazole le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par l'itraconazole."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "KETOCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer le kétoconazole le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par le kétoconazole."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "PRIMIDONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association et 1 à 2 semaines après leur arrêt.Diminution des concentrations plasmatiques de l’afatinib par augmentation de son métabolisme par la primidone."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association et 1 à 2 semaines après leur arrêt.Diminution des concentrations plasmatiques de l’afatinib par augmentation de son métabolisme par la rifampicine."
+  },
+  {
+    "d1": "AFATINIB",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer le vérapamil le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par le vérapamil."
+  },
+  {
+    "d1": "ALBENDAZOLE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique de la réponse thérapeutique et adaptation éventuelle de la posologie de l’albendazole pendant le traitement avec l’inducteur enzymatique et après son arrêt.Diminution importante des concentrations plasmatiques de l’albendazole et de son métabolite actif par l’inducteur, avec risque de baisse de son efficacité."
+  },
+  {
+    "d1": "ALBENDAZOLE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique de la réponse thérapeutique et adaptation éventuelle de la posologie de l’albendazole pendant le traitement avec l’inducteur enzymatique et après son arrêt.Diminution importante des concentrations plasmatiques de l’albendazole et de son métabolite actif par le ritonavir, avec risque de baisse de son efficacité."
+  },
+  {
+    "d1": "ALBENDAZOLE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique de la réponse thérapeutique et adaptation éventuelle de la posologie de l’albendazole pendant le traitement avec l’inducteur enzymatique et après son arrêt.Diminution importante des concentrations plasmatiques de l’albendazole et de son métabolite actif par l’inducteur, avec risque de baisse de son efficacité."
+  },
+  {
+    "d1": "ALCALINISANTS URINAIRES",
+    "d2": "HYDROQUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle des concentrations de l'hydroquinidine ; si besoin, adaptation de la posologie pendant le traitement alcalinisant et après son arrêt.Augmentation des concentrations plasmatiques de l'hydroquinidine et risque de surdosage (diminution de l'excrétion rénale de l'hydroquinidine par alcalinisation des urines)."
+  },
+  {
+    "d1": "ALCALINISANTS URINAIRES",
+    "d2": "QUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle de la quinidinémie ; si besoin, adaptation de la posologie pendant le traitement alcalinisant et après son arrêt.Augmentation des concentrations plasmatiques de la quinidine et risque de surdosage (diminution de l'excrétion rénale de la quinidine par alcalinisation des urines)."
+  },
+  {
+    "d1": "ALCALOÏDES DE L'ERGOT DE SEIGLE DOPAMINERGIQUES",
+    "d2": "ANTIPARKINSONIENS ANTICHOLINERGIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de majoration des troubles neuropsychiques."
+  },
+  {
+    "d1": "ALCALOÏDES DE L'ERGOT DE SEIGLE VASOCONSTRICTEURS",
+    "d2": "TRIPTANS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de 6 à 24 heures, selon le triptan, entre la prise de celui-ci et celle de l'alcaloïde ergotéRisque d'hypertension artérielle, de vasoconstriction artérielle coronaire."
+  },
+  {
+    "d1": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "d2": "ANTABUSE (RÉACTION)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool. Tenir compte de l’élimination complète des médicaments en se référant à leur demi-vie avant la reprise de boissons alcoolisées ou du médicament contenant de l’alcool.Effet antabuse (chaleur, rougeurs, vomissements, tachycardie)."
+  },
+  {
+    "d1": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "d2": "IMAO IRRÉVERSIBLES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Majoration des effets hypertenseurs et/ou hyperthermiques de la tyramine présente dans certaines boissons alcoolisées (chianti, certaines bières, etc)."
+  },
+  {
+    "d1": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "d2": "INSULINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Augmentation de la réaction hypoglycémique (inhibition des réactions de compensation pouvant faciliter la survenue de coma hypoglycémique)."
+  },
+  {
+    "d1": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "d2": "MÉDICAMENTS SÉDATIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Majoration par l'alcool de l'effet sédatif de ces substances. L'altération de la vigilance peut rendre dangereuses la conduite de véhicules et l'utilisation de machines."
+  },
+  {
+    "d1": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "d2": "METFORMINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Risque majoré d'acidose lactique lors d'intoxication alcoolique aiguë, particulièrement en cas de jeûne ou dénutrition, ou bien d'insuffisance hépatocellulaire."
+  },
+  {
+    "d1": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Effet antabuse, notamment pour glibenclamide, glipizide, tolbutamide. Augmentation de la réaction hypoglycémique (inhibition des réactions de compensation) pouvant faciliter la survenue de coma hypoglycémique."
+  },
+  {
+    "d1": "ALFENTANIL",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de l'alfentanil en cas de traitement par la cimétidine.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "ALFENTANIL",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de l'alfentanil en cas de traitement par le diltiazem.Augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "ALFENTANIL",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de l'alfentanil en cas de traitement par l'érythromycine.Augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "ALFENTANIL",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de l'alfentanil en cas de traitement par le fluconazole.Augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "ALFENTANIL",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’analgésique opiacé en cas de traitement par un inhibiteur puissant du CYP3A4.Augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "ALFUZOSINE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de l’alfuzosine et de ses effets indésirables."
+  },
+  {
+    "d1": "ALLOPURINOL",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par l'allopurinol et 8 jours après son arrêt.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ALUMINIUM (SELS)",
+    "d2": "CITRATES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les topiques gastro-intestinaux à base d'aluminium à distance des citrates (plus de 2 heures si possible), y compris les citrates naturels (jus d'agrumes).Risque de facilitation du passage systémique de l’aluminium, notamment en cas de fonction rénale altérée."
+  },
+  {
+    "d1": "AMINOSIDES",
+    "d2": "BOTULIQUE (TOXINE)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser un autre antibiotique.Risque d'augmentation des effets de la toxine botulique avec les aminosides (par extrapolation à partir des effets observés au cours du botulisme)."
+  },
+  {
+    "d1": "AMINOSIDES",
+    "d2": "CEFALOTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance de la fonction rénale.L'augmentation de la néphrotoxicité des aminosides par la céfalotine est discutée."
+  },
+  {
+    "d1": "AMINOSIDES",
+    "d2": "CURARES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller le degré de curarisation en fin d'anesthésie.Potentialisation des curares lorque l'antibiotique est administré par voie parentérale et/ou péritonéale avant, pendant ou après l'agent curarisant."
+  },
+  {
+    "d1": "AMINOSIDES",
+    "d2": "DIURÉTIQUES DE L'ANSE",
+    "level": "Précaution d'emploi",
+    "desc": "Association possible sous contrôle de l'état d'hydratation, des fonctions rénale et cochléovestibulaire, et éventuellement, des concentrations plasmatiques de l'aminoside.Augmentation des risques néphrotoxiques et ototoxiques de l'aminoside (insuffisance rénale fonctionnelle liée à la déshydratation entraînée par le diurétique)."
+  },
+  {
+    "d1": "AMINOSIDES",
+    "d2": "POLYMYXINE B",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance stricte avec une justification bactériologique indiscutable.Addition des effets néphrotoxiques."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer l'amiodarone le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatiques d’afatinib par augmentation de son absorption par l'amiodarone."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par l'amiodarone et jusqu'à 4 semaines après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL ET SOTALOL) (Y COMPRIS COLLYRES)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG régulière.Troubles de l'automatisme et de la conduction cardiaque avec risque de bradycardie excessive."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "CICLOSPORINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Dosage des concentrations sanguines de ciclosporine, contrôle de la fonction rénale et adaptation de la posologie de la ciclosporine pendant le traitement par l'amiodarone.Augmentation des concentrations sanguines de ciclosporine, par diminution de son métabolisme hépatique, avec risque d'effets néphrotoxiques."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "DABIGATRAN",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'indication post-chirurgicale : surveillance clinique et adaptation de la posologie du dabigatran si nécessaire, sans excéder 150 mg/j.Augmentation des concentrations plasmatiques de dabigatran, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et, s'il y a lieu, contrôle de la digoxinémie et adaptation de la posologie de la digoxine.Dépression de l'automatisme (bradycardie excessive) et troubles de la conduction auriculo-ventriculaire. De plus, augmentation de la digoxinémie par diminution de la clairance de la digoxine."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "DOCETAXEL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du docétaxel.Risque de majoration des effets indésirables du docétaxel par diminution de son métabolisme hépatique par l’amiodarone"
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "ESMOLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de la contractilité, de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "FIDAXOMICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de la fidaxomicine."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, particulièrement aux fortes doses de fluconazole (800 mg/j).Risque d’allongement de l’intervalle QT."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "IBRUTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d'augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par l’amiodarone."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "LIDOCAINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle des concentrations plasmatiques de lidocaïne. Si besoin, adaptation de la posologie de la lidocaïne pendant le traitement par amiodarone et après son arrêt.Risque d’augmentation des concentrations plasmatiques de lidocaïne, avec possibilité d’effets indésirables neurologiques et cardiaques, par diminution de son métabolisme hépatique par l’amiodarone."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par l'amiodarone."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "OLAPARIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 200 mg 2 fois par jour avec l’amiodarone.Augmentation des concentrations plasmatiques d’olaparib par l' amiodarone"
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "ORLISTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, ECG.Risque de diminution des concentrations plasmatiques de l'amiodarone et de son métabolite actif."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "PACLITAXEL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du paclitaxel.Risque de majoration des effets indésirables du paclitaxel par diminution de son métabolisme hépatique par l’amiodarone."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration du risque de troubles du rythme ventriculaire par potentialisation des effets antiarythmiques, ainsi que des effets indésirables neurologiques, par diminution du métabolisme hépatique de la phénytoïne par l’amiodarone."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "SIMVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine ou utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse (diminution du métabolisme hépatique de la simvastatine)."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "SOFOSBUVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique et ECG étroite, en particulier pendant les premières semaines de traitement. Une surveillance continue en milieu hospitalier est requise pendant les 48 heures qui suivent la co-adminsitration. Prendre en compte la longue demi-vie de l'amiodarone chez les patients l'ayant arrêtée au cours des derniers mois et qui doivent débuter un traitement contenant du sofosbuvir.Survenue de bradycardie éventuellement brutale, pouvant avoir des conséquences fatales."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "TACROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de tacrolimus, contrôle de la fonction rénale et adaptation de la posologie de tacrolimus pendant l’association et à l’arrêt de l’amiodarone.Augmentation des concentrations sanguines de tacrolimus par inhibition de son métabolisme par l’amiodarone."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "TALAZOPARIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "TAMSULOSINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la tamsulosine pendant le traitement par l’inhibiteur enzymatique et après son arrêt, le cas échéant.Risque de majoration des effets indésirables de la tamsulosine, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "TOLVAPTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de tolvaptan de moitié.Augmentation des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "VÉNÉTOCLAX",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment hématologique, et adaptation de la posologie du vénétoclax.Risque d’augmentation des effets indésirables du vénétoclax par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "AMIODARONE",
+    "d2": "VORICONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG, et adaptation éventuelle de la posologie de l’amiodarone.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes, par possible diminution du métabolisme de l’amiodarone."
+  },
+  {
+    "d1": "AMLODIPINE",
+    "d2": "SIMVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine ou utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d’effets indésirables (dose-dépendants) à type de rhabdomyolyse (diminution du métabolisme hépatique de l’hypocholestérolémiant)."
+  },
+  {
+    "d1": "AMPHOTERICINE B",
+    "d2": "ZIDOVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'hémogramme.Avec l'amphotéricine B administrée par voie IV : augmentation de la toxicité hématologique (addition d'effets de toxicité médullaire)."
+  },
+  {
+    "d1": "ANAGRELIDE",
+    "d2": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration des événements hémorragiques."
+  },
+  {
+    "d1": "ANAGRELIDE",
+    "d2": "OMEPRAZOLE",
+    "level": "A prendre en compte",
+    "desc": "Préférer un autre inhibiteur de la pompe à protons.Risque de moindre efficacité de l'anagrélide par augmentation de son métabolisme par l'oméprazole."
+  },
+  {
+    "d1": "ANAGRELIDE",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "ANALOGUES DE LA SOMATOSTATINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Augmentation des doses de ciclosporine sous contrôle des concentrations plasmatiques et réduction de la posologie après l'arrêt du traitement par l'analogue de la somatostatine.Avec la ciclosporine administrée par voie orale : baisse des concentrations sanguines de ciclosporine (diminution de son absorption intestinale)."
+  },
+  {
+    "d1": "ANALOGUES DE LA SOMATOSTATINE",
+    "d2": "INSULINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient du risque d'hypoglycémie ou d'hyperglycémie, renforcer l'autosurveillance glycémique et adapter si besoin la posologie de l'insuline pendant le traitement par l'analogue de la somatostatine.Risque d'hypoglycémie ou d'hyperglycémie : diminution ou augmentation des besoins en insuline, par diminution ou augmentation de la sécrétion de glucagon endogène."
+  },
+  {
+    "d1": "ANALOGUES DE LA SOMATOSTATINE",
+    "d2": "REPAGLINIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer l'autosurveillance glycémique et adapter si besoin la posologie de la repaglidine pendant le traitement par l'analogue de la somatostatine.Risque d'hypoglycémie ou d'hyperglycémie : diminution ou augmentation des besoins en repaglidine, par diminution ou augmentation de la sécrétion de glucagon endogène."
+  },
+  {
+    "d1": "ANALOGUES DE LA SOMATOSTATINE",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer l'autosurveillance glycémique et adapter si besoin la posologie du sulfamide hypoglycemiant pendant le traitement par l'analogue de la somatostatine.Risque d'hypoglycémie ou d'hyperglycémie : diminution ou augmentation des besoins en sulfamide hypoglycemiant, par diminution ou augmentation de la sécrétion de glucagon endogène."
+  },
+  {
+    "d1": "ANDROGÈNES",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation de la posologie de l’antivitamine K pendant le traitement par l'androgène et après son arrêt.Augmentation du risque hémorragique par effet direct sur la coagulation et/ou les systèmes fibrinolytiques."
+  },
+  {
+    "d1": "ANDROGÈNES",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association et 1 à 2 semaines après l’arrêt de l’inducteur.Risque de diminution des concentrations plasmatiques de l'androgène et par conséquent de son efficacité, par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "d2": "ADRÉNALINE (VOIE BUCCO-DENTAIRE OU SOUS-CUTANÉE)",
+    "level": "Précaution d'emploi",
+    "desc": "Limiter l'apport, par exemple : moins de 0,1 mg d'adrénaline en 10 minutes ou 0,3 mg en 1 heure chez l'adulte.Troubles du rythme ventriculaire graves par augmentation de l'excitabilité cardiaque."
+  },
+  {
+    "d1": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Précaution d'emploi",
+    "desc": "En règle générale, ne pas arrêter le traitement bêta-bloquant et, de toute façon, éviter l'arrêt brutal. Informer l'anesthésiste de ce traitement.Réduction des réactions cardiovasculaires de compensation par les bêta-bloquants. L'inhibition bêta-adrénergique peut être levée durant l'intervention par les bêta-mimétiques."
+  },
+  {
+    "d1": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "Précaution d'emploi",
+    "desc": "En règle générale, ne pas arrêter le traitement bêta-bloquant et, de toute façon, éviter l'arrêt brutal. Informer l'anesthésiste de ce traitement.Réduction des réactions cardiovasculaires de compensation par les bêta-bloquants. L'inhibition bêta-adrénergique peut être levée durant l'intervention par les bêta-stimulants."
+  },
+  {
+    "d1": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "d2": "ISONIAZIDE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d'intervention programmée, arrêter, par prudence, le traitement par l'isoniazide une semaine avant l'intervention et ne le reprendre que 15 jours après.Potentialisation de l'effet hépatotoxique de l'isonazide, avec formation accrue de métabolites toxiques de l'isoniazide."
+  },
+  {
+    "d1": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "d2": "SYMPATHOMIMÉTIQUES INDIRECTS",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d'intervention programmée, il est préférable d'interrompre le traitement quelques jours avant l'intervention.Poussée hypertensive peropératoire."
+  },
+  {
+    "d1": "ANTABUSE (RÉACTION)",
+    "d2": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool. Tenir compte de l’élimination complète des médicaments en se référant à leur demi-vie avant la reprise de boissons alcoolisées ou du médicament contenant de l’alcool.Effet antabuse (chaleur, rougeurs, vomissements, tachycardie)."
+  },
+  {
+    "d1": "ANTAGONISTES DES CANAUX CALCIQUES",
+    "d2": "IDÉLALISIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’antagoniste calcique pendant le traitement par l’idélalisib et après son arrêt.Majoration des effets indésirables de l’antagoniste des canaux calciques, à type d’hypotension orthostatique, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "d2": "ACIDE ACETYLSALICYLIQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Pour des doses anti-inflammatoires d'acide acétylsalicylique (>= 1g par prise et/ou >= 3g par jour) ou pour des doses antalgiques ou antipyrétiques (>= 500 mg par prise et/ou < 3g par jour) : Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, sous diurétiques, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Par ailleurs, réduction de l'effet antihypertenseur."
+  },
+  {
+    "d1": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Insuffisance rénale aiguë chez le patient à risque (sujet âgé, déshydratation, traitement associé avec diurétiques, altération de la fonction rénale), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Ces effets sont généralement réversibles. Par ailleurs, réduction de l’effet antihypertenseur."
+  },
+  {
+    "d1": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "d2": "DIURÉTIQUES HYPOKALIÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'hypertension artérielle, lorsqu'un traitement diurétique préalable a pu entraîner une déplétion hydrosodée, il faut : - soit arrêter le diurétique avant de débuter le traitement par l'antagoniste de l'angiotensine II, et réintroduire un diurétique hypokaliémiant si nécessaire ultérieurement ; - soit administrer des doses initiales réduites d'antagoniste de l'angiotensine II et augmenter progressivement la posologie. Dans tous les cas : surveiller la fonction rénale (créatininémie) dans les premières semaines du traitement par l'antagoniste de l'angiotensine II.Risque d'hypotension artérielle brutale et/ou d'insuffisance rénale aiguë lors de l'instauration ou de l'augmentation de la posologie d'un traitement par un antagoniste de l'angiotensine II en cas de déplétion hydrosodée préexistante."
+  },
+  {
+    "d1": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "d2": "EPLERENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle strict de la kaliémie et de la fonction rénale pendant l’association.Majoration du risque d’hyperkaliémie, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "A prendre en compte",
+    "desc": "Dans les indications où cette association est possible, risque accru de dégradation de la fonction rénale, voire insuffisance rénale aiguë, et majoration de l'hyperkaliémie, ainsi que de l'hypotension et des syncopes."
+  },
+  {
+    "d1": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "d2": "LITHIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'usage d'un antagoniste de l'angiotensine II est indispensable, surveillance stricte de la lithémie et adaptation de la posologie.Augmentation de la lithémie pouvant atteindre des valeurs toxiques (diminution de l'excrétion rénale du lithium)."
+  },
+  {
+    "d1": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "d2": "POTASSIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf en cas d'hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénale (addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "d2": "ANAGRELIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration des événements hémorragiques."
+  },
+  {
+    "d1": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "A prendre en compte",
+    "desc": "Augmentation du risque hémorragique, notamment gastro-intestinal."
+  },
+  {
+    "d1": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "d2": "COBIMÉTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "d2": "IBRUTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "d2": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "level": "A prendre en compte",
+    "desc": "Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "d2": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "level": "A prendre en compte",
+    "desc": "Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTIARYTHMIQUES CLASSE IA",
+    "d2": "ESMOLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de la contractilité, de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "ANTIARYTHMIQUES CLASSE IA",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et contrôle des concentrations plasmatiques ; si besoin, adaptation de la posologie de l'antiarythmique pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de l'antiarythmique, par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "ANTIARYTHMIQUES CLASSE IA",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement de la concentration plasmatique de l'antiarythmique. Si besoin, adaptation de la posologie de l'antiarythmique pendant le traitement par la rifampicine et après son arrêt (risque de surdosage en antiarythmique).Diminution des concentrations plasmatiques et de l'efficacité de l'antiarythmique (augmentation de son métabolisme hépatique)."
+  },
+  {
+    "d1": "ANTICHOLINESTÉRASIQUES",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique régulière, notamment en début d'association.Risque de bradycardie excessive (addition des effets bradycardisants)."
+  },
+  {
+    "d1": "ANTICHOLINESTÉRASIQUES",
+    "d2": "MÉDICAMENTS ATROPINIQUES",
+    "level": "A prendre en compte",
+    "desc": "Risque de moindre efficacité de l’anticholinestérasique par antagonisme des récepteurs de l’acétylcholine par l’atropinique."
+  },
+  {
+    "d1": "ANTICOAGULANTS ORAUX",
+    "d2": "AUTRES ANTICOAGULANTS ORAUX",
+    "level": "A prendre en compte",
+    "desc": "Tenir compte de la demi-vie de l'anticoagulant oral et observer, le cas échéant, un délai de carence avant le début du traitement par l'autre. Penser à informer le patient.Risque de majoration des événements hémorragiques lors du relais d'un anticoagulant oral par un autre."
+  },
+  {
+    "d1": "ANTICOAGULANTS ORAUX",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite, voire biologique .Augmentation du risque hémorragique de l'anticoagulant oral (agression de la muqueuse gastroduodénale par les anti- inflammatoires non stéroïdiens)."
+  },
+  {
+    "d1": "ANTICOAGULANTS ORAUX",
+    "d2": "COBIMÉTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et le cas échéant, contrôle plus fréquent de l'INR.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTICOAGULANTS ORAUX",
+    "d2": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "level": "Précaution d'emploi",
+    "desc": "Lorsque l'association est justifiée, renforcer la surveillance : le cas échéant, avec les antivitamines K, contrôle biologique au 8e jour, puis tous les 15 jours pendant la corticothérapie et après son arrêt.Glucocorticoïdes (voies générale et rectale) : impact éventuel de la corticothérapie sur le métabolisme de l'antivitamine K et sur celui des facteurs de la coagulation. Risque hémorragique propre à la corticothérapie (muqueuse digestive, fragilité vasculaire) à fortes doses ou en traitement prolongé supérieur à 10 jours."
+  },
+  {
+    "d1": "ANTICOAGULANTS ORAUX",
+    "d2": "IBRUTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite (pour les antivitamines K, contrôle plus fréquent de l’INR).Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTICOAGULANTS ORAUX",
+    "d2": "IMATINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite (pour les antivitamines K, contrôle plus fréquent de l’INR).Augmentation du risque hémorragique. Pour l’apixaban et le rivaroxaban, risque de diminution de leur métabolisme par l’imatinib, se surajoutant au risque pharmacodynamique."
+  },
+  {
+    "d1": "ANTICOAGULANTS ORAUX",
+    "d2": "IPILIMUMAB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite.Augmentation du risque d'hémorragies digestives."
+  },
+  {
+    "d1": "ANTICOAGULANTS ORAUX",
+    "d2": "TRAMADOL",
+    "level": "A prendre en compte",
+    "desc": "Surveillance particulièrement chez le sujet âgé.Augmentation du risque hémorragique"
+  },
+  {
+    "d1": "ANTIDÉPRESSEURS IMIPRAMINIQUES",
+    "d2": "ADRÉNALINE (VOIE BUCCO-DENTAIRE OU SOUS-CUTANÉE)",
+    "level": "Précaution d'emploi",
+    "desc": "Limiter l'apport, par exemple : moins de 0,1 mg d'adrénaline en 10 minutes ou 0,3 mg en 1 heure chez l'adulte.Troubles du rythme ventriculaire graves par augmentation de l'excitabilité cardiaque."
+  },
+  {
+    "d1": "ANTIDÉPRESSEURS IMIPRAMINIQUES",
+    "d2": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue et, si nécessaire, adaptation posologique.Augmentation des concentrations plasmatiques de l'antidépresseur imipraminique avec risque de convulsions et augmentation des effets indésirables."
+  },
+  {
+    "d1": "ANTIHYPERTENSEURS CENTRAUX",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Précaution d'emploi",
+    "desc": "Eviter l'arrêt brutal du traitement par l'antihypertenseur central. Surveillance clinique.Augmentation importante de la pression artérielle en cas d'arrêt brutal du traitement par l'antihypertenseur central."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "AUTRES ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Avec les autres anti-inflammatoires non stéroïdiens : majoration du risque ulcérogène et hémorragique digestif."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Insuffisance rénale aiguë chez le patient à risque (sujet âgé, déshydratation, traitement associé avec diurétiques, altération de la fonction rénale), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Ces effets sont généralement réversibles. Par ailleurs, réduction de l’effet antihypertenseur."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "level": "A prendre en compte",
+    "desc": "Augmentation du risque hémorragique, notamment gastro-intestinal."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "ANTICOAGULANTS ORAUX",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite, voire biologique .Augmentation du risque hémorragique de l'anticoagulant oral (agression de la muqueuse gastroduodénale par les anti- inflammatoires non stéroïdiens)."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "A prendre en compte",
+    "desc": "Réduction de l'effet antihypertenseur (inhibition des prostaglandines vasodilatatrices par les anti-inflammatoires non stéroïdiens)."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la fonction rénale en début de traitement par l’AINS.Risque d’addition des effets néphrotoxiques, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "COBIMÉTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "DIURÉTIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l'association.Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, sous diurétiques, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Ces effets sont généralement réversibles. Par ailleurs, réduction de l’effet antihypertenseur."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "HÉPARINES (DOSES CURATIVES ET/OU SUJET ÂGÉ)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite.Augmentation du risque hémorragique (agression de la muqueuse gastroduodénale par les anti-inflammatoires non stéroïdiens)."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, sous diurétiques, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Ces effets sont généralement réversibles. Par ailleurs, réduction de l’effet antihypertenseur."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "LITHIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveiller étroitement la lithémie et adapter la posologie du lithium pendant l'association et après l'arrêt de l'anti-inflammatoire non stéroïdien.Augmentation de la lithémie pouvant atteindre des valeurs toxiques (diminution de l'excrétion rénale du lithium)."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "level": "A prendre en compte",
+    "desc": "Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "MIFAMURTIDE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Aux doses élevées d’AINS, risque de moindre efficacité du mifamurtide."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "NICORANDIL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration du risque ulcérogène et hémorragique digestif."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "TACROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la fonction rénale en début de traitement par l’AINS.Risque d’addition des effets néphrotoxiques, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "d2": "TENOFOVIR DISOPROXIL",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d’association, surveiller la fonction rénale.Risque de majoration de la néphrotoxicité du ténofovir, notamment avec des doses élevées de l'anti-inflammatoire ou en présence de facteurs de risque d'insuffisance rénale."
+  },
+  {
+    "d1": "ANTIPARKINSONIENS ANTICHOLINERGIQUES",
+    "d2": "ALCALOÏDES DE L'ERGOT DE SEIGLE DOPAMINERGIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de majoration des troubles neuropsychiques."
+  },
+  {
+    "d1": "ANTIPURINES",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K à la mise en route du traitement par l'immunomodulateur et après son arrêt.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTISÉCRÉTOIRES ANTIHISTAMINIQUES H2",
+    "d2": "INHIBITEURS DE TYROSINE KINASES MÉTABOLISÉS",
+    "level": "A prendre en compte",
+    "desc": "- sauf avec l'entrectinib et le vandétanib.Risque de diminution de la biodisponibilité de l’inhibiteur de tyrosine kinases, en raison de son absorption pH-dépendante."
+  },
+  {
+    "d1": "ANTISÉCRÉTOIRES ANTIHISTAMINIQUES H2",
+    "d2": "POSACONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Association déconseillée: - uniquement avec la forme suspension buvable de posaconazole.Diminution de l'absorption de l'azolé antifongique, par augmentation du pH intragastrique par l'antisécrétoire."
+  },
+  {
+    "d1": "ANTISÉCRÉTOIRES ANTIHISTAMINIQUES H2",
+    "d2": "RILPIVIRINE",
+    "level": "A prendre en compte",
+    "desc": "Si nécessaire, utiliser un antihistaminique H2 actif en une prise par jour, à prendre au moins 12 heures avant, ou au moins 4 heures après.Risque de diminution des concentrations plasmatiques de la rilpivirine."
+  },
+  {
+    "d1": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle clinique et biologique régulier, avec augmentation éventuelle de la posologie des hormones thyroïdiennes.Diminution probable de l'absorption des hormones thyroïdiennes, par augmentation du pH intra-gastrique par l'antisécrétoire."
+  },
+  {
+    "d1": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "d2": "INHIBITEURS DE TYROSINE KINASES MÉTABOLISÉS",
+    "level": "A prendre en compte",
+    "desc": "- sauf avec l'entrectinib, le fédratinib, l'imatinib, le tucatinib et le vandétanibRisque de diminution de la biodisponibilité de l’inhibiteur de tyrosine kinases, en raison de son absorption pH-dépendante."
+  },
+  {
+    "d1": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "d2": "LÉDIPASVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé de prendre l'’inhibiteur de la pompe à protons et le lédipasvir simultanément.Diminution des concentrations du lédipasvir en cas d’administration de l’inhibiteur de la pompe à protons avant le lédipasvir."
+  },
+  {
+    "d1": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "d2": "MILLEPERTUIS",
+    "level": "A prendre en compte",
+    "desc": "Risque d’inefficacité du traitement antisécrétoire par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "d2": "POSACONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Association déconseillée: - uniquement avec la forme suspension buvable de posaconazole.Diminution de l'absorption de l'azolé antifongique, par augmentation du pH intragastrique par l'antisécrétoire."
+  },
+  {
+    "d1": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "d2": "VELPATASVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, la bithérapie velpatasvir/sofosbuvir doit être prise au moment du repas, ou 4 heures avant la prise d’un IPP donné à dose minimale.Diminution des concentrations de velpatasvir et de sofosbuvir."
+  },
+  {
+    "d1": "ANTI-TNF ALPHA",
+    "d2": "CANAKINUMAB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de majoration des infections graves."
+  },
+  {
+    "d1": "ANTI-TNF ALPHA",
+    "d2": "VACCINS VIVANTS ATTÉNUÉS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "ALLOPURINOL",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par l'allopurinol et 8 jours après son arrêt.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par l'amiodarone et jusqu'à 4 semaines après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "ANDROGÈNES",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation de la posologie de l’antivitamine K pendant le traitement par l'androgène et après son arrêt.Augmentation du risque hémorragique par effet direct sur la coagulation et/ou les systèmes fibrinolytiques."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "ANTIPURINES",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K à la mise en route du traitement par l'immunomodulateur et après son arrêt.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "APREPITANT",
+    "level": "A prendre en compte",
+    "desc": "Risque de diminution de l’effet de l’antivitamine K par augmentation de son métabolisme hépatique par l’aprépitant."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "BOSENTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Diminution de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "CEFAMANDOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la céphalosporine et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "CEFAZOLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la céphalosporine et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "CEFTRIAXONE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la céphalosporine et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "CIMETIDINE",
+    "level": "A prendre en compte",
+    "desc": "Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation de l'effet de l'antivitamine K et du risque hémorragique (diminution de son métabolisme hépatique)."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "CLINDAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation éventuelle de la posologie de l’antivitamine K pendant le traitement par clindamycine et après son arrêt.Augmentation de l’effet de l’antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "COLCHICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la colchicine et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "CYCLINES",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la cycline et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique (pour la tigécycline, effet direct sur la coagulation et/ou les systèmes fibrinolytiques)."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "CYTOTOXIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR.Augmentation du risque thrombotique et hémorragique au cours des affections tumorales. De surcroit, possible interaction entre les AVK et la chimiothérapie."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "DANAZOL",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation de la posologie de l’antivitamine K pendant le traitement par le danazol et après son arrêt.Augmentation du risque hémorragique par effet direct sur la coagulation et/ou les systèmes fibrinolytiques."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "DISULFIRAME",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation de la posologie de l'antivitamine K pendant le traitement par le disulfirame et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "ECONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par éconazole et après son arrêt.Quelle que soit la voie d'administration de l'éconazole : augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "EFAVIRENZ",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Diminution de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "FIBRATES",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par le fibrate et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par le fluconazole et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "FLUOROQUINOLONES",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la fluoroquinolone et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "FLUOROURACILE (ET, PAR EXTRAPOLATION, AUTRES FLUOROPYRIMIDINES)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si elle ne peut être évitée, contrôle plus fréquent de l'INR. Adaptation de la posologie de l'antivitamine K pendant le traitement par le cytotoxique et 8 jours après son arrêt.Augmentation importante de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "GLUCOSAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adapation éventuelle de la posologie de l’antivitamine K.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par l'anticonvulsivant inducteur et 8 jours après son arrêt.Diminution (ou, rarement, augmentation avec la phénytoïne) de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique par l'anticonvulsivant inducteur."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant la durée du traitement.Variation de l'effet de l'antivitamine K, le plus souvent dans le sens d'une diminution."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "LEVOCARNITINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la lévocarnitine et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique"
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "MACROLIDES (SAUF SPIRAMYCINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par le macrolide et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "METHYLPREDNISOLONE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle de l'INR 2 à 4 jours après le bolus de méthylprednisolone ou en présence de tous signes hémorragiques.Pour des doses de 0,5 à 1g de méthylprednisolone administrées en bolus : augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'association fortuite, ne pas interrompre brutalement la prise de millepertuis mais contrôler l'INR avant puis après l'arrêt du millepertuis.Diminution des concentrations plasmatiques de l'antivitamine K, en raison de son effet inducteur enzymatique, avec risque de baisse d'efficacité voire d'annulation de l'effet dont les conséquences peuvent être éventuellement graves (évènement thrombotique)."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "NEVIRAPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Diminution de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "ORLISTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par l'orlistat et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "PARACETAMOL",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation éventuelle de la posologie de l’antivitamine K pendant le traitement par le paracétamol et après son arrêt.Risque d’augmentation de l’effet de l’antivitamine K et du risque hémorragique en cas de prise de paracétamol aux doses maximales (4 g/j) pendant au moins 4 jours."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "PENTOXIFYLLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la pentoxifylline et 8 jours après son arrêt.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "PRISTINAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la pristinamycine et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "PROGUANIL",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation éventuelle de la posologie de l’antivitamine K pendant le traitement par le proguanil et après son arrêt.Risque d’augmentation de l’effet de l’antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la rifampicine et 8 jours après son arrêt.Diminution de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "ROPINIROLE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation éventuelle de la posologie de l’antivitamine K pendant le traitement par ropinirole et après son arrêt.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "SULFAMETHOXAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, contrôle plus fréquent de l’INR et adaptation de la posologie de l’antivitamine K pendant le traitement par cotrimoxazole et après son arrêt.Augmentation importante de l’effet de l’antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "TAMOXIFENE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Risque d'augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "TIBOLONE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la tibolone et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ANTI-INFECTIEUX ET HEMOSTASE",
+    "d2": "VORICONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par voriconazole et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "APIXABAN",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques de l’apixaban par l'inducteur enzymatique, avec risque de réduction de l’effet thérapeutique."
+  },
+  {
+    "d1": "APIXABAN",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de l’apixaban par l'inhibiteur, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "APIXABAN",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques de l’apixaban par la rifampicine, avec risque de diminution de l’effet thérapeutique."
+  },
+  {
+    "d1": "APRÉMILAST",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques d’aprémilast par augmentatiion de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "APREPITANT",
+    "d2": "ANTIVITAMINES K",
+    "level": "A prendre en compte",
+    "desc": "Risque de diminution de l’effet de l’antivitamine K par augmentation de son métabolisme hépatique par l’aprépitant."
+  },
+  {
+    "d1": "APREPITANT",
+    "d2": "CYPROTERONE",
+    "level": "Précaution d'emploi",
+    "desc": "Dans son utilisation comme contraceptif hormonal : Utiliser une méthode de contraception fiable, additionnelle ou alternative, pendant la durée de l'association.Risque de diminution des concentrations de la cyprotérone avec risque de moindre efficacité contraceptive."
+  },
+  {
+    "d1": "APREPITANT",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt de l’aprépitant.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par l'aprépitant."
+  },
+  {
+    "d1": "APREPITANT",
+    "d2": "PROGESTATIFS CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser de préférence une autre méthode contraceptive, en particulier de type mécanique, pendant la durée de l'association et un cycle suivant.(Sauf stérilet), diminution des concentrations du progestatif, avec risque de moindre efficacité contraceptive."
+  },
+  {
+    "d1": "ARIPIPRAZOLE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l’aripiprazole pendant l’association et 1 à 2 semaines après l’arrêt de l’inducteur.Diminution des concentrations plasmatiques de l’aripiprazole."
+  },
+  {
+    "d1": "ATAZANAVIR",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Augmentation des concentrations plasmatiques de clarithromycine et inhibition de la formation de son métabolite actif."
+  },
+  {
+    "d1": "ATAZANAVIR",
+    "d2": "EFAVIRENZ",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, adaptation posologique de l’atazanavir avec surveillance clinique et biologique régulière, notamment en début d’association.Risque de baisse de l’efficacité de l’atazanavir par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "ATAZANAVIR",
+    "d2": "GLÉCAPRÉVIR + PIBRENTASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation de l’hépatotoxicité avec la bithérapie."
+  },
+  {
+    "d1": "ATAZANAVIR",
+    "d2": "NEVIRAPINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, adaptation posologique de l’atazanavir avec surveillance clinique et biologique régulière, notamment en début d’association.Risque de baisse de l’efficacité de l’atazanavir par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "ATAZANAVIR",
+    "d2": "TENOFOVIR DISOPROXIL",
+    "level": "A prendre en compte",
+    "desc": "Ne pas administrer l’atazanavir avec le ténofovir sans ritonavir.Diminution d’environ un tiers de l’exposition à l’atazanavir chez le patient en cas d’association au ténofovir, comparativement au sujet sain recevant la même association."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "AZITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant ou une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 10mg/jour d'atorvastatine. Si l'objectif thérapeutique n'est pas atteint à cette posologie, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse (diminution du métabolisme de l'hypocholestérolémiant)."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d'hypocholestérolémiant. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholesterolémiant."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant ou une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d'hypocholestérolémiant. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholesterolémiant."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles de l'hypocholestérolémiant. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables concentration-dépendants à type de rhabdomyolyse (diminution du métabolisme hépatique de la statine)."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "GLÉCAPRÉVIR + PIBRENTASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation importante des concentrations plasmatiques d’atorvastatine par la bithérapie, avec risque majoré d’effets indésirables (concentration-dépendants) à type de rhabdomyolyses."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser des doses plus faibles d'atorvastatine. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse (diminution du métabolisme hépatique de l'atorvastatine)."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "PONATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de l'atrovastatine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "RANOLAZINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant ou une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse par inhibition du métabolisme de l'atorvastatine par la ranolazine."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "ROXITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse."
+  },
+  {
+    "d1": "ATORVASTATINE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d'hypocholestérolémiant. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "AVANAFIL",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de l'avanafil, avec risque d’hypotension."
+  },
+  {
+    "d1": "AZITHROMYCINE",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant ou une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "AZITHROMYCINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt du macrolide.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "AZITHROMYCINE",
+    "d2": "IVABRADINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG pendant l’association.Risque majoré de troubles du rythme ventriculaires, notamment de torsades de pointes. De plus, risque d'augmentation des concentrations plasmatiques de l’ivabradine par augmentation de son absorption par l’azithromycine."
+  },
+  {
+    "d1": "AZITHROMYCINE",
+    "d2": "SIMVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant ou une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "AZITHROMYCINE",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "AZTREONAM",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosages plasmatiques et adaptation éventuelle de la posologie de l'anticonvulsivant pendant le traitement par l'anti- infectieux et après son arrêt.Risque de survenue de crises convulsives, par diminution des concentrations plasmatiques de l'acide valproïque."
+  },
+  {
+    "d1": "BARBITURIQUES",
+    "d2": "BENZODIAZÉPINES ET APPARENTÉS",
+    "level": "A prendre en compte",
+    "desc": "Risque majoré de sédation et de dépression respiratoire pouvant entraîner coma et décès, notamment chez le sujet âgé. Il convient de limiter autant que possible les doses et la durée de l’association."
+  },
+  {
+    "d1": "BARBITURIQUES",
+    "d2": "MORPHINIQUES",
+    "level": "A prendre en compte",
+    "desc": "Risque majoré de sédation et de dépression respiratoire pouvant entraîner coma et décès, notamment chez le sujet âgé. Il convient de limiter autant que possible les doses et la durée de l’association."
+  },
+  {
+    "d1": "BAZÉDOXIFÈNE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance d'éventuels signes évocateurs d’une perte d’efficacité (saignements).Diminution des concentrations plasmatiques de bazédoxifène par l’inducteur."
+  },
+  {
+    "d1": "BÉDAQUILINE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques de bédaquiline par augmentation de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "BÉDAQUILINE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association est nécessaire, une surveillance ECG plus fréquente et une surveillance des transaminases sont recommandées.Augmentation des concentrations plasmatiques de bédaquiline par diminution de son métabolisme hépatique par l’inhibiteur."
+  },
+  {
+    "d1": "BENZODIAZÉPINES ET APPARENTÉS",
+    "d2": "BARBITURIQUES",
+    "level": "A prendre en compte",
+    "desc": "Risque majoré de sédation et de dépression respiratoire pouvant entraîner coma et décès, notamment chez le sujet âgé. Il convient de limiter autant que possible les doses et la durée de l’association."
+  },
+  {
+    "d1": "BENZODIAZÉPINES ET APPARENTÉS",
+    "d2": "BUPRENORPHINE",
+    "level": "A prendre en compte",
+    "desc": "Evaluer attentivement le rapport bénéfice/risque de cette association. Informer le patient de la nécessité de respecter les doses prescrites.Avec la buprénorphine utilisée en traitement de substitution : risque majoré de dépression respiratoire, pouvant être fatale."
+  },
+  {
+    "d1": "BENZODIAZÉPINES ET APPARENTÉS",
+    "d2": "MORPHINIQUES",
+    "level": "A prendre en compte",
+    "desc": "Risque majoré de sédation et de dépression respiratoire pouvant entraîner coma et décès, notamment chez le sujet âgé. Il convient de limiter autant que possible les doses et la durée de l’association."
+  },
+  {
+    "d1": "BÊTA-2 MIMÉTIQUES",
+    "d2": "HALOTHANE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Interrompre le traitement par bêta-2 mimétiques si l'anesthésie doit se faire sous halothane.En cas d'intervention obstétricale, majoration de l'inertie utérine avec risque hémorragique ; par ailleurs, troubles du rythme ventriculaires graves, par augmentation de la réactivité cardiaque."
+  },
+  {
+    "d1": "BÊTA-2 MIMÉTIQUES",
+    "d2": "INSULINE",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer la surveillance sanguine et urinaire.Elévation de la glycémie par le bêta-2 mimétique."
+  },
+  {
+    "d1": "BÊTA-2 MIMÉTIQUES",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer la surveillance sanguine et urinaire. Passer éventuellement à l'insuline, le cas échéant.Elévation de la glycémie par le bêta-2 mimétique."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL ET SOTALOL) (Y COMPRIS COLLYRES)",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "level": "Précaution d'emploi",
+    "desc": "En règle générale, ne pas arrêter le traitement bêta-bloquant et, de toute façon, éviter l'arrêt brutal. Informer l'anesthésiste de ce traitement.Réduction des réactions cardiovasculaires de compensation par les bêta-bloquants. L'inhibition bêta-adrénergique peut être levée durant l'intervention par les bêta-mimétiques."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "ANTIHYPERTENSEURS CENTRAUX",
+    "level": "Précaution d'emploi",
+    "desc": "Eviter l'arrêt brutal du traitement par l'antihypertenseur central. Surveillance clinique.Augmentation importante de la pression artérielle en cas d'arrêt brutal du traitement par l'antihypertenseur central."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "A prendre en compte",
+    "desc": "Réduction de l'effet antihypertenseur (inhibition des prostaglandines vasodilatatrices par les anti-inflammatoires non stéroïdiens)."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "DILTIAZEM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Une telle association ne doit se faire que sous surveillance clinique et ECG étroite, en particulier chez le sujet âgé ou en début de traitement.Troubles de l'automatisme (bradycardie excessive, arrêt sinusal), troubles de la conduction sino-auriculaire et auriculo-ventriculaire et défaillance cardiaque."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "DIPYRIDAMOLE",
+    "level": "A prendre en compte",
+    "desc": "Avec le dipyridamole par voie injectable : majoration de l'effet antihypertenseur."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "GLINIDES",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêta-bloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "GLIPTINES",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêtabloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "INSULINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêtabloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "LIDOCAINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle des concentrations plasmatiques de lidocaïne pendant l'association et après l'arrêt du bêta-bloquant. Adaptation si besoin de la posologie de la lidocaïne.Avec la lidocaïne utilisée par voie IV : augmentation des concentrations plasmatiques de lidocaïne avec possibilité d'effets indésirables neurologiques et cardiaques (diminution de la clairance hépatique de la lidocaïne)."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de la contractilité, de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêta-bloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "d2": "VERAPAMIL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Une telle association ne doit se faire que sous surveillance clinique et ECG étroite, en particulier chez le sujet âgé ou en début de traitement.Troubles de l'automatisme (bradycardie excessive, arrêt sinusal), trouble de la conduction sino-auriculaire et auriculo-ventriculaire et défaillance cardiaque."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG régulière.Troubles de l'automatisme et de la conduction cardiaque avec risque de bradycardie excessive."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "level": "Précaution d'emploi",
+    "desc": "En règle générale, ne pas arrêter le traitement bêta-bloquant et, de toute façon, éviter l'arrêt brutal. Informer l'anesthésiste de ce traitement.Réduction des réactions cardiovasculaires de compensation par les bêta-bloquants. L'inhibition bêta-adrénergique peut être levée durant l'intervention par les bêta-stimulants."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "ANTICHOLINESTÉRASIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique régulière, notamment en début d'association.Risque de bradycardie excessive (addition des effets bradycardisants)."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "DILTIAZEM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Effet inotrope négatif avec risque de décompensation de l’insuffisance cardiaque, troubles de l'automatisme (bradycardie, arrêt sinusal) et troubles de la conduction sino-auriculaire et auriculo-ventriculaire."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "GLINIDES",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêtabloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "INSULINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêtabloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "NEUROLEPTIQUES",
+    "level": "A prendre en compte",
+    "desc": "Effet vasodilatateur et risque d'hypotension, notamment orthostatique (effet additif)."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le malade et renforcer, surtout au début du traitement, l'autosurveillance sanguine.Tous les bêta-bloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "d2": "VERAPAMIL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Effet inotrope négatif avec risque de décompensation de l’insuffisance cardiaque, troubles de l'automatisme (bradycardie, arrêt sinusal) et troubles de la conduction sino-auriculaire et auriculo-ventriculaire."
+  },
+  {
+    "d1": "BICTÉGRAVIR",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le bictégravir au moins 2 heures avant les sels de fer, ou en même temps qu’un repas.Diminution de près des deux tiers de l'absorption du bictégravir en cas d’ingestion simultanée ou à jeun."
+  },
+  {
+    "d1": "BISPHOSPHONATES",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium et antiacides à distance des bisphosphonates (de 30 minutes au minimum à plus de 2 heures, si possible, selon le bisphosphonate).Pour les sels de calcium administrés par voie orale : diminution de l'absorption digestive des bisphosphonates."
+  },
+  {
+    "d1": "BISPHOSPHONATES",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance des bisphosphonates (de 30 minutes au minimum à plus de 2 heures, si possible, selon le bisphosphonate).Pour les sels de fer administrés par voie orale : diminution de l'absorption digestive des bisphosphonates."
+  },
+  {
+    "d1": "BLEOMYCINE",
+    "d2": "BRENTUXIMAB",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de majoration de la toxicité pulmonaire."
+  },
+  {
+    "d1": "BORTEZOMIB",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du bortezomib pendant la durée du traitement par l’inhibiteur enzymatique.Risque de majoration des effets indésirables, notamment neurologiques, du bortezomib par diminution de son métabolisme."
+  },
+  {
+    "d1": "BOSENTAN",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Diminution de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "BOSENTAN",
+    "d2": "CYPROTERONE",
+    "level": "Précaution d'emploi",
+    "desc": "Dans ses indications comme anti-androgène, surveillance clinique et si possible adaptation de la posologie de la cyprotérone pendant l'administration avec le bosentan et après son arrêt. Dans son utilisation comme contraceptif hormonal, utiliser une méthode de contraception fiable, additionnelle ou alternative pendant la durée de l'association.Risque de diminution de l'efficacité de la cyprotérone."
+  },
+  {
+    "d1": "BOSENTAN",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du bosentan.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par le bosentan."
+  },
+  {
+    "d1": "BOSENTAN",
+    "d2": "GLIBENCLAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance de la glycémie, adaptation du traitement si besoin, et surveillance des constantes biologiques hépatiques.Risque de moindre efficacité du glibenclamide par diminution de ses concentrations plasmatiques, en raison de l'effet inducteur du bosentan. Par ailleurs, des cas d'hépatotoxicité ont été rapportés lors de l'association."
+  },
+  {
+    "d1": "BOSENTAN",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations plasmatiques de"
+  },
+  {
+    "d1": "BOSENTAN",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association.Risque majoré des effets indésirables du bosentan, notamment d’atteintes hépatiques, par diminution de son métabolisme par l'inhibiteur."
+  },
+  {
+    "d1": "BOSENTAN",
+    "d2": "PROGESTATIFS CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode contraceptive fiable, additionnelle ou alternative, pendant la durée de l'association et un cycle suivant.Risque de diminution de l'efficacité du contraceptif hormonal par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "BOSENTAN",
+    "d2": "PROGESTATIFS NON CONTRACEPTIFS, ASSOCIÉS OU NON À UN ESTROGÈNE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du traitement hormonal pendant l’administration du bosentan et après son arrêt.Risque de diminution de l’efficacité du progestatif."
+  },
+  {
+    "d1": "BOTULIQUE (TOXINE)",
+    "d2": "AMINOSIDES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser un autre antibiotique.Risque d'augmentation des effets de la toxine botulique avec les aminosides (par extrapolation à partir des effets observés au cours du botulisme)."
+  },
+  {
+    "d1": "BRADYCARDISANTS",
+    "d2": "FINGOLIMOD",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et ECG continu pendant les 6 heures suivant la première dose voire 2 heures de plus, jusqu'au lendemain si nécessaire.Potentialisation des effets bradycardisants pouvant avoir des conséquences fatales. Les bêta-bloquants sont d’autant plus à risque qu’ils empêchent les mécanismes de compensation adrénergique."
+  },
+  {
+    "d1": "BRADYCARDISANTS",
+    "d2": "OZANIMOD",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et ECG pendant au moins 6 heures.Potentialisation des effets bradycardisants pouvant avoir des conséquences fatales. Les bêta-bloquants sont d’autant plus à risque qu’ils empêchent les mécanismes de compensation adrénergique."
+  },
+  {
+    "d1": "BRADYCARDISANTS",
+    "d2": "PONÉSIMOD",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et ECG continu pendant les 4 heures suivant la première dose, jusqu'au lendemain si nécessaire.Potentialisation des effets bradycardisants pouvant avoir des conséquences fatales. Les bêta-bloquants sont d’autant plus à risque qu’ils empêchent les mécanismes de compensation adrénergique."
+  },
+  {
+    "d1": "BRADYCARDISANTS",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "BRENTUXIMAB",
+    "d2": "BLEOMYCINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de majoration de la toxicité pulmonaire."
+  },
+  {
+    "d1": "BRENTUXIMAB",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "A prendre en compte",
+    "desc": "Augmentation des concentrations du métabolite actif du brentuximab, avec risque de neutropénie."
+  },
+  {
+    "d1": "BUPRENORPHINE",
+    "d2": "BENZODIAZÉPINES ET APPARENTÉS",
+    "level": "A prendre en compte",
+    "desc": "Evaluer attentivement le rapport bénéfice/risque de cette association. Informer le patient de la nécessité de respecter les doses prescrites.Avec la buprénorphine utilisée en traitement de substitution : risque majoré de dépression respiratoire, pouvant être fatale."
+  },
+  {
+    "d1": "BUPRENORPHINE",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la buprénorphine pendant le traitement par l'inhibiteur et, le cas échéant, après son arrêt.Augmentation des concentrations de buprénorphine par diminution de son métabolisme hépatique, avec risque de majoration de ses effets indésirables."
+  },
+  {
+    "d1": "BUPRENORPHINE",
+    "d2": "KETOCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la buprénorphine pendant le traitement par l'inhibiteur et, le cas échéant, après son arrêt.Augmentation des concentrations de buprénorphine par diminution de son métabolisme hépatique, avec risque de majoration de ses effets indésirables."
+  },
+  {
+    "d1": "BUPROPION",
+    "d2": "CLOMIPRAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la clomipramine pendant le traitement par le bupropion.Risque d'augmentation des effets indésirables de la clomipramine par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "BUPROPION",
+    "d2": "DESIPRAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la désipramine pendant le traitement par le bupropion.Risque d'augmentation des effets indésirables de la désipramine par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "BUPROPION",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par le bupropion.Avec le métoprolol utilisé dans l'insuffisance cardiaque : risque d'augmentation des effets indésirables du métoprolol par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "BUPROPION",
+    "d2": "NORTRIPTYLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la nortriptyline pendant le traitement par le bupropion.Risque d'augmentation des effets indésirables de la nortriptyline par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "BUPROPION",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la propafénone pendant le traitement par le bupropion.Risque d'augmentation des effets indésirables de la propafénone par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "BUPROPION",
+    "d2": "TAMOXIFENE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de baisse de l'efficacité du tamoxifène, par inhibition de la formation de son métabolite actif par le bupropion."
+  },
+  {
+    "d1": "BUPROPION",
+    "d2": "VÉMURAFÉNIB",
+    "level": "A prendre en compte",
+    "desc": "Risque de diminution des concentrations du bupropion, avec augmentation de son métabolite actif et toxicité majorée."
+  },
+  {
+    "d1": "BUSPIRONE",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la buspirone si nécessaire.Augmentation des concentrations plasmatiques de la buspirone par diminution de son métabolisme hépatique par le diltiazem, avec augmentation de ses effets indésirables."
+  },
+  {
+    "d1": "BUSPIRONE",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "A prendre en compte",
+    "desc": "Risque de majoration des effets indésirables de la buspirone par diminution de son métabolisme par le pamplemousse."
+  },
+  {
+    "d1": "BUSPIRONE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la buspirone pendant le traitement par rifampicine et après son arrêt.Diminution des concentrations plasmatiques de la buspirone par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "BUSPIRONE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la buspirone si nécessaire.Augmentation des concentrations plasmatiques de la buspirone par diminution de son métabolisme hépatique par le vérapamil, avec augmentation de ses effets indésirables."
+  },
+  {
+    "d1": "CABAZITAXEL",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du cabazitaxel pendant le traitement par l’inhibiteur enzymatique.Risque de majoration des effets indésirables dose-dépendants du cabazitaxel par inhibition de son métabolisme par l’inhibiteur enzymatique."
+  },
+  {
+    "d1": "CAFEINE",
+    "d2": "DIPYRIDAMOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Interrompre un traitement à base de caféine au moins 5 jours avant une imagerie myocardique avec le dipyridamole et éviter la consommation de café, thé, chocolat ou cola dans les 24 heures qui précèdent le test.Avec le dipyridamole par voie injectable : réduction de l’effet vasodilatateur du dipyridamole par la caféine."
+  },
+  {
+    "d1": "CAFEINE",
+    "d2": "STIRIPENTOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de caféine.Augmentation possible des concentrations plasmatiques de la caféine, avec risque de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "CALCITONINE",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d’association.Risque de baisse de l’efficacité du lithium par augmentation de son élimination rénale par la calcitonine."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "BISPHOSPHONATES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium et antiacides à distance des bisphosphonates (de 30 minutes au minimum à plus de 2 heures, si possible, selon le bisphosphonate).Pour les sels de calcium administrés par voie orale : diminution de l'absorption digestive des bisphosphonates."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "CIPROFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance de la ciprofloxacine (plus de 2 heures, si possible).Diminution de l'absorption digestive de la ciprofloxacine."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "CYCLINES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance des cyclines (plus de deux heures, si possible).Diminution de l'absorption digestive des cyclines."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "ESTRAMUSTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance de l'estramustine (plus de 2 heures, si possible).Diminution de l'absorption digestive de l'estramustine."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance des repas et en l'absence de calcium.Avec les sels de fer par voie orale : diminution de l'absorption digestive des sels de fer."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance des hormones thyroïdiennes (plus de 2 heures, si possible).Diminution de l’absorption digestive des hormones thyroïdiennes."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "INHIBITEURS D'INTÉGRASE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance de l’antirétroviral (plus de 2 heures, si possible).Diminution de l'absorption digestive des inhibiteurs d’intégrase."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "NORFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance de la norfloxacine (plus de 2 heures, si possible).Diminution de l'absorption digestive de la norflloxacine."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "ROXADUSTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le roxadustat à distance des sels de calcium (plus de 1 heure, si possible).La prise de cation divalent peut diminuer l’absorption intestinale et, potentiellement, l’efficacité du roxadustat pris simultanément."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "STRONTIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des sels de calcium (plus de deux heures, si possible).Avec les sels de calcium administrés par voie orale : diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "CALCIUM",
+    "d2": "ZINC",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance du zinc (plus de 2 heures si possible).Diminution de l’absorption digestive du zinc par le calcium."
+  },
+  {
+    "d1": "CANAKINUMAB",
+    "d2": "ANTI-TNF ALPHA",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de majoration des infections graves."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "ACETAZOLAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, contrôle des concentrations plasmatiques de carbamazépine et réduction éventuelle de sa posologie.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la carbamazépine, spécialement pendant les premiers jours de traitement par la cimétidine.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : en début de traitement, augmentation des concentrations plasmatiques de carbamazépine par inhibition de son métabolisme hépatique par la cimétidine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la carbamazépine.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "CLONAZEPAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosages plasmatiques et adaptation éventuelle des posologies des deux anticonvulsivants.Augmentation des concentrations plasmatiques du métabolite actif de la carbamazépine. De plus, diminution des concentrations plasmatiques du clonazépam par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "DANAZOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la carbamazépine.Augmentation des concentrations plasmatiques de carbamazépine, avec signes de surdosage."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prudence dans l'interprétation des concentrations plasmatiques.Augmentation des concentrations plasmatiques de carbamazépine et diminution de la digoxinémie."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "DIURÉTIQUES HYPOKALIÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Si possible, utiliser une autre classe de diurétiques.Risque d'hyponatrémie symptomatique."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "ERYTHROMYCINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de carbamazépine, avec signes de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "ETHOSUXIMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosage plasmatique de l'éthosuximide et augmentation éventuelle de sa posologie.Diminution des concentrations plasmatiques d'éthosuximide."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "FELBAMATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosages plasmatiques et adaptation éventuelle des posologies des deux anticonvulsivants.Augmentation des concentrations plasmatiques du métabolite actif de la carbamazépine. De plus, diminution des concentrations plasmatiques de felbamate par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de carbamazépine, pendant et après l’arrêt du traitement antifongique.Pour des doses de fluconazole >= 200 mg par jour : augmentation possible des effets indésirables de la carbamazépine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "FLUOXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques de carbamazépine et réduction éventuelle de la posologie de la carbamazépine pendant le traitement par l'antidépresseur sérotoninergique et après son arrêt.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques de carbamazépine et réduction éventuelle de la posologie de la carbamazépine pendant le traitement par l'antidépresseur sérotoninergique et après son arrêt.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "JOSAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, dosage plasmatique et réduction éventuelle de la posologie de la carbamazépine.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage, par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "LAMOTRIGINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la carbamazépine.Risque d'augmentation des effets neurologiques (vertiges, ataxie, diplopie) de la carbamazépine lors de l'introduction de la lamotrigine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Diminution des concentrations plasmatiques du nintédanib par diminution de son absorption par la carbamazépine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "OLANZAPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, et si besoin, adaptation posologique de l'olanzapine.Risque de diminution des concentrations plasmatiques de l'olanzapine et de son efficacité thérapeutique, par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de carbamazépine, avec risque de surdosage, par inhibition de son métabolisme par le pamplemousse."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "PAROXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques de carbamazépine et réduction éventuelle de la posologie de la carbamazépine pendant le traitement par l'antidépresseur sérotoninergique et après son arrêt.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "level": "A prendre en compte",
+    "desc": "Prudence quant à l'interprétation des concentrations plasmatiques.Diminution progressive des concentrations plasmatiques de carbamazépine et de son métabolite actif sans modification apparente de l'efficacité anticomitiale."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "A prendre en compte",
+    "desc": "Prudence dans l'interprétation des concentrations plasmatiques.Réduction réciproque des concentrations plasmatiques (augmentation du métabolisme sans modification apparente de l'efficacité anticomitiale)."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques et adaptation de la posologie de la carbamazépine pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de la carbamazépine par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "RISPERIDONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, et si besoin, adaptation posologique de la rispéridone.Risque de diminution de la fraction active de la rispéridone et de son efficacité thérapeutique par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "TOPIRAMATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, et si besoin, adaptation posologique du topiramate pendant le traitement par la carbamazépine et après son arrêt.Diminution des concentrations du topiramate avec risque de moindre efficacité, par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosages plasmatiques et adaptation de la posologie des deux anticonvulsivants.Augmentation des concentrations plasmatiques du métabolite actif de la carbamazépine avec signes de surdosage. De plus, diminution des concentrations plasmatiques d'acide valproïque par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "CARBAMAZEPINE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle des posologies des deux médicaments.Augmentation des concentrations de carbamazépine et de sa neurotoxicité par inhibition de son métabolisme par le vérapamil. De plus, diminution des concentrations du vérapamil par augmentation de son métabolisme par la carbamazépine."
+  },
+  {
+    "d1": "CARVEDILOL",
+    "d2": "CIMETIDINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Utiliser un autre antisécrétoire gastrique.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations du carvédilol, pouvant être préjudiciables dans le cas du traitement de l'insuffisance cardiaque, par diminution de son métabolisme hépatique par la cimétidine."
+  },
+  {
+    "d1": "CARVEDILOL",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique régulière et adaptation de la posologie du carvédilol pendant le traitement par la rifampicine. A l'arrêt de la rifampicine, risque de remontée importante des concentrations plasmatiques de carvédilol imposant une réduction posologique et une surveillance clinique étroite.Diminution importante des concentrations plasmatiques du carvédilol, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "CASPOFUNGINE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de traitement par inducteur, maintenir la posologie à 70 mg par jour dès le 2e jour.Diminution des concentrations plasmatiques de caspofungine."
+  },
+  {
+    "d1": "CEFALOTINE",
+    "d2": "AMINOSIDES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance de la fonction rénale.L'augmentation de la néphrotoxicité des aminosides par la céfalotine est discutée."
+  },
+  {
+    "d1": "CEFAMANDOLE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la céphalosporine et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "CEFAZOLINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la céphalosporine et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "CEFTRIAXONE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la céphalosporine et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "CHLORDIAZEPOXIDE",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Avertir les patients de l'augmentation du risque en cas de conduite automobile ou d'utilisation de machines.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : risque accru de somnolence."
+  },
+  {
+    "d1": "CHLOROQUINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt de la chloroquine.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "CHLOROQUINE",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par chloroquine et après son arrêt.Risque d’hypothyroïdie clinique chez les patients substitués par hormones thyroïdiennes."
+  },
+  {
+    "d1": "CHLORPROMAZINE",
+    "d2": "INSULINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer l'autosurveillance glycémique. Adapter éventuellement la posologie de l'insuline pendant le traitement par le neuroleptique et après son arrêt.A fortes posologies (100 mg par jour de chlorpromazine) : élévation de la glycémie (diminution de la libération de l'insuline)."
+  },
+  {
+    "d1": "CHLORPROMAZINE",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer l'autosurveillance glycémique. Adapter éventuellement la posologie du neuroleptique pendant le traitement et après son arrêt.A fortes posologies (100 mg par jour de chlorpromazine) : élévation de la glycémie (diminution de la libération de l'insuline)."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "ACIDE ASCORBIQUE",
+    "level": "A prendre en compte",
+    "desc": "Risque de diminution des concentrations sanguines de la ciclosporine, notamment en cas d’association avec la vitamine E."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer la ciclosporine le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par la ciclosporine."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "AMIODARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Dosage des concentrations sanguines de ciclosporine, contrôle de la fonction rénale et adaptation de la posologie de la ciclosporine pendant le traitement par l'amiodarone.Augmentation des concentrations sanguines de ciclosporine, par diminution de son métabolisme hépatique, avec risque d'effets néphrotoxiques."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "ANALOGUES DE LA SOMATOSTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Augmentation des doses de ciclosporine sous contrôle des concentrations plasmatiques et réduction de la posologie après l'arrêt du traitement par l'analogue de la somatostatine.Avec la ciclosporine administrée par voie orale : baisse des concentrations sanguines de ciclosporine (diminution de son absorption intestinale)."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la fonction rénale en début de traitement par l’AINS.Risque d’addition des effets néphrotoxiques, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 10mg/jour d'atorvastatine. Si l'objectif thérapeutique n'est pas atteint à cette posologie, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse (diminution du métabolisme de l'hypocholestérolémiant)."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "AZITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt du macrolide.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "CHLOROQUINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt de la chloroquine.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "CLINDAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle renforcé des dosages sanguins de ciclosporine et augmentation éventuelle de sa posologie.Diminution des concentrations sanguines de l'immunosuppresseur avec risque de perte de l'activité immunosuppressive."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "DANAZOL",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines de ciclosporine par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "ÉDOXABAN",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’édoxaban de moitié.Augmentation des concentrations plasmatiques de l’édoxaban, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "EVEROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines d’évérolimus, éventuellement adaptation de la posologie et contrôle de la fonction rénale, pendant l’association et après son arrêt.Augmentation des concentrations sanguines de l’évérolimus par la ciclosporine. La néphrotoxicité de la ciclosporine est également augmentée lors de l’association."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "FENOFIBRATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique de la fonction rénale, pendant et après l'association.Risque d'augmentation de la néphrotoxicité de la ciclosporine."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "FLUVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association.Augmentation modérée des concentrations de fluvastatine, avec risque musculaire non exclu."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "JOSAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt du macrolide.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "LERCANIDIPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Décaler les prises des deux médicaments. Dosage des concentrations sanguines de l'immunosuppresseur, et adaptation si nécessaire de sa posologie pendant l'association et après son arrêt.Augmentation modérée des concentrations sanguines de l'immunosuppresseur et augmentation plus notable des concentrations de lercanidipine."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "METHOTREXATE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de ciclosporine et de méthotrexate. Adaptation posologique si nécessaire pendant l'association et après son arrêt.Augmentation de la toxicité du méthotrexate et de la ciclosporine avec augmentation de la créatininémie : diminution réciproque des clairances des deux médicaments."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "MIDECAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt du macrolide.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "MIFAMURTIDE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d'atteinte des macrophages spléniques et des cellules phagocytaires mononuclées."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "NIFEDIPINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser une autre dihydropyridine.Risque d'addition d'effets indésirables à type de gingivopathies."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par la ciclosporine."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "ORLISTAT",
+    "level": "Association DECONSEILLEE",
+    "desc": "Prendre l'orlistat à distance de la ciclosporine (au moins 3 heures). Contrôle renforcé des dosages sanguins de ciclosporine, notamment en début d’association, et lors d’augmentation éventuelle de la posologie de l’orlistat.Diminution des concentrations sanguines de ciclosporine par diminution de son absorption intestinale, avec risque de perte de l'activité immunosuppressive."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "POTASSIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf en cas d'hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénale ( addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "PRAVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association. Débuter le traitement à la dose minimale de pravastatine.Augmentation des concentrations de pravastatine, avec risque musculaire non exclu."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "ROXITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt du macrolide.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "SIROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer le sirolimus 4 heures après la ciclosporine. Contrôle de la fonction rénale, pendant l’association et après son arrêt.Augmentation des concentrations sanguines de sirolimus par la ciclosporine. La néphrotoxicité de la ciclosporine est également augmentée lors de l’association."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "SULFINPYRAZONE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle des concentrations sanguines de ciclosporine et adaptation éventuelle de sa posologie pendant le traitement par sulfinpyrazone et après son arrêt.Diminution des concentrations sanguines de ciclosporine par augmentation de son métabolisme par la sulfinpyrazone."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "TALAZOPARIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "TÉNOFOVIR ALAFÉNAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration avec la ciclosporine, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour.Augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "TERBINAFINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle des concentrations sanguines de ciclosporine et adaptation éventuelle de sa posologie pendant le traitement par terbinafine et après son arrêt.Diminution des concentrations sanguines de ciclosporine."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "TICLOPIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Augmentation de la posologie de la ciclosporine sous contrôle des concentrations sanguines. Réduction de la posologie en cas d'arrêt de la ticlopidine.Diminution des concentrations sanguines de ciclosporine."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "TIGECYCLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant le traitement par la tigécycline.Augmentation des concentrations sanguines de l’immunosuppresseur, avec risque d'effets néphrotoxiques."
+  },
+  {
+    "d1": "CICLOSPORINE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines de la ciclosporine (diminution de son métabolisme hépatique), et majoration du risque de gingivopathies."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "ALFENTANIL",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de l'alfentanil en cas de traitement par la cimétidine.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "A prendre en compte",
+    "desc": "Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation de l'effet de l'antivitamine K et du risque hémorragique (diminution de son métabolisme hépatique)."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la carbamazépine, spécialement pendant les premiers jours de traitement par la cimétidine.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : en début de traitement, augmentation des concentrations plasmatiques de carbamazépine par inhibition de son métabolisme hépatique par la cimétidine."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "CARVEDILOL",
+    "level": "CONTRE-INDICATION",
+    "desc": "Utiliser un autre antisécrétoire gastrique.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations du carvédilol, pouvant être préjudiciables dans le cas du traitement de l'insuffisance cardiaque, par diminution de son métabolisme hépatique par la cimétidine."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "CHLORDIAZEPOXIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Avertir les patients de l'augmentation du risque en cas de conduite automobile ou d'utilisation de machines.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : risque accru de somnolence."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "DIAZEPAM",
+    "level": "Précaution d'emploi",
+    "desc": "Avertir les patients de l'augmentation du risque en cas de conduite automobile ou d'utilisation de machines.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : risque accru de somnolence."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "LIDOCAINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement des concentrations plasmatiques de la lidocaïne ; s'il y a lieu, adaptation de la posologie de la lidocaïne pendant le traitement par la cimétidine et après son arrêt.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations plasmatiques de lidocaïne avec risque d'effets indésirables neurologiques et cardiaques (inhibition du métabolisme hépatique de la lidocaïne)."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "METHADONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique renforcée ; si besoin, adaptation de la posologie de la méthadone pendant le traitement par la cimétidine et après son arrêt.Augmentation des concentrations plasmatiques de méthadone avec surdosage et risque majoré d’allongement de l’intervalle QT et de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par la cimétidine.Avec le métoprolol utilisé dans l'insuffisance cardiaque, et la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations du métoprolol, pouvant être préjudiciables dans le cas du traitement de l'insuffisance cardiaque, par diminution de son métabolisme hépatique par la cimétidine."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "MOCLOBEMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique avec adaptation éventuelle de la posologie de moclobémide.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations du moclobémide, par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "NIFEDIPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue : adapter la posologie de la nifédipine pendant le tratiement par la cimétidine et après son arrêt.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation de l'effet hypotenseur de la nifédipine par inhibition de son métabolisme hépatique par la cimétidine."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite, dosage des concentrations plasmatiques de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par la cimétidine et après son arrêt.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations plasmatiques de phénytoïne avec possibilité d'apparition des signes habituels de surdosage."
+  },
+  {
+    "d1": "CIMETIDINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie. S'il y a lieu, adaptation de la théophylline pendant le traitement par la cimétidine et après son arrêt.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation de la théophyllinémie avec risque de surdosage (diminution du métabolisme de la théophylline)."
+  },
+  {
+    "d1": "CINACALCET",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du métroprolol pendant le traitement par cinacalcet.Augmentation des concentrations plasmatiques de métroprolol avec risque de surdosage, par diminution de son métabolisme hépatique par le cinacalcet."
+  },
+  {
+    "d1": "CINACALCET",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de la propafénone pendant le traitement par cinacalcet.Augmentation des concentrations plasmatiques de propafénone avec risque de surdosage, par diminution de son métabolisme hépatique par le cinacalcet."
+  },
+  {
+    "d1": "CIPROFLOXACINE",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance de la ciprofloxacine (plus de 2 heures, si possible).Diminution de l'absorption digestive de la ciprofloxacine."
+  },
+  {
+    "d1": "CIPROFLOXACINE",
+    "d2": "CLOZAPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la clozapine pendant le traitement par la ciprofloxacine et après son arrêt.Augmentation des concentrations de clozapine avec risque de surdosage, par diminution de son métabolisme hépatique par la ciprofloxacine."
+  },
+  {
+    "d1": "CIPROFLOXACINE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de l’anticonvulsivant pendant le traitement par ciprofloxacine et après son arrêt.Variation, éventuellement importante, des concentrations de phénytoïne en cas de traitement par la ciprofloxacine."
+  },
+  {
+    "d1": "CIPROFLOXACINE",
+    "d2": "ROPINIROLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie du ropinirole pendant le traitement par la ciprofloxacine et après son arrêt.Augmentation des concentrations de ropinirole avec risque de surdosage, par diminution de son métabolisme hépatique par la ciprofloxacine."
+  },
+  {
+    "d1": "CIPROFLOXACINE",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "CIPROFLOXACINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Augmentation de la théophyllinémie avec risque de surdosage, par diminution de son métabolisme hépatique par la ciprofloxacine."
+  },
+  {
+    "d1": "CITRATES",
+    "d2": "ALUMINIUM (SELS)",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les topiques gastro-intestinaux à base d'aluminium à distance des citrates (plus de 2 heures si possible), y compris les citrates naturels (jus d'agrumes).Risque de facilitation du passage systémique de l’aluminium, notamment en cas de fonction rénale altérée."
+  },
+  {
+    "d1": "CLADRIBINE",
+    "d2": "LAMIVUDINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution de l’efficacité de la cladribine par la lamivudine."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "ATAZANAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Augmentation des concentrations plasmatiques de clarithromycine et inhibition de la formation de son métabolite actif."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d'hypocholestérolémiant. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholesterolémiant."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la carbamazépine.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Augmentation des concentrations de la clarithromycine et de son métabolite actif par diminution de son métabolisme hépatique par l'inhibiteur de protéases."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "LINEZOLIDE",
+    "level": "A prendre en compte",
+    "desc": "Risque de majoration des effets indésirables du linézolide par la clarithromycine, par augmentation de son absorption."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "PRAVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant le traitement par l'antibiotique.Augmentation de la concentration plasmatique de la pravastatine par la clarithromycine."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "REPAGLINIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie de l'hypoglycémiant pendant le traitement par la clarithromycine.Risque d'hypoglycémie par augmentation des concentrations plasmatiques du répaglinide."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "RIFABUTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'augmentation des effets indésirables de la rifabutine (uvéites) par augmentation de ses concentrations et de celle de son métabolite actif par la clarithromycine. De plus, augmentation du métabolisme de la clarithromycine par la rifabutine, avec augmentation des concentrations de son métabolite actif."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Diminution des concentrations plasmatiques et risque de baisse de l'efficacité de la clarithromycine, notamment chez le patient HIV, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide hypoglycémiant pendant le traitement par la clarithromycine.Risque d'hypoglycémie par augmentation des concentrations plasmatiques de l’antidiabétique."
+  },
+  {
+    "d1": "CLARITHROMYCINE",
+    "d2": "TALAZOPARIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "CLINDAMYCINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation éventuelle de la posologie de l’antivitamine K pendant le traitement par clindamycine et après son arrêt.Augmentation de l’effet de l’antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "CLINDAMYCINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle renforcé des dosages sanguins de ciclosporine et augmentation éventuelle de sa posologie.Diminution des concentrations sanguines de l'immunosuppresseur avec risque de perte de l'activité immunosuppressive."
+  },
+  {
+    "d1": "CLINDAMYCINE",
+    "d2": "TACROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle renforcé des dosages sanguins de tacrolimus et augmentation éventuelle de sa posologie.Diminution des concentrations sanguines de l'immunosuppresseur, avec risque de perte de l'activité immunosuppressive."
+  },
+  {
+    "d1": "CLOBAZAM",
+    "d2": "STIRIPENTOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosage plasmatique, lorsque cela est possible, de l'anticonvulsivant associé au stiripentol et éventuelle adaptation posologique de l'anticonvulsivant associé.Augmentation des concentrations plasmatiques de ces anticonvulsivants, avec risque de surdosage, par inhibition de leur métabolisme hépatique."
+  },
+  {
+    "d1": "CLOMIPRAMINE",
+    "d2": "BUPROPION",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la clomipramine pendant le traitement par le bupropion.Risque d'augmentation des effets indésirables de la clomipramine par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "CLONAZEPAM",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosages plasmatiques et adaptation éventuelle des posologies des deux anticonvulsivants.Augmentation des concentrations plasmatiques du métabolite actif de la carbamazépine. De plus, diminution des concentrations plasmatiques du clonazépam par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "CLOPIDOGREL",
+    "d2": "PACLITAXEL",
+    "level": "A prendre en compte",
+    "desc": "Augmentation des concentrations du paclitaxel par le clopidogrel, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "CLOPIDOGREL",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénytoïne.Augmentation des concentrations plasmatiques de phénytoïne avec signes de surdosage (inhibition du métabolisme de la"
+  },
+  {
+    "d1": "CLOPIDOGREL",
+    "d2": "REPAGLINIDE",
+    "level": "A prendre en compte",
+    "desc": "Augmentation des concentrations du répaglinide par le clopidogrel, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "CLOPIDOGREL",
+    "d2": "SELEXIPAG",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite pendant l’association. Réduire de moitié la posologie (une seule prise par jour).Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "CLOZAPINE",
+    "d2": "CIPROFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la clozapine pendant le traitement par la ciprofloxacine et après son arrêt.Augmentation des concentrations de clozapine avec risque de surdosage, par diminution de son métabolisme hépatique par la ciprofloxacine."
+  },
+  {
+    "d1": "CLOZAPINE",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie de la clozapine pendant le traitement par la fluvoxamine et après son arrêt.Augmentation des concentrations plasmatiques de clozapine avec signes de surdosage."
+  },
+  {
+    "d1": "CLOZAPINE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et augmentation éventuelle de la posologie de la clozapine durant le traitement par la rifampicine.Risque d'inefficacité du traitement antipsychotique (diminution des concentrations plasmatiques de clozapine par augmentation de son métabolisme hépatique)."
+  },
+  {
+    "d1": "COBICISTAT",
+    "d2": "GLUCOCORTICOÏDES PAR VOIE INTRA-ARTICULAIRE ET MÉTABOLISÉS",
+    "level": "Précaution d'emploi",
+    "desc": "Préférer un corticoïde non CYP3A4-dépendant (hydrocortisone).Décrit chez des patients HIV. Risque d’insuffisance surrénale aiguë, même en cas d’injection unique. L’articulation peut constituer un réservoir relarguant de façon continue le corticoïde CYP3A4-dépendant dans la circulation générale, avec augmentation possiblement très importante des concentrations du corticoïde, à l’origine d’une freination de la réponse hypothalamo- hypophysaire."
+  },
+  {
+    "d1": "COBICISTAT",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution de l’efficacité du cobicistat par augmentation de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "COBICISTAT",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "A prendre en compte",
+    "desc": "Pour connaître les risques et les niveaux de contrainte de chaque interaction, il convient de se reporter aux AMM specifiques à chaque spécialité.Risque d’augmentation des concentrations plasmatiques du cobicistat ou de l’inhibiteur du CYP3A4."
+  },
+  {
+    "d1": "COBICISTAT",
+    "d2": "QUINIDINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Surveillance clinique.Risque de majoration des effets indésirables de la quinidine par diminution de son métabolisme par le cobicistat."
+  },
+  {
+    "d1": "COBICISTAT",
+    "d2": "RIFABUTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduction de la dose de rifabutine (150 mg 1 jour sur deux). Surveillance clinique et biologique régulière, notamment en début d'association.Augmentation très importante du métabolite de la rifabutine, avec risque de majoration de sa toxicité (uvéites, neutropénies). Par ailleurs, possible diminution des concentrations de cobicistat."
+  },
+  {
+    "d1": "COBICISTAT",
+    "d2": "TÉNOFOVIR ALAFÉNAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour. L’association avec les autres inhibiteurs de protéases du VIH n’a pas été étudiée.Avec l'atazanavir, le darunavir ou le lopinavir boostés par cobicistat, augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "COBIMÉTINIB",
+    "d2": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "COBIMÉTINIB",
+    "d2": "ANTICOAGULANTS ORAUX",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et le cas échéant, contrôle plus fréquent de l'INR.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "COBIMÉTINIB",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "COBIMÉTINIB",
+    "d2": "DÉFIBROTIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "COBIMÉTINIB",
+    "d2": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "COBIMÉTINIB",
+    "d2": "HÉPARINES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "COBIMÉTINIB",
+    "d2": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "COBIMÉTINIB",
+    "d2": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "COBIMÉTINIB",
+    "d2": "PENTOXIFYLLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "COLCHICINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la colchicine et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "COLCHICINE",
+    "d2": "FIBRATES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, particulièrement au début de l’association.Risque de majoration des effets indésirables musculaires de ces substances, et notamment de rhabdomyolyse."
+  },
+  {
+    "d1": "COLCHICINE",
+    "d2": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, notamment au début de l'association.Risque de majoration des effets indésirables musculaires de ces substances, et notamment de rhabdomyolyse."
+  },
+  {
+    "d1": "COLCHICINE",
+    "d2": "PONATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la colchicine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "COLCHICINE",
+    "d2": "ROLAPITANT",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des effets indésirables de la colchicine, aux conséquences potentiellement fatales."
+  },
+  {
+    "d1": "COLISTINE",
+    "d2": "CURARES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller le degré de curarisation en fin d'anesthésie.Potentialisation des curares lorque l'antibiotique est administré par voie parentérale et/ou péritonéale avant, pendant ou après l'agent curarisant."
+  },
+  {
+    "d1": "CORTICOÏDES",
+    "d2": "MIFAMURTIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de moindre efficacité du mifamurtide."
+  },
+  {
+    "d1": "CORTICOÏDES (VOIE INTRA-ARTICULAIRE)",
+    "d2": "RITONAVIR",
+    "level": "A prendre en compte",
+    "desc": "Préférer un corticoïde non CYP3A4-dépendant (hydrocortisone)Décrit chez des patients HIV. Risque d’insuffisance surrénale aiguë, même en cas d’injection unique. L’articulation peut constituer un réservoir relarguant de façon continue le corticoïde CYP3A4-dépendant dans la circulation générale, avec augmentation possiblement très importante des concentrations du corticoïde à l’origine d’une freination de la réponse hypothalamo-hypophysaire."
+  },
+  {
+    "d1": "CORTICOÏDES MÉTABOLISÉS, NOTAMMENT INHALÉS",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer un corticoïde non métabolisé.En cas d’utilisation prolongée par voie orale ou inhalée : augmentation des concentrations plasmatiques du corticoïde par diminution de son métabolisme hépatique par l’inhibiteur, avec risque d’apparition d’un syndrome cushingoïde voire d’une insuffisance surrénalienne."
+  },
+  {
+    "d1": "CRIZOTINIB",
+    "d2": "IBRUTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par le crizotinib."
+  },
+  {
+    "d1": "CRIZOTINIB",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Contre-indication : - avec le citalopram, la dompéridone, l'escitalopram, l'hydroxyzine et la pipéraquine. Association déconseillée: - avec les autres médicaments susceptibles de donner des torsades de pointes. Si l’association ne peut être évitée, contrôle clinique et électrocardiographique régulier.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "CURARES",
+    "d2": "AMINOSIDES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller le degré de curarisation en fin d'anesthésie.Potentialisation des curares lorque l'antibiotique est administré par voie parentérale et/ou péritonéale avant, pendant ou après l'agent curarisant."
+  },
+  {
+    "d1": "CURARES",
+    "d2": "COLISTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller le degré de curarisation en fin d'anesthésie.Potentialisation des curares lorque l'antibiotique est administré par voie parentérale et/ou péritonéale avant, pendant ou après l'agent curarisant."
+  },
+  {
+    "d1": "CURARES",
+    "d2": "LINCOSANIDES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller le degré de curarisation en fin d'anesthésie.Potentialisation des curares lorque l'antibiotique est administré par voie parentérale et/ou péritonéale avant, pendant ou après l'agent curarisant."
+  },
+  {
+    "d1": "CURARES",
+    "d2": "POLYMYXINE B",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller le degré de curarisation en fin d'anesthésie.Potentialisation des curares lorque l'antibiotique est administré par voie parentérale et/ou péritonéale avant, pendant ou après l'agent curarisant."
+  },
+  {
+    "d1": "CYCLINES",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la cycline et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique (pour la tigécycline, effet direct sur la coagulation et/ou les systèmes fibrinolytiques)."
+  },
+  {
+    "d1": "CYCLINES",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance des cyclines (plus de deux heures, si possible).Diminution de l'absorption digestive des cyclines."
+  },
+  {
+    "d1": "CYCLINES",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance des cyclines (plus de 2 heures, si possible).Diminution de l'absorption digestive des cyclines et du fer"
+  },
+  {
+    "d1": "CYCLINES",
+    "d2": "RÉTINOÏDES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d'hypertension intracrânienne."
+  },
+  {
+    "d1": "CYCLINES",
+    "d2": "STRONTIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des cyclines (plus de deux heures, si possible).Diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "CYCLINES",
+    "d2": "VITAMINE A",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'apport de 10,000 UI/j et plus : risque d’hypertension intracrânienne."
+  },
+  {
+    "d1": "CYCLINES",
+    "d2": "ZINC",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de zinc à distance des cyclines (plus de 2 heures si possible).Diminution de l'absorption digestive des cyclines."
+  },
+  {
+    "d1": "CYCLOPHOSPHAMIDE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du métabolite actif du cyclophosphamide par l'inducteur, et donc de sa toxicité."
+  },
+  {
+    "d1": "CYCLOPHOSPHAMIDE",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du métabolite actif du cyclophosphamide par le millepertuis, et donc de sa toxicité."
+  },
+  {
+    "d1": "CYPROTERONE",
+    "d2": "APREPITANT",
+    "level": "Précaution d'emploi",
+    "desc": "Dans son utilisation comme contraceptif hormonal : Utiliser une méthode de contraception fiable, additionnelle ou alternative, pendant la durée de l'association.Risque de diminution des concentrations de la cyprotérone avec risque de moindre efficacité contraceptive."
+  },
+  {
+    "d1": "CYPROTERONE",
+    "d2": "BOSENTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Dans ses indications comme anti-androgène, surveillance clinique et si possible adaptation de la posologie de la cyprotérone pendant l'administration avec le bosentan et après son arrêt. Dans son utilisation comme contraceptif hormonal, utiliser une méthode de contraception fiable, additionnelle ou alternative pendant la durée de l'association.Risque de diminution de l'efficacité de la cyprotérone."
+  },
+  {
+    "d1": "CYPROTERONE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "- dans ses indications comme anti-androgène: surveillance clinique et adaptation éventuelle de la posologie de la cyprotérone pendant l'association et après son arrêt.Risque de diminution de l'efficacité de la cyprotérone."
+  },
+  {
+    "d1": "CYPROTERONE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "- dans ses indications comme anti-androgène: surveillance clinique et adaptation éventuelle de la posologie de la cyprotérone pendant l'association et après son arrêt.Risque de diminution de l'efficacité de la cyprotérone."
+  },
+  {
+    "d1": "CYPROTERONE",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution de l'efficacité de la cyprotérone, par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "CYPROTERONE",
+    "d2": "PÉRAMPANEL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Dans son utilisation comme contraceptif hormonal: utiliser de préférence une autre méthode de contraception en particulier de type mécanique, pendant la durée de l'association et un cycle suivant.Pour des doses de pérampanel > ou = à 12 mg/jour, risque de diminution de l'efficacité de la cyprotérone."
+  },
+  {
+    "d1": "CYTOTOXIQUES",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR.Augmentation du risque thrombotique et hémorragique au cours des affections tumorales. De surcroit, possible interaction entre les AVK et la chimiothérapie."
+  },
+  {
+    "d1": "CYTOTOXIQUES",
+    "d2": "VACCINS VIVANTS ATTÉNUÉS",
+    "level": "CONTRE-INDICATION",
+    "desc": "- Et pendant les 6 mois suivant l'arrêt de la chimiothérapie. - Et, à l'exception de l'hydroxycarbamide dans son indication chez le patient drépanocytaire.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "DABIGATRAN",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'indication post-chirurgicale : surveillance clinique et adaptation de la posologie du dabigatran si nécessaire, sans excéder 150 mg/j.Augmentation des concentrations plasmatiques de dabigatran, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "DABIGATRAN",
+    "d2": "GLÉCAPRÉVIR + PIBRENTASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Doublement des concentrations plasmatiques de dabigatran, avec majoration du risque de saignements."
+  },
+  {
+    "d1": "DABIGATRAN",
+    "d2": "PONATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques du dabigatran par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "DABIGATRAN",
+    "d2": "QUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'indication post-chirurgicale : surveillance clinique et adaptation de la posologie du dabigatran à 150 mg/j en une prise.Augmentation des concentrations plasmatiques de dabigatran, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "DABIGATRAN",
+    "d2": "ROLAPITANT",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques du dabigatran par augmentation de son absorption intestinale par le rolapitant."
+  },
+  {
+    "d1": "DABIGATRAN",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'indication post-chirurgicale : surveillance clinique et adaptation de la posologie du dabigatran à 150 mg/j en une prise, voire 75 mg/j en cas d'insuffisance rénale modérée. Dans l'indication fibrillation auriculaire : surveillance clinique et adaptation de la posologie du dabigatran à 220 mg/j en deux prises.Augmentation des concentrations plasmatiques de dabigatran, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "DACARBAZINE",
+    "d2": "FOTEMUSTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas utiliser simultanément mais respecter un délai d'une semaine entre la dernière administration de fotémustine et le premier jour de la cure de dacarbazine.Avec la dacarbazine à doses élevées : risque de toxicité pulmonaire (syndrome de détresse respiratoire aiguë de l'adulte)."
+  },
+  {
+    "d1": "DALFOPRISTINE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "DANAZOL",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation de la posologie de l’antivitamine K pendant le traitement par le danazol et après son arrêt.Augmentation du risque hémorragique par effet direct sur la coagulation et/ou les systèmes fibrinolytiques."
+  },
+  {
+    "d1": "DANAZOL",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la carbamazépine.Augmentation des concentrations plasmatiques de carbamazépine, avec signes de surdosage."
+  },
+  {
+    "d1": "DANAZOL",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines de ciclosporine par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "DANAZOL",
+    "d2": "INSULINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, prévenir le patient et renforcer l'autosurveillance glycémique. Adapter éventuellement la posologie de l'insuline pendant le traitement par le danazol et après son arrêt.Effet diabétogène du danazol."
+  },
+  {
+    "d1": "DANAZOL",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, prévenir le patient et renforcer l'autosurveillance glycémique. Adapter éventuellement la posologie de l'antidiabétique pendant le traitement par le danazol et après son arrêt.Effet diabétogène du danazol."
+  },
+  {
+    "d1": "DANAZOL",
+    "d2": "TACROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines du tacrolimus et adaptation de sa posologie pendant l'association et après son arrêt, avec contrôle de la fonction rénale.Augmentation des concentrations sanguines du tacrolimus par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "DAPOXÉTINE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de majoration des effets indésirables, notamment à type de vertiges ou de syncopes."
+  },
+  {
+    "d1": "DAPOXÉTINE",
+    "d2": "MÉDICAMENTS À L'ORIGINE D'UNE HYPOTENSION ORTHOSTATIQUE",
+    "level": "A prendre en compte",
+    "desc": "- avec les autres classes thérapeutiquesRisque de majoration des effets indésirables, notamment à type de vertiges ou de syncopes."
+  },
+  {
+    "d1": "DAPSONE",
+    "d2": "ZIDOVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'hémogramme.Augmentation de la toxicité hématologique (addition d'effets de toxicité médullaire)."
+  },
+  {
+    "d1": "DAPTOMYCINE",
+    "d2": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, renforcer la surveillance biologique (dosage des CPK plus d’une fois par semaine) et surveillance clinique étroite.Risque d’addition des effets indésirables (dose-dépendant) à type de rhabdomyolyse."
+  },
+  {
+    "d1": "DARIFENACINE",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du métoprolol pendant le traitement par darifénacine.Augmentation des concentrations plasmatiques du métoprolol, avec risque de surdosage, par diminution de son métabolisme hépatique par la darifénacine."
+  },
+  {
+    "d1": "DARIFENACINE",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de la propafénone pendant le traitement par darifénacine.Augmentation des concentrations plasmatiques de propafénone, avec risque de surdosage, par diminution de son métabolisme hépatique par la darifénacine."
+  },
+  {
+    "d1": "DEFERASIROX",
+    "d2": "ACIDE ACETYLSALICYLIQUE",
+    "level": "A prendre en compte",
+    "desc": "A prendre en compte : - Pour des doses anti-inflammatoires d'acide acétylsalicylique ( 1g par prise et/ou 3g par jour) - Pour des doses antalgiques ou antipyrétiques d'acide acétylsalicylique ( 500 mg par prise et/ou <3g par jour) et ( 500 mg par prise et/ou <3g par jour)Majoration du risque ulcérogène et hémorragique digestif."
+  },
+  {
+    "d1": "DEFERASIROX",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la ferritinémie pendant et après le traitement par l’inducteur enzymatique. Si besoin, adaptation de la posologie de déférasirox.Risque de diminution des concentrations plasmatiques de déférasirox."
+  },
+  {
+    "d1": "DEFERASIROX",
+    "d2": "PACLITAXEL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite.Risque d’augmentation des concentrations plasmatiques du paclitaxel par inhibition de son métabolisme hépatique par le deferasirox."
+  },
+  {
+    "d1": "DEFERASIROX",
+    "d2": "REPAGLINIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite.Risque d’augmentation des concentrations plasmatique de répaglinide, par inhibition de son métabolisme hépatique par le deferasirox."
+  },
+  {
+    "d1": "DEFERASIROX",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la ferritinémie pendant et après le traitement par l’inducteur enzymatique. Si besoin, adaptation de la posologie de déférasirox.Risque de diminution des concentrations plasmatiques de déférasirox."
+  },
+  {
+    "d1": "DEFERASIROX",
+    "d2": "SELEXIPAG",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite pendant l’association. Réduire de moitié la posologie (une seule prise par jour).Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "DÉFÉROXAMINE",
+    "d2": "ACIDE ASCORBIQUE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d'hémochromatose, ne donner de la vitamine C qu'après avoir commencé le traitement par la déféroxamine. Surveiller la fonction cardiaque en cas d'association.Avec l'acide ascorbique à fortes doses et par voie IV : anomalies de la fonction cardiaque, voire insuffisance cardiaque aiguë (en général réversible à l'arrêt de la vitamine C)."
+  },
+  {
+    "d1": "DÉFIBROTIDE",
+    "d2": "COBIMÉTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "DÉLAMANID",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, contrôle clinique et électrocardiographique régulier.Risque majoré de troubles du rythme ventriculaires, notamment de torsades de pointes."
+  },
+  {
+    "d1": "DESIPRAMINE",
+    "d2": "BUPROPION",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la désipramine pendant le traitement par le bupropion.Risque d'augmentation des effets indésirables de la désipramine par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "DEXAMETHASONE",
+    "d2": "PRAZIQUANTEL",
+    "level": "Précaution d'emploi",
+    "desc": "Décaler l'administration des deux médicaments d'au moins une semaine.Diminution des concentrations plasmatiques du praziquantel, avec risque d'échec du traitement, par augmentation du métabolisme hépatique du praziquantel par la dexaméthasone."
+  },
+  {
+    "d1": "DEXAMETHASONE",
+    "d2": "RILPIVIRINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Avec la dexaméthasone par voie systémique (sauf en cas de prise unique), risque de diminution des concentrations plasmatiques de rilpivirine par augmentation de son métabolisme hépatique par la dexamethasone."
+  },
+  {
+    "d1": "DIAZEPAM",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Avertir les patients de l'augmentation du risque en cas de conduite automobile ou d'utilisation de machines.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : risque accru de somnolence."
+  },
+  {
+    "d1": "DIAZEPAM",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénytoïne.Variations imprévisibles : les concentrations plasmatiques de phénytoïne peuvent augmenter, avec signes de surdosage, mais aussi diminuer ou rester stables."
+  },
+  {
+    "d1": "DIAZEPAM",
+    "d2": "STIRIPENTOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et dosage plasmatique, lorsque cela est possible, de l'anticonvulsivant associé au stiripentol et éventuelle adaptation posologique de l'anticonvulsivant associé.Augmentation des concentrations plasmatiques du diazépam, avec risque de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "DIDANOSINE",
+    "d2": "PENTAMIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance de l'amylasémie. Ne pas associer si l'amylasémie est à la limite supérieure de la normale.Risque majoré de survenue de pancréatite par addition d'effets indésirables."
+  },
+  {
+    "d1": "DIDANOSINE",
+    "d2": "THALIDOMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque majoré de survenue de neuropathies périphériques par addition d'effets indésirables."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et, s'il y a lieu, contrôle de la digoxinémie et adaptation de la posologie de la digoxine.Dépression de l'automatisme (bradycardie excessive) et troubles de la conduction auriculo-ventriculaire. De plus, augmentation de la digoxinémie par diminution de la clairance de la digoxine."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prudence dans l'interprétation des concentrations plasmatiques.Augmentation des concentrations plasmatiques de carbamazépine et diminution de la digoxinémie."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "DRONEDARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Réduire de moitié les doses de digoxine.Dépression de l'automatisme (bradycardie excessive) et troubles de la conduction auriculo-ventriculaire. En outre, augmentation de la digoxinémie par diminution du métabolisme de la digoxine. Surveillance clinique et ECG."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "GLÉCAPRÉVIR + PIBRENTASVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la digoxinémie pendant le traitement par glécaprévir/ pibrentasvir.Augmentation des concentrations plasmatiques de la digoxine par la bithérapie."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "HYDROQUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. En cas de réponse inattendue, contrôler la digoxinémie et adapter la posologie.Augmentation de la digoxinémie par diminution de la clairance rénale de la digoxine. De plus, troubles de l'automatisme (bradycardie excessive et troubles de la conduction auriculo- ventriculaire)."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "HYPOKALIÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Corriger auparavant toute hypokaliémie et réaliser une surveillance clinique, électrolytique et électrocardiographique.Hypokaliémie favorisant les effets toxiques des digitaliques."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, s’il y a lieu, de l’ECG et de la digoxinémie, avec adaptation éventuelle de la posologie de digoxine.Augmentation de la digoxinémie, plus marquée pour la voie intraveineuse, par augmentation de l’absorption de la digoxine ou diminution de sa clairance rénale."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, s'il y a lieu, de l'ECG et de la digoxinémie avec adaptation de la posologie de la digoxine pendant le traitement par l'itraconazole et après son arrêt.Augmentation de la digoxinémie avec nausées, vomissements, troubles du rythme."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "MACROLIDES (SAUF SPIRAMYCINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la digoxinémie pendant le traitement par le macrolide et après son arrêt.Augmentation de la digoxinémie par augmentation de son absorption."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "MIDODRINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cette association ne peut être évitée, renforcer la surveillance clinique et ECG.Troubles de l'automatisme (majoration de l'effet bradycardisant de la midodrine) et troubles de la conduction auriculo-ventriculaire."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'association fortuite, ne pas interrompre brutalement la prise de millepertuis mais contrôler les concentrations plasmatiques (ou l'efficacité) de la digoxine avant puis après l'arrêt du millepertuis.Diminution de la digoxinémie, en raison de l'effet inducteur du millepertuis, avec risque de baisse d'efficacité voire d'annulation de l'effet, dont les conséquences peuvent être éventuellement graves (décompensation d'une insuffisance cardiaque)."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "OMEPRAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et de la digoxinémie, particulièrement chez le sujet âgé.Augmentation modérée de la digoxinémie par majoration de son absorption par l'oméprazole."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "PONATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la digoxine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "POSACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, s'il y a lieu, de l'ECG et de la digoxinémie, avec adaptation de la posologie de la digoxine pendant le traitement par le posaconazole et après son arrêt.Augmentation de la digoxinémie avec nausées, vomissements, troubles du rythme."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la digoxinémie pendant le traitement par propafénone et après son arrêt.Risque d’augmentation de la digoxinémie, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "QUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. En cas de réponse inattendue, contrôler la digoxinémie et adapter la posologie.Augmentation de la digoxinémie par diminution de la clairance rénale de la digoxine. De plus, troubles de l'automatisme (bradycardie excessive et troubles de la conduction auriculo- ventriculaire)."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "QUININE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG, si besoin, avec adaptation éventuelle des doses de digoxine.Augmentation modérée de la digoxinémie."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "RANOLAZINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, biologique et éventuellement ECG. Adaptation de la posologie de la digoxine, si besoin.Augmentation de la digoxinémie."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Diminution modeste des concentrations de digoxine."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "ROLAPITANT",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG pendant le traitement par le rolapitant et après son arrêt.Augmentation de la digoxinémie par majoration de son absorption."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "SUCRALFATE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le sucralfate à distance de la digoxine (plus de 2 heures, si possible).Diminution de l'absorption digestive de la digoxine."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "SULFASALAZINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et, éventuellement, de la digoxinémie. S'il y a lieu, adaptation de la posologie de la digoxine pendant le traitement par la sulfasalazine et après son arrêt.Diminution de la digoxinémie pouvant atteindre 50 %."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "TELITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la digoxinémie pendant le traitement par la télithromycine et après son arrêt.Augmentation de la digoxinémie par augmentation de son absorption."
+  },
+  {
+    "d1": "DIGOXINE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et, éventuellement, contrôle de la digoxinémie. S'il y a lieu, adaptation de la posologie de la digoxine pendant le traitement par le vérapamil et après son arrêt.Bradycardie excessive et bloc auriculo-ventriculaire par majoration des effets de la digoxine sur l'automatisme et la conduction et par diminution de l'élimination rénale et extrarénale de la digoxine."
+  },
+  {
+    "d1": "DIHYDROERGOTAMINE",
+    "d2": "TRICLABENDAZOLE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de 24 heures entre l’arrêt du triclabendazole et la prise du médicament dérivé de l’ergot, et inversement.Ergotisme avec possibilité de nécrose des extrémités (inhibition du métabolisme hépatique de l’alcaloïde de l’ergot de seigle)."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "ALFENTANIL",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de l'alfentanil en cas de traitement par le diltiazem.Augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant ou une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Une telle association ne doit se faire que sous surveillance clinique et ECG étroite, en particulier chez le sujet âgé ou en début de traitement.Troubles de l'automatisme (bradycardie excessive, arrêt sinusal), troubles de la conduction sino-auriculaire et auriculo-ventriculaire et défaillance cardiaque."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Effet inotrope négatif avec risque de décompensation de l’insuffisance cardiaque, troubles de l'automatisme (bradycardie, arrêt sinusal) et troubles de la conduction sino-auriculaire et auriculo-ventriculaire."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "BUSPIRONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la buspirone si nécessaire.Augmentation des concentrations plasmatiques de la buspirone par diminution de son métabolisme hépatique par le diltiazem, avec augmentation de ses effets indésirables."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "DRONEDARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter le traitement par l’antagoniste calcique aux posologies minimales recommandées, et ajuster les doses en fonction de l’ECG.Risque de bradycardie ou de bloc auriculo-ventriculaire, notamment chez le sujet âgé. Par ailleurs, légère augmentation des concentrations de dronédarone par diminution de son métabolisme par l’antagoniste des canaux calciques."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "IBRUTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d'augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par le diltiazem."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par diminution de son métabolisme."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "IVABRADINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation des concentrations plasmatiques de l’ivabradine et de ses effets indésirables, notamment cardiaques (inhibition de son métabolisme hépatique par le diltiazem), qui s’ajoutent aux effets bradycardisants de ces substances."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "MIDAZOLAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie pendant le traitement par le diltiazem.Augmentation des concentrations plasmatiques de midazolam par diminution de son métabolisme hépatique, avec majoration de la sédation."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "NALOXEGOL",
+    "level": "Précaution d'emploi",
+    "desc": "Adaptation posologique pendant l’association.Augmentation des concentrations plasmatiques de naloxegol par le diltiazem."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "OLAPARIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 200 mg deux fois par jour.Augmentation des concentrations plasmatiques d’olaparib par le diltiazem."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "SIMVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/jour de simvastatine. Si l'objectif thérapeutique n'est pas atteint à cette posologie, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "TAMSULOSINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la tamsulosine pensant le traitement par l’inhibiteur enzymatique et après son arrêt, le cas échéant.Risque de majoration des effets indésirables de la tamsulosine, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "TOLVAPTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de tolvaptan de moitié.Augmentation des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "DILTIAZEM",
+    "d2": "VÉNÉTOCLAX",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment hématologique, et adaptation de la posologie du vénétoclax.Risque d’augmentation des effets indésirables du vénétoclax par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "DIPROPHYLLINE",
+    "d2": "PROBENECIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de diprophylline pendant le traitement par le probénécide.Risque de surdosage par augmentation des concentrations plasmatiques de diprophylline (inhibition de sa sécrétion tubulaire rénale)."
+  },
+  {
+    "d1": "DIPYRIDAMOLE",
+    "d2": "THÉINE",
+    "level": "Précaution d'emploi",
+    "desc": "Eviter la consommation de produits à base de théine dans les 24 heures qui précèdent une imagerie myocardique avec le dipyridamole.Avec le dipyridamole par voie injectable : réduction de l’effet vasodilatateur du dipyridamole par la théine."
+  },
+  {
+    "d1": "DIPYRIDAMOLE",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "A prendre en compte",
+    "desc": "Avec le dipyridamole par voie injectable : majoration de l'effet antihypertenseur."
+  },
+  {
+    "d1": "DIPYRIDAMOLE",
+    "d2": "CAFEINE",
+    "level": "Précaution d'emploi",
+    "desc": "Interrompre un traitement à base de caféine au moins 5 jours avant une imagerie myocardique avec le dipyridamole et éviter la consommation de café, thé, chocolat ou cola dans les 24 heures qui précèdent le test.Avec le dipyridamole par voie injectable : réduction de l’effet vasodilatateur du dipyridamole par la caféine."
+  },
+  {
+    "d1": "DIPYRIDAMOLE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Interrompre un traitement par théophylline au moins 5 jours avant une imagerie myocardique avec le dipyridamole.Avec le dipyridamole par voie injectable : réduction de l’effet vasodilatateur du dipyridamole par la théophylline."
+  },
+  {
+    "d1": "DISOPYRAMIDE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement adaptation de la posologie du disopyramide pendant l’association et 1 à 2 semaines après l’arrêt de l’inducteur.Risque de diminution des concentrations du disopyramide par l’inducteur."
+  },
+  {
+    "d1": "DISOPYRAMIDE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du disopyramide.Risque d’augmentation des effets indésirables du disopyramide par diminution de son métabolisme."
+  },
+  {
+    "d1": "DISOPYRAMIDE",
+    "d2": "JOSAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, biologique et électrocardiographique régulière.Risque de majoration des effets indésirables du disopyramide : hypoglycémies sévères, allongement de l’intervalle QT et troubles du rythme ventriculaire graves, notamment à type de torsades de pointes."
+  },
+  {
+    "d1": "DISOPYRAMIDE",
+    "d2": "OMBITASVIR + PARITAPRÉVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de disopyramide et de ses effets indésirables."
+  },
+  {
+    "d1": "DISULFIRAME",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation de la posologie de l'antivitamine K pendant le traitement par le disulfirame et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "DISULFIRAME",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si elle ne peut être évitée, contrôle clinique et des concentrations plasmatiques de phénytoïne pendant le traitement par le disulfirame et après son arrêt.Augmentation importante et rapide des concentrations plasmatiques de phénytoïne avec signes toxiques (inhibition de son métabolisme)."
+  },
+  {
+    "d1": "DIURÉTIQUES",
+    "d2": "ACIDE ACETYLSALICYLIQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Pour des doses anti-inflammatoires d'acide acétylsalicylique (>= 1g par prise et/ou >= 3g par jour) ou pour des doses antalgiques ou antipyrétiques (>= 500 mg par prise et/ou < 3g par jour) : Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Par ailleurs, réduction de l'effet antihypertenseur."
+  },
+  {
+    "d1": "DIURÉTIQUES",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l'association.Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, sous diurétiques, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Ces effets sont généralement réversibles. Par ailleurs, réduction de l’effet antihypertenseur."
+  },
+  {
+    "d1": "DIURÉTIQUES",
+    "d2": "PRODUITS DE CONTRASTE IODÉS",
+    "level": "Précaution d'emploi",
+    "desc": "Réhydratation avant administration du produit iodé.En cas de déshydratation provoquée par les diurétiques, risque majoré d'insuffisance rénale fonctionnelle aiguë, en particulier lors d'utilisation de doses importantes de produits de contraste iodés."
+  },
+  {
+    "d1": "DIURÉTIQUES DE L'ANSE",
+    "d2": "AMINOSIDES",
+    "level": "Précaution d'emploi",
+    "desc": "Association possible sous contrôle de l'état d'hydratation, des fonctions rénale et cochléovestibulaire, et éventuellement, des concentrations plasmatiques de l'aminoside.Augmentation des risques néphrotoxiques et ototoxiques de l'aminoside (insuffisance rénale fonctionnelle liée à la déshydratation entraînée par le diurétique)."
+  },
+  {
+    "d1": "DIURÉTIQUES DE L'ANSE",
+    "d2": "LITHIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance stricte de la lithémie et adaptation de la posologie du lithium.Augmentation de la lithémie avec signes de surdosage en lithium, comme lors d’un régime désodé (diminution de l’excrétion urinaire du lithium)."
+  },
+  {
+    "d1": "DIURÉTIQUES DE L'ANSE",
+    "d2": "METFORMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas utiliser la metformine lorsque la créatininémie dépasse 15 mg/l (135 µmol/l) chez l'homme, et 12 mg/l (110 µmol/l) chez la femme.Acidose lactique due à la metformine, déclenchée par une éventuelle insuffisance rénale fonctionnelle, liée aux diurétiques de l'anse."
+  },
+  {
+    "d1": "DIURÉTIQUES ÉPARGNEURS DE POTASSIUM (SEULS OU ASSOCIÉS)",
+    "d2": "AUTRES DIURÉTIQUES ÉPARGNEURS DE POTASSIUM (SEULS OU ASSOCIÉS)",
+    "level": "CONTRE-INDICATION",
+    "desc": "Contre-indiqué sauf s'il existe une hypokaliémie.Hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénal (addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "DIURÉTIQUES ÉPARGNEURS DE POTASSIUM (SEULS OU ASSOCIÉS)",
+    "d2": "DIURÉTIQUES HYPOKALIÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la kaliémie, éventuellement l'ECG et, s'il y a lieu, reconsidérer le traitement.L'association rationnelle, utile pour certains patients, n'exclut pas la survenue d'hypokaliémie ou, en particulier chez l'insuffisant rénal et le diabétique, d'hyperkaliémie."
+  },
+  {
+    "d1": "DIURÉTIQUES ÉPARGNEURS DE POTASSIUM (SEULS OU ASSOCIÉS)",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Augmentation de la lithémie avec signes de surdosage en lithium, comme lors d’un régime désodé (diminution de l’excrétion urinaire du lithium)."
+  },
+  {
+    "d1": "DIURÉTIQUES ÉPARGNEURS DE POTASSIUM (SEULS OU ASSOCIÉS)",
+    "d2": "POTASSIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf en cas d'hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénal (addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "DIURÉTIQUES HYPOKALIÉMIANTS",
+    "d2": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'hypertension artérielle, lorsqu'un traitement diurétique préalable a pu entraîner une déplétion hydrosodée, il faut : - soit arrêter le diurétique avant de débuter le traitement par l'antagoniste de l'angiotensine II, et réintroduire un diurétique hypokaliémiant si nécessaire ultérieurement ; - soit administrer des doses initiales réduites d'antagoniste de l'angiotensine II et augmenter progressivement la posologie. Dans tous les cas : surveiller la fonction rénale (créatininémie) dans les premières semaines du traitement par l'antagoniste de l'angiotensine II.Risque d'hypotension artérielle brutale et/ou d'insuffisance rénale aiguë lors de l'instauration ou de l'augmentation de la posologie d'un traitement par un antagoniste de l'angiotensine II en cas de déplétion hydrosodée préexistante."
+  },
+  {
+    "d1": "DIURÉTIQUES HYPOKALIÉMIANTS",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Si possible, utiliser une autre classe de diurétiques.Risque d'hyponatrémie symptomatique."
+  },
+  {
+    "d1": "DIURÉTIQUES HYPOKALIÉMIANTS",
+    "d2": "DIURÉTIQUES ÉPARGNEURS DE POTASSIUM (SEULS OU ASSOCIÉS)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la kaliémie, éventuellement l'ECG et, s'il y a lieu, reconsidérer le traitement.L'association rationnelle, utile pour certains patients, n'exclut pas la survenue d'hypokaliémie ou, en particulier chez l'insuffisant rénal et le diabétique, d'hyperkaliémie."
+  },
+  {
+    "d1": "DIURÉTIQUES HYPOKALIÉMIANTS",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'hypertension artérielle, lorsqu'un traitement diurétique préalable a pu entraîner une déplétion hydrosodée, il faut : - soit arrêter le diurétique avant de débuter le traitement par l'IEC, et réintroduire un diurétique hypokaliémiant si nécessaire ultérieurement ; - soit administrer des doses initiales réduites d'IEC et augmenter progressivement la posologie. Dans l'insuffisance cardiaque congestive traitée par diurétiques, commencer par une dose très faible d'IEC, éventuellement après réduction de la dose du diurétique hypokaliémient associé. Dans tous les cas : surveiller la fonction rénale (créatininémie) dans les premières semaines du traitement par l'IEC.Risque d'hypotension artérielle brutale et/ou d'insuffisance rénale aiguë lors de l'instauration ou de l'augmentation de la posologie d'un traitement par un inhibiteur de l'enzyme de conversion en cas de déplétion hydrosodée préexistante."
+  },
+  {
+    "d1": "DIURÉTIQUES THIAZIDIQUES ET APPARENTÉS",
+    "d2": "LITHIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance stricte de la lithémie et adaptation de la posologie du lithium.Augmentation de la lithémie avec signes de surdosage en lithium, comme lors d’un régime désodé (diminution de l’excrétion urinaire du lithium)."
+  },
+  {
+    "d1": "DOCETAXEL",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du docétaxel.Risque de majoration des effets indésirables du docétaxel par diminution de son métabolisme hépatique par l’amiodarone"
+  },
+  {
+    "d1": "DOCETAXEL",
+    "d2": "DRONEDARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du docétaxel pendant le traitement par l’inhibiteur enzymatique.Risque de majoration de la toxicité du docétaxel par diminution de son métabolisme."
+  },
+  {
+    "d1": "DOCETAXEL",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du docétaxel pendant le traitement par l’inhibiteur enzymatique.Risque de majoration des effets indésirables dose-dépendants du docétaxel par inhibition de son métabolisme par l’inhibiteur enzymatique."
+  },
+  {
+    "d1": "DOCETAXEL",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de moindre efficacité du taxane par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "DOLUTÉGRAVIR",
+    "d2": "METFORMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Chez le patient avec une insuffisance rénale modérée, surveillance clinique et éventuelle réduction supplémentaire de la posologie de metformine.Augmentation moyenne de moins de deux fois des concentrations plasmatiques de metformine."
+  },
+  {
+    "d1": "DOPAMINERGIQUES",
+    "d2": "NEUROLEPTIQUES ANTIÉMÉTIQUES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Utiliser un antiémétique dénué d'effets extrapyramidaux.Antagonisme réciproque entre le dopaminergique et le neuroleptique."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "DIGOXINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Réduire de moitié les doses de digoxine.Dépression de l'automatisme (bradycardie excessive) et troubles de la conduction auriculo-ventriculaire. En outre, augmentation de la digoxinémie par diminution du métabolisme de la digoxine. Surveillance clinique et ECG."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter le traitement par l’antagoniste calcique aux posologies minimales recommandées, et ajuster les doses en fonction de l’ECG.Risque de bradycardie ou de bloc auriculo-ventriculaire, notamment chez le sujet âgé. Par ailleurs, légère augmentation des concentrations de dronédarone par diminution de son métabolisme par l’antagoniste des canaux calciques."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "DOCETAXEL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du docétaxel pendant le traitement par l’inhibiteur enzymatique.Risque de majoration de la toxicité du docétaxel par diminution de son métabolisme."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "ÉDOXABAN",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’édoxaban de moitié.Augmentation des concentrations plasmatiques de l’édoxaban, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "IBRUTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par la dronédarone."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations de dronédarone par augmentation de son métabolisme, sans modification notable du métabolite actif."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "MILLEPERTUIS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations de dronédarone par augmentation de son métabolisme, sans modification notable du métabolite actif."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations de dronédarone par inhibition de son métabolisme par le pamplemousse."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "QUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter le traitement par la quinidine aux posologies minimales recommandées, et ajuster les doses en fonction de l’ECG.Risque de bradycardie ou de bloc auriculo-ventriculaire, notamment chez le sujet âgé. Par ailleurs, légère augmentation des concentrations de dronédarone par diminution de son métabolisme par la quinidine."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations de dronédarone par augmentation de son métabolisme, sans modification notable du métabolite actif."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "TALAZOPARIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "DRONEDARONE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter le traitement par l’antagoniste calcique aux posologies minimales recommandées, et ajuster les doses en fonction de l’ECG.Risque de bradycardie ou de bloc auriculo-ventriculaire, notamment chez le sujet âgé. Par ailleurs, légère augmentation des concentrations de dronédarone par diminution de son métabolisme par l’antagoniste des canaux calciques."
+  },
+  {
+    "d1": "DULOXETINE",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du métoprolol pendant le traitement par la duloxétine et après son arrêt.Augmentation des concentrations plasmatiques de métoprolol avec risque de surdosage, par diminution de son métabolisme hépatique par la duloxétine."
+  },
+  {
+    "d1": "DULOXETINE",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de la propafénone pendant le traitement par la duloxétine et après son arrêt.Augmentation des concentrations plasmatiques de propafénone avec risque de surdosage, par diminution de son métabolisme hépatique par la duloxétine."
+  },
+  {
+    "d1": "DULOXETINE",
+    "d2": "TAMOXIFENE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de baisse de l'efficacité du tamoxifène, par inhibition de la formation de son métabolite actif par la duloxétine."
+  },
+  {
+    "d1": "ECONAZOLE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par éconazole et après son arrêt.Quelle que soit la voie d'administration de l'éconazole : augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ÉDOXABAN",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’édoxaban de moitié.Augmentation des concentrations plasmatiques de l’édoxaban, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "ÉDOXABAN",
+    "d2": "DRONEDARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’édoxaban de moitié.Augmentation des concentrations plasmatiques de l’édoxaban, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "ÉDOXABAN",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’édoxaban de moitié.Augmentation des concentrations plasmatiques de l’édoxaban, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "ÉDOXABAN",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’édoxaban de moitié.Augmentation des concentrations plasmatiques de l’édoxaban, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "EFAVIRENZ",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Diminution de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "EFAVIRENZ",
+    "d2": "ATAZANAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, adaptation posologique de l’atazanavir avec surveillance clinique et biologique régulière, notamment en début d’association.Risque de baisse de l’efficacité de l’atazanavir par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "EFAVIRENZ",
+    "d2": "FOSAMPRENAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de baisse de l'efficacité de l'amprénavir."
+  },
+  {
+    "d1": "EFAVIRENZ",
+    "d2": "GINKGO",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de moindre efficacité de l'éfavirenz."
+  },
+  {
+    "d1": "EFAVIRENZ",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par l'inducteur et après son arrêt.Risque d'hypothyroïdie clinique chez les patients hypothyroïdiens, par augmentation du métabolisme de la T3 et de la T4."
+  },
+  {
+    "d1": "EFAVIRENZ",
+    "d2": "RIFABUTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Adaptation éventuelle de la posologie de la rifabutine ou de l'éfavirenz pendant la durée de l'association.Diminution importante des concentrations de rifabutine, par augmentation de son métabolisme hépatique par l’éfavirenz. Egalement, possibilité de diminution importante des concentrations d'éfavirenz par la rifabutine."
+  },
+  {
+    "d1": "EFAVIRENZ",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Diminution des concentrations plasmatiques et de l'efficacité de l'éfavirenz par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "EFAVIRENZ",
+    "d2": "VELPATASVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations de velpatasvir/sofosbuvir, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "EFAVIRENZ",
+    "d2": "VORICONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite et adaptation de la posologie du voriconazole et de l'éfavirenz pendant l'association.Risque de baisse de l'efficacité du voriconazole par augmentation de son métabolisme hépatique par l'efavirenz."
+  },
+  {
+    "d1": "ELTROMBOPAG",
+    "d2": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la statine.Risque de majoration de la toxicité des statines, par inhibition de leur recapture hépatique."
+  },
+  {
+    "d1": "ELVITÉGRAVIR",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt de l'elvitégravir.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par l'elvitégravir."
+  },
+  {
+    "d1": "ELVITÉGRAVIR",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Avec l’elvitegravir co-administré avec le cobicistat, surveillance clinique. Limiter la dose maximale d’itraconazole à 200 mg/j.Augmentation des concentrations plasmatiques d’elvitegravir par diminution de son métabolisme par l'itraconazole."
+  },
+  {
+    "d1": "ELVITÉGRAVIR",
+    "d2": "KETOCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Avec l’elvitegravir co-administré avec le cobicistat, surveillance clinique. Limiter la dose maximale de kétoconazole à 200 mg/j.Augmentation des concentrations plasmatiques d’elvitegravir par diminution de son métabolisme par le kétoconazole."
+  },
+  {
+    "d1": "ENOXACINE",
+    "d2": "ROPINIROLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du ropinirole pendant le traitement par l'énoxacine et après son arrêt.Augmentation des concentrations plasmatiques de ropinirole avec signes de surdosage par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "ENTACAPONE",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de l'entacapone (plus de 2 heures si possible).Diminution de l'absorption digestive de l'entacapone et du fer par chélation de celui-ci par l'entacapone."
+  },
+  {
+    "d1": "ENZALUTAMIDE",
+    "d2": "GEMFIBROZIL",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’enzalutamide de moitié en cas d’association au gemfibrozil.Majoration de la fraction active de l’enzalutamide."
+  },
+  {
+    "d1": "EPLERENONE",
+    "d2": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle strict de la kaliémie et de la fonction rénale pendant l’association.Majoration du risque d’hyperkaliémie, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "EPLERENONE",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle strict de la kaliémie et de la fonction rénale pendant l’association.Majoration du risque d’hyperkaliémie, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "EPLERENONE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de l’éplérénone par l'inhibiteur et de ses effets indésirables, notamment l’hyperkaliémie."
+  },
+  {
+    "d1": "ERGOTAMINE",
+    "d2": "OXPRENOLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique renforcée, en particulier pendant les premières semaines de l'association.Ergotisme : quelques cas de spasme artériel avec ischémie des extrémités ont été observés (addition d'effets vasculaires)."
+  },
+  {
+    "d1": "ERGOTAMINE",
+    "d2": "PROPRANOLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique renforcée, en particulier pendant les premières semaines de l'association.Ergotisme : quelques cas de spasme artériel avec ischémie des extrémités ont été observés (addition d'effets vasculaires)."
+  },
+  {
+    "d1": "ERGOTAMINE",
+    "d2": "TRICLABENDAZOLE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de 24 heures entre l’arrêt du triclabendazole et l’ergotamine, et inversement.Ergotisme avec possibilité de nécrose des extrémités (inhibition du métabolisme hépatique de l’alcaloïde de l’ergot de seigle)."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer l'érythromycine le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par l'érythromycine."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "ALFENTANIL",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de l'alfentanil en cas de traitement par l'érythromycine.Augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d'hypocholestérolémiant. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholesterolémiant."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de carbamazépine, avec signes de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "ÉDOXABAN",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’édoxaban de moitié.Augmentation des concentrations plasmatiques de l’édoxaban, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "GLIBENCLAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide hypoglycémiant pendant le traitement par l’érythromycine.Risque d'hypoglycémie par augmentation de l’absorption et des concentrations plasmatiques de l’antidiabétique."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "GLIMEPIRIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide hypoglycémiant pendant le traitement par l’érythromycine.Risque d'hypoglycémie par augmentation de l’absorption et des concentrations plasmatiques de l’antidiabétique."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par l'érythromycine."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "PRAVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant le traitement par l'antibiotique.Avec l'érythromycine utilisée par voie orale : augmentation de la concentration plasmatique de la pravastatine par l' érythromycine."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "TALAZOPARIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surdosage en théophylline par diminution de son élimination hépatique, plus particulièrement à risque chez l'enfant."
+  },
+  {
+    "d1": "ERYTHROMYCINE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG ; s'il y a lieu, adaptation de la posologie du vérapamil pendant le traitement par l'érythromycine et après son arrêt.Bradycardie et/ou troubles de la conduction auriculo-ventriculaire, par diminution du métabolisme hépatique du vérapamil par l'érythromycine."
+  },
+  {
+    "d1": "ESCITALOPRAM",
+    "d2": "ESOMEPRAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "ESCITALOPRAM",
+    "d2": "OMEPRAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "ESMOLOL",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de la contractilité, de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "ESMOLOL",
+    "d2": "ANTIARYTHMIQUES CLASSE IA",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de la contractilité, de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "ESMOLOL",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de la contractilité, de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "ESOMEPRAZOLE",
+    "d2": "ESCITALOPRAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "ESTRAMUSTINE",
+    "d2": "ACIDE CLODRONIQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique au cours de l’association.Risque d’augmentation des concentrations plasmatiques d’estramustine par le clodronate."
+  },
+  {
+    "d1": "ESTRAMUSTINE",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance de l'estramustine (plus de 2 heures, si possible).Diminution de l'absorption digestive de l'estramustine."
+  },
+  {
+    "d1": "ESTROGÈNES NON CONTRACEPTIFS",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation éventuelle des doses de l'hormone thyroïdienne chez les femmes ménopausées prenant des estrogènes.Risque d'hypothyroïdie clinique en cas d'estrogénothérapie substitutive."
+  },
+  {
+    "d1": "ESTROGÈNES NON CONTRACEPTIFS",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du traitement hormonal pendant l'administration de l'inducteur et après son arrêt.Diminution de l'efficacité de l'estrogène."
+  },
+  {
+    "d1": "ESTROGÈNES NON CONTRACEPTIFS",
+    "d2": "OXCARBAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du traitement hormonal pendant le traitement par l'oxcarbazépine et après son arrêt.Risque de diminution de l'efficacité du traitement hormonal, par augmentation de son métabolisme hépatique par l'oxcarbazépine."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "APREPITANT",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt de l’aprépitant.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par l'aprépitant."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "BOSENTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du bosentan.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par le bosentan."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "ELVITÉGRAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt de l'elvitégravir.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par l'elvitégravir."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "FELBAMATE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du felbamate.Risque de diminution de l’efficacité contraceptive, pendant le traitement et un cycle après l’arrêt du traitement par le felbamate, en raison de son potentiel inducteur enzymatique."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "GRISEOFULVINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt de de la griséofulvine.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par la griséofulvine."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt de l’inducteur.Diminution de l'efficacité contraceptive, par augmentation du métabolisme hépatique du contraceptif hormonal par l'inducteur."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du ritonavir.Risque de diminution de l'efficacité contraceptive par diminution des concentrations en contraceptif hormonal, dûe à l'augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "MODAFINIL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du modafinil.Risque de diminution de l’efficacité contraceptive, pendant le traitement et un cycle après l’arrêt du traitement par le modafinil, en raison de son potentiel inducteur enzymatique."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "RUFINAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du rufinamide.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par le rufinamide."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "TOPIRAMATE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, utiliser une méthode additionnel de type mécanique pendant la durée de l’association et un cycle suivant l’arrêt du topiramate.Pour des doses de topiramate >= 200 mg/jour : Risque de diminution de l’efficacité contraceptive par diminution des concentrations en estrogène."
+  },
+  {
+    "d1": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "d2": "VÉMURAFÉNIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations des estroprogestatifs, avec pour conséquence un risque d’inefficacité."
+  },
+  {
+    "d1": "ESZOPICLONE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d’association chez les sujets non âgés, une réduction de la dose d’eszopiclone peut être nécessaire.Augmentation de l'effet sédatif de l’eszopiclone."
+  },
+  {
+    "d1": "ESZOPICLONE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Utiliser éventuellement un autre hypnotique.Risque de diminution des concentrations plasmatiques et de l'efficacité de l’eszopiclone par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "ETHINYLESTRADIOL",
+    "d2": "GLÉCAPRÉVIR + PIBRENTASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation de l’hépatotoxicité avec la bithérapie."
+  },
+  {
+    "d1": "ETHOSUXIMIDE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosage plasmatique de l'éthosuximide et augmentation éventuelle de sa posologie.Diminution des concentrations plasmatiques d'éthosuximide."
+  },
+  {
+    "d1": "ETOPOSIDE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association s'avère nécessaire, surveillance clinique et adaptation éventuelle de la posologie d’étoposide pendant l’association, et 1 à 2 semaines après l’arrêt de l’inducteur.Diminution des concentrations plasmatiques d’étoposide par l’inducteur."
+  },
+  {
+    "d1": "EVEROLIMUS",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines d’évérolimus, éventuellement adaptation de la posologie et contrôle de la fonction rénale, pendant l’association et après son arrêt.Augmentation des concentrations sanguines de l’évérolimus par la ciclosporine. La néphrotoxicité de la ciclosporine est également augmentée lors de l’association."
+  },
+  {
+    "d1": "EVEROLIMUS",
+    "d2": "OMBITASVIR + PARITAPRÉVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.En association avec le ritonavir : augmentation significative des concentrations de l’immunosuppresseur avec risque de majoration de sa toxicité par la bithérapie."
+  },
+  {
+    "d1": "EVEROLIMUS",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines de l'évérolimus par diminution de son métabolisme hépatique par le vérapamil."
+  },
+  {
+    "d1": "FELBAMATE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosages plasmatiques et adaptation éventuelle des posologies des deux anticonvulsivants.Augmentation des concentrations plasmatiques du métabolite actif de la carbamazépine. De plus, diminution des concentrations plasmatiques de felbamate par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "FELBAMATE",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du felbamate.Risque de diminution de l’efficacité contraceptive, pendant le traitement et un cycle après l’arrêt du traitement par le felbamate, en raison de son potentiel inducteur enzymatique."
+  },
+  {
+    "d1": "FELBAMATE",
+    "d2": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénobarbital avec adaptation de la posologie si besoin.Diminution des concentrations plasmatiques et de l'efficacité du felbamate et augmentation des concentrations plasmatiques du phénobarbital, avec risque de surdosage."
+  },
+  {
+    "d1": "FELBAMATE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques de phénytoïne et si besoin, adaptation de sa posologie pendant le traitement par le felbamate.Augmentation des concentrations plasmatiques de phénytoïne avec risque de surdosage, par inhibition de son métabolisme par le felbamate."
+  },
+  {
+    "d1": "FELBAMATE",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle biologique et adaptation éventuelle de la posologie du valproate ou du valpromide pendant le traitement par le felbamate et après son arrêt.Augmentation des concentrations plasmatiques de l'acide valproïque, avec risque de surdosage."
+  },
+  {
+    "d1": "FENOFIBRATE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique de la fonction rénale, pendant et après l'association.Risque d'augmentation de la néphrotoxicité de la ciclosporine."
+  },
+  {
+    "d1": "FENTANYL",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer un autre morphinique.Diminution des concentrations plasmatiques de fentanyl par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "FENTANYL",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l’analgésique opiacé en cas de traitement par un inhibiteur puissant du CYP3A4.Risque d'augmentation de l’effet dépresseur respiratoire de l’analgésique opiacé par légère diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "FENTANYL",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer un autre morphinique.Diminution des concentrations plasmatiques de fentanyl par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "FER",
+    "d2": "BICTÉGRAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le bictégravir au moins 2 heures avant les sels de fer, ou en même temps qu’un repas.Diminution de près des deux tiers de l'absorption du bictégravir en cas d’ingestion simultanée ou à jeun."
+  },
+  {
+    "d1": "FER",
+    "d2": "BISPHOSPHONATES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance des bisphosphonates (de 30 minutes au minimum à plus de 2 heures, si possible, selon le bisphosphonate).Pour les sels de fer administrés par voie orale : diminution de l'absorption digestive des bisphosphonates."
+  },
+  {
+    "d1": "FER",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance des repas et en l'absence de calcium.Avec les sels de fer par voie orale : diminution de l'absorption digestive des sels de fer."
+  },
+  {
+    "d1": "FER",
+    "d2": "CYCLINES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance des cyclines (plus de 2 heures, si possible).Diminution de l'absorption digestive des cyclines et du fer"
+  },
+  {
+    "d1": "FER",
+    "d2": "ENTACAPONE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de l'entacapone (plus de 2 heures si possible).Diminution de l'absorption digestive de l'entacapone et du fer par chélation de celui-ci par l'entacapone."
+  },
+  {
+    "d1": "FER",
+    "d2": "FLUOROQUINOLONES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance des fluoroquinolones (plus de 2 heures, si possible).Diminution de l'absorption digestive des fluoroquinolones."
+  },
+  {
+    "d1": "FER",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les hormones thyroïdiennes à distance du fer (plus de 2 heures, si possible).Diminution de l'absorption digestive des hormones thyroïdiennes."
+  },
+  {
+    "d1": "FER",
+    "d2": "INHIBITEURS D'INTÉGRASE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de l’antirétroviral (plus de 2 heures, si possible).Diminution de l'absorption digestive des inhibiteurs d’intégrase."
+  },
+  {
+    "d1": "FER",
+    "d2": "LEVODOPA",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de la lévodopa (plus de 2 heures si possible).Diminution de l'absorption digestive de la lévodopa."
+  },
+  {
+    "d1": "FER",
+    "d2": "METHYLDOPA",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de la méthyldopa (plus de deux heures, si possible).Diminution de l'absorption digestive de la méthyldopa (formation de complexes)."
+  },
+  {
+    "d1": "FER",
+    "d2": "PENICILLAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de la pénicillamine (plus de 2 heures, si possible).Diminution de l'absorption digestive de la pénicillamine."
+  },
+  {
+    "d1": "FER",
+    "d2": "ROXADUSTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le roxadustat à distance des sels de fer (plus de 1 heure, si possible).La prise de cation divalent peut diminuer l’absorption intestinale et, potentiellement, l’efficacité du roxadustat pris simultanément."
+  },
+  {
+    "d1": "FER",
+    "d2": "STRONTIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des sels de fer (plus de deux heures, si possible).Diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "FER",
+    "d2": "TRIENTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre la trientine à distance des sels de fer.Diminution des concentrations de fer sérique."
+  },
+  {
+    "d1": "FER",
+    "d2": "ZINC",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance du zinc (plus de 2 heures si possible).Diminution de l’absorption digestive du zinc par le fer."
+  },
+  {
+    "d1": "FIBRATES",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par le fibrate et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "FIBRATES",
+    "d2": "COLCHICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, particulièrement au début de l’association.Risque de majoration des effets indésirables musculaires de ces substances, et notamment de rhabdomyolyse."
+  },
+  {
+    "d1": "FIDAXOMICINE",
+    "d2": "AMIODARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de la fidaxomicine."
+  },
+  {
+    "d1": "FINGOLIMOD",
+    "d2": "BRADYCARDISANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et ECG continu pendant les 6 heures suivant la première dose voire 2 heures de plus, jusqu'au lendemain si nécessaire.Potentialisation des effets bradycardisants pouvant avoir des conséquences fatales. Les bêta-bloquants sont d’autant plus à risque qu’ils empêchent les mécanismes de compensation adrénergique."
+  },
+  {
+    "d1": "FLUCLOXACILLINE",
+    "d2": "PARACETAMOL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance étroite avec mesure de la 5-oxoproline urinaire.Risque accru d'acidose métabolique à trou anionique élevé, notamment en cas d'insuffisance rénale sévère, de sepsis, de facteurs prédisposant à la déplétion en glutathion (malnutrition, alcoolisme chronique…), ainsi qu’en cas d’utilisation de paracétamol aux doses quotidiennes maximales."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "ABROCITINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de l’abrocitinib de moitié en cas de traitement par le fluconazole.Risque de majoration des effets indésirables de l’abrocitinib par diminution de son métabolisme."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "ALFENTANIL",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de l'alfentanil en cas de traitement par le fluconazole.Augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, particulièrement aux fortes doses de fluconazole (800 mg/j).Risque d’allongement de l’intervalle QT."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par le fluconazole et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles de l'hypocholestérolémiant. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables concentration-dépendants à type de rhabdomyolyse (diminution du métabolisme hépatique de la statine)."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Adapter la posologie de carbamazépine, pendant et après l’arrêt du traitement antifongique.Pour des doses de fluconazole >= 200 mg par jour : augmentation possible des effets indésirables de la carbamazépine."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "HALOFANTRINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cela est possible, interrompre le fluconazole. Si l'association ne peut être évitée, contrôle préalable du QT et surveillance ECG monitorée.Risque majoré de troubles du rythme ventriculaires, notamment de torsades de pointes."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "IBRUTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par le fluconazole."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de sa posologie pendant l'association et après son arrêt.Risque d'augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme et de la créatininémie."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "IVACAFTOR (SEUL OU ASSOCIÉ)",
+    "level": "Précaution d'emploi",
+    "desc": "Se référer à l'AMM pour les adaptations posologiques.Augmentation des concentrations d’ivacaftor, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "MIDAZOLAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de midazolam en cas de traitement par le fluconazole.Augmentation des concentrations plasmatiques de midazolam par diminution de son métabolisme hépatique, avec majoration de la sédation."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "NEVIRAPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la névirapine.Doublement des concentrations de névirapine avec risque d'augmentation de ses effets indésirables."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "OLAPARIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 200 mg deux fois par jour.Augmentation des concentrations plasmatiques d’olaparib par le fluconazole."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite.Augmentation des concentrations plasmatiques de phénytoïne pouvant atteindre des valeurs toxiques. Mécanisme invoqué : inhibition du métabolisme hépatique de la phénytoïne."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "RIFABUTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'accroissement des effets indésirables de la rifabutine (uvéites), par augmentation de ses concentrations et de celles de son métabolite actif."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques et de l'efficacité du fluconazole par augmentation de son métabolisme par la rifampicine."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "SIMVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables concentration-dépendants à type de rhabdomyolyse (diminution du métabolisme hépatique de la simvastatine)."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide pendant le traitement par le fluconazole.Augmentation du temps de demi-vie du sulfamide avec survenue possible de manifestations d'hypoglycémie."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par le fluconazole et après son arrêt.Augmentation de la théophyllinémie avec risque de surdosage (diminution de la clairance de la théophylline)."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "TOLVAPTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de tolvaptan de moitié.Augmentation des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "FLUCONAZOLE",
+    "d2": "VINCA-ALCALOÏDES CYTOTOXIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque de majoration de la toxicité de l’antimitotique par diminution de son métabolisme hépatique par le fluconazole."
+  },
+  {
+    "d1": "FLUCYTOSINE",
+    "d2": "ZIDOVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'hémogramme.Augmentation de la toxicité hématologique (addition d'effets de toxicité médullaire)."
+  },
+  {
+    "d1": "FLUOROQUINOLONES",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la fluoroquinolone et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "FLUOROQUINOLONES",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance des fluoroquinolones (plus de 2 heures, si possible).Diminution de l'absorption digestive des fluoroquinolones."
+  },
+  {
+    "d1": "FLUOROQUINOLONES",
+    "d2": "STRONTIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des fluoroquinolones (plus de deux heures, si possible).Diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "FLUOROQUINOLONES",
+    "d2": "SUCRALFATE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le sucralfate à distance des fluoroquinolones (plus de 2 heures, si possible).Diminution de l'absorption digestive des fluoroquinolones."
+  },
+  {
+    "d1": "FLUOROQUINOLONES",
+    "d2": "ZINC",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de zinc à distance des fluoroquinolones (plus de 2 heures, si possible).Diminution de l'absorption digestive des fluoroquinolones."
+  },
+  {
+    "d1": "FLUOROURACILE (ET, PAR EXTRAPOLATION, AUTRES FLUOROPYRIMIDINES)",
+    "d2": "ANTIVITAMINES K",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si elle ne peut être évitée, contrôle plus fréquent de l'INR. Adaptation de la posologie de l'antivitamine K pendant le traitement par le cytotoxique et 8 jours après son arrêt.Augmentation importante de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "FLUOXETINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques de carbamazépine et réduction éventuelle de la posologie de la carbamazépine pendant le traitement par l'antidépresseur sérotoninergique et après son arrêt.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage."
+  },
+  {
+    "d1": "FLUOXETINE",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie du métoprolol pendant la durée du traitement par la fluoxétine et après son arrêt.Risque de majoration des effets indésirables du métoprolol, avec notamment bradycardie excessive, par inhibition de son métabolisme par la fluoxétine."
+  },
+  {
+    "d1": "FLUOXETINE",
+    "d2": "NEBIVOLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie du nébivolol pendant la durée du traitement par l’antidépresseur et après son arrêt.Risque de majoration des effets indésirables du nébivolol avec notamment bradycardie excessive, par inhibition de son métabolisme par l’antidépresseur."
+  },
+  {
+    "d1": "FLUOXETINE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement contrôle des concentrations plasmatiques de phénytoïne. Si besoin, adaptation posologique pendant le traitement par la fluoxétine et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne avec signes de surdosage, par inhibition du métabolisme de la phénytoïne."
+  },
+  {
+    "d1": "FLUOXETINE",
+    "d2": "RISPERIDONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, adaptation posologique de la rispéridone.Augmentation de la fraction active de la rispéridone par diminution de son métabolisme hépatique par la fluoxétine, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "FLUVASTATINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association.Augmentation modérée des concentrations de fluvastatine, avec risque musculaire non exclu."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "ABROCITINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de l’abrocitinib de moitié en cas de traitement par la fluvoxamine.Risque de majoration des effets indésirables de l’abrocitinib par diminution de son métabolisme."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques de carbamazépine et réduction éventuelle de la posologie de la carbamazépine pendant le traitement par l'antidépresseur sérotoninergique et après son arrêt.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "CLOZAPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie de la clozapine pendant le traitement par la fluvoxamine et après son arrêt.Augmentation des concentrations plasmatiques de clozapine avec signes de surdosage."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "LIDOCAINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle des concentrations plasmatiques de la lidocaïne pendant et après l’arrêt de l’association. Adaptation, si besoin, de la posologie de la lidocaïne.Augmentation des concentrations plasmatiques de la lidocaïne avec possibilités d’effets indésirables neurologiques et cardiaques (diminution de la clairance hépatique de la lidocaïne)."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "METHADONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique renforcée ; si besoin, adaptation de la posologie de la méthadone pendant le traitement par la fluvoxamine et après son arrêt.Augmentation des concentrations plasmatiques de méthadone avec surdosage et risque majoré d’allongement de l’intervalle QT et de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "MEXILETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. Adaptation de la posologie de la méxilétine pendant le traitement par la fluvoxamine et après son arrêt.Risque de majoration des effets indésirables de la méxilétine, par inhibition de son métabolisme par la fluvoxamine."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "OLANZAPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de l’olanzapine pendant le traitement par fluvoxamine.Augmentation des concentrations de l’olanzapine, avec risque de majoration des effets indésirables, par diminution de son métabolisme hépatique par la fluvoxamine."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement contröle des concentrations plamatiques de phénytoïne. Si besoin, adaptation posologique de la phénytoïne pendant le traitement par la fluvoxamine et après son arrët.Augmentation des concentrations plasmatiques de phénytoïne avec signes de surdosage, par inhibition du métabolisme hépatique de la phénytoïne."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "PROPRANOLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue et, si besoin, adaptation de la posologie du propranolol pendant le traitement par la fluvoxamine et après son arrêt.Augmentation des concentrations plasmatiques de propranolol par inhibition de son métabolisme hépatique, avec majoration de l'activité et des effets indésirables, par exemple : bradycardie importante."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "ROPINIROLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du ropinirole pendant le traitement par fluvoxamine et après son arrêt.Augmentation des concentrations de ropinirole, avec risque de surdosage, par diminution de son métabolisme hépatique par la fluvoxamine."
+  },
+  {
+    "d1": "FLUVOXAMINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; si besoin, adaptation de la posologie de la théophylline pendant le traitement par la fluvoxamine et après son arrêt.Augmentation de la théophyllinémie avec signes de surdosage (diminution du métabolisme hépatique de la théophylline)."
+  },
+  {
+    "d1": "FOLATES",
+    "d2": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques, et adaptation, s'il y a lieu, de la posologie du phénobarbital pendant la supplémentation folique et après son arrêt.Diminution des concentrations plasmatiques du phénobarbital, par augmentation de son métabolisme dont les folates représentent un des cofacteurs."
+  },
+  {
+    "d1": "FOLATES",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénytoïne. Adaptation éventuelle de la posologie de la phénytoïne pendant la supplémentation folique et après son arrêt.Diminution des concentrations plasmatiques de phénytoïne par augmentation de son métabolisme dont les folates représentent un des cofacteurs."
+  },
+  {
+    "d1": "FOSAMPRENAVIR",
+    "d2": "EFAVIRENZ",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de baisse de l'efficacité de l'amprénavir."
+  },
+  {
+    "d1": "FOSAMPRENAVIR",
+    "d2": "MARAVIROC",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution significative des concentrations d’amprénavir pouvant conduire à une perte de la réponse virologique."
+  },
+  {
+    "d1": "FOSAMPRENAVIR",
+    "d2": "NEVIRAPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de baisse de l'efficacité de l'amprénavir."
+  },
+  {
+    "d1": "FOSCARNET",
+    "d2": "PENTAMIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance de la calcémie et supplémentation si nécessaire.Risque d'hypocalcémie sévère."
+  },
+  {
+    "d1": "FOSTAMATINIB",
+    "d2": "ROSUVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, avec adaptation de la posologie de rosuvastatine si nécessaire.Doublement moyen des concentrations plasmatiques de la rosuvastatine."
+  },
+  {
+    "d1": "FOSTEMSAVIR",
+    "d2": "ROSUVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter par la dose minimale de rosuvastatine. Surveillance clinique régulière.Augmentation modérée des concentrations de rosuvastatine."
+  },
+  {
+    "d1": "FOTEMUSTINE",
+    "d2": "DACARBAZINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas utiliser simultanément mais respecter un délai d'une semaine entre la dernière administration de fotémustine et le premier jour de la cure de dacarbazine.Avec la dacarbazine à doses élevées : risque de toxicité pulmonaire (syndrome de détresse respiratoire aiguë de l'adulte)."
+  },
+  {
+    "d1": "FUROSEMIDE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser éventuellement des doses plus élevées de furosémide.Diminution de l'effet diurétique pouvant atteindre 50 %."
+  },
+  {
+    "d1": "GANCICLOVIR",
+    "d2": "MARIBAVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Antagonisme de la phosporylation et donc de l'effet pharmacologique du ganciclovir par le maribavir."
+  },
+  {
+    "d1": "GANCICLOVIR",
+    "d2": "ZIDOVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Arrêter de façon transitoire la zidovudine ; contrôler la NFS et réintroduire, si possible, la zidovudine à doses faibles.Augmentation de la toxicité hématologique (addition d'effets de toxicité médullaire)."
+  },
+  {
+    "d1": "GEMFIBROZIL",
+    "d2": "ENZALUTAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’enzalutamide de moitié en cas d’association au gemfibrozil.Majoration de la fraction active de l’enzalutamide."
+  },
+  {
+    "d1": "GEMFIBROZIL",
+    "d2": "PACLITAXEL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite et adaptation de la posologie du paclitaxel pendant l’association.Risque d’augmentation des concentrations plasmatiques du paclitaxel par inhibition de son métabolisme hépatique par le gemfibrozil."
+  },
+  {
+    "d1": "GEMFIBROZIL",
+    "d2": "ROXADUSTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique (hémoglobine).Augmentation de l’exposition du roxadustat, par diminution de son métabolisme par le gemfibrozil."
+  },
+  {
+    "d1": "GEMFIBROZIL",
+    "d2": "SELEXIPAG",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "GINKGO",
+    "d2": "EFAVIRENZ",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de moindre efficacité de l'éfavirenz."
+  },
+  {
+    "d1": "GIVOSIRAN",
+    "d2": "THEOPHYLLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Risque d’augmentation de la théophyllinémie avec signes de surdosage par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "GLASDÉGIB",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "- avec les autres inducteurs - si l’association ne peut être évitée, augmenter la dose de glasdégib.Diminution, éventuellement importante selon l'inducteur, des concentrations de glasdégib par augmentation de son métabolisme, avec risque d'inefficacité."
+  },
+  {
+    "d1": "GLASDÉGIB",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Risque de majoration des effets indésirables du glasdégib par diminution de son métabolisme."
+  },
+  {
+    "d1": "GLASDÉGIB",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes. GLÉCAPRÉVIR + PIBRENTASVIR (Glécaprévir, pibrentasvir)"
+  },
+  {
+    "d1": "GLASDÉGIB",
+    "d2": "ATAZANAVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation de l’hépatotoxicité avec la bithérapie."
+  },
+  {
+    "d1": "GLASDÉGIB",
+    "d2": "ATORVASTATINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation importante des concentrations plasmatiques d’atorvastatine par la bithérapie, avec risque majoré d’effets indésirables (concentration-dépendants) à type de rhabdomyolyses."
+  },
+  {
+    "d1": "GLASDÉGIB",
+    "d2": "DABIGATRAN",
+    "level": "CONTRE-INDICATION",
+    "desc": "Doublement des concentrations plasmatiques de dabigatran, avec majoration du risque de saignements."
+  },
+  {
+    "d1": "GLASDÉGIB",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la digoxinémie pendant le traitement par glécaprévir/ pibrentasvir.Augmentation des concentrations plasmatiques de la digoxine par la bithérapie."
+  },
+  {
+    "d1": "GLASDÉGIB",
+    "d2": "ETHINYLESTRADIOL",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation de l’hépatotoxicité avec la bithérapie."
+  },
+  {
+    "d1": "GLASDÉGIB",
+    "d2": "SIMVASTATINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation importante des concentrations plasmatiques de simvastatine par la bithérapie, avec risque majoré d’effets indésirables (concentration-dépendants) à type de rhabdomyolyses ."
+  },
+  {
+    "d1": "GLIBENCLAMIDE",
+    "d2": "BOSENTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance de la glycémie, adaptation du traitement si besoin, et surveillance des constantes biologiques hépatiques.Risque de moindre efficacité du glibenclamide par diminution de ses concentrations plasmatiques, en raison de l'effet inducteur du bosentan. Par ailleurs, des cas d'hépatotoxicité ont été rapportés lors de l'association."
+  },
+  {
+    "d1": "GLIBENCLAMIDE",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide hypoglycémiant pendant le traitement par l’érythromycine.Risque d'hypoglycémie par augmentation de l’absorption et des concentrations plasmatiques de l’antidiabétique."
+  },
+  {
+    "d1": "GLIMEPIRIDE",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide hypoglycémiant pendant le traitement par l’érythromycine.Risque d'hypoglycémie par augmentation de l’absorption et des concentrations plasmatiques de l’antidiabétique."
+  },
+  {
+    "d1": "GLINIDES",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêta-bloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "GLINIDES",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêtabloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "GLIPIZIDE",
+    "d2": "VORICONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide pendant et après le traitement par voriconazole.Risque d’augmentation des concentrations plasmatiques du glipizide à l’origine d’hypoglycémies potentiellement sévères."
+  },
+  {
+    "d1": "GLIPTINES",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêtabloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "GLIPTINES",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "A prendre en compte",
+    "desc": "Risque de majoration de la survenue d'un angio-œdème d'origine bradykinique pouvant être fatal."
+  },
+  {
+    "d1": "GLIPTINES",
+    "d2": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "level": "Précaution d'emploi",
+    "desc": "Le contrôle régulier de la fonction rénale et le strict respect des doses sont impératifs.Possibilité de survenue d’effets indésirables musculaires à l’introduction d’une gliptine, malgré le traitement antérieur par statine bien toléré."
+  },
+  {
+    "d1": "GLOBULINES ANTILYMPHOCYTAIRES",
+    "d2": "VACCINS VIVANTS ATTÉNUÉS",
+    "level": "A prendre en compte",
+    "desc": "En particulier, utiliser un vaccin inactivé lorsqu'il existe (poliomyélite).Risque de maladie généralisée éventuellement mortelle. Ce risque est majoré chez les sujets âgés déjà immunodéprimés par la maladie sous-jacente."
+  },
+  {
+    "d1": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "d2": "ANTICOAGULANTS ORAUX",
+    "level": "Précaution d'emploi",
+    "desc": "Lorsque l'association est justifiée, renforcer la surveillance : le cas échéant, avec les antivitamines K, contrôle biologique au 8e jour, puis tous les 15 jours pendant la corticothérapie et après son arrêt.Glucocorticoïdes (voies générale et rectale) : impact éventuel de la corticothérapie sur le métabolisme de l'antivitamine K et sur celui des facteurs de la coagulation. Risque hémorragique propre à la corticothérapie (muqueuse digestive, fragilité vasculaire) à fortes doses ou en traitement prolongé supérieur à 10 jours."
+  },
+  {
+    "d1": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "d2": "COBIMÉTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation de la posologie des corticoïdes pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité des corticoïdes par augmentation de leur métabolisme hépatique par l'inducteur ; les conséquences sont particulièrement importantes chez les addisoniens traités par l'hydrocortisone et en cas de transplantation."
+  },
+  {
+    "d1": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "d2": "ISONIAZIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique.Décrit pour la prednisolone. Diminution des concentrations plasmatiques de l'isoniazide. Mécanisme invoqué : augmentation du métabolisme hépatique de l'isoniazide et diminution de celui des glucocorticoïdes."
+  },
+  {
+    "d1": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "d2": "VACCINS VIVANTS ATTÉNUÉS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt de la corticothérapie.A l'exception des voies inhalées et locales, et pour des posologies supérieures à 10 mg/j d’équivalent-prednisone (ou > 2 mg/kg/j chez l’enfant ou > 20 mg/j chez l’enfant de plus de 10 kg) pendant plus de deux semaines et pour les « bolus » de corticoïdes: risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "GLUCOCORTICOÏDES PAR VOIE INTRA-ARTICULAIRE ET MÉTABOLISÉS",
+    "d2": "COBICISTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Préférer un corticoïde non CYP3A4-dépendant (hydrocortisone).Décrit chez des patients HIV. Risque d’insuffisance surrénale aiguë, même en cas d’injection unique. L’articulation peut constituer un réservoir relarguant de façon continue le corticoïde CYP3A4-dépendant dans la circulation générale, avec augmentation possiblement très importante des concentrations du corticoïde, à l’origine d’une freination de la réponse hypothalamo- hypophysaire."
+  },
+  {
+    "d1": "GLUCOCORTICOÏDES PAR VOIE INTRA-ARTICULAIRE ET MÉTABOLISÉS",
+    "d2": "RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Préférer un corticoïde non CYP3A4-dépendant (hydrocortisone).Décrit chez des patients HIV. Risque d’insuffisance surrénale aiguë, même en cas d’injection unique. L’articulation peut constituer un réservoir relarguant de façon continue le corticoïde CYP3A4-dépendant dans la circulation générale, avec augmentation possiblement très importante des concentrations du corticoïde, à l’origine d’une freination de la réponse hypothalamo-hypophysaire."
+  },
+  {
+    "d1": "GLUCOSAMINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adapation éventuelle de la posologie de l’antivitamine K.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "GLYCEROL",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Diminution de la lithémie avec risque de baisse de l’efficacité thérapeutique. GRAZOPREVIR + ELBASVIR (elbasvir, grazoprevir)"
+  },
+  {
+    "d1": "GLYCEROL",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution des concentrations de grazoprévir et d’elbasvir par l’inducteur, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "GLYCEROL",
+    "d2": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association. La dose de statine ne doit pas dépasser 20 mg par jour (10 mg avec la rosuvastatine).Augmentation des concentrations plasmatiques de l’hypochlestérolémiant par augmentation de son absorption intestinale."
+  },
+  {
+    "d1": "GLYCEROL",
+    "d2": "SUNITINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Risque d’augmentation des effets indésirables du sunitinib par le grazoprévir/elbasvir."
+  },
+  {
+    "d1": "GLYCEROL",
+    "d2": "TACROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite.Augmentation des concentrations plasmatiques de tacrolimus par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "GRISEOFULVINE",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt de de la griséofulvine.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par la griséofulvine."
+  },
+  {
+    "d1": "GRISEOFULVINE",
+    "d2": "PROGESTATIFS CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode contraceptive fiable, additionnelle ou alternative, pendant la durée de l'association et un cycle suivant.Risque de diminution de l'efficacité du contraceptif hormonal par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "GUANETHIDINE",
+    "d2": "IMAO IRRÉVERSIBLES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Interrompre le traitement par IMAO 15 jours avant le traitement par guanéthidine.Avec la guanéthidine utilisée par voie IV : risque de réactions vasculaires imprévisibles, notamment d'hypotension."
+  },
+  {
+    "d1": "CYP3A4",
+    "d2": "FLUCONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cela est possible, interrompre le fluconazole. Si l'association ne peut être évitée, contrôle préalable du QT et surveillance ECG monitorée.Risque majoré de troubles du rythme ventriculaires, notamment de torsades de pointes."
+  },
+  {
+    "d1": "CYP3A4",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cela est possible, interrompre l'inhibiteur. Si l'association ne peut être évitée, contrôle préalable du QT et surveillance ECG monitorée.Risque majoré de troubles du rythme ventriculaires, notamment de torsades de pointes."
+  },
+  {
+    "d1": "CYP3A4",
+    "d2": "JOSAMYCINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cela est possible, interrompre le macrolide. Si l’association ne peut être évitée, contrôle préalable du QT et surveillance ECG monitorée.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "HALOPERIDOL",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, adaptation posologique pendant le traitement par l'halopéridol et après son arrêt.Risque de moindre efficacité de l'halopéridol par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "HALOPERIDOL",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, adaptation posologique pendant le traitement par la rifampicine et après son arrêt.Risque de diminution des concentrations plasmatiques de l'halopéridol et de son efficacité thérapeutique, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "HALOTHANE",
+    "d2": "BÊTA-2 MIMÉTIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Interrompre le traitement par bêta-2 mimétiques si l'anesthésie doit se faire sous halothane.En cas d'intervention obstétricale, majoration de l'inertie utérine avec risque hémorragique ; par ailleurs, troubles du rythme ventriculaires graves, par augmentation de la réactivité cardiaque."
+  },
+  {
+    "d1": "HÉPARINES",
+    "d2": "COBIMÉTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "HÉPARINES",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite.Augmentation du risque hémorragique (agression de la muqueuse gastroduodénale par les anti-inflammatoires non stéroïdiens)."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle clinique et biologique régulier, avec augmentation éventuelle de la posologie des hormones thyroïdiennes.Diminution probable de l'absorption des hormones thyroïdiennes, par augmentation du pH intra-gastrique par l'antisécrétoire."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance des hormones thyroïdiennes (plus de 2 heures, si possible).Diminution de l’absorption digestive des hormones thyroïdiennes."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "CHLOROQUINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par chloroquine et après son arrêt.Risque d’hypothyroïdie clinique chez les patients substitués par hormones thyroïdiennes."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "EFAVIRENZ",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par l'inducteur et après son arrêt.Risque d'hypothyroïdie clinique chez les patients hypothyroïdiens, par augmentation du métabolisme de la T3 et de la T4."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "ESTROGÈNES NON CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation éventuelle des doses de l'hormone thyroïdienne chez les femmes ménopausées prenant des estrogènes.Risque d'hypothyroïdie clinique en cas d'estrogénothérapie substitutive."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les hormones thyroïdiennes à distance du fer (plus de 2 heures, si possible).Diminution de l'absorption digestive des hormones thyroïdiennes."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par l'inducteur et après son arrêt.Risque d'hypothyroïdie clinique chez les patients hypothyroïdiens, par augmentation du métabolisme de la T3 et de la T4."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique et adaptation éventuelle de la posologie des hormones thyroïdiennes.Risque de baisse de l’efficacité des hormones thyroïdiennes par augmentation de leur métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "MILLEPERTUIS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de baisse de l’efficacité des hormones thyroïdiennes."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "PROGUANIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par l’antipaludique et après son arrêt.Risque d’hypothyroïdie clinique chez les patients substitués par hormones thyroïdiennes."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "RÉSINES CHÉLATRICES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les hormones thyroïdiennes à distance de la résine (plus de 2 heures, si possible).Diminution de l'absorption digestive des hormones thyroïdiennes."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "RIFABUTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par la rifabutine et après son arrêt.Décrit pour la phénytoïne, la rifampicine, la carbamazépine. Risque d'hypothyroïdie clinique chez les patients hypothyroïdiens, par augmentation du métabolisme de la T3 et de la T4."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par la rifampicine et après son arrêt.Risque d'hypothyroïdie clinique chez les patients hypothyroïdiens, par augmentation du métabolisme de la T3 et de la T4."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "SELPERCATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, et adjonction éventuelle de liothyronine au traitement par la lévothyroxine.Risque de moindre efficacité de la supplémentation en lévothyroxine par baisse de la conversion de T4 en T3 en cas de traitement par selpercatinib."
+  },
+  {
+    "d1": "HORMONES THYROÏDIENNES",
+    "d2": "SUCRALFATE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les hormones thyroïdiennes à distance du sucralfate (plus de 2 heures, si possible).Diminution de l'absorption digestive des hormones thyroïdiennes."
+  },
+  {
+    "d1": "HUILES MINÉRALES",
+    "d2": "PRÉSERVATIFS EN LATEX",
+    "level": "CONTRE-INDICATION",
+    "desc": "Utiliser un lubrifiant hydrosoluble (glycérine, polyacrylamide...).Risque de rupture du préservatif lors de l'utilisation avec des corps gras ou des lubrifiants contenant des huiles minérales (huile de paraffine, huile de silicone, etc...)."
+  },
+  {
+    "d1": "HYDROCORTISONE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation de la posologie de l'hydrocortisone pendant l'association et après l'arrêt de l'inducteur enzymatique.Risque de diminution de l'efficacité de l'hydrocortisone (augmentation de son métabolisme) ; les conséquences sont graves lorsque l'hydrocortisone est administrée en traitement substitutif ou en cas de transplantation."
+  },
+  {
+    "d1": "HYDROQUINIDINE",
+    "d2": "ALCALINISANTS URINAIRES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle des concentrations de l'hydroquinidine ; si besoin, adaptation de la posologie pendant le traitement alcalinisant et après son arrêt.Augmentation des concentrations plasmatiques de l'hydroquinidine et risque de surdosage (diminution de l'excrétion rénale de l'hydroquinidine par alcalinisation des urines)."
+  },
+  {
+    "d1": "HYDROQUINIDINE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. En cas de réponse inattendue, contrôler la digoxinémie et adapter la posologie.Augmentation de la digoxinémie par diminution de la clairance rénale de la digoxine. De plus, troubles de l'automatisme (bradycardie excessive et troubles de la conduction auriculo- ventriculaire)."
+  },
+  {
+    "d1": "HYDROQUINIDINE",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance des concentrations plasmatiques de l'antiarythmique et diminution éventuelle de sa posologie si nécessaire.Risque d'acouphènes et/ou de diminution de l'acuité auditive : cinchonisme lié à une diminution du métabolisme hépatique de l'antiarythmique par l'itraconazole."
+  },
+  {
+    "d1": "HYDROXYCARBAMIDE",
+    "d2": "VACCINS VIVANTS ATTÉNUÉS",
+    "level": "Association DECONSEILLEE",
+    "desc": "L'association ne devra être envisagée que si les bénéfices sont estimés comme étant supérieurs à ce risque. S'il est décidé d’interrompre le traitement par hydroxycarbamide pour effectuer la vaccination, un délai de 3 mois après l’arrêt est recommandé.Dans son indication chez le patient drépanocytaire, risque théorique de maladie vaccinale généralisée."
+  },
+  {
+    "d1": "HYPOKALIÉMIANTS",
+    "d2": "AUTRES HYPOKALIÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance de la kaliémie avec si besoin correction.Risque majoré d'hypokaliémie."
+  },
+  {
+    "d1": "HYPOKALIÉMIANTS",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Corriger auparavant toute hypokaliémie et réaliser une surveillance clinique, électrolytique et électrocardiographique.Hypokaliémie favorisant les effets toxiques des digitaliques."
+  },
+  {
+    "d1": "HYPOKALIÉMIANTS",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Corriger toute hypokaliémie avant d’administrer le produit et réaliser une surveillance clinique, électrolytique et électrocardiographique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "IBRUTINIB",
+    "d2": "AMIODARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d'augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par l’amiodarone."
+  },
+  {
+    "d1": "IBRUTINIB",
+    "d2": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "IBRUTINIB",
+    "d2": "ANTICOAGULANTS ORAUX",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite (pour les antivitamines K, contrôle plus fréquent de l’INR).Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "IBRUTINIB",
+    "d2": "CRIZOTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par le crizotinib."
+  },
+  {
+    "d1": "IBRUTINIB",
+    "d2": "DILTIAZEM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d'augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par le diltiazem."
+  },
+  {
+    "d1": "IBRUTINIB",
+    "d2": "DRONEDARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par la dronédarone."
+  },
+  {
+    "d1": "IBRUTINIB",
+    "d2": "FLUCONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par le fluconazole."
+  },
+  {
+    "d1": "IBRUTINIB",
+    "d2": "IMATINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par l'imatinib."
+  },
+  {
+    "d1": "IBRUTINIB",
+    "d2": "VERAPAMIL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par le vérapamil."
+  },
+  {
+    "d1": "IDÉLALISIB",
+    "d2": "ANTAGONISTES DES CANAUX CALCIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’antagoniste calcique pendant le traitement par l’idélalisib et après son arrêt.Majoration des effets indésirables de l’antagoniste des canaux calciques, à type d’hypotension orthostatique, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "IDÉLALISIB",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques d’idélalisib par augmentation de son métabolisme hépatique par l'inducteur enzymatique."
+  },
+  {
+    "d1": "IDÉLALISIB",
+    "d2": "MILLEPERTUIS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution importante des concentrations plasmatiques d’idélalisib par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "IFOSFAMIDE",
+    "d2": "VÉMURAFÉNIB",
+    "level": "A prendre en compte",
+    "desc": "Risque de diminution des concentrations de l'ifosfamide, avec augmentation de son métabolite actif et toxicité majorée."
+  },
+  {
+    "d1": "IMAO IRRÉVERSIBLES",
+    "d2": "ADRÉNALINE (VOIE BUCCO-DENTAIRE OU SOUS-CUTANÉE)",
+    "level": "Précaution d'emploi",
+    "desc": "Limiter l'apport, par exemple : moins de 0,1 mg d'adrénaline en 10 minutes ou 0,3 mg en 1 heure chez l'adulte.Troubles du rythme ventriculaire graves par augmentation de l'excitabilité cardiaque."
+  },
+  {
+    "d1": "IMAO IRRÉVERSIBLES",
+    "d2": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Majoration des effets hypertenseurs et/ou hyperthermiques de la tyramine présente dans certaines boissons alcoolisées (chianti, certaines bières, etc)."
+  },
+  {
+    "d1": "IMAO IRRÉVERSIBLES",
+    "d2": "GUANETHIDINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Interrompre le traitement par IMAO 15 jours avant le traitement par guanéthidine.Avec la guanéthidine utilisée par voie IV : risque de réactions vasculaires imprévisibles, notamment d'hypotension."
+  },
+  {
+    "d1": "IMAO IRRÉVERSIBLES",
+    "d2": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de deux semaines entre l'arrêt de l'IMAO et le début du traitement par l'antidépresseur sérotoninergique, et d'au moins une semaine entre l'arrêt de l'antidépresseur sérotoninergique (sauf pour la fluoxétine : cinq semaines) et le début.Risque d'apparition d'un syndrome sérotoninergique : diarrhée, tachycardie, sueurs, tremblements, confusion voire coma."
+  },
+  {
+    "d1": "IMAO IRRÉVERSIBLES",
+    "d2": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de deux semaines entre l'arrêt de l'IMAO et le début de l'autre traitement, et d'au moins une semaine entre l'arrêt de l'autre traitement et le début de l'IMAO.Risque d'apparition d'un syndrome sérotoninergique : diarrhée, tachycardie, sueurs, tremblements, confusion voire coma."
+  },
+  {
+    "d1": "IMAO IRRÉVERSIBLES",
+    "d2": "MILLEPERTUIS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'apparition d'un syndrome sérotoninergique."
+  },
+  {
+    "d1": "IMAO IRRÉVERSIBLES",
+    "d2": "SYMPATHOMIMÉTIQUES ALPHA ET BÊTA (VOIE IM ET IV)",
+    "level": "Précaution d'emploi",
+    "desc": "A n'utiliser que sous contrôle médical strict.Augmentation de l'action pressive du sympathomimétique, le plus souvent modérée."
+  },
+  {
+    "d1": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "d2": "IMAO-B",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de poussée hypertensive, par absence de sélectivité sur la monoamine oxydase, notamment en cas d’alimentation riche en tyramine (fromage, bière,…)."
+  },
+  {
+    "d1": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "d2": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique très étroite. Débuter l'association aux posologies minimales recommandées.Risque d'apparition d'un syndrome sérotoninergique : diarrhée, tachycardie, sueurs, tremblements, confusion voire coma."
+  },
+  {
+    "d1": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "d2": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique très étroite. Débuter l'association aux posologies minimales recommandées.Risque d'apparition d'un syndrome sérotoninergique : diarrhée, tachycardie, sueur, confusion voire coma."
+  },
+  {
+    "d1": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "d2": "MILLEPERTUIS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'apparition d'un syndrome sérotoninergique."
+  },
+  {
+    "d1": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "d2": "SYMPATHOMIMÉTIQUES ALPHA ET BÊTA (VOIE IM ET IV)",
+    "level": "Précaution d'emploi",
+    "desc": "A n'utiliser que sous contrôle médical strict.Par extrapolation à partir des IMAO non sélectifs : risque d'augmentation de l'action pressive."
+  },
+  {
+    "d1": "IMAO-B",
+    "d2": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de poussée hypertensive, par absence de sélectivité sur la monoamine oxydase, notamment en cas d’alimentation riche en tyramine (fromage, bière,…)."
+  },
+  {
+    "d1": "IMATINIB",
+    "d2": "ANTICOAGULANTS ORAUX",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite (pour les antivitamines K, contrôle plus fréquent de l’INR).Augmentation du risque hémorragique. Pour l’apixaban et le rivaroxaban, risque de diminution de leur métabolisme par l’imatinib, se surajoutant au risque pharmacodynamique."
+  },
+  {
+    "d1": "IMATINIB",
+    "d2": "IBRUTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par l'imatinib."
+  },
+  {
+    "d1": "IMATINIB",
+    "d2": "TÉDIZOLIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de l'imatinib, par augmentation de son absorption avec le tédizolide administré par voie orale."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "CLARITHROMYCINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "DALFOPRISTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par diminution de son métabolisme."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "ERYTHROMYCINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de sa posologie pendant l'association et après son arrêt.Risque d'augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme et de la créatininémie."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Augmentation de la posologie de l'immunosuppresseur sous contrôle des concentrations sanguines. Réduction de la posologie après l'arrêt de l'inducteur.Diminution des concentrations sanguines et de l'efficacité de l'immunosuppresseur, par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation de sa posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "ITRACONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "KETOCONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "LÉTERMOVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique renforcée.Augmentation, éventuellement très importante, des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme et de la créatininémie."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "MARIBAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation éventuelle de la posologie pendant l'association et après son arrêt.Possible augmentation des concentrations de l’immunosuppresseur."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "NICARDIPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de sa posologie pendant le traitement et après l'arrêt.Augmentation des concentrations sanguines de l'immunodépresseur, par inhibition de son métabolisme."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "POSACONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "PRISTINAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de sa posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "QUINUPRISTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "RANOLAZINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, et adaptation éventuelle de la posologie de l’immunosuppresseur.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme par la ranolazine."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "TELITHROMYCINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "VACCINS VIVANTS ATTÉNUÉS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "VÉMURAFÉNIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations des immunosuppresseurs, avec pour conséquence un risque d’inefficacité."
+  },
+  {
+    "d1": "IMMUNOSUPPRESSEURS",
+    "d2": "VORICONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "- avec la ciclosporine et le tacrolimus : dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique par le voriconazole."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "ANDROGÈNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association et 1 à 2 semaines après l’arrêt de l’inducteur.Risque de diminution des concentrations plasmatiques de l'androgène et par conséquent de son efficacité, par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "APRÉMILAST",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques d’aprémilast par augmentatiion de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "ARIPIPRAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l’aripiprazole pendant l’association et 1 à 2 semaines après l’arrêt de l’inducteur.Diminution des concentrations plasmatiques de l’aripiprazole."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "BAZÉDOXIFÈNE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance d'éventuels signes évocateurs d’une perte d’efficacité (saignements).Diminution des concentrations plasmatiques de bazédoxifène par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "BÉDAQUILINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques de bédaquiline par augmentation de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "CASPOFUNGINE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de traitement par inducteur, maintenir la posologie à 70 mg par jour dès le 2e jour.Diminution des concentrations plasmatiques de caspofungine."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "CYCLOPHOSPHAMIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du métabolite actif du cyclophosphamide par l'inducteur, et donc de sa toxicité."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "CYPROTERONE",
+    "level": "Précaution d'emploi",
+    "desc": "- dans ses indications comme anti-androgène: surveillance clinique et adaptation éventuelle de la posologie de la cyprotérone pendant l'association et après son arrêt.Risque de diminution de l'efficacité de la cyprotérone."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "DISOPYRAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement adaptation de la posologie du disopyramide pendant l’association et 1 à 2 semaines après l’arrêt de l’inducteur.Risque de diminution des concentrations du disopyramide par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt de l’inducteur.Diminution de l'efficacité contraceptive, par augmentation du métabolisme hépatique du contraceptif hormonal par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "ETOPOSIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association s'avère nécessaire, surveillance clinique et adaptation éventuelle de la posologie d’étoposide pendant l’association, et 1 à 2 semaines après l’arrêt de l’inducteur.Diminution des concentrations plasmatiques d’étoposide par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "GLASDÉGIB",
+    "level": "Précaution d'emploi",
+    "desc": "- avec les autres inducteurs - si l’association ne peut être évitée, augmenter la dose de glasdégib.Diminution, éventuellement importante selon l'inducteur, des concentrations de glasdégib par augmentation de son métabolisme, avec risque d'inefficacité."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation de la posologie des corticoïdes pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité des corticoïdes par augmentation de leur métabolisme hépatique par l'inducteur ; les conséquences sont particulièrement importantes chez les addisoniens traités par l'hydrocortisone et en cas de transplantation."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "GRAZOPREVIR + ELBASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution des concentrations de grazoprévir et d’elbasvir par l’inducteur, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "HYDROCORTISONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation de la posologie de l'hydrocortisone pendant l'association et après l'arrêt de l'inducteur enzymatique.Risque de diminution de l'efficacité de l'hydrocortisone (augmentation de son métabolisme) ; les conséquences sont graves lorsque l'hydrocortisone est administrée en traitement substitutif ou en cas de transplantation."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Augmentation de la posologie de l'immunosuppresseur sous contrôle des concentrations sanguines. Réduction de la posologie après l'arrêt de l'inducteur.Diminution des concentrations sanguines et de l'efficacité de l'immunosuppresseur, par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "LEVONORGESTREL",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de prise d’un médicament inducteur dans les 4 dernières semaines, l’utilisation d’une contraception d’urgence non hormonale (DIU au cuivre) devrait s’envisager. Si ce n’est pas possible, le doublement de la dose de lévonorgestrel est une autre option.Avec le lévonorgestrel utilisé dans l’indication contraception d’urgence, diminution importante des concentrations plasmatiques de lévonorgestrel, avec risque d’inefficacité."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "MARAVIROC",
+    "level": "Précaution d'emploi",
+    "desc": "La dose de maraviroc doit être augmentée à 600 mg deux fois par jour dans cette situation.En l’absence de co-administration avec un inhibiteur puissant du CYP3A4, diminution des concentrations de maraviroc par l’inducteur (sauf la névirapine)."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "MARIBAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, augmentation éventuelle de la posologie de maribavir.Diminution possiblement importante des concentrations de maribavir avec la rifampicine, avec risque de réduction de la réponse virologique."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "METHADONE",
+    "level": "Précaution d'emploi",
+    "desc": "Augmenter la fréquence des prises de méthadone (2 à 3 fois par jour au lieu d'une fois par jour).Diminution des concentrations plasmatiques de méthadone avec risque d'apparition d'un syndrome de sevrage, par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "MIDOSTAURINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations de midostaurine par l’inducteur enzymatique."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "OLAPARIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution, éventuellement très importante selon l’inducteur, des concentrations plasmatiques de l’olaparib par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "OXYCODONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Adaptation éventuelle de la posologie d’oxycodone .Diminution des concentrations plasmatiques de l’oxycodone par augmentation de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "PROGESTATIFS CONTRACEPTIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre méthode contraceptive, en particulier de type mécanique, pendant la durée de l'association et un cycle suivant.Diminution de l'efficacité contraceptive du contraceptif hormonal, par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "PROGESTATIFS NON CONTRACEPTIFS, ASSOCIÉS OU NON À UN ESTROGÈNE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du traitement hormonal pendant l'administration de l'inducteur et après son arrêt.Diminution de l'efficacité du progestatif."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "TÉNOFOVIR ALAFÉNAMIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique pendant l’association et 1 à 2 semaines après l’arrêt de l’inducteur.Diminution des concentrations plasmatiques du ténofovir alafénamide par diminution de son absorption par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "VINCA-ALCALOÏDES CYTOTOXIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques du vinca-alcaloïde par l’inducteur, avec possible retentissement sur l’efficacité.."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES",
+    "d2": "VISMODÉGIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations plasmatiques de vismodegib par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "ABIRATERONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution notable des concentrations plasmatiques de l’abiratérone, avec risque de moindre efficacité."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association et 1 à 2 semaines après leur arrêt.Diminution des concentrations plasmatiques de l’afatinib par augmentation de son métabolisme par ces substances."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "ALBENDAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique de la réponse thérapeutique et adaptation éventuelle de la posologie de l’albendazole pendant le traitement avec l’inducteur enzymatique et après son arrêt.Diminution importante des concentrations plasmatiques de l’albendazole et de son métabolite actif par l’inducteur, avec risque de baisse de son efficacité."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "ANTIARYTHMIQUES CLASSE IA",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et contrôle des concentrations plasmatiques ; si besoin, adaptation de la posologie de l'antiarythmique pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de l'antiarythmique, par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par l'anticonvulsivant inducteur et 8 jours après son arrêt.Diminution (ou, rarement, augmentation avec la phénytoïne) de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique par l'anticonvulsivant inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "APIXABAN",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques de l’apixaban par l'inducteur enzymatique, avec risque de réduction de l’effet thérapeutique."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "BOSENTAN",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations plasmatiques de"
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "COBICISTAT",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution de l’efficacité du cobicistat par augmentation de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "DEFERASIROX",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la ferritinémie pendant et après le traitement par l’inducteur enzymatique. Si besoin, adaptation de la posologie de déférasirox.Risque de diminution des concentrations plasmatiques de déférasirox."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "DRONEDARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations de dronédarone par augmentation de son métabolisme, sans modification notable du métabolite actif."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "ESTROGÈNES NON CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du traitement hormonal pendant l'administration de l'inducteur et après son arrêt.Diminution de l'efficacité de l'estrogène."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "FENTANYL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer un autre morphinique.Diminution des concentrations plasmatiques de fentanyl par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "HALOPERIDOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, adaptation posologique pendant le traitement par l'halopéridol et après son arrêt.Risque de moindre efficacité de l'halopéridol par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par l'inducteur et après son arrêt.Risque d'hypothyroïdie clinique chez les patients hypothyroïdiens, par augmentation du métabolisme de la T3 et de la T4."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "IDÉLALISIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques d’idélalisib par augmentation de son métabolisme hépatique par l'inducteur enzymatique."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "INHIBITEURS DE LA 5-ALPHA REDUCTASE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Diminution des concentrations plasmatiques de l’inhibiteur de la 5- alpha réductase par l’inducteur enzymatique."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de baisse de l'efficacité de l'inhibiteur de protéases par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "IVABRADINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’ivabradine pendant l’association et après l’arrêt de l’inducteur.Risque de diminution de l'efficacité de l’ivabradine, par augmentation de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "LÉDIPASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Sauf pour enzalutamideDiminution importante des concentrations plasmatiques du lédipasvir par augmentation de son métabolisme hépatique par l'inducteur enzymatique."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "METRONIDAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de métronidazole pendant le traitement par l’inducteur et après son arrêt.Diminution des concentrations plasmatiques du métronidazole par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "MINÉRALOCORTICOÏDES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation de la posologie des corticoïdes pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité des corticoïdes par augmentation de leur métabolisme hépatique par l'inducteur : les conséquences sont particulièrement importantes chez les addisoniens traités par l'hydrocortisone et en cas de transplantation."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "MONTELUKAST",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l'anti- asthmatique pendant le traitement par l'inducteur et après son arrêt.Risque de baisse de l'efficacité du montélukast par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "NIMODIPINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l'antagoniste du calcium pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques de l'antagoniste du calcium par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "POSACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si possible, dosages plasmatiques du posaconazole et adaptation éventuelle de sa posologie.Diminution des concentrations plasmatiques et de l'efficacité du posaconazole."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. S'il y a lieu, adaptation de la posologie de la propafénone pendant l'association et après l'arrêt de l'inducteur.Diminution des concentrations plasmatiques de la propafénone par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "QUININE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la quinine pendant le traitement par l’inducteur et après son arrêt.Risque de perte de l’efficacité de la quinine par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "STIRIPENTOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et dosage plasmatique, lorsque cela est possible, de l'inducteur associé au stiripentol et adaptation éventuelle de sa posologie.Augmentation des concentrations plasmatiques de l'inducteur, avec risque de surdosage, par inhibition de son métabolisme hépatique par le stiripentol."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, de la théophyllinémie. Adaptation éventuelle de la posologie de la théophylline pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de la théophylline par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "TIAGABINE",
+    "level": "Précaution d'emploi",
+    "desc": "Une augmentation de la posologie de tiagabine peut s'avérer nécessaire en cas d'association à un anticonvulsivant inducteur enzymatique.Diminution des concentrations plasmatiques de la tiagabine par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "TICAGRELOR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations plasmatiques de ticagrelor par augmentation de son métabolisme hépatique par l'inducteur enzymatique, avec risque de diminution de l’effet thérapeutique."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "ULIPRISTAL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer une alternative thérapeutique peu ou pas métabolisée.Risque de diminution de l’effet de l’ulipristal, par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "VELPATASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations plasmatiques de velpatasvir par l’inducteur, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "d2": "VITAMINE D",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations de vitamine D et supplémentation si nécessaire.Diminution des concentrations de vitamine D plus marquée qu’en l’absence d'inducteur."
+  },
+  {
+    "d1": "INHIBITEURS DE LA 5-ALPHA REDUCTASE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Diminution des concentrations plasmatiques de l’inhibiteur de la 5- alpha réductase par l’inducteur enzymatique."
+  },
+  {
+    "d1": "INHIBITEURS DE LA 5-ALPHA REDUCTASE",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Diminution des concentrations plasmatiques de l’inhibiteur de la 5- alpha réductase par l’inducteur enzymatique."
+  },
+  {
+    "d1": "INHIBITEURS DE LA XANTHINE OXYDASE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle de la théophyllinémie jusqu'à deux à trois semaines après la mise en route du traitement par l'inhibiteur ; s'il y a lieu, adaptation de la posologie pendant le traitement par l'association.En cas de posologies élevées de l'inhibiteur, augmentation des concentrations plasmatiques de théophylline par inhibition de son métabolisme."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "ACIDE ACETYLSALICYLIQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Pour des doses anti-inflammatoires d'acide acétylsalicylique (>= 1g par prise et/ou >= 3g par jour) ou pour des doses antalgiques ou antipyrétiques (>= 500 mg par prise et/ou < 3g par jour) : Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, sous diurétiques, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Par ailleurs, réduction de l'effet antihypertenseur."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "level": "A prendre en compte",
+    "desc": "Dans les indications où cette association est possible, risque accru de dégradation de la fonction rénale, voire insuffisance rénale aiguë, et majoration de l'hyperkaliémie, ainsi que de l'hypotension et des syncopes."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Précaution d'emploi",
+    "desc": "Hydrater le malade et surveiller la fonction rénale en début de traitement et régulièrement pendant l’association.Insuffisance rénale aiguë chez le patient à risque (âgé, déshydraté, sous diurétiques, avec une fonction rénale altérée), par diminution de la filtration glomérulaire secondaire à une diminution de la synthèse des prostaglandines rénales. Ces effets sont généralement réversibles. Par ailleurs, réduction de l’effet antihypertenseur."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "DIURÉTIQUES HYPOKALIÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'hypertension artérielle, lorsqu'un traitement diurétique préalable a pu entraîner une déplétion hydrosodée, il faut : - soit arrêter le diurétique avant de débuter le traitement par l'IEC, et réintroduire un diurétique hypokaliémiant si nécessaire ultérieurement ; - soit administrer des doses initiales réduites d'IEC et augmenter progressivement la posologie. Dans l'insuffisance cardiaque congestive traitée par diurétiques, commencer par une dose très faible d'IEC, éventuellement après réduction de la dose du diurétique hypokaliémient associé. Dans tous les cas : surveiller la fonction rénale (créatininémie) dans les premières semaines du traitement par l'IEC.Risque d'hypotension artérielle brutale et/ou d'insuffisance rénale aiguë lors de l'instauration ou de l'augmentation de la posologie d'un traitement par un inhibiteur de l'enzyme de conversion en cas de déplétion hydrosodée préexistante."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "EPLERENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle strict de la kaliémie et de la fonction rénale pendant l’association.Majoration du risque d’hyperkaliémie, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "GLIPTINES",
+    "level": "A prendre en compte",
+    "desc": "Risque de majoration de la survenue d'un angio-œdème d'origine bradykinique pouvant être fatal."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "INSULINE",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer l'autosurveillance glycémique.L'utilisation des IEC peut entraîner une majoration de l'effet hypoglycémiant chez le diabétique traité par insuline. La survenue de malaises hypoglycémiques semble exceptionnelle (amélioration de la tolérance au glucose qui aurait pour conséquence une réduction des besoins en insuline)."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "LITHIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'usage d'un IEC est indispensable, surveillance stricte de la lithémie et adaptation de la posologie du lithium.Augmentation de la lithémie pouvant atteindre des valeurs toxiques (diminution de l'excrétion rénale du lithium)."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "POTASSIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf s'il existe une hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénale ( addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "SIROLIMUS",
+    "level": "A prendre en compte",
+    "desc": "Majoration du risque d’angio-oedème."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "SPIRONOLACTONE",
+    "level": "Précaution d'emploi",
+    "desc": "Vérifier au préalable l’absence d’hyperkaliémie et d’insuffisance rénale. Surveillance biologique étroite de la kaliémie et de la créatininémie (1 fois par semaine pendant le premier mois, puis une fois par mois ensuite).Avec la spironolactone à la posologie de 12,5 à 50 mg par jour, et avec des doses faibles d’IEC. Dans le traitement de l’insuffisance cardiaque de classe III ou IV (NYHA) avec fraction d’éjection <35 % et préalablement traitée par l’association inhibiteur de conversion + diurétique de l’anse : risque d’hyperkaliémie, potentiellement létale, en cas de non-respect des conditions de prescription de cette association."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer l'autosurveillance glycémique.L'utilisation des IEC peut entraîner une majoration de l'effet hypoglycémiant chez le diabétique traité par sulfamides hypoglycémiants. La survenue de malaises hypoglycémiques semble exceptionnelle (amélioration de la tolérance au glucose qui aurait pour conséquence une réduction des besoins en sulfamides hypoglycémiants)."
+  },
+  {
+    "d1": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "d2": "TEMSIROLIMUS",
+    "level": "A prendre en compte",
+    "desc": "Majoration du risque d’angio-oedème."
+  },
+  {
+    "d1": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "d2": "ACIDE FUSIDIQUE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Arrêter le traitement par l'inhibiteur de l'HMG Co-A réductase avant d'initier un traitement par acide fusidique ou utiliser un autre antibiotique.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse."
+  },
+  {
+    "d1": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "d2": "COLCHICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, notamment au début de l'association.Risque de majoration des effets indésirables musculaires de ces substances, et notamment de rhabdomyolyse."
+  },
+  {
+    "d1": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "d2": "DAPTOMYCINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, renforcer la surveillance biologique (dosage des CPK plus d’une fois par semaine) et surveillance clinique étroite.Risque d’addition des effets indésirables (dose-dépendant) à type de rhabdomyolyse."
+  },
+  {
+    "d1": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "d2": "ELTROMBOPAG",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la statine.Risque de majoration de la toxicité des statines, par inhibition de leur recapture hépatique."
+  },
+  {
+    "d1": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "d2": "GLIPTINES",
+    "level": "Précaution d'emploi",
+    "desc": "Le contrôle régulier de la fonction rénale et le strict respect des doses sont impératifs.Possibilité de survenue d’effets indésirables musculaires à l’introduction d’une gliptine, malgré le traitement antérieur par statine bien toléré."
+  },
+  {
+    "d1": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "d2": "GRAZOPREVIR + ELBASVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association. La dose de statine ne doit pas dépasser 20 mg par jour (10 mg avec la rosuvastatine).Augmentation des concentrations plasmatiques de l’hypochlestérolémiant par augmentation de son absorption intestinale."
+  },
+  {
+    "d1": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "d2": "LENALIDOMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer le contrôle clinique et biologique, notamment durant les premières semaines de traitement.Risque majoré de survenue de rhabdomyolyses."
+  },
+  {
+    "d1": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "d2": "ROXADUSTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la statine pendant le traitement par roxadustat.Augmentation d’un facteur 2 à 3 de l’exposition de la statine, par diminution de son métabolisme par le roxadustat."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer l'inhibiteur de protéases le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatiques d’afatinib par augmentation de son absorption par l'inhibiteur de protéases."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "ALBENDAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique de la réponse thérapeutique et adaptation éventuelle de la posologie de l’albendazole pendant le traitement avec l’inducteur enzymatique et après son arrêt.Diminution importante des concentrations plasmatiques de l’albendazole et de son métabolite actif par le ritonavir, avec risque de baisse de son efficacité."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant la durée du traitement.Variation de l'effet de l'antivitamine K, le plus souvent dans le sens d'une diminution."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "ATORVASTATINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser des doses plus faibles d'atorvastatine. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse (diminution du métabolisme hépatique de l'atorvastatine)."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Augmentation des concentrations de la clarithromycine et de son métabolite actif par diminution de son métabolisme hépatique par l'inhibiteur de protéases."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "CYPROTERONE",
+    "level": "Précaution d'emploi",
+    "desc": "- dans ses indications comme anti-androgène: surveillance clinique et adaptation éventuelle de la posologie de la cyprotérone pendant l'association et après son arrêt.Risque de diminution de l'efficacité de la cyprotérone."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, s’il y a lieu, de l’ECG et de la digoxinémie, avec adaptation éventuelle de la posologie de digoxine.Augmentation de la digoxinémie, plus marquée pour la voie intraveineuse, par augmentation de l’absorption de la digoxine ou diminution de sa clairance rénale."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du ritonavir.Risque de diminution de l'efficacité contraceptive par diminution des concentrations en contraceptif hormonal, dûe à l'augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique et adaptation éventuelle de la posologie des hormones thyroïdiennes.Risque de baisse de l’efficacité des hormones thyroïdiennes par augmentation de leur métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation de sa posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de baisse de l'efficacité de l'inhibiteur de protéases par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "A prendre en compte",
+    "desc": "Pour connaître les risques et les niveaux de contrainte de chaque inhibiteur de protéase boosté par le ritonavir avec les inhibiteurs puissants du CYP3A4, il convient de se reporter aux AMM spécifiques à chacun d'eux.Risque d’augmentation des concentrations plasmatiques de l’inhibiteur de protéase boosté par le ritonavir ou de l’inhibiteur du CYP3A4."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique lors de l’association. L’administration de doses élevées d’itraconazole (>200 mg par jour) n’est pas recommandée.Risque d’augmentation des concentrations d’itraconazole par l’inhibiteur de protéases."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "LAMOTRIGINE",
+    "level": "Précaution d'emploi",
+    "desc": "- Surveillance clinique et adaptation de la posologie de la lamotrigine lors de la mise en route du traitement par ritonavir.Risque de diminution des concentrations et de l’efficacité de la lamotrigine par augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "METHADONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique régulière et adaptation éventuelle de la posologie de méthadone.Diminution des concentrations plasmatiques de méthadone avec risque d'apparition d'un syndrome de sevrage par augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'association fortuite, ne pas interrompre brutalement la prise de millepertuis mais contrôler les concentrations plasmatiques (ou l'efficacité) de l'inhibiteur de protéases avant puis après l'arrêt du millepertuis.Diminution des concentrations plasmatiques de l'inhibiteur de protéases, en raison de l'effet inducteur enzymatique du millepertuis, avec risque de baisse d'efficacité voire d'annulation de l'effet dont les conséquences peuvent être éventuellement graves (baisse de l'efficacité antirétrovirale)."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par l'inhibiteur de protéases boosté par ritonavir."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "PROGESTATIFS CONTRACEPTIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre méthode contraceptive, en particulier de type mécanique (préservatif ou stérilet), pendant la durée de l'association et un cycle suivant.Risque de diminution de l'efficacité contraceptive par diminution des concentrations en contraceptif hormonal, dûe à l'augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "RIFABUTINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduction de la dose de rifabutine (150 mg 1 jour sur deux). Surveillance clinique et biologique régulière, notamment en début d'association.Risque de baisse de l'efficacité de l'inhibiteur de protéases (ce d'autant que la posologie de la rifabutine est élevée) d'une part, et risque d'augmentation des effets indésirables (uvéites) de la rifabutine, d'autre part."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "RIFAMPICINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Dans l'attente de données complémentaires avec les inhibiteurs de protéases \"boostés\".Diminution très importante des concentrations plasmatiques de l'inhibiteur de protéases, par augmentation de son métabolisme hépatique par la rifampicine. Pour l'association (saquinavir + ritonavir) : risque de toxicité hépatocellulaire sévère."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "ROSUVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique.Augmentation des concentrations plasmatiques de la rosuvastatine par augmentation de son absorption."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "TALAZOPARIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "TÉNOFOVIR ALAFÉNAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour. L’association avec les autres inhibiteurs de protéases du VIH n’a pas été étudiée.Avec l'atazanavir, le darunavir ou le lopinavir, augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par l'inhibiteur de protéases et après son arrêt.Diminution des concentrations plasmatiques de la théophylline, par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "ULIPRISTAL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer une alternative thérapeutique peu ou pas métabolisée.Risque de diminution de l’effet de l’ulipristal, par augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "d2": "VORICONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Baisse très importante des concentrations de l’antifongique par augmentation de son métabolisme par le ritonavir, avec risque d’échec du traitement."
+  },
+  {
+    "d1": "INHIBITEURS DE TYROSINE KINASES MÉTABOLISÉS",
+    "d2": "ANTISÉCRÉTOIRES ANTIHISTAMINIQUES H2",
+    "level": "A prendre en compte",
+    "desc": "- sauf avec l'entrectinib et le vandétanib.Risque de diminution de la biodisponibilité de l’inhibiteur de tyrosine kinases, en raison de son absorption pH-dépendante."
+  },
+  {
+    "d1": "INHIBITEURS DE TYROSINE KINASES MÉTABOLISÉS",
+    "d2": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "level": "A prendre en compte",
+    "desc": "- sauf avec l'entrectinib, le fédratinib, l'imatinib, le tucatinib et le vandétanibRisque de diminution de la biodisponibilité de l’inhibiteur de tyrosine kinases, en raison de son absorption pH-dépendante."
+  },
+  {
+    "d1": "INHIBITEURS D'INTÉGRASE",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance de l’antirétroviral (plus de 2 heures, si possible).Diminution de l'absorption digestive des inhibiteurs d’intégrase."
+  },
+  {
+    "d1": "INHIBITEURS D'INTÉGRASE",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de l’antirétroviral (plus de 2 heures, si possible).Diminution de l'absorption digestive des inhibiteurs d’intégrase."
+  },
+  {
+    "d1": "INHIBITEURS D'INTÉGRASE",
+    "d2": "MAGNÉSIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de magnésium à distance de l’antirétroviral (plus de 2 heures, si possible).Diminution de l'absorption digestive des inhibiteurs d’intégrase."
+  },
+  {
+    "d1": "INHIBITEURS D'INTÉGRASE",
+    "d2": "ZINC",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de zinc à distance de l’antirétroviral (plus de 2 heures, si possible).Risque de diminution de l'absorption digestive des inhibiteurs d’intégrase, par chélation par le cation divalent."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "ALFENTANIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’analgésique opiacé en cas de traitement par un inhibiteur puissant du CYP3A4.Augmentation de l'effet dépresseur respiratoire de l'analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "ALFUZOSINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de l’alfuzosine et de ses effets indésirables."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "APIXABAN",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de l’apixaban par l'inhibiteur, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "BÉDAQUILINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association est nécessaire, une surveillance ECG plus fréquente et une surveillance des transaminases sont recommandées.Augmentation des concentrations plasmatiques de bédaquiline par diminution de son métabolisme hépatique par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "BORTEZOMIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du bortezomib pendant la durée du traitement par l’inhibiteur enzymatique.Risque de majoration des effets indésirables, notamment neurologiques, du bortezomib par diminution de son métabolisme."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "BOSENTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association.Risque majoré des effets indésirables du bosentan, notamment d’atteintes hépatiques, par diminution de son métabolisme par l'inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "BRENTUXIMAB",
+    "level": "A prendre en compte",
+    "desc": "Augmentation des concentrations du métabolite actif du brentuximab, avec risque de neutropénie."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "CABAZITAXEL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du cabazitaxel pendant le traitement par l’inhibiteur enzymatique.Risque de majoration des effets indésirables dose-dépendants du cabazitaxel par inhibition de son métabolisme par l’inhibiteur enzymatique."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "COBICISTAT",
+    "level": "A prendre en compte",
+    "desc": "Pour connaître les risques et les niveaux de contrainte de chaque interaction, il convient de se reporter aux AMM specifiques à chaque spécialité.Risque d’augmentation des concentrations plasmatiques du cobicistat ou de l’inhibiteur du CYP3A4."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "CORTICOÏDES MÉTABOLISÉS, NOTAMMENT INHALÉS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer un corticoïde non métabolisé.En cas d’utilisation prolongée par voie orale ou inhalée : augmentation des concentrations plasmatiques du corticoïde par diminution de son métabolisme hépatique par l’inhibiteur, avec risque d’apparition d’un syndrome cushingoïde voire d’une insuffisance surrénalienne."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "DAPOXÉTINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de majoration des effets indésirables, notamment à type de vertiges ou de syncopes."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "DÉLAMANID",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, contrôle clinique et électrocardiographique régulier.Risque majoré de troubles du rythme ventriculaires, notamment de torsades de pointes."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "DISOPYRAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du disopyramide.Risque d’augmentation des effets indésirables du disopyramide par diminution de son métabolisme."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "DOCETAXEL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du docétaxel pendant le traitement par l’inhibiteur enzymatique.Risque de majoration des effets indésirables dose-dépendants du docétaxel par inhibition de son métabolisme par l’inhibiteur enzymatique."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "EPLERENONE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de l’éplérénone par l'inhibiteur et de ses effets indésirables, notamment l’hyperkaliémie."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "ESZOPICLONE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d’association chez les sujets non âgés, une réduction de la dose d’eszopiclone peut être nécessaire.Augmentation de l'effet sédatif de l’eszopiclone."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "FENTANYL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l’analgésique opiacé en cas de traitement par un inhibiteur puissant du CYP3A4.Risque d'augmentation de l’effet dépresseur respiratoire de l’analgésique opiacé par légère diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "GLASDÉGIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Risque de majoration des effets indésirables du glasdégib par diminution de son métabolisme."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "HALOFANTRINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cela est possible, interrompre l'inhibiteur. Si l'association ne peut être évitée, contrôle préalable du QT et surveillance ECG monitorée.Risque majoré de troubles du rythme ventriculaires, notamment de torsades de pointes."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "A prendre en compte",
+    "desc": "Pour connaître les risques et les niveaux de contrainte de chaque inhibiteur de protéase boosté par le ritonavir avec les inhibiteurs puissants du CYP3A4, il convient de se reporter aux AMM spécifiques à chacun d'eux.Risque d’augmentation des concentrations plasmatiques de l’inhibiteur de protéase boosté par le ritonavir ou de l’inhibiteur du CYP3A4."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "IVACAFTOR (SEUL OU ASSOCIÉ)",
+    "level": "Précaution d'emploi",
+    "desc": "Se référer à l'AMM pour les adaptations posologiques.Augmentation des concentrations d’ivacaftor, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "LOMITAPIDE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation des concentrations plasmatiques du lomitapide par diminution de son métabolisme hépatique par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "LUMEFANTRINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cela est possible, interrompre l’inhibiteur. Si l’association ne peut être évitée, contrôle préalable du QT et surveillance ECG monitorée.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "MARAVIROC",
+    "level": "Précaution d'emploi",
+    "desc": "La dose de maraviroc doit être diminuée à 150 mg deux fois par jour en cas de co-administration avec cet inhibiteur. A l'exception du tipranavir boosté par ritonavir où la dose de maraviroc doit être de 300 mg deux fois par jour.Augmentation des concentrations de maraviroc par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "MIDOSTAURINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Augmentation des effets indésirables de la midostaurine par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "NALOXEGOL",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation très importante des concentrations du naloxegol par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "OLAPARIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 150 mg deux fois par jour.Augmentation des concentrations plasmatiques d’olaparib par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "OMBITASVIR + PARITAPRÉVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Contre-indication: - sauf avec le ritonavir.Augmentation des concentrations plasmatiques de la bithérapie par diminution de son métabolisme hépatique par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "OXYCODONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l’oxycodone pendant le traitement par l'inhibiteur et après son arrêt.Majoration des effets indésirables, notamment respiratoires, de l’oxycodone par diminution de son métabolisme par l'inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "PANOBINOSTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. Débuter le traitement à dose réduite de moitié (10 mg).Risque de majoration des effets indésirables, notamment cardiaques, du panobinostat par diminution de son métabolisme par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "SUFENTANIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’analgésique opiacé en cas de traitement par un inhibiteur puissant du CYP3A4.Augmentation de l’effet dépresseur respiratoire de l’analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "TELITHROMYCINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "chez le patient insuffisant rénal ou hépatique sévère.Risque de majoration des effets indésirables, notamment à type de troubles du rythme cardiaque."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "TOLVAPTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie des deux tiers aux trois quarts, selon la dose prescrite.Augmentation importante (entre 2 à 5 fois en moyenne) des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "TRÉTINOÏNE",
+    "level": "Précaution d'emploi",
+    "desc": "Adaptation de la posologie de la trétinoïne pendant le traitement par l’inhibiteur et après son arrêt.Décrit pour les antifongiques azolés Augmentation des concentrations de trétinoïne par diminution de son métabolisme, avec risque de majoration de sa toxicité (pseudo- tumor cerebrii, hypercalcémie…)"
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. S’il y a lieu, adaptation de la posologie du vérapamil pendant le traitement par l’inhibiteur, et après son arrêt, le cas échéant.Bradycardie et/ou troubles de la conduction auriculo-ventriculaire, par diminution du métabolisme hépatique du vérapamil par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "VINCA-ALCALOÏDES CYTOTOXIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite.Risque de majoration de la toxicité de l'antimitotique par diminution de son métabolisme hépatique par l’inhibiteur."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "ZOLPIDEM",
+    "level": "A prendre en compte",
+    "desc": "Légère augmentation de l'effet sédatif du zolpidem."
+  },
+  {
+    "d1": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "d2": "ZOPICLONE",
+    "level": "A prendre en compte",
+    "desc": "Légère augmentation de l'effet sédatif de la zopiclone."
+  },
+  {
+    "d1": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "d2": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "level": "A prendre en compte",
+    "desc": "Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "d2": "ANTIDÉPRESSEURS IMIPRAMINIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue et, si nécessaire, adaptation posologique.Augmentation des concentrations plasmatiques de l'antidépresseur imipraminique avec risque de convulsions et augmentation des effets indésirables."
+  },
+  {
+    "d1": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "d2": "COBIMÉTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "d2": "IMAO IRRÉVERSIBLES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de deux semaines entre l'arrêt de l'IMAO et le début du traitement par l'antidépresseur sérotoninergique, et d'au moins une semaine entre l'arrêt de l'antidépresseur sérotoninergique (sauf pour la fluoxétine : cinq semaines) et le début.Risque d'apparition d'un syndrome sérotoninergique : diarrhée, tachycardie, sueurs, tremblements, confusion voire coma."
+  },
+  {
+    "d1": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "d2": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique très étroite. Débuter l'association aux posologies minimales recommandées.Risque d'apparition d'un syndrome sérotoninergique : diarrhée, tachycardie, sueurs, tremblements, confusion voire coma."
+  },
+  {
+    "d1": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'apparition d'un syndrome sérotoninergique."
+  },
+  {
+    "d1": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "d2": "MILLEPERTUIS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'apparition d'un syndrome sérotoninergique."
+  },
+  {
+    "d1": "INSULINE",
+    "d2": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Augmentation de la réaction hypoglycémique (inhibition des réactions de compensation pouvant faciliter la survenue de coma hypoglycémique)."
+  },
+  {
+    "d1": "INSULINE",
+    "d2": "ANALOGUES DE LA SOMATOSTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient du risque d'hypoglycémie ou d'hyperglycémie, renforcer l'autosurveillance glycémique et adapter si besoin la posologie de l'insuline pendant le traitement par l'analogue de la somatostatine.Risque d'hypoglycémie ou d'hyperglycémie : diminution ou augmentation des besoins en insuline, par diminution ou augmentation de la sécrétion de glucagon endogène."
+  },
+  {
+    "d1": "INSULINE",
+    "d2": "BÊTA-2 MIMÉTIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer la surveillance sanguine et urinaire.Elévation de la glycémie par le bêta-2 mimétique."
+  },
+  {
+    "d1": "INSULINE",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêtabloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "INSULINE",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêtabloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "INSULINE",
+    "d2": "CHLORPROMAZINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer l'autosurveillance glycémique. Adapter éventuellement la posologie de l'insuline pendant le traitement par le neuroleptique et après son arrêt.A fortes posologies (100 mg par jour de chlorpromazine) : élévation de la glycémie (diminution de la libération de l'insuline)."
+  },
+  {
+    "d1": "INSULINE",
+    "d2": "DANAZOL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, prévenir le patient et renforcer l'autosurveillance glycémique. Adapter éventuellement la posologie de l'insuline pendant le traitement par le danazol et après son arrêt.Effet diabétogène du danazol."
+  },
+  {
+    "d1": "INSULINE",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer l'autosurveillance glycémique.L'utilisation des IEC peut entraîner une majoration de l'effet hypoglycémiant chez le diabétique traité par insuline. La survenue de malaises hypoglycémiques semble exceptionnelle (amélioration de la tolérance au glucose qui aurait pour conséquence une réduction des besoins en insuline)."
+  },
+  {
+    "d1": "IPILIMUMAB",
+    "d2": "ANTICOAGULANTS ORAUX",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite.Augmentation du risque d'hémorragies digestives."
+  },
+  {
+    "d1": "ISONIAZIDE",
+    "d2": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d'intervention programmée, arrêter, par prudence, le traitement par l'isoniazide une semaine avant l'intervention et ne le reprendre que 15 jours après.Potentialisation de l'effet hépatotoxique de l'isonazide, avec formation accrue de métabolites toxiques de l'isoniazide."
+  },
+  {
+    "d1": "ISONIAZIDE",
+    "d2": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique.Décrit pour la prednisolone. Diminution des concentrations plasmatiques de l'isoniazide. Mécanisme invoqué : augmentation du métabolisme hépatique de l'isoniazide et diminution de celui des glucocorticoïdes."
+  },
+  {
+    "d1": "ISONIAZIDE",
+    "d2": "KETOCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Espacer les prises des deux anti-infectieux d'au moins 12 heures. Surveiller les concentrations plasmatiques du kétoconazole et adapter éventuellement sa posologie.Diminution des concentrations plasmatiques de kétoconazole."
+  },
+  {
+    "d1": "ISONIAZIDE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite, dosage des concentrations plasmatiques de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par l'isoniazide et après son arrêt.Surdosage en phénytoïne (diminution de son métabolisme)."
+  },
+  {
+    "d1": "ISONIAZIDE",
+    "d2": "PYRAZINAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique.Addition des effets hépatotoxiques."
+  },
+  {
+    "d1": "ISONIAZIDE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique de cette association classique. En cas d'hépatite, arrêter l'isoniazide.Augmentation de l'hépatotoxicité de l'isoniazide (augmentation de la formation de métabolites toxiques de l'isoniazide)."
+  },
+  {
+    "d1": "ISONIAZIDE",
+    "d2": "STAVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque majoré de survenue de neuropathies périphériques par addition d'effets indésirables."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer l'itraconazole le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par l'itraconazole."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "BUPRENORPHINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la buprénorphine pendant le traitement par l'inhibiteur et, le cas échéant, après son arrêt.Augmentation des concentrations de buprénorphine par diminution de son métabolisme hépatique, avec risque de majoration de ses effets indésirables."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, s'il y a lieu, de l'ECG et de la digoxinémie avec adaptation de la posologie de la digoxine pendant le traitement par l'itraconazole et après son arrêt.Augmentation de la digoxinémie avec nausées, vomissements, troubles du rythme."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "ÉDOXABAN",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose d’édoxaban de moitié.Augmentation des concentrations plasmatiques de l’édoxaban, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "ELVITÉGRAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Avec l’elvitegravir co-administré avec le cobicistat, surveillance clinique. Limiter la dose maximale d’itraconazole à 200 mg/j.Augmentation des concentrations plasmatiques d’elvitegravir par diminution de son métabolisme par l'itraconazole."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "HYDROQUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance des concentrations plasmatiques de l'antiarythmique et diminution éventuelle de sa posologie si nécessaire.Risque d'acouphènes et/ou de diminution de l'acuité auditive : cinchonisme lié à une diminution du métabolisme hépatique de l'antiarythmique par l'itraconazole."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique lors de l’association. L’administration de doses élevées d’itraconazole (>200 mg par jour) n’est pas recommandée.Risque d’augmentation des concentrations d’itraconazole par l’inhibiteur de protéases."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution importante des concentrations plasmatiques d’itraconazole, avec risque de perte d’efficacité, par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par l'itraconazole."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "QUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes, ainsi que d'acouphènes et/ou de diminution de l'acuité auditive (cinchonisme), par diminution du métabolisme hépatique de la quinidine."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "TALAZOPARIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "TÉNOFOVIR ALAFÉNAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration avec l’itraconazole, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour.Augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "ITRACONAZOLE",
+    "d2": "TRABECTÉDINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association est nécessaire, surveillance clinique et adaptation éventuelle de la posologie de la trabectedine pendant la durée du traitement par l’itraconazole.Risque d’augmentation des concentrations plasmatiques de la trabectedine par l’itraconazole."
+  },
+  {
+    "d1": "IVABRADINE",
+    "d2": "AZITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG pendant l’association.Risque majoré de troubles du rythme ventriculaires, notamment de torsades de pointes. De plus, risque d'augmentation des concentrations plasmatiques de l’ivabradine par augmentation de son absorption par l’azithromycine."
+  },
+  {
+    "d1": "IVABRADINE",
+    "d2": "DILTIAZEM",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation des concentrations plasmatiques de l’ivabradine et de ses effets indésirables, notamment cardiaques (inhibition de son métabolisme hépatique par le diltiazem), qui s’ajoutent aux effets bradycardisants de ces substances."
+  },
+  {
+    "d1": "IVABRADINE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’ivabradine pendant l’association et après l’arrêt de l’inducteur.Risque de diminution de l'efficacité de l’ivabradine, par augmentation de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "IVABRADINE",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de l’ivabradine et de ses effets indésirables (inhibition de son métabolisme intestinal par le pamplemousse)."
+  },
+  {
+    "d1": "IVABRADINE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’ivabradine pendant l’association et après l’arrêt de la rifampicine.Risque de diminution de l'efficacité de l’ivabradine, par augmentation de son métabolisme par la rifampicine."
+  },
+  {
+    "d1": "IVABRADINE",
+    "d2": "VERAPAMIL",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation des concentrations plasmatiques de l’ivabradine et de ses effets indésirables, notamment cardiaques (augmentation de son absorption et inhibition de son métabolisme hépatique par le vérapamil), qui s’ajoutent aux effets bradycardisants de ces deux médicaments."
+  },
+  {
+    "d1": "IVACAFTOR (SEUL OU ASSOCIÉ)",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Se référer à l'AMM pour les adaptations posologiques.Augmentation des concentrations d’ivacaftor, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "IVACAFTOR (SEUL OU ASSOCIÉ)",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Se référer à l'AMM pour les adaptations posologiques.Augmentation des concentrations d’ivacaftor, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "JOSAMYCINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, dosage plasmatique et réduction éventuelle de la posologie de la carbamazépine.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage, par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "JOSAMYCINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt du macrolide.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "JOSAMYCINE",
+    "d2": "DISOPYRAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, biologique et électrocardiographique régulière.Risque de majoration des effets indésirables du disopyramide : hypoglycémies sévères, allongement de l’intervalle QT et troubles du rythme ventriculaire graves, notamment à type de torsades de pointes."
+  },
+  {
+    "d1": "JOSAMYCINE",
+    "d2": "HALOFANTRINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cela est possible, interrompre le macrolide. Si l’association ne peut être évitée, contrôle préalable du QT et surveillance ECG monitorée.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "JOSAMYCINE",
+    "d2": "SILDENAFIL",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter le traitement par sildénafil à la dose minimale en cas d'association avec la josamycine.Augmentation des concentrations plasmatiques de sildénafil, avec risque d'hypotension."
+  },
+  {
+    "d1": "KETOCONAZOLE",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer le kétoconazole le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par le kétoconazole."
+  },
+  {
+    "d1": "KETOCONAZOLE",
+    "d2": "BUPRENORPHINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la buprénorphine pendant le traitement par l'inhibiteur et, le cas échéant, après son arrêt.Augmentation des concentrations de buprénorphine par diminution de son métabolisme hépatique, avec risque de majoration de ses effets indésirables."
+  },
+  {
+    "d1": "KETOCONAZOLE",
+    "d2": "ELVITÉGRAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Avec l’elvitegravir co-administré avec le cobicistat, surveillance clinique. Limiter la dose maximale de kétoconazole à 200 mg/j.Augmentation des concentrations plasmatiques d’elvitegravir par diminution de son métabolisme par le kétoconazole."
+  },
+  {
+    "d1": "KETOCONAZOLE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "KETOCONAZOLE",
+    "d2": "ISONIAZIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Espacer les prises des deux anti-infectieux d'au moins 12 heures. Surveiller les concentrations plasmatiques du kétoconazole et adapter éventuellement sa posologie.Diminution des concentrations plasmatiques de kétoconazole."
+  },
+  {
+    "d1": "KETOCONAZOLE",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par le kétoconazole."
+  },
+  {
+    "d1": "KETOCONAZOLE",
+    "d2": "TÉNOFOVIR ALAFÉNAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration avec le kétoconazole, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour.Augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "LAMIVUDINE",
+    "d2": "CLADRIBINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution de l’efficacité de la cladribine par la lamivudine."
+  },
+  {
+    "d1": "LAMIVUDINE",
+    "d2": "SORBITOL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance plus fréquente de la charge virale.Diminution des concentrations plasmatiques de lamivudine par le sorbitol."
+  },
+  {
+    "d1": "LAMOTRIGINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la carbamazépine.Risque d'augmentation des effets neurologiques (vertiges, ataxie, diplopie) de la carbamazépine lors de l'introduction de la lamotrigine."
+  },
+  {
+    "d1": "LAMOTRIGINE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "- Surveillance clinique et adaptation de la posologie de la lamotrigine lors de la mise en route du traitement par ritonavir.Risque de diminution des concentrations et de l’efficacité de la lamotrigine par augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "LAMOTRIGINE",
+    "d2": "OXCARBAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques, avec adaptation de la posologie de la lamotrigine si besoin.Diminution des concentrations de la lamotrigine avec risque de moindre efficacité, par augmentation de son métabolisme hépatique par l'oxcarbazépine."
+  },
+  {
+    "d1": "LAMOTRIGINE",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association s'avère nécessaire, surveillance clinique étroite.Risque majoré de réactions cutanées graves (syndrome de Lyell). Par ailleurs, augmentation des concentrations plasmatiques de lamotrigine (diminution de son métabolisme hépatique par le valproate de sodium)."
+  },
+  {
+    "d1": "LANSOPRAZOLE",
+    "d2": "TACROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines du tacrolimus, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines du tacrolimus."
+  },
+  {
+    "d1": "LAPATINIB",
+    "d2": "TÉDIZOLIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du lapatinib, par augmentation de son absorption avec le tédizolide administré par voie orale, ou par diminution de son élimination avec le tédizolide administré par voie IV."
+  },
+  {
+    "d1": "LAXATIFS (TYPE MACROGOL)",
+    "d2": "MÉDICAMENTS ADMINISTRÉS PAR VOIE ORALE",
+    "level": "A prendre en compte",
+    "desc": "Eviter la prise d’autres médicaments pendant et après l’ingestion dans un délai d’au moins 2 h après la prise du laxatif, voire jusqu’à la réalisation de l’examen.Avec les laxatifs, notamment en vue d’explorations endoscopiques: risque de diminution de l’efficacité du médicament administré avec le laxatif."
+  },
+  {
+    "d1": "LÉDIPASVIR",
+    "d2": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé de prendre l'’inhibiteur de la pompe à protons et le lédipasvir simultanément.Diminution des concentrations du lédipasvir en cas d’administration de l’inhibiteur de la pompe à protons avant le lédipasvir."
+  },
+  {
+    "d1": "LÉDIPASVIR",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution importante des concentrations plasmatiques du lédipasvir par augmentation de son métabolisme hépatique par l'inducteur enzymatique."
+  },
+  {
+    "d1": "LÉDIPASVIR",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution importante des concentrations plasmatiques du lédipasvir par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "LÉDIPASVIR",
+    "d2": "RIFAMPICINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution importante des concentrations plasmatiques du lédipasvir par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "LÉDIPASVIR",
+    "d2": "TENOFOVIR DISOPROXIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, notamment de la fonction rénale.Lors de sa co-administration avec un inhibiteur de protéase, augmentation des concentrations plasmatiques du ténofovir par le lédipasvir."
+  },
+  {
+    "d1": "LENALIDOMIDE",
+    "d2": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer le contrôle clinique et biologique, notamment durant les premières semaines de traitement.Risque majoré de survenue de rhabdomyolyses."
+  },
+  {
+    "d1": "LERCANIDIPINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Décaler les prises des deux médicaments. Dosage des concentrations sanguines de l'immunosuppresseur, et adaptation si nécessaire de sa posologie pendant l'association et après son arrêt.Augmentation modérée des concentrations sanguines de l'immunosuppresseur et augmentation plus notable des concentrations de lercanidipine."
+  },
+  {
+    "d1": "LERCANIDIPINE",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "A prendre en compte",
+    "desc": "Risque majoré d'effets indésirables, notamment d'oedèmes, par diminution du métabolisme intestinal de la dihydropyridine."
+  },
+  {
+    "d1": "LÉTERMOVIR",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique renforcée.Augmentation, éventuellement très importante, des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme et de la créatininémie."
+  },
+  {
+    "d1": "LÉTERMOVIR",
+    "d2": "VORICONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, surveillance clinique étroite, notamment les deux premières semaines après l’instauration ou l’arrêt du traitement par létermovir.Diminution de plus de la moitié de l’exposition du voriconazole."
+  },
+  {
+    "d1": "LEVOCARNITINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la lévocarnitine et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique"
+  },
+  {
+    "d1": "LEVODOPA",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de la lévodopa (plus de 2 heures si possible).Diminution de l'absorption digestive de la lévodopa."
+  },
+  {
+    "d1": "LEVODOPA",
+    "d2": "METHYLDOPA",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement diminution des doses de lévodopa.Augmentation des effets de la lévodopa mais également de ses effets indésirables. Majoration de l'effet antihypertenseur de la méthyldopa."
+  },
+  {
+    "d1": "LEVODOPA",
+    "d2": "NEUROLEPTIQUES ANTIÉMÉTIQUES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Utiliser un antiémétique dénué d'effets extrapyramidaux.Antagonisme réciproque entre la lévodopa et le neuroleptique."
+  },
+  {
+    "d1": "LEVODOPA",
+    "d2": "NEUROLEPTIQUES ANTIPSYCHOTIQUES (SAUF CLOZAPINE)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Chez le patient parkinsonien, utiliser les doses minimales efficaces de chacun des deux médicaments.Antagonisme réciproque de la lévodopa et des neuroleptiques."
+  },
+  {
+    "d1": "LEVODOPA",
+    "d2": "SPIRAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la lévodopa.En cas d'association avec la carbidopa : inhibition de l'absorption de la carbidopa avec diminution des concentrations plasmatiques de la lévodopa."
+  },
+  {
+    "d1": "LEVOFLOXACINE",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "LEVONORGESTREL",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de prise d’un médicament inducteur dans les 4 dernières semaines, l’utilisation d’une contraception d’urgence non hormonale (DIU au cuivre) devrait s’envisager. Si ce n’est pas possible, le doublement de la dose de lévonorgestrel est une autre option.Avec le lévonorgestrel utilisé dans l’indication contraception d’urgence, diminution importante des concentrations plasmatiques de lévonorgestrel, avec risque d’inefficacité."
+  },
+  {
+    "d1": "LIDOCAINE",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle des concentrations plasmatiques de lidocaïne. Si besoin, adaptation de la posologie de la lidocaïne pendant le traitement par amiodarone et après son arrêt.Risque d’augmentation des concentrations plasmatiques de lidocaïne, avec possibilité d’effets indésirables neurologiques et cardiaques, par diminution de son métabolisme hépatique par l’amiodarone."
+  },
+  {
+    "d1": "LIDOCAINE",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle des concentrations plasmatiques de lidocaïne pendant l'association et après l'arrêt du bêta-bloquant. Adaptation si besoin de la posologie de la lidocaïne.Avec la lidocaïne utilisée par voie IV : augmentation des concentrations plasmatiques de lidocaïne avec possibilité d'effets indésirables neurologiques et cardiaques (diminution de la clairance hépatique de la lidocaïne)."
+  },
+  {
+    "d1": "LIDOCAINE",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement des concentrations plasmatiques de la lidocaïne ; s'il y a lieu, adaptation de la posologie de la lidocaïne pendant le traitement par la cimétidine et après son arrêt.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations plasmatiques de lidocaïne avec risque d'effets indésirables neurologiques et cardiaques (inhibition du métabolisme hépatique de la lidocaïne)."
+  },
+  {
+    "d1": "LIDOCAINE",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle des concentrations plasmatiques de la lidocaïne pendant et après l’arrêt de l’association. Adaptation, si besoin, de la posologie de la lidocaïne.Augmentation des concentrations plasmatiques de la lidocaïne avec possibilités d’effets indésirables neurologiques et cardiaques (diminution de la clairance hépatique de la lidocaïne)."
+  },
+  {
+    "d1": "LINCOSANIDES",
+    "d2": "CURARES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller le degré de curarisation en fin d'anesthésie.Potentialisation des curares lorque l'antibiotique est administré par voie parentérale et/ou péritonéale avant, pendant ou après l'agent curarisant."
+  },
+  {
+    "d1": "LINEZOLIDE",
+    "d2": "CLARITHROMYCINE",
+    "level": "A prendre en compte",
+    "desc": "Risque de majoration des effets indésirables du linézolide par la clarithromycine, par augmentation de son absorption."
+  },
+  {
+    "d1": "LINEZOLIDE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et augmentation éventuelle de la posologie du linézolide pendant le traitement par la rifampicine.Risque de diminution de l'efficacité du linézolide par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "ACETAZOLAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Diminution de la lithémie avec risque de baisse de l’efficacité thérapeutique."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'usage d'un antagoniste de l'angiotensine II est indispensable, surveillance stricte de la lithémie et adaptation de la posologie.Augmentation de la lithémie pouvant atteindre des valeurs toxiques (diminution de l'excrétion rénale du lithium)."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveiller étroitement la lithémie et adapter la posologie du lithium pendant l'association et après l'arrêt de l'anti-inflammatoire non stéroïdien.Augmentation de la lithémie pouvant atteindre des valeurs toxiques (diminution de l'excrétion rénale du lithium)."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "CALCITONINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d’association.Risque de baisse de l’efficacité du lithium par augmentation de son élimination rénale par la calcitonine."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "DIURÉTIQUES DE L'ANSE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance stricte de la lithémie et adaptation de la posologie du lithium.Augmentation de la lithémie avec signes de surdosage en lithium, comme lors d’un régime désodé (diminution de l’excrétion urinaire du lithium)."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "DIURÉTIQUES ÉPARGNEURS DE POTASSIUM (SEULS OU ASSOCIÉS)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Augmentation de la lithémie avec signes de surdosage en lithium, comme lors d’un régime désodé (diminution de l’excrétion urinaire du lithium)."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "DIURÉTIQUES THIAZIDIQUES ET APPARENTÉS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance stricte de la lithémie et adaptation de la posologie du lithium.Augmentation de la lithémie avec signes de surdosage en lithium, comme lors d’un régime désodé (diminution de l’excrétion urinaire du lithium)."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "GLYCEROL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Diminution de la lithémie avec risque de baisse de l’efficacité thérapeutique."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'usage d'un IEC est indispensable, surveillance stricte de la lithémie et adaptation de la posologie du lithium.Augmentation de la lithémie pouvant atteindre des valeurs toxiques (diminution de l'excrétion rénale du lithium)."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'apparition d'un syndrome sérotoninergique."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "MANNITOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Diminution de la lithémie avec risque de baisse de l’efficacité thérapeutique."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "METHYLDOPA",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de lithium.Augmentation de la lithémie pouvant atteindre des valeurs toxiques, avec signes de surdosage en lithium."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "METRONIDAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Augmentation de la lithémie pouvant atteindre des valeurs toxiques, avec signes de surdosage en lithium."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "NEUROLEPTIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d’apparition de signes neuropsychiques évocateurs d’un syndrome malin des neuroleptiques ou d’une intoxication au lithium."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "SODIUM (BICARBONATE DE)",
+    "level": "Précaution d'emploi",
+    "desc": "Eviter les surcharges sodées et tenir compte de la présence de sodium dans certains médicaments comme les antiacides.Risque de baisse de l’efficacité du lithium par augmentation de son élimination rénale par les sels de sodium."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "SODIUM (CHLORURE DE)",
+    "level": "Précaution d'emploi",
+    "desc": "Eviter les surcharges sodées et tenir compte de la présence de sodium dans certains médicaments comme les antiacides.Risque de baisse de l’efficacité du lithium par augmentation de son élimination rénale par les sels de sodium."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "THEOPHYLLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Diminution de la lithémie avec risque de baisse de l’efficacité thérapeutique."
+  },
+  {
+    "d1": "LITHIUM",
+    "d2": "TOPIRAMATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation de la posologie du lithium.Pour des doses de topiramate >= 200 mg par jour : augmentation de la lithémie pouvant atteindre des valeurs toxiques, avec signes de surdosage en lithium."
+  },
+  {
+    "d1": "LOMITAPIDE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation des concentrations plasmatiques du lomitapide par diminution de son métabolisme hépatique par l’inhibiteur."
+  },
+  {
+    "d1": "CYP3A4",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cela est possible, interrompre l’inhibiteur. Si l’association ne peut être évitée, contrôle préalable du QT et surveillance ECG monitorée.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "LURASIDONE",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de la lurasidone par diminution de son métabolisme par le pamplemousse."
+  },
+  {
+    "d1": "MACROLIDES (SAUF SPIRAMYCINE)",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par le macrolide et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "MACROLIDES (SAUF SPIRAMYCINE)",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la digoxinémie pendant le traitement par le macrolide et après son arrêt.Augmentation de la digoxinémie par augmentation de son absorption."
+  },
+  {
+    "d1": "MAGNÉSIUM",
+    "d2": "INHIBITEURS D'INTÉGRASE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de magnésium à distance de l’antirétroviral (plus de 2 heures, si possible).Diminution de l'absorption digestive des inhibiteurs d’intégrase."
+  },
+  {
+    "d1": "MAGNÉSIUM",
+    "d2": "ROXADUSTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le roxadustat à distance des sels de magnésium (plus de 1 heure, si possible).La prise de cation divalent peut diminuer l’absorption intestinale et, potentiellement, l’efficacité du roxadustat pris simultanément."
+  },
+  {
+    "d1": "MANNITOL",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Diminution de la lithémie avec risque de baisse de l’efficacité thérapeutique."
+  },
+  {
+    "d1": "MARAVIROC",
+    "d2": "FOSAMPRENAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution significative des concentrations d’amprénavir pouvant conduire à une perte de la réponse virologique."
+  },
+  {
+    "d1": "MARAVIROC",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "La dose de maraviroc doit être augmentée à 600 mg deux fois par jour dans cette situation.En l’absence de co-administration avec un inhibiteur puissant du CYP3A4, diminution des concentrations de maraviroc par l’inducteur (sauf la névirapine)."
+  },
+  {
+    "d1": "MARAVIROC",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "La dose de maraviroc doit être diminuée à 150 mg deux fois par jour en cas de co-administration avec cet inhibiteur. A l'exception du tipranavir boosté par ritonavir où la dose de maraviroc doit être de 300 mg deux fois par jour.Augmentation des concentrations de maraviroc par l’inhibiteur."
+  },
+  {
+    "d1": "MARIBAVIR",
+    "d2": "GANCICLOVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Antagonisme de la phosporylation et donc de l'effet pharmacologique du ganciclovir par le maribavir."
+  },
+  {
+    "d1": "MARIBAVIR",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation éventuelle de la posologie pendant l'association et après son arrêt.Possible augmentation des concentrations de l’immunosuppresseur."
+  },
+  {
+    "d1": "MARIBAVIR",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, augmentation éventuelle de la posologie de maribavir.Diminution possiblement importante des concentrations de maribavir avec la rifampicine, avec risque de réduction de la réponse virologique."
+  },
+  {
+    "d1": "MARIBAVIR",
+    "d2": "VALGANCICLOVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Antagonisme de la phosporylation et donc de l'effet pharmacologique du valganciclovir par le maribavir."
+  },
+  {
+    "d1": "MÉDICAMENTS À L'ORIGINE D'UN HYPOGONADISME MASCULIN",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "MÉDICAMENTS À L'ORIGINE D'UNE HYPOTENSION ORTHOSTATIQUE",
+    "d2": "DAPOXÉTINE",
+    "level": "A prendre en compte",
+    "desc": "- avec les autres classes thérapeutiquesRisque de majoration des effets indésirables, notamment à type de vertiges ou de syncopes."
+  },
+  {
+    "d1": "MÉDICAMENTS ATROPINIQUES",
+    "d2": "ANTICHOLINESTÉRASIQUES",
+    "level": "A prendre en compte",
+    "desc": "Risque de moindre efficacité de l’anticholinestérasique par antagonisme des récepteurs de l’acétylcholine par l’atropinique."
+  },
+  {
+    "d1": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "d2": "ADRÉNALINE (VOIE BUCCO-DENTAIRE OU SOUS-CUTANÉE)",
+    "level": "Précaution d'emploi",
+    "desc": "Limiter l'apport, par exemple : moins de 0,1 mg d'adrénaline en 10 minutes ou 0,3 mg en 1 heure chez l'adulte.Troubles du rythme ventriculaire graves par augmentation de l'excitabilité cardiaque."
+  },
+  {
+    "d1": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "d2": "ANTIAGRÉGANTS PLAQUETTAIRES",
+    "level": "A prendre en compte",
+    "desc": "Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "A prendre en compte",
+    "desc": "Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "d2": "COBIMÉTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "d2": "IMAO IRRÉVERSIBLES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de deux semaines entre l'arrêt de l'IMAO et le début de l'autre traitement, et d'au moins une semaine entre l'arrêt de l'autre traitement et le début de l'IMAO.Risque d'apparition d'un syndrome sérotoninergique : diarrhée, tachycardie, sueurs, tremblements, confusion voire coma."
+  },
+  {
+    "d1": "MÉDICAMENTS MIXTES ADRÉNERGIQUES-SÉROTONINERGIQUES",
+    "d2": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique très étroite. Débuter l'association aux posologies minimales recommandées.Risque d'apparition d'un syndrome sérotoninergique : diarrhée, tachycardie, sueur, confusion voire coma."
+  },
+  {
+    "d1": "MÉDICAMENTS SÉDATIFS",
+    "d2": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Majoration par l'alcool de l'effet sédatif de ces substances. L'altération de la vigilance peut rendre dangereuses la conduite de véhicules et l'utilisation de machines."
+  },
+  {
+    "d1": "MEFLOQUINE",
+    "d2": "QUININE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Respecter un délai minimum de 12 heures entre la fin de l'administration IV de quinine et le début de l'administration de méfloquine.Pour la quinine administrée par voie IV : risque majoré de survenue de crises épileptiques par addition des effets proconvulsivants."
+  },
+  {
+    "d1": "METFORMINE",
+    "d2": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Risque majoré d'acidose lactique lors d'intoxication alcoolique aiguë, particulièrement en cas de jeûne ou dénutrition, ou bien d'insuffisance hépatocellulaire."
+  },
+  {
+    "d1": "METFORMINE",
+    "d2": "DIURÉTIQUES DE L'ANSE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas utiliser la metformine lorsque la créatininémie dépasse 15 mg/l (135 µmol/l) chez l'homme, et 12 mg/l (110 µmol/l) chez la femme.Acidose lactique due à la metformine, déclenchée par une éventuelle insuffisance rénale fonctionnelle, liée aux diurétiques de l'anse."
+  },
+  {
+    "d1": "METFORMINE",
+    "d2": "DOLUTÉGRAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Chez le patient avec une insuffisance rénale modérée, surveillance clinique et éventuelle réduction supplémentaire de la posologie de metformine.Augmentation moyenne de moins de deux fois des concentrations plasmatiques de metformine."
+  },
+  {
+    "d1": "METFORMINE",
+    "d2": "PRODUITS DE CONTRASTE IODÉS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Le traitement par la metformine doit être suspendu au moment de l'examen radiologique pour n'être repris que 2 jours après.Risque important d'acidose lactique par hémoconcentration de la metformine, dans le cas d'un arrêt cardio-respiratoire induit par l'examen radiologique, avec insuffisance rénale aiguë. Le traitement par la metformine doit être suspendu au moment de l'examen radiologique pour n'être repris que 2 jours après.Risque important d'acidose lactique par hémoconcentration de la metformine, dans le cas d'un arrêt cardio-respiratoire induit par l'examen radiologique, avec insuffisance rénale aiguë. Le traitement par la metformine doit être suspendu au moment de l'examen radiologique pour n'être repris que 2 jours après.Risque important d'acidose lactique par hémoconcentration de la metformine, dans le cas d'un arrêt cardio-respiratoire induit par l'examen radiologique, avec insuffisance rénale aiguë."
+  },
+  {
+    "d1": "METHADONE",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique renforcée ; si besoin, adaptation de la posologie de la méthadone pendant le traitement par la cimétidine et après son arrêt.Augmentation des concentrations plasmatiques de méthadone avec surdosage et risque majoré d’allongement de l’intervalle QT et de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "METHADONE",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique renforcée ; si besoin, adaptation de la posologie de la méthadone pendant le traitement par la fluvoxamine et après son arrêt.Augmentation des concentrations plasmatiques de méthadone avec surdosage et risque majoré d’allongement de l’intervalle QT et de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "METHADONE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Augmenter la fréquence des prises de méthadone (2 à 3 fois par jour au lieu d'une fois par jour).Diminution des concentrations plasmatiques de méthadone avec risque d'apparition d'un syndrome de sevrage, par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "METHADONE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique régulière et adaptation éventuelle de la posologie de méthadone.Diminution des concentrations plasmatiques de méthadone avec risque d'apparition d'un syndrome de sevrage par augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "METHADONE",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations de méthadone par le millepertuis, avec risque de syndrome de sevrage."
+  },
+  {
+    "d1": "METHADONE",
+    "d2": "VORICONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique renforcée ; si besoin, adaptation de la posologie de la méthadone pendant le traitement par le voriconazole et après son arrêt.Augmentation des concentrations plasmatiques de méthadone avec surdosage et risque majoré d’allongement de l’intervalle QT et de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "METHOTREXATE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de ciclosporine et de méthotrexate. Adaptation posologique si nécessaire pendant l'association et après son arrêt.Augmentation de la toxicité du méthotrexate et de la ciclosporine avec augmentation de la créatininémie : diminution réciproque des clairances des deux médicaments."
+  },
+  {
+    "d1": "METHOTREXATE",
+    "d2": "PONATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques du méthotrexate par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "METHOTREXATE",
+    "d2": "SULFAMIDES ANTIBACTÉRIENS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations de méthotrexate. Adapatation posologique si nécessaire pendant l'association et après son arrêt.Augmentation de la toxicité hématologique du méthotrexate."
+  },
+  {
+    "d1": "METHOTREXATE",
+    "d2": "TÉDIZOLIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du méthotrexate, par augmentation de son absorption avec le tédizolide administré par voie orale, ou par diminution de son élimination avec le tédizolide administré par voie IV."
+  },
+  {
+    "d1": "METHYLDOPA",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de la méthyldopa (plus de deux heures, si possible).Diminution de l'absorption digestive de la méthyldopa (formation de complexes)."
+  },
+  {
+    "d1": "METHYLDOPA",
+    "d2": "LEVODOPA",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement diminution des doses de lévodopa.Augmentation des effets de la lévodopa mais également de ses effets indésirables. Majoration de l'effet antihypertenseur de la méthyldopa."
+  },
+  {
+    "d1": "METHYLDOPA",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de lithium.Augmentation de la lithémie pouvant atteindre des valeurs toxiques, avec signes de surdosage en lithium."
+  },
+  {
+    "d1": "MÉTHYLERGOMÉTRINE",
+    "d2": "SULPROSTONE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Ne pas utiliser ces deux médicaments simultanément ou successivement.Risque de vasoconstriction coronaire pouvant être fatale."
+  },
+  {
+    "d1": "METHYLPREDNISOLONE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle de l'INR 2 à 4 jours après le bolus de méthylprednisolone ou en présence de tous signes hémorragiques.Pour des doses de 0,5 à 1g de méthylprednisolone administrées en bolus : augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "ABIRATERONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par l'abiratérone.Chez l'insuffisant cardiaque, risque d'augmentation des effets indésirables du métoprolol, par diminution de son métabolisme hépatique par l'abiratérone."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "BUPROPION",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par le bupropion.Avec le métoprolol utilisé dans l'insuffisance cardiaque : risque d'augmentation des effets indésirables du métoprolol par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par la cimétidine.Avec le métoprolol utilisé dans l'insuffisance cardiaque, et la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations du métoprolol, pouvant être préjudiciables dans le cas du traitement de l'insuffisance cardiaque, par diminution de son métabolisme hépatique par la cimétidine."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "CINACALCET",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du métroprolol pendant le traitement par cinacalcet.Augmentation des concentrations plasmatiques de métroprolol avec risque de surdosage, par diminution de son métabolisme hépatique par le cinacalcet."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "DARIFENACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du métoprolol pendant le traitement par darifénacine.Augmentation des concentrations plasmatiques du métoprolol, avec risque de surdosage, par diminution de son métabolisme hépatique par la darifénacine."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "DULOXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du métoprolol pendant le traitement par la duloxétine et après son arrêt.Augmentation des concentrations plasmatiques de métoprolol avec risque de surdosage, par diminution de son métabolisme hépatique par la duloxétine."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "FLUOXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie du métoprolol pendant la durée du traitement par la fluoxétine et après son arrêt.Risque de majoration des effets indésirables du métoprolol, avec notamment bradycardie excessive, par inhibition de son métabolisme par la fluoxétine."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "MIRABÉGRON",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie du métoprolol pendant l'association.Avec le métoprolol utilisé dans l'insuffisance cardiaque, augmentation des concentrations plasmatiques du métoprolol par diminution de son métabolisme par le mirabégron."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "PAROXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie du métoprolol pendant la durée du traitement par la paroxétine et après son arrêt.Risque de majoration des effets indésirables du métoprolol, avec notamment bradycardie excessive, par inhibition de son métabolisme par la paroxétine."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "ROLAPITANT",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par le rolapitant.Chez l'insuffisant cardiaque, risque d'augmentation des effets indésirables du métoprolol, par diminution de son métabolisme hépatique par le rolapitant."
+  },
+  {
+    "d1": "METOPROLOL",
+    "d2": "TERBINAFINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par la terbinafine.Chez l'insuffisant cardiaque, risque d'augmentation des effets indésirables du métoprolol, par diminution de son métabolisme hépatique par la terbinafine."
+  },
+  {
+    "d1": "METRONIDAZOLE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de métronidazole pendant le traitement par l’inducteur et après son arrêt.Diminution des concentrations plasmatiques du métronidazole par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "METRONIDAZOLE",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Augmentation de la lithémie pouvant atteindre des valeurs toxiques, avec signes de surdosage en lithium."
+  },
+  {
+    "d1": "METRONIDAZOLE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de métronidazole pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques du métronidazole par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "METYRAPONE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Doubler la posologie de métyrapone.Risque de faux négatif du test à la métyrapone, dû à une diminution de ses concentrations plasmatiques, par augmentation de son métabolisme hépatique par la phénytoïne."
+  },
+  {
+    "d1": "MEXILETINE",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. Adaptation de la posologie de la méxilétine pendant le traitement par la fluvoxamine et après son arrêt.Risque de majoration des effets indésirables de la méxilétine, par inhibition de son métabolisme par la fluvoxamine."
+  },
+  {
+    "d1": "MEXILETINE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement des concentrations plasmatiques de la mexilétine ; s'il y a lieu, adaptation de la posologie de la mexilétine pendant le traitement par la phénytoïne et après son arrêt.Diminution de l'activité antiarythmique, des concentrations plasmatiques et de la demi-vie de la méxilétine (augmentation de son métabolisme hépatique)."
+  },
+  {
+    "d1": "MEXILETINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par la mexilétine et après son arrêt.Augmentation de la théophyllinémie avec risque de surdosage (diminution du métabolisme hépatique de la théophylline)."
+  },
+  {
+    "d1": "MICONAZOLE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite, dosage des concentrations plasmatiques de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par le miconazole et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne pouvant atteindre des valeurs toxiques, par inhibition du métabolisme hépatique de la phénytoïne."
+  },
+  {
+    "d1": "MICONAZOLE",
+    "d2": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation de l'effet hypoglycémiant avec survenue possible de manifestations hypoglycémiques, voire de coma."
+  },
+  {
+    "d1": "MIDAZOLAM",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie pendant le traitement par le diltiazem.Augmentation des concentrations plasmatiques de midazolam par diminution de son métabolisme hépatique, avec majoration de la sédation."
+  },
+  {
+    "d1": "MIDAZOLAM",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de midazolam en cas de traitement par le fluconazole.Augmentation des concentrations plasmatiques de midazolam par diminution de son métabolisme hépatique, avec majoration de la sédation."
+  },
+  {
+    "d1": "MIDAZOLAM",
+    "d2": "STIRIPENTOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie pendant le traitement par le stiripentol.Augmentation des concentrations plasmatiques du midazolam par diminution de son métabolisme hépatique avec majoration de la sédation."
+  },
+  {
+    "d1": "MIDAZOLAM",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de midazolam pendant le traitement par le vérapamil.Augmentation des concentrations plasmatiques de midazolam (diminution de son métabolisme hépatique avec majoration de la sédation)."
+  },
+  {
+    "d1": "MIDECAMYCINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt du macrolide.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "MIDODRINE",
+    "d2": "DIGOXINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si cette association ne peut être évitée, renforcer la surveillance clinique et ECG.Troubles de l'automatisme (majoration de l'effet bradycardisant de la midodrine) et troubles de la conduction auriculo-ventriculaire."
+  },
+  {
+    "d1": "MIDOSTAURINE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations de midostaurine par l’inducteur enzymatique."
+  },
+  {
+    "d1": "MIDOSTAURINE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Augmentation des effets indésirables de la midostaurine par l’inhibiteur."
+  },
+  {
+    "d1": "MIDOSTAURINE",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations de midostaurine par le millepertuis."
+  },
+  {
+    "d1": "MIFAMURTIDE",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Aux doses élevées d’AINS, risque de moindre efficacité du mifamurtide."
+  },
+  {
+    "d1": "MIFAMURTIDE",
+    "d2": "CICLOSPORINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d'atteinte des macrophages spléniques et des cellules phagocytaires mononuclées."
+  },
+  {
+    "d1": "MIFAMURTIDE",
+    "d2": "CORTICOÏDES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de moindre efficacité du mifamurtide."
+  },
+  {
+    "d1": "MIFAMURTIDE",
+    "d2": "TACROLIMUS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d'atteinte des macrophages spléniques et des cellules phagocytaires mononuclées."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "level": "A prendre en compte",
+    "desc": "Risque d’inefficacité du traitement antisécrétoire par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "ANTIVITAMINES K",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'association fortuite, ne pas interrompre brutalement la prise de millepertuis mais contrôler l'INR avant puis après l'arrêt du millepertuis.Diminution des concentrations plasmatiques de l'antivitamine K, en raison de son effet inducteur enzymatique, avec risque de baisse d'efficacité voire d'annulation de l'effet dont les conséquences peuvent être éventuellement graves (évènement thrombotique)."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "CYCLOPHOSPHAMIDE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du métabolite actif du cyclophosphamide par le millepertuis, et donc de sa toxicité."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "CYPROTERONE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution de l'efficacité de la cyprotérone, par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "DIGOXINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'association fortuite, ne pas interrompre brutalement la prise de millepertuis mais contrôler les concentrations plasmatiques (ou l'efficacité) de la digoxine avant puis après l'arrêt du millepertuis.Diminution de la digoxinémie, en raison de l'effet inducteur du millepertuis, avec risque de baisse d'efficacité voire d'annulation de l'effet, dont les conséquences peuvent être éventuellement graves (décompensation d'une insuffisance cardiaque)."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "DOCETAXEL",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de moindre efficacité du taxane par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "DRONEDARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations de dronédarone par augmentation de son métabolisme, sans modification notable du métabolite actif."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de baisse de l’efficacité des hormones thyroïdiennes."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "IDÉLALISIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution importante des concentrations plasmatiques d’idélalisib par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "IMAO IRRÉVERSIBLES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'apparition d'un syndrome sérotoninergique."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'apparition d'un syndrome sérotoninergique."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'association fortuite, ne pas interrompre brutalement la prise de millepertuis mais contrôler les concentrations plasmatiques (ou l'efficacité) de l'inhibiteur de protéases avant puis après l'arrêt du millepertuis.Diminution des concentrations plasmatiques de l'inhibiteur de protéases, en raison de l'effet inducteur enzymatique du millepertuis, avec risque de baisse d'efficacité voire d'annulation de l'effet dont les conséquences peuvent être éventuellement graves (baisse de l'efficacité antirétrovirale)."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "INHIBITEURS SÉLECTIFS DE LA RECAPTURE DE LA SÉROTONINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'apparition d'un syndrome sérotoninergique."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "ITRACONAZOLE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution importante des concentrations plasmatiques d’itraconazole, avec risque de perte d’efficacité, par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "LÉDIPASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution importante des concentrations plasmatiques du lédipasvir par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "METHADONE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations de méthadone par le millepertuis, avec risque de syndrome de sevrage."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "MIDOSTAURINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations de midostaurine par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "NINTÉDANIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques du nintédanib par diminution de son absorption par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "OLAPARIB",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution des concentrations plasmatiques d’olaparib et de son efficacité, par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "OXYCODONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Adaptation éventuelle de la posologie de l’oxycodone .Diminution des concentrations plasmatiques de l’oxycodone par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "PACLITAXEL",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de moindre efficacité du taxane par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. S'il y a lieu, adaptation de la posologie de la propafénone pendant l'association et après l'arrêt du millepertuis.Diminution des concentrations plasmatiques de la propafénone par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "RILPIVIRINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution des concentrations plasmatiques de rilpivirine par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'association fortuite, ne pas interrompre brutalement la prise de millepertuis mais contrôler les concentrations plasmatiques (ou l'efficacité) du médicament associé avant puis après l'arrêt du millepertuis.Diminution des concentrations plasmatiques de la théophylline, en raison de l'effet inducteur enzymatique du millepertuis, avec risque de baisse d'efficacité voire d'annulation de l'effet dont les conséquences peuvent être éventuellement graves (survenue d'un trouble ventilatoire obstructif)."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "TICAGRELOR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution importante des concentrations plasmatiques de ticagrelor par augmentation de son métabolisme hépatique par le millepertuis, avec diminution de son effet thérapeutique."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "ULIPRISTAL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer une alternative thérapeutique peu ou pas métabolisée.Risque de diminution de l’effet de l’ulipristal, par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "VÉNÉTOCLAX",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution importante des concentrations de vénétoclax, avec risque de perte d’efficacité."
+  },
+  {
+    "d1": "MILLEPERTUIS",
+    "d2": "VINCA-ALCALOÏDES CYTOTOXIQUES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de moindre efficacité du cytotoxique par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "MINÉRALOCORTICOÏDES",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation de la posologie des corticoïdes pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité des corticoïdes par augmentation de leur métabolisme hépatique par l'inducteur : les conséquences sont particulièrement importantes chez les addisoniens traités par l'hydrocortisone et en cas de transplantation."
+  },
+  {
+    "d1": "MINÉRALOCORTICOÏDES",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation de la posologie des corticoïdes pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité des corticoïdes par augmentation de leur métabolisme hépatique par la rifampicine ; les conséquences sont particulièrement importantes chez les addisoniens traités par l'hydrocortisone et en cas de transplantation."
+  },
+  {
+    "d1": "MIRABÉGRON",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie du métoprolol pendant l'association.Avec le métoprolol utilisé dans l'insuffisance cardiaque, augmentation des concentrations plasmatiques du métoprolol par diminution de son métabolisme par le mirabégron."
+  },
+  {
+    "d1": "MIRABÉGRON",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la propafénone pendant l'association.Augmentation des concentrations plasmatiques de la propafénone par diminution de son métabolisme par le mirabégron."
+  },
+  {
+    "d1": "MITOTANE",
+    "d2": "SPIRONOLACTONE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Possible réduction voire abolition de l'effet pharmacodynamique du mitotane par la spironolactone, associé à une baisse des concentrations du mitotane."
+  },
+  {
+    "d1": "MOCLOBEMIDE",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique avec adaptation éventuelle de la posologie de moclobémide.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations du moclobémide, par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "MODAFINIL",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du modafinil.Risque de diminution de l’efficacité contraceptive, pendant le traitement et un cycle après l’arrêt du traitement par le modafinil, en raison de son potentiel inducteur enzymatique."
+  },
+  {
+    "d1": "MONTELUKAST",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l'anti- asthmatique pendant le traitement par l'inducteur et après son arrêt.Risque de baisse de l'efficacité du montélukast par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "MONTELUKAST",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l'antiasthmatique pendant le traitement par la rifampicine et après son arrêt.Risque de baisse de l'efficacité du montélukast par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "MORPHINE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la morphine pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de la morphine et de son métabolite actif."
+  },
+  {
+    "d1": "MORPHINIQUES",
+    "d2": "BARBITURIQUES",
+    "level": "A prendre en compte",
+    "desc": "Risque majoré de sédation et de dépression respiratoire pouvant entraîner coma et décès, notamment chez le sujet âgé. Il convient de limiter autant que possible les doses et la durée de l’association."
+  },
+  {
+    "d1": "MORPHINIQUES",
+    "d2": "BENZODIAZÉPINES ET APPARENTÉS",
+    "level": "A prendre en compte",
+    "desc": "Risque majoré de sédation et de dépression respiratoire pouvant entraîner coma et décès, notamment chez le sujet âgé. Il convient de limiter autant que possible les doses et la durée de l’association."
+  },
+  {
+    "d1": "MYCOPHENOLATE MOFETIL",
+    "d2": "VACCINS VIVANTS ATTÉNUÉS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "MYCOPHENOLATE SODIQUE",
+    "d2": "VACCINS VIVANTS ATTÉNUÉS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "NALOXEGOL",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Adaptation posologique pendant l’association.Augmentation des concentrations plasmatiques de naloxegol par le diltiazem."
+  },
+  {
+    "d1": "NALOXEGOL",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation très importante des concentrations du naloxegol par l’inhibiteur."
+  },
+  {
+    "d1": "NALOXEGOL",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des effets indésirables du naloxegol par le pamplemousse."
+  },
+  {
+    "d1": "NALOXEGOL",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Adaptation posologique pendant l’association.Augmentation des concentrations plasmatiques de naloxegol par le vérapamil."
+  },
+  {
+    "d1": "NEBIVOLOL",
+    "d2": "FLUOXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie du nébivolol pendant la durée du traitement par l’antidépresseur et après son arrêt.Risque de majoration des effets indésirables du nébivolol avec notamment bradycardie excessive, par inhibition de son métabolisme par l’antidépresseur."
+  },
+  {
+    "d1": "NEBIVOLOL",
+    "d2": "PAROXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie du nébivolol pendant la durée du traitement par l’antidépresseur et après son arrêt.Risque de majoration des effets indésirables du nébivolol avec notamment bradycardie excessive, par inhibition de son métabolisme par l’antidépresseur."
+  },
+  {
+    "d1": "NEUROLEPTIQUES",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "A prendre en compte",
+    "desc": "Effet vasodilatateur et risque d'hypotension, notamment orthostatique (effet additif)."
+  },
+  {
+    "d1": "NEUROLEPTIQUES",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d’apparition de signes neuropsychiques évocateurs d’un syndrome malin des neuroleptiques ou d’une intoxication au lithium."
+  },
+  {
+    "d1": "NEUROLEPTIQUES ANTIÉMÉTIQUES",
+    "d2": "DOPAMINERGIQUES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Utiliser un antiémétique dénué d'effets extrapyramidaux.Antagonisme réciproque entre le dopaminergique et le neuroleptique."
+  },
+  {
+    "d1": "NEUROLEPTIQUES ANTIÉMÉTIQUES",
+    "d2": "LEVODOPA",
+    "level": "CONTRE-INDICATION",
+    "desc": "Utiliser un antiémétique dénué d'effets extrapyramidaux.Antagonisme réciproque entre la lévodopa et le neuroleptique."
+  },
+  {
+    "d1": "NEUROLEPTIQUES ANTIPSYCHOTIQUES (SAUF CLOZAPINE)",
+    "d2": "LEVODOPA",
+    "level": "Association DECONSEILLEE",
+    "desc": "Chez le patient parkinsonien, utiliser les doses minimales efficaces de chacun des deux médicaments.Antagonisme réciproque de la lévodopa et des neuroleptiques."
+  },
+  {
+    "d1": "NEVIRAPINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Diminution de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "NEVIRAPINE",
+    "d2": "ATAZANAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, adaptation posologique de l’atazanavir avec surveillance clinique et biologique régulière, notamment en début d’association.Risque de baisse de l’efficacité de l’atazanavir par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "NEVIRAPINE",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la névirapine.Doublement des concentrations de névirapine avec risque d'augmentation de ses effets indésirables."
+  },
+  {
+    "d1": "NEVIRAPINE",
+    "d2": "FOSAMPRENAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de baisse de l'efficacité de l'amprénavir."
+  },
+  {
+    "d1": "NEVIRAPINE",
+    "d2": "VORICONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite et adaptation éventuelle de la posologie du voriconazole pendant l'association.Risque de baisse de l'efficacité du voriconazole par augmentation de son métabolisme hépatique par la névirapine."
+  },
+  {
+    "d1": "NICARDIPINE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de sa posologie pendant le traitement et après l'arrêt.Augmentation des concentrations sanguines de l'immunodépresseur, par inhibition de son métabolisme."
+  },
+  {
+    "d1": "NICORANDIL",
+    "d2": "ACIDE ACETYLSALICYLIQUE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration du risque ulcérogène et hémorragique digestif."
+  },
+  {
+    "d1": "NICORANDIL",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration du risque ulcérogène et hémorragique digestif."
+  },
+  {
+    "d1": "NIFEDIPINE",
+    "d2": "CICLOSPORINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser une autre dihydropyridine.Risque d'addition d'effets indésirables à type de gingivopathies."
+  },
+  {
+    "d1": "NIFEDIPINE",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue : adapter la posologie de la nifédipine pendant le tratiement par la cimétidine et après son arrêt.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation de l'effet hypotenseur de la nifédipine par inhibition de son métabolisme hépatique par la cimétidine."
+  },
+  {
+    "d1": "NIMODIPINE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l'antagoniste du calcium pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques de l'antagoniste du calcium par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "NIMODIPINE",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l'antagoniste du calcium pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques de l'antagoniste du calcium par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par l'amiodarone."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Diminution des concentrations plasmatiques du nintédanib par diminution de son absorption par la carbamazépine."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par la ciclosporine."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par l'érythromycine."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par l'inhibiteur de protéases boosté par ritonavir."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par l'itraconazole."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "KETOCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par le kétoconazole."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "MILLEPERTUIS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques du nintédanib par diminution de son absorption par le millepertuis."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Diminution des concentrations plasmatiques du nintédanib par diminution de son absorption par la phénytoïne ou la fosphénytoïne."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Diminution des concentrations plasmatiques du nintédanib par diminution de son absorption par la rifampicine."
+  },
+  {
+    "d1": "NINTÉDANIB",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par le vérapamil."
+  },
+  {
+    "d1": "NORFLOXACINE",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance de la norfloxacine (plus de 2 heures, si possible).Diminution de l'absorption digestive de la norflloxacine."
+  },
+  {
+    "d1": "NORFLOXACINE",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "NORFLOXACINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Augmentation de la théophyllinémie avec risque de surdosage (diminution du métabolisme de la théophylline)."
+  },
+  {
+    "d1": "NORTRIPTYLINE",
+    "d2": "BUPROPION",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la nortriptyline pendant le traitement par le bupropion.Risque d'augmentation des effets indésirables de la nortriptyline par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "OLANZAPINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, et si besoin, adaptation posologique de l'olanzapine.Risque de diminution des concentrations plasmatiques de l'olanzapine et de son efficacité thérapeutique, par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "OLANZAPINE",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de l’olanzapine pendant le traitement par fluvoxamine.Augmentation des concentrations de l’olanzapine, avec risque de majoration des effets indésirables, par diminution de son métabolisme hépatique par la fluvoxamine."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "AMIODARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 200 mg 2 fois par jour avec l’amiodarone.Augmentation des concentrations plasmatiques d’olaparib par l' amiodarone"
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "DILTIAZEM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 200 mg deux fois par jour.Augmentation des concentrations plasmatiques d’olaparib par le diltiazem."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "FLUCONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 200 mg deux fois par jour.Augmentation des concentrations plasmatiques d’olaparib par le fluconazole."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution, éventuellement très importante selon l’inducteur, des concentrations plasmatiques de l’olaparib par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 150 mg deux fois par jour.Augmentation des concentrations plasmatiques d’olaparib par l’inhibiteur."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution des concentrations plasmatiques d’olaparib et de son efficacité, par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "VERAPAMIL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 200 mg deux fois par jour.Augmentation des concentrations plasmatiques d’olaparib par le vérapamil. OMBITASVIR + PARITAPRÉVIR (ombitasvir, paritaprévir)"
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "DISOPYRAMIDE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de disopyramide et de ses effets indésirables."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "EVEROLIMUS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.En association avec le ritonavir : augmentation significative des concentrations de l’immunosuppresseur avec risque de majoration de sa toxicité par la bithérapie."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "CONTRE-INDICATION",
+    "desc": "Contre-indication: - sauf avec le ritonavir.Augmentation des concentrations plasmatiques de la bithérapie par diminution de son métabolisme hépatique par l’inhibiteur."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "SIROLIMUS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.En association avec le ritonavir : augmentation significative des concentrations de l’immunosuppresseur avec risque de majoration de sa toxicité par la bithérapie."
+  },
+  {
+    "d1": "OLAPARIB",
+    "d2": "TACROLIMUS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.En association avec le ritonavir : augmentation significative des concentrations de l’immunosuppresseur avec risque de majoration de sa toxicité par la bithérapie."
+  },
+  {
+    "d1": "OMEPRAZOLE",
+    "d2": "ANAGRELIDE",
+    "level": "A prendre en compte",
+    "desc": "Préférer un autre inhibiteur de la pompe à protons.Risque de moindre efficacité de l'anagrélide par augmentation de son métabolisme par l'oméprazole."
+  },
+  {
+    "d1": "OMEPRAZOLE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et de la digoxinémie, particulièrement chez le sujet âgé.Augmentation modérée de la digoxinémie par majoration de son absorption par l'oméprazole."
+  },
+  {
+    "d1": "OMEPRAZOLE",
+    "d2": "ESCITALOPRAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "OMEPRAZOLE",
+    "d2": "TACROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines du tacrolimus, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines du tacrolimus."
+  },
+  {
+    "d1": "ONDANSETRON",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "ORLISTAT",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, ECG.Risque de diminution des concentrations plasmatiques de l'amiodarone et de son métabolite actif."
+  },
+  {
+    "d1": "ORLISTAT",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par l'orlistat et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "ORLISTAT",
+    "d2": "CICLOSPORINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Prendre l'orlistat à distance de la ciclosporine (au moins 3 heures). Contrôle renforcé des dosages sanguins de ciclosporine, notamment en début d’association, et lors d’augmentation éventuelle de la posologie de l’orlistat.Diminution des concentrations sanguines de ciclosporine par diminution de son absorption intestinale, avec risque de perte de l'activité immunosuppressive."
+  },
+  {
+    "d1": "OXCARBAZEPINE",
+    "d2": "ESTROGÈNES NON CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du traitement hormonal pendant le traitement par l'oxcarbazépine et après son arrêt.Risque de diminution de l'efficacité du traitement hormonal, par augmentation de son métabolisme hépatique par l'oxcarbazépine."
+  },
+  {
+    "d1": "OXCARBAZEPINE",
+    "d2": "LAMOTRIGINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques, avec adaptation de la posologie de la lamotrigine si besoin.Diminution des concentrations de la lamotrigine avec risque de moindre efficacité, par augmentation de son métabolisme hépatique par l'oxcarbazépine."
+  },
+  {
+    "d1": "OXCARBAZEPINE",
+    "d2": "TOPIRAMATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, et si besoin, adaptation posologique du topiramate pendant le traitement par l'oxcarbazépine et après son arrêt.Risque de diminution des concentrations du topiramate avec risque de moindre efficacité, par augmentation de son métabolisme hépatique par l'oxcarbazépine."
+  },
+  {
+    "d1": "OXCARBAZEPINE",
+    "d2": "VELPATASVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations de velpatasvir/sofosbuvir, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "OXPRENOLOL",
+    "d2": "ERGOTAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique renforcée, en particulier pendant les premières semaines de l'association.Ergotisme : quelques cas de spasme artériel avec ischémie des extrémités ont été observés (addition d'effets vasculaires)."
+  },
+  {
+    "d1": "OXYCODONE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Adaptation éventuelle de la posologie d’oxycodone .Diminution des concentrations plasmatiques de l’oxycodone par augmentation de son métabolisme par l’inducteur."
+  },
+  {
+    "d1": "OXYCODONE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l’oxycodone pendant le traitement par l'inhibiteur et après son arrêt.Majoration des effets indésirables, notamment respiratoires, de l’oxycodone par diminution de son métabolisme par l'inhibiteur."
+  },
+  {
+    "d1": "OXYCODONE",
+    "d2": "MILLEPERTUIS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Adaptation éventuelle de la posologie de l’oxycodone .Diminution des concentrations plasmatiques de l’oxycodone par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "OZANIMOD",
+    "d2": "BRADYCARDISANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et ECG pendant au moins 6 heures.Potentialisation des effets bradycardisants pouvant avoir des conséquences fatales. Les bêta-bloquants sont d’autant plus à risque qu’ils empêchent les mécanismes de compensation adrénergique."
+  },
+  {
+    "d1": "PACLITAXEL",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du paclitaxel.Risque de majoration des effets indésirables du paclitaxel par diminution de son métabolisme hépatique par l’amiodarone."
+  },
+  {
+    "d1": "PACLITAXEL",
+    "d2": "CLOPIDOGREL",
+    "level": "A prendre en compte",
+    "desc": "Augmentation des concentrations du paclitaxel par le clopidogrel, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "PACLITAXEL",
+    "d2": "DEFERASIROX",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite.Risque d’augmentation des concentrations plasmatiques du paclitaxel par inhibition de son métabolisme hépatique par le deferasirox."
+  },
+  {
+    "d1": "PACLITAXEL",
+    "d2": "GEMFIBROZIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite et adaptation de la posologie du paclitaxel pendant l’association.Risque d’augmentation des concentrations plasmatiques du paclitaxel par inhibition de son métabolisme hépatique par le gemfibrozil."
+  },
+  {
+    "d1": "PACLITAXEL",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de moindre efficacité du taxane par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "PACLITAXEL",
+    "d2": "TRIMETHOPRIME",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite et adaptation de la posologie du paclitaxel pendant l’association.Risque d’augmentation des concentrations plasmatiques du paclitaxel par inhibition de son métabolisme hépatique par le triméthoprime."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "AVANAFIL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de l'avanafil, avec risque d’hypotension."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "BUSPIRONE",
+    "level": "A prendre en compte",
+    "desc": "Risque de majoration des effets indésirables de la buspirone par diminution de son métabolisme par le pamplemousse."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "CARBAMAZEPINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de carbamazépine, avec risque de surdosage, par inhibition de son métabolisme par le pamplemousse."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "DRONEDARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations de dronédarone par inhibition de son métabolisme par le pamplemousse."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "IVABRADINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de l’ivabradine et de ses effets indésirables (inhibition de son métabolisme intestinal par le pamplemousse)."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "LERCANIDIPINE",
+    "level": "A prendre en compte",
+    "desc": "Risque majoré d'effets indésirables, notamment d'oedèmes, par diminution du métabolisme intestinal de la dihydropyridine."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "LURASIDONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de la lurasidone par diminution de son métabolisme par le pamplemousse."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "NALOXEGOL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des effets indésirables du naloxegol par le pamplemousse."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "RÉGORAFÉNIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de régorafenib par diminution de son métabolisme hépatique par le pamplemousse."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "SERTRALINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation parfois importante des concentrations de l’antidépresseur chez certains patients par diminution de son métabolisme intestinal."
+  },
+  {
+    "d1": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "d2": "VARDENAFIL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques du vardénafil, avec risque d’hypotension."
+  },
+  {
+    "d1": "PANOBINOSTAT",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. Débuter le traitement à dose réduite de moitié (10 mg).Risque de majoration des effets indésirables, notamment cardiaques, du panobinostat par diminution de son métabolisme par l’inhibiteur."
+  },
+  {
+    "d1": "PARACETAMOL",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation éventuelle de la posologie de l’antivitamine K pendant le traitement par le paracétamol et après son arrêt.Risque d’augmentation de l’effet de l’antivitamine K et du risque hémorragique en cas de prise de paracétamol aux doses maximales (4 g/j) pendant au moins 4 jours."
+  },
+  {
+    "d1": "PARACETAMOL",
+    "d2": "FLUCLOXACILLINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance étroite avec mesure de la 5-oxoproline urinaire.Risque accru d'acidose métabolique à trou anionique élevé, notamment en cas d'insuffisance rénale sévère, de sepsis, de facteurs prédisposant à la déplétion en glutathion (malnutrition, alcoolisme chronique…), ainsi qu’en cas d’utilisation de paracétamol aux doses quotidiennes maximales."
+  },
+  {
+    "d1": "PAROXETINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques de carbamazépine et réduction éventuelle de la posologie de la carbamazépine pendant le traitement par l'antidépresseur sérotoninergique et après son arrêt.Augmentation des concentrations plasmatiques de carbamazépine avec signes de surdosage."
+  },
+  {
+    "d1": "PAROXETINE",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie du métoprolol pendant la durée du traitement par la paroxétine et après son arrêt.Risque de majoration des effets indésirables du métoprolol, avec notamment bradycardie excessive, par inhibition de son métabolisme par la paroxétine."
+  },
+  {
+    "d1": "PAROXETINE",
+    "d2": "NEBIVOLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue ; si besoin, adaptation de la posologie du nébivolol pendant la durée du traitement par l’antidépresseur et après son arrêt.Risque de majoration des effets indésirables du nébivolol avec notamment bradycardie excessive, par inhibition de son métabolisme par l’antidépresseur."
+  },
+  {
+    "d1": "PAROXETINE",
+    "d2": "RISPERIDONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, adaptation posologique de la rispéridone.Augmentation de la fraction active de la rispéridone par diminution de son métabolisme hépatique par la paroxétine, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "PEFLOXACINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Augmentation de la théophyllinémie avec risque de surdosage (diminution du métabolisme de la théophylline)."
+  },
+  {
+    "d1": "PENICILLAMINE",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance de la pénicillamine (plus de 2 heures, si possible).Diminution de l'absorption digestive de la pénicillamine."
+  },
+  {
+    "d1": "PENTAMIDINE",
+    "d2": "DIDANOSINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance de l'amylasémie. Ne pas associer si l'amylasémie est à la limite supérieure de la normale.Risque majoré de survenue de pancréatite par addition d'effets indésirables."
+  },
+  {
+    "d1": "PENTAMIDINE",
+    "d2": "FOSCARNET",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance de la calcémie et supplémentation si nécessaire.Risque d'hypocalcémie sévère."
+  },
+  {
+    "d1": "PENTAMIDINE",
+    "d2": "STAVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque majoré de survenue de neuropathies périphériques par addition d'effets indésirables."
+  },
+  {
+    "d1": "PENTOXIFYLLINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la pentoxifylline et 8 jours après son arrêt.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "PENTOXIFYLLINE",
+    "d2": "COBIMÉTINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "PENTOXIFYLLINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par la pentoxifylline et après son arrêt.Augmentation de la théophyllinémie avec risque de surdosage (compétition au niveau du métabolisme hépatique de la théophylline)."
+  },
+  {
+    "d1": "PÉRAMPANEL",
+    "d2": "CYPROTERONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Dans son utilisation comme contraceptif hormonal: utiliser de préférence une autre méthode de contraception en particulier de type mécanique, pendant la durée de l'association et un cycle suivant.Pour des doses de pérampanel > ou = à 12 mg/jour, risque de diminution de l'efficacité de la cyprotérone."
+  },
+  {
+    "d1": "PÉRAMPANEL",
+    "d2": "PROGESTATIFS CONTRACEPTIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre méthode contraceptive, en particulier de type mécanique.Pour des doses de pérampanel >= 12 mg/jour : Risque de diminution de l’efficacité contraceptive."
+  },
+  {
+    "d1": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "d2": "ACIDE CHOLIQUE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Effet antagoniste du barbiturique."
+  },
+  {
+    "d1": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "d2": "CARBAMAZEPINE",
+    "level": "A prendre en compte",
+    "desc": "Prudence quant à l'interprétation des concentrations plasmatiques.Diminution progressive des concentrations plasmatiques de carbamazépine et de son métabolite actif sans modification apparente de l'efficacité anticomitiale."
+  },
+  {
+    "d1": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "d2": "FELBAMATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénobarbital avec adaptation de la posologie si besoin.Diminution des concentrations plasmatiques et de l'efficacité du felbamate et augmentation des concentrations plasmatiques du phénobarbital, avec risque de surdosage."
+  },
+  {
+    "d1": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "d2": "FOLATES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques, et adaptation, s'il y a lieu, de la posologie du phénobarbital pendant la supplémentation folique et après son arrêt.Diminution des concentrations plasmatiques du phénobarbital, par augmentation de son métabolisme dont les folates représentent un des cofacteurs."
+  },
+  {
+    "d1": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "AMIODARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration du risque de troubles du rythme ventriculaire par potentialisation des effets antiarythmiques, ainsi que des effets indésirables neurologiques, par diminution du métabolisme hépatique de la phénytoïne par l’amiodarone."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "CARBAMAZEPINE",
+    "level": "A prendre en compte",
+    "desc": "Prudence dans l'interprétation des concentrations plasmatiques.Réduction réciproque des concentrations plasmatiques (augmentation du métabolisme sans modification apparente de l'efficacité anticomitiale)."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "CIMETIDINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite, dosage des concentrations plasmatiques de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par la cimétidine et après son arrêt.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation des concentrations plasmatiques de phénytoïne avec possibilité d'apparition des signes habituels de surdosage."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "CIPROFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de l’anticonvulsivant pendant le traitement par ciprofloxacine et après son arrêt.Variation, éventuellement importante, des concentrations de phénytoïne en cas de traitement par la ciprofloxacine."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "CLOPIDOGREL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénytoïne.Augmentation des concentrations plasmatiques de phénytoïne avec signes de surdosage (inhibition du métabolisme de la"
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "DIAZEPAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénytoïne.Variations imprévisibles : les concentrations plasmatiques de phénytoïne peuvent augmenter, avec signes de surdosage, mais aussi diminuer ou rester stables."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "DISULFIRAME",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si elle ne peut être évitée, contrôle clinique et des concentrations plasmatiques de phénytoïne pendant le traitement par le disulfirame et après son arrêt.Augmentation importante et rapide des concentrations plasmatiques de phénytoïne avec signes toxiques (inhibition de son métabolisme)."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "FELBAMATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques de phénytoïne et si besoin, adaptation de sa posologie pendant le traitement par le felbamate.Augmentation des concentrations plasmatiques de phénytoïne avec risque de surdosage, par inhibition de son métabolisme par le felbamate."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite.Augmentation des concentrations plasmatiques de phénytoïne pouvant atteindre des valeurs toxiques. Mécanisme invoqué : inhibition du métabolisme hépatique de la phénytoïne."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "FLUOXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement contrôle des concentrations plasmatiques de phénytoïne. Si besoin, adaptation posologique pendant le traitement par la fluoxétine et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne avec signes de surdosage, par inhibition du métabolisme de la phénytoïne."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement contröle des concentrations plamatiques de phénytoïne. Si besoin, adaptation posologique de la phénytoïne pendant le traitement par la fluvoxamine et après son arrët.Augmentation des concentrations plasmatiques de phénytoïne avec signes de surdosage, par inhibition du métabolisme hépatique de la phénytoïne."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "FOLATES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénytoïne. Adaptation éventuelle de la posologie de la phénytoïne pendant la supplémentation folique et après son arrêt.Diminution des concentrations plasmatiques de phénytoïne par augmentation de son métabolisme dont les folates représentent un des cofacteurs."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "FUROSEMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser éventuellement des doses plus élevées de furosémide.Diminution de l'effet diurétique pouvant atteindre 50 %."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "ISONIAZIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite, dosage des concentrations plasmatiques de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par l'isoniazide et après son arrêt.Surdosage en phénytoïne (diminution de son métabolisme)."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "METYRAPONE",
+    "level": "Précaution d'emploi",
+    "desc": "Doubler la posologie de métyrapone.Risque de faux négatif du test à la métyrapone, dû à une diminution de ses concentrations plasmatiques, par augmentation de son métabolisme hépatique par la phénytoïne."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "MEXILETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement des concentrations plasmatiques de la mexilétine ; s'il y a lieu, adaptation de la posologie de la mexilétine pendant le traitement par la phénytoïne et après son arrêt.Diminution de l'activité antiarythmique, des concentrations plasmatiques et de la demi-vie de la méxilétine (augmentation de son métabolisme hépatique)."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "MICONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite, dosage des concentrations plasmatiques de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par le miconazole et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne pouvant atteindre des valeurs toxiques, par inhibition du métabolisme hépatique de la phénytoïne."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Diminution des concentrations plasmatiques du nintédanib par diminution de son absorption par la phénytoïne ou la fosphénytoïne."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "SUCRALFATE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le sucralfate à distance de la phénytoïne (plus de 2 heures, si possible).Diminution de l'absorption digestive de la phénytoïne."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "SULFAFURAZOL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre classe d'anti-infectieux, sinon surveillance clinique étroite, dosage des concentrations de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par le sulfamide anti-infectieux et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne jusqu'à des valeurs toxiques (inhibition de son métabolisme)."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "SULFAMETHIZOL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre classe d'anti-infectieux, sinon surveillance clinique étroite, dosage des concentrations de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par le sulfamide anti-infectieux et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne jusqu'à des valeurs toxiques (inhibition de son métabolisme)."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "SULFAMETHOXAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre classe d'anti-infectieux, sinon surveillance clinique étroite, dosage des concentrations de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par le sulfamide anti-infectieux et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne jusqu'à des valeurs toxiques (inhibition de son métabolisme)."
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "TICLOPIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénytoïne.Augmentation des concentrations plasmatiques de phénytoïne avec signes de surdosage (inhibition du métabolisme de la"
+  },
+  {
+    "d1": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "PIMOZIDE",
+    "d2": "TRICLABENDAZOLE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de 24 heures entre l’arrêt du triclabendazole et la prise du médicament torsadogène, et inversement.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes (inhibition du métabolisme hépatique du médicament torsadogène)."
+  },
+  {
+    "d1": "PIMOZIDE",
+    "d2": "VERAPAMIL",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque majoré de troubles du rythme ventriculaires, notamment, de torsades de pointes. PIPÉRACILLINE/TAZOBACTAM (pipéracilline, tazobactam)"
+  },
+  {
+    "d1": "PIMOZIDE",
+    "d2": "VANCOMYCINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration de la néphrotoxicité par comparaison à la vancomycine seule."
+  },
+  {
+    "d1": "POLYMYXINE B",
+    "d2": "AMINOSIDES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance stricte avec une justification bactériologique indiscutable.Addition des effets néphrotoxiques."
+  },
+  {
+    "d1": "POLYMYXINE B",
+    "d2": "CURARES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller le degré de curarisation en fin d'anesthésie.Potentialisation des curares lorque l'antibiotique est administré par voie parentérale et/ou péritonéale avant, pendant ou après l'agent curarisant."
+  },
+  {
+    "d1": "POLYSTYRÈNE SULFONATE DE CALCIUM",
+    "d2": "TOPIQUES GASTRO-INTESTINAUX, ANTIACIDES ET ADSORBANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Comme avec tout médicament oral pris avec l’un ou l’autre de ces médicaments, respecter un intervalle entre les prises (plus de 2 heures, si possible).Risque d'alcalose métabolique chez l'insuffisant rénal"
+  },
+  {
+    "d1": "POLYSTYRÈNE SULFONATE DE SODIUM",
+    "d2": "TOPIQUES GASTRO-INTESTINAUX, ANTIACIDES ET ADSORBANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Comme avec tout médicament oral pris avec l’un ou l’autre de ces médicaments, respecter un intervalle entre les prises (plus de 2 heures, si possible).Risque d'alcalose métabolique chez l'insuffisant rénal."
+  },
+  {
+    "d1": "PONATINIB",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de l'atrovastatine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PONATINIB",
+    "d2": "COLCHICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la colchicine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PONATINIB",
+    "d2": "DABIGATRAN",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques du dabigatran par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PONATINIB",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la digoxine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PONATINIB",
+    "d2": "METHOTREXATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques du méthotrexate par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PONATINIB",
+    "d2": "PRAVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la pravastatine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PONATINIB",
+    "d2": "ROSUVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la rosuvastatine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PONATINIB",
+    "d2": "SIMVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la simvastatine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PONATINIB",
+    "d2": "SULFASALAZINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la sulfasalazine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PONÉSIMOD",
+    "d2": "BRADYCARDISANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et ECG continu pendant les 4 heures suivant la première dose, jusqu'au lendemain si nécessaire.Potentialisation des effets bradycardisants pouvant avoir des conséquences fatales. Les bêta-bloquants sont d’autant plus à risque qu’ils empêchent les mécanismes de compensation adrénergique."
+  },
+  {
+    "d1": "POSACONAZOLE",
+    "d2": "ANTISÉCRÉTOIRES ANTIHISTAMINIQUES H2",
+    "level": "Association DECONSEILLEE",
+    "desc": "Association déconseillée: - uniquement avec la forme suspension buvable de posaconazole.Diminution de l'absorption de l'azolé antifongique, par augmentation du pH intragastrique par l'antisécrétoire."
+  },
+  {
+    "d1": "POSACONAZOLE",
+    "d2": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Association déconseillée: - uniquement avec la forme suspension buvable de posaconazole.Diminution de l'absorption de l'azolé antifongique, par augmentation du pH intragastrique par l'antisécrétoire."
+  },
+  {
+    "d1": "POSACONAZOLE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, s'il y a lieu, de l'ECG et de la digoxinémie, avec adaptation de la posologie de la digoxine pendant le traitement par le posaconazole et après son arrêt.Augmentation de la digoxinémie avec nausées, vomissements, troubles du rythme."
+  },
+  {
+    "d1": "POSACONAZOLE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "POSACONAZOLE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si possible, dosages plasmatiques du posaconazole et adaptation éventuelle de sa posologie.Diminution des concentrations plasmatiques et de l'efficacité du posaconazole."
+  },
+  {
+    "d1": "POSACONAZOLE",
+    "d2": "RIFABUTINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'accroissement des effets indésirables de la rifabutine (uvéites), par augmentation de ses concentrations et de celles de son métabolite actif."
+  },
+  {
+    "d1": "POTASSIUM",
+    "d2": "ANTAGONISTES DES RÉCEPTEURS DE L'ANGIOTENSINE II",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf en cas d'hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénale (addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "POTASSIUM",
+    "d2": "CICLOSPORINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf en cas d'hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénale ( addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "POTASSIUM",
+    "d2": "DIURÉTIQUES ÉPARGNEURS DE POTASSIUM (SEULS OU ASSOCIÉS)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf en cas d'hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénal (addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "POTASSIUM",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf s'il existe une hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénale ( addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "POTASSIUM",
+    "d2": "TACROLIMUS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf en cas d'hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénale (addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "PRAVASTATINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant l’association. Débuter le traitement à la dose minimale de pravastatine.Augmentation des concentrations de pravastatine, avec risque musculaire non exclu."
+  },
+  {
+    "d1": "PRAVASTATINE",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant le traitement par l'antibiotique.Augmentation de la concentration plasmatique de la pravastatine par la clarithromycine."
+  },
+  {
+    "d1": "PRAVASTATINE",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique pendant le traitement par l'antibiotique.Avec l'érythromycine utilisée par voie orale : augmentation de la concentration plasmatique de la pravastatine par l' érythromycine."
+  },
+  {
+    "d1": "PRAVASTATINE",
+    "d2": "PONATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la pravastatine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "PRAZIQUANTEL",
+    "d2": "DEXAMETHASONE",
+    "level": "Précaution d'emploi",
+    "desc": "Décaler l'administration des deux médicaments d'au moins une semaine.Diminution des concentrations plasmatiques du praziquantel, avec risque d'échec du traitement, par augmentation du métabolisme hépatique du praziquantel par la dexaméthasone."
+  },
+  {
+    "d1": "PRÉSERVATIFS EN LATEX",
+    "d2": "HUILES MINÉRALES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Utiliser un lubrifiant hydrosoluble (glycérine, polyacrylamide...).Risque de rupture du préservatif lors de l'utilisation avec des corps gras ou des lubrifiants contenant des huiles minérales (huile de paraffine, huile de silicone, etc...)."
+  },
+  {
+    "d1": "PRIMIDONE",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association et 1 à 2 semaines après leur arrêt.Diminution des concentrations plasmatiques de l’afatinib par augmentation de son métabolisme par la primidone."
+  },
+  {
+    "d1": "PRISTINAMYCINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la pristinamycine et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "PRISTINAMYCINE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de sa posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "PROBENECIDE",
+    "d2": "DIPROPHYLLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de diprophylline pendant le traitement par le probénécide.Risque de surdosage par augmentation des concentrations plasmatiques de diprophylline (inhibition de sa sécrétion tubulaire rénale)."
+  },
+  {
+    "d1": "PRODUITS DE CONTRASTE IODÉS",
+    "d2": "DIURÉTIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Réhydratation avant administration du produit iodé.En cas de déshydratation provoquée par les diurétiques, risque majoré d'insuffisance rénale fonctionnelle aiguë, en particulier lors d'utilisation de doses importantes de produits de contraste iodés."
+  },
+  {
+    "d1": "PRODUITS DE CONTRASTE IODÉS",
+    "d2": "METFORMINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Le traitement par la metformine doit être suspendu au moment de l'examen radiologique pour n'être repris que 2 jours après.Risque important d'acidose lactique par hémoconcentration de la metformine, dans le cas d'un arrêt cardio-respiratoire induit par l'examen radiologique, avec insuffisance rénale aiguë. Le traitement par la metformine doit être suspendu au moment de l'examen radiologique pour n'être repris que 2 jours après.Risque important d'acidose lactique par hémoconcentration de la metformine, dans le cas d'un arrêt cardio-respiratoire induit par l'examen radiologique, avec insuffisance rénale aiguë. Le traitement par la metformine doit être suspendu au moment de l'examen radiologique pour n'être repris que 2 jours après.Risque important d'acidose lactique par hémoconcentration de la metformine, dans le cas d'un arrêt cardio-respiratoire induit par l'examen radiologique, avec insuffisance rénale aiguë."
+  },
+  {
+    "d1": "PROGESTATIFS CONTRACEPTIFS",
+    "d2": "APREPITANT",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser de préférence une autre méthode contraceptive, en particulier de type mécanique, pendant la durée de l'association et un cycle suivant.(Sauf stérilet), diminution des concentrations du progestatif, avec risque de moindre efficacité contraceptive."
+  },
+  {
+    "d1": "PROGESTATIFS CONTRACEPTIFS",
+    "d2": "BOSENTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode contraceptive fiable, additionnelle ou alternative, pendant la durée de l'association et un cycle suivant.Risque de diminution de l'efficacité du contraceptif hormonal par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "PROGESTATIFS CONTRACEPTIFS",
+    "d2": "GRISEOFULVINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode contraceptive fiable, additionnelle ou alternative, pendant la durée de l'association et un cycle suivant.Risque de diminution de l'efficacité du contraceptif hormonal par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "PROGESTATIFS CONTRACEPTIFS",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre méthode contraceptive, en particulier de type mécanique, pendant la durée de l'association et un cycle suivant.Diminution de l'efficacité contraceptive du contraceptif hormonal, par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "PROGESTATIFS CONTRACEPTIFS",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre méthode contraceptive, en particulier de type mécanique (préservatif ou stérilet), pendant la durée de l'association et un cycle suivant.Risque de diminution de l'efficacité contraceptive par diminution des concentrations en contraceptif hormonal, dûe à l'augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "PROGESTATIFS CONTRACEPTIFS",
+    "d2": "PÉRAMPANEL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre méthode contraceptive, en particulier de type mécanique.Pour des doses de pérampanel >= 12 mg/jour : Risque de diminution de l’efficacité contraceptive."
+  },
+  {
+    "d1": "PROGESTATIFS CONTRACEPTIFS",
+    "d2": "ULIPRISTAL",
+    "level": "Association DECONSEILLEE",
+    "desc": "- Dans l'indication contraception d'urgence: Dans le cas où la (re)prise d’une contraception hormonale est envisagée, utiliser une contraception additionnelle de type mécanique pendant les 12 jours qui suivent la (dernière) prise de l’ulipristal (au cas où il y en aurait eu plus d’une). - Dans l’indication fibrome : Dans le cas où la (re)prise d’une contraception hormonale est envisagée, utiliser une contraception de type mécanique pendant les 7 premiers jours de la contraception hormonale.Dans l'indication contraception d'urgence : Antagonisme des effets de l’ulipristal en cas de reprise d’un contraceptif hormonal moins de 5 jours après la prise de la contraception d’urgence. Dans l’indication fibrome : Antagonisme réciproque des effets de l’ulipristal et du progestatif, avec risque d’inefficacité."
+  },
+  {
+    "d1": "PROGESTATIFS NON CONTRACEPTIFS, ASSOCIÉS OU NON À UN ESTROGÈNE",
+    "d2": "BOSENTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du traitement hormonal pendant l’administration du bosentan et après son arrêt.Risque de diminution de l’efficacité du progestatif."
+  },
+  {
+    "d1": "PROGESTATIFS NON CONTRACEPTIFS, ASSOCIÉS OU NON À UN ESTROGÈNE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie du traitement hormonal pendant l'administration de l'inducteur et après son arrêt.Diminution de l'efficacité du progestatif."
+  },
+  {
+    "d1": "PROGESTATIFS NON CONTRACEPTIFS, ASSOCIÉS OU NON À UN ESTROGÈNE",
+    "d2": "ULIPRISTAL",
+    "level": "A prendre en compte",
+    "desc": "Dans l’indication fibrome : Antagonisme réciproque des effets de l’ulipristal et du progestatif, avec risque d’inefficacité."
+  },
+  {
+    "d1": "PROGUANIL",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation éventuelle de la posologie de l’antivitamine K pendant le traitement par le proguanil et après son arrêt.Risque d’augmentation de l’effet de l’antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "PROGUANIL",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par l’antipaludique et après son arrêt.Risque d’hypothyroïdie clinique chez les patients substitués par hormones thyroïdiennes."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "ABIRATERONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la propafénone pendant le traitement par l'abiratérone.Risque d'augmentation des effets indésirables de la propafénone, par diminution de son métabolisme hépatique par l'abiratérone."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de la contractilité, de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "BUPROPION",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la propafénone pendant le traitement par le bupropion.Risque d'augmentation des effets indésirables de la propafénone par diminution de son métabolisme hépatique par le bupropion."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "CINACALCET",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de la propafénone pendant le traitement par cinacalcet.Augmentation des concentrations plasmatiques de propafénone avec risque de surdosage, par diminution de son métabolisme hépatique par le cinacalcet."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "DARIFENACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de la propafénone pendant le traitement par darifénacine.Augmentation des concentrations plasmatiques de propafénone, avec risque de surdosage, par diminution de son métabolisme hépatique par la darifénacine."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la digoxinémie pendant le traitement par propafénone et après son arrêt.Risque d’augmentation de la digoxinémie, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "DULOXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de la propafénone pendant le traitement par la duloxétine et après son arrêt.Augmentation des concentrations plasmatiques de propafénone avec risque de surdosage, par diminution de son métabolisme hépatique par la duloxétine."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "ESMOLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Troubles de la contractilité, de l'automatisme et de la conduction (suppression des mécanismes sympathiques compensateurs)."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. S'il y a lieu, adaptation de la posologie de la propafénone pendant l'association et après l'arrêt de l'inducteur.Diminution des concentrations plasmatiques de la propafénone par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "MILLEPERTUIS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. S'il y a lieu, adaptation de la posologie de la propafénone pendant l'association et après l'arrêt du millepertuis.Diminution des concentrations plasmatiques de la propafénone par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "MIRABÉGRON",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie de la propafénone pendant l'association.Augmentation des concentrations plasmatiques de la propafénone par diminution de son métabolisme par le mirabégron."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. S'il y a lieu, adaptation de la posologie de la propafénone pendant l'association et après l'arrêt de la rifampicine.Diminution des concentrations plasmatiques de la propafénone, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "ROLAPITANT",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de la propafénone pendant le traitement par le rolapitant et après son arrêt.Augmentation des concentrations plasmatiques de propafénone avec risque de surdosage, par diminution de son métabolisme hépatique par le rolapitant."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "TERBINAFINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la propafénone pendant le traitement par la terbinafine.Risque d'augmentation des effets indésirables de la propafénone, par diminution de son métabolisme hépatique par la terbinafine."
+  },
+  {
+    "d1": "PROPAFENONE",
+    "d2": "THEOPHYLLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Risque d’augmentation de la théophyllinémie par diminution de son métabolisme hépatique par la propafénone."
+  },
+  {
+    "d1": "PROPRANOLOL",
+    "d2": "ERGOTAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique renforcée, en particulier pendant les premières semaines de l'association.Ergotisme : quelques cas de spasme artériel avec ischémie des extrémités ont été observés (addition d'effets vasculaires)."
+  },
+  {
+    "d1": "PROPRANOLOL",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique accrue et, si besoin, adaptation de la posologie du propranolol pendant le traitement par la fluvoxamine et après son arrêt.Augmentation des concentrations plasmatiques de propranolol par inhibition de son métabolisme hépatique, avec majoration de l'activité et des effets indésirables, par exemple : bradycardie importante."
+  },
+  {
+    "d1": "PYRAZINAMIDE",
+    "d2": "ISONIAZIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique.Addition des effets hépatotoxiques."
+  },
+  {
+    "d1": "PYRIMETHAMINE",
+    "d2": "TRIMETHOPRIME",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle régulier de l'hémogramme et association d'un traitement par l'acide folique (injections IM régulières).Anémie mégaloblastique, plus particulièrement à fortes doses des deux produits (déficit en acide folique par l'association de deux 2-4 diaminopyrimidines)."
+  },
+  {
+    "d1": "QUETIAPINE",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution très importante des concentrations plasmatiques de quétiapine par augmentation de son métabolisme hépatique par l'inducteur, avec risque d’inefficacité."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "ALCALINISANTS URINAIRES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement contrôle de la quinidinémie ; si besoin, adaptation de la posologie pendant le traitement alcalinisant et après son arrêt.Augmentation des concentrations plasmatiques de la quinidine et risque de surdosage (diminution de l'excrétion rénale de la quinidine par alcalinisation des urines)."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "COBICISTAT",
+    "level": "CONTRE-INDICATION",
+    "desc": "Surveillance clinique.Risque de majoration des effets indésirables de la quinidine par diminution de son métabolisme par le cobicistat."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "DABIGATRAN",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'indication post-chirurgicale : surveillance clinique et adaptation de la posologie du dabigatran à 150 mg/j en une prise.Augmentation des concentrations plasmatiques de dabigatran, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. En cas de réponse inattendue, contrôler la digoxinémie et adapter la posologie.Augmentation de la digoxinémie par diminution de la clairance rénale de la digoxine. De plus, troubles de l'automatisme (bradycardie excessive et troubles de la conduction auriculo- ventriculaire)."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "DRONEDARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter le traitement par la quinidine aux posologies minimales recommandées, et ajuster les doses en fonction de l’ECG.Risque de bradycardie ou de bloc auriculo-ventriculaire, notamment chez le sujet âgé. Par ailleurs, légère augmentation des concentrations de dronédarone par diminution de son métabolisme par la quinidine."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes, ainsi que d'acouphènes et/ou de diminution de l'acuité auditive (cinchonisme), par diminution du métabolisme hépatique de la quinidine."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "STIRIPENTOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "TALAZOPARIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "TAMOXIFENE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de baisse de l'efficacité du tamoxifène, par inhibition de la formation de son métabolite actif par la quinidine."
+  },
+  {
+    "d1": "QUINIDINE",
+    "d2": "TRICLABENDAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes (inhibition du métabolisme hépatique du médicament torsadogène)."
+  },
+  {
+    "d1": "QUININE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG, si besoin, avec adaptation éventuelle des doses de digoxine.Augmentation modérée de la digoxinémie."
+  },
+  {
+    "d1": "QUININE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la quinine pendant le traitement par l’inducteur et après son arrêt.Risque de perte de l’efficacité de la quinine par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "QUININE",
+    "d2": "MEFLOQUINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Respecter un délai minimum de 12 heures entre la fin de l'administration IV de quinine et le début de l'administration de méfloquine.Pour la quinine administrée par voie IV : risque majoré de survenue de crises épileptiques par addition des effets proconvulsivants."
+  },
+  {
+    "d1": "QUINUPRISTINE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "RALTÉGRAVIR",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, un doublement de la dose de raltégravir peut être envisagé.Diminution des concentrations du raltégravir par la rifampicine."
+  },
+  {
+    "d1": "RANOLAZINE",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant ou une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse par inhibition du métabolisme de l'atorvastatine par la ranolazine."
+  },
+  {
+    "d1": "RANOLAZINE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, biologique et éventuellement ECG. Adaptation de la posologie de la digoxine, si besoin.Augmentation de la digoxinémie."
+  },
+  {
+    "d1": "RANOLAZINE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, et adaptation éventuelle de la posologie de l’immunosuppresseur.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme par la ranolazine."
+  },
+  {
+    "d1": "RANOLAZINE",
+    "d2": "SIMVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine ou utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse par inhibition du métabolisme de la simvastatine par la ranolazine."
+  },
+  {
+    "d1": "RÉGORAFÉNIB",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques de régorafenib par diminution de son métabolisme hépatique par le pamplemousse."
+  },
+  {
+    "d1": "REPAGLINIDE",
+    "d2": "ANALOGUES DE LA SOMATOSTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer l'autosurveillance glycémique et adapter si besoin la posologie de la repaglidine pendant le traitement par l'analogue de la somatostatine.Risque d'hypoglycémie ou d'hyperglycémie : diminution ou augmentation des besoins en repaglidine, par diminution ou augmentation de la sécrétion de glucagon endogène."
+  },
+  {
+    "d1": "REPAGLINIDE",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie de l'hypoglycémiant pendant le traitement par la clarithromycine.Risque d'hypoglycémie par augmentation des concentrations plasmatiques du répaglinide."
+  },
+  {
+    "d1": "REPAGLINIDE",
+    "d2": "CLOPIDOGREL",
+    "level": "A prendre en compte",
+    "desc": "Augmentation des concentrations du répaglinide par le clopidogrel, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "REPAGLINIDE",
+    "d2": "DEFERASIROX",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite.Risque d’augmentation des concentrations plasmatique de répaglinide, par inhibition de son métabolisme hépatique par le deferasirox."
+  },
+  {
+    "d1": "REPAGLINIDE",
+    "d2": "TRIMETHOPRIME",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite.Risque d’augmentation des concentrations plasmatiques de répaglinide par inhibition de son métabolisme hépatique par le triméthoprime."
+  },
+  {
+    "d1": "RÉSINES CHÉLATRICES",
+    "d2": "MÉDICAMENTS ADMINISTRÉS PAR VOIE ORALE",
+    "level": "Précaution d'emploi",
+    "desc": "D’une façon générale, la prise de la résine doit se faire à distance de celle des autres médicaments, en respectant un intervalle de plus de 2 heures, si possible.La prise de résine chélatrice peut diminuer l’absorption intestinale et, potentiellement, l’efficacité d’autres médicaments pris simultanément."
+  },
+  {
+    "d1": "RÉSINES CHÉLATRICES",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les hormones thyroïdiennes à distance de la résine (plus de 2 heures, si possible).Diminution de l'absorption digestive des hormones thyroïdiennes."
+  },
+  {
+    "d1": "RÉSINES CHÉLATRICES",
+    "d2": "ROXADUSTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le roxadustat à distance de la résine (plus de 1 heure, si possible).La prise de résine chélatrice peut diminuer l’absorption intestinale et, potentiellement, l’efficacité du roxadustat pris simultanément."
+  },
+  {
+    "d1": "RÉTINOÏDES",
+    "d2": "AUTRES RÉTINOÏDES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de symptômes évocateurs d’une hypervitaminose A."
+  },
+  {
+    "d1": "RÉTINOÏDES",
+    "d2": "CYCLINES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d'hypertension intracrânienne."
+  },
+  {
+    "d1": "RÉTINOÏDES",
+    "d2": "VITAMINE A",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de symptômes évocateurs d’une hypervitaminose A."
+  },
+  {
+    "d1": "RIBAVIRINE",
+    "d2": "STAVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de diminution de l'efficacité de chaque antiviral, par antagonisme compétitif de la réaction de phosphorylation à l'origine des métabolites actifs."
+  },
+  {
+    "d1": "RIBAVIRINE",
+    "d2": "ZIDOVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de diminution de l'efficacité de chaque antiviral, par antagonisme compétitif de la réaction de phosphorylation à l'origine des métabolites actifs."
+  },
+  {
+    "d1": "RIFABUTINE",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'augmentation des effets indésirables de la rifabutine (uvéites) par augmentation de ses concentrations et de celle de son métabolite actif par la clarithromycine. De plus, augmentation du métabolisme de la clarithromycine par la rifabutine, avec augmentation des concentrations de son métabolite actif."
+  },
+  {
+    "d1": "RIFABUTINE",
+    "d2": "COBICISTAT",
+    "level": "Précaution d'emploi",
+    "desc": "Réduction de la dose de rifabutine (150 mg 1 jour sur deux). Surveillance clinique et biologique régulière, notamment en début d'association.Augmentation très importante du métabolite de la rifabutine, avec risque de majoration de sa toxicité (uvéites, neutropénies). Par ailleurs, possible diminution des concentrations de cobicistat."
+  },
+  {
+    "d1": "RIFABUTINE",
+    "d2": "EFAVIRENZ",
+    "level": "Précaution d'emploi",
+    "desc": "Adaptation éventuelle de la posologie de la rifabutine ou de l'éfavirenz pendant la durée de l'association.Diminution importante des concentrations de rifabutine, par augmentation de son métabolisme hépatique par l’éfavirenz. Egalement, possibilité de diminution importante des concentrations d'éfavirenz par la rifabutine."
+  },
+  {
+    "d1": "RIFABUTINE",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'accroissement des effets indésirables de la rifabutine (uvéites), par augmentation de ses concentrations et de celles de son métabolite actif."
+  },
+  {
+    "d1": "RIFABUTINE",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par la rifabutine et après son arrêt.Décrit pour la phénytoïne, la rifampicine, la carbamazépine. Risque d'hypothyroïdie clinique chez les patients hypothyroïdiens, par augmentation du métabolisme de la T3 et de la T4."
+  },
+  {
+    "d1": "RIFABUTINE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Réduction de la dose de rifabutine (150 mg 1 jour sur deux). Surveillance clinique et biologique régulière, notamment en début d'association.Risque de baisse de l'efficacité de l'inhibiteur de protéases (ce d'autant que la posologie de la rifabutine est élevée) d'une part, et risque d'augmentation des effets indésirables (uvéites) de la rifabutine, d'autre part."
+  },
+  {
+    "d1": "RIFABUTINE",
+    "d2": "POSACONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque d'accroissement des effets indésirables de la rifabutine (uvéites), par augmentation de ses concentrations et de celles de son métabolite actif."
+  },
+  {
+    "d1": "RIFABUTINE",
+    "d2": "VELPATASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations plasmatiques de velpatasvir par la rifabutine, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "RIFABUTINE",
+    "d2": "VORICONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association est jugée néccessaire, surveillance clinique et adaptation de la posologie du voriconazole (en général doublée) pendant le traitement par la rifabutine.Diminution des concentrations plasmatiques du voriconazole avec risque de perte d'efficacité, par augmentation de son métabolisme hépatique par la rifabutine d'une part, et risque d'augmentation des effets indésirables (uvéites) de la rifabutine d'autre part."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association et 1 à 2 semaines après leur arrêt.Diminution des concentrations plasmatiques de l’afatinib par augmentation de son métabolisme par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "ALBENDAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique de la réponse thérapeutique et adaptation éventuelle de la posologie de l’albendazole pendant le traitement avec l’inducteur enzymatique et après son arrêt.Diminution importante des concentrations plasmatiques de l’albendazole et de son métabolite actif par l’inducteur, avec risque de baisse de son efficacité."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "ANTIARYTHMIQUES CLASSE IA",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et éventuellement de la concentration plasmatique de l'antiarythmique. Si besoin, adaptation de la posologie de l'antiarythmique pendant le traitement par la rifampicine et après son arrêt (risque de surdosage en antiarythmique).Diminution des concentrations plasmatiques et de l'efficacité de l'antiarythmique (augmentation de son métabolisme hépatique)."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la rifampicine et 8 jours après son arrêt.Diminution de l'effet de l'antivitamine K par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "APIXABAN",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques de l’apixaban par la rifampicine, avec risque de diminution de l’effet thérapeutique."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "BUSPIRONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la buspirone pendant le traitement par rifampicine et après son arrêt.Diminution des concentrations plasmatiques de la buspirone par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle des concentrations plasmatiques et adaptation de la posologie de la carbamazépine pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de la carbamazépine par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "CARVEDILOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique régulière et adaptation de la posologie du carvédilol pendant le traitement par la rifampicine. A l'arrêt de la rifampicine, risque de remontée importante des concentrations plasmatiques de carvédilol imposant une réduction posologique et une surveillance clinique étroite.Diminution importante des concentrations plasmatiques du carvédilol, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Diminution des concentrations plasmatiques et risque de baisse de l'efficacité de la clarithromycine, notamment chez le patient HIV, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "CLOZAPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et augmentation éventuelle de la posologie de la clozapine durant le traitement par la rifampicine.Risque d'inefficacité du traitement antipsychotique (diminution des concentrations plasmatiques de clozapine par augmentation de son métabolisme hépatique)."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "DEFERASIROX",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la ferritinémie pendant et après le traitement par l’inducteur enzymatique. Si besoin, adaptation de la posologie de déférasirox.Risque de diminution des concentrations plasmatiques de déférasirox."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG.Diminution modeste des concentrations de digoxine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "DRONEDARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations de dronédarone par augmentation de son métabolisme, sans modification notable du métabolite actif."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "EFAVIRENZ",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Diminution des concentrations plasmatiques et de l'efficacité de l'éfavirenz par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "ESZOPICLONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Utiliser éventuellement un autre hypnotique.Risque de diminution des concentrations plasmatiques et de l'efficacité de l’eszopiclone par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "FENTANYL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer un autre morphinique.Diminution des concentrations plasmatiques de fentanyl par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "FLUCONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques et de l'efficacité du fluconazole par augmentation de son métabolisme par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "HALOPERIDOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, adaptation posologique pendant le traitement par la rifampicine et après son arrêt.Risque de diminution des concentrations plasmatiques de l'halopéridol et de son efficacité thérapeutique, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation, si besoin, de la posologie des hormones thyroïdiennes pendant le traitement par la rifampicine et après son arrêt.Risque d'hypothyroïdie clinique chez les patients hypothyroïdiens, par augmentation du métabolisme de la T3 et de la T4."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "INHIBITEURS DE LA 5-ALPHA REDUCTASE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Diminution des concentrations plasmatiques de l’inhibiteur de la 5- alpha réductase par l’inducteur enzymatique."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Dans l'attente de données complémentaires avec les inhibiteurs de protéases \"boostés\".Diminution très importante des concentrations plasmatiques de l'inhibiteur de protéases, par augmentation de son métabolisme hépatique par la rifampicine. Pour l'association (saquinavir + ritonavir) : risque de toxicité hépatocellulaire sévère."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "ISONIAZIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique de cette association classique. En cas d'hépatite, arrêter l'isoniazide.Augmentation de l'hépatotoxicité de l'isoniazide (augmentation de la formation de métabolites toxiques de l'isoniazide)."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "IVABRADINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’ivabradine pendant l’association et après l’arrêt de la rifampicine.Risque de diminution de l'efficacité de l’ivabradine, par augmentation de son métabolisme par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "LÉDIPASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution importante des concentrations plasmatiques du lédipasvir par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "LINEZOLIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et augmentation éventuelle de la posologie du linézolide pendant le traitement par la rifampicine.Risque de diminution de l'efficacité du linézolide par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "METRONIDAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de métronidazole pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques du métronidazole par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "MINÉRALOCORTICOÏDES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique ; adaptation de la posologie des corticoïdes pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité des corticoïdes par augmentation de leur métabolisme hépatique par la rifampicine ; les conséquences sont particulièrement importantes chez les addisoniens traités par l'hydrocortisone et en cas de transplantation."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "MONTELUKAST",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l'antiasthmatique pendant le traitement par la rifampicine et après son arrêt.Risque de baisse de l'efficacité du montélukast par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "MORPHINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la morphine pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de la morphine et de son métabolite actif."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "NIMODIPINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de l'antagoniste du calcium pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques de l'antagoniste du calcium par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Diminution des concentrations plasmatiques du nintédanib par diminution de son absorption par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. S'il y a lieu, adaptation de la posologie de la propafénone pendant l'association et après l'arrêt de la rifampicine.Diminution des concentrations plasmatiques de la propafénone, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "QUETIAPINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution très importante des concentrations plasmatiques de quétiapine par augmentation de son métabolisme hépatique par l'inducteur, avec risque d’inefficacité."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "RALTÉGRAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, un doublement de la dose de raltégravir peut être envisagé.Diminution des concentrations du raltégravir par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "SACITUZUMAB",
+    "level": "A prendre en compte",
+    "desc": "Pour le SN38 lié au sacizutumab (govitécan) : risque de diminution de son exposition, par augmentation de son métabolisme."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "TÉNOFOVIR ALAFÉNAMIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique pendant l’association et 1 à 2 semaines après l’arrêt de la rifampicine.Diminution des concentrations plasmatiques du ténofovir alafénamide par diminution de son absorption par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "TERBINAFINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la terbinafine pendant le traitement par la rifampicine.Diminution des concentrations plasmatiques et de l'efficacité de la terbinafine, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, de la théophyllinémie. Adapter, s'il y a lieu, la posologie de la théophylline pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de la théophylline (augmentation de son métabolisme par induction enzymatique)."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "TIAGABINE",
+    "level": "Précaution d'emploi",
+    "desc": "Une augmentation de la posologie de la tiagabine peut s’avérer nécessaire en cas d’association à la rifampicine.Diminution des concentrations plasmatiques de la tiagabine par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "TICAGRELOR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations plasmatiques de ticagrelor par augmentation de son métabolisme hépatique par la rifampicine, avec risque de diminution de l’effet thérapeutique."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "ULIPRISTAL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer une alternative thérapeutique peu ou pas métabolisée.Risque de diminution de l’effet de l’ulipristal, par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, et adaptation éventuelle de la posologie de l'anticonvulsivant pendant le traitement par la rifampicine et après son arrêt.Risque de survenue de crises convulsives, par augmentation du métabolisme hépatique du valproate par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "VELPATASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations plasmatiques de velpatasvir par la rifampicine, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "VITAMINE D",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations de vitamine D et supplémentation si nécessaire.Diminution des concentrations de vitamine D plus marquée qu’en l’absence de traitement par la rifampicine"
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "ZIDOVUDINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association s'avère nécessaire, surveillance clinique et biologique renforcée.Diminution de moitié des concentrations de la zidovudine par augmentation de son métabolisme par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "ZOLPIDEM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Utiliser éventuellement un autre hypnotique.Diminution des concentrations plasmatiques et de l'efficacité du zolpidem par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RIFAMPICINE",
+    "d2": "ZOPICLONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Utiliser éventuellement un autre hypnotique.Diminution des concentrations plasmatiques et de l'efficacité de la zopiclone par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "RILPIVIRINE",
+    "d2": "ANTISÉCRÉTOIRES ANTIHISTAMINIQUES H2",
+    "level": "A prendre en compte",
+    "desc": "Si nécessaire, utiliser un antihistaminique H2 actif en une prise par jour, à prendre au moins 12 heures avant, ou au moins 4 heures après.Risque de diminution des concentrations plasmatiques de la rilpivirine."
+  },
+  {
+    "d1": "RILPIVIRINE",
+    "d2": "DEXAMETHASONE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Avec la dexaméthasone par voie systémique (sauf en cas de prise unique), risque de diminution des concentrations plasmatiques de rilpivirine par augmentation de son métabolisme hépatique par la dexamethasone."
+  },
+  {
+    "d1": "RILPIVIRINE",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution des concentrations plasmatiques de rilpivirine par augmentation de son métabolisme hépatique par le millepertuis."
+  },
+  {
+    "d1": "RISPERIDONE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, et si besoin, adaptation posologique de la rispéridone.Risque de diminution de la fraction active de la rispéridone et de son efficacité thérapeutique par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "RISPERIDONE",
+    "d2": "FLUOXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, adaptation posologique de la rispéridone.Augmentation de la fraction active de la rispéridone par diminution de son métabolisme hépatique par la fluoxétine, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "RISPERIDONE",
+    "d2": "PAROXETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, adaptation posologique de la rispéridone.Augmentation de la fraction active de la rispéridone par diminution de son métabolisme hépatique par la paroxétine, avec risque de majoration des effets indésirables."
+  },
+  {
+    "d1": "RITONAVIR",
+    "d2": "CORTICOÏDES (VOIE INTRA-ARTICULAIRE)",
+    "level": "A prendre en compte",
+    "desc": "Préférer un corticoïde non CYP3A4-dépendant (hydrocortisone)Décrit chez des patients HIV. Risque d’insuffisance surrénale aiguë, même en cas d’injection unique. L’articulation peut constituer un réservoir relarguant de façon continue le corticoïde CYP3A4-dépendant dans la circulation générale, avec augmentation possiblement très importante des concentrations du corticoïde à l’origine d’une freination de la réponse hypothalamo-hypophysaire."
+  },
+  {
+    "d1": "RITONAVIR",
+    "d2": "GLUCOCORTICOÏDES PAR VOIE INTRA-ARTICULAIRE ET MÉTABOLISÉS",
+    "level": "Précaution d'emploi",
+    "desc": "Préférer un corticoïde non CYP3A4-dépendant (hydrocortisone).Décrit chez des patients HIV. Risque d’insuffisance surrénale aiguë, même en cas d’injection unique. L’articulation peut constituer un réservoir relarguant de façon continue le corticoïde CYP3A4-dépendant dans la circulation générale, avec augmentation possiblement très importante des concentrations du corticoïde, à l’origine d’une freination de la réponse hypothalamo-hypophysaire."
+  },
+  {
+    "d1": "ROLAPITANT",
+    "d2": "COLCHICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des effets indésirables de la colchicine, aux conséquences potentiellement fatales."
+  },
+  {
+    "d1": "ROLAPITANT",
+    "d2": "DABIGATRAN",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques du dabigatran par augmentation de son absorption intestinale par le rolapitant."
+  },
+  {
+    "d1": "ROLAPITANT",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG pendant le traitement par le rolapitant et après son arrêt.Augmentation de la digoxinémie par majoration de son absorption."
+  },
+  {
+    "d1": "ROLAPITANT",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par le rolapitant.Chez l'insuffisant cardiaque, risque d'augmentation des effets indésirables du métoprolol, par diminution de son métabolisme hépatique par le rolapitant."
+  },
+  {
+    "d1": "ROLAPITANT",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de la propafénone pendant le traitement par le rolapitant et après son arrêt.Augmentation des concentrations plasmatiques de propafénone avec risque de surdosage, par diminution de son métabolisme hépatique par le rolapitant."
+  },
+  {
+    "d1": "ROLAPITANT",
+    "d2": "ROSUVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser la rosuvastatine à dose minimale.Risque d’augmentation des concentrations de rosuvastatine."
+  },
+  {
+    "d1": "ROPINIROLE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l’INR. Adaptation éventuelle de la posologie de l’antivitamine K pendant le traitement par ropinirole et après son arrêt.Augmentation du risque hémorragique."
+  },
+  {
+    "d1": "ROPINIROLE",
+    "d2": "CIPROFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction éventuelle de la posologie du ropinirole pendant le traitement par la ciprofloxacine et après son arrêt.Augmentation des concentrations de ropinirole avec risque de surdosage, par diminution de son métabolisme hépatique par la ciprofloxacine."
+  },
+  {
+    "d1": "ROPINIROLE",
+    "d2": "ENOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du ropinirole pendant le traitement par l'énoxacine et après son arrêt.Augmentation des concentrations plasmatiques de ropinirole avec signes de surdosage par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "ROPINIROLE",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie du ropinirole pendant le traitement par fluvoxamine et après son arrêt.Augmentation des concentrations de ropinirole, avec risque de surdosage, par diminution de son métabolisme hépatique par la fluvoxamine."
+  },
+  {
+    "d1": "ROSUVASTATINE",
+    "d2": "FOSTAMATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, avec adaptation de la posologie de rosuvastatine si nécessaire.Doublement moyen des concentrations plasmatiques de la rosuvastatine."
+  },
+  {
+    "d1": "ROSUVASTATINE",
+    "d2": "FOSTEMSAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter par la dose minimale de rosuvastatine. Surveillance clinique régulière.Augmentation modérée des concentrations de rosuvastatine."
+  },
+  {
+    "d1": "ROSUVASTATINE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique.Augmentation des concentrations plasmatiques de la rosuvastatine par augmentation de son absorption."
+  },
+  {
+    "d1": "ROSUVASTATINE",
+    "d2": "PONATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la rosuvastatine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "ROSUVASTATINE",
+    "d2": "ROLAPITANT",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser la rosuvastatine à dose minimale.Risque d’augmentation des concentrations de rosuvastatine."
+  },
+  {
+    "d1": "ROSUVASTATINE",
+    "d2": "TÉDIZOLIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de la rosuvastatine, par augmentation de son absorption avec le tédizolide administré par voie orale, ou par diminution de son élimination avec le tédizolide administré par voie IV."
+  },
+  {
+    "d1": "ROSUVASTATINE",
+    "d2": "VELPATASVIR",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d’association, ne pas dépasser 10 mg par jour de rosuvastatine.Augmentation des concentrations plasmatiques de rosuvastatine par augmentation de son absorption intestinale par le velpatasvir."
+  },
+  {
+    "d1": "ROXADUSTAT",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le roxadustat à distance des sels de calcium (plus de 1 heure, si possible).La prise de cation divalent peut diminuer l’absorption intestinale et, potentiellement, l’efficacité du roxadustat pris simultanément."
+  },
+  {
+    "d1": "ROXADUSTAT",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le roxadustat à distance des sels de fer (plus de 1 heure, si possible).La prise de cation divalent peut diminuer l’absorption intestinale et, potentiellement, l’efficacité du roxadustat pris simultanément."
+  },
+  {
+    "d1": "ROXADUSTAT",
+    "d2": "GEMFIBROZIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique (hémoglobine).Augmentation de l’exposition du roxadustat, par diminution de son métabolisme par le gemfibrozil."
+  },
+  {
+    "d1": "ROXADUSTAT",
+    "d2": "INHIBITEURS DE L'HMG-COA RÉDUCTASE (STATINES)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la statine pendant le traitement par roxadustat.Augmentation d’un facteur 2 à 3 de l’exposition de la statine, par diminution de son métabolisme par le roxadustat."
+  },
+  {
+    "d1": "ROXADUSTAT",
+    "d2": "MAGNÉSIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le roxadustat à distance des sels de magnésium (plus de 1 heure, si possible).La prise de cation divalent peut diminuer l’absorption intestinale et, potentiellement, l’efficacité du roxadustat pris simultanément."
+  },
+  {
+    "d1": "ROXADUSTAT",
+    "d2": "RÉSINES CHÉLATRICES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le roxadustat à distance de la résine (plus de 1 heure, si possible).La prise de résine chélatrice peut diminuer l’absorption intestinale et, potentiellement, l’efficacité du roxadustat pris simultanément."
+  },
+  {
+    "d1": "ROXITHROMYCINE",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse."
+  },
+  {
+    "d1": "ROXITHROMYCINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après l'arrêt du macrolide.Risque d'augmentation des concentrations sanguines de ciclosporine et de la créatininémie."
+  },
+  {
+    "d1": "ROXITHROMYCINE",
+    "d2": "SIMVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse."
+  },
+  {
+    "d1": "ROXITHROMYCINE",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "RUFINAMIDE",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser une méthode additionnelle de type mécanique (préservatif) pendant la durée de l’association, et un cycle suivant l’arrêt du rufinamide.Diminution de l’efficacité contraceptive par augmentation du métabolisme hépatique du contraceptif hormonal par le rufinamide."
+  },
+  {
+    "d1": "RUFINAMIDE",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Chez l’enfant de moins de 30 kg : ne pas dépasser la dose totale de 600 mg/j après la période de titration.Possible augmentation des concentrations de rufinamide, notamment chez l’enfant de moins de 30 kg."
+  },
+  {
+    "d1": "SACITUZUMAB",
+    "d2": "RIFAMPICINE",
+    "level": "A prendre en compte",
+    "desc": "Pour le SN38 lié au sacizutumab (govitécan) : risque de diminution de son exposition, par augmentation de son métabolisme."
+  },
+  {
+    "d1": "SELEXIPAG",
+    "d2": "CLOPIDOGREL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite pendant l’association. Réduire de moitié la posologie (une seule prise par jour).Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "SELEXIPAG",
+    "d2": "DEFERASIROX",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite pendant l’association. Réduire de moitié la posologie (une seule prise par jour).Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "SELEXIPAG",
+    "d2": "GEMFIBROZIL",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "SELEXIPAG",
+    "d2": "TÉRIFLUNOMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite pendant l’association. Réduire de moitié la posologie (une seule prise par jour).Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "SELEXIPAG",
+    "d2": "TRIMETHOPRIME",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite pendant l’association. Réduire de moitié la posologie (une seule prise par jour).Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "SELPERCATINIB",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, et adjonction éventuelle de liothyronine au traitement par la lévothyroxine.Risque de moindre efficacité de la supplémentation en lévothyroxine par baisse de la conversion de T4 en T3 en cas de traitement par selpercatinib."
+  },
+  {
+    "d1": "SERTRALINE",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation parfois importante des concentrations de l’antidépresseur chez certains patients par diminution de son métabolisme intestinal."
+  },
+  {
+    "d1": "SILDENAFIL",
+    "d2": "JOSAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter le traitement par sildénafil à la dose minimale en cas d'association avec la josamycine.Augmentation des concentrations plasmatiques de sildénafil, avec risque d'hypotension."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine ou utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse (diminution du métabolisme hépatique de la simvastatine)."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "AMLODIPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine ou utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d’effets indésirables (dose-dépendants) à type de rhabdomyolyse (diminution du métabolisme hépatique de l’hypocholestérolémiant)."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "AZITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant ou une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/jour de simvastatine. Si l'objectif thérapeutique n'est pas atteint à cette posologie, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables concentration-dépendants à type de rhabdomyolyse (diminution du métabolisme hépatique de la simvastatine)."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "GLÉCAPRÉVIR + PIBRENTASVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation importante des concentrations plasmatiques de simvastatine par la bithérapie, avec risque majoré d’effets indésirables (concentration-dépendants) à type de rhabdomyolyses ."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "PONATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la simvastatine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "RANOLAZINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine ou utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse par inhibition du métabolisme de la simvastatine par la ranolazine."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "ROXITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d’hypocholestérolémiant.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse."
+  },
+  {
+    "d1": "SIMVASTATINE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine ou utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d’effets indésirables (dose-dépendants) à type de rhabdomyolyse (diminution du métabolisme hépatique de l’hypocholestérolémiant)."
+  },
+  {
+    "d1": "SIROLIMUS",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer le sirolimus 4 heures après la ciclosporine. Contrôle de la fonction rénale, pendant l’association et après son arrêt.Augmentation des concentrations sanguines de sirolimus par la ciclosporine. La néphrotoxicité de la ciclosporine est également augmentée lors de l’association."
+  },
+  {
+    "d1": "SIROLIMUS",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "A prendre en compte",
+    "desc": "Majoration du risque d’angio-oedème."
+  },
+  {
+    "d1": "SIROLIMUS",
+    "d2": "OMBITASVIR + PARITAPRÉVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.En association avec le ritonavir : augmentation significative des concentrations de l’immunosuppresseur avec risque de majoration de sa toxicité par la bithérapie."
+  },
+  {
+    "d1": "SIROLIMUS",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines du sirolimus (diminution de son métabolisme hépatique par le vérapamil)."
+  },
+  {
+    "d1": "SODIUM (BICARBONATE DE)",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Eviter les surcharges sodées et tenir compte de la présence de sodium dans certains médicaments comme les antiacides.Risque de baisse de l’efficacité du lithium par augmentation de son élimination rénale par les sels de sodium."
+  },
+  {
+    "d1": "SODIUM (CHLORURE DE)",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Eviter les surcharges sodées et tenir compte de la présence de sodium dans certains médicaments comme les antiacides.Risque de baisse de l’efficacité du lithium par augmentation de son élimination rénale par les sels de sodium."
+  },
+  {
+    "d1": "SOFOSBUVIR",
+    "d2": "AMIODARONE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique et ECG étroite, en particulier pendant les premières semaines de traitement. Une surveillance continue en milieu hospitalier est requise pendant les 48 heures qui suivent la co-adminsitration. Prendre en compte la longue demi-vie de l'amiodarone chez les patients l'ayant arrêtée au cours des derniers mois et qui doivent débuter un traitement contenant du sofosbuvir.Survenue de bradycardie éventuellement brutale, pouvant avoir des conséquences fatales."
+  },
+  {
+    "d1": "SORBITOL",
+    "d2": "LAMIVUDINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance plus fréquente de la charge virale.Diminution des concentrations plasmatiques de lamivudine par le sorbitol."
+  },
+  {
+    "d1": "SPIRAMYCINE",
+    "d2": "LEVODOPA",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de la lévodopa.En cas d'association avec la carbidopa : inhibition de l'absorption de la carbidopa avec diminution des concentrations plasmatiques de la lévodopa."
+  },
+  {
+    "d1": "SPIRONOLACTONE",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "Précaution d'emploi",
+    "desc": "Vérifier au préalable l’absence d’hyperkaliémie et d’insuffisance rénale. Surveillance biologique étroite de la kaliémie et de la créatininémie (1 fois par semaine pendant le premier mois, puis une fois par mois ensuite).Avec la spironolactone à la posologie de 12,5 à 50 mg par jour, et avec des doses faibles d’IEC. Dans le traitement de l’insuffisance cardiaque de classe III ou IV (NYHA) avec fraction d’éjection <35 % et préalablement traitée par l’association inhibiteur de conversion + diurétique de l’anse : risque d’hyperkaliémie, potentiellement létale, en cas de non-respect des conditions de prescription de cette association."
+  },
+  {
+    "d1": "SPIRONOLACTONE",
+    "d2": "MITOTANE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Possible réduction voire abolition de l'effet pharmacodynamique du mitotane par la spironolactone, associé à une baisse des concentrations du mitotane."
+  },
+  {
+    "d1": "STAVUDINE",
+    "d2": "ISONIAZIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque majoré de survenue de neuropathies périphériques par addition d'effets indésirables."
+  },
+  {
+    "d1": "STAVUDINE",
+    "d2": "PENTAMIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque majoré de survenue de neuropathies périphériques par addition d'effets indésirables."
+  },
+  {
+    "d1": "STAVUDINE",
+    "d2": "RIBAVIRINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de diminution de l'efficacité de chaque antiviral, par antagonisme compétitif de la réaction de phosphorylation à l'origine des métabolites actifs."
+  },
+  {
+    "d1": "STAVUDINE",
+    "d2": "THALIDOMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque majoré de survenue de neuropathies périphériques par addition d'effets indésirables."
+  },
+  {
+    "d1": "STIRIPENTOL",
+    "d2": "CAFEINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle de la posologie de caféine.Augmentation possible des concentrations plasmatiques de la caféine, avec risque de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "STIRIPENTOL",
+    "d2": "CLOBAZAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosage plasmatique, lorsque cela est possible, de l'anticonvulsivant associé au stiripentol et éventuelle adaptation posologique de l'anticonvulsivant associé.Augmentation des concentrations plasmatiques de ces anticonvulsivants, avec risque de surdosage, par inhibition de leur métabolisme hépatique."
+  },
+  {
+    "d1": "STIRIPENTOL",
+    "d2": "DIAZEPAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et dosage plasmatique, lorsque cela est possible, de l'anticonvulsivant associé au stiripentol et éventuelle adaptation posologique de l'anticonvulsivant associé.Augmentation des concentrations plasmatiques du diazépam, avec risque de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "STIRIPENTOL",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et dosage plasmatique, lorsque cela est possible, de l'inducteur associé au stiripentol et adaptation éventuelle de sa posologie.Augmentation des concentrations plasmatiques de l'inducteur, avec risque de surdosage, par inhibition de son métabolisme hépatique par le stiripentol."
+  },
+  {
+    "d1": "STIRIPENTOL",
+    "d2": "MIDAZOLAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie pendant le traitement par le stiripentol.Augmentation des concentrations plasmatiques du midazolam par diminution de son métabolisme hépatique avec majoration de la sédation."
+  },
+  {
+    "d1": "STIRIPENTOL",
+    "d2": "QUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "STIRIPENTOL",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosage plasmatique et adaptation éventuelle de la posologie de théophylline.Augmentation possible de la théophyllinémie, avec risque de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "STRONTIUM",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des sels de calcium (plus de deux heures, si possible).Avec les sels de calcium administrés par voie orale : diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "STRONTIUM",
+    "d2": "CYCLINES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des cyclines (plus de deux heures, si possible).Diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "STRONTIUM",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des sels de fer (plus de deux heures, si possible).Diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "STRONTIUM",
+    "d2": "FLUOROQUINOLONES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des fluoroquinolones (plus de deux heures, si possible).Diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "STRONTIUM",
+    "d2": "ZINC",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des sels de zinc (plus de deux heures, si possible).Diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "ANAGRELIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "AZITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "BRADYCARDISANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "CIPROFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "CRIZOTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Contre-indication : - avec le citalopram, la dompéridone, l'escitalopram, l'hydroxyzine et la pipéraquine. Association déconseillée: - avec les autres médicaments susceptibles de donner des torsades de pointes. Si l’association ne peut être évitée, contrôle clinique et électrocardiographique régulier.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "GLASDÉGIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "HYPOKALIÉMIANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Corriger toute hypokaliémie avant d’administrer le produit et réaliser une surveillance clinique, électrolytique et électrocardiographique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "LEVOFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "MÉDICAMENTS À L'ORIGINE D'UN HYPOGONADISME MASCULIN",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "NORFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "ONDANSETRON",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "ROXITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique pendant l'association.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "d2": "SULFAMÉTHOXAZOLE + TRIMÉTHOPRIME",
+    "level": "Association DECONSEILLEE",
+    "desc": "Contre-indication : - avec le citalopram, la dompéridone, l'escitalopram, l'hydroxyzine et la pipéraquine. Association déconseillée: - avec les autres médicaments susceptibles de donner des torsades de pointes. Si l’association ne peut être évitée, contrôle clinique et électrocardiographique régulier.Risque de troubles ventriculaires, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SUCRALFATE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le sucralfate à distance de la digoxine (plus de 2 heures, si possible).Diminution de l'absorption digestive de la digoxine."
+  },
+  {
+    "d1": "SUCRALFATE",
+    "d2": "FLUOROQUINOLONES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le sucralfate à distance des fluoroquinolones (plus de 2 heures, si possible).Diminution de l'absorption digestive des fluoroquinolones."
+  },
+  {
+    "d1": "SUCRALFATE",
+    "d2": "HORMONES THYROÏDIENNES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les hormones thyroïdiennes à distance du sucralfate (plus de 2 heures, si possible).Diminution de l'absorption digestive des hormones thyroïdiennes."
+  },
+  {
+    "d1": "SUCRALFATE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le sucralfate à distance de la phénytoïne (plus de 2 heures, si possible).Diminution de l'absorption digestive de la phénytoïne."
+  },
+  {
+    "d1": "SUCRALFATE",
+    "d2": "SULPIRIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le sucralfate à distance du sulpiride (plus de 2 heures, si possible).Diminution de l'absorption digestive du sulpiride."
+  },
+  {
+    "d1": "SUFENTANIL",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de l’analgésique opiacé en cas de traitement par un inhibiteur puissant du CYP3A4.Augmentation de l’effet dépresseur respiratoire de l’analgésique opiacé par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "SULFAFURAZOL",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre classe d'anti-infectieux, sinon surveillance clinique étroite, dosage des concentrations de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par le sulfamide anti-infectieux et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne jusqu'à des valeurs toxiques (inhibition de son métabolisme)."
+  },
+  {
+    "d1": "SULFAMETHIZOL",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre classe d'anti-infectieux, sinon surveillance clinique étroite, dosage des concentrations de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par le sulfamide anti-infectieux et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne jusqu'à des valeurs toxiques (inhibition de son métabolisme)."
+  },
+  {
+    "d1": "SULFAMETHOXAZOLE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, contrôle plus fréquent de l’INR et adaptation de la posologie de l’antivitamine K pendant le traitement par cotrimoxazole et après son arrêt.Augmentation importante de l’effet de l’antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "SULFAMETHOXAZOLE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Utiliser de préférence une autre classe d'anti-infectieux, sinon surveillance clinique étroite, dosage des concentrations de phénytoïne et adaptation éventuelle de sa posologie pendant le traitement par le sulfamide anti-infectieux et après son arrêt.Augmentation des concentrations plasmatiques de phénytoïne jusqu'à des valeurs toxiques (inhibition de son métabolisme). SULFAMÉTHOXAZOLE + TRIMÉTHOPRIME (sulfamethoxazole, trimethoprime)"
+  },
+  {
+    "d1": "SULFAMETHOXAZOLE",
+    "d2": "SUBSTANCES SUSCEPTIBLES DE DONNER DES TORSADES DE POINTES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Contre-indication : - avec le citalopram, la dompéridone, l'escitalopram, l'hydroxyzine et la pipéraquine. Association déconseillée: - avec les autres médicaments susceptibles de donner des torsades de pointes. Si l’association ne peut être évitée, contrôle clinique et électrocardiographique régulier.Risque de troubles ventriculaires, notamment de torsades de pointes."
+  },
+  {
+    "d1": "SULFAMIDES ANTIBACTÉRIENS",
+    "d2": "METHOTREXATE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations de méthotrexate. Adapatation posologique si nécessaire pendant l'association et après son arrêt.Augmentation de la toxicité hématologique du méthotrexate."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "ALCOOL (BOISSON OU EXCIPIENT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Eviter la prise de boissons alcoolisées et de médicaments contenant de l'alcool.Effet antabuse, notamment pour glibenclamide, glipizide, tolbutamide. Augmentation de la réaction hypoglycémique (inhibition des réactions de compensation) pouvant faciliter la survenue de coma hypoglycémique."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "ANALOGUES DE LA SOMATOSTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer l'autosurveillance glycémique et adapter si besoin la posologie du sulfamide hypoglycemiant pendant le traitement par l'analogue de la somatostatine.Risque d'hypoglycémie ou d'hyperglycémie : diminution ou augmentation des besoins en sulfamide hypoglycemiant, par diminution ou augmentation de la sécrétion de glucagon endogène."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "BÊTA-2 MIMÉTIQUES",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer la surveillance sanguine et urinaire. Passer éventuellement à l'insuline, le cas échéant.Elévation de la glycémie par le bêta-2 mimétique."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer, surtout en début de traitement, l'autosurveillance glycémique.Tous les bêta-bloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le malade et renforcer, surtout au début du traitement, l'autosurveillance sanguine.Tous les bêta-bloquants peuvent masquer certains symptômes de l'hypoglycémie : palpitations et tachycardie."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "CHLORPROMAZINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient et renforcer l'autosurveillance glycémique. Adapter éventuellement la posologie du neuroleptique pendant le traitement et après son arrêt.A fortes posologies (100 mg par jour de chlorpromazine) : élévation de la glycémie (diminution de la libération de l'insuline)."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide hypoglycémiant pendant le traitement par la clarithromycine.Risque d'hypoglycémie par augmentation des concentrations plasmatiques de l’antidiabétique."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "DANAZOL",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, prévenir le patient et renforcer l'autosurveillance glycémique. Adapter éventuellement la posologie de l'antidiabétique pendant le traitement par le danazol et après son arrêt.Effet diabétogène du danazol."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide pendant le traitement par le fluconazole.Augmentation du temps de demi-vie du sulfamide avec survenue possible de manifestations d'hypoglycémie."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "Précaution d'emploi",
+    "desc": "Renforcer l'autosurveillance glycémique.L'utilisation des IEC peut entraîner une majoration de l'effet hypoglycémiant chez le diabétique traité par sulfamides hypoglycémiants. La survenue de malaises hypoglycémiques semble exceptionnelle (amélioration de la tolérance au glucose qui aurait pour conséquence une réduction des besoins en sulfamides hypoglycémiants)."
+  },
+  {
+    "d1": "SULFAMIDES HYPOGLYCÉMIANTS",
+    "d2": "MICONAZOLE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation de l'effet hypoglycémiant avec survenue possible de manifestations hypoglycémiques, voire de coma."
+  },
+  {
+    "d1": "SULFASALAZINE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et, éventuellement, de la digoxinémie. S'il y a lieu, adaptation de la posologie de la digoxine pendant le traitement par la sulfasalazine et après son arrêt.Diminution de la digoxinémie pouvant atteindre 50 %."
+  },
+  {
+    "d1": "SULFASALAZINE",
+    "d2": "PONATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque d’augmentation des concentrations plasmatiques de la sulfasalazine par augmentation de son absorption intestinale par le ponatinib."
+  },
+  {
+    "d1": "SULFASALAZINE",
+    "d2": "TÉDIZOLIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de la sulfasalazine, par augmentation de son absorption avec le tédizolide administré par voie orale."
+  },
+  {
+    "d1": "SULFINPYRAZONE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle des concentrations sanguines de ciclosporine et adaptation éventuelle de sa posologie pendant le traitement par sulfinpyrazone et après son arrêt.Diminution des concentrations sanguines de ciclosporine par augmentation de son métabolisme par la sulfinpyrazone."
+  },
+  {
+    "d1": "SULPIRIDE",
+    "d2": "SUCRALFATE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le sucralfate à distance du sulpiride (plus de 2 heures, si possible).Diminution de l'absorption digestive du sulpiride."
+  },
+  {
+    "d1": "SULPROSTONE",
+    "d2": "MÉTHYLERGOMÉTRINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Ne pas utiliser ces deux médicaments simultanément ou successivement.Risque de vasoconstriction coronaire pouvant être fatale."
+  },
+  {
+    "d1": "SUNITINIB",
+    "d2": "GRAZOPREVIR + ELBASVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Risque d’augmentation des effets indésirables du sunitinib par le grazoprévir/elbasvir."
+  },
+  {
+    "d1": "SYMPATHOMIMÉTIQUES ALPHA ET BÊTA (VOIE IM ET IV)",
+    "d2": "IMAO IRRÉVERSIBLES",
+    "level": "Précaution d'emploi",
+    "desc": "A n'utiliser que sous contrôle médical strict.Augmentation de l'action pressive du sympathomimétique, le plus souvent modérée."
+  },
+  {
+    "d1": "SYMPATHOMIMÉTIQUES ALPHA ET BÊTA (VOIE IM ET IV)",
+    "d2": "IMAO-A RÉVERSIBLES, Y COMPRIS OXAZOLIDINONES ET BLEU DE MÉTHYLÈNE",
+    "level": "Précaution d'emploi",
+    "desc": "A n'utiliser que sous contrôle médical strict.Par extrapolation à partir des IMAO non sélectifs : risque d'augmentation de l'action pressive."
+  },
+  {
+    "d1": "SYMPATHOMIMÉTIQUES INDIRECTS",
+    "d2": "ANESTHÉSIQUES VOLATILS HALOGÉNÉS",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d'intervention programmée, il est préférable d'interrompre le traitement quelques jours avant l'intervention.Poussée hypertensive peropératoire."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de tacrolimus, contrôle de la fonction rénale et adaptation de la posologie de tacrolimus pendant l’association et à l’arrêt de l’amiodarone.Augmentation des concentrations sanguines de tacrolimus par inhibition de son métabolisme par l’amiodarone."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveiller la fonction rénale en début de traitement par l’AINS.Risque d’addition des effets néphrotoxiques, notamment chez le sujet âgé."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "CLINDAMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle renforcé des dosages sanguins de tacrolimus et augmentation éventuelle de sa posologie.Diminution des concentrations sanguines de l'immunosuppresseur, avec risque de perte de l'activité immunosuppressive."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "DANAZOL",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines du tacrolimus et adaptation de sa posologie pendant l'association et après son arrêt, avec contrôle de la fonction rénale.Augmentation des concentrations sanguines du tacrolimus par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "GRAZOPREVIR + ELBASVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite.Augmentation des concentrations plasmatiques de tacrolimus par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "LANSOPRAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines du tacrolimus, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines du tacrolimus."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "MIFAMURTIDE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque d'atteinte des macrophages spléniques et des cellules phagocytaires mononuclées."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "OMBITASVIR + PARITAPRÉVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.En association avec le ritonavir : augmentation significative des concentrations de l’immunosuppresseur avec risque de majoration de sa toxicité par la bithérapie."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "OMEPRAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines du tacrolimus, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines du tacrolimus."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "POTASSIUM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Sauf en cas d'hypokaliémie.Pour une quantité de potassium > à 1 mmol/prise, hyperkaliémie potentiellement létale, notamment chez l'insuffisant rénale (addition des effets hyperkaliémiants)."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "TIGECYCLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant le traitement par la tigécycline.Augmentation des concentrations sanguines de l’immunosuppresseur, avec risque d'effets néphrotoxiques."
+  },
+  {
+    "d1": "TACROLIMUS",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines du tacrolimus (diminution de son métabolisme hépatique par le verapamil)."
+  },
+  {
+    "d1": "TALAZOPARIB",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "TALAZOPARIB",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "TALAZOPARIB",
+    "d2": "CLARITHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "TALAZOPARIB",
+    "d2": "DRONEDARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "TALAZOPARIB",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "TALAZOPARIB",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "TALAZOPARIB",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "TALAZOPARIB",
+    "d2": "QUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "TALAZOPARIB",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "TAMOXIFENE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K.Risque d'augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "TAMOXIFENE",
+    "d2": "BUPROPION",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de baisse de l'efficacité du tamoxifène, par inhibition de la formation de son métabolite actif par le bupropion."
+  },
+  {
+    "d1": "TAMOXIFENE",
+    "d2": "DULOXETINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de baisse de l'efficacité du tamoxifène, par inhibition de la formation de son métabolite actif par la duloxétine."
+  },
+  {
+    "d1": "TAMOXIFENE",
+    "d2": "QUINIDINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de baisse de l'efficacité du tamoxifène, par inhibition de la formation de son métabolite actif par la quinidine."
+  },
+  {
+    "d1": "TAMSULOSINE",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la tamsulosine pendant le traitement par l’inhibiteur enzymatique et après son arrêt, le cas échéant.Risque de majoration des effets indésirables de la tamsulosine, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "TAMSULOSINE",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la tamsulosine pensant le traitement par l’inhibiteur enzymatique et après son arrêt, le cas échéant.Risque de majoration des effets indésirables de la tamsulosine, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "TAMSULOSINE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la tamsulosine pensant le traitement par l’inhibiteur enzymatique et après son arrêt, le cas échéant.Risque de majoration des effets indésirables de la tamsulosine, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "TÉDIZOLIDE",
+    "d2": "IMATINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de l'imatinib, par augmentation de son absorption avec le tédizolide administré par voie orale."
+  },
+  {
+    "d1": "TÉDIZOLIDE",
+    "d2": "LAPATINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du lapatinib, par augmentation de son absorption avec le tédizolide administré par voie orale, ou par diminution de son élimination avec le tédizolide administré par voie IV."
+  },
+  {
+    "d1": "TÉDIZOLIDE",
+    "d2": "METHOTREXATE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du méthotrexate, par augmentation de son absorption avec le tédizolide administré par voie orale, ou par diminution de son élimination avec le tédizolide administré par voie IV."
+  },
+  {
+    "d1": "TÉDIZOLIDE",
+    "d2": "ROSUVASTATINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de la rosuvastatine, par augmentation de son absorption avec le tédizolide administré par voie orale, ou par diminution de son élimination avec le tédizolide administré par voie IV."
+  },
+  {
+    "d1": "TÉDIZOLIDE",
+    "d2": "SULFASALAZINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques de la sulfasalazine, par augmentation de son absorption avec le tédizolide administré par voie orale."
+  },
+  {
+    "d1": "TÉDIZOLIDE",
+    "d2": "TOPOTECANE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du topotécan, par augmentation de son absorption avec le tédizolide administré par voie orale, ou par diminution de son élimination avec le tédizolide administré par voie IV."
+  },
+  {
+    "d1": "TELITHROMYCINE",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la digoxinémie pendant le traitement par la télithromycine et après son arrêt.Augmentation de la digoxinémie par augmentation de son absorption."
+  },
+  {
+    "d1": "TELITHROMYCINE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Association DECONSEILLEE",
+    "desc": "En cas d’association, contrôle strict de la fonction rénale, dosage des concentrations sanguines de l'immunosuppresseur et adaptation éventuelle de la posologie.Augmentation très importante des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "TELITHROMYCINE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "CONTRE-INDICATION",
+    "desc": "chez le patient insuffisant rénal ou hépatique sévère.Risque de majoration des effets indésirables, notamment à type de troubles du rythme cardiaque."
+  },
+  {
+    "d1": "TEMSIROLIMUS",
+    "d2": "INHIBITEURS DE L'ENZYME DE CONVERSION",
+    "level": "A prendre en compte",
+    "desc": "Majoration du risque d’angio-oedème."
+  },
+  {
+    "d1": "TÉNOFOVIR ALAFÉNAMIDE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration avec la ciclosporine, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour.Augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "TÉNOFOVIR ALAFÉNAMIDE",
+    "d2": "COBICISTAT",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour. L’association avec les autres inhibiteurs de protéases du VIH n’a pas été étudiée.Avec l'atazanavir, le darunavir ou le lopinavir boostés par cobicistat, augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "TÉNOFOVIR ALAFÉNAMIDE",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique pendant l’association et 1 à 2 semaines après l’arrêt de l’inducteur.Diminution des concentrations plasmatiques du ténofovir alafénamide par diminution de son absorption par l’inducteur."
+  },
+  {
+    "d1": "TÉNOFOVIR ALAFÉNAMIDE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour. L’association avec les autres inhibiteurs de protéases du VIH n’a pas été étudiée.Avec l'atazanavir, le darunavir ou le lopinavir, augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "TÉNOFOVIR ALAFÉNAMIDE",
+    "d2": "ITRACONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration avec l’itraconazole, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour.Augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "TÉNOFOVIR ALAFÉNAMIDE",
+    "d2": "KETOCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration avec le kétoconazole, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour.Augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "TÉNOFOVIR ALAFÉNAMIDE",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surveillance clinique pendant l’association et 1 à 2 semaines après l’arrêt de la rifampicine.Diminution des concentrations plasmatiques du ténofovir alafénamide par diminution de son absorption par la rifampicine."
+  },
+  {
+    "d1": "TÉNOFOVIR ALAFÉNAMIDE",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration avec le vérapamil, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour.Augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "TENOFOVIR DISOPROXIL",
+    "d2": "ANTI-INFLAMMATOIRES NON STÉROÏDIENS",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d’association, surveiller la fonction rénale.Risque de majoration de la néphrotoxicité du ténofovir, notamment avec des doses élevées de l'anti-inflammatoire ou en présence de facteurs de risque d'insuffisance rénale."
+  },
+  {
+    "d1": "TENOFOVIR DISOPROXIL",
+    "d2": "ATAZANAVIR",
+    "level": "A prendre en compte",
+    "desc": "Ne pas administrer l’atazanavir avec le ténofovir sans ritonavir.Diminution d’environ un tiers de l’exposition à l’atazanavir chez le patient en cas d’association au ténofovir, comparativement au sujet sain recevant la même association."
+  },
+  {
+    "d1": "TENOFOVIR DISOPROXIL",
+    "d2": "LÉDIPASVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, notamment de la fonction rénale.Lors de sa co-administration avec un inhibiteur de protéase, augmentation des concentrations plasmatiques du ténofovir par le lédipasvir."
+  },
+  {
+    "d1": "TERBINAFINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle des concentrations sanguines de ciclosporine et adaptation éventuelle de sa posologie pendant le traitement par terbinafine et après son arrêt.Diminution des concentrations sanguines de ciclosporine."
+  },
+  {
+    "d1": "TERBINAFINE",
+    "d2": "METOPROLOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie du métoprolol pendant le traitement par la terbinafine.Chez l'insuffisant cardiaque, risque d'augmentation des effets indésirables du métoprolol, par diminution de son métabolisme hépatique par la terbinafine."
+  },
+  {
+    "d1": "TERBINAFINE",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la propafénone pendant le traitement par la terbinafine.Risque d'augmentation des effets indésirables de la propafénone, par diminution de son métabolisme hépatique par la terbinafine."
+  },
+  {
+    "d1": "TERBINAFINE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Si besoin, adaptation de la posologie de la terbinafine pendant le traitement par la rifampicine.Diminution des concentrations plasmatiques et de l'efficacité de la terbinafine, par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "TÉRIFLUNOMIDE",
+    "d2": "SELEXIPAG",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite pendant l’association. Réduire de moitié la posologie (une seule prise par jour).Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "THALIDOMIDE",
+    "d2": "DIDANOSINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque majoré de survenue de neuropathies périphériques par addition d'effets indésirables."
+  },
+  {
+    "d1": "THALIDOMIDE",
+    "d2": "STAVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque majoré de survenue de neuropathies périphériques par addition d'effets indésirables."
+  },
+  {
+    "d1": "THEOPHYLLINE",
+    "d2": "GIVOSIRAN",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Risque d’augmentation de la théophyllinémie avec signes de surdosage par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "THEOPHYLLINE",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance stricte de la lithémie et adaptation éventuelle de la posologie du lithium.Diminution de la lithémie avec risque de baisse de l’efficacité thérapeutique."
+  },
+  {
+    "d1": "THEOPHYLLINE",
+    "d2": "PROPAFENONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Risque d’augmentation de la théophyllinémie par diminution de son métabolisme hépatique par la propafénone."
+  },
+  {
+    "d1": "THEOPHYLLINE",
+    "d2": "VÉMURAFÉNIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la théophylline pendant le traitement par vémurafénib et après son arrêt.Augmentation importante des concentrations de théophylline, avec risques de majoration de ses effets indésirables."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "CIMETIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie. S'il y a lieu, adaptation de la théophylline pendant le traitement par la cimétidine et après son arrêt.Avec la cimétidine utilisée à des doses supérieures ou égales à 800 mg/j : augmentation de la théophyllinémie avec risque de surdosage (diminution du métabolisme de la théophylline)."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "CIPROFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Augmentation de la théophyllinémie avec risque de surdosage, par diminution de son métabolisme hépatique par la ciprofloxacine."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "DIPYRIDAMOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Interrompre un traitement par théophylline au moins 5 jours avant une imagerie myocardique avec le dipyridamole.Avec le dipyridamole par voie injectable : réduction de l’effet vasodilatateur du dipyridamole par la théophylline."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "ERYTHROMYCINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Surdosage en théophylline par diminution de son élimination hépatique, plus particulièrement à risque chez l'enfant."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par le fluconazole et après son arrêt.Augmentation de la théophyllinémie avec risque de surdosage (diminution de la clairance de la théophylline)."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "FLUVOXAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; si besoin, adaptation de la posologie de la théophylline pendant le traitement par la fluvoxamine et après son arrêt.Augmentation de la théophyllinémie avec signes de surdosage (diminution du métabolisme hépatique de la théophylline)."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, de la théophyllinémie. Adaptation éventuelle de la posologie de la théophylline pendant le traitement par l'inducteur et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de la théophylline par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "INHIBITEURS DE LA XANTHINE OXYDASE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle de la théophyllinémie jusqu'à deux à trois semaines après la mise en route du traitement par l'inhibiteur ; s'il y a lieu, adaptation de la posologie pendant le traitement par l'association.En cas de posologies élevées de l'inhibiteur, augmentation des concentrations plasmatiques de théophylline par inhibition de son métabolisme."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par l'inhibiteur de protéases et après son arrêt.Diminution des concentrations plasmatiques de la théophylline, par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "MEXILETINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par la mexilétine et après son arrêt.Augmentation de la théophyllinémie avec risque de surdosage (diminution du métabolisme hépatique de la théophylline)."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'association fortuite, ne pas interrompre brutalement la prise de millepertuis mais contrôler les concentrations plasmatiques (ou l'efficacité) du médicament associé avant puis après l'arrêt du millepertuis.Diminution des concentrations plasmatiques de la théophylline, en raison de l'effet inducteur enzymatique du millepertuis, avec risque de baisse d'efficacité voire d'annulation de l'effet dont les conséquences peuvent être éventuellement graves (survenue d'un trouble ventilatoire obstructif)."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "NORFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Augmentation de la théophyllinémie avec risque de surdosage (diminution du métabolisme de la théophylline)."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "PEFLOXACINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie.Augmentation de la théophyllinémie avec risque de surdosage (diminution du métabolisme de la théophylline)."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "PENTOXIFYLLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par la pentoxifylline et après son arrêt.Augmentation de la théophyllinémie avec risque de surdosage (compétition au niveau du métabolisme hépatique de la théophylline)."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et, si besoin, de la théophyllinémie. Adapter, s'il y a lieu, la posologie de la théophylline pendant le traitement par la rifampicine et après son arrêt.Diminution des concentrations plasmatiques et de l'efficacité de la théophylline (augmentation de son métabolisme par induction enzymatique)."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "STIRIPENTOL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosage plasmatique et adaptation éventuelle de la posologie de théophylline.Augmentation possible de la théophyllinémie, avec risque de surdosage, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "TIABENDAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement (et après son arrêt, dans le cas où l'anthelminthique est prescrit pour une durée excédant 48 heures).Augmentation de la théophyllinémie avec risque de surdosage, par diminution du métabolisme hépatique de la théophylline."
+  },
+  {
+    "d1": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "d2": "TICLOPIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par la ticlopidine et après son arrêt.Augmentation de la théophyllinémie avec risque de surdosage (diminution de la clairance plasmatique de la théophylline)."
+  },
+  {
+    "d1": "TIABENDAZOLE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement (et après son arrêt, dans le cas où l'anthelminthique est prescrit pour une durée excédant 48 heures).Augmentation de la théophyllinémie avec risque de surdosage, par diminution du métabolisme hépatique de la théophylline."
+  },
+  {
+    "d1": "TIAGABINE",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Une augmentation de la posologie de tiagabine peut s'avérer nécessaire en cas d'association à un anticonvulsivant inducteur enzymatique.Diminution des concentrations plasmatiques de la tiagabine par augmentation de son métabolisme hépatique par l'inducteur."
+  },
+  {
+    "d1": "TIAGABINE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Une augmentation de la posologie de la tiagabine peut s’avérer nécessaire en cas d’association à la rifampicine.Diminution des concentrations plasmatiques de la tiagabine par augmentation de son métabolisme hépatique."
+  },
+  {
+    "d1": "TIBOLONE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par la tibolone et après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique."
+  },
+  {
+    "d1": "TICAGRELOR",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations plasmatiques de ticagrelor par augmentation de son métabolisme hépatique par l'inducteur enzymatique, avec risque de diminution de l’effet thérapeutique."
+  },
+  {
+    "d1": "TICAGRELOR",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de diminution importante des concentrations plasmatiques de ticagrelor par augmentation de son métabolisme hépatique par le millepertuis, avec diminution de son effet thérapeutique."
+  },
+  {
+    "d1": "TICAGRELOR",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution importante des concentrations plasmatiques de ticagrelor par augmentation de son métabolisme hépatique par la rifampicine, avec risque de diminution de l’effet thérapeutique."
+  },
+  {
+    "d1": "TICLOPIDINE",
+    "d2": "ACIDE ACETYLSALICYLIQUE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite.Majoration du risque hémorragique par addition des activités antiagrégantes plaquettaires."
+  },
+  {
+    "d1": "TICLOPIDINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Augmentation de la posologie de la ciclosporine sous contrôle des concentrations sanguines. Réduction de la posologie en cas d'arrêt de la ticlopidine.Diminution des concentrations sanguines de ciclosporine."
+  },
+  {
+    "d1": "TICLOPIDINE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et contrôle des concentrations plasmatiques de phénytoïne.Augmentation des concentrations plasmatiques de phénytoïne avec signes de surdosage (inhibition du métabolisme de la"
+  },
+  {
+    "d1": "TICLOPIDINE",
+    "d2": "THÉOPHYLLINE (ET, PAR EXTRAPOLATION, AMINOPHYLLINE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et éventuellement de la théophyllinémie ; s'il y a lieu, adaptation de la posologie de la théophylline pendant le traitement par la ticlopidine et après son arrêt.Augmentation de la théophyllinémie avec risque de surdosage (diminution de la clairance plasmatique de la théophylline)."
+  },
+  {
+    "d1": "TIGECYCLINE",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant le traitement par la tigécycline.Augmentation des concentrations sanguines de l’immunosuppresseur, avec risque d'effets néphrotoxiques."
+  },
+  {
+    "d1": "TIGECYCLINE",
+    "d2": "TACROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant le traitement par la tigécycline.Augmentation des concentrations sanguines de l’immunosuppresseur, avec risque d'effets néphrotoxiques."
+  },
+  {
+    "d1": "TOLVAPTAN",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de tolvaptan de moitié.Augmentation des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "TOLVAPTAN",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de tolvaptan de moitié.Augmentation des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "TOLVAPTAN",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de tolvaptan de moitié.Augmentation des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "TOLVAPTAN",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie des deux tiers aux trois quarts, selon la dose prescrite.Augmentation importante (entre 2 à 5 fois en moyenne) des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "TOLVAPTAN",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de tolvaptan de moitié.Augmentation des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "TOPIQUES GASTRO-INTESTINAUX, ANTIACIDES ET ADSORBANTS",
+    "d2": "POLYSTYRÈNE SULFONATE DE CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Comme avec tout médicament oral pris avec l’un ou l’autre de ces médicaments, respecter un intervalle entre les prises (plus de 2 heures, si possible).Risque d'alcalose métabolique chez l'insuffisant rénal"
+  },
+  {
+    "d1": "TOPIQUES GASTRO-INTESTINAUX, ANTIACIDES ET ADSORBANTS",
+    "d2": "POLYSTYRÈNE SULFONATE DE SODIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Comme avec tout médicament oral pris avec l’un ou l’autre de ces médicaments, respecter un intervalle entre les prises (plus de 2 heures, si possible).Risque d'alcalose métabolique chez l'insuffisant rénal."
+  },
+  {
+    "d1": "TOPIRAMATE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, et si besoin, adaptation posologique du topiramate pendant le traitement par la carbamazépine et après son arrêt.Diminution des concentrations du topiramate avec risque de moindre efficacité, par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "TOPIRAMATE",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, utiliser une méthode additionnel de type mécanique pendant la durée de l’association et un cycle suivant l’arrêt du topiramate.Pour des doses de topiramate >= 200 mg/jour : Risque de diminution de l’efficacité contraceptive par diminution des concentrations en estrogène."
+  },
+  {
+    "d1": "TOPIRAMATE",
+    "d2": "LITHIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique. Adaptation de la posologie du lithium.Pour des doses de topiramate >= 200 mg par jour : augmentation de la lithémie pouvant atteindre des valeurs toxiques, avec signes de surdosage en lithium."
+  },
+  {
+    "d1": "TOPIRAMATE",
+    "d2": "OXCARBAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, et si besoin, adaptation posologique du topiramate pendant le traitement par l'oxcarbazépine et après son arrêt.Risque de diminution des concentrations du topiramate avec risque de moindre efficacité, par augmentation de son métabolisme hépatique par l'oxcarbazépine."
+  },
+  {
+    "d1": "TOPIRAMATE",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "TOPOTECANE",
+    "d2": "TÉDIZOLIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque d’augmentation des concentrations plasmatiques du topotécan, par augmentation de son absorption avec le tédizolide administré par voie orale, ou par diminution de son élimination avec le tédizolide administré par voie IV. TORSADOGÈNES (SAUF ARSÉNIEUX, ANTIPARASITAIRES, NEUROLEPTIQUES, MÉTHADONE...) (amiodarone, citalopram, cocaine, disopyramide, domperidone, dronedarone, erythromycine, escitalopram, hydroquinidine, hydroxyzine, mequitazine, moxifloxacine, pipéraquine, quinidine, sotalol, spiramycine, toremifene, vandétanib, vincamine)"
+  },
+  {
+    "d1": "TRABECTÉDINE",
+    "d2": "ITRACONAZOLE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association est nécessaire, surveillance clinique et adaptation éventuelle de la posologie de la trabectedine pendant la durée du traitement par l’itraconazole.Risque d’augmentation des concentrations plasmatiques de la trabectedine par l’itraconazole."
+  },
+  {
+    "d1": "TRAMADOL",
+    "d2": "ANTICOAGULANTS ORAUX",
+    "level": "A prendre en compte",
+    "desc": "Surveillance particulièrement chez le sujet âgé.Augmentation du risque hémorragique"
+  },
+  {
+    "d1": "TRÉTINOÏNE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Adaptation de la posologie de la trétinoïne pendant le traitement par l’inhibiteur et après son arrêt.Décrit pour les antifongiques azolés Augmentation des concentrations de trétinoïne par diminution de son métabolisme, avec risque de majoration de sa toxicité (pseudo- tumor cerebrii, hypercalcémie…)"
+  },
+  {
+    "d1": "TRICLABENDAZOLE",
+    "d2": "DIHYDROERGOTAMINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de 24 heures entre l’arrêt du triclabendazole et la prise du médicament dérivé de l’ergot, et inversement.Ergotisme avec possibilité de nécrose des extrémités (inhibition du métabolisme hépatique de l’alcaloïde de l’ergot de seigle)."
+  },
+  {
+    "d1": "TRICLABENDAZOLE",
+    "d2": "ERGOTAMINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de 24 heures entre l’arrêt du triclabendazole et l’ergotamine, et inversement.Ergotisme avec possibilité de nécrose des extrémités (inhibition du métabolisme hépatique de l’alcaloïde de l’ergot de seigle)."
+  },
+  {
+    "d1": "TRICLABENDAZOLE",
+    "d2": "PIMOZIDE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de 24 heures entre l’arrêt du triclabendazole et la prise du médicament torsadogène, et inversement.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes (inhibition du métabolisme hépatique du médicament torsadogène)."
+  },
+  {
+    "d1": "TRICLABENDAZOLE",
+    "d2": "QUINIDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes (inhibition du métabolisme hépatique du médicament torsadogène)."
+  },
+  {
+    "d1": "TRIENTINE",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre la trientine à distance des sels de fer.Diminution des concentrations de fer sérique."
+  },
+  {
+    "d1": "TRIMETHOPRIME",
+    "d2": "PACLITAXEL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite et adaptation de la posologie du paclitaxel pendant l’association.Risque d’augmentation des concentrations plasmatiques du paclitaxel par inhibition de son métabolisme hépatique par le triméthoprime."
+  },
+  {
+    "d1": "TRIMETHOPRIME",
+    "d2": "PYRIMETHAMINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle régulier de l'hémogramme et association d'un traitement par l'acide folique (injections IM régulières).Anémie mégaloblastique, plus particulièrement à fortes doses des deux produits (déficit en acide folique par l'association de deux 2-4 diaminopyrimidines)."
+  },
+  {
+    "d1": "TRIMETHOPRIME",
+    "d2": "REPAGLINIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite.Risque d’augmentation des concentrations plasmatiques de répaglinide par inhibition de son métabolisme hépatique par le triméthoprime."
+  },
+  {
+    "d1": "TRIMETHOPRIME",
+    "d2": "SELEXIPAG",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique étroite pendant l’association. Réduire de moitié la posologie (une seule prise par jour).Risque d’augmentation des effets indésirables du sélexipag par diminution de son métabolisme."
+  },
+  {
+    "d1": "TRIPTANS",
+    "d2": "ALCALOÏDES DE L'ERGOT DE SEIGLE VASOCONSTRICTEURS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Respecter un délai de 6 à 24 heures, selon le triptan, entre la prise de celui-ci et celle de l'alcaloïde ergotéRisque d'hypertension artérielle, de vasoconstriction artérielle coronaire."
+  },
+  {
+    "d1": "ULIPRISTAL",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer une alternative thérapeutique peu ou pas métabolisée.Risque de diminution de l’effet de l’ulipristal, par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "ULIPRISTAL",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer une alternative thérapeutique peu ou pas métabolisée.Risque de diminution de l’effet de l’ulipristal, par augmentation de son métabolisme hépatique par le ritonavir."
+  },
+  {
+    "d1": "ULIPRISTAL",
+    "d2": "MILLEPERTUIS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer une alternative thérapeutique peu ou pas métabolisée.Risque de diminution de l’effet de l’ulipristal, par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "ULIPRISTAL",
+    "d2": "PROGESTATIFS CONTRACEPTIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "- Dans l'indication contraception d'urgence: Dans le cas où la (re)prise d’une contraception hormonale est envisagée, utiliser une contraception additionnelle de type mécanique pendant les 12 jours qui suivent la (dernière) prise de l’ulipristal (au cas où il y en aurait eu plus d’une). - Dans l’indication fibrome : Dans le cas où la (re)prise d’une contraception hormonale est envisagée, utiliser une contraception de type mécanique pendant les 7 premiers jours de la contraception hormonale.Dans l'indication contraception d'urgence : Antagonisme des effets de l’ulipristal en cas de reprise d’un contraceptif hormonal moins de 5 jours après la prise de la contraception d’urgence. Dans l’indication fibrome : Antagonisme réciproque des effets de l’ulipristal et du progestatif, avec risque d’inefficacité."
+  },
+  {
+    "d1": "ULIPRISTAL",
+    "d2": "PROGESTATIFS NON CONTRACEPTIFS, ASSOCIÉS OU NON À UN ESTROGÈNE",
+    "level": "A prendre en compte",
+    "desc": "Dans l’indication fibrome : Antagonisme réciproque des effets de l’ulipristal et du progestatif, avec risque d’inefficacité."
+  },
+  {
+    "d1": "ULIPRISTAL",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Préférer une alternative thérapeutique peu ou pas métabolisée.Risque de diminution de l’effet de l’ulipristal, par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "VACCINS VIVANTS ATTÉNUÉS",
+    "d2": "ABATACEPT",
+    "level": "Association DECONSEILLEE",
+    "desc": "ainsi que pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée, éventuellement mortelle."
+  },
+  {
+    "d1": "VACCINS VIVANTS ATTÉNUÉS",
+    "d2": "ANTI-TNF ALPHA",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "VACCINS VIVANTS ATTÉNUÉS",
+    "d2": "CYTOTOXIQUES",
+    "level": "CONTRE-INDICATION",
+    "desc": "- Et pendant les 6 mois suivant l'arrêt de la chimiothérapie. - Et, à l'exception de l'hydroxycarbamide dans son indication chez le patient drépanocytaire.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "VACCINS VIVANTS ATTÉNUÉS",
+    "d2": "GLOBULINES ANTILYMPHOCYTAIRES",
+    "level": "A prendre en compte",
+    "desc": "En particulier, utiliser un vaccin inactivé lorsqu'il existe (poliomyélite).Risque de maladie généralisée éventuellement mortelle. Ce risque est majoré chez les sujets âgés déjà immunodéprimés par la maladie sous-jacente."
+  },
+  {
+    "d1": "VACCINS VIVANTS ATTÉNUÉS",
+    "d2": "GLUCOCORTICOÏDES (SAUF HYDROCORTISONE)",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt de la corticothérapie.A l'exception des voies inhalées et locales, et pour des posologies supérieures à 10 mg/j d’équivalent-prednisone (ou > 2 mg/kg/j chez l’enfant ou > 20 mg/j chez l’enfant de plus de 10 kg) pendant plus de deux semaines et pour les « bolus » de corticoïdes: risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "VACCINS VIVANTS ATTÉNUÉS",
+    "d2": "HYDROXYCARBAMIDE",
+    "level": "Association DECONSEILLEE",
+    "desc": "L'association ne devra être envisagée que si les bénéfices sont estimés comme étant supérieurs à ce risque. S'il est décidé d’interrompre le traitement par hydroxycarbamide pour effectuer la vaccination, un délai de 3 mois après l’arrêt est recommandé.Dans son indication chez le patient drépanocytaire, risque théorique de maladie vaccinale généralisée."
+  },
+  {
+    "d1": "VACCINS VIVANTS ATTÉNUÉS",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "VACCINS VIVANTS ATTÉNUÉS",
+    "d2": "MYCOPHENOLATE MOFETIL",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "VACCINS VIVANTS ATTÉNUÉS",
+    "d2": "MYCOPHENOLATE SODIQUE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Et pendant les 3 mois suivant l'arrêt du traitement.Risque de maladie vaccinale généralisée éventuellement mortelle."
+  },
+  {
+    "d1": "VALGANCICLOVIR",
+    "d2": "MARIBAVIR",
+    "level": "CONTRE-INDICATION",
+    "desc": "Antagonisme de la phosporylation et donc de l'effet pharmacologique du valganciclovir par le maribavir."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "ACETAZOLAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "AZTREONAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosages plasmatiques et adaptation éventuelle de la posologie de l'anticonvulsivant pendant le traitement par l'anti- infectieux et après son arrêt.Risque de survenue de crises convulsives, par diminution des concentrations plasmatiques de l'acide valproïque."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, dosages plasmatiques et adaptation de la posologie des deux anticonvulsivants.Augmentation des concentrations plasmatiques du métabolite actif de la carbamazépine avec signes de surdosage. De plus, diminution des concentrations plasmatiques d'acide valproïque par augmentation de son métabolisme hépatique par la carbamazépine."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "FELBAMATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, contrôle biologique et adaptation éventuelle de la posologie du valproate ou du valpromide pendant le traitement par le felbamate et après son arrêt.Augmentation des concentrations plasmatiques de l'acide valproïque, avec risque de surdosage."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "LAMOTRIGINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association s'avère nécessaire, surveillance clinique étroite.Risque majoré de réactions cutanées graves (syndrome de Lyell). Par ailleurs, augmentation des concentrations plasmatiques de lamotrigine (diminution de son métabolisme hépatique par le valproate de sodium)."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "PHÉNOBARBITAL (ET, PAR EXTRAPOLATION, PRIMIDONE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "PHÉNYTOÏNE (ET, PAR EXTRAPOLATION, FOSPHÉNYTOÏNE)",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique, et adaptation éventuelle de la posologie de l'anticonvulsivant pendant le traitement par la rifampicine et après son arrêt.Risque de survenue de crises convulsives, par augmentation du métabolisme hépatique du valproate par la rifampicine."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "RUFINAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Chez l’enfant de moins de 30 kg : ne pas dépasser la dose totale de 600 mg/j après la période de titration.Possible augmentation des concentrations de rufinamide, notamment chez l’enfant de moins de 30 kg."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "TOPIRAMATE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "ZIDOVUDINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière. Un hémogramme à la recherche d’une anémie devrait être réalisé au cours des deux premiers mois de l’association.Risque d’augmentation des effets indésirables, notamment hématologiques, de la zidovudine par diminution de son métabolisme par l’acide valproïque."
+  },
+  {
+    "d1": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "d2": "ZONISAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "VANCOMYCINE",
+    "d2": "PIPÉRACILLINE/TAZOBACTAM",
+    "level": "Association DECONSEILLEE",
+    "desc": "Majoration de la néphrotoxicité par comparaison à la vancomycine seule."
+  },
+  {
+    "d1": "VARDENAFIL",
+    "d2": "PAMPLEMOUSSE (JUS ET FRUIT)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Augmentation des concentrations plasmatiques du vardénafil, avec risque d’hypotension."
+  },
+  {
+    "d1": "VELPATASVIR",
+    "d2": "ANTISÉCRÉTOIRES INHIBITEURS DE LA POMPE À PROTONS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, la bithérapie velpatasvir/sofosbuvir doit être prise au moment du repas, ou 4 heures avant la prise d’un IPP donné à dose minimale.Diminution des concentrations de velpatasvir et de sofosbuvir."
+  },
+  {
+    "d1": "VELPATASVIR",
+    "d2": "EFAVIRENZ",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations de velpatasvir/sofosbuvir, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "VELPATASVIR",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations plasmatiques de velpatasvir par l’inducteur, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "VELPATASVIR",
+    "d2": "OXCARBAZEPINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations de velpatasvir/sofosbuvir, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "VELPATASVIR",
+    "d2": "RIFABUTINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations plasmatiques de velpatasvir par la rifabutine, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "VELPATASVIR",
+    "d2": "RIFAMPICINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution des concentrations plasmatiques de velpatasvir par la rifampicine, avec possible retentissement sur l’efficacité."
+  },
+  {
+    "d1": "VELPATASVIR",
+    "d2": "ROSUVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas d’association, ne pas dépasser 10 mg par jour de rosuvastatine.Augmentation des concentrations plasmatiques de rosuvastatine par augmentation de son absorption intestinale par le velpatasvir."
+  },
+  {
+    "d1": "VÉMURAFÉNIB",
+    "d2": "BUPROPION",
+    "level": "A prendre en compte",
+    "desc": "Risque de diminution des concentrations du bupropion, avec augmentation de son métabolite actif et toxicité majorée."
+  },
+  {
+    "d1": "VÉMURAFÉNIB",
+    "d2": "ESTROPROGESTATIFS CONTRACEPTIFS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations des estroprogestatifs, avec pour conséquence un risque d’inefficacité."
+  },
+  {
+    "d1": "VÉMURAFÉNIB",
+    "d2": "IFOSFAMIDE",
+    "level": "A prendre en compte",
+    "desc": "Risque de diminution des concentrations de l'ifosfamide, avec augmentation de son métabolite actif et toxicité majorée."
+  },
+  {
+    "d1": "VÉMURAFÉNIB",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations des immunosuppresseurs, avec pour conséquence un risque d’inefficacité."
+  },
+  {
+    "d1": "VÉMURAFÉNIB",
+    "d2": "THEOPHYLLINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la théophylline pendant le traitement par vémurafénib et après son arrêt.Augmentation importante des concentrations de théophylline, avec risques de majoration de ses effets indésirables."
+  },
+  {
+    "d1": "VÉNÉTOCLAX",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment hématologique, et adaptation de la posologie du vénétoclax.Risque d’augmentation des effets indésirables du vénétoclax par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "VÉNÉTOCLAX",
+    "d2": "DILTIAZEM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment hématologique, et adaptation de la posologie du vénétoclax.Risque d’augmentation des effets indésirables du vénétoclax par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "VÉNÉTOCLAX",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Diminution importante des concentrations de vénétoclax, avec risque de perte d’efficacité."
+  },
+  {
+    "d1": "VÉNÉTOCLAX",
+    "d2": "VERAPAMIL",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment hématologique, et adaptation de la posologie du vénétoclax.Risque d’augmentation des effets indésirables du vénétoclax par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "AFATINIB",
+    "level": "Précaution d'emploi",
+    "desc": "Il est recommandé d’administrer le vérapamil le plus à distance possible de l’afatinib, en respectant de préférence un intervalle de 6 heures ou de 12 heures par rapport à la prise d’afatinib.Augmentation des concentrations plasmatique d’afatinib par augmentation de son absorption par le vérapamil."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "ATORVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Utiliser des doses plus faibles d'hypocholestérolémiant. Si l'objectif thérapeutique n'est pas atteint, utiliser une autre statine non concernée par ce type d'interaction.Risque majoré d'effets indésirables (concentration-dépendants) à type de rhabdomyolyse, par diminution du métabolisme hépatique de l'hypocholestérolémiant."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "BÊTA-BLOQUANTS (SAUF ESMOLOL) (Y COMPRIS COLLYRES)",
+    "level": "Association DECONSEILLEE",
+    "desc": "Une telle association ne doit se faire que sous surveillance clinique et ECG étroite, en particulier chez le sujet âgé ou en début de traitement.Troubles de l'automatisme (bradycardie excessive, arrêt sinusal), trouble de la conduction sino-auriculaire et auriculo-ventriculaire et défaillance cardiaque."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "BÊTA-BLOQUANTS DANS L'INSUFFISANCE CARDIAQUE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Effet inotrope négatif avec risque de décompensation de l’insuffisance cardiaque, troubles de l'automatisme (bradycardie, arrêt sinusal) et troubles de la conduction sino-auriculaire et auriculo-ventriculaire."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "BUSPIRONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la buspirone si nécessaire.Augmentation des concentrations plasmatiques de la buspirone par diminution de son métabolisme hépatique par le vérapamil, avec augmentation de ses effets indésirables."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "CARBAMAZEPINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation éventuelle des posologies des deux médicaments.Augmentation des concentrations de carbamazépine et de sa neurotoxicité par inhibition de son métabolisme par le vérapamil. De plus, diminution des concentrations du vérapamil par augmentation de son métabolisme par la carbamazépine."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "CICLOSPORINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de la ciclosporine, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines de la ciclosporine (diminution de son métabolisme hépatique), et majoration du risque de gingivopathies."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "DABIGATRAN",
+    "level": "Précaution d'emploi",
+    "desc": "Dans l'indication post-chirurgicale : surveillance clinique et adaptation de la posologie du dabigatran à 150 mg/j en une prise, voire 75 mg/j en cas d'insuffisance rénale modérée. Dans l'indication fibrillation auriculaire : surveillance clinique et adaptation de la posologie du dabigatran à 220 mg/j en deux prises.Augmentation des concentrations plasmatiques de dabigatran, avec majoration du risque de saignement."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "DIGOXINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique, ECG et, éventuellement, contrôle de la digoxinémie. S'il y a lieu, adaptation de la posologie de la digoxine pendant le traitement par le vérapamil et après son arrêt.Bradycardie excessive et bloc auriculo-ventriculaire par majoration des effets de la digoxine sur l'automatisme et la conduction et par diminution de l'élimination rénale et extrarénale de la digoxine."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "DRONEDARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Débuter le traitement par l’antagoniste calcique aux posologies minimales recommandées, et ajuster les doses en fonction de l’ECG.Risque de bradycardie ou de bloc auriculo-ventriculaire, notamment chez le sujet âgé. Par ailleurs, légère augmentation des concentrations de dronédarone par diminution de son métabolisme par l’antagoniste des canaux calciques."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "ERYTHROMYCINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG ; s'il y a lieu, adaptation de la posologie du vérapamil pendant le traitement par l'érythromycine et après son arrêt.Bradycardie et/ou troubles de la conduction auriculo-ventriculaire, par diminution du métabolisme hépatique du vérapamil par l'érythromycine."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "EVEROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines de l'évérolimus par diminution de son métabolisme hépatique par le vérapamil."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "IBRUTINIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique étroite et réduction de la dose d’ibrutinib à 280 mg par jour pendant la durée de l’association.Risque d’augmentation des concentrations plasmatiques d’ibrutinib par diminution de son métabolisme hépatique par le vérapamil."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG. S’il y a lieu, adaptation de la posologie du vérapamil pendant le traitement par l’inhibiteur, et après son arrêt, le cas échéant.Bradycardie et/ou troubles de la conduction auriculo-ventriculaire, par diminution du métabolisme hépatique du vérapamil par l’inhibiteur."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "IVABRADINE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Augmentation des concentrations plasmatiques de l’ivabradine et de ses effets indésirables, notamment cardiaques (augmentation de son absorption et inhibition de son métabolisme hépatique par le vérapamil), qui s’ajoutent aux effets bradycardisants de ces deux médicaments."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "MIDAZOLAM",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et réduction de la posologie de midazolam pendant le traitement par le vérapamil.Augmentation des concentrations plasmatiques de midazolam (diminution de son métabolisme hépatique avec majoration de la sédation)."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "NALOXEGOL",
+    "level": "Précaution d'emploi",
+    "desc": "Adaptation posologique pendant l’association.Augmentation des concentrations plasmatiques de naloxegol par le vérapamil."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "NINTÉDANIB",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique pendant l’association.Augmentation des concentrations plasmatiques du nintédanib par augmentation de son absorption par le vérapamil."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "OLAPARIB",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, limiter la dose d’olaparib à 200 mg deux fois par jour.Augmentation des concentrations plasmatiques d’olaparib par le vérapamil."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "PIMOZIDE",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque majoré de troubles du rythme ventriculaires, notamment, de torsades de pointes."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "SIMVASTATINE",
+    "level": "Précaution d'emploi",
+    "desc": "Ne pas dépasser la posologie de 20 mg/j de simvastatine ou utiliser une autre statine non concernée par ce type d’interaction.Risque majoré d’effets indésirables (dose-dépendants) à type de rhabdomyolyse (diminution du métabolisme hépatique de l’hypocholestérolémiant)."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "SIROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines du sirolimus (diminution de son métabolisme hépatique par le vérapamil)."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "TACROLIMUS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations sanguines de l’immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l’association et après son arrêt.Augmentation des concentrations sanguines du tacrolimus (diminution de son métabolisme hépatique par le verapamil)."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "TALAZOPARIB",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la dose de talazoparib.Augmentation des concentrations de talazoparib avec risque de majoration de la toxicité."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "TAMSULOSINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et adaptation de la posologie de la tamsulosine pensant le traitement par l’inhibiteur enzymatique et après son arrêt, le cas échéant.Risque de majoration des effets indésirables de la tamsulosine, par inhibition de son métabolisme hépatique."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "TÉNOFOVIR ALAFÉNAMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "En cas de co-administration avec le vérapamil, la dose de ténofovir alafénamide doit être limitée à 10 mg par jour.Augmentation des concentrations plasmatiques du ténofovir alafénamide par augmentation de son absorption."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "TOLVAPTAN",
+    "level": "Précaution d'emploi",
+    "desc": "Réduire la posologie de tolvaptan de moitié.Augmentation des concentrations de tolvaptan, avec risque de majoration importante des effets indésirables, notamment diurèse importante, déshydratation, insuffisance rénale aiguë."
+  },
+  {
+    "d1": "VERAPAMIL",
+    "d2": "VÉNÉTOCLAX",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment hématologique, et adaptation de la posologie du vénétoclax.Risque d’augmentation des effets indésirables du vénétoclax par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "VINCA-ALCALOÏDES CYTOTOXIQUES",
+    "d2": "FLUCONAZOLE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique étroite pendant l’association.Risque de majoration de la toxicité de l’antimitotique par diminution de son métabolisme hépatique par le fluconazole."
+  },
+  {
+    "d1": "VINCA-ALCALOÏDES CYTOTOXIQUES",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Diminution des concentrations plasmatiques du vinca-alcaloïde par l’inducteur, avec possible retentissement sur l’efficacité.."
+  },
+  {
+    "d1": "VINCA-ALCALOÏDES CYTOTOXIQUES",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association ne peut être évitée, surveillance clinique et biologique étroite.Risque de majoration de la toxicité de l'antimitotique par diminution de son métabolisme hépatique par l’inhibiteur."
+  },
+  {
+    "d1": "VINCA-ALCALOÏDES CYTOTOXIQUES",
+    "d2": "MILLEPERTUIS",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de moindre efficacité du cytotoxique par augmentation de son métabolisme par le millepertuis."
+  },
+  {
+    "d1": "VISMODÉGIB",
+    "d2": "INDUCTEURS ENZYMATIQUES",
+    "level": "Association DECONSEILLEE",
+    "desc": "Risque de diminution des concentrations plasmatiques de vismodegib par augmentation de son métabolisme hépatique par l’inducteur."
+  },
+  {
+    "d1": "VITAMINE A",
+    "d2": "CYCLINES",
+    "level": "CONTRE-INDICATION",
+    "desc": "En cas d'apport de 10,000 UI/j et plus : risque d’hypertension intracrânienne."
+  },
+  {
+    "d1": "VITAMINE A",
+    "d2": "RÉTINOÏDES",
+    "level": "CONTRE-INDICATION",
+    "desc": "Risque de symptômes évocateurs d’une hypervitaminose A."
+  },
+  {
+    "d1": "VITAMINE D",
+    "d2": "INDUCTEURS ENZYMATIQUES PUISSANTS",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations de vitamine D et supplémentation si nécessaire.Diminution des concentrations de vitamine D plus marquée qu’en l’absence d'inducteur."
+  },
+  {
+    "d1": "VITAMINE D",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Dosage des concentrations de vitamine D et supplémentation si nécessaire.Diminution des concentrations de vitamine D plus marquée qu’en l’absence de traitement par la rifampicine"
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "AMIODARONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et ECG, et adaptation éventuelle de la posologie de l’amiodarone.Risque majoré de troubles du rythme ventriculaire, notamment de torsades de pointes, par possible diminution du métabolisme de l’amiodarone."
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "ANTIVITAMINES K",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'INR. Adaptation éventuelle de la posologie de l'antivitamine K pendant le traitement par voriconazole et 8 jours après son arrêt.Augmentation de l'effet de l'antivitamine K et du risque hémorragique par diminution de son métabolisme hépatique."
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "EFAVIRENZ",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite et adaptation de la posologie du voriconazole et de l'éfavirenz pendant l'association.Risque de baisse de l'efficacité du voriconazole par augmentation de son métabolisme hépatique par l'efavirenz."
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "GLIPIZIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Prévenir le patient, renforcer l'autosurveillance glycémique et adapter éventuellement la posologie du sulfamide pendant et après le traitement par voriconazole.Risque d’augmentation des concentrations plasmatiques du glipizide à l’origine d’hypoglycémies potentiellement sévères."
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "IMMUNOSUPPRESSEURS",
+    "level": "Précaution d'emploi",
+    "desc": "- avec la ciclosporine et le tacrolimus : dosage des concentrations sanguines de l'immunosuppresseur, contrôle de la fonction rénale et adaptation de la posologie pendant l'association et après son arrêt.Augmentation des concentrations sanguines de l'immunosuppresseur par inhibition de son métabolisme hépatique par le voriconazole."
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "INHIBITEURS DE PROTÉASES BOOSTÉS PAR RITONAVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Baisse très importante des concentrations de l’antifongique par augmentation de son métabolisme par le ritonavir, avec risque d’échec du traitement."
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "LÉTERMOVIR",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l’association s’avère nécessaire, surveillance clinique étroite, notamment les deux premières semaines après l’instauration ou l’arrêt du traitement par létermovir.Diminution de plus de la moitié de l’exposition du voriconazole."
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "METHADONE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et électrocardiographique renforcée ; si besoin, adaptation de la posologie de la méthadone pendant le traitement par le voriconazole et après son arrêt.Augmentation des concentrations plasmatiques de méthadone avec surdosage et risque majoré d’allongement de l’intervalle QT et de troubles du rythme ventriculaire, notamment de torsades de pointes."
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "NEVIRAPINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association ne peut être évitée, surveillance clinique étroite et adaptation éventuelle de la posologie du voriconazole pendant l'association.Risque de baisse de l'efficacité du voriconazole par augmentation de son métabolisme hépatique par la névirapine."
+  },
+  {
+    "d1": "VORICONAZOLE",
+    "d2": "RIFABUTINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association est jugée néccessaire, surveillance clinique et adaptation de la posologie du voriconazole (en général doublée) pendant le traitement par la rifabutine.Diminution des concentrations plasmatiques du voriconazole avec risque de perte d'efficacité, par augmentation de son métabolisme hépatique par la rifabutine d'une part, et risque d'augmentation des effets indésirables (uvéites) de la rifabutine d'autre part."
+  },
+  {
+    "d1": "ZIDOVUDINE",
+    "d2": "AMPHOTERICINE B",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'hémogramme.Avec l'amphotéricine B administrée par voie IV : augmentation de la toxicité hématologique (addition d'effets de toxicité médullaire)."
+  },
+  {
+    "d1": "ZIDOVUDINE",
+    "d2": "DAPSONE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'hémogramme.Augmentation de la toxicité hématologique (addition d'effets de toxicité médullaire)."
+  },
+  {
+    "d1": "ZIDOVUDINE",
+    "d2": "FLUCYTOSINE",
+    "level": "Précaution d'emploi",
+    "desc": "Contrôle plus fréquent de l'hémogramme.Augmentation de la toxicité hématologique (addition d'effets de toxicité médullaire)."
+  },
+  {
+    "d1": "ZIDOVUDINE",
+    "d2": "GANCICLOVIR",
+    "level": "Précaution d'emploi",
+    "desc": "Arrêter de façon transitoire la zidovudine ; contrôler la NFS et réintroduire, si possible, la zidovudine à doses faibles.Augmentation de la toxicité hématologique (addition d'effets de toxicité médullaire)."
+  },
+  {
+    "d1": "ZIDOVUDINE",
+    "d2": "RIBAVIRINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière, notamment en début d'association.Risque de diminution de l'efficacité de chaque antiviral, par antagonisme compétitif de la réaction de phosphorylation à l'origine des métabolites actifs."
+  },
+  {
+    "d1": "ZIDOVUDINE",
+    "d2": "RIFAMPICINE",
+    "level": "Association DECONSEILLEE",
+    "desc": "Si l'association s'avère nécessaire, surveillance clinique et biologique renforcée.Diminution de moitié des concentrations de la zidovudine par augmentation de son métabolisme par la rifampicine."
+  },
+  {
+    "d1": "ZIDOVUDINE",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière. Un hémogramme à la recherche d’une anémie devrait être réalisé au cours des deux premiers mois de l’association.Risque d’augmentation des effets indésirables, notamment hématologiques, de la zidovudine par diminution de son métabolisme par l’acide valproïque."
+  },
+  {
+    "d1": "ZINC",
+    "d2": "CALCIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de calcium à distance du zinc (plus de 2 heures si possible).Diminution de l’absorption digestive du zinc par le calcium."
+  },
+  {
+    "d1": "ZINC",
+    "d2": "CYCLINES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de zinc à distance des cyclines (plus de 2 heures si possible).Diminution de l'absorption digestive des cyclines."
+  },
+  {
+    "d1": "ZINC",
+    "d2": "FER",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de fer à distance du zinc (plus de 2 heures si possible).Diminution de l’absorption digestive du zinc par le fer."
+  },
+  {
+    "d1": "ZINC",
+    "d2": "FLUOROQUINOLONES",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de zinc à distance des fluoroquinolones (plus de 2 heures, si possible).Diminution de l'absorption digestive des fluoroquinolones."
+  },
+  {
+    "d1": "ZINC",
+    "d2": "INHIBITEURS D'INTÉGRASE",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre les sels de zinc à distance de l’antirétroviral (plus de 2 heures, si possible).Risque de diminution de l'absorption digestive des inhibiteurs d’intégrase, par chélation par le cation divalent."
+  },
+  {
+    "d1": "ZINC",
+    "d2": "STRONTIUM",
+    "level": "Précaution d'emploi",
+    "desc": "Prendre le strontium à distance des sels de zinc (plus de deux heures, si possible).Diminution de l'absorption digestive du strontium."
+  },
+  {
+    "d1": "ZOLPIDEM",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "A prendre en compte",
+    "desc": "Légère augmentation de l'effet sédatif du zolpidem."
+  },
+  {
+    "d1": "ZOLPIDEM",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Utiliser éventuellement un autre hypnotique.Diminution des concentrations plasmatiques et de l'efficacité du zolpidem par augmentation de son métabolisme hépatique par la rifampicine."
+  },
+  {
+    "d1": "ZONISAMIDE",
+    "d2": "VALPROÏQUE (ACIDE) ET, PAR EXTRAPOLATION, VALPROMIDE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique et biologique régulière.Augmentation de l'hyperammoniémie, avec risque accru d'encéphalopathie."
+  },
+  {
+    "d1": "ZOPICLONE",
+    "d2": "INHIBITEURS PUISSANTS DU CYP3A4",
+    "level": "A prendre en compte",
+    "desc": "Légère augmentation de l'effet sédatif de la zopiclone."
+  },
+  {
+    "d1": "ZOPICLONE",
+    "d2": "RIFAMPICINE",
+    "level": "Précaution d'emploi",
+    "desc": "Surveillance clinique. Utiliser éventuellement un autre hypnotique.Diminution des concentrations plasmatiques et de l'efficacité de la zopiclone par augmentation de son métabolisme hépatique par la rifampicine."
+  }
+];
