@@ -39,33 +39,74 @@ function initUI() {
     const cleanDCI = (str) => {
         if(!str) return "";
         let s = str.replace(/\b(IV|PO|SC|IM|IV\/PO|per os|comprimés?|gélules?|sirop|collyre|ampoules?|mg|ml|µg|solution|injectable)\b/gi, '');
-        s = s.replace(/[\(\)\[\]\*]/g, ' '); 
-        return s.replace(/\s+/g, ' ').trim();
+        return s.trim();
     };
 
+    // Le Nouveau Moteur de Fusion Intelligent anti-doublons
     const smartMergeMed = (dciRaw, princepsRaw, classeRaw, id, albumine = 0) => {
         if (!dciRaw) return;
         let testStr = dciRaw.toLowerCase();
         if (dciRaw.length > 45 || testStr.includes('tableau') || testStr.includes('adaptation') || testStr.includes('mg/j') || testStr.includes('clairance')) return;
 
-        let dci = cleanDCI(dciRaw); let key = sanitizeText(dci);
+        let rawClean = cleanDCI(dciRaw);
+        // On sépare intelligemment ce qui est dans les parenthèses
+        let parts = rawClean.split(/[\(\/\)]/).map(x => x.replace(/[\*\[\]]/g, '').trim()).filter(x => x.length > 2);
+        if (parts.length === 0) return;
+        
+        let mainDci = parts[0];
+        let key = sanitizeText(mainDci);
         if (!key || key.length < 3) return;
 
-        let pRaw = (princepsRaw || "").trim(); let cRaw = (classeRaw || "").trim();
+        let others = parts.slice(1);
+        let pRaw = (princepsRaw || "").trim();
+        if (others.length > 0) pRaw = pRaw ? pRaw + ", " + others.join(', ') : others.join(', ');
+        let cRaw = (classeRaw || "").trim();
 
-        if (unifiedMedsMap.has(key)) {
-            let existing = unifiedMedsMap.get(key);
-            if (pRaw && !existing.princeps.toLowerCase().includes(pRaw.toLowerCase())) existing.princeps = existing.princeps ? existing.princeps + ', ' + pRaw : pRaw;
+        // Résolution de clé croisée (Si "miorel" arrive mais que "thiocolchicoside" existe déjà dans les alias)
+        let targetKey = key;
+        if (!unifiedMedsMap.has(key)) {
+            for (let o of others) {
+                let oKey = sanitizeText(o);
+                if (unifiedMedsMap.has(oKey)) { targetKey = oKey; break; }
+            }
+            if (targetKey === key) {
+                for (let existingKey of unifiedMedsMap.keys()) {
+                    if (existingKey.length > 5 && key.includes(existingKey)) { targetKey = existingKey; break; }
+                }
+            }
+        }
+
+        // Fusion parfaite
+        if (unifiedMedsMap.has(targetKey)) {
+            let existing = unifiedMedsMap.get(targetKey);
+            if (pRaw) {
+                pRaw.split(',').forEach(p => {
+                    let pt = p.trim();
+                    if (pt && !existing.princeps.toLowerCase().includes(pt.toLowerCase()) && !existing.dci_pure.toLowerCase().includes(pt.toLowerCase())) {
+                        existing.princeps = existing.princeps ? existing.princeps + ', ' + pt : pt;
+                    }
+                });
+            }
             if (cRaw && cRaw !== 'Médicament avec suivi spécifique' && cRaw !== 'Classe Médicamenteuse') {
-                if (!existing.classe.toLowerCase().includes(cRaw.toLowerCase())) existing.classe = existing.classe === 'Médicament avec suivi spécifique' || existing.classe === 'Classe Médicamenteuse' || !existing.classe ? cRaw : existing.classe + ' / ' + cRaw;
+                if (!existing.classe.toLowerCase().includes(cRaw.toLowerCase())) {
+                    existing.classe = existing.classe.includes('Médicament') || !existing.classe ? cRaw : existing.classe + ' / ' + cRaw;
+                }
             }
             if (albumine > existing.albumine) existing.albumine = albumine;
-            if (dci.length < existing.dci_pure.length && dci.length > 3) existing.dci_pure = dci;
+            
+            // On s'assure que le plus long nom est utilisé comme DCI (car c'est souvent la molécule, et le nom court est le princeps)
+            if (mainDci.length > existing.dci_pure.length && others.length === 0 && !mainDci.includes(' ')) {
+                if (!existing.princeps.toLowerCase().includes(existing.dci_pure.toLowerCase())) {
+                    existing.princeps = existing.princeps ? existing.princeps + ', ' + existing.dci_pure : existing.dci_pure;
+                }
+                existing.dci_pure = mainDci;
+            }
         } else {
-            unifiedMedsMap.set(key, { dci_pure: dci, princeps: pRaw, classe: cRaw, core_id: id, albumine: albumine });
+            unifiedMedsMap.set(targetKey, { dci_pure: mainDci, princeps: pRaw, classe: cRaw, core_id: id, albumine: albumine });
         }
     };
 
+    // Chargement de TOUTES les bases de données (sans aucun doublon possible)
     if(GERIA_DB.dci_mapping) {
         for (const [dci, info] of Object.entries(GERIA_DB.dci_mapping)) { 
             smartMergeMed(dci, info.princeps, info.classe_qt, info.med_id_clinique || dci, parsePourcentage(info.liaison_albumine || info.liaison_proteique)); 
@@ -86,8 +127,11 @@ function initUI() {
         });
     }
 
-    if(typeof ATB_DB !== 'undefined') ATB_DB.forEach(atb => smartMergeMed(atb.nom_affichage, '', 'Antibiotique', atb.nom_affichage, 0));
+    if (typeof ATB_DB !== 'undefined') ATB_DB.forEach(atb => smartMergeMed(atb.nom_affichage, '', 'Antibiotique', atb.nom_affichage, 0));
+    if (typeof SUIVI_BIOLOGIQUE_DB !== 'undefined') SUIVI_BIOLOGIQUE_DB.forEach(row => smartMergeMed(row.medicament, '', 'Médicament avec suivi spécifique', row.medicament, 0));
+    if (typeof POSOLOGIE_DB !== 'undefined') POSOLOGIE_DB.forEach(row => smartMergeMed(row.medicament, '', row.classe_pharmacologique || 'Médicament', row.medicament, 0));
     
+    // Forçages Experts
     smartMergeMed('miansérine', 'Athymil', 'Antidépresseur tétracyclique', 'mianserine', 90);
     smartMergeMed('mirtazapine', 'Norset', 'Antidépresseur tétracyclique', 'mirtazapine', 85);
     smartMergeMed('rifampicine', 'Rifadine', 'Antibiotique / Inducteur CYP3A4', 'rifampicine', 80);
@@ -102,8 +146,6 @@ function initUI() {
     smartMergeMed('acide folique', 'Spéciafoldine', 'Vitamine B9', 'b9', 70);
     smartMergeMed('spironolactone', 'Aldactone', 'Diurétique épargneur K+', 'spironolactone', 90);
     smartMergeMed('clarithromycine', 'Zeclar', 'Macrolide / Inhibiteur CYP3A4', 'clarithromycine', 70);
-
-    if (typeof SUIVI_BIOLOGIQUE_DB !== 'undefined') SUIVI_BIOLOGIQUE_DB.forEach(row => smartMergeMed(row.medicament, '', 'Médicament avec suivi spécifique', row.medicament, 0));
 
     setupAutocomplete('inputComorb', 'listComorb', searchComorbList, selectComorb);
     setupAutocomplete('inputMed', 'listMed', searchMedList, selectMed);
@@ -131,33 +173,19 @@ function calculerDFG(autoSwitch = true) {
         }
     }
 
-    // Bascule automatique si on tape des valeurs, mais UNIQUEMENT si le champ est sur "Manuel"
     if (autoSwitch && methodSelect.value === 'manuel' && creat > 0 && age > 0) { 
         methodSelect.value = poids > 0 ? 'cg' : 'ckdepi'; 
     }
 
-    // Application stricte de la formule sélectionnée
     if (methodSelect.value === 'cg') { 
-        if (cgValue > 0) {
-            dfgInput.value = Math.round(cgValue);
-        } else {
-            dfgInput.value = "";
-            dfgInput.placeholder = "Poids?";
-        }
+        if (cgValue > 0) { dfgInput.value = Math.round(cgValue); } else { dfgInput.value = ""; dfgInput.placeholder = "Poids?"; }
         dfgInput.className = "form-control fw-bold bg-warning bg-opacity-25 text-dark"; 
     } 
     else if (methodSelect.value === 'ckdepi') { 
-        if (ckdEpiValue > 0) {
-            dfgInput.value = Math.round(ckdEpiValue);
-        } else {
-            dfgInput.value = "";
-            dfgInput.placeholder = "Âge?";
-        }
+        if (ckdEpiValue > 0) { dfgInput.value = Math.round(ckdEpiValue); } else { dfgInput.value = ""; dfgInput.placeholder = "Âge?"; }
         dfgInput.className = "form-control fw-bold bg-info bg-opacity-25 text-dark"; 
     } 
-    else { 
-        dfgInput.className = "form-control fw-bold"; 
-    }
+    else { dfgInput.className = "form-control fw-bold"; }
 }
 
 function setupAutocomplete(inputId, listId, searchFunc, selectFunc) {
@@ -182,11 +210,15 @@ function setupAutocomplete(inputId, listId, searchFunc, selectFunc) {
 function searchComorbList(val) { const cleanVal = sanitizeText(val); return allComorbs.filter(c => c.search.includes(cleanVal) || c.id.toLowerCase().includes(cleanVal)).map(c => ({display: c.label, data: c.id})); }
 
 function searchMedList(val) {
-    const cleanVal = sanitizeText(val); let matches = []; let seen = new Set(); 
+    const cleanVal = sanitizeText(val); let matches = []; let seenSignatures = new Set(); 
     unifiedMedsMap.forEach((data, key) => { 
         if(!data.dci_pure.startsWith('[Classe]') && (key.includes(cleanVal) || sanitizeText(data.princeps).includes(cleanVal))) { 
-            let uniqueKey = sanitizeText(data.dci_pure);
-            if(!seen.has(uniqueKey)) { seen.add(uniqueKey); matches.push({display: `${data.dci_pure}${data.princeps ? ` (${data.princeps})` : ''} - ${data.classe}`, data: data}); }
+            // Signature unique pour unifier l'affichage et bloquer tout doublon visuel résiduel
+            let signature = sanitizeText(data.dci_pure);
+            if(!seenSignatures.has(signature)) { 
+                seenSignatures.add(signature); 
+                matches.push({display: `${data.dci_pure}${data.princeps ? ` (${data.princeps})` : ''} - ${data.classe}`, data: data}); 
+            }
         } 
     });
     return matches;

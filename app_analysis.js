@@ -88,7 +88,7 @@ function analyserPrescription() {
     if (modePalliatif) { addAlert(divInitier, `<div class="alert alert-secondary border-secondary text-center shadow-sm"><strong>🛑 MODE PATIENT TRÈS FRAGILE ACTIVÉ</strong><br>Les alertes de prévention primaire (START) sont réduites au silence pour privilégier le confort.</div>`, null); }
 
     // =========================================================================
-    // 🌉 1. DIAGNOSTIC SYNDROMIQUE CROISÉ (PONT CLINICO-BIOLOGIQUE EXPERT)
+    // 🌉 1. DIAGNOSTIC SYNDROMIQUE CROISÉ
     try {
         let syndromeAlerts = [];
         if (bioPatient.Tsh > 0) {
@@ -230,7 +230,6 @@ function analyserPrescription() {
             addAlert(divEviter, `<div class="alert alert-danger alert-stopp shadow-sm"><strong>🚨 Alerte de Sécurité (FDA/HAS) : Antipsychotiques</strong><br>Prescription de <b>${antipsychotiquesIsoles.map(m=>m.dci).join(', ').toUpperCase()}</b> chez un patient de ${patientAge} ans. <br><em>Risque :</em> Augmentation démontrée du risque d'AVC et de mortalité cardiovasculaire/infectieuse.<br><em>Action :</em> À proscrire sauf diagnostic psychiatrique précis. <span class="badge bg-dark float-end">Beers / STOPP</span></div>`, 'eviter');
         }
 
-        // 🚬 INTERACTION TABAC (INDUCTION CYP1A2)
         if (isFumeur) {
             let cyp1a2Substrates = activeMeds.filter(m => ['clozapine', 'olanzapine', 'duloxetine', 'theophylline', 'haloperidol', 'flecainide'].some(x => sanitizeText(m.dci).includes(x)));
             if (cyp1a2Substrates.length > 0) {
@@ -247,7 +246,7 @@ function analyserPrescription() {
         }
         
         if (hasComorb('IC_FE_PRESERVEE') && !patientHasMedClass('sglt2')) {
-            addAlert(divInitier, `<div class="alert alert-success alert-start shadow-sm"><strong>🫀 Optimisation IC FEVG Préservée (HFpEF)</strong><br>Les inhibiteurs de SGLT2 (Dapagliflozine, Empagliflozine) sont recommandés en 1ère intention pour réduire les hospitalisations pour IC.<br><em>Action :</em> Envisager l'introduction d'une gliflozine. <span class="badge bg-dark float-end">ESC 2023</span></div>`, 'initier');
+            addAlert(divInitier, `<div class="alert alert-success alert-start shadow-sm"><strong>🫀 Optimisation IC FEVG Préservée (HFpEF)</strong><br>Les inhibiteurs de SGLT2 (Dapagliflozine, Empagliflozine) sont recommandés en 1ère intention pour réduire les hospitalisations pour IC.<br><em>Action :</em> Envisager l'introduction d'une gliflozine. <span class="badge bg-dark float-end">ESC 2023/2024</span></div>`, 'initier');
         }
 
         if (patientHasMedClass('arni') && patientHasMedClass('iec')) addAlert(divEviter, `<div class="alert alert-danger alert-stopp shadow-sm"><strong>🚨 Contre-indication Absolue : IEC + Entresto (ARNI)</strong><br>Risque d'angioedème fatal. Délai de "wash-out" de 36h obligatoire. <span class="badge bg-dark float-end">ESC / HAS</span></div>`, 'eviter');
@@ -381,7 +380,7 @@ function analyserPrescription() {
     } catch(e) { console.error("Erreur Scores", e); }
 
     // =========================================================================
-    // 🧠 6. INTERACTIONS CLASSIQUES, ANSM ET GPT_DDI
+    // 🧠 6. INTERACTIONS CLASSIQUES, ANSM ET GPT_DDI (AVEC REGROUPEMENT INTELLIGENT)
     const getEnRoots = (dci) => {
         let s = sanitizeText(dci); let roots = [s];
         if (s.includes('rifampic')) roots.push('rifampin', 'rifampicin');
@@ -393,48 +392,67 @@ function analyserPrescription() {
     };
 
     try {
-        if(typeof GERIA_DB !== 'undefined' && GERIA_DB.interactions) {
-            GERIA_DB.interactions.forEach(inter => {
-                let cibles = (inter.med_cible_id || "").split('|').map(x=>x.trim().toLowerCase());
-                let interacteurs = (inter.med_interagissant_id || "").split('|').map(x=>x.trim().toLowerCase());
-                
-                if (cibles.join('|') === interacteurs.join('|')) {
-                    let classMedsCount = activeMeds.filter(m => {
-                        let d = sanitizeText(m.dci); let c = sanitizeText(m.classe).toLowerCase();
-                        return cibles.some(t => d.includes(t) || c.includes(t) || (t==='ac' && (c.includes('anticholinerg') || infoACB_global.some(i=>i.toLowerCase().includes(d)))));
-                    }).length;
-                    if (classMedsCount < 2) return; 
-                }
-
-                let hasCible = cibles.some(m => patientHasMedClass(m)); let hasInt = interacteurs.some(m => patientHasMedClass(m));
-                if(hasCible && hasInt) {
-                    if((inter.action || "").toLowerCase().includes('inr') && patientHasMedClass('aod') && !patientHasMedClass('avk')) return; 
-                    addAlert(divInteract, `<div class="alert alert-warning border border-warning shadow-sm"><strong>⚡ Interaction : ${inter.med_cible_id} + ${inter.med_interagissant_id}</strong><br><em>Risque :</em> ${inter.risque}<br><em>Action :</em> ${inter.action}</div>`, 'interact');
-                }
-            });
-        }
-
-        let interactedPairs = new Set();
+        // Regroupement ANSM (Dédoublonnage sur la sémantique)
+        let groupedAnsm = {};
         if(typeof ANSM_DDI_DB !== 'undefined') {
             for(let i=0; i<activeMeds.length; i++) {
                 for(let j=i+1; j<activeMeds.length; j++) {
                     let mA = activeMeds[i], mB = activeMeds[j];
                     ANSM_DDI_DB.forEach(d => {
                         if ((medMatchesAnsmTerm(mA, d.d1) && medMatchesAnsmTerm(mB, d.d2)) || (medMatchesAnsmTerm(mA, d.d2) && medMatchesAnsmTerm(mB, d.d1))) {
-                            let aType = String(d.level).includes("CONTRE-INDICATION") ? "danger alert-stopp" : "warning"; 
-                            let icon = String(d.level).includes("CONTRE-INDICATION") ? "🚨" : "⚡";
-                            let key = [String(d.d1), String(d.d2)].sort().join('-');
-                            if(!interactedPairs.has(key)) {
-                                interactedPairs.add(key);
-                                addAlert(divAnsm, `<div class="alert alert-${aType} shadow-sm"><strong>${icon} ANSM : ${d.d1} + ${d.d2}</strong><br><em>Niveau :</em> <b>${d.level}</b><br><em>Conséquence :</em> ${d.desc}</div>`, 'ansm');
+                            let pairName = `${mA.dci.toUpperCase()} + ${mB.dci.toUpperCase()}`;
+                            if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
+                            
+                            let isDanger = String(d.level).includes("CONTRE-INDICATION");
+                            if(isDanger) groupedAnsm[pairName].isDanger = true;
+                            
+                            let isDup = false;
+                            // Concepts clés pour éviter de répéter deux fois "Risque de torsades de pointes..."
+                            let concepts = ["torsade", "hyperkali", "bradycardi", "hypotension", "sédat", "sérotonin", "hémorrag", "lithémie", "convuls", "myopathie", "rhabdomyolyse", "allongement de l'intervalle qt"];
+                            let matchedConcept = concepts.find(c => String(d.desc).toLowerCase().includes(c));
+
+                            for (let ex of groupedAnsm[pairName].raw) {
+                                let exDesc = String(ex.desc).toLowerCase();
+                                if (exDesc === String(d.desc).toLowerCase() || exDesc.includes(String(d.desc).toLowerCase()) || String(d.desc).toLowerCase().includes(exDesc)) { 
+                                    isDup = true; 
+                                    if(isDanger && !String(ex.level).includes("CONTRE-INDICATION")) { ex.level = d.level; ex.desc = d.desc; }
+                                    break; 
+                                }
+                                if (matchedConcept && exDesc.includes(matchedConcept)) {
+                                    if (isDanger && !String(ex.level).includes("CONTRE-INDICATION")) { ex.level = d.level; ex.desc = d.desc; }
+                                    isDup = true;
+                                    break;
+                                }
                             }
+                            if (!isDup) groupedAnsm[pairName].raw.push({ level: d.level, desc: d.desc, isDanger: isDanger });
                         }
                     });
                 }
             }
         }
+        
+        // Affichage des encadrés ANSM regroupés
+        for (const [pair, data] of Object.entries(groupedAnsm)) {
+            let boxClass = data.isDanger ? "danger alert-stopp" : "warning";
+            let mainIcon = data.isDanger ? "🚨" : "⚡";
+            let itemsHtml = data.raw.map(x => {
+                let textColor = x.isDanger ? "text-danger" : "text-dark";
+                let icon = x.isDanger ? "🔴" : "🟠";
+                return `<li style="margin-bottom: 6px;"><span class="${textColor} fw-bold">${icon} ${x.level}</span><br><span class="small text-muted">${x.desc}</span></li>`;
+            }).join('');
+            
+            let html = `<div class="alert alert-${boxClass} shadow-sm">
+                <strong style="font-size:1.05em;">${mainIcon} Risques ANSM : ${pair}</strong>
+                <hr class="mt-2 mb-2" style="opacity:0.15;">
+                <ul class="mb-0 ps-3">
+                    ${itemsHtml}
+                </ul>
+            </div>`;
+            addAlert(divAnsm, html, 'ansm');
+        }
 
-        // MOTEUR GPT DDI (La base globale internationale BNF/Micromedex)
+        // Regroupement GPT DDI
+        let groupedInteract = {};
         if(typeof GPT_DDI_DB !== 'undefined') {
             for(let i=0; i<activeMeds.length; i++) {
                 for(let j=i+1; j<activeMeds.length; j++) {
@@ -452,33 +470,53 @@ function analyserPrescription() {
                         
                         if ((aIsD1 && bIsD2) || (bIsD1 && aIsD2)) {
                             let niveau = String(d.niveau || "Interaction");
-                            let aType = niveau.toLowerCase().includes("contre-indication") || niveau.toLowerCase().includes("majeure") ? "danger alert-stopp" : "warning border-warning"; 
-                            let icon = aType.includes("danger") ? "🚨" : "⚡";
+                            let isDanger = niveau.toLowerCase().includes("contre-indication") || niveau.toLowerCase().includes("majeure");
                             
-                            let cacheKey = sanitizeText(mA.dci + mB.dci + d.event);
-                            if(!alertCache.has(cacheKey)) {
-                                alertCache.add(cacheKey);
-                                let sourceTxt = d.source ? `<span class="badge bg-secondary float-end">${d.source}</span>` : "";
-                                addAlert(divInteract, `<div class="alert alert-${aType} shadow-sm"><strong>${icon} Risque Clinique : ${mA.dci.toUpperCase()} + ${mB.dci.toUpperCase()}</strong>${sourceTxt}<br><em>Niveau :</em> <b>${niveau}</b><br><em>Risque documenté :</em> ${d.event}</div>`, 'interact');
-                            }
+                            let pairName = `${mA.dci.toUpperCase()} + ${mB.dci.toUpperCase()}`;
+                            if(!groupedInteract[pairName]) groupedInteract[pairName] = { isDanger: false, raw: [] };
+                            if(isDanger) groupedInteract[pairName].isDanger = true;
+                            
+                            let isDup = groupedInteract[pairName].raw.some(ex => ex.event.toLowerCase() === String(d.event).toLowerCase());
+                            if(!isDup) groupedInteract[pairName].raw.push({ event: d.event, niveau: niveau, isDanger: isDanger, source: d.source });
                         }
                     });
                 }
             }
         }
 
+        // Affichage GPT DDI
+        for (const [pair, data] of Object.entries(groupedInteract)) {
+            let boxClass = data.isDanger ? "danger alert-stopp" : "warning border-warning";
+            let mainIcon = data.isDanger ? "🚨" : "⚡";
+            let itemsHtml = data.raw.map(x => {
+                let textColor = x.isDanger ? "text-danger" : "text-warning text-dark";
+                let icon = x.isDanger ? "🔴" : "🟠";
+                let sourceTxt = x.source ? `<span class="badge bg-secondary ms-1" style="font-size:0.7em;">${x.source}</span>` : "";
+                return `<li style="margin-bottom: 6px;"><span class="${textColor} fw-bold">${icon} ${x.event}</span> ${sourceTxt}<br><span class="small text-muted">Niveau : ${x.niveau}</span></li>`;
+            }).join('');
+            
+            let html = `<div class="alert alert-${boxClass} shadow-sm">
+                <strong style="font-size:1.05em;">${mainIcon} Risques Cliniques (Internationaux) : ${pair}</strong>
+                <hr class="mt-2 mb-2" style="opacity:0.15;">
+                <ul class="mb-0 ps-3">${itemsHtml}</ul>
+            </div>`;
+            addAlert(divInteract, html, 'interact');
+        }
+
     } catch(e) { console.error("Erreur Interactions Globales", e); }
 
     // =========================================================================
-    // 🧠 7. MOTEUR PK AVEC BYPASS D'EXPERT CLARITHROMYCINE
+    // 🧠 7. MOTEUR PK AVEC BYPASS D'EXPERT ET AGGRÉGATION DES ÉTUDES
     try {
+        let groupedAuc = {};
         if (typeof DDI_AUC_DB !== 'undefined') {
             for(let i=0; i<activeMeds.length; i++) {
                 for(let j=i+1; j<activeMeds.length; j++) {
                     let mA = activeMeds[i], mB = activeMeds[j];
                     let rootsA = getEnRoots(mA.dci); let rootsB = getEnRoots(mB.dci);
+                    let pairName = `${mA.dci.toUpperCase()} + ${mB.dci.toUpperCase()}`;
                     
-                    let match = DDI_AUC_DB.find(d => {
+                    let matches = DDI_AUC_DB.filter(d => {
                         if (!d || !d.perpetrator || !d.victim) return false;
                         let p = sanitizeText(String(d.perpetrator)); let v = sanitizeText(String(d.victim));
                         if (p === "" || v === "") return false;
@@ -490,52 +528,108 @@ function analyserPrescription() {
                         return (aIsP && bIsV) || (bIsP && aIsV);
                     });
 
-                    // Coupe-circuits de sécurité experts
+                    // Bypass experts (Ajout des données FDA/RCP absentes des modèles statiques de base)
                     let isRifQuet = (rootsA.includes('rifampin') && rootsB.includes('quetiapine')) || (rootsB.includes('rifampin') && rootsA.includes('quetiapine'));
                     let isRitQuet = (rootsA.includes('ritonavir') && rootsB.includes('quetiapine')) || (rootsB.includes('ritonavir') && rootsA.includes('quetiapine'));
                     let isClariQuet = (rootsA.includes('clarithromycin') && rootsB.includes('quetiapine')) || (rootsB.includes('clarithromycin') && rootsA.includes('quetiapine'));
 
-                    if (isRifQuet) match = { auc_ratio: 0.13, perpetrator: "Rifampicine", victim: "Quétiapine", mechanism: "Induction enzymatique puissante (CYP3A4) : Effondrement des concentrations (-87%)." };
-                    else if (isRitQuet) match = { auc_ratio: 3.5, perpetrator: "Ritonavir", victim: "Quétiapine", mechanism: "Inhibition enzymatique puissante (CYP3A4) : Surdosage clinique grave." };
-                    else if (isClariQuet) match = { auc_ratio: 2.8, perpetrator: "Clarithromycine", victim: "Quétiapine", mechanism: "Inhibition enzymatique forte (CYP3A4) : Surdosage significatif (Risque accru de Torsades de Pointes)." };
+                    if (isRifQuet && !matches.some(m => String(m.auc_ratio) === "0.13")) matches.push({ auc_ratio: 0.13, mechanism: "Induction enzymatique puissante (CYP3A4)", note: "Littérature (Modèle Statique FDA)" });
+                    if (isRitQuet && !matches.some(m => String(m.auc_ratio) === "6.2")) matches.push({ auc_ratio: 6.2, mechanism: "Inhibition enzymatique puissante (CYP3A4) : Surdosage clinique grave.", note: "Monographie (RCP) / FDA" });
+                    if (isClariQuet && !matches.some(m => String(m.auc_ratio) === "2.8")) matches.push({ auc_ratio: 2.8, mechanism: "Inhibition enzymatique forte (CYP3A4) : Surdosage significatif (Risque Torsade de Pointes).", note: "Littérature PK" });
 
-                    if (match && !isNaN(parseFloat(match.auc_ratio))) {
-                        let ratio = parseFloat(match.auc_ratio);
-                        let color = (ratio >= 5 || ratio <= 0.2) ? "danger alert-stopp" : ((ratio >= 2 || ratio <= 0.5) ? "warning" : "info");
-                        let txtRatio = ratio < 1 ? `x${ratio} (Baisse de ${Math.round((1-ratio)*100)}%)` : `x${ratio} (Hausse de ${Math.round((ratio-1)*100)}%)`;
-                        addAlert(divAuc, `<div class="alert alert-${color} shadow-sm"><strong>📈 PK : Modification de l'AUC ${txtRatio}</strong><br>💊 <b>Substrat :</b> ${match.victim} | 🛑 <b>Interacteur :</b> ${match.perpetrator}<br><em>Mécanisme :</em> ${match.mechanism}</div>`, 'auc');
+                    if (matches.length > 0) {
+                        groupedAuc[pairName] = { items: [] };
+                        matches.forEach(m => {
+                            if(!isNaN(parseFloat(m.auc_ratio))) groupedAuc[pairName].items.push(m);
+                        });
                     }
                 }
             }
         }
+        
+        for (const [pair, data] of Object.entries(groupedAuc)) {
+            if(data.items.length === 0) continue;
+            
+            // On dédoublonne sur la valeur ratio exacte pour ne pas spammer si la base contient 3x la même étude
+            let uniqueItems = [];
+            data.items.forEach(item => {
+                if(!uniqueItems.some(u => parseFloat(u.auc_ratio) === parseFloat(item.auc_ratio))) uniqueItems.push(item);
+            });
+            
+            let maxRatio = Math.max(...uniqueItems.map(m => parseFloat(m.auc_ratio)));
+            let minRatio = Math.min(...uniqueItems.map(m => parseFloat(m.auc_ratio)));
+            let isDanger = maxRatio >= 5 || minRatio <= 0.2;
+            let isWarning = (maxRatio >= 2 && maxRatio < 5) || (minRatio <= 0.5 && minRatio > 0.2);
+            let color = isDanger ? "danger alert-stopp" : (isWarning ? "warning border-warning" : "info border-info");
+            
+            let detailsHtml = uniqueItems.map(m => {
+                let ratio = parseFloat(m.auc_ratio);
+                let txtRatio = ratio < 1 ? `x${ratio} (Baisse de ${Math.round((1-ratio)*100)}%)` : `x${ratio} (Hausse de ${Math.round((ratio-1)*100)}%)`;
+                let src = m.source || (m.note ? m.note : "Étude PK / Base DDI_AUC");
+                let icon = (ratio >= 5 || ratio <= 0.2) ? "🔴" : ((ratio >= 2 || ratio <= 0.5) ? "🟠" : "🔵");
+                return `<li style="margin-bottom:6px;"><span class="fw-bold">${icon} Ratio ${txtRatio}</span><br><em class="text-muted small">${m.mechanism}</em> <span class="badge bg-secondary ms-1" style="font-size:0.65em;">${src}</span></li>`;
+            }).join('');
+
+            addAlert(divAuc, `<div class="alert alert-${color} shadow-sm">
+                <strong style="font-size:1.05em;">📈 Multi-Évaluations PK (AUC) : ${pair}</strong>
+                <hr class="mt-2 mb-2" style="opacity:0.15;">
+                <ul class="mb-0 ps-3">${detailsHtml}</ul>
+            </div>`, 'auc');
+        }
     } catch(e) { console.error("Erreur PK AUC", e); }
 
     // =========================================================================
-    // 🧠 8. POSOLOGIES ET SUIVI BIOLOGIQUE CUMULATIF (RÉPARÉ)
+    // 🧠 8. POSOLOGIES ET SUIVI BIOLOGIQUE CUMULATIF ET DÉBLOQUÉ
     try {
         activeMeds.forEach(m => {
             let isATB = (typeof ATB_DB !== 'undefined') && ATB_DB.some(a => a.nom_affichage === m.core_id || a.nom_affichage === m.dci);
             if(isATB) return; 
 
-            let row = typeof GERIA_DB !== 'undefined' && GERIA_DB.medica_qt ? GERIA_DB.medica_qt.find(q => sanitizeText(q["DCI (Molécule)"] || q["DCI"] || "").includes(sanitizeText(m.dci))) : null;
-            let posHab = null, posGer = null, posRen = null;
+            let posHab = null, posGer = null, posNotes = null;
+            let sourcePoso = "";
+
+            // Priorité absolue à votre nouvelle base robuste POSOLOGIE_DB
+            if (typeof POSOLOGIE_DB !== 'undefined') {
+                let match = POSOLOGIE_DB.find(p => sanitizeText(p.medicament).includes(sanitizeText(m.dci)) || sanitizeText(m.dci).includes(sanitizeText(p.medicament)));
+                if (match) {
+                    posHab = match.posologie_adulte;
+                    posGer = match.posologie_sujet_age;
+                    posNotes = match.notes_cliniques;
+                    sourcePoso = match.source;
+                }
+            }
             
-            if(row) {
-                let keyHab = Object.keys(row).find(k => k && k.toLowerCase().includes("habituelle")); 
-                let keyGer = Object.keys(row).find(k => k && (k.toLowerCase().includes("gériatrique") || k.toLowerCase().includes("geriatrique"))); 
-                let keyRen = Object.keys(row).find(k => k && (k.toLowerCase().includes("rénale") || k.toLowerCase().includes("renale")));
-                posHab = keyHab ? row[keyHab] : null; posGer = keyGer ? row[keyGer] : null; posRen = keyRen ? row[keyRen] : null;
+            // Si le médicament n'est pas dans la nouvelle base, on fouille dans les anciennes données QT
+            if(!posHab && !posGer) {
+                let row = typeof GERIA_DB !== 'undefined' && GERIA_DB.medica_qt ? GERIA_DB.medica_qt.find(q => sanitizeText(q["DCI (Molécule)"] || q["DCI"] || "").includes(sanitizeText(m.dci))) : null;
+                if(row) {
+                    let keyHab = Object.keys(row).find(k => k && k.toLowerCase().includes("habituelle")); 
+                    let keyGer = Object.keys(row).find(k => k && (k.toLowerCase().includes("gériatrique") || k.toLowerCase().includes("geriatrique"))); 
+                    let keyRen = Object.keys(row).find(k => k && (k.toLowerCase().includes("rénale") || k.toLowerCase().includes("renale")));
+                    posHab = keyHab ? row[keyHab] : null; 
+                    posGer = keyGer ? row[keyGer] : null; 
+                    if (keyRen && row[keyRen] && row[keyRen] !== "NA") {
+                        posNotes = "Adaptation Rénale : " + row[keyRen];
+                    }
+                }
             }
 
-            let hasPoso = (posGer && posGer !== "NA" && posGer !== "") || (posRen && posRen !== "NA" && posRen !== "");
+            let hasPoso = (posGer && posGer !== "NA" && posGer !== "") || (posHab && posHab !== "NA" && posHab !== "") || (posNotes && posNotes !== "NA" && posNotes !== "");
             let hasAlb = m.albumine >= 85; 
 
             if(hasPoso || hasAlb) {
-                let html = `<div class="alert alert-success border border-success shadow-sm"><strong class="text-success">💊 Posologies & PK : ${m.dci.toUpperCase()}</strong><br>`;
+                let html = `<div class="alert alert-success border border-success shadow-sm"><strong class="text-success">💊 Posologies & PK : ${m.dci.toUpperCase()}</strong>`;
+                if(sourcePoso) html += ` <span class="badge bg-secondary ms-1 float-end" style="font-size:0.65em;">${sourcePoso}</span>`;
+                html += `<br>`;
+                
                 if(hasPoso) {
                     if(posHab && posHab !== "NA" && posHab !== "") html += `<em>Standard :</em> ${posHab}<br>`;
-                    if(posGer && posGer !== "NA" && posGer !== "") html += `<em>👴 Gériatrique :</em> <b>${posGer}</b><br>`;
-                    if(posRen && posRen !== "NA" && posRen !== "") html += `<span class="${(bioPatient.DFG > 0 && bioPatient.DFG < 60) ? "text-danger fw-bold" : "text-dark"}"><em>🧪 Fonction Rénale :</em> ${posRen}</span><br>`;
+                    if(posGer && posGer !== "NA" && posGer !== "") {
+                         // L'IA lit votre texte : si elle voit des mots liés au rein ET que le patient est IRC, ça passe au rouge !
+                         let isRenalDanger = (bioPatient.DFG > 0 && bioPatient.DFG < 60) && (posGer.toLowerCase().includes('dfg') || posGer.toLowerCase().includes('rénal') || posGer.toLowerCase().includes('renal') || posGer.toLowerCase().includes('clairance') || posGer.toLowerCase().includes('créatinine'));
+                         html += `<span class="${isRenalDanger ? 'text-danger fw-bold' : 'text-dark'}"><em>👴 Gériatrique / Rénal :</em> <b>${posGer}</b></span><br>`;
+                    }
+                    if(posNotes && posNotes !== "NA" && posNotes !== "") html += `<span class="text-dark small"><em>📝 Notes :</em> ${posNotes}</span><br>`;
                 }
                 if(hasAlb) html += `<span class="text-danger small d-block border-top pt-1 mt-1 border-success border-opacity-25"><em>🩸 Forte liaison à l'albumine :</em> <b>${m.albumine}%</b> (Risque de surdosage si hypoalbuminémie < 35 g/L).</span>`;
                 html += `</div>`; 
@@ -566,7 +660,7 @@ function analyserPrescription() {
             return `<ul class="mb-0 ps-3 text-dark">` + items.map(x => `<li style="margin-bottom:3px;">${x}</li>`).join('') + `</ul>`;
         };
 
-        // On traite d'abord les suivis issus du CSV SUIVI_BIOLOGIQUE_DB
+        // 1. Suivis issus du CSV
         if (typeof SUIVI_BIOLOGIQUE_DB !== 'undefined') {
             activeMeds.forEach(m => {
                 let mDciClean = sanitizeText(m.dci);
@@ -634,10 +728,19 @@ function analyserPrescription() {
             });
         }
         
-        // Ensuite, on applique TOUJOURS les règles de suivi génériques pour les médicaments non présents dans le CSV
-        if(patientHasMedClass('amiodarone')) addAlert(divSuivi, `<div class="alert alert-light border border-primary shadow-sm"><strong class="text-primary">👁️ Suivi Recommandé : AMIODARONE</strong><ul class="mb-0 mt-2 ps-3"><li>Bilan thyroïdien (TSH)</li><li>Bilan hépatique</li><li>ECG (QTc)</li><li>Rx Thorax 1x/an</li></ul></div>`, 'suivi');
-        if(patientHasMedClass('anticoagulant')) addAlert(divSuivi, `<div class="alert alert-light border border-primary shadow-sm"><strong class="text-primary">👁️ Suivi Recommandé : ANTICOAGULANT</strong><ul class="mb-0 mt-2 ps-3"><li>Fonction rénale (ClCr) min 1x/an</li><li>NFS annuelle</li></ul></div>`, 'suivi');
-        if(patientHasMedClass('lithium')) addAlert(divSuivi, `<div class="alert alert-light border border-primary shadow-sm"><strong class="text-primary">👁️ Suivi Recommandé : LITHIUM</strong><ul class="mb-0 mt-2 ps-3"><li>Lithémie (marge étroite)</li><li>TSH</li><li>Créatininémie</li><li>Calcémie</li></ul></div>`, 'suivi');
+        // 2. Suivis Génériques (S'additionnent TOUJOURS au reste)
+        let suiviRules = [];
+        if(patientHasMedClass('amiodarone')) suiviRules.push("<b>Amiodarone :</b> Bilan thyroïdien (TSH), Bilan hépatique, ECG (QTc), Rx Thorax 1x/an.");
+        if(patientHasMedClass('anticoagulant')) suiviRules.push("<b>Anticoagulants :</b> Fonction rénale min 1x/an, NFS annuelle.");
+        if(patientHasMedClass('lithium')) suiviRules.push("<b>Lithium :</b> Lithémie, TSH, Créatininémie, Calcémie.");
+        if(patientHasMedClass('diuretique') || patientHasMedClass('iec') || patientHasMedClass('ara2')) suiviRules.push("<b>SRAA / Diurétiques :</b> Ionogramme (K+, Na+) et Créatininémie 7 à 14 jours après modification, puis 1 à 2 fois/an.");
+        if(activeMeds.some(m => ['quetiapine', 'risperidone', 'olanzapine', 'clozapine', 'aripiprazole', 'haloperidol'].some(x => sanitizeText(m.dci).includes(x)))) {
+            suiviRules.push("<b>Antipsychotiques :</b> Surveillance métabolique (Glycémie à jeun, Bilan lipidique), ECG (QTc) annuel, surveillance du poids.");
+        }
+        
+        if(suiviRules.length > 0) {
+            addAlert(divSuivi, `<div class="alert alert-light border border-primary shadow-sm"><strong class="text-primary" style="font-size:1.05em;">👁️ Protocoles de Suivi Standards :</strong><hr class="mt-2 mb-2" style="opacity:0.15;"><ul class="mb-0 ps-3 text-dark">` + suiviRules.map(r => `<li style="margin-bottom:6px;">${r}</li>`).join('') + `</ul></div>`, 'suivi');
+        }
 
     } catch(e) { console.error("Erreur Posologie / Suivi", e); }
 
