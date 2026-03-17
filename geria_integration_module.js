@@ -4920,7 +4920,7 @@ const REFERENTIEL_CSV_DB = {
 //          nouvelles règles STOPP v3 / Dalleur 2025 non encore converties.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const RECOS_SUPPLEMENT = [
+const RECOS_SUPPLEMENT_INTEGRATION = [
     {
         "id": "SUP_STOP_001",
         "csv_ref": "RECO_0010",
@@ -7434,19 +7434,28 @@ function applyFullIntegration() {
         applyV2Enrichments();
     }
     
+    // Fusionner RECOS_SUPPLEMENT_INTEGRATION dans RECOS_SUPPLEMENT (source unique)
+    if (typeof RECOS_SUPPLEMENT !== 'undefined' && typeof RECOS_SUPPLEMENT_INTEGRATION !== 'undefined') {
+        const existingIds = new Set(RECOS_SUPPLEMENT.map(r => r.id));
+        RECOS_SUPPLEMENT_INTEGRATION.forEach(r => {
+            if (!existingIds.has(r.id)) RECOS_SUPPLEMENT.push(r);
+        });
+        console.log(`[INTEGRATION] Fusion RECOS_SUPPLEMENT: ${RECOS_SUPPLEMENT.length} règles totales`);
+    }
+
     // Stats
     const csvCount = Object.keys(REFERENTIEL_CSV_DB).length;
-    const suppCount = RECOS_SUPPLEMENT.length;
+    const suppCount = typeof RECOS_SUPPLEMENT !== 'undefined' ? RECOS_SUPPLEMENT.length : 0;
     const crossCount = Object.keys(CROSS_REFERENCE_PATHO).length;
     const bioCount = PATHO_BIO_MONITOR.length;
     const pathoCount = typeof PATHOLOGY_RULES_DB !== 'undefined' ? Object.keys(PATHOLOGY_RULES_DB).length : 0;
-    
-    console.log(`[INTEGRATION] ✅ Module chargé :
-  📋 REFERENTIEL_CSV_DB : ${csvCount} recommandations (8 sources)
-  ➕ RECOS_SUPPLEMENT   : ${suppCount} règles supplémentaires pour GeriaEngineV2
-  🔗 CROSS_REFERENCE    : ${crossCount} pathologies mappées
-  🧪 BIO_MONITOR        : ${bioCount} protocoles de surveillance
-  🏥 PATHOLOGY_RULES_DB : ${pathoCount} pathologies EBM`);
+
+    console.log(`[INTEGRATION] Module chargé :
+  REFERENTIEL_CSV_DB : ${csvCount} recommandations (8 sources)
+  RECOS_SUPPLEMENT   : ${suppCount} règles supplémentaires pour GeriaEngineV2
+  CROSS_REFERENCE    : ${crossCount} pathologies mappées
+  BIO_MONITOR        : ${bioCount} protocoles de surveillance
+  PATHOLOGY_RULES_DB : ${pathoCount} pathologies EBM`);
     
     return { csvCount, suppCount, crossCount, bioCount, pathoCount };
 }

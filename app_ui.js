@@ -1,6 +1,13 @@
-// 🟢 app_ui.js - V5
+// app_ui.js - V6.0
 function initUI() {
     if(typeof MASTER_DB === 'undefined') return;
+
+    // Intégrer les 48 médicaments d'enrichissement dans MASTER_DB
+    if (typeof MISSING_MEDS_ENRICHMENT !== 'undefined') {
+        MASTER_DB.MEDICAMENTS.push(...MISSING_MEDS_ENRICHMENT);
+        console.log(`[ENRICHMENT] ${MISSING_MEDS_ENRICHMENT.length} médicaments ajoutés à MASTER_DB`);
+    }
+
     allComorbs.length = 0; unifiedMedsMap.clear();
 
     for (const key in MASTER_DB.PATHOLOGIES) {

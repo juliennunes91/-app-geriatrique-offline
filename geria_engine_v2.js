@@ -88,40 +88,23 @@ const GeriaEngineV2 = (() => {
     
     function hasMedKeyCached(key, ctx) {
         if (!ctx.activeMeds || !key) return false;
-        
+
         const k = key.toLowerCase().replace(/[^a-z0-9]/g, '');
         if (_medKeyCache[k] !== undefined) return _medKeyCache[k];
-        
-        const result = ctx._medsNormalized.some(m => {
-            const dci = m.dci;
-            const classe = m.classe;
-            
-            // Matching par alias de classe (même logique que hasMedKey original, mais exécuté 1 seule fois)
-            if (k === 'ains' && (classe.includes('ains') || ['ibuprofene','ketoprofene','naproxene','diclofenac','piroxicam','meloxicam','celecoxib','etoricoxib'].some(d => dci.includes(d)))) return true;
-            if (k === 'iec' && (classe.includes('iec') || dci.includes('pril'))) return true;
-            if (k.includes('ara2') && (classe.includes('ara2') || dci.includes('sartan'))) return true;
-            if (k.includes('betabloquant') && (classe.includes('beta') || ['bisoprolol','metoprolol','nebivolol','carvedilol','atenolol','propranolol','acebutolol','betaxolol','sotalol','nadolol','pindolol','timolol','celiprolol','labetalol'].some(d => dci.includes(d)))) return true;
-            if (k.includes('diuretique') && (classe.includes('diuretique') || classe.includes('diuretique') || ['furosemide','bumetanide','hydrochlorothiazide','indapamide','spironolactone','altizide','chlortalidone','amiloride','triamterene','eplerenone'].some(d => dci.includes(d)))) return true;
-            if (k === 'anticoag' && (classe.includes('aod') || classe.includes('avk') || classe.includes('anticoag') || ['apixaban','rivaroxaban','dabigatran','edoxaban','acenocoumarol','warfarine','fluindione','enoxaparine','tinzaparine','dalteparine','fondaparinux'].some(d => dci.includes(d)))) return true;
-            if ((k === 'antiagreg' || k === 'antiagregant') && (classe.includes('antiagr') || ['acideacetylsalicylique','clopidogrel','prasugrel','ticagrelor','ticlopidine','dipyridamole'].some(d => dci.includes(d)))) return true;
-            if (k === 'antipsychotique' && (classe.includes('antipsychotique') || classe.includes('neuroleptique'))) return true;
-            if (k.includes('benzodiazepine') && (classe.includes('benzodiaz') || classe.includes('hypnotiquez'))) return true;
-            if (k === 'isrs' && (classe.includes('isrs') || classe.includes('ssri'))) return true;
-            if ((k === 'irsn' || k === 'snri') && ['venlafaxine','duloxetine','milnacipran','desvenlafaxine'].some(d => dci.includes(d))) return true;
-            if (k.includes('antidepresseurtricyclique') && classe.includes('tricyclique')) return true;
-            if (k === 'opioid' && (classe.includes('opio') || ['morphine','oxycodone','fentanyl','buprenorphine','tramadol','codeine','pethidine','methadone'].some(d => dci.includes(d)))) return true;
-            if (k.includes('statine') && (classe.includes('statine') || dci.includes('statine') || dci.includes('vastatine'))) return true;
-            if (k.includes('ipp') && (classe.includes('ipp') || classe.includes('inhibiteurpompe') || ['omeprazole','esomeprazole','lansoprazole','pantoprazole','rabeprazole'].some(d => dci.includes(d)))) return true;
-            if (k.includes('corticoide') && (classe.includes('corticoidesystemique') || classe.includes('corticoide') || ['prednisone','prednisolone','methylprednisolone','dexamethasone','betamethasone','hydrocortisone'].some(d => dci.includes(d)))) return true;
-            if (k === 'arni' && (dci.includes('sacubitril') || dci.includes('entresto'))) return true;
-            if (k === 'mra' && (dci.includes('spironolactone') || dci.includes('eplerenone') || dci.includes('aldactazine'))) return true;
-            if ((k === 'sglt2' || k === 'isglt2') && (classe.includes('sglt2') || ['canagliflozin','dapagliflozin','empagliflozin','ertugliflozin'].some(d => dci.includes(d)))) return true;
-            if (k === 'antihypertenseur') return classe.includes('hypertens') || hasMedKeyCached('iec', ctx) || hasMedKeyCached('ara2', ctx) || hasMedKeyCached('inhibiteur calcique', ctx) || hasMedKeyCached('diuretique', ctx) || hasMedKeyCached('betabloquant', ctx);
-            if (k.includes('inhibiteurcalcique') && (classe.includes('inhibiteurcalcique') || classe.includes('calcique') || ['amlodipine','nifedipine','felodipine','lercanidipine','nicardipine','diltiazem','verapamil','manidipine'].some(d => dci.includes(d)))) return true;
-            if (k.includes('antiepileptique') && (classe.includes('antiepileptique') || classe.includes('antiepileptique'))) return true;
-            return dci.includes(k) || classe.includes(k) || k.includes(dci);
-        });
-        
+
+        // Cas spécial : antihypertenseur (composite)
+        if (k === 'antihypertenseur') {
+            const result = ctx._medsNormalized.some(m => m.classe.includes('hypertens')) ||
+                hasMedKeyCached('iec', ctx) || hasMedKeyCached('ara2', ctx) ||
+                hasMedKeyCached('inhibiteurcalcique', ctx) || hasMedKeyCached('diuretique', ctx) ||
+                hasMedKeyCached('betabloquant', ctx);
+            _medKeyCache[k] = result;
+            return result;
+        }
+
+        // Utilise le référentiel centralisé de drug_classes.js
+        const result = ctx._medsNormalized.some(m => matchesDrugClass(m.dci, m.classe, k));
+
         _medKeyCache[k] = result;
         return result;
     }
@@ -299,11 +282,13 @@ const GeriaEngineV2 = (() => {
                 }
             });
             
-            // Ajouter les classes génériques
-            const classAliases = ['ains','iec','ara2','betabloquant','diuretique','anticoag','antiagreg',
-                'antiagregant','antipsychotique','benzodiazepine','isrs','irsn','opioid',
-                'statine','ipp','corticoide','arni','mra','sglt2','isglt2','antihypertenseur',
-                'inhibiteurcalcique','antiepileptique','antidepresseurtricyclique'];
+            // Ajouter les classes génériques (dérivées du référentiel centralisé)
+            const classAliases = typeof DRUG_CLASSES !== 'undefined'
+                ? Object.values(DRUG_CLASSES).flatMap(def => def.aliases)
+                : ['ains','iec','ara2','betabloquant','diuretique','anticoag','antiagreg',
+                   'antiagregant','antipsychotique','benzodiazepine','isrs','irsn','opioid',
+                   'statine','ipp','corticoide','arni','mra','sglt2','isglt2','antihypertenseur',
+                   'inhibiteurcalcique','antiepileptique','antidepresseurtricyclique'];
             
             classAliases.forEach(alias => {
                 if (hasMedKeyCached(alias, ctx) && _invertedIndex[alias]) {

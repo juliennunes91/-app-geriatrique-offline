@@ -1,32 +1,10 @@
-// 🧠 app_analysis.js - BRANCHEMENT SUR GERIA ENGINE V2
+// app_analysis.js - V6.0 (Refactorisé - utilise drug_classes.js)
 
 const medMatchesAnsmTerm = (med, term) => {
     if (!term || !med) return false;
-    let t = sanitizeText(term); 
     let dci = sanitizeText(med.dci); let classe = sanitizeText(med.classe);
-    
-    if (t.endsWith('s') && !t.includes('ains') && !t.includes('isrs')) t = t.slice(0, -1);
-    if (t.endsWith('aux')) t = t.replace('aux', 'al');
-    
-    if(dci.includes(t) || t.includes(dci)) return true;
-    if(classe.includes(t) || t.includes(classe)) return true;
-
-    if((t.includes('ains') || t.includes('antiinflammatoire')) && (classe.includes('ains') || ['ibuprofene','ketoprofene','naproxene','diclofenac','celecoxib','etoricoxib','meloxicam','piroxicam'].some(d=>dci.includes(d)))) return true;
-    if((t.includes('iec') || t.includes('enzymedeconversion')) && (classe.includes('iec') || dci.includes('pril'))) return true;
-    if((t.includes('ara2') || t.includes('sartan') || t.includes('angiotensine')) && (classe.includes('ara2') || dci.includes('sartan'))) return true;
-    if((t.includes('beta') || t.includes('betabloquant')) && (classe.includes('beta') || dci.includes('lol'))) return true;
-    if(t.includes('diuretique') && (classe.includes('diuretique') || ['furosemide','bumetanide','hydrochlorothiazide','indapamide','spironolactone','altizide','eplerenone'].some(d=>dci.includes(d)))) return true;
-    if(t.includes('macrolide') && (classe.includes('macrolide') || ['clarithromycine', 'erythromycine', 'azithromycine', 'roxithromycine', 'spiramycine'].some(d=>dci.includes(d)))) return true;
-    if((t.includes('anticoag') || t.includes('aod') || t.includes('avk')) && (classe.includes('anticoag') || classe.includes('aod') || classe.includes('avk') || ['apixaban', 'rivaroxaban', 'dabigatran', 'warfarine', 'fluindione', 'acenocoumarol', 'enoxaparine'].some(d=>dci.includes(d)))) return true;
-    if((t.includes('antidepresseur') || t.includes('isrs') || t.includes('irsn') || t.includes('serotonine')) && (classe.includes('antidepresseur') || ['citalopram', 'escitalopram', 'sertraline', 'paroxetine', 'fluoxetine', 'venlafaxine', 'duloxetine', 'mianserine', 'mirtazapine', 'amitriptyline'].some(d=>dci.includes(d)))) return true;
-    if((t.includes('antiagreg') || t.includes('aspirine') || t.includes('acetylsalicylique')) && (classe.includes('antiagreg') || ['aspirin', 'clopidogrel', 'prasugrel', 'ticagrelor', 'kardegic'].some(d=>dci.includes(d)))) return true;
-    if((t.includes('neuroleptique') || t.includes('antipsychotique')) && (classe.includes('neuroleptique') || classe.includes('antipsychotique') || ['quetiapine', 'risperidone', 'olanzapine', 'haloperidol', 'aripiprazole', 'clozapine', 'tiapride', 'loxapine', 'cyamemazine'].some(d=>dci.includes(d)))) return true;
-    
-    if(t.includes('inducteur') && t.includes('enzymatique') && ['rifampicine', 'rifabutine', 'millepertuis', 'carbamazepine', 'phenytoine', 'phenobarbital', 'primidone', 'efavirenz', 'nevirapine', 'bosentan', 'enzalutamide'].some(d=>dci.includes(d))) return true;
-    if(t.includes('inhibiteur') && t.includes('cyp3a4') && ['ritonavir', 'clarithromycine', 'erythromycine', 'telithromycine', 'itraconazole', 'ketoconazole', 'posaconazole', 'voriconazole', 'idelalisib', 'cobicistat', 'jusdepamplemousse', 'pamplemousse'].some(d=>dci.includes(d))) return true;
-    if(t.includes('inhibiteur') && t.includes('protease') && ['darunavir', 'atazanavir', 'lopinavir', 'ritonavir'].some(d=>dci.includes(d))) return true;
-
-    return false;
+    let t = sanitizeText(term);
+    return matchesDrugClassAnsm(dci, classe, t);
 };
 
 function formatSuiviList(str) {
