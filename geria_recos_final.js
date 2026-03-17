@@ -2631,7 +2631,7 @@ function evaluerRecommandations(ctx) {
         if (c.bio) {
             for (const [bioId, crit] of Object.entries(c.bio)) {
                 const val = ctx.bioValues && ctx.bioValues[bioId];
-                if (!val || val <= 0) return false; // CORRECTION : Pas de donnée bio saisie = On bloque l'alerte !
+                if (!val || val <= 0) continue; // Pas de valeur saisie : on ignore cette condition bio
                 if (crit.op === '<' && !(val < crit.val)) return false;
                 if (crit.op === '>' && !(val > crit.val)) return false;
                 if (crit.op === '<=' && !(val <= crit.val)) return false;
@@ -2640,11 +2640,6 @@ function evaluerRecommandations(ctx) {
         }
 
         // Âge minimum
-        // Contexte clinique (ex: constipation, chutes)
-        if (c.contexte_clinique) {
-            if (!ctx.contexte_clinique || !ctx.contexte_clinique.includes(c.contexte_clinique)) return false;
-        }
-
         if (c.age_min && (!ctx.patientAge || ctx.patientAge < c.age_min)) return false;
 
         // Fragilité
@@ -2754,3 +2749,2184 @@ function renderAlertesInitier(alertes) {
         </div>`;
     }).join('');
 }
+// ============================================================================
+// 🏥 GERIA_RECOS_SUPPLEMENT - Dictionnaires PIM par molécule
+// Version 1.0 - Mars 2026
+// ============================================================================
+// Ce fichier COMPLÈTE geria_recos_db.js avec :
+//   1. Dictionnaire PIM par DCI (PRISCUS 2.0 / FORTA / EU7-PIM / Beers / PIM-Check)
+//   2. Règles conditionnelles additionnelles non couvertes par geria_recos_db.js
+//
+// Structure PIM_DICT : chaque entrée est indexée par DCI (minuscule, sans accents)
+//   - priscus: "PIM" | "PIM-B" (conditionnel) | null
+//   - priscus_cond: condition pour PIM-B (ex: "> 8 semaines", "> 1200 mg/j")
+//   - priscus_alt: alternatives proposées par PRISCUS
+//   - forta: "A" (indispensable) | "B" (bénéfique) | "C" (discutable) | "D" (à éviter)
+//   - forta_indication: indication pour laquelle la classification s'applique
+//   - eu7pim: true | false
+//   - eu7pim_cond: condition spécifique EU(7)-PIM
+//   - beers: true | false
+//   - beers_cond: condition Beers
+//   - pimcheck: true | false
+//   - pimcheck_detail: détail PIM-Check
+//   - risque_principal: résumé du risque principal
+// ============================================================================
+
+const PIM_DICT = {
+
+    // ========================================================================
+    // SYSTÈME NERVEUX CENTRAL — Antipsychotiques
+    // ========================================================================
+    "haloperidol": {
+        priscus: "PIM-B", priscus_cond: "> 2 mg/j ou > 6 semaines", priscus_alt: "Rispéridone ≤ 2 mg courte durée, quétiapine",
+        forta: "C", forta_indication: "Delirium/SCPD",
+        eu7pim: true, eu7pim_cond: "Utilisation au long cours",
+        beers: true, beers_cond: "Antipsychotique en général chez âgé",
+        pimcheck: true, pimcheck_detail: "Dose max 2 mg/j gériatrie",
+        risque_principal: "Effets extrapyramidaux, QTc, sédation, chutes"
+    },
+    "risperidone": {
+        priscus: "PIM-B", priscus_cond: "> 2 mg/j ou > 6 semaines", priscus_alt: "Quétiapine faible dose",
+        forta: "C", forta_indication: "SCPD",
+        eu7pim: true, eu7pim_cond: "> 6 semaines pour SCPD",
+        beers: true, beers_cond: "Antipsychotique chez âgé",
+        pimcheck: true, pimcheck_detail: "Max 6 semaines pour SCPD, max 2 mg/j",
+        risque_principal: "AVC, mortalité, EPS, chutes"
+    },
+    "olanzapine": {
+        priscus: "PIM", priscus_alt: "Quétiapine, aripiprazole",
+        forta: "D", forta_indication: "SCPD",
+        eu7pim: true, beers: true,
+        pimcheck: true, pimcheck_detail: "Syndrome métabolique, sédation marquée",
+        risque_principal: "Sédation, prise de poids, syndrome métabolique, AVC"
+    },
+    "clozapine": {
+        priscus: "PIM", priscus_alt: "Quétiapine",
+        forta: "B", forta_indication: "Psychose dans Parkinson uniquement",
+        eu7pim: true, beers: true,
+        risque_principal: "Agranulocytose, sédation, métabolique, myocardite"
+    },
+    "chlorpromazine": {
+        priscus: "PIM", priscus_alt: "Rispéridone courte durée, quétiapine",
+        forta: "D", forta_indication: "Toute indication chez âgé",
+        eu7pim: true, beers: true,
+        risque_principal: "Sédation majeure, hypotension, anticholinergique, QTc"
+    },
+    "levomepromazine": {
+        priscus: "PIM", priscus_alt: "Quétiapine, exception antiémétique palliatif",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Sédation profonde, hypotension, anticholinergique"
+    },
+    "cyamemazine": {
+        priscus: "PIM", priscus_alt: "Quétiapine faible dose",
+        eu7pim: true, beers: true,
+        risque_principal: "Phénothiazine : sédation, QTc, EPS"
+    },
+    "aripiprazole": {
+        priscus: null, forta: "B", forta_indication: "Psychose chez âgé (meilleur profil métabolique)",
+        eu7pim: false, beers: true, beers_cond: "Antipsychotique sauf schizophrénie/bipolaire",
+        risque_principal: "Akathisie, insomnie"
+    },
+    "amisulpride": {
+        priscus: "PIM-B", priscus_cond: "> 400 mg/j", priscus_alt: "Rispéridone faible dose",
+        eu7pim: true, beers: true,
+        risque_principal: "Hyperprolactinémie, EPS, QTc"
+    },
+    "flupentixol": {
+        priscus: "PIM", priscus_alt: "Rispéridone ≤ 2 mg, aripiprazole",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "EPS sévères, sédation, QTc"
+    },
+    "fluphenazine": {
+        priscus: "PIM", priscus_alt: "Rispéridone courte durée",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "EPS sévères, dyskinésie tardive"
+    },
+    "pipotiazine": {
+        priscus: "PIM", eu7pim: true, beers: true,
+        risque_principal: "EPS, sédation prolongée (forme LP)"
+    },
+    "propericiazine": {
+        priscus: "PIM", eu7pim: true,
+        risque_principal: "Phénothiazine : anticholinergique, sédation"
+    },
+    "pimozide": {
+        priscus: "PIM", eu7pim: true, beers: true,
+        risque_principal: "QTc majeur, EPS, interactions CYP"
+    },
+    "sulpiride": {
+        priscus: "PIM-B", priscus_cond: "> 200 mg/j",
+        eu7pim: true, risque_principal: "Hyperprolactinémie, EPS"
+    },
+    "tiapride": {
+        priscus: null, forta: "C", forta_indication: "Agitation/SCPD",
+        eu7pim: true, eu7pim_cond: "> 4 semaines",
+        risque_principal: "Sédation, EPS modérés"
+    },
+
+    // ========================================================================
+    // SNC — Benzodiazépines & hypnotiques
+    // ========================================================================
+    "diazepam": {
+        priscus: "PIM", priscus_alt: "Lorazépam, oxazépam (courte durée)",
+        forta: "D", eu7pim: true, beers: true,
+        pimcheck: true, pimcheck_detail: "Demi-vie très longue (>100h avec métabolites)",
+        risque_principal: "Sédation prolongée, accumulation, chutes, dépendance"
+    },
+    "bromazepam": {
+        priscus: "PIM", priscus_alt: "Lorazépam courte durée",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Sédation, chutes, dépendance"
+    },
+    "alprazolam": {
+        priscus: "PIM", priscus_alt: "Lorazépam, oxazépam",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Anxiolytique puissant mais dépendance rapide, rebond anxieux"
+    },
+    "lorazepam": {
+        priscus: "PIM-B", priscus_cond: "> 2 mg/j ou > 4 semaines", priscus_alt: "Oxazépam si possible",
+        forta: "C", forta_indication: "Anxiété aiguë",
+        eu7pim: true, eu7pim_cond: "> 4 semaines", beers: true,
+        risque_principal: "Sédation, chutes, dépendance (mais pas de métabolites actifs)"
+    },
+    "oxazepam": {
+        priscus: "PIM-B", priscus_cond: "> 60 mg/j ou > 4 semaines",
+        priscus_alt: "Mesures non pharmacologiques",
+        forta: "C", eu7pim: true, eu7pim_cond: "> 4 semaines", beers: true,
+        risque_principal: "Chutes, dépendance (mais profil PK favorable : pas de CYP)"
+    },
+    "clorazepate": {
+        priscus: "PIM", priscus_alt: "Oxazépam, lorazépam",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Demi-vie très longue, accumulation"
+    },
+    "prazepam": {
+        priscus: "PIM", priscus_alt: "Oxazépam",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Prodrogue du nordazépam, demi-vie longue"
+    },
+    "nordazepam": {
+        priscus: "PIM", forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Demi-vie > 60h, accumulation"
+    },
+    "nitrazepam": {
+        priscus: "PIM", forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Hypnotique longue durée, sédation résiduelle"
+    },
+    "clobazam": {
+        priscus: "PIM-B", priscus_cond: "Sauf épilepsie",
+        eu7pim: true, beers: true,
+        risque_principal: "Sédation, métabolites actifs"
+    },
+    "clonazepam": {
+        priscus: "PIM-B", priscus_cond: "Sauf épilepsie",
+        eu7pim: true, beers: true,
+        risque_principal: "Demi-vie longue, sédation"
+    },
+    "midazolam": {
+        priscus: "PIM-B", priscus_cond: "Sauf sédation procédurale",
+        beers: true, risque_principal: "Sédation profonde, dépression respiratoire"
+    },
+    "lormetazepam": {
+        priscus: "PIM-B", priscus_cond: "> 0.5 mg/j ou > 4 semaines",
+        eu7pim: true, beers: true,
+        risque_principal: "Sédation, chutes"
+    },
+    "zolpidem": {
+        priscus: "PIM-B", priscus_cond: "> 5 mg/j ou > 2 semaines",
+        priscus_alt: "Mélatonine LP, hygiène du sommeil",
+        forta: "D", eu7pim: true, beers: true, pimcheck: true,
+        risque_principal: "Chutes nocturnes, comportements complexes, amnésie"
+    },
+    "zopiclone": {
+        priscus: "PIM-B", priscus_cond: "> 3.75 mg/j ou > 2 semaines",
+        priscus_alt: "Mélatonine LP",
+        forta: "D", eu7pim: true, beers: true, pimcheck: true,
+        risque_principal: "Chutes, sédation résiduelle, goût métallique"
+    },
+
+    // ========================================================================
+    // SNC — Antidépresseurs
+    // ========================================================================
+    "amitriptyline": {
+        priscus: "PIM", priscus_alt: "Sertraline, mirtazapine, escitalopram",
+        forta: "D", eu7pim: true, beers: true, pimcheck: true,
+        risque_principal: "ACB=3, cardiotoxicité, sédation, hypotension orthostatique"
+    },
+    "clomipramine": {
+        priscus: "PIM", priscus_alt: "ISRS, duloxétine (si douleur)",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "ACB=3, QTc, convulsions"
+    },
+    "imipramine": {
+        priscus: "PIM", priscus_alt: "ISRS",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "ACB=3, cardiotoxicité"
+    },
+    "doxepine": {
+        priscus: "PIM-B", priscus_cond: "> 6 mg/j (≤ 6 mg acceptable pour insomnie)",
+        forta: "D", forta_indication: "Sauf doxépine ≤ 6 mg insomnie",
+        eu7pim: true, beers: true, beers_cond: "> 6 mg/j",
+        risque_principal: "Sédation, anticholinergique à haute dose"
+    },
+    "trimipramine": {
+        priscus: "PIM", priscus_alt: "Mirtazapine si insomnie, ISRS",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "ACB élevé, sédation"
+    },
+    "nortriptyline": {
+        priscus: "PIM", priscus_alt: "ISRS, duloxétine",
+        forta: "C", forta_indication: "Douleur neuropathique (C car amine secondaire, moins ACB)",
+        eu7pim: true, beers: true,
+        risque_principal: "Moins ACB que amines tertiaires mais cardiotoxicité"
+    },
+    "maprotiline": {
+        priscus: "PIM", priscus_alt: "ISRS, mirtazapine",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Convulsions, anticholinergique, cardiotoxicité"
+    },
+    "dosulpine": {
+        priscus: "PIM", eu7pim: true, beers: true,
+        risque_principal: "Le plus toxique en surdosage des tricycliques"
+    },
+    "citalopram": {
+        priscus: "PIM-B", priscus_cond: "> 20 mg/j chez > 65 ans",
+        priscus_alt: "Citalopram ≤ 20 mg, sertraline, escitalopram ≤ 10 mg",
+        forta: "B", forta_indication: "Dépression (à dose correcte)",
+        pimcheck: true, pimcheck_detail: "Max 20 mg/j : allongement QTc dose-dépendant",
+        risque_principal: "QTc dose-dépendant > 20 mg/j"
+    },
+    "escitalopram": {
+        priscus: "PIM-B", priscus_cond: "> 10 mg/j chez > 65 ans",
+        priscus_alt: "Escitalopram ≤ 10 mg, sertraline",
+        forta: "B", forta_indication: "Dépression (à dose correcte)",
+        pimcheck: true, pimcheck_detail: "Max 10 mg/j : allongement QTc",
+        risque_principal: "QTc dose-dépendant > 10 mg/j"
+    },
+    "sertraline": {
+        priscus: "PIM-B", priscus_cond: "> 100 mg/j",
+        forta: "A", forta_indication: "Dépression — ISRS de référence en gériatrie",
+        pimcheck: false, risque_principal: "Hyponatrémie, troubles GI"
+    },
+    "fluoxetine": {
+        priscus: "PIM", priscus_alt: "Sertraline, escitalopram",
+        forta: "C", eu7pim: true, beers: true,
+        risque_principal: "Demi-vie très longue (norfluoxétine ~14j), interactions CYP2D6"
+    },
+    "paroxetine": {
+        priscus: "PIM", priscus_alt: "Sertraline, escitalopram",
+        forta: "C", forta_indication: "Dépression (ACB le plus élevé des ISRS)",
+        eu7pim: true, beers: true,
+        pimcheck: true, pimcheck_detail: "ISRS le plus anticholinergique",
+        risque_principal: "Anticholinergique (ACB=2-3), syndrome de sevrage marqué"
+    },
+    "fluvoxamine": {
+        priscus: "PIM-B", priscus_cond: "> 100 mg/j",
+        eu7pim: true, risque_principal: "Interactions CYP1A2 majeures"
+    },
+    "mirtazapine": {
+        priscus: null, forta: "A", forta_indication: "Dépression avec insomnie/perte poids",
+        eu7pim: false, beers: false,
+        risque_principal: "Prise de poids, sédation (peut être bénéfique si dénutrition/insomnie)"
+    },
+    "venlafaxine": {
+        priscus: null, priscus_cond: "Ambiguë (95% CI inclut 3)",
+        forta: "B", forta_indication: "Dépression",
+        pimcheck: true, pimcheck_detail: "Surveillance TA (effet noradrénergique dose-dépendant)",
+        risque_principal: "HTA dose-dépendante, syndrome de sevrage"
+    },
+    "duloxetine": {
+        priscus: null, priscus_cond: "Ambiguë",
+        forta: "B", forta_indication: "Dépression + douleur neuropathique",
+        risque_principal: "Nausées, HTA, hépatotoxicité rare"
+    },
+    "mianserine": {
+        priscus: null, forta: "B", forta_indication: "Dépression chez âgé (peu ACB)",
+        risque_principal: "Somnolence, agranulocytose rare"
+    },
+    "agomelatine": {
+        priscus: null, forta: "C",
+        risque_principal: "Hépatotoxicité (surveillance transaminases), peu de données gériatriques"
+    },
+
+    // ========================================================================
+    // SNC — Antiépileptiques
+    // ========================================================================
+    "phenobarbital": {
+        priscus: "PIM", priscus_alt: "Lamotrigine, lévétiracétam",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Sédation, induction enzymatique majeure, dépendance"
+    },
+    "phenytoine": {
+        priscus: "PIM", priscus_alt: "Lamotrigine, lévétiracétam",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Cinétique non linéaire, induction, toxicité SNC"
+    },
+    "carbamazepine": {
+        priscus: "PIM-B", priscus_cond: "Si alternatives disponibles",
+        priscus_alt: "Lamotrigine, lévétiracétam, valproate",
+        forta: "C", eu7pim: true, beers: true,
+        risque_principal: "SIADH, induction enzymatique, leucopénie, ataxie"
+    },
+    "valproate": {
+        priscus: "PIM-B", priscus_cond: "Tremblement, prise poids, hépatotoxicité",
+        forta: "C", eu7pim: false,
+        risque_principal: "Tremblement, prise de poids, thrombopénie, hépatotoxicité"
+    },
+    "gabapentine": {
+        priscus: "PIM-B", priscus_cond: "> 1800 mg/j ou si DFG < 60 sans adaptation",
+        forta: "B", forta_indication: "Douleur neuropathique",
+        risque_principal: "Sédation, vertiges, œdèmes, abus potentiel"
+    },
+    "pregabaline": {
+        priscus: null, priscus_cond: "Ambiguë",
+        forta: "B", forta_indication: "Douleur neuropathique, anxiété généralisée",
+        beers: true, beers_cond: "Risque de chutes",
+        risque_principal: "Sédation, vertiges, prise de poids, abus potentiel"
+    },
+    "lamotrigine": {
+        priscus: null, forta: "A", forta_indication: "Épilepsie chez âgé (1er choix)",
+        risque_principal: "Syndrome de Stevens-Johnson (titration lente), interactions"
+    },
+    "levetiracetam": {
+        priscus: null, forta: "A", forta_indication: "Épilepsie chez âgé (1er choix)",
+        risque_principal: "Irritabilité, troubles du comportement (rare)"
+    },
+
+    // ========================================================================
+    // SNC — Anticholinergiques
+    // ========================================================================
+    "hydroxyzine": {
+        priscus: "PIM", priscus_alt: "Cétirizine, lévocétirizine",
+        forta: "D", eu7pim: true, beers: true, pimcheck: true,
+        risque_principal: "Anticholinergique, sédation, QTc"
+    },
+    "dexchlorpheniramine": {
+        priscus: "PIM", priscus_alt: "Antihistaminique 2ème gén.",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Anticholinergique, sédation"
+    },
+    "promethazine": {
+        priscus: "PIM", forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Forte charge anticholinergique, sédation"
+    },
+    "diphenhydramine": {
+        priscus: "PIM", forta: "D", eu7pim: true, beers: true,
+        risque_principal: "ACB=3, sédation, confusion"
+    },
+    "doxylamine": {
+        priscus: "PIM", priscus_alt: "Mélatonine LP",
+        eu7pim: true, beers: true,
+        risque_principal: "Sédation, anticholinergique"
+    },
+    "mequitazine": {
+        priscus: "PIM", eu7pim: true,
+        risque_principal: "Anticholinergique, QTc"
+    },
+
+    // ========================================================================
+    // UROGÉNITAL — Antimuscariniques vésicaux
+    // ========================================================================
+    "oxybutynine": {
+        priscus: "PIM", priscus_alt: "Mirabégron, trospium, rééducation périnéale",
+        forta: "D", eu7pim: true, beers: true, pimcheck: true,
+        risque_principal: "PIM absolu : passage BHE maximal, déclin cognitif, confusion (ACB=3)"
+    },
+    "tolterodine": {
+        priscus: "PIM-B", priscus_cond: "Forme LI PIM, forme LP acceptée",
+        priscus_alt: "Trospium, mirabégron",
+        forta: "C", eu7pim: true, beers: true,
+        risque_principal: "Anticholinergique, sécheresse buccale, constipation"
+    },
+    "solifenacine": {
+        priscus: "PIM-B", priscus_cond: "> 5 mg/j",
+        forta: "C", eu7pim: true, beers: true,
+        risque_principal: "Anticholinergique, constipation, QTc"
+    },
+    "fesoterodine": {
+        priscus: "PIM-B", priscus_cond: "> 4 mg/j",
+        forta: "C", eu7pim: true, beers: true,
+        risque_principal: "Anticholinergique (métabolite actif = toltérodine)"
+    },
+    "darifenacine": {
+        priscus: "PIM", forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Anticholinergique sélectif M3 mais passage BHE"
+    },
+    "trospium": {
+        priscus: null, forta: "B", forta_indication: "Hyperactivité vésicale (ne passe pas la BHE)",
+        eu7pim: false, beers: false,
+        risque_principal: "Constipation, sécheresse buccale (mais PAS de passage BHE)"
+    },
+    "mirabegron": {
+        priscus: null, forta: "B", forta_indication: "Hyperactivité vésicale (agoniste β3, pas ACB)",
+        eu7pim: false, beers: false,
+        risque_principal: "HTA, tachycardie, IU (rare)"
+    },
+    "flavoxate": {
+        priscus: "PIM", eu7pim: true, beers: true,
+        risque_principal: "Anticholinergique, efficacité non démontrée"
+    },
+
+    // ========================================================================
+    // CARDIOVASCULAIRE
+    // ========================================================================
+    "digoxine": {
+        priscus: "PIM-B", priscus_cond: "> 0.125 mg/j ou sans monitorage",
+        priscus_alt: "Bêtabloquant cardiosélectif pour contrôle fréquence",
+        forta: "C", forta_indication: "FA (contrôle fréquence en 2ème intention)",
+        eu7pim: true, eu7pim_cond: "> 0.125 mg/j", beers: true, beers_cond: "1ère intention FA, > 0.125 mg/j",
+        pimcheck: true, pimcheck_detail: "Index thérapeutique étroit, dosage digoxinémie",
+        risque_principal: "Intoxication digitalique (IRA, hypoK, interactions), mortalité FA"
+    },
+    "amiodarone": {
+        priscus: null, priscus_cond: "Ambiguë",
+        forta: "C", forta_indication: "FA (toxicité thyroïde/poumon/foie/neuro/peau)",
+        eu7pim: true, beers: true, beers_cond: "1ère intention FA",
+        pimcheck: true, pimcheck_detail: "Thyroïde, poumon, foie, interactions multiples",
+        risque_principal: "Thyrotoxicose, fibrose pulmonaire, hépatotoxicité, neuropathie, QTc"
+    },
+    "dronedarone": {
+        priscus: "PIM", priscus_alt: "Bêtabloquant, amiodarone sous surveillance",
+        eu7pim: true, pimcheck: true,
+        risque_principal: "CI en IC (surmortalité PALLAS), hépatotoxicité"
+    },
+    "flecainide": {
+        priscus: "PIM", priscus_alt: "Bêtabloquant, amiodarone",
+        eu7pim: true, pimcheck: true,
+        risque_principal: "Proarythmie si cardiopathie structurelle"
+    },
+    "propafenone": {
+        priscus: "PIM-B", priscus_cond: "Au long cours",
+        priscus_alt: "Bêtabloquant, amiodarone",
+        eu7pim: true, risque_principal: "Proarythmie, bêtablocage"
+    },
+    "nifedipine": {
+        priscus: "PIM-B", priscus_cond: "Forme LI PIM absolu, LP acceptable",
+        priscus_alt: "Amlodipine, lercanidipine (LP)",
+        forta: "C", forta_indication: "HTA (forme LI à proscrire)",
+        eu7pim: true, eu7pim_cond: "Libération immédiate", beers: true,
+        risque_principal: "Forme LI : hypotension brutale, ischémie réflexe"
+    },
+    "methyldopa": {
+        priscus: "PIM", priscus_alt: "IEC, ARA2, ICa DHP",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Sédation, dépression, bradycardie, hépatotoxicité"
+    },
+    "clonidine": {
+        priscus: "PIM", priscus_alt: "IEC, ARA2, ICa",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Sédation, rebond hypertensif à l'arrêt, bradycardie"
+    },
+    "moxonidine": {
+        priscus: "PIM", priscus_alt: "IEC, ARA2, ICa",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Sédation, hypotension orthostatique"
+    },
+    "rilmenidine": {
+        priscus: "PIM", priscus_alt: "IEC, ARA2, ICa",
+        forta: "D", eu7pim: true,
+        risque_principal: "Antihypertenseur central, sédation"
+    },
+    "doxazosine": {
+        priscus: "PIM-B", priscus_cond: "Comme antihypertenseur (OK pour HBP à faible dose)",
+        forta: "D", forta_indication: "HTA",
+        eu7pim: true, beers: true, beers_cond: "Comme antihypertenseur",
+        risque_principal: "Hypotension orthostatique, chutes, incontinence"
+    },
+    "prazosine": {
+        priscus: "PIM", priscus_alt: "IEC, ARA2",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Hypotension orthostatique sévère"
+    },
+    "dipyridamole": {
+        priscus: "PIM", priscus_alt: "Clopidogrel, aspirine",
+        forta: "D", eu7pim: true,
+        risque_principal: "Vasodilatation, céphalées, syncope"
+    },
+    "ticlopidine": {
+        priscus: "PIM", priscus_alt: "Clopidogrel",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Agranulocytose, PTT, hépatotoxicité"
+    },
+    "prasugrel": {
+        priscus: "PIM", priscus_alt: "Clopidogrel, ticagrélor",
+        eu7pim: true, beers: true, beers_cond: "> 75 ans",
+        risque_principal: "Risque hémorragique majoré chez > 75 ans"
+    },
+
+    // ========================================================================
+    // ENDOCRINE — Antidiabétiques
+    // ========================================================================
+    "glibenclamide": {
+        priscus: "PIM", priscus_alt: "Gliclazide, metformine, iDPP4",
+        forta: "D", eu7pim: true, beers: true, pimcheck: true,
+        risque_principal: "Hypoglycémie prolongée (demi-vie longue), surtout si IRC"
+    },
+    "glimepiride": {
+        priscus: "PIM", priscus_alt: "Gliclazide, metformine, iDPP4",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Hypoglycémie prolongée"
+    },
+    "gliclazide": {
+        priscus: "PIM-B", priscus_cond: "Risque d'hypoglycémie mais demi-vie plus courte",
+        forta: "C", forta_indication: "DT2 (si metformine insuffisante, ≤ 60 mg LM)",
+        risque_principal: "Hypoglycémie (mais moindre que glibenclamide)"
+    },
+    "pioglitazone": {
+        priscus: "PIM", priscus_alt: "Metformine, iDPP4, iSGLT2",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "IC, fractures, cancer vessie"
+    },
+    "acarbose": {
+        priscus: "PIM", priscus_alt: "iDPP4, metformine",
+        forta: "D", eu7pim: true,
+        risque_principal: "Flatulences, diarrhée, mauvaise tolérance"
+    },
+    "metformine": {
+        priscus: null, forta: "A", forta_indication: "DT2 — 1er choix (si DFG > 30)",
+        risque_principal: "Acidose lactique si DFG < 30, troubles GI"
+    },
+    "sitagliptine": {
+        priscus: null, forta: "A", forta_indication: "DT2 chez âgé (bonne tolérance)",
+        risque_principal: "Peu d'EI, adaptation rénale"
+    },
+    "linagliptine": {
+        priscus: null, forta: "A", forta_indication: "DT2 — pas d'adaptation rénale",
+        risque_principal: "Très bonne tolérance, pas d'ajustement rénal"
+    },
+    "empagliflozin": {
+        priscus: null, forta: "A", forta_indication: "DT2 + IC ou MRC — bénéfice cardiovasculaire",
+        risque_principal: "Infections génitales, déshydratation, acidocétose rare"
+    },
+    "dapagliflozin": {
+        priscus: null, forta: "A", forta_indication: "DT2 + IC ou MRC",
+        risque_principal: "Infections génitales, déshydratation"
+    },
+    "repaglinide": {
+        priscus: "PIM-B", priscus_cond: "Hypoglycémie possible (mais demi-vie courte)",
+        forta: "C", eu7pim: true,
+        risque_principal: "Hypoglycémie (moins que sulfamides)"
+    },
+    "insuline": {
+        priscus: null, forta: "A", forta_indication: "DT2 si nécessaire (schéma simplifié)",
+        beers: true, beers_cond: "Sliding scale seule (sans basale) = PIM",
+        risque_principal: "Hypoglycémie (cibles assouplies si fragile)"
+    },
+
+    // ========================================================================
+    // GASTRO — IPP
+    // ========================================================================
+    "omeprazole": {
+        priscus: "PIM-B", priscus_cond: "> 8 semaines sans indication claire",
+        priscus_alt: "Demi-dose, anti-H2, arrêt progressif",
+        forta: "C", forta_indication: "Gastroprotection (C si > 8 sem sans indication)",
+        eu7pim: true, eu7pim_cond: "> 8 semaines",
+        beers: true, beers_cond: "> 8 semaines sans indication",
+        pimcheck: true, pimcheck_detail: "Réévaluer > 8 sem : fractures, C.diff, hypoMg, néphrite",
+        risque_principal: "Long cours : fractures, C. difficile, hypoMg, néphrite interstitielle, B12"
+    },
+    "esomeprazole": {
+        priscus: "PIM-B", priscus_cond: "> 8 semaines sans indication claire",
+        priscus_alt: "Demi-dose, anti-H2",
+        forta: "C", forta_indication: "Idem oméprazole",
+        eu7pim: true, eu7pim_cond: "> 8 semaines", beers: true,
+        risque_principal: "Idem oméprazole"
+    },
+    "lansoprazole": {
+        priscus: "PIM-B", priscus_cond: "> 8 semaines",
+        eu7pim: true, eu7pim_cond: "> 8 semaines", beers: true,
+        risque_principal: "Idem IPP"
+    },
+    "pantoprazole": {
+        priscus: "PIM-B", priscus_cond: "> 8 semaines",
+        eu7pim: true, eu7pim_cond: "> 8 semaines", beers: true,
+        risque_principal: "Idem IPP"
+    },
+    "rabeprazole": {
+        priscus: "PIM-B", priscus_cond: "> 8 semaines",
+        eu7pim: true, eu7pim_cond: "> 8 semaines", beers: true,
+        risque_principal: "Idem IPP"
+    },
+
+    // ========================================================================
+    // GASTRO — Antiémétiques / Prokinétiques
+    // ========================================================================
+    "metoclopramide": {
+        priscus: "PIM", priscus_alt: "Dompéridone (si QTc N), ondansétron",
+        forta: "D", eu7pim: true, beers: true, pimcheck: true,
+        risque_principal: "Dyskinésie tardive, EPS, syndrome parkinsonien"
+    },
+    "domperidone": {
+        priscus: "PIM-B", priscus_cond: "> 30 mg/j ou > 1 semaine",
+        priscus_alt: "Ondansétron",
+        eu7pim: true, pimcheck: true, pimcheck_detail: "QTc, max 30 mg/j, max 1 semaine",
+        risque_principal: "Allongement QTc, mort subite"
+    },
+    "metopimazine": {
+        priscus: "PIM", eu7pim: true,
+        risque_principal: "Phénothiazine, QTc, EPS"
+    },
+
+    // ========================================================================
+    // AINS — Classification détaillée
+    // ========================================================================
+    "ibuprofene": {
+        priscus: "PIM-B", priscus_cond: "> 1200 mg/j ou > 7 jours sans IPP",
+        priscus_alt: "Paracétamol, AINS topiques",
+        forta: "C", forta_indication: "Douleur (courte durée + IPP)",
+        eu7pim: true, eu7pim_cond: "Long cours", beers: true,
+        risque_principal: "Rénal, GI, cardiovasculaire"
+    },
+    "naproxene": {
+        priscus: "PIM-B", priscus_cond: "> 500 mg/j ou > 7 jours sans IPP",
+        forta: "C", eu7pim: true, beers: true,
+        risque_principal: "GI (meilleur profil CV que autres AINS mais GI)"
+    },
+    "diclofenac": {
+        priscus: "PIM-B", priscus_cond: "> 75 mg/j ou > 7 jours sans IPP",
+        forta: "D", forta_indication: "Risque CV le plus élevé des AINS non sélectifs",
+        eu7pim: true, beers: true, pimcheck: true,
+        risque_principal: "Risque cardiovasculaire élevé, rénal, GI"
+    },
+    "piroxicam": {
+        priscus: "PIM", priscus_alt: "Ibuprofène courte durée + IPP",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Demi-vie > 50h, accumulation, GI++"
+    },
+    "meloxicam": {
+        priscus: "PIM-B", priscus_cond: "Dose minimale, courte durée",
+        forta: "C", eu7pim: true,
+        risque_principal: "Rénal, GI, cardiovasculaire"
+    },
+    "ketoprofene": {
+        priscus: "PIM-B", priscus_cond: "> 7 jours sans IPP",
+        eu7pim: true, beers: true,
+        risque_principal: "GI, rénal, photosensibilité"
+    },
+    "celecoxib": {
+        priscus: "PIM-B", priscus_cond: "> 200 mg/j ou > 7 jours",
+        priscus_alt: "Paracétamol, topiques",
+        forta: "C", eu7pim: true, beers: true,
+        risque_principal: "Risque cardiovasculaire, moins GI mais pas nul"
+    },
+    "etoricoxib": {
+        priscus: "PIM-B", priscus_cond: "> 60 mg/j",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "HTA, risque CV, rétention hydrosodée"
+    },
+    "indometacine": {
+        priscus: "PIM", priscus_alt: "Paracétamol, colchicine (goutte)",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "Effets centraux fréquents (céphalées, vertiges), GI, rénal"
+    },
+
+    // ========================================================================
+    // MUSCULOSQUELETTIQUE
+    // ========================================================================
+    "thiocolchicoside": {
+        priscus: "PIM", priscus_alt: "Kinésithérapie, paracétamol",
+        eu7pim: true, beers: true, beers_cond: "Myorelaxant",
+        risque_principal: "Sédation, convulsions, peu de preuves d'efficacité"
+    },
+    "methocarbamol": {
+        priscus: "PIM", priscus_alt: "Kinésithérapie",
+        eu7pim: true, beers: true,
+        risque_principal: "Sédation, anticholinergique"
+    },
+    "baclofene": {
+        priscus: "PIM-B", priscus_cond: "> 30 mg/j ou dose non réduite si IRC",
+        beers: true, risque_principal: "Sédation, syndrome de sevrage si arrêt brutal, confusion"
+    },
+    "tizanidine": {
+        priscus: "PIM", priscus_alt: "Baclofène faible dose si nécessaire",
+        eu7pim: true, beers: true,
+        risque_principal: "Sédation, hypotension, hépatotoxicité, QTc"
+    },
+
+    // ========================================================================
+    // ANTALGIQUES OPIOÏDES — Classification FORTA/PRISCUS
+    // ========================================================================
+    "tramadol": {
+        priscus: "PIM-B", priscus_cond: "> 150 mg/j ou sans adaptation rénale",
+        forta: "C", forta_indication: "Douleur modérée",
+        eu7pim: true, beers: true, beers_cond: "Risque de convulsions, syndrome sérotoninergique",
+        pimcheck: true, pimcheck_detail: "Convulsions, SIADH, interactions",
+        risque_principal: "Convulsions, SIADH, syndrome sérotoninergique, nausées"
+    },
+    "codeine": {
+        priscus: "PIM-B", priscus_cond: "Métaboliseurs ultra-rapides CYP2D6",
+        forta: "C", eu7pim: true,
+        risque_principal: "Constipation, sédation, variabilité CYP2D6"
+    },
+    "morphine": {
+        priscus: null, forta: "A", forta_indication: "Douleur sévère (opioïde de référence)",
+        risque_principal: "Accumulation métabolite M6G si IRC → préférer oxycodone"
+    },
+    "oxycodone": {
+        priscus: null, forta: "A", forta_indication: "Douleur sévère (pas de métabolites actifs rénaux)",
+        risque_principal: "Constipation, sédation"
+    },
+    "fentanyl": {
+        priscus: null, forta: "A", forta_indication: "Douleur sévère transdermique",
+        risque_principal: "Dépression respiratoire, accumulation si fièvre/cachexi"
+    },
+    "buprenorphine": {
+        priscus: null, forta: "A", forta_indication: "Douleur sévère (effet plafond, sûr en IRC)",
+        risque_principal: "Nausées, constipation (mais profil sécurité favorable)"
+    },
+    "pethidine": {
+        priscus: "PIM", priscus_alt: "Morphine, oxycodone",
+        forta: "D", eu7pim: true, beers: true,
+        risque_principal: "PIM absolu : métabolite neurotoxique (norpéthidine), convulsions"
+    },
+
+    // ========================================================================
+    // DIVERS
+    // ========================================================================
+    "theophylline": {
+        priscus: "PIM-B", priscus_cond: "Index thérapeutique étroit, interactions multiples",
+        forta: "D", forta_indication: "BPCO (alternatives plus sûres)",
+        eu7pim: true, beers: true,
+        risque_principal: "Index thérapeutique étroit, arythmies, convulsions, interactions"
+    },
+    "nitrofurantoine": {
+        priscus: null, priscus_cond: "Ambiguë",
+        forta: "C", forta_indication: "IU basse (OK si DFG > 45)",
+        beers: true, beers_cond: "ClCr < 30 ou long cours (neuropathie, fibrose pulmonaire)",
+        risque_principal: "Neuropathie, fibrose pulmonaire si long cours"
+    },
+    "colchicine": {
+        priscus: null, priscus_cond: "Ambiguë",
+        forta: "C", eu7pim: true, eu7pim_cond: "CI si DFG < 10",
+        risque_principal: "Index thérapeutique étroit, diarrhée, myopathie si IRC"
+    },
+    "spironolactone": {
+        priscus: "PIM-B", priscus_cond: "> 25 mg/j sans monitorage K+",
+        forta: "A", forta_indication: "IC (ARM à dose ≤ 25 mg avec surveillance K+)",
+        pimcheck: true, pimcheck_detail: "Surveillance K+ obligatoire",
+        risque_principal: "Hyperkaliémie, gynécomastie"
+    },
+    "furosemide": {
+        priscus: null, forta: "A", forta_indication: "IC congestive",
+        pimcheck: true, pimcheck_detail: "Surveillance ionogramme, DFG",
+        risque_principal: "Déshydratation, hypoK, hypoNa, hyperuricémie"
+    },
+    "alendronate": {
+        priscus: null, forta: "A", forta_indication: "Ostéoporose (1er choix)",
+        risque_principal: "Œsophagite (prise debout), ostéonécrose mâchoire (rare, long cours)"
+    },
+    "denosumab": {
+        priscus: null, forta: "A", forta_indication: "Ostéoporose (si CI bisphosphonates ou IRC)",
+        risque_principal: "Hypocalcémie, rebond fracturaire à l'arrêt"
+    },
+    "allopurinol": {
+        priscus: null, forta: "A", forta_indication: "Goutte (titration progressive)",
+        risque_principal: "DRESS syndrome (titration lente 100 mg → dose cible)"
+    },
+    "meprobamate": {
+        priscus: "PIM", forta: "D", eu7pim: true, beers: true,
+        risque_principal: "PIM absolu : dépendance, toxicité, surdosage"
+    },
+    "pentoxifylline": {
+        priscus: "PIM", priscus_alt: "Exercice physique, revascularisation",
+        forta: "D", eu7pim: true,
+        risque_principal: "Efficacité non prouvée en AOMI, vertiges, nausées"
+    }
+};
+
+// ============================================================================
+// 🔍 RÈGLES ADDITIONNELLES CONDITIONNELLES (PIM-Check / REMEDIES / EU7-PIM)
+// ============================================================================
+
+const RECOS_SUPPLEMENT = [
+
+    // PIM-Check — Règles de co-prescription et monitoring
+    {
+        id: "SUP_PIMC_01", sources: ["PIM_CHECK"],
+        titre: "Corticoïde systémique > 3 mois sans bilan ostéoporose",
+        message: "PIM-Check : Corticothérapie systémique > 3 mois sans évaluation du risque fracturaire ni traitement préventif (vitamine D + calcium + bisphosphonate si T-score ≤ -1.5).",
+        severite: "warning",
+        condition: { med_keys: ["corticoide", "prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], med_absent: ["alendronate", "risedronate", "acide zoledronique", "denosumab", "cholecalciferol", "vitamine d"] }
+    },
+    {
+        id: "SUP_PIMC_02", sources: ["PIM_CHECK"],
+        titre: "Diurétique sans ionogramme de surveillance",
+        message: "PIM-Check : Tout diurétique au long cours nécessite un ionogramme de surveillance (K+, Na+, créatinine) au minimum tous les 6 mois.",
+        severite: "warning",
+        condition: { med_keys: ["diuretique", "furosemide", "bumetanide", "hydrochlorothiazide", "indapamide", "spironolactone"] }
+    },
+    {
+        id: "SUP_PIMC_03", sources: ["PIM_CHECK"],
+        titre: "Lithium sans monitorage régulier",
+        message: "PIM-Check : Lithium nécessite monitorage régulier : lithiémie, créatinine/DFG, TSH, calcémie tous les 3-6 mois.",
+        severite: "warning",
+        condition: { med_keys: ["lithium"] }
+    },
+    {
+        id: "SUP_PIMC_04", sources: ["PIM_CHECK"],
+        titre: "Méthotrexate sans supplémentation en acide folique",
+        message: "PIM-Check : Méthotrexate sans acide folique co-prescrit — risque de toxicité hématologique et mucite.",
+        severite: "danger",
+        condition: { med_keys: ["methotrexate"], med_absent: ["acide folique", "folinate"] }
+    },
+    {
+        id: "SUP_PIMC_05", sources: ["PIM_CHECK"],
+        titre: "AVK sans surveillance INR régulière documentée",
+        message: "PIM-Check : AVK nécessite un INR régulier (tous les 8-28 jours selon stabilité).",
+        severite: "warning",
+        condition: { med_keys: ["acenocoumarol", "warfarine", "fluindione"] }
+    },
+    {
+        id: "SUP_PIMC_06", sources: ["PIM_CHECK"],
+        titre: "Inhibiteur acétylcholinestérase sans ECG de référence",
+        message: "PIM-Check : IAChE (donépézil, rivastigmine, galantamine) — ECG de référence recommandé avant initiation (risque de bradycardie, BAV).",
+        severite: "warning",
+        condition: { med_keys: ["donepezil", "rivastigmine", "galantamine"] }
+    },
+    {
+        id: "SUP_PIMC_07", sources: ["PIM_CHECK"],
+        titre: "Antiarythmique classe I/III sans ECG régulier",
+        message: "PIM-Check : Antiarythmiques classe I (flécaïnide, propafénone) et III (amiodarone, dronédarone, sotalol) : ECG avec mesure QTc au minimum tous les 6 mois.",
+        severite: "warning",
+        condition: { med_keys: ["flecainide", "propafenone", "amiodarone", "dronedarone", "sotalol"] }
+    },
+    {
+        id: "SUP_PIMC_08", sources: ["PIM_CHECK"],
+        titre: "Triple association IEC/ARA2 + diurétique + AINS",
+        message: "PIM-Check : Triple association IEC/ARA2 + diurétique + AINS = « triple whammy » — risque élevé d'IRA.",
+        severite: "danger",
+        condition: { med_keys: ["iec", "ara2"], med_keys_2: ["ains"] }
+    },
+    {
+        id: "SUP_PIMC_09", sources: ["PIM_CHECK"],
+        titre: "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
+        message: "PIM-Check : Association anticoagulant + antiagrégant — risque hémorragique majeur. Justification de la double thérapie nécessaire (stent récent ?).",
+        severite: "danger",
+        condition: { med_keys: ["anticoag", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "acenocoumarol", "warfarine", "fluindione"], med_keys_2: ["antiagreg", "acide acetylsalicylique", "clopidogrel"] }
+    },
+    {
+        id: "SUP_PIMC_10", sources: ["PIM_CHECK"],
+        titre: "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
+        message: "PIM-Check : IEC ou ARA2 — contrôle créatinine et K+ recommandé dans les 7-14 jours après initiation ou changement de dose.",
+        severite: "warning",
+        condition: { med_keys: ["iec", "ara2"] }
+    },
+    {
+        id: "SUP_PIMC_11", sources: ["PIM_CHECK"],
+        titre: "Clozapine sans NFS hebdomadaire",
+        message: "PIM-Check : Clozapine — NFS obligatoire (hebdomadaire pendant 18 semaines, puis mensuelle) pour dépistage agranulocytose.",
+        severite: "danger",
+        condition: { med_keys: ["clozapine"] }
+    },
+    {
+        id: "SUP_PIMC_12", sources: ["PIM_CHECK"],
+        titre: "Statine haute dose chez > 75 ans sans réévaluation",
+        message: "PIM-Check : Statine haute intensité (atorvastatine > 40 mg, rosuvastatine > 20 mg) chez > 75 ans — réévaluer le rapport bénéfice/risque. Risque musculaire accru.",
+        severite: "warning",
+        condition: { med_keys: ["atorvastatine", "rosuvastatine"], age_min: 75 }
+    },
+
+    // REMEDIES — Déprescription et rationalisation
+    {
+        id: "SUP_REM_01", sources: ["REMEDIES"],
+        titre: "Fer oral au long cours sans vérification de la réponse",
+        message: "REMEDIES : Fer oral au long cours (> 3 mois) — vérifier NFS et ferritine pour confirmer la réponse. Arrêter si ferritine normalisée.",
+        severite: "warning",
+        condition: { med_keys: ["fer", "fumarate ferreux", "sulfate ferreux", "ascorbate ferreux"] }
+    },
+    {
+        id: "SUP_REM_02", sources: ["REMEDIES"],
+        titre: "Supplémentation calcique > 1000 mg/j",
+        message: "REMEDIES : Supplémentation calcique > 1000 mg/j — risque cardiovasculaire discuté. Favoriser l'apport alimentaire. Max 500-600 mg/j en supplément.",
+        severite: "warning",
+        condition: { med_keys: ["carbonate de calcium", "calcium"] }
+    },
+    {
+        id: "SUP_REM_03", sources: ["REMEDIES", "STOPPFRAIL"],
+        titre: "Médicament anti-Alzheimer si démence sévère sans bénéfice observé",
+        message: "REMEDIES / STOPPFrail : IAChE ou mémantine si démence sévère (MMSE < 10) ou absence de bénéfice observé depuis ≥ 6 mois — envisager arrêt progressif.",
+        severite: "warning",
+        condition: { med_keys: ["donepezil", "rivastigmine", "galantamine", "memantine"], fragile: true }
+    },
+    {
+        id: "SUP_REM_04", sources: ["REMEDIES"],
+        titre: "Laxatif stimulant au long cours",
+        message: "REMEDIES : Laxatif stimulant (bisacodyl, séné, picosulfate) au long cours — préférer laxatif osmotique (macrogol, lactulose). Stimulants réservés au court terme.",
+        severite: "warning",
+        condition: { med_keys: ["bisacodyl", "sene"] }
+    },
+    {
+        id: "SUP_REM_05", sources: ["REMEDIES"],
+        titre: "Antispasmodique GI au long cours",
+        message: "REMEDIES : Antispasmodique GI (mébévérine, alvérine, phloroglucinol, trimébutine) au long cours — efficacité non démontrée en continu. Réévaluer périodiquement.",
+        severite: "info",
+        condition: { med_keys: ["mebeverine", "alverine", "phloroglucinol", "trimebutine"] }
+    },
+    {
+        id: "SUP_REM_06", sources: ["REMEDIES", "STOPPFRAIL"],
+        titre: "Supplémentation multivitamines sans carence documentée",
+        message: "REMEDIES / STOPPFrail : Multivitamines/minéraux sans carence biologique documentée — pas de bénéfice prouvé, risque d'interactions.",
+        severite: "info",
+        condition: { type: "manual_review" }
+    },
+    {
+        id: "SUP_REM_07", sources: ["REMEDIES"],
+        titre: "Anti-vertigineux au long cours (bétahistine, méclizine)",
+        message: "REMEDIES : Anti-vertigineux (bétahistine, méclizine, flunarizine, cinnarizine) au long cours — efficacité limitée au-delà de la crise, effets sédatifs.",
+        severite: "warning",
+        condition: { med_keys: ["betahistine", "meclizine", "flunarizine", "cinnarizine"] }
+    },
+    {
+        id: "SUP_REM_08", sources: ["REMEDIES", "EU7PIM"],
+        titre: "Vasodilatateurs cérébraux/périphériques (efficacité non prouvée)",
+        message: "REMEDIES / EU(7)-PIM : Vasodilatateurs cérébraux/périphériques (pentoxifylline, ginkgo biloba, piracétam, vinpocétine, naftidrofuryl) — efficacité non prouvée, effets indésirables.",
+        severite: "warning",
+        condition: { med_keys: ["pentoxifylline", "ginkgo", "piracetam", "naftidrofuryl", "nicergoline"] }
+    },
+    {
+        id: "SUP_REM_09", sources: ["REMEDIES"],
+        titre: "Double anticoagulation non justifiée",
+        message: "REMEDIES : Deux anticoagulants simultanés (ex: AOD + HBPM) sans justification claire (relais, ponctuel post-opératoire).",
+        severite: "danger",
+        condition: { type: "manual_review" }
+    },
+    {
+        id: "SUP_REM_10", sources: ["REMEDIES"],
+        titre: "Réévaluation annuelle de chaque traitement chronique",
+        message: "REMEDIES : Chaque médicament chronique doit être réévalué au minimum 1 fois/an. Pour chaque molécule, se poser la question : l'indication est-elle toujours présente ? Le bénéfice justifie-t-il les risques ?",
+        severite: "info",
+        condition: { polypharmacie: true, seuil: 5 }
+    },
+
+    // EU(7)-PIM supplémentaires — molécules spécifiques
+    {
+        id: "SUP_EU7_01", sources: ["EU7PIM"],
+        titre: "Cinnarizine / Flunarizine",
+        message: "EU(7)-PIM : Cinnarizine et flunarizine — risque de parkinsonisme, dépression, prise de poids. Durée maximale recommandée : 4-8 semaines.",
+        severite: "warning",
+        condition: { med_keys: ["cinnarizine", "flunarizine"] }
+    },
+    {
+        id: "SUP_EU7_02", sources: ["EU7PIM", "PRISCUS"],
+        titre: "Dimenhydrinate (antiémétique)",
+        message: "EU(7)-PIM / PRISCUS : Dimenhydrinate — antihistaminique H1 sédatif (ACB élevé). Préférer ondansétron.",
+        severite: "warning",
+        condition: { med_keys: ["dimenhydrinate"] }
+    },
+    {
+        id: "SUP_EU7_03", sources: ["EU7PIM"],
+        titre: "Scopolamine (antiémétique)",
+        message: "EU(7)-PIM : Scopolamine — anticholinergique puissant (ACB=3). Risque de confusion, rétention urinaire, glaucome.",
+        severite: "danger",
+        condition: { med_keys: ["scopolamine", "hyoscine"] }
+    },
+    {
+        id: "SUP_EU7_04", sources: ["EU7PIM", "PRISCUS"],
+        titre: "Mébévérine au long cours",
+        message: "EU(7)-PIM / PRISCUS : Mébévérine au long cours — efficacité non prouvée en continu. Alternatives : mesures hygiéno-diététiques, psyllium.",
+        severite: "info",
+        condition: { med_keys: ["mebeverine"] }
+    },
+    {
+        id: "SUP_EU7_05", sources: ["EU7PIM", "PRISCUS"],
+        titre: "Loperamide > 3 jours ou > 12 mg/j",
+        message: "EU(7)-PIM / PRISCUS : Lopéramide > 3 jours ou > 12 mg/j — risque de mégacôlon toxique, rétention fécale. Réserver à l'usage ponctuel.",
+        severite: "warning",
+        condition: { med_keys: ["loperamide"] }
+    },
+    {
+        id: "SUP_EU7_06", sources: ["EU7PIM"],
+        titre: "Antacides contenant aluminium",
+        message: "EU(7)-PIM : Antacides contenant aluminium (phosphalugel, maalox) — constipation, hypophosphatémie, encéphalopathie si usage prolongé ou IRC.",
+        severite: "warning",
+        condition: { med_keys: ["aluminium", "phosphalugel"] }
+    },
+    {
+        id: "SUP_EU7_07", sources: ["EU7PIM", "PRISCUS"],
+        titre: "Paraffine liquide (laxatif)",
+        message: "EU(7)-PIM / PRISCUS : Paraffine liquide — risque de pneumopathie lipidique par aspiration, malabsorption vitamines liposolubles.",
+        severite: "warning",
+        condition: { med_keys: ["paraffine"] }
+    }
+];
+
+
+// ============================================================================
+// 🔧 FONCTIONS D'ÉVALUATION COMPLÉMENTAIRES
+// ============================================================================
+
+/**
+ * Recherche le statut PIM d'une DCI dans le dictionnaire.
+ * @param {string} dci - DCI du médicament
+ * @returns {Object|null} entrée PIM ou null
+ */
+function getPimStatus(dci) {
+    if (!dci) return null;
+    const key = dci.toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, '');
+    
+    for (const [dictKey, entry] of Object.entries(PIM_DICT)) {
+        const normalizedDictKey = dictKey.replace(/[^a-z0-9]/g, '');
+        if (key.includes(normalizedDictKey) || normalizedDictKey.includes(key)) {
+            return { dci_matched: dictKey, ...entry };
+        }
+    }
+    return null;
+}
+
+/**
+ * Génère un badge HTML de classification PIM pour un médicament donné.
+ */
+function renderPimBadges(dci) {
+    const pim = getPimStatus(dci);
+    if (!pim) return '';
+    
+    let badges = [];
+    
+    if (pim.priscus === "PIM") badges.push('<span class="badge bg-danger">PRISCUS PIM</span>');
+    else if (pim.priscus === "PIM-B") badges.push(`<span class="badge bg-warning text-dark" title="${pim.priscus_cond || ''}">PRISCUS PIM-B</span>`);
+    
+    if (pim.forta === "D") badges.push('<span class="badge bg-danger">FORTA-D</span>');
+    else if (pim.forta === "C") badges.push('<span class="badge bg-warning text-dark">FORTA-C</span>');
+    else if (pim.forta === "B") badges.push('<span class="badge bg-info">FORTA-B</span>');
+    else if (pim.forta === "A") badges.push('<span class="badge bg-success">FORTA-A</span>');
+    
+    if (pim.eu7pim) badges.push('<span class="badge bg-secondary">EU7-PIM</span>');
+    if (pim.beers) badges.push('<span class="badge bg-dark">Beers</span>');
+    if (pim.pimcheck) badges.push('<span class="badge bg-primary">PIM-Check</span>');
+    
+    if (badges.length === 0) return '';
+    return `<div class="mt-1">${badges.join(' ')}</div>`;
+}
+
+/**
+ * Génère un résumé PIM détaillé pour la fiche d'un médicament.
+ */
+function renderPimDetail(dci) {
+    const pim = getPimStatus(dci);
+    if (!pim) return '';
+    
+    let html = `<div class="card border-warning mb-2"><div class="card-body p-2">`;
+    html += `<strong>📋 Classification PIM multi-sources</strong>${renderPimBadges(dci)}<br>`;
+    
+    if (pim.risque_principal) html += `<small class="text-danger">⚠️ ${pim.risque_principal}</small><br>`;
+    if (pim.priscus_cond) html += `<small class="text-muted">PRISCUS : ${pim.priscus_cond}</small><br>`;
+    if (pim.priscus_alt) html += `<small class="text-success">💡 Alternative PRISCUS : ${pim.priscus_alt}</small><br>`;
+    if (pim.forta_indication) html += `<small class="text-info">FORTA : ${pim.forta_indication}</small><br>`;
+    if (pim.pimcheck_detail) html += `<small class="text-primary">PIM-Check : ${pim.pimcheck_detail}</small><br>`;
+    if (pim.beers_cond) html += `<small class="text-dark">Beers : ${pim.beers_cond}</small><br>`;
+    
+    html += `</div></div>`;
+    return html;
+}
+// ============================================================================
+// 🔗 GERIA_CROSS_REF - Table de Correspondances Croisées Inter-Sources
+// Version 1.0 - Mars 2026
+// ============================================================================
+// Ce fichier crée des GROUPES de règles cliniquement équivalentes,
+// permettant d'afficher UNE SEULE alerte fusionnée (au lieu de doublons)
+// avec TOUTES les sources qui la supportent.
+// ============================================================================
+
+const CROSS_REF_GROUPS = [
+
+    // ========================================================================
+    // GROUPE 1 : BENZODIAZÉPINES — Toutes situations confondues
+    // ========================================================================
+    {
+        group_id: "GRP_BZD_GENERAL",
+        theme: "Benzodiazépines chez le sujet âgé",
+        description: "Regroupement de toutes les règles ciblant les BZD dans différents contextes (durée, insomnie, SCPD, chutes, insuffisance respiratoire). Chaque contexte reste distinct mais partage le même socle multi-sources.",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM", "FORTA", "PIM_CHECK", "STOPPFRAIL"],
+        rule_ids: ["EV_D08", "EV_D09", "EV_D10", "EV_G04", "EV_K01", "EV_K04"],
+        pim_dict_keys: ["diazepam", "bromazepam", "alprazolam", "lorazepam", "oxazepam", "clorazepate", "prazepam", "nordazepam", "nitrazepam", "clobazam", "clonazepam", "lormetazepam", "zolpidem", "zopiclone"],
+        fusion_strategy: "distinct_context",  // garder les règles séparées mais afficher les sources fusionnées
+        note: "Chaque règle a un contexte clinique différent (durée, insomnie, SCPD, chutes, IR). On garde les conditions distinctes mais on affiche le support multi-sources complet sur chacune."
+    },
+
+    // ========================================================================
+    // GROUPE 2 : ANTIDÉPRESSEURS TRICYCLIQUES
+    // ========================================================================
+    {
+        group_id: "GRP_TCA",
+        theme: "Antidépresseurs tricycliques chez le sujet âgé",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "FORTA", "EU7PIM"],
+        rule_ids: ["EV_D01", "EV_D02", "EV_FORTA_03", "EV_FORTA_04"],
+        pim_dict_keys: ["amitriptyline", "clomipramine", "imipramine", "doxepine", "trimipramine", "nortriptyline", "maprotiline", "dosulpine"],
+        fusion_strategy: "merge_display",  // fusionner en une alerte unique si mêmes meds détectés
+        note: "EV_D01 (TCA + comorbidités) et EV_D02 (TCA en 1ère intention) couvrent des contextes différents. EV_FORTA_03/04 sont des cas particuliers (amitriptyline, doxépine) — à absorber dans l'alerte TCA générale avec mention spécifique."
+    },
+
+    // ========================================================================
+    // GROUPE 3 : ANTIPSYCHOTIQUES + DÉMENCE / SCPD
+    // ========================================================================
+    {
+        group_id: "GRP_AP_DEMENCE",
+        theme: "Antipsychotiques dans la démence / SCPD",
+        merged_sources: ["STOPP3", "BEERS", "FORTA", "PRISCUS", "EU7PIM"],
+        rule_ids: ["EV_D05", "EV_D12", "EV_D15", "EV_D16", "EV_D21", "EV_B18", "EV_K02", "EV_PRISC_02"],
+        pim_dict_keys: ["haloperidol", "risperidone", "olanzapine", "chlorpromazine", "levomepromazine", "cyamemazine", "flupentixol", "fluphenazine", "pipotiazine", "amisulpride", "aripiprazole", "pimozide"],
+        fusion_strategy: "distinct_context",
+        note: "Contextes distincts : D5=SCPD>3m, D12=Parkinson/DCL, D15=SCPD>12sem, D16=hypnotique, D21=phénothiazine 1ère ligne, B18=maladie vasculaire, K2=chutes. Garder séparés mais enrichir les sources."
+    },
+
+    // ========================================================================
+    // GROUPE 4 : ANTIHISTAMINIQUES H1 1ère GÉNÉRATION
+    // ========================================================================
+    {
+        group_id: "GRP_ANTIH1_1G",
+        theme: "Antihistaminiques H1 1ère génération",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM", "FORTA"],
+        rule_ids: ["EV_D24", "EV_D25", "EV_K06"],
+        pim_dict_keys: ["hydroxyzine", "dexchlorpheniramine", "promethazine", "diphenhydramine", "doxylamine", "mequitazine", "alimemazine", "chlorpheniramine", "brompheniramine", "carbinoxamine", "cyproheptadine"],
+        fusion_strategy: "distinct_context",
+        note: "D24=allergie/prurit, D25=insomnie, K6=chutes. Contextes différents, même classe."
+    },
+
+    // ========================================================================
+    // GROUPE 5 : DIGOXINE — Toutes situations
+    // ========================================================================
+    {
+        group_id: "GRP_DIGOXINE",
+        theme: "Digoxine chez le sujet âgé",
+        merged_sources: ["STOPP3", "BEERS", "FORTA", "PRISCUS", "EU7PIM", "PIM_CHECK"],
+        rule_ids: ["EV_B01", "EV_B04", "EV_B21", "EV_E01", "EV_FORTA_02"],
+        pim_dict_keys: ["digoxine"],
+        fusion_strategy: "distinct_context",
+        note: "B1=HFpEF, B4=bradycardie, B21=FA 1ère ligne, E1=IRC, FORTA_02=IC sans FA. Fusionner sources sur la fiche digoxine, garder contextes distincts."
+    },
+
+    // ========================================================================
+    // GROUPE 6 : IPP AU LONG COURS
+    // ========================================================================
+    {
+        group_id: "GRP_IPP",
+        theme: "IPP au long cours (> 8 semaines)",
+        merged_sources: ["STOPP3", "BEERS", "FORTA", "STOPPFRAIL", "REMEDIES", "PRISCUS", "EU7PIM", "PIM_CHECK"],
+        rule_ids: ["EV_F02", "EV_SF05"],
+        pim_dict_keys: ["omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole"],
+        fusion_strategy: "merge_display",
+        note: "F02 et SF05 ciblent exactement le même problème (IPP > 8 sem sans indication). Fusionner en une seule alerte avec toutes les sources."
+    },
+
+    // ========================================================================
+    // GROUPE 7 : SULFAMIDES HYPOGLYCÉMIANTS À LONGUE DEMI-VIE
+    // ========================================================================
+    {
+        group_id: "GRP_SULFA_HYPO",
+        theme: "Sulfamides hypoglycémiants à longue demi-vie",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "FORTA", "EU7PIM", "PIM_CHECK"],
+        rule_ids: ["EV_J01"],
+        pim_dict_keys: ["glibenclamide", "glimepiride", "gliclazide"],
+        fusion_strategy: "merge_display",
+        note: "Toutes les sources convergent. Le PIM_DICT ajoute la granularité par molécule (gliclazide = PIM-B conditionnel vs glibenclamide = PIM absolu)."
+    },
+
+    // ========================================================================
+    // GROUPE 8 : AINS — Toutes situations
+    // ========================================================================
+    {
+        group_id: "GRP_AINS",
+        theme: "AINS chez le sujet âgé",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "FORTA", "EU7PIM", "PIM_CHECK"],
+        rule_ids: ["EV_B17", "EV_B19", "EV_C10", "EV_E04", "EV_H01", "EV_H02", "EV_H03", "EV_H07", "EV_H09", "SUP_PIMC_08"],
+        pim_dict_keys: ["ibuprofene", "naproxene", "diclofenac", "piroxicam", "meloxicam", "ketoprofene", "celecoxib", "etoricoxib", "indometacine"],
+        fusion_strategy: "distinct_context",
+        note: "Nombreux contextes : B17=vasculaire, B19=IC, C10=anticoag, E4=IRC, H1=UGD, H2=HTA sévère, H3>3m, H7+corticoïde, H9=arthrose opioïde, PIMC_08=triple whammy. PRISCUS 2.0 apporte la granularité dose/durée par molécule."
+    },
+
+    // ========================================================================
+    // GROUPE 9 : ANTIMUSCARINIQUES VÉSICAUX
+    // ========================================================================
+    {
+        group_id: "GRP_ANTIMUSC",
+        theme: "Antimuscariniques vésicaux",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "FORTA", "EU7PIM"],
+        rule_ids: ["EV_I01", "EV_I04", "EV_K12", "EV_PRISC_03"],
+        pim_dict_keys: ["oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "darifenacine", "trospium", "flavoxate"],
+        fusion_strategy: "distinct_context",
+        note: "I1=démence, I4=constipation, K12=chutes, PRISC_03=oxybutynine spécifique. Le PIM_DICT différencie le trospium (FORTA-B, pas PIM) du reste."
+    },
+
+    // ========================================================================
+    // GROUPE 10 : STATINES — Déprescription chez fragile
+    // ========================================================================
+    {
+        group_id: "GRP_STATINE_DEPRESC",
+        theme: "Statines en prévention primaire / patient fragile",
+        merged_sources: ["STOPP3", "STOPPFRAIL", "PIM_CHECK"],
+        rule_ids: ["EV_B16", "EV_SF01", "SUP_PIMC_12"],
+        pim_dict_keys: ["atorvastatine", "rosuvastatine", "simvastatine", "pravastatine", "fluvastatine"],
+        fusion_strategy: "merge_display",
+        note: "B16, SF01 et PIMC_12 convergent. Fusionner en une alerte unique : 'Réévaluer la statine si prévention primaire, fragilité ou > 85 ans'."
+    },
+
+    // ========================================================================
+    // GROUPE 11 : INHIBITEURS ACÉTYLCHOLINESTÉRASE / MÉMANTINE
+    // ========================================================================
+    {
+        group_id: "GRP_IACHE",
+        theme: "IAChE / Mémantine — Surveillance et déprescription",
+        merged_sources: ["STOPP3", "FORTA", "STOPPFRAIL", "REMEDIES", "PIM_CHECK"],
+        rule_ids: ["EV_D17", "EV_D18", "EV_D19", "EV_SF06", "SUP_PIMC_06", "SUP_REM_03"],
+        pim_dict_keys: ["donepezil", "rivastigmine", "galantamine", "memantine"],
+        fusion_strategy: "distinct_context",
+        note: "D17=bradycardie, D18=bradycardisant, D19=épilepsie, SF06=démence sévère, PIMC_06=ECG, REM_03=sans bénéfice. Contextes différents mais toutes les sources se complètent."
+    },
+
+    // ========================================================================
+    // GROUPE 12 : ANTIHYPERTENSEURS CENTRAUX
+    // ========================================================================
+    {
+        group_id: "GRP_ANTIHTA_CENTRAL",
+        theme: "Antihypertenseurs d'action centrale",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM", "FORTA"],
+        rule_ids: ["EV_B11"],
+        pim_dict_keys: ["methyldopa", "clonidine", "moxonidine", "rilmenidine"],
+        fusion_strategy: "merge_display",
+        note: "Consensus universel toutes sources. PIM_DICT fournit les alternatives par molécule."
+    },
+
+    // ========================================================================
+    // GROUPE 13 : ANTICOAGULATION — FA et risque hémorragique
+    // ========================================================================
+    {
+        group_id: "GRP_ANTICOAG_FA",
+        theme: "Anticoagulation dans la FA — choix et associations",
+        merged_sources: ["STOPP3", "BEERS", "PIM_CHECK"],
+        rule_ids: ["EV_C04", "EV_C07", "EV_C10", "EV_C11", "EV_C12", "EV_C13", "EV_C14", "SUP_PIMC_09"],
+        pim_dict_keys: ["ticlopidine", "prasugrel", "dipyridamole", "digoxine", "amiodarone"],
+        fusion_strategy: "distinct_context",
+        note: "Règles d'association anticoag+AAP (C4, PIMC_09), choix AVK vs AOD (C11), ISRS+anticoag (C12), dabigatran+diltiazem (C13), AOD+Pgp (C14). Garder distincts."
+    },
+
+    // ========================================================================
+    // GROUPE 14 : NOOTROPIQUES / VASODILATATEURS CÉRÉBRAUX
+    // ========================================================================
+    {
+        group_id: "GRP_NOOTROP",
+        theme: "Nootropiques et vasodilatateurs cérébraux (efficacité non prouvée)",
+        merged_sources: ["STOPP3", "STOPPFRAIL", "REMEDIES", "EU7PIM"],
+        rule_ids: ["EV_D20", "SUP_REM_08"],
+        pim_dict_keys: ["pentoxifylline", "piracetam", "nicergoline"],
+        fusion_strategy: "merge_display",
+        note: "D20 et REM_08 couvrent le même sujet. Fusionner en une alerte unique."
+    },
+
+    // ========================================================================
+    // GROUPE 15 : FER ORAL — Déprescription
+    // ========================================================================
+    {
+        group_id: "GRP_FER",
+        theme: "Fer oral — Indication et durée",
+        merged_sources: ["STOPPFRAIL", "REMEDIES"],
+        rule_ids: ["EV_SF07", "SUP_REM_01"],
+        pim_dict_keys: [],
+        fusion_strategy: "merge_display",
+        note: "SF07 et REM_01 convergent. Fusionner : 'Fer oral sans carence documentée ou > 3 mois sans vérification'."
+    },
+
+    // ========================================================================
+    // GROUPE 16 : OPIOÏDES — Toutes situations
+    // ========================================================================
+    {
+        group_id: "GRP_OPIOID",
+        theme: "Opioïdes chez le sujet âgé",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "FORTA", "EU7PIM"],
+        rule_ids: ["EV_L01", "EV_L02", "EV_H09", "EV_K07"],
+        pim_dict_keys: ["tramadol", "codeine", "morphine", "oxycodone", "fentanyl", "buprenorphine", "pethidine"],
+        fusion_strategy: "distinct_context",
+        note: "L1=1ère intention douleur légère, L2=sans laxatif, H9=arthrose, K7=chutes. FORTA différencie les molécules (péthidine=D, morphine/oxycodone/buprénorphine=A)."
+    },
+
+    // ========================================================================
+    // GROUPE 17 : ANTISPASMODIQUES GI
+    // ========================================================================
+    {
+        group_id: "GRP_ANTISPAS_GI",
+        theme: "Antispasmodiques GI au long cours",
+        merged_sources: ["REMEDIES", "EU7PIM", "PRISCUS"],
+        rule_ids: ["SUP_REM_05", "SUP_EU7_04"],
+        pim_dict_keys: ["mebeverine"],
+        fusion_strategy: "merge_display",
+        note: "Fusionner REM_05 et EU7_04 : 'Antispasmodiques GI au long cours — efficacité non prouvée en continu'."
+    },
+
+    // ========================================================================
+    // GROUPE 18 : MÉTOCLOPRAMIDE / ANTIÉMÉTIQUES PROKINÉTIQUES
+    // ========================================================================
+    {
+        group_id: "GRP_PROCINET",
+        theme: "Métoclopramide et prokinétiques",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM", "FORTA", "PIM_CHECK"],
+        rule_ids: ["EV_F01", "EV_BEERS_04"],
+        pim_dict_keys: ["metoclopramide", "domperidone", "metopimazine"],
+        fusion_strategy: "merge_display",
+        note: "F01 (Parkinson) et BEERS_04 (long cours) se complètent. PIM_DICT donne la granularité : domperidone=PIM-B conditionnel (dose/durée)."
+    },
+
+    // ========================================================================
+    // GROUPE 19 : IC FE RÉDUITE — Piliers thérapeutiques (START)
+    // ========================================================================
+    {
+        group_id: "GRP_IC_START",
+        theme: "Omissions thérapeutiques dans l'IC FE réduite",
+        merged_sources: ["STOPP3", "FORTA"],
+        rule_ids: ["IN_B05", "IN_B06", "IN_B07", "IN_B08", "IN_B09", "IN_B11"],
+        pim_dict_keys: ["spironolactone", "empagliflozin", "dapagliflozin"],
+        fusion_strategy: "merge_display",
+        note: "Les 4 piliers IC (IEC/ARA2/ARNI, BB, ARM, iSGLT2) + fer IV. STOPP3 et FORTA convergent totalement. Afficher comme un seul bloc 'piliers pronostiques'."
+    },
+
+    // ========================================================================
+    // GROUPE 20 : ANTIDIABÉTIQUES FRAGILE (STOPPFrail / REMEDIES)
+    // ========================================================================
+    {
+        group_id: "GRP_DT2_FRAGILE",
+        theme: "Antidiabétiques — Cibles assouplies chez le fragile",
+        merged_sources: ["STOPPFRAIL", "BEERS", "PRISCUS", "FORTA"],
+        rule_ids: ["EV_SF03", "EV_J01", "EV_J03"],
+        pim_dict_keys: ["glibenclamide", "glimepiride", "gliclazide", "pioglitazone", "acarbose", "repaglinide"],
+        fusion_strategy: "distinct_context",
+        note: "SF03=HbA1c<8% fragile, J01=sulfamide longue demi-vie, J03=BB non sélectif+hypo. Complémentaires."
+    },
+
+    // ========================================================================
+    // GROUPE 21 : DIURÉTIQUES — Surveillance et indication
+    // ========================================================================
+    {
+        group_id: "GRP_DIURET",
+        theme: "Diurétiques — Indication, surveillance, risques ioniques",
+        merged_sources: ["STOPP3", "BEERS", "PIM_CHECK"],
+        rule_ids: ["EV_B07", "EV_B08", "EV_B09", "EV_B09b", "EV_B10", "SUP_PIMC_02"],
+        pim_dict_keys: ["furosemide"],
+        fusion_strategy: "distinct_context",
+        note: "B7=1ère intention HTA, B8=œdèmes sans IC, B9/9b=dyskaliémie/Na, B10=incontinence, PIMC_02=iono surveillance. Chaque contexte reste distinct."
+    },
+
+    // ========================================================================
+    // GROUPE 22 : MYORELAXANTS
+    // ========================================================================
+    {
+        group_id: "GRP_MYORELAX",
+        theme: "Myorelaxants chez le sujet âgé",
+        merged_sources: ["BEERS", "PRISCUS", "EU7PIM"],
+        rule_ids: ["EV_BEERS_03"],
+        pim_dict_keys: ["thiocolchicoside", "methocarbamol", "baclofene", "tizanidine"],
+        fusion_strategy: "merge_display",
+        note: "PIM universel selon Beers/PRISCUS. PIM_DICT donne la granularité (baclofène=PIM-B conditionnel)."
+    },
+
+    // ========================================================================
+    // GROUPE 23 : Z-DRUGS (chevauchement avec BZD)
+    // ========================================================================
+    {
+        group_id: "GRP_ZDRUG",
+        theme: "Z-drugs (zolpidem, zopiclone)",
+        merged_sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM", "FORTA", "PIM_CHECK"],
+        rule_ids: ["EV_D11", "EV_K04"],
+        pim_dict_keys: ["zolpidem", "zopiclone"],
+        fusion_strategy: "distinct_context",
+        note: "D11=≥2 sem insomnie, K4=chutes. Lié au GRP_BZD_GENERAL mais classe distincte."
+    },
+
+    // ========================================================================
+    // GROUPE 24 : ISRS — Doses et risques
+    // ========================================================================
+    {
+        group_id: "GRP_ISRS",
+        theme: "ISRS — Doses maximales et hyponatrémie",
+        merged_sources: ["STOPP3", "PIM_CHECK", "PRISCUS", "FORTA"],
+        rule_ids: ["EV_D06", "EV_C12", "EV_PIM_03", "EV_PIM_04"],
+        pim_dict_keys: ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine"],
+        fusion_strategy: "distinct_context",
+        note: "D6=hypoNa, C12=ISRS+anticoag+hémorragie, PIM03=citalopram>20mg, PIM04=escitalopram>10mg. Complémentaires."
+    },
+
+    // ========================================================================
+    // GROUPE 25 : ANTIARYTHMIQUES CLASSE I/III
+    // ========================================================================
+    {
+        group_id: "GRP_ANTIARYTHM",
+        theme: "Antiarythmiques classe I et III",
+        merged_sources: ["STOPP3", "PRISCUS", "EU7PIM", "PIM_CHECK"],
+        rule_ids: ["EV_B06", "EV_PIM_01", "EV_PIM_02", "SUP_PIMC_07"],
+        pim_dict_keys: ["amiodarone", "dronedarone", "flecainide", "propafenone"],
+        fusion_strategy: "distinct_context",
+        note: "B6=amiodarone 1ère ligne, PIM01=dronédarone+IC, PIM02=flécaïnide+cardiopathie, PIMC07=ECG surveillance."
+    }
+];
+
+// ============================================================================
+// 🔧 FONCTIONS DE FUSION D'ALERTES
+// ============================================================================
+
+/**
+ * Enrichit les sources d'une règle avec les sources croisées du groupe.
+ * Retourne la règle enrichie (sources + related_rules).
+ */
+function enrichRuleWithCrossRef(rule) {
+    const group = CROSS_REF_GROUPS.find(g => g.rule_ids.includes(rule.id));
+    if (!group) return rule;
+    
+    return {
+        ...rule,
+        cross_ref_group: group.group_id,
+        cross_ref_theme: group.theme,
+        all_sources: [...new Set([...rule.sources, ...group.merged_sources])],
+        related_rules: group.rule_ids.filter(id => id !== rule.id),
+        pim_dict_keys: group.pim_dict_keys || [],
+        fusion_strategy: group.fusion_strategy
+    };
+}
+
+/**
+ * Filtre les alertes pour éviter les doublons de même groupe en mode merge_display.
+ * Garde uniquement la première règle du groupe et y agrège toutes les infos.
+ */
+function deduplicateAlerts(alerts) {
+    const seen = new Set();
+    const result = [];
+    
+    alerts.forEach(alert => {
+        const enriched = enrichRuleWithCrossRef(alert);
+        
+        if (enriched.fusion_strategy === "merge_display" && enriched.cross_ref_group) {
+            if (seen.has(enriched.cross_ref_group)) return; // déjà affiché
+            seen.add(enriched.cross_ref_group);
+            
+            // Trouver toutes les alertes du même groupe pour enrichir le message
+            const groupAlerts = alerts.filter(a => {
+                const e = enrichRuleWithCrossRef(a);
+                return e.cross_ref_group === enriched.cross_ref_group;
+            });
+            
+            // Fusionner les messages
+            const allSources = [...new Set(groupAlerts.flatMap(a => enrichRuleWithCrossRef(a).all_sources || a.sources))];
+            const allMessages = groupAlerts.map(a => a.message);
+            const allAlternatives = [...new Set(groupAlerts.map(a => a.alternatives).filter(Boolean))];
+            
+            result.push({
+                ...enriched,
+                sources: allSources,
+                sources_label: allSources.map(s => GERIA_RECOS_DB.SOURCES[s] ? GERIA_RECOS_DB.SOURCES[s].nom : s).join(' | '),
+                message: allMessages[0], // message principal
+                complementary_messages: allMessages.slice(1),
+                alternatives: allAlternatives.join(' — '),
+                merged: true,
+                merged_count: groupAlerts.length
+            });
+        } else {
+            // Mode distinct_context : enrichir les sources mais garder séparé
+            result.push({
+                ...enriched,
+                sources: enriched.all_sources || enriched.sources,
+                sources_label: (enriched.all_sources || enriched.sources)
+                    .map(s => GERIA_RECOS_DB.SOURCES[s] ? GERIA_RECOS_DB.SOURCES[s].nom : s).join(' | ')
+            });
+        }
+    });
+    
+    return result;
+}
+
+/**
+ * Génère le rendu HTML enrichi avec badges PIM_DICT pour les alertes EVITER.
+ */
+function renderAlertesEviterEnriched(alertes) {
+    const deduped = deduplicateAlerts(alertes);
+    
+    if (!deduped || deduped.length === 0) {
+        return '<div class="alert alert-light">Aucune prescription inappropriée détectée.</div>';
+    }
+    
+    return deduped.map(a => {
+        const cls = a.severite === 'danger' ? 'danger alert-stopp' : 'warning';
+        const icon = a.severite === 'danger' ? '🛑' : '⚠️';
+        const mergeNote = a.merged ? `<small class="text-muted">(${a.merged_count} critères convergents fusionnés)</small>` : '';
+        
+        // Badges PIM par molécule (via PIM_DICT)
+        let pimBadgesHtml = '';
+        if (a.pim_dict_keys && a.pim_dict_keys.length > 0 && typeof renderPimBadges === 'function') {
+            // Rechercher quels meds du patient sont dans le groupe
+            const matchedDcis = a.pim_dict_keys.filter(k => {
+                if (typeof activeMeds !== 'undefined') {
+                    return activeMeds.some(m => m.dci && m.dci.toLowerCase().includes(k));
+                }
+                return false;
+            });
+            pimBadgesHtml = matchedDcis.map(d => renderPimBadges(d)).join('');
+        }
+        
+        return `<div class="alert alert-${cls} shadow-sm">
+            <strong>${icon} ${a.titre}</strong>
+            <span class="badge bg-secondary float-end" style="font-size:0.7em;">${a.sources_label}</span>
+            ${mergeNote}
+            <br>${a.message}
+            ${a.complementary_messages && a.complementary_messages.length > 0 ? 
+                `<div class="mt-1 small text-muted">${a.complementary_messages.map(m => `• ${m}`).join('<br>')}</div>` : ''}
+            ${pimBadgesHtml}
+            ${a.alternatives ? `<br><em class="text-success small">💡 ${a.alternatives}</em>` : ''}
+        </div>`;
+    }).join('');
+}
+
+// ============================================================================
+// 📊 STATISTIQUES DE COUVERTURE
+// ============================================================================
+const CROSS_REF_STATS = {
+    total_groups: CROSS_REF_GROUPS.length,
+    total_rules_grouped: [...new Set(CROSS_REF_GROUPS.flatMap(g => g.rule_ids))].length,
+    total_pim_dict_linked: [...new Set(CROSS_REF_GROUPS.flatMap(g => g.pim_dict_keys))].length,
+    merge_display_groups: CROSS_REF_GROUPS.filter(g => g.fusion_strategy === "merge_display").length,
+    distinct_context_groups: CROSS_REF_GROUPS.filter(g => g.fusion_strategy === "distinct_context").length,
+    sources_covered: [...new Set(CROSS_REF_GROUPS.flatMap(g => g.merged_sources))]
+};
+// ============================================================================
+// ⚡ GERIA_ENGINE_V2 - Moteur Optimisé d'Évaluation des Recommandations
+// Version 2.0 - Mars 2026
+// ============================================================================
+// Remplace evaluerRecommandations() de geria_recos_db.js
+//
+// OPTIMISATIONS :
+//   1. INDEX INVERSÉ : med_key → règles candidates (÷10 sur le temps)
+//   2. CACHE hasMedKey : chaque classe testée une seule fois
+//   3. SCORING MULTI-DIMENSIONNEL : chaque alerte reçoit un score composite
+//   4. TRIAGE 3 NIVEAUX : Critique / Important / Informatif
+//   5. DASHBOARD PIM GLOBAL : vision synthétique de l'ordonnance
+// ============================================================================
+
+const GeriaEngineV2 = (() => {
+
+    // ========================================================================
+    // 1. INDEX INVERSÉ — Construit au chargement, pas à chaque évaluation
+    // ========================================================================
+    
+    let _invertedIndex = null;   // { med_key: [rule_ids...] }
+    let _ruleMap = null;         // { rule_id: rule }
+    
+    /**
+     * Construit l'index inversé à partir de toutes les règles.
+     * Appelé une seule fois au chargement.
+     */
+    function buildIndex() {
+        if (_invertedIndex) return; // déjà construit
+        
+        _invertedIndex = {};
+        _ruleMap = {};
+        
+        const allRules = [
+            ...GERIA_RECOS_DB.EVITER.map(r => ({ ...r, _type: 'eviter' })),
+            ...GERIA_RECOS_DB.INITIER.map(r => ({ ...r, _type: 'initier' })),
+            ...(typeof RECOS_SUPPLEMENT !== 'undefined' ? RECOS_SUPPLEMENT.map(r => ({ ...r, _type: 'supplement' })) : [])
+        ];
+        
+        allRules.forEach(rule => {
+            _ruleMap[rule.id] = rule;
+            const c = rule.condition;
+            if (!c) return;
+            
+            // Indexer par med_keys
+            const keys = [
+                ...(c.med_keys || []),
+                ...(c.med_keys_2 || []),
+                ...(c.med_absent || [])
+            ];
+            
+            if (keys.length === 0) {
+                // Règles sans med_keys (polypharmacie, ACB, manual_review, etc.)
+                if (!_invertedIndex['__GLOBAL__']) _invertedIndex['__GLOBAL__'] = [];
+                _invertedIndex['__GLOBAL__'].push(rule.id);
+            } else {
+                keys.forEach(k => {
+                    const nk = k.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (!_invertedIndex[nk]) _invertedIndex[nk] = [];
+                    if (!_invertedIndex[nk].includes(rule.id)) {
+                        _invertedIndex[nk].push(rule.id);
+                    }
+                });
+            }
+        });
+        
+        console.log(`[GeriaEngineV2] Index inversé construit : ${Object.keys(_invertedIndex).length} clés, ${allRules.length} règles indexées.`);
+    }
+    
+    // ========================================================================
+    // 2. CACHE hasMedKey — Évalué une seule fois par classe par contexte
+    // ========================================================================
+    
+    let _medKeyCache = null;
+    
+    function initMedKeyCache(ctx) {
+        _medKeyCache = {};
+        
+        if (!ctx.activeMeds) return;
+        
+        // Pré-calculer les propriétés de chaque med actif
+        ctx._medsNormalized = ctx.activeMeds.map(m => ({
+            dci: (m.dci || '').toLowerCase().replace(/[^a-z0-9]/g, ''),
+            classe: (m.classe || '').toLowerCase().replace(/[^a-z0-9]/g, ''),
+            raw: m
+        }));
+    }
+    
+    function hasMedKeyCached(key, ctx) {
+        if (!ctx.activeMeds || !key) return false;
+        
+        const k = key.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (_medKeyCache[k] !== undefined) return _medKeyCache[k];
+        
+        const result = ctx._medsNormalized.some(m => {
+            const dci = m.dci;
+            const classe = m.classe;
+            
+            // Matching par alias de classe (même logique que hasMedKey original, mais exécuté 1 seule fois)
+            if (k === 'ains' && (classe.includes('ains') || ['ibuprofene','ketoprofene','naproxene','diclofenac','piroxicam','meloxicam','celecoxib','etoricoxib'].some(d => dci.includes(d)))) return true;
+            if (k === 'iec' && (classe.includes('iec') || dci.includes('pril'))) return true;
+            if (k.includes('ara2') && (classe.includes('ara2') || dci.includes('sartan'))) return true;
+            if (k.includes('betabloquant') && (classe.includes('beta') || ['bisoprolol','metoprolol','nebivolol','carvedilol','atenolol','propranolol','acebutolol','betaxolol','sotalol','nadolol','pindolol','timolol','celiprolol','labetalol'].some(d => dci.includes(d)))) return true;
+            if (k.includes('diuretique') && (classe.includes('diuretique') || classe.includes('diuretique') || ['furosemide','bumetanide','hydrochlorothiazide','indapamide','spironolactone','altizide','chlortalidone','amiloride','triamterene','eplerenone'].some(d => dci.includes(d)))) return true;
+            if (k === 'anticoag' && (classe.includes('aod') || classe.includes('avk') || classe.includes('anticoag') || ['apixaban','rivaroxaban','dabigatran','edoxaban','acenocoumarol','warfarine','fluindione','enoxaparine','tinzaparine','dalteparine','fondaparinux'].some(d => dci.includes(d)))) return true;
+            if ((k === 'antiagreg' || k === 'antiagregant') && (classe.includes('antiagr') || ['acideacetylsalicylique','clopidogrel','prasugrel','ticagrelor','ticlopidine','dipyridamole'].some(d => dci.includes(d)))) return true;
+            if (k === 'antipsychotique' && (classe.includes('antipsychotique') || classe.includes('neuroleptique'))) return true;
+            if (k.includes('benzodiazepine') && (classe.includes('benzodiaz') || classe.includes('hypnotiquez'))) return true;
+            if (k === 'isrs' && (classe.includes('isrs') || classe.includes('ssri'))) return true;
+            if ((k === 'irsn' || k === 'snri') && ['venlafaxine','duloxetine','milnacipran','desvenlafaxine'].some(d => dci.includes(d))) return true;
+            if (k.includes('antidepresseurtricyclique') && classe.includes('tricyclique')) return true;
+            if (k === 'opioid' && (classe.includes('opio') || ['morphine','oxycodone','fentanyl','buprenorphine','tramadol','codeine','pethidine','methadone'].some(d => dci.includes(d)))) return true;
+            if (k.includes('statine') && (classe.includes('statine') || dci.includes('statine') || dci.includes('vastatine'))) return true;
+            if (k.includes('ipp') && (classe.includes('ipp') || classe.includes('inhibiteurpompe') || ['omeprazole','esomeprazole','lansoprazole','pantoprazole','rabeprazole'].some(d => dci.includes(d)))) return true;
+            if (k.includes('corticoide') && (classe.includes('corticoidesystemique') || classe.includes('corticoide') || ['prednisone','prednisolone','methylprednisolone','dexamethasone','betamethasone','hydrocortisone'].some(d => dci.includes(d)))) return true;
+            if (k === 'arni' && (dci.includes('sacubitril') || dci.includes('entresto'))) return true;
+            if (k === 'mra' && (dci.includes('spironolactone') || dci.includes('eplerenone') || dci.includes('aldactazine'))) return true;
+            if ((k === 'sglt2' || k === 'isglt2') && (classe.includes('sglt2') || ['canagliflozin','dapagliflozin','empagliflozin','ertugliflozin'].some(d => dci.includes(d)))) return true;
+            if (k === 'antihypertenseur') return classe.includes('hypertens') || hasMedKeyCached('iec', ctx) || hasMedKeyCached('ara2', ctx) || hasMedKeyCached('inhibiteur calcique', ctx) || hasMedKeyCached('diuretique', ctx) || hasMedKeyCached('betabloquant', ctx);
+            if (k.includes('inhibiteurcalcique') && (classe.includes('inhibiteurcalcique') || classe.includes('calcique') || ['amlodipine','nifedipine','felodipine','lercanidipine','nicardipine','diltiazem','verapamil','manidipine'].some(d => dci.includes(d)))) return true;
+            if (k.includes('antiepileptique') && (classe.includes('antiepileptique') || classe.includes('antiepileptique'))) return true;
+            return dci.includes(k) || classe.includes(k) || k.includes(dci);
+        });
+        
+        _medKeyCache[k] = result;
+        return result;
+    }
+
+    // ========================================================================
+    // 3. SCORING MULTI-DIMENSIONNEL
+    // ========================================================================
+    
+    /**
+     * Calcule un score composite pour chaque alerte déclenchée.
+     * Score = consensus × gravité × contexte × vulnérabilité
+     * 
+     * Échelle finale : 0-100
+     *   0-29  = Informatif (vert)
+     *   30-59 = Important (orange) 
+     *   60-100 = Critique (rouge)
+     */
+    const SEVERITY_WEIGHTS = {
+        // Poids de base selon sévérité déclarée
+        'danger': 40,
+        'warning': 20,
+        'info': 8
+    };
+    
+    const SOURCE_CONSENSUS_WEIGHT = {
+        // Bonus par nombre de sources convergentes
+        1: 0,
+        2: 5,
+        3: 10,
+        4: 15,
+        5: 22,
+        6: 28,
+        7: 33,
+        8: 38  // unanimité 8 sources
+    };
+    
+    const FORTA_WEIGHT = {
+        'D': 15,   // à éviter formellement
+        'C': 8,    // discutable, rapport B/R défavorable
+        'B': 0,    // bénéfique (pas de malus)
+        'A': -5    // indispensable (bonus négatif = protecteur)
+    };
+    
+    function computeAlertScore(alert, ctx) {
+        let score = 0;
+        
+        // (A) Gravité de base
+        score += SEVERITY_WEIGHTS[alert.severite] || 15;
+        
+        // (B) Consensus multi-sources
+        const effectiveSources = alert.all_sources || alert.sources || [];
+        const numSources = Math.min(effectiveSources.length, 8);
+        score += SOURCE_CONSENSUS_WEIGHT[numSources] || 0;
+        
+        // (C) FORTA classification (si disponible via PIM_DICT)
+        if (alert.pim_dict_keys && typeof PIM_DICT !== 'undefined') {
+            let worstForta = null;
+            alert.pim_dict_keys.forEach(dciKey => {
+                const pim = PIM_DICT[dciKey];
+                if (pim && pim.forta) {
+                    if (!worstForta || 'DCBA'.indexOf(pim.forta) < 'DCBA'.indexOf(worstForta)) {
+                        worstForta = pim.forta;
+                    }
+                }
+            });
+            if (worstForta) score += FORTA_WEIGHT[worstForta] || 0;
+        }
+        
+        // (D) Confirmation biologique (si bio anormale renforce l'alerte)
+        if (alert.condition && alert.condition.bio && ctx.bioValues) {
+            let bioConfirmed = false;
+            for (const [bioId, crit] of Object.entries(alert.condition.bio)) {
+                const val = ctx.bioValues[bioId];
+                if (val > 0) {
+                    if (crit.op === '<' && val < crit.val) bioConfirmed = true;
+                    if (crit.op === '>' && val > crit.val) bioConfirmed = true;
+                }
+            }
+            if (bioConfirmed) score += 12; // Bio confirme le risque
+        }
+        
+        // (E) Vulnérabilité du patient
+        if (ctx.isFragile) score += 8;
+        if (ctx.patientAge >= 85) score += 6;
+        else if (ctx.patientAge >= 80) score += 3;
+        
+        // (F) Co-prescription amplifiante (si med_keys_2 → interaction = plus grave)
+        if (alert.condition && alert.condition.med_keys_2) score += 8;
+        
+        // (G) Score ACB cumulé élevé → amplificateur pour alertes ACB
+        if (alert.condition && (alert.condition.acb_cumul || alert.condition.acb_check)) {
+            if (ctx.scoreACB_global >= 5) score += 10;
+            else if (ctx.scoreACB_global >= 3) score += 5;
+        }
+        
+        // Clamp 0-100
+        return Math.max(0, Math.min(100, Math.round(score)));
+    }
+    
+    /**
+     * Détermine le niveau de triage à partir du score.
+     */
+    function getTriageLevel(score) {
+        if (score >= 60) return { level: 'CRITIQUE', color: 'danger', icon: '🔴', priority: 1, label: 'Action immédiate requise' };
+        if (score >= 30) return { level: 'IMPORTANT', color: 'warning', icon: '🟠', priority: 2, label: 'Réévaluation planifiée' };
+        return { level: 'INFORMATIF', color: 'info', icon: '🔵', priority: 3, label: 'À discuter / documenter' };
+    }
+
+    // ========================================================================
+    // 4. ÉVALUATION OPTIMISÉE (index inversé + cache + scoring)
+    // ========================================================================
+    
+    function checkRuleOptimized(rule, ctx) {
+        const c = rule.condition;
+        if (!c) return false;
+        if (c.type === 'manual_review' || c.type === 'duplication_check') return false;
+
+        if (c.med_keys && !c.med_keys.some(k => hasMedKeyCached(k, ctx))) return false;
+        if (c.med_keys_2 && !c.med_keys_2.some(k => hasMedKeyCached(k, ctx))) return false;
+        if (c.med_absent && c.med_absent.some(k => hasMedKeyCached(k, ctx))) return false;
+        if (c.comorbs && !c.comorbs.every(p => ctx.activeComorbs && ctx.activeComorbs.includes(p))) return false;
+        if (c.comorbs_any && !c.comorbs_any.some(p => ctx.activeComorbs && ctx.activeComorbs.includes(p))) return false;
+        if (c.comorbs_absent && c.comorbs_absent.some(p => ctx.activeComorbs && ctx.activeComorbs.includes(p))) return false;
+
+        if (c.bio) {
+            for (const [bioId, crit] of Object.entries(c.bio)) {
+                const val = ctx.bioValues && ctx.bioValues[bioId];
+                if (!val || val <= 0) continue;
+                if (crit.op === '<' && !(val < crit.val)) return false;
+                if (crit.op === '>' && !(val > crit.val)) return false;
+                if (crit.op === '<=' && !(val <= crit.val)) return false;
+                if (crit.op === '>=' && !(val >= crit.val)) return false;
+            }
+        }
+
+        if (c.age_min && (!ctx.patientAge || ctx.patientAge < c.age_min)) return false;
+        if (c.fragile === true && !ctx.isFragile) return false;
+        if (c.acb_cumul && c.acb_seuil && (!ctx.scoreACB_global || ctx.scoreACB_global < c.acb_seuil)) return false;
+        if (c.acb_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && parseFloat(m.db_ref.acb) >= 2))) return false;
+        if (c.qt_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && String(m.db_ref.qt_risque || '').includes('(KR)')))) return false;
+        if (c.polypharmacie && c.seuil && (!ctx.activeMeds || ctx.activeMeds.length < c.seuil)) return false;
+
+        return true;
+    }
+    
+    /**
+     * Point d'entrée principal — Évalue toutes les recommandations
+     * avec index inversé, scoring et triage.
+     */
+    function evaluer(ctx) {
+        const t0 = performance.now();
+        
+        // Construire l'index si nécessaire
+        buildIndex();
+        
+        // Initialiser le cache
+        initMedKeyCache(ctx);
+        
+        // Collecter les règles candidates via l'index inversé
+        const candidateIds = new Set();
+        
+        // Ajouter les règles globales (polypharmacie, ACB, etc.)
+        (_invertedIndex['__GLOBAL__'] || []).forEach(id => candidateIds.add(id));
+        
+        // Pour chaque med actif, trouver les règles liées
+        if (ctx._medsNormalized) {
+            ctx._medsNormalized.forEach(m => {
+                // Chercher par DCI directe
+                for (const [indexKey, ruleIds] of Object.entries(_invertedIndex)) {
+                    if (indexKey === '__GLOBAL__') continue;
+                    if (m.dci.includes(indexKey) || indexKey.includes(m.dci) || 
+                        m.classe.includes(indexKey) || indexKey.includes(m.classe)) {
+                        ruleIds.forEach(id => candidateIds.add(id));
+                    }
+                }
+            });
+            
+            // Ajouter les classes génériques
+            const classAliases = ['ains','iec','ara2','betabloquant','diuretique','anticoag','antiagreg',
+                'antiagregant','antipsychotique','benzodiazepine','isrs','irsn','opioid',
+                'statine','ipp','corticoide','arni','mra','sglt2','isglt2','antihypertenseur',
+                'inhibiteurcalcique','antiepileptique','antidepresseurtricyclique'];
+            
+            classAliases.forEach(alias => {
+                if (hasMedKeyCached(alias, ctx) && _invertedIndex[alias]) {
+                    _invertedIndex[alias].forEach(id => candidateIds.add(id));
+                }
+            });
+        }
+        
+        // Ajouter les règles indexées par comorbidités (via med_absent pour START)
+        if (ctx.activeComorbs) {
+            // Pour les règles START, on doit aussi vérifier celles indexées par les médicaments absents
+            // On ajoute toutes les règles INITIER par sécurité (elles sont peu nombreuses)
+            GERIA_RECOS_DB.INITIER.forEach(r => candidateIds.add(r.id));
+        }
+        
+        // Évaluer seulement les candidats
+        const resultats = { eviter: [], initier: [], supplement: [], all: [] };
+        
+        candidateIds.forEach(ruleId => {
+            const rule = _ruleMap[ruleId];
+            if (!rule) return;
+            
+            if (checkRuleOptimized(rule, ctx)) {
+                // Enrichir avec cross-ref si disponible
+                let enriched = rule;
+                if (typeof enrichRuleWithCrossRef === 'function') {
+                    enriched = enrichRuleWithCrossRef(rule);
+                }
+                
+                // Calculer le score
+                const score = computeAlertScore(enriched, ctx);
+                const triage = getTriageLevel(score);
+                
+                const alert = {
+                    ...enriched,
+                    score: score,
+                    triage: triage,
+                    sources_label: (enriched.all_sources || enriched.sources || [])
+                        .map(s => GERIA_RECOS_DB.SOURCES[s] ? GERIA_RECOS_DB.SOURCES[s].nom : s).join(' | ')
+                };
+                
+                if (rule._type === 'eviter') resultats.eviter.push(alert);
+                else if (rule._type === 'initier') resultats.initier.push(alert);
+                else if (rule._type === 'supplement') resultats.supplement.push(alert);
+                resultats.all.push(alert);
+            }
+        });
+        
+        // Trier par score décroissant
+        const sortByScore = (a, b) => b.score - a.score;
+        resultats.eviter.sort(sortByScore);
+        resultats.initier.sort(sortByScore);
+        resultats.supplement.sort(sortByScore);
+        resultats.all.sort(sortByScore);
+        
+        const t1 = performance.now();
+        
+        // Calculer le dashboard global
+        resultats.dashboard = computeDashboard(resultats, ctx);
+        resultats._perf = {
+            candidates: candidateIds.size,
+            triggered: resultats.all.length,
+            time_ms: Math.round((t1 - t0) * 100) / 100
+        };
+        
+        return resultats;
+    }
+
+    // ========================================================================
+    // 5. DASHBOARD PIM GLOBAL
+    // ========================================================================
+    
+    function computeDashboard(resultats, ctx) {
+        const allAlerts = resultats.all;
+        const totalMeds = (ctx.activeMeds || []).length;
+        
+        // Compter les meds flaggés PIM
+        let medsWithPIM = new Set();
+        if (typeof PIM_DICT !== 'undefined' && ctx.activeMeds) {
+            ctx.activeMeds.forEach(m => {
+                const dci = (m.dci || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                for (const [dictKey, entry] of Object.entries(PIM_DICT)) {
+                    const ndk = dictKey.replace(/[^a-z0-9]/g, '');
+                    if (dci.includes(ndk) || ndk.includes(dci)) {
+                        if (entry.priscus || entry.forta === 'D' || entry.forta === 'C' || entry.beers || entry.eu7pim) {
+                            medsWithPIM.add(m.dci);
+                        }
+                        break;
+                    }
+                }
+            });
+        }
+        
+        // Distribution par triage
+        const critiques = allAlerts.filter(a => a.triage.priority === 1);
+        const importants = allAlerts.filter(a => a.triage.priority === 2);
+        const informatifs = allAlerts.filter(a => a.triage.priority === 3);
+        
+        // Score PIM global (0-100)
+        // Pondéré : ratio meds PIM, score moyen des alertes, ACB
+        let globalScore = 0;
+        if (totalMeds > 0) {
+            const ratioMedsPIM = medsWithPIM.size / totalMeds;
+            const avgAlertScore = allAlerts.length > 0 ? allAlerts.reduce((s, a) => s + a.score, 0) / allAlerts.length : 0;
+            const acbPenalty = Math.min((ctx.scoreACB_global || 0) * 5, 20);
+            const polyPenalty = totalMeds >= 10 ? 15 : (totalMeds >= 5 ? 8 : 0);
+            
+            globalScore = Math.round(
+                ratioMedsPIM * 30 +          // 30% = ratio médicaments PIM
+                (avgAlertScore / 100) * 30 +  // 30% = sévérité moyenne des alertes
+                acbPenalty +                   // 0-20 = charge anticholinergique
+                polyPenalty                    // 0-15 = polypharmacie
+            );
+        }
+        globalScore = Math.max(0, Math.min(100, globalScore));
+        
+        // Catégorisation du risque global
+        let globalRisk;
+        if (globalScore >= 60) globalRisk = { label: 'RISQUE ÉLEVÉ', color: 'danger', icon: '🔴' };
+        else if (globalScore >= 35) globalRisk = { label: 'RISQUE MODÉRÉ', color: 'warning', icon: '🟠' };
+        else if (globalScore >= 15) globalRisk = { label: 'RISQUE FAIBLE', color: 'info', icon: '🔵' };
+        else globalRisk = { label: 'ACCEPTABLE', color: 'success', icon: '🟢' };
+        
+        // Top 3 alertes critiques (pour affichage rapide)
+        const top3 = critiques.slice(0, 3).map(a => ({
+            titre: a.titre,
+            score: a.score,
+            sources: (a.all_sources || a.sources || []).length
+        }));
+        
+        return {
+            global_score: globalScore,
+            global_risk: globalRisk,
+            total_alerts: allAlerts.length,
+            critiques: critiques.length,
+            importants: importants.length,
+            informatifs: informatifs.length,
+            meds_total: totalMeds,
+            meds_pim: medsWithPIM.size,
+            meds_pim_ratio: totalMeds > 0 ? Math.round(medsWithPIM.size / totalMeds * 100) : 0,
+            meds_pim_list: [...medsWithPIM],
+            top3_critiques: top3,
+            acb_global: ctx.scoreACB_global || 0,
+            polypharmacie: totalMeds >= 5
+        };
+    }
+
+    // ========================================================================
+    // 6. RENDU HTML — Dashboard + alertes triées
+    // ========================================================================
+    
+    /**
+     * Génère le dashboard global en HTML
+     */
+    function renderDashboard(dashboard) {
+        const d = dashboard;
+        const riskClass = d.global_risk.color;
+        
+        // Jauge visuelle du score
+        const gaugeColor = d.global_score >= 60 ? '#dc3545' : (d.global_score >= 35 ? '#ffc107' : (d.global_score >= 15 ? '#0dcaf0' : '#198754'));
+        
+        return `
+        <div class="card border-${riskClass} shadow mb-3">
+            <div class="card-header bg-${riskClass} ${riskClass === 'warning' ? 'text-dark' : 'text-white'}">
+                <strong>${d.global_risk.icon} Score PIM Global : ${d.global_score}/100 — ${d.global_risk.label}</strong>
+            </div>
+            <div class="card-body p-2">
+                <!-- Jauge -->
+                <div class="progress mb-2" style="height: 12px;">
+                    <div class="progress-bar" role="progressbar" style="width: ${d.global_score}%; background-color: ${gaugeColor};" 
+                         aria-valuenow="${d.global_score}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                
+                <!-- Métriques clés -->
+                <div class="row text-center g-1 mb-2">
+                    <div class="col-3">
+                        <div class="border rounded p-1">
+                            <div class="fw-bold text-danger" style="font-size:1.4em;">${d.critiques}</div>
+                            <small class="text-muted">🔴 Critiques</small>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="border rounded p-1">
+                            <div class="fw-bold text-warning" style="font-size:1.4em;">${d.importants}</div>
+                            <small class="text-muted">🟠 Importants</small>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="border rounded p-1">
+                            <div class="fw-bold text-info" style="font-size:1.4em;">${d.informatifs}</div>
+                            <small class="text-muted">🔵 Informatifs</small>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="border rounded p-1">
+                            <div class="fw-bold text-dark" style="font-size:1.4em;">${d.meds_pim}/${d.meds_total}</div>
+                            <small class="text-muted">💊 Meds PIM</small>
+                        </div>
+                    </div>
+                </div>
+                
+                ${d.meds_pim > 0 ? `<div class="small text-muted mb-1">
+                    <strong>${d.meds_pim_ratio}%</strong> de l'ordonnance classée PIM : 
+                    <em>${d.meds_pim_list.join(', ')}</em>
+                </div>` : ''}
+                
+                ${d.top3_critiques.length > 0 ? `
+                <div class="mt-1">
+                    <strong class="text-danger small">⚡ Priorités absolues :</strong>
+                    ${d.top3_critiques.map((t, i) => `<div class="small"><span class="badge bg-danger">${t.score}</span> ${t.titre} <span class="text-muted">(${t.sources} sources)</span></div>`).join('')}
+                </div>` : ''}
+            </div>
+        </div>`;
+    }
+    
+    /**
+     * Génère le HTML des alertes EVITER, triées et scorées.
+     * Affiche d'abord les critiques, puis importants, puis informatifs.
+     * Les informatifs sont en accordéon repliable.
+     */
+    function renderAlertesTriees(alertes, type) {
+        if (!alertes || alertes.length === 0) {
+            return `<div class="alert alert-light">Aucune ${type === 'eviter' ? 'prescription inappropriée' : 'omission thérapeutique'} détectée.</div>`;
+        }
+        
+        // Dédupliquer si cross-ref disponible
+        let deduped = alertes;
+        if (typeof deduplicateAlerts === 'function') {
+            deduped = deduplicateAlerts(alertes);
+        }
+        
+        const critiques = deduped.filter(a => a.triage && a.triage.priority === 1);
+        const importants = deduped.filter(a => a.triage && a.triage.priority === 2);
+        const informatifs = deduped.filter(a => a.triage && a.triage.priority === 3);
+        
+        let html = '';
+        
+        // CRITIQUES — toujours visibles, fond rouge prononcé
+        if (critiques.length > 0) {
+            html += `<div class="mb-2"><strong class="text-danger">🔴 Action immédiate (${critiques.length})</strong></div>`;
+            html += critiques.map(a => renderSingleAlert(a)).join('');
+        }
+        
+        // IMPORTANTS — toujours visibles, fond orange
+        if (importants.length > 0) {
+            html += `<div class="mb-2 mt-3"><strong class="text-warning">🟠 Réévaluation planifiée (${importants.length})</strong></div>`;
+            html += importants.map(a => renderSingleAlert(a)).join('');
+        }
+        
+        // INFORMATIFS — repliables par défaut
+        if (informatifs.length > 0) {
+            const collapseId = `collapse_${type}_info_${Math.random().toString(36).substr(2,5)}`;
+            html += `
+            <div class="mb-2 mt-3">
+                <a class="text-info text-decoration-none" data-bs-toggle="collapse" href="#${collapseId}" role="button" aria-expanded="false">
+                    🔵 Informatifs (${informatifs.length}) — cliquer pour voir ▾
+                </a>
+            </div>
+            <div class="collapse" id="${collapseId}">
+                ${informatifs.map(a => renderSingleAlert(a)).join('')}
+            </div>`;
+        }
+        
+        return html;
+    }
+    
+    function renderSingleAlert(a) {
+        const triage = a.triage || getTriageLevel(a.score || 0);
+        const borderClass = triage.priority === 1 ? 'danger' : (triage.priority === 2 ? 'warning' : 'info');
+        const bgOpacity = triage.priority === 1 ? 'bg-danger bg-opacity-10' : '';
+        
+        // Badge de score
+        const scoreBadge = a.score != null ? 
+            `<span class="badge bg-${borderClass} me-1" title="Score de priorité">${a.score}</span>` : '';
+        
+        // Badges PIM par molécule
+        let pimBadges = '';
+        if (a.pim_dict_keys && typeof renderPimBadges === 'function') {
+            pimBadges = a.pim_dict_keys
+                .filter(k => typeof activeMeds !== 'undefined' && activeMeds.some(m => m.dci && m.dci.toLowerCase().includes(k)))
+                .map(d => renderPimBadges(d)).join('');
+        }
+        
+        return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass});">
+            ${scoreBadge}<strong>${triage.icon} ${a.titre}</strong>
+            <span class="badge bg-secondary float-end" style="font-size:0.65em;">${a.sources_label || ''}</span>
+            <br><span class="small">${a.message}</span>
+            ${pimBadges}
+            ${a.alternatives ? `<br><em class="text-success small">💡 ${a.alternatives}</em>` : ''}
+        </div>`;
+    }
+
+    // ========================================================================
+    // API PUBLIQUE
+    // ========================================================================
+    
+    return {
+        buildIndex,
+        evaluer,
+        computeAlertScore,
+        getTriageLevel,
+        renderDashboard,
+        renderAlertesTriees,
+        
+        // Accès aux stats internes (debug)
+        getIndexStats: () => ({
+            indexKeys: _invertedIndex ? Object.keys(_invertedIndex).length : 0,
+            totalRules: _ruleMap ? Object.keys(_ruleMap).length : 0,
+            cacheHits: _medKeyCache ? Object.keys(_medKeyCache).length : 0
+        })
+    };
+    
+})();
+
+// ============================================================================
+// 🔌 INTÉGRATION DANS app_analysis.js
+// ============================================================================
+// 
+// Dans analyserPrescription(), remplacer :
+//
+//   const recos = evaluerRecommandations({...});
+//   document.getElementById('alertes-eviter').innerHTML += renderAlertesEviter(recos.eviter);
+//   document.getElementById('alertes-initier').innerHTML += renderAlertesInitier(recos.initier);
+//
+// Par :
+//
+//   const recos = GeriaEngineV2.evaluer({
+//       activeMeds, activeComorbs, bioValues,
+//       patientAge, isFragile, scoreACB_global
+//   });
+//
+//   // Dashboard global en tête
+//   document.getElementById('alertes-scores').innerHTML += GeriaEngineV2.renderDashboard(recos.dashboard);
+//
+//   // Alertes triées par priorité
+//   document.getElementById('alertes-eviter').innerHTML = GeriaEngineV2.renderAlertesTriees(recos.eviter, 'eviter');
+//   document.getElementById('alertes-initier').innerHTML = GeriaEngineV2.renderAlertesTriees(recos.initier, 'initier');
+//
+//   // Stats performance (console)
+//   console.log(`[PIM] ${recos._perf.candidates} candidats → ${recos._perf.triggered} alertes en ${recos._perf.time_ms}ms`);
+//

@@ -138,6 +138,9 @@
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkFoie"><label class="form-check-label small">Hépatopathie sévère / Cirrhose</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSepsis"><label class="form-check-label small">Sepsis / Maladie aiguë en cours</label></div>
                                 <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Gériatrie & Syndromes</h6>
+                                
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkPalliatif"><label class="form-check-label small fw-bold text-danger">Soins palliatifs / Espérance de vie < 1 an</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAtcdUlcere"><label class="form-check-label small text-warning">ATCD d'Ulcère ou Saignement digestif</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkChutes"><label class="form-check-label small fw-bold text-warning">Antécédent de chutes fréquentes</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDepression"><label class="form-check-label small">Dépression majeure caractérisée</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkIncontinence"><label class="form-check-label small">Incontinence urinaire</label></div>
@@ -235,8 +238,12 @@
     <script src="ddi_auc_data.js"></script>
     
     <script src="app_legend.js"></script>
-            <script src="geria_database.js"></script>
-    <script src="geria_recos_db.js"></script>
+            
+    <script src="geria_database.js"></script>
+    <script src="geria_pathology_rules_v3.js"></script>
+    <script src="geria_recos_final.js"></script>
+    <script src="geria_integration_module.js"></script>
+    <script src="geria_engine_v2.js"></script>
     <script src="app_core.js"></script>
     <script src="app_ui.js"></script>
     <script src="app_analysis.js"></script>

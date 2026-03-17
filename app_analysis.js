@@ -1,14 +1,32 @@
-// 🧠 app_analysis.js - V6.0 (Branché sur GERIA_RECOS_DB)
+// 🧠 app_analysis.js - BRANCHEMENT SUR GERIA ENGINE V2
 
 const medMatchesAnsmTerm = (med, term) => {
     if (!term || !med) return false;
-    let t = sanitizeText(term); let dci = sanitizeText(med.dci); let classe = sanitizeText(med.classe);
-    if(t === 'ains' && (classe.includes('ains') || ['ibuprofene','ketoprofene','naproxene','diclofenac','celecoxib','etoricoxib'].some(d=>dci.includes(d)))) return true;
-    if(t === 'iec' && (classe.includes('iec') || dci.includes('pril'))) return true;
-    if(t.includes('ara2') && (classe.includes('ara2') || dci.includes('sartan'))) return true;
-    if(t.includes('betabloquant') && (classe.includes('beta') || dci.includes('lol'))) return true;
-    if(t.includes('diuretique') && (classe.includes('diuretique') || ['furosemide','bumetanide','hydrochlorothiazide','indapamide','spironolactone','altizide'].some(d=>dci.includes(d)))) return true;
-    return dci.includes(t) || classe.includes(t) || t.includes(dci);
+    let t = sanitizeText(term); 
+    let dci = sanitizeText(med.dci); let classe = sanitizeText(med.classe);
+    
+    if (t.endsWith('s') && !t.includes('ains') && !t.includes('isrs')) t = t.slice(0, -1);
+    if (t.endsWith('aux')) t = t.replace('aux', 'al');
+    
+    if(dci.includes(t) || t.includes(dci)) return true;
+    if(classe.includes(t) || t.includes(classe)) return true;
+
+    if((t.includes('ains') || t.includes('antiinflammatoire')) && (classe.includes('ains') || ['ibuprofene','ketoprofene','naproxene','diclofenac','celecoxib','etoricoxib','meloxicam','piroxicam'].some(d=>dci.includes(d)))) return true;
+    if((t.includes('iec') || t.includes('enzymedeconversion')) && (classe.includes('iec') || dci.includes('pril'))) return true;
+    if((t.includes('ara2') || t.includes('sartan') || t.includes('angiotensine')) && (classe.includes('ara2') || dci.includes('sartan'))) return true;
+    if((t.includes('beta') || t.includes('betabloquant')) && (classe.includes('beta') || dci.includes('lol'))) return true;
+    if(t.includes('diuretique') && (classe.includes('diuretique') || ['furosemide','bumetanide','hydrochlorothiazide','indapamide','spironolactone','altizide','eplerenone'].some(d=>dci.includes(d)))) return true;
+    if(t.includes('macrolide') && (classe.includes('macrolide') || ['clarithromycine', 'erythromycine', 'azithromycine', 'roxithromycine', 'spiramycine'].some(d=>dci.includes(d)))) return true;
+    if((t.includes('anticoag') || t.includes('aod') || t.includes('avk')) && (classe.includes('anticoag') || classe.includes('aod') || classe.includes('avk') || ['apixaban', 'rivaroxaban', 'dabigatran', 'warfarine', 'fluindione', 'acenocoumarol', 'enoxaparine'].some(d=>dci.includes(d)))) return true;
+    if((t.includes('antidepresseur') || t.includes('isrs') || t.includes('irsn') || t.includes('serotonine')) && (classe.includes('antidepresseur') || ['citalopram', 'escitalopram', 'sertraline', 'paroxetine', 'fluoxetine', 'venlafaxine', 'duloxetine', 'mianserine', 'mirtazapine', 'amitriptyline'].some(d=>dci.includes(d)))) return true;
+    if((t.includes('antiagreg') || t.includes('aspirine') || t.includes('acetylsalicylique')) && (classe.includes('antiagreg') || ['aspirin', 'clopidogrel', 'prasugrel', 'ticagrelor', 'kardegic'].some(d=>dci.includes(d)))) return true;
+    if((t.includes('neuroleptique') || t.includes('antipsychotique')) && (classe.includes('neuroleptique') || classe.includes('antipsychotique') || ['quetiapine', 'risperidone', 'olanzapine', 'haloperidol', 'aripiprazole', 'clozapine', 'tiapride', 'loxapine', 'cyamemazine'].some(d=>dci.includes(d)))) return true;
+    
+    if(t.includes('inducteur') && t.includes('enzymatique') && ['rifampicine', 'rifabutine', 'millepertuis', 'carbamazepine', 'phenytoine', 'phenobarbital', 'primidone', 'efavirenz', 'nevirapine', 'bosentan', 'enzalutamide'].some(d=>dci.includes(d))) return true;
+    if(t.includes('inhibiteur') && t.includes('cyp3a4') && ['ritonavir', 'clarithromycine', 'erythromycine', 'telithromycine', 'itraconazole', 'ketoconazole', 'posaconazole', 'voriconazole', 'idelalisib', 'cobicistat', 'jusdepamplemousse', 'pamplemousse'].some(d=>dci.includes(d))) return true;
+    if(t.includes('inhibiteur') && t.includes('protease') && ['darunavir', 'atazanavir', 'lopinavir', 'ritonavir'].some(d=>dci.includes(d))) return true;
+
+    return false;
 };
 
 function formatSuiviList(str) {
@@ -35,6 +53,17 @@ function preCalculerScores() {
 
 function analyserPrescription() {
     if (typeof MASTER_DB === 'undefined') return;
+    
+    // 🔥 INITIALISATION DU MOTEUR V2 (Une seule fois)
+    if (typeof applyFullIntegration === 'function' && !window.engineInitialized) {
+        applyFullIntegration();
+        if (typeof GeriaEngineV2 !== 'undefined') {
+            GeriaEngineV2.buildIndex();
+            window.engineInitialized = true;
+            console.log("🚀 Moteur GeriaEngineV2 initialisé et indexé.");
+        }
+    }
+
     preCalculerScores();
     const patientAge = getVal('patientAge'); const sexe = getStr('patientSexe'); const isFragile = isChecked('patientFragile') || getVal('scoreCFS') >= 7;
 
@@ -43,7 +72,8 @@ function analyserPrescription() {
         'BIO_005': getVal('bioCa'), 'BIO_006': getVal('bioMg'), 'BIO_007': getVal('bioUree'), 'BIO_008': getVal('bioUric'),
         'BIO_009': getVal('bioHb'), 'BIO_010': getVal('bioPlaq'), 'BIO_013': getVal('bioAsat'), 'BIO_014': getVal('bioAlat'),
         'BIO_018': getVal('bioCpk'), 'BIO_019': getVal('bioTsh'), 'BIO_020': getVal('bioFer'), 'BIO_021': getVal('bioB12'),
-        'BIO_024': getVal('bioCrp'), 'BIO_028': getVal('bioBnp'), 'BIO_031': getVal('bioQtc')
+        'BIO_024': getVal('bioCrp'), 'BIO_028': getVal('bioBnp'), 'BIO_031': getVal('bioQtc'),
+        'BIO_011': getVal('bioHbA1c'), 'BIO_012': getVal('bioLdl'), 'BIO_022': getVal('bioVitD'), 'BIO_023': getVal('bioAlb')
     };
 
     const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi'];
@@ -55,25 +85,59 @@ function analyserPrescription() {
     };
 
     // =========================================================
-    // 1. PHÉNOTYPE ET SCORES 
+    // 1. 🚀 BRANCHEMENT AU NOUVEAU MOTEUR EXPERT (GERIA ENGINE V2)
     // =========================================================
     let divScores = document.getElementById('alertes-scores');
-    let phenotype = [];
-    if(patientAge >= 85) phenotype.push("Très Grand Âge"); else if(patientAge >= 75) phenotype.push("Gériatrique");
-    if(isFragile) phenotype.push("Vulnérable/Fragile");
-    if(['PAT_005','PAT_016','PAT_004','PAT_007','PAT_001','PAT_002','PAT_003','PAT_006'].some(c=>activeComorbs.includes(c))) phenotype.push("Cardio-Métabolique");
-    if(['PAT_010','PAT_011','PAT_012','PAT_013','PAT_014'].some(c=>activeComorbs.includes(c))) phenotype.push("Neuro-dégénératif");
-    if(scoreACB_global >= 3 || scoreCIA_global >= 3) phenotype.push("Haut risque Chute/Confusion");
     
-    let phenoStr = phenotype.length ? phenotype.join(" • ") : "Standard";
-    let polyAlerte = activeMeds.length >= 10 ? `<div class="alert alert-danger border-danger mb-2 shadow-sm"><strong>💊 Hyperpolypharmacie majeure (${activeMeds.length} médicaments)</strong></div>` : (activeMeds.length >= 5 ? `<div class="alert alert-warning border-warning mb-2 shadow-sm" style="padding:0.5rem;"><strong>💊 Polypharmacie (${activeMeds.length} médicaments)</strong></div>` : "");
-    if(divScores) divScores.innerHTML = `<div class="alert alert-dark mb-2 shadow-sm"><strong>👤 Phénotype : ${phenoStr}</strong></div>` + polyAlerte;
+    // Contexte Clinique
+    const ctxClinique = [];
+    if(isChecked('chkBrady')) ctxClinique.push("bradycardie");
+    if(isChecked('chkIncontinence')) ctxClinique.push("incontinence");
+    if(isChecked('chkStenoseAortique')) ctxClinique.push("stenose_aortique");
+    if(isChecked('chkSaignement') || isChecked('chkAspirineForte')) { ctxClinique.push("risque_hemorragique"); ctxClinique.push("atcd_hemorragie"); }
+    if(isChecked('chkHbp')) ctxClinique.push("hbp");
+    if(isChecked('chkDepression')) ctxClinique.push("depression");
+    if(isChecked('chkConstipation')) ctxClinique.push("constipation_chronique");
+    if(isChecked('chkDysphagie')) ctxClinique.push("dysphagie");
+    if(isChecked('chkChutes')) ctxClinique.push("chutes");
+    if(isChecked('chkAnorexie') || (getVal('patientBmi') > 0 && getVal('patientBmi') < 18.5)) ctxClinique.push("denutrition");
+    if(isChecked('chkGlaucome')) ctxClinique.push("glaucome");
+    if(isChecked('chkPalliatif')) ctxClinique.push("palliatif", "esperance_vie_reduite", "stoppfrail");
+    if(isChecked('chkAtcdUlcere')) ctxClinique.push("atcd_ulcere", "atcd_hemorragie_digestive");
+    if(getVal('bioAlb') > 0 && getVal('bioAlb') < 30) ctxClinique.push("denutrition_severe");
 
+
+    const ctx = {
+        activeMeds: activeMeds,
+        activeComorbs: activeComorbs,
+        bioValues: bioValues,
+        patientAge: patientAge,
+        isFragile: isFragile,
+        scoreACB_global: scoreACB_global,
+        contexte_clinique: ctxClinique
+    };
+
+    // ÉVALUATION V2
+    if (typeof GeriaEngineV2 !== 'undefined') {
+        const recos = GeriaEngineV2.evaluer(ctx);
+        
+        // Affichage du Dashboard Global
+        if (divScores) divScores.innerHTML += GeriaEngineV2.renderDashboard(recos.dashboard);
+        
+        // Affichage des Recommandations (Triées et Sourcées)
+        document.getElementById('alertes-eviter').innerHTML = GeriaEngineV2.renderAlertesTriees(recos.eviter, 'eviter');
+        document.getElementById('alertes-initier').innerHTML = GeriaEngineV2.renderAlertesTriees(recos.initier, 'initier');
+        
+        counts.eviter = recos.eviter.length;
+        counts.initier = recos.initier.length;
+    } else {
+        divScores.innerHTML += `<div class="alert alert-danger">⚠️ Le moteur GeriaEngineV2 est introuvable. Avez-vous actualisé la page ?</div>`;
+    }
+
+    // =========================================================
+    // 2. SCORES CLINIQUES (Risq-Path, Tisdale, CHA2DS2, etc.)
+    // =========================================================
     if(divScores) {
-        let colorACB = scoreACB_global >= 3 ? "danger fw-bold" : (scoreACB_global > 0 ? "warning" : "success"); 
-        let colorCIA = scoreCIA_global >= 3 ? "danger fw-bold" : (scoreCIA_global > 0 ? "warning" : "success");
-        divScores.innerHTML += `<div class="alert alert-light border border-secondary mb-2 shadow-sm"><strong>🧠 Scores Anticholinergiques :</strong><br><span class="text-${colorACB}">• Échelle ACB : <b>${scoreACB_global} point(s)</b></span><br><span class="text-${colorCIA}">• Échelle CIA : <b>${scoreCIA_global} point(s)</b></span></div>`;
-
         let scoreCha = 0; let ttCha = [];
         if(patientAge >= 75) { scoreCha += 2; ttCha.push("Âge ≥75 (+2)"); } else if(patientAge >= 65) { scoreCha += 1; ttCha.push("Âge ≥65 (+1)"); }
         if(sexe === 'F') { scoreCha += 1; ttCha.push("Femme (+1)"); }
@@ -94,7 +158,7 @@ function analyserPrescription() {
         let scoreOrbit = 0; let ttOrbit = [];
         if(patientAge >= 75) { scoreOrbit += 1; ttOrbit.push("Âge ≥75 (+1)"); }
         if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < 13) || (sexe === 'F' && bioValues['BIO_009'] < 12))) { scoreOrbit += 2; ttOrbit.push("Anémie (+2)"); }
-        if(isChecked('chkSaignement')) { scoreOrbit += 2; ttOrbit.push("Saignement (+2)"); }
+        if(isChecked('chkSaignement') || isChecked('chkAspirineForte')) { scoreOrbit += 2; ttOrbit.push("Saignement (+2)"); }
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 60) { scoreOrbit += 1; ttOrbit.push("DFG <60 (+1)"); }
         if(patientHasMedClass('antiagreg')) { scoreOrbit += 1; ttOrbit.push("Antiagrégant (+1)"); }
         divScores.innerHTML += `<div class="alert alert-light border border-warning mb-2 shadow-sm"><strong class="text-warning">ORBIT-AF : ${scoreOrbit} point(s)</strong><br><small class="text-muted">${ttOrbit.join(', ') || 'Aucun'}</small></div>`;
@@ -124,7 +188,7 @@ function analyserPrescription() {
     }
 
     // =========================================================
-    // 2. MOTEUR BIOLOGIQUE (Iatrogénie active)
+    // 3. MOTEUR BIOLOGIQUE (Syndromes d'Iatrogénie)
     // =========================================================
     const checkBioSyndrome = (syndId, conditionRemplie) => {
         if(!conditionRemplie) return;
@@ -144,50 +208,8 @@ function analyserPrescription() {
     if(bioValues['BIO_001'] > 5.0) checkBioSyndrome('SYND_010', true); 
     if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] < 3.5) checkBioSyndrome('SYND_011', true); 
 
-
     // =========================================================
-    // 3. 🎯 NOUVEAU MOTEUR EXPERT (GERIA_RECOS_DB)
-    // =========================================================
-    // Collecte des contextes cliniques depuis les checkboxes
-    const ctxClinique = [];
-    if(isChecked('chkBrady')) ctxClinique.push("bradycardie");
-    if(isChecked('chkIncontinence')) ctxClinique.push("incontinence");
-    if(isChecked('chkStenoseAortique')) ctxClinique.push("stenose_aortique");
-    if(isChecked('chkSaignement') || isChecked('chkHtaNonControlee')) { ctxClinique.push("risque_hemorragique"); ctxClinique.push("atcd_hemorragie"); }
-    if(isChecked('chkHbp')) ctxClinique.push("hbp");
-    if(isChecked('chkDepression')) ctxClinique.push("depression");
-    if(isChecked('chkConstipation')) ctxClinique.push("constipation_chronique");
-    if(isChecked('chkDysphagie')) ctxClinique.push("dysphagie");
-    if(isChecked('chkChutes')) ctxClinique.push("chutes");
-    if(isChecked('chkAnorexie') || (getVal('patientBmi') > 0 && getVal('patientBmi') < 18.5)) ctxClinique.push("denutrition");
-    if(isChecked('chkAspirineForte')) ctxClinique.push("dose_aspirine_elevee");
-    if(isChecked('chkGlaucome')) ctxClinique.push("glaucome");
-
-    // Préparation de l'objet de contexte pour le Moteur
-    const ctx = {
-        activeMeds: activeMeds,
-        activeComorbs: activeComorbs,
-        bioValues: bioValues,
-        patientAge: patientAge,
-        isFragile: isFragile,
-        scoreACB_global: scoreACB_global,
-        contexte_clinique: ctxClinique
-    };
-
-    // Lancement de l'évaluation
-    if (typeof evaluerRecommandations === 'function') {
-        const recos = evaluerRecommandations(ctx);
-        document.getElementById('alertes-eviter').innerHTML = renderAlertesEviter(recos.eviter);
-        document.getElementById('alertes-initier').innerHTML = renderAlertesInitier(recos.initier);
-        counts.eviter = recos.eviter.length;
-        counts.initier = recos.initier.length;
-    } else {
-        document.getElementById('alertes-eviter').innerHTML = '<div class="alert alert-danger">Erreur : geria_recos_db.js est introuvable.</div>';
-    }
-
-
-    // =========================================================
-    // 4. MOTEUR DES INTERACTIONS (TABAC, DDI & AUC)
+    // 4. MOTEUR DES INTERACTIONS (TABAC, DDI, ANSM & AUC)
     // =========================================================
     try {
         if (isChecked('chkTabac')) {
@@ -195,17 +217,9 @@ function analyserPrescription() {
             let affected = activeMeds.filter(m => cyp1a2_drugs.some(d => sanitizeText(m.dci).includes(d)));
             if (affected.length > 0) {
                 let medNames = affected.map(m => m.dci.toUpperCase()).join(', ');
-                addAlert('alertes-auc', `<div class="alert alert-warning border-warning shadow-sm"><strong style="font-size:1.05em; color:#d97706;">🚬 Interaction Tabac (Induction CYP1A2)</strong><br>Le tabagisme diminue fortement l'efficacité des médicaments suivants : <b>${medNames}</b>.<br><em class="text-danger small">⚠️ Attention : l'arrêt brutal du tabac à l'hôpital expose le patient à un risque de surdosage toxique.</em></div>`, 'auc');
+                addAlert('alertes-auc', `<div class="alert alert-warning border-warning shadow-sm"><strong style="font-size:1.05em; color:#d97706;">🚬 Interaction Tabac (Induction CYP1A2)</strong><br>Le tabagisme diminue fortement l'efficacité de : <b>${medNames}</b>.<br><em class="text-danger small">⚠️ Attention : arrêt brutal = risque de surdosage.</em></div>`, 'auc');
             }
         }
-
-        const getEnRoots = (dci) => {
-            let s = sanitizeText(dci); let roots = [s];
-            if (s.includes('rifampic')) roots.push('rifampin', 'rifampicin');
-            if (s.includes('quetiap')) roots.push('quetiapine', 'quetiapin');
-            if (s.includes('clarithromyc')) roots.push('clarithromycin');
-            return roots;
-        };
 
         activeMeds.forEach(m => {
             let ref = m.db_ref; if(!ref) return;
@@ -226,31 +240,55 @@ function analyserPrescription() {
         for(let i=0; i<activeMeds.length; i++) {
             for(let j=i+1; j<activeMeds.length; j++) {
                 let mA = activeMeds[i], mB = activeMeds[j];
-                let rootsA = getEnRoots(mA.dci); let rootsB = getEnRoots(mB.dci);
                 let pairName = `${mA.dci.toUpperCase()} + ${mB.dci.toUpperCase()}`;
-
+                let dciA = sanitizeText(mA.dci); let dciB = sanitizeText(mB.dci);
                 let matchesAuc = [];
+                
+                // AUC EXTERNE
                 if(typeof DDI_AUC_DB !== 'undefined') {
-                    matchesAuc = DDI_AUC_DB.filter(d => {
+                    let rootsA = [dciA]; let rootsB = [dciB];
+                    if (dciA.includes('rifampic')) rootsA.push('rifampin');
+                    if (dciA.includes('quetiap')) rootsA.push('quetiapine');
+                    if (dciB.includes('rifampic')) rootsB.push('rifampin');
+                    if (dciB.includes('quetiap')) rootsB.push('quetiapine');
+
+                    let aucFiltered = DDI_AUC_DB.filter(d => {
                         let p = sanitizeText(String(d.perpetrator)); let v = sanitizeText(String(d.victim));
                         return (rootsA.some(r => r.includes(p)) && rootsB.some(r => r.includes(v))) || (rootsB.some(r => r.includes(p)) && rootsA.some(r => r.includes(v)));
                     });
+                    matchesAuc.push(...aucFiltered);
                 }
-                if ((rootsA.includes('ritonavir') && rootsB.includes('quetiapine')) || (rootsB.includes('ritonavir') && rootsA.includes('quetiapine'))) matchesAuc.push({ auc_ratio: 6.2, mechanism: "Inhibition puissante CYP3A4", note: "FDA" });
-                if ((rootsA.includes('clarithromycin') && rootsB.includes('quetiapine')) || (rootsB.includes('clarithromycin') && rootsA.includes('quetiapine'))) matchesAuc.push({ auc_ratio: 2.8, mechanism: "Inhibition forte CYP3A4", note: "PK" });
+                
+                // AUC RÈGLES
+                if ((dciA.includes('ritonavir') && dciB.includes('quetiapine')) || (dciB.includes('ritonavir') && dciA.includes('quetiapine'))) matchesAuc.push({ auc_ratio: 6.2, mechanism: "Inhibition puissante CYP3A4", note: "FDA" });
+                if ((dciA.includes('clarithromycin') && dciB.includes('quetiapine')) || (dciB.includes('clarithromycin') && dciA.includes('quetiapine'))) matchesAuc.push({ auc_ratio: 2.8, mechanism: "Inhibition forte CYP3A4", note: "PK" });
+                if ((dciA.includes('ritonavir') && dciB.includes('apixaban')) || (dciB.includes('ritonavir') && dciA.includes('apixaban'))) matchesAuc.push({ auc_ratio: 2.5, mechanism: "Inhibition CYP3A4 & P-gp (Risque Hémorragique Majeur)", note: "FDA" });
+                if ((dciA.includes('clarithromycin') && dciB.includes('apixaban')) || (dciB.includes('clarithromycin') && dciA.includes('apixaban'))) matchesAuc.push({ auc_ratio: 1.6, mechanism: "Inhibition CYP3A4", note: "PK" });
                 
                 if (matchesAuc.length > 0) {
                     if(!groupedAuc[pairName]) groupedAuc[pairName] = { items: [] };
                     matchesAuc.forEach(m => { if(!isNaN(parseFloat(m.auc_ratio))) groupedAuc[pairName].items.push(m); });
                 }
 
-                if(typeof ANSM_DDI_DB !== 'undefined') {
-                    ANSM_DDI_DB.forEach(d => {
-                        if ((medMatchesAnsmTerm(mA, d.d1) && medMatchesAnsmTerm(mB, d.d2)) || (medMatchesAnsmTerm(mA, d.d2) && medMatchesAnsmTerm(mB, d.d1))) {
+                // ANSM
+                let ansmDb = typeof ANSM_DDI_DB !== 'undefined' ? ANSM_DDI_DB : (typeof ansm_ddi_data !== 'undefined' ? ansm_ddi_data : null);
+                if(ansmDb && Array.isArray(ansmDb)) {
+                    ansmDb.forEach(d => {
+                        let term1 = d.d1 || d.molecule1 || d.nom1 || "";
+                        let term2 = d.d2 || d.molecule2 || d.nom2 || "";
+                        let niveau = String(d.level || d.niveau || "Interaction").toUpperCase();
+                        let desc = String(d.desc || d.description || d.message || "");
+                        
+                        if ((medMatchesAnsmTerm(mA, term1) && medMatchesAnsmTerm(mB, term2)) || 
+                            (medMatchesAnsmTerm(mA, term2) && medMatchesAnsmTerm(mB, term1))) {
+                            
                             if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
-                            let isDanger = String(d.level).includes("CONTRE-INDICATION");
+                            let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("DECONSEILLE") || niveau.includes("MAJEUR");
                             if(isDanger) groupedAnsm[pairName].isDanger = true;
-                            if(!groupedAnsm[pairName].raw.some(ex => String(ex.desc).toLowerCase().includes(String(d.desc).toLowerCase()))) groupedAnsm[pairName].raw.push({ level: d.level, desc: d.desc, isDanger: isDanger });
+                            
+                            if(!groupedAnsm[pairName].raw.some(ex => ex.desc.toLowerCase() === desc.toLowerCase())) {
+                                groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger });
+                            }
                         }
                     });
                 }
@@ -274,7 +312,7 @@ function analyserPrescription() {
     } catch(e) { console.error("Erreur Interactions", e); }
 
     // =========================================================
-    // 5. POSOLOGIES ET SUIVI BIOLOGIQUE
+    // 5. POSOLOGIES ET PROTOCOLES BIOLOGIQUES INTÉGRÉS V2
     // =========================================================
     activeMeds.forEach(m => {
         let ref = m.db_ref; if (!ref) return;
@@ -299,7 +337,6 @@ function analyserPrescription() {
                 if(ref.atb_moderee) html += `<span class="${isModeree ? 'bg-warning bg-opacity-50 fw-bold px-1 rounded' : 'text-muted'}">- Modérée (30-60) : ${ref.atb_moderee}</span><br>`;
                 if(ref.atb_severe) html += `<span class="${isSevere ? 'bg-danger text-white fw-bold px-1 rounded' : 'text-muted'}">- Sévère (15-30) : ${ref.atb_severe}</span><br>`;
                 if(ref.atb_terminale) html += `<span class="${isTerminale ? 'bg-danger text-white fw-bold px-1 rounded' : 'text-muted'}">- Terminale (<15) : ${ref.atb_terminale}</span>`;
-                if(isUnk) html += `<span class="text-danger small"><br>⚠️ Saisissez la Créatinine pour voir le palier d'adaptation.</span>`;
                 html += `</div>`;
             }
             if (alb >= 85) html += `<span class="text-danger small d-block border-top pt-1 mt-1 border-success border-opacity-25"><em>🩸 Forte liaison à l'albumine :</em> <b>${alb}%</b> (Risque surdosage si dénutrition).</span>`;
@@ -308,7 +345,7 @@ function analyserPrescription() {
         }
 
         if (ref.suivi_initial || ref.suivi_periodique || ref.alerte_clinique) {
-            let sHtml = `<div class="alert alert-light border border-primary shadow-sm"><strong class="text-primary" style="font-size:1.05em;">👁️ Protocole de Suivi : ${ref.dci.toUpperCase()}</strong><hr class="mt-2 mb-2" style="opacity:0.15;">`;
+            let sHtml = `<div class="alert alert-light border border-primary shadow-sm"><strong class="text-primary" style="font-size:1.05em;">👁️ Protocole de Suivi Médicamenteux : ${ref.dci.toUpperCase()}</strong><hr class="mt-2 mb-2" style="opacity:0.15;">`;
             if (ref.suivi_initial) sHtml += `<div class="mb-2 text-dark"><b>Initial :</b> ${formatSuiviList(ref.suivi_initial)}</div>`;
             if (ref.suivi_periodique) sHtml += `<div class="mb-2 text-dark"><b>Régulier :</b> ${formatSuiviList(ref.suivi_periodique)}</div>`;
             if (ref.alerte_clinique) sHtml += `<div style="color: #d97706;"><b>⚠️ À surveiller :</b> ${formatSuiviList(ref.alerte_clinique)}</div>`;
@@ -329,6 +366,24 @@ function analyserPrescription() {
             addAlert('alertes-suivi', sHtml, 'suivi');
         }
     });
+
+    // 🧪 INJECTION DES PROTOCOLES DE SURVEILLANCE BIOLOGIQUE PAR PATHOLOGIE (V2)
+    if (typeof getRequiredBioMonitoring === 'function' && activeComorbs.length > 0) {
+        try {
+            const bioMonitors = getRequiredBioMonitoring(activeComorbs);
+            for (const [bioId, data] of Object.entries(bioMonitors)) {
+                let pNames = data.pathos.map(p => MASTER_DB.PATHOLOGIES[p]?.NOM_STANDARD || p).join(', ');
+                let html = `<div class="alert alert-info border-info shadow-sm">
+                    <strong class="text-info">🧪 Biologie Recommandée : ${MASTER_DB.BIOLOGIE[bioId]?.NOM_STANDARD || bioId}</strong>
+                    <br><span class="small"><b>Pathologie(s) :</b> ${pNames}</span>
+                    <br><span class="small"><b>Fréquence :</b> ${data.frequences.join(' / ')}</span>
+                    <br><span class="badge bg-secondary mt-1" style="font-size:0.65em;">${data.sources.join(', ')}</span>
+                </div>`;
+                addAlert('alertes-suivi', html, 'suivi');
+            }
+        } catch(e) { console.error("Erreur BioMonitor:", e); }
+    }
+
 
     if(counts.eviter === 0) document.getElementById('alertes-eviter').innerHTML = '<div class="alert alert-light">Aucune prescription inappropriée détectée.</div>';
     if(counts.initier === 0) document.getElementById('alertes-initier').innerHTML = '<div class="alert alert-light">Aucune omission majeure détectée.</div>';
