@@ -3539,6 +3539,87 @@ const RECOS_SUPPLEMENT = [
         message: "EU(7)-PIM / PRISCUS : Paraffine liquide — risque de pneumopathie lipidique par aspiration, malabsorption vitamines liposolubles.",
         severite: "warning",
         condition: { med_keys: ["paraffine"] }
+    },
+
+    // ========================================================================
+    // Interactions manquantes intégrées depuis GERIA_DB (Beers 2023 / REMEDIES)
+    // ========================================================================
+    {
+        id: "SUP_INT_001", sources: ["BEERS"],
+        titre: "Lithium + IEC/ARA2 : surveiller lithémie",
+        message: "Beers 2023 : Les IEC/ARA2 modifient la volémie et réduisent la clairance rénale du lithium → risque de toxicité (marge thérapeutique étroite). Surveiller la lithémie de façon rapprochée.",
+        severite: "warning",
+        condition: { med_keys: ["lithium"], med_keys_2: ["iec", "ara2"] }
+    },
+    {
+        id: "SUP_INT_002", sources: ["BEERS", "EU7PIM"],
+        titre: "Phénytoïne + Cotrimoxazole : risque de toxicité",
+        message: "Beers/EU(7)-PIM : Le TMP-SMX inhibe le métabolisme de la phénytoïne → surdosage (nystagmus, ataxie, convulsions). Éviter l'association ou doser la phénytoïnémie.",
+        severite: "danger",
+        condition: { med_keys: ["phenytoine"], med_keys_2: ["cotrimoxazole", "trimethoprime", "sulfamethoxazole"] }
+    },
+    {
+        id: "SUP_INT_003", sources: ["BEERS"],
+        titre: "Théophylline + Fluoroquinolones : toxicité théophylline",
+        message: "Beers 2023 : Les fluoroquinolones (ciprofloxacine, norfloxacine) inhibent le métabolisme hépatique de la théophylline → risque de surdosage (tachycardie, convulsions). Éviter l'association.",
+        severite: "danger",
+        condition: { med_keys: ["theophylline"], med_keys_2: ["ciprofloxacine", "norfloxacine", "levofloxacine", "ofloxacine", "moxifloxacine"] }
+    },
+    {
+        id: "SUP_INT_004", sources: ["BEERS"],
+        titre: "AVK + Amiodarone : surveiller INR étroitement",
+        message: "Beers 2023 : L'amiodarone inhibe le métabolisme des AVK (CYP2C9) → risque hémorragique majeur. Réduire la dose d'AVK de 30-50% et contrôler l'INR 2×/semaine pendant 4-6 semaines.",
+        severite: "danger",
+        condition: { med_keys: ["warfarine", "fluindione", "acenocoumarol", "avk"], med_keys_2: ["amiodarone"] }
+    },
+    {
+        id: "SUP_INT_005", sources: ["BEERS"],
+        titre: "Alpha-bloquant HTA + Diurétique de l'anse (femme)",
+        message: "Beers 2023 : Association alpha-bloquant antihypertenseur + diurétique de l'anse : risque d'incontinence urinaire aggravée chez la femme âgée.",
+        severite: "warning",
+        condition: { med_keys: ["doxazosine", "prazosine", "terazosine", "urapidil"], med_keys_2: ["furosemide", "bumetanide"] }
+    },
+    {
+        id: "SUP_INT_006", sources: ["REMEDIES"],
+        titre: "Colchicine + Macrolide : CONTRE-INDICATION ABSOLUE",
+        message: "REMEDIES I-19 : Colchicine + macrolide (sauf spiramycine) = surdosage potentiellement fatal : pancytopénie, défaillance multiviscérale. URGENCE : changer l'antibiotique.",
+        severite: "danger",
+        condition: { med_keys: ["colchicine"], med_keys_2: ["clarithromycine", "erythromycine", "azithromycine", "roxithromycine", "josamycine"] }
+    },
+    {
+        id: "SUP_INT_007", sources: ["REMEDIES"],
+        titre: "IEC/ARA2 + Cotrimoxazole : hyperkaliémie sévère",
+        message: "REMEDIES I-9/I-10 : L'association IEC/ARA2 + cotrimoxazole (ou sels de potassium) expose à une hyperkaliémie sévère, potentiellement létale. Surveillance kaliémie impérative.",
+        severite: "danger",
+        condition: { med_keys: ["iec", "ara2"], med_keys_2: ["cotrimoxazole", "trimethoprime", "sulfamethoxazole"] }
+    },
+    {
+        id: "SUP_INT_008", sources: ["REMEDIES"],
+        titre: "Bêtabloquant + Inhibiteur acétylcholinestérase : bradycardie",
+        message: "REMEDIES I-1 : L'association bêtabloquant + IAChE (donépézil, rivastigmine, galantamine) expose à un risque de trouble de conduction, bradycardie excessive et syncope. ECG de surveillance recommandé.",
+        severite: "warning",
+        condition: { med_keys: ["betabloquant"], med_keys_2: ["donepezil", "rivastigmine", "galantamine"] }
+    },
+    {
+        id: "SUP_INT_009", sources: ["BEERS"],
+        titre: "AVK + ISRS : surveillance INR",
+        message: "Beers 2023 : Les ISRS inhibent la recapture plaquettaire et interfèrent avec le métabolisme des AVK → risque hémorragique accru. Surveillance INR recommandée.",
+        severite: "warning",
+        condition: { med_keys: ["warfarine", "fluindione", "acenocoumarol", "avk"], med_keys_2: ["isrs", "citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine"] }
+    },
+    {
+        id: "SUP_INT_010", sources: ["BEERS"],
+        titre: "Digoxine + Amiodarone : surveiller digoxinémie",
+        message: "Beers 2023 : L'amiodarone inhibe le transport rénal (P-gp) de la digoxine → accumulation et toxicité digitalique. Réduire la dose de digoxine de 50% et doser la digoxinémie.",
+        severite: "danger",
+        condition: { med_keys: ["digoxine"], med_keys_2: ["amiodarone"] }
+    },
+    {
+        id: "SUP_INT_011", sources: ["BEERS"],
+        titre: "Inhibiteur calcique non-DHP + Bêtabloquant : trouble conductif",
+        message: "Beers 2023 : L'association vérapamil ou diltiazem + bêtabloquant expose au risque de BAV, bradycardie sévère, insuffisance cardiaque aiguë. À éviter sauf indication spécifique.",
+        severite: "danger",
+        condition: { med_keys: ["verapamil", "diltiazem"], med_keys_2: ["betabloquant"] }
     }
 ];
 

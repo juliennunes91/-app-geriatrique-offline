@@ -256,16 +256,35 @@ function analyserPrescription() {
                         let term2 = d.d2 || d.molecule2 || d.nom2 || "";
                         let niveau = String(d.level || d.niveau || "Interaction").toUpperCase();
                         let desc = String(d.desc || d.description || d.message || "");
-                        
-                        if ((medMatchesAnsmTerm(mA, term1) && medMatchesAnsmTerm(mB, term2)) || 
+
+                        if ((medMatchesAnsmTerm(mA, term1) && medMatchesAnsmTerm(mB, term2)) ||
                             (medMatchesAnsmTerm(mA, term2) && medMatchesAnsmTerm(mB, term1))) {
-                            
+
                             if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
                             let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("DECONSEILLE") || niveau.includes("MAJEUR");
                             if(isDanger) groupedAnsm[pairName].isDanger = true;
-                            
+
                             if(!groupedAnsm[pairName].raw.some(ex => ex.desc.toLowerCase() === desc.toLowerCase())) {
-                                groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger });
+                                groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: 'ANSM' });
+                            }
+                        }
+                    });
+                }
+
+                // GPT_DDI_DB (BNF + Micromedex — événements cliniques)
+                if(typeof GPT_DDI_DB !== 'undefined' && Array.isArray(GPT_DDI_DB)) {
+                    GPT_DDI_DB.forEach(d => {
+                        if ((medMatchesAnsmTerm(mA, d.d1) && medMatchesAnsmTerm(mB, d.d2)) ||
+                            (medMatchesAnsmTerm(mA, d.d2) && medMatchesAnsmTerm(mB, d.d1))) {
+
+                            if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
+                            let niveau = String(d.niveau || "Interaction").toUpperCase();
+                            let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("MAJEUR");
+                            if(isDanger) groupedAnsm[pairName].isDanger = true;
+                            let desc = `${d.event || ''} — ${d.source || 'BNF+Micromedex'}`;
+
+                            if(!groupedAnsm[pairName].raw.some(ex => ex.desc.toLowerCase() === desc.toLowerCase())) {
+                                groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: d.source || 'BNF+Micromedex' });
                             }
                         }
                     });
