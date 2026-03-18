@@ -5,7 +5,7 @@ let maxQTLevel_global = 0; let infoQT_global = [];
 const unifiedMedsMap = new Map(); const allComorbs = [];
 
 // Nettoyeur universel (enlève accents, espaces, majuscules)
-const sanitizeText = str => str ? String(str).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "") : "";
+function sanitizeText(str) { return str ? String(str).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "") : ""; }
 
 window.genererPDF = function() { window.print(); };
 
