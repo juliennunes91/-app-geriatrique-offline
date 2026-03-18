@@ -4155,3 +4155,4 @@ const CROSS_REF_STATS = {
     merge_display_groups: CROSS_REF_GROUPS.filter(g => g.fusion_strategy === "merge_display").length,
     distinct_context_groups: CROSS_REF_GROUPS.filter(g => g.fusion_strategy === "distinct_context").length,
     sources_covered: [...new Set(CROSS_REF_GROUPS.flatMap(g => g.merged_sources))]
+};
