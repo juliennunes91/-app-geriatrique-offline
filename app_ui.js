@@ -105,6 +105,11 @@ function initUI() {
         console.log(`[ANTICHOLINERGIC] ${enriched} médicaments enrichis avec ACB/CIA/BHE`);
     }
 
+    // =====================================================================
+    // 6. Enrichissement V2 (classes manquantes + liaison albumine)
+    // =====================================================================
+    if (typeof applyEnrichmentV2 === 'function') applyEnrichmentV2();
+
     allComorbs.length = 0; unifiedMedsMap.clear();
 
     for (const key in MASTER_DB.PATHOLOGIES) {
