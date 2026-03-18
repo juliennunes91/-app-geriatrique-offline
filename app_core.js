@@ -9,6 +9,44 @@ const sanitizeText = str => str ? String(str).normalize("NFD").replace(/[\u0300-
 
 window.genererPDF = function() { window.print(); };
 
+function copierSynthese() {
+    const tabs = ['alertes-scores','alertes-eviter','alertes-initier','alertes-interact','alertes-auc','alertes-ansm','alertes-bio','alertes-usage','alertes-suivi','alertes-pd'];
+    const labels = ['SCORES','À ÉVITER','OMISSIONS','INTERACTIONS','PK (AUC)','ANSM','BIOLOGIE','DOSES','SUIVI','PHARMACODYNAMIE'];
+    let txt = `=== GeriaAssist — Synthèse Pharmaco-Clinique ===\n`;
+    txt += `Date : ${new Date().toLocaleDateString('fr-FR')} | Âge : ${document.getElementById('patientAge')?.value || '?'} | Sexe : ${document.getElementById('patientSexe')?.value || '?'}\n`;
+    txt += `DFG : ${document.getElementById('patientDFG')?.value || '?'} ml/min\n`;
+    txt += `Comorbidités : ${activeComorbs.map(c => MASTER_DB?.PATHOLOGIES?.[c]?.NOM_STANDARD || c).join(', ') || 'Aucune'}\n`;
+    txt += `Médicaments : ${activeMeds.map(m => m.dci).join(', ') || 'Aucun'}\n\n`;
+    tabs.forEach((id, i) => {
+        let el = document.getElementById(id);
+        if (el && el.innerText.trim()) {
+            txt += `--- ${labels[i]} ---\n${el.innerText.trim()}\n\n`;
+        }
+    });
+    navigator.clipboard.writeText(txt).then(() => {
+        let btn = document.getElementById('btnCopier');
+        if (btn) { btn.textContent = '✅ Copié !'; setTimeout(() => { btn.textContent = '📋 Copier'; }, 2000); }
+    }).catch(() => {
+        let ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    });
+}
+
+function exporterPDF() {
+    const el = document.querySelector('.col-md-7 .section-box');
+    if (!el) { window.print(); return; }
+    if (typeof html2pdf === 'undefined') { window.print(); return; }
+    const age = document.getElementById('patientAge')?.value || '?';
+    const dfg = document.getElementById('patientDFG')?.value || '?';
+    html2pdf().set({
+        margin: [8, 8, 8, 8],
+        filename: `GeriaAssist_${age}ans_DFG${dfg}_${new Date().toISOString().slice(0,10)}.pdf`,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    }).from(el).save();
+}
+
 const patientHasMedClass = (classOrDci) => {
     let t = sanitizeText(classOrDci);
     return activeMeds.some(m => {

@@ -473,11 +473,11 @@ function analyserPrescription() {
     if(bioValues['BIO_031'] >= 450) checkBioSyndrome('SYND_003', true);
     if(bioValues['BIO_001'] > 5.0) checkBioSyndrome('SYND_010', true);
     if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] < 3.5) checkBioSyndrome('SYND_011', true);
-    if(bioValues['BIO_002'] > 0 && bioValues['BIO_002'] < 130) checkBioSyndrome('SYND_012', true);
-    if(bioValues['BIO_002'] > 145) checkBioSyndrome('SYND_013', true);
-    if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < 10) || (sexe === 'F' && bioValues['BIO_009'] < 9))) checkBioSyndrome('SYND_020', true);
-    if(bioValues['BIO_010'] > 0 && bioValues['BIO_010'] < 100) checkBioSyndrome('SYND_021', true);
-    if(bioValues['BIO_034'] > 0 && bioValues['BIO_034'] < 1.5) checkBioSyndrome('SYND_022', true);
+    if(bioValues['BIO_002'] > 0 && bioValues['BIO_002'] < 130) checkBioSyndrome('SYND_009', true);
+    if(bioValues['BIO_002'] > 145) checkBioSyndrome('SYND_042', true);
+    if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < 10) || (sexe === 'F' && bioValues['BIO_009'] < 9))) checkBioSyndrome('SYND_005', true);
+    if(bioValues['BIO_010'] > 0 && bioValues['BIO_010'] < 100) checkBioSyndrome('SYND_004', true);
+    if(bioValues['BIO_034'] > 0 && bioValues['BIO_034'] < 1.5) checkBioSyndrome('SYND_014', true);
     if(bioValues['BIO_036'] > 0 && bioValues['BIO_036'] > 4) {
         addAlert('alertes-bio', `<div class="alert alert-danger alert-stopp shadow-sm"><strong>🚨 Hyperlactatémie (${bioValues['BIO_036']} mmol/L)</strong><br>Rechercher acidose lactique iatrogène (metformine, INTI, linézolide)<br><em>Conduite : arrêt médicament suspect, hydratation</em></div>`, 'bio');
     }
