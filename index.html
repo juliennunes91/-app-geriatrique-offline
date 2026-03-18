@@ -107,6 +107,14 @@
                             <div class="col-4"><label class="small text-muted">Triglycérides <span class="fw-normal" style="font-size:0.85em;">(g/L)</span></label><input type="number" step="0.1" id="bioTg" class="form-control form-control-sm"></div>
                             
                             <div class="col-12"><label class="small text-muted">CRP <span class="fw-normal" style="font-size:0.85em;">(mg/L)</span></label><input type="number" id="bioCrp" class="form-control form-control-sm"></div>
+
+                            <div class="col-4"><label class="small text-muted fw-bold text-danger">INR</label><input type="number" step="0.1" id="bioINR" class="form-control form-control-sm border-danger" placeholder="ex: 2.5"></div>
+                            <div class="col-4"><label class="small text-muted fw-bold">HbA1c <span class="fw-normal" style="font-size:0.85em;">(%)</span></label><input type="number" step="0.1" id="bioHbA1c" class="form-control form-control-sm" placeholder="ex: 7.0"></div>
+                            <div class="col-4"><label class="small text-muted">Glycémie <span class="fw-normal" style="font-size:0.85em;">(mmol/L)</span></label><input type="number" step="0.1" id="bioGlyc" class="form-control form-control-sm"></div>
+
+                            <div class="col-4"><label class="small text-muted">PNN <span class="fw-normal" style="font-size:0.85em;">(G/L)</span></label><input type="number" step="0.1" id="bioPNN" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">Phosphore <span class="fw-normal" style="font-size:0.85em;">(mmol/L)</span></label><input type="number" step="0.01" id="bioPhos" class="form-control form-control-sm"></div>
+                            <div class="col-4"><label class="small text-muted">Lactates <span class="fw-normal" style="font-size:0.85em;">(mmol/L)</span></label><input type="number" step="0.1" id="bioLact" class="form-control form-control-sm"></div>
                         </div>
                     </details>
 
@@ -129,6 +137,7 @@
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSaignement"><label class="form-check-label small fw-bold text-danger">ATCD de Saignement majeur</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkBrady"><label class="form-check-label small">Bradycardie sévère (< 45 bpm)</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkHtaNonControlee"><label class="form-check-label small">HTA non contrôlée (>160 mmHg)</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkINRlabile"><label class="form-check-label small text-warning">INR labile (TTR < 60%)</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkArret"><label class="form-check-label small">Post-Arrêt Cardiaque / Cardioversion FA</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkScaAigu"><label class="form-check-label small">Syndrome Coronarien Aigu (IDM récent)</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkLqts"><label class="form-check-label small">Syndrome du QT Long Congénital</label></div>
@@ -196,6 +205,7 @@
                         <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-bio">🧪 Bio</button></li>
                         <li class="nav-item"><button class="nav-link text-info fw-bold" data-bs-toggle="tab" data-bs-target="#tab-usage">💡 Doses</button></li>
                         <li class="nav-item"><button class="nav-link text-primary fw-bold" data-bs-toggle="tab" data-bs-target="#tab-suivi">👁️ Suivi</button></li>
+                        <li class="nav-item"><button class="nav-link fw-bold" style="color:#6f42c1!important;" data-bs-toggle="tab" data-bs-target="#tab-pd">🔗 PD</button></li>
                     </ul>
                     <div class="tab-content mt-3" id="myTabContent">
                         <div class="tab-pane fade show active" id="tab-scores"><div id="alertes-scores" class="text-muted">Cliquez sur Analyser...</div></div>
@@ -207,6 +217,7 @@
                         <div class="tab-pane fade" id="tab-bio"><div id="alertes-bio" class="text-muted">Cliquez sur Analyser...</div></div>
                         <div class="tab-pane fade" id="tab-usage"><div id="alertes-usage" class="text-muted">Cliquez sur Analyser...</div></div>
                         <div class="tab-pane fade" id="tab-suivi"><div id="alertes-suivi" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-pd"><div id="alertes-pd" class="text-muted">Cliquez sur Analyser...</div></div>
                     </div>
                 </div>
             </div>

@@ -84,6 +84,27 @@ function initUI() {
         console.log(`[ATB] ${enriched} antibiotiques enrichis depuis ATB_DB`);
     }
 
+    // =====================================================================
+    // 5. Enrichir MASTER_DB avec ANTICHOLINERGIC_DB (ACB, CIA, BHE)
+    // =====================================================================
+    if (typeof ANTICHOLINERGIC_DB !== 'undefined') {
+        let enriched = 0;
+        MASTER_DB.MEDICAMENTS.forEach(m => {
+            const key = sanitizeText(m.dci);
+            for (const [achDci, achData] of Object.entries(ANTICHOLINERGIC_DB)) {
+                const achKey = sanitizeText(achDci);
+                if (key === achKey || (key.length >= 4 && achKey.length >= 4 && (key.includes(achKey) || achKey.includes(key)))) {
+                    if ((!m.acb || m.acb === 0) && achData.acb != null) m.acb = achData.acb;
+                    if ((!m.cia || m.cia === 0) && achData.cia != null) m.cia = achData.cia;
+                    if (m.bhe == null && achData.bhe != null) m.bhe = achData.bhe;
+                    enriched++;
+                    break;
+                }
+            }
+        });
+        console.log(`[ANTICHOLINERGIC] ${enriched} médicaments enrichis avec ACB/CIA/BHE`);
+    }
+
     allComorbs.length = 0; unifiedMedsMap.clear();
 
     for (const key in MASTER_DB.PATHOLOGIES) {
