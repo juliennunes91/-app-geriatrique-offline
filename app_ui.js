@@ -110,6 +110,11 @@ function initUI() {
     // =====================================================================
     if (typeof applyEnrichmentV2 === 'function') applyEnrichmentV2();
 
+    // =====================================================================
+    // 7. Maillage BIO ↔ Médicaments ↔ Pathologies
+    // =====================================================================
+    if (typeof applyBioLinkage === 'function') applyBioLinkage();
+
     allComorbs.length = 0; unifiedMedsMap.clear();
 
     for (const key in MASTER_DB.PATHOLOGIES) {
