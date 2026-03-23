@@ -229,6 +229,15 @@ const GeriaEngineV2 = (() => {
         if (c.comorbs_any && !c.comorbs_any.some(p => ctx.activeComorbs && ctx.activeComorbs.includes(p))) return false;
         if (c.comorbs_absent && c.comorbs_absent.some(p => ctx.activeComorbs && ctx.activeComorbs.includes(p))) return false;
 
+        if (c.contexte_clinique) {
+            const ctxClin = ctx.contexte_clinique || [];
+            if (typeof c.contexte_clinique === 'string') {
+                if (!ctxClin.includes(c.contexte_clinique)) return false;
+            } else if (Array.isArray(c.contexte_clinique)) {
+                if (!c.contexte_clinique.every(cc => ctxClin.includes(cc))) return false;
+            }
+        }
+
         if (c.bio) {
             for (const [bioId, crit] of Object.entries(c.bio)) {
                 const val = ctx.bioValues && ctx.bioValues[bioId];
@@ -572,10 +581,16 @@ const GeriaEngineV2 = (() => {
                 .map(d => renderPimBadges(d)).join('');
         }
         
+        let compHtml = '';
+        if (a.complementary_messages && a.complementary_messages.length > 0) {
+            compHtml = `<ul class="mb-1 ps-3 mt-1" style="font-size:0.88em;">${a.complementary_messages.map(m => `<li>${m}</li>`).join('')}</ul>`;
+        }
+
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass});">
-            ${scoreBadge}<strong>${triage.icon} ${a.titre}</strong>
+            ${scoreBadge}<strong>${triage.icon} ${a.titre}</strong>${a.merged_count > 1 ? ` <span class="badge bg-light text-dark border" style="font-size:0.65em;">${a.merged_count} recommandations groupées</span>` : ''}
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${a.sources_label || ''}</span>
             <br><span class="small">${a.message}</span>
+            ${compHtml}
             ${pimBadges}
             ${a.alternatives ? `<br><em class="text-success small">💡 ${a.alternatives}</em>` : ''}
         </div>`;

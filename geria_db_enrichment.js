@@ -883,9 +883,31 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Reevaluation de l'indication",
         "alerte_clinique": "REMEDIES — usage PRN acceptable, usage chronique a reevaluer | Pas d'effet anticholinergique (avantage sur butylscopolamine) | Bonne tolerance geriatrique en aigu",
         "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+    },
+
+    // ========================================================================
+    // 💊 Sacubitril/Valsartan (Entresto) — ARNI
+    // ========================================================================
+    {
+        "dci": "Sacubitril/Valsartan",
+        "princeps": "Entresto",
+        "classe": "ARNI (Inhibiteur neprilysine + ARA2)",
+        "poso_hab": "49/51 mg x2/j → cible 97/103 mg x2/j",
+        "poso_ger": "Debuter 24/26 mg x2/j, titrer toutes les 2-4 semaines si tolere",
+        "poso_ren": "DFG 15-30: debuter 24/26 mg x2/j, pas de titration rapide. CI si DFG < 15",
+        "acb": 0.0,
+        "cia": 0.0,
+        "bhe": "",
+        "albumine": "94%",
+        "qt_risque": "",
+        "ddi_interact": "IEC (CI absolue — wash-out 36h) | AINS (risque IRA + hyperK) | Diuretiques epargneurs K (hyperK) | Lithium (augmentation lithiemie) | Aliskiren (CI si diabete/IRC)",
+        "suivi_initial": "TA | Creatinine + DFG | Kalieme | Natremie | BNP/NT-proBNP",
+        "suivi_periodique": "TA (chaque consultation) | Creatinine + K (J7, J14, M1, puis /3 mois) | NT-proBNP (/6 mois) | Symptomes IC (NYHA)",
+        "alerte_clinique": "Hypotension symptomatique → reduire diuretique d'abord | Hyperkaliemie > 5.5 → arret temporaire | Angio-oedeme (rare) → arret definitif | Ne JAMAIS associer a un IEC (risque angio-oedeme grave)",
+        "bio_cible": ["BIO_001", "BIO_003", "BIO_004", "BIO_028"],
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
     }
 ];
-
 
 // ============================================================================
 // 🧪 RÈGLES BIOLOGIQUES ENRICHIES — 7 Bio sous-exploitées

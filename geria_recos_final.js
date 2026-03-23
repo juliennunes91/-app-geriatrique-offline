@@ -3657,17 +3657,17 @@ function renderPimBadges(dci) {
     
     let badges = [];
     
-    if (pim.priscus === "PIM") badges.push('<span class="badge bg-danger">PRISCUS PIM</span>');
-    else if (pim.priscus === "PIM-B") badges.push(`<span class="badge bg-warning text-dark" title="${pim.priscus_cond || ''}">PRISCUS PIM-B</span>`);
-    
-    if (pim.forta === "D") badges.push('<span class="badge bg-danger">FORTA-D</span>');
-    else if (pim.forta === "C") badges.push('<span class="badge bg-warning text-dark">FORTA-C</span>');
-    else if (pim.forta === "B") badges.push('<span class="badge bg-info">FORTA-B</span>');
-    else if (pim.forta === "A") badges.push('<span class="badge bg-success">FORTA-A</span>');
-    
-    if (pim.eu7pim) badges.push('<span class="badge bg-secondary">EU7-PIM</span>');
-    if (pim.beers) badges.push('<span class="badge bg-dark">Beers</span>');
-    if (pim.pimcheck) badges.push('<span class="badge bg-primary">PIM-Check</span>');
+    if (pim.priscus === "PIM") badges.push(`<span class="badge bg-danger" style="cursor:help;" title="PRISCUS 2.0 : MPI absolu${pim.priscus_cond ? ' — ' + pim.priscus_cond : ''}${pim.priscus_alt ? ' | Alt: ' + pim.priscus_alt : ''}">PRISCUS PIM</span>`);
+    else if (pim.priscus === "PIM-B") badges.push(`<span class="badge bg-warning text-dark" style="cursor:help;" title="PRISCUS 2.0 : MPI conditionnel — ${pim.priscus_cond || 'Condition non précisée'}${pim.priscus_alt ? ' | Alt: ' + pim.priscus_alt : ''}">PRISCUS PIM-B</span>`);
+
+    if (pim.forta === "D") badges.push(`<span class="badge bg-danger" style="cursor:help;" title="FORTA D : À éviter chez le sujet âgé${pim.forta_indication ? ' — ' + pim.forta_indication : ''}">FORTA-D</span>`);
+    else if (pim.forta === "C") badges.push(`<span class="badge bg-warning text-dark" style="cursor:help;" title="FORTA C : Défavorable, alternatives préférables${pim.forta_indication ? ' — ' + pim.forta_indication : ''}">FORTA-C</span>`);
+    else if (pim.forta === "B") badges.push(`<span class="badge bg-info" style="cursor:help;" title="FORTA B : Bénéfice limité, utilisation prudente${pim.forta_indication ? ' — ' + pim.forta_indication : ''}">FORTA-B</span>`);
+    else if (pim.forta === "A") badges.push(`<span class="badge bg-success" style="cursor:help;" title="FORTA A : Bénéfice clairement démontré${pim.forta_indication ? ' — ' + pim.forta_indication : ''}">FORTA-A</span>`);
+
+    if (pim.eu7pim) badges.push(`<span class="badge bg-secondary" style="cursor:help;" title="EU(7)-PIM : Listé comme MPI par le consensus européen${pim.risque_principal ? ' — ' + pim.risque_principal : ''}">EU7-PIM</span>`);
+    if (pim.beers) badges.push(`<span class="badge bg-dark" style="cursor:help;" title="Beers 2023 (AGS) : MPI chez le sujet âgé${pim.beers_cond ? ' — ' + pim.beers_cond : ''}">Beers</span>`);
+    if (pim.pimcheck) badges.push(`<span class="badge bg-primary" style="cursor:help;" title="PIM-Check : Interaction potentiellement inappropriée${pim.pimcheck_detail ? ' — ' + pim.pimcheck_detail : ''}">PIM-Check</span>`);
     
     if (badges.length === 0) return '';
     return `<div class="mt-1">${badges.join(' ')}</div>`;

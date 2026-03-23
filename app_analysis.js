@@ -124,14 +124,14 @@ function analyserPrescription() {
         if(activeComorbs.includes('PAT_016')) { scoreCha += 1; ttCha.push("Diabète (+1)"); }
         if(activeComorbs.includes('PAT_008')) { scoreCha += 2; ttCha.push("ATCD AVC (+2)"); } 
         if(activeComorbs.some(c=>['PAT_004','PAT_007'].includes(c))) { scoreCha += 1; ttCha.push("Vasc (+1)"); }
-        divScores.innerHTML += `<div class="alert alert-light border border-info mb-2 shadow-sm"><strong class="text-info">CHA₂DS₂-VASc : ${scoreCha} point(s)</strong><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small></div>`;
+        divScores.innerHTML += `<div class="alert alert-light border border-info mb-2 shadow-sm"><strong class="text-info">CHA₂DS₂-VASc : ${scoreCha} point(s)</strong> <em class="text-muted small">— Risque thromboembolique dans la FA</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small></div>`;
 
         let scoreHas = 0; let ttHas = [];
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 50) { scoreHas += 1; ttHas.push("IRC (+1)"); }
         if(activeComorbs.includes('PAT_008')) { scoreHas += 1; ttHas.push("ATCD AVC (+1)"); }
         if(patientAge > 65) { scoreHas += 1; ttHas.push("Âge >65 (+1)"); }
         if(patientHasMedClass('ains') || patientHasMedClass('antiagreg')) { scoreHas += 1; ttHas.push("AINS/AAS (+1)"); }
-        divScores.innerHTML += `<div class="alert alert-light border border-danger mb-2 shadow-sm"><strong class="text-danger">HAS-BLED : ${scoreHas} point(s)</strong><br><small class="text-muted">${ttHas.join(', ') || 'Aucun'}</small></div>`;
+        divScores.innerHTML += `<div class="alert alert-light border border-danger mb-2 shadow-sm"><strong class="text-danger">HAS-BLED : ${scoreHas} point(s)</strong> <em class="text-muted small">— Risque hémorragique sous anticoagulant</em><br><small class="text-muted">${ttHas.join(', ') || 'Aucun'}</small></div>`;
 
         let scoreOrbit = 0; let ttOrbit = [];
         if(patientAge >= 75) { scoreOrbit += 1; ttOrbit.push("Âge ≥75 (+1)"); }
@@ -139,7 +139,7 @@ function analyserPrescription() {
         if(isChecked('chkSaignement') || isChecked('chkAspirineForte')) { scoreOrbit += 2; ttOrbit.push("Saignement (+2)"); }
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 60) { scoreOrbit += 1; ttOrbit.push("DFG <60 (+1)"); }
         if(patientHasMedClass('antiagreg')) { scoreOrbit += 1; ttOrbit.push("Antiagrégant (+1)"); }
-        divScores.innerHTML += `<div class="alert alert-light border border-warning mb-2 shadow-sm"><strong class="text-warning">ORBIT-AF : ${scoreOrbit} point(s)</strong><br><small class="text-muted">${ttOrbit.join(', ') || 'Aucun'}</small></div>`;
+        divScores.innerHTML += `<div class="alert alert-light border border-warning mb-2 shadow-sm"><strong class="text-warning">ORBIT-AF : ${scoreOrbit} point(s)</strong> <em class="text-muted small">— Risque de saignement sous AOD</em><br><small class="text-muted">${ttOrbit.join(', ') || 'Aucun'}</small></div>`;
 
         let scoreRisq = 0; let ttRisq = [];
         if(patientAge >= 65) { scoreRisq += 1; ttRisq.push("Âge ≥65 (+1)"); }
@@ -153,7 +153,7 @@ function analyserPrescription() {
         if(activeComorbs.includes('PAT_006')) { scoreRisq += 1; ttRisq.push("FA (+1)"); }
         if(['PAT_010','PAT_011','PAT_012','PAT_013','PAT_014'].some(c=>activeComorbs.includes(c))) { scoreRisq += 1; ttRisq.push("Démence/Park (+1)"); }
         if(globalQT_CountKR > 0) { scoreRisq += (3 * globalQT_CountKR); ttRisq.push(`Médoc QT (+${3*globalQT_CountKR})`); }
-        divScores.innerHTML += `<div class="alert alert-light border border-primary mb-2 shadow-sm"><strong class="text-primary">RISQ-PATH : ${scoreRisq} point(s)</strong><br><small class="text-muted">${ttRisq.join(', ') || 'Aucun'}</small></div>`;
+        divScores.innerHTML += `<div class="alert alert-light border border-primary mb-2 shadow-sm"><strong class="text-primary">RISQ-PATH : ${scoreRisq} point(s)</strong> <em class="text-muted small">— Risque d'allongement du QT</em><br><small class="text-muted">${ttRisq.join(', ') || 'Aucun'}</small></div>`;
 
         let scoreTisdale = 0; let ttTisdale = [];
         if(patientAge >= 68) { scoreTisdale += 1; ttTisdale.push("Âge ≥68 (+1)"); }
@@ -162,7 +162,20 @@ function analyserPrescription() {
         if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] <= 3.5) { scoreTisdale += 2; ttTisdale.push("HypoK (+2)"); }
         if(bioValues['BIO_031'] >= 450) { scoreTisdale += 2; ttTisdale.push("QTc ≥450 (+2)"); }
         if(globalQT_CountKR > 0) { scoreTisdale += 3; ttTisdale.push("Médoc QT (+3)"); }
-        divScores.innerHTML += `<div class="alert alert-light border border-dark mb-2 shadow-sm"><strong class="text-dark">Score de Tisdale : ${scoreTisdale} point(s)</strong><br><small class="text-muted">${ttTisdale.join(', ') || 'Aucun'}</small></div>`;
+        divScores.innerHTML += `<div class="alert alert-light border border-dark mb-2 shadow-sm"><strong class="text-dark">Score de Tisdale : ${scoreTisdale} point(s)</strong> <em class="text-muted small">— Risque de TdP en hospitalisation</em><br><small class="text-muted">${ttTisdale.join(', ') || 'Aucun'}</small></div>`;
+
+        // Charge Anticholinergique (ACB + CIA)
+        let acbClass = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
+        let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé' : (scoreACB_global >= 1 ? 'Charge modérée, surveiller' : 'Charge faible');
+        let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé' : (scoreCIA_global >= 1 ? 'Charge modérée' : 'Charge faible');
+        let acbMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0).map(m => `${m.dci} (ACB ${m.db_ref.acb})`);
+        let ciaMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.cia) > 0).map(m => `${m.dci} (CIA ${m.db_ref.cia})`);
+        divScores.innerHTML += `<div class="alert alert-light border border-${acbClass} mb-2 shadow-sm">
+            <strong class="text-${acbClass}">Score ACB : ${scoreACB_global}</strong> <em class="text-muted small">— Charge anticholinergique cumulée</em><br>
+            <small class="text-muted">${acbInterp}${acbMeds.length > 0 ? ' — ' + acbMeds.join(', ') : ''}</small><br>
+            <strong class="text-${scoreCIA_global >= 3 ? 'danger' : (scoreCIA_global >= 1 ? 'warning' : 'success')}">Score CIA : ${scoreCIA_global}</strong> <em class="text-muted small">— Charge sédative/cognitive cumulée</em><br>
+            <small class="text-muted">${ciaInterp}${ciaMeds.length > 0 ? ' — ' + ciaMeds.join(', ') : ''}</small>
+        </div>`;
     }
 
     // =========================================================
@@ -185,6 +198,23 @@ function analyserPrescription() {
     if(bioValues['BIO_031'] >= 450) checkBioSyndrome('SYND_003', true);
     if(bioValues['BIO_001'] > 5.0) checkBioSyndrome('SYND_010', true); 
     if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] < 3.5) checkBioSyndrome('SYND_011', true); 
+
+    // =========================================================
+    // 3b. CONTRE-INDICATIONS MÉDICAMENT / PATHOLOGIE (pathology_rules_v3)
+    // =========================================================
+    if (typeof checkMedContraPathologies === 'function' && activeComorbs.length > 0) {
+        activeMeds.forEach(m => {
+            const alerts = checkMedContraPathologies(m.dci, m.classe, activeComorbs);
+            alerts.forEach(a => {
+                let isSevere = a.gravite === 'absolue' || a.gravite === 'majeure';
+                addAlert('alertes-eviter', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm">
+                    <strong>${isSevere ? '🚨' : '⚠️'} ${m.dci.toUpperCase()} — CI ${a.patho_nom}</strong>
+                    <span class="badge bg-secondary float-end" style="font-size:0.65em;">Pathology Rules</span>
+                    <br><span class="small">${a.raison}${a.condition ? ` <em class="text-muted">(${a.condition})</em>` : ''}</span>
+                </div>`, 'eviter');
+            });
+        });
+    }
 
     // =========================================================
     // 4. MOTEUR DES INTERACTIONS (TABAC, DDI, ANSM & AUC)
