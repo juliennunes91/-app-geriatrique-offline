@@ -2538,6 +2538,10 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
         { terme: "oxybutynine", raison: "Charge anticholinergique élevée (ACB 3) chez patient fragile", gravite: "DECONSEILLE" },
         { terme: "hydroxyzine", raison: "Charge anticholinergique élevée (ACB 3) — confusion, sédation", gravite: "DECONSEILLE" },
         { terme: "amitriptyline", raison: "Charge anticholinergique élevée (ACB 3) — chutes, confusion", gravite: "DECONSEILLE" }
+    ],
+    "PAT_020": [
+        { terme: "methotrexate", condition: "Sans surveillance NFS/hépatique", raison: "Pancytopénie, hépatotoxicité — surveillance NFS et bilan hépatique obligatoires", gravite: "SURVEILLANCE OBLIGATOIRE" },
+        { terme: "ains", raison: "Néphrotoxicité, interaction avec chimiothérapie (ex: méthotrexate), risque hémorragique si thrombopénie", gravite: "PRUDENCE" }
     ]
 };
 

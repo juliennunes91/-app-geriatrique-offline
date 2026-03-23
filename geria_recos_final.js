@@ -2456,6 +2456,48 @@ const GERIA_RECOS_DB = {
             },
             alternatives: "Ramipril, périndopril, ou valsartan, candésartan"
         },
+        {
+            id: "IN_J02",
+            sources: ["ETA/ATA 2023", "FORTA"],
+            ref_code: "START-J2",
+            section: "Endocrine",
+            titre: "Lévothyroxine pour hypothyroïdie confirmée",
+            message: "Substitution par lévothyroxine (LT4) pour hypothyroïdie confirmée (TSH > 10 mUI/L, ou TSH 4-10 avec symptômes). Chez le sujet âgé : débuter à faible dose (12.5-25 µg/j) et titrer lentement toutes les 6-8 semaines.",
+            severite: "warning",
+            condition: {
+                comorbs: ["PAT_017"],
+                med_absent: ["levothyroxine", "l-thyroxine", "lt4", "euthyrox", "levothyrox", "thyrosit"]
+            },
+            alternatives: "Lévothyroxine 25-50 µg/j (titration lente chez le sujet âgé)"
+        },
+        {
+            id: "IN_J03",
+            sources: ["ETA/ATA 2023"],
+            ref_code: "START-J3",
+            section: "Endocrine",
+            titre: "Antithyroïdien de synthèse (ATS) pour hyperthyroïdie",
+            message: "Antithyroïdien de synthèse (thiamazole/carbimazole, ou propylthiouracile si CI) pour hyperthyroïdie confirmée. Le thiamazole est préféré chez le sujet âgé (meilleure tolérance hépatique).",
+            severite: "warning",
+            condition: {
+                comorbs: ["PAT_018"],
+                med_absent: ["thiamazole", "carbimazole", "propylthiouracile", "thyrozol", "neomercazole"]
+            },
+            alternatives: "Thiamazole 10-30 mg/j, carbimazole 20-40 mg/j"
+        },
+        {
+            id: "IN_J04",
+            sources: ["ILAE 2022", "FORTA"],
+            ref_code: "START-J4",
+            section: "SNC",
+            titre: "Antiépileptique pour épilepsie active",
+            message: "Antiépileptique pour épilepsie active ou antécédent de crises convulsives répétées. Chez le sujet âgé : lévétiracétam ou lamotrigine préférés (moins d'interactions, meilleure tolérance).",
+            severite: "danger",
+            condition: {
+                comorbs: ["PAT_015"],
+                med_absent: ["levetiracetam", "lamotrigine", "valproate", "carbamazepine", "oxcarbazepine", "lacosamide", "pregabaline", "gabapentine", "phenytoine", "topiramate", "zonisamide", "perampanel", "brivaracetam"]
+            },
+            alternatives: "Lévétiracétam 250-500 mg x2/j, lamotrigine 25→100-200 mg/j"
+        },
 
         // ====================================================================
         // SECTION K : ANTALGIQUES
