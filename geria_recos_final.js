@@ -3718,23 +3718,8 @@ function renderPimBadges(dci) {
 /**
  * Génère un résumé PIM détaillé pour la fiche d'un médicament.
  */
-function renderPimDetail(dci) {
-    const pim = getPimStatus(dci);
-    if (!pim) return '';
-    
-    let html = `<div class="card border-warning mb-2"><div class="card-body p-2">`;
-    html += `<strong>📋 Classification PIM multi-sources</strong>${renderPimBadges(dci)}<br>`;
-    
-    if (pim.risque_principal) html += `<small class="text-danger">⚠️ ${pim.risque_principal}</small><br>`;
-    if (pim.priscus_cond) html += `<small class="text-muted">PRISCUS : ${pim.priscus_cond}</small><br>`;
-    if (pim.priscus_alt) html += `<small class="text-success">💡 Alternative PRISCUS : ${pim.priscus_alt}</small><br>`;
-    if (pim.forta_indication) html += `<small class="text-info">FORTA : ${pim.forta_indication}</small><br>`;
-    if (pim.pimcheck_detail) html += `<small class="text-primary">PIM-Check : ${pim.pimcheck_detail}</small><br>`;
-    if (pim.beers_cond) html += `<small class="text-dark">Beers : ${pim.beers_cond}</small><br>`;
-    
-    html += `</div></div>`;
-    return html;
-}
+// renderPimDetail supprimé : fonction de rendu jamais appelée (0 références)
+// Le rendu PIM actif passe par renderPimBadges() et getPimStatus()
 // ============================================================================
 // 🔗 GERIA_CROSS_REF - Table de Correspondances Croisées Inter-Sources
 // Version 1.0 - Mars 2026
@@ -4187,14 +4172,4 @@ function renderAlertesEviterEnriched(alertes) {
     }).join('');
 }
 
-// ============================================================================
-// 📊 STATISTIQUES DE COUVERTURE
-// ============================================================================
-const CROSS_REF_STATS = {
-    total_groups: CROSS_REF_GROUPS.length,
-    total_rules_grouped: [...new Set(CROSS_REF_GROUPS.flatMap(g => g.rule_ids))].length,
-    total_pim_dict_linked: [...new Set(CROSS_REF_GROUPS.flatMap(g => g.pim_dict_keys))].length,
-    merge_display_groups: CROSS_REF_GROUPS.filter(g => g.fusion_strategy === "merge_display").length,
-    distinct_context_groups: CROSS_REF_GROUPS.filter(g => g.fusion_strategy === "distinct_context").length,
-    sources_covered: [...new Set(CROSS_REF_GROUPS.flatMap(g => g.merged_sources))]
-};
+// CROSS_REF_STATS supprimé : objet informatif jamais lu par le code (dérivé de CROSS_REF_GROUPS)

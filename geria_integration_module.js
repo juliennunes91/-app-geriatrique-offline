@@ -7346,57 +7346,11 @@ const PATHO_BIO_MONITOR = [
  * Enrichit une alerte GeriaEngineV2 avec les données du REFERENTIEL_CSV_DB.
  * Ajoute les colonnes Beers, FORTA, PRISCUS, STOPPFrail, nb_sources.
  */
-function enrichAlertWithCSV(alert) {
-    if (!alert || !alert.ref_code) return alert;
-    
-    // Chercher dans le CSV par ref_code
-    const csvMatch = Object.values(REFERENTIEL_CSV_DB).find(r => 
-        r.ref_code_geria === alert.ref_code
-    );
-    
-    if (csvMatch) {
-        alert.csv_ref = csvMatch.id;
-        alert.beers_2023 = csvMatch.beers || '';
-        alert.forta_2022 = csvMatch.forta || '';
-        alert.priscus_v2 = csvMatch.priscus || '';
-        alert.stopp_frail = csvMatch.stopp_frail || '';
-        alert.nb_sources_total = csvMatch.nb_sources;
-        alert.commentaire_ref = csvMatch.commentaire || '';
-        
-        // Enrichir sources_label
-        let labels = [];
-        if (csvMatch.stopp_v3) labels.push('STOPP3');
-        if (csvMatch.beers && csvMatch.beers.trim()) labels.push('Beers');
-        if (csvMatch.forta && csvMatch.forta.trim()) labels.push('FORTA');
-        if (csvMatch.priscus && csvMatch.priscus.trim()) labels.push('PRISCUS');
-        if (csvMatch.stopp_frail && csvMatch.stopp_frail.trim()) labels.push('STOPPFrail');
-        alert.sources_label = labels.join(' · ');
-    }
-    
-    return alert;
-}
+// enrichAlertWithCSV supprimé : fonction jamais appelée (0 références)
+// L'enrichissement multi-sources est assuré par renderAlertesEviterEnriched() + PIM_DICT
 
-/**
- * Pour une liste de pathologies actives, retourne les règles EV/IN pertinentes
- * à vérifier en priorité via GeriaEngineV2.
- */
-function getRelevantRulesForPathos(activePathoList) {
-    let eviterIds = new Set();
-    let initierIds = new Set();
-    
-    activePathoList.forEach(patId => {
-        const ref = CROSS_REFERENCE_PATHO[patId];
-        if (ref) {
-            (ref.eviter || []).forEach(id => eviterIds.add(id));
-            (ref.initier || []).forEach(id => initierIds.add(id));
-        }
-    });
-    
-    return {
-        eviter: Array.from(eviterIds),
-        initier: Array.from(initierIds)
-    };
-}
+// getRelevantRulesForPathos supprimé : fonction jamais appelée (0 références)
+// GeriaEngineV2.evaluer() scanne directement toutes les règles EVITER/INITIER
 
 /**
  * Pour une liste de pathologies actives, retourne les BIO à surveiller
@@ -7429,11 +7383,9 @@ function getRequiredBioMonitoring(activePathoList) {
  * 2. Log les stats d'intégration
  */
 function applyFullIntegration() {
-    // Appliquer v2 enrichments si disponible
-    if (typeof applyV2Enrichments === 'function') {
-        applyV2Enrichments();
-    }
-    
+    // Référence applyV2Enrichments supprimée : fonction jamais définie (code cassé)
+    // Les enrichissements V2/V3 sont déjà mergés via IIFE dans geria_pathology_rules_v3.js
+
     // Fusionner RECOS_SUPPLEMENT_INTEGRATION dans RECOS_SUPPLEMENT (source unique)
     if (typeof RECOS_SUPPLEMENT !== 'undefined' && typeof RECOS_SUPPLEMENT_INTEGRATION !== 'undefined') {
         const existingIds = new Set(RECOS_SUPPLEMENT.map(r => r.id));

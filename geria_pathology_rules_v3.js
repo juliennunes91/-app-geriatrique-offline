@@ -2559,17 +2559,8 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
     });
 })();
 
-function getPathologyRules(pathoId) {
-    return PATHOLOGY_RULES_DB[pathoId] || null;
-}
-
-function getPathoSyndromes(pathoId) {
-    return PATHO_SYNDROME_MAP[pathoId] || [];
-}
-
-function getPathoInterditsMeds(pathoId) {
-    return PATHO_MED_INTERDITS[pathoId] || [];
-}
+// Wrappers getPathologyRules, getPathoSyndromes, getPathoInterditsMeds supprimés :
+// DOUBLONS — accès direct PATHOLOGY_RULES_DB[id] / PATHO_MED_INTERDITS[id] utilisé partout
 
 // Vérifier si un médicament est interdit pour une liste de pathologies actives
 function checkMedContraPathologies(medDci, medClasse, activePathoList) {
@@ -2596,51 +2587,6 @@ function checkMedContraPathologies(medDci, medClasse, activePathoList) {
     return alerts;
 }
 
-// Récupérer toutes les surveillances biologiques requises pour les pathologies actives
-function getRequiredBioSurveillance(activePathoList) {
-    let bioSet = new Set();
-    activePathoList.forEach(pathoId => {
-        let rules = PATHOLOGY_RULES_DB[pathoId];
-        if (rules && rules.BIOLOGIE && rules.BIOLOGIE.SURVEILLANCE_CIBLE) {
-            rules.BIOLOGIE.SURVEILLANCE_CIBLE.forEach(b => bioSet.add(b));
-        }
-    });
-    return Array.from(bioSet);
-}
-
-// Récupérer toutes les omissions thérapeutiques (START-like) pour les pathologies actives
-function getTherapeuticOmissions(activePathoList, activeMedClasses) {
-    let omissions = [];
-    activePathoList.forEach(pathoId => {
-        let rules = PATHOLOGY_RULES_DB[pathoId];
-        if (!rules || !rules.TRAITEMENTS || !rules.TRAITEMENTS.INITIER) return;
-        rules.TRAITEMENTS.INITIER.forEach(ttt => {
-            if (ttt.niveau_preuve && ttt.niveau_preuve.startsWith("I")) {
-                // Vérification simplifiée — la logique complète de matching sera dans app_analysis.js
-                let found = false;
-                let searchTerms = [];
-                if (ttt.classe) searchTerms.push(ttt.classe.toLowerCase());
-                if (ttt.dci_exemples) ttt.dci_exemples.forEach(d => searchTerms.push(d.toLowerCase()));
-
-                activeMedClasses.forEach(mc => {
-                    let mcl = mc.toLowerCase();
-                    searchTerms.forEach(st => {
-                        if (mcl.includes(st) || st.includes(mcl)) found = true;
-                    });
-                });
-
-                if (!found) {
-                    omissions.push({
-                        patho: pathoId,
-                        patho_nom: rules.NOM,
-                        classe_manquante: ttt.classe,
-                        indication: ttt.indication,
-                        niveau_preuve: ttt.niveau_preuve
-                    });
-                }
-            }
-        });
-    });
-    return omissions;
-}
+// getRequiredBioSurveillance supprimé : DOUBLON de getRequiredBioMonitoring() dans geria_integration_module.js
+// getTherapeuticOmissions supprimé : DOUBLON — GeriaEngineV2 INITIER (med_absent) assure cette fonctionnalité
 
