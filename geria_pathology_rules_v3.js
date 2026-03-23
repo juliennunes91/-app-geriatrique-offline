@@ -2476,16 +2476,83 @@ const PATHO_MED_INTERDITS_V2_ADDITIONS = {
     ]
 };
 
-// Merge V2 additions into PATHO_MED_INTERDITS
+const PATHO_MED_INTERDITS_V3_ADDITIONS = {
+    "PAT_003": [
+        { terme: "ains", raison: "Rétention hydrosodée, décompensation IC", gravite: "CONTRE-INDICATION" }
+    ],
+    "PAT_004": [
+        { terme: "ains", raison: "Risque thrombotique CV + hémorragique digestif", gravite: "CONTRE-INDICATION RELATIVE" }
+    ],
+    "PAT_005": [
+        { terme: "ains", raison: "Antagonise l'effet antihypertenseur, néphrotoxicité", gravite: "DECONSEILLE" },
+        { terme: "doxazosine", raison: "Pas de réduction mortalité CV en monothérapie (ALLHAT), hypotension orthostatique", gravite: "DECONSEILLE sauf indication prostatique" },
+        { terme: "prazosine", raison: "Alpha-bloquant — hypotension orthostatique chez le sujet âgé", gravite: "DECONSEILLE en monothérapie antihypertensive" }
+    ],
+    "PAT_017": [
+        { terme: "lithium", raison: "Induit hypothyroïdie — surveillance TSH renforcée", gravite: "PRUDENCE" },
+        { terme: "amiodarone", raison: "Hypothyroïdie induite fréquente (effet Wolff-Chaikoff)", gravite: "PRUDENCE — monitoring TSH /3 mois" }
+    ],
+    "PAT_018": [
+        { terme: "amiodarone", raison: "Thyréotoxicose type 1 ou 2 si ATCD thyroïdien", gravite: "PRUDENCE — discussion cardio/endocrino" },
+        { terme: "lithium", raison: "Peut masquer puis démasquer thyrotoxicose", gravite: "SURVEILLANCE renforcée TSH" }
+    ],
+    "PAT_019": [
+        { terme: "gemfibrozil", raison: "Rhabdomyolyse par inhibition glucuronidation si associé à statine", gravite: "CONTRE-INDICATION ABSOLUE avec statine" }
+    ],
+    "PAT_021": [
+        { terme: "ains", raison: "Récidive ulcéreuse, saignement digestif", gravite: "CONTRE-INDICATION si UGD actif ou récent" },
+        { terme: "aspirine", condition: "UGD actif ou récent < 3 mois", raison: "Risque hémorragique digestif majeur", gravite: "CONTRE-INDICATION TEMPORAIRE — réévaluer après cicatrisation" },
+        { terme: "corticoide", raison: "Risque ulcère gastrique, surtout si association AINS/aspirine", gravite: "PRUDENCE — associer IPP si indispensable" }
+    ],
+    "PAT_025": [
+        { terme: "corticoide", raison: "Ostéoporose cortisonique — prévention par bisphosphonate si > 3 mois", gravite: "SURVEILLANCE" },
+        { terme: "glitazone", raison: "Augmentation du risque fracturaire (pioglitazone)", gravite: "DECONSEILLE" },
+        { terme: "pioglitazone", raison: "Augmentation du risque fracturaire", gravite: "DECONSEILLE" }
+    ],
+    "PAT_026": [
+        { terme: "ciprofloxacine", condition: "Cystite simple", raison: "EI graves (tendinopathie, neuropathie, rupture aortique) — pas en 1ère intention", gravite: "DECONSEILLE en première intention" },
+        { terme: "ofloxacine", condition: "Cystite simple", raison: "Fluoroquinolone — EI graves, sélection résistances", gravite: "DECONSEILLE en première intention" },
+        { terme: "levofloxacine", condition: "Cystite simple", raison: "Fluoroquinolone — EI graves, sélection résistances", gravite: "DECONSEILLE en première intention" },
+        { terme: "nitrofurantoine", condition: "Traitement > 14 jours", raison: "Pneumopathie interstitielle, hépatotoxicité au long cours", gravite: "CONTRE-INDICATION" }
+    ],
+    "PAT_027": [
+        { terme: "benzodiazepine", raison: "Sédation résiduelle, chutes, confusion, dépendance chez le sujet âgé", gravite: "DECONSEILLE" },
+        { terme: "zolpidem", raison: "Mêmes risques que BZD : chutes, confusion, dépendance", gravite: "DECONSEILLE" },
+        { terme: "zopiclone", raison: "Mêmes risques que BZD : chutes, confusion, dépendance", gravite: "DECONSEILLE" },
+        { terme: "hydroxyzine", raison: "Charge anticholinergique élevée, confusion, rétention urinaire", gravite: "DECONSEILLE" },
+        { terme: "doxylamine", raison: "Antihistaminique sédatif — charge anticholinergique, confusion", gravite: "DECONSEILLE" }
+    ],
+    "PAT_028": [
+        { terme: "acetylleucine", raison: "Retarde la compensation vestibulaire, sédation", gravite: "DECONSEILLE > 3-5 jours" },
+        { terme: "meclozine", raison: "Retarde la compensation vestibulaire, sédation, anticholinergique", gravite: "DECONSEILLE > 3-5 jours" },
+        { terme: "benzodiazepine", raison: "Sédation, chutes, retarde compensation vestibulaire", gravite: "DECONSEILLE > 48h" }
+    ],
+    "PAT_030": [
+        { terme: "statine", raison: "Déprescrire en soins palliatifs — pas de bénéfice à court terme", gravite: "DEPRESCRIRE" },
+        { terme: "bisphosphonate", raison: "Déprescrire en soins palliatifs — bénéfice différé", gravite: "DEPRESCRIRE" },
+        { terme: "metformine", condition: "Pronostic < 3 mois", raison: "Risque acidose lactique, bénéfice nul en fin de vie", gravite: "DEPRESCRIRE" },
+        { terme: "glibenclamide", condition: "Pronostic < 3 mois", raison: "Hypoglycémie grave, relâcher cibles glycémiques", gravite: "DEPRESCRIRE" }
+    ],
+    "PAT_031": [
+        { terme: "benzodiazepine", raison: "Chutes, confusion, dépendance — sevrage progressif si > 4 semaines", gravite: "DEPRESCRIRE" },
+        { terme: "oxybutynine", raison: "Charge anticholinergique élevée (ACB 3) chez patient fragile", gravite: "DECONSEILLE" },
+        { terme: "hydroxyzine", raison: "Charge anticholinergique élevée (ACB 3) — confusion, sédation", gravite: "DECONSEILLE" },
+        { terme: "amitriptyline", raison: "Charge anticholinergique élevée (ACB 3) — chutes, confusion", gravite: "DECONSEILLE" }
+    ]
+};
+
+// Merge V2 and V3 additions into PATHO_MED_INTERDITS
 (function() {
-    for (const [patId, rules] of Object.entries(PATHO_MED_INTERDITS_V2_ADDITIONS)) {
-        if (!PATHO_MED_INTERDITS[patId]) PATHO_MED_INTERDITS[patId] = [];
-        rules.forEach(r => {
-            if (!PATHO_MED_INTERDITS[patId].some(existing => existing.terme === r.terme)) {
-                PATHO_MED_INTERDITS[patId].push(r);
-            }
-        });
-    }
+    [PATHO_MED_INTERDITS_V2_ADDITIONS, PATHO_MED_INTERDITS_V3_ADDITIONS].forEach(additions => {
+        for (const [patId, rules] of Object.entries(additions)) {
+            if (!PATHO_MED_INTERDITS[patId]) PATHO_MED_INTERDITS[patId] = [];
+            rules.forEach(r => {
+                if (!PATHO_MED_INTERDITS[patId].some(existing => existing.terme === r.terme)) {
+                    PATHO_MED_INTERDITS[patId].push(r);
+                }
+            });
+        }
+    });
 })();
 
 function getPathologyRules(pathoId) {
