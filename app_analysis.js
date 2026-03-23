@@ -51,7 +51,8 @@ function analyserPrescription() {
         'BIO_009': getVal('bioHb'), 'BIO_010': getVal('bioPlaq'), 'BIO_013': getVal('bioAsat'), 'BIO_014': getVal('bioAlat'),
         'BIO_018': getVal('bioCpk'), 'BIO_019': getVal('bioTsh'), 'BIO_020': getVal('bioFer'), 'BIO_021': getVal('bioB12'),
         'BIO_024': getVal('bioCrp'), 'BIO_028': getVal('bioBnp'), 'BIO_031': getVal('bioQtc'),
-        'BIO_011': getVal('bioHbA1c'), 'BIO_012': getVal('bioLdl'), 'BIO_022': getVal('bioVitD'), 'BIO_023': getVal('bioAlb')
+        'BIO_011': getVal('bioHbA1c'), 'BIO_012': getVal('bioLdl'), 'BIO_022': getVal('bioVitD'), 'BIO_023': getVal('bioAlb'),
+        'BIO_T4': getVal('bioT4'), 'BIO_T3': getVal('bioT3')
     };
 
     const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi'];
@@ -124,14 +125,16 @@ function analyserPrescription() {
         if(activeComorbs.includes('PAT_016')) { scoreCha += 1; ttCha.push("Diabète (+1)"); }
         if(activeComorbs.includes('PAT_008')) { scoreCha += 2; ttCha.push("ATCD AVC (+2)"); } 
         if(activeComorbs.some(c=>['PAT_004','PAT_007'].includes(c))) { scoreCha += 1; ttCha.push("Vasc (+1)"); }
-        divScores.innerHTML += `<div class="alert alert-light border border-info mb-2 shadow-sm"><strong class="text-info">CHA₂DS₂-VASc : ${scoreCha} point(s)</strong> <em class="text-muted small">— Risque thromboembolique dans la FA</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small></div>`;
+        let chaConc = scoreCha === 0 ? 'Risque faible — anticoagulation non indiquée' : (scoreCha === 1 ? (sexe === 'M' ? 'Risque faible (H) — anticoagulation optionnelle' : 'Score lié au sexe seul — anticoagulation non indiquée (F)') : 'Anticoagulation recommandée (sauf CI)');
+        divScores.innerHTML += `<div class="alert alert-light border border-info mb-2 shadow-sm"><strong class="text-info">CHA₂DS₂-VASc : ${scoreCha} point(s)</strong> <em class="text-muted small">— Risque thromboembolique dans la FA</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreCha >= 2 ? 'danger' : 'success'}">${chaConc}</small></div>`;
 
         let scoreHas = 0; let ttHas = [];
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 50) { scoreHas += 1; ttHas.push("IRC (+1)"); }
         if(activeComorbs.includes('PAT_008')) { scoreHas += 1; ttHas.push("ATCD AVC (+1)"); }
         if(patientAge > 65) { scoreHas += 1; ttHas.push("Âge >65 (+1)"); }
         if(patientHasMedClass('ains') || patientHasMedClass('antiagreg')) { scoreHas += 1; ttHas.push("AINS/AAS (+1)"); }
-        divScores.innerHTML += `<div class="alert alert-light border border-danger mb-2 shadow-sm"><strong class="text-danger">HAS-BLED : ${scoreHas} point(s)</strong> <em class="text-muted small">— Risque hémorragique sous anticoagulant</em><br><small class="text-muted">${ttHas.join(', ') || 'Aucun'}</small></div>`;
+        let hasConc = scoreHas >= 3 ? 'Risque hémorragique élevé — prudence avec anticoagulant' : (scoreHas >= 1 ? 'Risque modéré — réévaluer bénéfice/risque' : 'Risque faible');
+        divScores.innerHTML += `<div class="alert alert-light border border-danger mb-2 shadow-sm"><strong class="text-danger">HAS-BLED : ${scoreHas} point(s)</strong> <em class="text-muted small">— Risque hémorragique sous anticoagulant</em><br><small class="text-muted">${ttHas.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreHas >= 3 ? 'danger' : 'muted'}">${hasConc}</small></div>`;
 
         let scoreOrbit = 0; let ttOrbit = [];
         if(patientAge >= 75) { scoreOrbit += 1; ttOrbit.push("Âge ≥75 (+1)"); }
@@ -139,7 +142,8 @@ function analyserPrescription() {
         if(isChecked('chkSaignement') || isChecked('chkAspirineForte')) { scoreOrbit += 2; ttOrbit.push("Saignement (+2)"); }
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 60) { scoreOrbit += 1; ttOrbit.push("DFG <60 (+1)"); }
         if(patientHasMedClass('antiagreg')) { scoreOrbit += 1; ttOrbit.push("Antiagrégant (+1)"); }
-        divScores.innerHTML += `<div class="alert alert-light border border-warning mb-2 shadow-sm"><strong class="text-warning">ORBIT-AF : ${scoreOrbit} point(s)</strong> <em class="text-muted small">— Risque de saignement sous AOD</em><br><small class="text-muted">${ttOrbit.join(', ') || 'Aucun'}</small></div>`;
+        let orbitConc = scoreOrbit >= 4 ? 'Risque hémorragique élevé (7.3%/an)' : (scoreOrbit >= 3 ? 'Risque modéré (4.7%/an)' : 'Risque faible (2.4%/an)');
+        divScores.innerHTML += `<div class="alert alert-light border border-warning mb-2 shadow-sm"><strong class="text-warning">ORBIT-AF : ${scoreOrbit} point(s)</strong> <em class="text-muted small">— Risque de saignement sous AOD</em><br><small class="text-muted">${ttOrbit.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreOrbit >= 4 ? 'danger' : 'muted'}">${orbitConc}</small></div>`;
 
         let scoreRisq = 0; let ttRisq = [];
         if(patientAge >= 65) { scoreRisq += 1; ttRisq.push("Âge ≥65 (+1)"); }
@@ -153,7 +157,8 @@ function analyserPrescription() {
         if(activeComorbs.includes('PAT_006')) { scoreRisq += 1; ttRisq.push("FA (+1)"); }
         if(['PAT_010','PAT_011','PAT_012','PAT_013','PAT_014'].some(c=>activeComorbs.includes(c))) { scoreRisq += 1; ttRisq.push("Démence/Park (+1)"); }
         if(globalQT_CountKR > 0) { scoreRisq += (3 * globalQT_CountKR); ttRisq.push(`Médoc QT (+${3*globalQT_CountKR})`); }
-        divScores.innerHTML += `<div class="alert alert-light border border-primary mb-2 shadow-sm"><strong class="text-primary">RISQ-PATH : ${scoreRisq} point(s)</strong> <em class="text-muted small">— Risque d'allongement du QT</em><br><small class="text-muted">${ttRisq.join(', ') || 'Aucun'}</small></div>`;
+        let risqConc = scoreRisq >= 10 ? 'Risque très élevé de TdP' : (scoreRisq >= 5 ? 'Risque élevé — prudence avec QTc-allongeants' : 'Risque modéré');
+        divScores.innerHTML += `<div class="alert alert-light border border-primary mb-2 shadow-sm"><strong class="text-primary">RISQ-PATH : ${scoreRisq} point(s)</strong> <em class="text-muted small">— Risque d'allongement du QT</em><br><small class="text-muted">${ttRisq.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreRisq >= 10 ? 'danger' : 'muted'}">${risqConc}</small></div>`;
 
         let scoreTisdale = 0; let ttTisdale = [];
         if(patientAge >= 68) { scoreTisdale += 1; ttTisdale.push("Âge ≥68 (+1)"); }
@@ -162,12 +167,13 @@ function analyserPrescription() {
         if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] <= 3.5) { scoreTisdale += 2; ttTisdale.push("HypoK (+2)"); }
         if(bioValues['BIO_031'] >= 450) { scoreTisdale += 2; ttTisdale.push("QTc ≥450 (+2)"); }
         if(globalQT_CountKR > 0) { scoreTisdale += 3; ttTisdale.push("Médoc QT (+3)"); }
-        divScores.innerHTML += `<div class="alert alert-light border border-dark mb-2 shadow-sm"><strong class="text-dark">Score de Tisdale : ${scoreTisdale} point(s)</strong> <em class="text-muted small">— Risque de TdP en hospitalisation</em><br><small class="text-muted">${ttTisdale.join(', ') || 'Aucun'}</small></div>`;
+        let tisdaleConc = scoreTisdale >= 11 ? 'Risque élevé de TdP — monitoring ECG continu' : (scoreTisdale >= 7 ? 'Risque modéré — ECG quotidien recommandé' : 'Risque faible');
+        divScores.innerHTML += `<div class="alert alert-light border border-dark mb-2 shadow-sm"><strong class="text-dark">Score de Tisdale : ${scoreTisdale} point(s)</strong> <em class="text-muted small">— Risque de TdP en hospitalisation</em><br><small class="text-muted">${ttTisdale.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreTisdale >= 11 ? 'danger' : 'muted'}">${tisdaleConc}</small></div>`;
 
         // Charge Anticholinergique (ACB + CIA)
         let acbClass = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
-        let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé' : (scoreACB_global >= 1 ? 'Charge modérée, surveiller' : 'Charge faible');
-        let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé' : (scoreCIA_global >= 1 ? 'Charge modérée' : 'Charge faible');
+        let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé — confusion, chutes, démence' : (scoreACB_global >= 1 ? 'Charge modérée, surveiller' : 'Charge faible');
+        let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé — chutes, somnolence' : (scoreCIA_global >= 1 ? 'Charge modérée' : 'Charge faible');
         let acbMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0).map(m => `${m.dci} (ACB ${m.db_ref.acb})`);
         let ciaMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.cia) > 0).map(m => `${m.dci} (CIA ${m.db_ref.cia})`);
         divScores.innerHTML += `<div class="alert alert-light border border-${acbClass} mb-2 shadow-sm">
@@ -176,6 +182,21 @@ function analyserPrescription() {
             <strong class="text-${scoreCIA_global >= 3 ? 'danger' : (scoreCIA_global >= 1 ? 'warning' : 'success')}">Score CIA : ${scoreCIA_global}</strong> <em class="text-muted small">— Charge sédative/cognitive cumulée</em><br>
             <small class="text-muted">${ciaInterp}${ciaMeds.length > 0 ? ' — ' + ciaMeds.join(', ') : ''}</small>
         </div>`;
+
+        // Score de Child-Pugh (si hépatopathie cochée ou score > 5)
+        let cpScore = getVal('cpBili') + getVal('cpAlb') + getVal('cpTp') + getVal('cpAscite') + getVal('cpEnceph');
+        if (cpScore >= 6 || isChecked('chkFoie')) {
+            let cpClass = cpScore <= 6 ? 'A' : (cpScore <= 9 ? 'B' : 'C');
+            let cpColor = cpClass === 'A' ? 'success' : (cpClass === 'B' ? 'warning' : 'danger');
+            let cpConc = cpClass === 'A' ? 'Bonne fonction hépatique — peu d\'adaptations' : (cpClass === 'B' ? 'Insuffisance modérée — réduire doses des médicaments à métabolisme hépatique' : 'Insuffisance sévère — CI de nombreux médicaments hépatotoxiques');
+            let hepatoMeds = activeMeds.filter(m => {
+                let ref = m.db_ref; if (!ref) return false;
+                let alb = parseFloat(ref.albumine) || 0;
+                return alb >= 85;
+            }).map(m => m.dci.toUpperCase());
+            let hepatoAlert = hepatoMeds.length > 0 ? `<br><span class="text-danger small fw-bold">Médicaments à forte liaison albumine (risque surdosage) : ${hepatoMeds.join(', ')}</span>` : '';
+            divScores.innerHTML += `<div class="alert alert-light border border-${cpColor} mb-2 shadow-sm"><strong class="text-${cpColor}">Child-Pugh : ${cpScore} pts — Classe ${cpClass}</strong> <em class="text-muted small">— Sévérité de l'insuffisance hépatique</em><br><small class="fw-bold text-${cpColor}">${cpConc}</small>${hepatoAlert}</div>`;
+        }
     }
 
     // =========================================================
@@ -197,7 +218,77 @@ function analyserPrescription() {
     if(bioValues['BIO_018'] > 850) checkBioSyndrome('SYND_002', true);
     if(bioValues['BIO_031'] >= 450) checkBioSyndrome('SYND_003', true);
     if(bioValues['BIO_001'] > 5.0) checkBioSyndrome('SYND_010', true); 
-    if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] < 3.5) checkBioSyndrome('SYND_011', true); 
+    if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] < 3.5) checkBioSyndrome('SYND_011', true);
+
+    // Cholestase hépatique (PAL > 1.5N ~135 UI/L ou GGT > 3N ~150 UI/L avec bilirubine élevée)
+    let bioPal = getVal('bioPal'); let bioGgt = getVal('bioGgt');
+    if ((bioPal > 135 || bioGgt > 150) && (bioValues['BIO_013'] > 45 || bioValues['BIO_014'] > 45)) {
+        let cholCauses = [];
+        ['amoxicilline', 'acide clavulanique', 'flucloxacilline', 'erythromycine', 'azithromycine', 'cotrimoxazole', 'amiodarone', 'carbamazepine', 'phenytoine', 'atorvastatine', 'captopril'].forEach(d => { if(patientHasMedClass(d)) cholCauses.push(d); });
+        let cholImput = cholCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${cholCauses.join(', ').toUpperCase()}</b>` : '';
+        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Cholestase Hépatique</strong> (PAL ${bioPal > 0 ? bioPal + ' UI/L' : '?'} / GGT ${bioGgt > 0 ? bioGgt + ' UI/L' : '?'})${cholImput}<br><em>Conduite :</em> Échographie hépatique, arrêt médicament suspect, bilan étiologique (auto-immunité, obstruction biliaire)</div>`, 'bio');
+    }
+
+    // Dysthyroïdie (TSH + T4/T3)
+    let tsh = bioValues['BIO_019']; let t4 = bioValues['BIO_T4']; let t3 = bioValues['BIO_T3'];
+    if (tsh > 0) {
+        if (tsh > 4.0) {
+            let isOvert = (t4 > 0 && t4 < 60) || tsh > 10;
+            let thyroLabel = isOvert ? 'Hypothyroïdie avérée' : 'Hypothyroïdie subclinique';
+            let thyroSev = isOvert ? 'danger' : 'warning';
+            let thyroCauses = [];
+            ['amiodarone', 'lithium', 'carbamazepine', 'interferon', 'sunitinib', 'ipilimumab', 'nivolumab'].forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
+            let thyroImput = thyroCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${thyroCauses.join(', ').toUpperCase()}</b>` : '';
+            let thyroConc = isOvert ? 'Traitement substitutif par lévothyroxine recommandé. Débuter 12.5-25 µg/j chez le sujet âgé, titrer par paliers de 12.5 µg toutes les 6-8 semaines.' : (tsh > 10 ? 'TSH > 10 — substitution recommandée même si subclinique.' : 'TSH 4-10 — à contrôler à 6-8 semaines, substituer si symptômes ou progression.');
+            addAlert('alertes-bio', `<div class="alert alert-${thyroSev} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4 ' + t4 + ' nmol/L' : ''})${thyroImput}<br><em>Conduite :</em> ${thyroConc}</div>`, 'bio');
+        } else if (tsh < 0.4 && tsh > 0) {
+            let isOvert = (t4 > 0 && t4 > 120) || (t3 > 0 && t3 > 2.7);
+            let thyroLabel = isOvert ? 'Hyperthyroïdie avérée' : 'Hyperthyroïdie subclinique';
+            let thyroCauses = [];
+            ['amiodarone', 'lithium', 'interferon', 'levothyroxine'].forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
+            let thyroImput = thyroCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${thyroCauses.join(', ').toUpperCase()}</b>` : '';
+            addAlert('alertes-bio', `<div class="alert alert-${isOvert ? 'danger' : 'warning'} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4 ' + t4 + ' nmol/L' : ''}${t3 > 0 ? ', T3 ' + t3 + ' nmol/L' : ''})<br>${thyroImput}<em>Conduite :</em> ${isOvert ? 'Avis endocrino, rechercher cause (Basedow, nodule toxique, amiodarone). Risque FA et ostéoporose.' : 'Contrôle à 6-8 semaines, ECG (risque FA), densitométrie si post-ménopause.'}</div>`, 'bio');
+        }
+    }
+
+    // Supplémentation vitamine D systématique si âge avancé (sans carence documentée)
+    if (patientAge >= 70 && (!bioValues['BIO_022'] || bioValues['BIO_022'] <= 0) && !patientHasMedClass('cholecalciferol') && !patientHasMedClass('vitamine d') && !patientHasMedClass('calcifediol')) {
+        addAlert('alertes-initier', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Vitamine D — supplémentation systématique recommandée</strong>
+            <span class="badge bg-secondary float-end" style="font-size:0.65em;">HAS 2011 / Sociétés savantes</span>
+            <br><span class="small">Chez le sujet âgé ≥ 70 ans, notamment institutionnalisé ou à risque de chute/fracture, un apport systématique de vitamine D par voie orale (800-1000 UI/j) est recommandé sans dosage préalable obligatoire.</span>
+        </div>`, 'initier');
+    }
+
+    // Médicaments abaissant le seuil épileptogène (si épilepsie active)
+    if (activeComorbs.includes('PAT_015')) {
+        const epileptogenics = {
+            'tramadol': 'Opioïde — abaisse fortement le seuil', 'bupropion': 'CI formelle si épilepsie',
+            'clozapine': 'Risque dose-dépendant (3-5%)', 'chlorpromazine': 'Phénothiazine pro-convulsivante',
+            'olanzapine': 'Risque modéré', 'quetiapine': 'Risque faible-modéré',
+            'ciprofloxacine': 'FQ — risque convulsif', 'ofloxacine': 'FQ — risque convulsif',
+            'levofloxacine': 'FQ — risque convulsif', 'moxifloxacine': 'FQ — risque convulsif',
+            'imipeneme': 'Carbapénème pro-convulsivant', 'meropeneme': 'Risque moindre que imipénème',
+            'amitriptyline': 'TCA — risque convulsif dose-dépendant', 'clomipramine': 'TCA pro-convulsivant',
+            'maprotiline': 'Risque élevé de convulsions', 'venlafaxine': 'IRSNA — risque dose-dépendant',
+            'theophylline': 'Xanthine pro-convulsivante', 'mefloquine': 'CI si ATCD convulsions',
+            'ciclosporine': 'Neurotoxicité dose-dépendante', 'lithium': 'Risque si lithiémie élevée'
+        };
+        let found = [];
+        activeMeds.forEach(m => {
+            let dci = sanitizeText(m.dci);
+            for (const [drug, desc] of Object.entries(epileptogenics)) {
+                if (dci.includes(sanitizeText(drug))) found.push({ med: m.dci.toUpperCase(), desc: desc });
+            }
+        });
+        if (found.length > 0) {
+            let list = found.map(f => `<li><b>${f.med}</b> — ${f.desc}</li>`).join('');
+            addAlert('alertes-eviter', `<div class="alert alert-danger alert-stopp shadow-sm"><strong>🚨 Médicaments abaissant le seuil épileptogène</strong>
+                <span class="badge bg-secondary float-end" style="font-size:0.65em;">Epilepsie active</span>
+                <br><span class="small">Patient épileptique — les médicaments suivants augmentent le risque de crise :</span>
+                <ul class="mb-0 ps-3 small">${list}</ul>
+            </div>`, 'eviter');
+        }
+    }
 
     // =========================================================
     // 3b. CONTRE-INDICATIONS MÉDICAMENT / PATHOLOGIE (pathology_rules_v3)
@@ -206,11 +297,27 @@ function analyserPrescription() {
         activeMeds.forEach(m => {
             const alerts = checkMedContraPathologies(m.dci, m.classe, activeComorbs);
             alerts.forEach(a => {
-                let isSevere = a.gravite === 'absolue' || a.gravite === 'majeure';
+                let isSevere = String(a.gravite).includes('CONTRE-INDICATION') || String(a.gravite).includes('ABSOLUE');
+                // Enrichir avec source ESC si disponible
+                let sourceLabel = 'Pathology Rules';
+                if (typeof PATHOLOGY_RULES_DB !== 'undefined' && PATHOLOGY_RULES_DB[a.patho]) {
+                    let ref = PATHOLOGY_RULES_DB[a.patho].REFERENCE;
+                    if (ref) sourceLabel = ref.split('|')[0].trim();
+                    let srcEbm = PATHOLOGY_RULES_DB[a.patho].SOURCES_EBM;
+                    if (srcEbm && srcEbm.EVITER) {
+                        let termLc = sanitizeText(a.med);
+                        for (const [k, v] of Object.entries(srcEbm.EVITER)) {
+                            if (sanitizeText(k).includes(termLc) || termLc.includes(sanitizeText(k))) {
+                                sourceLabel = v; break;
+                            }
+                        }
+                    }
+                }
                 addAlert('alertes-eviter', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm">
                     <strong>${isSevere ? '🚨' : '⚠️'} ${m.dci.toUpperCase()} — CI ${a.patho_nom}</strong>
-                    <span class="badge bg-secondary float-end" style="font-size:0.65em;">Pathology Rules</span>
+                    <span class="badge bg-secondary float-end" style="font-size:0.65em;" title="${sourceLabel}">${sourceLabel.length > 30 ? sourceLabel.substring(0, 30) + '...' : sourceLabel}</span>
                     <br><span class="small">${a.raison}${a.condition ? ` <em class="text-muted">(${a.condition})</em>` : ''}</span>
+                    <br><span class="badge bg-${isSevere ? 'danger' : 'warning'} text-${isSevere ? 'white' : 'dark'}" style="font-size:0.7em;">${a.gravite}</span>
                 </div>`, 'eviter');
             });
         });
@@ -253,14 +360,14 @@ function analyserPrescription() {
                 let matchesAuc = [];
                 
                 // AUC EXTERNE
-                if(typeof DDI_AUC_DB !== 'undefined') {
+                if(typeof DDI_MERGED_DB !== 'undefined') {
                     let rootsA = [dciA]; let rootsB = [dciB];
                     if (dciA.includes('rifampic')) rootsA.push('rifampin');
                     if (dciA.includes('quetiap')) rootsA.push('quetiapine');
                     if (dciB.includes('rifampic')) rootsB.push('rifampin');
                     if (dciB.includes('quetiap')) rootsB.push('quetiapine');
 
-                    let aucFiltered = DDI_AUC_DB.filter(d => {
+                    let aucFiltered = DDI_MERGED_DB.filter(d => {
                         let p = sanitizeText(String(d.perpetrator)); let v = sanitizeText(String(d.victim));
                         return (rootsA.some(r => r.includes(p)) && rootsB.some(r => r.includes(v))) || (rootsB.some(r => r.includes(p)) && rootsA.some(r => r.includes(v)));
                     });

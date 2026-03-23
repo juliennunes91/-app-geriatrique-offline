@@ -11,30 +11,10 @@ function initUI() {
     }
 
     // =====================================================================
-    // 2. Fusionner DDI_DB dans DDI_AUC_DB (format unifié perpetrator/victim)
+    // 2. DDI_MERGED_DB remplace DDI_DB + DDI_AUC_DB (fichier pré-fusionné)
     // =====================================================================
-    if (typeof DDI_DB !== 'undefined' && typeof DDI_AUC_DB !== 'undefined') {
-        const existingPairs = new Set(DDI_AUC_DB.map(d =>
-            sanitizeText(String(d.perpetrator)) + '|' + sanitizeText(String(d.victim))
-        ));
-        let added = 0;
-        DDI_DB.forEach(d => {
-            const pairKey = sanitizeText(String(d.int)) + '|' + sanitizeText(String(d.sub));
-            const pairKeyReverse = sanitizeText(String(d.sub)) + '|' + sanitizeText(String(d.int));
-            if (!existingPairs.has(pairKey) && !existingPairs.has(pairKeyReverse)) {
-                DDI_AUC_DB.push({
-                    perpetrator: d.int,
-                    victim: d.sub,
-                    auc_ratio: parseFloat(d.auc) || 0,
-                    mechanism: d.effet || "",
-                    category: d.couleur === 'danger' ? 'Fort inhibiteur / Contre-indication probable' : 'Inhibiteur modéré / Surveillance',
-                    note: "Source: DDI_DB"
-                });
-                existingPairs.add(pairKey);
-                added++;
-            }
-        });
-        console.log(`[DDI] ${added} paires AUC ajoutées depuis DDI_DB → DDI_AUC_DB total: ${DDI_AUC_DB.length}`);
+    if (typeof DDI_MERGED_DB !== 'undefined') {
+        console.log(`[DDI] DDI_MERGED_DB chargé : ${DDI_MERGED_DB.length} paires d'interactions AUC`);
     }
 
     // =====================================================================
