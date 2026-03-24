@@ -373,7 +373,7 @@ const GERIA_RECOS_DB = {
                 med_keys: ["antihypertenseur", "inhibiteur calcique", "betabloquant", "diuretique"],
                 contexte_clinique: "stenose_aortique"
             },
-            alternatives: "IEC/ARA2 avec titration prudente, évaluation cardiologique"
+            alternatives: "Évaluation pour TAVI/SAVR en priorité ; si non candidat : IEC/ARA2 avec titration très prudente"
         },
         {
             id: "EV_B21",
@@ -977,7 +977,7 @@ const GERIA_RECOS_DB = {
             ref_code: "STOPP3-E8",
             section: "Rénal",
             titre: "Nitrofurantoïne + DFG < 45",
-            message: "Nitrofurantoïne avec DFG < 45 ml/min : risque de toxicité (neuropathie, pneumopathie).",
+            message: "Nitrofurantoïne avec DFG < 45 ml/min : risque de toxicité (neuropathie, pneumopathie). Note : l'ANSM/HAS autorise les cures courtes (5j) jusqu'à DFG 30, mais Beers/BNF maintiennent le seuil à 45.",
             severite: "danger",
             condition: {
                 med_keys: ["nitrofurantoine"],
@@ -994,7 +994,7 @@ const GERIA_RECOS_DB = {
             message: "Bisphosphonate oral ou IV avec DFG < 30 ml/min : risque d'insuffisance rénale aiguë.",
             severite: "danger",
             condition: {
-                med_keys: ["alendronate", "risedronate", "acide zoledronique", "acide zoldronique", "ibandronate"],
+                med_keys: ["alendronate", "risedronate", "acide zoledronique", "acide zoledronique", "ibandronate"],
                 bio: { "BIO_004": { op: "<", val: 30 } }
             },
             alternatives: "Dénosumab (pas de CI rénale), surveillance calcémie"
@@ -1544,10 +1544,10 @@ const GERIA_RECOS_DB = {
             ref_code: "STOPP3-L1",
             section: "Antalgiques",
             titre: "Opioïde fort en 1ère intention pour douleur légère",
-            message: "Opioïde fort (morphine, oxycodone, fentanyl, buprénorphine, méthadone, tramadol, péthidine) en première intention pour douleur légère : non-respect de l'échelle OMS.",
+            message: "Opioïde fort (morphine, oxycodone, fentanyl, buprénorphine, méthadone, péthidine) en première intention pour douleur légère : non-respect de l'échelle OMS. Note : le tramadol est un opioïde de palier 2 (faible) selon l'OMS, traité séparément.",
             severite: "danger",
             condition: {
-                med_keys: ["morphine", "oxycodone", "fentanyl", "buprenorphine", "methadone", "tramadol", "pethidine"]
+                med_keys: ["morphine", "oxycodone", "fentanyl", "buprenorphine", "methadone", "pethidine"]
             },
             alternatives: "Paracétamol en premier, AINS si non CI, palier 2 avant palier 3"
         },
