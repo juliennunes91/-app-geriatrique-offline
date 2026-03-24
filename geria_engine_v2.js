@@ -564,15 +564,62 @@ const GeriaEngineV2 = (() => {
         return html;
     }
     
+    /**
+     * Recherche la source EBM spécifique (société savante / essai clinique)
+     * dans PATHOLOGY_RULES_DB pour enrichir l'affichage au-delà du simple "STOPP/START".
+     */
+    function findEbmSource(alert) {
+        if (typeof PATHOLOGY_RULES_DB === 'undefined' || typeof activeComorbs === 'undefined') return '';
+        const c = alert.condition;
+        if (!c) return '';
+
+        // Collecter les med_keys de l'alerte pour chercher dans SOURCES_EBM
+        const medKeys = [...(c.med_keys || []), ...(c.med_keys_2 || [])];
+        if (medKeys.length === 0) return '';
+
+        const category = alert._type === 'initier' ? 'INITIER' : 'EVITER';
+        let found = [];
+
+        activeComorbs.forEach(pathoId => {
+            const rule = PATHOLOGY_RULES_DB[pathoId];
+            if (!rule || !rule.SOURCES_EBM || !rule.SOURCES_EBM[category]) return;
+            const ebmCat = rule.SOURCES_EBM[category];
+
+            for (const [classKey, ref] of Object.entries(ebmCat)) {
+                const cleanKey = classKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+                if (medKeys.some(mk => {
+                    const cleanMk = mk.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    return cleanMk.includes(cleanKey) || cleanKey.includes(cleanMk);
+                })) {
+                    // Resolve full reference if possible
+                    let fullRef = ref;
+                    if (typeof GUIDELINE_INDEX !== 'undefined') {
+                        const guidelineKeys = ref.match(/[A-Z][A-Z0-9_]+/g);
+                        if (guidelineKeys) {
+                            guidelineKeys.forEach(gk => {
+                                if (GUIDELINE_INDEX[gk] && !found.some(f => f.includes(gk))) {
+                                    found.push(`${ref} → ${GUIDELINE_INDEX[gk].ref}`);
+                                }
+                            });
+                        }
+                    }
+                    if (found.length === 0) found.push(ref);
+                }
+            }
+        });
+
+        return found.length > 0 ? found[0] : '';
+    }
+
     function renderSingleAlert(a) {
         const triage = a.triage || getTriageLevel(a.score || 0);
         const borderClass = triage.priority === 1 ? 'danger' : (triage.priority === 2 ? 'warning' : 'info');
         const bgOpacity = triage.priority === 1 ? 'bg-danger bg-opacity-10' : '';
-        
+
         // Badge de score
-        const scoreBadge = a.score != null ? 
+        const scoreBadge = a.score != null ?
             `<span class="badge bg-${borderClass} me-1" title="Score de priorité">${a.score}</span>` : '';
-        
+
         // Badges PIM par molécule
         let pimBadges = '';
         if (a.pim_dict_keys && typeof renderPimBadges === 'function') {
@@ -580,11 +627,17 @@ const GeriaEngineV2 = (() => {
                 .filter(k => typeof activeMeds !== 'undefined' && activeMeds.some(m => m.dci && m.dci.toLowerCase().includes(k)))
                 .map(d => renderPimBadges(d)).join('');
         }
-        
+
         let compHtml = '';
         if (a.complementary_messages && a.complementary_messages.length > 0) {
             compHtml = `<ul class="mb-1 ps-3 mt-1" style="font-size:0.88em;">${a.complementary_messages.map(m => `<li>${m}</li>`).join('')}</ul>`;
         }
+
+        // Enrichir avec la source EBM spécifique (société savante / essai clinique)
+        const ebmSource = findEbmSource(a);
+        const ebmBadge = ebmSource
+            ? `<br><span class="badge" style="font-size:0.6em; background-color:#6f42c1;" title="${ebmSource}">${ebmSource.length > 60 ? ebmSource.substring(0,60)+'...' : ebmSource}</span>`
+            : '';
 
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass});">
             ${scoreBadge}<strong>${triage.icon} ${a.titre}</strong>${a.merged_count > 1 ? ` <span class="badge bg-light text-dark border" style="font-size:0.65em;">${a.merged_count} recommandations groupées</span>` : ''}
@@ -592,7 +645,8 @@ const GeriaEngineV2 = (() => {
             <br><span class="small">${a.message}</span>
             ${compHtml}
             ${pimBadges}
-            ${a.alternatives ? `<br><em class="text-success small">💡 ${a.alternatives}</em>` : ''}
+            ${ebmBadge}
+            ${a.alternatives ? `<br><em class="text-success small">${a.alternatives}</em>` : ''}
         </div>`;
     }
 

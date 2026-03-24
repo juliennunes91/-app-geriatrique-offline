@@ -65,7 +65,8 @@ function buildSyntheseText() {
         { id: 'alertes-ansm', titre: 'INTERACTIONS ANSM' },
         { id: 'alertes-bio', titre: 'SYNDROMES BIOLOGIQUES' },
         { id: 'alertes-usage', titre: 'ADAPTATIONS POSOLOGIQUES' },
-        { id: 'alertes-suivi', titre: 'SUIVI BIOLOGIQUE' }
+        { id: 'alertes-suivi', titre: 'SUIVI BIOLOGIQUE' },
+        { id: 'alertes-guidelines', titre: 'GUIDELINES PAR PATHOLOGIE' }
     ];
     tabs.forEach(t => {
         const el = document.getElementById(t.id);
@@ -151,7 +152,8 @@ function buildPdfContent() {
         { id: 'alertes-ansm', titre: 'Interactions ANSM', color: '#6f42c1' },
         { id: 'alertes-bio', titre: 'Syndromes biologiques', color: '#20c997' },
         { id: 'alertes-usage', titre: 'Adaptations posologiques', color: '#0d6efd' },
-        { id: 'alertes-suivi', titre: 'Suivi biologique', color: '#6c757d' }
+        { id: 'alertes-suivi', titre: 'Suivi biologique', color: '#6c757d' },
+        { id: 'alertes-guidelines', titre: 'Guidelines par pathologie', color: '#6f42c1' }
     ];
 
     sections.forEach(s => {
@@ -269,7 +271,7 @@ window.resetPatient = function() {
     if (typeof renderTags === 'function') renderTags();
 
     const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact',
-                   'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi'];
+                   'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines'];
     divs.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = '<span class="text-muted">Cliquez sur Analyser...</span>';

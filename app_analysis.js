@@ -55,7 +55,7 @@ function analyserPrescription() {
         'BIO_T4': getVal('bioT4'), 'BIO_T3': getVal('bioT3')
     };
 
-    const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi'];
+    const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines'];
     divs.forEach(id => { let el = document.getElementById(id); if(el) el.innerHTML = ''; });
     let counts = { eviter: 0, initier: 0, interact: 0, ansm: 0, auc: 0, bio: 0, usage: 0, suivi: 0 };
     const addAlert = (targetId, htmlStr, countKey) => {
@@ -526,6 +526,239 @@ function analyserPrescription() {
     if(counts.ansm === 0) document.getElementById('alertes-ansm').innerHTML = '<div class="alert alert-light">Aucune interaction du thésaurus ANSM détectée.</div>';
     if(counts.interact === 0) document.getElementById('alertes-interact').innerHTML = '<div class="alert alert-light">Aucun risque clinique ou Pharmacocinétique détecté.</div>';
     if(counts.bio === 0) document.getElementById('alertes-bio').innerHTML = '<div class="alert alert-light">Aucune anomalie syndromique biologique.</div>';
+
+    // =========================================================
+    // 8. ONGLET GUIDELINES — Recommandations EBM par pathologie
+    // =========================================================
+    const divGuidelines = document.getElementById('alertes-guidelines');
+    if (divGuidelines && typeof PATHOLOGY_RULES_DB !== 'undefined' && activeComorbs.length > 0) {
+        let guidelinesHtml = '';
+        activeComorbs.forEach(pathoId => {
+            const rule = PATHOLOGY_RULES_DB[pathoId];
+            if (!rule || !rule.TRAITEMENTS) return;
+
+            // Résoudre la référence complète via GUIDELINE_INDEX
+            let refFull = rule.REFERENCE || '';
+            let refDetails = '';
+            if (typeof GUIDELINE_INDEX !== 'undefined' && rule.SOURCES_EBM) {
+                const allKeys = new Set();
+                ['INITIER', 'EVITER'].forEach(cat => {
+                    if (rule.SOURCES_EBM[cat]) {
+                        Object.values(rule.SOURCES_EBM[cat]).forEach(v => {
+                            // Extract guideline keys like ESC_HF_2023, COMPASS, etc.
+                            const matches = v.match(/[A-Z][A-Z0-9_]+/g);
+                            if (matches) matches.forEach(k => { if (GUIDELINE_INDEX[k]) allKeys.add(k); });
+                        });
+                    }
+                });
+                if (allKeys.size > 0) {
+                    refDetails = Array.from(allKeys).map(k =>
+                        `<li class="small text-muted">${GUIDELINE_INDEX[k].ref}</li>`
+                    ).join('');
+                }
+            }
+
+            guidelinesHtml += `<div class="card border-0 shadow-sm mb-3">
+                <div class="card-header" style="background: linear-gradient(135deg, #6f42c1 0%, #4a1a8a 100%); color: white;">
+                    <strong>${rule.NOM}</strong>
+                    <br><small style="opacity:0.85;">${refFull}</small>
+                </div>
+                <div class="card-body p-2">`;
+
+            // Références bibliographiques détaillées
+            if (refDetails) {
+                guidelinesHtml += `<details class="mb-2">
+                    <summary class="small fw-bold" style="color:#6f42c1; cursor:pointer;">Références bibliographiques</summary>
+                    <ul class="ps-3 mt-1 mb-0" style="font-size:0.8em;">${refDetails}</ul>
+                </details>`;
+            }
+
+            // INITIER
+            const initier = rule.TRAITEMENTS.INITIER;
+            if (initier && initier.length > 0) {
+                guidelinesHtml += `<div class="mb-2"><strong class="text-success small">A INITIER</strong></div>`;
+                initier.forEach(trt => {
+                    // Chercher la source EBM spécifique
+                    let srcEbm = '';
+                    if (rule.SOURCES_EBM && rule.SOURCES_EBM.INITIER) {
+                        for (const [k, v] of Object.entries(rule.SOURCES_EBM.INITIER)) {
+                            if (sanitizeText(trt.classe).includes(sanitizeText(k)) || sanitizeText(k).includes(sanitizeText(trt.classe.split('(')[0].trim()))) {
+                                srcEbm = v; break;
+                            }
+                        }
+                    }
+
+                    // Composants (quadrithérapie IC)
+                    let composantsHtml = '';
+                    if (trt.composants) {
+                        composantsHtml = `<ul class="ps-3 mb-1">${trt.composants.map(c =>
+                            `<li class="small">${c.classe} <span class="badge bg-success" style="font-size:0.6em;">Niveau ${c.niveau}</span>${c.note ? ` <em class="text-muted" style="font-size:0.85em;">${c.note}</em>` : ''}</li>`
+                        ).join('')}</ul>`;
+                    }
+
+                    guidelinesHtml += `<div class="alert alert-success py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #198754;">
+                        <strong class="small">${trt.classe}</strong>
+                        ${trt.niveau_preuve ? ` <span class="badge bg-success" style="font-size:0.6em;">Niveau ${trt.niveau_preuve}</span>` : ''}
+                        ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;" title="${srcEbm}">${srcEbm.length > 40 ? srcEbm.substring(0,40)+'...' : srcEbm}</span>` : ''}
+                        ${trt.dci_exemples ? `<br><small class="text-muted">DCI : ${trt.dci_exemples.join(', ')}</small>` : ''}
+                        <br><small>${trt.indication}</small>
+                        ${composantsHtml}
+                        ${trt.condition ? `<br><small class="text-muted fst-italic">Condition : ${trt.condition}</small>` : ''}
+                        ${trt.note ? `<br><small class="text-info">${trt.note}</small>` : ''}
+                        ${trt.contre_indication_dfg ? `<br><small class="text-danger">${trt.contre_indication_dfg}</small>` : ''}
+                    </div>`;
+                });
+            }
+
+            // CRISE_AIGUE (ex: Goutte)
+            const criseAigue = rule.TRAITEMENTS.CRISE_AIGUE;
+            if (criseAigue && criseAigue.length > 0) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">TRAITEMENT DE LA CRISE</strong></div>`;
+                criseAigue.forEach(trt => {
+                    guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #ffc107;">
+                        <strong class="small">${trt.classe}</strong>
+                        <br><small>${trt.indication}</small>
+                        ${trt.note ? `<br><small class="text-muted">${trt.note}</small>` : ''}
+                    </div>`;
+                });
+            }
+
+            // TRAITEMENT_FOND (ex: Goutte)
+            const traitFond = rule.TRAITEMENTS.TRAITEMENT_FOND;
+            if (traitFond && traitFond.length > 0) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-success small">TRAITEMENT DE FOND</strong></div>`;
+                traitFond.forEach(trt => {
+                    let srcEbm = '';
+                    if (rule.SOURCES_EBM && rule.SOURCES_EBM.INITIER) {
+                        for (const [k, v] of Object.entries(rule.SOURCES_EBM.INITIER)) {
+                            if (sanitizeText(trt.classe).includes(sanitizeText(k)) || sanitizeText(k).includes(sanitizeText(trt.classe.split('(')[0].trim()))) {
+                                srcEbm = v; break;
+                            }
+                        }
+                    }
+                    guidelinesHtml += `<div class="alert alert-success py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #198754;">
+                        <strong class="small">${trt.classe}</strong>
+                        ${trt.niveau_preuve ? ` <span class="badge bg-success" style="font-size:0.6em;">Niveau ${trt.niveau_preuve}</span>` : ''}
+                        ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;">${srcEbm}</span>` : ''}
+                        <br><small>${trt.indication}</small>
+                        ${trt.note ? `<br><small class="text-info">${trt.note}</small>` : ''}
+                    </div>`;
+                });
+            }
+
+            // ANTICOAGULATION (ex: FA)
+            const anticoag = rule.TRAITEMENTS.ANTICOAGULATION;
+            if (anticoag) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-primary small">ANTICOAGULATION</strong></div>`;
+                guidelinesHtml += `<div class="alert alert-primary py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #0d6efd;">
+                    <small>${anticoag.indication || ''}</small>
+                    ${anticoag.premiere_ligne ? `<br><strong class="small">${anticoag.premiere_ligne.classe}</strong> <small class="text-muted">${anticoag.premiere_ligne.note || ''}</small>` : ''}
+                </div>`;
+                if (anticoag.regles_specifiques_doac) {
+                    anticoag.regles_specifiques_doac.forEach(d => {
+                        guidelinesHtml += `<div class="small ps-3 mb-1"><strong>${d.dci}</strong> : ${d.dose_pleine} ${d.dose_reduite ? `| Réduite : ${d.dose_reduite}` : ''} ${d.ci_dfg ? `| CI : DFG ${d.ci_dfg}` : ''}</div>`;
+                    });
+                }
+            }
+
+            // EVITER
+            const eviter = rule.TRAITEMENTS.EVITER;
+            if (eviter && eviter.length > 0) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-danger small">A EVITER</strong></div>`;
+                eviter.forEach(trt => {
+                    let srcEbm = '';
+                    if (rule.SOURCES_EBM && rule.SOURCES_EBM.EVITER) {
+                        for (const [k, v] of Object.entries(rule.SOURCES_EBM.EVITER)) {
+                            if (sanitizeText(trt.classe).includes(sanitizeText(k)) || sanitizeText(k).includes(sanitizeText(trt.classe.split('(')[0].trim()))) {
+                                srcEbm = v; break;
+                            }
+                        }
+                    }
+                    guidelinesHtml += `<div class="alert alert-danger py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #dc3545;">
+                        <strong class="small">${trt.classe}</strong>
+                        ${trt.gravite ? ` <span class="badge bg-${trt.gravite === 'CONTRE-INDICATION' || String(trt.gravite).includes('ABSOLUE') ? 'danger' : 'warning text-dark'}" style="font-size:0.6em;">${trt.gravite}</span>` : ''}
+                        ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;" title="${srcEbm}">${srcEbm.length > 40 ? srcEbm.substring(0,40)+'...' : srcEbm}</span>` : ''}
+                        ${trt.ref_stopp ? ` <span class="badge bg-secondary float-end me-1" style="font-size:0.6em;">${trt.ref_stopp}</span>` : ''}
+                        <br><small>${trt.raison}</small>
+                        ${trt.condition ? `<br><small class="text-muted fst-italic">${trt.condition}</small>` : ''}
+                    </div>`;
+                });
+            }
+
+            // DEPRESCRIPTION (soins palliatifs, fragilité)
+            const deprescription = rule.TRAITEMENTS.DEPRESCRIPTION;
+            if (deprescription) {
+                if (deprescription.a_arreter_systematiquement) {
+                    guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">DEPRESCRIPTION</strong></div>`;
+                    deprescription.a_arreter_systematiquement.forEach(d => {
+                        guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1" style="border-left:3px solid #ffc107;">
+                            <strong class="small">${d.classe}</strong><br><small>${d.raison}</small>
+                        </div>`;
+                    });
+                }
+                if (deprescription.a_conserver) {
+                    guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-success small">A CONSERVER</strong></div>`;
+                    deprescription.a_conserver.forEach(d => {
+                        guidelinesHtml += `<div class="alert alert-success py-1 px-2 mb-1" style="border-left:3px solid #198754;">
+                            <strong class="small">${d.classe}</strong><br><small>${d.indication}</small>
+                        </div>`;
+                    });
+                }
+            }
+
+            // DEPRESCRIPTION_CIBLES (fragilité)
+            const depCibles = rule.TRAITEMENTS.DEPRESCRIPTION_CIBLES;
+            if (depCibles) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">CIBLES DE DEPRESCRIPTION</strong></div>`;
+                depCibles.forEach(d => {
+                    guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1" style="border-left:3px solid #ffc107;">
+                        <strong class="small">${d.classe}</strong>
+                        ${d.ref ? ` <span class="badge bg-secondary float-end" style="font-size:0.6em;">${d.ref}</span>` : ''}
+                        <br><small>${d.action}</small>
+                    </div>`;
+                });
+            }
+
+            // CIBLES HbA1c (diabète)
+            const cibles = rule.TRAITEMENTS.CIBLES_HBA1C;
+            if (cibles) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-info small">CIBLES HbA1c INDIVIDUALISEES</strong>
+                    ${cibles.ref ? ` <span class="badge bg-dark" style="font-size:0.6em;">${cibles.ref}</span>` : ''}</div>`;
+                ['general', 'sujet_age_robuste', 'sujet_age_fragile', 'fin_de_vie'].forEach(k => {
+                    if (cibles[k]) {
+                        guidelinesHtml += `<div class="small ps-2 mb-1">${cibles[k].max ? `<strong>HbA1c ≤ ${cibles[k].max}%</strong> — ` : ''}${cibles[k].note}</div>`;
+                    }
+                });
+            }
+
+            // INTERACTIONS CRITIQUES
+            const interCrit = rule.INTERACTIONS_CRITIQUES;
+            if (interCrit && interCrit.length > 0) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-danger small">INTERACTIONS CRITIQUES SPECIFIQUES</strong></div>`;
+                interCrit.forEach(ic => {
+                    guidelinesHtml += `<div class="alert alert-danger py-1 px-2 mb-1 bg-danger bg-opacity-10" style="border-left:3px solid #dc3545;">
+                        <strong class="small">${ic.combinaison.join(' + ')}</strong>
+                        ${ic.gravite ? ` <span class="badge bg-danger" style="font-size:0.6em;">${ic.gravite}</span>` : ''}
+                        <br><small class="text-danger">${ic.risque}</small>
+                        ${ic.conduite ? `<br><small>${ic.conduite}</small>` : ''}
+                        ${ic.surveillance ? `<br><small class="text-info">${ic.surveillance}</small>` : ''}
+                    </div>`;
+                });
+            }
+
+            guidelinesHtml += `</div></div>`;
+        });
+
+        if (guidelinesHtml) {
+            divGuidelines.innerHTML = guidelinesHtml;
+        } else {
+            divGuidelines.innerHTML = '<div class="alert alert-light">Aucune guideline spécifique pour les pathologies sélectionnées.</div>';
+        }
+    } else if (divGuidelines) {
+        divGuidelines.innerHTML = activeComorbs.length === 0
+            ? '<div class="alert alert-light">Ajoutez des comorbidités pour voir les recommandations des sociétés savantes.</div>'
+            : '<div class="alert alert-light">Données PATHOLOGY_RULES_DB non disponibles.</div>';
+    }
 
     let btnPdf = document.getElementById('btnPdf'); if(btnPdf) btnPdf.style.display = 'inline-block';
     let btnCopier = document.getElementById('btnCopier'); if(btnCopier) btnCopier.style.display = 'inline-block';

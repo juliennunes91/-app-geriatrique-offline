@@ -359,8 +359,12 @@ const PATHOLOGY_RULES_DB = {
         SOURCES_EBM: {
                   "INITIER": {
                             "iSGLT2": "ESC_HF_2023 Rec Table 2, IA + EMPEROR-Preserved + DELIVER",
+                            "Diurétique": "ESC_HF_2021 §5.3, IC",
                             "ARM": "ESC_HF_2021 §6.2, IIbB + TOPCAT",
-                            "GLP-1": "STEP-HFpEF, IIaB"
+                            "GLP-1": "STEP_HFpEF, IIaB"
+                  },
+                  "EVITER": {
+                            "AINS": "ESC_HF_2021 §5.12 + STOPP_START_V3 H2"
                   }
         },
 
@@ -445,6 +449,10 @@ const PATHOLOGY_RULES_DB = {
                             "IEC": "ESC_CCS_2019 §5.3, IA",
                             "Bêtabloquant": "ESC_CCS_2019 §5.2, IA post-IDM",
                             "Rivaroxaban": "COMPASS, IIaB"
+                  },
+                  "EVITER": {
+                            "DAPT": "ESC_CCS_2019 §5.1 — pas au-delà de 12 mois post-stent",
+                            "AINS": "ESC_CCS_2019 §5.5 + STOPP_START_V3"
                   }
         },
 
@@ -531,8 +539,9 @@ const PATHOLOGY_RULES_DB = {
                             "Spironolactone": "PATHWAY-2, IB"
                   },
                   "EVITER": {
-                            "IEC + ARA2": "ONTARGET",
-                            "Alpha-bloquants": "ALLHAT"
+                            "IEC + ARA2": "ONTARGET — Yusuf S et al. NEJM 2008;358:1547",
+                            "Alpha-bloquants": "ALLHAT — JAMA 2000;283:1967",
+                            "AINS": "ESC_HTN_2024 + STOPP_START_V3 B12"
                   }
         },
 
@@ -778,9 +787,16 @@ const PATHOLOGY_RULES_DB = {
         SOURCES_EBM: {
                   "INITIER": {
                             "Monothérapie antiagrégante": "ESC_PAD_2024 §8.2, IA",
-                            "Rivaroxaban": "ESC_PAD_2024 §8.2, IIaA + COMPASS + VOYAGER-PAD",
+                            "Rivaroxaban": "ESC_PAD_2024 §8.2, IIaA + COMPASS + VOYAGER_PAD",
                             "Statine": "ESC_PAD_2024 §8.1, IA",
+                            "IEC": "ESC_PAD_2024 §8.1, IA",
+                            "iSGLT2": "ADA_2025 §9.4 + KDIGO_CKD_2024",
                             "Exercice": "ESC_PAD_2024 §8.3, IA"
+                  },
+                  "EVITER": {
+                            "DAPT": "ESC_PAD_2024 §8.2 + CHARISMA",
+                            "Anticoagulation": "WAVE trial — Anand SS et al. NEJM 2006;354:1706",
+                            "Bêtabloquants": "ESC_PAD_2024 §8.1 — pas de CI absolue"
                   }
         },
 
@@ -918,8 +934,15 @@ const PATHOLOGY_RULES_DB = {
         SOURCES_EBM: {
                   "INITIER": {
                             "DAPT courte": "CHANCE + POINT, IA",
+                            "AOD": "ESC_AF_2024 §5.2, IA",
                             "Statine": "SPARCL + ESC_DYSLIP_2019, IA",
-                            "Antihypertenseur": "PROGRESS + ESC_HTN_2024, IA"
+                            "Antihypertenseur": "PROGRESS + ESC_HTN_2024, IA",
+                            "iSGLT2": "ADA_2025 §9.4 + KDIGO_CKD_2024"
+                  },
+                  "EVITER": {
+                            "AOD + Antiagrégant": "ESC_AF_2024 §5.3, IIIB",
+                            "AINS": "ESC_HTN_2024 + STOPP_START_V3",
+                            "Switch DOAC": "ESC_AF_2024 §5.2"
                   }
         },
 
@@ -1037,7 +1060,14 @@ const PATHOLOGY_RULES_DB = {
         SOURCES_EBM: {
                   "INITIER": {
                             "Midodrine": "ESC_SYNCOPE_2018 §5.4, IB",
-                            "Fludrocortisone": "ESC_SYNCOPE_2018 §5.4, IIaC"
+                            "Fludrocortisone": "ESC_SYNCOPE_2018 §5.4, IIaC",
+                            "Mesures non pharmacologiques": "ESC_SYNCOPE_2018 §5.4, IC"
+                  },
+                  "EVITER": {
+                            "Alpha-bloquants": "STOPP_START_V3 K1 + ESC_SYNCOPE_2018 §5.3",
+                            "Diurétiques": "STOPP_START_V3 B10 + ESC_SYNCOPE_2018",
+                            "Antihypertenseurs": "STOPP_START_V3 B6",
+                            "Antidépresseurs tricycliques": "BEERS_2023 + STOPP_START_V3 D4"
                   }
         },
 
@@ -1187,7 +1217,13 @@ const PATHOLOGY_RULES_DB = {
         SOURCES_EBM: {
                   "INITIER": {
                             "Donépézil": "EAN_DEMENTIA_2023 §4.1, A",
+                            "Rivastigmine": "EAN_DEMENTIA_2023 §4.1, A",
+                            "Galantamine": "EAN_DEMENTIA_2023 §4.1, A",
                             "Mémantine": "EAN_DEMENTIA_2023 §4.2, A"
+                  },
+                  "EVITER": {
+                            "Anticholinergiques": "STOPP_START_V3 D1 + BEERS_2023",
+                            "Antipsychotiques": "STOPP_START_V3 D3 + FDA Black Box Warning 2005"
                   }
         },
         TRAITEMENTS: {
@@ -1573,7 +1609,11 @@ const PATHOLOGY_RULES_DB = {
         REFERENCE: "ETA 2023 | ATA 2024 | TRUST trial",
         SOURCES_EBM: {
                   "INITIER": {
-                            "Lévothyroxine": "ETA_2023 §3.1, A + TRUST"
+                            "Lévothyroxine": "ETA_THYROID_2023 §3.1, A + TRUST"
+                  },
+                  "EVITER": {
+                            "Surdosage LT4": "ETA_THYROID_2023 §3.4 + ATA_THYROID_2024",
+                            "Traitement subclinique": "TRUST — Stott DJ et al. NEJM 2017;376:2534"
                   }
         },
         TRAITEMENTS: {
@@ -1639,7 +1679,13 @@ const PATHOLOGY_RULES_DB = {
         REFERENCE: "ETA 2023 | ATA | ESC 2024 (FA)",
         SOURCES_EBM: {
                   "INITIER": {
-                            "Thiamazole": "ETA_2023 §4.1, A"
+                            "Thiamazole": "ETA_THYROID_2023 §4.1, A",
+                            "PTU": "ATA_THYROID_2024 — 1er trimestre grossesse uniquement",
+                            "Bêtabloquant": "ETA_THYROID_2023 §4.2, IC"
+                  },
+                  "EVITER": {
+                            "Amiodarone": "ESC_AF_2024 §6.2 + ETA_THYROID_2023 §5",
+                            "Lithium": "ATA_THYROID_2024 §5.3"
                   }
         },
         TRAITEMENTS: {
@@ -1961,6 +2007,10 @@ const PATHOLOGY_RULES_DB = {
                             "Colchicine": "EULAR_2023 §4.1, A",
                             "Allopurinol": "EULAR_2023 §4.3, IA",
                             "Fébuxostat": "EULAR_2023 §4.3, IIaB + CARES"
+                  },
+                  "EVITER": {
+                            "Diurétiques": "EULAR_GOUT_2023 §3.2 + ACR_GOUT_2020",
+                            "Aspirine faible dose": "EULAR_GOUT_2023 §3.2"
                   }
         },
         TRAITEMENTS: {
@@ -2011,8 +2061,13 @@ const PATHOLOGY_RULES_DB = {
         REFERENCE: "IOF/ESCEO 2024 | NOGG 2024 | HAS 2024",
         SOURCES_EBM: {
                   "INITIER": {
-                            "Bisphosphonates": "IOF_2024 §5.1, A",
-                            "Dénosumab": "IOF_2024 §5.2, A"
+                            "Bisphosphonates": "IOF_OSTEO_2024 §5.1, A",
+                            "Dénosumab": "IOF_OSTEO_2024 §5.2, A",
+                            "Tériparatide": "IOF_OSTEO_2024 §5.3, A",
+                            "Vitamine D": "IOF_OSTEO_2024 §4, A"
+                  },
+                  "EVITER": {
+                            "Corticoïdes": "IOF_OSTEO_2024 §6 + ACR Glucocorticoid-Induced OP 2022"
                   }
         },
         TRAITEMENTS: {
@@ -2124,7 +2179,12 @@ const PATHOLOGY_RULES_DB = {
         REFERENCE: "Bárány Society 2023 | HAS",
         SOURCES_EBM: {
                   "INITIER": {
-                            "Manoeuvre Epley": "Bárány 2023 §3.1, A"
+                            "Manoeuvre Epley": "Bárány Society 2023 §3.1, A",
+                            "Bétahistine": "Cochrane Review 2011 + HAS_FR"
+                  },
+                  "EVITER": {
+                            "Antivertigineux": "STOPP_START_V3 + HAS_FR — pas d'indication > 3-5 jours",
+                            "Benzodiazépines": "STOPP_START_V3 D5 + BEERS_2023"
                   }
         },
         TRAITEMENTS: {
@@ -2162,7 +2222,9 @@ const PATHOLOGY_RULES_DB = {
                             "Statine": "KDIGO_2024 §3.10, IA"
                   },
                   "EVITER": {
-                            "AINS": "KDIGO_2024 §4.1"
+                            "AINS": "KDIGO_CKD_2024 §4.1",
+                            "IEC + ARA2": "ONTARGET + KDIGO_CKD_2024 — pas de double blocage SRAA",
+                            "Metformine": "ADA_2025 §9.4 — CI si DFG < 30 mL/min"
                   }
         },
 
@@ -2260,7 +2322,16 @@ const PATHOLOGY_RULES_DB = {
         REFERENCE: "SFAP 2024 | EAPC 2023 | NICE End of Life 2024",
         SOURCES_EBM: {
                   "INITIER": {
-                            "Déprescription": "SFAP_2024 + EAPC_2023"
+                            "Déprescription": "SFAP_2024 + EAPC_2023",
+                            "Morphine": "SFAP_2024 §3.1 + EAPC_2023 §4",
+                            "Anxiolytiques": "SFAP_2024 §3.3"
+                  },
+                  "EVITER": {
+                            "Statines": "SFAP_2024 + EAPC_2023 — aucun bénéfice en fin de vie",
+                            "Bisphosphonates": "EAPC_2023 — bénéfice à ≥ 6 mois",
+                            "Antihypertenseurs": "SFAP_2024 — si PAS < 110 ou pronostic < 3 mois",
+                            "Hypoglycémiants": "ADA_2025 Older Adults + SFAP_2024",
+                            "Anticoagulants": "EAPC_2023 — réévaluer bénéfice/risque"
                   }
         },
         TRAITEMENTS: {
@@ -2315,7 +2386,16 @@ const PATHOLOGY_RULES_DB = {
         REFERENCE: "STOPP/START v3 (2023) | Beers 2023 | NICE Multimorbidity 2024 | Consensus Gériatrique International",
         SOURCES_EBM: {
                   "INITIER": {
-                            "Déprescription": "STOPP/START v3 + Beers 2023 + NICE 2024"
+                            "Déprescription": "STOPP_START_V3 + BEERS_2023 + NICE Multimorbidity 2024"
+                  },
+                  "EVITER": {
+                            "Benzodiazépines": "STOPP_START_V3 D5 + BEERS_2023",
+                            "IPP": "STOPP_START_V3 F1",
+                            "Statines": "Contexte fragile / palliatif — discuter arrêt",
+                            "Antihypertenseurs": "STOPP_START_V3 B6",
+                            "Sulfamides": "ADA_2025 Older Adults + STOPP_START_V3 J1",
+                            "Anticholinergiques": "STOPP_START_V3 D1-D5 + BEERS_2023",
+                            "Antipsychotiques": "STOPP_START_V3 D3 + FDA Black Box"
                   }
         },
         TRAITEMENTS: {
