@@ -485,5 +485,361 @@ const CHILD_PUGH_ADAPTATIONS = {
         A: { msg: "Pas d'adaptation", ci: false, reduire: false },
         B: { msg: "Débuter à 20-40 mg/j — Surveillance ionogramme rapprochée, risque d'encéphalopathie hépatique", ci: false, reduire: true },
         C: { msg: "Débuter à 20 mg/j — Association spironolactone. Risque d'encéphalopathie hépatique si diurèse trop rapide.", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // IEC (Inhibiteurs de l'Enzyme de Conversion)
+    // ========================================================================
+    "ramipril": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation habituelle (élimination rénale prédominante)", ci: false, reduire: false },
+        C: { msg: "Prudence — Données limitées. Surveiller TA et K+.", ci: false, reduire: false }
+    },
+    "perindopril": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (élimination rénale)", ci: false, reduire: false },
+        C: { msg: "Pas d'adaptation — Élimination rénale. Prudence TA.", ci: false, reduire: false }
+    },
+    "enalapril": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prodrogue (énalaprilat) — Conversion hépatique. Prudence si IHC sévère.", ci: false, reduire: false },
+        C: { msg: "Prodrogue — Conversion hépatique potentiellement réduite. Préférer un IEC non prodrogue (lisinopril, captopril).", ci: false, reduire: true }
+    },
+    "lisinopril": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (pas de métabolisme hépatique, pas de prodrogue)", ci: false, reduire: false },
+        C: { msg: "IEC de choix en IHC — Pas de métabolisme hépatique.", ci: false, reduire: false }
+    },
+    "captopril": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (pas de prodrogue)", ci: false, reduire: false },
+        C: { msg: "Pas d'adaptation. Surveiller TA.", ci: false, reduire: false }
+    },
+
+    // ========================================================================
+    // ARA2 (Antagonistes des Récepteurs de l'Angiotensine II)
+    // ========================================================================
+    "valsartan": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Dose max 80 mg/j — Biodisponibilité doublée en IHC", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ (cholestase biliaire)", ci: true, reduire: false }
+    },
+    "candesartan": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Débuter à 4 mg/j — Prudence (prodrogue, métabolisme hépatique)", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ (cholestase biliaire sévère)", ci: true, reduire: false }
+    },
+    "irbesartan": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation habituelle (données limitées)", ci: false, reduire: false },
+        C: { msg: "Prudence — Données insuffisantes", ci: false, reduire: false }
+    },
+    "telmisartan": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Dose max 40 mg/j — Excrétion biliaire, accumulation possible", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Obstruction biliaire", ci: true, reduire: false }
+    },
+    "olmesartan": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Dose max 20 mg/j — Prudence", ci: false, reduire: true },
+        C: { msg: "Non recommandé — Données insuffisantes", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // BÊTABLOQUANTS COURANTS (manquants)
+    // ========================================================================
+    "bisoprolol": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation habituelle — 50% élimination rénale", ci: false, reduire: false },
+        C: { msg: "Débuter à dose faible — Demi-vie peut être prolongée", ci: false, reduire: true }
+    },
+    "metoprolol": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduire la dose — Biodisponibilité augmentée (fort premier passage hépatique CYP2D6)", ci: false, reduire: true },
+        C: { msg: "Réduire de 50% minimum — Biodisponibilité très augmentée", ci: false, reduire: true }
+    },
+    "nebivolol": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Métabolisme hépatique CYP2D6. Débuter à 1.25 mg.", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ (RCP)", ci: true, reduire: false }
+    },
+    "atenolol": {
+        A: { msg: "Pas d'adaptation (élimination rénale)", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (élimination rénale prédominante)", ci: false, reduire: false },
+        C: { msg: "Pas d'adaptation rénale. Mais prudence hémodynamique.", ci: false, reduire: false }
+    },
+    "sotalol": {
+        A: { msg: "Pas d'adaptation (élimination rénale)", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (élimination rénale prédominante)", ci: false, reduire: false },
+        C: { msg: "Pas d'adaptation — Mais prudence QTc en IHC (hypokaliémie).", ci: false, reduire: false }
+    },
+    "acebutolol": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Métabolisme hépatique", ci: false, reduire: true },
+        C: { msg: "Prudence — Réduction de dose", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // ANTIBIOTIQUES COURANTS
+    // ========================================================================
+    "amoxicilline": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (élimination rénale)", ci: false, reduire: false },
+        C: { msg: "Pas d'adaptation — Mais surveiller bilan hépatique si association acide clavulanique", ci: false, reduire: false }
+    },
+    "azithromycine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Hépatotoxicité possible. Bilan hépatique.", ci: false, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité documentée, métabolisation hépatique", ci: true, reduire: false }
+    },
+    "clarithromycine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Métabolisme hépatique CYP3A4, interactions multiples", ci: false, reduire: false },
+        C: { msg: "Non recommandé — Hépatotoxicité, accumulation. Préférer azithromycine (si CP B) ou autre classe.", ci: false, reduire: true }
+    },
+    "ciprofloxacine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation habituelle (double élimination rénale/hépatique)", ci: false, reduire: false },
+        C: { msg: "Prudence — Réduire si IRC associée", ci: false, reduire: false }
+    },
+    "levofloxacine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (élimination rénale prédominante)", ci: false, reduire: false },
+        C: { msg: "Pas d'adaptation", ci: false, reduire: false }
+    },
+    "doxycycline": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Excrétion biliaire. Pas de réduction de dose systématique.", ci: false, reduire: false },
+        C: { msg: "Prudence — Demi-vie peut être prolongée si excrétion biliaire réduite", ci: false, reduire: false }
+    },
+    "rifampicine": {
+        A: { msg: "Prudence — Hépatotoxicité intrinsèque. Bilan hépatique à J0, J15, M1.", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Hépatotoxicité majeure sur foie atteint", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité sévère", ci: true, reduire: false }
+    },
+    "isoniazide": {
+        A: { msg: "Prudence — Hépatotoxicité dose-dépendante. Bilan hépatique rapproché.", ci: false, reduire: false },
+        B: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité majeure (acétylation hépatique)", ci: true, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // ANTIFONGIQUES
+    // ========================================================================
+    "itraconazole": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Métabolisme hépatique CYP3A4 extensif. Bilan hépatique rapproché.", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité, accumulation", ci: true, reduire: false }
+    },
+    "ketoconazole": {
+        A: { msg: "Prudence — Hépatotoxicité intrinsèque", ci: false, reduire: false },
+        B: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité sévère documentée", ci: true, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "voriconazole": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Dose de charge standard, dose d'entretien réduite de 50%", ci: false, reduire: true },
+        C: { msg: "Dose d'entretien réduite de 50% — Surveillance rapprochée taux plasmatiques", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // CORTICOÏDES
+    // ========================================================================
+    "prednisone": {
+        A: { msg: "Prodrogue (→ prednisolone) — Conversion hépatique normalement préservée", ci: false, reduire: false },
+        B: { msg: "Prudence — Conversion en prednisolone peut être réduite. Préférer prednisolone directement.", ci: false, reduire: true },
+        C: { msg: "Préférer prednisolone (métabolite actif direct) — Conversion de la prednisone altérée", ci: false, reduire: true }
+    },
+    "prednisolone": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (forme active). Mais surveillance glycémie/TA.", ci: false, reduire: false },
+        C: { msg: "Forme active préférée en IHC. Surveillance rapprochée.", ci: false, reduire: false }
+    },
+    "methylprednisolone": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Métabolisme hépatique CYP3A4", ci: false, reduire: false },
+        C: { msg: "Prudence — Clairance peut être réduite", ci: false, reduire: true }
+    },
+    "dexamethasone": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Métabolisme CYP3A4", ci: false, reduire: false },
+        C: { msg: "Prudence — Clearance réduite", ci: false, reduire: true }
+    },
+    "hydrocortisone": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (métabolisme peu CYP-dépendant)", ci: false, reduire: false },
+        C: { msg: "Pas d'adaptation habituelle", ci: false, reduire: false }
+    },
+
+    // ========================================================================
+    // ANTIPSYCHOTIQUES MANQUANTS
+    // ========================================================================
+    "chlorpromazine": {
+        A: { msg: "Prudence — Fort métabolisme hépatique", ci: false, reduire: true },
+        B: { msg: "Réduire de 50% — Risque d'accumulation, cholestase iatrogène", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité (cholestase), coma hépatique", ci: true, reduire: false }
+    },
+    "clozapine": {
+        A: { msg: "Prudence — Bilan hépatique rapproché", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Hépatotoxicité, agranulocytose, métabolisme CYP1A2/3A4 altéré", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "levomepromazine": {
+        A: { msg: "Prudence — Métabolisme hépatique extensif", ci: false, reduire: true },
+        B: { msg: "Réduire significativement — Accumulation, sédation prolongée", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Risque de coma", ci: true, reduire: false }
+    },
+    "cyamemazine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduire la dose — Phénothiazine, métabolisme hépatique", ci: false, reduire: true },
+        C: { msg: "Non recommandé", ci: false, reduire: true }
+    },
+    "amisulpride": {
+        A: { msg: "Pas d'adaptation (élimination rénale prédominante)", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (élimination rénale)", ci: false, reduire: false },
+        C: { msg: "Pas d'adaptation (élimination rénale). Données limitées.", ci: false, reduire: false }
+    },
+
+    // ========================================================================
+    // BENZODIAZÉPINES MANQUANTES
+    // ========================================================================
+    "bromazepam": {
+        A: { msg: "Prudence — CYP3A4", ci: false, reduire: true },
+        B: { msg: "Réduire de 50% — Préférer lorazépam ou oxazépam", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Préférer lorazépam ou oxazépam", ci: true, reduire: false }
+    },
+    "clorazepate": {
+        A: { msg: "Prudence — Prodrogue → nordazépam (demi-vie longue)", ci: false, reduire: true },
+        B: { msg: "ÉVITER — Demi-vie très prolongée, accumulation", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Préférer lorazépam ou oxazépam", ci: true, reduire: false }
+    },
+    "prazepam": {
+        A: { msg: "Prudence — Prodrogue du nordazépam", ci: false, reduire: true },
+        B: { msg: "ÉVITER — Accumulation (nordazépam > 60h)", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "clonazepam": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduire la dose — CYP3A4, demi-vie prolongée", ci: false, reduire: true },
+        C: { msg: "Réduire dose significativement", ci: false, reduire: true }
+    },
+    "clobazam": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Dose max 20 mg/j — Métabolite actif (N-desméthylclobazam) accumulable", ci: false, reduire: true },
+        C: { msg: "Dose max 10 mg/j — Titration très lente", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // DIURÉTIQUES MANQUANTS
+    // ========================================================================
+    "hydrochlorothiazide": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Risque d'encéphalopathie hépatique (alcalose hypokaliémique)", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Risque majeur d'encéphalopathie hépatique", ci: true, reduire: false }
+    },
+    "indapamide": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Risque d'encéphalopathie si hypokaliémie", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Encéphalopathie hépatique", ci: true, reduire: false }
+    },
+    "bumetanide": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Débuter à 0.5-1 mg — Comme furosémide, risque encéphalopathie", ci: false, reduire: true },
+        C: { msg: "Débuter à 0.5 mg — Prudence extrême", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // ANTI-ANGINEUX / ANTIARYTHMIQUES MANQUANTS
+    // ========================================================================
+    "flecainide": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduire la dose — Métabolisme hépatique CYP2D6", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "dronedarone": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Hépatotoxicité documentée, bilan hépatique rapproché", ci: false, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité sévère", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // ANTIÉMÉTIQUES MANQUANTS
+    // ========================================================================
+    "metoclopramide": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduire la dose de 50% — Biodisponibilité augmentée", ci: false, reduire: true },
+        C: { msg: "Réduire de 50% minimum", ci: false, reduire: true }
+    },
+    "domperidone": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "CONTRE-INDIQUÉ — Métabolisme hépatique CYP3A4, risque QTc accru", ci: true, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "ondansetron": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Dose max 8 mg/j — Clairance réduite de 50%", ci: false, reduire: true },
+        C: { msg: "Dose max 8 mg/j", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // IMMUNOSUPPRESSEURS / ANTIRHUMATISMAUX
+    // ========================================================================
+    "ciclosporine": {
+        A: { msg: "Prudence — Métabolisme hépatique CYP3A4. Dosage taux résiduel.", ci: false, reduire: false },
+        B: { msg: "Réduction de dose probable — Taux résiduels augmentés", ci: false, reduire: true },
+        C: { msg: "Non recommandé — Néphrotoxicité + hépatotoxicité combinées", ci: false, reduire: true }
+    },
+    "hydroxychloroquine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation habituelle (longue demi-vie tissulaire, peu de métabolisme hépatique de 1er passage)", ci: false, reduire: false },
+        C: { msg: "Prudence — Données limitées", ci: false, reduire: false }
+    },
+    "leflunomide": {
+        A: { msg: "Prudence — Hépatotoxicité documentée. Bilan hépatique mensuel.", ci: false, reduire: false },
+        B: { msg: "CONTRE-INDIQUÉ (RCP) — Hépatotoxicité sévère", ci: true, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // ANTICOAGULANTS INJECTABLES
+    // ========================================================================
+    "enoxaparine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Risque hémorragique accru si coagulopathie. Anti-Xa si disponible.", ci: false, reduire: false },
+        C: { msg: "Prudence extrême — Coagulopathie hépatique. Surveillance anti-Xa.", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // ANTIDIABÉTIQUES MANQUANTS
+    // ========================================================================
+    "vildagliptine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Hépatotoxicité documentée (élévation transaminases)", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité", ci: true, reduire: false }
+    },
+    "saxagliptine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (CYP3A4 mais faible impact)", ci: false, reduire: false },
+        C: { msg: "Données insuffisantes — Non recommandé", ci: false, reduire: true }
+    },
+    "canagliflozin": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        C: { msg: "Non recommandé — Données insuffisantes", ci: false, reduire: true }
+    },
+    "liraglutide": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation — Pas de métabolisme hépatique (dégradation peptidique)", ci: false, reduire: false },
+        C: { msg: "Prudence — Données limitées mais pas de métabolisme hépatique", ci: false, reduire: false }
+    },
+    "semaglutide": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Pas d'adaptation (dégradation peptidique, pas de CYP)", ci: false, reduire: false },
+        C: { msg: "Pas d'adaptation — Données limitées", ci: false, reduire: false }
+    },
+    "acarbose": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Hépatotoxicité possible", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Cirrhose avec troubles digestifs", ci: true, reduire: false }
     }
 };

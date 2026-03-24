@@ -167,11 +167,26 @@ function toggleCpDetails(val) {
         block.style.display = '';
     } else {
         block.style.display = 'none';
-        // Also check the hepatopathy checkbox automatically when manually setting Child-Pugh B or C
-        if (val === 'B' || val === 'C') {
-            let chk = document.getElementById('chkFoie');
-            if (chk) chk.checked = true;
-        }
+        // Synchroniser la checkbox hépatopathie
+        let chk = document.getElementById('chkFoie');
+        if (chk) chk.checked = (val === 'B' || val === 'C');
+    }
+}
+
+// Quand l'utilisateur coche "Hépatopathie" sans avoir renseigné le Child-Pugh,
+// ouvrir la section des paramètres cliniques et mettre le focus sur le sélecteur CP
+function syncFoieToChildPugh() {
+    let chk = document.getElementById('chkFoie');
+    let cpManual = document.getElementById('cpManual');
+    if (!chk || !cpManual) return;
+    if (chk.checked && cpManual.value === '0') {
+        // Ouvrir le details parent si fermé
+        let details = cpManual.closest('details');
+        if (details && !details.open) details.open = true;
+        // Mettre en surbrillance le sélecteur
+        cpManual.classList.add('border-warning');
+        cpManual.focus();
+        setTimeout(() => cpManual.classList.remove('border-warning'), 3000);
     }
 }
 

@@ -75,7 +75,31 @@ function analyserPrescription() {
     // 1. 🚀 BRANCHEMENT AU NOUVEAU MOTEUR EXPERT (GERIA ENGINE V2)
     // =========================================================
     let divScores = document.getElementById('alertes-scores');
-    
+
+    // ---- Auto-injection des PAT codes depuis les checkboxes cliniques ----
+    // Garantit que les règles STOPP/START (qui vérifient activeComorbs) se déclenchent
+    const checkboxPatMap = {
+        'chkAvc':           'PAT_008',   // AVC/AIT
+        'chkAtcdUlcere':    'PAT_021',   // UGD
+        'chkDialyse':       'PAT_029',   // MRC (hémodialyse implique MRC sévère)
+        'chkPalliatif':     'PAT_030',   // Soins palliatifs
+        'chkDepression':    'PAT_027B',  // Note: pas de PAT dédié, mais contexte "depression" existe
+        'chkGlaucome':      'PAT_GLAUCOME' // Pas de PAT dédié dans la base
+    };
+    // Injection sans doublon
+    for (const [chkId, patCode] of Object.entries(checkboxPatMap)) {
+        if (isChecked(chkId) && !activeComorbs.includes(patCode)) {
+            // Vérifier que le PAT existe dans la base avant d'injecter
+            if (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES && MASTER_DB.PATHOLOGIES[patCode]) {
+                activeComorbs.push(patCode);
+            }
+        }
+    }
+    // Fragilité → flag utilisé par STOPPFrail
+    if (isFragile && !activeComorbs.includes('PAT_031') && typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES && MASTER_DB.PATHOLOGIES['PAT_031']) {
+        activeComorbs.push('PAT_031');
+    }
+
     // Contexte Clinique
     const ctxClinique = [];
     if(isChecked('chkBrady')) ctxClinique.push("bradycardie");
