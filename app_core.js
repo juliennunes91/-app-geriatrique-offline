@@ -215,6 +215,87 @@ window.copierSynthese = function() {
     });
 };
 
+// ============================================================================
+// RESET PATIENT — Efface toutes les données pour un nouveau patient
+// ============================================================================
+window.resetPatient = function() {
+    // 1. Vider les listes actives
+    activeComorbs.length = 0;
+    activeMeds.length = 0;
+    window.suspendedMeds.length = 0;
+    resultatsSynthese = "";
+
+    // 2. Réinitialiser les scores globaux
+    globalQT_CountKR = 0; globalQT_CountCR_PR = 0;
+    scoreACB_global = 0; scoreCIA_global = 0;
+    maxQTLevel_global = 0; infoQT_global.length = 0;
+
+    // 3. Remettre les champs du formulaire à leurs valeurs par défaut
+    const defaults = {
+        'patientAge': '80', 'patientSexe': 'F', 'patientPoids': '', 'patientBmi': '',
+        'bioCreat': '', 'patientDFG': '45', 'dfgMethodSelect': 'manuel',
+        'patientK': '4.0', 'patientNa': '140', 'bioAlbumSg': '',
+        'bioUree': '', 'bioMg': '', 'bioCa': '', 'bioUric': '',
+        'bioHb': '', 'bioPlaq': '', 'bioFer': '', 'bioCst': '', 'bioB12': '',
+        'bioB9': '', 'bioVitD': '', 'bioCpk': '',
+        'bioAsat': '', 'bioAlat': '', 'bioPal': '', 'bioGgt': '',
+        'bioTsh': '', 'bioT4': '', 'bioT3': '', 'bioBnp': '',
+        'bioLdl': '', 'bioHdl': '', 'bioTg': '', 'bioCrp': '',
+        'scoreCFS': '0', 'bioQtc': '',
+        'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1'
+    };
+    for (const [id, val] of Object.entries(defaults)) {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+    }
+
+    // 4. Décocher toutes les checkboxes
+    const checkboxes = [
+        'chkStent', 'chkAlcool', 'chkAnorexie', 'chkTabac',
+        'chkAvc', 'chkTvp', 'chkSaignement', 'chkBrady', 'chkHtaNonControlee',
+        'chkArret', 'chkScaAigu', 'chkLqts',
+        'chkDialyse', 'chkFoie', 'chkSepsis',
+        'chkPalliatif', 'chkAtcdUlcere', 'chkChutes', 'chkDepression',
+        'chkIncontinence', 'chkHbp', 'chkConstipation', 'chkDysphagie',
+        'chkGlaucome', 'chkStenoseAortique', 'chkAspirineForte',
+        'patientFragile'
+    ];
+    checkboxes.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.checked = false;
+    });
+
+    // 5. Vider l'affichage des tags et résultats
+    if (typeof renderTags === 'function') renderTags();
+
+    const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact',
+                   'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi'];
+    divs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = '<span class="text-muted">Cliquez sur Analyser...</span>';
+    });
+
+    // 6. Masquer les boutons d'export
+    const btnPdf = document.getElementById('btnPdf');
+    const btnCopier = document.getElementById('btnCopier');
+    if (btnPdf) btnPdf.style.display = 'none';
+    if (btnCopier) btnCopier.style.display = 'none';
+
+    // 7. Réinitialiser le style DFG
+    const dfgInput = document.getElementById('patientDFG');
+    if (dfgInput) dfgInput.className = 'form-control fw-bold';
+
+    // 8. Remettre le premier onglet actif
+    const firstTab = document.querySelector('#myTab .nav-link');
+    if (firstTab) {
+        document.querySelectorAll('#myTab .nav-link').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => { p.classList.remove('show', 'active'); });
+        firstTab.classList.add('active');
+        const target = document.querySelector(firstTab.getAttribute('data-bs-target'));
+        if (target) { target.classList.add('show', 'active'); }
+    }
+};
+
 const patientHasMedClass = (classOrDci) => {
     let t = sanitizeText(classOrDci);
     return activeMeds.some(m => {
