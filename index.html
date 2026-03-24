@@ -135,12 +135,15 @@
                             <div class="col-6"><label class="small text-muted fw-bold">Score Fragilité (CFS)</label><select id="scoreCFS" class="form-select form-select-sm" onchange="checkFrail()"><option value="0">Non évalué</option><option value="1">1 - Très en forme</option><option value="2">2 - En forme</option><option value="3">3 - Gère bien</option><option value="4">4 - Vulnérable</option><option value="5">5 - Légèrement fragile</option><option value="6">6 - Modérément fragile</option><option value="7">7 - Sévèrement fragile</option><option value="8">8 - Très sév. fragile</option><option value="9">9 - Phase terminale</option></select></div>
                             <div class="col-6"><label class="small text-muted fw-bold">QTc de base (ms)</label><input type="number" id="bioQtc" class="form-control form-control-sm" placeholder="ex: 430"></div>
 
-                            <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Score de Child-Pugh (si h\u00e9patopathie)</h6>
+                            <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Score de Child-Pugh (si hépatopathie)</h6>
+                            <div class="col-12 mb-2"><label class="small text-muted fw-bold">Classe Child-Pugh (saisie directe si bio indisponible)</label><select id="cpManual" class="form-select form-select-sm" onchange="toggleCpDetails(this.value)"><option value="0">— Calcul automatique (remplir les items ci-dessous) —</option><option value="A">Child-Pugh A (5-6 pts) — Compensée</option><option value="B">Child-Pugh B (7-9 pts) — Modérée</option><option value="C">Child-Pugh C (10-15 pts) — Sévère / Décompensée</option></select></div>
+                            <div id="cpDetailsBlock">
                             <div class="col-4"><label class="small text-muted">Bilirubine tot.</label><select id="cpBili" class="form-select form-select-sm"><option value="1">&lt; 35 µmol/L</option><option value="2">35-50 µmol/L</option><option value="3">&gt; 50 µmol/L</option></select></div>
                             <div class="col-4"><label class="small text-muted">Albumine sg</label><select id="cpAlb" class="form-select form-select-sm"><option value="1">&gt; 35 g/L</option><option value="2">28-35 g/L</option><option value="3">&lt; 28 g/L</option></select></div>
                             <div class="col-4"><label class="small text-muted">TP / INR</label><select id="cpTp" class="form-select form-select-sm"><option value="1">TP &gt; 54% (INR &lt; 1.7)</option><option value="2">TP 44-54% (1.7-2.3)</option><option value="3">TP &lt; 44% (INR &gt; 2.3)</option></select></div>
-                            <div class="col-6"><label class="small text-muted">Ascite</label><select id="cpAscite" class="form-select form-select-sm"><option value="1">Absente</option><option value="2">Mod\u00e9r\u00e9e</option><option value="3">Tendue</option></select></div>
-                            <div class="col-6"><label class="small text-muted">Enc\u00e9phalopathie</label><select id="cpEnceph" class="form-select form-select-sm"><option value="1">Absente</option><option value="2">Grade I-II</option><option value="3">Grade III-IV</option></select></div>
+                            <div class="col-6"><label class="small text-muted">Ascite</label><select id="cpAscite" class="form-select form-select-sm"><option value="1">Absente</option><option value="2">Modérée</option><option value="3">Tendue</option></select></div>
+                            <div class="col-6"><label class="small text-muted">Encéphalopathie</label><select id="cpEnceph" class="form-select form-select-sm"><option value="1">Absente</option><option value="2">Grade I-II</option><option value="3">Grade III-IV</option></select></div>
+                            </div>
                             
                             <div class="col-12 mt-3">
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkStent"><label class="form-check-label small fw-bold text-primary">Stent coronaire récent (< 6 mois)</label></div>
@@ -291,6 +294,7 @@
     <!-- Application -->
     <script src="app_core.js"></script>
     <script src="app_ui.js"></script>
+    <script src="child_pugh_adaptations.js"></script>
     <script src="app_analysis.js"></script>
 </body>
 </html>

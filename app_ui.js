@@ -159,4 +159,20 @@ function renderTags() {
     }
 }
 function checkFrail() { let el = document.getElementById('patientFragile'); if(el) el.checked = (getVal('scoreCFS') >= 7); }
+
+function toggleCpDetails(val) {
+    const block = document.getElementById('cpDetailsBlock');
+    if (!block) return;
+    if (val === '0') {
+        block.style.display = '';
+    } else {
+        block.style.display = 'none';
+        // Also check the hepatopathy checkbox automatically when manually setting Child-Pugh B or C
+        if (val === 'B' || val === 'C') {
+            let chk = document.getElementById('chkFoie');
+            if (chk) chk.checked = true;
+        }
+    }
+}
+
 window.onload = initUI;

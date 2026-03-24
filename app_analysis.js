@@ -191,19 +191,76 @@ function analyserPrescription() {
             <small class="text-muted">${ciaInterp}${ciaMeds.length > 0 ? ' — ' + ciaMeds.join(', ') : ''}</small>
         </div>`;
 
-        // Score de Child-Pugh (si hépatopathie cochée ou score > 5)
-        let cpScore = getVal('cpBili') + getVal('cpAlb') + getVal('cpTp') + getVal('cpAscite') + getVal('cpEnceph');
-        if (cpScore >= 6 || isChecked('chkFoie')) {
-            let cpClass = cpScore <= 6 ? 'A' : (cpScore <= 9 ? 'B' : 'C');
+        // Score de Child-Pugh (saisie manuelle OU calcul automatique)
+        let cpManualEl = document.getElementById('cpManual');
+        let cpManualVal = cpManualEl ? cpManualEl.value : '0';
+        let cpScore = 0;
+        let cpClass = null;
+        let cpSource = '';
+
+        if (cpManualVal !== '0') {
+            // Saisie manuelle directe de la classe Child-Pugh
+            cpClass = cpManualVal; // 'A', 'B' ou 'C'
+            cpScore = cpClass === 'A' ? 6 : (cpClass === 'B' ? 8 : 12); // Score estimé médian
+            cpSource = '(saisie manuelle)';
+        } else {
+            // Calcul automatique à partir des 5 items
+            cpScore = getVal('cpBili') + getVal('cpAlb') + getVal('cpTp') + getVal('cpAscite') + getVal('cpEnceph');
+            if (cpScore >= 6) {
+                cpClass = cpScore <= 6 ? 'A' : (cpScore <= 9 ? 'B' : 'C');
+                cpSource = `(${cpScore} pts calculés)`;
+            }
+        }
+
+        if (cpClass || isChecked('chkFoie')) {
+            if (!cpClass) cpClass = 'C'; // Si checkbox "Hépatopathie sévère" cochée sans score → considérer C par prudence
+            if (!cpSource) cpSource = '(hépatopathie sévère cochée, classe C par prudence)';
             let cpColor = cpClass === 'A' ? 'success' : (cpClass === 'B' ? 'warning' : 'danger');
-            let cpConc = cpClass === 'A' ? 'Bonne fonction hépatique — peu d\'adaptations' : (cpClass === 'B' ? 'Insuffisance modérée — réduire doses des médicaments à métabolisme hépatique' : 'Insuffisance sévère — CI de nombreux médicaments hépatotoxiques');
+            let cpConc = cpClass === 'A' ? 'Bonne fonction hépatique — peu d\'adaptations'
+                : (cpClass === 'B' ? 'Insuffisance modérée — réduire doses des médicaments à métabolisme hépatique'
+                : 'Insuffisance sévère — CI de nombreux médicaments hépatotoxiques');
+
+            // Médicaments à forte liaison albumine (risque surdosage si IHC)
             let hepatoMeds = activeMeds.filter(m => {
                 let ref = m.db_ref; if (!ref) return false;
                 let alb = parseFloat(ref.albumine) || 0;
                 return alb >= 85;
             }).map(m => m.dci.toUpperCase());
             let hepatoAlert = hepatoMeds.length > 0 ? `<br><span class="text-danger small fw-bold">Médicaments à forte liaison albumine (risque surdosage) : ${hepatoMeds.join(', ')}</span>` : '';
-            divScores.innerHTML += `<div class="alert alert-light border border-${cpColor} mb-2 shadow-sm"><strong class="text-${cpColor}">Child-Pugh : ${cpScore} pts — Classe ${cpClass}</strong> <em class="text-muted small">— Sévérité de l'insuffisance hépatique</em><br><small class="fw-bold text-${cpColor}">${cpConc}</small>${hepatoAlert}</div>`;
+
+            // ---- Adaptations posologiques hépatiques par médicament ----
+            let cpDrugAlerts = '';
+            if (typeof CHILD_PUGH_ADAPTATIONS !== 'undefined') {
+                let drugAlertList = [];
+                activeMeds.forEach(m => {
+                    let key = m.dci.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+                    let adapt = CHILD_PUGH_ADAPTATIONS[key];
+                    if (!adapt) {
+                        // Essayer avec le nom sans espace
+                        for (let k of Object.keys(CHILD_PUGH_ADAPTATIONS)) {
+                            if (key.includes(k) || k.includes(key)) { adapt = CHILD_PUGH_ADAPTATIONS[k]; break; }
+                        }
+                    }
+                    if (adapt) {
+                        let info = adapt[cpClass];
+                        if (info) {
+                            let alertColor = info.ci ? 'danger' : (info.reduire ? 'warning' : 'info');
+                            let icon = info.ci ? '🛑 CI' : (info.reduire ? '⚠️ Adapter' : 'ℹ️');
+                            drugAlertList.push(`<span class="badge bg-${alertColor} me-1">${icon} ${m.dci.toUpperCase()}</span> <small>${info.msg}</small>`);
+                        }
+                    }
+                });
+                if (drugAlertList.length > 0) {
+                    cpDrugAlerts = `<br><hr class="my-1"><strong class="small text-dark">Adaptations posologiques hépatiques :</strong><br>` + drugAlertList.join('<br>');
+                }
+            }
+
+            divScores.innerHTML += `<div class="alert alert-light border border-${cpColor} mb-2 shadow-sm">
+                <strong class="text-${cpColor}">Child-Pugh : Classe ${cpClass}</strong> <small class="text-muted">${cpSource}</small>
+                <em class="text-muted small"> — Sévérité de l'insuffisance hépatique</em><br>
+                <small class="fw-bold text-${cpColor}">${cpConc}</small>
+                ${hepatoAlert}${cpDrugAlerts}
+            </div>`;
         }
     }
 
