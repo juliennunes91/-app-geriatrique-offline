@@ -48,10 +48,18 @@ function analyserPrescription() {
     const bioValues = {
         'BIO_001': getVal('patientK'), 'BIO_002': getVal('patientNa'), 'BIO_003': getVal('bioCreat'), 'BIO_004': getVal('patientDFG'),
         'BIO_005': getVal('bioCa'), 'BIO_006': getVal('bioMg'), 'BIO_007': getVal('bioUree'), 'BIO_008': getVal('bioUric'),
-        'BIO_009': getVal('bioHb'), 'BIO_010': getVal('bioPlaq'), 'BIO_013': getVal('bioAsat'), 'BIO_014': getVal('bioAlat'),
-        'BIO_018': getVal('bioCpk'), 'BIO_019': getVal('bioTsh'), 'BIO_020': getVal('bioFer'), 'BIO_021': getVal('bioB12'),
-        'BIO_024': getVal('bioCrp'), 'BIO_028': getVal('bioBnp'), 'BIO_031': getVal('bioQtc'),
-        'BIO_011': getVal('bioHbA1c'), 'BIO_012': getVal('bioLdl'), 'BIO_022': getVal('bioVitD'), 'BIO_023': getVal('bioAlb'),
+        'BIO_009': getVal('bioHb'), 'BIO_010': getVal('bioPlaq'), 'BIO_011': getVal('bioGb'), 'BIO_012': getVal('bioPnn'),
+        'BIO_013': getVal('bioAsat'), 'BIO_014': getVal('bioAlat'), 'BIO_015': getVal('bioGgt'), 'BIO_016': getVal('bioPal'),
+        'BIO_017': getVal('bioBili'), 'BIO_018': getVal('bioCpk'), 'BIO_019': getVal('bioTsh'),
+        'BIO_020': getVal('bioFer'), 'BIO_021': getVal('bioB12'), 'BIO_022': getVal('bioB9'), 'BIO_023': getVal('bioVitD'),
+        'BIO_024': getVal('bioCrp'), 'BIO_025': getVal('bioGly'), 'BIO_026': getVal('bioHba1c'),
+        'BIO_027_LDL': getVal('bioLdl'), 'BIO_027_TG': getVal('bioTg'),
+        'BIO_028': getVal('bioBnp'), 'BIO_030': getVal('bioInr'), 'BIO_031': getVal('bioQtc'),
+        'BIO_032': getVal('bioPct'), 'BIO_029': getVal('bioLithium'),
+        'BIO_033': getVal('bioDdim'), 'BIO_034': getVal('bioTropo'), 'BIO_036': getVal('bioLipase'),
+        'BIO_035': getVal('bioAlbumSg'), 'BIO_037': getVal('bioLact'),
+        'BIO_CST': getVal('bioCst'), 'BIO_PHOS': getVal('bioPhos'),
+        'BIO_TEMP': getVal('bioTemp'),
         'BIO_T4': getVal('bioT4'), 'BIO_T3': getVal('bioT3')
     };
 
@@ -214,26 +222,75 @@ function analyserPrescription() {
         } catch(e) {}
     };
 
+    // --- SYND_001 : Cytolyse Hépatique (ASAT > 3N ou ALAT > 3N) ---
     if(bioValues['BIO_013'] > 135 || bioValues['BIO_014'] > 105) checkBioSyndrome('SYND_001', true);
-    if(bioValues['BIO_018'] > 850) checkBioSyndrome('SYND_002', true);
-    if(bioValues['BIO_031'] >= 450) checkBioSyndrome('SYND_003', true);
-    if(bioValues['BIO_001'] > 5.0) checkBioSyndrome('SYND_010', true); 
-    if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] < 3.5) checkBioSyndrome('SYND_011', true);
 
-    // Cholestase hépatique (PAL > 1.5N ~135 UI/L ou GGT > 3N ~150 UI/L avec bilirubine élevée)
-    let bioPal = getVal('bioPal'); let bioGgt = getVal('bioGgt');
-    if ((bioPal > 135 || bioGgt > 150) && (bioValues['BIO_013'] > 45 || bioValues['BIO_014'] > 45)) {
-        let cholCauses = [];
-        ['amoxicilline', 'acide clavulanique', 'flucloxacilline', 'erythromycine', 'azithromycine', 'cotrimoxazole', 'amiodarone', 'carbamazepine', 'phenytoine', 'atorvastatine', 'captopril'].forEach(d => { if(patientHasMedClass(d)) cholCauses.push(d); });
-        let cholImput = cholCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${cholCauses.join(', ').toUpperCase()}</b>` : '';
-        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Cholestase Hépatique</strong> (PAL ${bioPal > 0 ? bioPal + ' UI/L' : '?'} / GGT ${bioGgt > 0 ? bioGgt + ' UI/L' : '?'})${cholImput}<br><em>Conduite :</em> Échographie hépatique, arrêt médicament suspect, bilan étiologique (auto-immunité, obstruction biliaire)</div>`, 'bio');
+    // --- SYND_002 : Rhabdomyolyse (CPK > 5N) ---
+    if(bioValues['BIO_018'] > 850) checkBioSyndrome('SYND_002', true);
+
+    // --- SYND_003 : Allongement du QTc ---
+    if(bioValues['BIO_031'] >= 450) checkBioSyndrome('SYND_003', true);
+
+    // --- SYND_004 : Thrombopénie Sévère (Plaquettes < 100 G/L) ---
+    if(bioValues['BIO_010'] > 0 && bioValues['BIO_010'] < 100) checkBioSyndrome('SYND_004', true);
+
+    // --- SYND_005 : Anémie (Hb < 13 H / < 12 F) ---
+    {
+        let hb = bioValues['BIO_009'];
+        let seuilAnemia = (sexe === 'M') ? 13 : 12;
+        if (hb > 0 && hb < seuilAnemia) {
+            checkBioSyndrome('SYND_005', true);
+            // Sous-typage anémie : ferriprive vs macrocytaire vs rénale
+            let fer = bioValues['BIO_020']; let cst = bioValues['BIO_CST']; let crp = bioValues['BIO_024'];
+            let b12 = bioValues['BIO_021']; let b9 = bioValues['BIO_022']; let dfg = bioValues['BIO_004'];
+
+            // SYND_006 : Anémie Ferriprive (Hb basse + Ferritine < 30 ou CST < 20%)
+            if ((fer > 0 && fer < 30) || (cst > 0 && cst < 20)) {
+                checkBioSyndrome('SYND_006', true);
+            } else if (fer <= 0 && cst <= 0 && hb < seuilAnemia) {
+                // Ferritine et CST non dosés → recommander le bilan martial
+                let inflNote = (crp > 0 && crp > 5) ? ' <em class="text-warning">(CRP élevée : interpréter ferritine avec prudence, seuil carentiel < 100 µg/L en contexte inflammatoire)</em>' : '';
+                addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Anémie détectée — Bilan martial recommandé</strong>
+                    <br><span class="small">Hb ${hb} g/dL (seuil ${seuilAnemia}). Dosage ferritine + CST + CRP indispensable pour orienter le diagnostic étiologique.${inflNote}</span>
+                    <br><em>Si ferritine &lt; 30 µg/L (ou &lt; 100 en inflammation) : carence martiale → fer PO/IV. Si ferritine normale avec CST &lt; 20% : carence fonctionnelle.</em></div>`, 'bio');
+            }
+
+            // SYND_007 : Anémie Macrocytaire / Carence B12-B9
+            if ((b12 > 0 && b12 < 150) || (b9 > 0 && b9 < 7)) {
+                checkBioSyndrome('SYND_007', true);
+            } else if (b12 <= 0 && b9 <= 0) {
+                addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Anémie — doser B12 et folates</strong>
+                    <br><span class="small">Hb ${hb} g/dL. Dosage vitamine B12 et folates recommandé pour exclure une carence (fréquente sous metformine, IPP, antiépileptiques).</span></div>`, 'bio');
+            }
+
+            // SYND_039 : Anémie Rénale (Hb < 11 + DFG < 45)
+            if (hb < 11 && dfg > 0 && dfg < 45) {
+                checkBioSyndrome('SYND_039', true);
+            }
+        }
     }
 
-    // Dysthyroïdie (TSH + T4/T3)
+    // --- SYND_008 : Insuffisance Rénale Fonctionnelle (Urée/Créat > 100) ---
+    if (bioValues['BIO_007'] > 0 && bioValues['BIO_003'] > 0) {
+        let ratioUreCreat = (bioValues['BIO_007'] * 1000) / bioValues['BIO_003'];
+        if (ratioUreCreat > 100) checkBioSyndrome('SYND_008', true);
+    }
+
+    // --- SYND_009 : Hyponatrémie Sévère (Na < 130) ---
+    if (bioValues['BIO_002'] > 0 && bioValues['BIO_002'] < 130) checkBioSyndrome('SYND_009', true);
+
+    // --- SYND_010 : Hyperkaliémie (K > 5.0) ---
+    if(bioValues['BIO_001'] > 5.0) checkBioSyndrome('SYND_010', true);
+
+    // --- SYND_011 : Hypokaliémie (K < 3.5) ---
+    if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] < 3.5) checkBioSyndrome('SYND_011', true);
+
+    // --- SYND_012/013 : Dysthyroïdie (TSH + T4/T3) ---
     let tsh = bioValues['BIO_019']; let t4 = bioValues['BIO_T4']; let t3 = bioValues['BIO_T3'];
     if (tsh > 0) {
         if (tsh > 4.0) {
             let isOvert = (t4 > 0 && t4 < 60) || tsh > 10;
+            checkBioSyndrome(isOvert ? 'SYND_013' : 'SYND_013', true);
             let thyroLabel = isOvert ? 'Hypothyroïdie avérée' : 'Hypothyroïdie subclinique';
             let thyroSev = isOvert ? 'danger' : 'warning';
             let thyroCauses = [];
@@ -243,6 +300,9 @@ function analyserPrescription() {
             addAlert('alertes-bio', `<div class="alert alert-${thyroSev} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4 ' + t4 + ' nmol/L' : ''})${thyroImput}<br><em>Conduite :</em> ${thyroConc}</div>`, 'bio');
         } else if (tsh < 0.4 && tsh > 0) {
             let isOvert = (t4 > 0 && t4 > 120) || (t3 > 0 && t3 > 2.7);
+            // SYND_019 si thyrotoxicose sévère, sinon SYND_012
+            if (tsh < 0.1 && t4 > 30) { checkBioSyndrome('SYND_019', true); }
+            else { checkBioSyndrome('SYND_012', true); }
             let thyroLabel = isOvert ? 'Hyperthyroïdie avérée' : 'Hyperthyroïdie subclinique';
             let thyroCauses = [];
             ['amiodarone', 'lithium', 'interferon', 'levothyroxine'].forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
@@ -251,12 +311,149 @@ function analyserPrescription() {
         }
     }
 
-    // Supplémentation vitamine D systématique si âge avancé (sans carence documentée)
-    if (patientAge >= 70 && (!bioValues['BIO_022'] || bioValues['BIO_022'] <= 0) && !patientHasMedClass('cholecalciferol') && !patientHasMedClass('vitamine d') && !patientHasMedClass('calcifediol')) {
+    // --- SYND_014 : Agranulocytose / Neutropénie Sévère (PNN < 0.5) ---
+    if (bioValues['BIO_012'] > 0 && bioValues['BIO_012'] < 0.5) checkBioSyndrome('SYND_014', true);
+    // Neutropénie modérée (PNN < 1.5 mais > 0.5) — alerte informative
+    else if (bioValues['BIO_012'] > 0 && bioValues['BIO_012'] < 1.5) {
+        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Neutropénie modérée</strong> (PNN ${bioValues['BIO_012']} G/L)
+            <br><em>Conduite :</em> Contrôle NFS à 48-72h, rechercher cause iatrogène, arrêt médicament suspect si PNN en baisse.</div>`, 'bio');
+    }
+
+    // --- SYND_015 : IRC Avancée (DFG < 30) ---
+    if (bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 30) checkBioSyndrome('SYND_015', true);
+
+    // --- SYND_016 : Hyperuricémie (> 420 µmol/L H, > 360 F) ---
+    {
+        let seuilUric = (sexe === 'M') ? 420 : 360;
+        if (bioValues['BIO_008'] > seuilUric) checkBioSyndrome('SYND_016', true);
+    }
+
+    // --- SYND_017 : Hypoglycémie (Glycémie < 3.9 mmol/L) ---
+    if (bioValues['BIO_025'] > 0 && bioValues['BIO_025'] < 3.9) checkBioSyndrome('SYND_017', true);
+
+    // --- SYND_018 : Hyperglycémie Sévère (Glycémie > 20 ou HbA1c > 10%) ---
+    if ((bioValues['BIO_025'] > 20) || (bioValues['BIO_026'] > 10)) checkBioSyndrome('SYND_018', true);
+
+    // --- SYND_020 : Hypocalcémie (Ca < 2.0 mmol/L) ---
+    if (bioValues['BIO_005'] > 0 && bioValues['BIO_005'] < 2.0) checkBioSyndrome('SYND_020', true);
+
+    // --- SYND_021 : Hypercalcémie (Ca > 2.65 mmol/L) ---
+    if (bioValues['BIO_005'] > 2.65) checkBioSyndrome('SYND_021', true);
+
+    // --- SYND_022 : Hypomagnésémie (Mg < 0.75 mmol/L) ---
+    if (bioValues['BIO_006'] > 0 && bioValues['BIO_006'] < 0.75) checkBioSyndrome('SYND_022', true);
+
+    // --- SYND_023 : Syndrome Inflammatoire Marqué (CRP > 100) ---
+    if (bioValues['BIO_024'] > 100) checkBioSyndrome('SYND_023', true);
+
+    // --- SYND_024 : Sepsis Biologique (PCT > 2 ng/mL) ---
+    if (bioValues['BIO_032'] > 2) checkBioSyndrome('SYND_024', true);
+
+    // --- SYND_025 : Carence en Vitamine D Sévère (< 10 ng/mL) ---
+    if (bioValues['BIO_023'] > 0 && bioValues['BIO_023'] < 10) checkBioSyndrome('SYND_025', true);
+    // Insuffisance en vitamine D (10-30 ng/mL) — alerte modérée
+    else if (bioValues['BIO_023'] > 0 && bioValues['BIO_023'] < 30) {
+        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Insuffisance en Vitamine D</strong> (${bioValues['BIO_023']} ng/mL — seuil recommandé ≥ 30)
+            <br><em>Conduite :</em> Supplémentation cholécalciférol 800-1000 UI/j ou charge mensuelle, supplémenter calcium si apports insuffisants.</div>`, 'bio');
+    }
+
+    // --- SYND_026 : Carence en Folates / B9 (< 7 nmol/L) ---
+    if (bioValues['BIO_022'] > 0 && bioValues['BIO_022'] < 7) checkBioSyndrome('SYND_026', true);
+
+    // --- SYND_027 : Surdosage AVK / INR Suprathérapeutique (INR > 4) ---
+    if (bioValues['BIO_030'] > 4.0) checkBioSyndrome('SYND_027', true);
+
+    // --- SYND_028 : Lithiémie Toxique / Surdosage Lithium (> 1.5 mEq/L) ---
+    if (bioValues['BIO_029'] > 1.5) checkBioSyndrome('SYND_028', true);
+
+    // --- SYND_029 : IC Décompensation Biologique (NT-proBNP élevé selon âge) ---
+    {
+        let bnp = bioValues['BIO_028'];
+        if (bnp > 0) {
+            let seuilBnp = patientAge > 75 ? 1800 : (patientAge > 50 ? 900 : 450);
+            if (bnp > seuilBnp) checkBioSyndrome('SYND_029', true);
+        }
+    }
+
+    // --- SYND_030 : Dyslipidémie / Hypertriglycéridémie Sévère ---
+    if (bioValues['BIO_027_TG'] > 5.6) checkBioSyndrome('SYND_030', true);
+
+    // --- SYND_031 : Cholestase Biologique (GGT > 3N ou PAL > 2N) ---
+    if ((bioValues['BIO_015'] > 150 || bioValues['BIO_016'] > 135)) checkBioSyndrome('SYND_031', true);
+
+    // --- SYND_032 : Ictère / Hyperbilirubinémie (Bili > 35 µmol/L) ---
+    if (bioValues['BIO_017'] > 35) checkBioSyndrome('SYND_032', true);
+
+    // --- SYND_033 : Dénutrition / Hypoalbuminémie Sévère (Albumine < 30 g/L) ---
+    if (bioValues['BIO_035'] > 0 && bioValues['BIO_035'] < 30) checkBioSyndrome('SYND_033', true);
+    // Dénutrition modérée (Albumine 30-35 g/L) — alerte informative
+    else if (bioValues['BIO_035'] > 0 && bioValues['BIO_035'] < 35) {
+        let albCauses = [];
+        ['corticoides', 'prednisone', 'prednisolone', 'dexamethasone'].forEach(d => { if(patientHasMedClass(d)) albCauses.push(d); });
+        let albImput = albCauses.length > 0 ? `<br><em>Imputabilité :</em> <b>${albCauses.join(', ').toUpperCase()}</b>` : '';
+        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hypoalbuminémie modérée / Dénutrition</strong> (Albumine ${bioValues['BIO_035']} g/L)${albImput}
+            <br><em>Conduite :</em> Évaluation nutritionnelle (MNA), compléments nutritionnels oraux, adapter posologies des médicaments à forte liaison albumine (risque surdosage).</div>`, 'bio');
+    }
+
+    // --- SYND_034 : Pancréatite Aiguë Biologique (Lipase > 3N = 180 UI/L) ---
+    if (bioValues['BIO_036'] > 180) checkBioSyndrome('SYND_034', true);
+
+    // --- SYND_035 : Suspicion MTEV / Embolie Pulmonaire (D-Dimères > 500 µg/L, seuil ajusté âge) ---
+    {
+        let ddim = bioValues['BIO_033'];
+        let seuilDdim = patientAge > 50 ? patientAge * 10 : 500;
+        if (ddim > seuilDdim) checkBioSyndrome('SYND_035', true);
+    }
+
+    // --- SYND_036 : Syndrome Coronarien Aigu (Troponine hs > 52 ng/L) ---
+    if (bioValues['BIO_034'] > 52) checkBioSyndrome('SYND_036', true);
+
+    // --- SYND_037 : Pancytopénie (Hb < 10 + Plaq < 100 + GB < 2) ---
+    if (bioValues['BIO_009'] > 0 && bioValues['BIO_009'] < 10 && bioValues['BIO_010'] > 0 && bioValues['BIO_010'] < 100 && bioValues['BIO_011'] > 0 && bioValues['BIO_011'] < 2) {
+        checkBioSyndrome('SYND_037', true);
+    }
+
+    // --- SYND_038 : Hyperlactatémie / Acidose Lactique (Lactates > 2 mmol/L) ---
+    if (bioValues['BIO_037'] > 2) checkBioSyndrome('SYND_038', true);
+
+    // --- SYND_040 : Désordre Phospho-Calcique IRC (Phosphore > 1.45 + DFG < 45) ---
+    if (bioValues['BIO_PHOS'] > 1.45 && bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 45) checkBioSyndrome('SYND_040', true);
+
+    // --- SYND_041 : Neutropénie Fébrile sous Chimiothérapie (PNN < 1.0 + T > 38.3°C) ---
+    if (bioValues['BIO_012'] > 0 && bioValues['BIO_012'] < 1.0 && bioValues['BIO_TEMP'] > 38.3) checkBioSyndrome('SYND_041', true);
+
+    // --- SYND_042 : Hypernatrémie / Déshydratation Intracellulaire (Na > 145) ---
+    if (bioValues['BIO_002'] > 145) checkBioSyndrome('SYND_042', true);
+
+    // --- Supplémentation vitamine D systématique si âge avancé (sans carence documentée) ---
+    if (patientAge >= 70 && (!bioValues['BIO_023'] || bioValues['BIO_023'] <= 0) && !patientHasMedClass('cholecalciferol') && !patientHasMedClass('vitamine d') && !patientHasMedClass('calcifediol')) {
         addAlert('alertes-initier', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Vitamine D — supplémentation systématique recommandée</strong>
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">HAS 2011 / Sociétés savantes</span>
             <br><span class="small">Chez le sujet âgé ≥ 70 ans, notamment institutionnalisé ou à risque de chute/fracture, un apport systématique de vitamine D par voie orale (800-1000 UI/j) est recommandé sans dosage préalable obligatoire.</span>
         </div>`, 'initier');
+    }
+
+    // --- Carence B12 isolée (sans anémie) — fréquente sous metformine/IPP ---
+    if (bioValues['BIO_021'] > 0 && bioValues['BIO_021'] < 150 && !(bioValues['BIO_009'] > 0 && bioValues['BIO_009'] < 12)) {
+        let b12Causes = [];
+        ['metformine', 'omeprazole', 'esomeprazole', 'lansoprazole', 'pantoprazole', 'rabeprazole', 'phenytoine'].forEach(d => { if(patientHasMedClass(d)) b12Causes.push(d); });
+        let b12Imput = b12Causes.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${b12Causes.join(', ').toUpperCase()}</b>` : '';
+        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Carence en Vitamine B12 (sans anémie)</strong> (B12 : ${bioValues['BIO_021']} pmol/L)${b12Imput}
+            <br><em>Conduite :</em> Supplémentation B12 IM ou forte dose PO (1000 µg/j), contrôle à 3 mois. Neuropathie périphérique possible même sans anémie.</div>`, 'bio');
+    }
+
+    // --- HbA1c informative (cibles gériatriques adaptées) ---
+    if (bioValues['BIO_026'] > 0) {
+        let hba1c = bioValues['BIO_026'];
+        if (hba1c > 8.5 && patientAge >= 75) {
+            addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 HbA1c élevée chez le sujet âgé</strong> (HbA1c ${hba1c}%)
+                <br><em>Cibles gériatriques :</em> HbA1c 7-8% si robuste, 8-8.5% si fragile, 8.5-9% si très dépendant (ADA/EASD 2022).
+                <br><em>Conduite :</em> Réévaluer traitement antidiabétique, attention hypoglycémies sous sulfamides/insuline.</div>`, 'bio');
+        } else if (hba1c < 6.5 && patientAge >= 75 && (patientHasMedClass('sulfamide') || patientHasMedClass('insuline') || patientHasMedClass('glinide'))) {
+            addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ HbA1c basse sous traitement hypoglycémiant</strong> (HbA1c ${hba1c}%)
+                <br><em>Risque :</em> Hypoglycémie iatrogène chez le sujet âgé (chutes, confusion, AVC).
+                <br><em>Conduite :</em> Envisager réduction de dose ou arrêt sulfamide/insuline. Cible HbA1c gériatrique : 7-8%.</div>`, 'bio');
+        }
     }
 
     // Médicaments abaissant le seuil épileptogène (si épilepsie active)

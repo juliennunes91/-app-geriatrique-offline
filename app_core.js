@@ -243,6 +243,9 @@ window.resetPatient = function() {
         'bioAsat': '', 'bioAlat': '', 'bioPal': '', 'bioGgt': '',
         'bioTsh': '', 'bioT4': '', 'bioT3': '', 'bioBnp': '',
         'bioLdl': '', 'bioHdl': '', 'bioTg': '', 'bioCrp': '',
+        'bioGb': '', 'bioPnn': '', 'bioInr': '', 'bioGly': '',
+        'bioHba1c': '', 'bioBili': '', 'bioPhos': '', 'bioLact': '',
+        'bioPct': '', 'bioLithium': '', 'bioLipase': '', 'bioDdim': '', 'bioTropo': '', 'bioTemp': '',
         'scoreCFS': '0', 'bioQtc': '',
         'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1'
     };
