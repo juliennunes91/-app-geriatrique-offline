@@ -2430,6 +2430,214 @@ const PATHOLOGY_RULES_DB = {
                 { bio: "BIO_021", frequence: "Annuel" }
             ]
         }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PAT_032 → Dépression
+    // ═══════════════════════════════════════════════════════════════════════════
+    "PAT_032": {
+        ID: "PAT_032",
+        NOM: "Dépression",
+        REFERENCE: "NICE Depression 2022 | APA Practice Guideline 2023 | STOPP/START v3 | Beers 2023",
+        SOURCES_EBM: {
+            "INITIER": {
+                "ISRS": "STOPP_START_V3 START-D2 + NICE CG90",
+                "Mirtazapine": "STOPP_START_V3 START-D2 + Beers acceptable"
+            },
+            "EVITER": {
+                "Tricycliques": "STOPP_START_V3 D1 + BEERS_2023 + PRISCUS",
+                "IMAO": "BEERS_2023",
+                "Benzodiazépines": "STOPP_START_V3 D5"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Première intention : ISRS (sertraline, escitalopram). Mirtazapine si insomnie/dénutrition. Éviter tricycliques (anticholinergiques, QT, chutes)." }
+            ],
+            INITIER: [
+                { classe: "ISRS (sertraline, escitalopram)", posologie: "Sertraline 25→50 mg/j, Escitalopram 5→10 mg/j", ref: "START-D2" },
+                { classe: "Mirtazapine", posologie: "15-30 mg/j (sédation utile si insomnie)", ref: "NICE CG90" },
+                { classe: "Venlafaxine/Duloxétine", posologie: "37.5→75 mg/j / 30→60 mg/j (2e ligne)", ref: "NICE CG90" }
+            ],
+            EVITER: [
+                { classe: "Tricycliques (amitriptyline, clomipramine, imipramine, dosulpine)", raison: "ACB élevé, QT, chutes, confusion", ref: "STOPP D1 + Beers" },
+                { classe: "IMAO (phénelzine, tranylcypromine)", raison: "Interactions alimentaires et médicamenteuses dangereuses", ref: "Beers 2023" },
+                { classe: "Benzodiazépines", raison: "Pas d'indication dans la dépression, risque de dépendance", ref: "STOPP D5" }
+            ]
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_001", "BIO_019", "BIO_003"],
+            REGLES: [
+                { bio: "BIO_001", frequence: "J14 puis trimestriel (natrémie sous ISRS)", syndrome: "SYND_004" },
+                { bio: "BIO_019", frequence: "Annuel (TSH pour exclure cause thyroïdienne)" }
+            ]
+        }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PAT_033 → Glaucome à angle fermé
+    // ═══════════════════════════════════════════════════════════════════════════
+    "PAT_033": {
+        ID: "PAT_033",
+        NOM: "Glaucome à angle fermé",
+        REFERENCE: "AAO Preferred Practice Pattern 2024 | EGS Guidelines 2024 | STOPP/START v3",
+        SOURCES_EBM: {
+            "EVITER": {
+                "Anticholinergiques": "STOPP_START_V3 D1 + BEERS_2023",
+                "LAMA inhalés": "STOPP_START_V3 G3",
+                "Tricycliques": "STOPP_START_V3 D1",
+                "Antihistaminiques H1": "BEERS_2023"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Contre-indication absolue des anticholinergiques systémiques (risque de crise aiguë de fermeture). Collyres myotiques autorisés." }
+            ],
+            EVITER: [
+                { classe: "Anticholinergiques systémiques (oxybutynine, trospium, solifenacine, toltérodine)", raison: "Mydriase → crise de fermeture de l'angle", ref: "STOPP D1" },
+                { classe: "Antidépresseurs tricycliques", raison: "Effets anticholinergiques → mydriase", ref: "STOPP D1" },
+                { classe: "LAMA inhalés (tiotropium, aclidinium)", raison: "Effets anticholinergiques à dose systémique", ref: "STOPP G3" },
+                { classe: "Antihistaminiques H1 1ère gén (hydroxyzine, dexchlorphéniramine)", raison: "Effets anticholinergiques", ref: "Beers 2023" },
+                { classe: "Antispasmodiques (atropine, scopolamine, butylscopolamine)", raison: "Anticholinergiques puissants", ref: "Beers 2023" },
+                { classe: "Ipratropium nébulisé", raison: "Contact oculaire direct → crise glaucome", ref: "AAO PPP" }
+            ]
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: [],
+            REGLES: []
+        }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PAT_034 → Hépatopathie chronique / Cirrhose
+    // ═══════════════════════════════════════════════════════════════════════════
+    "PAT_034": {
+        ID: "PAT_034",
+        NOM: "Hépatopathie chronique / Cirrhose",
+        REFERENCE: "EASL Clinical Practice Guidelines 2024 | AASLD Practice Guidance 2023 | Verbeeck 2008 Liver Disease Pharmacokinetics",
+        SOURCES_EBM: {
+            "EVITER": {
+                "Paracétamol > 2g": "EASL 2024 + Verbeeck 2008",
+                "AINS": "EASL 2024 (CI dans cirrhose)",
+                "Méthotrexate": "EASL 2024",
+                "Statines (Child-Pugh C)": "EASL 2024"
+            },
+            "INITIER": {
+                "Lactulose": "EASL Encéphalopathie hépatique 2024",
+                "Rifaximine": "EASL 2024 prévention secondaire EH"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Child-Pugh A : peu d'adaptations. Child-Pugh B : réduire doses médicaments hépatiques. Child-Pugh C : CI de nombreux médicaments. Privilégier élimination rénale." }
+            ],
+            EVITER: [
+                { classe: "AINS (tous)", raison: "Risque hémorragique digestif, décompensation rénale, ascite", ref: "EASL 2024" },
+                { classe: "Paracétamol > 2 g/j", raison: "Hépatotoxicité dose-dépendante (seuil abaissé)", ref: "EASL 2024" },
+                { classe: "Méthotrexate", raison: "Hépatotoxicité directe, fibrose hépatique", ref: "EASL 2024" },
+                { classe: "Statines si Child-Pugh C", raison: "Métabolisme hépatique, risque d'hépatite", ref: "EASL 2024" },
+                { classe: "Benzodiazépines (surtout si encéphalopathie)", raison: "Sédation prolongée, encéphalopathie", ref: "AASLD 2023" },
+                { classe: "Opioïdes", raison: "Métabolisme hépatique ralenti, encéphalopathie", ref: "AASLD 2023" },
+                { classe: "Amiodarone", raison: "Hépatotoxicité cumulative", ref: "Verbeeck 2008" },
+                { classe: "Valproate", raison: "Hépatotoxicité idiosyncrasique", ref: "ILAE 2024" }
+            ],
+            INITIER: [
+                { classe: "Lactulose", posologie: "15-30 mL x3/j (objectif 2-3 selles/j)", ref: "EASL EH" },
+                { classe: "Rifaximine", posologie: "550 mg x2/j (prévention secondaire encéphalopathie)", ref: "EASL 2024" },
+                { classe: "Spironolactone + Furosémide", posologie: "Ratio 100/40 pour ascite", ref: "EASL Ascite 2024" }
+            ]
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_013", "BIO_014", "BIO_015", "BIO_016", "BIO_017", "BIO_035", "BIO_030", "BIO_009"],
+            REGLES: [
+                { bio: "BIO_013", frequence: "Hebdomadaire si Child-Pugh B/C", syndrome: "SYND_001" },
+                { bio: "BIO_014", frequence: "Hebdomadaire si Child-Pugh B/C", syndrome: "SYND_001" },
+                { bio: "BIO_030", frequence: "Hebdomadaire (TP/INR — reflet fonction hépatique)" },
+                { bio: "BIO_035", frequence: "Mensuel (albumine — score Child-Pugh)", syndrome: "SYND_033" },
+                { bio: "BIO_009", frequence: "Mensuel (NFS — hypersplénisme)" }
+            ]
+        }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PAT_035 → Bradycardie
+    // ═══════════════════════════════════════════════════════════════════════════
+    "PAT_035": {
+        ID: "PAT_035",
+        NOM: "Bradycardie",
+        REFERENCE: "ESC Guidelines for Cardiac Pacing 2021 | STOPP/START v3",
+        SOURCES_EBM: {
+            "EVITER": {
+                "Bêtabloquants": "STOPP_START_V3 B4",
+                "Vérapamil/Diltiazem": "STOPP_START_V3 B4",
+                "Digoxine": "STOPP_START_V3 B4",
+                "Ivabradine": "ESC Pacing 2021",
+                "Anticholinestérasiques": "STOPP_START_V3 D18"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Bradycardie sévère (< 45/min) ou symptomatique : réévaluer TOUS les chronotropes négatifs. Éviter association de ≥ 2 bradycardisants." }
+            ],
+            EVITER: [
+                { classe: "Bêtabloquants", raison: "Chronotrope négatif — aggravation bradycardie", ref: "STOPP B4" },
+                { classe: "Vérapamil, Diltiazem", raison: "Chronotrope négatif — risque BAV complet", ref: "STOPP B4" },
+                { classe: "Digoxine", raison: "Chronotrope négatif — BAV", ref: "STOPP B4" },
+                { classe: "Ivabradine", raison: "Effet bradycardisant direct (If)", ref: "ESC Pacing 2021" },
+                { classe: "Donépézil, Rivastigmine, Galantamine", raison: "Effet vagomimétique → bradycardie", ref: "STOPP D18" },
+                { classe: "Amiodarone", raison: "Bradycardie sinusale, BAV", ref: "ESC AF 2024" },
+                { classe: "Clonidine, Méthyldopa", raison: "Effet sympatholytique central → bradycardie", ref: "STOPP B11" }
+            ]
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_001", "BIO_005", "BIO_031"],
+            REGLES: [
+                { bio: "BIO_001", frequence: "Ionogramme (hyperkaliémie aggrave bradycardie)" },
+                { bio: "BIO_031", frequence: "ECG systématique si chronotrope négatif", syndrome: "SYND_003" }
+            ]
+        }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PAT_036 → Maladie thromboembolique veineuse (MTEV)
+    // ═══════════════════════════════════════════════════════════════════════════
+    "PAT_036": {
+        ID: "PAT_036",
+        NOM: "Maladie thromboembolique veineuse (MTEV)",
+        REFERENCE: "ESC Guidelines for PE/DVT 2024 | ASH VTE Guidelines 2023 | ACCP Antithrombotic Guidelines 2024",
+        SOURCES_EBM: {
+            "INITIER": {
+                "AOD": "ESC PE 2024 + ASH 2023 (1ère intention)",
+                "HBPM relais AVK": "ESC PE 2024 (si AOD CI)"
+            },
+            "EVITER": {
+                "AINS": "ESC PE 2024 (risque hémorragique)",
+                "Œstrogènes": "ESC PE 2024 (CI absolue)"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "AOD en première intention (apixaban, rivaroxaban) pour TVP/EP. HBPM (enoxaparine, tinzaparine) si cancer actif ou CI AOD. Durée : ≥ 3 mois, évaluation bénéfice/risque pour prolongation." }
+            ],
+            INITIER: [
+                { classe: "AOD (apixaban, rivaroxaban)", posologie: "Apixaban 10mg x2/j 7j puis 5mg x2/j. Rivaroxaban 15mg x2/j 21j puis 20mg/j", ref: "ESC PE 2024" },
+                { classe: "HBPM (enoxaparine, tinzaparine) si cancer", posologie: "Enoxaparine 100 UI/kg x2/j ou Tinzaparine 175 UI/kg/j", ref: "ASH 2023 Cancer VTE" },
+                { classe: "AVK si CI AOD", posologie: "Après HBPM ≥ 5j, INR cible 2-3", ref: "ESC PE 2024" }
+            ],
+            EVITER: [
+                { classe: "AINS", raison: "Risque hémorragique majoré sous anticoagulation", ref: "ESC PE 2024" },
+                { classe: "Œstrogènes (contraceptifs, THS)", raison: "CI absolue si ATCD MTEV", ref: "ESC PE 2024" },
+                { classe: "Tamoxifène", raison: "Risque thrombogène", ref: "ESC PE 2024" }
+            ]
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_003", "BIO_004", "BIO_009", "BIO_030"],
+            REGLES: [
+                { bio: "BIO_003", frequence: "Créatinine avant AOD, puis trimestrielle (clearance)" },
+                { bio: "BIO_009", frequence: "NFS-Plaquettes mensuelle sous HBPM" },
+                { bio: "BIO_030", frequence: "INR 2x/sem puis mensuel si AVK" }
+            ]
+        }
     }
 };
 
@@ -2464,7 +2672,12 @@ const PATHO_SYNDROME_MAP = {
     "PAT_028": ["SYND_009"],
     "PAT_029": ["SYND_015", "SYND_010", "SYND_020"],
     "PAT_030": ["SYND_005", "SYND_033"],
-    "PAT_031": ["SYND_033", "SYND_025", "SYND_017"]
+    "PAT_031": ["SYND_033", "SYND_025", "SYND_017"],
+    "PAT_032": ["SYND_004", "SYND_013"],
+    "PAT_033": [],
+    "PAT_034": ["SYND_001", "SYND_033"],
+    "PAT_035": ["SYND_003"],
+    "PAT_036": ["SYND_027", "SYND_030"]
 };
 
 const PATHO_MED_INTERDITS = {
@@ -2622,6 +2835,49 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
     "PAT_020": [
         { terme: "methotrexate", condition: "Sans surveillance NFS/hépatique", raison: "Pancytopénie, hépatotoxicité — surveillance NFS et bilan hépatique obligatoires", gravite: "SURVEILLANCE OBLIGATOIRE" },
         { terme: "ains", raison: "Néphrotoxicité, interaction avec chimiothérapie (ex: méthotrexate), risque hémorragique si thrombopénie", gravite: "PRUDENCE" }
+    ],
+    "PAT_032": [
+        { terme: "amitriptyline", raison: "Tricyclique : ACB élevé, QT, chutes — non recommandé en 1ère intention", gravite: "DECONSEILLE" },
+        { terme: "clomipramine", raison: "Tricyclique : ACB élevé, QT, sédation", gravite: "DECONSEILLE" },
+        { terme: "imipramine", raison: "Tricyclique : ACB élevé, QT, sédation", gravite: "DECONSEILLE" },
+        { terme: "dosulpine", raison: "Tricyclique : ACB 3, QT, PIM absolu en gériatrie", gravite: "CONTRE-INDICATION" },
+        { terme: "benzodiazepine", raison: "Pas d'indication dans la dépression, risque de dépendance", gravite: "DECONSEILLE" }
+    ],
+    "PAT_033": [
+        { terme: "oxybutynine", raison: "Anticholinergique systémique → mydriase → crise glaucome aigu", gravite: "CONTRE-INDICATION" },
+        { terme: "solifenacine", raison: "Anticholinergique → risque glaucome aigu", gravite: "CONTRE-INDICATION" },
+        { terme: "trospium", raison: "Anticholinergique → risque glaucome aigu", gravite: "CONTRE-INDICATION" },
+        { terme: "fesoterodine", raison: "Anticholinergique → risque glaucome aigu", gravite: "CONTRE-INDICATION" },
+        { terme: "amitriptyline", raison: "Anticholinergique puissant → mydriase", gravite: "CONTRE-INDICATION" },
+        { terme: "clomipramine", raison: "Anticholinergique puissant → mydriase", gravite: "CONTRE-INDICATION" },
+        { terme: "hydroxyzine", raison: "Anticholinergique → risque mydriase", gravite: "DECONSEILLE" },
+        { terme: "ipratropium", raison: "Contact oculaire direct → crise glaucome", gravite: "PRUDENCE" },
+        { terme: "tiotropium", raison: "Anticholinergique inhalé — risque résiduel", gravite: "PRUDENCE" }
+    ],
+    "PAT_034": [
+        { terme: "ains", raison: "CI dans cirrhose : hémorragie digestive, décompensation rénale, ascite", gravite: "CONTRE-INDICATION" },
+        { terme: "methotrexate", raison: "Hépatotoxicité directe — fibrose hépatique", gravite: "CONTRE-INDICATION" },
+        { terme: "amiodarone", raison: "Hépatotoxicité cumulative sévère", gravite: "CONTRE-INDICATION" },
+        { terme: "valproate", raison: "Hépatotoxicité idiosyncrasique", gravite: "CONTRE-INDICATION" },
+        { terme: "paracetamol", condition: "> 2 g/j", raison: "Seuil hépatotoxicité abaissé en cirrhose (max 2 g/j)", gravite: "PRUDENCE" },
+        { terme: "benzodiazepine", raison: "Encéphalopathie hépatique — métabolisme prolongé", gravite: "DECONSEILLE" },
+        { terme: "morphine", raison: "Métabolisme hépatique ralenti — encéphalopathie", gravite: "DECONSEILLE" },
+        { terme: "tramadol", raison: "Métabolisme hépatique — accumulation", gravite: "DECONSEILLE" }
+    ],
+    "PAT_035": [
+        { terme: "betabloquant", raison: "Chronotrope négatif — aggravation bradycardie sévère", gravite: "CONTRE-INDICATION" },
+        { terme: "verapamil", raison: "Chronotrope négatif — risque BAV complet", gravite: "CONTRE-INDICATION" },
+        { terme: "diltiazem", raison: "Chronotrope négatif — risque BAV", gravite: "CONTRE-INDICATION" },
+        { terme: "digoxine", raison: "Chronotrope négatif — BAV", gravite: "CONTRE-INDICATION" },
+        { terme: "ivabradine", raison: "Bradycardisant direct (If)", gravite: "CONTRE-INDICATION" },
+        { terme: "amiodarone", raison: "Bradycardie sinusale, BAV", gravite: "PRUDENCE" },
+        { terme: "donepezil", raison: "Effet vagomimétique → bradycardie", gravite: "PRUDENCE" },
+        { terme: "rivastigmine", raison: "Effet vagomimétique → bradycardie", gravite: "PRUDENCE" },
+        { terme: "clonidine", raison: "Sympatholytique central → bradycardie", gravite: "DECONSEILLE" }
+    ],
+    "PAT_036": [
+        { terme: "ains", raison: "Risque hémorragique sous anticoagulation", gravite: "CONTRE-INDICATION" },
+        { terme: "tamoxifene", raison: "Risque thrombogène — CI si ATCD MTEV", gravite: "CONTRE-INDICATION" }
     ]
 };
 

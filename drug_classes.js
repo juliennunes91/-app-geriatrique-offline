@@ -43,7 +43,7 @@ const DRUG_CLASSES = {
     antiagregant: {
         aliases: ['antiagreg', 'antiagregant', 'aspirine', 'acetylsalicylique'],
         classeMatch: ['antiagreg', 'antiagr'],
-        dcis: ['acideacetylsalicylique', 'aspirin', 'kardegic', 'clopidogrel', 'prasugrel', 'ticagrelor', 'ticlopidine', 'dipyridamole']
+        dcis: ['acideacetylsalicylique', 'clopidogrel', 'prasugrel', 'ticagrelor', 'ticlopidine', 'dipyridamole']
     },
     antipsychotique: {
         aliases: ['antipsychotique', 'neuroleptique'],
@@ -99,7 +99,7 @@ const DRUG_CLASSES = {
     arni: {
         aliases: ['arni'],
         classeMatch: [],
-        dcis: ['sacubitril', 'entresto']
+        dcis: ['sacubitrilvalsartan']
     },
     mra: {
         aliases: ['mra'],
@@ -109,7 +109,7 @@ const DRUG_CLASSES = {
     sglt2: {
         aliases: ['sglt2', 'isglt2'],
         classeMatch: ['sglt2'],
-        dcis: ['canagliflozin', 'dapagliflozin', 'empagliflozin', 'ertugliflozin', 'dapagliflozine', 'empagliflozine', 'canagliflozine']
+        dcis: ['canagliflozin', 'dapagliflozin', 'empagliflozin', 'ertugliflozin']
     },
     inhibiteur_calcique: {
         aliases: ['inhibiteurcalcique', 'calcique'],
