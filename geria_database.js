@@ -1189,9 +1189,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Acide actylsalicylique",
+            "dci": "Acide acetylsalicylique",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiagregant (antiplaquettaire)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -1238,9 +1238,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Acide zoldronique",
+            "dci": "Acide zoledronique",
             "princeps": "",
-            "classe": "",
+            "classe": "Bisphosphonate IV",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -1287,9 +1287,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Acnocoumarol",
+            "dci": "Acenocoumarol",
             "princeps": "",
-            "classe": "",
+            "classe": "AVK (antivitamine K)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -1309,9 +1309,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Akineton biperidene",
+            "dci": "Biperidene",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiparkinsonien anticholinergique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -1463,9 +1463,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Alimmazine",
+            "dci": "Alimemazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -1971,9 +1971,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Anafranil",
+            "dci": "Clomipramine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antidepresseur tricyclique (imipraminique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -2069,9 +2069,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Aprpitant",
+            "dci": "Aprepitant",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiemetique (antagoniste NK1)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -2122,9 +2122,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Artane / parkinane trihexyphenidyle",
+            "dci": "Trihexyphenidyle",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiparkinsonien anticholinergique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -2229,9 +2229,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Atarax",
+            "dci": "Hydroxyzine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -2339,9 +2339,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Atnolol",
+            "dci": "Atenolol",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant cardioselectif",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -2361,9 +2361,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Atnolol + chlortalidone",
+            "dci": "Atenolol + Chlortalidone",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant + diuretique thiazidique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -2494,7 +2494,7 @@ const MASTER_DB = {
         {
             "dci": "Aztreonam",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (monobactame)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -2541,9 +2541,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Bclomtasone",
+            "dci": "Beclometasone",
             "princeps": "",
-            "classe": "",
+            "classe": "Corticoide inhale",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -2839,9 +2839,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Bipridne",
+            "dci": "Biperidene",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiparkinsonien anticholinergique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3040,9 +3040,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Bromazpam",
+            "dci": "Bromazepam",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (anxiolytique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3112,9 +3112,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Btamthasone",
+            "dci": "Betamethasone",
             "princeps": "",
-            "classe": "",
+            "classe": "Corticoide systémique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3134,9 +3134,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Btaxolol",
+            "dci": "Betaxolol",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant cardioselectif",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3181,9 +3181,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Budsonide",
+            "dci": "Budesonide",
             "princeps": "",
-            "classe": "",
+            "classe": "Corticoide inhale",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3311,9 +3311,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Calcifdiol",
+            "dci": "Calcifediol",
             "princeps": "",
-            "classe": "",
+            "classe": "Vitamine D (25-OH-D3)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3628,9 +3628,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cartolol",
+            "dci": "Carteolol",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant non cardioselectif (collyre antiglaucomateux)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3650,9 +3650,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Carvdilol",
+            "dci": "Carvedilol",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant non cardioselectif (alpha + beta)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3848,9 +3848,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cefepime possible",
+            "dci": "Cefepime",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (cephalosporine 4G)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3972,9 +3972,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cefpodoxime proxetil",
+            "dci": "Cefpodoxime",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (cephalosporine 3G orale)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -3994,9 +3994,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Ceftaroline fosamil",
+            "dci": "Ceftaroline",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (cephalosporine 5G)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4175,9 +4175,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cefuroxime axetil",
+            "dci": "Cefuroxime",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (cephalosporine 2G)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4278,9 +4278,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Ceris",
+            "dci": "Cetirizine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 (2eme generation)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4326,7 +4326,7 @@ const MASTER_DB = {
         {
             "dci": "Chlordiazepoxide",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (anxiolytique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4479,7 +4479,7 @@ const MASTER_DB = {
         {
             "dci": "Chlorthalidone",
             "princeps": "",
-            "classe": "",
+            "classe": "Diuretique thiazidique-like",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4499,9 +4499,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cholcalcifrol",
+            "dci": "Cholecalciferol",
             "princeps": "",
-            "classe": "",
+            "classe": "Vitamine D3",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4656,9 +4656,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Ciclsonide",
+            "dci": "Ciclesonide",
             "princeps": "",
-            "classe": "",
+            "classe": "Corticoide inhale",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4678,9 +4678,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cicltanide",
+            "dci": "Cicletanide",
             "princeps": "",
-            "classe": "",
+            "classe": "Diuretique (thiazidique-like)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4781,9 +4781,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cimtidine",
+            "dci": "Cimetidine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anti-H2 (antiulcereux)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4956,7 +4956,7 @@ const MASTER_DB = {
         {
             "dci": "Clindamycine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (lincosamide)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -4976,9 +4976,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cliprolol",
+            "dci": "Celiprolol",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant cardioselectif (vasodilatateur)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5081,9 +5081,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Clonazpam",
+            "dci": "Clonazepam",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (antiepileptique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5131,9 +5131,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Clopixol zuclopenthixol",
+            "dci": "Zuclopenthixol",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique FGA (thioxanthene)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5178,9 +5178,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Clorazpate",
+            "dci": "Clorazepate",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (anxiolytique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5225,9 +5225,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Clotiazpam",
+            "dci": "Clotiazepam",
             "princeps": "",
-            "classe": "",
+            "classe": "Thienodiazepine (anxiolytique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5308,9 +5308,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Clvidipine",
+            "dci": "Clevidipine",
             "princeps": "",
-            "classe": "",
+            "classe": "Inhibiteur calcique (DHP) IV",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5412,9 +5412,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Colistine colistimethate sodique",
+            "dci": "Colistimethate",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (polymyxine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5493,9 +5493,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Ctirizine",
+            "dci": "Cetirizine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 (2eme generation)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5544,9 +5544,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cyammazine",
+            "dci": "Cyamemazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique FGA (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5618,9 +5618,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Cyclosporine",
+            "dci": "Ciclosporine",
             "princeps": "",
-            "classe": "",
+            "classe": "Immunosuppresseur (inhibiteur calcineurine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -5963,9 +5963,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Detrusitol",
+            "dci": "Toltérodine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique vesical",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6014,9 +6014,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Dexamthasone",
+            "dci": "Dexamethasone",
             "princeps": "",
-            "classe": "",
+            "classe": "Corticoide systémique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6058,9 +6058,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Dexchlorphniramine",
+            "dci": "Dexchlorpheniramine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6132,9 +6132,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Diazpam",
+            "dci": "Diazepam",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (anxiolytique longue duree)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6176,9 +6176,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Digoxin",
+            "dci": "Digoxine",
             "princeps": "",
-            "classe": "",
+            "classe": "Digitalique (glycoside cardiaque)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6253,9 +6253,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Dihydrocodine",
+            "dci": "Dihydrocodeine",
             "princeps": "",
-            "classe": "",
+            "classe": "Opioide faible (antitussif/analgesique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6407,9 +6407,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Ditropan / driptane",
+            "dci": "Oxybutynine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique vesical",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6456,9 +6456,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Donormyl / lidaprim",
+            "dci": "Doxylamine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif (hypnotique OTC)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6559,9 +6559,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Doxaban",
+            "dci": "Edoxaban",
             "princeps": "",
-            "classe": "",
+            "classe": "AOD anti-Xa",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6605,9 +6605,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Doxepin",
+            "dci": "Doxepine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antidepresseur tricyclique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6656,9 +6656,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Doxpine",
+            "dci": "Doxepine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antidepresseur tricyclique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -6812,9 +6812,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Duloxtine",
+            "dci": "Duloxetine",
             "princeps": "",
-            "classe": "",
+            "classe": "IRSNA",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -7129,9 +7129,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Ergocalcifrol",
+            "dci": "Ergocalciferol",
             "princeps": "",
-            "classe": "",
+            "classe": "Vitamine D2",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -7436,9 +7436,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Fbuxostat",
+            "dci": "Febuxostat",
             "princeps": "",
-            "classe": "",
+            "classe": "Inhibiteur xanthine oxydase (hypo-uricemiant)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -7612,9 +7612,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Fexofnadine",
+            "dci": "Fexofenadine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 (2eme generation)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -7682,9 +7682,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Flodipine",
+            "dci": "Felodipine",
             "princeps": "",
-            "classe": "",
+            "classe": "Inhibiteur calcique (DHP)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -7704,9 +7704,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Fluanxol flupentixol",
+            "dci": "Flupentixol",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique FGA (thioxanthene)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -7782,9 +7782,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Fluoxtine",
+            "dci": "Fluoxetine",
             "princeps": "",
-            "classe": "",
+            "classe": "ISRS",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -7863,9 +7863,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Fluphnazine",
+            "dci": "Fluphenazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique FGA (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -7989,9 +7989,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Formotrol",
+            "dci": "Formoterol",
             "princeps": "",
-            "classe": "",
+            "classe": "Beta-2 agoniste longue duree (LABA)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -8062,9 +8062,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Fosfomycine trometamol",
+            "dci": "Fosfomycine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (fosfomycine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -8136,9 +8136,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Fsotrodine",
+            "dci": "Fesoterodine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique vesical",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -8338,9 +8338,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Hemigoxine / digoxine digoxine",
+            "dci": "Digoxine",
             "princeps": "",
-            "classe": "",
+            "classe": "Digitalique (glycoside cardiaque)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -8573,9 +8573,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Imipenem + cilastatine + relebactam",
+            "dci": "Imipenem/Cilastatine/Relebactam",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (carbapeneme + inhibiteur BL)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -8625,9 +8625,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Imodium",
+            "dci": "Loperamide",
             "princeps": "",
-            "classe": "",
+            "classe": "Antidiarrheique (agoniste opioide peripherique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -8672,9 +8672,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Indacatrol",
+            "dci": "Indacaterol",
             "princeps": "",
-            "classe": "",
+            "classe": "Beta-2 agoniste longue duree (LABA ultra-long)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -8803,9 +8803,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Insuline dgludec",
+            "dci": "Insuline degludec",
             "princeps": "",
-            "classe": "",
+            "classe": "Insuline basale ultra-longue",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -8825,9 +8825,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Insuline dtmir",
+            "dci": "Insuline detemir",
             "princeps": "",
-            "classe": "",
+            "classe": "Insuline basale longue",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -9154,9 +9154,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Labtalol",
+            "dci": "Labetalol",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant non cardioselectif (alpha + beta)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -9307,9 +9307,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Laroxyl",
+            "dci": "Amitriptyline",
             "princeps": "",
-            "classe": "",
+            "classe": "Antidepresseur tricyclique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -9351,9 +9351,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Lepticur tropatepine",
+            "dci": "Tropatepine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiparkinsonien anticholinergique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -9804,9 +9804,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Lopramide",
+            "dci": "Loperamide",
             "princeps": "",
-            "classe": "",
+            "classe": "Antidiarrheique (agoniste opioide peripherique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -9903,9 +9903,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Lorazpam",
+            "dci": "Lorazepam",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (anxiolytique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -9950,9 +9950,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Lormtazpam",
+            "dci": "Lormetazepam",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (hypnotique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10028,9 +10028,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Lumirelax",
+            "dci": "Methocarbamol",
             "princeps": "",
-            "classe": "",
+            "classe": "Myorelaxant central",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10050,9 +10050,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Lvomthopromazine",
+            "dci": "Levomepromazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique FGA (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10072,9 +10072,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Lvtiractam",
+            "dci": "Levetiracetam",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiepileptique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10197,9 +10197,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Meclizine",
+            "dci": "Meclozine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif (antivertigineux)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10221,7 +10221,7 @@ const MASTER_DB = {
         {
             "dci": "Meclozine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif (antivertigineux)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10321,9 +10321,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Meropenem + vaborbactam atb de reserve",
+            "dci": "Meropenem/Vaborbactam",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (carbapeneme + inhibiteur BL)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10428,9 +10428,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Methotrimeprazine",
+            "dci": "Levomepromazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique FGA (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10659,9 +10659,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Miorel / coltramyl",
+            "dci": "Thiocolchicoside",
             "princeps": "",
-            "classe": "",
+            "classe": "Myorelaxant",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10791,9 +10791,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Mthocarbamol",
+            "dci": "Methocarbamol",
             "princeps": "",
-            "classe": "",
+            "classe": "Myorelaxant central",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10813,9 +10813,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Mthylprednisolone",
+            "dci": "Methylprednisolone",
             "princeps": "",
-            "classe": "",
+            "classe": "Corticoide systémique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10835,9 +10835,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Mtoclopramide",
+            "dci": "Metoclopramide",
             "princeps": "",
-            "classe": "",
+            "classe": "Procinetique (antagoniste D2)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -10857,9 +10857,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Mtoprolol",
+            "dci": "Metoprolol",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant cardioselectif",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11013,9 +11013,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Nbivolol",
+            "dci": "Nebivolol",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant cardioselectif (vasodilatateur NO)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11086,9 +11086,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Nfopam",
+            "dci": "Nefopam",
             "princeps": "",
-            "classe": "",
+            "classe": "Analgesique non opioide (central)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11133,9 +11133,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Nifdipine",
+            "dci": "Nifedipine",
             "princeps": "",
-            "classe": "",
+            "classe": "Inhibiteur calcique (DHP)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11229,9 +11229,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Nitrazpam",
+            "dci": "Nitrazepam",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (hypnotique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11326,9 +11326,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Nordazpam",
+            "dci": "Nordazepam",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (anxiolytique longue duree)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11567,7 +11567,7 @@ const MASTER_DB = {
         {
             "dci": "Oxacilline",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (penicilline M)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11640,9 +11640,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Oxybutynin",
+            "dci": "Oxybutynine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique vesical",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11744,9 +11744,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Palipridone",
+            "dci": "Paliperidone",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique SGA",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11817,9 +11817,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Paractamol",
+            "dci": "Paracetamol",
             "princeps": "",
-            "classe": "",
+            "classe": "Analgesique (paracetamol)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11866,9 +11866,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Paroxtine",
+            "dci": "Paroxetine",
             "princeps": "",
-            "classe": "",
+            "classe": "ISRS",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11942,9 +11942,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Perphnazine",
+            "dci": "Perphenazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique FGA (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -11964,9 +11964,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Phenergan",
+            "dci": "Promethazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -12225,9 +12225,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Piportil pipotiazine",
+            "dci": "Pipotiazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique FGA (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -12301,9 +12301,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Pirtanide",
+            "dci": "Piretanide",
             "princeps": "",
-            "classe": "",
+            "classe": "Diuretique de l'anse",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -12347,9 +12347,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Polaramine",
+            "dci": "Dexchlorpheniramine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -12523,9 +12523,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Prazpam",
+            "dci": "Prazepam",
             "princeps": "",
-            "classe": "",
+            "classe": "Benzodiazepine (anxiolytique longue duree)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -12630,9 +12630,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Prgabaline",
+            "dci": "Pregabaline",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiepileptique (gabapentenoide)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -12652,9 +12652,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Primperan",
+            "dci": "Metoclopramide",
             "princeps": "",
-            "classe": "",
+            "classe": "Procinetique (antagoniste D2)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -12757,9 +12757,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Promthazine",
+            "dci": "Promethazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -13019,9 +13019,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Quitaxon",
+            "dci": "Doxepine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antidepresseur tricyclique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -13041,9 +13041,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Qutiapine",
+            "dci": "Quetiapine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique SGA",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -13088,9 +13088,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Rabprazole",
+            "dci": "Rabeprazole",
             "princeps": "",
-            "classe": "",
+            "classe": "Inhibiteur pompe a protons (IPP)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -13221,9 +13221,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Risdronate",
+            "dci": "Risedronate",
             "princeps": "",
-            "classe": "",
+            "classe": "Bisphosphonate oral",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -13466,9 +13466,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Salmtrol",
+            "dci": "Salmeterol",
             "princeps": "",
-            "classe": "",
+            "classe": "Beta-2 agoniste longue duree (LABA)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -13516,9 +13516,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Scopoderm scopolamine",
+            "dci": "Scopolamine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique (antiemetique/antimaladie du mouvement)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -13720,9 +13720,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Smaglutide",
+            "dci": "Semaglutide",
             "princeps": "",
-            "classe": "",
+            "classe": "Agoniste GLP-1",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -13770,9 +13770,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Solifenacin",
+            "dci": "Solifenacine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique vesical",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -13819,9 +13819,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Solifnacine",
+            "dci": "Solifenacine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique vesical",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14055,9 +14055,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Surmontil",
+            "dci": "Trimipramine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antidepresseur tricyclique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14259,7 +14259,7 @@ const MASTER_DB = {
         {
             "dci": "Temocilline",
             "princeps": "",
-            "classe": "",
+            "classe": "Antibiotique (penicilline)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14279,9 +14279,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Tenoretic",
+            "dci": "Atenolol + Chlortalidone",
             "princeps": "",
-            "classe": "",
+            "classe": "Betabloquant + diuretique thiazidique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14349,9 +14349,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Tercian cyamemazine",
+            "dci": "Cyamemazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antipsychotique FGA (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14399,9 +14399,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Theralene",
+            "dci": "Alimemazine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif (phenothiazine)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14527,9 +14527,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Ticagrlor",
+            "dci": "Ticagrelor",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiagregant (anti-P2Y12)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14750,9 +14750,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Tirzpatide",
+            "dci": "Tirzepatide",
             "princeps": "",
-            "classe": "",
+            "classe": "Agoniste GIP/GLP-1 double",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14825,9 +14825,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Tofranil",
+            "dci": "Imipramine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antidepresseur tricyclique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14874,9 +14874,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Toltrodine",
+            "dci": "Tolterodine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique vesical",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14950,9 +14950,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Torasmide",
+            "dci": "Torasemide",
             "princeps": "",
-            "classe": "",
+            "classe": "Diuretique de l'anse",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -14972,9 +14972,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Toviaz",
+            "dci": "Fesoterodine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique vesical",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -15251,9 +15251,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Trihexyphnidyle",
+            "dci": "Trihexyphenidyle",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiparkinsonien anticholinergique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -15330,7 +15330,7 @@ const MASTER_DB = {
         {
             "dci": "Triprolidine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antihistaminique H1 sedatif",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -15372,9 +15372,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Tropatpine",
+            "dci": "Tropatepine",
             "princeps": "",
-            "classe": "",
+            "classe": "Antiparkinsonien anticholinergique",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -15606,9 +15606,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Vesicare",
+            "dci": "Solifenacine",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique vesical",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -15656,9 +15656,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Visceralgine tiemonium",
+            "dci": "Tiemonium",
             "princeps": "",
-            "classe": "",
+            "classe": "Anticholinergique (antispasmodique)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",
@@ -15678,9 +15678,9 @@ const MASTER_DB = {
             "atb_terminale": ""
         },
         {
-            "dci": "Warfarin",
+            "dci": "Warfarine",
             "princeps": "",
-            "classe": "",
+            "classe": "AVK (antivitamine K)",
             "poso_hab": "",
             "poso_ger": "",
             "poso_ren": "",

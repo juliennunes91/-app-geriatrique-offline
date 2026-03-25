@@ -2881,9 +2881,260 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
     ]
 };
 
-// Merge V2 and V3 additions into PATHO_MED_INTERDITS
+// ============================================================================
+// PATHO_MED_INTERDITS_V4 — Couverture par CLASSE thérapeutique (EBM 2024-2025)
+// Sources : ESC 2023 HF/AF/ACS/VTE Guidelines, KDIGO 2024, EASL Cirrhosis,
+//           Beers 2023, STOPP/START v3, HAS recommandations gériatriques
+// Le terme matche sur dci.includes(terme) || classe.includes(terme)
+// ============================================================================
+const PATHO_MED_INTERDITS_V4_CLASSES = {
+
+    // PAT_001 — Insuffisance cardiaque
+    "PAT_001": [
+        { terme: "glitazone", raison: "Rétention hydrosodée → décompensation IC (ESC 2023 classe III)", gravite: "CONTRE-INDICATION" },
+        { terme: "inhibiteur calcique", condition: "DHP sauf amlodipine/felodipine", raison: "Effet inotrope négatif potentiel (ESC 2023)", gravite: "PRUDENCE" },
+        { terme: "pregabaline", raison: "Rétention hydrique → œdèmes → décompensation IC", gravite: "PRUDENCE" },
+        { terme: "corticoide", condition: "systémique", raison: "Rétention hydrosodée → décompensation", gravite: "PRUDENCE" },
+        { terme: "irsna", raison: "Rétention hydrique possible, prudence si IC sévère", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_002 — Cardiopathie (générale)
+    "PAT_002": [
+        { terme: "triptan", raison: "Vasospasme coronaire — CI si cardiopathie ischémique (EMA/FDA)", gravite: "CONTRE-INDICATION" }
+    ],
+
+    // PAT_003 — Fibrillation auriculaire
+    "PAT_003": [
+        { terme: "flecainide", condition: "si cardiopathie structurelle", raison: "Proarythmie — CI si FEVG altérée (ESC 2024 AF)", gravite: "PRUDENCE" },
+        { terme: "propafenone", condition: "si cardiopathie structurelle", raison: "Proarythmie — CI si FEVG altérée", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_004 — Coronarien / SCA
+    "PAT_004": [
+        { terme: "triptan", raison: "Vasospasme coronaire — CI absolue post-SCA (ESC 2023 ACS)", gravite: "CONTRE-INDICATION" },
+        { terme: "ergot", raison: "Vasospasme coronaire — CI absolue", gravite: "CONTRE-INDICATION" }
+    ],
+
+    // PAT_005 — HTA non contrôlée
+    "PAT_005": [
+        { terme: "triptan", raison: "Risque vasculaire si HTA non contrôlée (> 180/110)", gravite: "CONTRE-INDICATION" },
+        { terme: "corticoide", condition: "systémique", raison: "Rétention hydrosodée → aggravation HTA", gravite: "PRUDENCE" },
+        { terme: "ergot", raison: "Vasospasme — CI si HTA sévère non contrôlée", gravite: "CONTRE-INDICATION" },
+        { terme: "ciclosporine", raison: "HTA dose-dépendante (néphrotoxicité)", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_006 — Diabète
+    "PAT_006": [
+        { terme: "corticoide", condition: "systémique", raison: "Hyperglycémie dose-dépendante — adapter insuline/ADO", gravite: "PRUDENCE" },
+        { terme: "thiazidique", raison: "Hyperglycémie dose-dépendante, hypokaliémie → ↓ sécrétion insuline", gravite: "PRUDENCE" },
+        { terme: "antipsychotique sga", raison: "Syndrome métabolique — prise de poids, dyslipidémie, insulinorésistance (ADA 2024)", gravite: "PRUDENCE" },
+        { terme: "quetiapine", raison: "Risque métabolique élevé — hyperglycémie, prise de poids (ADA 2024)", gravite: "PRUDENCE" },
+        { terme: "olanzapine", raison: "Risque métabolique élevé — hyperglycémie (ADA 2024)", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_007 — Insuffisance rénale chronique (modérée)
+    "PAT_007": [
+        { terme: "metformine", condition: "si DFG < 30", raison: "Risque acidose lactique si IRC sévère (KDIGO 2024)", gravite: "CONTRE-INDICATION" },
+        { terme: "lithium", raison: "Index thérapeutique étroit — accumulation rénale", gravite: "PRUDENCE" },
+        { terme: "bisphosphonate", condition: "si DFG < 30-35", raison: "CI si IRC sévère — nécrose tubulaire", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_008 — AVC / AIT
+    "PAT_008": [
+        { terme: "triptan", raison: "CI si ATCD AVC — risque vasospasme cérébral", gravite: "CONTRE-INDICATION" },
+        { terme: "ergot", raison: "Vasospasme cérébral — CI absolue post-AVC", gravite: "CONTRE-INDICATION" },
+        { terme: "antipsychotique", raison: "↑ mortalité cérébrovasculaire chez le sujet âgé (FDA black box)", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_009 — HBP / troubles mictionnels
+    "PAT_009": [
+        { terme: "anticholinergique", raison: "Rétention urinaire — aggravation HBP", gravite: "DECONSEILLE" },
+        { terme: "tricyclique", raison: "Effet anticholinergique → rétention urinaire", gravite: "DECONSEILLE" }
+    ],
+
+    // PAT_010 — Démence
+    "PAT_010": [
+        { terme: "anticholinergique", raison: "Aggravation cognitive — antagonisme du traitement pro-cholinergique (Beers 2023)", gravite: "CONTRE-INDICATION" },
+        { terme: "benzodiazepine", raison: "Confusion, sédation, chutes — PIM en démence (STOPP v3)", gravite: "DECONSEILLE" },
+        { terme: "antipsychotique", raison: "↑ mortalité et AVC chez déments (FDA black box)", gravite: "PRUDENCE" },
+        { terme: "tricyclique", raison: "ACB élevé — aggravation cognitive", gravite: "CONTRE-INDICATION" }
+    ],
+
+    // PAT_012 — Maladie de Parkinson
+    "PAT_012": [
+        { terme: "antipsychotique", raison: "Antagonisme dopaminergique → aggravation syndrome parkinsonien", gravite: "CONTRE-INDICATION" },
+        { terme: "metoclopramide", raison: "Antidopaminergique central — aggravation parkinson", gravite: "CONTRE-INDICATION" },
+        { terme: "metopimazine", raison: "Antidopaminergique — risque extrapyramidal", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_014 — Syndrome extrapyramidal
+    "PAT_014": [
+        { terme: "antipsychotique", raison: "Risque d'aggravation extrapyramidale", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_015 — Épilepsie
+    "PAT_015": [
+        { terme: "fluoroquinolone", raison: "Abaisse seuil épileptogène (ANSM 2019)", gravite: "PRUDENCE" },
+        { terme: "antipsychotique", raison: "Abaisse seuil épileptogène", gravite: "PRUDENCE" },
+        { terme: "isrs", condition: "à dose élevée", raison: "Hyponatrémie → convulsions (rare)", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_016 — Hypoglycémies
+    "PAT_016": [
+        { terme: "sulfamide", raison: "Risque hypoglycémique élevé chez le sujet âgé", gravite: "PRUDENCE" },
+        { terme: "glinide", raison: "Sécrétagogue insuline — risque hypoglycémie", gravite: "PRUDENCE" },
+        { terme: "fluoroquinolone", raison: "Dysglycémie (hypo et hyper) — FDA warning", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_019 — Insuffisance rénale (interaction statine)
+    "PAT_019": [
+        { terme: "ains", raison: "Néphrotoxicité — vasoconstriction afférente (KDIGO 2024)", gravite: "CONTRE-INDICATION" },
+        { terme: "lithium", raison: "Index thérapeutique étroit — accumulation si IRC", gravite: "PRUDENCE" },
+        { terme: "ciclosporine", raison: "Néphrotoxicité dose-dépendante", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_020 — Polyarthrite / rhumatisme inflammatoire
+    "PAT_020": [
+        { terme: "corticoide", condition: "≤ 7.5 mg/j prednisone eq.", raison: "Dose minimale efficace — risque ostéoporose, diabète (EULAR 2023)", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_021 — ATCD ulcère gastrique / hémorragie digestive
+    "PAT_021": [
+        { terme: "isrs", raison: "↑ risque hémorragique GI (inhibition sérotonine plaquettaire) — associer IPP", gravite: "PRUDENCE" },
+        { terme: "irsna", raison: "↑ risque hémorragique GI — associer IPP si ATCD ulcère", gravite: "PRUDENCE" },
+        { terme: "antiagregant", raison: "Risque hémorragique digestif — gastroprotection par IPP", gravite: "PRUDENCE" },
+        { terme: "anticoagulant", raison: "Risque hémorragique digestif — gastroprotection recommandée", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_022 — Asthme / BPCO
+    "PAT_022": [
+        { terme: "betabloquant", raison: "Bronchospasme — CI si asthme, prudence si BPCO (GINA 2024)", gravite: "CONTRE-INDICATION" }
+    ],
+
+    // PAT_024 — Goutte
+    "PAT_024": [
+        { terme: "thiazidique", raison: "Hyperuricémie — aggravation goutte", gravite: "DECONSEILLE" },
+        { terme: "aspirine", condition: "faible dose", raison: "Diminue l'excrétion urique — aggravation potentielle", gravite: "PRUDENCE" },
+        { terme: "ciclosporine", raison: "Hyperuricémie — aggravation goutte", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_025 — Ostéoporose
+    "PAT_025": [
+        { terme: "ipp", condition: "> 1 an", raison: "↑ risque fracture si usage prolongé > 12 mois (ACG 2024)", gravite: "PRUDENCE" },
+        { terme: "antiepileptique", raison: "Inducteurs enzymatiques ↓ vitamine D → perte osseuse", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_026 — Infections urinaires récidivantes
+    "PAT_026": [
+        { terme: "anticholinergique", raison: "Rétention urinaire → stase → récidive IU", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_027 — Chutes / troubles de l'équilibre
+    "PAT_027": [
+        { terme: "antipsychotique", raison: "Sédation, hypotension orthostatique → chutes (Beers 2023)", gravite: "PRUDENCE" },
+        { terme: "tricyclique", raison: "Hypotension orthostatique, sédation → chutes", gravite: "DECONSEILLE" },
+        { terme: "opioide", raison: "Sédation, confusion → risque de chutes chez le sujet âgé", gravite: "PRUDENCE" },
+        { terme: "alpha-1 bloquant", raison: "Hypotension orthostatique → chutes", gravite: "PRUDENCE" },
+        { terme: "isrs", condition: "initiation", raison: "Hyponatrémie, vertiges en début de traitement → chutes", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_028 — Vertiges
+    "PAT_028": [
+        { terme: "antipsychotique", raison: "Sédation, hypotension → aggravation vertiges", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_029 — IRC sévère / Dialyse
+    "PAT_029": [
+        { terme: "bisphosphonate", condition: "si DFG < 30", raison: "CI — risque néphrotoxicité, ostéomalacie adynamique", gravite: "CONTRE-INDICATION" },
+        { terme: "lithium", raison: "Accumulation toxique — CI si IRC sévère", gravite: "CONTRE-INDICATION" },
+        { terme: "enoxaparine", condition: "si DFG < 30", raison: "Accumulation HBPM — risque hémorragique (utiliser HNF)", gravite: "CONTRE-INDICATION" },
+        { terme: "tinzaparine", condition: "si DFG < 30", raison: "Accumulation HBPM — privilégier HNF", gravite: "PRUDENCE" },
+        { terme: "dalteparine", condition: "si DFG < 30", raison: "Accumulation HBPM — adapter posologie", gravite: "PRUDENCE" },
+        { terme: "fondaparinux", condition: "si DFG < 20", raison: "CI si IRC sévère — élimination rénale exclusive", gravite: "CONTRE-INDICATION" },
+        { terme: "isglt2", condition: "si DFG < 20", raison: "Inefficacité glycémique mais bénéfice cardiorénal maintenu (KDIGO 2024)", gravite: "PRUDENCE" },
+        { terme: "gabapentine", raison: "Élimination rénale — réduire dose si DFG < 30", gravite: "PRUDENCE" },
+        { terme: "pregabaline", raison: "Élimination rénale — adapter dose si IRC", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_030 — Soins palliatifs
+    "PAT_030": [
+        { terme: "ipp", condition: "si pas d'indication active", raison: "Déprescription recommandée (STOPPFrail)", gravite: "PRUDENCE" },
+        { terme: "antiagregant", condition: "prévention primaire", raison: "Bénéfice incertain en fin de vie (STOPPFrail)", gravite: "PRUDENCE" },
+        { terme: "isglt2", raison: "Risque déshydratation en fin de vie", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_031 — Confusion / delirium
+    "PAT_031": [
+        { terme: "anticholinergique", raison: "Facteur déclenchant majeur du delirium (Beers 2023)", gravite: "CONTRE-INDICATION" },
+        { terme: "corticoide", raison: "Agitation, insomnie, confusion dose-dépendante", gravite: "PRUDENCE" },
+        { terme: "opioide", raison: "Confusion, sédation — facteur de delirium", gravite: "PRUDENCE" },
+        { terme: "fluoroquinolone", raison: "Neurotoxicité — confusion, hallucinations (FDA 2018)", gravite: "PRUDENCE" },
+        { terme: "tricyclique", raison: "ACB élevé — facteur majeur de delirium", gravite: "CONTRE-INDICATION" }
+    ],
+
+    // PAT_032 — Dépression
+    "PAT_032": [
+        { terme: "betabloquant", raison: "Dépression iatrogène controversée mais prudence si lipophile (propranolol)", gravite: "PRUDENCE" },
+        { terme: "corticoide", condition: "usage prolongé", raison: "Troubles de l'humeur dose-dépendants", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_033 — Glaucome angle fermé
+    "PAT_033": [
+        { terme: "anticholinergique", raison: "Mydriase → crise de glaucome aigu par fermeture de l'angle", gravite: "CONTRE-INDICATION" },
+        { terme: "tricyclique", raison: "Effet anticholinergique puissant → mydriase → crise GAF", gravite: "CONTRE-INDICATION" },
+        { terme: "isrs", condition: "surtout paroxetine", raison: "Mydriase modérée possible — rare mais documentée", gravite: "PRUDENCE" },
+        { terme: "irsna", raison: "Effet noradrénergique → mydriase possible", gravite: "PRUDENCE" },
+        { terme: "phenothiazine", raison: "Effet anticholinergique → mydriase", gravite: "DECONSEILLE" }
+    ],
+
+    // PAT_034 — Hépatopathie / Cirrhose
+    "PAT_034": [
+        { terme: "statine", condition: "si transaminases > 3N ou cirrhose décompensée", raison: "Hépatotoxicité — CI si cirrhose Child C", gravite: "PRUDENCE" },
+        { terme: "ketoconazole", raison: "Hépatotoxicité sévère — CI en cirrhose", gravite: "CONTRE-INDICATION" },
+        { terme: "isoniazide", raison: "Hépatotoxicité majeure — CI en hépatopathie", gravite: "CONTRE-INDICATION" },
+        { terme: "ciclosporine", raison: "Métabolisme hépatique — accumulation toxique", gravite: "PRUDENCE" },
+        { terme: "fluoroquinolone", raison: "Hépatotoxicité idiosyncrasique possible", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_035 — Bradycardie sévère
+    "PAT_035": [
+        { terme: "galantamine", raison: "Effet vagomimétique → bradycardie", gravite: "PRUDENCE" },
+        { terme: "phenylephrine", raison: "Réflexe vagal si HTA → bradycardie réflexe", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_036 — MTEV / maladie thromboembolique
+    "PAT_036": [
+        { terme: "corticoide", condition: "systémique", raison: "Augmente le risque thromboembolique", gravite: "PRUDENCE" },
+        { terme: "raloxifene", raison: "SERM — risque thromboembolique (CI si ATCD MTEV)", gravite: "CONTRE-INDICATION" },
+        { terme: "contraceptif", raison: "Risque thromboembolique — CI si ATCD MTEV", gravite: "CONTRE-INDICATION" },
+        { terme: "erythropoietine", raison: "↑ viscosité sanguine → risque thrombotique", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_017 — Dysthyroïdie
+    "PAT_017": [
+        { terme: "iec", condition: "hypothyroidie", raison: "Pas de CI mais surveillance TSH (interaction indirecte métabolique)", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_024 — Goutte (ajouts diurétiques)
+    "PAT_024": [
+        { terme: "diuretique de l'anse", raison: "Hyperuricémie → aggravation goutte", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_027 — Chutes (ajout diurétiques)
+    "PAT_027": [
+        { terme: "diuretique", raison: "Hypovolémie, hypotension orthostatique → chutes", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_029 — IRC sévère (ajouts AVK, AOD)
+    "PAT_029": [
+        { terme: "avk", condition: "si DFG < 15 sans dialyse", raison: "Calciphylaxie possible — surveillance INR renforcée", gravite: "PRUDENCE" },
+        { terme: "aod", condition: "selon seuils DFG spécifiques", raison: "Accumulation si IRC sévère — adapter ou CI selon molécule (EHRA 2024)", gravite: "PRUDENCE" }
+    ]
+};
+
+// Merge V2, V3, and V4 additions into PATHO_MED_INTERDITS
 (function() {
-    [PATHO_MED_INTERDITS_V2_ADDITIONS, PATHO_MED_INTERDITS_V3_ADDITIONS].forEach(additions => {
+    [PATHO_MED_INTERDITS_V2_ADDITIONS, PATHO_MED_INTERDITS_V3_ADDITIONS, PATHO_MED_INTERDITS_V4_CLASSES].forEach(additions => {
         for (const [patId, rules] of Object.entries(additions)) {
             if (!PATHO_MED_INTERDITS[patId]) PATHO_MED_INTERDITS[patId] = [];
             rules.forEach(r => {
