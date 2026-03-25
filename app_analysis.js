@@ -79,12 +79,18 @@ function analyserPrescription() {
     // ---- Auto-injection des PAT codes depuis les checkboxes cliniques ----
     // Garantit que les règles STOPP/START (qui vérifient activeComorbs) se déclenchent
     const checkboxPatMap = {
-        'chkAvc':           'PAT_008',   // AVC/AIT
-        'chkAtcdUlcere':    'PAT_021',   // UGD
-        'chkDialyse':       'PAT_029',   // MRC (hémodialyse implique MRC sévère)
-        'chkPalliatif':     'PAT_030',   // Soins palliatifs
-        'chkDepression':    'PAT_027B',  // Note: pas de PAT dédié, mais contexte "depression" existe
-        'chkGlaucome':      'PAT_GLAUCOME' // Pas de PAT dédié dans la base
+        'chkAvc':              'PAT_008',   // AVC/AIT
+        'chkAtcdUlcere':       'PAT_021',   // UGD
+        'chkDialyse':          'PAT_029',   // MRC (hémodialyse implique MRC sévère)
+        'chkPalliatif':        'PAT_030',   // Soins palliatifs
+        'chkDepression':       'PAT_032',   // Dépression (nouveau PAT)
+        'chkGlaucome':         'PAT_033',   // Glaucome à angle fermé (nouveau PAT)
+        'chkFoie':             'PAT_034',   // Hépatopathie chronique / Cirrhose (nouveau PAT)
+        'chkBrady':            'PAT_035',   // Bradycardie (nouveau PAT)
+        'chkTvp':              'PAT_036',   // MTEV - TVP/EP (nouveau PAT)
+        'chkStent':            'PAT_004',   // Stent → SCC
+        'chkScaAigu':          'PAT_004',   // SCA → SCC
+        'chkHtaNonControlee':  'PAT_005'    // HTA non contrôlée → HTA
     };
     // Injection sans doublon
     for (const [chkId, patCode] of Object.entries(checkboxPatMap)) {
@@ -115,7 +121,23 @@ function analyserPrescription() {
     if(isChecked('chkGlaucome')) ctxClinique.push("glaucome");
     if(isChecked('chkPalliatif')) ctxClinique.push("palliatif", "esperance_vie_reduite", "stoppfrail");
     if(isChecked('chkAtcdUlcere')) ctxClinique.push("atcd_ulcere", "atcd_hemorragie_digestive");
+    if(isChecked('chkAspirineForte')) ctxClinique.push("dose_aspirine_elevee");
     if(getVal('bioAlb') > 0 && getVal('bioAlb') < 30) ctxClinique.push("denutrition_severe");
+
+    // Contexte clinique pour checkboxes avec pont PAT (doublon contexte + comorbs pour couverture complète)
+    if(isChecked('chkFoie')) ctxClinique.push("hepatopathie");
+    if(isChecked('chkTvp')) ctxClinique.push("mtev");
+    if(isChecked('chkAvc')) ctxClinique.push("avc");
+    if(isChecked('chkDialyse')) ctxClinique.push("hemodialyse");
+    if(isChecked('chkStent') || isChecked('chkScaAigu')) ctxClinique.push("coronarien_aigu");
+    if(isChecked('chkHtaNonControlee')) ctxClinique.push("hta_non_controlee");
+
+    // Contexte clinique pour checkboxes sans PAT code
+    if(isChecked('chkAlcool')) ctxClinique.push("alcool");
+    if(isChecked('chkTabac')) ctxClinique.push("tabac");
+    if(isChecked('chkSepsis')) ctxClinique.push("sepsis");
+    if(isChecked('chkArret')) ctxClinique.push("arret_cardiaque");
+    if(isChecked('chkLqts')) ctxClinique.push("qt_long_congenital");
 
 
     const ctx = {
@@ -234,6 +256,17 @@ function analyserPrescription() {
                 cpClass = cpScore <= 6 ? 'A' : (cpScore <= 9 ? 'B' : 'C');
                 cpSource = `(${cpScore} pts calculés)`;
             }
+        }
+
+        // Pont Child-Pugh → PAT_034 : injection automatique même sans chkFoie
+        if (cpClass && !activeComorbs.includes('PAT_034')) {
+            if (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES && MASTER_DB.PATHOLOGIES['PAT_034']) {
+                activeComorbs.push('PAT_034');
+            }
+        }
+        // Pont Child-Pugh → contexte_clinique
+        if (cpClass && !ctxClinique.includes("hepatopathie")) {
+            ctxClinique.push("hepatopathie");
         }
 
         if (cpClass || isChecked('chkFoie')) {

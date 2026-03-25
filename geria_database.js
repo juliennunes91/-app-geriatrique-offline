@@ -553,6 +553,51 @@ const MASTER_DB = {
             "SYNONYMES": "Fragile, CFS élevé, Très grand âge",
             "BIO_SURVEILLANCE": "BIO_009, BIO_023, BIO_035, BIO_025, BIO_003",
             "SYND_RISQUE": "SYND_005, SYND_025, SYND_033, SYND_017, SYND_015"
+        },
+        "PAT_032": {
+            "ID_PATHO": "PAT_032",
+            "CIM_10": "F32.1",
+            "NOM_STANDARD": "Dépression",
+            "CATEGORIE": "Psychiatrie",
+            "SYNONYMES": "Épisode dépressif majeur, Dépression caractérisée, Trouble dépressif",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_022, BIO_021, BIO_023",
+            "SYND_RISQUE": ""
+        },
+        "PAT_033": {
+            "ID_PATHO": "PAT_033",
+            "CIM_10": "H40.2",
+            "NOM_STANDARD": "Glaucome à angle fermé",
+            "CATEGORIE": "Ophtalmologie",
+            "SYNONYMES": "Glaucome, Glaucome aigu, Angle fermé, Hypertension oculaire",
+            "BIO_SURVEILLANCE": "",
+            "SYND_RISQUE": ""
+        },
+        "PAT_034": {
+            "ID_PATHO": "PAT_034",
+            "CIM_10": "K74",
+            "NOM_STANDARD": "Hépatopathie chronique / Cirrhose",
+            "CATEGORIE": "Hépato-gastro-entérologie",
+            "SYNONYMES": "Cirrhose, Hépatopathie sévère, Insuffisance hépatique, Child-Pugh, MASLD, MASH, Stéatose",
+            "BIO_SURVEILLANCE": "BIO_013, BIO_014, BIO_015, BIO_016, BIO_017, BIO_035, BIO_030",
+            "SYND_RISQUE": ""
+        },
+        "PAT_035": {
+            "ID_PATHO": "PAT_035",
+            "CIM_10": "R00.1",
+            "NOM_STANDARD": "Bradycardie",
+            "CATEGORIE": "Cardiologie",
+            "SYNONYMES": "Bradycardie sévère, BAV, Bloc auriculo-ventriculaire, Dysfonction sinusale",
+            "BIO_SURVEILLANCE": "BIO_001, BIO_002",
+            "SYND_RISQUE": ""
+        },
+        "PAT_036": {
+            "ID_PATHO": "PAT_036",
+            "CIM_10": "I82.9",
+            "NOM_STANDARD": "Maladie thromboembolique veineuse (MTEV)",
+            "CATEGORIE": "Cardiologie",
+            "SYNONYMES": "TVP, EP, Embolie pulmonaire, Thrombose veineuse profonde, Phlébite",
+            "BIO_SURVEILLANCE": "BIO_033, BIO_030",
+            "SYND_RISQUE": ""
         }
     },
     "SYNDROMES": {

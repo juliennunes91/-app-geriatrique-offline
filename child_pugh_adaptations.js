@@ -841,5 +841,315 @@ const CHILD_PUGH_ADAPTATIONS = {
         A: { msg: "Pas d'adaptation", ci: false, reduire: false },
         B: { msg: "Non recommandé — Hépatotoxicité possible", ci: false, reduire: true },
         C: { msg: "CONTRE-INDIQUÉ — Cirrhose avec troubles digestifs", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // AJOUT v1.2 — AINS / COXIBS (hépatotoxicité connue)
+    // ========================================================================
+    "diclofenac": {
+        A: { msg: "Prudence — Surveillance transaminases. Préférer paracétamol.", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Hépatotoxicité idiosyncrasique + métabolisme CYP2C9 diminué", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité et risque hémorragique digestif", ci: true, reduire: false }
+    },
+    "indometacine": {
+        A: { msg: "Prudence — Surveillance hépatique", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Risque hémorragique GI + métabolisme diminué", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "ketoprofene": {
+        A: { msg: "Prudence — Préférer paracétamol", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Hépatotoxicité + risque GI", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "naproxene": {
+        A: { msg: "Prudence — Surveillance hépatique", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Métabolisme CYP diminué, accumulation possible", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "meloxicam": {
+        A: { msg: "Pas d'adaptation — Surveillance hépatique", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Réduction clearance hépatique", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Insuffisance hépatique sévère", ci: true, reduire: false }
+    },
+    "piroxicam": {
+        A: { msg: "Prudence — Surveillance transaminases", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Demi-vie prolongée, hépatotoxicité", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "celecoxib": {
+        A: { msg: "Pas d'adaptation nécessaire", ci: false, reduire: false },
+        B: { msg: "Réduire de 50% — CYP2C9, accumulation significative", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Insuffisance hépatique sévère", ci: true, reduire: false }
+    },
+    "etoricoxib": {
+        A: { msg: "Dose max 60 mg/j", ci: false, reduire: true },
+        B: { msg: "Dose max 30 mg/j (si indispensable)", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // OPIOÏDES manquants
+    // ========================================================================
+    "buprenorphine": {
+        A: { msg: "Pas d'adaptation nécessaire", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Métabolisme CYP3A4 diminué, surveillance sédation", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Accumulation majeure, dépression respiratoire", ci: true, reduire: false }
+    },
+    "pethidine": {
+        A: { msg: "Prudence — Accumulation norpéthidine possible", ci: false, reduire: true },
+        B: { msg: "CONTRE-INDIQUÉ — Accumulation toxique de norpéthidine (convulsions)", ci: true, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // ANTIARYTHMIQUE manquant
+    // ========================================================================
+    "propafenone": {
+        A: { msg: "Réduction de dose ~50% — CYP2D6/CYP3A4, biodisponibilité accrue", ci: false, reduire: true },
+        B: { msg: "CONTRE-INDIQUÉ — Biodisponibilité x3-7, risque proarythmique majeur", ci: true, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // DIVERS HIGH PRIORITY
+    // ========================================================================
+    "theophylline": {
+        A: { msg: "Surveillance taux plasmatiques rapprochée", ci: false, reduire: true },
+        B: { msg: "Réduction 50% — Clairance très diminuée, dosage plasmatique obligatoire", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Clairance quasi nulle, toxicité prévisible", ci: true, reduire: false }
+    },
+    "methyldopa": {
+        A: { msg: "Prudence — Surveillance hépatique (hépatite auto-immune rapportée)", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Hépatotoxicité significative + métabolisme diminué", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Hépatopathie active", ci: true, reduire: false }
+    },
+    "clonidine": {
+        A: { msg: "Pas d'adaptation — 50% hépatique, 50% rénal", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Clairance diminuée, risque hypotension", ci: false, reduire: true },
+        C: { msg: "Réduction importante — Surveillance stricte TA + FC", ci: false, reduire: true }
+    },
+    "mirabegron": {
+        A: { msg: "Pas d'adaptation nécessaire", ci: false, reduire: false },
+        B: { msg: "Dose max 25 mg/j (au lieu de 50 mg)", ci: false, reduire: true },
+        C: { msg: "Non recommandé — Pas de données", ci: false, reduire: true }
+    },
+    "rabeprazole": {
+        A: { msg: "Pas d'adaptation nécessaire", ci: false, reduire: false },
+        B: { msg: "Prudence — Pas de données spécifiques, surveillance", ci: false, reduire: false },
+        C: { msg: "Non recommandé — Données insuffisantes en IH sévère", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // AJOUT v1.2 — MEDIUM PRIORITY : PSYCHOTROPES
+    // ========================================================================
+    "agomelatine": {
+        A: { msg: "Surveillance ALAT/ASAT avant et pendant traitement", ci: false, reduire: false },
+        B: { msg: "CONTRE-INDIQUÉ — Hépatotoxicité, transaminases > 3N", ci: true, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "clomipramine": {
+        A: { msg: "Prudence — Surveillance hépatique", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Métabolisme CYP diminué, effet anticholinergique accru", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Accumulation majeure", ci: true, reduire: false }
+    },
+    "dosulpine": {
+        A: { msg: "Prudence", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Métabolisme hépatique diminué", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "doxepine": {
+        A: { msg: "Prudence — Surveillance sédation", ci: false, reduire: false },
+        B: { msg: "Réduction de dose significative — Premier passage hépatique diminué", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "imipramine": {
+        A: { msg: "Surveillance hépatique", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Métabolisme CYP1A2/2D6 diminué", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Accumulation, risque cardiaque", ci: true, reduire: false }
+    },
+    "nortriptyline": {
+        A: { msg: "Prudence — Dosage plasmatique recommandé", ci: false, reduire: false },
+        B: { msg: "Réduction 50% — Dosage plasmatique obligatoire", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "maprotiline": {
+        A: { msg: "Prudence", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Métabolisme CYP2D6 diminué", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "mianserine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Clairance diminuée", ci: false, reduire: true },
+        C: { msg: "Non recommandé", ci: false, reduire: true }
+    },
+    "fluvoxamine": {
+        A: { msg: "Prudence — Inhibiteur CYP1A2/2C19", ci: false, reduire: false },
+        B: { msg: "Débuter à dose réduite — Clairance diminuée de 30%", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Accumulation significative", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // MEDIUM : BENZODIAZÉPINES manquantes
+    // ========================================================================
+    "lormetazepam": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Glucuronidation diminuée", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Encéphalopathie hépatique", ci: true, reduire: false }
+    },
+    "midazolam": {
+        A: { msg: "Prudence — CYP3A4", ci: false, reduire: false },
+        B: { msg: "Réduction de dose importante — Biodisponibilité x2, clairance diminuée", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Risque coma, encéphalopathie", ci: true, reduire: false }
+    },
+    "nitrazepam": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Demi-vie prolongée", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Encéphalopathie hépatique", ci: true, reduire: false }
+    },
+    "nordazepam": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduction — Demi-vie très prolongée (métabolisme oxydatif)", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // MEDIUM : ANTIPSYCHOTIQUES manquants
+    // ========================================================================
+    "flupentixol": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Métabolisme hépatique diminué", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "fluphenazine": {
+        A: { msg: "Prudence", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Métabolisme CYP2D6", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "pimozide": {
+        A: { msg: "Prudence — CYP3A4, surveillance QTc", ci: false, reduire: false },
+        B: { msg: "Réduction 50% — Allongement QTc accru", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — QTc, risque torsade de pointes", ci: true, reduire: false }
+    },
+    "pipotiazine": {
+        A: { msg: "Prudence", ci: false, reduire: false },
+        B: { msg: "Réduction de dose", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "propericiazine": {
+        A: { msg: "Prudence — Métabolisme hépatique", ci: false, reduire: false },
+        B: { msg: "Réduction de dose", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // MEDIUM : ANTICHOLINERGIQUES / URINAIRES
+    // ========================================================================
+    "darifenacine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Dose max 7.5 mg/j — CYP2D6/3A4 diminué", ci: false, reduire: true },
+        C: { msg: "Non recommandé — Pas de données", ci: false, reduire: true }
+    },
+    "fesoterodine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Dose max 4 mg/j — CYP2D6/3A4", ci: false, reduire: true },
+        C: { msg: "Non recommandé", ci: false, reduire: true }
+    },
+    "oxybutynine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Premier passage hépatique altéré", ci: false, reduire: true },
+        C: { msg: "Non recommandé", ci: false, reduire: true }
+    },
+    "tolterodine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Dose max 2 mg/j — CYP2D6", ci: false, reduire: true },
+        C: { msg: "Non recommandé — Données insuffisantes", ci: false, reduire: true }
+    },
+
+    // ========================================================================
+    // MEDIUM : ANTIHISTAMINIQUES à métabolisme hépatique
+    // ========================================================================
+    "hydroxyzine": {
+        A: { msg: "Prudence — Réduire de 33% (métabolisme CYP3A4)", ci: false, reduire: true },
+        B: { msg: "Réduire de 50% — Sédation et anticholinergique majorés", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Encéphalopathie hépatique", ci: true, reduire: false }
+    },
+    "dexchlorpheniramine": {
+        A: { msg: "Prudence — Sédation accrue", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Métabolisme diminué", ci: false, reduire: true },
+        C: { msg: "Non recommandé — Effet sédatif majeur", ci: false, reduire: true }
+    },
+    "diphenhydramine": {
+        A: { msg: "Prudence — Sédation", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Effet anticholinergique accru", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Encéphalopathie", ci: true, reduire: false }
+    },
+    "promethazine": {
+        A: { msg: "Prudence — Métabolisme hépatique", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Sédation/anticholinergique majeurs", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+    "doxylamine": {
+        A: { msg: "Prudence", ci: false, reduire: false },
+        B: { msg: "Non recommandé — Métabolisme diminué, somnolence excessive", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ", ci: true, reduire: false }
+    },
+
+    // ========================================================================
+    // MEDIUM : DIVERS
+    // ========================================================================
+    "doxazosine": {
+        A: { msg: "Prudence — Métabolisme CYP3A4", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Biodisponibilité augmentée, hypotension", ci: false, reduire: true },
+        C: { msg: "Non recommandé — Pas de données", ci: false, reduire: true }
+    },
+    "prazosine": {
+        A: { msg: "Prudence", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Clairance diminuée, hypotension", ci: false, reduire: true },
+        C: { msg: "Non recommandé", ci: false, reduire: true }
+    },
+    "dipyridamole": {
+        A: { msg: "Pas d'adaptation nécessaire", ci: false, reduire: false },
+        B: { msg: "Prudence — Glucuronidation hépatique", ci: false, reduire: false },
+        C: { msg: "Non recommandé — Données insuffisantes", ci: false, reduire: true }
+    },
+    "prasugrel": {
+        A: { msg: "Pas d'adaptation nécessaire", ci: false, reduire: false },
+        B: { msg: "Prudence — Pas de réduction nécessaire mais risque hémorragique accru", ci: false, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ — Coagulopathie, risque hémorragique majeur", ci: true, reduire: false }
+    },
+    "baclofene": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Débuter à dose réduite — Métabolisme partiellement hépatique", ci: false, reduire: true },
+        C: { msg: "Non recommandé — Encéphalopathie hépatique possible", ci: false, reduire: true }
+    },
+    "pentoxifylline": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Réduction de dose — Biodisponibilité augmentée", ci: false, reduire: true },
+        C: { msg: "Réduction importante — Surveillance hémorragique", ci: false, reduire: true }
+    },
+    "phenobarbital": {
+        A: { msg: "Prudence — Inducteur enzymatique CYP", ci: false, reduire: true },
+        B: { msg: "Réduction de dose — Demi-vie prolongée, sédation majeure", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Encéphalopathie hépatique, accumulation", ci: true, reduire: false }
+    },
+    "nitrofurantoine": {
+        A: { msg: "Pas d'adaptation — Élimination rénale", ci: false, reduire: false },
+        B: { msg: "Prudence — Hépatotoxicité idiosyncrasique rare", ci: false, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ — Hépatite cholestatique rapportée", ci: true, reduire: false }
+    },
+    "insuline": {
+        A: { msg: "Pas d'adaptation habituelle", ci: false, reduire: false },
+        B: { msg: "Réduction possible — Néoglucogenèse diminuée, risque hypoglycémie", ci: false, reduire: true },
+        C: { msg: "Réduction importante — Hypoglycémies fréquentes, surveillance glycémique rapprochée", ci: false, reduire: true }
+    },
+    "metopimazine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Métabolisme hépatique", ci: false, reduire: false },
+        C: { msg: "Non recommandé", ci: false, reduire: true }
+    },
+    "moxonidine": {
+        A: { msg: "Pas d'adaptation", ci: false, reduire: false },
+        B: { msg: "Prudence — Biodisponibilité augmentée", ci: false, reduire: true },
+        C: { msg: "Non recommandé — Hypotension sévère", ci: false, reduire: true }
     }
 };

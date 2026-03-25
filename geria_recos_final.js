@@ -562,7 +562,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["antidepresseur tricyclique", "amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "maprotiline", "amoxapine", "dosulpine"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_009"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_009", "PAT_033"]
             },
             alternatives: "ISRS (sertraline, escitalopram) ou mirtazapine"
         },
@@ -1114,7 +1114,8 @@ const GERIA_RECOS_DB = {
             message: "LAMA inhalé (tiotropium, aclidinium, uméclidinium, glycopyrronium) avec glaucome à angle fermé (exacerbation) ou obstruction vésicale (rétention urinaire).",
             severite: "danger",
             condition: {
-                med_keys: ["tiotropium", "aclidinium", "umeclidinium", "glycopyrronium"]
+                med_keys: ["tiotropium", "aclidinium", "umeclidinium", "glycopyrronium"],
+                comorbs_any: ["PAT_033"]
             },
             alternatives: "LABA seul"
         },
@@ -1961,6 +1962,137 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: { type: "manual_review" },
             alternatives: "Dosages biologiques avant supplémentation"
+        },
+
+        // ====================================================================
+        // SECTION N : RÈGLES HÉPATOPATHIE / ALCOOL / MTEV / QT LONG / SEPSIS
+        // ====================================================================
+        {
+            id: "EV_N01",
+            sources: ["STOPP3", "BEERS"],
+            ref_code: "HEPATO-1",
+            section: "Hépatologie",
+            titre: "Médicament hépatotoxique + hépatopathie chronique / cirrhose",
+            message: "Médicament hépatotoxique (paracétamol > 2 g/j, statine à forte dose, méthotrexate, amiodarone, valproate) avec hépatopathie chronique ou cirrhose (PAT_034) : risque d'aggravation de l'insuffisance hépatique.",
+            severite: "danger",
+            condition: {
+                med_keys: ["paracetamol", "methotrexate", "amiodarone", "valproate", "acide valproique"],
+                comorbs: ["PAT_034"]
+            },
+            alternatives: "Réduction de dose paracétamol (max 2 g/j), alternatives non hépatotoxiques, surveillance bio hépatique rapprochée"
+        },
+        {
+            id: "EV_N02",
+            sources: ["STOPP3", "BEERS"],
+            ref_code: "HEPATO-2",
+            section: "Hépatologie",
+            titre: "Benzodiazépine / opioïde + cirrhose sévère",
+            message: "Benzodiazépine ou opioïde avec cirrhose sévère : risque d'encéphalopathie hépatique, sédation prolongée par diminution du métabolisme hépatique.",
+            severite: "danger",
+            condition: {
+                med_keys: ["benzodiazepine", "diazepam", "lorazepam", "oxazepam", "alprazolam", "bromazepam", "clorazepate", "opioid", "morphine", "oxycodone", "fentanyl", "tramadol", "codeine"],
+                contexte_clinique: "hepatopathie"
+            },
+            alternatives: "Éviter BZD/opioïdes, privilégier lactulose pour encéphalopathie, paracétamol ≤ 2 g/j pour douleur"
+        },
+        {
+            id: "EV_N03",
+            sources: ["STOPP3"],
+            ref_code: "ALCOOL-1",
+            section: "Addiction",
+            titre: "Médicament sédatif + alcool excessif",
+            message: "Médicament sédatif (benzodiazépine, opioïde, antihistaminique H1, antipsychotique) avec consommation excessive d'alcool : risque majoré de sédation, dépression respiratoire, chutes.",
+            severite: "danger",
+            condition: {
+                med_keys: ["benzodiazepine", "diazepam", "lorazepam", "oxazepam", "alprazolam", "bromazepam", "zolpidem", "zopiclone", "opioid", "morphine", "tramadol", "codeine", "hydroxyzine", "doxylamine", "promethazine"],
+                contexte_clinique: "alcool"
+            },
+            alternatives: "Sevrage alcool, alternatives non sédatives"
+        },
+        {
+            id: "EV_N04",
+            sources: ["STOPP3"],
+            ref_code: "ALCOOL-2",
+            section: "Addiction",
+            titre: "Méthotrexate / paracétamol haute dose + alcool excessif",
+            message: "Méthotrexate ou paracétamol à dose élevée avec alcool excessif : hépatotoxicité majorée.",
+            severite: "danger",
+            condition: {
+                med_keys: ["methotrexate", "paracetamol"],
+                contexte_clinique: "alcool"
+            },
+            alternatives: "Réduction/arrêt paracétamol (max 2 g/j), surveillance hépatique rapprochée, sevrage alcool"
+        },
+        {
+            id: "EV_N05",
+            sources: ["STOPP3"],
+            ref_code: "QTL-1",
+            section: "Cardiovasculaire",
+            titre: "Médicament allongeant le QT + QT long congénital",
+            message: "Médicament allongeant le QT avec syndrome du QT long congénital : risque majeur de torsades de pointes et mort subite.",
+            severite: "danger",
+            condition: {
+                qt_check: true,
+                contexte_clinique: "qt_long_congenital"
+            },
+            alternatives: "Contre-indication absolue aux allongeurs du QT, ECG obligatoire, avis cardiologique"
+        },
+        {
+            id: "EV_N06",
+            sources: ["STOPP3"],
+            ref_code: "SEPSIS-1",
+            section: "Infectiologie",
+            titre: "Immunosuppresseur / corticoïde au long cours + sepsis aigu",
+            message: "Immunosuppresseur ou corticothérapie au long cours pendant un sepsis aigu : risque d'aggravation infectieuse. Réévaluation urgente du traitement immunosuppresseur.",
+            severite: "danger",
+            condition: {
+                med_keys: ["methotrexate", "azathioprine", "ciclosporine", "tacrolimus", "mycophenolate", "prednisone", "prednisolone", "methylprednisolone", "dexamethasone"],
+                contexte_clinique: "sepsis"
+            },
+            alternatives: "Suspendre temporairement l'immunosuppression si possible, avis infectiologue"
+        },
+        {
+            id: "EV_N07",
+            sources: ["STOPP3"],
+            ref_code: "SEPSIS-2",
+            section: "Infectiologie",
+            titre: "Médicament néphrotoxique + sepsis aigu",
+            message: "Médicament néphrotoxique (AINS, aminoside, IEC/ARA2) pendant un sepsis aigu : risque d'insuffisance rénale aiguë. Suspendre temporairement.",
+            severite: "danger",
+            condition: {
+                med_keys: ["ains", "ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "meloxicam", "celecoxib", "gentamicine", "amikacine", "tobramycine"],
+                contexte_clinique: "sepsis"
+            },
+            alternatives: "Suspendre AINS/aminosides, surveiller fonction rénale, hydratation IV"
+        },
+        {
+            id: "EV_N08",
+            sources: ["STOPP3"],
+            ref_code: "BRADY-2",
+            section: "Cardiovasculaire",
+            titre: "Association de ≥ 2 bradycardisants + bradycardie",
+            message: "Association de ≥ 2 médicaments bradycardisants (bêtabloquant + digoxine, bêtabloquant + vérapamil/diltiazem, etc.) avec bradycardie sévère : risque d'asystolie.",
+            severite: "danger",
+            condition: {
+                med_keys: ["betabloquant", "bisoprolol", "atenolol", "propranolol", "metoprolol", "nebivolol", "carvedilol"],
+                med_keys_2: ["digoxine", "verapamil", "diltiazem", "ivabradine", "amiodarone"],
+                contexte_clinique: "bradycardie"
+            },
+            alternatives: "Réévaluer la nécessité de l'association, réduire à un seul chronotrope négatif"
+        },
+        {
+            id: "EV_N09",
+            sources: ["STOPP3"],
+            ref_code: "ARRET-1",
+            section: "Cardiovasculaire",
+            titre: "Médicament inotrope négatif + post-arrêt cardiaque",
+            message: "Médicament inotrope négatif (vérapamil, diltiazem, bêtabloquant à forte dose) en phase post-arrêt cardiaque ou post-cardioversion FA récente : risque hémodynamique.",
+            severite: "warning",
+            condition: {
+                med_keys: ["verapamil", "diltiazem"],
+                contexte_clinique: "arret_cardiaque"
+            },
+            alternatives: "Réévaluation cardiologique, amiodarone si antiarythmique nécessaire"
         }
     ],
 
@@ -2574,6 +2706,52 @@ const GERIA_RECOS_DB = {
             severite: "info",
             condition: { type: "manual_review" },
             alternatives: "Shingrix (vaccin recombinant adjuvanté) 2 doses"
+        },
+
+        // ====================================================================
+        // SECTION M : HÉPATOLOGIE / MTEV / CORONARIEN
+        // ====================================================================
+        {
+            id: "IN_M01",
+            sources: ["STOPP3"],
+            ref_code: "START-MTEV1",
+            section: "Cardiovasculaire",
+            titre: "Anticoagulant pour MTEV (TVP/EP) documentée",
+            message: "Anticoagulation par AOD ou AVK pour maladie thromboembolique veineuse (TVP/EP) documentée, en l'absence de contre-indication hémorragique majeure.",
+            severite: "warning",
+            condition: {
+                comorbs: ["PAT_036"],
+                med_absent: ["apixaban", "rivaroxaban", "dabigatran", "edoxaban", "warfarine", "fluindione", "acenocoumarol", "heparine", "enoxaparine", "tinzaparine", "fondaparinux"]
+            },
+            alternatives: "AOD (apixaban 5 mg x2, rivaroxaban 20 mg) ou AVK si CI AOD"
+        },
+        {
+            id: "IN_M02",
+            sources: ["STOPP3"],
+            ref_code: "START-HEPATO1",
+            section: "Hépatologie",
+            titre: "Lactulose / rifaximine pour encéphalopathie hépatique (cirrhose)",
+            message: "Lactulose ou rifaximine pour prévention/traitement de l'encéphalopathie hépatique chez patient cirrhotique (PAT_034).",
+            severite: "info",
+            condition: {
+                comorbs: ["PAT_034"],
+                med_absent: ["lactulose", "rifaximine"]
+            },
+            alternatives: "Lactulose 15-30 mL x3/j ± rifaximine 550 mg x2/j"
+        },
+        {
+            id: "IN_M03",
+            sources: ["STOPP3"],
+            ref_code: "START-CORO1",
+            section: "Cardiovasculaire",
+            titre: "Antiagrégant / statine pour syndrome coronarien",
+            message: "Antiagrégant plaquettaire et statine pour syndrome coronarien chronique ou aigu (stent récent, IDM) en l'absence de contre-indication hémorragique.",
+            severite: "warning",
+            condition: {
+                comorbs: ["PAT_004"],
+                med_absent: ["aspirine", "clopidogrel", "ticagrelor", "prasugrel"]
+            },
+            alternatives: "Aspirine 75-100 mg/j + statine haute intensité (atorvastatine 40-80 mg)"
         }
     ]
 };
