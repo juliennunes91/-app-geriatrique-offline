@@ -571,28 +571,19 @@ function analyserPrescription() {
     }
 
     // Médicaments abaissant le seuil épileptogène (si épilepsie active)
+    // Données lues depuis MASTER_DB champ epileptogene (eleve/modere/faible)
     if (activeComorbs.includes('PAT_015')) {
-        const epileptogenics = {
-            'tramadol': 'Opioïde — abaisse fortement le seuil', 'bupropion': 'CI formelle si épilepsie',
-            'clozapine': 'Risque dose-dépendant (3-5%)', 'chlorpromazine': 'Phénothiazine pro-convulsivante',
-            'olanzapine': 'Risque modéré', 'quetiapine': 'Risque faible-modéré',
-            'ciprofloxacine': 'FQ — risque convulsif', 'ofloxacine': 'FQ — risque convulsif',
-            'levofloxacine': 'FQ — risque convulsif', 'moxifloxacine': 'FQ — risque convulsif',
-            'imipeneme': 'Carbapénème pro-convulsivant', 'meropeneme': 'Risque moindre que imipénème',
-            'amitriptyline': 'TCA — risque convulsif dose-dépendant', 'clomipramine': 'TCA pro-convulsivant',
-            'maprotiline': 'Risque élevé de convulsions', 'venlafaxine': 'IRSNA — risque dose-dépendant',
-            'theophylline': 'Xanthine pro-convulsivante', 'mefloquine': 'CI si ATCD convulsions',
-            'ciclosporine': 'Neurotoxicité dose-dépendante', 'lithium': 'Risque si lithiémie élevée'
-        };
         let found = [];
         activeMeds.forEach(m => {
-            let dci = sanitizeText(m.dci);
-            for (const [drug, desc] of Object.entries(epileptogenics)) {
-                if (dci.includes(sanitizeText(drug))) found.push({ med: m.dci.toUpperCase(), desc: desc });
+            let ref = m.db_ref || {};
+            if (ref.epileptogene) {
+                let niveau = ref.epileptogene === 'eleve' ? '🔴' : ref.epileptogene === 'modere' ? '🟠' : '🟡';
+                found.push({ med: m.dci.toUpperCase(), desc: ref.epileptogene_desc || ref.epileptogene, niveau: niveau });
             }
         });
         if (found.length > 0) {
-            let list = found.map(f => `<li><b>${f.med}</b> — ${f.desc}</li>`).join('');
+            found.sort((a, b) => a.niveau < b.niveau ? -1 : 1); // élevé en premier
+            let list = found.map(f => `<li>${f.niveau} <b>${f.med}</b> — ${f.desc}</li>`).join('');
             addAlert('alertes-eviter', `<div class="alert alert-danger alert-stopp shadow-sm"><strong>🚨 Médicaments abaissant le seuil épileptogène</strong>
                 <span class="badge bg-secondary float-end" style="font-size:0.65em;">Epilepsie active</span>
                 <br><span class="small">Patient épileptique — les médicaments suivants augmentent le risque de crise :</span>

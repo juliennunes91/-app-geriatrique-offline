@@ -1639,7 +1639,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "Pro-convulsivant (métabolite = théophylline)"
           },
           {
                     "dci": "Amiodarone",
@@ -1736,7 +1738,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Beers 2023 : À ÉVITER (anticholinergique, arythmie, chutes). Taux plasmatique 80–200 ng/mL.",
-                    "source": "RCP Laroxyl ; HAS 2017 ; Beers 2023"
+                    "source": "RCP Laroxyl ; HAS 2017 ; Beers 2023",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "TCA — risque convulsif dose-dépendant"
           },
           {
                     "dci": "Amlodipine",
@@ -2009,7 +2013,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Agoniste partiel D2 = profil différent. Moins de PRL.",
-                    "source": "RCP Abilify ; HAS 2017"
+                    "source": "RCP Abilify ; HAS 2017",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Risque faible"
           },
           {
                     "dci": "Ascorbate ferreux",
@@ -2358,7 +2364,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "Sevrage brutal = convulsions — ne jamais arrêter brutalement"
           },
           {
                     "dci": "Beclometasone",
@@ -3005,7 +3013,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CI si ATCD épilepsie/troubles alimentaires",
-                    "source": "RCP Wellbutrin/Zyban ; HAS 2017"
+                    "source": "RCP Wellbutrin/Zyban ; HAS 2017",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "CI formelle si épilepsie (risque dose-dépendant 0.4%)"
           },
           {
                     "dci": "Buspirone",
@@ -4026,7 +4036,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Nombreux EI. Préférer AP atypiques chez SA.",
-                    "source": "RCP Largactil ; HAS 2017"
+                    "source": "RCP Largactil ; HAS 2017",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "Phénothiazine — seuil épileptogène fortement abaissé"
           },
           {
                     "dci": "Chlortalidone",
@@ -4204,7 +4216,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "bhe": "",
                     "albumine": "0,9",
-                    "qt_risque": "",
+                    "qt_risque": "(CR) - QTc rapporté en cas de magnésémie basse",
                     "ddi_interact": "CYP3A4 substrat puissant",
                     "suivi_initial": "Creatinine/DFG | Bilan hepatique | Ionogramme | TA | NFS | Bilan lipidique | Uricemie | Dosage serique C0 ou C2",
                     "suivi_periodique": "Creatinine + dosage C0 (tous les 3 mois) | Bilan hepatique (tous les 3 mois) | Ionogramme (tous les 3 mois) | TA (chaque consultation) | Bilan lipidique (annuel)",
@@ -4224,7 +4236,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Taux résiduel C0 guidé. Nombreuses interactions CYP3A4/P-gp.",
-                    "source": "RCP Néoral ; HAS 2022 transplantation"
+                    "source": "RCP Néoral ; HAS 2022 transplantation",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "Neurotoxicité dose-dépendante"
           },
           {
                     "dci": "Cilazapril",
@@ -4337,7 +4351,9 @@ const MASTER_DB = {
                     "atb_legere": "250-500 mg/12h",
                     "atb_moderee": "250-500 mg/12h",
                     "atb_severe": "250-500 mg/24h",
-                    "atb_terminale": "250-500 mg/24h"
+                    "atb_terminale": "250-500 mg/24h",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "FQ — risque convulsif"
           },
           {
                     "dci": "Citalopram",
@@ -4551,7 +4567,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Beers 2023 : À ÉVITER. Taux plasmatique 230–450 ng/mL.",
-                    "source": "RCP Anafranil ; HAS 2017 ; Beers 2023"
+                    "source": "RCP Anafranil ; HAS 2017 ; Beers 2023",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "TCA le plus pro-convulsivant (risque 1-2%)"
           },
           {
                     "dci": "Clonazepam",
@@ -4727,7 +4745,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "NFS hebdomadaire 18 premières semaines OBLIGATOIRE (REMS ANSM)",
-                    "source": "RCP Leponex ; ANSM REMS ; HAS 2017"
+                    "source": "RCP Leponex ; ANSM REMS ; HAS 2017",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "Risque dose-dépendant 3-5% (le plus élevé des AP)"
           },
           {
                     "dci": "Cobicistat",
@@ -4933,7 +4953,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Usage anxiolyse en psychiatrie (France)",
-                    "source": "RCP Tercian ; HAS 2017"
+                    "source": "RCP Tercian ; HAS 2017",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "Phénothiazine — risque convulsif"
           },
           {
                     "dci": "Cyclobenzaprine",
@@ -5835,7 +5857,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Beers 2023 : À ÉVITER >6 mg/j. Faible dose (≤6 mg) pour insomnie SA acceptable.",
-                    "source": "RCP Quitaxon ; HAS 2017 ; Beers 2023"
+                    "source": "RCP Quitaxon ; HAS 2017 ; Beers 2023",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "TCA — risque convulsif modéré"
           },
           {
                     "dci": "Doxycycline",
@@ -5977,7 +6001,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CI si DFG<30",
-                    "source": "RCP Cymbalta ; HAS 2017"
+                    "source": "RCP Cymbalta ; HAS 2017",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "IRSNA — risque faible, rapporté en surdosage"
           },
           {
                     "dci": "Edoxaban",
@@ -7334,7 +7360,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Référence délirium hospitalier (0,5–1 mg). EPS fréquents SA.",
-                    "source": "RCP Haldol ; HAS 2017"
+                    "source": "RCP Haldol ; HAS 2017",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Risque faible mais existant"
           },
           {
                     "dci": "Hydralazine",
@@ -7557,7 +7585,9 @@ const MASTER_DB = {
                     "atb_legere": "500 mg/6h en perfusion de 30 min",
                     "atb_moderee": "500 mg/8h",
                     "atb_severe": "500 mg/8h",
-                    "atb_terminale": "500 mg/8h"
+                    "atb_terminale": "500 mg/8h",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "Carbapénème le plus pro-convulsivant (3-33% selon dose/IRC)"
           },
           {
                     "dci": "Imipenem/Cilastatine/Relebactam",
@@ -7583,7 +7613,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "Carbapénème le plus pro-convulsivant (3-33% selon dose/IRC)"
           },
           {
                     "dci": "Imipramine",
@@ -7615,7 +7647,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Beers 2023 : À ÉVITER. Hypotension orthostatique fréquente.",
-                    "source": "RCP Tofranil ; HAS 2017 ; Beers 2023"
+                    "source": "RCP Tofranil ; HAS 2017 ; Beers 2023",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "TCA — risque convulsif dose-dépendant"
           },
           {
                     "dci": "Indacaterol",
@@ -7976,7 +8010,9 @@ const MASTER_DB = {
                     "atb_legere": "3 à 5 mg/kg/24h",
                     "atb_moderee": "3 à 5 mg/kg/24h",
                     "atb_severe": "3 à 5 mg/kg/24h",
-                    "atb_terminale": "Max : 200 mg/j"
+                    "atb_terminale": "Max : 200 mg/j",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "Déplétion pyridoxine → convulsions (prévention par B6)"
           },
           {
                     "dci": "Isosorbide",
@@ -8286,7 +8322,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "bhe": "",
                     "albumine": "< 10 %",
-                    "qt_risque": "",
+                    "qt_risque": "(CR) - QTc rapporté en surdosage",
                     "ddi_interact": "Aucune majeure documentee",
                     "suivi_initial": "Creatinine/DFG (ajustement de dose) | NFS | Bilan hepatique",
                     "suivi_periodique": "Creatinine (annuelle) | NFS (annuelle) | Bilan hepatique (annuel)",
@@ -8382,7 +8418,9 @@ const MASTER_DB = {
                     "atb_legere": "DC de 500 mg puis 250 mg/12 à 24h",
                     "atb_moderee": "DC de 500 mg puis 250 mg/12 à 24h",
                     "atb_severe": "DC de 500 mg puis 250 mg/24 à 48h",
-                    "atb_terminale": "DC de 500 mg puis 250 mg/24 à 48h"
+                    "atb_terminale": "DC de 500 mg puis 250 mg/24 à 48h",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "FQ — risque convulsif"
           },
           {
                     "dci": "Levomepromazine",
@@ -8410,7 +8448,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "Phénothiazine — risque convulsif"
           },
           {
                     "dci": "Levomethopromazine",
@@ -8622,7 +8662,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "bhe": "1.0",
                     "albumine": "0",
-                    "qt_risque": "",
+                    "qt_risque": "(PR) - Anomalies ECG (onde T), allongement QTc possible",
                     "ddi_interact": "IEC/ARA2/AINS (augmentent lithiemie +++), Thiazidiques (augmentent lithiemie +), Diuretiques de l'anse (attention: augmentent lithiemie), Carbamazepine (neurotoxicite), Haloperidol (neurotoxicite), ISRS (syndrome serotoninergique)",
                     "suivi_initial": "Creatinine/DFG | Ionogramme (natremie +++) | TSH + FT4 | ECG | Bilan parathyroidien (PTH, calcemie) | Hemogramme | Dosage serique (fenetre 0.6-1.2 mEq/L prophylaxie)",
                     "suivi_periodique": "Lithiemie C0 (residuelle 12h post-dose) (mensuelle 1ere annee puis tous les 3-6 mois) | Creatinine + ionogramme (tous les 3-6 mois) | TSH + FT4 (annuel) | Calcemie + PTH (annuel - hyperparathyroidie) | ECG (annuel)",
@@ -8639,7 +8679,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "Risque si lithiémie élevée (neurotoxicité)"
           },
           {
                     "dci": "Loperamide",
@@ -8973,7 +9015,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "Risque élevé de convulsions (tétracyclique)"
           },
           {
                     "dci": "Meclozine",
@@ -9075,7 +9119,9 @@ const MASTER_DB = {
                     "atb_legere": "1 à 2 g/8h",
                     "atb_moderee": "1 à 2 g/8h",
                     "atb_severe": "1 à 2 g/8h",
-                    "atb_terminale": "1 à 2 g/12h"
+                    "atb_terminale": "1 à 2 g/12h",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Risque moindre que imipénème mais existant"
           },
           {
                     "dci": "Meropenem/Vaborbactam",
@@ -9101,7 +9147,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Risque moindre que imipénème mais existant"
           },
           {
                     "dci": "Metformine",
@@ -9301,7 +9349,9 @@ const MASTER_DB = {
                     "atb_legere": "1,5 MUI (spiramycine) + 250 mg (métronidazole) /8h",
                     "atb_moderee": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h",
                     "atb_severe": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h",
-                    "atb_terminale": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h"
+                    "atb_terminale": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Neurotoxicité si traitement prolongé"
           },
           {
                     "dci": "Midazolam",
@@ -9441,7 +9491,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Stimulation appétit utile chez SA dénutri. Moins sédatif à forte dose.",
-                    "source": "RCP Norset ; HAS 2017"
+                    "source": "RCP Norset ; HAS 2017",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Risque faible mais rapporté"
           },
           {
                     "dci": "Moexipril",
@@ -9525,7 +9577,9 @@ const MASTER_DB = {
                     "atb_legere": "400 mg/24h",
                     "atb_moderee": "400 mg/24h",
                     "atb_severe": "400 mg/24h",
-                    "atb_terminale": "400 mg/24h"
+                    "atb_terminale": "400 mg/24h",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "FQ — risque convulsif"
           },
           {
                     "dci": "Mycophenolate mofetil",
@@ -9709,7 +9763,7 @@ const MASTER_DB = {
                     "cia": 3,
                     "bhe": "1.0",
                     "albumine": "0,73",
-                    "qt_risque": "",
+                    "qt_risque": "(CR) - Tachycardie + anomalies ECG rapportées",
                     "ddi_interact": "Aucune majeure documentee",
                     "suivi_initial": "ECG si cardiopathie (tachycardie) | TA",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -9934,7 +9988,9 @@ const MASTER_DB = {
                     "atb_legere": "400 mg/12 à 24 h",
                     "atb_moderee": "400 mg/12 à 24 h",
                     "atb_severe": "400 mg/24h",
-                    "atb_terminale": "400 mg/24h"
+                    "atb_terminale": "400 mg/24h",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "FQ — risque convulsif"
           },
           {
                     "dci": "Nortriptyline",
@@ -9989,7 +10045,9 @@ const MASTER_DB = {
                     "atb_legere": "Dose usuelle : 200 mg/12h",
                     "atb_moderee": "200 mg/24h",
                     "atb_severe": "200 mg/24h",
-                    "atb_terminale": "200 mg/48h"
+                    "atb_terminale": "200 mg/48h",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "FQ — risque convulsif"
           },
           {
                     "dci": "Olanzapine",
@@ -10022,7 +10080,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Forte prise de poids. CI chez déments.",
-                    "source": "RCP Zyprexa ; HAS 2017"
+                    "source": "RCP Zyprexa ; HAS 2017",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "Risque modéré (0.9%)"
           },
           {
                     "dci": "Olmesartan",
@@ -11011,7 +11071,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "bhe": "",
                     "albumine": "0",
-                    "qt_risque": "",
+                    "qt_risque": "(CR) - QTc rapporté en surdosage / association",
                     "ddi_interact": "Aucune majeure documentee",
                     "suivi_initial": "Creatinine/DFG (ajustement de dose) | Glycemie si diabte",
                     "suivi_periodique": "Creatinine (annuelle)",
@@ -11301,7 +11361,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CI chez déments (mortalité ↑). Sédation marquée.",
-                    "source": "RCP Xeroquel ; HAS 2017"
+                    "source": "RCP Xeroquel ; HAS 2017",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Risque faible-modéré (0.5%)"
           },
           {
                     "dci": "Quinapril",
@@ -11561,7 +11623,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Précaution majeure : risque AVC chez déments âgés.",
-                    "source": "RCP Risperdal ; HAS 2017 ; EMA"
+                    "source": "RCP Risperdal ; HAS 2017 ; EMA",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Risque faible (< 0.3%)"
           },
           {
                     "dci": "Ritonavir",
@@ -12100,7 +12164,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Neurotoxicité si traitement prolongé"
           },
           {
                     "dci": "Spironolactone",
@@ -12228,7 +12294,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "bhe": "1.0",
                     "albumine": "14 - 21 %",
-                    "qt_risque": "",
+                    "qt_risque": "(PR) - Vasospasme coronaire, QTc possible",
                     "ddi_interact": "Faible metabolisme",
                     "suivi_initial": "ECG si cardiopathie",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -12274,7 +12340,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Taux résiduel C0 guidé selon indication et phase post-transplantation.",
-                    "source": "RCP Prograf/Advagraf ; HAS 2022 transplantation"
+                    "source": "RCP Prograf/Advagraf ; HAS 2022 transplantation",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "Neurotoxicité — convulsions rapportées"
           },
           {
                     "dci": "Tafluprost",
@@ -12350,7 +12418,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CI si DFG<30. Double mécanisme µ + IRSN.",
-                    "source": "RCP Palexia ; HAS douleur 2022"
+                    "source": "RCP Palexia ; HAS douleur 2022",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "Opioïde — risque modéré par mécanisme NRI"
           },
           {
                     "dci": "Tedizolide",
@@ -12535,7 +12605,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "Xanthine pro-convulsivante — surtout si taux > 25 mg/L"
           },
           {
                     "dci": "Thiocolchicoside",
@@ -13004,7 +13076,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CI si épilepsie non contrôlée. Max 300 mg/j chez SA.",
-                    "source": "RCP Topalgic ; HAS douleur 2022"
+                    "source": "RCP Topalgic ; HAS douleur 2022",
+                    "epileptogene": "eleve",
+                    "epileptogene_desc": "Opioïde — abaisse fortement le seuil (inhibition recapture sérotonine + noradrénaline)"
           },
           {
                     "dci": "Trandolapril",
@@ -13298,7 +13372,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Beers 2023 : À ÉVITER (anticholinergique, QTc, chutes).",
-                    "source": "RCP Surmontil ; HAS 2017 ; Beers 2023"
+                    "source": "RCP Surmontil ; HAS 2017 ; Beers 2023",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "TCA — risque convulsif modéré"
           },
           {
                     "dci": "Triprolidine",
@@ -13540,7 +13616,9 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "HTA dose-dépendante (surtout >150 mg/j). Syndrome de sevrage marqué.",
-                    "source": "RCP Effexor ; HAS 2017"
+                    "source": "RCP Effexor ; HAS 2017",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "IRSNA — risque dose-dépendant (surtout surdosage)"
           },
           {
                     "dci": "Verapamil",
@@ -14531,7 +14609,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "modere",
+                    "epileptogene_desc": "IRSNA — risque dose-dépendant (surtout surdosage)"
           },
           {
                     "dci": "Dosulpine",
@@ -14767,7 +14847,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "epileptogene": "faible",
+                    "epileptogene_desc": "Antiémétique — abaissement modeste du seuil"
           },
           {
                     "dci": "Ondansetron",
@@ -14832,7 +14914,7 @@ const MASTER_DB = {
                     "acb": 0,
                     "cia": 2,
                     "bhe": "1",
-                    "qt_risque": "",
+                    "qt_risque": "(PR) - Risque possible via métabolites",
                     "albumine": "20%",
                     "ddi_interact": "Inducteur CYP: AVK, AOD, Contraceptifs, Statines, Corticoïdes",
                     "suivi_initial": "NFS | BH | Taux phénobarbital",

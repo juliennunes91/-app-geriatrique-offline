@@ -327,7 +327,9 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "ECG (mensuel les 3 premiers mois, puis semestriel) | Creatinine | Dosage plasmatique si IRC ou association CYP2D6",
         "alerte_clinique": "CI ABSOLUE si cardiopathie structurelle (IC, post-IDM, valvulopathie — CAST: surmortalite) | PRISCUS PIM / PIM-Check | Pro-arythmie si elargissement QRS > 25% | Toujours associer a un betabloquant ou ICa ralentisseur",
         "bio_cible": ["BIO_031", "BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "epileptogene": "faible",
+        "epileptogene_desc": "Neurotoxicité possible en surdosage"
     },
     {
         "dci": "Ivabradine",
@@ -340,7 +342,7 @@ const MISSING_MEDS_ENRICHMENT = [
         "cia": 0.0,
         "bhe": "0",
         "albumine": "70%",
-        "qt_risque": "",
+        "qt_risque": "(CR) - Bradycardie sinusale, pas QTc directement",
         "ddi_interact": "Inhibiteurs CYP3A4 puissants (ketoconazole, itraconazole, clarithromycine — CI) | Verapamil, Diltiazem (bradycardie — CI) | Allongeants QTc (prudence)",
         "suivi_initial": "ECG (FC, rythme sinusal confirme) | TA",
         "suivi_periodique": "FC repos (chaque consultation) | ECG semestriel",
@@ -388,7 +390,9 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Phenytoinemie (cible 10-20 µg/mL ou libre 1-2 µg/mL) | NFS | Calcemie/VitD (osteoporose induite) | Bilan hepatique",
         "alerte_clinique": "PIM ABSOLU geriatrie — cinetique non lineaire (petite variation dose = grande variation taux) | Inducteur enzymatique majeur (interactions ++) | Osteoporose, neuropathie, hyperplasie gingivale, acne | Preferer lamotrigine ou levetiracetam",
         "bio_cible": ["BIO_005", "BIO_023", "BIO_009", "BIO_013", "BIO_014", "BIO_035"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "epileptogene": "faible",
+        "epileptogene_desc": "Antiépileptique paradoxalement pro-convulsivant en surdosage"
     },
     {
         "dci": "Ropinirole",
@@ -439,13 +443,15 @@ const MISSING_MEDS_ENRICHMENT = [
         "cia": 0.0,
         "bhe": "1",
         "albumine": "Donnees limitees",
-        "qt_risque": "",
+        "qt_risque": "(CR) - QTc rapporté à forte dose",
         "ddi_interact": "Antipsychotiques (antagonisme) | Tetrabenazine (antagonisme)",
         "suivi_initial": "TA couche/debout",
         "suivi_periodique": "TA | Somnolence | Troubles controle impulsions",
         "alerte_clinique": "START — Parkinson | Nausees frequentes (prendre au milieu du repas) | Somnolence | Troubles controle impulsions | Molecule specificiquement francaise",
         "bio_cible": ["BIO_003"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "epileptogene": "faible",
+        "epileptogene_desc": "Agoniste dopaminergique — risque faible"
     },
     {
         "dci": "Rasagiline",
@@ -557,13 +563,15 @@ const MISSING_MEDS_ENRICHMENT = [
         "cia": 0.0,
         "bhe": "1",
         "albumine": "58-75%",
-        "qt_risque": "",
+        "qt_risque": "(CR) - QTc rapporté en surdosage",
         "ddi_interact": "IMAO (CI ABSOLUE — crise hypertensive, hyperthermie maligne) | ISRS (syndrome serotoninergique) | Phenytoine (augmente metabolite toxique)",
         "suivi_initial": "Ne pas prescrire",
         "suivi_periodique": "Ne pas prescrire",
         "alerte_clinique": "PIM ABSOLU — ne JAMAIS utiliser chez le sujet age | Metabolite norpethidine: neurotoxique (convulsions, agitation, hallucinations) | Demi-vie prolongee chez l'age | Remplacer par morphine, oxycodone ou fentanyl",
         "bio_cible": ["BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "epileptogene": "eleve",
+        "epileptogene_desc": "Métabolite norpéthidine pro-convulsivant — PIM absolu"
     },
     {
         "dci": "Meprobamate",
@@ -582,7 +590,9 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Si patient encore sous traitement ancien: sevrage progressif obligatoire",
         "alerte_clinique": "RETIRE DU MARCHE (France 2012, Europe) | PIM absolu Beers/PRISCUS | Si encore prescrit (importation, ancien stock): SEVRAGE PROGRESSIF — risque de convulsions si arret brutal | Remplacer par BZD courte duree (oxazepam) si sevrage necessaire",
         "bio_cible": [],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "epileptogene": "modere",
+        "epileptogene_desc": "Sevrage brutal → convulsions — PIM absolu"
     },
     {
         "dci": "Pentoxifylline",
@@ -615,7 +625,7 @@ const MISSING_MEDS_ENRICHMENT = [
         "poso_ger": "Debuter 25 mg. STOPP3-B14: CI si IC severe (PAS < 90) ou derives nitres",
         "poso_ren": "DFG < 30: debuter 25 mg",
         "acb": 0.0, "cia": 0.0, "bhe": "0", "albumine": "96%",
-        "qt_risque": "",
+        "qt_risque": "(CR) - Modeste allongement QTc",
         "ddi_interact": "Derives nitres (CI ABSOLUE — hypotension severe) | Alpha-bloquants (hypotension) | Inhibiteurs CYP3A4 (augmentation exposition) | Riociguat (CI)",
         "suivi_initial": "TA | ECG si FdR CV",
         "suivi_periodique": "TA",
@@ -630,7 +640,7 @@ const MISSING_MEDS_ENRICHMENT = [
         "poso_ger": "Debuter 5 mg. Idem sildenafil pour CI",
         "poso_ren": "DFG 30-50: max 5 mg/j | DFG < 30: eviter (peu de donnees)",
         "acb": 0.0, "cia": 0.0, "bhe": "0", "albumine": "94%",
-        "qt_risque": "",
+        "qt_risque": "(CR) - Modeste allongement QTc",
         "ddi_interact": "Derives nitres (CI ABSOLUE) | Alpha-bloquants | Inhibiteurs CYP3A4",
         "suivi_initial": "TA", "suivi_periodique": "TA",
         "alerte_clinique": "STOPP3-B14: memes CI que sildenafil | Demi-vie longue (36h): interactions prolongees | Douleurs dorsolombaires (frequentes debut)",
@@ -681,7 +691,9 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Bilan hepatique hebdomadaire si > 2 semaines",
         "alerte_clinique": "Usage systemique tres restreint (syndrome de Cushing, cancer prostate) | Hepatotoxicite severe (Black Box FDA) | STOPP3-C14: interaction P-gp avec AOD | Usage topique (shampooing) n'a pas ces risques",
         "bio_cible": ["BIO_013", "BIO_014", "BIO_031"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "epileptogene": "faible",
+        "epileptogene_desc": "Neurotoxicité rapportée à forte dose"
     },
     {
         "dci": "Tamoxifene",
@@ -707,7 +719,7 @@ const MISSING_MEDS_ENRICHMENT = [
         "poso_ger": "EVITER (EU7-PIM). Max 4-8 semaines si inevitable",
         "poso_ren": "Pas d'ajustement",
         "acb": 1.0, "cia": 1.0, "bhe": "1", "albumine": "91%",
-        "qt_risque": "",
+        "qt_risque": "(CR) - QTc rapporté",
         "ddi_interact": "Depresseurs SNC (sedation additive) | Anti-Parkinson (antagonisme — CI)",
         "suivi_initial": "Recherche syndrome parkinsonien",
         "suivi_periodique": "Syndrome parkinsonien (survenue progressive) | Prise de poids | Depression",
@@ -722,7 +734,7 @@ const MISSING_MEDS_ENRICHMENT = [
         "poso_ger": "EVITER (EU7-PIM). 5 mg/j max si inevitable, max 2 mois",
         "poso_ren": "Pas d'ajustement",
         "acb": 0.0, "cia": 0.0, "bhe": "1", "albumine": "99%",
-        "qt_risque": "",
+        "qt_risque": "(PR) - Bloqueur calcique — QTc possible",
         "ddi_interact": "Depresseurs SNC | Anti-Parkinson (antagonisme)",
         "suivi_initial": "Recherche syndrome parkinsonien | Humeur",
         "suivi_periodique": "Syndrome parkinsonien | Depression | Prise de poids",
@@ -788,7 +800,9 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Transaminases a S3, S6, S12, S24 puis si augmentation dose | Arret si > 3N",
         "alerte_clinique": "FORTA-C — hepatotoxicite (surveillance transaminases obligatoire) | CI si transaminases > 3N | Peu de donnees > 75 ans | Pas d'effet anticholinergique ni serotoninergique | Pas de syndrome de sevrage | CI avec fluvoxamine/ciprofloxacine",
         "bio_cible": ["BIO_013", "BIO_014"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "epileptogene": "faible",
+        "epileptogene_desc": "Risque faible mais rapporté"
     },
     {
         "dci": "Thiamazole",
@@ -830,7 +844,7 @@ const MISSING_MEDS_ENRICHMENT = [
         "poso_ger": "600 mg x2/j. Interactions majeures — preferer fenofibrate si possible",
         "poso_ren": "CI si DFG < 15",
         "acb": 0.0, "cia": 0.0, "bhe": "0", "albumine": "97%",
-        "qt_risque": "",
+        "qt_risque": "(CR) - Interaction QTc via inhibition CYP2C8",
         "ddi_interact": "Statines (rhabdomyolyse — surtout simvastatine, lovastatine = CI. Prudence ++) | Repaglinide (augmentation x8 — CI) | Anticoagulants (augmente INR) | Pioglitazone (augmente exposition x3)",
         "suivi_initial": "Bilan lipidique | CPK | Bilan hepatique | Creatinine | NFS",
         "suivi_periodique": "Bilan lipidique trimestriel | CPK si myalgies | Bilan hepatique semestriel | NFS",
