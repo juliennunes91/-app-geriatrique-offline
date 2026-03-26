@@ -17,52 +17,8 @@ function initUI() {
         console.log(`[DDI] DDI_MERGED_DB chargé : ${DDI_MERGED_DB.length} paires d'interactions AUC`);
     }
 
-    // =====================================================================
-    // 3. Enrichir MASTER_DB avec POSOLOGIE_DB, SUIVI_BIOLOGIQUE_DB, ATB_DB
-    // =====================================================================
-    if (typeof POSOLOGIE_DB !== 'undefined') {
-        let enriched = 0;
-        POSOLOGIE_DB.forEach(poso => {
-            const key = sanitizeText(poso.medicament);
-            const match = MASTER_DB.MEDICAMENTS.find(m => sanitizeText(m.dci) === key);
-            if (match) {
-                if (!match.poso_hab && poso.posologie_adulte) { match.poso_hab = poso.posologie_adulte; enriched++; }
-                if (!match.poso_ger && poso.posologie_sujet_age) match.poso_ger = poso.posologie_sujet_age;
-                if (!match.notes_cliniques && poso.notes_cliniques) match.notes_cliniques = poso.notes_cliniques;
-            }
-        });
-        console.log(`[POSOLOGIE] ${enriched} médicaments enrichis depuis POSOLOGIE_DB`);
-    }
-
-    if (typeof SUIVI_BIOLOGIQUE_DB !== 'undefined') {
-        let enriched = 0;
-        SUIVI_BIOLOGIQUE_DB.forEach(suivi => {
-            const key = sanitizeText(suivi.medicament);
-            const match = MASTER_DB.MEDICAMENTS.find(m => sanitizeText(m.dci) === key);
-            if (match) {
-                if (!match.suivi_initial && suivi.bilan_initial) { match.suivi_initial = suivi.bilan_initial; enriched++; }
-                if (!match.suivi_periodique && suivi.suivi_periodique) match.suivi_periodique = suivi.suivi_periodique;
-                if (!match.alerte_clinique && suivi.alerte_clinique_biologique) match.alerte_clinique = suivi.alerte_clinique_biologique;
-            }
-        });
-        console.log(`[SUIVI] ${enriched} médicaments enrichis depuis SUIVI_BIOLOGIQUE_DB`);
-    }
-
-    if (typeof ATB_DB !== 'undefined') {
-        let enriched = 0;
-        ATB_DB.forEach(atb => {
-            if (!atb.nom_affichage || atb.normale === 'Non spécifié') return;
-            const key = sanitizeText(atb.nom_affichage);
-            const match = MASTER_DB.MEDICAMENTS.find(m => sanitizeText(m.dci).includes(key) || key.includes(sanitizeText(m.dci)));
-            if (match) {
-                if (!match.atb_legere && atb.legere && atb.legere !== 'Non spécifié') { match.atb_legere = atb.legere; enriched++; }
-                if (!match.atb_moderee && atb.moderee && atb.moderee !== 'Non spécifié') match.atb_moderee = atb.moderee;
-                if (!match.atb_severe && atb.severe && atb.severe !== 'Non spécifié') match.atb_severe = atb.severe;
-                if (!match.atb_terminale && atb.terminale && atb.terminale !== 'Non spécifié') match.atb_terminale = atb.terminale;
-            }
-        });
-        console.log(`[ATB] ${enriched} antibiotiques enrichis depuis ATB_DB`);
-    }
+    // POSOLOGIE_DB, SUIVI_BIOLOGIQUE_DB, ATB_DB : données migrées dans MASTER_DB (v0.40)
+    // Fichiers renommés posologie_data_old.js, suivi_data_old.js, atb_data_old.js
 
     allComorbs.length = 0; unifiedMedsMap.clear();
 

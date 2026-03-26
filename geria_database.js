@@ -1131,7 +1131,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Activité sympathomimétique intrinsèque",
+                    "source": "RCP Sectral ; ESC HTA 2023"
           },
           {
                     "dci": "Acenocoumarol",
@@ -1159,7 +1161,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie courte (8–11h). Moins stable que warfarine.",
+                    "source": "RCP Sintrom ; HAS 2008 AVK"
           },
           {
                     "dci": "Acide acetylsalicylique",
@@ -1186,7 +1190,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "IPP recommandé si >70 ans ou ATCD digestifs",
+                    "source": "RCP Cardégic ; ESC SCA 2023"
           },
           {
                     "dci": "Acide fusidique",
@@ -1210,10 +1216,10 @@ const MASTER_DB = {
                               "BIO_018",
                               "BIO_030"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "500 mg/8 à 12h",
+                    "atb_moderee": "500 mg/8 à 12h",
+                    "atb_severe": "500 mg/8 à 12h",
+                    "atb_terminale": "500 mg/8 à 12h"
           },
           {
                     "dci": "Acide zoledronique",
@@ -1240,7 +1246,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Perfusion ≥15 min. Supplémentation Ca/Vit D obligatoire",
+                    "source": "RCP Aclasta ; HAS 2018"
           },
           {
                     "dci": "Albendazole",
@@ -1268,7 +1276,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "À prendre avec repas gras (absorption ↑)",
+                    "source": "RCP Zentel ; HAS parasitoses 2019"
           },
           {
                     "dci": "Alendronate",
@@ -1294,7 +1304,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "À jeun + grand verre d'eau, rester debout 30 min",
+                    "source": "RCP Fosamax ; HAS 2018"
           },
           {
                     "dci": "Alfacalcidol",
@@ -1320,7 +1332,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Pas besoin d'hydroxylation rénale → IRC sévère",
+                    "source": "RCP Un-Alfa ; HAS IRC 2022"
           },
           {
                     "dci": "Alfuzosine",
@@ -1344,7 +1358,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "À prendre après repas (LP). Hypotension 1ère dose.",
+                    "source": "RCP Xatral ; EAU 2022"
           },
           {
                     "dci": "Alimemazine",
@@ -1372,7 +1388,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Risque QTc/sédation/EPS. Déconseillé SA.",
+                    "source": "RCP Théralène ; HAS"
           },
           {
                     "dci": "Allopurinol",
@@ -1401,7 +1419,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ne jamais débuter en crise (attendre 2–4 sem). Test HLA-B*5801 si Asiatique.",
+                    "source": "RCP Zyloric ; SFR 2020 ; EULAR 2022"
           },
           {
                     "dci": "Alogliptine",
@@ -1430,7 +1450,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prudence IH sévère",
+                    "source": "RCP Vipidia ; HAS DT2 2023"
           },
           {
                     "dci": "Alprazolam",
@@ -1455,7 +1477,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER chez SA. Usage ≤4 sem.",
+                    "source": "RCP Xanax ; HAS BZD 2022 ; Beers 2023"
           },
           {
                     "dci": "Alverine",
@@ -1531,7 +1555,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Moins hépatotoxique que bosentan. Tératogène.",
+                    "source": "RCP Volibris ; ESC HTAP 2022"
           },
           {
                     "dci": "Amikacine",
@@ -1555,10 +1581,10 @@ const MASTER_DB = {
                               "BIO_006",
                               "BIO_009"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
+                    "atb_moderee": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
+                    "atb_severe": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
+                    "atb_terminale": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses."
           },
           {
                     "dci": "Amiloride",
@@ -1584,7 +1610,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Toujours associé à diurétique kaliurétique",
+                    "source": "RCP Modamide"
           },
           {
                     "dci": "Aminophylline",
@@ -1641,7 +1669,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie 40–55 jours. Surveillance multiorgane obligatoire.",
+                    "source": "RCP Cordarone ; ESC arythmie 2020"
           },
           {
                     "dci": "Amisulpride",
@@ -1672,7 +1702,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Élimination rénale → ajustement IRC obligatoire",
+                    "source": "RCP Solian ; HAS 2017"
           },
           {
                     "dci": "Amitriptyline",
@@ -1702,7 +1734,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER (anticholinergique, arythmie, chutes). Taux plasmatique 80–200 ng/mL.",
+                    "source": "RCP Laroxyl ; HAS 2017 ; Beers 2023"
           },
           {
                     "dci": "Amlodipine",
@@ -1727,7 +1761,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie très longue (35–50h) = 1 prise/j",
+                    "source": "RCP Amlor ; ESC HTA 2023"
           },
           {
                     "dci": "Amoxapine",
@@ -1777,10 +1813,10 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_004"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "DC de 1 g puis 500 mg/8h",
+                    "atb_moderee": "DC de 1 g puis 750 mg/24h",
+                    "atb_severe": "DC de 1 g puis 750 mg/24h",
+                    "atb_terminale": "DC de 1 g puis 750 mg/24h"
           },
           {
                     "dci": "Amoxicilline + acide clavulanique",
@@ -1829,10 +1865,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Posologie usuelle : 1 à 2 g /6 à 12h",
+                    "atb_moderee": "Posologie usuelle : 1 à 2 g /6 à 12h",
+                    "atb_severe": "Posologie usuelle : 1 à 2 g /6 à 12h",
+                    "atb_terminale": "DC de 1 g puis 500 mg/12h"
           },
           {
                     "dci": "Ampicilline + sulbactam",
@@ -1887,7 +1923,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Réduction FA : 2 critères sur 3 (âge/poids/créatinine)",
+                    "source": "RCP Eliquis ; HAS 2023 ; ESC FA 2020"
           },
           {
                     "dci": "Apraclonidine",
@@ -1909,7 +1947,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Tachyphylaxie → usage court terme",
+                    "source": "RCP Iopidine ; EGS 2020"
           },
           {
                     "dci": "Aprepitant",
@@ -1934,7 +1974,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage court (3 jours). Inducteur CYP3A4 modéré.",
+                    "source": "RCP Emend ; HAS 2022"
           },
           {
                     "dci": "Aripiprazole",
@@ -1965,7 +2007,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Agoniste partiel D2 = profil différent. Moins de PRL.",
+                    "source": "RCP Abilify ; HAS 2017"
           },
           {
                     "dci": "Ascorbate ferreux",
@@ -1991,7 +2035,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Selles noires normales. Administrer à distance des repas si toléré.",
+                    "source": "RCP Ascofer ; HAS 2021"
           },
           {
                     "dci": "Asenapine",
@@ -2050,7 +2096,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Retiré du marché EU 2018",
+                    "source": "RCP Sunvepra (retiré)"
           },
           {
                     "dci": "Atazanavir",
@@ -2080,7 +2128,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ictère par inhibition UGT1A1 (bénin). Risque lithiase rénale.",
+                    "source": "RCP Reyataz ; HAS VIH 2023"
           },
           {
                     "dci": "Atenolol",
@@ -2107,7 +2157,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Élimination rénale exclusive → ajustement IRC obligatoire",
+                    "source": "RCP Ténormine ; ESC HTA 2023"
           },
           {
                     "dci": "Atenolol + chlortalidone",
@@ -2138,7 +2190,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ajustement IRC (aténolol élimination rénale). Risque hypokaliémie (chlortalidone).",
+                    "source": "RCP Tenoretic ; ESC HTA 2023"
           },
           {
                     "dci": "Atorvastatine",
@@ -2167,7 +2221,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Dose élevée (40–80 mg) en prévention CV haute. Demi-vie 14h.",
+                    "source": "RCP Tahor ; ESC prévention 2021"
           },
           {
                     "dci": "Atropine",
@@ -2191,7 +2247,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage hospitalier principalement (ACLS). Collyre : mydriase/cycloplégie.",
+                    "source": "RCP Atropine"
           },
           {
                     "dci": "Azathioprine",
@@ -2244,10 +2302,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
+                    "atb_moderee": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
+                    "atb_severe": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
+                    "atb_terminale": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5"
           },
           {
                     "dci": "Aztreonam",
@@ -2270,10 +2328,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
+                    "atb_moderee": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
+                    "atb_severe": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
+                    "atb_terminale": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique"
           },
           {
                     "dci": "Baclofene",
@@ -2324,7 +2382,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Rinçage bouche obligatoire",
+                    "source": "RCP Becotide ; GINA 2023"
           },
           {
                     "dci": "Bedaquiline",
@@ -2348,10 +2408,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_009"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Semaines 1 et 2 : 400 mg, 1 fois par jour Semaines 3 à 24 : 200 mg, 3 fois par semaine, avec un intervalle d’au moins 48 heures entre chaque prise",
+                    "atb_moderee": "Semaines 1 et 2 : 400 mg, 1 fois par jour Semaines 3 à 24 : 200 mg, 3 fois par semaine, avec un intervalle d’au moins 48 heures entre chaque prise",
+                    "atb_severe": "Semaines 1 et 2 : 400 mg, 1 fois par jour Semaines 3 à 24 : 200 mg, 3 fois par semaine, avec un intervalle d’au moins 48 heures entre chaque prise",
+                    "atb_terminale": "Aucune donnée"
           },
           {
                     "dci": "Belladonna",
@@ -2401,7 +2461,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ajustement si DFG<30",
+                    "source": "RCP Cibacen ; ESC HTA 2023"
           },
           {
                     "dci": "Benzathine benzylpenicilline",
@@ -2422,10 +2484,10 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1,8 MUI tous les 8 jours",
+                    "atb_moderee": "1,8 MUI tous les 8 jours",
+                    "atb_severe": "1,8 MUI tous les 8 jours",
+                    "atb_terminale": "1,8 MUI tous les 8 jours"
           },
           {
                     "dci": "Benzbromarone",
@@ -2454,7 +2516,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Surveillance hépatique tous les 3 mois la 1ère année. ANSM usage restreint.",
+                    "source": "RCP Désuric ; SFR 2020 ; ANSM"
           },
           {
                     "dci": "Benztropine",
@@ -2507,7 +2571,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Puissance : 25x cortisone. Pas d'effet minéralocorticoïde.",
+                    "source": "RCP Célestène ; HAS 2022"
           },
           {
                     "dci": "Betaxolol",
@@ -2532,7 +2598,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage systémique et ophtalmologique",
+                    "source": "RCP Kerlone/Betoptic ; ESC HTA 2023"
           },
           {
                     "dci": "Bimatoprost",
@@ -2554,7 +2622,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "1x/soir. Modification pigmentation iris/cils.",
+                    "source": "RCP Lumigan ; EGS 2020"
           },
           {
                     "dci": "Biperidene",
@@ -2576,7 +2646,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER. Anticholinergique fort.",
+                    "source": "RCP Akineton ; HAS Parkinson 2016 ; Beers 2023"
           },
           {
                     "dci": "Bisacodyl",
@@ -2627,7 +2699,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Titration IC : 1,25→2,5→3,75→5→7,5→10 mg/j",
+                    "source": "RCP Cardensiel ; ESC HF 2021 ; ESC HTA 2023"
           },
           {
                     "dci": "Boceprevir",
@@ -2655,7 +2729,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Retiré du marché EU 2015",
+                    "source": "RCP Victrelis (retiré)"
           },
           {
                     "dci": "Bosentan",
@@ -2683,7 +2759,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Surveillance hépatique mensuelle OBLIGATOIRE (REMS). Tératogène.",
+                    "source": "RCP Tracleer ; ESC HTAP 2022"
           },
           {
                     "dci": "Brimonidine",
@@ -2705,7 +2783,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Absorption systémique possible",
+                    "source": "RCP Alphagan ; EGS 2020"
           },
           {
                     "dci": "Brinzolamide",
@@ -2730,7 +2810,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI si DFG<30 ou allergie sulfonamides",
+                    "source": "RCP Azopt ; EGS 2020"
           },
           {
                     "dci": "Bromazepam",
@@ -2755,7 +2837,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER. Durée max 4–12 sem.",
+                    "source": "RCP Lexomil ; HAS BZD 2022 ; Beers 2023"
           },
           {
                     "dci": "Bromocriptine",
@@ -2830,7 +2914,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Disponible en nébulisation",
+                    "source": "RCP Pulmicort ; GINA 2023"
           },
           {
                     "dci": "Bumetanide",
@@ -2857,7 +2943,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "1 mg bumétanide ≈ 40 mg furosémide",
+                    "source": "RCP Burinex ; ESC HF 2021"
           },
           {
                     "dci": "Buprenorphine",
@@ -2885,7 +2973,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Agoniste partiel µ = effet plafond. Patch changé toutes les 72–96h.",
+                    "source": "RCP Subutex/Transtec ; HAS TSO 2020"
           },
           {
                     "dci": "Bupropion",
@@ -2913,7 +3003,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI si ATCD épilepsie/troubles alimentaires",
+                    "source": "RCP Wellbutrin/Zyban ; HAS 2017"
           },
           {
                     "dci": "Buspirone",
@@ -2938,7 +3030,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Délai 2–4 sem. Pas de sevrage ni dépendance.",
+                    "source": "RCP Buspar ; HAS anxiété 2017"
           },
           {
                     "dci": "Calcifediol",
@@ -2965,7 +3059,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Forme semi-activée. Avantage en IRC modérée.",
+                    "source": "RCP Dédrogyl ; HAS 2022"
           },
           {
                     "dci": "Calcitriol",
@@ -2991,7 +3087,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Forme la plus active. Surveillance calcémie/phosphatémie rapprochée.",
+                    "source": "RCP Rocaltrol ; HAS IRC 2022"
           },
           {
                     "dci": "Canagliflozin",
@@ -3020,7 +3118,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Pause péri-opératoire 3–4 j",
+                    "source": "RCP Invokana ; HAS 2023"
           },
           {
                     "dci": "Candesartan",
@@ -3046,7 +3146,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Double élimination → peu d'ajustement IRC modérée",
+                    "source": "RCP Atacand ; ESC HTA/HF 2023"
           },
           {
                     "dci": "Captopril",
@@ -3074,7 +3176,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Seul IEC avec risque neutropénie (NFS si connectivite/IRC)",
+                    "source": "RCP Lopril ; ESC 2023"
           },
           {
                     "dci": "Carbamazepine",
@@ -3104,7 +3208,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Inducteur puissant CYP3A4/2C9. Taux plasmatique 4–12 mg/L.",
+                    "source": "RCP Tégrétol ; HAS 2020"
           },
           {
                     "dci": "Carbidopa",
@@ -3159,7 +3265,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "NFS si fièvre (agranulocytose)",
+                    "source": "RCP Néo-Mercazole ; HAS 2022"
           },
           {
                     "dci": "Carbinoxamine",
@@ -3208,7 +3316,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "À prendre pendant repas. Max 500 mg Ca/prise.",
+                    "source": "RCP Cacit/Calperos ; HAS 2022 ; SFR"
           },
           {
                     "dci": "Carteolol",
@@ -3233,7 +3343,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage systémique et ophtalmologique",
+                    "source": "RCP Mikelan/Carteol ; ESC HTA 2023"
           },
           {
                     "dci": "Carvedilol",
@@ -3261,7 +3373,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Titration IC : 3,125→6,25→12,5→25 mg x2/j toutes les 2 sem",
+                    "source": "RCP Kredex ; ESC HF 2021"
           },
           {
                     "dci": "Casopitant",
@@ -3286,7 +3400,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Non commercialisé en France",
+                    "source": "Développement arrêté (GSK)"
           },
           {
                     "dci": "Cefaclor",
@@ -3307,10 +3423,10 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
+                    "atb_moderee": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
+                    "atb_severe": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
+                    "atb_terminale": "250 à 500 mg/8h Posologie max : 1500 mg/24h"
           },
           {
                     "dci": "Cefadroxil",
@@ -3331,10 +3447,10 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1 g/12h",
+                    "atb_moderee": "1 g/12h",
+                    "atb_severe": "1 g/12h",
+                    "atb_terminale": "500 mg/12h"
           },
           {
                     "dci": "Cefalexine",
@@ -3355,10 +3471,10 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1 g/12h",
+                    "atb_moderee": "500 mg/12h",
+                    "atb_severe": "500 mg/12h",
+                    "atb_terminale": "500 mg/12h"
           },
           {
                     "dci": "Cefamandole",
@@ -3406,10 +3522,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Infection peu sévère: 60 à 80 mg/kg/24h en 4 à 6 injections OU en continue avec DC = 1/4 ou 1/3 de la dose journalière",
+                    "atb_moderee": "DC de 500 mg puis 125 à 250 mg/12h",
+                    "atb_severe": "DC de 500 mg puis 125 à 250 mg/12h",
+                    "atb_terminale": "DC de 500 mg puis 125 à 250 mg/12h"
           },
           {
                     "dci": "Cefiderocol",
@@ -3433,10 +3549,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "2 g/8h",
+                    "atb_moderee": "1,5 g/8h",
+                    "atb_severe": "1,5 g/8h",
+                    "atb_terminale": "1,5 g/8h"
           },
           {
                     "dci": "Cefixime",
@@ -3457,10 +3573,10 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "200 mg/12h",
+                    "atb_moderee": "200 mg/12h",
+                    "atb_severe": "200 mg/12h",
+                    "atb_terminale": "200 mg/12h"
           },
           {
                     "dci": "Cefotaxime",
@@ -3483,10 +3599,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1 à 2 g/12h",
+                    "atb_moderee": "1 à 2 g/12h",
+                    "atb_severe": "750 à 1500 mg/12h",
+                    "atb_terminale": "750 à 1500 mg/24h"
           },
           {
                     "dci": "Cefoxitine",
@@ -3508,10 +3624,10 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_009"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Infection peu grave : 1 à 2 g/8h",
+                    "atb_moderee": "1 à 2 g/8 à 12h",
+                    "atb_severe": "1 à 2 g/12 à 24h",
+                    "atb_terminale": "1 à 2 g/12 à 24h"
           },
           {
                     "dci": "Ceftazidime",
@@ -3535,10 +3651,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "2 g/12h",
+                    "atb_moderee": "2 g/12h",
+                    "atb_severe": "2 g/24h",
+                    "atb_terminale": "1 g/24h"
           },
           {
                     "dci": "Ceftazidime + avibactam",
@@ -3589,10 +3705,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "500 mg /8h en perfusion de 2h Si infection sévère : 1 g/8h en perfusion de 4h",
+                    "atb_moderee": "500 mg/12h",
+                    "atb_severe": "250 mg/12h",
+                    "atb_terminale": "250 mg/24h"
           },
           {
                     "dci": "Ceftolozane + tazobactam",
@@ -3616,10 +3732,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1 g/8h en perfusion de 60 min Si pneumonie nosocomiale : 2 g/8h en perfusion de 60 min",
+                    "atb_moderee": "500 mg/8h 1 g/8h",
+                    "atb_severe": "250 mg /8h 500 mg/8h",
+                    "atb_terminale": "DC de 500 mg puis 8h plus tard 100 mg/8h DC 1500 mg puis 8h plus tard 300 mg/8h"
           },
           {
                     "dci": "Ceftriaxone",
@@ -3643,10 +3759,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_005"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
+                    "atb_moderee": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
+                    "atb_severe": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
+                    "atb_terminale": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal"
           },
           {
                     "dci": "Cefuroxime",
@@ -3667,10 +3783,10 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "250 à 500 mg/12h",
+                    "atb_moderee": "250 à 500 mg/12h",
+                    "atb_severe": "250 à 500 mg/24h",
+                    "atb_terminale": "250 à 500 mg/48h"
           },
           {
                     "dci": "Celecoxib",
@@ -3725,7 +3841,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "À prendre à jeun (chélation par calcium alimentaire)",
+                    "source": "RCP Célectol ; ESC HTA 2023"
           },
           {
                     "dci": "Celiprololol",
@@ -3775,7 +3893,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Légère sédation possible",
+                    "source": "RCP Zyrtec ; HAS allergie 2020"
           },
           {
                     "dci": "Chlordiazepoxide",
@@ -3850,7 +3970,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER (anticholinergique, confusion, rétention, chutes).",
+                    "source": "RCP Polaramine ; Beers 2023"
           },
           {
                     "dci": "Chlorphniramine",
@@ -3865,9 +3987,9 @@ const MASTER_DB = {
                     "albumine": "95 - 98 %",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Haloperidol, Metoclopramide, Tricycliques, QT long",
-                    "suivi_initial": "",
-                    "suivi_periodique": "",
-                    "alerte_clinique": "",
+                    "suivi_initial": "Pas de biologie spcifique",
+                    "suivi_periodique": "Pas de biologie systmatique",
+                    "alerte_clinique": "Rtention urinaire (examen clinique)",
                     "bio_cible": [],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -3902,7 +4024,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Nombreux EI. Préférer AP atypiques chez SA.",
+                    "source": "RCP Largactil ; HAS 2017"
           },
           {
                     "dci": "Chlortalidone",
@@ -3984,7 +4108,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Dose cumulée mensuelle préférable",
+                    "source": "RCP Uvedose/Zymad ; HAS 2022 ; Grio 2022"
           },
           {
                     "dci": "Ciclesonide",
@@ -4008,7 +4134,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prodrogue activée localement → moins de candidose",
+                    "source": "RCP Alvesco ; GINA 2023"
           },
           {
                     "dci": "Cicletanide",
@@ -4034,7 +4162,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage principalement HTA",
+                    "source": "RCP Tenstaten"
           },
           {
                     "dci": "Cicletanine",
@@ -4092,7 +4222,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Taux résiduel C0 guidé. Nombreuses interactions CYP3A4/P-gp.",
+                    "source": "RCP Néoral ; HAS 2022 transplantation"
           },
           {
                     "dci": "Cilazapril",
@@ -4118,7 +4250,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ajustement si DFG<10",
+                    "source": "RCP Justor ; ESC HTA 2023"
           },
           {
                     "dci": "Cilostazol",
@@ -4145,7 +4279,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI si IC (quelque soit le stade). Prise 30 min avant repas.",
+                    "source": "RCP Pletal ; ESC artériopathie 2017"
           },
           {
                     "dci": "Cimetidine",
@@ -4173,7 +4309,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Nombreuses interactions CYP. Préférer IPP. Beers 2023 : À ÉVITER.",
+                    "source": "RCP Tagamet ; HAS 2020 ; Beers 2023"
           },
           {
                     "dci": "Ciprofloxacine",
@@ -4196,10 +4334,10 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_025"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "250-500 mg/12h",
+                    "atb_moderee": "250-500 mg/12h",
+                    "atb_severe": "250-500 mg/24h",
+                    "atb_terminale": "250-500 mg/24h"
           },
           {
                     "dci": "Citalopram",
@@ -4226,7 +4364,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Max 20 mg/j chez SA. Risque hyponatrémie.",
+                    "source": "RCP Seropram ; ANSM 2011 ; HAS 2017"
           },
           {
                     "dci": "Clarithromycine",
@@ -4251,10 +4391,10 @@ const MASTER_DB = {
                               "BIO_018",
                               "BIO_027"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "250 mg/24h",
+                    "atb_moderee": "250 mg/24h",
+                    "atb_severe": "250 mg/24h",
+                    "atb_terminale": "250 mg/24h"
           },
           {
                     "dci": "Clemastine",
@@ -4302,7 +4442,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage exclusivement hospitalier. Émulsion lipidique IV.",
+                    "source": "RCP Cleviprex"
           },
           {
                     "dci": "Clidinium",
@@ -4346,10 +4488,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "600 mg/6 à 8h",
+                    "atb_moderee": "600 mg/6 à 8h",
+                    "atb_severe": "600 mg/6 à 8h",
+                    "atb_terminale": "600 mg/6 à 8h"
           },
           {
                     "dci": "Clobazam",
@@ -4376,7 +4518,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Moins de sédation que autres BZD",
+                    "source": "RCP Urbanyl ; HAS BZD 2022"
           },
           {
                     "dci": "Clomipramine",
@@ -4405,7 +4549,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER. Taux plasmatique 230–450 ng/mL.",
+                    "source": "RCP Anafranil ; HAS 2017 ; Beers 2023"
           },
           {
                     "dci": "Clonazepam",
@@ -4432,7 +4578,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage épilepsie principalement. Demi-vie 18–50h.",
+                    "source": "RCP Rivotril ; HAS BZD 2022"
           },
           {
                     "dci": "Clopidogrel",
@@ -4460,7 +4608,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prodrogue CYP2C19. Interaction oméprazole/ésoméprazole à éviter.",
+                    "source": "RCP Plavix ; ESC SCA 2023"
           },
           {
                     "dci": "Clorazepate",
@@ -4485,7 +4635,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Accumulation chez SA (prodrogue longue demi-vie)",
+                    "source": "RCP Tranxène ; HAS BZD 2022"
           },
           {
                     "dci": "Clotiazepam",
@@ -4510,7 +4662,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie courte = moins d'accumulation",
+                    "source": "RCP Vératran ; HAS BZD 2022"
           },
           {
                     "dci": "Cloxacilline",
@@ -4535,10 +4689,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "50 mg/kg/24h en 3 prises (sans dépasser 4 g/24h)",
+                    "atb_moderee": "50 mg/kg/24h en 3 prises (sans dépasser 4 g/24h)",
+                    "atb_severe": "50 mg/kg/24h en 3 prises (sans dépasser 4 g/24h)",
+                    "atb_terminale": "Aucune donnée"
           },
           {
                     "dci": "Clozapine",
@@ -4571,7 +4725,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "NFS hebdomadaire 18 premières semaines OBLIGATOIRE (REMS ANSM)",
+                    "source": "RCP Leponex ; ANSM REMS ; HAS 2017"
           },
           {
                     "dci": "Cobicistat",
@@ -4598,7 +4754,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur fort CYP3A4. Fausse élévation créatinine.",
+                    "source": "RCP Tybost ; HAS VIH 2023"
           },
           {
                     "dci": "Codeine",
@@ -4624,7 +4782,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prodrogue CYP2D6. Ultra-métaboliseurs : toxicité sévère.",
+                    "source": "RCP Codéine ; HAS douleur 2022"
           },
           {
                     "dci": "Colchicine",
@@ -4653,7 +4813,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "REMS FDA 2009 : abandon des anciens schémas à doses élevées. Interactions CYP3A4/P-gp.",
+                    "source": "RCP Colchicine Opocalcium ; SFR 2020 ; EULAR 2022"
           },
           {
                     "dci": "Colistimethate",
@@ -4676,10 +4838,10 @@ const MASTER_DB = {
                               "BIO_001",
                               "BIO_002"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "DC de 9 MUI en perfusion de 30 min puis 9 MUI/24h en 2 ou 3 administrations",
+                    "atb_moderee": "DC de 9 MUI puis 5,5 à 7,5 MUI/24h en 2 perfusions",
+                    "atb_severe": "DC de 9 MUI puis 4,5 à 5,5 MUI/24h en 2 perfusion",
+                    "atb_terminale": "DC de 9 MUI puis 4,5 à 5,5 MUI/24h en 2 perfusion"
           },
           {
                     "dci": "Cortisone",
@@ -4708,7 +4870,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prodrogue (cortisol). Effet minéralocorticoïde modéré.",
+                    "source": "RCP Cortisone ; SFEDM 2017"
           },
           {
                     "dci": "Cotrimoxazole",
@@ -4735,10 +4899,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "800 mg de sulfaméthoxazole + 160 mg de triméthoprime / 12h",
+                    "atb_moderee": "800 mg/160 mg/24h",
+                    "atb_severe": "Contre-indiqué",
+                    "atb_terminale": "Contre-indiqué"
           },
           {
                     "dci": "Cyamemazine",
@@ -4767,7 +4931,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage anxiolyse en psychiatrie (France)",
+                    "source": "RCP Tercian ; HAS 2017"
           },
           {
                     "dci": "Cyclobenzaprine",
@@ -4871,7 +5037,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Élimination rénale exclusive. Ajustement DFG obligatoire.",
+                    "source": "RCP Pradaxa ; HAS 2023 ; ESC FA 2020"
           },
           {
                     "dci": "Daclatasvir",
@@ -4898,7 +5066,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "30 mg/j si inhibiteurs CYP3A4 forts ; 90 mg/j si inducteurs.",
+                    "source": "RCP Daklinza ; EASL VHC 2020"
           },
           {
                     "dci": "Dalbavancine",
@@ -4922,10 +5092,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_009"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1500 mg en une seule perfusion OU 1000 mg en perfusion de 30 min suivi de 500 mg 7 jours après",
+                    "atb_moderee": "1500 mg en une seule perfusion OU 1000 mg en perfusion de 30 min suivi de 500 mg 7 jours après",
+                    "atb_severe": "1000 mg en une seule perfusion OU 750 mg suivi de 375 mg 7 jours après",
+                    "atb_terminale": "1000 mg en une seule perfusion OU 750 mg suivi de 375 mg 7 jours après"
           },
           {
                     "dci": "Dapagliflozin",
@@ -4953,7 +5123,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Pause péri-opératoire 3–4 j",
+                    "source": "RCP Forxiga ; HAS 2023"
           },
           {
                     "dci": "Daptomycine",
@@ -4978,10 +5150,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_011"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Infection non sévère : 6 à 8 mg/kg en perfusion de 30 min, 1 fois/24h",
+                    "atb_moderee": "Infection non sévère : 6 à 8 mg/kg en perfusion de 30 min, 1 fois/24h",
+                    "atb_severe": "6 à 8 mg/48h",
+                    "atb_terminale": "6 à 8 mg/48h"
           },
           {
                     "dci": "Darifenacin",
@@ -5037,7 +5209,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Toujours associé à ritonavir 100 mg ou cobicistat 150 mg",
+                    "source": "RCP Prezista ; HAS VIH 2023"
           },
           {
                     "dci": "Delafloxacine",
@@ -5061,10 +5235,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "450 mg/12h",
+                    "atb_moderee": "450 mg/12h",
+                    "atb_severe": "450 mg/12h",
+                    "atb_terminale": "450 mg/12h"
           },
           {
                     "dci": "Delamanide",
@@ -5088,10 +5262,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_035"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "100 mg deux fois par jour pendant 24 semaines",
+                    "atb_moderee": "100 mg deux fois par jour pendant 24 semaines",
+                    "atb_severe": "100 mg deux fois par jour pendant 24 semaines",
+                    "atb_terminale": "Aucune donnée"
           },
           {
                     "dci": "Desipramine",
@@ -5164,7 +5338,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Réduire de 50% si IH ou DFG<30",
+                    "source": "RCP Détrusitol ; EAU OAB 2023"
           },
           {
                     "dci": "Dexamethasone",
@@ -5193,7 +5369,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Puissance : 30–40x cortisone. Pas d'effet minéralocorticoïde.",
+                    "source": "RCP Dectancyl ; HAS 2022"
           },
           {
                     "dci": "Dexchlorpheniramine",
@@ -5215,7 +5393,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER (anticholinergique).",
+                    "source": "RCP Polaramine ; Beers 2023"
           },
           {
                     "dci": "Dextromethorphane",
@@ -5267,7 +5447,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER. Risque chutes/fractures ↑↑.",
+                    "source": "RCP Valium ; HAS BZD 2022 ; Beers 2023"
           },
           {
                     "dci": "Dicyclomine",
@@ -5318,7 +5500,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "SA : demi-dose + taux résiduel 0,5–0,8 ng/mL. Toxicité augmentée par hypokaliémie/IRC.",
+                    "source": "RCP Digoxine ; ESC HF 2021 ; ESC FA 2020"
           },
           {
                     "dci": "Dihydrocodeine",
@@ -5344,7 +5528,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "LP uniquement. Ajustement IRC.",
+                    "source": "RCP Dicodin ; HAS douleur 2022"
           },
           {
                     "dci": "Diltiazem",
@@ -5371,7 +5557,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur modéré CYP3A4. Nombreuses interactions.",
+                    "source": "RCP Tildiem ; ESC 2023"
           },
           {
                     "dci": "Dimenhydrinate",
@@ -5476,7 +5664,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Effets anticholinergiques marqués. Déconseillé Beers 2023.",
+                    "source": "RCP Rythmodan ; ESC arythmie 2020"
           },
           {
                     "dci": "Domperidone",
@@ -5531,7 +5721,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Peu d'interactions. Profil tolérance favorable.",
+                    "source": "RCP Pifeltro ; HAS VIH 2023"
           },
           {
                     "dci": "Dorzolamide",
@@ -5555,7 +5747,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI si DFG<30 ou allergie sulfonamides",
+                    "source": "RCP Trusopt ; EGS 2020"
           },
           {
                     "dci": "Dosulepine",
@@ -5608,7 +5802,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Effet favorable profil lipidique. Hypotension 1ère dose.",
+                    "source": "RCP Zoxan ; EAU 2022 ; ESC HTA 2023"
           },
           {
                     "dci": "Doxepine",
@@ -5637,7 +5833,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER >6 mg/j. Faible dose (≤6 mg) pour insomnie SA acceptable.",
+                    "source": "RCP Quitaxon ; HAS 2017 ; Beers 2023"
           },
           {
                     "dci": "Doxycycline",
@@ -5661,10 +5859,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
+                    "atb_moderee": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
+                    "atb_severe": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
+                    "atb_terminale": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …"
           },
           {
                     "dci": "Doxylamine",
@@ -5686,7 +5884,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER chez SA. Anticholinergique.",
+                    "source": "RCP Donormyl ; Beers 2023"
           },
           {
                     "dci": "Dronedarone",
@@ -5716,7 +5916,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI si IC sévère/FA permanente. Hépatotoxicité fatale documentée.",
+                    "source": "RCP Multaq ; ESC arythmie 2020"
           },
           {
                     "dci": "Dulaglutide",
@@ -5743,7 +5945,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Titration toutes les 4 semaines",
+                    "source": "RCP Trulicity ; HAS 2023"
           },
           {
                     "dci": "Duloxetine",
@@ -5771,7 +5975,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI si DFG<30",
+                    "source": "RCP Cymbalta ; HAS 2017"
           },
           {
                     "dci": "Edoxaban",
@@ -5798,7 +6004,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Réduction à 30 mg/j si DFG 15–50 ou poids ≤60 kg",
+                    "source": "RCP Savaysa ; HAS 2023 ; ESC FA 2020"
           },
           {
                     "dci": "Efavirenz",
@@ -5827,7 +6035,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Au coucher à jeun. Inducteur CYP3A4.",
+                    "source": "RCP Sustiva ; HAS VIH 2023"
           },
           {
                     "dci": "Eletriptan",
@@ -5853,7 +6063,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Max 80 mg/24h. CI cardiopathie ischémique.",
+                    "source": "RCP Relpax ; HAS migraine 2013"
           },
           {
                     "dci": "Empagliflozin",
@@ -5881,7 +6093,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Pause péri-opératoire 3–4 j",
+                    "source": "RCP Jardiance ; HAS 2023"
           },
           {
                     "dci": "Emtricitabine",
@@ -5908,7 +6122,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Élimination rénale → ajustement IRC. Activité anti-VHB.",
+                    "source": "RCP Emtriva ; HAS VIH 2023"
           },
           {
                     "dci": "Enalapril",
@@ -5934,7 +6150,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Médicament de référence de la classe",
+                    "source": "RCP Renitec ; ESC HTA/HF 2023"
           },
           {
                     "dci": "Entacapone",
@@ -6012,7 +6230,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ne pas associer IEC+ARA2+anti-aldostérone (triple blocage SRA)",
+                    "source": "RCP Inspra ; ESC HF 2021"
           },
           {
                     "dci": "Eprosartan",
@@ -6040,7 +6260,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Faible volume de distribution",
+                    "source": "RCP Teveten ; ESC HTA 2023"
           },
           {
                     "dci": "Ergocalciferol",
@@ -6066,7 +6288,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "D2 moins efficace que D3",
+                    "source": "RCP Stérogyl ; HAS 2022"
           },
           {
                     "dci": "Ertapenem",
@@ -6090,10 +6314,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1 g/ 24h",
+                    "atb_moderee": "1 g/ 24h",
+                    "atb_severe": "1 g/ 24h",
+                    "atb_terminale": "1 g/ 24h"
           },
           {
                     "dci": "Ertugliflozin",
@@ -6121,7 +6345,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Pause péri-opératoire 3–4 j",
+                    "source": "RCP Steglatro ; HAS 2023"
           },
           {
                     "dci": "Erythromycine",
@@ -6144,10 +6370,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1 g/8 à 12h",
+                    "atb_moderee": "500 à 750 mg/8 à 12h",
+                    "atb_severe": "500 à 750 mg/8 à 12h",
+                    "atb_terminale": "500 à 750 mg/8 à 12h"
           },
           {
                     "dci": "Escitalopram",
@@ -6174,7 +6400,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Max 10 mg/j chez SA. Isomère actif du citalopram.",
+                    "source": "RCP Seroplex ; ANSM 2011 ; HAS 2017"
           },
           {
                     "dci": "Esketamine",
@@ -6224,7 +6452,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage exclusivement hospitalier (t1/2 = 9 min)",
+                    "source": "RCP Brevibloc"
           },
           {
                     "dci": "Esomeprazole",
@@ -6249,7 +6479,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prendre 30 min avant repas. Réévaluation annuelle si usage prolongé.",
+                    "source": "RCP Inexium ; HAS 2020 IPP"
           },
           {
                     "dci": "Estazolam",
@@ -6274,7 +6506,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage hypnotique uniquement",
+                    "source": "RCP Nuctalon ; HAS BZD 2022"
           },
           {
                     "dci": "Ethambutol",
@@ -6327,7 +6561,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Injection 60 min avant repas (forme courte)",
+                    "source": "RCP Byetta/Bydureon ; HAS 2023"
           },
           {
                     "dci": "Famotidine",
@@ -6351,7 +6587,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Moins d'interactions que cimétidine. Ajustement IRC.",
+                    "source": "RCP Pepcid ; HAS 2020"
           },
           {
                     "dci": "Febuxostat",
@@ -6378,7 +6616,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Risque CV discuté (CARES). Pas d'ajustement rénal.",
+                    "source": "RCP Adenuric ; SFR 2020 ; EULAR 2022"
           },
           {
                     "dci": "Febusostat",
@@ -6428,7 +6668,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Interaction jus de pamplemousse",
+                    "source": "RCP Flodil ; ESC HTA 2023"
           },
           {
                     "dci": "Fentanyl",
@@ -6454,7 +6696,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Patch : changement toutes les 72h. Ne pas chauffer le patch.",
+                    "source": "RCP Durogésic ; HAS douleur 2022"
           },
           {
                     "dci": "Fesoterodine",
@@ -6480,7 +6724,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Max 4 mg/j si DFG<30 ou IH modérée",
+                    "source": "RCP Toviaz ; EAU OAB 2023"
           },
           {
                     "dci": "Fexofenadine",
@@ -6504,7 +6750,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Non sédatif. Pas de passage BHE. Préféré chez SA.",
+                    "source": "RCP Telfast ; HAS allergie 2020"
           },
           {
                     "dci": "Fidaxomicine",
@@ -6527,10 +6775,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "200 mg/12h",
+                    "atb_moderee": "200 mg/12h",
+                    "atb_severe": "200 mg/12h",
+                    "atb_terminale": "200 mg/12h"
           },
           {
                     "dci": "Flavoxate",
@@ -6580,7 +6828,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Seul indanedione disponible en France",
+                    "source": "RCP Previscan ; HAS 2008 AVK"
           },
           {
                     "dci": "Fluoxetine",
@@ -6608,7 +6858,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie très longue. Inhibiteur puissant CYP2D6.",
+                    "source": "RCP Prozac ; HAS 2017"
           },
           {
                     "dci": "Flupentixol",
@@ -6638,7 +6890,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage dépression résistante à faible dose (off-label)",
+                    "source": "RCP Fluanxol ; HAS 2017"
           },
           {
                     "dci": "Fluphenazine",
@@ -6667,7 +6921,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Disponible en forme retard (décanoate)",
+                    "source": "RCP Modécate ; HAS 2017"
           },
           {
                     "dci": "Fluticasone",
@@ -6692,7 +6948,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Furoate : 1x/j. Propionate : 2x/j.",
+                    "source": "RCP Flixotide/Arnuity ; GINA 2023"
           },
           {
                     "dci": "Fluvastatine",
@@ -6719,7 +6977,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Métabolisme CYP2C9 → moins d'interactions",
+                    "source": "RCP Lescol ; ESC prévention 2021"
           },
           {
                     "dci": "Fluvoxamine",
@@ -6746,7 +7006,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur puissant CYP1A2/2C19",
+                    "source": "RCP Floxyfral ; HAS 2017"
           },
           {
                     "dci": "Formoterol",
@@ -6771,7 +7033,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Toujours associé à CI en asthme",
+                    "source": "RCP Foradil ; GINA 2023"
           },
           {
                     "dci": "Fosaprepitant",
@@ -6796,7 +7060,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage hospitalier IV. Prodrogue aprépitant.",
+                    "source": "RCP Ivemend ; HAS 2022"
           },
           {
                     "dci": "Fosfomycine",
@@ -6819,10 +7085,10 @@ const MASTER_DB = {
                               "BIO_002",
                               "BIO_001"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
+                    "atb_moderee": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
+                    "atb_severe": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
+                    "atb_terminale": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique"
           },
           {
                     "dci": "Fosinopril",
@@ -6850,7 +7116,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Double élimination → peu d'ajustement en IRC",
+                    "source": "RCP Fozitec ; ESC HTA 2023"
           },
           {
                     "dci": "Frovatriptan",
@@ -6874,7 +7142,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Longue demi-vie (26h). Moins de récidives.",
+                    "source": "RCP Tigreat ; HAS migraine 2013"
           },
           {
                     "dci": "Fumarate ferreux",
@@ -6900,7 +7170,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Bonne tolérance digestive",
+                    "source": "RCP Fumafer ; HAS 2021"
           },
           {
                     "dci": "Furosemide",
@@ -6928,7 +7200,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prendre le matin (nycturie)",
+                    "source": "RCP Lasilix ; ESC HF 2021"
           },
           {
                     "dci": "Gabapentine",
@@ -6953,7 +7227,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ajustement DFG obligatoire. Potentiel d'abus.",
+                    "source": "RCP Neurontin ; HAS 2020"
           },
           {
                     "dci": "Gentamicine",
@@ -6977,10 +7253,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_006"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "3 à 8 mg/kg/j",
+                    "atb_moderee": "3 à 8 mg/kg/j",
+                    "atb_severe": "3 à 8 mg/kg/j",
+                    "atb_terminale": "3 à 8 mg/kg/j"
           },
           {
                     "dci": "Glycopyrronium",
@@ -7002,7 +7278,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "1 prise quotidienne",
+                    "source": "RCP Seebri ; GOLD 2023"
           },
           {
                     "dci": "Guaifenesine",
@@ -7054,7 +7332,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Référence délirium hospitalier (0,5–1 mg). EPS fréquents SA.",
+                    "source": "RCP Haldol ; HAS 2017"
           },
           {
                     "dci": "Hydralazine",
@@ -7111,7 +7391,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Photosensibilisation ; risque carcinome cutané prolongé",
+                    "source": "RCP HCTZ ; ESC HTA 2023"
           },
           {
                     "dci": "Hydrocortisone",
@@ -7138,7 +7420,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Cortisol naturel. Effet minéralocorticoïde. Carte urgence surrénalienne.",
+                    "source": "RCP Hydrocortisone ; SFEDM IS 2017"
           },
           {
                     "dci": "Hydromorphone",
@@ -7165,7 +7449,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Puissant (ratio 7,5:1 avec morphine)",
+                    "source": "RCP Sophidone ; HAS douleur 2022"
           },
           {
                     "dci": "Hydroxyzine",
@@ -7190,7 +7476,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Max posologie SA : ANSM 2015 (QTc). EMA 2015.",
+                    "source": "RCP Atarax ; ANSM/EMA 2015"
           },
           {
                     "dci": "Hyoscyamine",
@@ -7240,7 +7528,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "PO : à jeun, rester debout 60 min",
+                    "source": "RCP Bonviva ; HAS 2018"
           },
           {
                     "dci": "Imipenem + cilastatine",
@@ -7264,10 +7554,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "500 mg/6h en perfusion de 30 min",
+                    "atb_moderee": "500 mg/8h",
+                    "atb_severe": "500 mg/8h",
+                    "atb_terminale": "500 mg/8h"
           },
           {
                     "dci": "Imipenem/Cilastatine/Relebactam",
@@ -7323,7 +7613,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER. Hypotension orthostatique fréquente.",
+                    "source": "RCP Tofranil ; HAS 2017 ; Beers 2023"
           },
           {
                     "dci": "Indacaterol",
@@ -7348,7 +7640,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "1 prise/j. Toussotement bénin post-inhalation.",
+                    "source": "RCP Onbrez ; GOLD 2023"
           },
           {
                     "dci": "Indapamide",
@@ -7375,7 +7669,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Préféré aux thiazidiques en IRC modérée",
+                    "source": "RCP Fludex ; ESC HTA 2023"
           },
           {
                     "dci": "Insuline aspart",
@@ -7403,7 +7699,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Peut être injectée après repas si appétit incertain",
+                    "source": "RCP Novorapid ; HAS DT1/DT2 2023"
           },
           {
                     "dci": "Insuline degludec",
@@ -7430,7 +7728,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie 25h. Flexibilité horaire. Moins d'hypoglycémies nocturnes.",
+                    "source": "RCP Tresiba ; HAS DT1/DT2 2023"
           },
           {
                     "dci": "Insuline detemir",
@@ -7457,7 +7757,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Durée 12–24h selon dose",
+                    "source": "RCP Levemir ; HAS DT1/DT2 2023"
           },
           {
                     "dci": "Insuline glargine",
@@ -7484,7 +7786,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Glargine 300 UI/mL (Toujeo) : durée >24h",
+                    "source": "RCP Lantus/Toujeo ; HAS DT1/DT2 2023"
           },
           {
                     "dci": "Insuline glulisine",
@@ -7509,7 +7813,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Injection avant ou immédiatement après repas",
+                    "source": "RCP Apidra ; HAS DT1/DT2 2023"
           },
           {
                     "dci": "Insuline humaine",
@@ -7537,7 +7843,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Rapide : 30 min avant repas (différent des analogues)",
+                    "source": "RCP Actrapid/Insulatard ; HAS DT1/DT2 2023"
           },
           {
                     "dci": "Insuline lispro",
@@ -7562,7 +7870,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Début action 15 min. Peut être injectée après repas.",
+                    "source": "RCP Humalog ; HAS DT1/DT2 2023"
           },
           {
                     "dci": "Ipratropium",
@@ -7584,7 +7894,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Durée d'action 4–6h",
+                    "source": "RCP Atrovent ; GOLD 2023"
           },
           {
                     "dci": "Iproniazide",
@@ -7636,7 +7948,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI grossesse",
+                    "source": "RCP Aprovel ; ESC HTA 2023"
           },
           {
                     "dci": "Isoniazide",
@@ -7659,10 +7973,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_022"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "3 à 5 mg/kg/24h",
+                    "atb_moderee": "3 à 5 mg/kg/24h",
+                    "atb_severe": "3 à 5 mg/kg/24h",
+                    "atb_terminale": "Max : 200 mg/j"
           },
           {
                     "dci": "Isosorbide",
@@ -7710,7 +8024,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Moins utilisé actuellement",
+                    "source": "RCP Icaz ; ESC HTA 2023"
           },
           {
                     "dci": "Ketamine",
@@ -7764,7 +8080,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage HTA gravidique. Risque hépatotoxicité.",
+                    "source": "RCP Trandate ; ESC HTA 2023"
           },
           {
                     "dci": "Lacosamide",
@@ -7792,7 +8110,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Max 250 mg/j si DFG<30. Surveillance BAV.",
+                    "source": "RCP Vimpat ; HAS 2020"
           },
           {
                     "dci": "Lactitol",
@@ -7817,7 +8137,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Délai action 48h",
+                    "source": "RCP Importal"
           },
           {
                     "dci": "Lactulose",
@@ -7842,7 +8164,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "EH : objectif 2–3 selles molles/j",
+                    "source": "RCP Duphalac"
           },
           {
                     "dci": "Lamotrigine",
@@ -7870,7 +8194,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Titration très lente selon co-médications. Taux plasmatique 2–14 mg/L.",
+                    "source": "RCP Lamictal ; HAS 2020"
           },
           {
                     "dci": "Lansoprazole",
@@ -7895,7 +8221,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prendre 30 min avant repas. Capsules peuvent être ouvertes.",
+                    "source": "RCP Ogastoro ; HAS 2020 IPP"
           },
           {
                     "dci": "Latanoprost",
@@ -7917,7 +8245,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "1x/soir. Risque uvéite antérieure.",
+                    "source": "RCP Xalatan ; EGS 2020"
           },
           {
                     "dci": "Lercanidipine",
@@ -7941,7 +8271,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prise 15 min avant repas. Moins d'œdèmes.",
+                    "source": "RCP Zanidip ; ESC HTA 2023"
           },
           {
                     "dci": "Levetiracetam",
@@ -7970,7 +8302,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ajustement DFG : max 1500 mg/j si DFG<80 ; max 1000 mg/j si DFG<50.",
+                    "source": "RCP Keppra ; HAS 2020"
           },
           {
                     "dci": "Levocetirizine",
@@ -8045,10 +8379,10 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_025"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "DC de 500 mg puis 250 mg/12 à 24h",
+                    "atb_moderee": "DC de 500 mg puis 250 mg/12 à 24h",
+                    "atb_severe": "DC de 500 mg puis 250 mg/24 à 48h",
+                    "atb_terminale": "DC de 500 mg puis 250 mg/24 à 48h"
           },
           {
                     "dci": "Levomepromazine",
@@ -8104,7 +8438,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Forte sédation. Usage principalement soins palliatifs.",
+                    "source": "RCP Nozinan ; HAS 2017"
           },
           {
                     "dci": "Levothyroxine",
@@ -8131,7 +8467,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prudence si cardiopathie. TSH cible normale ou haute-normale chez SA.",
+                    "source": "RCP Levothyrox ; HAS 2019 ; ETA 2019"
           },
           {
                     "dci": "Linezolide",
@@ -8156,10 +8494,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "600 mg/12h",
+                    "atb_moderee": "600 mg/12h",
+                    "atb_severe": "600 mg/24h",
+                    "atb_terminale": "600 mg/24h"
           },
           {
                     "dci": "Liothyronine",
@@ -8184,7 +8522,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie courte (24h). Usage limité.",
+                    "source": "RCP Cytomel ; HAS 2019"
           },
           {
                     "dci": "Liotrix",
@@ -8209,7 +8549,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage très limité. Préférer lévothyroxine.",
+                    "source": "RCP Euthyral ; HAS 2019"
           },
           {
                     "dci": "Liraglutide",
@@ -8237,7 +8579,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Titration progressive",
+                    "source": "RCP Victoza/Saxenda ; HAS 2023"
           },
           {
                     "dci": "Lisinopril",
@@ -8263,7 +8607,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Élimination rénale exclusive → ajustement strict IRC",
+                    "source": "RCP Zestril ; ESC HTA/HF 2023"
           },
           {
                     "dci": "Lithium",
@@ -8317,7 +8663,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Risque QTc/arythmie à doses suprathérapeutiques (ANSM 2017). Usage ≤2 jours si aigu.",
+                    "source": "RCP Imodium ; ANSM 2017"
           },
           {
                     "dci": "Lopinavir",
@@ -8348,7 +8696,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Co-formulé avec ritonavir (Kaletra). Fort potentiel dyslipidémiant.",
+                    "source": "RCP Kaletra ; HAS VIH 2023"
           },
           {
                     "dci": "Loprazolam",
@@ -8373,7 +8723,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie intermédiaire (8h)",
+                    "source": "RCP Havlane ; HAS BZD 2022"
           },
           {
                     "dci": "Loratadine",
@@ -8398,7 +8750,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Non sédatif. Pas d'anticholinergique.",
+                    "source": "RCP Clarityne ; HAS allergie 2020"
           },
           {
                     "dci": "Lorazepam",
@@ -8425,7 +8779,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Glucuronidation → moins d'accumulation. BZD à privilégier chez SA si nécessaire.",
+                    "source": "RCP Temesta ; HAS BZD 2022"
           },
           {
                     "dci": "Lormetazepam",
@@ -8450,7 +8806,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie 10h",
+                    "source": "RCP Noctamide ; HAS BZD 2022"
           },
           {
                     "dci": "Losartan",
@@ -8477,7 +8835,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Seul ARA2 avec effet uricosurique",
+                    "source": "RCP Cozaar ; ESC HTA 2023"
           },
           {
                     "dci": "Loxapine",
@@ -8528,10 +8888,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Aucune donnée",
+                    "atb_moderee": "Aucune donnée",
+                    "atb_severe": "Aucune donnée",
+                    "atb_terminale": "Aucune donnée"
           },
           {
                     "dci": "Macrogol",
@@ -8556,7 +8916,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Laxatif de référence SA. Peu absorbé.",
+                    "source": "RCP Movicol/Forlax ; HAS"
           },
           {
                     "dci": "Manidipine",
@@ -8580,7 +8942,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Moins d'œdèmes des membres inférieurs",
+                    "source": "RCP Iperten ; ESC HTA 2023"
           },
           {
                     "dci": "Maprotiline",
@@ -8708,10 +9072,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1 à 2 g/8h",
+                    "atb_moderee": "1 à 2 g/8h",
+                    "atb_severe": "1 à 2 g/8h",
+                    "atb_terminale": "1 à 2 g/12h"
           },
           {
                     "dci": "Meropenem/Vaborbactam",
@@ -8767,7 +9131,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Suspension péri-opératoire et si produit de contraste iodé",
+                    "source": "RCP Glucophage ; HAS DT2 2023"
           },
           {
                     "dci": "Methadone",
@@ -8822,7 +9188,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Sédation fréquente. Usage lombalgies/contractures.",
+                    "source": "RCP Lumirelax"
           },
           {
                     "dci": "Methylprednisolone",
@@ -8851,7 +9219,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Puissance : 5x prednisone. Pas d'effet minéralocorticoïde.",
+                    "source": "RCP Médrol ; HAS 2022"
           },
           {
                     "dci": "Metoclopramide",
@@ -8875,7 +9245,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "ANSM 2013 : max 5 jours. Beers 2023 : À ÉVITER au long cours (dyskinésie tardive).",
+                    "source": "RCP Primpéran ; ANSM 2013 ; Beers 2023"
           },
           {
                     "dci": "Metoprolol",
@@ -8901,7 +9273,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Forme LP préférable en IC (MERIT-HF). CYP2D6.",
+                    "source": "RCP Lopressor/Seloken ; ESC HF 2021"
           },
           {
                     "dci": "Metronidazole",
@@ -8924,10 +9298,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1,5 MUI (spiramycine) + 250 mg (métronidazole) /8h",
+                    "atb_moderee": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h",
+                    "atb_severe": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h",
+                    "atb_terminale": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h"
           },
           {
                     "dci": "Midazolam",
@@ -8981,7 +9355,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Hypoglycémie si repas sauté. Usage limité en France.",
+                    "source": "RCP classe glinides ; HAS DT2 2023"
           },
           {
                     "dci": "Milnacipran",
@@ -9005,7 +9381,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Indication principale : dépression",
+                    "source": "RCP Ixel ; HAS 2017"
           },
           {
                     "dci": "Minocycline",
@@ -9028,10 +9406,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_009"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "200 mg/j en 2 prises",
+                    "atb_moderee": "200 mg/j en 2 prises",
+                    "atb_severe": "200 mg/j en 2 prises",
+                    "atb_terminale": "200 mg/j en 2 prises"
           },
           {
                     "dci": "Mirtazapine",
@@ -9061,7 +9439,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Stimulation appétit utile chez SA dénutri. Moins sédatif à forte dose.",
+                    "source": "RCP Norset ; HAS 2017"
           },
           {
                     "dci": "Moexipril",
@@ -9087,7 +9467,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prise 1h avant repas",
+                    "source": "RCP Fempress ; ESC HTA 2023"
           },
           {
                     "dci": "Morphine",
@@ -9114,7 +9496,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Antidote : naloxone. M6G actif s'accumule en IRC.",
+                    "source": "RCP Actiskenan/Skenan ; HAS douleur 2022"
           },
           {
                     "dci": "Moxifloxacine",
@@ -9138,10 +9522,10 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_001"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "400 mg/24h",
+                    "atb_moderee": "400 mg/24h",
+                    "atb_severe": "400 mg/24h",
+                    "atb_terminale": "400 mg/24h"
           },
           {
                     "dci": "Mycophenolate mofetil",
@@ -9170,7 +9554,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ne pas écraser (tératogène). Prise 1h avant ou 2h après repas.",
+                    "source": "RCP Cellcept ; HAS 2022 transplantation"
           },
           {
                     "dci": "Nadolol",
@@ -9196,7 +9582,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Longue demi-vie (20h) ; élimination rénale exclusive",
+                    "source": "RCP Corgard ; ESC HTA 2023"
           },
           {
                     "dci": "Nalbuphine",
@@ -9247,7 +9635,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie plus longue que sumatriptan. Moins d'EI.",
+                    "source": "RCP Naramig ; HAS migraine 2013"
           },
           {
                     "dci": "Nateglinide",
@@ -9275,7 +9665,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prendre immédiatement avant repas. CI si repas sauté.",
+                    "source": "RCP Starlix ; HAS DT2 2023"
           },
           {
                     "dci": "Nebivolol",
@@ -9302,7 +9694,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Seul BB indiqué en IC chez ≥70 ans (SENIORS trial)",
+                    "source": "RCP Temerit ; ESC HF 2021 (SENIORS)"
           },
           {
                     "dci": "Nefopam",
@@ -9326,7 +9720,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Effets anticholinergiques. Déconseillé SA.",
+                    "source": "RCP Acupan ; Beers 2023"
           },
           {
                     "dci": "Nicardipine",
@@ -9351,7 +9747,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage IV en urgences hypertensives",
+                    "source": "RCP Loxen ; ESC HTA 2023"
           },
           {
                     "dci": "Nifedipine",
@@ -9375,7 +9773,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Formes IR CI en HTA",
+                    "source": "RCP Adalate ; ESC HTA 2023"
           },
           {
                     "dci": "Nimodipine",
@@ -9400,7 +9800,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Indication spécifique : vasospasme après HSA",
+                    "source": "RCP Nimotop"
           },
           {
                     "dci": "Nitrazepam",
@@ -9425,7 +9827,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Demi-vie longue. À éviter chez SA.",
+                    "source": "RCP Mogadon ; HAS BZD 2022"
           },
           {
                     "dci": "Nitrendipine",
@@ -9447,7 +9851,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Étude SYST-EUR (SA isolée systolique)",
+                    "source": "RCP Baypress ; ESC HTA 2023"
           },
           {
                     "dci": "Nitrofurantoine",
@@ -9472,10 +9878,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_011"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Déconseillé",
+                    "atb_moderee": "Déconseillé",
+                    "atb_severe": "Contre-indiqué",
+                    "atb_terminale": "Contre-indiqué"
           },
           {
                     "dci": "Nordazepam",
@@ -9500,7 +9906,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Métabolite actif de plusieurs BZD. Demi-vie extrêmement longue.",
+                    "source": "RCP Nordaz ; HAS BZD 2022"
           },
           {
                     "dci": "Norfloxacine",
@@ -9523,10 +9931,10 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_025"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "400 mg/12 à 24 h",
+                    "atb_moderee": "400 mg/12 à 24 h",
+                    "atb_severe": "400 mg/24h",
+                    "atb_terminale": "400 mg/24h"
           },
           {
                     "dci": "Nortriptyline",
@@ -9578,10 +9986,10 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_025"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Dose usuelle : 200 mg/12h",
+                    "atb_moderee": "200 mg/24h",
+                    "atb_severe": "200 mg/24h",
+                    "atb_terminale": "200 mg/48h"
           },
           {
                     "dci": "Olanzapine",
@@ -9612,7 +10020,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Forte prise de poids. CI chez déments.",
+                    "source": "RCP Zyprexa ; HAS 2017"
           },
           {
                     "dci": "Olmesartan",
@@ -9639,7 +10049,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Risque entéropathie sprue-like",
+                    "source": "RCP Olmetec ; ESC HTA 2023"
           },
           {
                     "dci": "Omeprazole",
@@ -9664,7 +10076,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur CYP2C19 → interaction clopidogrel. Prendre 30 min avant repas.",
+                    "source": "RCP Mopral ; HAS 2020 IPP"
           },
           {
                     "dci": "Oritavancine",
@@ -9688,10 +10102,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_030"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1200 mg (dose unique) en perfusion de 3h",
+                    "atb_moderee": "1200 mg (dose unique) en perfusion de 3h",
+                    "atb_severe": "Aucune donnée",
+                    "atb_terminale": "Aucune donnée"
           },
           {
                     "dci": "Orphenadrine",
@@ -9740,10 +10154,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
+                    "atb_moderee": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
+                    "atb_severe": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
+                    "atb_terminale": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue"
           },
           {
                     "dci": "Oxazepam",
@@ -9768,7 +10182,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "BZD préféré chez SA avec lorazépam (glucuronidation, demi-vie courte 4–15h)",
+                    "source": "RCP Séresta ; HAS BZD 2022"
           },
           {
                     "dci": "Oxcarbazepine",
@@ -9796,7 +10212,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Hyponatrémie fréquente (15%). Inducteur modéré CYP3A4.",
+                    "source": "RCP Trileptal ; HAS 2020"
           },
           {
                     "dci": "Oxybutynine",
@@ -9821,7 +10239,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER (confusion cognitive, rétention). Préférer solifénacine ou mirabégron.",
+                    "source": "RCP Ditropan ; EAU OAB 2023 ; Beers 2023"
           },
           {
                     "dci": "Oxycodone",
@@ -9848,7 +10268,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "LP : avaler entier",
+                    "source": "RCP Oxycontin ; HAS douleur 2022"
           },
           {
                     "dci": "Paliperidone",
@@ -9878,7 +10300,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Élimination rénale exclusive → ajustement strict IRC",
+                    "source": "RCP Invega ; HAS 2017"
           },
           {
                     "dci": "Pantoprazole",
@@ -9903,7 +10327,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Moins d'interactions CYP2C19. Préféré avec clopidogrel.",
+                    "source": "RCP Eupantol ; HAS 2020 IPP"
           },
           {
                     "dci": "Paracetamol",
@@ -9929,7 +10355,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Antalgique de 1ère intention chez SA. Dose max 3 g/j si poids<50 kg.",
+                    "source": "RCP Doliprane ; HAS douleur 2022"
           },
           {
                     "dci": "Paroxetine",
@@ -9956,7 +10384,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Effets anticholinergiques marqués. Inhibiteur puissant CYP2D6.",
+                    "source": "RCP Deroxat ; HAS 2017"
           },
           {
                     "dci": "Perindopril",
@@ -9982,7 +10412,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prise le matin avant repas",
+                    "source": "RCP Coversyl ; ESC HTA/HF 2023"
           },
           {
                     "dci": "Perphenazine",
@@ -10010,7 +10442,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Également utilisé comme antiémétique",
+                    "source": "RCP Trilifan ; HAS 2017"
           },
           {
                     "dci": "Pheniramine",
@@ -10087,7 +10521,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Bonne tolérance digestive",
+                    "source": "RCP Calcium Sandoz ; HAS 2022"
           },
           {
                     "dci": "Pilocarpine",
@@ -10109,7 +10545,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "PO : Sjögren. Collyre : glaucome. Myosis ++.",
+                    "source": "RCP Pilocarpine/Salagen ; EGS 2020"
           },
           {
                     "dci": "Pimozide",
@@ -10164,7 +10602,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Forte ASI → moins de bradycardie",
+                    "source": "RCP Visken ; ESC HTA 2023"
           },
           {
                     "dci": "Pipamperone",
@@ -10218,10 +10658,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "4 g/6 à 8h",
+                    "atb_moderee": "4 g/6 à 8h",
+                    "atb_severe": "4 g/ 8h",
+                    "atb_terminale": "4 g/ 8h"
           },
           {
                     "dci": "Piperacilline + tazobactam",
@@ -10278,7 +10718,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Forme retard disponible (palmitate, décanoate)",
+                    "source": "RCP Piportil ; HAS 2017"
           },
           {
                     "dci": "Piretanide",
@@ -10303,7 +10745,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Usage HTA et IC",
+                    "source": "RCP Eurelix"
           },
           {
                     "dci": "Pivmecillinam",
@@ -10324,10 +10768,10 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "400 mg/8 à 12h",
+                    "atb_moderee": "400 mg/8 à 12h",
+                    "atb_severe": "DC de 400 mg puis 200 mg/8 à 12h",
+                    "atb_terminale": "DC de 400 mg puis 200 mg/8 à 12h"
           },
           {
                     "dci": "Poudre d'opium",
@@ -10353,7 +10797,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Composition variable (morphine + autres alcaloïdes)",
+                    "source": "RCP Poudre d'opium ; HAS douleur 2022"
           },
           {
                     "dci": "Pramipexole",
@@ -10405,7 +10851,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Réduction à 5 mg/j si ≥75 ans ou <60 kg",
+                    "source": "RCP Efient ; ESC SCA 2023"
           },
           {
                     "dci": "Pravastatine",
@@ -10432,7 +10880,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Statine de choix si interactions CYP (ciclosporine, ARV)",
+                    "source": "RCP Elisor ; ESC prévention 2021"
           },
           {
                     "dci": "Prazepam",
@@ -10457,7 +10907,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prodrogue nordazépam (longue demi-vie)",
+                    "source": "RCP Lysanxia ; HAS BZD 2022"
           },
           {
                     "dci": "Prazosine",
@@ -10481,7 +10933,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Phénomène 1ère dose : débuter au coucher",
+                    "source": "RCP Alpress ; ESC HTA 2023"
           },
           {
                     "dci": "Prednisolone",
@@ -10511,7 +10965,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prise le matin. Prévention OPM + Ca/Vit D si traitement prolongé.",
+                    "source": "RCP Solupred ; HAS 2022 ; SFR"
           },
           {
                     "dci": "Prednisone",
@@ -10540,7 +10996,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prodrogue → prednisolone. Prévention OPM.",
+                    "source": "RCP Cortancyl ; HAS 2022 ; SFR"
           },
           {
                     "dci": "Pregabaline",
@@ -10566,7 +11024,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prescription sécurisée (abus/dépendance). Ajustement DFG obligatoire.",
+                    "source": "RCP Lyrica ; HAS 2020"
           },
           {
                     "dci": "Pristinamycine",
@@ -10590,10 +11050,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
+                    "atb_moderee": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
+                    "atb_severe": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
+                    "atb_terminale": "1 g/8 à 12h (posologie maximale = 4 g/24h)"
           },
           {
                     "dci": "Prochlorperazine",
@@ -10649,7 +11109,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER (EPS, QTc, sédation, anticholinergique).",
+                    "source": "RCP Phénergan ; Beers 2023"
           },
           {
                     "dci": "Propantheline",
@@ -10723,7 +11185,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Lipophile → effets centraux. Hypoglycémie masquée (DT2).",
+                    "source": "RCP Avlocardyl ; ESC HTA 2023"
           },
           {
                     "dci": "Propylthiouracile",
@@ -10752,7 +11216,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Préféré au 1er trimestre grossesse et crise thyrotoxique",
+                    "source": "RCP PTU ; HAS 2022"
           },
           {
                     "dci": "Pseudoephedrine",
@@ -10798,10 +11264,10 @@ const MASTER_DB = {
                               "BIO_008",
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "30 mg/kg/24h en 1 prise /j",
+                    "atb_moderee": "30 mg/kg/24h en 1 prise /j",
+                    "atb_severe": "30 mg/kg/24h en 1 prise /j",
+                    "atb_terminale": "30 mg/kg/48h"
           },
           {
                     "dci": "Quetiapine",
@@ -10833,7 +11299,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI chez déments (mortalité ↑). Sédation marquée.",
+                    "source": "RCP Xeroquel ; HAS 2017"
           },
           {
                     "dci": "Quinapril",
@@ -10859,7 +11327,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ajustement si DFG<60",
+                    "source": "RCP Acuitel ; ESC HTA 2023"
           },
           {
                     "dci": "Quinidine",
@@ -10914,7 +11384,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Moins sensible au polymorphisme CYP2C19",
+                    "source": "RCP Pariet ; HAS 2020 IPP"
           },
           {
                     "dci": "Ramipril",
@@ -10940,7 +11412,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Molécule la plus étudiée en cardioprotection (HOPE)",
+                    "source": "RCP Triatec ; ESC HTA/HF 2023"
           },
           {
                     "dci": "Ranitidine",
@@ -10991,10 +11465,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_011"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Traitement curatif des infections à Mycobacterium avium complexe chez les sujets VIH + : poids > 50 kg : 600 mg/j - poids < 50 kg : 450 mg/j Si association avec la Clarithromycine : 300 mg/j",
+                    "atb_moderee": "Traitement curatif des infections à Mycobacterium avium complexe chez les sujets VIH + : poids > 50 kg : 600 mg/j - poids < 50 kg : 450 mg/j Si association avec la Clarithromycine : 300 mg/j",
+                    "atb_severe": "Traitement curatif des infections à Mycobacterium avium complexe chez les sujets VIH + : poids > 50 kg : 600 mg/j - poids < 50 kg : 450 mg/j Si association avec la Clarithromycine : 300 mg/j",
+                    "atb_terminale": "Poids > 50 kg : 300 mg/24h Poids < 50 kg : 450 mg/48h Si association avec la Clarithromycine : 150 mg/j"
           },
           {
                     "dci": "Rifampicine",
@@ -11022,10 +11496,10 @@ const MASTER_DB = {
                               "BIO_010",
                               "BIO_019"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Tuberculose : 8 à 12 mg/kg/24h",
+                    "atb_moderee": "Tuberculose : 8 à 12 mg/kg/24h",
+                    "atb_severe": "Tuberculose : 8 à 12 mg/kg/24h",
+                    "atb_terminale": "Tuberculose : 8 à 12 mg/kg/24h"
           },
           {
                     "dci": "Risedronate",
@@ -11051,7 +11525,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "À jeun, rester debout 30 min",
+                    "source": "RCP Actonel ; HAS 2018"
           },
           {
                     "dci": "Risperidone",
@@ -11083,7 +11559,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Précaution majeure : risque AVC chez déments âgés.",
+                    "source": "RCP Risperdal ; HAS 2017 ; EMA"
           },
           {
                     "dci": "Ritonavir",
@@ -11115,7 +11593,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Faible dose (100 mg/j) pour booster IP. Inhibiteur fort CYP3A4.",
+                    "source": "RCP Norvir ; HAS VIH 2023"
           },
           {
                     "dci": "Rivaroxaban",
@@ -11144,7 +11624,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "À prendre au cours du repas (biodisponibilité ++)",
+                    "source": "RCP Xarelto ; HAS 2023 ; ESC FA 2020"
           },
           {
                     "dci": "Rosuvastatine",
@@ -11172,7 +11654,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Statine la plus puissante. Départ 5 mg/j chez SA ou IRC.",
+                    "source": "RCP Crestor ; ESC prévention 2021"
           },
           {
                     "dci": "Roxithromycine",
@@ -11195,10 +11679,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "150 mg/12h",
+                    "atb_moderee": "150 mg/24h",
+                    "atb_severe": "150 mg/24h",
+                    "atb_terminale": "150 mg/24h"
           },
           {
                     "dci": "Salbutamol",
@@ -11223,7 +11707,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "À la demande en asthme (usage excessif = mauvais contrôle)",
+                    "source": "RCP Ventoline ; GINA 2023"
           },
           {
                     "dci": "Salmeterol",
@@ -11248,7 +11734,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Toujours associé à CI en asthme (jamais seul)",
+                    "source": "RCP Serevent ; GINA 2023"
           },
           {
                     "dci": "Saxagliptine",
@@ -11276,7 +11764,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Réduire à 2,5 mg/j si DFG<50 ou inhibiteurs CYP3A4",
+                    "source": "RCP Onglyza ; HAS DT2 2023"
           },
           {
                     "dci": "Scopolamine",
@@ -11298,7 +11788,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Effets anticholinergiques marqués. Usage palliatif/MAV.",
+                    "source": "RCP Scopoderm"
           },
           {
                     "dci": "Selegiline",
@@ -11350,7 +11842,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "PO : à jeun avec ≤120 mL eau, attendre 30 min",
+                    "source": "RCP Ozempic/Wegovy/Rybelsus ; HAS 2023"
           },
           {
                     "dci": "Sertraline",
@@ -11377,7 +11871,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "ISRS de choix en 1ère intention chez SA",
+                    "source": "RCP Zoloft ; HAS 2017"
           },
           {
                     "dci": "Silodosine",
@@ -11403,7 +11899,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Éjaculation rétrograde fréquente",
+                    "source": "RCP Silodyx ; EAU 2022"
           },
           {
                     "dci": "Simvastatine",
@@ -11430,7 +11928,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "80 mg/j CI si nouveau patient. Max recommandé 40 mg/j en pratique.",
+                    "source": "RCP Zocor ; ESC prévention 2021"
           },
           {
                     "dci": "Sitagliptine",
@@ -11458,7 +11958,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Ajustement DFG : 50 mg si DFG<45 ; 25 mg si DFG<30",
+                    "source": "RCP Januvia ; HAS DT2 2023"
           },
           {
                     "dci": "Sofosbuvir",
@@ -11486,7 +11988,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI avec amiodarone (bradycardie sévère). CI si DFG<30.",
+                    "source": "RCP Sovaldi ; EASL VHC 2020"
           },
           {
                     "dci": "Solifenacine",
@@ -11513,7 +12017,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "5 mg/j si DFG<30 ou inhibiteurs CYP3A4 forts",
+                    "source": "RCP Vesicare ; EAU OAB 2023"
           },
           {
                     "dci": "Sotalol",
@@ -11540,7 +12046,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Initiation hospitalière recommandée. CI si QTc>450ms.",
+                    "source": "RCP Sotalex ; ESC arythmie 2020"
           },
           {
                     "dci": "Spiramycine",
@@ -11563,10 +12071,10 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Per os : 3 MUI/8 à 12h",
+                    "atb_moderee": "Per os : 3 MUI/8 à 12h",
+                    "atb_severe": "Per os : 3 MUI/8 à 12h",
+                    "atb_terminale": "Per os : 3 MUI/8 à 12h"
           },
           {
                     "dci": "Spiramycine + metronidazole",
@@ -11620,7 +12128,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Gynécomastie dose-dépendante",
+                    "source": "RCP Aldactone ; ESC HF 2021"
           },
           {
                     "dci": "Sulfadiazine",
@@ -11645,10 +12155,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Réduction de la posologie",
+                    "atb_moderee": "Aucune donnée",
+                    "atb_severe": "Aucune donnée",
+                    "atb_terminale": "Aucune donnée"
           },
           {
                     "dci": "Sulfate ferreux",
@@ -11674,7 +12184,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Référence carence martiale. Plus d'effets GI.",
+                    "source": "RCP Tardyféron ; HAS 2021"
           },
           {
                     "dci": "Sulpiride",
@@ -11727,7 +12239,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Triptan de référence. Plusieurs voies d'administration.",
+                    "source": "RCP Imigrane ; HAS migraine 2013"
           },
           {
                     "dci": "Tacrolimus",
@@ -11758,7 +12272,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Taux résiduel C0 guidé selon indication et phase post-transplantation.",
+                    "source": "RCP Prograf/Advagraf ; HAS 2022 transplantation"
           },
           {
                     "dci": "Tafluprost",
@@ -11780,7 +12296,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Sans BAC → moins d'irritation oculaire",
+                    "source": "RCP Saflutan ; EGS 2020"
           },
           {
                     "dci": "Tamsulosine",
@@ -11802,7 +12320,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Éjaculation rétrograde possible",
+                    "source": "RCP Josir ; EAU 2022"
           },
           {
                     "dci": "Tapentadol",
@@ -11828,7 +12348,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI si DFG<30. Double mécanisme µ + IRSN.",
+                    "source": "RCP Palexia ; HAS douleur 2022"
           },
           {
                     "dci": "Tedizolide",
@@ -11852,10 +12374,10 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "200 mg/24h",
+                    "atb_moderee": "200 mg/24h",
+                    "atb_severe": "200 mg/24h",
+                    "atb_terminale": "200 mg/24h"
           },
           {
                     "dci": "Teicoplanine",
@@ -11878,10 +12400,10 @@ const MASTER_DB = {
                               "BIO_004",
                               "BIO_009"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Infection peu sévère : DC de 6 mg/kg/12h les 3 premières injections puis 6 mg/kg/24h",
+                    "atb_moderee": "DC de 6 mg/kg/12h les 3 premières injections puis 3 mg/kg/24h ou 6 mg/kg/48h",
+                    "atb_severe": "DC de 6 mg/kg/12h les 3 premières injections puis 2 mg/kg/24h ou 6 mg/kg/72h",
+                    "atb_terminale": "DC de 6 mg/kg/12h les 3 premières injections puis 2 mg/kg/24h ou 6 mg/kg/72h"
           },
           {
                     "dci": "Telmisartan",
@@ -11907,7 +12429,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Longue demi-vie (24h). Élimination biliaire exclusive.",
+                    "source": "RCP Micardis ; ESC HTA 2023"
           },
           {
                     "dci": "Temocilline",
@@ -11928,10 +12452,10 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "1 g/12h",
+                    "atb_moderee": "1 g/12h",
+                    "atb_severe": "1 g/24h",
+                    "atb_terminale": "1 g/24h"
           },
           {
                     "dci": "Terazosine",
@@ -11955,7 +12479,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Phénomène 1ère dose : débuter au coucher",
+                    "source": "RCP Hytrine ; EAU 2022"
           },
           {
                     "dci": "Terbutaline",
@@ -11979,7 +12505,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Disponible en voie SC (crise sévère)",
+                    "source": "RCP Bricanyl ; GINA 2023"
           },
           {
                     "dci": "Theophylline",
@@ -12029,7 +12557,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "ANSM : max 7 jours (génotoxicité potentielle). Usage lombalgies aiguës.",
+                    "source": "RCP Miorel ; ANSM 2013"
           },
           {
                     "dci": "Thioridazine",
@@ -12085,7 +12615,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Élimination rénale → ajustement IRC",
+                    "source": "RCP Tiapridal ; HAS 2017"
           },
           {
                     "dci": "Ticagrelor",
@@ -12113,7 +12645,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Dyspnée non liée à bronchospasme. Pas de prodrogue.",
+                    "source": "RCP Brilique ; ESC SCA 2023"
           },
           {
                     "dci": "Ticlopidine",
@@ -12140,7 +12674,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "NFS bimensuelle obligatoire 3 premiers mois. Quasi-abandonné (PTT, agranulocytose).",
+                    "source": "RCP Ticlid ; ANSM"
           },
           {
                     "dci": "Tiemonium",
@@ -12162,7 +12698,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Peu de passage BHE → moins de confusion centrale",
+                    "source": "RCP Viscéralgine"
           },
           {
                     "dci": "Tigecycline",
@@ -12188,10 +12726,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
+                    "atb_moderee": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
+                    "atb_severe": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
+                    "atb_terminale": "Infection non sévère : DC de 100 mg puis 50 mg/12h"
           },
           {
                     "dci": "Timolol",
@@ -12215,7 +12753,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI asthme/BAV/bradycardie. Absorption systémique.",
+                    "source": "RCP Timoptol ; EGS 2020"
           },
           {
                     "dci": "Tiotropium",
@@ -12239,7 +12779,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Prise unique/j. Respimat : moins d'effets systémiques.",
+                    "source": "RCP Spiriva ; GOLD 2023"
           },
           {
                     "dci": "Tiratricol",
@@ -12264,7 +12806,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Indication : thyroïde résistante aux hormones",
+                    "source": "RCP Teatrois"
           },
           {
                     "dci": "Tirzepatide",
@@ -12292,7 +12836,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Titration toutes les 4 semaines",
+                    "source": "RCP Mounjaro ; HAS 2024"
           },
           {
                     "dci": "Tizanidine",
@@ -12342,10 +12888,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_006"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "3 à 8 mg/kg/j",
+                    "atb_moderee": "3 à 8 mg/kg/j",
+                    "atb_severe": "3 à 8 mg/kg/j",
+                    "atb_terminale": "3 à 8 mg/kg/j"
           },
           {
                     "dci": "Tolterodine",
@@ -12399,7 +12945,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Perte de poids fréquente. Risque lithiase rénale.",
+                    "source": "RCP Epitomax ; HAS 2020"
           },
           {
                     "dci": "Torasemide",
@@ -12426,7 +12974,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Biodisponibilité orale supérieure au furosémide",
+                    "source": "RCP Torem ; ESC HF 2021"
           },
           {
                     "dci": "Tramadol",
@@ -12452,7 +13002,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "CI si épilepsie non contrôlée. Max 300 mg/j chez SA.",
+                    "source": "RCP Topalgic ; HAS douleur 2022"
           },
           {
                     "dci": "Trandolapril",
@@ -12480,7 +13032,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Longue demi-vie → 1 prise/j",
+                    "source": "RCP Odrik ; ESC HTA 2023"
           },
           {
                     "dci": "Travoprost",
@@ -12502,7 +13056,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "1x/soir. Modification pigmentation iris/cils.",
+                    "source": "RCP Travatan ; EGS 2020"
           },
           {
                     "dci": "Trazodone",
@@ -12683,7 +13239,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER (confusion, hallucinations, rétention urinaire, glaucome).",
+                    "source": "RCP Artane ; HAS Parkinson 2016 ; Beers 2023"
           },
           {
                     "dci": "Trimethoprime",
@@ -12706,10 +13264,10 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_009"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Cystite aiguë non compliquée : 300 mg/j en 1 prise, pendant 3 jours",
+                    "atb_moderee": "Aucune donnée",
+                    "atb_severe": "Aucune donnée",
+                    "atb_terminale": "Aucune donnée"
           },
           {
                     "dci": "Trimipramine",
@@ -12738,7 +13296,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER (anticholinergique, QTc, chutes).",
+                    "source": "RCP Surmontil ; HAS 2017 ; Beers 2023"
           },
           {
                     "dci": "Triprolidine",
@@ -12782,7 +13342,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Beers 2023 : À ÉVITER. Même profil que trihexyphénidyle.",
+                    "source": "RCP Lepticur ; HAS Parkinson 2016"
           },
           {
                     "dci": "Trospium",
@@ -12806,7 +13368,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Peu de passage BHE → moins de confusion cognitive que autres antimuscariniques. Préféré chez SA.",
+                    "source": "RCP Ceris ; EAU OAB 2023"
           },
           {
                     "dci": "Umeclidinium",
@@ -12828,7 +13392,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "1 prise quotidienne",
+                    "source": "RCP Incruse ; GOLD 2023"
           },
           {
                     "dci": "Valproate",
@@ -12858,7 +13424,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "TÉRATOGÈNE — CI femme en âge de procréer sans contraception (Accord de soins). Taux 50–100 mg/L.",
+                    "source": "RCP Dépakine ; HAS 2020 ; ANSM"
           },
           {
                     "dci": "Valpromide",
@@ -12916,7 +13484,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Référence IC avec FE préservée",
+                    "source": "RCP Nisis ; ESC HTA/HF 2023"
           },
           {
                     "dci": "Vancomycine",
@@ -12939,10 +13509,10 @@ const MASTER_DB = {
                               "BIO_004",
                               "BIO_009"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
+                    "atb_moderee": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
+                    "atb_severe": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
+                    "atb_terminale": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre"
           },
           {
                     "dci": "Venlafaxine",
@@ -12968,7 +13538,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "HTA dose-dépendante (surtout >150 mg/j). Syndrome de sevrage marqué.",
+                    "source": "RCP Effexor ; HAS 2017"
           },
           {
                     "dci": "Verapamil",
@@ -12994,7 +13566,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur modéré CYP3A4 + P-gp. Nombreuses interactions.",
+                    "source": "RCP Isoptine ; ESC 2023"
           },
           {
                     "dci": "Vildagliptine",
@@ -13022,7 +13596,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Surveillance hépatique renforcée (tous les 3 mois la 1ère année)",
+                    "source": "RCP Galvus ; HAS DT2 2023"
           },
           {
                     "dci": "Warfarine",
@@ -13050,7 +13626,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Référence internationale. Antidote : vitamine K.",
+                    "source": "RCP Coumadine ; HAS 2008 AVK ; ESC FA 2020"
           },
           {
                     "dci": "Zofenopril",
@@ -13076,7 +13654,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Propriétés antioxydantes spécifiques",
+                    "source": "RCP Zofenil ; ESC HTA 2023"
           },
           {
                     "dci": "Zolmitriptan",
@@ -13102,7 +13682,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Formes PO et spray nasal. Max 10 mg/24h.",
+                    "source": "RCP Zomig ; HAS migraine 2013"
           },
           {
                     "dci": "Zolpidem",
@@ -13127,7 +13709,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Dose SA : 5 mg (ANSM). Durée max 4 sem.",
+                    "source": "RCP Stilnox ; ANSM ; HAS BZD 2022"
           },
           {
                     "dci": "Zonisamide",
@@ -13155,7 +13739,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Perte de poids fréquente. Risque lithiase.",
+                    "source": "RCP Zonegran ; HAS 2020"
           },
           {
                     "dci": "Zopiclone",
@@ -13180,7 +13766,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Durée max 4 sem",
+                    "source": "RCP Imovane ; HAS BZD 2022"
           },
           {
                     "dci": "Zuclopenthixol",
@@ -13210,7 +13798,9 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "notes_cliniques": "Acuphase (acétate) : agitation aiguë — effet 72h",
+                    "source": "RCP Clopixol ; HAS 2017"
           },
           {
                     "dci": "Cefepime",
@@ -13234,10 +13824,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_012"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "Infection respiratoire communautaire, pyélonéphrite non compliquée : 1 g/12h *",
+                    "atb_moderee": "Infection respiratoire communautaire, pyélonéphrite non compliquée : 1 g/12h *",
+                    "atb_severe": "1 g/24h",
+                    "atb_terminale": "1 g/24h"
           },
           {
                     "dci": "Cefpodoxime",
@@ -13258,10 +13848,10 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "100 à 200 mg/12 à 24h",
+                    "atb_moderee": "100 à 200 mg/12 à 24h",
+                    "atb_severe": "100 à 200 mg/24h",
+                    "atb_terminale": "100 à 200 mg/24h"
           },
           {
                     "dci": "Ceftaroline",
@@ -13284,10 +13874,10 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_038"
                     ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_legere": "600 mg/12h",
+                    "atb_moderee": "400 mg/12h",
+                    "atb_severe": "300 mg/12h",
+                    "atb_terminale": "200 mg/12h"
           },
           {
                     "dci": "Colistine",
