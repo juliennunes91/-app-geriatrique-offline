@@ -727,7 +727,7 @@ const MASTER_DB = {
             "BIO_CIBLE": "BIO_001",
             "CONDITION": "< 3.5 mmol/L",
             "GRAVITE": "Modérée à Sévère",
-            "IMPUTABILITE_FREQ": "Diurétiques de l'anse (Furosémide), Thiazidiques, Amphotéricine B, Corticoïdes",
+            "IMPUTABILITE_FREQ": "Diurétique de l'anse, Thiazidique, Amphotéricine B, Corticoïdes, Laxatifs stimulants",
             "ID_PATHO_ASSOC": "PAT_001, PAT_006, PAT_005",
             "BIO_SECONDAIRE": "BIO_006, BIO_031",
             "CONDUITE_IMMEDIATE": "Supplémentation K+ per os ou IV (max 40 mEq/h IV), corriger hypomagnésémie associée, adapter diurétique",

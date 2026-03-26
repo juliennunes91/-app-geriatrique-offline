@@ -241,7 +241,7 @@ const GeriaEngineV2 = (() => {
         if (c.bio) {
             for (const [bioId, crit] of Object.entries(c.bio)) {
                 const val = ctx.bioValues && ctx.bioValues[bioId];
-                if (!val || val <= 0) continue;
+                if (!val || val <= 0) return false; // Bio requise mais non renseignée → ne pas déclencher
                 if (crit.op === '<' && !(val < crit.val)) return false;
                 if (crit.op === '>' && !(val > crit.val)) return false;
                 if (crit.op === '<=' && !(val <= crit.val)) return false;

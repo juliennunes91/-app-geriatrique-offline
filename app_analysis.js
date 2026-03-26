@@ -249,8 +249,8 @@ function analyserPrescription() {
             cpClass = cpManualVal; // 'A', 'B' ou 'C'
             cpScore = cpClass === 'A' ? 6 : (cpClass === 'B' ? 8 : 12); // Score estimé médian
             cpSource = '(saisie manuelle)';
-        } else {
-            // Calcul automatique à partir des 5 items
+        } else if (isChecked('chkFoie')) {
+            // Calcul automatique à partir des 5 items — uniquement si hépatopathie cochée
             cpScore = getVal('cpBili') + getVal('cpAlb') + getVal('cpTp') + getVal('cpAscite') + getVal('cpEnceph');
             if (cpScore >= 6) {
                 cpClass = cpScore <= 6 ? 'A' : (cpScore <= 9 ? 'B' : 'C');
@@ -329,7 +329,7 @@ function analyserPrescription() {
         try {
             let s = MASTER_DB.SYNDROMES[syndId]; if(!s) return;
             let causes = [];
-            if(s.IMPUTABILITE_FREQ) s.IMPUTABILITE_FREQ.split(',').map(x=>x.trim()).forEach(c => { if(patientHasMedClass(c)) causes.push(c); });
+            if(s.IMPUTABILITE_FREQ) s.IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(x=>x).forEach(c => { if(patientHasMedClass(c)) causes.push(c); });
             let imputStr = causes.length > 0 ? `<br><em>Imputabilité iatrogène détectée :</em> <b>${causes.join(', ').toUpperCase()}</b>` : '';
             let isSevere = String(s.GRAVITE).includes('Sévère') || String(s.GRAVITE).includes('Severe');
             addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${s.NOM_SYNDROME}</strong>${imputStr}<br><em>Conduite :</em> ${s.CONDUITE_IMMEDIATE || 'Surveillance'}</div>`, 'bio');
@@ -703,7 +703,7 @@ function analyserPrescription() {
                             let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("DECONSEILLE") || niveau.includes("MAJEUR");
                             if(isDanger) groupedAnsm[pairName].isDanger = true;
 
-                            if(!groupedAnsm[pairName].raw.some(ex => ex.desc.toLowerCase() === desc.toLowerCase())) {
+                            if(!groupedAnsm[pairName].raw.some(ex => ex.source === 'ANSM' && ex.level === niveau && ex.desc.toLowerCase() === desc.toLowerCase())) {
                                 groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: 'ANSM' });
                             }
                         }
@@ -742,8 +742,18 @@ function analyserPrescription() {
 
         for (const [pair, data] of Object.entries(groupedAnsm)) {
             let boxClass = data.isDanger ? "danger alert-stopp" : "warning";
-            let itemsHtml = data.raw.map(x => `<li style="margin-bottom: 6px;"><span class="${x.isDanger ? 'text-danger' : 'text-dark'} fw-bold">${x.isDanger ? '🔴' : '🟠'} ${x.level}</span><br><span class="small text-muted">${x.desc}</span></li>`).join('');
-            addAlert('alertes-ansm', `<div class="alert alert-${boxClass} shadow-sm"><strong style="font-size:1.05em;">${data.isDanger ? '🚨' : '⚡'} Risques ANSM : ${pair}</strong><ul class="mb-0 ps-3">${itemsHtml}</ul></div>`, 'ansm');
+            // Séparer les sources ANSM et Micromedex/BNF
+            let ansmItems = data.raw.filter(x => x.source === 'ANSM');
+            let otherItems = data.raw.filter(x => x.source !== 'ANSM');
+            let itemsHtml = '';
+            if (ansmItems.length > 0) {
+                itemsHtml += ansmItems.map(x => `<li style="margin-bottom: 6px;"><span class="${x.isDanger ? 'text-danger' : 'text-dark'} fw-bold">${x.isDanger ? '🔴' : '🟠'} ${x.level}</span> <span class="badge bg-primary" style="font-size:0.6em;">ANSM</span><br><span class="small text-muted">${x.desc}</span></li>`).join('');
+            }
+            if (otherItems.length > 0) {
+                itemsHtml += otherItems.map(x => `<li style="margin-bottom: 6px;"><span class="${x.isDanger ? 'text-danger' : 'text-dark'} fw-bold">${x.isDanger ? '🔴' : '🟠'} ${x.level}</span> <span class="badge bg-info" style="font-size:0.6em;">${x.source}</span><br><span class="small text-muted">${x.desc}</span></li>`).join('');
+            }
+            let sourceLabel = ansmItems.length > 0 && otherItems.length > 0 ? 'ANSM + Micromedex' : (ansmItems.length > 0 ? 'ANSM' : 'Micromedex');
+            addAlert('alertes-ansm', `<div class="alert alert-${boxClass} shadow-sm"><strong style="font-size:1.05em;">${data.isDanger ? '🚨' : '⚡'} Interactions ${sourceLabel} : ${pair}</strong><ul class="mb-0 ps-3">${itemsHtml}</ul></div>`, 'ansm');
         }
     } catch(e) { console.error("Erreur Interactions", e); }
 
@@ -804,16 +814,32 @@ function analyserPrescription() {
     });
 
     // 🧪 INJECTION DES PROTOCOLES DE SURVEILLANCE BIOLOGIQUE PAR PATHOLOGIE (V2)
+    // Regroupement par pathologie pour lisibilité
     if (typeof getRequiredBioMonitoring === 'function' && activeComorbs.length > 0) {
         try {
             const bioMonitors = getRequiredBioMonitoring(activeComorbs);
+            // Regrouper par pathologie
+            const byPatho = {};
             for (const [bioId, data] of Object.entries(bioMonitors)) {
-                let pNames = data.pathos.map(p => MASTER_DB.PATHOLOGIES[p]?.NOM_STANDARD || p).join(', ');
-                let html = `<div class="alert alert-info border-info shadow-sm">
-                    <strong class="text-info">🧪 Biologie Recommandée : ${MASTER_DB.BIOLOGIE[bioId]?.NOM_STANDARD || bioId}</strong>
-                    <br><span class="small"><b>Pathologie(s) :</b> ${pNames}</span>
-                    <br><span class="small"><b>Fréquence :</b> ${data.frequences.join(' / ')}</span>
-                    <br><span class="badge bg-secondary mt-1" style="font-size:0.65em;">${data.sources.join(', ')}</span>
+                data.pathos.forEach((p, i) => {
+                    if (!byPatho[p]) byPatho[p] = [];
+                    byPatho[p].push({
+                        bioId,
+                        nom: MASTER_DB.BIOLOGIE[bioId]?.NOM_STANDARD || bioId,
+                        frequence: data.frequences[i] || data.frequences[0] || '',
+                        source: data.sources[i] || data.sources[0] || ''
+                    });
+                });
+            }
+            for (const [patId, bios] of Object.entries(byPatho)) {
+                let patName = MASTER_DB.PATHOLOGIES[patId]?.NOM_STANDARD || patId;
+                let rows = bios.map(b => `<tr><td class="small">${b.nom}</td><td class="small text-muted">${b.frequence}</td></tr>`).join('');
+                let sources = [...new Set(bios.map(b => b.source).filter(Boolean))].join(', ');
+                let html = `<div class="alert alert-info border-info shadow-sm py-2 px-2">
+                    <strong class="text-info" style="font-size:0.95em;">🧪 Surveillance biologique — ${patName}</strong>
+                    ${sources ? `<span class="badge bg-secondary float-end" style="font-size:0.6em;">${sources}</span>` : ''}
+                    <table class="table table-sm table-borderless mb-0 mt-1" style="font-size:0.88em;">
+                    <tbody>${rows}</tbody></table>
                 </div>`;
                 addAlert('alertes-suivi', html, 'suivi');
             }
@@ -903,11 +929,12 @@ function analyserPrescription() {
                         ${trt.niveau_preuve ? ` <span class="badge bg-success" style="font-size:0.6em;">Niveau ${trt.niveau_preuve}</span>` : ''}
                         ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;" title="${srcEbm}">${srcEbm.length > 40 ? srcEbm.substring(0,40)+'...' : srcEbm}</span>` : ''}
                         ${trt.dci_exemples ? `<br><small class="text-muted">DCI : ${trt.dci_exemples.join(', ')}</small>` : ''}
-                        <br><small>${trt.indication}</small>
+                        ${trt.indication ? `<br><small>${trt.indication}</small>` : (trt.posologie ? `<br><small>${trt.posologie}</small>` : '')}
                         ${composantsHtml}
                         ${trt.condition ? `<br><small class="text-muted fst-italic">Condition : ${trt.condition}</small>` : ''}
                         ${trt.note ? `<br><small class="text-info">${trt.note}</small>` : ''}
                         ${trt.contre_indication_dfg ? `<br><small class="text-danger">${trt.contre_indication_dfg}</small>` : ''}
+                        ${trt.ref && !srcEbm ? ` <span class="badge bg-secondary float-end" style="font-size:0.6em;">${trt.ref}</span>` : ''}
                     </div>`;
                 });
             }
@@ -963,10 +990,10 @@ function analyserPrescription() {
                 }
             }
 
-            // EVITER
+            // EVITER (liste déroulante — médicaments non prescrits)
             const eviter = rule.TRAITEMENTS.EVITER;
             if (eviter && eviter.length > 0) {
-                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-danger small">A EVITER</strong></div>`;
+                let eviterItems = '';
                 eviter.forEach(trt => {
                     let srcEbm = '';
                     if (rule.SOURCES_EBM && rule.SOURCES_EBM.EVITER) {
@@ -976,15 +1003,16 @@ function analyserPrescription() {
                             }
                         }
                     }
-                    guidelinesHtml += `<div class="alert alert-danger py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #dc3545;">
+                    eviterItems += `<div class="alert alert-danger py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #dc3545;">
                         <strong class="small">${trt.classe}</strong>
                         ${trt.gravite ? ` <span class="badge bg-${trt.gravite === 'CONTRE-INDICATION' || String(trt.gravite).includes('ABSOLUE') ? 'danger' : 'warning text-dark'}" style="font-size:0.6em;">${trt.gravite}</span>` : ''}
                         ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;" title="${srcEbm}">${srcEbm.length > 40 ? srcEbm.substring(0,40)+'...' : srcEbm}</span>` : ''}
                         ${trt.ref_stopp ? ` <span class="badge bg-secondary float-end me-1" style="font-size:0.6em;">${trt.ref_stopp}</span>` : ''}
-                        <br><small>${trt.raison}</small>
+                        ${trt.raison ? `<br><small>${trt.raison}</small>` : ''}
                         ${trt.condition ? `<br><small class="text-muted fst-italic">${trt.condition}</small>` : ''}
                     </div>`;
                 });
+                guidelinesHtml += `<details class="mb-2 mt-2"><summary class="text-danger small fw-bold" style="cursor:pointer;">A EVITER (${eviter.length}) — cliquer pour dérouler</summary><div class="mt-1">${eviterItems}</div></details>`;
             }
 
             // DEPRESCRIPTION (soins palliatifs, fragilité)
