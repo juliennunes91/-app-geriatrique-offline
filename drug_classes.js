@@ -9,59 +9,74 @@
 const DRUG_CLASSES = {
 
     ains: {
-        aliases: ['ains', 'antiinflammatoire', 'antiinflammatoirenonsteroidien'],
+        aliases: ['ains', 'antiinflammatoire', 'antiinflammatoirenonsteroidien', 'antiinflammatoiresnonsteroidien', 'autresantiinflammatoiresnonsteroidien'],
         classeMatch: ['ains'],
         dcis: ['ibuprofene', 'ketoprofene', 'naproxene', 'diclofenac', 'piroxicam', 'meloxicam', 'celecoxib', 'etoricoxib', 'indometacine', 'aceclofenac']
     },
     iec: {
-        aliases: ['iec', 'enzymedeconversion', 'inhibiteurenzymedelaconversion'],
+        aliases: ['iec', 'enzymedeconversion', 'inhibiteurenzymedelaconversion', 'inhibiteursdelenzymedelaconversion', 'inhibiteursdelenzymedelaconversion'],
         classeMatch: ['iec'],
         dciSuffix: ['pril'],
         dcis: []
     },
     ara2: {
-        aliases: ['ara2', 'ara 2', 'sartan', 'angiotensine'],
+        aliases: ['ara2', 'ara2', 'sartan', 'angiotensine', 'antagonistesdesrecepteursdelangiotensineii', 'antagonistesdesrecepteursdelangiotensine'],
         classeMatch: ['ara2'],
         dciSuffix: ['sartan'],
         dcis: []
     },
     betabloquant: {
-        aliases: ['beta', 'beta bloquant', 'betabloquant', 'betabloquants'],
+        aliases: ['beta', 'betabloquant', 'betabloquants', 'betabloquantsdanslinsuffisancecardiaque'],
         classeMatch: ['beta'],
         dcis: ['bisoprolol', 'metoprolol', 'nebivolol', 'carvedilol', 'atenolol', 'propranolol', 'acebutolol', 'betaxolol', 'sotalol', 'nadolol', 'pindolol', 'timolol', 'celiprolol', 'labetalol']
     },
     diuretique: {
-        aliases: ['diuretique', 'diuretiques'],
-        classeMatch: ['diuretique', 'diuretique'],
-        dcis: ['furosemide', 'bumetanide', 'hydrochlorothiazide', 'indapamide', 'spironolactone', 'altizide', 'chlortalidone', 'amiloride', 'triamterene', 'eplerenone']
+        aliases: ['diuretique', 'diuretiques', 'diuretiqueshypokaliemiant', 'autreshypokaliemiant', 'hypokaliemiant'],
+        classeMatch: ['diuretique'],
+        dcis: ['furosemide', 'bumetanide', 'hydrochlorothiazide', 'indapamide', 'spironolactone', 'altizide', 'chlortalidone', 'amiloride', 'triamterene', 'eplerenone', 'piretanide', 'torasemide', 'cicletanide']
+    },
+    diuretique_anse: {
+        aliases: ['diuretiquedelanse', 'diuretiquesdelanse'],
+        classeMatch: ['diuretiquedelanse'],
+        dcis: ['furosemide', 'bumetanide', 'piretanide', 'torasemide']
+    },
+    diuretique_thiazidique: {
+        aliases: ['diuretiquethiazidique', 'diuretiquesthiazidiquesetapparente'],
+        classeMatch: ['thiazid'],
+        dcis: ['hydrochlorothiazide', 'indapamide', 'chlortalidone', 'cicletanide']
     },
     anticoagulant: {
-        aliases: ['anticoag', 'anticoagulant', 'aod', 'avk'],
+        aliases: ['anticoag', 'anticoagulant', 'aod', 'avk', 'antivitaminesk', 'anticoagulantsoraux', 'autresanticoagulantsoraux', 'antiinfectieuxethemostase'],
         classeMatch: ['anticoag', 'aod', 'avk'],
         dcis: ['apixaban', 'rivaroxaban', 'dabigatran', 'edoxaban', 'acenocoumarol', 'warfarine', 'fluindione', 'enoxaparine', 'tinzaparine', 'dalteparine', 'fondaparinux']
     },
+    heparine: {
+        aliases: ['heparine', 'heparinesdosescurativesetousujetage'],
+        classeMatch: ['hbpm', 'heparine'],
+        dcis: ['enoxaparine', 'tinzaparine', 'dalteparine', 'fondaparinux']
+    },
     antiagregant: {
-        aliases: ['antiagreg', 'antiagregant', 'aspirine', 'acetylsalicylique'],
+        aliases: ['antiagreg', 'antiagregant', 'aspirine', 'acetylsalicylique', 'antiagregantplaquettaire', 'antiagregantplaquettaires'],
         classeMatch: ['antiagreg', 'antiagr'],
         dcis: ['acideacetylsalicylique', 'clopidogrel', 'prasugrel', 'ticagrelor', 'ticlopidine', 'dipyridamole']
     },
     antipsychotique: {
-        aliases: ['antipsychotique', 'neuroleptique'],
+        aliases: ['antipsychotique', 'neuroleptique', 'neuroleptiques', 'neuroleptiquesantiemetique'],
         classeMatch: ['antipsychotique', 'neuroleptique'],
-        dcis: ['quetiapine', 'risperidone', 'olanzapine', 'haloperidol', 'aripiprazole', 'clozapine', 'tiapride', 'loxapine', 'cyamemazine']
+        dcis: ['quetiapine', 'risperidone', 'olanzapine', 'haloperidol', 'aripiprazole', 'clozapine', 'tiapride', 'loxapine', 'cyamemazine', 'paliperidone', 'amisulpride', 'sulpiride', 'pipamperone']
     },
     benzodiazepine: {
-        aliases: ['benzodiazepine', 'benzodiazepines'],
+        aliases: ['benzodiazepine', 'benzodiazepines', 'benzodiazepinesetapparente'],
         classeMatch: ['benzodiaz', 'hypnotique'],
         dcis: ['diazepam', 'lorazepam', 'oxazepam', 'bromazepam', 'alprazolam', 'clonazepam', 'clorazepate', 'prazepam', 'zolpidem', 'zopiclone', 'lormetazepam', 'nitrazepam', 'midazolam']
     },
     isrs: {
-        aliases: ['isrs', 'ssri'],
+        aliases: ['isrs', 'ssri', 'inhibiteursselectifsdelarecapturedelaserotonine'],
         classeMatch: ['isrs', 'ssri'],
         dcis: ['citalopram', 'escitalopram', 'sertraline', 'paroxetine', 'fluoxetine', 'fluvoxamine']
     },
     irsn: {
-        aliases: ['irsn', 'snri'],
+        aliases: ['irsn', 'snri', 'medicamentsmixtesadrenergiquesserotoninergiqu'],
         classeMatch: [],
         dcis: ['venlafaxine', 'duloxetine', 'milnacipran', 'desvenlafaxine']
     },
@@ -71,28 +86,33 @@ const DRUG_CLASSES = {
         dcis: ['citalopram', 'escitalopram', 'sertraline', 'paroxetine', 'fluoxetine', 'venlafaxine', 'duloxetine', 'mianserine', 'mirtazapine', 'amitriptyline', 'fluvoxamine', 'milnacipran']
     },
     antidepresseur_tricyclique: {
-        aliases: ['antidepresseurtricyclique'],
-        classeMatch: ['tricyclique'],
-        dcis: ['amitriptyline', 'clomipramine', 'imipramine', 'doxepine', 'nortriptyline']
+        aliases: ['antidepresseurtricyclique', 'antidepresseursimipraminique', 'imipraminique'],
+        classeMatch: ['tricyclique', 'imipraminique'],
+        dcis: ['amitriptyline', 'clomipramine', 'imipramine', 'doxepine', 'nortriptyline', 'trimipramine', 'dosulpine']
     },
     opioid: {
-        aliases: ['opioid', 'opioide', 'opiace'],
-        classeMatch: ['opio'],
-        dcis: ['morphine', 'oxycodone', 'fentanyl', 'buprenorphine', 'tramadol', 'codeine', 'pethidine', 'methadone']
+        aliases: ['opioid', 'opioide', 'opiace', 'morphinique'],
+        classeMatch: ['opio', 'morphinique'],
+        dcis: ['morphine', 'oxycodone', 'fentanyl', 'buprenorphine', 'tramadol', 'codeine', 'pethidine', 'methadone', 'alfentanil', 'sufentanil']
     },
     statine: {
-        aliases: ['statine', 'statines'],
+        aliases: ['statine', 'statines', 'inhibiteursdelhmgcoareductasestatine', 'inhibiteursdelhmgcoareductase'],
         classeMatch: ['statine'],
         dciSuffix: ['statine', 'vastatine'],
         dcis: ['atorvastatine', 'simvastatine', 'pravastatine', 'rosuvastatine', 'fluvastatine']
     },
     ipp: {
-        aliases: ['ipp', 'inhibiteurpompe'],
+        aliases: ['ipp', 'inhibiteurpompe', 'antisecretoiresinhibiteursdelapompeaproton'],
         classeMatch: ['ipp', 'inhibiteurpompe'],
         dcis: ['omeprazole', 'esomeprazole', 'lansoprazole', 'pantoprazole', 'rabeprazole']
     },
+    anti_h2: {
+        aliases: ['antih2', 'antisecretoiresantihistaminiquesh2'],
+        classeMatch: ['antih2', 'antiulcereux'],
+        dcis: ['cimetidine', 'ranitidine', 'famotidine']
+    },
     corticoide: {
-        aliases: ['corticoide', 'corticoidesystemique'],
+        aliases: ['corticoide', 'corticoidesystemique', 'corticoides', 'corticoidesvoi', 'glucocorticoidesparvoieintraarticulaireetmetabolise', 'corticoidesvoieintraarticulaire', 'corticoidesmetabolisenotammentinhale'],
         classeMatch: ['corticoidesystemique', 'corticoide'],
         dcis: ['prednisone', 'prednisolone', 'methylprednisolone', 'dexamethasone', 'betamethasone', 'hydrocortisone']
     },
@@ -112,7 +132,7 @@ const DRUG_CLASSES = {
         dcis: ['canagliflozin', 'dapagliflozin', 'empagliflozin', 'ertugliflozin']
     },
     inhibiteur_calcique: {
-        aliases: ['inhibiteurcalcique', 'calcique'],
+        aliases: ['inhibiteurcalcique', 'calcique', 'antagonistesdescanauxcalcique', 'antagonistesdescanauxcalciques', 'antagonistesdescanaux'],
         classeMatch: ['inhibiteurcalcique', 'calcique'],
         dcis: ['amlodipine', 'nifedipine', 'felodipine', 'lercanidipine', 'nicardipine', 'diltiazem', 'verapamil', 'manidipine']
     },
@@ -126,13 +146,28 @@ const DRUG_CLASSES = {
         classeMatch: ['macrolide'],
         dcis: ['clarithromycine', 'erythromycine', 'azithromycine', 'roxithromycine', 'spiramycine']
     },
+    fluoroquinolone: {
+        aliases: ['fluoroquinolone', 'fluoroquinolones'],
+        classeMatch: ['fluoroquinolone'],
+        dcis: ['ciprofloxacine', 'ofloxacine', 'levofloxacine', 'moxifloxacine', 'norfloxacine']
+    },
+    cycline: {
+        aliases: ['cycline', 'cyclines'],
+        classeMatch: ['cycline', 'tetracycline'],
+        dcis: ['doxycycline', 'minocycline', 'tetracycline', 'lymecycline']
+    },
+    aminoside: {
+        aliases: ['aminoside', 'aminosides'],
+        classeMatch: ['aminoside', 'aminoglycoside'],
+        dcis: ['gentamicine', 'amikacine', 'tobramycine', 'netilmicine']
+    },
     inducteur_enzymatique: {
-        aliases: ['inducteurenzymatique'],
+        aliases: ['inducteurenzymatique', 'inducteursenzymatique', 'inducteursenzymatiquespuissant'],
         classeMatch: [],
         dcis: ['rifampicine', 'rifabutine', 'millepertuis', 'carbamazepine', 'phenytoine', 'phenobarbital', 'primidone', 'efavirenz', 'nevirapine', 'bosentan', 'enzalutamide']
     },
     inhibiteur_cyp3a4: {
-        aliases: ['inhibiteurcyp3a4'],
+        aliases: ['inhibiteurcyp3a4', 'inhibiteurspuissantsducyp3a4'],
         classeMatch: [],
         dcis: ['ritonavir', 'clarithromycine', 'erythromycine', 'telithromycine', 'itraconazole', 'ketoconazole', 'posaconazole', 'voriconazole', 'idelalisib', 'cobicistat', 'jusdepamplemousse', 'pamplemousse']
     },
@@ -140,6 +175,116 @@ const DRUG_CLASSES = {
         aliases: ['inhibiteurprotease'],
         classeMatch: [],
         dcis: ['darunavir', 'atazanavir', 'lopinavir', 'ritonavir']
+    },
+    sulfamide_hypoglycemiant: {
+        aliases: ['sulfamidehypoglycemiant', 'sulfamideshypoglycemiant'],
+        classeMatch: ['sulfamidehypoglycemiant'],
+        dcis: ['gliclazide', 'glibenclamide', 'glimepiride', 'glipizide']
+    },
+    glinide: {
+        aliases: ['glinide', 'glinides'],
+        classeMatch: ['glinide'],
+        dcis: ['repaglinide', 'nateglinide']
+    },
+    immunosuppresseur: {
+        aliases: ['immunosuppresseur', 'immunosuppresseurs'],
+        classeMatch: ['immunosuppresseur'],
+        dcis: ['ciclosporine', 'tacrolimus', 'sirolimus', 'everolimus', 'mycophenolate', 'azathioprine', 'methotrexate', 'leflunomide']
+    },
+    antiparkinsonien_anticholinergique: {
+        aliases: ['antiparkinsonienanticholinergique', 'antiparkinsoniensanticholinergique', 'antiparkinsonienanticholi', 'medicamentsatropinique'],
+        classeMatch: ['antiparkinsonienanticholi'],
+        dcis: ['trihexyphenidyle', 'biperidene', 'tropatepine']
+    },
+    anticholinesterasique: {
+        aliases: ['anticholinesterasique', 'anticholinesterasiques'],
+        classeMatch: ['acetylcholinesterase'],
+        dcis: ['donepezil', 'rivastigmine', 'galantamine']
+    },
+    antihypertenseur_central: {
+        aliases: ['antihypertenseurcentral', 'antihypertenseurscentraux'],
+        classeMatch: ['antihypertenseurcentral'],
+        dcis: ['clonidine', 'moxonidine', 'rilmenidine', 'methyldopa']
+    },
+    torsadogene: {
+        aliases: ['torsadogene', 'substancessusceptiblesdedonnerdestorsadesdepointe', 'substancessusceptiblesdedonnerdestorsade'],
+        classeMatch: [],
+        dcis: ['amiodarone', 'sotalol', 'dronedarone', 'haloperidol', 'chlorpromazine', 'citalopram', 'escitalopram', 'ondansetron', 'domperidone', 'hydroxychloroquine', 'moxifloxacine', 'erythromycine', 'clarithromycine', 'methadone', 'fluconazole', 'pimozide']
+    },
+    bradycardisant: {
+        aliases: ['bradycardisant', 'bradycardisants'],
+        classeMatch: [],
+        dcis: ['bisoprolol', 'metoprolol', 'nebivolol', 'carvedilol', 'atenolol', 'propranolol', 'sotalol', 'diltiazem', 'verapamil', 'amiodarone', 'dronedarone', 'digoxine', 'ivabradine', 'donepezil', 'rivastigmine', 'galantamine', 'clonidine']
+    },
+    hormone_thyroidienne: {
+        aliases: ['hormonethyroidienne', 'hormonesthyroidiennes'],
+        classeMatch: ['thyroidien'],
+        dcis: ['levothyroxine', 'liothyronine']
+    },
+    fibrate: {
+        aliases: ['fibrate', 'fibrates'],
+        classeMatch: ['fibrate'],
+        dcis: ['fenofibrate', 'gemfibrozil', 'bezafibrate', 'ciprofibrate']
+    },
+    dopaminergique: {
+        aliases: ['dopaminergique', 'dopaminergiques'],
+        classeMatch: ['dopaminergique', 'agonistedopaminergique'],
+        dcis: ['levodopa', 'ropinirole', 'pramipexole', 'rotigotine', 'piribedil', 'bromocriptine', 'amantadine']
+    },
+    triptan: {
+        aliases: ['triptan', 'triptans'],
+        classeMatch: ['triptan'],
+        dcis: ['sumatriptan', 'zolmitriptan', 'rizatriptan', 'almotriptan', 'eletriptan', 'naratriptan', 'frovatriptan']
+    },
+    sedatif: {
+        aliases: ['sedatif', 'medicamentssedatif'],
+        classeMatch: [],
+        dcis: ['diazepam', 'lorazepam', 'oxazepam', 'bromazepam', 'alprazolam', 'zolpidem', 'zopiclone', 'hydroxyzine', 'doxylamine', 'alimemazine', 'promethazine']
+    },
+    hypotenseur_orthostatique: {
+        aliases: ['hypotenseurorthostatique', 'medicamentsaloriginedunehypotensionorthostatique', 'medicamentsaloriginedunehypotension'],
+        classeMatch: [],
+        dcis: ['doxazosine', 'prazosine', 'tamsulosine', 'alfuzosine', 'clonidine', 'moxonidine']
+    },
+    atropinique: {
+        aliases: ['atropinique', 'medicamentsatropiniques', 'medicamentaeffetantimuscarinic'],
+        classeMatch: ['anticholinergique', 'atropinique'],
+        dcis: ['trihexyphenidyle', 'biperidene', 'tropatepine', 'oxybutynine', 'solifenacine', 'fesoterodine', 'tolterodin', 'amitriptyline', 'clomipramine', 'imipramine', 'hydroxyzine', 'doxylamine', 'alimemazine', 'promethazine', 'chlorpromazine', 'cyamemazine', 'clozapine', 'quetiapine', 'scopolamine', 'atropine', 'ipratropium', 'tiotropium']
+    },
+    imao: {
+        aliases: ['imao', 'imaoreversible', 'imaoreversibleycomprisoxazolidinonesetbleudemethylene', 'imaoreversiblesinhibiteursdelamonoamineoxydas', 'imaobnonselecif'],
+        classeMatch: ['imao'],
+        dcis: ['phenelzine', 'tranylcypromine', 'iproniazide', 'moclobemide', 'linezolide', 'selegiline', 'rasagiline', 'safinamide']
+    },
+    serotoninergique: {
+        aliases: ['serotoninergique', 'medicamentsserotoninergiqu', 'medicamentsserotonergique'],
+        classeMatch: ['isrs', 'irsn', 'ssri'],
+        dcis: ['citalopram', 'escitalopram', 'sertraline', 'paroxetine', 'fluoxetine', 'fluvoxamine', 'venlafaxine', 'duloxetine', 'milnacipran', 'amitriptyline', 'clomipramine', 'imipramine', 'tramadol', 'triptans', 'linezolide', 'mirtazapine']
+    },
+    digitalique: {
+        aliases: ['digitalique', 'digitalepur', 'digitaliques'],
+        classeMatch: ['digitalique'],
+        dcis: ['digoxine', 'digitoxine']
+    },
+    lithium: {
+        aliases: ['lithium'],
+        classeMatch: ['lithium'],
+        dcis: ['lithium']
+    },
+    antidiabetique: {
+        aliases: ['antidiabetique', 'antidiabetiques', 'medicamentssusceptiblesdedonnerdeshypoglycemie'],
+        classeMatch: ['antidiabetique', 'diabete'],
+        dcis: ['metformine', 'gliclazide', 'glibenclamide', 'glimepiride', 'glipizide', 'repaglinide', 'sitagliptine', 'vildagliptine', 'saxagliptine', 'linagliptine', 'canagliflozin', 'dapagliflozin', 'empagliflozin', 'liraglutide', 'semaglutide', 'dulaglutide', 'insuline', 'pioglitazone', 'acarbose']
+    },
+    potassium: {
+        aliases: ['potassium', 'selsdepotassium', 'hyperkaliemiant', 'medicamentshyperkaliemiant'],
+        classeMatch: [],
+        dcis: ['potassium']
+    },
+    antiarythmique: {
+        aliases: ['antiarythmique', 'antiarythmiques'],
+        classeMatch: ['antiarythmique'],
+        dcis: ['amiodarone', 'dronedarone', 'flecainide', 'propafenone', 'sotalol', 'lidocaine', 'mexiletine']
     }
 };
 
@@ -156,17 +301,22 @@ const DRUG_CLASSES = {
  */
 function matchesDrugClass(dci, classe, key) {
     // Recherche directe dans le référentiel
+    let foundAlias = false;
     for (const [classId, def] of Object.entries(DRUG_CLASSES)) {
-        if (def.aliases.some(a => key === a || key.includes(a))) {
+        // Match alias : exact, ou le key contient l'alias (min 4 car pour éviter faux positifs)
+        const aliasMatch = def.aliases.some(a => key === a || a === key || (a.length >= 4 && key.includes(a)) || (key.length >= 4 && a.includes(key)));
+        if (aliasMatch) {
+            foundAlias = true;
             // Match par classe
             if (def.classeMatch.some(cm => classe.includes(cm))) return true;
             // Match par DCI exacte
             if (def.dcis.some(d => dci.includes(d))) return true;
             // Match par suffixe DCI
             if (def.dciSuffix && def.dciSuffix.some(s => dci.includes(s))) return true;
-            return false;
+            // Continuer : d'autres classes peuvent aussi matcher
         }
     }
+    if (foundAlias) return false;
     // Cas spécial : antihypertenseur (composite)
     if (key === 'antihypertenseur') {
         return classe.includes('hypertens') ||
@@ -186,12 +336,16 @@ function matchesDrugClass(dci, classe, key) {
  */
 function matchesDrugClassAnsm(dci, classe, rawTerm) {
     let t = rawTerm;
-    // Gestion pluriels
+    // Gestion pluriels (trailing)
     if (t.endsWith('s') && !t.includes('ains') && !t.includes('isrs')) t = t.slice(0, -1);
-    if (t.endsWith('aux')) t = t.replace('aux', 'al');
+    if (t.endsWith('aux')) t = t.replace(/aux$/, 'al');
     // Matching direct DCI/classe avant le référentiel
     if (dci.includes(t) || t.includes(dci)) return true;
     if (classe.includes(t) || t.includes(classe)) return true;
-    // Matching via référentiel
-    return matchesDrugClass(dci, classe, t);
+    // Matching via référentiel (essai avec et sans pluriel)
+    if (matchesDrugClass(dci, classe, t)) return true;
+    // Essai supplémentaire : singulariser les pluriels internes (ex: inhibiteursselectifs → inhibiteurselectif)
+    let tSing = t.replace(/([a-z])s([a-z])/g, '$1$2');
+    if (tSing !== t && matchesDrugClass(dci, classe, tSing)) return true;
+    return false;
 }

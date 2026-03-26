@@ -920,6 +920,33 @@ const MISSING_MEDS_ENRICHMENT = [
         "alerte_clinique": "Hypotension symptomatique → reduire diuretique d'abord | Hyperkaliemie > 5.5 → arret temporaire | Angio-oedeme (rare) → arret definitif | Ne JAMAIS associer a un IEC (risque angio-oedeme grave)",
         "bio_cible": ["BIO_001", "BIO_003", "BIO_004", "BIO_028"],
         "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+    },
+
+    // ========================================================================
+    // 🌿 Millepertuis — Inducteur enzymatique critique (46 interactions ANSM)
+    // ========================================================================
+    {
+        "dci": "Millepertuis",
+        "princeps": "Procalmil / Arkogélules",
+        "classe": "Phytothérapie - Inducteur enzymatique puissant",
+        "poso_hab": "300-900 mg/j d'extrait standardisé",
+        "poso_ger": "CONTRE-INDIQUÉ en polypharmacie — inducteur puissant du CYP3A4, CYP1A2, CYP2C9 et P-gp",
+        "poso_ren": "Pas de donnée fiable",
+        "acb": 0.0,
+        "cia": 0.0,
+        "bhe": "1 (passage BHE)",
+        "albumine": "",
+        "qt_risque": "",
+        "ddi_interact": "CONTRE-INDIQUÉ avec : anticoagulants oraux (diminution INR), ciclosporine, tacrolimus, digoxine, antirétroviraux, contraceptifs oraux, ISRS, venlafaxine, méthadone, théophylline, irinotécan, imatinib — Inducteur puissant CYP3A4/CYP1A2/CYP2C9/P-gp",
+        "suivi_initial": "Inventaire complet des traitements en cours",
+        "suivi_periodique": "Vérifier interactions à chaque modification de traitement",
+        "alerte_clinique": "Le millepertuis est un inducteur enzymatique PUISSANT responsable de nombreuses interactions graves. En gériatrie : arrêt recommandé si tout autre traitement à marge thérapeutique étroite",
+        "bio_cible": [],
+        "epileptogene": "faible",
+        "epileptogene_desc": "Abaissement modeste du seuil épileptogène",
+        "notes_cliniques": "Produit en vente libre souvent non déclaré — toujours interroger le patient sur l'automédication et la phytothérapie",
+        "source": "ANSM Thesaurus 2024 | Prescrire 2023",
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
     }
 ];
 
