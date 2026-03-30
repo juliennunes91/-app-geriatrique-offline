@@ -920,7 +920,7 @@ function analyserPrescription() {
                     let composantsHtml = '';
                     if (trt.composants) {
                         composantsHtml = `<ul class="ps-3 mb-1">${trt.composants.map(c =>
-                            `<li class="small">${c.classe} <span class="badge bg-success" style="font-size:0.6em;">Niveau ${c.niveau}</span>${c.note ? ` <em class="text-muted" style="font-size:0.85em;">${c.note}</em>` : ''}</li>`
+                            `<li class="small">${c.classe || ''} ${c.niveau ? `<span class="badge bg-success" style="font-size:0.6em;">Niveau ${c.niveau}</span>` : ''}${c.note ? ` <em class="text-muted" style="font-size:0.85em;">${c.note}</em>` : ''}</li>`
                         ).join('')}</ul>`;
                     }
 
@@ -945,8 +945,8 @@ function analyserPrescription() {
                 guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">TRAITEMENT DE LA CRISE</strong></div>`;
                 criseAigue.forEach(trt => {
                     guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #ffc107;">
-                        <strong class="small">${trt.classe}</strong>
-                        <br><small>${trt.indication}</small>
+                        <strong class="small">${trt.classe || ''}</strong>
+                        ${trt.indication ? `<br><small>${trt.indication}</small>` : (trt.posologie ? `<br><small>${trt.posologie}</small>` : '')}
                         ${trt.note ? `<br><small class="text-muted">${trt.note}</small>` : ''}
                     </div>`;
                 });
@@ -966,10 +966,10 @@ function analyserPrescription() {
                         }
                     }
                     guidelinesHtml += `<div class="alert alert-success py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #198754;">
-                        <strong class="small">${trt.classe}</strong>
+                        <strong class="small">${trt.classe || ''}</strong>
                         ${trt.niveau_preuve ? ` <span class="badge bg-success" style="font-size:0.6em;">Niveau ${trt.niveau_preuve}</span>` : ''}
                         ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;">${srcEbm}</span>` : ''}
-                        <br><small>${trt.indication}</small>
+                        ${trt.indication ? `<br><small>${trt.indication}</small>` : (trt.posologie ? `<br><small>${trt.posologie}</small>` : '')}
                         ${trt.note ? `<br><small class="text-info">${trt.note}</small>` : ''}
                     </div>`;
                 });
@@ -981,11 +981,11 @@ function analyserPrescription() {
                 guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-primary small">ANTICOAGULATION</strong></div>`;
                 guidelinesHtml += `<div class="alert alert-primary py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #0d6efd;">
                     <small>${anticoag.indication || ''}</small>
-                    ${anticoag.premiere_ligne ? `<br><strong class="small">${anticoag.premiere_ligne.classe}</strong> <small class="text-muted">${anticoag.premiere_ligne.note || ''}</small>` : ''}
+                    ${anticoag.premiere_ligne ? `<br><strong class="small">${anticoag.premiere_ligne.classe || ''}</strong> <small class="text-muted">${anticoag.premiere_ligne.note || ''}</small>` : ''}
                 </div>`;
                 if (anticoag.regles_specifiques_doac) {
                     anticoag.regles_specifiques_doac.forEach(d => {
-                        guidelinesHtml += `<div class="small ps-3 mb-1"><strong>${d.dci}</strong> : ${d.dose_pleine} ${d.dose_reduite ? `| Réduite : ${d.dose_reduite}` : ''} ${d.ci_dfg ? `| CI : DFG ${d.ci_dfg}` : ''}</div>`;
+                        guidelinesHtml += `<div class="small ps-3 mb-1"><strong>${d.dci || ''}</strong> : ${d.dose_pleine || ''} ${d.dose_reduite ? `| Réduite : ${d.dose_reduite}` : ''} ${d.ci_dfg ? `| CI : DFG ${d.ci_dfg}` : ''}</div>`;
                     });
                 }
             }
@@ -1022,7 +1022,7 @@ function analyserPrescription() {
                     guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">DEPRESCRIPTION</strong></div>`;
                     deprescription.a_arreter_systematiquement.forEach(d => {
                         guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1" style="border-left:3px solid #ffc107;">
-                            <strong class="small">${d.classe}</strong><br><small>${d.raison}</small>
+                            <strong class="small">${d.classe || ''}</strong>${d.raison ? `<br><small>${d.raison}</small>` : ''}
                         </div>`;
                     });
                 }
@@ -1030,7 +1030,7 @@ function analyserPrescription() {
                     guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-success small">A CONSERVER</strong></div>`;
                     deprescription.a_conserver.forEach(d => {
                         guidelinesHtml += `<div class="alert alert-success py-1 px-2 mb-1" style="border-left:3px solid #198754;">
-                            <strong class="small">${d.classe}</strong><br><small>${d.indication}</small>
+                            <strong class="small">${d.classe || ''}</strong>${d.indication ? `<br><small>${d.indication}</small>` : ''}
                         </div>`;
                     });
                 }
@@ -1042,9 +1042,9 @@ function analyserPrescription() {
                 guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">CIBLES DE DEPRESCRIPTION</strong></div>`;
                 depCibles.forEach(d => {
                     guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1" style="border-left:3px solid #ffc107;">
-                        <strong class="small">${d.classe}</strong>
+                        <strong class="small">${d.classe || ''}</strong>
                         ${d.ref ? ` <span class="badge bg-secondary float-end" style="font-size:0.6em;">${d.ref}</span>` : ''}
-                        <br><small>${d.action}</small>
+                        ${d.action ? `<br><small>${d.action}</small>` : ''}
                     </div>`;
                 });
             }
@@ -1056,7 +1056,7 @@ function analyserPrescription() {
                     ${cibles.ref ? ` <span class="badge bg-dark" style="font-size:0.6em;">${cibles.ref}</span>` : ''}</div>`;
                 ['general', 'sujet_age_robuste', 'sujet_age_fragile', 'fin_de_vie'].forEach(k => {
                     if (cibles[k]) {
-                        guidelinesHtml += `<div class="small ps-2 mb-1">${cibles[k].max ? `<strong>HbA1c ≤ ${cibles[k].max}%</strong> — ` : ''}${cibles[k].note}</div>`;
+                        guidelinesHtml += `<div class="small ps-2 mb-1">${cibles[k].max ? `<strong>HbA1c ≤ ${cibles[k].max}%</strong> — ` : ''}${cibles[k].note || ''}</div>`;
                     }
                 });
             }
@@ -1067,9 +1067,9 @@ function analyserPrescription() {
                 guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-danger small">INTERACTIONS CRITIQUES SPECIFIQUES</strong></div>`;
                 interCrit.forEach(ic => {
                     guidelinesHtml += `<div class="alert alert-danger py-1 px-2 mb-1 bg-danger bg-opacity-10" style="border-left:3px solid #dc3545;">
-                        <strong class="small">${ic.combinaison.join(' + ')}</strong>
+                        <strong class="small">${ic.combinaison ? ic.combinaison.join(' + ') : ''}</strong>
                         ${ic.gravite ? ` <span class="badge bg-danger" style="font-size:0.6em;">${ic.gravite}</span>` : ''}
-                        <br><small class="text-danger">${ic.risque}</small>
+                        ${ic.risque ? `<br><small class="text-danger">${ic.risque}</small>` : ''}
                         ${ic.conduite ? `<br><small>${ic.conduite}</small>` : ''}
                         ${ic.surveillance ? `<br><small class="text-info">${ic.surveillance}</small>` : ''}
                     </div>`;

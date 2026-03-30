@@ -2927,9 +2927,7 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
     "PAT_006": [
         { terme: "corticoide", condition: "systémique", raison: "Hyperglycémie dose-dépendante — adapter insuline/ADO", gravite: "PRUDENCE" },
         { terme: "thiazidique", raison: "Hyperglycémie dose-dépendante, hypokaliémie → ↓ sécrétion insuline", gravite: "PRUDENCE" },
-        { terme: "antipsychotique sga", raison: "Syndrome métabolique — prise de poids, dyslipidémie, insulinorésistance (ADA 2024)", gravite: "PRUDENCE" },
-        { terme: "quetiapine", raison: "Risque métabolique élevé — hyperglycémie, prise de poids (ADA 2024)", gravite: "PRUDENCE" },
-        { terme: "olanzapine", raison: "Risque métabolique élevé — hyperglycémie (ADA 2024)", gravite: "PRUDENCE" }
+        { terme: "antipsychotique", raison: "Syndrome métabolique — prise de poids, dyslipidémie, insulinorésistance. Risque maximal : olanzapine, clozapine, quetiapine (ADA 2024)", gravite: "PRUDENCE" }
     ],
 
     // PAT_007 — Insuffisance rénale chronique (modérée)

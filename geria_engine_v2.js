@@ -251,7 +251,12 @@ const GeriaEngineV2 = (() => {
 
         if (c.age_min && (!ctx.patientAge || ctx.patientAge < c.age_min)) return false;
         if (c.fragile === true && !ctx.isFragile) return false;
-        if (c.acb_cumul && c.acb_seuil && (!ctx.scoreACB_global || ctx.scoreACB_global < c.acb_seuil)) return false;
+        if (c.acb_cumul && c.acb_seuil) {
+            if (!ctx.scoreACB_global || ctx.scoreACB_global < c.acb_seuil) return false;
+            // Exiger au moins 2 médicaments avec ACB > 0 (le titre dit "≥ 2 concomitants")
+            let acbMedCount = ctx.activeMeds ? ctx.activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0).length : 0;
+            if (acbMedCount < 2) return false;
+        }
         if (c.acb_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && parseFloat(m.db_ref.acb) >= 2))) return false;
         if (c.qt_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && String(m.db_ref.qt_risque || '').includes('(KR)')))) return false;
         if (c.polypharmacie && c.seuil && (!ctx.activeMeds || ctx.activeMeds.length < c.seuil)) return false;
