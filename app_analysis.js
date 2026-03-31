@@ -408,7 +408,8 @@ function analyserPrescription() {
             let thyroLabel = isOvert ? 'Hypothyroïdie avérée' : 'Hypothyroïdie subclinique';
             let thyroSev = isOvert ? 'danger' : 'warning';
             let thyroCauses = [];
-            ['amiodarone', 'lithium', 'carbamazepine', 'interferon', 'sunitinib', 'ipilimumab', 'nivolumab'].forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
+            let hypoTerms = MASTER_DB.SYNDROMES['SYND_013'] && MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
+            hypoTerms.forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
             let thyroImput = thyroCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${thyroCauses.join(', ').toUpperCase()}</b>` : '';
             let thyroConc = isOvert ? 'Traitement substitutif par lévothyroxine recommandé. Débuter 12.5-25 µg/j chez le sujet âgé, titrer par paliers de 12.5 µg toutes les 6-8 semaines.' : (tsh > 10 ? 'TSH > 10 — substitution recommandée même si subclinique.' : 'TSH 4-10 — à contrôler à 6-8 semaines, substituer si symptômes ou progression.');
             addAlert('alertes-bio', `<div class="alert alert-${thyroSev} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4 ' + t4 + ' nmol/L' : ''})${thyroImput}<br><em>Conduite :</em> ${thyroConc}</div>`, 'bio');
@@ -419,7 +420,8 @@ function analyserPrescription() {
             else { checkBioSyndrome('SYND_012', true); }
             let thyroLabel = isOvert ? 'Hyperthyroïdie avérée' : 'Hyperthyroïdie subclinique';
             let thyroCauses = [];
-            ['amiodarone', 'lithium', 'interferon', 'levothyroxine'].forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
+            let hyperTerms = MASTER_DB.SYNDROMES['SYND_012'] && MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
+            hyperTerms.forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
             let thyroImput = thyroCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${thyroCauses.join(', ').toUpperCase()}</b>` : '';
             addAlert('alertes-bio', `<div class="alert alert-${isOvert ? 'danger' : 'warning'} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4 ' + t4 + ' nmol/L' : ''}${t3 > 0 ? ', T3 ' + t3 + ' nmol/L' : ''})<br>${thyroImput}<em>Conduite :</em> ${isOvert ? 'Avis endocrino, rechercher cause (Basedow, nodule toxique, amiodarone). Risque FA et ostéoporose.' : 'Contrôle à 6-8 semaines, ECG (risque FA), densitométrie si post-ménopause.'}</div>`, 'bio');
         }
@@ -503,7 +505,8 @@ function analyserPrescription() {
     // Dénutrition modérée (Albumine 30-35 g/L) — alerte informative
     else if (bioValues['BIO_035'] > 0 && bioValues['BIO_035'] < 35) {
         let albCauses = [];
-        ['corticoides', 'prednisone', 'prednisolone', 'dexamethasone'].forEach(d => { if(patientHasMedClass(d)) albCauses.push(d); });
+        let albTerms = MASTER_DB.SYNDROMES['SYND_033'] && MASTER_DB.SYNDROMES['SYND_033'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_033'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
+        albTerms.forEach(d => { if(patientHasMedClass(d)) albCauses.push(d); });
         let albImput = albCauses.length > 0 ? `<br><em>Imputabilité :</em> <b>${albCauses.join(', ').toUpperCase()}</b>` : '';
         addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hypoalbuminémie modérée / Dénutrition</strong> (Albumine ${bioValues['BIO_035']} g/L)${albImput}
             <br><em>Conduite :</em> Évaluation nutritionnelle (MNA), compléments nutritionnels oraux, adapter posologies des médicaments à forte liaison albumine (risque surdosage).</div>`, 'bio');
@@ -654,13 +657,42 @@ function analyserPrescription() {
         });
 
         let groupedAnsm = {}; let groupedAuc = {};
+
+        // --- Pré-indexation ANSM & GPT_DDI : pour chaque med, quels entries matchent sur term1 ou term2 ---
+        let ansmDb = typeof ANSM_DDI_DB !== 'undefined' ? ANSM_DDI_DB : (typeof ansm_ddi_data !== 'undefined' ? ansm_ddi_data : null);
+        let ansmIndex = new Map(); // medKey -> [{idx, side:'t1'|'t2'}]
+        if (ansmDb && Array.isArray(ansmDb)) {
+            activeMeds.forEach(med => {
+                let key = sanitizeText(med.dci);
+                let hits = [];
+                ansmDb.forEach((d, idx) => {
+                    if (medMatchesAnsmTerm(med, d.d1 || d.molecule1 || d.nom1 || "")) hits.push({idx, side:'t1'});
+                    if (medMatchesAnsmTerm(med, d.d2 || d.molecule2 || d.nom2 || "")) hits.push({idx, side:'t2'});
+                });
+                ansmIndex.set(key, hits);
+            });
+        }
+        let gptDb = typeof GPT_DDI_DB !== 'undefined' && Array.isArray(GPT_DDI_DB) ? GPT_DDI_DB : null;
+        let gptIndex = new Map();
+        if (gptDb) {
+            activeMeds.forEach(med => {
+                let key = sanitizeText(med.dci);
+                let hits = [];
+                gptDb.forEach((d, idx) => {
+                    if (medMatchesAnsmTerm(med, d.d1 || "")) hits.push({idx, side:'t1'});
+                    if (medMatchesAnsmTerm(med, d.d2 || "")) hits.push({idx, side:'t2'});
+                });
+                gptIndex.set(key, hits);
+            });
+        }
+
         for(let i=0; i<activeMeds.length; i++) {
             for(let j=i+1; j<activeMeds.length; j++) {
                 let mA = activeMeds[i], mB = activeMeds[j];
                 let pairName = `${mA.dci.toUpperCase()} + ${mB.dci.toUpperCase()}`;
                 let dciA = sanitizeText(mA.dci); let dciB = sanitizeText(mB.dci);
                 let matchesAuc = [];
-                
+
                 // AUC EXTERNE
                 if(typeof DDI_MERGED_DB !== 'undefined') {
                     let rootsA = [dciA]; let rootsB = [dciB];
@@ -675,56 +707,62 @@ function analyserPrescription() {
                     });
                     matchesAuc.push(...aucFiltered);
                 }
-                
+
                 // AUC RÈGLES
                 if ((dciA.includes('ritonavir') && dciB.includes('quetiapine')) || (dciB.includes('ritonavir') && dciA.includes('quetiapine'))) matchesAuc.push({ auc_ratio: 6.2, mechanism: "Inhibition puissante CYP3A4", note: "FDA" });
                 if ((dciA.includes('clarithromycin') && dciB.includes('quetiapine')) || (dciB.includes('clarithromycin') && dciA.includes('quetiapine'))) matchesAuc.push({ auc_ratio: 2.8, mechanism: "Inhibition forte CYP3A4", note: "PK" });
                 if ((dciA.includes('ritonavir') && dciB.includes('apixaban')) || (dciB.includes('ritonavir') && dciA.includes('apixaban'))) matchesAuc.push({ auc_ratio: 2.5, mechanism: "Inhibition CYP3A4 & P-gp (Risque Hémorragique Majeur)", note: "FDA" });
                 if ((dciA.includes('clarithromycin') && dciB.includes('apixaban')) || (dciB.includes('clarithromycin') && dciA.includes('apixaban'))) matchesAuc.push({ auc_ratio: 1.6, mechanism: "Inhibition CYP3A4", note: "PK" });
-                
+
                 if (matchesAuc.length > 0) {
                     if(!groupedAuc[pairName]) groupedAuc[pairName] = { items: [] };
                     matchesAuc.forEach(m => { if(!isNaN(parseFloat(m.auc_ratio))) groupedAuc[pairName].items.push(m); });
                 }
 
-                // ANSM
-                let ansmDb = typeof ANSM_DDI_DB !== 'undefined' ? ANSM_DDI_DB : (typeof ansm_ddi_data !== 'undefined' ? ansm_ddi_data : null);
-                if(ansmDb && Array.isArray(ansmDb)) {
-                    ansmDb.forEach(d => {
-                        let term1 = d.d1 || d.molecule1 || d.nom1 || "";
-                        let term2 = d.d2 || d.molecule2 || d.nom2 || "";
+                // ANSM — utilise l'index pré-calculé
+                if (ansmDb) {
+                    let hitsA = ansmIndex.get(dciA) || [];
+                    let hitsB = ansmIndex.get(dciB) || [];
+                    // Pour chaque entry ANSM, vérifier si A match un côté et B match l'autre
+                    let bByIdx = new Map();
+                    hitsB.forEach(h => { if(!bByIdx.has(h.idx)) bByIdx.set(h.idx, new Set()); bByIdx.get(h.idx).add(h.side); });
+                    hitsA.forEach(hA => {
+                        let bSides = bByIdx.get(hA.idx);
+                        if (!bSides) return;
+                        // A matche t1 et B matche t2, ou A matche t2 et B matche t1
+                        let crossMatch = (hA.side === 't1' && bSides.has('t2')) || (hA.side === 't2' && bSides.has('t1'));
+                        if (!crossMatch) return;
+                        let d = ansmDb[hA.idx];
                         let niveau = String(d.level || d.niveau || "Interaction").toUpperCase();
                         let desc = String(d.desc || d.description || d.message || "");
-
-                        if ((medMatchesAnsmTerm(mA, term1) && medMatchesAnsmTerm(mB, term2)) ||
-                            (medMatchesAnsmTerm(mA, term2) && medMatchesAnsmTerm(mB, term1))) {
-
-                            if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
-                            let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("DECONSEILLE") || niveau.includes("MAJEUR");
-                            if(isDanger) groupedAnsm[pairName].isDanger = true;
-
-                            if(!groupedAnsm[pairName].raw.some(ex => ex.source === 'ANSM' && ex.level === niveau && ex.desc.toLowerCase() === desc.toLowerCase())) {
-                                groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: 'ANSM' });
-                            }
+                        if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
+                        let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("DECONSEILLE") || niveau.includes("MAJEUR");
+                        if(isDanger) groupedAnsm[pairName].isDanger = true;
+                        if(!groupedAnsm[pairName].raw.some(ex => ex.source === 'ANSM' && ex.level === niveau && ex.desc.toLowerCase() === desc.toLowerCase())) {
+                            groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: 'ANSM' });
                         }
                     });
                 }
 
-                // GPT_DDI_DB (BNF + Micromedex — événements cliniques)
-                if(typeof GPT_DDI_DB !== 'undefined' && Array.isArray(GPT_DDI_DB)) {
-                    GPT_DDI_DB.forEach(d => {
-                        if ((medMatchesAnsmTerm(mA, d.d1) && medMatchesAnsmTerm(mB, d.d2)) ||
-                            (medMatchesAnsmTerm(mA, d.d2) && medMatchesAnsmTerm(mB, d.d1))) {
-
-                            if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
-                            let niveau = String(d.niveau || "Interaction").toUpperCase();
-                            let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("MAJEUR");
-                            if(isDanger) groupedAnsm[pairName].isDanger = true;
-                            let desc = `${d.event || ''} — ${d.source || 'BNF+Micromedex'}`;
-
-                            if(!groupedAnsm[pairName].raw.some(ex => ex.desc.toLowerCase() === desc.toLowerCase())) {
-                                groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: d.source || 'BNF+Micromedex' });
-                            }
+                // GPT_DDI_DB (BNF + Micromedex) — utilise l'index pré-calculé
+                if (gptDb) {
+                    let hitsA = gptIndex.get(dciA) || [];
+                    let hitsB = gptIndex.get(dciB) || [];
+                    let bByIdx = new Map();
+                    hitsB.forEach(h => { if(!bByIdx.has(h.idx)) bByIdx.set(h.idx, new Set()); bByIdx.get(h.idx).add(h.side); });
+                    hitsA.forEach(hA => {
+                        let bSides = bByIdx.get(hA.idx);
+                        if (!bSides) return;
+                        let crossMatch = (hA.side === 't1' && bSides.has('t2')) || (hA.side === 't2' && bSides.has('t1'));
+                        if (!crossMatch) return;
+                        let d = gptDb[hA.idx];
+                        if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
+                        let niveau = String(d.niveau || "Interaction").toUpperCase();
+                        let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("MAJEUR");
+                        if(isDanger) groupedAnsm[pairName].isDanger = true;
+                        let desc = `${d.event || ''} — ${d.source || 'BNF+Micromedex'}`;
+                        if(!groupedAnsm[pairName].raw.some(ex => ex.desc.toLowerCase() === desc.toLowerCase())) {
+                            groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: d.source || 'BNF+Micromedex' });
                         }
                     });
                 }
@@ -881,7 +919,7 @@ function analyserPrescription() {
                 });
                 if (allKeys.size > 0) {
                     refDetails = Array.from(allKeys).map(k =>
-                        `<li class="small text-muted">${GUIDELINE_INDEX[k].ref}</li>`
+                        `<li class="small text-muted">${(GUIDELINE_INDEX[k] && GUIDELINE_INDEX[k].ref) || k}</li>`
                     ).join('');
                 }
             }
