@@ -44,6 +44,12 @@ function analyserPrescription() {
 
     preCalculerScores();
     const patientAge = getVal('patientAge'); const sexe = getStr('patientSexe'); const isFragile = isChecked('patientFragile') || getVal('scoreCFS') >= 7;
+    // Validation entrées critiques
+    if (patientAge <= 0 || patientAge > 120) {
+        let el = document.getElementById('alertes-scores');
+        if(el) el.innerHTML = '<div class="alert alert-danger">Veuillez saisir un âge valide (18-120 ans) avant de lancer l\'analyse.</div>';
+        return;
+    }
 
     const bioValues = {
         'BIO_001': getVal('patientK'), 'BIO_002': getVal('patientNa'), 'BIO_003': getVal('bioCreat'), 'BIO_004': getVal('patientDFG'),
@@ -66,9 +72,21 @@ function analyserPrescription() {
     const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines'];
     divs.forEach(id => { let el = document.getElementById(id); if(el) el.innerHTML = ''; });
     let counts = { eviter: 0, initier: 0, interact: 0, ansm: 0, auc: 0, bio: 0, usage: 0, suivi: 0 };
+    // Batch DOM: accumulate HTML, flush once at end
+    const _htmlBuffers = {};
+    divs.forEach(id => _htmlBuffers[id] = []);
     const addAlert = (targetId, htmlStr, countKey) => {
-        let el = document.getElementById(targetId); if(!el || !htmlStr) return;
-        el.innerHTML += htmlStr; if(countKey) counts[countKey]++;
+        if(!htmlStr) return;
+        if(_htmlBuffers[targetId]) _htmlBuffers[targetId].push(htmlStr);
+        else { let el = document.getElementById(targetId); if(el) el.innerHTML += htmlStr; }
+        if(countKey) counts[countKey]++;
+    };
+    const flushAlerts = () => {
+        for(const [id, parts] of Object.entries(_htmlBuffers)) {
+            if(parts.length === 0) continue;
+            let el = document.getElementById(id);
+            if(el) el.innerHTML += parts.join('');
+        }
     };
 
     // =========================================================
@@ -155,7 +173,7 @@ function analyserPrescription() {
         const recos = GeriaEngineV2.evaluer(ctx);
         
         // Affichage du Dashboard Global
-        if (divScores) divScores.innerHTML += GeriaEngineV2.renderDashboard(recos.dashboard);
+        if (divScores) addAlert('alertes-scores', GeriaEngineV2.renderDashboard(recos.dashboard));
         
         // Affichage des Recommandations (Triées et Sourcées)
         document.getElementById('alertes-eviter').innerHTML = GeriaEngineV2.renderAlertesTriees(recos.eviter, 'eviter');
@@ -164,7 +182,7 @@ function analyserPrescription() {
         counts.eviter = recos.eviter.length;
         counts.initier = recos.initier.length;
     } else {
-        divScores.innerHTML += `<div class="alert alert-danger">⚠️ Le moteur GeriaEngineV2 est introuvable. Avez-vous actualisé la page ?</div>`;
+        addAlert('alertes-scores', `<div class="alert alert-danger">⚠️ Le moteur GeriaEngineV2 est introuvable. Avez-vous actualisé la page ?</div>`);
     }
 
     // =========================================================
@@ -180,7 +198,7 @@ function analyserPrescription() {
         if(activeComorbs.includes('PAT_008')) { scoreCha += 2; ttCha.push("ATCD AVC (+2)"); } 
         if(activeComorbs.some(c=>['PAT_004','PAT_007'].includes(c))) { scoreCha += 1; ttCha.push("Vasc (+1)"); }
         let chaConc = scoreCha === 0 ? 'Risque faible — anticoagulation non indiquée' : (scoreCha === 1 ? (sexe === 'M' ? 'Risque faible (H) — anticoagulation optionnelle' : 'Score lié au sexe seul — anticoagulation non indiquée (F)') : 'Anticoagulation recommandée (sauf CI)');
-        divScores.innerHTML += `<div class="alert alert-light border border-info mb-2 shadow-sm"><strong class="text-info">CHA₂DS₂-VASc : ${scoreCha} point(s)</strong> <em class="text-muted small">— Risque thromboembolique dans la FA</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreCha >= 2 ? 'danger' : 'success'}">${chaConc}</small></div>`;
+        addAlert('alertes-scores', `<div class="alert alert-light border border-info mb-2 shadow-sm"><strong class="text-info">CHA₂DS₂-VASc : ${scoreCha} point(s)</strong> <em class="text-muted small">— Risque thromboembolique dans la FA</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreCha >= 2 ? 'danger' : 'success'}">${chaConc}</small></div>`);
 
         let scoreHas = 0; let ttHas = [];
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 50) { scoreHas += 1; ttHas.push("IRC (+1)"); }
@@ -188,7 +206,7 @@ function analyserPrescription() {
         if(patientAge > 65) { scoreHas += 1; ttHas.push("Âge >65 (+1)"); }
         if(patientHasMedClass('ains') || patientHasMedClass('antiagreg')) { scoreHas += 1; ttHas.push("AINS/AAS (+1)"); }
         let hasConc = scoreHas >= 3 ? 'Risque hémorragique élevé — prudence avec anticoagulant' : (scoreHas >= 1 ? 'Risque modéré — réévaluer bénéfice/risque' : 'Risque faible');
-        divScores.innerHTML += `<div class="alert alert-light border border-danger mb-2 shadow-sm"><strong class="text-danger">HAS-BLED : ${scoreHas} point(s)</strong> <em class="text-muted small">— Risque hémorragique sous anticoagulant</em><br><small class="text-muted">${ttHas.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreHas >= 3 ? 'danger' : 'muted'}">${hasConc}</small></div>`;
+        addAlert('alertes-scores', `<div class="alert alert-light border border-danger mb-2 shadow-sm"><strong class="text-danger">HAS-BLED : ${scoreHas} point(s)</strong> <em class="text-muted small">— Risque hémorragique sous anticoagulant</em><br><small class="text-muted">${ttHas.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreHas >= 3 ? 'danger' : 'muted'}">${hasConc}</small></div>`);
 
         let scoreOrbit = 0; let ttOrbit = [];
         if(patientAge >= 75) { scoreOrbit += 1; ttOrbit.push("Âge ≥75 (+1)"); }
@@ -197,7 +215,7 @@ function analyserPrescription() {
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 60) { scoreOrbit += 1; ttOrbit.push("DFG <60 (+1)"); }
         if(patientHasMedClass('antiagreg')) { scoreOrbit += 1; ttOrbit.push("Antiagrégant (+1)"); }
         let orbitConc = scoreOrbit >= 4 ? 'Risque hémorragique élevé (7.3%/an)' : (scoreOrbit >= 3 ? 'Risque modéré (4.7%/an)' : 'Risque faible (2.4%/an)');
-        divScores.innerHTML += `<div class="alert alert-light border border-warning mb-2 shadow-sm"><strong class="text-warning">ORBIT-AF : ${scoreOrbit} point(s)</strong> <em class="text-muted small">— Risque de saignement sous AOD</em><br><small class="text-muted">${ttOrbit.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreOrbit >= 4 ? 'danger' : 'muted'}">${orbitConc}</small></div>`;
+        addAlert('alertes-scores', `<div class="alert alert-light border border-warning mb-2 shadow-sm"><strong class="text-warning">ORBIT-AF : ${scoreOrbit} point(s)</strong> <em class="text-muted small">— Risque de saignement sous AOD</em><br><small class="text-muted">${ttOrbit.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreOrbit >= 4 ? 'danger' : 'muted'}">${orbitConc}</small></div>`);
 
         let scoreRisq = 0; let ttRisq = [];
         if(patientAge >= 65) { scoreRisq += 1; ttRisq.push("Âge ≥65 (+1)"); }
@@ -212,7 +230,7 @@ function analyserPrescription() {
         if(['PAT_010','PAT_011','PAT_012','PAT_013','PAT_014'].some(c=>activeComorbs.includes(c))) { scoreRisq += 1; ttRisq.push("Démence/Park (+1)"); }
         if(globalQT_CountKR > 0) { scoreRisq += (3 * globalQT_CountKR); ttRisq.push(`Médoc QT (+${3*globalQT_CountKR})`); }
         let risqConc = scoreRisq >= 10 ? 'Risque très élevé de TdP' : (scoreRisq >= 5 ? 'Risque élevé — prudence avec QTc-allongeants' : 'Risque modéré');
-        divScores.innerHTML += `<div class="alert alert-light border border-primary mb-2 shadow-sm"><strong class="text-primary">RISQ-PATH : ${scoreRisq} point(s)</strong> <em class="text-muted small">— Risque d'allongement du QT</em><br><small class="text-muted">${ttRisq.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreRisq >= 10 ? 'danger' : 'muted'}">${risqConc}</small></div>`;
+        addAlert('alertes-scores', `<div class="alert alert-light border border-primary mb-2 shadow-sm"><strong class="text-primary">RISQ-PATH : ${scoreRisq} point(s)</strong> <em class="text-muted small">— Risque d'allongement du QT</em><br><small class="text-muted">${ttRisq.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreRisq >= 10 ? 'danger' : 'muted'}">${risqConc}</small></div>`);
 
         let scoreTisdale = 0; let ttTisdale = [];
         if(patientAge >= 68) { scoreTisdale += 1; ttTisdale.push("Âge ≥68 (+1)"); }
@@ -222,7 +240,7 @@ function analyserPrescription() {
         if(bioValues['BIO_031'] >= 450) { scoreTisdale += 2; ttTisdale.push("QTc ≥450 (+2)"); }
         if(globalQT_CountKR > 0) { scoreTisdale += 3; ttTisdale.push("Médoc QT (+3)"); }
         let tisdaleConc = scoreTisdale >= 11 ? 'Risque élevé de TdP — monitoring ECG continu' : (scoreTisdale >= 7 ? 'Risque modéré — ECG quotidien recommandé' : 'Risque faible');
-        divScores.innerHTML += `<div class="alert alert-light border border-dark mb-2 shadow-sm"><strong class="text-dark">Score de Tisdale : ${scoreTisdale} point(s)</strong> <em class="text-muted small">— Risque de TdP en hospitalisation</em><br><small class="text-muted">${ttTisdale.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreTisdale >= 11 ? 'danger' : 'muted'}">${tisdaleConc}</small></div>`;
+        addAlert('alertes-scores', `<div class="alert alert-light border border-dark mb-2 shadow-sm"><strong class="text-dark">Score de Tisdale : ${scoreTisdale} point(s)</strong> <em class="text-muted small">— Risque de TdP en hospitalisation</em><br><small class="text-muted">${ttTisdale.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreTisdale >= 11 ? 'danger' : 'muted'}">${tisdaleConc}</small></div>`);
 
         // Charge Anticholinergique (ACB + CIA)
         let acbClass = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
@@ -230,12 +248,12 @@ function analyserPrescription() {
         let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé — chutes, somnolence' : (scoreCIA_global >= 1 ? 'Charge modérée' : 'Charge faible');
         let acbMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0).map(m => `${m.dci} (ACB ${m.db_ref.acb})`);
         let ciaMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.cia) > 0).map(m => `${m.dci} (CIA ${m.db_ref.cia})`);
-        divScores.innerHTML += `<div class="alert alert-light border border-${acbClass} mb-2 shadow-sm">
+        addAlert('alertes-scores', `<div class="alert alert-light border border-${acbClass} mb-2 shadow-sm">
             <strong class="text-${acbClass}">Score ACB : ${scoreACB_global}</strong> <em class="text-muted small">— Charge anticholinergique cumulée</em><br>
             <small class="text-muted">${acbInterp}${acbMeds.length > 0 ? ' — ' + acbMeds.join(', ') : ''}</small><br>
             <strong class="text-${scoreCIA_global >= 3 ? 'danger' : (scoreCIA_global >= 1 ? 'warning' : 'success')}">Score CIA : ${scoreCIA_global}</strong> <em class="text-muted small">— Charge sédative/cognitive cumulée</em><br>
             <small class="text-muted">${ciaInterp}${ciaMeds.length > 0 ? ' — ' + ciaMeds.join(', ') : ''}</small>
-        </div>`;
+        </div>`);
 
         // Score de Child-Pugh (saisie manuelle OU calcul automatique)
         let cpManualEl = document.getElementById('cpManual');
@@ -312,12 +330,12 @@ function analyserPrescription() {
                 }
             }
 
-            divScores.innerHTML += `<div class="alert alert-light border border-${cpColor} mb-2 shadow-sm">
+            addAlert('alertes-scores', `<div class="alert alert-light border border-${cpColor} mb-2 shadow-sm">
                 <strong class="text-${cpColor}">Child-Pugh : Classe ${cpClass}</strong> <small class="text-muted">${cpSource}</small>
                 <em class="text-muted small"> — Sévérité de l'insuffisance hépatique</em><br>
                 <small class="fw-bold text-${cpColor}">${cpConc}</small>
                 ${hepatoAlert}${cpDrugAlerts}
-            </div>`;
+            </div>`);
         }
     }
 
@@ -1127,6 +1145,9 @@ function analyserPrescription() {
             ? '<div class="alert alert-light">Ajoutez des comorbidités pour voir les recommandations des sociétés savantes.</div>'
             : '<div class="alert alert-light">Données PATHOLOGY_RULES_DB non disponibles.</div>';
     }
+
+    // Flush all accumulated HTML into DOM (single reflow)
+    flushAlerts();
 
     let btnPdf = document.getElementById('btnPdf'); if(btnPdf) btnPdf.style.display = 'inline-block';
     let btnCopier = document.getElementById('btnCopier'); if(btnCopier) btnCopier.style.display = 'inline-block';

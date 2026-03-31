@@ -2,9 +2,13 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="GeriaAssist - Outil d'aide à la décision pharmaco-clinique en gériatrie">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="manifest.json">
     <title>GeriaAssist - Décision Pharmaco-Clinique (Expert)</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="lib/bootstrap.min.css" rel="stylesheet">
+    <script src="lib/html2pdf.bundle.min.js"></script>
     <style>
         body { background-color: #f8f9fa; font-size: 0.95rem; }
         .alert-stopp { border-left: 5px solid #dc3545; }
@@ -33,6 +37,26 @@
         .autocomplete-list li:hover { background-color: #f0f8ff; }
         .autocomplete-list li:last-child { border-bottom: none; }
         .version-footer { position: fixed; bottom: 0; left: 0; font-size: 0.7rem; color: #6c757d; z-index: 9999; background: rgba(255,255,255,0.92); padding: 4px 12px; border-top-right-radius: 6px; border-top: 1px solid #dee2e6; border-right: 1px solid #dee2e6; max-width: 420px; line-height: 1.3; }
+        /* Accessibilité : tailles minimales sur mobile */
+        @media (max-width: 576px) {
+            body { font-size: 1rem; }
+            .form-control, .form-select { font-size: 1rem; min-height: 44px; }
+            .btn { min-height: 44px; font-size: 1rem; }
+            .nav-link { padding: 0.5rem 0.4rem; font-size: 0.8rem; }
+            .tag-badge { font-size: 0.85em; padding: 6px; min-height: 36px; }
+            .autocomplete-list li { padding: 12px; min-height: 44px; }
+        }
+        /* Impression */
+        @media print {
+            .version-footer, .nav-tabs, .btn, .autocomplete-container, .form-check-input,
+            #inputComorb, #inputMed, #legendModal { display: none !important; }
+            .section-box { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+            .tab-pane { display: block !important; opacity: 1 !important; }
+            .tab-pane:not(:empty)::before { content: attr(data-print-title); font-weight: bold; font-size: 1.1em; display: block; border-bottom: 1px solid #333; margin-bottom: 8px; }
+            body { font-size: 10pt; }
+            .alert { page-break-inside: avoid; }
+            .col-md-5, .col-md-7 { width: 100% !important; }
+        }
     </style>
 </head>
 <body>
@@ -217,16 +241,16 @@
             <div class="col-md-7">
                 <div class="section-box">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item"><button class="nav-link text-success fw-bold active" data-bs-toggle="tab" data-bs-target="#tab-scores">🧮 Calcs & Scores</button></li>
-                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-eviter">⚠️ À Éviter</button></li>
-                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-initier">➕ Omissions</button></li>
-                        <li class="nav-item"><button class="nav-link text-warning fw-bold" data-bs-toggle="tab" data-bs-target="#tab-interact">⚡ Interact</button></li>
-                        <li class="nav-item"><button class="nav-link text-danger fw-bold" data-bs-toggle="tab" data-bs-target="#tab-auc">📈 PK (AUC)</button></li>
-                        <li class="nav-item"><button class="nav-link text-warning" style="color:#d63384!important;" data-bs-toggle="tab" data-bs-target="#tab-ansm">🇫🇷 ANSM</button></li>
-                        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-bio">🧪 Bio</button></li>
-                        <li class="nav-item"><button class="nav-link text-info fw-bold" data-bs-toggle="tab" data-bs-target="#tab-usage">💡 Doses</button></li>
-                        <li class="nav-item"><button class="nav-link text-primary fw-bold" data-bs-toggle="tab" data-bs-target="#tab-suivi">👁️ Suivi</button></li>
-                        <li class="nav-item"><button class="nav-link fw-bold" style="color:#6f42c1!important;" data-bs-toggle="tab" data-bs-target="#tab-guidelines">📚 Guidelines</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link text-success fw-bold active" data-bs-toggle="tab" data-bs-target="#tab-scores" role="tab" aria-selected="true" aria-label="Calculs et Scores">🧮 Scores</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-eviter" role="tab" aria-label="Prescriptions inappropriées - À Éviter">⚠️ Éviter</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-initier" role="tab" aria-label="Omissions thérapeutiques - À Initier">➕ Omissions</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link text-warning fw-bold" data-bs-toggle="tab" data-bs-target="#tab-interact" role="tab" aria-label="Interactions médicamenteuses cliniques">⚡ Interact</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link text-danger fw-bold" data-bs-toggle="tab" data-bs-target="#tab-auc" role="tab" aria-label="Pharmacocinétique AUC">📈 PK</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" style="color:#d63384!important;" data-bs-toggle="tab" data-bs-target="#tab-ansm" role="tab" aria-label="Interactions ANSM France">🇫🇷 ANSM</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-bio" role="tab" aria-label="Syndromes biologiques">🧪 Bio</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link text-info fw-bold" data-bs-toggle="tab" data-bs-target="#tab-usage" role="tab" aria-label="Adaptations posologiques">💡 Doses</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link text-primary fw-bold" data-bs-toggle="tab" data-bs-target="#tab-suivi" role="tab" aria-label="Suivi biologique">👁️ Suivi</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link fw-bold" style="color:#6f42c1!important;" data-bs-toggle="tab" data-bs-target="#tab-guidelines" role="tab" aria-label="Guidelines par pathologie">📚 Recos</button></li>
                     </ul>
                     <div class="tab-content mt-3" id="myTabContent">
                         <div class="tab-pane fade show active" id="tab-scores"><div id="alertes-scores" class="text-muted">Cliquez sur Analyser...</div></div>
@@ -267,10 +291,10 @@
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/bootstrap.bundle.min.js"></script>
 
     <!-- Données d'interactions (toutes les sources) -->
-    <script src="anticholinergics_data.js"></script>
+    <!-- anticholinergics_data.js retiré : ACB scores déjà dans MASTER_DB.MEDICAMENTS -->
     <script src="ansm_ddi_data.js"></script>
     <script src="ddi_merged_V2.js"></script>
     <script src="gpt_ddi_data_filtered.js"></script>
@@ -300,5 +324,10 @@
     <script src="app_ui.js"></script>
     <script src="child_pugh_adaptations.js"></script>
     <script src="app_analysis.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').then(r => console.log('SW enregistré:', r.scope)).catch(e => console.warn('SW erreur:', e));
+        }
+    </script>
 </body>
 </html>

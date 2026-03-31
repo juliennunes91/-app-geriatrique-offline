@@ -1,0 +1,17 @@
+{
+    "name": "GeriaAssist - Aide Pharmaco-Clinique",
+    "short_name": "GeriaAssist",
+    "description": "Outil d'aide a la decision pharmaco-clinique en geriatrie",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#f8f9fa",
+    "theme_color": "#0d6efd",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}

@@ -5,7 +5,19 @@ let maxQTLevel_global = 0; let infoQT_global = [];
 const unifiedMedsMap = new Map(); const allComorbs = [];
 
 // Nettoyeur universel (enlève accents, espaces, majuscules)
-const sanitizeText = str => str ? String(str).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "") : "";
+const sanitizeText = (() => {
+    const _cache = new Map();
+    return str => {
+        if (!str) return "";
+        const k = String(str);
+        let v = _cache.get(k);
+        if (v !== undefined) return v;
+        v = k.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        _cache.set(k, v);
+        if (_cache.size > 5000) _cache.clear(); // éviter fuite mémoire
+        return v;
+    };
+})();
 
 // ============================================================================
 // EXPORT PDF & COPIE SYNTHÈSE

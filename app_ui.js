@@ -36,7 +36,12 @@ function initUI() {
     setupAutocomplete('inputMed', 'listMed', searchMedList, selectMed);
 }
 
-const getVal = id => { let el = document.getElementById(id); return el && el.value ? parseFloat(el.value.replace(',', '.')) : 0; };
+const getVal = id => {
+    let el = document.getElementById(id);
+    if (!el || !el.value) return 0;
+    let v = parseFloat(el.value.replace(',', '.'));
+    return isNaN(v) ? 0 : v;
+};
 const getStr = id => { let el = document.getElementById(id); return el ? el.value : ""; };
 const isChecked = id => { let el = document.getElementById(id); return el ? el.checked : false; };
 
@@ -44,6 +49,10 @@ function calculerDFG(autoSwitch = true) {
     const age = getVal('patientAge'); const poids = getVal('patientPoids'); const creat = getVal('bioCreat'); const sexe = getStr('patientSexe');
     const methodSelect = document.getElementById('dfgMethodSelect'); const dfgInput = document.getElementById('patientDFG');
     if(!methodSelect || !dfgInput) return;
+    // Validation plausibilité
+    if (age > 0 && (age < 18 || age > 120)) { dfgInput.value = ''; dfgInput.title = 'Âge hors limites (18-120)'; return; }
+    if (creat > 0 && creat > 2000) { dfgInput.value = ''; dfgInput.title = 'Créatinine hors limites'; return; }
+    dfgInput.title = '';
     let cgValue = 0; let ckdEpiValue = 0;
     if (age > 0 && creat > 0) {
         let scrMgDl = creat / 88.4; let kappa = (sexe === 'F') ? 0.7 : 0.9; let alpha = (sexe === 'F') ? -0.241 : -0.302;
