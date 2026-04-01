@@ -1,4 +1,4 @@
-// app_core.js - V6.0 (Refactorisé - utilise drug_classes.js)
+// app_core.js - V7.0 (v0.44 — escapeHtml, nettoyage code mort)
 let activeComorbs = []; let activeMeds = []; window.suspendedMeds = [];
 let globalQT_CountKR = 0; let globalQT_CountCR_PR = 0; let scoreACB_global = 0; let scoreCIA_global = 0;
 let maxQTLevel_global = 0; let infoQT_global = [];

@@ -1,4 +1,4 @@
-// app_analysis.js - V7.0 (Refactorisé - utilise drug_classes.js)
+// app_analysis.js - V8.0 (v0.44 — escapeHtml, refactoring, SCORES_CONFIG)
 
 // =========================================================
 // SCORES_CONFIG — Seuils externalisés (modifiable sans toucher la logique)
