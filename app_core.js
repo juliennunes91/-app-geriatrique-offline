@@ -4,6 +4,12 @@ let globalQT_CountKR = 0; let globalQT_CountCR_PR = 0; let scoreACB_global = 0; 
 let maxQTLevel_global = 0; let infoQT_global = [];
 const unifiedMedsMap = new Map(); const allComorbs = [];
 
+// Échappement HTML — prévient les injections XSS dans les interpolations
+const escapeHtml = str => {
+    if (!str) return "";
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+};
+
 // Nettoyeur universel (enlève accents, espaces, majuscules)
 const sanitizeText = (() => {
     const _cache = new Map();
@@ -124,7 +130,7 @@ function buildPdfContent() {
     } else {
         activeComorbs.forEach(c => {
             const nom = (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES[c]) ? MASTER_DB.PATHOLOGIES[c].NOM_STANDARD : c;
-            html += `<span style="display:inline-block;background:#e7f1ff;border-radius:3px;padding:1px 4px;margin:1px;font-size:8px;">${nom}</span>`;
+            html += `<span style="display:inline-block;background:#e7f1ff;border-radius:3px;padding:1px 4px;margin:1px;font-size:8px;">${escapeHtml(nom)}</span>`;
         });
     }
     html += `</div>`;
@@ -136,7 +142,7 @@ function buildPdfContent() {
         html += `<em>Aucun</em>`;
     } else {
         activeMeds.forEach(m => {
-            html += `<span style="display:inline-block;background:#fff3cd;border-radius:3px;padding:1px 4px;margin:1px;font-size:8px;">${m.dci}</span>`;
+            html += `<span style="display:inline-block;background:#fff3cd;border-radius:3px;padding:1px 4px;margin:1px;font-size:8px;">${escapeHtml(m.dci)}</span>`;
         });
     }
     html += `</div></div>`;

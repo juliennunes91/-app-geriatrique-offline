@@ -60,6 +60,7 @@
     </style>
 </head>
 <body>
+    <noscript><div class="alert alert-danger m-4">JavaScript est requis pour utiliser GeriaAssist. Veuillez activer JavaScript dans votre navigateur.</div></noscript>
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="text-primary m-0">🏥 GeriaAssist - Décision Pharmaco-Clinique</h2>
@@ -76,12 +77,12 @@
                 <div class="section-box">
                     <h4>1. Profil & Biologie</h4>
                     <div class="row g-2 mb-2">
-                        <div class="col-3"><label class="fw-bold small">Âge</label><input type="number" id="patientAge" class="form-control px-1" value="80" oninput="calculerDFG()"></div>
+                        <div class="col-3"><label class="fw-bold small" for="patientAge">Âge</label><input type="number" id="patientAge" class="form-control px-1" value="80" min="18" max="120" oninput="calculerDFG()"></div>
                         <div class="col-3"><label class="fw-bold small">Sexe</label><select id="patientSexe" class="form-select px-1" onchange="calculerDFG()"><option value="F">F</option><option value="M">M</option></select></div>
-                        <div class="col-3"><label class="fw-bold small">Poids <span class="fw-normal text-muted">(kg)</span></label><input type="number" id="patientPoids" class="form-control px-1" oninput="calculerDFG()"></div>
+                        <div class="col-3"><label class="fw-bold small" for="patientPoids">Poids <span class="fw-normal text-muted">(kg)</span></label><input type="number" id="patientPoids" class="form-control px-1" min="20" max="300" oninput="calculerDFG()"></div>
                         <div class="col-3"><label class="fw-bold small">IMC <span class="fw-normal text-muted">(kg/m²)</span></label><input type="number" id="patientBmi" class="form-control px-1"></div>
                         
-                        <div class="col-4"><label class="fw-bold small text-primary">Créat <span class="fw-normal text-secondary">(µmol/L)</span></label><input type="number" id="bioCreat" class="form-control border-primary" oninput="calculerDFG()"></div>
+                        <div class="col-4"><label class="fw-bold small text-primary" for="bioCreat">Créat <span class="fw-normal text-secondary">(µmol/L)</span></label><input type="number" id="bioCreat" class="form-control border-primary" min="0" max="2000" oninput="calculerDFG()"></div>
                         <div class="col-8">
                             <label class="fw-bold small">DFGe estimé <span class="fw-normal text-muted">(ml/min)</span></label>
                             <div class="input-group">
@@ -234,7 +235,7 @@
                     </div>
                     <div id="selectedMeds" class="mb-3"></div>
 
-                    <button class="btn btn-primary w-100 mt-3" onclick="analyserPrescription()">Lancer l'Analyse Clinique</button>
+                    <button class="btn btn-primary w-100 mt-3" id="btnAnalyse" onclick="this.disabled=true;this.textContent='Analyse en cours...';try{analyserPrescription();}finally{this.disabled=false;this.textContent='Lancer l\u0027Analyse Clinique';}">Lancer l'Analyse Clinique</button>
                 </div>
             </div>
 

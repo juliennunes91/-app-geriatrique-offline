@@ -644,9 +644,10 @@ const GeriaEngineV2 = (() => {
             ? `<br><span class="badge" style="font-size:0.6em; background-color:#6f42c1;" title="${ebmSource}">${ebmSource.length > 60 ? ebmSource.substring(0,60)+'...' : ebmSource}</span>`
             : '';
 
+        const esc = typeof escapeHtml === 'function' ? escapeHtml : s => String(s||'');
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass});">
-            ${scoreBadge}<strong>${triage.icon} ${a.titre}</strong>${a.merged_count > 1 ? ` <span class="badge bg-light text-dark border" style="font-size:0.65em;">${a.merged_count} recommandations groupées</span>` : ''}
-            <span class="badge bg-secondary float-end" style="font-size:0.65em;">${a.sources_label || ''}</span>
+            ${scoreBadge}<strong>${triage.icon} ${esc(a.titre)}</strong>${a.merged_count > 1 ? ` <span class="badge bg-light text-dark border" style="font-size:0.65em;">${a.merged_count} recommandations groupées</span>` : ''}
+            <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(a.sources_label || '')}</span>
             <br><span class="small">${a.message}</span>
             ${compHtml}
             ${pimBadges}

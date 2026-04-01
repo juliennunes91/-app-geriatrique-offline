@@ -50,8 +50,12 @@ function calculerDFG(autoSwitch = true) {
     const methodSelect = document.getElementById('dfgMethodSelect'); const dfgInput = document.getElementById('patientDFG');
     if(!methodSelect || !dfgInput) return;
     // Validation plausibilité
-    if (age > 0 && (age < 18 || age > 120)) { dfgInput.value = ''; dfgInput.title = 'Âge hors limites (18-120)'; return; }
-    if (creat > 0 && creat > 2000) { dfgInput.value = ''; dfgInput.title = 'Créatinine hors limites'; return; }
+    const ageEl = document.getElementById('patientAge');
+    const creatEl = document.getElementById('bioCreat');
+    if (age > 0 && (age < 18 || age > 120)) { dfgInput.value = ''; if(ageEl) { ageEl.classList.add('is-invalid'); ageEl.title = 'Âge hors limites (18-120)'; } return; }
+    if(ageEl) ageEl.classList.remove('is-invalid');
+    if (creat > 0 && creat > 2000) { dfgInput.value = ''; if(creatEl) { creatEl.classList.add('is-invalid'); creatEl.title = 'Créatinine hors limites'; } return; }
+    if(creatEl) creatEl.classList.remove('is-invalid');
     dfgInput.title = '';
     let cgValue = 0; let ckdEpiValue = 0;
     if (age > 0 && creat > 0) {
@@ -116,10 +120,10 @@ function toggleSuspend(dci) {
 
 function renderTags() {
     let elComorb = document.getElementById('selectedComorbs'); let elMeds = document.getElementById('selectedMeds');
-    if(elComorb) elComorb.innerHTML = activeComorbs.map(c => { let p = MASTER_DB.PATHOLOGIES[c]; let label = p ? p.NOM_STANDARD : c; return `<span class="badge bg-secondary tag-badge" onclick="removeComorb('${c}')">${label} ✖</span>`; }).join('');
+    if(elComorb) elComorb.innerHTML = activeComorbs.map(c => { let p = MASTER_DB.PATHOLOGIES[c]; let label = p ? escapeHtml(p.NOM_STANDARD) : escapeHtml(c); return `<span class="badge bg-secondary tag-badge" onclick="removeComorb('${escapeHtml(c)}')">${label} ✖</span>`; }).join('');
     if(elMeds) {
-        let htmlActifs = activeMeds.map(m => `<span class="badge bg-primary tag-badge">${m.label} <span title="Suspendre" onclick="toggleSuspend('${m.dci}')" style="cursor:pointer;">⏸️</span> <span onclick="removeMed('${m.dci}')" style="cursor:pointer; color:#ffcccc;">✖</span></span>`).join('');
-        let htmlSuspendus = window.suspendedMeds.map(m => `<span class="badge bg-light text-muted border tag-badge" style="text-decoration: line-through;">${m.label} <span title="Réactiver" onclick="toggleSuspend('${m.dci}')" style="cursor:pointer;">▶️</span> <span onclick="window.suspendedMeds = window.suspendedMeds.filter(x=>x.dci!=='${m.dci}');renderTags();" style="cursor:pointer;">✖</span></span>`).join('');
+        let htmlActifs = activeMeds.map(m => { let eDci = escapeHtml(m.dci); let eLabel = escapeHtml(m.label); return `<span class="badge bg-primary tag-badge">${eLabel} <span title="Suspendre" onclick="toggleSuspend('${eDci}')" style="cursor:pointer;" aria-label="Suspendre ${eDci}">⏸️</span> <span onclick="removeMed('${eDci}')" style="cursor:pointer; color:#ffcccc;" aria-label="Retirer ${eDci}">✖</span></span>`; }).join('');
+        let htmlSuspendus = window.suspendedMeds.map(m => { let eDci = escapeHtml(m.dci); let eLabel = escapeHtml(m.label); return `<span class="badge bg-light text-muted border tag-badge" style="text-decoration: line-through;">${eLabel} <span title="Réactiver" onclick="toggleSuspend('${eDci}')" style="cursor:pointer;" aria-label="Réactiver ${eDci}">▶️</span> <span onclick="window.suspendedMeds = window.suspendedMeds.filter(x=>x.dci!=='${eDci}');renderTags();" style="cursor:pointer;" aria-label="Supprimer ${eDci}">✖</span></span>`; }).join('');
         elMeds.innerHTML = htmlActifs + htmlSuspendus;
     }
 }
