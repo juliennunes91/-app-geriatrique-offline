@@ -6,9 +6,10 @@
     <meta name="description" content="GeriaAssist - Outil d'aide à la décision pharmaco-clinique en gériatrie">
     <meta name="theme-color" content="#0d6efd">
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
     <title>GeriaAssist - Décision Pharmaco-Clinique (Expert)</title>
-    <link href="lib/bootstrap.min.css" rel="stylesheet">
-    <script src="lib/html2pdf.bundle.min.js"></script>
+    <link href="lib/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="lib/html2pdf.bundle.min.js" integrity="sha384-Yv5O+t3uE3hunW8uyrbpPW3iw6/5/Y7HitWJBLgqfMoA36NogMmy+8wWZMpn3HWc" crossorigin="anonymous"></script>
     <style>
         body { background-color: #f8f9fa; font-size: 0.95rem; }
         .alert-stopp { border-left: 5px solid #dc3545; }
@@ -221,7 +222,7 @@
                             <input class="form-control" type="text" id="inputComorb" placeholder="Taper une pathologie..." autocomplete="off">
                             <button class="btn btn-outline-secondary" onclick="addComorbManual()">Ajouter</button>
                         </div>
-                        <ul class="autocomplete-list" id="listComorb"></ul>
+                        <ul class="autocomplete-list" id="listComorb" role="listbox" aria-label="Suggestions de pathologies"></ul>
                     </div>
                     <div id="selectedComorbs" class="mb-3"></div>
 
@@ -231,7 +232,7 @@
                             <input class="form-control" type="text" id="inputMed" placeholder="DCI, Princeps..." autocomplete="off">
                             <button class="btn btn-outline-secondary" onclick="addMedManual()">Ajouter</button>
                         </div>
-                        <ul class="autocomplete-list" id="listMed"></ul>
+                        <ul class="autocomplete-list" id="listMed" role="listbox" aria-label="Suggestions de médicaments"></ul>
                     </div>
                     <div id="selectedMeds" class="mb-3"></div>
 
@@ -254,16 +255,16 @@
                         <li class="nav-item" role="presentation"><button class="nav-link fw-bold" style="color:#6f42c1!important;" data-bs-toggle="tab" data-bs-target="#tab-guidelines" role="tab" aria-label="Guidelines par pathologie">📚 Recos</button></li>
                     </ul>
                     <div class="tab-content mt-3" id="myTabContent">
-                        <div class="tab-pane fade show active" id="tab-scores"><div id="alertes-scores" class="text-muted">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-eviter"><div id="alertes-eviter" class="text-muted">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-initier"><div id="alertes-initier" class="text-muted">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-interact"><div id="alertes-interact" class="text-muted">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-auc"><div id="alertes-auc" class="text-muted">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-ansm"><div id="alertes-ansm" class="text-muted">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-bio"><div id="alertes-bio" class="text-muted">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-usage"><div id="alertes-usage" class="text-muted">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-suivi"><div id="alertes-suivi" class="text-muted">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-guidelines"><div id="alertes-guidelines" class="text-muted">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade show active" id="tab-scores" role="tabpanel"><div id="alertes-scores" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-eviter" role="tabpanel"><div id="alertes-eviter" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-initier" role="tabpanel"><div id="alertes-initier" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-interact" role="tabpanel"><div id="alertes-interact" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-auc" role="tabpanel"><div id="alertes-auc" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-ansm" role="tabpanel"><div id="alertes-ansm" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-bio" role="tabpanel"><div id="alertes-bio" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-usage" role="tabpanel"><div id="alertes-usage" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-suivi" role="tabpanel"><div id="alertes-suivi" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-guidelines" role="tabpanel"><div id="alertes-guidelines" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
                     </div>
                 </div>
             </div>
@@ -292,7 +293,7 @@
       </div>
     </div>
 
-    <script src="lib/bootstrap.bundle.min.js"></script>
+    <script src="lib/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
     <!-- Données d'interactions (toutes les sources) -->
     <!-- anticholinergics_data.js retiré : ACB scores déjà dans MASTER_DB.MEDICAMENTS -->

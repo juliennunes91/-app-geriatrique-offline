@@ -1,5 +1,5 @@
 // app_core.js - V6.0 (Refactorisé - utilise drug_classes.js)
-let activeComorbs = []; let activeMeds = []; let resultatsSynthese = ""; window.suspendedMeds = [];
+let activeComorbs = []; let activeMeds = []; window.suspendedMeds = [];
 let globalQT_CountKR = 0; let globalQT_CountCR_PR = 0; let scoreACB_global = 0; let scoreCIA_global = 0;
 let maxQTLevel_global = 0; let infoQT_global = [];
 const unifiedMedsMap = new Map(); const allComorbs = [];
@@ -243,7 +243,6 @@ window.resetPatient = function() {
     activeComorbs.length = 0;
     activeMeds.length = 0;
     window.suspendedMeds.length = 0;
-    resultatsSynthese = "";
 
     // 2. Réinitialiser les scores globaux
     globalQT_CountKR = 0; globalQT_CountCR_PR = 0;

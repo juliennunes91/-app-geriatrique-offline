@@ -1,8 +1,9 @@
-// Service Worker - GeriaAssist v0.42
-const CACHE_NAME = 'geriaassist-v42';
+// Service Worker - GeriaAssist v0.43
+const CACHE_NAME = 'geriaassist-v43';
 const ASSETS = [
     './',
     './index.html',
+    './offline.html',
     './manifest.json',
     './lib/bootstrap.min.css',
     './lib/bootstrap.bundle.min.js',
@@ -29,6 +30,7 @@ self.addEventListener('install', event => {
         caches.open(CACHE_NAME)
             .then(cache => cache.addAll(ASSETS))
             .then(() => self.skipWaiting())
+            .catch(err => console.warn('SW cache install error:', err))
     );
 });
 
@@ -42,6 +44,12 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request).then(cached => cached || fetch(event.request))
+        caches.match(event.request)
+            .then(cached => cached || fetch(event.request))
+            .catch(() => {
+                if (event.request.mode === 'navigate') {
+                    return caches.match('./offline.html');
+                }
+            })
     );
 });

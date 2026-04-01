@@ -19,7 +19,7 @@
 // REFERENTIEL_CSV_DB supprimé (v0.42) : 222 recommandations, jamais lu par l'app.
 // L'enrichissement multi-sources est assuré par PIM_DICT dans geria_engine_v2.js.
 
-const REFERENTIEL_CSV_DB = {}; // Vidé v0.42 — données jamais utilisées
+// REFERENTIEL_CSV_DB retiré v0.43 — données vérifiées redondantes et non référencées
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1979,8 +1979,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
     }
 ];
 
-// CROSS_REFERENCE_PATHO supprimé (v0.42) — mapping jamais utilisé
-const CROSS_REFERENCE_PATHO = {};
+// CROSS_REFERENCE_PATHO retiré v0.43 — mapping jamais utilisé
 
 
 // ═══════════════════════════════════════════════════════════════════════════════

@@ -80,16 +80,20 @@ function calculerDFG(autoSwitch = true) {
 function setupAutocomplete(inputId, listId, searchFunc, selectFunc) {
     const input = document.getElementById(inputId); const list = document.getElementById(listId);
     if(!input || !list) return;
+    input.setAttribute('role', 'combobox'); input.setAttribute('aria-autocomplete', 'list'); input.setAttribute('aria-expanded', 'false');
     input.addEventListener('input', function() {
         const val = this.value.trim(); list.innerHTML = '';
-        if(val.length < 2) { list.style.display = 'none'; return; }
+        if(val.length < 2) { list.style.display = 'none'; input.setAttribute('aria-expanded', 'false'); return; }
         const matches = searchFunc(val);
         if(matches.length > 0) {
             matches.slice(0, 5).forEach(match => {
-                let li = document.createElement('li'); li.textContent = match.display;
-                li.onclick = () => { input.value = ''; list.style.display = 'none'; selectFunc(match.data); }; list.appendChild(li);
-            }); list.style.display = 'block';
-        } else list.style.display = 'none';
+                let li = document.createElement('li'); li.textContent = match.display; li.setAttribute('role', 'option');
+                li.onclick = () => { input.value = ''; list.style.display = 'none'; input.setAttribute('aria-expanded', 'false'); selectFunc(match.data); }; list.appendChild(li);
+            }); list.style.display = 'block'; input.setAttribute('aria-expanded', 'true');
+        } else {
+            let li = document.createElement('li'); li.textContent = 'Aucun résultat'; li.className = 'text-muted fst-italic'; li.style.pointerEvents = 'none';
+            list.appendChild(li); list.style.display = 'block'; input.setAttribute('aria-expanded', 'true');
+        }
     });
     document.addEventListener('click', function(e) { if (e.target !== input && e.target !== list) list.style.display = 'none'; });
 }
@@ -120,11 +124,30 @@ function toggleSuspend(dci) {
 
 function renderTags() {
     let elComorb = document.getElementById('selectedComorbs'); let elMeds = document.getElementById('selectedMeds');
-    if(elComorb) elComorb.innerHTML = activeComorbs.map(c => { let p = MASTER_DB.PATHOLOGIES[c]; let label = p ? escapeHtml(p.NOM_STANDARD) : escapeHtml(c); return `<span class="badge bg-secondary tag-badge" onclick="removeComorb('${escapeHtml(c)}')">${label} ✖</span>`; }).join('');
+    if(elComorb) {
+        const frag = document.createDocumentFragment();
+        activeComorbs.forEach(c => {
+            let p = MASTER_DB.PATHOLOGIES[c]; let label = p ? p.NOM_STANDARD : c;
+            let span = document.createElement('span'); span.className = 'badge bg-secondary tag-badge'; span.textContent = label + ' ✖';
+            span.onclick = () => removeComorb(c); frag.appendChild(span);
+        });
+        elComorb.innerHTML = ''; elComorb.appendChild(frag);
+    }
     if(elMeds) {
-        let htmlActifs = activeMeds.map(m => { let eDci = escapeHtml(m.dci); let eLabel = escapeHtml(m.label); return `<span class="badge bg-primary tag-badge">${eLabel} <span title="Suspendre" onclick="toggleSuspend('${eDci}')" style="cursor:pointer;" aria-label="Suspendre ${eDci}">⏸️</span> <span onclick="removeMed('${eDci}')" style="cursor:pointer; color:#ffcccc;" aria-label="Retirer ${eDci}">✖</span></span>`; }).join('');
-        let htmlSuspendus = window.suspendedMeds.map(m => { let eDci = escapeHtml(m.dci); let eLabel = escapeHtml(m.label); return `<span class="badge bg-light text-muted border tag-badge" style="text-decoration: line-through;">${eLabel} <span title="Réactiver" onclick="toggleSuspend('${eDci}')" style="cursor:pointer;" aria-label="Réactiver ${eDci}">▶️</span> <span onclick="window.suspendedMeds = window.suspendedMeds.filter(x=>x.dci!=='${eDci}');renderTags();" style="cursor:pointer;" aria-label="Supprimer ${eDci}">✖</span></span>`; }).join('');
-        elMeds.innerHTML = htmlActifs + htmlSuspendus;
+        const frag = document.createDocumentFragment();
+        activeMeds.forEach(m => {
+            let eDci = escapeHtml(m.dci); let eLabel = escapeHtml(m.label);
+            let span = document.createElement('span'); span.className = 'badge bg-primary tag-badge';
+            span.innerHTML = `${eLabel} <span title="Suspendre" onclick="toggleSuspend('${eDci}')" style="cursor:pointer;" aria-label="Suspendre ${eDci}">⏸️</span> <span onclick="removeMed('${eDci}')" style="cursor:pointer; color:#ffcccc;" aria-label="Retirer ${eDci}">✖</span>`;
+            frag.appendChild(span);
+        });
+        window.suspendedMeds.forEach(m => {
+            let eDci = escapeHtml(m.dci); let eLabel = escapeHtml(m.label);
+            let span = document.createElement('span'); span.className = 'badge bg-light text-muted border tag-badge'; span.style.textDecoration = 'line-through';
+            span.innerHTML = `${eLabel} <span title="Réactiver" onclick="toggleSuspend('${eDci}')" style="cursor:pointer;" aria-label="Réactiver ${eDci}">▶️</span> <span onclick="window.suspendedMeds = window.suspendedMeds.filter(x=>x.dci!=='${eDci}');renderTags();" style="cursor:pointer;" aria-label="Supprimer ${eDci}">✖</span>`;
+            frag.appendChild(span);
+        });
+        elMeds.innerHTML = ''; elMeds.appendChild(frag);
     }
 }
 function checkFrail() { let el = document.getElementById('patientFragile'); if(el) el.checked = (getVal('scoreCFS') >= 7); }
