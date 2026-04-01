@@ -328,16 +328,14 @@
         </div>
       </div>
     </div>
-      </div>
-    </div>
 
     <script src="lib/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
     <!-- Données d'interactions (toutes les sources) -->
     <!-- anticholinergics_data.js retiré : ACB scores déjà dans MASTER_DB.MEDICAMENTS -->
-    <script src="ansm_ddi_data.js" defer></script>
-    <script src="ddi_merged_V2.js" defer></script>
-    <script src="gpt_ddi_data_filtered.js" defer></script>
+    <script src="ansm_ddi_data.js"></script>
+    <script src="ddi_merged_V2.js"></script>
+    <script src="gpt_ddi_data_filtered.js"></script>
 
     <!-- posologie_data.js, suivi_data.js, atb_data.js : données migrées dans MASTER_DB (v0.40), fichiers renommés _old -->
     <!-- guidelines_data.js retiré : DOUBLON de GUIDELINE_INDEX dans geria_pathology_rules_v3.js -->
@@ -364,7 +362,7 @@
     <script src="app_ui.js"></script>
     <script src="child_pugh_adaptations.js"></script>
     <script src="app_analysis.js"></script>
-    <div id="session-restore-banner" style="display:none;" class="alert alert-warning alert-dismissible position-fixed bottom-0 end-0 m-3 shadow py-2 px-3" style="z-index:10000;max-width:350px;">
+    <div id="session-restore-banner" style="display:none; z-index:10000; max-width:350px;" class="alert alert-warning alert-dismissible position-fixed bottom-0 end-0 m-3 shadow py-2 px-3">
         Session précédente détectée. <a href="#" onclick="_restoreSession();document.getElementById('session-restore-banner').style.display='none';return false;" class="fw-bold">Restaurer</a>
         <button type="button" class="btn-close btn-sm" onclick="this.parentElement.style.display='none';sessionStorage.removeItem('geriaassist_session');"></button>
     </div>
@@ -404,7 +402,7 @@
         // Restore saved theme
         (function() {
             const saved = localStorage.getItem('geriaassist-theme');
-            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            if (saved === 'dark') {
                 document.documentElement.setAttribute('data-bs-theme', 'dark');
                 const btn = document.getElementById('btnDarkMode');
                 if (btn) btn.textContent = '☀️';
