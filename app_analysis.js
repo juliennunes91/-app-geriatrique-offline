@@ -313,15 +313,28 @@ function analyserPrescription() {
         if(globalQT_CountKR > 0) { scoreTisdale += 3; ttTisdale.push("Médoc QT (+3)"); }
         renderScore(SC.TISDALE, scoreTisdale, ttTisdale);
 
-        // Charge Anticholinergique (ACB + CIA)
+        // Charge Anticholinergique (ACB + CIA) avec distinction BHE
         let acbClass = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
         let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé — confusion, chutes, démence' : (scoreACB_global >= 1 ? 'Charge modérée, surveiller' : 'Charge faible');
         let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé — chutes, somnolence' : (scoreCIA_global >= 1 ? 'Charge modérée' : 'Charge faible');
-        let acbMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0).map(m => `${escapeHtml(m.dci)} (ACB ${m.db_ref.acb})`);
+        // Classer les médicaments ACB par passage de la BHE
+        let acbCentral = []; let acbPeripheral = []; let acbUnknown = [];
+        activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0).forEach(m => {
+            let bhe = String(m.db_ref.bhe || '').trim();
+            let bheVal = parseFloat(bhe);
+            let label = `${escapeHtml(m.dci)} (ACB ${m.db_ref.acb})`;
+            if (bheVal >= 1 || bhe.includes('1')) acbCentral.push(label);
+            else if (bhe === '0' || bhe === '0.0' || bhe.includes('ne traverse pas')) acbPeripheral.push(label);
+            else acbUnknown.push(label);
+        });
         let ciaMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.cia) > 0).map(m => `${escapeHtml(m.dci)} (CIA ${m.db_ref.cia})`);
+        let bheHtml = '';
+        if (acbCentral.length > 0) bheHtml += `<br><span class="text-danger small">🧠 <em>Traverse la BHE (effets centraux) :</em> <b>${acbCentral.join(', ')}</b></span>`;
+        if (acbPeripheral.length > 0) bheHtml += `<br><span class="text-success small">🛡️ <em>Ne traverse pas la BHE (effets périphériques) :</em> ${acbPeripheral.join(', ')}</span>`;
+        if (acbUnknown.length > 0) bheHtml += `<br><span class="text-muted small"><em>BHE non documentée :</em> ${acbUnknown.join(', ')}</span>`;
         addAlert('alertes-scores', `<div class="alert alert-light border border-${acbClass} mb-2 shadow-sm">
             <strong class="text-${acbClass}">Score ACB : ${scoreACB_global}</strong> <em class="text-muted small">— Charge anticholinergique cumulée</em><br>
-            <small class="text-muted">${acbInterp}${acbMeds.length > 0 ? ' — ' + acbMeds.join(', ') : ''}</small><br>
+            <small class="text-muted">${acbInterp}</small>${bheHtml}<br>
             <strong class="text-${scoreCIA_global >= 3 ? 'danger' : (scoreCIA_global >= 1 ? 'warning' : 'success')}">Score CIA : ${scoreCIA_global}</strong> <em class="text-muted small">— Charge sédative/cognitive cumulée</em><br>
             <small class="text-muted">${ciaInterp}${ciaMeds.length > 0 ? ' — ' + ciaMeds.join(', ') : ''}</small>
         </div>`);
@@ -374,15 +387,21 @@ function analyserPrescription() {
             }).map(m => escapeHtml(m.dci.toUpperCase()));
             let hepatoAlert = hepatoMeds.length > 0 ? `<br><span class="text-danger small fw-bold">Médicaments à forte liaison albumine (risque surdosage) : ${hepatoMeds.join(', ')}</span>` : '';
 
-            // ---- Adaptations posologiques hépatiques par médicament ----
-            let cpDrugAlerts = '';
+            // Score Child-Pugh dans l'onglet Scores (sans adaptations médicamenteuses)
+            addAlert('alertes-scores', `<div class="alert alert-light border border-${cpColor} mb-2 shadow-sm">
+                <strong class="text-${cpColor}">Child-Pugh : Classe ${cpClass}</strong> <small class="text-muted">${cpSource}</small>
+                <em class="text-muted small"> — Sévérité de l'insuffisance hépatique</em><br>
+                <small class="fw-bold text-${cpColor}">${cpConc}</small>
+                ${hepatoAlert}
+            </div>`);
+
+            // ---- Adaptations posologiques hépatiques → Onglet Doses ----
             if (typeof CHILD_PUGH_ADAPTATIONS !== 'undefined') {
                 let drugAlertList = [];
                 activeMeds.forEach(m => {
                     let key = m.dci.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
                     let adapt = CHILD_PUGH_ADAPTATIONS[key];
                     if (!adapt) {
-                        // Essayer avec le nom sans espace
                         for (let k of Object.keys(CHILD_PUGH_ADAPTATIONS)) {
                             if (key.includes(k) || k.includes(key)) { adapt = CHILD_PUGH_ADAPTATIONS[k]; break; }
                         }
@@ -397,16 +416,13 @@ function analyserPrescription() {
                     }
                 });
                 if (drugAlertList.length > 0) {
-                    cpDrugAlerts = `<br><hr class="my-1"><strong class="small text-dark">Adaptations posologiques hépatiques :</strong><br>` + drugAlertList.join('<br>');
+                    addAlert('alertes-usage', `<div class="alert alert-light border border-${cpColor} shadow-sm">
+                        <strong class="text-${cpColor}">🫁 Adaptations hépatiques — Child-Pugh ${cpClass}</strong>
+                        <span class="badge bg-secondary float-end" style="font-size:0.65em;">Child-Pugh</span>
+                        <br>${drugAlertList.join('<br>')}
+                    </div>`, 'usage');
                 }
             }
-
-            addAlert('alertes-scores', `<div class="alert alert-light border border-${cpColor} mb-2 shadow-sm">
-                <strong class="text-${cpColor}">Child-Pugh : Classe ${cpClass}</strong> <small class="text-muted">${cpSource}</small>
-                <em class="text-muted small"> — Sévérité de l'insuffisance hépatique</em><br>
-                <small class="fw-bold text-${cpColor}">${cpConc}</small>
-                ${hepatoAlert}${cpDrugAlerts}
-            </div>`);
         }
     }
 
@@ -862,7 +878,9 @@ function analyserPrescription() {
             let uniqueItems = []; data.items.forEach(item => { if(!uniqueItems.some(u => parseFloat(u.auc_ratio) === parseFloat(item.auc_ratio))) uniqueItems.push(item); });
             let detailsHtml = uniqueItems.map(m => {
                 let ratio = parseFloat(m.auc_ratio); let txtRatio = ratio < 1 ? `x${ratio} (Baisse)` : `x${ratio} (Hausse)`;
-                return `<li style="margin-bottom:6px;"><span class="fw-bold">${(ratio >= 3 || ratio <= 0.3) ? '🔴' : '🟠'} Ratio ${txtRatio}</span><br><em class="text-muted small">${m.mechanism}</em></li>`;
+                let src = m.source || m.note || m.ref || '';
+                let srcBadge = src ? ` <span class="badge bg-info" style="font-size:0.6em;">${escapeHtml(String(src))}</span>` : '';
+                return `<li style="margin-bottom:6px;"><span class="fw-bold">${(ratio >= 3 || ratio <= 0.3) ? '🔴' : '🟠'} Ratio ${txtRatio}</span>${srcBadge}<br><em class="text-muted small">${m.mechanism}</em></li>`;
             }).join('');
             addAlert('alertes-auc', `<div class="alert alert-warning border-warning shadow-sm"><strong style="font-size:1.05em;">📈 Pharmacocinétique (AUC) : ${pair}</strong><ul class="mb-0 ps-3">${detailsHtml}</ul></div>`, 'auc');
         }

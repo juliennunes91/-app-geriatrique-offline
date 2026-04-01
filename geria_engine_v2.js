@@ -340,7 +340,8 @@ const GeriaEngineV2 = (() => {
                     ...enriched,
                     score: score,
                     triage: triage,
-                    sources_label: (enriched.all_sources || enriched.sources || [])
+                    // Sources : utiliser les sources propres à la règle (pas les cross-ref merged)
+                    sources_label: (enriched.sources || [])
                         .map(s => GERIA_RECOS_DB.SOURCES[s] ? GERIA_RECOS_DB.SOURCES[s].nom : s).join(' | ')
                 };
                 
@@ -645,9 +646,19 @@ const GeriaEngineV2 = (() => {
             : '';
 
         const esc = typeof escapeHtml === 'function' ? escapeHtml : s => String(s||'');
+        // Titre amélioré pour les recommandations groupées (multi-thérapie)
+        let displayTitle = esc(a.titre);
+        let mergedBadge = '';
+        if (a.merged_count > 1) {
+            displayTitle = `${triage.icon} Multi-thérapie — ${a.merged_count} traitements recommandés`;
+            mergedBadge = a.cross_ref_theme ? ` <span class="badge bg-primary" style="font-size:0.65em;">${esc(a.cross_ref_theme)}</span>` : '';
+        } else {
+            displayTitle = `${triage.icon} ${displayTitle}`;
+        }
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass});">
-            ${scoreBadge}<strong>${triage.icon} ${esc(a.titre)}</strong>${a.merged_count > 1 ? ` <span class="badge bg-light text-dark border" style="font-size:0.65em;">${a.merged_count} recommandations groupées</span>` : ''}
+            ${scoreBadge}<strong>${displayTitle}</strong>${mergedBadge}
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(a.sources_label || '')}</span>
+            ${a.merged_count > 1 ? '<br><span class="small fw-bold">• ' + esc(a.titre) + '</span>' : ''}
             <br><span class="small">${a.message}</span>
             ${compHtml}
             ${pimBadges}

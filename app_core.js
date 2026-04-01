@@ -48,7 +48,8 @@ window.exporterPatientJSON = function() {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = `GeriaAssist_Patient_${new Date().toISOString().slice(0, 10)}.json`;
+    const nomPatient = (document.getElementById('patientNom')?.value || 'Patient').replace(/[^a-zA-Z0-9àâäéèêëïîôùûüÿçÀÂÄÉÈÊËÏÎÔÙÛÜŸÇ_ -]/g, '');
+    a.href = url; a.download = `GeriaAssist_${nomPatient}_${new Date().toISOString().slice(0, 10)}.json`;
     a.click(); URL.revokeObjectURL(url);
     GeriaLog.info('Patient exporté en JSON');
 };
@@ -73,7 +74,7 @@ window.importerPatientJSON = function() {
 
 function _collectPatientData() {
     const fields = {};
-    document.querySelectorAll('#patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB9, #bioVitD, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
+    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB9, #bioVitD, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
         if (el) fields[el.id] = el.value;
     });
     const checkboxes = {};
@@ -158,6 +159,7 @@ window._restoreSession = function() {
  * Construit le texte brut de la synthèse (réutilisé par PDF et copier).
  */
 function buildSyntheseText() {
+    const nom = document.getElementById('patientNom')?.value || '';
     const age = document.getElementById('patientAge')?.value || '';
     const sexe = document.getElementById('patientSexe')?.value || '';
     const poids = document.getElementById('patientPoids')?.value || '';
@@ -166,7 +168,7 @@ function buildSyntheseText() {
     let lines = [];
     lines.push('=== SYNTHÈSE GERIAASSIST ===');
     lines.push(`Date : ${new Date().toLocaleDateString('fr-FR')}`);
-    lines.push(`Patient : ${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}`);
+    lines.push(`Patient : ${nom ? nom + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}`);
     lines.push('');
 
     // Comorbidités
@@ -230,18 +232,19 @@ function buildSyntheseText() {
  * Construit un élément HTML formaté pour l'export PDF (1 page, compact).
  */
 function buildPdfContent() {
+    const nom = document.getElementById('patientNom')?.value || '';
     const age = document.getElementById('patientAge')?.value || '—';
     const sexe = document.getElementById('patientSexe')?.value || '';
     const poids = document.getElementById('patientPoids')?.value || '';
     const dfg = document.getElementById('patientDFG')?.value || '';
 
-    let html = `<div style="font-family:Arial,sans-serif;font-size:9px;color:#222;line-height:1.3;padding:8px;">`;
+    let html = `<div style="font-family:Arial,sans-serif;font-size:10px;color:#222;line-height:1.4;padding:10px;">`;
 
     // En-tête
-    html += `<div style="border-bottom:2px solid #0d6efd;padding-bottom:4px;margin-bottom:6px;">
-        <strong style="font-size:13px;color:#0d6efd;">GeriaAssist — Synthèse</strong>
-        <span style="float:right;font-size:8px;color:#888;">${new Date().toLocaleDateString('fr-FR')}</span>
-        <br><span style="font-size:9px;">Patient : ${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}</span>
+    html += `<div style="border-bottom:2px solid #0d6efd;padding-bottom:4px;margin-bottom:8px;">
+        <strong style="font-size:14px;color:#0d6efd;">GeriaAssist — Synthèse Pharmaco-Clinique</strong>
+        <span style="float:right;font-size:9px;color:#888;">${new Date().toLocaleDateString('fr-FR')}</span>
+        <br><span style="font-size:10px;"><strong>${nom ? escapeHtml(nom) + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}</strong>${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}</span>
     </div>`;
 
     // 2 colonnes : Comorbidités + Médicaments
@@ -303,17 +306,20 @@ function buildPdfContent() {
         const el = document.getElementById(s.id);
         if (!el) return;
         const alerts = el.querySelectorAll('.alert');
-        // Ne pas afficher les sections vides (texte "Aucune..." seulement)
         if (alerts.length === 0) return;
         const hasContent = Array.from(alerts).some(a => !a.classList.contains('alert-light') || a.querySelectorAll('strong').length > 1);
         if (!hasContent && alerts.length === 1 && alerts[0].textContent.includes('Aucun')) return;
 
-        html += `<div style="border-left:3px solid ${s.color};padding-left:5px;margin-bottom:4px;">
-            <strong style="font-size:9px;color:${s.color};">${s.titre} (${alerts.length})</strong>`;
+        html += `<div style="border-left:3px solid ${s.color};padding-left:6px;margin-bottom:6px;">
+            <strong style="font-size:10px;color:${s.color};">${s.titre} (${alerts.length})</strong>`;
         alerts.forEach(a => {
             const strong = a.querySelector('strong');
-            const title = strong ? strong.textContent.trim() : a.textContent.substring(0, 80).trim();
-            html += `<div style="font-size:8px;margin:1px 0;">• ${title}</div>`;
+            const title = strong ? strong.textContent.trim() : '';
+            // Extraire aussi le détail (texte après le titre)
+            let detail = '';
+            const smalls = a.querySelectorAll('small, em, span.small');
+            if (smalls.length > 0) detail = smalls[0].textContent.trim().substring(0, 120);
+            html += `<div style="font-size:9px;margin:2px 0;">• <strong>${escapeHtml(title)}</strong>${detail ? ' — <span style="color:#555;">' + escapeHtml(detail) + '</span>' : ''}</div>`;
         });
         html += `</div>`;
     });
@@ -332,7 +338,7 @@ window.exporterPDF = function() {
 
     const opt = {
         margin: [5, 5, 5, 5],
-        filename: 'GeriaAssist_Synthese_' + new Date().toISOString().slice(0, 10) + '.pdf',
+        filename: 'GeriaAssist_' + (document.getElementById('patientNom')?.value || 'Patient').replace(/[^a-zA-Z0-9àâäéèêëïîôùûüÿçÀÂÄÉÈÊËÏÎÔÙÛÜŸÇ_ -]/g, '') + '_' + new Date().toISOString().slice(0, 10) + '.pdf',
         image: { type: 'jpeg', quality: 0.95 },
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -376,7 +382,7 @@ window.resetPatient = function() {
 
     // 3. Remettre les champs du formulaire à leurs valeurs par défaut
     const defaults = {
-        'patientAge': '80', 'patientSexe': 'F', 'patientPoids': '', 'patientBmi': '',
+        'patientNom': '', 'patientAge': '80', 'patientSexe': 'F', 'patientPoids': '', 'patientBmi': '',
         'bioCreat': '', 'patientDFG': '45', 'dfgMethodSelect': 'manuel',
         'patientK': '4.0', 'patientNa': '140', 'bioAlbumSg': '',
         'bioUree': '', 'bioMg': '', 'bioCa': '', 'bioUric': '',

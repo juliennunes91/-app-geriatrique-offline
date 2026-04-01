@@ -4280,15 +4280,15 @@ function deduplicateAlerts(alerts) {
                 return e.cross_ref_group === enriched.cross_ref_group;
             });
             
-            // Fusionner les messages
-            const allSources = [...new Set(groupAlerts.flatMap(a => enrichRuleWithCrossRef(a).all_sources || a.sources))];
+            // Fusionner les messages — garder les sources propres (pas cross-ref)
+            const primarySources = [...new Set(groupAlerts.flatMap(a => a.sources || []))];
             const allMessages = groupAlerts.map(a => a.message);
             const allAlternatives = [...new Set(groupAlerts.map(a => a.alternatives).filter(Boolean))];
-            
+
             result.push({
                 ...enriched,
-                sources: allSources,
-                sources_label: allSources.map(s => GERIA_RECOS_DB.SOURCES[s] ? GERIA_RECOS_DB.SOURCES[s].nom : s).join(' | '),
+                sources: primarySources,
+                sources_label: primarySources.map(s => GERIA_RECOS_DB.SOURCES[s] ? GERIA_RECOS_DB.SOURCES[s].nom : s).join(' | '),
                 message: allMessages[0], // message principal
                 complementary_messages: allMessages.slice(1),
                 alternatives: allAlternatives.join(' — '),
@@ -4296,11 +4296,11 @@ function deduplicateAlerts(alerts) {
                 merged_count: groupAlerts.length
             });
         } else {
-            // Mode distinct_context : enrichir les sources mais garder séparé
+            // Mode distinct_context : garder les sources propres à la règle
             result.push({
                 ...enriched,
-                sources: enriched.all_sources || enriched.sources,
-                sources_label: (enriched.all_sources || enriched.sources)
+                sources: enriched.sources,
+                sources_label: (enriched.sources || [])
                     .map(s => GERIA_RECOS_DB.SOURCES[s] ? GERIA_RECOS_DB.SOURCES[s].nom : s).join(' | ')
             });
         }

@@ -51,16 +51,37 @@
         [data-bs-theme="dark"] { --bs-body-bg: #1a1a2e; --bs-body-color: #e0e0e0; }
         [data-bs-theme="dark"] body { background-color: #1a1a2e; color: #e0e0e0; }
         [data-bs-theme="dark"] .section-box { background: #16213e; color: #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        [data-bs-theme="dark"] .form-control, [data-bs-theme="dark"] .form-select { background-color: #0f3460; color: #e0e0e0; border-color: #1a1a5e; }
+        [data-bs-theme="dark"] .form-control, [data-bs-theme="dark"] .form-select { background-color: #1e2a4a; color: #e0e0e0; border-color: #3a4a6e; }
+        [data-bs-theme="dark"] .form-control::placeholder { color: #888; }
         [data-bs-theme="dark"] .nav-tabs .nav-link { color: #aaa; }
         [data-bs-theme="dark"] .nav-tabs .nav-link.active { background-color: #16213e; color: #fff; border-color: #0d6efd #0d6efd #16213e; }
         [data-bs-theme="dark"] .alert { color: #e0e0e0; }
-        [data-bs-theme="dark"] .alert-light { background-color: #1a1a3e; border-color: #333; color: #ddd; }
+        [data-bs-theme="dark"] .alert-light { background-color: #1e2a4a; border-color: #3a4a6e; color: #ddd; }
+        [data-bs-theme="dark"] .alert-success { background-color: #1a3a2a; border-color: #2a5a3a; color: #c8e6d0; }
+        [data-bs-theme="dark"] .alert-danger { background-color: #3a1a1a; border-color: #5a2a2a; color: #e6c8c8; }
+        [data-bs-theme="dark"] .alert-warning { background-color: #3a3a1a; border-color: #5a5a2a; color: #e6e6c8; }
+        [data-bs-theme="dark"] .alert-info { background-color: #1a2a3a; border-color: #2a4a5a; color: #c8d8e6; }
+        [data-bs-theme="dark"] .alert-primary { background-color: #1a1a3a; border-color: #2a2a5a; color: #c8c8e6; }
         [data-bs-theme="dark"] .badge.bg-secondary { background-color: #444 !important; }
+        [data-bs-theme="dark"] .badge.bg-light { background-color: #2a3a5a !important; color: #ddd !important; }
         [data-bs-theme="dark"] .version-footer { background: rgba(26,26,46,0.95); color: #888; border-color: #333; }
-        [data-bs-theme="dark"] .text-muted { color: #888 !important; }
+        [data-bs-theme="dark"] .text-muted { color: #999 !important; }
+        [data-bs-theme="dark"] .text-dark { color: #ddd !important; }
+        [data-bs-theme="dark"] .text-success { color: #6fc87a !important; }
+        [data-bs-theme="dark"] .text-danger { color: #e07070 !important; }
+        [data-bs-theme="dark"] .text-warning { color: #e0c050 !important; }
+        [data-bs-theme="dark"] .text-info { color: #60b0d0 !important; }
+        [data-bs-theme="dark"] .text-primary { color: #6090e0 !important; }
         [data-bs-theme="dark"] .autocomplete-list { background: #16213e; border-color: #333; }
-        [data-bs-theme="dark"] .autocomplete-list li:hover { background-color: #0f3460; }
+        [data-bs-theme="dark"] .autocomplete-list li:hover { background-color: #1e2a4a; }
+        [data-bs-theme="dark"] .card-header { color: #fff; }
+        [data-bs-theme="dark"] .card-body { background-color: #16213e; color: #ddd; }
+        [data-bs-theme="dark"] .bg-light { background-color: #1e2a4a !important; color: #ddd; }
+        [data-bs-theme="dark"] .bg-white { background-color: #16213e !important; color: #ddd; }
+        [data-bs-theme="dark"] .border { border-color: #3a4a6e !important; }
+        [data-bs-theme="dark"] label, [data-bs-theme="dark"] .form-check-label { color: #ccc; }
+        [data-bs-theme="dark"] strong { color: inherit; }
+        [data-bs-theme="dark"] .table { color: #ddd; }
         /* Comparaison mode */
         #compare-panel { display: none; }
         #compare-panel.active { display: block; }
@@ -108,6 +129,7 @@
                 <div class="section-box">
                     <h4>1. Profil & Biologie</h4>
                     <div class="row g-2 mb-2">
+                        <div class="col-12 mb-1"><label class="fw-bold small" for="patientNom">Identifiant patient</label><input type="text" id="patientNom" class="form-control form-control-sm" placeholder="Nom ou identifiant (optionnel, pour export/PDF)"></div>
                         <div class="col-3"><label class="fw-bold small" for="patientAge">Âge</label><input type="number" id="patientAge" class="form-control px-1" value="80" min="18" max="120" oninput="calculerDFG()"></div>
                         <div class="col-3"><label class="fw-bold small">Sexe</label><select id="patientSexe" class="form-select px-1" onchange="calculerDFG()"><option value="F">F</option><option value="M">M</option></select></div>
                         <div class="col-3"><label class="fw-bold small" for="patientPoids">Poids <span class="fw-normal text-muted">(kg)</span></label><input type="number" id="patientPoids" class="form-control px-1" min="20" max="300" oninput="calculerDFG()"></div>
