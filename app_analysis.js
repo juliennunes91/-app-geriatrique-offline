@@ -1,4 +1,50 @@
-// app_analysis.js - V6.0 (Refactorisé - utilise drug_classes.js)
+// app_analysis.js - V7.0 (Refactorisé - utilise drug_classes.js)
+
+// =========================================================
+// SCORES_CONFIG — Seuils externalisés (modifiable sans toucher la logique)
+// =========================================================
+const SCORES_CONFIG = {
+    CHA2DS2: {
+        label: 'CHA₂DS₂-VASc', desc: 'Risque thromboembolique dans la FA', border: 'info',
+        seuils: { haut: 2 },
+        conclusions: { 0: 'Risque faible — anticoagulation non indiquée', 1: 'Risque intermédiaire — anticoagulation optionnelle', haut: 'Anticoagulation recommandée (sauf CI)' }
+    },
+    HAS_BLED: {
+        label: 'HAS-BLED', desc: 'Risque hémorragique sous anticoagulant', border: 'danger',
+        seuils: { modere: 1, haut: 3 },
+        conclusions: { 0: 'Risque faible', modere: 'Risque modéré — réévaluer bénéfice/risque', haut: 'Risque hémorragique élevé — prudence avec anticoagulant' }
+    },
+    ORBIT: {
+        label: 'ORBIT-AF', desc: 'Risque de saignement sous AOD', border: 'warning',
+        seuils: { modere: 3, haut: 4 },
+        conclusions: { 0: 'Risque faible (2.4%/an)', modere: 'Risque modéré (4.7%/an)', haut: 'Risque hémorragique élevé (7.3%/an)' }
+    },
+    RISQ_PATH: {
+        label: 'RISQ-PATH', desc: 'Risque d\'allongement du QT', border: 'primary',
+        seuils: { modere: 5, haut: 10 },
+        conclusions: { 0: 'Risque modéré', modere: 'Risque élevé — prudence avec QTc-allongeants', haut: 'Risque très élevé de TdP' }
+    },
+    TISDALE: {
+        label: 'Score de Tisdale', desc: 'Risque de TdP en hospitalisation', border: 'dark',
+        seuils: { modere: 7, haut: 11 },
+        conclusions: { 0: 'Risque faible', modere: 'Risque modéré — ECG quotidien recommandé', haut: 'Risque élevé de TdP — monitoring ECG continu' }
+    },
+    // Seuils biologiques pour les scores
+    BIO: {
+        anemia_M: 13, anemia_F: 12,   // g/dL
+        hypoK: 3.5,                     // mmol/L
+        hypoCa: 2.15,                   // mmol/L
+        irc_has: 50, irc_orbit: 60, irc_severe: 30, // ml/min DFG
+        qtc_prolonge: 450               // ms
+    },
+    AGE: {
+        cha_75: 75, cha_65: 65,
+        has_65: 65,
+        orbit_75: 75,
+        risq_65: 65,
+        tisdale_68: 68
+    }
+};
 
 const medMatchesAnsmTerm = (med, term) => {
     if (!term || !med) return false;
@@ -20,12 +66,13 @@ function preCalculerScores() {
 
     activeMeds.forEach(m => {
         let ref = m.db_ref; if (!ref) return;
-        let acb = parseFloat(ref.acb) || 0; let cia = parseFloat(ref.cia) || 0;
-        if (acb > 0) scoreACB_global += acb;
-        if (cia > 0) scoreCIA_global += cia;
+        // Cache parseFloat dans db_ref pour éviter recalculs
+        if (ref._acb === undefined) { ref._acb = parseFloat(ref.acb) || 0; ref._cia = parseFloat(ref.cia) || 0; }
+        if (ref._acb > 0) scoreACB_global += ref._acb;
+        if (ref._cia > 0) scoreCIA_global += ref._cia;
         let qt = String(ref.qt_risque || "");
-        if (qt.includes("(KR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 2); infoQT_global.push(`${m.dci}`); globalQT_CountKR++; }
-        else if (qt.includes("(PR)") || qt.includes("(CR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 1); infoQT_global.push(`${m.dci}`); globalQT_CountCR_PR++; }
+        if (qt.includes("(KR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 2); infoQT_global.push(m.dci); globalQT_CountKR++; }
+        else if (qt.includes("(PR)") || qt.includes("(CR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 1); infoQT_global.push(m.dci); globalQT_CountCR_PR++; }
     });
 }
 
@@ -189,58 +236,70 @@ function analyserPrescription() {
     // 2. SCORES CLINIQUES (Risq-Path, Tisdale, CHA2DS2, etc.)
     // =========================================================
     if(divScores) {
+        const SC = SCORES_CONFIG; const SB = SC.BIO; const SA = SC.AGE;
+
+        // Helper rendu score
+        const renderScore = (cfg, score, details) => {
+            let conc = cfg.conclusions[0];
+            let dangerClass = 'success';
+            if (cfg.seuils.haut && score >= cfg.seuils.haut) { conc = cfg.conclusions.haut; dangerClass = 'danger'; }
+            else if (cfg.seuils.modere && score >= cfg.seuils.modere) { conc = cfg.conclusions.modere; dangerClass = 'muted'; }
+            addAlert('alertes-scores', `<div class="alert alert-light border border-${cfg.border} mb-2 shadow-sm"><strong class="text-${cfg.border}">${cfg.label} : ${score} point(s)</strong> <em class="text-muted small">— ${cfg.desc}</em><br><small class="text-muted">${details.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${dangerClass}">${conc}</small></div>`);
+        };
+
+        // CHA₂DS₂-VASc
         let scoreCha = 0; let ttCha = [];
-        if(patientAge >= 75) { scoreCha += 2; ttCha.push("Âge ≥75 (+2)"); } else if(patientAge >= 65) { scoreCha += 1; ttCha.push("Âge ≥65 (+1)"); }
+        if(patientAge >= SA.cha_75) { scoreCha += 2; ttCha.push("Âge ≥75 (+2)"); } else if(patientAge >= SA.cha_65) { scoreCha += 1; ttCha.push("Âge ≥65 (+1)"); }
         if(sexe === 'F') { scoreCha += 1; ttCha.push("Femme (+1)"); }
         if(activeComorbs.some(c=>['PAT_001','PAT_002','PAT_003'].includes(c))) { scoreCha += 1; ttCha.push("IC (+1)"); }
         if(activeComorbs.includes('PAT_005')) { scoreCha += 1; ttCha.push("HTA (+1)"); }
         if(activeComorbs.includes('PAT_016')) { scoreCha += 1; ttCha.push("Diabète (+1)"); }
-        if(activeComorbs.includes('PAT_008')) { scoreCha += 2; ttCha.push("ATCD AVC (+2)"); } 
+        if(activeComorbs.includes('PAT_008')) { scoreCha += 2; ttCha.push("ATCD AVC (+2)"); }
         if(activeComorbs.some(c=>['PAT_004','PAT_007'].includes(c))) { scoreCha += 1; ttCha.push("Vasc (+1)"); }
-        let chaConc = scoreCha === 0 ? 'Risque faible — anticoagulation non indiquée' : (scoreCha === 1 ? (sexe === 'M' ? 'Risque faible (H) — anticoagulation optionnelle' : 'Score lié au sexe seul — anticoagulation non indiquée (F)') : 'Anticoagulation recommandée (sauf CI)');
-        addAlert('alertes-scores', `<div class="alert alert-light border border-info mb-2 shadow-sm"><strong class="text-info">CHA₂DS₂-VASc : ${scoreCha} point(s)</strong> <em class="text-muted small">— Risque thromboembolique dans la FA</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreCha >= 2 ? 'danger' : 'success'}">${chaConc}</small></div>`);
+        let chaConc = scoreCha === 0 ? SC.CHA2DS2.conclusions[0] : (scoreCha === 1 ? (sexe === 'M' ? 'Risque faible (H) — anticoagulation optionnelle' : 'Score lié au sexe seul — anticoagulation non indiquée (F)') : SC.CHA2DS2.conclusions.haut);
+        addAlert('alertes-scores', `<div class="alert alert-light border border-${SC.CHA2DS2.border} mb-2 shadow-sm"><strong class="text-${SC.CHA2DS2.border}">${SC.CHA2DS2.label} : ${scoreCha} point(s)</strong> <em class="text-muted small">— ${SC.CHA2DS2.desc}</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreCha >= SC.CHA2DS2.seuils.haut ? 'danger' : 'success'}">${chaConc}</small></div>`);
 
+        // HAS-BLED
         let scoreHas = 0; let ttHas = [];
-        if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 50) { scoreHas += 1; ttHas.push("IRC (+1)"); }
+        if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < SB.irc_has) { scoreHas += 1; ttHas.push("IRC (+1)"); }
         if(activeComorbs.includes('PAT_008')) { scoreHas += 1; ttHas.push("ATCD AVC (+1)"); }
-        if(patientAge > 65) { scoreHas += 1; ttHas.push("Âge >65 (+1)"); }
+        if(patientAge > SA.has_65) { scoreHas += 1; ttHas.push("Âge >65 (+1)"); }
         if(patientHasMedClass('ains') || patientHasMedClass('antiagreg')) { scoreHas += 1; ttHas.push("AINS/AAS (+1)"); }
-        let hasConc = scoreHas >= 3 ? 'Risque hémorragique élevé — prudence avec anticoagulant' : (scoreHas >= 1 ? 'Risque modéré — réévaluer bénéfice/risque' : 'Risque faible');
-        addAlert('alertes-scores', `<div class="alert alert-light border border-danger mb-2 shadow-sm"><strong class="text-danger">HAS-BLED : ${scoreHas} point(s)</strong> <em class="text-muted small">— Risque hémorragique sous anticoagulant</em><br><small class="text-muted">${ttHas.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreHas >= 3 ? 'danger' : 'muted'}">${hasConc}</small></div>`);
+        renderScore(SC.HAS_BLED, scoreHas, ttHas);
 
+        // ORBIT-AF
         let scoreOrbit = 0; let ttOrbit = [];
-        if(patientAge >= 75) { scoreOrbit += 1; ttOrbit.push("Âge ≥75 (+1)"); }
-        if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < 13) || (sexe === 'F' && bioValues['BIO_009'] < 12))) { scoreOrbit += 2; ttOrbit.push("Anémie (+2)"); }
+        if(patientAge >= SA.orbit_75) { scoreOrbit += 1; ttOrbit.push("Âge ≥75 (+1)"); }
+        if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < SB.anemia_M) || (sexe === 'F' && bioValues['BIO_009'] < SB.anemia_F))) { scoreOrbit += 2; ttOrbit.push("Anémie (+2)"); }
         if(isChecked('chkSaignement') || isChecked('chkAspirineForte')) { scoreOrbit += 2; ttOrbit.push("Saignement (+2)"); }
-        if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 60) { scoreOrbit += 1; ttOrbit.push("DFG <60 (+1)"); }
+        if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < SB.irc_orbit) { scoreOrbit += 1; ttOrbit.push("DFG <60 (+1)"); }
         if(patientHasMedClass('antiagreg')) { scoreOrbit += 1; ttOrbit.push("Antiagrégant (+1)"); }
-        let orbitConc = scoreOrbit >= 4 ? 'Risque hémorragique élevé (7.3%/an)' : (scoreOrbit >= 3 ? 'Risque modéré (4.7%/an)' : 'Risque faible (2.4%/an)');
-        addAlert('alertes-scores', `<div class="alert alert-light border border-warning mb-2 shadow-sm"><strong class="text-warning">ORBIT-AF : ${scoreOrbit} point(s)</strong> <em class="text-muted small">— Risque de saignement sous AOD</em><br><small class="text-muted">${ttOrbit.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreOrbit >= 4 ? 'danger' : 'muted'}">${orbitConc}</small></div>`);
+        renderScore(SC.ORBIT, scoreOrbit, ttOrbit);
 
+        // RISQ-PATH
         let scoreRisq = 0; let ttRisq = [];
-        if(patientAge >= 65) { scoreRisq += 1; ttRisq.push("Âge ≥65 (+1)"); }
+        if(patientAge >= SA.risq_65) { scoreRisq += 1; ttRisq.push("Âge ≥65 (+1)"); }
         if(sexe === 'F') { scoreRisq += 1; ttRisq.push("Femme (+1)"); }
         if(getVal('patientBmi') >= 30) { scoreRisq += 1; ttRisq.push("Obésité (+1)"); }
-        if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] <= 3.5) { scoreRisq += 2; ttRisq.push("HypoK (+2)"); }
-        if(bioValues['BIO_005'] > 0 && bioValues['BIO_005'] < 2.15) { scoreRisq += 2; ttRisq.push("HypoCa (+2)"); }
-        if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] <= 30) { scoreRisq += 2; ttRisq.push("IRC Sévère (+2)"); }
+        if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] <= SB.hypoK) { scoreRisq += 2; ttRisq.push("HypoK (+2)"); }
+        if(bioValues['BIO_005'] > 0 && bioValues['BIO_005'] < SB.hypoCa) { scoreRisq += 2; ttRisq.push("HypoCa (+2)"); }
+        if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] <= SB.irc_severe) { scoreRisq += 2; ttRisq.push("IRC Sévère (+2)"); }
         if(bioValues['BIO_024'] > 5) { scoreRisq += 1; ttRisq.push("Inflammation (+1)"); }
         if(['PAT_005','PAT_001','PAT_002','PAT_003'].some(c=>activeComorbs.includes(c))) { scoreRisq += 1; ttRisq.push("HTA/IC (+1)"); }
         if(activeComorbs.includes('PAT_006')) { scoreRisq += 1; ttRisq.push("FA (+1)"); }
         if(['PAT_010','PAT_011','PAT_012','PAT_013','PAT_014'].some(c=>activeComorbs.includes(c))) { scoreRisq += 1; ttRisq.push("Démence/Park (+1)"); }
         if(globalQT_CountKR > 0) { scoreRisq += (3 * globalQT_CountKR); ttRisq.push(`Médoc QT (+${3*globalQT_CountKR})`); }
-        let risqConc = scoreRisq >= 10 ? 'Risque très élevé de TdP' : (scoreRisq >= 5 ? 'Risque élevé — prudence avec QTc-allongeants' : 'Risque modéré');
-        addAlert('alertes-scores', `<div class="alert alert-light border border-primary mb-2 shadow-sm"><strong class="text-primary">RISQ-PATH : ${scoreRisq} point(s)</strong> <em class="text-muted small">— Risque d'allongement du QT</em><br><small class="text-muted">${ttRisq.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreRisq >= 10 ? 'danger' : 'muted'}">${risqConc}</small></div>`);
+        renderScore(SC.RISQ_PATH, scoreRisq, ttRisq);
 
+        // Tisdale
         let scoreTisdale = 0; let ttTisdale = [];
-        if(patientAge >= 68) { scoreTisdale += 1; ttTisdale.push("Âge ≥68 (+1)"); }
+        if(patientAge >= SA.tisdale_68) { scoreTisdale += 1; ttTisdale.push("Âge ≥68 (+1)"); }
         if(sexe === 'F') { scoreTisdale += 1; ttTisdale.push("Femme (+1)"); }
         if(patientHasMedClass('diuretique')) { scoreTisdale += 1; ttTisdale.push("Diurétique (+1)"); }
-        if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] <= 3.5) { scoreTisdale += 2; ttTisdale.push("HypoK (+2)"); }
-        if(bioValues['BIO_031'] >= 450) { scoreTisdale += 2; ttTisdale.push("QTc ≥450 (+2)"); }
+        if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] <= SB.hypoK) { scoreTisdale += 2; ttTisdale.push("HypoK (+2)"); }
+        if(bioValues['BIO_031'] >= SB.qtc_prolonge) { scoreTisdale += 2; ttTisdale.push("QTc ≥450 (+2)"); }
         if(globalQT_CountKR > 0) { scoreTisdale += 3; ttTisdale.push("Médoc QT (+3)"); }
-        let tisdaleConc = scoreTisdale >= 11 ? 'Risque élevé de TdP — monitoring ECG continu' : (scoreTisdale >= 7 ? 'Risque modéré — ECG quotidien recommandé' : 'Risque faible');
-        addAlert('alertes-scores', `<div class="alert alert-light border border-dark mb-2 shadow-sm"><strong class="text-dark">Score de Tisdale : ${scoreTisdale} point(s)</strong> <em class="text-muted small">— Risque de TdP en hospitalisation</em><br><small class="text-muted">${ttTisdale.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreTisdale >= 11 ? 'danger' : 'muted'}">${tisdaleConc}</small></div>`);
+        renderScore(SC.TISDALE, scoreTisdale, ttTisdale);
 
         // Charge Anticholinergique (ACB + CIA)
         let acbClass = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
