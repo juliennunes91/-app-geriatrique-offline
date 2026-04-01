@@ -47,6 +47,30 @@
             .tag-badge { font-size: 0.85em; padding: 6px; min-height: 36px; }
             .autocomplete-list li { padding: 12px; min-height: 44px; }
         }
+        /* Dark mode */
+        [data-bs-theme="dark"] { --bs-body-bg: #1a1a2e; --bs-body-color: #e0e0e0; }
+        [data-bs-theme="dark"] body { background-color: #1a1a2e; color: #e0e0e0; }
+        [data-bs-theme="dark"] .section-box { background: #16213e; color: #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        [data-bs-theme="dark"] .form-control, [data-bs-theme="dark"] .form-select { background-color: #0f3460; color: #e0e0e0; border-color: #1a1a5e; }
+        [data-bs-theme="dark"] .nav-tabs .nav-link { color: #aaa; }
+        [data-bs-theme="dark"] .nav-tabs .nav-link.active { background-color: #16213e; color: #fff; border-color: #0d6efd #0d6efd #16213e; }
+        [data-bs-theme="dark"] .alert { color: #e0e0e0; }
+        [data-bs-theme="dark"] .alert-light { background-color: #1a1a3e; border-color: #333; color: #ddd; }
+        [data-bs-theme="dark"] .badge.bg-secondary { background-color: #444 !important; }
+        [data-bs-theme="dark"] .version-footer { background: rgba(26,26,46,0.95); color: #888; border-color: #333; }
+        [data-bs-theme="dark"] .text-muted { color: #888 !important; }
+        [data-bs-theme="dark"] .autocomplete-list { background: #16213e; border-color: #333; }
+        [data-bs-theme="dark"] .autocomplete-list li:hover { background-color: #0f3460; }
+        /* Comparaison mode */
+        #compare-panel { display: none; }
+        #compare-panel.active { display: block; }
+        .compare-removed { background-color: rgba(220,53,69,0.1) !important; border-left: 4px solid #dc3545 !important; text-decoration: line-through; opacity: 0.7; }
+        .compare-added { background-color: rgba(25,135,84,0.1) !important; border-left: 4px solid #198754 !important; }
+        .alert-hidden { display: none !important; }
+        /* Score tooltips */
+        .score-tooltip { position: relative; cursor: help; }
+        .score-tooltip .score-tip-text { visibility: hidden; width: 280px; background-color: #333; color: #fff; text-align: left; border-radius: 6px; padding: 8px 10px; position: absolute; z-index: 1001; bottom: 125%; left: 0; font-size: 0.75rem; line-height: 1.4; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .score-tooltip:hover .score-tip-text, .score-tooltip:focus .score-tip-text { visibility: visible; }
         /* Impression */
         @media print {
             .version-footer, .nav-tabs, .btn, .autocomplete-container, .form-check-input,
@@ -65,11 +89,17 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="text-primary m-0">🏥 GeriaAssist - Décision Pharmaco-Clinique</h2>
-            <div>
-                <button class="btn btn-outline-secondary shadow-sm me-2" onclick="resetPatient()" title="Nouveau patient : efface toutes les données">Nouveau Patient</button>
-                <button class="btn btn-outline-info shadow-sm me-2" data-bs-toggle="modal" data-bs-target="#legendModal">Legende</button>
-                <button class="btn btn-outline-primary shadow-sm" onclick="copierSynthese()" id="btnCopier" style="display:none;">Copier</button>
-                <button class="btn btn-outline-danger shadow-sm ms-2" onclick="exporterPDF()" id="btnPdf" style="display:none;">PDF</button>
+            <div class="d-flex flex-wrap gap-1">
+                <button class="btn btn-outline-secondary btn-sm shadow-sm" onclick="resetPatient()" title="Nouveau patient (Ctrl+N)">Nouveau</button>
+                <button class="btn btn-outline-info btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#legendModal">Legende</button>
+                <button class="btn btn-outline-primary btn-sm shadow-sm" onclick="copierSynthese()" id="btnCopier" style="display:none;">Copier</button>
+                <button class="btn btn-outline-danger btn-sm shadow-sm" onclick="exporterPDF()" id="btnPdf" style="display:none;" title="Export PDF (Ctrl+P)">PDF</button>
+                <button class="btn btn-outline-secondary btn-sm shadow-sm" onclick="imprimerSynthese()" id="btnPrint" style="display:none;" title="Aperçu impression">🖨️</button>
+                <div class="btn-group btn-group-sm shadow-sm">
+                    <button class="btn btn-outline-success" onclick="exporterPatientJSON()" title="Exporter le patient en JSON">Exporter</button>
+                    <button class="btn btn-outline-success" onclick="importerPatientJSON()" title="Importer un patient JSON">Importer</button>
+                </div>
+                <button class="btn btn-outline-dark btn-sm shadow-sm" onclick="toggleDarkMode()" id="btnDarkMode" title="Mode sombre">🌙</button>
             </div>
         </div>
 
@@ -241,7 +271,15 @@
             </div>
 
             <div class="col-md-7">
+                <div id="sw-update-banner" style="display:none;" class="alert alert-info alert-dismissible py-2 mb-2 shadow-sm">
+                    Nouvelle version disponible. <a href="#" onclick="location.reload();return false;" class="fw-bold">Mettre à jour</a>
+                    <button type="button" class="btn-close btn-sm" onclick="this.parentElement.style.display='none'"></button>
+                </div>
                 <div class="section-box">
+                    <div class="mb-2 d-flex gap-2 align-items-center">
+                        <input type="text" id="searchAlertes" class="form-control form-control-sm" placeholder="Filtrer les alertes..." oninput="filterAlertes(this.value)" style="max-width:250px;">
+                        <button class="btn btn-outline-secondary btn-sm" id="btnCompare" onclick="toggleCompareMode()" title="Comparer ordonnances" style="display:none;white-space:nowrap;">Comparer</button>
+                    </div>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation"><button class="nav-link text-success fw-bold active" data-bs-toggle="tab" data-bs-target="#tab-scores" role="tab" aria-selected="true" aria-label="Calculs et Scores">🧮 Scores</button></li>
                         <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-eviter" role="tab" aria-label="Prescriptions inappropriées - À Éviter">⚠️ Éviter</button></li>
@@ -272,7 +310,7 @@
     </div>
 
     <footer class="version-footer">
-        version 0.44 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+        version 0.45 — créé par Dr Julien Nunes à l'aide de l'IA<br>
         Merci aux testeurs (Dr Juliette Muffet)<br>
         <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
     </footer>
@@ -297,9 +335,9 @@
 
     <!-- Données d'interactions (toutes les sources) -->
     <!-- anticholinergics_data.js retiré : ACB scores déjà dans MASTER_DB.MEDICAMENTS -->
-    <script src="ansm_ddi_data.js"></script>
-    <script src="ddi_merged_V2.js"></script>
-    <script src="gpt_ddi_data_filtered.js"></script>
+    <script src="ansm_ddi_data.js" defer></script>
+    <script src="ddi_merged_V2.js" defer></script>
+    <script src="gpt_ddi_data_filtered.js" defer></script>
 
     <!-- posologie_data.js, suivi_data.js, atb_data.js : données migrées dans MASTER_DB (v0.40), fichiers renommés _old -->
     <!-- guidelines_data.js retiré : DOUBLON de GUIDELINE_INDEX dans geria_pathology_rules_v3.js -->
@@ -326,10 +364,171 @@
     <script src="app_ui.js"></script>
     <script src="child_pugh_adaptations.js"></script>
     <script src="app_analysis.js"></script>
+    <div id="session-restore-banner" style="display:none;" class="alert alert-warning alert-dismissible position-fixed bottom-0 end-0 m-3 shadow py-2 px-3" style="z-index:10000;max-width:350px;">
+        Session précédente détectée. <a href="#" onclick="_restoreSession();document.getElementById('session-restore-banner').style.display='none';return false;" class="fw-bold">Restaurer</a>
+        <button type="button" class="btn-close btn-sm" onclick="this.parentElement.style.display='none';sessionStorage.removeItem('geriaassist_session');"></button>
+    </div>
     <script>
+        // ================================================================
+        // SERVICE WORKER + AUTO-UPDATE
+        // ================================================================
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js').then(r => console.log('SW enregistré:', r.scope)).catch(e => console.warn('SW erreur:', e));
+            navigator.serviceWorker.register('./sw.js').then(reg => {
+                console.log('SW enregistré:', reg.scope);
+                // Auto-update detection
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    if (newWorker) {
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
+                                const banner = document.getElementById('sw-update-banner');
+                                if (banner) banner.style.display = 'block';
+                            }
+                        });
+                    }
+                });
+            }).catch(e => console.warn('SW erreur:', e));
         }
+
+        // ================================================================
+        // DARK MODE
+        // ================================================================
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-bs-theme') === 'dark';
+            html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('geriaassist-theme', isDark ? 'light' : 'dark');
+            const btn = document.getElementById('btnDarkMode');
+            if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+        }
+        // Restore saved theme
+        (function() {
+            const saved = localStorage.getItem('geriaassist-theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+                const btn = document.getElementById('btnDarkMode');
+                if (btn) btn.textContent = '☀️';
+            }
+        })();
+
+        // ================================================================
+        // KEYBOARD SHORTCUTS
+        // ================================================================
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+Enter → Lancer l'analyse
+            if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); const btn = document.getElementById('btnAnalyse'); if (btn && !btn.disabled) btn.click(); }
+            // Ctrl+N → Nouveau patient (sauf dans input)
+            if (e.ctrlKey && e.key === 'n' && !e.shiftKey) { e.preventDefault(); resetPatient(); }
+            // Ctrl+P → Export PDF (override print)
+            if (e.ctrlKey && e.key === 'p') {
+                const btnPdf = document.getElementById('btnPdf');
+                if (btnPdf && btnPdf.style.display !== 'none') { e.preventDefault(); exporterPDF(); }
+            }
+            // Ctrl+S → Export JSON
+            if (e.ctrlKey && e.key === 's' && !e.shiftKey) { e.preventDefault(); exporterPatientJSON(); }
+            // Ctrl+O → Import JSON
+            if (e.ctrlKey && e.key === 'o') { e.preventDefault(); importerPatientJSON(); }
+            // Arrow Left/Right → Navigate tabs (when not in input)
+            if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)) {
+                const tabs = Array.from(document.querySelectorAll('#myTab .nav-link'));
+                const active = tabs.findIndex(t => t.classList.contains('active'));
+                if (active >= 0) {
+                    const next = e.key === 'ArrowRight' ? (active + 1) % tabs.length : (active - 1 + tabs.length) % tabs.length;
+                    tabs[next].click();
+                }
+            }
+        });
+
+        // ================================================================
+        // SEARCH / FILTER ALERTS
+        // ================================================================
+        function filterAlertes(query) {
+            const q = query.toLowerCase().trim();
+            document.querySelectorAll('.tab-content .alert').forEach(el => {
+                if (!q) { el.classList.remove('alert-hidden'); return; }
+                const text = el.textContent.toLowerCase();
+                el.classList.toggle('alert-hidden', !text.includes(q));
+            });
+        }
+
+        // ================================================================
+        // TAB COUNTERS — Updated after analysis
+        // ================================================================
+        function updateTabCounters() {
+            const tabMap = {
+                'alertes-scores': 0, 'alertes-eviter': 1, 'alertes-initier': 2,
+                'alertes-interact': 3, 'alertes-auc': 4, 'alertes-ansm': 5,
+                'alertes-bio': 6, 'alertes-usage': 7, 'alertes-suivi': 8, 'alertes-guidelines': 9
+            };
+            const tabs = document.querySelectorAll('#myTab .nav-link');
+            for (const [divId, tabIdx] of Object.entries(tabMap)) {
+                const el = document.getElementById(divId);
+                if (!el || !tabs[tabIdx]) continue;
+                const alerts = el.querySelectorAll('.alert:not(.alert-light)');
+                const count = alerts.length;
+                const btn = tabs[tabIdx];
+                // Remove existing counter badge
+                const existing = btn.querySelector('.tab-counter');
+                if (existing) existing.remove();
+                if (count > 0) {
+                    const badge = document.createElement('span');
+                    badge.className = 'tab-counter badge bg-danger rounded-pill ms-1';
+                    badge.style.fontSize = '0.6em';
+                    badge.textContent = count;
+                    btn.appendChild(badge);
+                }
+            }
+        }
+
+        // ================================================================
+        // COMPARE MODE — Snapshot before/after
+        // ================================================================
+        let _compareSnapshot = null;
+        function toggleCompareMode() {
+            const btn = document.getElementById('btnCompare');
+            if (!_compareSnapshot) {
+                // Take snapshot of current alert texts
+                _compareSnapshot = {};
+                ['alertes-eviter','alertes-initier','alertes-interact','alertes-ansm','alertes-auc','alertes-bio','alertes-usage','alertes-suivi'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) _compareSnapshot[id] = Array.from(el.querySelectorAll('.alert')).map(a => a.textContent.trim().substring(0, 100));
+                });
+                if (btn) { btn.textContent = 'Comparer maintenant'; btn.classList.replace('btn-outline-secondary', 'btn-warning'); }
+            } else {
+                // Compare current with snapshot
+                ['alertes-eviter','alertes-initier','alertes-interact','alertes-ansm','alertes-auc','alertes-bio','alertes-usage','alertes-suivi'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    const oldTexts = _compareSnapshot[id] || [];
+                    el.querySelectorAll('.alert').forEach(a => {
+                        const txt = a.textContent.trim().substring(0, 100);
+                        if (!oldTexts.includes(txt)) a.classList.add('compare-added');
+                    });
+                    // Show removed alerts
+                    const currentTexts = Array.from(el.querySelectorAll('.alert')).map(a => a.textContent.trim().substring(0, 100));
+                    oldTexts.forEach(ot => {
+                        if (!currentTexts.some(ct => ct === ot)) {
+                            const div = document.createElement('div');
+                            div.className = 'alert compare-removed mb-2 py-1 px-2 small';
+                            div.textContent = '(Retiré) ' + ot;
+                            el.appendChild(div);
+                        }
+                    });
+                });
+                _compareSnapshot = null;
+                if (btn) { btn.textContent = 'Comparer'; btn.classList.replace('btn-warning', 'btn-outline-secondary'); }
+            }
+        }
+
+        // ================================================================
+        // SESSION RESTORE — Check on load
+        // ================================================================
+        window.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('geriaassist_session')) {
+                const banner = document.getElementById('session-restore-banner');
+                if (banner) banner.style.display = 'block';
+            }
+        });
     </script>
 </body>
 </html>

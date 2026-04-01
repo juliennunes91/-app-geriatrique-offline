@@ -1,4 +1,4 @@
-// app_analysis.js - V8.0 (v0.44 — escapeHtml, refactoring, SCORES_CONFIG)
+// app_analysis.js - V9.0 (v0.45 — SCORE_TOOLTIPS, tab counters, compare mode)
 
 // =========================================================
 // SCORES_CONFIG — Seuils externalisés (modifiable sans toucher la logique)
@@ -240,13 +240,23 @@ function analyserPrescription() {
     if(divScores) {
         const SC = SCORES_CONFIG; const SB = SC.BIO; const SA = SC.AGE;
 
-        // Helper rendu score
+        // Helper rendu score (avec tooltip explicatif)
+        const SCORE_TOOLTIPS = {
+            CHA2DS2: 'IC +1 | HTA +1 | Âge≥75 +2 | Diabète +1 | AVC/AIT +2 | Vasculaire +1 | Femme +1 | Âge 65-74 +1. Source: ESC 2020.',
+            HAS_BLED: 'HTA +1 | IRC (DFG<50) +1 | AVC +1 | Saignement +1 | INR labile +1 | Âge>65 +1 | Alcool +1 | Méd. antiagrég/AINS +1. Source: Pisters 2010.',
+            ORBIT: 'Âge≥75 +1 | Anémie +2 | Saignement +2 | DFG<60 +1 | Antiagrégant +1. Source: O\'Brien 2015.',
+            RISQ_PATH: 'Âge≥65 +1 | Femme +1 | Obésité +1 | HypoK +2 | HypoCa +2 | IRC sévère +2 | Inflammation +1 | Cardiopathie +1 | FA +1 | Démence +1 | Méd QT(KR) +3. Source: Tisdale 2013 adapté.',
+            TISDALE: 'Âge≥68 +1 | Femme +1 | Diurétique +1 | HypoK +2 | QTc≥450 +2 | Méd QT +3 | Sepsis +2 | IC +3. Source: Tisdale 2013.'
+        };
         const renderScore = (cfg, score, details) => {
             let conc = cfg.conclusions[0];
             let dangerClass = 'success';
             if (cfg.seuils.haut && score >= cfg.seuils.haut) { conc = cfg.conclusions.haut; dangerClass = 'danger'; }
             else if (cfg.seuils.modere && score >= cfg.seuils.modere) { conc = cfg.conclusions.modere; dangerClass = 'muted'; }
-            addAlert('alertes-scores', `<div class="alert alert-light border border-${cfg.border} mb-2 shadow-sm"><strong class="text-${cfg.border}">${cfg.label} : ${score} point(s)</strong> <em class="text-muted small">— ${cfg.desc}</em><br><small class="text-muted">${details.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${dangerClass}">${conc}</small></div>`);
+            const tipKey = Object.keys(SCORES_CONFIG).find(k => SCORES_CONFIG[k] === cfg) || '';
+            const tipText = SCORE_TOOLTIPS[tipKey] || '';
+            const tooltip = tipText ? ` <span class="score-tooltip" tabindex="0"><span class="badge bg-light text-dark border" style="font-size:0.6em; cursor:help;">?</span><span class="score-tip-text">${escapeHtml(tipText)}</span></span>` : '';
+            addAlert('alertes-scores', `<div class="alert alert-light border border-${cfg.border} mb-2 shadow-sm"><strong class="text-${cfg.border}">${cfg.label} : ${score} point(s)</strong>${tooltip} <em class="text-muted small">— ${cfg.desc}</em><br><small class="text-muted">${details.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${dangerClass}">${conc}</small></div>`);
         };
 
         // CHA₂DS₂-VASc
@@ -1210,6 +1220,10 @@ function analyserPrescription() {
     // Flush all accumulated HTML into DOM (single reflow)
     flushAlerts();
 
-    let btnPdf = document.getElementById('btnPdf'); if(btnPdf) btnPdf.style.display = 'inline-block';
-    let btnCopier = document.getElementById('btnCopier'); if(btnCopier) btnCopier.style.display = 'inline-block';
+    ['btnPdf','btnCopier','btnCompare','btnPrint'].forEach(id => { let b = document.getElementById(id); if(b) b.style.display = 'inline-block'; });
+
+    // Post-analyse : compteurs onglets, sauvegarde session
+    if (typeof updateTabCounters === 'function') updateTabCounters();
+    if (typeof _saveSession === 'function') _saveSession();
+    if (typeof GeriaLog !== 'undefined') GeriaLog.info(`Analyse terminée — ${activeMeds.length} médicaments, ${activeComorbs.length} comorbidités, ${counts.eviter} éviter, ${counts.initier} initier, ${counts.ansm} ANSM`);
 }

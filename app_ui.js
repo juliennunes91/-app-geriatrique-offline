@@ -1,4 +1,4 @@
-// app_ui.js - V8.0 (v0.44 — DocumentFragment, a11y, validation feedback)
+// app_ui.js - V9.0 (v0.45 — DocumentFragment, a11y, validation feedback)
 function initUI() {
     if(typeof MASTER_DB === 'undefined') return;
 
