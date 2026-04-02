@@ -115,7 +115,13 @@
                 <button class="btn btn-outline-info btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#legendModal">Legende</button>
                 <button class="btn btn-outline-primary btn-sm shadow-sm" onclick="copierSynthese()" id="btnCopier" style="display:none;">Copier</button>
                 <button class="btn btn-outline-danger btn-sm shadow-sm" onclick="exporterPDF()" id="btnPdf" style="display:none;" title="Export PDF (Ctrl+P)">PDF</button>
-                <button class="btn btn-outline-secondary btn-sm shadow-sm" onclick="imprimerSynthese()" id="btnPrint" style="display:none;" title="Aperçu impression">🖨️</button>
+                <div class="btn-group" id="btnPrint" style="display:none;">
+                    <button class="btn btn-outline-secondary btn-sm shadow-sm dropdown-toggle" data-bs-toggle="dropdown" title="Imprimer">🖨️</button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" onclick="imprimerSynthese('synthese');return false;">📋 Synthèse seule</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="imprimerSynthese('complet');return false;">📄 Rapport complet</a></li>
+                    </ul>
+                </div>
                 <div class="btn-group btn-group-sm shadow-sm">
                     <button class="btn btn-outline-success" onclick="exporterPatientJSON()" title="Exporter le patient en JSON">Exporter</button>
                     <button class="btn btn-outline-success" onclick="importerPatientJSON()" title="Importer un patient JSON">Importer</button>

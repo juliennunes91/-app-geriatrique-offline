@@ -478,34 +478,45 @@ window.resetPatient = function() {
 // ============================================================================
 // IMPRESSION OPTIMISÉE — Fenêtre dédiée avec tous les onglets dépliés
 // ============================================================================
-window.imprimerSynthese = function() {
+window.imprimerSynthese = function(mode) {
+    mode = mode || 'complet';
     const w = window.open('', '_blank', 'width=800,height=600');
     if (!w) { alert('Popup bloquée. Autorisez les popups pour ce site.'); return; }
     const content = buildPdfContent();
-    // Also add all alert sections
+
     let sections = '';
-    const tabs = [
-        { id: 'alertes-scores', titre: 'Scores Cliniques' },
-        { id: 'alertes-eviter', titre: 'Prescriptions Inappropriées' },
-        { id: 'alertes-initier', titre: 'Omissions Thérapeutiques' },
-        { id: 'alertes-interact', titre: 'Interactions Cliniques' },
-        { id: 'alertes-auc', titre: 'Pharmacocinétique AUC' },
-        { id: 'alertes-ansm', titre: 'Interactions ANSM' },
-        { id: 'alertes-bio', titre: 'Syndromes Biologiques' },
-        { id: 'alertes-usage', titre: 'Adaptations Posologiques' },
-        { id: 'alertes-suivi', titre: 'Suivi Biologique' },
-        { id: 'alertes-guidelines', titre: 'Guidelines' }
-    ];
-    tabs.forEach(t => {
-        const el = document.getElementById(t.id);
-        if (el && el.innerHTML && !el.innerHTML.includes('Cliquez sur Analyser')) {
-            sections += `<h3 style="color:#0d6efd;border-bottom:2px solid #0d6efd;padding-bottom:4px;margin-top:16px;">${escapeHtml(t.titre)}</h3>${el.innerHTML}`;
-        }
-    });
-    w.document.write(`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>GeriaAssist — Impression</title>
+    if (mode === 'complet') {
+        const tabs = [
+            { id: 'alertes-scores', titre: 'Scores Cliniques' },
+            { id: 'alertes-eviter', titre: 'Prescriptions Inappropriées' },
+            { id: 'alertes-initier', titre: 'Omissions Thérapeutiques' },
+            { id: 'alertes-interact', titre: 'Interactions Cliniques' },
+            { id: 'alertes-auc', titre: 'Pharmacocinétique AUC' },
+            { id: 'alertes-ansm', titre: 'Interactions ANSM' },
+            { id: 'alertes-bio', titre: 'Syndromes Biologiques' },
+            { id: 'alertes-usage', titre: 'Adaptations Posologiques' },
+            { id: 'alertes-suivi', titre: 'Suivi Biologique' },
+            { id: 'alertes-guidelines', titre: 'Guidelines' }
+        ];
+        tabs.forEach(t => {
+            const el = document.getElementById(t.id);
+            if (el && el.innerHTML && !el.innerHTML.includes('Cliquez sur Analyser')) {
+                sections += `<h3 style="color:#0d6efd;border-bottom:2px solid #0d6efd;padding-bottom:4px;margin-top:16px;">${escapeHtml(t.titre)}</h3>${el.innerHTML}`;
+            }
+        });
+    }
+    // Synthèse intelligente (toujours incluse)
+    const synthEl = document.getElementById('alertes-synthese');
+    let synthSection = '';
+    if (synthEl && synthEl.innerHTML && !synthEl.innerHTML.includes('Cliquez sur Analyser')) {
+        synthSection = `<h3 style="color:#0d6efd;border-bottom:2px solid #0d6efd;padding-bottom:4px;margin-top:16px;">Synthèse Intelligente</h3>${synthEl.innerHTML}`;
+    }
+
+    const modeLabel = mode === 'synthese' ? 'Synthèse seule' : 'Rapport complet';
+    w.document.write(`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>GeriaAssist — ${modeLabel}</title>
         <link href="lib/bootstrap.min.css" rel="stylesheet">
-        <style>body{font-size:10pt;padding:20px;} .alert{page-break-inside:avoid;margin-bottom:8px;} @media print{body{padding:10px;} .no-print{display:none;}}</style>
-    </head><body>${content}<hr>${sections}
+        <style>body{font-size:10pt;padding:20px;} .alert{page-break-inside:avoid;margin-bottom:8px;} .card{page-break-inside:avoid;} @media print{body{padding:10px;} .no-print{display:none;}}</style>
+    </head><body>${content}${synthSection}${mode === 'complet' ? '<hr>' + sections : ''}
         <div class="text-center mt-3 no-print"><button onclick="window.print()" class="btn btn-primary">Imprimer</button> <button onclick="window.close()" class="btn btn-secondary">Fermer</button></div>
     </body></html>`);
     w.document.close();

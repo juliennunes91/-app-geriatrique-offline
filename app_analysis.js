@@ -1490,7 +1490,7 @@ function analyserPrescription() {
     // Flush all accumulated HTML into DOM (single reflow)
     flushAlerts();
 
-    ['btnPdf','btnCopier','btnCompare','btnPrint'].forEach(id => { let b = document.getElementById(id); if(b) b.style.display = 'inline-block'; });
+    ['btnPdf','btnCopier','btnCompare','btnPrint'].forEach(id => { let b = document.getElementById(id); if(b) b.style.display = id === 'btnPrint' ? 'inline-flex' : 'inline-block'; });
 
     // Post-analyse : compteurs onglets, sauvegarde session
     if (typeof updateTabCounters === 'function') updateTabCounters();
