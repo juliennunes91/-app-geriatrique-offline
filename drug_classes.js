@@ -301,19 +301,27 @@ const DRUG_CLASSES = {
  */
 function matchesDrugClass(dci, classe, key) {
     // Recherche directe dans le référentiel
+    // Passe 1 : match alias EXACT uniquement (prioritaire)
+    let foundExact = false;
+    for (const [classId, def] of Object.entries(DRUG_CLASSES)) {
+        const exactMatch = def.aliases.some(a => key === a);
+        if (exactMatch) {
+            foundExact = true;
+            if (def.classeMatch.some(cm => classe.includes(cm))) return true;
+            if (def.dcis.some(d => dci.includes(d))) return true;
+            if (def.dciSuffix && def.dciSuffix.some(s => dci.includes(s))) return true;
+        }
+    }
+    if (foundExact) return false;
+    // Passe 2 : match alias par inclusion (substring) — seulement si aucun exact
     let foundAlias = false;
     for (const [classId, def] of Object.entries(DRUG_CLASSES)) {
-        // Match alias : exact, ou le key contient l'alias (min 4 car pour éviter faux positifs)
-        const aliasMatch = def.aliases.some(a => key === a || a === key || (a.length >= 4 && key.includes(a)) || (key.length >= 4 && a.includes(key)));
+        const aliasMatch = def.aliases.some(a => (a.length >= 4 && key.includes(a)) || (key.length >= 4 && a.includes(key)));
         if (aliasMatch) {
             foundAlias = true;
-            // Match par classe
             if (def.classeMatch.some(cm => classe.includes(cm))) return true;
-            // Match par DCI exacte
             if (def.dcis.some(d => dci.includes(d))) return true;
-            // Match par suffixe DCI
             if (def.dciSuffix && def.dciSuffix.some(s => dci.includes(s))) return true;
-            // Continuer : d'autres classes peuvent aussi matcher
         }
     }
     if (foundAlias) return false;

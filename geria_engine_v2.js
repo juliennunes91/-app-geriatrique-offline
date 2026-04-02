@@ -80,8 +80,8 @@ const GeriaEngineV2 = (() => {
         
         // Pré-calculer les propriétés de chaque med actif
         ctx._medsNormalized = ctx.activeMeds.map(m => ({
-            dci: (m.dci || '').toLowerCase().replace(/[^a-z0-9]/g, ''),
-            classe: (m.classe || '').toLowerCase().replace(/[^a-z0-9]/g, ''),
+            dci: (m.dci || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, ''),
+            classe: (m.classe || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, ''),
             raw: m
         }));
     }

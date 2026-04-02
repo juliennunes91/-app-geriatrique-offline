@@ -1,5 +1,5 @@
-// Service Worker - GeriaAssist v0.45
-const CACHE_NAME = 'geriaassist-v45';
+// Service Worker - GeriaAssist v0.47
+const CACHE_NAME = 'geriaassist-v47';
 const ASSETS = [
     './',
     './index.html',
