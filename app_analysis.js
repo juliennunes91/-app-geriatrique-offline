@@ -1,4 +1,4 @@
-// app_analysis.js - V9.0 (v0.45 — SCORE_TOOLTIPS, tab counters, compare mode)
+// app_analysis.js - V10.0 (v0.48 — synthèse intelligente, bio unifiée, registre structuré)
 
 // =========================================================
 // SCORES_CONFIG — Seuils externalisés (modifiable sans toucher la logique)
@@ -177,9 +177,24 @@ function analyserPrescription() {
 
     const { bioValues, ctxClinique } = _buildPatientContext(patientAge, sexe, isFragile);
 
-    const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines'];
+    const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines', 'alertes-synthese'];
     divs.forEach(id => { let el = document.getElementById(id); if(el) el.innerHTML = ''; });
     let counts = { eviter: 0, initier: 0, interact: 0, ansm: 0, auc: 0, bio: 0, usage: 0, suivi: 0 };
+
+    // ── Registre structuré d'alertes (pour synthèse transversale) ──
+    const _registry = { byMed: {}, byDomain: {}, actions: [] };
+    const _regAddMed = (dci, domain, entry) => {
+        const k = (dci || '').toLowerCase();
+        if (!k) return;
+        if (!_registry.byMed[k]) _registry.byMed[k] = {};
+        if (!_registry.byMed[k][domain]) _registry.byMed[k][domain] = [];
+        _registry.byMed[k][domain].push(entry);
+    };
+    const _regAddDomain = (domain, entry) => {
+        if (!_registry.byDomain[domain]) _registry.byDomain[domain] = [];
+        _registry.byDomain[domain].push(entry);
+    };
+
     // Batch DOM: accumulate HTML, flush once at end
     const _htmlBuffers = {};
     divs.forEach(id => _htmlBuffers[id] = []);
@@ -227,6 +242,14 @@ function analyserPrescription() {
 
             counts.eviter = recos.eviter ? recos.eviter.length : 0;
             counts.initier = recos.initier ? recos.initier.length : 0;
+            // Registre: éviter/initier depuis le moteur V2
+            if (recos.eviter) recos.eviter.forEach(a => {
+                (a.med_keys || []).forEach(k => _regAddMed(k, 'eviter', { text: a.titre || a.message || '', severity: a.severite || 'warning', source: a.sources_label || '' }));
+                _regAddDomain('eviter', { titre: a.titre || '', meds: a.med_keys || [], severity: a.severite || 'warning' });
+            });
+            if (recos.initier) recos.initier.forEach(a => {
+                _regAddDomain('initier', { titre: a.titre || '', meds: a.med_absent || [], severity: 'info' });
+            });
         } else {
             addAlert('alertes-scores', `<div class="alert alert-warning">Le moteur d'évaluation n'a retourné aucun résultat.</div>`);
         }
@@ -729,6 +752,7 @@ function analyserPrescription() {
                     <br><span class="small">${a.raison}${a.condition ? ` <em class="text-muted">(${a.condition})</em>` : ''}</span>
                     <br><span class="badge bg-${isSevere ? 'danger' : 'warning'} text-${isSevere ? 'white' : 'dark'}" style="font-size:0.7em;">${a.gravite}</span>
                 </div>`, 'eviter');
+                _regAddMed(m.dci, 'eviter', { severity: isSevere ? 'danger' : 'warning', text: `CI ${a.patho_nom} — ${a.raison}`, gravite: a.gravite, source: sourceLabel });
             });
         });
     }
@@ -757,6 +781,7 @@ function analyserPrescription() {
                 });
                 if(found.length > 0) {
                     addAlert('alertes-interact', `<div class="alert alert-danger shadow-sm"><strong>🚨 Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}</strong><br>Interaction détectée avec : <b>${found.map(f => escapeHtml(f)).join(', ')}</b></div>`, 'interact');
+                    _regAddMed(m.dci, 'interact', { text: `Interaction avec ${found.join(', ')}`, severity: 'danger' });
                 }
             }
         });
@@ -933,62 +958,146 @@ function analyserPrescription() {
             if (alb >= 85) html += `<span class="text-danger small d-block border-top pt-1 mt-1 border-success border-opacity-25"><em>🩸 Forte liaison à l'albumine :</em> <b>${alb}%</b> (Risque surdosage si dénutrition).</span>`;
             html += `</div>`;
             addAlert('alertes-usage', html, 'usage');
+            // Registre: adaptation posologique
+            let usageDetails = [];
+            if (ref.poso_ger) usageDetails.push('Dose gériatrique');
+            if (ref.poso_ren && dfg > 0 && dfg < 60) usageDetails.push('Adaptation rénale');
+            if (alb >= 85) usageDetails.push('Forte liaison albumine');
+            if (usageDetails.length) _regAddMed(m.dci, 'usage', { text: usageDetails.join(', '), severity: 'info' });
         }
 
+        // Collecter bio_cible pour suivi unifié (per-drug)
+        if (Array.isArray(ref.bio_cible)) {
+            ref.bio_cible.forEach(bioId => {
+                if (!_registry._bioPlan) _registry._bioPlan = {};
+                if (!_registry._bioPlan[bioId]) _registry._bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [] };
+                _registry._bioPlan[bioId].meds.push(ref.dci);
+            });
+        }
+        // Alertes cliniques (suivi) per med — on les garde dans le registre
         if (ref.suivi_initial || ref.suivi_periodique || ref.alerte_clinique) {
-            let sHtml = `<div class="alert alert-light border border-primary shadow-sm"><strong class="text-primary" style="font-size:1.05em;">👁️ Protocole de Suivi Médicamenteux : ${escapeHtml(ref.dci.toUpperCase())}</strong><hr class="mt-2 mb-2" style="opacity:0.15;">`;
-            if (ref.suivi_initial) sHtml += `<div class="mb-2 text-dark"><b>Initial :</b> ${formatSuiviList(ref.suivi_initial)}</div>`;
-            if (ref.suivi_periodique) sHtml += `<div class="mb-2 text-dark"><b>Régulier :</b> ${formatSuiviList(ref.suivi_periodique)}</div>`;
-            if (ref.alerte_clinique) sHtml += `<div style="color: #d97706;"><b>⚠️ À surveiller :</b> ${formatSuiviList(ref.alerte_clinique)}</div>`;
-            
-            let anomaliesTrouvees = [];
-            if(Array.isArray(ref.bio_cible)) {
-                ref.bio_cible.forEach(bio_id => {
-                    let val = bioValues[bio_id];
-                    if (val > 0) {
-                        if (bio_id === 'BIO_004' && val < 60) anomaliesTrouvees.push(`🧪 DFG abaissé (${val} ml/min)`);
-                        if (bio_id === 'BIO_001' && (val < 3.5 || val > 5.0)) anomaliesTrouvees.push(`🩸 Dyskaliémie (${val} mmol/L)`);
-                        if (bio_id === 'BIO_031' && val >= 450) anomaliesTrouvees.push(`⚡ QTc allongé (${val} ms)`);
-                    }
-                });
-            }
-            if (anomaliesTrouvees.length > 0) sHtml += `<div class="mt-3 p-2 bg-danger bg-opacity-10 border border-danger text-danger rounded shadow-sm"><b>⚠️ Anomalies détectées :</b><br>` + anomaliesTrouvees.join('<br>') + `</div>`;
-            sHtml += `</div>`;
-            addAlert('alertes-suivi', sHtml, 'suivi');
+            _regAddMed(m.dci, 'suivi', {
+                initial: ref.suivi_initial || '',
+                periodique: ref.suivi_periodique || '',
+                alerte: ref.alerte_clinique || ''
+            });
         }
     });
 
-    // 🧪 INJECTION DES PROTOCOLES DE SURVEILLANCE BIOLOGIQUE PAR PATHOLOGIE (V2)
-    // Regroupement par pathologie pour lisibilité
-    if (typeof getRequiredBioMonitoring === 'function' && activeComorbs.length > 0) {
-        try {
-            const bioMonitors = getRequiredBioMonitoring(activeComorbs);
-            // Regrouper par pathologie
-            const byPatho = {};
-            for (const [bioId, data] of Object.entries(bioMonitors)) {
-                data.pathos.forEach((p, i) => {
-                    if (!byPatho[p]) byPatho[p] = [];
-                    byPatho[p].push({
-                        bioId,
-                        nom: MASTER_DB.BIOLOGIE[bioId]?.NOM_STANDARD || bioId,
-                        frequence: data.frequences[i] || data.frequences[0] || '',
-                        source: data.sources[i] || data.sources[0] || ''
+    // =========================================================
+    // 5b. TABLE DE SUIVI BIOLOGIQUE UNIFIÉE (dédup multi-sources)
+    // =========================================================
+    {
+        // Initialiser le plan bio unifié
+        const bioPlan = _registry._bioPlan || {};
+
+        // Source 2: PATHO_BIO_MONITOR (via getRequiredBioMonitoring)
+        if (typeof getRequiredBioMonitoring === 'function' && activeComorbs.length > 0) {
+            try {
+                const bioMonitors = getRequiredBioMonitoring(activeComorbs);
+                for (const [bioId, data] of Object.entries(bioMonitors)) {
+                    if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [] };
+                    data.pathos.forEach((p, i) => {
+                        let patName = MASTER_DB.PATHOLOGIES[p]?.NOM_STANDARD || p;
+                        if (!bioPlan[bioId].pathos.includes(patName)) bioPlan[bioId].pathos.push(patName);
+                        let freq = data.frequences[i] || data.frequences[0] || '';
+                        if (freq && !bioPlan[bioId].freqs.includes(freq)) bioPlan[bioId].freqs.push(freq);
+                        let src = data.sources[i] || data.sources[0] || '';
+                        if (src && !bioPlan[bioId].sources.includes(src)) bioPlan[bioId].sources.push(src);
                     });
+                }
+            } catch(e) { console.error("Erreur BioMonitor:", e); }
+        }
+
+        // Source 3: SURVEILLANCE_CIBLE from PATHOLOGY_RULES_DB
+        if (typeof PATHOLOGY_RULES_DB !== 'undefined') {
+            activeComorbs.forEach(patId => {
+                const rule = PATHOLOGY_RULES_DB[patId];
+                if (!rule || !rule.BIOLOGIE || !rule.BIOLOGIE.SURVEILLANCE_CIBLE) return;
+                let patName = rule.NOM || patId;
+                rule.BIOLOGIE.SURVEILLANCE_CIBLE.forEach(bioId => {
+                    if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [] };
+                    if (!bioPlan[bioId].pathos.includes(patName)) bioPlan[bioId].pathos.push(patName);
                 });
+            });
+        }
+
+        // Render: table unifiée par BIO_ID
+        const bioIds = Object.keys(bioPlan);
+        if (bioIds.length > 0) {
+            // Fréquence la plus stricte = la plus courte
+            const freqPriority = { 'hebdomadaire': 1, '/semaine': 1, 'bimensuel': 2, '/2sem': 2, 'mensuel': 3, '/mois': 3, '/1m': 3, '/1-3m': 4, 'trimestriel': 5, '/3m': 5, '/3 mois': 5, 'semestriel': 7, '/6m': 7, '/6 mois': 7, 'annuel': 10, '/an': 10, '/12m': 10 };
+            const getFreqScore = (f) => {
+                let fl = f.toLowerCase();
+                for (const [k, v] of Object.entries(freqPriority)) { if (fl.includes(k)) return v; }
+                return 8; // défaut entre semestriel et annuel
+            };
+
+            let rows = bioIds.map(bioId => {
+                let entry = bioPlan[bioId];
+                let bioName = (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
+                let val = bioValues[bioId];
+                let valStr = val > 0 ? val : '<span class="text-muted fst-italic">—</span>';
+                // Statut : simple heuristique
+                let statusBadge = '';
+                if (val > 0) {
+                    if (bioId === 'BIO_004' && val < 30) statusBadge = '<span class="badge bg-danger">Bas</span>';
+                    else if (bioId === 'BIO_004' && val < 60) statusBadge = '<span class="badge bg-warning text-dark">Abaissé</span>';
+                    else if (bioId === 'BIO_001' && (val < 3.5 || val > 5.0)) statusBadge = '<span class="badge bg-danger">Anormal</span>';
+                    else if (bioId === 'BIO_002' && val < 130) statusBadge = '<span class="badge bg-warning text-dark">Bas</span>';
+                    else if (bioId === 'BIO_009' && val < 12) statusBadge = '<span class="badge bg-warning text-dark">Anémie</span>';
+                    else if (bioId === 'BIO_031' && val >= 450) statusBadge = '<span class="badge bg-danger">Allongé</span>';
+                    else statusBadge = '<span class="badge bg-success">OK</span>';
+                } else {
+                    statusBadge = '<span class="badge bg-secondary">Non renseigné</span>';
+                }
+                // Fréquence la plus stricte
+                let strictFreq = '—';
+                if (entry.freqs.length > 0) {
+                    entry.freqs.sort((a, b) => getFreqScore(a) - getFreqScore(b));
+                    strictFreq = entry.freqs[0];
+                }
+                // Raisons (meds + pathos combinés)
+                let reasons = [...new Set([...entry.meds.map(m => m.charAt(0).toUpperCase() + m.slice(1)), ...entry.pathos])];
+                let srcBadges = entry.sources.map(s => `<span class="badge bg-dark me-1" style="font-size:0.55em;">${s}</span>`).join('');
+                return { bioId, html: `<tr>
+                    <td class="small fw-semibold">${bioName}</td>
+                    <td class="small text-center">${valStr} ${statusBadge}</td>
+                    <td class="small">${strictFreq}</td>
+                    <td class="small">${reasons.join(', ')} ${srcBadges}</td>
+                </tr>`, freqScore: entry.freqs.length > 0 ? getFreqScore(entry.freqs[0]) : 99 };
+            });
+            // Trier: fréquence la plus stricte en premier
+            rows.sort((a, b) => a.freqScore - b.freqScore);
+
+            let tableHtml = `<div class="alert alert-info border-info shadow-sm py-2 px-2">
+                <strong class="text-info" style="font-size:1.05em;">🧪 Plan de surveillance biologique unifié</strong>
+                <span class="badge bg-info float-end">${bioIds.length} paramètres</span>
+                <table class="table table-sm table-hover mb-0 mt-2" style="font-size:0.88em;">
+                <thead><tr>
+                    <th style="width:25%;">Paramètre</th>
+                    <th style="width:20%;" class="text-center">Valeur / Statut</th>
+                    <th style="width:20%;">Fréquence</th>
+                    <th style="width:35%;">Raisons (méd/patho)</th>
+                </tr></thead>
+                <tbody>${rows.map(r => r.html).join('')}</tbody>
+                </table>
+            </div>`;
+            addAlert('alertes-suivi', tableHtml, 'suivi');
+        }
+
+        // Alertes cliniques spécifiques per-drug (suivi_initial, suivi_periodique, alerte_clinique)
+        activeMeds.forEach(m => {
+            let ref = m.db_ref; if (!ref) return;
+            if (ref.alerte_clinique) {
+                addAlert('alertes-suivi', `<div class="alert alert-warning border-warning shadow-sm py-2 px-2">
+                    <strong class="text-warning">⚠️ ${escapeHtml(ref.dci.toUpperCase())} — Alertes cliniques</strong>
+                    ${formatSuiviList(ref.alerte_clinique)}
+                </div>`, 'suivi');
             }
-            for (const [patId, bios] of Object.entries(byPatho)) {
-                let patName = MASTER_DB.PATHOLOGIES[patId]?.NOM_STANDARD || patId;
-                let rows = bios.map(b => `<tr><td class="small">${b.nom}</td><td class="small text-muted">${b.frequence}</td></tr>`).join('');
-                let sources = [...new Set(bios.map(b => b.source).filter(Boolean))].join(', ');
-                let html = `<div class="alert alert-info border-info shadow-sm py-2 px-2">
-                    <strong class="text-info" style="font-size:0.95em;">🧪 Surveillance biologique — ${patName}</strong>
-                    ${sources ? `<span class="badge bg-secondary float-end" style="font-size:0.6em;">${sources}</span>` : ''}
-                    <table class="table table-sm table-borderless mb-0 mt-1" style="font-size:0.88em;">
-                    <tbody>${rows}</tbody></table>
-                </div>`;
-                addAlert('alertes-suivi', html, 'suivi');
-            }
-        } catch(e) { console.error("Erreur BioMonitor:", e); }
+        });
+
+        _registry.bioPlan = bioPlan;
     }
 
 
@@ -1234,6 +1343,149 @@ function analyserPrescription() {
             ? '<div class="alert alert-light">Ajoutez des comorbidités pour voir les recommandations des sociétés savantes.</div>'
             : '<div class="alert alert-light">Données PATHOLOGY_RULES_DB non disponibles.</div>';
     }
+
+    // =========================================================
+    // 🧠 BLOC SYNTHÈSE INTELLIGENTE
+    // =========================================================
+    {
+        let synthHtml = '';
+
+        // ── Indicateurs clés ──
+        let critCount = counts.eviter;
+        let interactCount = counts.interact + counts.ansm;
+        let bioMissing = 0;
+        if (_registry.bioPlan) {
+            Object.keys(_registry.bioPlan).forEach(bioId => { if (!bioValues[bioId] || bioValues[bioId] <= 0) bioMissing++; });
+        }
+        synthHtml += `<div class="row g-2 mb-3">
+            <div class="col-3"><div class="card text-center border-${critCount > 0 ? 'danger' : 'success'} shadow-sm"><div class="card-body py-2">
+                <div style="font-size:1.8em;font-weight:bold;" class="text-${critCount > 0 ? 'danger' : 'success'}">${critCount}</div>
+                <div class="small text-muted">CI / PIM</div>
+            </div></div></div>
+            <div class="col-3"><div class="card text-center border-${interactCount > 0 ? 'warning' : 'success'} shadow-sm"><div class="card-body py-2">
+                <div style="font-size:1.8em;font-weight:bold;" class="text-${interactCount > 0 ? 'warning' : 'success'}">${interactCount}</div>
+                <div class="small text-muted">Interactions</div>
+            </div></div></div>
+            <div class="col-3"><div class="card text-center border-${scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success')} shadow-sm"><div class="card-body py-2">
+                <div style="font-size:1.8em;font-weight:bold;" class="text-${scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success')}">${scoreACB_global}</div>
+                <div class="small text-muted">Score ACB</div>
+            </div></div></div>
+            <div class="col-3"><div class="card text-center border-${bioMissing > 0 ? 'secondary' : 'success'} shadow-sm"><div class="card-body py-2">
+                <div style="font-size:1.8em;font-weight:bold;" class="text-${bioMissing > 0 ? 'secondary' : 'success'}">${bioMissing}</div>
+                <div class="small text-muted">Bio manquante</div>
+            </div></div></div>
+        </div>`;
+
+        // ── Synthèse transversale par médicament ──
+        const medKeys = Object.keys(_registry.byMed);
+        if (medKeys.length > 0) {
+            synthHtml += `<div class="card shadow-sm mb-3"><div class="card-header py-2" style="background:linear-gradient(135deg,#0d6efd 0%,#0a58ca 100%);color:white;">
+                <strong>📋 Vue transversale par médicament</strong>
+            </div><div class="card-body p-2">`;
+
+            // Trier par nombre d'alertes décroissant
+            const medSorted = medKeys.map(k => ({ dci: k, domains: _registry.byMed[k], count: Object.values(_registry.byMed[k]).reduce((s, arr) => s + arr.length, 0) })).sort((a, b) => b.count - a.count);
+
+            medSorted.forEach(med => {
+                let badges = [];
+                const d = med.domains;
+                if (d.eviter) {
+                    let hasDanger = d.eviter.some(e => e.severity === 'danger' || (e.gravite && e.gravite.includes('CONTRE-INDICATION')));
+                    badges.push(`<span class="badge bg-${hasDanger ? 'danger' : 'warning text-dark'} me-1">${hasDanger ? '🔴' : '🟠'} ${d.eviter.length} CI</span>`);
+                }
+                if (d.interact) badges.push(`<span class="badge bg-danger me-1">⚡ ${d.interact.length} interact</span>`);
+                if (d.usage) badges.push(`<span class="badge bg-info me-1">💊 Adapter</span>`);
+                if (d.suivi) badges.push(`<span class="badge bg-primary me-1">👁️ Suivi</span>`);
+
+                // Détails condensés
+                let details = [];
+                if (d.eviter) d.eviter.forEach(e => details.push(`<span class="text-${e.severity || 'warning'} small">• ${e.text}</span>`));
+                if (d.interact) d.interact.forEach(e => details.push(`<span class="text-danger small">• ${e.text}</span>`));
+                if (d.usage) d.usage.forEach(e => details.push(`<span class="text-info small">• ${e.text}</span>`));
+
+                synthHtml += `<div class="border-bottom py-1">
+                    <div class="d-flex align-items-center">
+                        <strong class="me-2" style="min-width:120px;">${med.dci.charAt(0).toUpperCase() + med.dci.slice(1)}</strong>
+                        <div>${badges.join('')}</div>
+                    </div>
+                    ${details.length > 0 ? `<div class="ps-3" style="line-height:1.6;">${details.join('<br>')}</div>` : ''}
+                </div>`;
+            });
+            synthHtml += `</div></div>`;
+        }
+
+        // ── Actions concrètes priorisées ──
+        let actions = [];
+        // 1. ARRÊTER (CI absolues)
+        for (const [dci, domains] of Object.entries(_registry.byMed)) {
+            if (domains.eviter) {
+                domains.eviter.forEach(e => {
+                    if (e.gravite && (e.gravite.includes('CONTRE-INDICATION') || e.gravite.includes('ABSOLUE'))) {
+                        actions.push({ priority: 1, type: 'ARRÊTER', icon: '🔴', color: 'danger', med: dci, detail: e.text, source: e.source || '' });
+                    }
+                });
+            }
+        }
+        // 2. SUBSTITUER (PIM avec alternatives via eviter domain)
+        for (const [dci, domains] of Object.entries(_registry.byMed)) {
+            if (domains.eviter) {
+                domains.eviter.forEach(e => {
+                    if (!e.gravite || !e.gravite.includes('CONTRE-INDICATION')) {
+                        actions.push({ priority: 2, type: 'SUBSTITUER', icon: '🟠', color: 'warning', med: dci, detail: e.text, source: e.source || '' });
+                    }
+                });
+            }
+        }
+        // 3. ADAPTER (usage)
+        for (const [dci, domains] of Object.entries(_registry.byMed)) {
+            if (domains.usage) {
+                domains.usage.forEach(e => {
+                    actions.push({ priority: 3, type: 'ADAPTER', icon: '🟡', color: 'info', med: dci, detail: e.text });
+                });
+            }
+        }
+        // 4. SURVEILLER (bio manquante ou anormale)
+        if (_registry.bioPlan) {
+            for (const [bioId, data] of Object.entries(_registry.bioPlan)) {
+                let val = bioValues[bioId];
+                let bioName = (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
+                if (!val || val <= 0) {
+                    actions.push({ priority: 4, type: 'SURVEILLER', icon: '🔵', color: 'secondary', med: bioName, detail: `Non renseigné — requis pour ${[...data.meds, ...data.pathos].join(', ')}` });
+                }
+            }
+        }
+        // 5. INITIER (omissions)
+        if (_registry.byDomain.initier) {
+            _registry.byDomain.initier.forEach(a => {
+                actions.push({ priority: 5, type: 'INITIER', icon: '🟢', color: 'success', med: a.titre, detail: '' });
+            });
+        }
+
+        actions.sort((a, b) => a.priority - b.priority);
+
+        if (actions.length > 0) {
+            synthHtml += `<div class="card shadow-sm mb-3"><div class="card-header py-2" style="background:linear-gradient(135deg,#198754 0%,#0f5132 100%);color:white;">
+                <strong>✅ Actions concrètes priorisées</strong>
+                <span class="badge bg-light text-dark float-end">${actions.length}</span>
+            </div><div class="card-body p-0">
+            <table class="table table-sm table-hover mb-0" style="font-size:0.9em;">
+            <tbody>`;
+            actions.forEach(a => {
+                synthHtml += `<tr>
+                    <td style="width:30px;" class="text-center">${a.icon}</td>
+                    <td style="width:90px;"><span class="badge bg-${a.color}">${a.type}</span></td>
+                    <td><strong>${a.med.charAt(0).toUpperCase() + a.med.slice(1)}</strong>${a.detail ? ` <span class="text-muted small">— ${a.detail}</span>` : ''}</td>
+                </tr>`;
+            });
+            synthHtml += `</tbody></table></div></div>`;
+        }
+
+        if (!synthHtml) synthHtml = '<div class="alert alert-light">Lancez l\'analyse pour voir la synthèse.</div>';
+        addAlert('alertes-synthese', synthHtml);
+    }
+
+    // Exposer le registre pour PDF et synthèse texte
+    window._analysisRegistry = _registry;
 
     // Flush all accumulated HTML into DOM (single reflow)
     flushAlerts();

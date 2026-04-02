@@ -202,6 +202,20 @@ function buildSyntheseText() {
         lines.push('');
     }
 
+    // Section synthèse intelligente (depuis le registre si disponible)
+    const reg = window._analysisRegistry;
+    if (reg && reg.byMed && Object.keys(reg.byMed).length > 0) {
+        lines.push('--- SYNTHÈSE PAR MÉDICAMENT ---');
+        for (const [dci, domains] of Object.entries(reg.byMed)) {
+            let alerts = [];
+            if (domains.eviter) domains.eviter.forEach(e => alerts.push(`[CI] ${e.text}`));
+            if (domains.interact) domains.interact.forEach(e => alerts.push(`[INTER] ${e.text}`));
+            if (domains.usage) domains.usage.forEach(e => alerts.push(`[DOSE] ${e.text}`));
+            if (alerts.length > 0) lines.push(`• ${dci.toUpperCase()} : ${alerts.join(' | ')}`);
+        }
+        lines.push('');
+    }
+
     // Conclusions par onglet
     const tabs = [
         { id: 'alertes-eviter', titre: 'PRESCRIPTIONS INAPPROPRIÉES (ÉVITER)' },
@@ -287,6 +301,21 @@ function buildPdfContent() {
             const detail = concl.length >= 2 ? concl[concl.length - 1].textContent.trim() : '';
             html += `<div style="margin:2px 0;"><strong style="font-size:8px;">${label}</strong> <span style="font-size:8px;color:#555;">${detail}</span></div>`;
         });
+        html += `</div>`;
+    }
+
+    // Section synthèse transversale (depuis registre)
+    const reg = window._analysisRegistry;
+    if (reg && reg.byMed && Object.keys(reg.byMed).length > 0) {
+        html += `<div style="border:1px solid #0d6efd;border-radius:4px;padding:4px;margin-bottom:6px;">
+            <strong style="font-size:9px;color:#0d6efd;">Synthèse par médicament</strong><br>`;
+        for (const [dci, domains] of Object.entries(reg.byMed)) {
+            let tags = [];
+            if (domains.eviter) tags.push(`<span style="color:#dc3545;font-weight:bold;">${domains.eviter.length} CI</span>`);
+            if (domains.interact) tags.push(`<span style="color:#fd7e14;font-weight:bold;">${domains.interact.length} inter</span>`);
+            if (domains.usage) tags.push(`<span style="color:#0d6efd;">adapter</span>`);
+            if (tags.length > 0) html += `<div style="font-size:8px;margin:1px 0;"><strong>${escapeHtml(dci.toUpperCase())}</strong> — ${tags.join(' | ')}</div>`;
+        }
         html += `</div>`;
     }
 
