@@ -1162,34 +1162,38 @@ function analyserPrescription() {
                 initier.forEach(trt => {
                     // Chercher la source EBM spécifique
                     let srcEbm = '';
-                    if (rule.SOURCES_EBM && rule.SOURCES_EBM.INITIER) {
+                    if (rule.SOURCES_EBM && rule.SOURCES_EBM.INITIER && trt.classe) {
                         for (const [k, v] of Object.entries(rule.SOURCES_EBM.INITIER)) {
-                            if (sanitizeText(trt.classe).includes(sanitizeText(k)) || sanitizeText(k).includes(sanitizeText(trt.classe.split('(')[0].trim()))) {
+                            if (trt.classe && (sanitizeText(trt.classe).includes(sanitizeText(k)) || sanitizeText(k).includes(sanitizeText(trt.classe.split('(')[0].trim())))) {
                                 srcEbm = v; break;
                             }
                         }
                     }
 
-                    // Composants (quadrithérapie IC)
+                    // Composants (quadrithérapie IC, bithérapie HTA)
                     let composantsHtml = '';
-                    if (trt.composants) {
-                        composantsHtml = `<ul class="ps-3 mb-1">${trt.composants.map(c =>
-                            `<li class="small">${c.classe || ''} ${c.niveau ? `<span class="badge bg-success" style="font-size:0.6em;">Niveau ${c.niveau}</span>` : ''}${c.note ? ` <em class="text-muted" style="font-size:0.85em;">${c.note}</em>` : ''}</li>`
-                        ).join('')}</ul>`;
+                    if (trt.composants && Array.isArray(trt.composants) && trt.composants.length > 0) {
+                        composantsHtml = `<ul class="ps-3 mb-1">${trt.composants.map(c => {
+                            if (typeof c === 'string') return `<li class="small">${c}</li>`;
+                            return `<li class="small">${c.classe || ''} ${c.niveau ? `<span class="badge bg-success" style="font-size:0.6em;">Niveau ${c.niveau}</span>` : ''}${c.note ? ` <em class="text-muted" style="font-size:0.85em;">${c.note}</em>` : ''}</li>`;
+                        }).join('')}</ul>`;
                     }
 
+                    if (trt.classe || trt.indication || composantsHtml) {
                     guidelinesHtml += `<div class="alert alert-success py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #198754;">
-                        <strong class="small">${trt.classe}</strong>
+                        <strong class="small">${trt.classe || ''}</strong>
                         ${trt.niveau_preuve ? ` <span class="badge bg-success" style="font-size:0.6em;">Niveau ${trt.niveau_preuve}</span>` : ''}
                         ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;" title="${srcEbm}">${srcEbm.length > 40 ? srcEbm.substring(0,40)+'...' : srcEbm}</span>` : ''}
                         ${trt.dci_exemples ? `<br><small class="text-muted">DCI : ${trt.dci_exemples.join(', ')}</small>` : ''}
                         ${trt.indication ? `<br><small>${trt.indication}</small>` : (trt.posologie ? `<br><small>${trt.posologie}</small>` : '')}
+                        ${trt.exception ? `<br><small class="text-muted fst-italic">${trt.exception}</small>` : ''}
                         ${composantsHtml}
                         ${trt.condition ? `<br><small class="text-muted fst-italic">Condition : ${trt.condition}</small>` : ''}
                         ${trt.note ? `<br><small class="text-info">${trt.note}</small>` : ''}
                         ${trt.contre_indication_dfg ? `<br><small class="text-danger">${trt.contre_indication_dfg}</small>` : ''}
                         ${trt.ref && !srcEbm ? ` <span class="badge bg-secondary float-end" style="font-size:0.6em;">${trt.ref}</span>` : ''}
                     </div>`;
+                    }
                 });
             }
 
@@ -1214,7 +1218,7 @@ function analyserPrescription() {
                     let srcEbm = '';
                     if (rule.SOURCES_EBM && rule.SOURCES_EBM.INITIER) {
                         for (const [k, v] of Object.entries(rule.SOURCES_EBM.INITIER)) {
-                            if (sanitizeText(trt.classe).includes(sanitizeText(k)) || sanitizeText(k).includes(sanitizeText(trt.classe.split('(')[0].trim()))) {
+                            if (trt.classe && (sanitizeText(trt.classe).includes(sanitizeText(k)) || sanitizeText(k).includes(sanitizeText(trt.classe.split('(')[0].trim())))) {
                                 srcEbm = v; break;
                             }
                         }
@@ -1252,19 +1256,21 @@ function analyserPrescription() {
                     let srcEbm = '';
                     if (rule.SOURCES_EBM && rule.SOURCES_EBM.EVITER) {
                         for (const [k, v] of Object.entries(rule.SOURCES_EBM.EVITER)) {
-                            if (sanitizeText(trt.classe).includes(sanitizeText(k)) || sanitizeText(k).includes(sanitizeText(trt.classe.split('(')[0].trim()))) {
+                            if (trt.classe && (sanitizeText(trt.classe).includes(sanitizeText(k)) || sanitizeText(k).includes(sanitizeText(trt.classe.split('(')[0].trim())))) {
                                 srcEbm = v; break;
                             }
                         }
                     }
+                    if (trt.classe || trt.raison) {
                     eviterItems += `<div class="alert alert-danger py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #dc3545;">
-                        <strong class="small">${trt.classe}</strong>
+                        <strong class="small">${trt.classe || ''}</strong>
                         ${trt.gravite ? ` <span class="badge bg-${trt.gravite === 'CONTRE-INDICATION' || String(trt.gravite).includes('ABSOLUE') ? 'danger' : 'warning text-dark'}" style="font-size:0.6em;">${trt.gravite}</span>` : ''}
                         ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;" title="${srcEbm}">${srcEbm.length > 40 ? srcEbm.substring(0,40)+'...' : srcEbm}</span>` : ''}
                         ${trt.ref_stopp ? ` <span class="badge bg-secondary float-end me-1" style="font-size:0.6em;">${trt.ref_stopp}</span>` : ''}
                         ${trt.raison ? `<br><small>${trt.raison}</small>` : ''}
                         ${trt.condition ? `<br><small class="text-muted fst-italic">${trt.condition}</small>` : ''}
                     </div>`;
+                    }
                 });
                 guidelinesHtml += `<details class="mb-2 mt-2"><summary class="text-danger small fw-bold" style="cursor:pointer;">A EVITER (${eviter.length}) — cliquer pour dérouler</summary><div class="mt-1">${eviterItems}</div></details>`;
             }
@@ -1353,6 +1359,7 @@ function analyserPrescription() {
         // ── Indicateurs clés ──
         let critCount = counts.eviter;
         let interactCount = counts.interact + counts.ansm;
+        let bioAnomalyCount = counts.bio;
         let bioMissing = 0;
         if (_registry.bioPlan) {
             Object.keys(_registry.bioPlan).forEach(bioId => { if (!bioValues[bioId] || bioValues[bioId] <= 0) bioMissing++; });
@@ -1370,11 +1377,19 @@ function analyserPrescription() {
                 <div style="font-size:1.8em;font-weight:bold;" class="text-${scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success')}">${scoreACB_global}</div>
                 <div class="small text-muted">Score ACB</div>
             </div></div></div>
-            <div class="col-3"><div class="card text-center border-${bioMissing > 0 ? 'secondary' : 'success'} shadow-sm"><div class="card-body py-2">
-                <div style="font-size:1.8em;font-weight:bold;" class="text-${bioMissing > 0 ? 'secondary' : 'success'}">${bioMissing}</div>
-                <div class="small text-muted">Bio manquante</div>
+            <div class="col-3"><div class="card text-center border-${bioAnomalyCount > 0 ? 'danger' : 'success'} shadow-sm"><div class="card-body py-2">
+                <div style="font-size:1.8em;font-weight:bold;" class="text-${bioAnomalyCount > 0 ? 'danger' : 'success'}">${bioAnomalyCount}</div>
+                <div class="small text-muted">Anomalies bio</div>
             </div></div></div>
         </div>`;
+
+        // ── Anomalies biologiques détectées (résumé) ──
+        if (bioAnomalyCount > 0) {
+            synthHtml += `<div class="alert alert-danger border-danger shadow-sm py-2 mb-3">
+                <strong>🧪 Anomalies biologiques détectées (${bioAnomalyCount})</strong>
+                <span class="small text-muted ms-2">— Détails dans l'onglet Bio</span>
+            </div>`;
+        }
 
         // ── Synthèse transversale par médicament ──
         const medKeys = Object.keys(_registry.byMed);
@@ -1383,7 +1398,6 @@ function analyserPrescription() {
                 <strong>📋 Vue transversale par médicament</strong>
             </div><div class="card-body p-2">`;
 
-            // Trier par nombre d'alertes décroissant
             const medSorted = medKeys.map(k => ({ dci: k, domains: _registry.byMed[k], count: Object.values(_registry.byMed[k]).reduce((s, arr) => s + arr.length, 0) })).sort((a, b) => b.count - a.count);
 
             medSorted.forEach(med => {
@@ -1397,7 +1411,6 @@ function analyserPrescription() {
                 if (d.usage) badges.push(`<span class="badge bg-info me-1">💊 Adapter</span>`);
                 if (d.suivi) badges.push(`<span class="badge bg-primary me-1">👁️ Suivi</span>`);
 
-                // Détails condensés
                 let details = [];
                 if (d.eviter) d.eviter.forEach(e => details.push(`<span class="text-${e.severity || 'warning'} small">• ${e.text}</span>`));
                 if (d.interact) d.interact.forEach(e => details.push(`<span class="text-danger small">• ${e.text}</span>`));
@@ -1414,53 +1427,29 @@ function analyserPrescription() {
             synthHtml += `</div></div>`;
         }
 
-        // ── Actions concrètes priorisées ──
+        // ── Actions concrètes priorisées (sans bio) ──
         let actions = [];
-        // 1. ARRÊTER (CI absolues)
         for (const [dci, domains] of Object.entries(_registry.byMed)) {
             if (domains.eviter) {
                 domains.eviter.forEach(e => {
                     if (e.gravite && (e.gravite.includes('CONTRE-INDICATION') || e.gravite.includes('ABSOLUE'))) {
-                        actions.push({ priority: 1, type: 'ARRÊTER', icon: '🔴', color: 'danger', med: dci, detail: e.text, source: e.source || '' });
+                        actions.push({ priority: 1, type: 'ARRÊTER', icon: '🔴', color: 'danger', med: dci, detail: e.text });
+                    } else {
+                        actions.push({ priority: 2, type: 'SUBSTITUER', icon: '🟠', color: 'warning', med: dci, detail: e.text });
                     }
                 });
             }
-        }
-        // 2. SUBSTITUER (PIM avec alternatives via eviter domain)
-        for (const [dci, domains] of Object.entries(_registry.byMed)) {
-            if (domains.eviter) {
-                domains.eviter.forEach(e => {
-                    if (!e.gravite || !e.gravite.includes('CONTRE-INDICATION')) {
-                        actions.push({ priority: 2, type: 'SUBSTITUER', icon: '🟠', color: 'warning', med: dci, detail: e.text, source: e.source || '' });
-                    }
-                });
-            }
-        }
-        // 3. ADAPTER (usage)
-        for (const [dci, domains] of Object.entries(_registry.byMed)) {
             if (domains.usage) {
                 domains.usage.forEach(e => {
                     actions.push({ priority: 3, type: 'ADAPTER', icon: '🟡', color: 'info', med: dci, detail: e.text });
                 });
             }
         }
-        // 4. SURVEILLER (bio manquante ou anormale)
-        if (_registry.bioPlan) {
-            for (const [bioId, data] of Object.entries(_registry.bioPlan)) {
-                let val = bioValues[bioId];
-                let bioName = (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
-                if (!val || val <= 0) {
-                    actions.push({ priority: 4, type: 'SURVEILLER', icon: '🔵', color: 'secondary', med: bioName, detail: `Non renseigné — requis pour ${[...data.meds, ...data.pathos].join(', ')}` });
-                }
-            }
-        }
-        // 5. INITIER (omissions)
         if (_registry.byDomain.initier) {
             _registry.byDomain.initier.forEach(a => {
                 actions.push({ priority: 5, type: 'INITIER', icon: '🟢', color: 'success', med: a.titre, detail: '' });
             });
         }
-
         actions.sort((a, b) => a.priority - b.priority);
 
         if (actions.length > 0) {
@@ -1478,6 +1467,40 @@ function analyserPrescription() {
                 </tr>`;
             });
             synthHtml += `</tbody></table></div></div>`;
+        }
+
+        // ── Schéma de surveillance biologique (groupé par fréquence) ──
+        if (_registry.bioPlan && Object.keys(_registry.bioPlan).length > 0) {
+            const freqPriority = { 'hebdomadaire': 1, '/semaine': 1, 'bimensuel': 2, '/2sem': 2, 'mensuel': 3, '/mois': 3, '/1m': 3, '/1-3m': 4, 'trimestriel': 5, '/3m': 5, '/3 mois': 5, 'semestriel': 7, '/6m': 7, '/6 mois': 7, 'annuel': 10, '/an': 10, '/12m': 10 };
+            const getFreqScore = (f) => { let fl = f.toLowerCase(); for (const [k, v] of Object.entries(freqPriority)) { if (fl.includes(k)) return v; } return 8; };
+            const freqLabels = { 1: 'Hebdomadaire', 2: 'Bimensuel', 3: 'Mensuel', 4: '1 à 3 mois', 5: 'Trimestriel', 7: 'Semestriel', 8: 'Selon contexte', 10: 'Annuel', 99: 'Fréquence non précisée' };
+
+            // Grouper par fréquence
+            const byFreq = {};
+            for (const [bioId, data] of Object.entries(_registry.bioPlan)) {
+                let bioName = (MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
+                let freqScore = data.freqs.length > 0 ? Math.min(...data.freqs.map(f => getFreqScore(f))) : 99;
+                if (!byFreq[freqScore]) byFreq[freqScore] = [];
+                byFreq[freqScore].push(bioName);
+            }
+
+            let freqKeys = Object.keys(byFreq).map(Number).sort((a, b) => a - b);
+            synthHtml += `<div class="card shadow-sm mb-3"><div class="card-header py-2" style="background:linear-gradient(135deg,#6f42c1 0%,#4a1a8a 100%);color:white;">
+                <strong>🗓️ Schéma de surveillance biologique</strong>
+                <span class="small ms-2" style="opacity:0.8;">Détails dans l'onglet Suivi</span>
+            </div><div class="card-body p-2">`;
+            freqKeys.forEach(score => {
+                let label = freqLabels[score] || `Fréquence ${score}`;
+                let bios = byFreq[score];
+                synthHtml += `<div class="mb-2">
+                    <span class="badge bg-primary me-2">${label}</span>
+                    <span class="small">${bios.join(', ')}</span>
+                </div>`;
+            });
+            if (bioMissing > 0) {
+                synthHtml += `<div class="mt-2 text-muted small fst-italic">⚠️ ${bioMissing} paramètre(s) non renseigné(s) — voir onglet Suivi pour le détail</div>`;
+            }
+            synthHtml += `</div></div>`;
         }
 
         if (!synthHtml) synthHtml = '<div class="alert alert-light">Lancez l\'analyse pour voir la synthèse.</div>';
