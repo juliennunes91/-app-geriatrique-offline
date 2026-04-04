@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="description" content="GeriaAssist - Outil d'aide à la décision pharmaco-clinique en gériatrie">
-    <meta name="theme-color" content="#0d6efd">
+    <meta name="theme-color" content="#0d9488">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
     <title>GeriaAssist - Décision Pharmaco-Clinique (Expert)</title>
     <link href="lib/bootstrap.min.css" rel="stylesheet">
+    <link href="geria-theme.css" rel="stylesheet">
     <script src="lib/html2pdf.bundle.min.js"></script>
     <style>
         body { background-color: #f8f9fa; font-size: 0.95rem; }
@@ -47,41 +48,7 @@
             .tag-badge { font-size: 0.85em; padding: 6px; min-height: 36px; }
             .autocomplete-list li { padding: 12px; min-height: 44px; }
         }
-        /* Dark mode */
-        [data-bs-theme="dark"] { --bs-body-bg: #1a1a2e; --bs-body-color: #e0e0e0; }
-        [data-bs-theme="dark"] body { background-color: #1a1a2e; color: #e0e0e0; }
-        [data-bs-theme="dark"] .section-box { background: #16213e; color: #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        [data-bs-theme="dark"] .form-control, [data-bs-theme="dark"] .form-select { background-color: #1e2a4a; color: #e0e0e0; border-color: #3a4a6e; }
-        [data-bs-theme="dark"] .form-control::placeholder { color: #888; }
-        [data-bs-theme="dark"] .nav-tabs .nav-link { color: #aaa; }
-        [data-bs-theme="dark"] .nav-tabs .nav-link.active { background-color: #16213e; color: #fff; border-color: #0d6efd #0d6efd #16213e; }
-        [data-bs-theme="dark"] .alert { color: #e0e0e0; }
-        [data-bs-theme="dark"] .alert-light { background-color: #1e2a4a; border-color: #3a4a6e; color: #ddd; }
-        [data-bs-theme="dark"] .alert-success { background-color: #1a3a2a; border-color: #2a5a3a; color: #c8e6d0; }
-        [data-bs-theme="dark"] .alert-danger { background-color: #3a1a1a; border-color: #5a2a2a; color: #e6c8c8; }
-        [data-bs-theme="dark"] .alert-warning { background-color: #3a3a1a; border-color: #5a5a2a; color: #e6e6c8; }
-        [data-bs-theme="dark"] .alert-info { background-color: #1a2a3a; border-color: #2a4a5a; color: #c8d8e6; }
-        [data-bs-theme="dark"] .alert-primary { background-color: #1a1a3a; border-color: #2a2a5a; color: #c8c8e6; }
-        [data-bs-theme="dark"] .badge.bg-secondary { background-color: #444 !important; }
-        [data-bs-theme="dark"] .badge.bg-light { background-color: #2a3a5a !important; color: #ddd !important; }
-        [data-bs-theme="dark"] .version-footer { background: rgba(26,26,46,0.95); color: #888; border-color: #333; }
-        [data-bs-theme="dark"] .text-muted { color: #999 !important; }
-        [data-bs-theme="dark"] .text-dark { color: #ddd !important; }
-        [data-bs-theme="dark"] .text-success { color: #6fc87a !important; }
-        [data-bs-theme="dark"] .text-danger { color: #e07070 !important; }
-        [data-bs-theme="dark"] .text-warning { color: #e0c050 !important; }
-        [data-bs-theme="dark"] .text-info { color: #60b0d0 !important; }
-        [data-bs-theme="dark"] .text-primary { color: #6090e0 !important; }
-        [data-bs-theme="dark"] .autocomplete-list { background: #16213e; border-color: #333; }
-        [data-bs-theme="dark"] .autocomplete-list li:hover { background-color: #1e2a4a; }
-        [data-bs-theme="dark"] .card-header { color: #fff; }
-        [data-bs-theme="dark"] .card-body { background-color: #16213e; color: #ddd; }
-        [data-bs-theme="dark"] .bg-light { background-color: #1e2a4a !important; color: #ddd; }
-        [data-bs-theme="dark"] .bg-white { background-color: #16213e !important; color: #ddd; }
-        [data-bs-theme="dark"] .border { border-color: #3a4a6e !important; }
-        [data-bs-theme="dark"] label, [data-bs-theme="dark"] .form-check-label { color: #ccc; }
-        [data-bs-theme="dark"] strong { color: inherit; }
-        [data-bs-theme="dark"] .table { color: #ddd; }
+        /* Dark mode — handled by geria-theme.css */
         /* Comparaison mode */
         #compare-panel { display: none; }
         #compare-panel.active { display: block; }
@@ -107,28 +74,32 @@
 </head>
 <body>
     <noscript><div class="alert alert-danger m-4">JavaScript est requis pour utiliser GeriaAssist. Veuillez activer JavaScript dans votre navigateur.</div></noscript>
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="text-primary m-0">🏥 GeriaAssist - Décision Pharmaco-Clinique</h2>
-            <div class="d-flex flex-wrap gap-1">
-                <button class="btn btn-outline-secondary btn-sm shadow-sm" onclick="resetPatient()" title="Nouveau patient (Ctrl+N)">Nouveau</button>
-                <button class="btn btn-outline-info btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#legendModal">Legende</button>
-                <button class="btn btn-outline-primary btn-sm shadow-sm" onclick="copierSynthese()" id="btnCopier" style="display:none;">Copier</button>
-                <button class="btn btn-outline-danger btn-sm shadow-sm" onclick="exporterPDF()" id="btnPdf" style="display:none;" title="Export PDF (Ctrl+P)">PDF</button>
-                <div class="btn-group" id="btnPrint" style="display:none;">
-                    <button class="btn btn-outline-secondary btn-sm shadow-sm dropdown-toggle" data-bs-toggle="dropdown" title="Imprimer">🖨️</button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#" onclick="imprimerSynthese('synthese');return false;">📋 Synthèse seule</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="imprimerSynthese('complet');return false;">📄 Rapport complet</a></li>
-                    </ul>
+    <div class="ga-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2><span class="ga-brand-accent">Geria</span>Assist <span class="text-muted" style="font-size:0.6em;font-weight:400;letter-spacing:0;">Décision Pharmaco-Clinique</span></h2>
+                <div class="d-flex flex-wrap gap-1">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="resetPatient()" title="Nouveau patient (Ctrl+N)">Nouveau</button>
+                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#legendModal">Lexique</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="copierSynthese()" id="btnCopier" style="display:none;">Copier</button>
+                    <button class="btn btn-outline-danger btn-sm" onclick="exporterPDF()" id="btnPdf" style="display:none;" title="Export PDF (Ctrl+P)">PDF</button>
+                    <div class="btn-group" id="btnPrint" style="display:none;">
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" title="Imprimer">Imprimer</button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" onclick="imprimerSynthese('synthese');return false;">Synthese seule</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="imprimerSynthese('complet');return false;">Rapport complet</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary" onclick="exporterPatientJSON()" title="Exporter le patient en JSON">Export</button>
+                        <button class="btn btn-outline-secondary" onclick="importerPatientJSON()" title="Importer un patient JSON">Import</button>
+                    </div>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="toggleDarkMode()" id="btnDarkMode" title="Mode sombre">Mode sombre</button>
                 </div>
-                <div class="btn-group btn-group-sm shadow-sm">
-                    <button class="btn btn-outline-success" onclick="exporterPatientJSON()" title="Exporter le patient en JSON">Exporter</button>
-                    <button class="btn btn-outline-success" onclick="importerPatientJSON()" title="Importer un patient JSON">Importer</button>
-                </div>
-                <button class="btn btn-outline-dark btn-sm shadow-sm" onclick="toggleDarkMode()" id="btnDarkMode" title="Mode sombre">🌙</button>
             </div>
         </div>
+    </div>
+    <div class="container">
 
         <div class="row">
             <div class="col-md-5">
@@ -309,17 +280,17 @@
                         <button class="btn btn-outline-secondary btn-sm" id="btnCompare" onclick="toggleCompareMode()" title="Comparer ordonnances" style="display:none;white-space:nowrap;">Comparer</button>
                     </div>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation"><button class="nav-link fw-bold active" style="color:#0d6efd!important;" data-bs-toggle="tab" data-bs-target="#tab-synthese" role="tab" aria-selected="true" aria-label="Synthèse intelligente">🧠 Synthèse</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link text-success fw-bold" data-bs-toggle="tab" data-bs-target="#tab-scores" role="tab" aria-label="Calculs et Scores">🧮 Scores</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-eviter" role="tab" aria-label="Prescriptions inappropriées - À Éviter">⚠️ Éviter</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-initier" role="tab" aria-label="Omissions thérapeutiques - À Initier">➕ Omissions</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link text-warning fw-bold" data-bs-toggle="tab" data-bs-target="#tab-interact" role="tab" aria-label="Interactions médicamenteuses cliniques">⚡ Interact</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link text-danger fw-bold" data-bs-toggle="tab" data-bs-target="#tab-auc" role="tab" aria-label="Pharmacocinétique AUC">📈 PK</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link" style="color:#d63384!important;" data-bs-toggle="tab" data-bs-target="#tab-ansm" role="tab" aria-label="Interactions ANSM France">🇫🇷 ANSM</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-bio" role="tab" aria-label="Syndromes biologiques">🧪 Bio</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link text-info fw-bold" data-bs-toggle="tab" data-bs-target="#tab-usage" role="tab" aria-label="Adaptations posologiques">💡 Doses</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link text-primary fw-bold" data-bs-toggle="tab" data-bs-target="#tab-suivi" role="tab" aria-label="Suivi biologique">👁️ Suivi</button></li>
-                        <li class="nav-item" role="presentation"><button class="nav-link fw-bold" style="color:#6f42c1!important;" data-bs-toggle="tab" data-bs-target="#tab-guidelines" role="tab" aria-label="Guidelines par pathologie">📚 Recos</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-synthese" role="tab" aria-selected="true" aria-label="Synthese intelligente">Synthese</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-scores" role="tab" aria-label="Calculs et Scores">Scores</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-eviter" role="tab" aria-label="Prescriptions inappropriees">Eviter</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-initier" role="tab" aria-label="Omissions therapeutiques">Omissions</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-interact" role="tab" aria-label="Interactions medicamenteuses">Interactions</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-auc" role="tab" aria-label="Pharmacocinetique AUC">PK/AUC</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-ansm" role="tab" aria-label="Interactions ANSM France">ANSM</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-bio" role="tab" aria-label="Syndromes biologiques">Bio</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-usage" role="tab" aria-label="Adaptations posologiques">Doses</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-suivi" role="tab" aria-label="Suivi biologique">Suivi</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-guidelines" role="tab" aria-label="Guidelines par pathologie">Recos</button></li>
                     </ul>
                     <div class="tab-content mt-3" id="myTabContent">
                         <div class="tab-pane fade show active" id="tab-synthese" role="tabpanel"><div id="alertes-synthese" class="text-muted" aria-live="polite">Cliquez sur Analyser pour voir la synthèse intelligente...</div></div>
@@ -340,7 +311,7 @@
     </div>
 
     <footer class="version-footer">
-        version 0.48 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+        version 0.49 — créé par Dr Julien Nunes à l'aide de l'IA<br>
         Merci aux testeurs (Dr Juliette Muffet)<br>
         <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
     </footer>
@@ -427,7 +398,7 @@
             html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
             localStorage.setItem('geriaassist-theme', isDark ? 'light' : 'dark');
             const btn = document.getElementById('btnDarkMode');
-            if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+            if (btn) btn.textContent = isDark ? 'Mode sombre' : 'Mode clair';
         }
         // Restore saved theme
         (function() {
@@ -435,7 +406,7 @@
             if (saved === 'dark') {
                 document.documentElement.setAttribute('data-bs-theme', 'dark');
                 const btn = document.getElementById('btnDarkMode');
-                if (btn) btn.textContent = '☀️';
+                if (btn) btn.textContent = 'Mode clair';
             }
         })();
 

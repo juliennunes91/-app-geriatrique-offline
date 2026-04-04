@@ -1141,7 +1141,7 @@ function analyserPrescription() {
             }
 
             guidelinesHtml += `<div class="card border-0 shadow-sm mb-3">
-                <div class="card-header" style="background: linear-gradient(135deg, #6f42c1 0%, #4a1a8a 100%); color: white;">
+                <div class="card-header ga-card-header-recos">
                     <strong>${rule.NOM}</strong>
                     <br><small style="opacity:0.85;">${refFull}</small>
                 </div>
@@ -1364,22 +1364,22 @@ function analyserPrescription() {
         if (_registry.bioPlan) {
             Object.keys(_registry.bioPlan).forEach(bioId => { if (!bioValues[bioId] || bioValues[bioId] <= 0) bioMissing++; });
         }
-        synthHtml += `<div class="row g-2 mb-3">
-            <div class="col-3"><div class="card text-center border-${critCount > 0 ? 'danger' : 'success'} shadow-sm"><div class="card-body py-2">
-                <div style="font-size:1.8em;font-weight:bold;" class="text-${critCount > 0 ? 'danger' : 'success'}">${critCount}</div>
-                <div class="small text-muted">CI / PIM</div>
+        synthHtml += `<div class="row g-2 mb-3 ga-indicator-row">
+            <div class="col-3"><div class="card text-center border-${critCount > 0 ? 'danger' : 'success'}"><div class="card-body">
+                <div class="ga-indicator-value text-${critCount > 0 ? 'danger' : 'success'}">${critCount}</div>
+                <div class="ga-indicator-label">CI / PIM</div>
             </div></div></div>
-            <div class="col-3"><div class="card text-center border-${interactCount > 0 ? 'warning' : 'success'} shadow-sm"><div class="card-body py-2">
-                <div style="font-size:1.8em;font-weight:bold;" class="text-${interactCount > 0 ? 'warning' : 'success'}">${interactCount}</div>
-                <div class="small text-muted">Interactions</div>
+            <div class="col-3"><div class="card text-center border-${interactCount > 0 ? 'warning' : 'success'}"><div class="card-body">
+                <div class="ga-indicator-value text-${interactCount > 0 ? 'warning' : 'success'}">${interactCount}</div>
+                <div class="ga-indicator-label">Interactions</div>
             </div></div></div>
-            <div class="col-3"><div class="card text-center border-${scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success')} shadow-sm"><div class="card-body py-2">
-                <div style="font-size:1.8em;font-weight:bold;" class="text-${scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success')}">${scoreACB_global}</div>
-                <div class="small text-muted">Score ACB</div>
+            <div class="col-3"><div class="card text-center border-${scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success')}"><div class="card-body">
+                <div class="ga-indicator-value text-${scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success')}">${scoreACB_global}</div>
+                <div class="ga-indicator-label">Score ACB</div>
             </div></div></div>
-            <div class="col-3"><div class="card text-center border-${bioAnomalyCount > 0 ? 'danger' : 'success'} shadow-sm"><div class="card-body py-2">
-                <div style="font-size:1.8em;font-weight:bold;" class="text-${bioAnomalyCount > 0 ? 'danger' : 'success'}">${bioAnomalyCount}</div>
-                <div class="small text-muted">Anomalies bio</div>
+            <div class="col-3"><div class="card text-center border-${bioAnomalyCount > 0 ? 'danger' : 'success'}"><div class="card-body">
+                <div class="ga-indicator-value text-${bioAnomalyCount > 0 ? 'danger' : 'success'}">${bioAnomalyCount}</div>
+                <div class="ga-indicator-label">Anomalies bio</div>
             </div></div></div>
         </div>`;
 
@@ -1394,8 +1394,8 @@ function analyserPrescription() {
         // ── Synthèse transversale par médicament ──
         const medKeys = Object.keys(_registry.byMed);
         if (medKeys.length > 0) {
-            synthHtml += `<div class="card shadow-sm mb-3"><div class="card-header py-2" style="background:linear-gradient(135deg,#0d6efd 0%,#0a58ca 100%);color:white;">
-                <strong>📋 Vue transversale par médicament</strong>
+            synthHtml += `<div class="card mb-3"><div class="card-header py-2 ga-card-header-primary">
+                <strong>Vue transversale par medicament</strong>
             </div><div class="card-body p-2">`;
 
             const medSorted = medKeys.map(k => ({ dci: k, domains: _registry.byMed[k], count: Object.values(_registry.byMed[k]).reduce((s, arr) => s + arr.length, 0) })).sort((a, b) => b.count - a.count);
@@ -1453,8 +1453,8 @@ function analyserPrescription() {
         actions.sort((a, b) => a.priority - b.priority);
 
         if (actions.length > 0) {
-            synthHtml += `<div class="card shadow-sm mb-3"><div class="card-header py-2" style="background:linear-gradient(135deg,#198754 0%,#0f5132 100%);color:white;">
-                <strong>✅ Actions concrètes priorisées</strong>
+            synthHtml += `<div class="card mb-3"><div class="card-header py-2 ga-card-header-actions">
+                <strong>Actions concretes priorisees</strong>
                 <span class="badge bg-light text-dark float-end">${actions.length}</span>
             </div><div class="card-body p-0">
             <table class="table table-sm table-hover mb-0" style="font-size:0.9em;">
@@ -1485,9 +1485,9 @@ function analyserPrescription() {
             }
 
             let freqKeys = Object.keys(byFreq).map(Number).sort((a, b) => a - b);
-            synthHtml += `<div class="card shadow-sm mb-3"><div class="card-header py-2" style="background:linear-gradient(135deg,#6f42c1 0%,#4a1a8a 100%);color:white;">
-                <strong>🗓️ Schéma de surveillance biologique</strong>
-                <span class="small ms-2" style="opacity:0.8;">Détails dans l'onglet Suivi</span>
+            synthHtml += `<div class="card mb-3"><div class="card-header py-2 ga-card-header-bio">
+                <strong>Schema de surveillance biologique</strong>
+                <span class="small ms-2" style="opacity:0.8;">Details dans l'onglet Suivi</span>
             </div><div class="card-body p-2">`;
             freqKeys.forEach(score => {
                 let label = freqLabels[score] || `Fréquence ${score}`;

@@ -1,11 +1,12 @@
-// Service Worker - GeriaAssist v0.48
-const CACHE_NAME = 'geriaassist-v48';
+// Service Worker - GeriaAssist v0.49
+const CACHE_NAME = 'geriaassist-v49';
 const ASSETS = [
     './',
     './index.html',
     './offline.html',
     './manifest.json',
     './lib/bootstrap.min.css',
+    './geria-theme.css',
     './lib/bootstrap.bundle.min.js',
     './lib/html2pdf.bundle.min.js',
     './app_core.js',
