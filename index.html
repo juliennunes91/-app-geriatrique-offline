@@ -332,11 +332,9 @@
 
     <script src="lib/bootstrap.bundle.min.js"></script>
 
-    <!-- Données d'interactions (toutes les sources) -->
-    <!-- anticholinergics_data.js retiré : ACB scores déjà dans MASTER_DB.MEDICAMENTS -->
-    <script src="ansm_ddi_data.js"></script>
-    <script src="ddi_merged_V2.js"></script>
-    <script src="gpt_ddi_data_filtered.js"></script>
+    <!-- Données d'interactions (fusionnées ANSM + BNF/Micromedex, AUC séparé) -->
+    <script src="ddi_general.js" defer></script>
+    <script src="ddi_merged_V2.js" defer></script>
 
     <!-- posologie_data.js, suivi_data.js, atb_data.js : données migrées dans MASTER_DB (v0.40), fichiers renommés _old -->
     <!-- guidelines_data.js retiré : DOUBLON de GUIDELINE_INDEX dans geria_pathology_rules_v3.js -->
@@ -351,6 +349,10 @@
     <script src="geria_pathology_rules_v3.js"></script>
     <script src="geria_recos_final.js"></script>
     <script src="geria_integration_module.js"></script>
+
+    <!-- Utilitaires partagés et état patient (chargés avant tout le reste) -->
+    <script src="utils.js"></script>
+    <script src="patient_state.js"></script>
 
     <!-- Référentiel de classes médicamenteuses (source unique) -->
     <script src="drug_classes.js"></script>

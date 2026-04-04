@@ -162,8 +162,50 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     return { bioValues, ctxClinique };
 }
 
+// =========================================================
+// MEMOIZATION — évite les re-analyses identiques
+// =========================================================
+let _lastAnalysisHash = null;
+let _lastAnalysisResult = null;
+
+function _computeAnalysisHash() {
+    const parts = [
+        getVal('patientAge'), getStr('patientSexe'), getVal('patientPoids'),
+        getVal('patientDFG'), getVal('patientK'), getVal('patientNa'),
+        getVal('bioAlbumSg'), getVal('bioCreat'), getVal('bioHb'),
+        getVal('bioPlaq'), getVal('bioGly'), getVal('bioHba1c'),
+        getVal('bioTsh'), getVal('bioBnp'), getVal('bioLdl'),
+        getVal('bioCrp'), getVal('bioInr'), getVal('bioQtc'),
+        getVal('scoreCFS'), getStr('cpManual'),
+        isChecked('patientFragile'),
+        activeComorbs.slice().sort().join(','),
+        activeMeds.map(m => m.dci).sort().join(','),
+        window.suspendedMeds.map(m => m.dci).sort().join(',')
+    ];
+    // Inclure toutes les checkboxes cliniques
+    ['chkStent','chkAlcool','chkAnorexie','chkTabac','chkAvc','chkTvp','chkSaignement',
+     'chkBrady','chkHtaNonControlee','chkArret','chkScaAigu','chkLqts','chkDialyse',
+     'chkFoie','chkSepsis','chkPalliatif','chkAtcdUlcere','chkChutes','chkDepression',
+     'chkIncontinence','chkHbp','chkConstipation','chkDysphagie','chkGlaucome',
+     'chkStenoseAortique','chkAspirineForte'].forEach(id => parts.push(isChecked(id)));
+    return parts.join('|');
+}
+
 function analyserPrescription() {
     if (typeof MASTER_DB === 'undefined') return;
+
+    // Memoization : skip si rien n'a changé
+    const hash = _computeAnalysisHash();
+    if (hash === _lastAnalysisHash && _lastAnalysisResult) {
+        // Restaurer le DOM depuis le cache
+        for (const [divId, html] of Object.entries(_lastAnalysisResult)) {
+            const el = document.getElementById(divId);
+            if (el) el.innerHTML = html;
+        }
+        GeriaLog.info('Analyse identique — résultats restaurés depuis le cache');
+        return;
+    }
+
     _initEngine();
 
     preCalculerScores();
@@ -172,6 +214,7 @@ function analyserPrescription() {
     if (patientAge <= 0 || patientAge > 120) {
         let el = document.getElementById('alertes-scores');
         if(el) el.innerHTML = '<div class="alert alert-danger">Veuillez saisir un âge valide (18-120 ans) avant de lancer l\'analyse.</div>';
+        _lastAnalysisHash = null;
         return;
     }
 
@@ -788,31 +831,18 @@ function analyserPrescription() {
 
         let groupedAnsm = {}; let groupedAuc = {};
 
-        // --- Pré-indexation ANSM & GPT_DDI : pour chaque med, quels entries matchent sur term1 ou term2 ---
-        let ansmDb = typeof ANSM_DDI_DB !== 'undefined' ? ANSM_DDI_DB : (typeof ansm_ddi_data !== 'undefined' ? ansm_ddi_data : null);
-        let ansmIndex = new Map(); // medKey -> [{idx, side:'t1'|'t2'}]
-        if (ansmDb && Array.isArray(ansmDb)) {
+        // --- Pré-indexation DDI_GENERAL_DB (ANSM + BNF/Micromedex fusionnées) ---
+        let ddiGeneralDb = typeof DDI_GENERAL_DB !== 'undefined' && Array.isArray(DDI_GENERAL_DB) ? DDI_GENERAL_DB : null;
+        let ddiGeneralIndex = new Map(); // medKey -> [{idx, side:'t1'|'t2'}]
+        if (ddiGeneralDb) {
             activeMeds.forEach(med => {
                 let key = sanitizeText(med.dci);
                 let hits = [];
-                ansmDb.forEach((d, idx) => {
-                    if (medMatchesAnsmTerm(med, d.d1 || d.molecule1 || d.nom1 || "")) hits.push({idx, side:'t1'});
-                    if (medMatchesAnsmTerm(med, d.d2 || d.molecule2 || d.nom2 || "")) hits.push({idx, side:'t2'});
-                });
-                ansmIndex.set(key, hits);
-            });
-        }
-        let gptDb = typeof GPT_DDI_DB !== 'undefined' && Array.isArray(GPT_DDI_DB) ? GPT_DDI_DB : null;
-        let gptIndex = new Map();
-        if (gptDb) {
-            activeMeds.forEach(med => {
-                let key = sanitizeText(med.dci);
-                let hits = [];
-                gptDb.forEach((d, idx) => {
+                ddiGeneralDb.forEach((d, idx) => {
                     if (medMatchesAnsmTerm(med, d.d1 || "")) hits.push({idx, side:'t1'});
                     if (medMatchesAnsmTerm(med, d.d2 || "")) hits.push({idx, side:'t2'});
                 });
-                gptIndex.set(key, hits);
+                ddiGeneralIndex.set(key, hits);
             });
         }
 
@@ -849,50 +879,26 @@ function analyserPrescription() {
                     matchesAuc.forEach(m => { if(!isNaN(parseFloat(m.auc_ratio))) groupedAuc[pairName].items.push(m); });
                 }
 
-                // ANSM — utilise l'index pré-calculé
-                if (ansmDb) {
-                    let hitsA = ansmIndex.get(dciA) || [];
-                    let hitsB = ansmIndex.get(dciB) || [];
-                    // Pour chaque entry ANSM, vérifier si A match un côté et B match l'autre
+                // DDI_GENERAL_DB (ANSM + BNF/Micromedex) — utilise l'index pré-calculé
+                if (ddiGeneralDb) {
+                    let hitsA = ddiGeneralIndex.get(dciA) || [];
+                    let hitsB = ddiGeneralIndex.get(dciB) || [];
                     let bByIdx = new Map();
                     hitsB.forEach(h => { if(!bByIdx.has(h.idx)) bByIdx.set(h.idx, new Set()); bByIdx.get(h.idx).add(h.side); });
                     hitsA.forEach(hA => {
                         let bSides = bByIdx.get(hA.idx);
                         if (!bSides) return;
-                        // A matche t1 et B matche t2, ou A matche t2 et B matche t1
                         let crossMatch = (hA.side === 't1' && bSides.has('t2')) || (hA.side === 't2' && bSides.has('t1'));
                         if (!crossMatch) return;
-                        let d = ansmDb[hA.idx];
-                        let niveau = String(d.level || d.niveau || "Interaction").toUpperCase();
-                        let desc = String(d.desc || d.description || d.message || "");
+                        let d = ddiGeneralDb[hA.idx];
+                        let niveau = String(d.level || "Interaction").toUpperCase();
+                        let desc = String(d.desc || "");
+                        let src = d.source || 'ANSM';
                         if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
                         let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("DECONSEILLE") || niveau.includes("MAJEUR");
                         if(isDanger) groupedAnsm[pairName].isDanger = true;
-                        if(!groupedAnsm[pairName].raw.some(ex => ex.source === 'ANSM' && ex.level === niveau && ex.desc.toLowerCase() === desc.toLowerCase())) {
-                            groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: 'ANSM' });
-                        }
-                    });
-                }
-
-                // GPT_DDI_DB (BNF + Micromedex) — utilise l'index pré-calculé
-                if (gptDb) {
-                    let hitsA = gptIndex.get(dciA) || [];
-                    let hitsB = gptIndex.get(dciB) || [];
-                    let bByIdx = new Map();
-                    hitsB.forEach(h => { if(!bByIdx.has(h.idx)) bByIdx.set(h.idx, new Set()); bByIdx.get(h.idx).add(h.side); });
-                    hitsA.forEach(hA => {
-                        let bSides = bByIdx.get(hA.idx);
-                        if (!bSides) return;
-                        let crossMatch = (hA.side === 't1' && bSides.has('t2')) || (hA.side === 't2' && bSides.has('t1'));
-                        if (!crossMatch) return;
-                        let d = gptDb[hA.idx];
-                        if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
-                        let niveau = String(d.niveau || "Interaction").toUpperCase();
-                        let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("MAJEUR");
-                        if(isDanger) groupedAnsm[pairName].isDanger = true;
-                        let desc = `${d.event || ''} — ${d.source || 'BNF+Micromedex'}`;
-                        if(!groupedAnsm[pairName].raw.some(ex => ex.desc.toLowerCase() === desc.toLowerCase())) {
-                            groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: d.source || 'BNF+Micromedex' });
+                        if(!groupedAnsm[pairName].raw.some(ex => ex.source === src && ex.desc.toLowerCase() === desc.toLowerCase())) {
+                            groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: src });
                         }
                     });
                 }
@@ -1518,5 +1524,12 @@ function analyserPrescription() {
     // Post-analyse : compteurs onglets, sauvegarde session
     if (typeof updateTabCounters === 'function') updateTabCounters();
     if (typeof _saveSession === 'function') _saveSession();
+
+    // Sauvegarder le résultat pour la memoization
+    const divs_memo = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines', 'alertes-synthese'];
+    _lastAnalysisResult = {};
+    divs_memo.forEach(id => { const el = document.getElementById(id); if (el) _lastAnalysisResult[id] = el.innerHTML; });
+    _lastAnalysisHash = hash;
+
     if (typeof GeriaLog !== 'undefined') GeriaLog.info(`Analyse terminée — ${activeMeds.length} médicaments, ${activeComorbs.length} comorbidités, ${counts.eviter} éviter, ${counts.initier} initier, ${counts.ansm} ANSM`);
 }

@@ -289,7 +289,41 @@ const DRUG_CLASSES = {
 };
 
 // ============================================================================
-// Moteur de matching unifié
+// Index inversé alias → classId (construit une seule fois au chargement)
+// ============================================================================
+const _ALIAS_EXACT_INDEX = new Map();   // alias exact → [classId, ...]
+const _ALIAS_SUBSTR_LIST = [];          // [{alias, classId}] pour matching substring
+const _DCI_SET = new Map();             // classId → Set de dcis (pour O(1) lookup)
+
+(function _buildDrugClassIndex() {
+    for (const [classId, def] of Object.entries(DRUG_CLASSES)) {
+        // Index exact
+        def.aliases.forEach(a => {
+            if (!_ALIAS_EXACT_INDEX.has(a)) _ALIAS_EXACT_INDEX.set(a, []);
+            _ALIAS_EXACT_INDEX.get(a).push(classId);
+        });
+        // Liste substring (alias >= 4 chars)
+        def.aliases.filter(a => a.length >= 4).forEach(a => {
+            _ALIAS_SUBSTR_LIST.push({ alias: a, classId });
+        });
+        // Set de DCIs pour lookup rapide
+        _DCI_SET.set(classId, new Set(def.dcis));
+    }
+})();
+
+function _classMatchesMed(classId, dci, classe) {
+    const def = DRUG_CLASSES[classId];
+    if (!def) return false;
+    if (def.classeMatch.some(cm => classe.includes(cm))) return true;
+    if (_DCI_SET.get(classId).has(dci)) return true;
+    // Fallback inclusion pour DCIs composées (ex: "acideacetylsalicylique" contient "aspirine" non)
+    if (def.dcis.some(d => dci.includes(d))) return true;
+    if (def.dciSuffix && def.dciSuffix.some(s => dci.includes(s))) return true;
+    return false;
+}
+
+// ============================================================================
+// Moteur de matching unifié (optimisé par index inversé)
 // ============================================================================
 
 /**
@@ -300,32 +334,7 @@ const DRUG_CLASSES = {
  * @returns {boolean}
  */
 function matchesDrugClass(dci, classe, key) {
-    // Recherche directe dans le référentiel
-    // Passe 1 : match alias EXACT uniquement (prioritaire)
-    let foundExact = false;
-    for (const [classId, def] of Object.entries(DRUG_CLASSES)) {
-        const exactMatch = def.aliases.some(a => key === a);
-        if (exactMatch) {
-            foundExact = true;
-            if (def.classeMatch.some(cm => classe.includes(cm))) return true;
-            if (def.dcis.some(d => dci.includes(d))) return true;
-            if (def.dciSuffix && def.dciSuffix.some(s => dci.includes(s))) return true;
-        }
-    }
-    if (foundExact) return false;
-    // Passe 2 : match alias par inclusion (substring) — seulement si aucun exact
-    let foundAlias = false;
-    for (const [classId, def] of Object.entries(DRUG_CLASSES)) {
-        const aliasMatch = def.aliases.some(a => (a.length >= 4 && key.includes(a)) || (key.length >= 4 && a.includes(key)));
-        if (aliasMatch) {
-            foundAlias = true;
-            if (def.classeMatch.some(cm => classe.includes(cm))) return true;
-            if (def.dcis.some(d => dci.includes(d))) return true;
-            if (def.dciSuffix && def.dciSuffix.some(s => dci.includes(s))) return true;
-        }
-    }
-    if (foundAlias) return false;
-    // Cas spécial : antihypertenseur (composite)
+    // Cas spécial : antihypertenseur (composite) — testé en premier
     if (key === 'antihypertenseur') {
         return classe.includes('hypertens') ||
             matchesDrugClass(dci, classe, 'iec') ||
@@ -333,6 +342,25 @@ function matchesDrugClass(dci, classe, key) {
             matchesDrugClass(dci, classe, 'inhibiteurcalcique') ||
             matchesDrugClass(dci, classe, 'diuretique') ||
             matchesDrugClass(dci, classe, 'betabloquant');
+    }
+    // Passe 1 : match alias EXACT via index O(1)
+    const exactClasses = _ALIAS_EXACT_INDEX.get(key);
+    if (exactClasses) {
+        for (const classId of exactClasses) {
+            if (_classMatchesMed(classId, dci, classe)) return true;
+        }
+        return false;
+    }
+    // Passe 2 : match alias par inclusion (substring) — seulement si aucun exact
+    if (key.length >= 4) {
+        let foundAlias = false;
+        for (const entry of _ALIAS_SUBSTR_LIST) {
+            if (key.includes(entry.alias) || entry.alias.includes(key)) {
+                foundAlias = true;
+                if (_classMatchesMed(entry.classId, dci, classe)) return true;
+            }
+        }
+        if (foundAlias) return false;
     }
     // Fallback : matching direct DCI/classe
     return dci.includes(key) || classe.includes(key) || key.includes(dci);

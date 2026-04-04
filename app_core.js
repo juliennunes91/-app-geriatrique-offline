@@ -1,29 +1,7 @@
-// app_core.js - V8.0 (v0.45 — GeriaLog, export/import JSON, session, print)
-let activeComorbs = []; let activeMeds = []; window.suspendedMeds = [];
-let globalQT_CountKR = 0; let globalQT_CountCR_PR = 0; let scoreACB_global = 0; let scoreCIA_global = 0;
-let maxQTLevel_global = 0; let infoQT_global = [];
+// app_core.js - V9.0 (v0.49 — refactored: state in patient_state.js, utils in utils.js)
+// activeComorbs, activeMeds, suspendedMeds, scores → définis dans patient_state.js
+// escapeHtml, sanitizeText, getVal, getStr, isChecked → définis dans utils.js
 const unifiedMedsMap = new Map(); const allComorbs = [];
-
-// Échappement HTML — prévient les injections XSS dans les interpolations
-const escapeHtml = str => {
-    if (!str) return "";
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-};
-
-// Nettoyeur universel (enlève accents, espaces, majuscules)
-const sanitizeText = (() => {
-    const _cache = new Map();
-    return str => {
-        if (!str) return "";
-        const k = String(str);
-        let v = _cache.get(k);
-        if (v !== undefined) return v;
-        v = k.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
-        _cache.set(k, v);
-        if (_cache.size > 5000) _cache.clear(); // éviter fuite mémoire
-        return v;
-    };
-})();
 
 // ============================================================================
 // MINI-LOGGER — Niveaux debug/info/warn/error avec timestamp

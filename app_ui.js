@@ -6,13 +6,24 @@ function initUI() {
     // 1. Intégrer les 48 médicaments d'enrichissement dans MASTER_DB
     // =====================================================================
     if (typeof MISSING_MEDS_ENRICHMENT !== 'undefined') {
-        MASTER_DB.MEDICAMENTS.push(...MISSING_MEDS_ENRICHMENT);
-        console.log(`[ENRICHMENT] ${MISSING_MEDS_ENRICHMENT.length} médicaments ajoutés à MASTER_DB`);
+        const existingDcis = new Set(MASTER_DB.MEDICAMENTS.map(m => sanitizeText(m.dci)));
+        let added = 0;
+        MISSING_MEDS_ENRICHMENT.forEach(m => {
+            if (!existingDcis.has(sanitizeText(m.dci))) {
+                MASTER_DB.MEDICAMENTS.push(m);
+                existingDcis.add(sanitizeText(m.dci));
+                added++;
+            }
+        });
+        console.log(`[ENRICHMENT] ${added}/${MISSING_MEDS_ENRICHMENT.length} médicaments ajoutés (doublons ignorés)`);
     }
 
     // =====================================================================
-    // 2. DDI_MERGED_DB remplace DDI_DB + DDI_AUC_DB (fichier pré-fusionné)
+    // 2. DDI : ddi_general.js (ANSM+BNF fusionnées) + ddi_merged_V2.js (AUC)
     // =====================================================================
+    if (typeof DDI_GENERAL_DB !== 'undefined') {
+        console.log(`[DDI] DDI_GENERAL_DB chargé : ${DDI_GENERAL_DB.length} interactions (ANSM + BNF/Micromedex fusionnées)`);
+    }
     if (typeof DDI_MERGED_DB !== 'undefined') {
         console.log(`[DDI] DDI_MERGED_DB chargé : ${DDI_MERGED_DB.length} paires d'interactions AUC`);
     }
@@ -36,14 +47,7 @@ function initUI() {
     setupAutocomplete('inputMed', 'listMed', searchMedList, selectMed);
 }
 
-const getVal = id => {
-    let el = document.getElementById(id);
-    if (!el || !el.value) return 0;
-    let v = parseFloat(el.value.replace(',', '.'));
-    return isNaN(v) ? 0 : v;
-};
-const getStr = id => { let el = document.getElementById(id); return el ? el.value : ""; };
-const isChecked = id => { let el = document.getElementById(id); return el ? el.checked : false; };
+// getVal, getStr, isChecked → définis dans utils.js
 
 function calculerDFG(autoSwitch = true) {
     const age = getVal('patientAge'); const poids = getVal('patientPoids'); const creat = getVal('bioCreat'); const sexe = getStr('patientSexe');
