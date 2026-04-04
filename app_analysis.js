@@ -891,15 +891,18 @@ function analyserPrescription() {
                         let crossMatch = (hA.side === 't1' && bSides.has('t2')) || (hA.side === 't2' && bSides.has('t1'));
                         if (!crossMatch) return;
                         let d = ddiGeneralDb[hA.idx];
-                        let niveau = String(d.level || "Interaction").toUpperCase();
-                        let desc = String(d.desc || "");
-                        let src = d.source || 'ANSM';
                         if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
-                        let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("DECONSEILLE") || niveau.includes("MAJEUR");
-                        if(isDanger) groupedAnsm[pairName].isDanger = true;
-                        if(!groupedAnsm[pairName].raw.some(ex => ex.source === src && ex.desc.toLowerCase() === desc.toLowerCase())) {
-                            groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: src });
-                        }
+                        // Exploiter toutes les sources de la paire fusionnée
+                        (d.details || []).forEach(detail => {
+                            let niveau = String(detail.level || "Interaction").toUpperCase();
+                            let desc = String(detail.desc || "");
+                            let src = detail.source || 'ANSM';
+                            let isDanger = niveau.includes("CONTRE-INDICATION") || niveau.includes("DECONSEILLE") || niveau.includes("MAJEUR");
+                            if(isDanger) groupedAnsm[pairName].isDanger = true;
+                            if(!groupedAnsm[pairName].raw.some(ex => ex.source === src && ex.desc.toLowerCase() === desc.toLowerCase())) {
+                                groupedAnsm[pairName].raw.push({ level: niveau, desc: desc, isDanger: isDanger, source: src });
+                            }
+                        });
                     });
                 }
             }
@@ -928,7 +931,8 @@ function analyserPrescription() {
             if (otherItems.length > 0) {
                 itemsHtml += otherItems.map(x => `<li style="margin-bottom: 6px;"><span class="${x.isDanger ? 'text-danger' : 'text-dark'} fw-bold">${x.isDanger ? '🔴' : '🟠'} ${x.level}</span> <span class="badge bg-info" style="font-size:0.6em;">${x.source}</span><br><span class="small text-muted">${x.desc}</span></li>`).join('');
             }
-            let sourceLabel = ansmItems.length > 0 && otherItems.length > 0 ? 'ANSM + Micromedex' : (ansmItems.length > 0 ? 'ANSM' : 'Micromedex');
+            let allSources = [...new Set(data.raw.map(x => x.source))];
+            let sourceLabel = allSources.join(' + ');
             addAlert('alertes-ansm', `<div class="alert alert-${boxClass} shadow-sm"><strong style="font-size:1.05em;">${data.isDanger ? '🚨' : '⚡'} Interactions ${sourceLabel} : ${pair}</strong><ul class="mb-0 ps-3">${itemsHtml}</ul></div>`, 'ansm');
         }
     } catch(e) { console.error("Erreur Interactions", e); }
