@@ -60,6 +60,242 @@ function formatSuiviList(str) {
     return `<ul class="mb-0 ps-3">` + items.map(i => `<li style="margin-bottom:3px;">${i}</li>`).join('') + `</ul>`;
 }
 
+// =========================================================
+// SUIVI BIOLOGIQUE — Utilitaires + Rendus dual-mode
+// =========================================================
+const _FREQ_PRIORITY = { 'hebdomadaire': 1, '/semaine': 1, 'bimensuel': 2, '/2sem': 2, 'mensuel': 3, '/mois': 3, '/1m': 3, '/1-3m': 4, 'trimestriel': 5, '/3m': 5, '/3 mois': 5, 'semestriel': 7, '/6m': 7, '/6 mois': 7, 'annuel': 10, '/an': 10, '/12m': 10 };
+function _getFreqScore(f) {
+    if (!f) return 99;
+    let fl = f.toLowerCase();
+    for (const [k, v] of Object.entries(_FREQ_PRIORITY)) { if (fl.includes(k)) return v; }
+    return 8;
+}
+function _freqCssClass(score) {
+    if (score <= 1) return 'freq-hebdo';
+    if (score <= 3) return 'freq-mensuel';
+    if (score <= 5) return 'freq-trimestriel';
+    return 'freq-annuel';
+}
+function _freqShortLabel(f) {
+    if (!f) return '';
+    let fl = f.toLowerCase();
+    if (fl.includes('hebdo') || fl.includes('/semaine')) return 'H';
+    if (fl.includes('bimensuel') || fl.includes('/2sem')) return '2S';
+    if (fl.includes('mensuel') || fl.includes('/mois') || fl.includes('/1m')) return 'M';
+    if (fl.includes('/1-3m')) return '1-3M';
+    if (fl.includes('trimestriel') || fl.includes('/3m') || fl.includes('/3 mois')) return '3M';
+    if (fl.includes('semestriel') || fl.includes('/6m') || fl.includes('/6 mois')) return '6M';
+    if (fl.includes('annuel') || fl.includes('/an') || fl.includes('/12m')) return 'An';
+    return f.length > 6 ? f.substring(0, 6) : f;
+}
+function _extractFreqForBio(suiviStr, bioId) {
+    if (!suiviStr) return '';
+    let items = suiviStr.split('|').map(x => x.trim());
+    // Chercher un item contenant le bioId ou un terme lié
+    let bioName = (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD.toLowerCase() : '';
+    for (const item of items) {
+        let il = item.toLowerCase();
+        if (bioName && il.includes(bioName.substring(0, 5))) {
+            // Extraire la parenthèse fréquence
+            let match = item.match(/\(([^)]+)\)/);
+            if (match) return match[1];
+        }
+    }
+    return '';
+}
+function _bioStatusBadge(bioId, val) {
+    if (!val || val <= 0) return '<span class="badge bg-secondary">—</span>';
+    if (bioId === 'BIO_004' && val < 30) return '<span class="badge bg-danger">Bas</span>';
+    if (bioId === 'BIO_004' && val < 60) return '<span class="badge bg-warning text-dark">Abaissé</span>';
+    if (bioId === 'BIO_001' && (val < 3.5 || val > 5.0)) return '<span class="badge bg-danger">Anormal</span>';
+    if (bioId === 'BIO_002' && val < 130) return '<span class="badge bg-warning text-dark">Bas</span>';
+    if (bioId === 'BIO_009' && val < 12) return '<span class="badge bg-warning text-dark">Anémie</span>';
+    if (bioId === 'BIO_031' && val >= 450) return '<span class="badge bg-danger">Allongé</span>';
+    return '<span class="badge bg-success">OK</span>';
+}
+
+/**
+ * Rendu MODE TABLEAU CROISÉ : matrice bio (lignes) × médicaments+pathologies (colonnes)
+ */
+function _renderSuiviCross(bioPlan, bioValues) {
+    const bioIds = Object.keys(bioPlan);
+    if (bioIds.length === 0) return '';
+
+    // Collecter toutes les origines (médicaments + pathologies) comme colonnes
+    const origins = new Set();
+    for (const entry of Object.values(bioPlan)) {
+        entry.meds.forEach(m => origins.add(m));
+        entry.pathos.forEach(p => origins.add(p));
+    }
+    const cols = [...origins].sort();
+    if (cols.length === 0) return '';
+
+    // Trier les lignes bio par fréquence la plus stricte
+    const sortedBio = bioIds.map(bioId => {
+        const entry = bioPlan[bioId];
+        const allFreqs = [...entry.freqs, ...Object.values(entry.freqByOrigin || {})].filter(Boolean);
+        const bestScore = allFreqs.length > 0 ? Math.min(...allFreqs.map(_getFreqScore)) : 99;
+        return { bioId, entry, bestScore };
+    }).sort((a, b) => a.bestScore - b.bestScore);
+
+    // Header
+    let html = `<div class="alert alert-info border-info shadow-sm py-2 px-2">
+        <strong class="text-info" style="font-size:1.05em;">🧪 Tableau croisé — Surveillance biologique</strong>
+        <span class="badge bg-info float-end">${bioIds.length} param. / ${cols.length} origines</span>
+        <div class="table-responsive mt-2">
+        <table class="table table-sm table-bordered mb-0 suivi-cross-table">
+        <thead><tr>
+            <th style="min-width:130px;">Paramètre</th>
+            <th class="text-center" style="width:55px;">Valeur</th>
+            <th class="text-center" style="width:50px;">Freq.</th>`;
+    cols.forEach(c => {
+        let label = c.charAt(0).toUpperCase() + c.slice(1);
+        if (label.length > 18) label = label.substring(0, 16) + '...';
+        html += `<th class="rotate text-center" title="${escapeHtml(c)}">${escapeHtml(label)}</th>`;
+    });
+    html += `</tr></thead><tbody>`;
+
+    sortedBio.forEach(({ bioId, entry, bestScore }) => {
+        let bioName = (MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
+        let val = bioValues[bioId];
+        let valStr = val > 0 ? `<b>${val}</b>` : '<span class="text-muted">—</span>';
+        let status = _bioStatusBadge(bioId, val);
+
+        // Fréquence globale la plus stricte
+        const allFreqs = [...entry.freqs, ...Object.values(entry.freqByOrigin || {})].filter(Boolean);
+        allFreqs.sort((a, b) => _getFreqScore(a) - _getFreqScore(b));
+        let bestFreq = allFreqs.length > 0 ? allFreqs[0] : '';
+        let freqLabel = _freqShortLabel(bestFreq);
+        let freqClass = _freqCssClass(bestScore);
+
+        html += `<tr>
+            <td class="bio-row-name">${escapeHtml(bioName)}</td>
+            <td class="bio-val">${valStr} ${status}</td>
+            <td class="text-center ${freqClass}" title="${escapeHtml(bestFreq)}"><b>${freqLabel}</b></td>`;
+
+        cols.forEach(col => {
+            let isMed = entry.meds.includes(col);
+            let isPatho = entry.pathos.includes(col);
+            if (isMed || isPatho) {
+                let freq = (entry.freqByOrigin || {})[col] || '';
+                let fLabel = _freqShortLabel(freq);
+                let fClass = freq ? _freqCssClass(_getFreqScore(freq)) : '';
+                let icon = isMed ? '💊' : '🏥';
+                html += `<td class="cell-check ${fClass}" title="${escapeHtml(col)}${freq ? ' — ' + escapeHtml(freq) : ''}">${icon}${fLabel ? '<br><small>' + fLabel + '</small>' : ''}</td>`;
+            } else {
+                html += `<td class="cell-check"></td>`;
+            }
+        });
+        html += `</tr>`;
+    });
+
+    html += `</tbody></table></div>
+        <div class="mt-1" style="font-size:0.7em; color:#888;">
+            💊 = médicament &nbsp; 🏥 = pathologie &nbsp;
+            <b>H</b>=hebdo <b>M</b>=mensuel <b>3M</b>=trimestriel <b>6M</b>=semestriel <b>An</b>=annuel
+        </div>
+    </div>`;
+    return html;
+}
+
+/**
+ * Rendu MODE PAR MÉDICAMENT : carte par médicament avec suivi initial, périodique, alertes
+ */
+function _renderSuiviPerMed(suiviPerMed, bioValues) {
+    if (suiviPerMed.length === 0) return '';
+    let html = '';
+    suiviPerMed.forEach(med => {
+        html += `<div class="suivi-med-card">`;
+        html += `<h6>💊 ${escapeHtml(med.dci.toUpperCase())}</h6>`;
+        if (med.initial) {
+            html += `<div class="suivi-section"><span class="suivi-label">Bilan initial :</span> ${formatSuiviList(med.initial)}</div>`;
+        }
+        if (med.periodique) {
+            html += `<div class="suivi-section"><span class="suivi-label">Suivi périodique :</span> ${formatSuiviList(med.periodique)}</div>`;
+        }
+        if (med.bioCibles.length > 0) {
+            html += `<div class="suivi-section"><span class="suivi-label">Paramètres ciblés :</span><div class="d-flex flex-wrap gap-1 mt-1">`;
+            med.bioCibles.forEach(b => {
+                let badge = _bioStatusBadge(b.id, b.val);
+                let valTxt = b.val > 0 ? b.val : '—';
+                html += `<span class="badge bg-light text-dark border" style="font-size:0.8em;">${escapeHtml(b.name)} : <b>${valTxt}</b> ${badge}</span>`;
+            });
+            html += `</div></div>`;
+        }
+        if (med.alerte) {
+            html += `<div class="suivi-section mt-1"><span class="suivi-label text-warning">Alertes cliniques :</span> ${formatSuiviList(med.alerte)}</div>`;
+        }
+        html += `</div>`;
+    });
+    return html;
+}
+
+/**
+ * Fonction interne de rendu appelée par analyserPrescription et par le toggle UI
+ */
+function _renderSuiviBio(bioPlan, suiviPerMed, bioValues, mode, addAlertFn, countsObj) {
+    const targetEl = document.getElementById('alertes-suivi');
+    if (!targetEl) return;
+
+    // Si appelé depuis le toggle (pas depuis analyserPrescription), on écrit directement dans le DOM
+    const directMode = !addAlertFn;
+    if (directMode) {
+        targetEl.innerHTML = '';
+    }
+
+    let html = '';
+    if (mode === 'croix') {
+        html = _renderSuiviCross(bioPlan, bioValues);
+    } else {
+        html = _renderSuiviPerMed(suiviPerMed, bioValues);
+    }
+
+    if (html) {
+        if (directMode) {
+            targetEl.innerHTML = html;
+        } else {
+            addAlertFn('alertes-suivi', html, 'suivi');
+        }
+    }
+
+    // Alertes cliniques (toujours affichées quel que soit le mode)
+    if (!directMode) {
+        activeMeds.forEach(m => {
+            let ref = m.db_ref; if (!ref) return;
+            if (ref.alerte_clinique) {
+                addAlertFn('alertes-suivi', `<div class="alert alert-warning border-warning shadow-sm py-2 px-2">
+                    <strong class="text-warning">⚠️ ${escapeHtml(ref.dci.toUpperCase())} — Alertes cliniques</strong>
+                    ${formatSuiviList(ref.alerte_clinique)}
+                </div>`, 'suivi');
+            }
+        });
+    } else {
+        // Mode direct (toggle) : ajouter les alertes cliniques
+        activeMeds.forEach(m => {
+            let ref = m.db_ref; if (!ref) return;
+            if (ref.alerte_clinique) {
+                targetEl.innerHTML += `<div class="alert alert-warning border-warning shadow-sm py-2 px-2">
+                    <strong class="text-warning">⚠️ ${escapeHtml(ref.dci.toUpperCase())} — Alertes cliniques</strong>
+                    ${formatSuiviList(ref.alerte_clinique)}
+                </div>`;
+            }
+        });
+    }
+
+    if (!html && !directMode) {
+        if (countsObj) countsObj.suivi = 0;
+    }
+}
+
+/**
+ * Fonction publique appelée par le toggle radio dans index.html
+ */
+window.renderSuiviBiologique = function(mode) {
+    const reg = window._analysisRegistry;
+    if (!reg || !reg.bioPlan) return;
+    _renderSuiviBio(reg.bioPlan, reg.suiviPerMed || [], reg.bioValues || {}, mode, null, null);
+};
+
 function preCalculerScores() {
     scoreACB_global = 0; scoreCIA_global = 0; maxQTLevel_global = 0;
     globalQT_CountKR = 0; globalQT_CountCR_PR = 0; infoQT_global = [];
@@ -980,7 +1216,7 @@ function analyserPrescription() {
         if (Array.isArray(ref.bio_cible)) {
             ref.bio_cible.forEach(bioId => {
                 if (!_registry._bioPlan) _registry._bioPlan = {};
-                if (!_registry._bioPlan[bioId]) _registry._bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [] };
+                if (!_registry._bioPlan[bioId]) _registry._bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
                 _registry._bioPlan[bioId].meds.push(ref.dci);
             });
         }
@@ -995,7 +1231,7 @@ function analyserPrescription() {
     });
 
     // =========================================================
-    // 5b. TABLE DE SUIVI BIOLOGIQUE UNIFIÉE (dédup multi-sources)
+    // 5b. SUIVI BIOLOGIQUE — Collecte des données + rendu dual-mode
     // =========================================================
     {
         // Initialiser le plan bio unifié
@@ -1006,12 +1242,13 @@ function analyserPrescription() {
             try {
                 const bioMonitors = getRequiredBioMonitoring(activeComorbs);
                 for (const [bioId, data] of Object.entries(bioMonitors)) {
-                    if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [] };
+                    if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
                     data.pathos.forEach((p, i) => {
                         let patName = MASTER_DB.PATHOLOGIES[p]?.NOM_STANDARD || p;
                         if (!bioPlan[bioId].pathos.includes(patName)) bioPlan[bioId].pathos.push(patName);
                         let freq = data.frequences[i] || data.frequences[0] || '';
                         if (freq && !bioPlan[bioId].freqs.includes(freq)) bioPlan[bioId].freqs.push(freq);
+                        if (freq) bioPlan[bioId].freqByOrigin[patName] = freq;
                         let src = data.sources[i] || data.sources[0] || '';
                         if (src && !bioPlan[bioId].sources.includes(src)) bioPlan[bioId].sources.push(src);
                     });
@@ -1026,88 +1263,59 @@ function analyserPrescription() {
                 if (!rule || !rule.BIOLOGIE || !rule.BIOLOGIE.SURVEILLANCE_CIBLE) return;
                 let patName = rule.NOM || patId;
                 rule.BIOLOGIE.SURVEILLANCE_CIBLE.forEach(bioId => {
-                    if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [] };
+                    if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
                     if (!bioPlan[bioId].pathos.includes(patName)) bioPlan[bioId].pathos.push(patName);
                 });
             });
         }
 
-        // Render: table unifiée par BIO_ID
-        const bioIds = Object.keys(bioPlan);
-        if (bioIds.length > 0) {
-            // Fréquence la plus stricte = la plus courte
-            const freqPriority = { 'hebdomadaire': 1, '/semaine': 1, 'bimensuel': 2, '/2sem': 2, 'mensuel': 3, '/mois': 3, '/1m': 3, '/1-3m': 4, 'trimestriel': 5, '/3m': 5, '/3 mois': 5, 'semestriel': 7, '/6m': 7, '/6 mois': 7, 'annuel': 10, '/an': 10, '/12m': 10 };
-            const getFreqScore = (f) => {
-                let fl = f.toLowerCase();
-                for (const [k, v] of Object.entries(freqPriority)) { if (fl.includes(k)) return v; }
-                return 8; // défaut entre semestriel et annuel
-            };
-
-            let rows = bioIds.map(bioId => {
-                let entry = bioPlan[bioId];
-                let bioName = (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
-                let val = bioValues[bioId];
-                let valStr = val > 0 ? val : '<span class="text-muted fst-italic">—</span>';
-                // Statut : simple heuristique
-                let statusBadge = '';
-                if (val > 0) {
-                    if (bioId === 'BIO_004' && val < 30) statusBadge = '<span class="badge bg-danger">Bas</span>';
-                    else if (bioId === 'BIO_004' && val < 60) statusBadge = '<span class="badge bg-warning text-dark">Abaissé</span>';
-                    else if (bioId === 'BIO_001' && (val < 3.5 || val > 5.0)) statusBadge = '<span class="badge bg-danger">Anormal</span>';
-                    else if (bioId === 'BIO_002' && val < 130) statusBadge = '<span class="badge bg-warning text-dark">Bas</span>';
-                    else if (bioId === 'BIO_009' && val < 12) statusBadge = '<span class="badge bg-warning text-dark">Anémie</span>';
-                    else if (bioId === 'BIO_031' && val >= 450) statusBadge = '<span class="badge bg-danger">Allongé</span>';
-                    else statusBadge = '<span class="badge bg-success">OK</span>';
-                } else {
-                    statusBadge = '<span class="badge bg-secondary">Non renseigné</span>';
+        // Enrichir freqByOrigin pour les médicaments
+        for (const [bioId, entry] of Object.entries(bioPlan)) {
+            entry.meds.forEach(medDci => {
+                if (!entry.freqByOrigin[medDci]) {
+                    // Chercher la fréquence dans le suivi_periodique du médicament
+                    const med = activeMeds.find(m => m.dci === medDci);
+                    if (med && med.db_ref && med.db_ref.suivi_periodique) {
+                        entry.freqByOrigin[medDci] = _extractFreqForBio(med.db_ref.suivi_periodique, bioId);
+                    }
                 }
-                // Fréquence la plus stricte
-                let strictFreq = '—';
-                if (entry.freqs.length > 0) {
-                    entry.freqs.sort((a, b) => getFreqScore(a) - getFreqScore(b));
-                    strictFreq = entry.freqs[0];
-                }
-                // Raisons (meds + pathos combinés)
-                let reasons = [...new Set([...entry.meds.map(m => m.charAt(0).toUpperCase() + m.slice(1)), ...entry.pathos])];
-                let srcBadges = entry.sources.map(s => `<span class="badge bg-dark me-1" style="font-size:0.55em;">${s}</span>`).join('');
-                return { bioId, html: `<tr>
-                    <td class="small fw-semibold">${bioName}</td>
-                    <td class="small text-center">${valStr} ${statusBadge}</td>
-                    <td class="small">${strictFreq}</td>
-                    <td class="small">${reasons.join(', ')} ${srcBadges}</td>
-                </tr>`, freqScore: entry.freqs.length > 0 ? getFreqScore(entry.freqs[0]) : 99 };
             });
-            // Trier: fréquence la plus stricte en premier
-            rows.sort((a, b) => a.freqScore - b.freqScore);
-
-            let tableHtml = `<div class="alert alert-info border-info shadow-sm py-2 px-2">
-                <strong class="text-info" style="font-size:1.05em;">🧪 Plan de surveillance biologique unifié</strong>
-                <span class="badge bg-info float-end">${bioIds.length} paramètres</span>
-                <table class="table table-sm table-hover mb-0 mt-2" style="font-size:0.88em;">
-                <thead><tr>
-                    <th style="width:25%;">Paramètre</th>
-                    <th style="width:20%;" class="text-center">Valeur / Statut</th>
-                    <th style="width:20%;">Fréquence</th>
-                    <th style="width:35%;">Raisons (méd/patho)</th>
-                </tr></thead>
-                <tbody>${rows.map(r => r.html).join('')}</tbody>
-                </table>
-            </div>`;
-            addAlert('alertes-suivi', tableHtml, 'suivi');
         }
 
-        // Alertes cliniques spécifiques per-drug (suivi_initial, suivi_periodique, alerte_clinique)
+        // Collecter les données suivi per-médicament (pour le mode "par médicament")
+        const suiviPerMed = [];
         activeMeds.forEach(m => {
             let ref = m.db_ref; if (!ref) return;
-            if (ref.alerte_clinique) {
-                addAlert('alertes-suivi', `<div class="alert alert-warning border-warning shadow-sm py-2 px-2">
-                    <strong class="text-warning">⚠️ ${escapeHtml(ref.dci.toUpperCase())} — Alertes cliniques</strong>
-                    ${formatSuiviList(ref.alerte_clinique)}
-                </div>`, 'suivi');
-            }
+            let hasSuivi = ref.suivi_initial || ref.suivi_periodique || ref.alerte_clinique || (Array.isArray(ref.bio_cible) && ref.bio_cible.length > 0);
+            if (!hasSuivi) return;
+            suiviPerMed.push({
+                dci: ref.dci,
+                initial: ref.suivi_initial || '',
+                periodique: ref.suivi_periodique || '',
+                alerte: ref.alerte_clinique || '',
+                bioCibles: (ref.bio_cible || []).map(id => {
+                    let name = (MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[id]) ? MASTER_DB.BIOLOGIE[id].NOM_STANDARD : id;
+                    let val = bioValues[id];
+                    return { id, name, val };
+                })
+            });
         });
 
+        // Stocker dans le registre pour re-rendu dynamique
         _registry.bioPlan = bioPlan;
+        _registry.suiviPerMed = suiviPerMed;
+        _registry.bioValues = bioValues;
+
+        // Afficher le toggle si des données existent
+        const bioIds = Object.keys(bioPlan);
+        if (bioIds.length > 0 || suiviPerMed.length > 0) {
+            const toggleEl = document.getElementById('suivi-mode-toggle');
+            if (toggleEl) toggleEl.style.display = '';
+        }
+
+        // Rendu initial (mode par défaut = tableau croisé)
+        const currentMode = document.querySelector('input[name="suiviMode"]:checked');
+        _renderSuiviBio(bioPlan, suiviPerMed, bioValues, currentMode ? currentMode.value : 'croix', addAlert, counts);
     }
 
 

@@ -55,6 +55,22 @@
         .compare-removed { background-color: rgba(220,53,69,0.1) !important; border-left: 4px solid #dc3545 !important; text-decoration: line-through; opacity: 0.7; }
         .compare-added { background-color: rgba(25,135,84,0.1) !important; border-left: 4px solid #198754 !important; }
         .alert-hidden { display: none !important; }
+        /* Tableau croisé suivi bio */
+        .suivi-cross-table { font-size: 0.78em; }
+        .suivi-cross-table th { position: sticky; top: 0; background: white; z-index: 2; }
+        .suivi-cross-table thead th.rotate { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); white-space: nowrap; padding: 6px 4px; max-width: 38px; vertical-align: bottom; font-weight: 500; }
+        .suivi-cross-table td.cell-check { text-align: center; padding: 2px; min-width: 34px; }
+        .suivi-cross-table td.cell-check.freq-hebdo { background: rgba(220,53,69,0.12); }
+        .suivi-cross-table td.cell-check.freq-mensuel { background: rgba(253,126,20,0.10); }
+        .suivi-cross-table td.cell-check.freq-trimestriel { background: rgba(13,202,240,0.10); }
+        .suivi-cross-table td.cell-check.freq-annuel { background: rgba(108,117,125,0.06); }
+        .suivi-cross-table .bio-row-name { white-space: nowrap; font-weight: 600; min-width: 120px; }
+        .suivi-cross-table .bio-val { text-align: center; min-width: 60px; }
+        /* Suivi par médicament */
+        .suivi-med-card { border-left: 4px solid #0dcaf0; background: #f8f9fa; border-radius: 6px; padding: 10px 14px; margin-bottom: 10px; }
+        .suivi-med-card h6 { color: #0d6efd; margin-bottom: 6px; }
+        .suivi-med-card .suivi-section { margin-bottom: 4px; }
+        .suivi-med-card .suivi-label { font-weight: 600; font-size: 0.82em; color: #495057; }
         /* Score tooltips */
         .score-tooltip { position: relative; cursor: help; }
         .score-tooltip .score-tip-text { visibility: hidden; width: 280px; background-color: #333; color: #fff; text-align: left; border-radius: 6px; padding: 8px 10px; position: absolute; z-index: 1001; bottom: 125%; left: 0; font-size: 0.75rem; line-height: 1.4; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
@@ -302,7 +318,17 @@
                         <div class="tab-pane fade" id="tab-ansm" role="tabpanel"><div id="alertes-ansm" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
                         <div class="tab-pane fade" id="tab-bio" role="tabpanel"><div id="alertes-bio" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
                         <div class="tab-pane fade" id="tab-usage" role="tabpanel"><div id="alertes-usage" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
-                        <div class="tab-pane fade" id="tab-suivi" role="tabpanel"><div id="alertes-suivi" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-suivi" role="tabpanel">
+                            <div id="suivi-mode-toggle" class="mb-2" style="display:none;">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Mode d'affichage suivi">
+                                    <input type="radio" class="btn-check" name="suiviMode" id="suiviModeCroix" value="croix" checked>
+                                    <label class="btn btn-outline-info" for="suiviModeCroix">Tableau croisé</label>
+                                    <input type="radio" class="btn-check" name="suiviMode" id="suiviModeMed" value="med">
+                                    <label class="btn btn-outline-info" for="suiviModeMed">Par médicament</label>
+                                </div>
+                            </div>
+                            <div id="alertes-suivi" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div>
+                        </div>
                         <div class="tab-pane fade" id="tab-guidelines" role="tabpanel"><div id="alertes-guidelines" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
                     </div>
                 </div>
@@ -529,6 +555,12 @@
                 const banner = document.getElementById('session-restore-banner');
                 if (banner) banner.style.display = 'block';
             }
+            // Toggle mode suivi biologique
+            document.querySelectorAll('input[name="suiviMode"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (typeof renderSuiviBiologique === 'function') renderSuiviBiologique(this.value);
+                });
+            });
         });
     </script>
 </body>
