@@ -86,7 +86,8 @@ function _freqShortLabel(f) {
     if (fl.includes('trimestriel') || fl.includes('/3m') || fl.includes('/3 mois')) return '3M';
     if (fl.includes('semestriel') || fl.includes('/6m') || fl.includes('/6 mois')) return '6M';
     if (fl.includes('annuel') || fl.includes('/an') || fl.includes('/12m')) return 'An';
-    return f.length > 6 ? f.substring(0, 6) : f;
+    // Pas de troncature — afficher le texte complet si non reconnu
+    return f;
 }
 function _extractFreqForBio(suiviStr, bioId) {
     if (!suiviStr) return '';
@@ -95,8 +96,15 @@ function _extractFreqForBio(suiviStr, bioId) {
     let bioName = (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD.toLowerCase() : '';
     for (const item of items) {
         let il = item.toLowerCase();
-        if (bioName && il.includes(bioName.substring(0, 5))) {
-            // Extraire la parenthèse fréquence
+        // Matcher sur au moins 4 caractères du nom bio (accents inclus)
+        let matched = false;
+        if (bioName) {
+            // Essayer longueurs décroissantes (8, 6, 4 chars) pour match progressif
+            for (let len = Math.min(8, bioName.length); len >= 4; len--) {
+                if (il.includes(bioName.substring(0, len))) { matched = true; break; }
+            }
+        }
+        if (matched) {
             let match = item.match(/\(([^)]+)\)/);
             if (match) return match[1];
         }
@@ -150,7 +158,6 @@ function _renderSuiviCross(bioPlan, bioValues) {
             <th class="text-center" style="width:50px;">Freq.</th>`;
     cols.forEach(c => {
         let label = c.charAt(0).toUpperCase() + c.slice(1);
-        if (label.length > 18) label = label.substring(0, 16) + '...';
         html += `<th class="rotate text-center" title="${escapeHtml(c)}">${escapeHtml(label)}</th>`;
     });
     html += `</tr></thead><tbody>`;
