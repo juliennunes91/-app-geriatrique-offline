@@ -355,7 +355,8 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'chkAvc': 'PAT_008', 'chkAtcdUlcere': 'PAT_021', 'chkDialyse': 'PAT_029',
         'chkPalliatif': 'PAT_030', 'chkDepression': 'PAT_032', 'chkGlaucome': 'PAT_033',
         'chkFoie': 'PAT_034', 'chkBrady': 'PAT_035', 'chkTvp': 'PAT_036',
-        'chkStent': 'PAT_004', 'chkScaAigu': 'PAT_004', 'chkHtaNonControlee': 'PAT_005'
+        'chkStent': 'PAT_004', 'chkScaAigu': 'PAT_004', 'chkHtaNonControlee': 'PAT_005',
+        'chkIncontinence': 'PAT_039', 'chkDysphagie': 'PAT_038'
     };
     for (const [chkId, patCode] of Object.entries(checkboxPatMap)) {
         if (isChecked(chkId) && !activeComorbs.includes(patCode)) {

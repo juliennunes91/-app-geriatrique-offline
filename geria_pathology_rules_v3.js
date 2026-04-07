@@ -2638,6 +2638,140 @@ const PATHOLOGY_RULES_DB = {
                 { bio: "BIO_030", frequence: "INR 2x/sem puis mensuel si AVK" }
             ]
         }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PAT_037 → Sarcopénie
+    // ═══════════════════════════════════════════════════════════════════════════
+    "PAT_037": {
+        ID: "PAT_037",
+        NOM: "Sarcopénie",
+        REFERENCE: "EWGSOP2 2019 | ICFSR 2022 | HAS Dénutrition 2021",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Exercice résistance": "EWGSOP2 2019 (niveau A — seule intervention prouvée)",
+                "Protéines": "ESPEN 2019 (1.0-1.2 g/kg/j, 1.2-1.5 si dénutri)",
+                "Vitamine D": "EWGSOP2 2019 (supplémentation si carence)"
+            },
+            "EVITER": {
+                "Corticoïdes": "EWGSOP2 2019 (catabolisme protéique)",
+                "Statines": "ICFSR 2022 (myopathie — réévaluer bénéfice/risque)"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "La sarcopénie est un syndrome gériatrique associé à un risque de chutes, fractures, dépendance et mortalité. L'exercice physique adapté (résistance) est la seule intervention ayant un niveau de preuve élevé." }
+            ],
+            INITIER: [
+                { classe: "Exercice physique en résistance", indication: "Programme supervisé 2-3x/sem, adaptation gériatrique. Seule intervention prouvée (niveau A).", niveau_preuve: "A", ref: "EWGSOP2 2019" },
+                { classe: "Apports protéiques optimisés", indication: "1.0-1.2 g/kg/j (1.2-1.5 si dénutrition). CNO hyperprotidiques si apports PO insuffisants.", niveau_preuve: "B", ref: "ESPEN 2019" },
+                { classe: "Vitamine D (cholécalciférol)", indication: "800-1000 UI/j si carence documentée ou âge > 70 ans.", niveau_preuve: "B", ref: "EWGSOP2 2019" },
+                { classe: "Leucine / HMB", indication: "Supplémentation en leucine (3g/repas) ou HMB 3g/j — bénéfice modeste sur masse musculaire.", niveau_preuve: "C", ref: "ICFSR 2022" }
+            ],
+            EVITER: [
+                { classe: "Corticoïdes systémiques au long cours", raison: "Catabolisme protéique musculaire, aggravation sarcopénie", gravite: "DECONSEILLE", ref_stopp: "EWGSOP2" },
+                { classe: "Repos strict prolongé", raison: "Perte de 1-3% de masse musculaire par jour d'alitement", gravite: "PRECAUTION" },
+                { classe: "Restriction calorique/protéique", raison: "Aggrave la sarcopénie — maintenir les apports même si surpoids", gravite: "PRECAUTION" }
+            ]
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_035", "BIO_023", "BIO_018", "BIO_024"],
+            REGLES: [
+                { bio: "BIO_035", frequence: "Albumine trimestrielle (marqueur nutritionnel lent)", syndrome: "SYND_033" },
+                { bio: "BIO_023", frequence: "Vitamine D semestrielle", syndrome: "SYND_025" },
+                { bio: "BIO_018", frequence: "CPK si myalgies sous statine" },
+                { bio: "BIO_024", frequence: "CRP (la sarcopénie s'aggrave en inflammation)" }
+            ]
+        }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PAT_038 → Dysphagie / Troubles de déglutition
+    // ═══════════════════════════════════════════════════════════════════════════
+    "PAT_038": {
+        ID: "PAT_038",
+        NOM: "Dysphagie / Troubles de déglutition",
+        REFERENCE: "ESSD 2021 | ESPEN Dysphagia 2022 | HAS Fausses routes 2020",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Adaptation textures": "ESSD/IDDSI 2019 (niveau B)",
+                "Rééducation orthophonique": "ESSD 2021 (niveau B)"
+            },
+            "EVITER": {
+                "Formes sèches/gélules volumineuses": "ESPEN Dysphagia 2022",
+                "Sédatifs": "HAS 2020 (aggravation réflexe déglutition)"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "La dysphagie en gériatrie augmente le risque de pneumopathie d'inhalation, dénutrition et déshydratation. Adapter les formes galéniques et textures alimentaires. Évaluation orthophonique systématique." }
+            ],
+            INITIER: [
+                { classe: "Évaluation orthophonique", indication: "Bilan de déglutition systématique (test de l'eau). Rééducation si possible.", niveau_preuve: "B", ref: "ESSD 2021" },
+                { classe: "Adaptation des textures (IDDSI)", indication: "Alimentation texture modifiée (mixé, haché). Eau gélifiée si fausses routes aux liquides.", ref: "IDDSI 2019" },
+                { classe: "CNO si dénutrition associée", indication: "Texture adaptée (crèmes enrichies), fractionnement des repas.", ref: "ESPEN 2022" },
+                { classe: "Adaptation galénique des médicaments", indication: "Formes liquides, orodispersibles, ou écrasables. Vérifier la liste des médicaments écrasables.", ref: "SFPC 2023" }
+            ],
+            EVITER: [
+                { classe: "Antipsychotiques", raison: "Altèrent le réflexe de déglutition — risque de pneumopathie d'inhalation", gravite: "DECONSEILLE sauf indication psychiatrique majeure", ref_stopp: "STOPP v3" },
+                { classe: "Benzodiazépines / Sédatifs", raison: "Sédation → diminution des réflexes protecteurs des voies aériennes", gravite: "PRUDENCE" },
+                { classe: "Anticholinergiques", raison: "Sécheresse buccale aggravant la dysphagie, xérostomie", gravite: "PRUDENCE" },
+                { classe: "Formes LP / gastro-résistantes non écrasables", raison: "Ne pas écraser les formes à libération prolongée — risque de dose-dumping", gravite: "PRECAUTION" }
+            ]
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_035", "BIO_024", "BIO_002", "BIO_009"],
+            REGLES: [
+                { bio: "BIO_035", frequence: "Albumine mensuelle (risque dénutrition)", syndrome: "SYND_033" },
+                { bio: "BIO_024", frequence: "CRP si suspicion pneumopathie d'inhalation" },
+                { bio: "BIO_002", frequence: "Natrémie (risque déshydratation)" },
+                { bio: "BIO_009", frequence: "NFS (anémie carentielle si dénutrition)" }
+            ]
+        }
+    },
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PAT_039 → Incontinence urinaire
+    // ═══════════════════════════════════════════════════════════════════════════
+    "PAT_039": {
+        ID: "PAT_039",
+        NOM: "Incontinence urinaire",
+        REFERENCE: "ICI/ICS 2023 | EAU Urinary Incontinence 2024 | NICE UI 2019 | Beers 2023",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Rééducation périnéale": "EAU 2024 (1ère intention, niveau A)",
+                "Mirabégron": "EAU 2024 (si anticholinergiques CI)"
+            },
+            "EVITER": {
+                "Oxybutynine": "Beers 2023 + STOPP v3 (ACB 3, passage BHE élevé)",
+                "Diurétiques de l'anse": "STOPP v3 B10 (aggravation incontinence)"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "L'incontinence urinaire chez le sujet âgé est multifactorielle. Toujours rechercher les causes iatrogènes (diurétiques, alpha-bloquants, BZD, ISRS). Les mesures non pharmacologiques sont la 1ère ligne de traitement." }
+            ],
+            INITIER: [
+                { classe: "Rééducation périnéale (kinésithérapie)", indication: "1ère intention dans l'incontinence d'effort et mixte. Efficace chez la femme et l'homme.", niveau_preuve: "A", ref: "EAU 2024" },
+                { classe: "Mictions programmées (prompted voiding)", indication: "Efficace dans l'incontinence fonctionnelle du sujet âgé dépendant.", niveau_preuve: "B", ref: "ICI 2023" },
+                { classe: "Mirabégron (agoniste β3)", indication: "Alternative aux anticholinergiques si vessie hyperactive. Pas de charge anticholinergique. CI si HTA non contrôlée.", niveau_preuve: "A", ref: "EAU 2024", dci_exemples: ["mirabegron"] },
+                { classe: "Duloxétine (si incontinence d'effort)", indication: "Efficacité modeste, EI fréquents (nausées). Option si chirurgie refusée ou CI.", niveau_preuve: "B", ref: "EAU 2024", condition: "Incontinence d'effort isolée" }
+            ],
+            EVITER: [
+                { classe: "Oxybutynine", raison: "ACB 3, passage BHE élevé → confusion, déclin cognitif chez le sujet âgé. PIM absolu en gériatrie.", gravite: "CONTRE-INDICATION gériatrique", ref_stopp: "STOPP H2 / Beers 2023" },
+                { classe: "Solifénacine, Toltérodine, Fésotérodine", raison: "Anticholinergiques — charge cognitive, sécheresse buccale, constipation, rétention. Préférer mirabégron.", gravite: "DECONSEILLE si alternatives disponibles", ref_stopp: "Beers 2023" },
+                { classe: "Diurétiques de l'anse (furosémide, bumétanide) pour HTA", raison: "Aggravent l'incontinence par augmentation du volume urinaire. Switch vers thiazidique si possible.", gravite: "DECONSEILLE si HTA seule indication", ref_stopp: "STOPP v3 B10" },
+                { classe: "Alpha-bloquants (si hypotension associée)", raison: "Tamsulosine/alfuzosine : hypotension orthostatique + aggravation incontinence d'effort chez la femme", gravite: "PRUDENCE" }
+            ]
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_003", "BIO_004", "BIO_002"],
+            REGLES: [
+                { bio: "BIO_003", frequence: "Créatinine (recherche obstacle si rétention)", syndrome: "SYND_015" },
+                { bio: "BIO_004", frequence: "DFG (adapter diurétiques)" },
+                { bio: "BIO_002", frequence: "Natrémie (si diurétiques associés)" }
+            ]
+        }
     }
 };
 
@@ -2677,7 +2811,10 @@ const PATHO_SYNDROME_MAP = {
     "PAT_033": [],
     "PAT_034": ["SYND_001", "SYND_033"],
     "PAT_035": ["SYND_003"],
-    "PAT_036": ["SYND_027", "SYND_030"]
+    "PAT_036": ["SYND_027", "SYND_030"],
+    "PAT_037": ["SYND_033", "SYND_025"],
+    "PAT_038": ["SYND_033"],
+    "PAT_039": []
 };
 
 const PATHO_MED_INTERDITS = {
@@ -2878,6 +3015,20 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
     "PAT_036": [
         { terme: "ains", raison: "Risque hémorragique sous anticoagulation", gravite: "CONTRE-INDICATION" },
         { terme: "tamoxifene", raison: "Risque thrombogène — CI si ATCD MTEV", gravite: "CONTRE-INDICATION" }
+    ],
+    "PAT_037": [
+        { terme: "corticoide", raison: "Catabolisme protéique musculaire — aggravation sarcopénie", gravite: "DECONSEILLE au long cours" }
+    ],
+    "PAT_038": [
+        { terme: "antipsychotique", raison: "Altère le réflexe de déglutition — pneumopathie d'inhalation", gravite: "DECONSEILLE" },
+        { terme: "benzodiazepine", raison: "Sédation → diminution réflexes protecteurs voies aériennes", gravite: "PRUDENCE" }
+    ],
+    "PAT_039": [
+        { terme: "oxybutynine", raison: "ACB 3, passage BHE élevé — confusion, déclin cognitif chez le sujet âgé (Beers 2023, STOPP H2)", gravite: "CONTRE-INDICATION gériatrique" },
+        { terme: "solifenacine", raison: "Anticholinergique — charge cognitive, sécheresse, constipation. Préférer mirabégron.", gravite: "DECONSEILLE" },
+        { terme: "tolterodine", raison: "Anticholinergique — préférer mirabégron chez le sujet âgé", gravite: "DECONSEILLE" },
+        { terme: "fesoterodine", raison: "Anticholinergique — charge cognitive. Préférer mirabégron.", gravite: "DECONSEILLE" },
+        { terme: "furosemide", condition: "si HTA seule indication", raison: "Aggrave l'incontinence par polyurie — switch vers thiazidique si possible", gravite: "DECONSEILLE" }
     ]
 };
 
