@@ -198,6 +198,12 @@
                             <div class="col-3"><label class="small text-muted">D-Dimères <span class="fw-normal" style="font-size:0.7em;">(µg/L)</span></label><input type="number" id="bioDdim" class="form-control form-control-sm" placeholder="<500"></div>
                             <div class="col-3"><label class="small text-muted">Troponine <span class="fw-normal" style="font-size:0.7em;">(ng/L)</span></label><input type="number" step="0.1" id="bioTropo" class="form-control form-control-sm" placeholder="<14"></div>
                             <div class="col-3"><label class="small text-muted">Temp. <span class="fw-normal" style="font-size:0.7em;">(°C)</span></label><input type="number" step="0.1" id="bioTemp" class="form-control form-control-sm" placeholder="36.5-37.5"></div>
+
+                            <h6 class="small fw-bold text-danger border-bottom pb-1 mt-3 mb-2">Biomarqueurs complémentaires</h6>
+                            <div class="col-3"><label class="small text-muted">TP <span class="fw-normal" style="font-size:0.7em;">(%)</span></label><input type="number" id="bioTp" class="form-control form-control-sm" placeholder="70-100"></div>
+                            <div class="col-3"><label class="small text-muted">Chlore <span class="fw-normal" style="font-size:0.7em;">(mmol/L)</span></label><input type="number" id="bioChlore" class="form-control form-control-sm" placeholder="98-106"></div>
+                            <div class="col-3"><label class="small text-muted">Osmolalité <span class="fw-normal" style="font-size:0.7em;">(mOsm/kg)</span></label><input type="number" id="bioOsm" class="form-control form-control-sm" placeholder="280-295"></div>
+                            <div class="col-3"><label class="small text-muted">Préalbumine <span class="fw-normal" style="font-size:0.7em;">(g/L)</span></label><input type="number" step="0.01" id="bioPrealb" class="form-control form-control-sm" placeholder="0.20-0.40"></div>
                         </div>
                     </details>
 
@@ -206,6 +212,45 @@
                         <div class="row g-2 mt-2">
                             <div class="col-6"><label class="small text-muted fw-bold">Score Fragilité (CFS)</label><select id="scoreCFS" class="form-select form-select-sm" onchange="checkFrail()"><option value="0">Non évalué</option><option value="1">1 - Très en forme</option><option value="2">2 - En forme</option><option value="3">3 - Gère bien</option><option value="4">4 - Vulnérable</option><option value="5">5 - Légèrement fragile</option><option value="6">6 - Modérément fragile</option><option value="7">7 - Sévèrement fragile</option><option value="8">8 - Très sév. fragile</option><option value="9">9 - Phase terminale</option></select></div>
                             <div class="col-6"><label class="small text-muted fw-bold">QTc de base (ms)</label><input type="number" id="bioQtc" class="form-control form-control-sm" placeholder="ex: 430"></div>
+
+                            <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Screenings Gériatriques Standardisés</h6>
+                            <div class="col-12 mb-2">
+                                <label class="small text-muted fw-bold">Critères de Fried (fragilité physique)</label>
+                                <div class="row g-1 ps-2">
+                                    <div class="col-6"><div class="form-check"><input type="checkbox" class="form-check-input" id="friedPerte"><label class="form-check-label small">Perte de poids involontaire (>4.5 kg/an)</label></div></div>
+                                    <div class="col-6"><div class="form-check"><input type="checkbox" class="form-check-input" id="friedEpuisement"><label class="form-check-label small">Épuisement / Fatigue subjective</label></div></div>
+                                    <div class="col-6"><div class="form-check"><input type="checkbox" class="form-check-input" id="friedLenteur"><label class="form-check-label small">Lenteur de la marche</label></div></div>
+                                    <div class="col-6"><div class="form-check"><input type="checkbox" class="form-check-input" id="friedFaiblesse"><label class="form-check-label small">Faiblesse musculaire (grip)</label></div></div>
+                                    <div class="col-6"><div class="form-check"><input type="checkbox" class="form-check-input" id="friedActivite"><label class="form-check-label small">Activité physique réduite</label></div></div>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <label class="small text-muted fw-bold">Score Morse (risque de chute)</label>
+                                <select id="scoreMorse" class="form-select form-select-sm">
+                                    <option value="0">Non évalué</option>
+                                    <option value="1">0-24 : Risque faible</option>
+                                    <option value="2">25-44 : Risque modéré</option>
+                                    <option value="3">≥45 : Risque élevé</option>
+                                </select>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <label class="small text-muted fw-bold">MNA-SF (nutrition)</label>
+                                <select id="scoreMna" class="form-select form-select-sm">
+                                    <option value="0">Non évalué</option>
+                                    <option value="12">12-14 : Normal</option>
+                                    <option value="9">8-11 : Risque de dénutrition</option>
+                                    <option value="5">0-7 : Dénutri</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="small text-muted fw-bold">CAM — Confusion Assessment Method (délirium)</label>
+                                <div class="row g-1 ps-2">
+                                    <div class="col-6"><div class="form-check"><input type="checkbox" class="form-check-input" id="camAigu"><label class="form-check-label small">1. Début aigu / fluctuation</label></div></div>
+                                    <div class="col-6"><div class="form-check"><input type="checkbox" class="form-check-input" id="camInattention"><label class="form-check-label small">2. Inattention</label></div></div>
+                                    <div class="col-6"><div class="form-check"><input type="checkbox" class="form-check-input" id="camDesorganise"><label class="form-check-label small">3. Pensée désorganisée</label></div></div>
+                                    <div class="col-6"><div class="form-check"><input type="checkbox" class="form-check-input" id="camConscience"><label class="form-check-label small">4. Altération du niveau de conscience</label></div></div>
+                                </div>
+                            </div>
 
                             <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Score de Child-Pugh (si hépatopathie)</h6>
                             <div class="col-12 mb-2"><label class="small text-muted fw-bold">Classe Child-Pugh (saisie directe si bio indisponible)</label><select id="cpManual" class="form-select form-select-sm" onchange="toggleCpDetails(this.value)"><option value="0">— Calcul automatique (remplir les items ci-dessous) —</option><option value="A">Child-Pugh A (5-6 pts) — Compensée</option><option value="B">Child-Pugh B (7-9 pts) — Modérée</option><option value="C">Child-Pugh C (10-15 pts) — Sévère / Décompensée</option></select></div>

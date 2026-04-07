@@ -345,7 +345,9 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'BIO_035': getVal('bioAlbumSg'), 'BIO_037': getVal('bioLact'),
         'BIO_CST': getVal('bioCst'), 'BIO_PHOS': getVal('bioPhos'),
         'BIO_TEMP': getVal('bioTemp'),
-        'BIO_T4': getVal('bioT4'), 'BIO_T3': getVal('bioT3')
+        'BIO_T4': getVal('bioT4'), 'BIO_T3': getVal('bioT3'),
+        'BIO_TP': getVal('bioTp'), 'BIO_CL': getVal('bioChlore'),
+        'BIO_OSM': getVal('bioOsm'), 'BIO_PREALB': getVal('bioPrealb')
     };
 
     // Auto-injection des PAT codes depuis les checkboxes cliniques
@@ -413,6 +415,9 @@ function _computeAnalysisHash() {
         getVal('bioTsh'), getVal('bioBnp'), getVal('bioLdl'),
         getVal('bioCrp'), getVal('bioInr'), getVal('bioQtc'),
         getVal('scoreCFS'), getStr('cpManual'),
+        getVal('scoreMorse'), getVal('scoreMna'),
+        isChecked('friedPerte'), isChecked('friedEpuisement'), isChecked('friedLenteur'), isChecked('friedFaiblesse'), isChecked('friedActivite'),
+        isChecked('camAigu'), isChecked('camInattention'), isChecked('camDesorganise'), isChecked('camConscience'),
         isChecked('patientFragile'),
         activeComorbs.slice().sort().join(','),
         activeMeds.map(m => m.dci).sort().join(','),
@@ -423,7 +428,10 @@ function _computeAnalysisHash() {
      'chkBrady','chkHtaNonControlee','chkArret','chkScaAigu','chkLqts','chkDialyse',
      'chkFoie','chkSepsis','chkPalliatif','chkAtcdUlcere','chkChutes','chkDepression',
      'chkIncontinence','chkHbp','chkConstipation','chkDysphagie','chkGlaucome',
-     'chkStenoseAortique','chkAspirineForte'].forEach(id => parts.push(isChecked(id)));
+     'chkStenoseAortique','chkAspirineForte',
+     'friedPerte','friedEpuisement','friedLenteur','friedFaiblesse','friedActivite',
+     'camAigu','camInattention','camDesorganise','camConscience'].forEach(id => parts.push(isChecked(id)));
+    ['scoreMorse','scoreMna','bioTp','bioChlore','bioOsm','bioPrealb'].forEach(id => parts.push(getVal(id)));
     return parts.join('|');
 }
 
@@ -640,6 +648,125 @@ function analyserPrescription() {
             <strong class="text-${scoreCIA_global >= 3 ? 'danger' : (scoreCIA_global >= 1 ? 'warning' : 'success')}">Score CIA : ${scoreCIA_global}</strong> <em class="text-muted small">— Charge sédative/cognitive cumulée</em><br>
             <small class="text-muted">${ciaInterp}${ciaMeds.length > 0 ? ' — ' + ciaMeds.join(', ') : ''}</small>
         </div>`);
+
+        // =========================================================
+        // SCREENINGS GÉRIATRIQUES STANDARDISÉS
+        // =========================================================
+
+        // --- Score de Fragilité CFS (déjà saisi) — interprétation enrichie ---
+        {
+            const cfs = getVal('scoreCFS');
+            if (cfs >= 1) {
+                let cfsColor = cfs <= 3 ? 'success' : (cfs <= 5 ? 'warning' : 'danger');
+                let cfsLabels = { 1: 'Très en forme', 2: 'En forme', 3: 'Gère bien', 4: 'Vulnérable', 5: 'Légèrement fragile', 6: 'Modérément fragile', 7: 'Sévèrement fragile', 8: 'Très sévèrement fragile', 9: 'Phase terminale' };
+                let cfsConc = cfs <= 3 ? 'Patient robuste — pas de restriction thérapeutique liée à la fragilité.' :
+                    (cfs === 4 ? 'Vulnérable — surveillance rapprochée, prévention des décompensations.' :
+                    (cfs <= 6 ? 'Fragile — adapter les cibles thérapeutiques (HbA1c, PA), déprescrire si bénéfice incertain, éviter les médicaments à forte charge anticholinergique.' :
+                    (cfs <= 8 ? 'Très fragile — approche palliative à discuter, STOPPFrail applicable, objectif confort.' :
+                    'Phase terminale — seuls les traitements de confort sont justifiés.')));
+                addAlert('alertes-scores', `<div class="alert alert-light border border-${cfsColor} mb-2 shadow-sm">
+                    <strong class="text-${cfsColor}">CFS : ${cfs}/9 — ${cfsLabels[cfs] || ''}</strong> <em class="text-muted small">— Clinical Frailty Scale (Rockwood 2005)</em>
+                    <br><small class="fw-bold text-${cfsColor}">${cfsConc}</small>
+                </div>`);
+            }
+        }
+
+        // --- Critères de Fried (fragilité physique) ---
+        {
+            const friedItems = ['friedPerte', 'friedEpuisement', 'friedLenteur', 'friedFaiblesse', 'friedActivite'];
+            const friedLabels = ['Perte de poids', 'Épuisement', 'Lenteur', 'Faiblesse', 'Sédentarité'];
+            const friedCount = friedItems.filter(id => isChecked(id)).length;
+            const friedPresent = friedItems.map((id, i) => isChecked(id) ? friedLabels[i] : null).filter(Boolean);
+            if (friedCount > 0) {
+                let friedColor = friedCount >= 3 ? 'danger' : (friedCount >= 1 ? 'warning' : 'success');
+                let friedConc = friedCount >= 3 ? 'Fragile (≥3 critères) — risque accru de chutes, hospitalisation et mortalité. Déprescription recommandée.'
+                    : (friedCount >= 1 ? 'Pré-fragile (1-2 critères) — intervention préventive recommandée (exercice, nutrition).' : '');
+                addAlert('alertes-scores', `<div class="alert alert-light border border-${friedColor} mb-2 shadow-sm">
+                    <strong class="text-${friedColor}">Fried : ${friedCount}/5 critère(s)</strong> <em class="text-muted small">— Phénotype de fragilité (Fried 2001)</em>
+                    <br><small class="text-muted">${friedPresent.join(', ')}</small>
+                    <br><small class="fw-bold text-${friedColor}">${friedConc}</small>
+                </div>`);
+            }
+        }
+
+        // --- Score Morse (risque de chute) ---
+        {
+            const morseLevel = getVal('scoreMorse');
+            if (morseLevel > 0) {
+                const morseLabels = { 1: 'Faible (0-24)', 2: 'Modéré (25-44)', 3: 'Élevé (≥45)' };
+                const morseColors = { 1: 'success', 2: 'warning', 3: 'danger' };
+                const morseConc = {
+                    1: 'Prévention standard. Pas de mesure spécifique.',
+                    2: 'Prévention ciblée : chaussures adaptées, éclairage, révision médicamenteuse (psychotropes, antihypertenseurs).',
+                    3: 'Risque élevé — programme de prévention des chutes obligatoire : arrêt BZD si possible, réduction antihypertenseurs, kinésithérapie, évaluation podologique, vitamine D.'
+                };
+                // Alerte médicaments à risque de chute
+                let fallDrugs = [];
+                const fallClasses = ['benzodiazepine', 'hypnotique', 'neuroleptique', 'antipsychotique', 'opioid', 'antidepresseur', 'antihistaminique'];
+                activeMeds.forEach(m => {
+                    fallClasses.forEach(cls => {
+                        if (matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), cls)) {
+                            if (!fallDrugs.includes(m.dci.toUpperCase())) fallDrugs.push(m.dci.toUpperCase());
+                        }
+                    });
+                });
+                let fallDrugHtml = fallDrugs.length > 0 && morseLevel >= 2 ? `<br><span class="text-danger small">Médicaments à risque de chute : <b>${fallDrugs.join(', ')}</b></span>` : '';
+                addAlert('alertes-scores', `<div class="alert alert-light border border-${morseColors[morseLevel]} mb-2 shadow-sm">
+                    <strong class="text-${morseColors[morseLevel]}">Morse Fall Scale : ${morseLabels[morseLevel]}</strong> <em class="text-muted small">— Risque de chute en milieu hospitalier</em>
+                    <br><small class="fw-bold text-${morseColors[morseLevel]}">${morseConc[morseLevel]}</small>${fallDrugHtml}
+                </div>`);
+            }
+        }
+
+        // --- CAM (Confusion Assessment Method) — Screening Délirium ---
+        {
+            const camAigu = isChecked('camAigu');
+            const camInattention = isChecked('camInattention');
+            const camDesorganise = isChecked('camDesorganise');
+            const camConscience = isChecked('camConscience');
+            const camPositif = camAigu && camInattention && (camDesorganise || camConscience);
+            const camAny = camAigu || camInattention || camDesorganise || camConscience;
+            if (camAny) {
+                let camColor = camPositif ? 'danger' : 'warning';
+                let camResult = camPositif ? 'CAM POSITIF — Délirium probable' : 'CAM incomplet — critères insuffisants pour le diagnostic';
+                let camConc = camPositif
+                    ? 'Rechercher et traiter la cause (iatrogénie, infection, rétention, constipation, douleur, déshydratation). Arrêter immédiatement les médicaments anticholinergiques, BZD, opioïdes si possible.'
+                    : 'Surveillance rapprochée. Réévaluer dans les 24h.';
+                // Médicaments déliriogènes
+                let delDrugs = [];
+                activeMeds.forEach(m => {
+                    let ref = m.db_ref;
+                    if (ref && (parseFloat(ref.acb) >= 2 || ['benzodiazepine','opioid','anticholinergique','corticoide'].some(cls => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), cls)))) {
+                        delDrugs.push(m.dci.toUpperCase());
+                    }
+                });
+                let delHtml = delDrugs.length > 0 ? `<br><span class="text-danger small fw-bold">Médicaments déliriogènes à arrêter en priorité : ${delDrugs.join(', ')}</span>` : '';
+                addAlert('alertes-scores', `<div class="alert alert-${camColor} shadow-sm">
+                    <strong>${camPositif ? '🚨' : '⚠️'} ${camResult}</strong> <em class="text-muted small">— Confusion Assessment Method (Inouye 1990)</em>
+                    <br><small class="text-muted">Critères : ${[camAigu ? 'Début aigu ✓' : '', camInattention ? 'Inattention ✓' : '', camDesorganise ? 'Pensée désorganisée ✓' : '', camConscience ? 'Altération conscience ✓' : ''].filter(Boolean).join(' | ')}</small>
+                    <br><small class="fw-bold">${camConc}</small>${delHtml}
+                </div>`);
+            }
+        }
+
+        // --- MNA-SF (Mini Nutritional Assessment - Short Form) ---
+        {
+            const mnaScore = getVal('scoreMna');
+            if (mnaScore > 0) {
+                let mnaColor = mnaScore >= 12 ? 'success' : (mnaScore >= 8 ? 'warning' : 'danger');
+                let mnaLabel = mnaScore >= 12 ? 'État nutritionnel normal (12-14)' : (mnaScore >= 8 ? 'Risque de dénutrition (8-11)' : 'Dénutri (0-7)');
+                let mnaConc = mnaScore >= 12 ? 'Pas d\'intervention nutritionnelle spécifique nécessaire.'
+                    : (mnaScore >= 8 ? 'Compléments nutritionnels oraux (CNO), enrichissement des repas, réévaluation à 1 mois. Doser albumine et préalbumine.'
+                    : 'Dénutrition avérée — CNO systématiques, avis diététique, envisager nutrition entérale si échec PO. Adapter les posologies des médicaments à forte liaison albumine.');
+                let albHtml = '';
+                if (bioValues['BIO_035'] > 0 && bioValues['BIO_035'] < 35) albHtml = `<br><span class="text-warning small">Albumine ${bioValues['BIO_035']} g/L — confirme la dénutrition.</span>`;
+                if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.20) albHtml += `<br><span class="text-danger small">Préalbumine ${bioValues['BIO_PREALB']} g/L — dénutrition aiguë.</span>`;
+                addAlert('alertes-scores', `<div class="alert alert-light border border-${mnaColor} mb-2 shadow-sm">
+                    <strong class="text-${mnaColor}">MNA-SF : ${mnaLabel}</strong> <em class="text-muted small">— Mini Nutritional Assessment (Guigoz 2002)</em>
+                    <br><small class="fw-bold text-${mnaColor}">${mnaConc}</small>${albHtml}
+                </div>`);
+            }
+        }
 
         // Score de Child-Pugh (saisie manuelle OU calcul automatique)
         let cpManualEl = document.getElementById('cpManual');
@@ -949,6 +1076,48 @@ function analyserPrescription() {
     // --- SYND_042 : Hypernatrémie / Déshydratation Intracellulaire (Na > 145) ---
     if (bioValues['BIO_002'] > 145) checkBioSyndrome('SYND_042', true);
 
+    // --- TP bas (< 50%) — Risque hémorragique ---
+    if (bioValues['BIO_TP'] > 0 && bioValues['BIO_TP'] < 50) {
+        let tpCauses = [];
+        ['avk', 'anticoag', 'rivaroxaban', 'apixaban', 'dabigatran'].forEach(d => { if (patientHasMedClass(d)) tpCauses.push(d); });
+        let tpImput = tpCauses.length > 0 ? `<br><em>Imputabilité :</em> <b>${tpCauses.join(', ').toUpperCase()}</b>` : '';
+        addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 TP bas (${bioValues['BIO_TP']}%) — Risque hémorragique</strong>${tpImput}
+            <br><em>Conduite :</em> ${bioValues['BIO_TP'] < 30 ? 'TP < 30% — urgence hémostatique, vitamine K IV si AVK, PFC si IHC sévère.' : 'Rechercher cause : insuffisance hépatique, AVK, CIVD. Adapter anticoagulation.'}</div>`, 'bio');
+    }
+
+    // --- Hypochlorémie (< 95 mmol/L) ou Hyperchlorémie (> 110 mmol/L) ---
+    if (bioValues['BIO_CL'] > 0) {
+        if (bioValues['BIO_CL'] < 95) {
+            addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hypochlorémie (${bioValues['BIO_CL']} mmol/L)</strong>
+                <br><em>Causes fréquentes :</em> Vomissements, aspirations gastriques, diurétiques (furosémide). Alcalose métabolique associée probable.
+                <br><em>Conduite :</em> Corriger la cause, NaCl IV si sévère.</div>`, 'bio');
+        } else if (bioValues['BIO_CL'] > 110) {
+            addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hyperchlorémie (${bioValues['BIO_CL']} mmol/L)</strong>
+                <br><em>Causes fréquentes :</em> Perfusion NaCl excessive, acidose tubulaire, IRC. Acidose hyperchlorémique possible.
+                <br><em>Conduite :</em> Trou anionique, gaz du sang, adapter les perfusions.</div>`, 'bio');
+        }
+    }
+
+    // --- Hyperosmolalité (> 300 mOsm/kg) — Déshydratation ---
+    if (bioValues['BIO_OSM'] > 300) {
+        let osmCauses = [];
+        ['diuretique', 'lithium', 'mannitol'].forEach(d => { if (patientHasMedClass(d)) osmCauses.push(d); });
+        let osmImput = osmCauses.length > 0 ? `<br><em>Imputabilité :</em> <b>${osmCauses.join(', ').toUpperCase()}</b>` : '';
+        addAlert('alertes-bio', `<div class="alert alert-${bioValues['BIO_OSM'] > 320 ? 'danger' : 'warning'} shadow-sm">
+            <strong>${bioValues['BIO_OSM'] > 320 ? '🚨' : '⚠️'} Hyperosmolalité (${bioValues['BIO_OSM']} mOsm/kg)</strong>${osmImput}
+            <br><em>Conduite :</em> ${bioValues['BIO_OSM'] > 320 ? 'Déshydratation sévère — réhydratation IV par soluté hypotonique. Rechercher coma hyperosmolaire si diabétique.' : 'Déshydratation modérée — réhydratation PO/IV, adapter diurétiques.'}</div>`, 'bio');
+    }
+
+    // --- Préalbumine basse (< 0.11 g/L) — Dénutrition aiguë ---
+    if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.11) {
+        addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 Préalbumine effondrée (${bioValues['BIO_PREALB']} g/L)</strong>
+            <br><em>Interprétation :</em> Dénutrition aiguë sévère (demi-vie 2 jours, marqueur précoce). Attention : baissée aussi en inflammation.
+            <br><em>Conduite :</em> Support nutritionnel urgent, CNO hypercaloriques/hyperprotidiques, envisager nutrition entérale. Adapter posologies des médicaments fortement liés aux protéines.</div>`, 'bio');
+    } else if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.20) {
+        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Préalbumine basse (${bioValues['BIO_PREALB']} g/L)</strong>
+            <br><em>Conduite :</em> Dénutrition modérée. CNO, enrichissement des repas, réévaluation à J15.</div>`, 'bio');
+    }
+
     // --- Supplémentation vitamine D systématique si âge avancé (sans carence documentée) ---
     if (patientAge >= 70 && (!bioValues['BIO_023'] || bioValues['BIO_023'] <= 0) && !patientHasMedClass('cholecalciferol') && !patientHasMedClass('vitamine d') && !patientHasMedClass('calcifediol')) {
         addAlert('alertes-initier', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Vitamine D — supplémentation systématique recommandée</strong>
@@ -998,6 +1167,140 @@ function analyserPrescription() {
                 <span class="badge bg-secondary float-end" style="font-size:0.65em;">Epilepsie active</span>
                 <br><span class="small">Patient épileptique — les médicaments suivants augmentent le risque de crise :</span>
                 <ul class="mb-0 ps-3 small">${list}</ul>
+            </div>`, 'eviter');
+        }
+    }
+
+    // =========================================================
+    // 3a. DÉTECTION CASCADE IATROGÉNIQUE
+    // =========================================================
+    {
+        const cascadePatterns = [
+            { trigger: ['antihypertenseur', 'diuretique', 'betabloquant', 'inhibiteurcalcique', 'iec', 'ara2'],
+              effect: 'hypotension/chutes', cascade: ['antihypertenseur'],
+              desc: 'Antihypertenseur → Hypotension orthostatique → Chutes → Fractures. Envisager réduction posologique ou déprescription si PA < 130/70.' },
+            { trigger: ['neuroleptique', 'antipsychotique'],
+              effect: 'syndrome extrapyramidal', cascade: ['antiparkinsonien', 'levodopa'],
+              desc: 'Neuroleptique → Syndrome extrapyramidal → Ajout antiparkinsonien. Privilégier l\'arrêt du neuroleptique plutôt que l\'ajout.' },
+            { trigger: ['diuretique'],
+              effect: 'hypokaliémie/déshydratation', cascade: ['potassium', 'sel'],
+              desc: 'Diurétique → Hypokaliémie → Ajout potassium. Réévaluer l\'indication du diurétique, vérifier les doses.' },
+            { trigger: ['opioid'],
+              effect: 'constipation', cascade: ['laxatif'],
+              desc: 'Opioïde → Constipation → Ajout laxatif. Si opioïde non indispensable, envisager rotation ou déprescription.' },
+            { trigger: ['inhibiteurscholinesterase', 'donepezil', 'rivastigmine', 'galantamine'],
+              effect: 'troubles digestifs', cascade: ['antiemetique', 'metoclopramide', 'domperidone'],
+              desc: 'Anti-Alzheimer → Nausées/Diarrhées → Ajout antiémétique (risque extrapyramidal). Réévaluer le bénéfice de l\'anticholinestérasique.' },
+            { trigger: ['ains'],
+              effect: 'HTA/gastropathie', cascade: ['ipp', 'antihypertenseur'],
+              desc: 'AINS → HTA secondaire + Gastropathie → Ajout IPP + Majoration antihypertenseur. Préférer le paracétamol.' },
+            { trigger: ['corticoide'],
+              effect: 'hyperglycémie/ostéoporose', cascade: ['insuline', 'antidiabetique', 'bisphosphonate'],
+              desc: 'Corticoïde → Hyperglycémie + Ostéoporose → Ajout antidiabétique + Bisphosphonate. Évaluer la possibilité de sevrage.' },
+            { trigger: ['benzodiazepine', 'hypnotique'],
+              effect: 'somnolence/chutes', cascade: [],
+              desc: 'BZD → Somnolence diurne, chutes, troubles cognitifs. Déprescription progressive recommandée (réduction 25% toutes les 2 semaines).' }
+        ];
+
+        let cascadeAlerts = [];
+        cascadePatterns.forEach(p => {
+            let triggerMeds = activeMeds.filter(m => p.trigger.some(cls => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), cls)));
+            if (triggerMeds.length === 0) return;
+            let cascadeMeds = p.cascade.length > 0 ? activeMeds.filter(m => p.cascade.some(cls => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), cls))) : [];
+            if (p.cascade.length > 0 && cascadeMeds.length === 0) return;
+            let trigNames = triggerMeds.map(m => m.dci.toUpperCase()).join(', ');
+            let cascNames = cascadeMeds.length > 0 ? cascadeMeds.map(m => m.dci.toUpperCase()).join(', ') : '';
+            cascadeAlerts.push({ trigger: trigNames, cascade: cascNames, effect: p.effect, desc: p.desc });
+        });
+
+        if (cascadeAlerts.length > 0) {
+            let cascadeHtml = cascadeAlerts.map(c =>
+                `<li class="mb-2"><span class="text-danger fw-bold">${c.trigger}</span> → ${c.effect}${c.cascade ? ` → <span class="text-warning fw-bold">${c.cascade}</span>` : ''}
+                <br><small class="text-muted">${c.desc}</small></li>`
+            ).join('');
+            addAlert('alertes-eviter', `<div class="alert alert-warning border-warning shadow-sm">
+                <strong>🔄 Cascades iatrogéniques détectées (${cascadeAlerts.length})</strong>
+                <span class="badge bg-secondary float-end" style="font-size:0.65em;">Rochon 1997 / Scott 2015</span>
+                <ul class="mb-0 ps-3 mt-1">${cascadeHtml}</ul>
+            </div>`, 'eviter');
+        }
+    }
+
+    // =========================================================
+    // 3a-bis. DÉPRESCRIPTION GUIDÉE (BZD / Opioïdes / IPP / Statines)
+    // =========================================================
+    {
+        const deprescriptionGuides = [];
+
+        // BZD / Z-drugs
+        const bzdMeds = activeMeds.filter(m => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), 'benzodiazepine') || matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), 'hypnotique'));
+        if (bzdMeds.length > 0 && (isFragile || patientAge >= 75 || isChecked('chkChutes'))) {
+            deprescriptionGuides.push({
+                meds: bzdMeds.map(m => m.dci.toUpperCase()).join(', '),
+                classe: 'Benzodiazépines / Z-drugs',
+                color: 'danger',
+                protocol: `<b>Protocole de sevrage :</b> Réduction de 25% de la dose tous les 15 jours. Si dose faible : passage à demi-dose pendant 2 semaines puis arrêt.
+                    <br>Si BZD à demi-vie longue (diazépam, clorazépate) → switch vers BZD demi-vie courte (oxazépam, lorazépam) avant sevrage.
+                    <br><em>Alternatives :</em> Mélatonine LP 2mg, hygiène du sommeil, TCC-I. Ne pas substituer par un antihistaminique (charge anticholinergique).`,
+                source: 'HAS 2015 / deprescribing.org'
+            });
+        }
+
+        // Opioïdes
+        const opioidMeds = activeMeds.filter(m => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), 'opioid'));
+        if (opioidMeds.length > 0 && (isFragile || patientAge >= 80)) {
+            deprescriptionGuides.push({
+                meds: opioidMeds.map(m => m.dci.toUpperCase()).join(', '),
+                classe: 'Opioïdes',
+                color: 'danger',
+                protocol: `<b>Réévaluation systématique :</b> Évaluer le bénéfice antalgique (EVA). Si douleur non cancéreuse chronique > 3 mois, envisager sevrage progressif.
+                    <br>Réduction de 10% de la dose totale par semaine. Surveiller syndrome de sevrage (agitation, diarrhée, myalgies).
+                    <br><em>Alternatives :</em> Paracétamol, TENS, kinésithérapie, duloxétine (si douleur neuropathique).`,
+                source: 'CDC 2022 / Sociétés de douleur'
+            });
+        }
+
+        // IPP au long cours
+        const ippMeds = activeMeds.filter(m => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), 'ipp'));
+        if (ippMeds.length > 0 && !isChecked('chkAtcdUlcere') && !activeComorbs.includes('PAT_021')) {
+            let hasIndicationIPP = patientHasMedClass('ains') || patientHasMedClass('anticoag') || patientHasMedClass('antiagreg');
+            if (!hasIndicationIPP) {
+                deprescriptionGuides.push({
+                    meds: ippMeds.map(m => m.dci.toUpperCase()).join(', '),
+                    classe: 'IPP (sans indication claire)',
+                    color: 'warning',
+                    protocol: `<b>Sevrage :</b> Réduction à demi-dose pendant 4 semaines, puis passage à la demande, puis arrêt.
+                        <br>Risque rebond acide : prévenir le patient (brûlures transitoires 1-2 semaines).
+                        <br><em>Risques IPP au long cours :</em> Hyponatrémie, hypomagnésémie, carence B12/fer, fractures ostéoporotiques, C. difficile.`,
+                    source: 'deprescribing.org / HAS'
+                });
+            }
+        }
+
+        // Statines chez le très fragile (CFS ≥ 7) sans ATCD cardiovasculaire
+        const statinMeds = activeMeds.filter(m => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), 'statine'));
+        if (statinMeds.length > 0 && getVal('scoreCFS') >= 7 && !activeComorbs.some(c => ['PAT_004', 'PAT_007', 'PAT_008'].includes(c))) {
+            deprescriptionGuides.push({
+                meds: statinMeds.map(m => m.dci.toUpperCase()).join(', '),
+                classe: 'Statines (patient très fragile, prévention primaire)',
+                color: 'info',
+                protocol: `<b>Recommandation :</b> Chez le patient très fragile (CFS ≥ 7) en prévention primaire, le bénéfice des statines est incertain.
+                    <br>Arrêt envisageable après discussion avec le patient/famille. Pas de protocole de sevrage nécessaire.`,
+                source: 'STOPPFrail 2017 / Holmes 2015'
+            });
+        }
+
+        if (deprescriptionGuides.length > 0) {
+            let depHtml = deprescriptionGuides.map(d =>
+                `<div class="alert alert-${d.color} py-2 mb-2 shadow-sm" style="border-left:4px solid;">
+                    <strong>${d.classe} : ${d.meds}</strong>
+                    <span class="badge bg-dark float-end" style="font-size:0.6em;">${d.source}</span>
+                    <br><small>${d.protocol}</small>
+                </div>`
+            ).join('');
+            addAlert('alertes-eviter', `<div class="card mb-2 shadow-sm">
+                <div class="card-header py-2" style="background:linear-gradient(135deg,#ffecd2,#fcb69f);"><strong>📋 Protocoles de déprescription guidée (${deprescriptionGuides.length})</strong></div>
+                <div class="card-body p-2">${depHtml}</div>
             </div>`, 'eviter');
         }
     }

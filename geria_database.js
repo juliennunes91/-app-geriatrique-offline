@@ -272,6 +272,34 @@ const MASTER_DB = {
             "NOM_STANDARD": "VGM",
             "UNITE": "fL",
             "SYNONYMES": "Volume globulaire moyen, MCV, Microcytose, Macrocytose, NFS"
+        },
+        "BIO_040": {
+            "ID_BIO": "BIO_040",
+            "LOINC": "5902-2",
+            "NOM_STANDARD": "TP (Taux de Prothrombine)",
+            "UNITE": "%",
+            "SYNONYMES": "TP, Prothrombine, Temps de Quick, Hémostase"
+        },
+        "BIO_041": {
+            "ID_BIO": "BIO_041",
+            "LOINC": "2075-0",
+            "NOM_STANDARD": "Chlorémie",
+            "UNITE": "mmol/L",
+            "SYNONYMES": "Chlore, Chlorure, Cl, Ionogramme"
+        },
+        "BIO_042": {
+            "ID_BIO": "BIO_042",
+            "LOINC": "2532-0",
+            "NOM_STANDARD": "Osmolalité plasmatique",
+            "UNITE": "mOsm/kg",
+            "SYNONYMES": "Osmolalite, Osmolarité, Deshydratation"
+        },
+        "BIO_043": {
+            "ID_BIO": "BIO_043",
+            "LOINC": "14338-8",
+            "NOM_STANDARD": "Préalbumine (Transthyrétine)",
+            "UNITE": "g/L",
+            "SYNONYMES": "Prealbumine, Transthyretine, TTR, Marqueur nutritionnel, Denutrition"
         }
     },
     "PATHOLOGIES": {
@@ -597,6 +625,33 @@ const MASTER_DB = {
             "CATEGORIE": "Cardiologie",
             "SYNONYMES": "TVP, EP, Embolie pulmonaire, Thrombose veineuse profonde, Phlébite",
             "BIO_SURVEILLANCE": "BIO_033, BIO_030",
+            "SYND_RISQUE": ""
+        },
+        "PAT_037": {
+            "ID_PATHO": "PAT_037",
+            "CIM_10": "M62.84",
+            "NOM_STANDARD": "Sarcopénie",
+            "CATEGORIE": "Gériatrie",
+            "SYNONYMES": "Sarcopenie, Fonte musculaire, Amyotrophie, Perte de masse musculaire",
+            "BIO_SURVEILLANCE": "BIO_035, BIO_023, BIO_018",
+            "SYND_RISQUE": "SYND_033, SYND_025"
+        },
+        "PAT_038": {
+            "ID_PATHO": "PAT_038",
+            "CIM_10": "R13",
+            "NOM_STANDARD": "Dysphagie / Troubles de déglutition",
+            "CATEGORIE": "Gériatrie",
+            "SYNONYMES": "Dysphagie, Trouble deglutition, Fausse route, Pneumopathie d'inhalation",
+            "BIO_SURVEILLANCE": "BIO_035, BIO_024",
+            "SYND_RISQUE": "SYND_033"
+        },
+        "PAT_039": {
+            "ID_PATHO": "PAT_039",
+            "CIM_10": "N39.4",
+            "NOM_STANDARD": "Incontinence urinaire",
+            "CATEGORIE": "Gériatrie",
+            "SYNONYMES": "Incontinence, Fuites urinaires, Impériosité mictionnelle, Vessie hyperactive",
+            "BIO_SURVEILLANCE": "BIO_003, BIO_004",
             "SYND_RISQUE": ""
         }
     },
