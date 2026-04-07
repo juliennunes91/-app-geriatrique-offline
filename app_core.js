@@ -402,7 +402,8 @@ window.resetPatient = function() {
         'bioHba1c': '', 'bioBili': '', 'bioPhos': '', 'bioLact': '',
         'bioPct': '', 'bioLithium': '', 'bioLipase': '', 'bioDdim': '', 'bioTropo': '', 'bioTemp': '',
         'scoreCFS': '0', 'bioQtc': '',
-        'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1'
+        'bioTp': '', 'bioChlore': '', 'bioOsm': '', 'bioPrealb': '',
+        'cpManual': '0', 'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1'
     };
     for (const [id, val] of Object.entries(defaults)) {
         const el = document.getElementById(id);
@@ -418,12 +419,17 @@ window.resetPatient = function() {
         'chkPalliatif', 'chkAtcdUlcere', 'chkChutes', 'chkDepression',
         'chkIncontinence', 'chkHbp', 'chkConstipation', 'chkDysphagie',
         'chkGlaucome', 'chkStenoseAortique', 'chkAspirineForte',
-        'patientFragile'
+        'chkLewy', 'patientFragile'
     ];
     checkboxes.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.checked = false;
     });
+
+    // 4b. Réinitialiser le cache d'analyse
+    if (typeof _lastAnalysisHash !== 'undefined') _lastAnalysisHash = null;
+    if (typeof _lastAnalysisResult !== 'undefined') _lastAnalysisResult = null;
+    if (typeof window.engineInitialized !== 'undefined') window.engineInitialized = false;
 
     // 5. Vider l'affichage des tags et résultats
     if (typeof renderTags === 'function') renderTags();
@@ -450,6 +456,17 @@ window.resetPatient = function() {
         firstTab.classList.add('active');
         const target = document.querySelector(firstTab.getAttribute('data-bs-target'));
         if (target) { target.classList.add('show', 'active'); }
+    }
+};
+
+// ============================================================================
+// FRAGILE → PALLIATIF — Prompt automatique
+// ============================================================================
+window.onFragileChange = function() {
+    if (document.getElementById('patientFragile').checked) {
+        if (confirm('Espérance de vie < 1 an / Soins palliatifs ?')) {
+            document.getElementById('chkPalliatif').checked = true;
+        }
     }
 };
 

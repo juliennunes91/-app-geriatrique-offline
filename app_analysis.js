@@ -5,9 +5,9 @@
 // =========================================================
 const SCORES_CONFIG = {
     CHA2DS2: {
-        label: 'CHA₂DS₂-VASc', desc: 'Risque thromboembolique dans la FA', border: 'info',
+        label: 'CHA₂DS₂-VA', desc: 'Risque thromboembolique dans la FA (ESC 2024)', border: 'info',
         seuils: { haut: 2 },
-        conclusions: { 0: 'Risque faible — anticoagulation non indiquée', 1: 'Risque intermédiaire — anticoagulation optionnelle', haut: 'Anticoagulation recommandée (sauf CI)' }
+        conclusions: { 0: 'Risque faible — anticoagulation non recommandée', 1: 'Anticoagulation à considérer (évaluer bénéfice/risque)', haut: 'Anticoagulation recommandée (sauf CI)' }
     },
     HAS_BLED: {
         label: 'HAS-BLED', desc: 'Risque hémorragique sous anticoagulant', border: 'danger',
@@ -19,6 +19,11 @@ const SCORES_CONFIG = {
         seuils: { modere: 3, haut: 4 },
         conclusions: { 0: 'Risque faible (2.4%/an)', modere: 'Risque modéré (4.7%/an)', haut: 'Risque hémorragique élevé (7.3%/an)' }
     },
+    DOAC: {
+        label: 'DOACscore', desc: 'Risque de saignement majeur sous AOD', border: 'warning',
+        seuils: { modere: 4, haut: 7 },
+        conclusions: { 0: 'Risque faible de saignement majeur', modere: 'Risque modéré — surveillance rapprochée', haut: 'Risque élevé — réévaluer bénéfice/risque AOD' }
+    },
     RISQ_PATH: {
         label: 'RISQ-PATH', desc: 'Risque d\'allongement du QT', border: 'primary',
         seuils: { modere: 5, haut: 10 },
@@ -28,6 +33,11 @@ const SCORES_CONFIG = {
         label: 'Score de Tisdale', desc: 'Risque de TdP en hospitalisation', border: 'dark',
         seuils: { modere: 7, haut: 11 },
         conclusions: { 0: 'Risque faible', modere: 'Risque modéré — ECG quotidien recommandé', haut: 'Risque élevé de TdP — monitoring ECG continu' }
+    },
+    DOAC: {
+        label: 'DOACscore', desc: 'Risque de saignement majeur sous AOD (Hijazi 2023)', border: 'warning',
+        seuils: { modere: 4, haut: 7 },
+        conclusions: { 0: 'Risque faible de saignement majeur', modere: 'Risque modéré — surveillance rapprochée', haut: 'Risque élevé — réévaluer bénéfice/risque AOD' }
     },
     // Seuils biologiques pour les scores
     BIO: {
@@ -363,7 +373,8 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'chkPalliatif': 'PAT_030', 'chkDepression': 'PAT_032', 'chkGlaucome': 'PAT_033',
         'chkFoie': 'PAT_034', 'chkBrady': 'PAT_035', 'chkTvp': 'PAT_036',
         'chkStent': 'PAT_004', 'chkScaAigu': 'PAT_004', 'chkHtaNonControlee': 'PAT_005',
-        'chkIncontinence': 'PAT_039', 'chkDysphagie': 'PAT_038'
+        'chkIncontinence': 'PAT_039', 'chkDysphagie': 'PAT_038',
+        'chkLewy': 'PAT_040'
     };
     for (const [chkId, patCode] of Object.entries(checkboxPatMap)) {
         if (isChecked(chkId) && !activeComorbs.includes(patCode)) {
@@ -423,9 +434,6 @@ function _computeAnalysisHash() {
         getVal('bioTsh'), getVal('bioBnp'), getVal('bioLdl'),
         getVal('bioCrp'), getVal('bioInr'), getVal('bioQtc'),
         getVal('scoreCFS'), getStr('cpManual'),
-        getVal('scoreMorse'), getVal('scoreMna'),
-        isChecked('friedPerte'), isChecked('friedEpuisement'), isChecked('friedLenteur'), isChecked('friedFaiblesse'), isChecked('friedActivite'),
-        isChecked('camAigu'), isChecked('camInattention'), isChecked('camDesorganise'), isChecked('camConscience'),
         isChecked('patientFragile'),
         activeComorbs.slice().sort().join(','),
         activeMeds.map(m => m.dci).sort().join(','),
@@ -436,10 +444,8 @@ function _computeAnalysisHash() {
      'chkBrady','chkHtaNonControlee','chkArret','chkScaAigu','chkLqts','chkDialyse',
      'chkFoie','chkSepsis','chkPalliatif','chkAtcdUlcere','chkChutes','chkDepression',
      'chkIncontinence','chkHbp','chkConstipation','chkDysphagie','chkGlaucome',
-     'chkStenoseAortique','chkAspirineForte',
-     'friedPerte','friedEpuisement','friedLenteur','friedFaiblesse','friedActivite',
-     'camAigu','camInattention','camDesorganise','camConscience'].forEach(id => parts.push(isChecked(id)));
-    ['scoreMorse','scoreMna','bioTp','bioChlore','bioOsm','bioPrealb'].forEach(id => parts.push(getVal(id)));
+     'chkStenoseAortique','chkAspirineForte','chkLewy'].forEach(id => parts.push(isChecked(id)));
+    ['bioTp','bioChlore','bioOsm','bioPrealb'].forEach(id => parts.push(getVal(id)));
     return parts.join('|');
 }
 
@@ -560,11 +566,12 @@ function analyserPrescription() {
 
         // Helper rendu score (avec tooltip explicatif)
         const SCORE_TOOLTIPS = {
-            CHA2DS2: 'IC +1 | HTA +1 | Âge≥75 +2 | Diabète +1 | AVC/AIT +2 | Vasculaire +1 | Femme +1 | Âge 65-74 +1. Source: ESC 2020.',
+            CHA2DS2: 'IC +1 | HTA +1 | Âge≥75 +2 | Diabète +1 | AVC/AIT +2 | Vasculaire +1 | Âge 65-74 +1. Source: ESC 2024 (sexe retiré).',
             HAS_BLED: 'HTA +1 | IRC (DFG<50) +1 | AVC +1 | Saignement +1 | INR labile +1 | Âge>65 +1 | Alcool +1 | Méd. antiagrég/AINS +1. Source: Pisters 2010.',
             ORBIT: 'Âge≥75 +1 | Anémie +2 | Saignement +2 | DFG<60 +1 | Antiagrégant +1. Source: O\'Brien 2015.',
             RISQ_PATH: 'Âge≥65 +1 | Femme +1 | Obésité +1 | HypoK +2 | HypoCa +2 | IRC sévère +2 | Inflammation +1 | Cardiopathie +1 | FA +1 | Démence +1 | Méd QT(KR) +3. Source: Tisdale 2013 adapté.',
-            TISDALE: 'Âge≥68 +1 | Femme +1 | Diurétique +1 | HypoK +2 | QTc≥450 +2 | Méd QT +3 | Sepsis +2 | IC +3. Source: Tisdale 2013.'
+            TISDALE: 'Âge≥68 +1 | Femme +1 | Diurétique +1 | HypoK +2 | QTc≥450 +2 | Méd QT +3 | Sepsis +2 | IC +3. Source: Tisdale 2013.',
+            DOAC: 'Âge≥75 +1 | DFG 30-49 +1 | DFG<30 +2 | Poids<60kg +1 | ATCD saignement +1 | Antiagrégant +1 | AINS +1 | Diabète +1 | Anémie +1 | IC +1. Source: Hijazi 2023.'
         };
         const renderScore = (cfg, score, details) => {
             let conc = cfg.conclusions[0];
@@ -577,16 +584,15 @@ function analyserPrescription() {
             addAlert('alertes-scores', `<div class="alert alert-light border border-${cfg.border} mb-2 shadow-sm"><strong class="text-${cfg.border}">${cfg.label} : ${score} point(s)</strong>${tooltip} <em class="text-muted small">— ${cfg.desc}</em><br><small class="text-muted">${details.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${dangerClass}">${conc}</small></div>`);
         };
 
-        // CHA₂DS₂-VASc
+        // CHA₂DS₂-VA (ESC 2024 — sexe retiré du calcul)
         let scoreCha = 0; let ttCha = [];
         if(patientAge >= SA.cha_75) { scoreCha += 2; ttCha.push("Âge ≥75 (+2)"); } else if(patientAge >= SA.cha_65) { scoreCha += 1; ttCha.push("Âge ≥65 (+1)"); }
-        if(sexe === 'F') { scoreCha += 1; ttCha.push("Femme (+1)"); }
         if(activeComorbs.some(c=>['PAT_001','PAT_002','PAT_003'].includes(c))) { scoreCha += 1; ttCha.push("IC (+1)"); }
         if(activeComorbs.includes('PAT_005')) { scoreCha += 1; ttCha.push("HTA (+1)"); }
         if(activeComorbs.includes('PAT_016')) { scoreCha += 1; ttCha.push("Diabète (+1)"); }
         if(activeComorbs.includes('PAT_008')) { scoreCha += 2; ttCha.push("ATCD AVC (+2)"); }
         if(activeComorbs.some(c=>['PAT_004','PAT_007'].includes(c))) { scoreCha += 1; ttCha.push("Vasc (+1)"); }
-        let chaConc = scoreCha === 0 ? SC.CHA2DS2.conclusions[0] : (scoreCha === 1 ? (sexe === 'M' ? 'Risque faible (H) — anticoagulation optionnelle' : 'Score lié au sexe seul — anticoagulation non indiquée (F)') : SC.CHA2DS2.conclusions.haut);
+        let chaConc = scoreCha === 0 ? SC.CHA2DS2.conclusions[0] : (scoreCha === 1 ? SC.CHA2DS2.conclusions[1] : SC.CHA2DS2.conclusions.haut);
         addAlert('alertes-scores', `<div class="alert alert-light border border-${SC.CHA2DS2.border} mb-2 shadow-sm"><strong class="text-${SC.CHA2DS2.border}">${SC.CHA2DS2.label} : ${scoreCha} point(s)</strong> <em class="text-muted small">— ${SC.CHA2DS2.desc}</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreCha >= SC.CHA2DS2.seuils.haut ? 'danger' : 'success'}">${chaConc}</small></div>`);
 
         // HAS-BLED
@@ -605,6 +611,22 @@ function analyserPrescription() {
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < SB.irc_orbit) { scoreOrbit += 1; ttOrbit.push("DFG <60 (+1)"); }
         if(patientHasMedClass('antiagreg')) { scoreOrbit += 1; ttOrbit.push("Antiagrégant (+1)"); }
         renderScore(SC.ORBIT, scoreOrbit, ttOrbit);
+
+        // DOACscore (Hijazi et al. 2023 — risque de saignement majeur sous AOD)
+        let scoreDoac = 0; let ttDoac = [];
+        if(patientAge >= SA.orbit_75) { scoreDoac += 1; ttDoac.push("Âge ≥75 (+1)"); }
+        let dfgDoac = bioValues['BIO_004'];
+        if(dfgDoac > 0 && dfgDoac < 30) { scoreDoac += 2; ttDoac.push("DFG <30 (+2)"); }
+        else if(dfgDoac > 0 && dfgDoac < 50) { scoreDoac += 1; ttDoac.push("DFG 30-49 (+1)"); }
+        let poidsDoac = getVal('patientPoids');
+        if(poidsDoac > 0 && poidsDoac < 60) { scoreDoac += 1; ttDoac.push("Poids <60kg (+1)"); }
+        if(isChecked('chkSaignement')) { scoreDoac += 1; ttDoac.push("ATCD saignement (+1)"); }
+        if(patientHasMedClass('antiagregant')) { scoreDoac += 1; ttDoac.push("Antiagrégant (+1)"); }
+        if(patientHasMedClass('ains')) { scoreDoac += 1; ttDoac.push("AINS (+1)"); }
+        if(activeComorbs.includes('PAT_016')) { scoreDoac += 1; ttDoac.push("Diabète (+1)"); }
+        if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < SB.anemia_M) || (sexe === 'F' && bioValues['BIO_009'] < SB.anemia_F))) { scoreDoac += 1; ttDoac.push("Anémie (+1)"); }
+        if(activeComorbs.some(c=>['PAT_001','PAT_002','PAT_003'].includes(c))) { scoreDoac += 1; ttDoac.push("IC (+1)"); }
+        renderScore(SC.DOAC, scoreDoac, ttDoac);
 
         // RISQ-PATH
         let scoreRisq = 0; let ttRisq = [];
@@ -675,103 +697,6 @@ function analyserPrescription() {
                 addAlert('alertes-scores', `<div class="alert alert-light border border-${cfsColor} mb-2 shadow-sm">
                     <strong class="text-${cfsColor}">CFS : ${cfs}/9 — ${cfsLabels[cfs] || ''}</strong> <em class="text-muted small">— Clinical Frailty Scale (Rockwood 2005)</em>
                     <br><small class="fw-bold text-${cfsColor}">${cfsConc}</small>
-                </div>`);
-            }
-        }
-
-        // --- Critères de Fried (fragilité physique) ---
-        {
-            const friedItems = ['friedPerte', 'friedEpuisement', 'friedLenteur', 'friedFaiblesse', 'friedActivite'];
-            const friedLabels = ['Perte de poids', 'Épuisement', 'Lenteur', 'Faiblesse', 'Sédentarité'];
-            const friedCount = friedItems.filter(id => isChecked(id)).length;
-            const friedPresent = friedItems.map((id, i) => isChecked(id) ? friedLabels[i] : null).filter(Boolean);
-            if (friedCount > 0) {
-                let friedColor = friedCount >= 3 ? 'danger' : (friedCount >= 1 ? 'warning' : 'success');
-                let friedConc = friedCount >= 3 ? 'Fragile (≥3 critères) — risque accru de chutes, hospitalisation et mortalité. Déprescription recommandée.'
-                    : (friedCount >= 1 ? 'Pré-fragile (1-2 critères) — intervention préventive recommandée (exercice, nutrition).' : '');
-                addAlert('alertes-scores', `<div class="alert alert-light border border-${friedColor} mb-2 shadow-sm">
-                    <strong class="text-${friedColor}">Fried : ${friedCount}/5 critère(s)</strong> <em class="text-muted small">— Phénotype de fragilité (Fried 2001)</em>
-                    <br><small class="text-muted">${friedPresent.join(', ')}</small>
-                    <br><small class="fw-bold text-${friedColor}">${friedConc}</small>
-                </div>`);
-            }
-        }
-
-        // --- Score Morse (risque de chute) ---
-        {
-            const morseLevel = getVal('scoreMorse');
-            if (morseLevel > 0) {
-                const morseLabels = { 1: 'Faible (0-24)', 2: 'Modéré (25-44)', 3: 'Élevé (≥45)' };
-                const morseColors = { 1: 'success', 2: 'warning', 3: 'danger' };
-                const morseConc = {
-                    1: 'Prévention standard. Pas de mesure spécifique.',
-                    2: 'Prévention ciblée : chaussures adaptées, éclairage, révision médicamenteuse (psychotropes, antihypertenseurs).',
-                    3: 'Risque élevé — programme de prévention des chutes obligatoire : arrêt BZD si possible, réduction antihypertenseurs, kinésithérapie, évaluation podologique, vitamine D.'
-                };
-                // Alerte médicaments à risque de chute
-                let fallDrugs = [];
-                const fallClasses = ['benzodiazepine', 'hypnotique', 'neuroleptique', 'antipsychotique', 'opioid', 'antidepresseur', 'antihistaminique'];
-                activeMeds.forEach(m => {
-                    fallClasses.forEach(cls => {
-                        if (matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), cls)) {
-                            if (!fallDrugs.includes(m.dci.toUpperCase())) fallDrugs.push(m.dci.toUpperCase());
-                        }
-                    });
-                });
-                let fallDrugHtml = fallDrugs.length > 0 && morseLevel >= 2 ? `<br><span class="text-danger small">Médicaments à risque de chute : <b>${fallDrugs.join(', ')}</b></span>` : '';
-                addAlert('alertes-scores', `<div class="alert alert-light border border-${morseColors[morseLevel]} mb-2 shadow-sm">
-                    <strong class="text-${morseColors[morseLevel]}">Morse Fall Scale : ${morseLabels[morseLevel]}</strong> <em class="text-muted small">— Risque de chute en milieu hospitalier</em>
-                    <br><small class="fw-bold text-${morseColors[morseLevel]}">${morseConc[morseLevel]}</small>${fallDrugHtml}
-                </div>`);
-            }
-        }
-
-        // --- CAM (Confusion Assessment Method) — Screening Délirium ---
-        {
-            const camAigu = isChecked('camAigu');
-            const camInattention = isChecked('camInattention');
-            const camDesorganise = isChecked('camDesorganise');
-            const camConscience = isChecked('camConscience');
-            const camPositif = camAigu && camInattention && (camDesorganise || camConscience);
-            const camAny = camAigu || camInattention || camDesorganise || camConscience;
-            if (camAny) {
-                let camColor = camPositif ? 'danger' : 'warning';
-                let camResult = camPositif ? 'CAM POSITIF — Délirium probable' : 'CAM incomplet — critères insuffisants pour le diagnostic';
-                let camConc = camPositif
-                    ? 'Rechercher et traiter la cause (iatrogénie, infection, rétention, constipation, douleur, déshydratation). Arrêter immédiatement les médicaments anticholinergiques, BZD, opioïdes si possible.'
-                    : 'Surveillance rapprochée. Réévaluer dans les 24h.';
-                // Médicaments déliriogènes
-                let delDrugs = [];
-                activeMeds.forEach(m => {
-                    let ref = m.db_ref;
-                    if (ref && (parseFloat(ref.acb) >= 2 || ['benzodiazepine','opioid','anticholinergique','corticoide'].some(cls => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), cls)))) {
-                        delDrugs.push(m.dci.toUpperCase());
-                    }
-                });
-                let delHtml = delDrugs.length > 0 ? `<br><span class="text-danger small fw-bold">Médicaments déliriogènes à arrêter en priorité : ${delDrugs.join(', ')}</span>` : '';
-                addAlert('alertes-scores', `<div class="alert alert-${camColor} shadow-sm">
-                    <strong>${camPositif ? '🚨' : '⚠️'} ${camResult}</strong> <em class="text-muted small">— Confusion Assessment Method (Inouye 1990)</em>
-                    <br><small class="text-muted">Critères : ${[camAigu ? 'Début aigu ✓' : '', camInattention ? 'Inattention ✓' : '', camDesorganise ? 'Pensée désorganisée ✓' : '', camConscience ? 'Altération conscience ✓' : ''].filter(Boolean).join(' | ')}</small>
-                    <br><small class="fw-bold">${camConc}</small>${delHtml}
-                </div>`);
-            }
-        }
-
-        // --- MNA-SF (Mini Nutritional Assessment - Short Form) ---
-        {
-            const mnaScore = getVal('scoreMna');
-            if (mnaScore > 0) {
-                let mnaColor = mnaScore >= 12 ? 'success' : (mnaScore >= 8 ? 'warning' : 'danger');
-                let mnaLabel = mnaScore >= 12 ? 'État nutritionnel normal (12-14)' : (mnaScore >= 8 ? 'Risque de dénutrition (8-11)' : 'Dénutri (0-7)');
-                let mnaConc = mnaScore >= 12 ? 'Pas d\'intervention nutritionnelle spécifique nécessaire.'
-                    : (mnaScore >= 8 ? 'Compléments nutritionnels oraux (CNO), enrichissement des repas, réévaluation à 1 mois. Doser albumine et préalbumine.'
-                    : 'Dénutrition avérée — CNO systématiques, avis diététique, envisager nutrition entérale si échec PO. Adapter les posologies des médicaments à forte liaison albumine.');
-                let albHtml = '';
-                if (bioValues['BIO_035'] > 0 && bioValues['BIO_035'] < 35) albHtml = `<br><span class="text-warning small">Albumine ${bioValues['BIO_035']} g/L — confirme la dénutrition.</span>`;
-                if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.20) albHtml += `<br><span class="text-danger small">Préalbumine ${bioValues['BIO_PREALB']} g/L — dénutrition aiguë.</span>`;
-                addAlert('alertes-scores', `<div class="alert alert-light border border-${mnaColor} mb-2 shadow-sm">
-                    <strong class="text-${mnaColor}">MNA-SF : ${mnaLabel}</strong> <em class="text-muted small">— Mini Nutritional Assessment (Guigoz 2002)</em>
-                    <br><small class="fw-bold text-${mnaColor}">${mnaConc}</small>${albHtml}
                 </div>`);
             }
         }
@@ -1795,7 +1720,7 @@ function analyserPrescription() {
                         <strong class="small">${trt.classe || ''}</strong>
                         ${trt.gravite ? ` <span class="badge bg-${trt.gravite === 'CONTRE-INDICATION' || String(trt.gravite).includes('ABSOLUE') ? 'danger' : 'warning text-dark'}" style="font-size:0.6em;">${trt.gravite}</span>` : ''}
                         ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;" title="${srcEbm}">${srcEbm.length > 40 ? srcEbm.substring(0,40)+'...' : srcEbm}</span>` : ''}
-                        ${trt.ref_stopp ? ` <span class="badge bg-secondary float-end me-1" style="font-size:0.6em;">${trt.ref_stopp}</span>` : ''}
+                        ${!srcEbm && trt.ref_stopp ? ` <span class="badge bg-secondary float-end me-1" style="font-size:0.6em;">${trt.ref_stopp}</span>` : ''}
                         ${trt.raison ? `<br><small>${trt.raison}</small>` : ''}
                         ${trt.condition ? `<br><small class="text-muted fst-italic">${trt.condition}</small>` : ''}
                     </div>`;
@@ -1861,6 +1786,35 @@ function analyserPrescription() {
                         ${ic.risque ? `<br><small class="text-danger">${ic.risque}</small>` : ''}
                         ${ic.conduite ? `<br><small>${ic.conduite}</small>` : ''}
                         ${ic.surveillance ? `<br><small class="text-info">${ic.surveillance}</small>` : ''}
+                    </div>`;
+                });
+            }
+
+            // PRINCIPES (notes générales, ex: KC)
+            const principes = rule.TRAITEMENTS.PRINCIPES;
+            if (principes && principes.length > 0) {
+                principes.forEach(p => {
+                    if (p.note) guidelinesHtml += `<div class="alert alert-light py-1 px-2 mb-1 border"><small class="text-muted fst-italic">${p.note}</small></div>`;
+                });
+            }
+
+            // SURVEILLANCE_TOXICITE (ex: KC tumeur solide — protocoles de surveillance par classe)
+            const survTox = rule.TRAITEMENTS.SURVEILLANCE_TOXICITE;
+            if (survTox && survTox.length > 0) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-info small">SURVEILLANCE DES TOXICITES</strong></div>`;
+                survTox.forEach(st => {
+                    let bioList = (st.bio || []).map(b => {
+                        let name = (MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[b]) ? MASTER_DB.BIOLOGIE[b].NOM_STANDARD : b;
+                        return name;
+                    }).join(', ');
+                    guidelinesHtml += `<div class="alert alert-info py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #0dcaf0;">
+                        <strong class="small">${st.classe || ''}</strong>
+                        ${st.risque ? `<br><small class="text-danger">${st.risque}</small>` : ''}
+                        ${st.schema ? `<br><small>${st.schema}</small>` : ''}
+                        ${bioList ? `<br><small class="text-muted">Bio : ${bioList}</small>` : ''}
+                        ${st.conduite ? `<br><small class="text-info fw-bold">${st.conduite}</small>` : ''}
+                        ${st.conduite_neutropenie_febrile ? `<br><small class="text-danger fw-bold">${st.conduite_neutropenie_febrile}</small>` : ''}
+                        ${st.conduite_grade3 ? `<br><small class="text-warning fw-bold">${st.conduite_grade3}</small>` : ''}
                     </div>`;
                 });
             }

@@ -34,7 +34,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "FC (chaque consultation) | ECG si bradycardisant co-prescrit | MMSE/MoCA (annuel) | Reevaluation benefice a 6-12 mois",
         "alerte_clinique": "Bradycardie < 50/min → ECG urgent, discuter arret | Syncope → arret et bilan cardiologique | Nausees/diarrhee/anorexie (dose-dependant) | Reevaluer si MMSE < 10 (STOPPFrail)",
         "bio_cible": ["BIO_031", "BIO_003", "BIO_013", "BIO_014"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Aricept | NICE Dementia 2023"
     },
     {
         "dci": "Rivastigmine",
@@ -53,7 +54,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "FC | Poids (perte poids sous traitement) | MMSE/MoCA annuel | Surveillance cutanee (patch)",
         "alerte_clinique": "Bradycardie → ECG | Nausees/vomissements (surtout forme orale) | Perte poids significative → reevaluer | Indication specifique MCL et Parkinson-Demence (START)",
         "bio_cible": ["BIO_031", "BIO_003", "BIO_009"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Exelon | NICE Dementia 2023"
     },
     {
         "dci": "Galantamine",
@@ -72,7 +74,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "FC | Creatinine (semestriel) | MMSE/MoCA annuel",
         "alerte_clinique": "Bradycardie → ECG | Adaptation renale obligatoire | Nausees dose-dependantes",
         "bio_cible": ["BIO_031", "BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Reminyl | NICE Dementia 2023"
     },
     {
         "dci": "Memantine",
@@ -91,7 +94,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Creatinine (semestriel) | MMSE/MoCA annuel | Reevaluation benefice a 6-12 mois",
         "alerte_clinique": "Vertiges, cephalees (debut traitement) | STOPP3-D19: CI si epilepsie active | STOPPFrail: reevaluer si demence severe (MMSE < 10)",
         "bio_cible": ["BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Ebixa | NICE Dementia 2023"
     },
 
     // ========================================================================
@@ -114,7 +118,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "HbA1c (trimestriel) | Glycemie capillaire | Creatinine (semestriel) | Poids",
         "alerte_clinique": "Hypoglycemie (surtout si IRC, denutrition, saut de repas) | Risque moindre que glibenclamide/glimepiride | Assouplir cibles si fragile (HbA1c 7.5-8.5%)",
         "bio_cible": ["BIO_025", "BIO_026", "BIO_003", "BIO_004", "BIO_035"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Diamicron | SFD 2021"
     },
     {
         "dci": "Glibenclamide",

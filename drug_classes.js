@@ -5,6 +5,9 @@
 // Source unique de vérité pour toutes les listes de médicaments par classe.
 // Utilisé par : app_core.js, app_analysis.js, geria_engine_v2.js
 // ============================================================================
+// Sources: Classification ATC OMS 2024 | ANSM Thesaurus 2024
+//          Beers Criteria (AGS 2023) | STOPP/START v3 (2023)
+//          RCP Vidal 2024 | CredibleMeds QT (Woosley 2024)
 
 const DRUG_CLASSES = {
 
@@ -285,6 +288,12 @@ const DRUG_CLASSES = {
         aliases: ['antiarythmique', 'antiarythmiques'],
         classeMatch: ['antiarythmique'],
         dcis: ['amiodarone', 'dronedarone', 'flecainide', 'propafenone', 'sotalol', 'lidocaine', 'mexiletine']
+    },
+    inhibiteur_5alpha_reductase: {
+        aliases: ['5alphareductase', '5ari', 'inhibiteur5alpha', 'inhibiteurdelareductase'],
+        classeMatch: ['inhibiteur de la 5-alpha-réductase', '5-alpha réductase', '5-alpha-réductase'],
+        dcis: ['finasteride', 'dutasteride'],
+        dciSuffix: ['asteride']
     }
 };
 

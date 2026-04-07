@@ -1,3 +1,9 @@
+// ANTICHOLINERGIC_DB — Scores anticholinergiques par DCI
+// Sources: ACB Scale (Boustani et al. Aging Ment Health 2008),
+//          CIA Scale (Carnahan et al. JAGS 2006),
+//          BHE (Rudolph et al. J Clin Pharm Ther 2008)
+// Beers Criteria (AGS 2023) | STOPP/START v3 (2023)
+
 const ANTICHOLINERGIC_DB = {
   "alimemazine": {
     "cia": 1,
