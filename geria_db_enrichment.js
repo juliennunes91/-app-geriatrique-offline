@@ -138,7 +138,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "HbA1c (trimestriel) | Glycemie capillaire frequente | Creatinine (semestriel)",
         "alerte_clinique": "PIM ABSOLU en geriatrie — hypoglycemie prolongee (demi-vie 10-16h, metabolites actifs) | Remplacer par gliclazide LM ou iDPP4 | STOPP3-J1, Beers, PRISCUS, FORTA-D",
         "bio_cible": ["BIO_025", "BIO_026", "BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Daonil | HAS DT2 2023 ; Beers 2023"
     },
     {
         "dci": "Glimepiride",
@@ -157,7 +158,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "HbA1c trimestriel | Glycemie capillaire | Creatinine semestriel",
         "alerte_clinique": "PIM en geriatrie — hypoglycemie prolongee | Preferer gliclazide LM ou iDPP4 | STOPP3-J1, Beers, PRISCUS, FORTA-D",
         "bio_cible": ["BIO_025", "BIO_026", "BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Amarel | HAS DT2 2023 ; Beers 2023"
     },
     {
         "dci": "Pioglitazone",
@@ -176,7 +178,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Bilan hepatique trimestriel | Poids | Signes d'IC | Densitometrie si FdR osteoporose",
         "alerte_clinique": "CI ABSOLUE si IC (toute FEVG) — retention hydrosodee, decompensation | Fractures (femmes ++) | Cancer vesical (controverse) | Beers/PRISCUS/FORTA-D",
         "bio_cible": ["BIO_028", "BIO_013", "BIO_014", "BIO_009", "BIO_025"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Actos | HAS DT2 2023 ; Beers 2023"
     },
     {
         "dci": "Linagliptine",
@@ -195,7 +198,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "HbA1c trimestriel",
         "alerte_clinique": "Tres bonne tolerance geriatrique — pas d'ajustement renal (FORTA-A) | Rare: pancreatite, arthralgie | Prefere aux sulfamides si IRC",
         "bio_cible": ["BIO_025", "BIO_026"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Trajenta | HAS DT2 2023"
     },
     {
         "dci": "Repaglinide",
@@ -214,7 +218,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "HbA1c trimestriel | Glycemie capillaire | Bilan hepatique annuel",
         "alerte_clinique": "PRISCUS PIM-B / EU7-PIM | Hypoglycemie possible mais demi-vie courte (moins que sulfamides) | Prise preprandiale obligatoire | Eviter si repas sautes",
         "bio_cible": ["BIO_025", "BIO_026", "BIO_013", "BIO_014"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Novonorm | HAS DT2 2023"
     },
     {
         "dci": "Acarbose",
@@ -233,7 +238,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "HbA1c trimestriel | Transaminases si > 6 mois",
         "alerte_clinique": "PRISCUS PIM / FORTA-D — flatulences, diarrhee, mauvaise observance | Si hypo sous association: donner GLUCOSE PUR (le sucrose n'est pas absorbe) | Hepatotoxicite rare",
         "bio_cible": ["BIO_025", "BIO_026", "BIO_013", "BIO_014"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Glucor | HAS DT2 2023 ; PRISCUS 2.0"
     },
 
     // ========================================================================
@@ -256,7 +262,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "TA | FC | Creatinine semestriel",
         "alerte_clinique": "PIM absolu geriatrie — sedation, secheresse buccale, hypotension orthostatique | CI ABSOLUE si HFrEF (MOXCON: surmortalite) | Ne pas arreter brutalement (rebond HTA)",
         "bio_cible": ["BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Physiotens | ESC HTA 2023 ; Beers 2023"
     },
     {
         "dci": "Rilmenidine",
@@ -275,7 +282,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "TA | Recherche hypotension orthostatique",
         "alerte_clinique": "PIM geriatrie — hypotension orthostatique, somnolence | Ne pas arreter brutalement",
         "bio_cible": ["BIO_003"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Hyperium | ESC HTA 2023 ; Beers 2023"
     },
     {
         "dci": "Mirabegron",
@@ -294,7 +302,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "TA (mensuel les 3 premiers mois) | Residuel post-mictionnel si HBP",
         "alerte_clinique": "STOPP3-I6: CI si HTA severe ou labile | Alternative FORTA-B aux antimuscariniques (pas de passage BHE, pas d'ACB) | Surveiller TA",
         "bio_cible": ["BIO_003", "BIO_004", "BIO_031"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Betmiga | EAU Incontinence 2023"
     },
     {
         "dci": "Denosumab",
@@ -313,7 +322,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Calcemie (2 semaines post-injection si IRC) | Vitamine D | Bilan dentaire annuel | DMO (18-24 mois)",
         "alerte_clinique": "⚠️ REBOND FRACTURAIRE A L'ARRET — ne jamais arreter sans relais bisphosphonate | Hypocalcemie (surtout si IRC/carence vit D) | Osteonecroses de la machoire (rare) | Supplementer vit D + Ca systematiquement",
         "bio_cible": ["BIO_005", "BIO_023", "BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Prolia | HAS Ostéoporose 2019"
     },
     {
         "dci": "Flecainide",
@@ -334,7 +344,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "bio_cible": ["BIO_031", "BIO_003", "BIO_004"],
         "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
         "epileptogene": "faible",
-        "epileptogene_desc": "Neurotoxicité possible en surdosage"
+        "epileptogene_desc": "Neurotoxicité possible en surdosage",
+        "source": "RCP Flecaine | ESC Arythmie 2020"
     },
     {
         "dci": "Ivabradine",
@@ -353,7 +364,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "FC repos (chaque consultation) | ECG semestriel",
         "alerte_clinique": "NE PAS utiliser si FA/flutter (inefficace) | Phosphenes (lumineux) frequents debut | Bradycardie < 50 → reduire | CI: rythme non sinusal, BAV III, IC aigue",
         "bio_cible": ["BIO_031"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Procoralan | ESC IC 2023"
     },
     {
         "dci": "Finerenone",
@@ -372,7 +384,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Kaliemie a M1, M3, puis trimestriel | DFG trimestriel | Transaminases",
         "alerte_clinique": "NE PAS initier si K+ > 5.0 | Arreter si K+ > 5.5 | FIDELIO-DKD/FIGARO-DKD: reduction progression MRC + evenements CV | Complementaire aux IEC/ARA2 et iSGLT2 dans la nephropathie diabetique",
         "bio_cible": ["BIO_001", "BIO_003", "BIO_004", "BIO_013", "BIO_014"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Kerendia | ESC IC 2023 ; KDIGO 2024"
     },
 
     // ========================================================================
@@ -397,7 +410,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "bio_cible": ["BIO_005", "BIO_023", "BIO_009", "BIO_013", "BIO_014", "BIO_035"],
         "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
         "epileptogene": "faible",
-        "epileptogene_desc": "Antiépileptique paradoxalement pro-convulsivant en surdosage"
+        "epileptogene_desc": "Antiépileptique paradoxalement pro-convulsivant en surdosage",
+        "source": "RCP Di-Hydan | HAS Epilepsie 2020 ; Beers 2023"
     },
     {
         "dci": "Ropinirole",
@@ -416,7 +430,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "TA | Somnolence diurne (conduite) | Troubles du controle des impulsions (jeu, achats, hypersexualite) | Dyskiniesies",
         "alerte_clinique": "START — Parkinson avec handicap fonctionnel | Hypotension orthostatique (surtout debut) | Somnolence subite (conduite) | Troubles controle impulsions (rechercher activement) | Syndrome de sevrage si arret brutal",
         "bio_cible": ["BIO_003"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Requip | HAS Parkinson 2016"
     },
     {
         "dci": "Rotigotine",
@@ -435,7 +450,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "TA | Somnolence | Troubles controle impulsions | Site d'application (rotation, reactions cutanees)",
         "alerte_clinique": "START — Parkinson | Avantage du patch: liberation continue, moins de fluctuations | Reactions cutanees au site d'application (rotation obligatoire) | Troubles controle impulsions",
         "bio_cible": ["BIO_003"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Neupro | HAS Parkinson 2016"
     },
     {
         "dci": "Piribedil",
@@ -456,7 +472,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "bio_cible": ["BIO_003"],
         "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
         "epileptogene": "faible",
-        "epileptogene_desc": "Agoniste dopaminergique — risque faible"
+        "epileptogene_desc": "Agoniste dopaminergique — risque faible",
+        "source": "RCP Trivastal | HAS Parkinson 2016"
     },
     {
         "dci": "Rasagiline",
@@ -475,7 +492,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Bilan hepatique annuel | Surveillance interactions",
         "alerte_clinique": "Bien tolere en geriatrie | CI avec tramadol, pethidine, dextromethorphane | Delai 14j avant introduction ISRS/IRSN apres arret | Tyramine: interaction dietetique negligeable avec IMAO-B selectif",
         "bio_cible": ["BIO_013", "BIO_014"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Azilect | HAS Parkinson 2016"
     },
     {
         "dci": "Safinamide",
@@ -494,7 +512,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Bilan hepatique semestriel | Examen ophtalmologique annuel (maculopathie rare) | Dyskiniesies (ajuster L-DOPA si besoin)",
         "alerte_clinique": "Adjuvant a la L-DOPA dans Parkinson avec fluctuations motrices | Double mecanisme IMAO-B + antiglutamate | CI si insuffisance hepatique severe | Surveiller oeil (degenerescence maculaire)",
         "bio_cible": ["BIO_013", "BIO_014", "BIO_003"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Xadago | HAS Parkinson 2016"
     },
     {
         "dci": "Opicapone",
@@ -513,7 +532,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Bilan hepatique (M3, M6, puis annuel) | Dyskiniesies (reduire L-DOPA de 10-30% si besoin)",
         "alerte_clinique": "Adjuvant L-DOPA: prolonge l'effet (reduit OFF) | Avantage: 1 prise/j au coucher | Souvent necessaire de reduire la dose de L-DOPA | CI si insuffisance hepatique severe | Coloration urine (brun-rouge, benin)",
         "bio_cible": ["BIO_013", "BIO_014"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Ongentys | HAS Parkinson 2016"
     },
 
     // ========================================================================
@@ -536,7 +556,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Natremie a J3, J7, M1, puis mensuel les 3 premiers mois | Poids | Restriction hydrique le soir (< 250 mL apres prise)",
         "alerte_clinique": "STOPP3-J10 — Risque d'hyponatremie symptomatique (convulsions, coma) | CI relative chez > 65 ans | Si utilise: restriction hydrique le soir, Na+ frequent | Indications residuelles: enuresie, diabete insipide",
         "bio_cible": ["BIO_002", "BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Minirin | Beers 2023"
     },
     {
         "dci": "Teriparatide",
@@ -555,7 +576,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Calcemie a M1, M3 puis semestriel | Calciurie si ATCD lithiase | DMO a 18-24 mois",
         "alerte_clinique": "Duree limitee a 24 mois (risque osteosarcome chez le rat — non confirme humain) | TOUJOURS relayer par anti-resorptif apres arret (bisphosphonate ou denosumab) | Hypercalcemie transitoire (3-6h post-injection) | Hypotension orthostatique (1eres injections)",
         "bio_cible": ["BIO_005", "BIO_023", "BIO_003", "BIO_008", "BIO_016"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Forsteo | HAS Ostéoporose 2019"
     },
     {
         "dci": "Pethidine",
@@ -576,7 +598,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "bio_cible": ["BIO_003", "BIO_004"],
         "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
         "epileptogene": "eleve",
-        "epileptogene_desc": "Métabolite norpéthidine pro-convulsivant — PIM absolu"
+        "epileptogene_desc": "Métabolite norpéthidine pro-convulsivant — PIM absolu",
+        "source": "RCP Dolosal | Beers 2023"
     },
     {
         "dci": "Meprobamate",
@@ -597,7 +620,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "bio_cible": [],
         "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
         "epileptogene": "modere",
-        "epileptogene_desc": "Sevrage brutal → convulsions — PIM absolu"
+        "epileptogene_desc": "Sevrage brutal → convulsions — PIM absolu",
+        "source": "ANSM retrait 2012 ; Beers 2023"
     },
     {
         "dci": "Pentoxifylline",
@@ -616,7 +640,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Reevaluation de l'indication",
         "alerte_clinique": "FORTA-D / REMEDIES — efficacite non prouvee en AOMI | Vertiges, nausees, cephalees | Preferer exercice physique supervise et revascularisation si indiquee | Deprescrire si deja en cours",
         "bio_cible": ["BIO_003"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Torental | FORTA-D"
     },
 
     // ========================================================================
@@ -635,7 +660,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_initial": "TA | ECG si FdR CV",
         "suivi_periodique": "TA",
         "alerte_clinique": "STOPP3-B14: CI si IC severe PAS < 90 ou derives nitres concomitants — risque de collapsus | Priapisme (rare) | Perte audition/vision (rare, urgence)",
-        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Revatio | RCP"
     },
     {
         "dci": "Tadalafil",
@@ -649,7 +675,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "ddi_interact": "Derives nitres (CI ABSOLUE) | Alpha-bloquants | Inhibiteurs CYP3A4",
         "suivi_initial": "TA", "suivi_periodique": "TA",
         "alerte_clinique": "STOPP3-B14: memes CI que sildenafil | Demi-vie longue (36h): interactions prolongees | Douleurs dorsolombaires (frequentes debut)",
-        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Cialis | RCP"
     },
     {
         "dci": "Zaleplon",
@@ -664,7 +691,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_initial": "Evaluation insomnie (cause secondaire)",
         "suivi_periodique": "Reevaluer a 2 semaines — sevrage si > 2 sem",
         "alerte_clinique": "STOPP3-D11/K4: PIM si ≥ 2 semaines ou patient chuteur | Demi-vie ultra-courte (1h): plutot endormissement que maintien | Comportements complexes du sommeil (somnambulisme)",
-        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Sonata | HAS BZD 2022 ; Beers 2023"
     },
     {
         "dci": "Itraconazole",
@@ -680,7 +708,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Bilan hepatique mensuel | ECG si QTc FdR",
         "alerte_clinique": "STOPP3-C14: interaction P-gp avec AOD — risque hemorragique | Inhibiteur CYP3A4 le plus puissant — verifier TOUTES les co-prescriptions | Hepatotoxicite | IC: inotrope negatif, eviter si IC",
         "bio_cible": ["BIO_013", "BIO_014", "BIO_031", "BIO_003"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Sporanox | ESCMID 2022"
     },
     {
         "dci": "Ketoconazole",
@@ -698,7 +727,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "bio_cible": ["BIO_013", "BIO_014", "BIO_031"],
         "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
         "epileptogene": "faible",
-        "epileptogene_desc": "Neurotoxicité rapportée à forte dose"
+        "epileptogene_desc": "Neurotoxicité rapportée à forte dose",
+        "source": "RCP Nizoral | ANSM restrictions 2013"
     },
     {
         "dci": "Tamoxifene",
@@ -714,7 +744,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Examen gyneco annuel (endometre) | Bilan hepatique semestriel | Examen ophtalmologique (retinopathie) | DMO (perte osseuse pre-menopause)",
         "alerte_clinique": "STOPP3-C14: inhibiteur P-gp — interaction AOD | STOPP3-C15: CI si ATCD MTEV | NE PAS associer ISRS inhibiteurs CYP2D6 (paroxetine, fluoxetine) — perte d'efficacite anti-tumorale | Risque thrombo-embolique, cancer endometre, retinopathie",
         "bio_cible": ["BIO_013", "BIO_014", "BIO_030", "BIO_005"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Nolvadex | ASCO 2019"
     },
     {
         "dci": "Cinnarizine",
@@ -729,7 +760,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_initial": "Recherche syndrome parkinsonien",
         "suivi_periodique": "Syndrome parkinsonien (survenue progressive) | Prise de poids | Depression",
         "alerte_clinique": "EU7-PIM — risque de parkinsonisme iatrogene (D2 blocker faible) | Depression | Prise de poids | Somnolence | Max 4-8 semaines",
-        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Sureptil | Beers 2023"
     },
     {
         "dci": "Flunarizine",
@@ -744,7 +776,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_initial": "Recherche syndrome parkinsonien | Humeur",
         "suivi_periodique": "Syndrome parkinsonien | Depression | Prise de poids",
         "alerte_clinique": "EU7-PIM — risque parkinsonisme + depression (plus eleve que cinnarizine) | Prise de poids importante | CI si Parkinson ou depression | Max 2 mois",
-        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Sibelium | ANSM ; Beers 2023"
     },
     {
         "dci": "Betahistine",
@@ -759,7 +792,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_initial": "Diagnostic ORL (Meniere vs autre cause)",
         "suivi_periodique": "Reevaluation de l'indication a 3 mois",
         "alerte_clinique": "REMEDIES — efficacite limitee au-dela de la crise de Meniere | Etude BEMED (2022): pas de superiorite vs placebo en prevention | Reevaluer et deprescrire si > 3 mois | Troubles GI frequents",
-        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Serc | Cochrane 2016"
     },
     {
         "dci": "Naftidrofuryl",
@@ -774,7 +808,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_initial": "Bilan hepatique",
         "suivi_periodique": "Reevaluation de l'indication",
         "alerte_clinique": "REMEDIES/EU7-PIM — efficacite non prouvee | Hepatotoxicite rare | Troubles GI | Preferer exercice physique et revascularisation si AOMI | Deprescrire",
-        "bio_cible": ["BIO_013", "BIO_014"], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": ["BIO_013", "BIO_014"], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Praxilene | FORTA-D"
     },
     {
         "dci": "Nicergoline",
@@ -789,7 +824,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_initial": "TA",
         "suivi_periodique": "TA | Reevaluation indication",
         "alerte_clinique": "REMEDIES — efficacite non prouvee dans troubles cognitifs vasculaires | Derive de l'ergot: fibrose rare (retro-peritoneale, valvulaire) | Deprescrire",
-        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Sermion | FORTA-D ; Beers 2023"
     },
     {
         "dci": "Agomelatine",
@@ -807,7 +843,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "bio_cible": ["BIO_013", "BIO_014"],
         "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
         "epileptogene": "faible",
-        "epileptogene_desc": "Risque faible mais rapporté"
+        "epileptogene_desc": "Risque faible mais rapporté",
+        "source": "RCP Valdoxan | HAS Depression 2017"
     },
     {
         "dci": "Thiamazole",
@@ -823,7 +860,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "NFS si fievre ou angine (agranulocytose — urgence) | TSH/T4L toutes les 4-6 semaines puis trimestriel | Bilan hepatique mensuel les 3 premiers mois",
         "alerte_clinique": "Agranulocytose (0.2-0.5%) — informer le patient: fievre + angine = NFS urgente | Hepatotoxicite (cholestatique, parfois cytolytique) | Arthralgies, rash | Thyrotoxicose a l'amiodarone: avis endocrinologue",
         "bio_cible": ["BIO_019", "BIO_011", "BIO_012", "BIO_013", "BIO_014"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Thyrozol | HAS Thyroïde 2022"
     },
     {
         "dci": "Midodrine",
@@ -839,7 +877,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "TA debout ET couche (risque HTA decubitus) | FC | Residuel vesical (risque retention)",
         "alerte_clinique": "Indication: hypotension orthostatique severe apres echec mesures non pharmacologiques | NE PAS donner le soir (HTA decubitus nocturne) | Retention urinaire possible (alpha-1 agoniste) | Pilotaxis | Prurit cuir chevelu",
         "bio_cible": ["BIO_003"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Gutron | ESC Syncope 2018"
     },
     {
         "dci": "Gemfibrozil",
@@ -855,7 +894,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Bilan lipidique trimestriel | CPK si myalgies | Bilan hepatique semestriel | NFS",
         "alerte_clinique": "INHIBITEUR PUISSANT CYP2C8 — interactions majeures avec statines (rhabdomyolyse), repaglinide (hypo severe) | CI avec simvastatine/lovastatine | Preferer fenofibrate (moins d'interactions) | Cholelithiase",
         "bio_cible": ["BIO_027", "BIO_018", "BIO_013", "BIO_014", "BIO_003"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Lipur | ESC Dyslipidémie 2019"
     },
     {
         "dci": "Sucralfate",
@@ -871,7 +911,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "Creatinine si usage prolonge | Phosphoremie si IRC (hypophosphatemie)",
         "alerte_clinique": "EU7-PIM/PRISCUS — constipation, interactions absorption multiples | CI si IRC severe (encephalopathie aluminique) | Espacer TOUS les medicaments de ≥ 2h | Preferer IPP a demi-dose",
         "bio_cible": ["BIO_003", "BIO_004"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Ulcar | SNFGE 2018"
     },
     {
         "dci": "Mebeverine",
@@ -886,7 +927,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_initial": "Diagnostic SII confirme",
         "suivi_periodique": "Reevaluation a 3 mois — deprescrire si pas de benefice",
         "alerte_clinique": "PRISCUS PIM / EU7-PIM / REMEDIES — efficacite non prouvee en continu | Reevaluer a 3 mois | Alternatives: regles hygienodietetiques, psyllium (fibres solubles) | Cephalees, vertiges rares",
-        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Duspatalin | Pharmacopée"
     },
     {
         "dci": "Phloroglucinol",
@@ -901,7 +943,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_initial": "Aucun",
         "suivi_periodique": "Reevaluation de l'indication",
         "alerte_clinique": "REMEDIES — usage PRN acceptable, usage chronique a reevaluer | Pas d'effet anticholinergique (avantage sur butylscopolamine) | Bonne tolerance geriatrique en aigu",
-        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "bio_cible": [], "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Spasfon | Pharmacopée"
     },
 
     // ========================================================================
@@ -924,7 +967,8 @@ const MISSING_MEDS_ENRICHMENT = [
         "suivi_periodique": "TA (chaque consultation) | Creatinine + K (J7, J14, M1, puis /3 mois) | NT-proBNP (/6 mois) | Symptomes IC (NYHA)",
         "alerte_clinique": "Hypotension symptomatique → reduire diuretique d'abord | Hyperkaliemie > 5.5 → arret temporaire | Angio-oedeme (rare) → arret definitif | Ne JAMAIS associer a un IEC (risque angio-oedeme grave)",
         "bio_cible": ["BIO_001", "BIO_003", "BIO_004", "BIO_028"],
-        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": ""
+        "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+        "source": "RCP Entresto | ESC IC 2023"
     },
 
     // ========================================================================

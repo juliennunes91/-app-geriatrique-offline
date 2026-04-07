@@ -1325,7 +1325,8 @@ const MASTER_DB = {
                     "atb_legere": "500 mg/8 à 12h",
                     "atb_moderee": "500 mg/8 à 12h",
                     "atb_severe": "500 mg/8 à 12h",
-                    "atb_terminale": "500 mg/8 à 12h"
+                    "atb_terminale": "500 mg/8 à 12h",
+                    "source": "RCP Fucidine | SPILF 2023"
           },
           {
                     "dci": "Acide zoledronique",
@@ -1607,7 +1608,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Spasfon-Lyoc | Pharmacopée"
           },
           {
                     "dci": "Amantadine",
@@ -1633,7 +1635,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Mantadix | HAS Parkinson 2016"
           },
           {
                     "dci": "Ambrisentan",
@@ -1690,7 +1693,8 @@ const MASTER_DB = {
                     "atb_legere": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
                     "atb_moderee": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
                     "atb_severe": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
-                    "atb_terminale": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses."
+                    "atb_terminale": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
+                    "source": "RCP Amiklin | SPILF 2023"
           },
           {
                     "dci": "Amiloride",
@@ -1747,7 +1751,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "eleve",
-                    "epileptogene_desc": "Pro-convulsivant (métabolite = théophylline)"
+                    "epileptogene_desc": "Pro-convulsivant (métabolite = théophylline)",
+                    "source": "RCP Aminophylline | GINA 2023"
           },
           {
                     "dci": "Amiodarone",
@@ -1901,7 +1906,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Defanyl | HAS Depression 2017 ; Beers 2023"
           },
           {
                     "dci": "Amoxicilline",
@@ -1926,7 +1932,8 @@ const MASTER_DB = {
                     "atb_legere": "DC de 1 g puis 500 mg/8h",
                     "atb_moderee": "DC de 1 g puis 750 mg/24h",
                     "atb_severe": "DC de 1 g puis 750 mg/24h",
-                    "atb_terminale": "DC de 1 g puis 750 mg/24h"
+                    "atb_terminale": "DC de 1 g puis 750 mg/24h",
+                    "source": "RCP Clamoxyl | SPILF 2023"
           },
           {
                     "dci": "Amoxicilline + acide clavulanique",
@@ -1952,7 +1959,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Augmentin | SPILF 2023"
           },
           {
                     "dci": "Ampicilline",
@@ -1978,7 +1986,8 @@ const MASTER_DB = {
                     "atb_legere": "Posologie usuelle : 1 à 2 g /6 à 12h",
                     "atb_moderee": "Posologie usuelle : 1 à 2 g /6 à 12h",
                     "atb_severe": "Posologie usuelle : 1 à 2 g /6 à 12h",
-                    "atb_terminale": "DC de 1 g puis 500 mg/12h"
+                    "atb_terminale": "DC de 1 g puis 500 mg/12h",
+                    "source": "RCP Totapen | SPILF 2023"
           },
           {
                     "dci": "Ampicilline + sulbactam",
@@ -2004,7 +2013,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Unasyn | SPILF 2023"
           },
           {
                     "dci": "Apixaban",
@@ -2180,7 +2190,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Sycrest | HAS 2017 ; Beers 2023"
           },
           {
                     "dci": "Asunaprevir",
@@ -2391,7 +2402,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Imurel | HAS 2022"
           },
           {
                     "dci": "Azithromycine",
@@ -2417,7 +2429,8 @@ const MASTER_DB = {
                     "atb_legere": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
                     "atb_moderee": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
                     "atb_severe": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
-                    "atb_terminale": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5"
+                    "atb_terminale": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
+                    "source": "RCP Zithromax | SPILF 2023"
           },
           {
                     "dci": "Aztreonam",
@@ -2443,7 +2456,8 @@ const MASTER_DB = {
                     "atb_legere": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
                     "atb_moderee": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
                     "atb_severe": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
-                    "atb_terminale": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique"
+                    "atb_terminale": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
+                    "source": "RCP Azactam | SPILF 2023"
           },
           {
                     "dci": "Baclofene",
@@ -2472,7 +2486,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "Sevrage brutal = convulsions — ne jamais arrêter brutalement"
+                    "epileptogene_desc": "Sevrage brutal = convulsions — ne jamais arrêter brutalement",
+                    "source": "RCP Lioresal | HAS 2023"
           },
           {
                     "dci": "Beclometasone",
@@ -2525,7 +2540,8 @@ const MASTER_DB = {
                     "atb_legere": "Semaines 1 et 2 : 400 mg, 1 fois par jour Semaines 3 à 24 : 200 mg, 3 fois par semaine, avec un intervalle d’au moins 48 heures entre chaque prise",
                     "atb_moderee": "Semaines 1 et 2 : 400 mg, 1 fois par jour Semaines 3 à 24 : 200 mg, 3 fois par semaine, avec un intervalle d’au moins 48 heures entre chaque prise",
                     "atb_severe": "Semaines 1 et 2 : 400 mg, 1 fois par jour Semaines 3 à 24 : 200 mg, 3 fois par semaine, avec un intervalle d’au moins 48 heures entre chaque prise",
-                    "atb_terminale": "Aucune donnée"
+                    "atb_terminale": "Aucune donnée",
+                    "source": "RCP Sirturo | OMS TB 2022"
           },
           {
                     "dci": "Belladonna",
@@ -2549,7 +2565,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "Pharmacopée | Beers 2023"
           },
           {
                     "dci": "Benazepril",
@@ -2601,7 +2618,8 @@ const MASTER_DB = {
                     "atb_legere": "1,8 MUI tous les 8 jours",
                     "atb_moderee": "1,8 MUI tous les 8 jours",
                     "atb_severe": "1,8 MUI tous les 8 jours",
-                    "atb_terminale": "1,8 MUI tous les 8 jours"
+                    "atb_terminale": "1,8 MUI tous les 8 jours",
+                    "source": "RCP Extencilline | SPILF 2023"
           },
           {
                     "dci": "Benzbromarone",
@@ -2654,7 +2672,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Cogentin | Beers 2023"
           },
           {
                     "dci": "Betamethasone",
@@ -2786,7 +2805,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Dulcolax | SNFGE 2018"
           },
           {
                     "dci": "Bisoprolol",
@@ -2979,7 +2999,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Parlodel | HAS Parkinson 2016"
           },
           {
                     "dci": "Brompheniramine",
@@ -3003,7 +3024,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Dimegan | Beers 2023"
           },
           {
                     "dci": "Budesonide",
@@ -3352,7 +3374,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Sinemet | HAS Parkinson 2016"
           },
           {
                     "dci": "Carbimazole",
@@ -3407,7 +3430,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP | Beers 2023"
           },
           {
                     "dci": "Carbonate de calcium",
@@ -3542,7 +3566,8 @@ const MASTER_DB = {
                     "atb_legere": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
                     "atb_moderee": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
                     "atb_severe": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
-                    "atb_terminale": "250 à 500 mg/8h Posologie max : 1500 mg/24h"
+                    "atb_terminale": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
+                    "source": "RCP Alfatil | SPILF 2023"
           },
           {
                     "dci": "Cefadroxil",
@@ -3566,7 +3591,8 @@ const MASTER_DB = {
                     "atb_legere": "1 g/12h",
                     "atb_moderee": "1 g/12h",
                     "atb_severe": "1 g/12h",
-                    "atb_terminale": "500 mg/12h"
+                    "atb_terminale": "500 mg/12h",
+                    "source": "RCP Oracéfal | SPILF 2023"
           },
           {
                     "dci": "Cefalexine",
@@ -3590,7 +3616,8 @@ const MASTER_DB = {
                     "atb_legere": "1 g/12h",
                     "atb_moderee": "500 mg/12h",
                     "atb_severe": "500 mg/12h",
-                    "atb_terminale": "500 mg/12h"
+                    "atb_terminale": "500 mg/12h",
+                    "source": "RCP Keforal | SPILF 2023"
           },
           {
                     "dci": "Cefamandole",
@@ -3615,7 +3642,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Cefamandole | SPILF 2023"
           },
           {
                     "dci": "Cefazoline",
@@ -3641,7 +3669,8 @@ const MASTER_DB = {
                     "atb_legere": "Infection peu sévère: 60 à 80 mg/kg/24h en 4 à 6 injections OU en continue avec DC = 1/4 ou 1/3 de la dose journalière",
                     "atb_moderee": "DC de 500 mg puis 125 à 250 mg/12h",
                     "atb_severe": "DC de 500 mg puis 125 à 250 mg/12h",
-                    "atb_terminale": "DC de 500 mg puis 125 à 250 mg/12h"
+                    "atb_terminale": "DC de 500 mg puis 125 à 250 mg/12h",
+                    "source": "RCP Cefazoline | SPILF 2023"
           },
           {
                     "dci": "Cefiderocol",
@@ -3668,7 +3697,8 @@ const MASTER_DB = {
                     "atb_legere": "2 g/8h",
                     "atb_moderee": "1,5 g/8h",
                     "atb_severe": "1,5 g/8h",
-                    "atb_terminale": "1,5 g/8h"
+                    "atb_terminale": "1,5 g/8h",
+                    "source": "RCP Fetcroja | SPILF 2023"
           },
           {
                     "dci": "Cefixime",
@@ -3692,7 +3722,8 @@ const MASTER_DB = {
                     "atb_legere": "200 mg/12h",
                     "atb_moderee": "200 mg/12h",
                     "atb_severe": "200 mg/12h",
-                    "atb_terminale": "200 mg/12h"
+                    "atb_terminale": "200 mg/12h",
+                    "source": "RCP Oroken | SPILF 2023"
           },
           {
                     "dci": "Cefotaxime",
@@ -3718,7 +3749,8 @@ const MASTER_DB = {
                     "atb_legere": "1 à 2 g/12h",
                     "atb_moderee": "1 à 2 g/12h",
                     "atb_severe": "750 à 1500 mg/12h",
-                    "atb_terminale": "750 à 1500 mg/24h"
+                    "atb_terminale": "750 à 1500 mg/24h",
+                    "source": "RCP Claforan | SPILF 2023"
           },
           {
                     "dci": "Cefoxitine",
@@ -3743,7 +3775,8 @@ const MASTER_DB = {
                     "atb_legere": "Infection peu grave : 1 à 2 g/8h",
                     "atb_moderee": "1 à 2 g/8 à 12h",
                     "atb_severe": "1 à 2 g/12 à 24h",
-                    "atb_terminale": "1 à 2 g/12 à 24h"
+                    "atb_terminale": "1 à 2 g/12 à 24h",
+                    "source": "RCP Mefoxin | SPILF 2023"
           },
           {
                     "dci": "Ceftazidime",
@@ -3770,7 +3803,8 @@ const MASTER_DB = {
                     "atb_legere": "2 g/12h",
                     "atb_moderee": "2 g/12h",
                     "atb_severe": "2 g/24h",
-                    "atb_terminale": "1 g/24h"
+                    "atb_terminale": "1 g/24h",
+                    "source": "RCP Fortum | SPILF 2023"
           },
           {
                     "dci": "Ceftazidime + avibactam",
@@ -3797,7 +3831,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Zavicefta | SPILF 2023"
           },
           {
                     "dci": "Ceftobiprole",
@@ -3824,7 +3859,8 @@ const MASTER_DB = {
                     "atb_legere": "500 mg /8h en perfusion de 2h Si infection sévère : 1 g/8h en perfusion de 4h",
                     "atb_moderee": "500 mg/12h",
                     "atb_severe": "250 mg/12h",
-                    "atb_terminale": "250 mg/24h"
+                    "atb_terminale": "250 mg/24h",
+                    "source": "RCP Zevtera | SPILF 2023"
           },
           {
                     "dci": "Ceftolozane + tazobactam",
@@ -3851,7 +3887,8 @@ const MASTER_DB = {
                     "atb_legere": "1 g/8h en perfusion de 60 min Si pneumonie nosocomiale : 2 g/8h en perfusion de 60 min",
                     "atb_moderee": "500 mg/8h 1 g/8h",
                     "atb_severe": "250 mg /8h 500 mg/8h",
-                    "atb_terminale": "DC de 500 mg puis 8h plus tard 100 mg/8h DC 1500 mg puis 8h plus tard 300 mg/8h"
+                    "atb_terminale": "DC de 500 mg puis 8h plus tard 100 mg/8h DC 1500 mg puis 8h plus tard 300 mg/8h",
+                    "source": "RCP Zerbaxa | SPILF 2023"
           },
           {
                     "dci": "Ceftriaxone",
@@ -3878,7 +3915,8 @@ const MASTER_DB = {
                     "atb_legere": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
                     "atb_moderee": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
                     "atb_severe": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
-                    "atb_terminale": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal"
+                    "atb_terminale": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
+                    "source": "RCP Rocéphine | SPILF 2023"
           },
           {
                     "dci": "Cefuroxime",
@@ -3902,7 +3940,8 @@ const MASTER_DB = {
                     "atb_legere": "250 à 500 mg/12h",
                     "atb_moderee": "250 à 500 mg/12h",
                     "atb_severe": "250 à 500 mg/24h",
-                    "atb_terminale": "250 à 500 mg/48h"
+                    "atb_terminale": "250 à 500 mg/48h",
+                    "source": "RCP Zinnat | SPILF 2023"
           },
           {
                     "dci": "Celecoxib",
@@ -3931,7 +3970,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Celebrex | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Celiprolol",
@@ -3985,7 +4025,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Celectol | ESC HTA 2023"
           },
           {
                     "dci": "Cetirizine",
@@ -4036,7 +4077,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Librium | HAS BZD 2022 ; Beers 2023"
           },
           {
                     "dci": "Chloroquine",
@@ -4064,7 +4106,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Nivaquine | Pharmacopée"
           },
           {
                     "dci": "Chlorpheniramine",
@@ -4110,7 +4153,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Polaramine | Beers 2023"
           },
           {
                     "dci": "Chlorpromazine",
@@ -4173,7 +4217,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Hygroton | ESC HTA 2023"
           },
           {
                     "dci": "Chlorthalidone",
@@ -4200,7 +4245,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Hygroton | ESC HTA 2023"
           },
           {
                     "dci": "Cholecalciferol",
@@ -4309,7 +4355,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Tenstaten | ESC HTA 2023"
           },
           {
                     "dci": "Ciclosporine",
@@ -4459,7 +4506,8 @@ const MASTER_DB = {
                     "atb_severe": "250-500 mg/24h",
                     "atb_terminale": "250-500 mg/24h",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "FQ — risque convulsif"
+                    "epileptogene_desc": "FQ — risque convulsif",
+                    "source": "RCP Ciflox | SPILF 2023"
           },
           {
                     "dci": "Citalopram",
@@ -4516,7 +4564,8 @@ const MASTER_DB = {
                     "atb_legere": "250 mg/24h",
                     "atb_moderee": "250 mg/24h",
                     "atb_severe": "250 mg/24h",
-                    "atb_terminale": "250 mg/24h"
+                    "atb_terminale": "250 mg/24h",
+                    "source": "RCP Zeclar | SPILF 2023"
           },
           {
                     "dci": "Clemastine",
@@ -4540,7 +4589,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Tavegyl | Beers 2023"
           },
           {
                     "dci": "Clevidipine",
@@ -4588,7 +4638,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Librax | Beers 2023"
           },
           {
                     "dci": "Clindamycine",
@@ -4613,7 +4664,8 @@ const MASTER_DB = {
                     "atb_legere": "600 mg/6 à 8h",
                     "atb_moderee": "600 mg/6 à 8h",
                     "atb_severe": "600 mg/6 à 8h",
-                    "atb_terminale": "600 mg/6 à 8h"
+                    "atb_terminale": "600 mg/6 à 8h",
+                    "source": "RCP Dalacine | SPILF 2023"
           },
           {
                     "dci": "Clobazam",
@@ -4816,7 +4868,8 @@ const MASTER_DB = {
                     "atb_legere": "50 mg/kg/24h en 3 prises (sans dépasser 4 g/24h)",
                     "atb_moderee": "50 mg/kg/24h en 3 prises (sans dépasser 4 g/24h)",
                     "atb_severe": "50 mg/kg/24h en 3 prises (sans dépasser 4 g/24h)",
-                    "atb_terminale": "Aucune donnée"
+                    "atb_terminale": "Aucune donnée",
+                    "source": "RCP Orbenine | SPILF 2023"
           },
           {
                     "dci": "Clozapine",
@@ -4967,7 +5020,8 @@ const MASTER_DB = {
                     "atb_legere": "DC de 9 MUI en perfusion de 30 min puis 9 MUI/24h en 2 ou 3 administrations",
                     "atb_moderee": "DC de 9 MUI puis 5,5 à 7,5 MUI/24h en 2 perfusions",
                     "atb_severe": "DC de 9 MUI puis 4,5 à 5,5 MUI/24h en 2 perfusion",
-                    "atb_terminale": "DC de 9 MUI puis 4,5 à 5,5 MUI/24h en 2 perfusion"
+                    "atb_terminale": "DC de 9 MUI puis 4,5 à 5,5 MUI/24h en 2 perfusion",
+                    "source": "RCP Colimycine | SPILF 2023"
           },
           {
                     "dci": "Cortisone",
@@ -5028,7 +5082,8 @@ const MASTER_DB = {
                     "atb_legere": "800 mg de sulfaméthoxazole + 160 mg de triméthoprime / 12h",
                     "atb_moderee": "800 mg/160 mg/24h",
                     "atb_severe": "Contre-indiqué",
-                    "atb_terminale": "Contre-indiqué"
+                    "atb_terminale": "Contre-indiqué",
+                    "source": "RCP Bactrim | SPILF 2023"
           },
           {
                     "dci": "Cyamemazine",
@@ -5087,7 +5142,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Flexeril | Beers 2023"
           },
           {
                     "dci": "Cycloserine",
@@ -5113,7 +5169,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Seromycine | OMS TB 2022"
           },
           {
                     "dci": "Cyproheptadine",
@@ -5138,7 +5195,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Periactin | Beers 2023"
           },
           {
                     "dci": "Dabigatran",
@@ -5223,7 +5281,8 @@ const MASTER_DB = {
                     "atb_legere": "1500 mg en une seule perfusion OU 1000 mg en perfusion de 30 min suivi de 500 mg 7 jours après",
                     "atb_moderee": "1500 mg en une seule perfusion OU 1000 mg en perfusion de 30 min suivi de 500 mg 7 jours après",
                     "atb_severe": "1000 mg en une seule perfusion OU 750 mg suivi de 375 mg 7 jours après",
-                    "atb_terminale": "1000 mg en une seule perfusion OU 750 mg suivi de 375 mg 7 jours après"
+                    "atb_terminale": "1000 mg en une seule perfusion OU 750 mg suivi de 375 mg 7 jours après",
+                    "source": "RCP Xydalba | SPILF 2023"
           },
           {
                     "dci": "Dapagliflozin",
@@ -5281,7 +5340,8 @@ const MASTER_DB = {
                     "atb_legere": "Infection non sévère : 6 à 8 mg/kg en perfusion de 30 min, 1 fois/24h",
                     "atb_moderee": "Infection non sévère : 6 à 8 mg/kg en perfusion de 30 min, 1 fois/24h",
                     "atb_severe": "6 à 8 mg/48h",
-                    "atb_terminale": "6 à 8 mg/48h"
+                    "atb_terminale": "6 à 8 mg/48h",
+                    "source": "RCP Cubicin | SPILF 2023"
           },
           {
                     "dci": "Darifenacin",
@@ -5308,7 +5368,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Enablex | Beers 2023"
           },
           {
                     "dci": "Darunavir",
@@ -5366,7 +5427,8 @@ const MASTER_DB = {
                     "atb_legere": "450 mg/12h",
                     "atb_moderee": "450 mg/12h",
                     "atb_severe": "450 mg/12h",
-                    "atb_terminale": "450 mg/12h"
+                    "atb_terminale": "450 mg/12h",
+                    "source": "RCP Quofenix | SPILF 2023"
           },
           {
                     "dci": "Delamanide",
@@ -5393,7 +5455,8 @@ const MASTER_DB = {
                     "atb_legere": "100 mg deux fois par jour pendant 24 semaines",
                     "atb_moderee": "100 mg deux fois par jour pendant 24 semaines",
                     "atb_severe": "100 mg deux fois par jour pendant 24 semaines",
-                    "atb_terminale": "Aucune donnée"
+                    "atb_terminale": "Aucune donnée",
+                    "source": "RCP Deltyba | OMS TB 2022"
           },
           {
                     "dci": "Desipramine",
@@ -5422,7 +5485,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Pertofran | Beers 2023"
           },
           {
                     "dci": "Desloratadine",
@@ -5444,7 +5508,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Aerius | RCP"
           },
           {
                     "dci": "Toltérodine",
@@ -5548,7 +5613,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Tussidane | Beers 2023"
           },
           {
                     "dci": "Diazepam",
@@ -5599,7 +5665,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Bentyl | Beers 2023"
           },
           {
                     "dci": "Digoxine",
@@ -5711,7 +5778,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Nausicalm | Beers 2023"
           },
           {
                     "dci": "Diphenhydramine",
@@ -5735,7 +5803,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Nautamine | Beers 2023"
           },
           {
                     "dci": "Dipyridamole",
@@ -5763,7 +5832,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Persantine | ESC 2024"
           },
           {
                     "dci": "Disopyramide",
@@ -5821,7 +5891,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Motilium | ANSM 2014"
           },
           {
                     "dci": "Doravirine",
@@ -5906,7 +5977,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Prothiaden | HAS Depression 2017 ; Beers 2023"
           },
           {
                     "dci": "Doxazosine",
@@ -5992,7 +6064,8 @@ const MASTER_DB = {
                     "atb_legere": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
                     "atb_moderee": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
                     "atb_severe": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
-                    "atb_terminale": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …"
+                    "atb_terminale": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
+                    "source": "RCP Doxy | SPILF 2023"
           },
           {
                     "dci": "Doxylamine",
@@ -6311,7 +6384,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Comtan | HAS Parkinson 2016"
           },
           {
                     "dci": "Ephedrine",
@@ -6335,7 +6409,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Ephedrine | Beers 2023"
           },
           {
                     "dci": "Eplerenone",
@@ -6449,7 +6524,8 @@ const MASTER_DB = {
                     "atb_legere": "1 g/ 24h",
                     "atb_moderee": "1 g/ 24h",
                     "atb_severe": "1 g/ 24h",
-                    "atb_terminale": "1 g/ 24h"
+                    "atb_terminale": "1 g/ 24h",
+                    "source": "RCP Invanz | SPILF 2023"
           },
           {
                     "dci": "Ertugliflozin",
@@ -6505,7 +6581,8 @@ const MASTER_DB = {
                     "atb_legere": "1 g/8 à 12h",
                     "atb_moderee": "500 à 750 mg/8 à 12h",
                     "atb_severe": "500 à 750 mg/8 à 12h",
-                    "atb_terminale": "500 à 750 mg/8 à 12h"
+                    "atb_terminale": "500 à 750 mg/8 à 12h",
+                    "source": "RCP Erythrocine | SPILF 2023"
           },
           {
                     "dci": "Escitalopram",
@@ -6560,7 +6637,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Spravato | RCP ; HAS 2022"
           },
           {
                     "dci": "Esmolol",
@@ -6666,7 +6744,8 @@ const MASTER_DB = {
                     "atb_legere": "15 mg/kg/j",
                     "atb_moderee": "10 mg/kg/j",
                     "atb_severe": "10 mg/kg/j",
-                    "atb_terminale": "10 mg/kg/j"
+                    "atb_terminale": "10 mg/kg/j",
+                    "source": "RCP Dexambutol | OMS TB 2022"
           },
           {
                     "dci": "Exenatide",
@@ -6778,7 +6857,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Adenuric | EULAR Goutte 2023"
           },
           {
                     "dci": "Felodipine",
@@ -6910,7 +6990,8 @@ const MASTER_DB = {
                     "atb_legere": "200 mg/12h",
                     "atb_moderee": "200 mg/12h",
                     "atb_severe": "200 mg/12h",
-                    "atb_terminale": "200 mg/12h"
+                    "atb_terminale": "200 mg/12h",
+                    "source": "RCP Dificlir | SPILF 2023 ; ESCMID C. difficile 2021"
           },
           {
                     "dci": "Flavoxate",
@@ -6932,7 +7013,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Urispas | Beers 2023"
           },
           {
                     "dci": "Fluindione",
@@ -7220,7 +7302,8 @@ const MASTER_DB = {
                     "atb_legere": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
                     "atb_moderee": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
                     "atb_severe": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
-                    "atb_terminale": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique"
+                    "atb_terminale": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
+                    "source": "RCP Monuril | SPILF 2023"
           },
           {
                     "dci": "Fosinopril",
@@ -7388,7 +7471,8 @@ const MASTER_DB = {
                     "atb_legere": "3 à 8 mg/kg/j",
                     "atb_moderee": "3 à 8 mg/kg/j",
                     "atb_severe": "3 à 8 mg/kg/j",
-                    "atb_terminale": "3 à 8 mg/kg/j"
+                    "atb_terminale": "3 à 8 mg/kg/j",
+                    "source": "RCP Gentalline | SPILF 2023"
           },
           {
                     "dci": "Glycopyrronium",
@@ -7434,7 +7518,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Mucinex | Pharmacopée"
           },
           {
                     "dci": "Haloperidol",
@@ -7496,7 +7581,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Nepresol | ESC HTA 2023"
           },
           {
                     "dci": "Hydrochlorothiazide",
@@ -7636,7 +7722,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP | Beers 2023"
           },
           {
                     "dci": "Ibandronate",
@@ -7693,7 +7780,8 @@ const MASTER_DB = {
                     "atb_severe": "500 mg/8h",
                     "atb_terminale": "500 mg/8h",
                     "epileptogene": "eleve",
-                    "epileptogene_desc": "Carbapénème le plus pro-convulsivant (3-33% selon dose/IRC)"
+                    "epileptogene_desc": "Carbapénème le plus pro-convulsivant (3-33% selon dose/IRC)",
+                    "source": "RCP Tienam | SPILF 2023"
           },
           {
                     "dci": "Imipenem/Cilastatine/Relebactam",
@@ -7721,7 +7809,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "eleve",
-                    "epileptogene_desc": "Carbapénème le plus pro-convulsivant (3-33% selon dose/IRC)"
+                    "epileptogene_desc": "Carbapénème le plus pro-convulsivant (3-33% selon dose/IRC)",
+                    "source": "RCP Recarbrio | SPILF 2023"
           },
           {
                     "dci": "Imipramine",
@@ -8062,7 +8151,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Marsilid | Beers 2023"
           },
           {
                     "dci": "Irbesartan",
@@ -8118,7 +8208,8 @@ const MASTER_DB = {
                     "atb_severe": "3 à 5 mg/kg/24h",
                     "atb_terminale": "Max : 200 mg/j",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "Déplétion pyridoxine → convulsions (prévention par B6)"
+                    "epileptogene_desc": "Déplétion pyridoxine → convulsions (prévention par B6)",
+                    "source": "RCP Rimifon | OMS TB 2022"
           },
           {
                     "dci": "Isosorbide",
@@ -8144,7 +8235,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Risordan | ESC IC 2023"
           },
           {
                     "dci": "Isradipine",
@@ -8194,7 +8286,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Ketalar | RCP ; SFAR 2023"
           },
           {
                     "dci": "Labetalol",
@@ -8470,7 +8563,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Xyzall | RCP"
           },
           {
                     "dci": "Levodopa",
@@ -8497,7 +8591,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Modopar | HAS Parkinson 2016"
           },
           {
                     "dci": "Levofloxacine",
@@ -8526,7 +8621,8 @@ const MASTER_DB = {
                     "atb_severe": "DC de 500 mg puis 250 mg/24 à 48h",
                     "atb_terminale": "DC de 500 mg puis 250 mg/24 à 48h",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "FQ — risque convulsif"
+                    "epileptogene_desc": "FQ — risque convulsif",
+                    "source": "RCP Tavanic | SPILF 2023"
           },
           {
                     "dci": "Levomepromazine",
@@ -8556,7 +8652,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "Phénothiazine — risque convulsif"
+                    "epileptogene_desc": "Phénothiazine — risque convulsif",
+                    "source": "RCP Nozinan | HAS 2017"
           },
           {
                     "dci": "Levomethopromazine",
@@ -8643,7 +8740,8 @@ const MASTER_DB = {
                     "atb_legere": "600 mg/12h",
                     "atb_moderee": "600 mg/12h",
                     "atb_severe": "600 mg/24h",
-                    "atb_terminale": "600 mg/24h"
+                    "atb_terminale": "600 mg/24h",
+                    "source": "RCP Zyvoxid | SPILF 2023"
           },
           {
                     "dci": "Liothyronine",
@@ -8787,7 +8885,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "Risque si lithiémie élevée (neurotoxicité)"
+                    "epileptogene_desc": "Risque si lithiémie élevée (neurotoxicité)",
+                    "source": "RCP Teralithe | HAS Bipolaire 2015"
           },
           {
                     "dci": "Loperamide",
@@ -9014,7 +9113,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Loxapac | HAS 2017"
           },
           {
                     "dci": "Lymecycline",
@@ -9039,7 +9139,8 @@ const MASTER_DB = {
                     "atb_legere": "Aucune donnée",
                     "atb_moderee": "Aucune donnée",
                     "atb_severe": "Aucune donnée",
-                    "atb_terminale": "Aucune donnée"
+                    "atb_terminale": "Aucune donnée",
+                    "source": "RCP Tetralysal | SPILF 2023"
           },
           {
                     "dci": "Macrogol",
@@ -9123,7 +9224,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "eleve",
-                    "epileptogene_desc": "Risque élevé de convulsions (tétracyclique)"
+                    "epileptogene_desc": "Risque élevé de convulsions (tétracyclique)",
+                    "source": "RCP Ludiomil | HAS Depression 2017 ; Beers 2023"
           },
           {
                     "dci": "Meclozine",
@@ -9145,7 +9247,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Agyrax | Beers 2023"
           },
           {
                     "dci": "Meperidine",
@@ -9172,7 +9275,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Pethidine | Beers 2023"
           },
           {
                     "dci": "Mequitazine",
@@ -9198,7 +9302,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Primalan | Beers 2023"
           },
           {
                     "dci": "Meropenem",
@@ -9227,7 +9332,8 @@ const MASTER_DB = {
                     "atb_severe": "1 à 2 g/8h",
                     "atb_terminale": "1 à 2 g/12h",
                     "epileptogene": "faible",
-                    "epileptogene_desc": "Risque moindre que imipénème mais existant"
+                    "epileptogene_desc": "Risque moindre que imipénème mais existant",
+                    "source": "RCP Meronem | SPILF 2023"
           },
           {
                     "dci": "Meropenem/Vaborbactam",
@@ -9255,7 +9361,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "faible",
-                    "epileptogene_desc": "Risque moindre que imipénème mais existant"
+                    "epileptogene_desc": "Risque moindre que imipénème mais existant",
+                    "source": "RCP Vaborem | SPILF 2023"
           },
           {
                     "dci": "Metformine",
@@ -9316,7 +9423,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Methadone | RCP ; HAS Douleur 2016"
           },
           {
                     "dci": "Methocarbamol",
@@ -9457,7 +9565,8 @@ const MASTER_DB = {
                     "atb_severe": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h",
                     "atb_terminale": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h",
                     "epileptogene": "faible",
-                    "epileptogene_desc": "Neurotoxicité si traitement prolongé"
+                    "epileptogene_desc": "Neurotoxicité si traitement prolongé",
+                    "source": "RCP Flagyl | SPILF 2023"
           },
           {
                     "dci": "Midazolam",
@@ -9483,7 +9592,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Hypnovel | HAS BZD 2022"
           },
           {
                     "dci": "Miglitinide",
@@ -9565,7 +9675,8 @@ const MASTER_DB = {
                     "atb_legere": "200 mg/j en 2 prises",
                     "atb_moderee": "200 mg/j en 2 prises",
                     "atb_severe": "200 mg/j en 2 prises",
-                    "atb_terminale": "200 mg/j en 2 prises"
+                    "atb_terminale": "200 mg/j en 2 prises",
+                    "source": "RCP Minocycline | SPILF 2023"
           },
           {
                     "dci": "Mirtazapine",
@@ -9685,7 +9796,8 @@ const MASTER_DB = {
                     "atb_severe": "400 mg/24h",
                     "atb_terminale": "400 mg/24h",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "FQ — risque convulsif"
+                    "epileptogene_desc": "FQ — risque convulsif",
+                    "source": "RCP Izilox | SPILF 2023"
           },
           {
                     "dci": "Mycophenolate mofetil",
@@ -9770,7 +9882,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Nubain | RCP"
           },
           {
                     "dci": "Naratriptan",
@@ -10041,7 +10154,8 @@ const MASTER_DB = {
                     "atb_legere": "Déconseillé",
                     "atb_moderee": "Déconseillé",
                     "atb_severe": "Contre-indiqué",
-                    "atb_terminale": "Contre-indiqué"
+                    "atb_terminale": "Contre-indiqué",
+                    "source": "RCP Furadantine | SPILF 2023"
           },
           {
                     "dci": "Nordazepam",
@@ -10096,7 +10210,8 @@ const MASTER_DB = {
                     "atb_severe": "400 mg/24h",
                     "atb_terminale": "400 mg/24h",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "FQ — risque convulsif"
+                    "epileptogene_desc": "FQ — risque convulsif",
+                    "source": "RCP Noroxine | SPILF 2023"
           },
           {
                     "dci": "Nortriptyline",
@@ -10125,7 +10240,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Aventyl | Beers 2023"
           },
           {
                     "dci": "Ofloxacine",
@@ -10153,7 +10269,8 @@ const MASTER_DB = {
                     "atb_severe": "200 mg/24h",
                     "atb_terminale": "200 mg/48h",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "FQ — risque convulsif"
+                    "epileptogene_desc": "FQ — risque convulsif",
+                    "source": "RCP Oflocet | SPILF 2023"
           },
           {
                     "dci": "Olanzapine",
@@ -10271,7 +10388,8 @@ const MASTER_DB = {
                     "atb_legere": "1200 mg (dose unique) en perfusion de 3h",
                     "atb_moderee": "1200 mg (dose unique) en perfusion de 3h",
                     "atb_severe": "Aucune donnée",
-                    "atb_terminale": "Aucune donnée"
+                    "atb_terminale": "Aucune donnée",
+                    "source": "RCP Tenkasi | SPILF 2023"
           },
           {
                     "dci": "Orphenadrine",
@@ -10297,7 +10415,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Disipal | Beers 2023"
           },
           {
                     "dci": "Oxacilline",
@@ -10323,7 +10442,8 @@ const MASTER_DB = {
                     "atb_legere": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
                     "atb_moderee": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
                     "atb_severe": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
-                    "atb_terminale": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue"
+                    "atb_terminale": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
+                    "source": "RCP Bristopen | SPILF 2023"
           },
           {
                     "dci": "Oxazepam",
@@ -10634,7 +10754,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Fervex | Beers 2023"
           },
           {
                     "dci": "Phenobarbital",
@@ -10663,7 +10784,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Gardenal | HAS Epilepsie 2020 ; Beers 2023"
           },
           {
                     "dci": "Pidolate de calcium",
@@ -10743,7 +10865,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Orap | HAS 2017"
           },
           {
                     "dci": "Pindolol",
@@ -10799,7 +10922,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Dipiperon | HAS 2017"
           },
           {
                     "dci": "Piperacilline",
@@ -10827,7 +10951,8 @@ const MASTER_DB = {
                     "atb_legere": "4 g/6 à 8h",
                     "atb_moderee": "4 g/6 à 8h",
                     "atb_severe": "4 g/ 8h",
-                    "atb_terminale": "4 g/ 8h"
+                    "atb_terminale": "4 g/ 8h",
+                    "source": "RCP Piperacilline | SPILF 2023"
           },
           {
                     "dci": "Piperacilline + tazobactam",
@@ -10855,7 +10980,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Tazocilline | SPILF 2023"
           },
           {
                     "dci": "Pipotiazine",
@@ -10937,7 +11063,8 @@ const MASTER_DB = {
                     "atb_legere": "400 mg/8 à 12h",
                     "atb_moderee": "400 mg/8 à 12h",
                     "atb_severe": "DC de 400 mg puis 200 mg/8 à 12h",
-                    "atb_terminale": "DC de 400 mg puis 200 mg/8 à 12h"
+                    "atb_terminale": "DC de 400 mg puis 200 mg/8 à 12h",
+                    "source": "RCP Selexid | SPILF 2023"
           },
           {
                     "dci": "Poudre d'opium",
@@ -10990,7 +11117,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Sifrol | HAS Parkinson 2016"
           },
           {
                     "dci": "Prasugrel",
@@ -11219,7 +11347,8 @@ const MASTER_DB = {
                     "atb_legere": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
                     "atb_moderee": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
                     "atb_severe": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
-                    "atb_terminale": "1 g/8 à 12h (posologie maximale = 4 g/24h)"
+                    "atb_terminale": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
+                    "source": "RCP Pyostacine | SPILF 2023"
           },
           {
                     "dci": "Prochlorperazine",
@@ -11247,7 +11376,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Stemetil | Beers 2023"
           },
           {
                     "dci": "Promethazine",
@@ -11299,7 +11429,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Pro-Banthine | Beers 2023"
           },
           {
                     "dci": "Propiverine",
@@ -11324,7 +11455,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Mictonorm | Beers 2023"
           },
           {
                     "dci": "Propranolol",
@@ -11406,7 +11538,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Sudafed | Beers 2023"
           },
           {
                     "dci": "Pyrazinamide",
@@ -11433,7 +11566,8 @@ const MASTER_DB = {
                     "atb_legere": "30 mg/kg/24h en 1 prise /j",
                     "atb_moderee": "30 mg/kg/24h en 1 prise /j",
                     "atb_severe": "30 mg/kg/24h en 1 prise /j",
-                    "atb_terminale": "30 mg/kg/48h"
+                    "atb_terminale": "30 mg/kg/48h",
+                    "source": "RCP Pirilene | OMS TB 2022"
           },
           {
                     "dci": "Quetiapine",
@@ -11527,7 +11661,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Serecor | ESC Arythmie 2020"
           },
           {
                     "dci": "Rabeprazole",
@@ -11609,7 +11744,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Azantac | ANSM retrait 2020 ; Beers 2023"
           },
           {
                     "dci": "Rifabutine",
@@ -11636,7 +11772,8 @@ const MASTER_DB = {
                     "atb_legere": "Traitement curatif des infections à Mycobacterium avium complexe chez les sujets VIH + : poids > 50 kg : 600 mg/j - poids < 50 kg : 450 mg/j Si association avec la Clarithromycine : 300 mg/j",
                     "atb_moderee": "Traitement curatif des infections à Mycobacterium avium complexe chez les sujets VIH + : poids > 50 kg : 600 mg/j - poids < 50 kg : 450 mg/j Si association avec la Clarithromycine : 300 mg/j",
                     "atb_severe": "Traitement curatif des infections à Mycobacterium avium complexe chez les sujets VIH + : poids > 50 kg : 600 mg/j - poids < 50 kg : 450 mg/j Si association avec la Clarithromycine : 300 mg/j",
-                    "atb_terminale": "Poids > 50 kg : 300 mg/24h Poids < 50 kg : 450 mg/48h Si association avec la Clarithromycine : 150 mg/j"
+                    "atb_terminale": "Poids > 50 kg : 300 mg/24h Poids < 50 kg : 450 mg/48h Si association avec la Clarithromycine : 150 mg/j",
+                    "source": "RCP Ansatipine | OMS TB 2022"
           },
           {
                     "dci": "Rifampicine",
@@ -11667,7 +11804,8 @@ const MASTER_DB = {
                     "atb_legere": "Tuberculose : 8 à 12 mg/kg/24h",
                     "atb_moderee": "Tuberculose : 8 à 12 mg/kg/24h",
                     "atb_severe": "Tuberculose : 8 à 12 mg/kg/24h",
-                    "atb_terminale": "Tuberculose : 8 à 12 mg/kg/24h"
+                    "atb_terminale": "Tuberculose : 8 à 12 mg/kg/24h",
+                    "source": "RCP Rifadine | OMS TB 2022"
           },
           {
                     "dci": "Risedronate",
@@ -11852,7 +11990,8 @@ const MASTER_DB = {
                     "atb_legere": "150 mg/12h",
                     "atb_moderee": "150 mg/24h",
                     "atb_severe": "150 mg/24h",
-                    "atb_terminale": "150 mg/24h"
+                    "atb_terminale": "150 mg/24h",
+                    "source": "RCP Rulid | SPILF 2023"
           },
           {
                     "dci": "Salbutamol",
@@ -11985,7 +12124,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Deprenyl | HAS Parkinson 2016"
           },
           {
                     "dci": "Semaglutide",
@@ -12244,7 +12384,8 @@ const MASTER_DB = {
                     "atb_legere": "Per os : 3 MUI/8 à 12h",
                     "atb_moderee": "Per os : 3 MUI/8 à 12h",
                     "atb_severe": "Per os : 3 MUI/8 à 12h",
-                    "atb_terminale": "Per os : 3 MUI/8 à 12h"
+                    "atb_terminale": "Per os : 3 MUI/8 à 12h",
+                    "source": "RCP Rovamycine | SPILF 2023"
           },
           {
                     "dci": "Spiramycine + metronidazole",
@@ -12272,7 +12413,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "faible",
-                    "epileptogene_desc": "Neurotoxicité si traitement prolongé"
+                    "epileptogene_desc": "Neurotoxicité si traitement prolongé",
+                    "source": "RCP Rodogyl | SPILF 2023"
           },
           {
                     "dci": "Spironolactone",
@@ -12330,7 +12472,8 @@ const MASTER_DB = {
                     "atb_legere": "Réduction de la posologie",
                     "atb_moderee": "Aucune donnée",
                     "atb_severe": "Aucune donnée",
-                    "atb_terminale": "Aucune donnée"
+                    "atb_terminale": "Aucune donnée",
+                    "source": "RCP Adiazine | SPILF 2023"
           },
           {
                     "dci": "Sulfate ferreux",
@@ -12387,7 +12530,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Dogmatil | HAS 2017"
           },
           {
                     "dci": "Sumatriptan",
@@ -12553,7 +12697,8 @@ const MASTER_DB = {
                     "atb_legere": "200 mg/24h",
                     "atb_moderee": "200 mg/24h",
                     "atb_severe": "200 mg/24h",
-                    "atb_terminale": "200 mg/24h"
+                    "atb_terminale": "200 mg/24h",
+                    "source": "RCP Sivextro | SPILF 2023"
           },
           {
                     "dci": "Teicoplanine",
@@ -12579,7 +12724,8 @@ const MASTER_DB = {
                     "atb_legere": "Infection peu sévère : DC de 6 mg/kg/12h les 3 premières injections puis 6 mg/kg/24h",
                     "atb_moderee": "DC de 6 mg/kg/12h les 3 premières injections puis 3 mg/kg/24h ou 6 mg/kg/48h",
                     "atb_severe": "DC de 6 mg/kg/12h les 3 premières injections puis 2 mg/kg/24h ou 6 mg/kg/72h",
-                    "atb_terminale": "DC de 6 mg/kg/12h les 3 premières injections puis 2 mg/kg/24h ou 6 mg/kg/72h"
+                    "atb_terminale": "DC de 6 mg/kg/12h les 3 premières injections puis 2 mg/kg/24h ou 6 mg/kg/72h",
+                    "source": "RCP Targocid | SPILF 2023"
           },
           {
                     "dci": "Telmisartan",
@@ -12631,7 +12777,8 @@ const MASTER_DB = {
                     "atb_legere": "1 g/12h",
                     "atb_moderee": "1 g/12h",
                     "atb_severe": "1 g/24h",
-                    "atb_terminale": "1 g/24h"
+                    "atb_terminale": "1 g/24h",
+                    "source": "RCP Negaban | SPILF 2023"
           },
           {
                     "dci": "Terazosine",
@@ -12713,7 +12860,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "eleve",
-                    "epileptogene_desc": "Xanthine pro-convulsivante — surtout si taux > 25 mg/L"
+                    "epileptogene_desc": "Xanthine pro-convulsivante — surtout si taux > 25 mg/L",
+                    "source": "RCP Euphylline | GINA 2023"
           },
           {
                     "dci": "Thiocolchicoside",
@@ -12766,7 +12914,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Melleril | Beers 2023"
           },
           {
                     "dci": "Tiapride",
@@ -12907,7 +13056,8 @@ const MASTER_DB = {
                     "atb_legere": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
                     "atb_moderee": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
                     "atb_severe": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
-                    "atb_terminale": "Infection non sévère : DC de 100 mg puis 50 mg/12h"
+                    "atb_terminale": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
+                    "source": "RCP Tygacil | SPILF 2023"
           },
           {
                     "dci": "Timolol",
@@ -13042,7 +13192,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Sirdalud | Beers 2023"
           },
           {
                     "dci": "Tobramycine",
@@ -13069,7 +13220,8 @@ const MASTER_DB = {
                     "atb_legere": "3 à 8 mg/kg/j",
                     "atb_moderee": "3 à 8 mg/kg/j",
                     "atb_severe": "3 à 8 mg/kg/j",
-                    "atb_terminale": "3 à 8 mg/kg/j"
+                    "atb_terminale": "3 à 8 mg/kg/j",
+                    "source": "RCP Nebcine | SPILF 2023"
           },
           {
                     "dci": "Tolterodine",
@@ -13096,7 +13248,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Detrusitol | Beers 2023"
           },
           {
                     "dci": "Topiramate",
@@ -13267,7 +13420,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Desyrel | HAS Depression 2017"
           },
           {
                     "dci": "Trazosine",
@@ -13291,7 +13445,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Minipress | ESC HTA 2023"
           },
           {
                     "dci": "Triamcinolone",
@@ -13320,7 +13475,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Kenacort | HAS Corticothérapie"
           },
           {
                     "dci": "Triamterene",
@@ -13347,7 +13503,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Teriam | ESC HTA 2023"
           },
           {
                     "dci": "Trifluoperazine",
@@ -13375,7 +13532,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Terfluzine | Beers 2023"
           },
           {
                     "dci": "Trihexyphenidyl",
@@ -13397,7 +13555,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Artane | Beers 2023"
           },
           {
                     "dci": "Trihexyphenidyle",
@@ -13447,7 +13606,8 @@ const MASTER_DB = {
                     "atb_legere": "Cystite aiguë non compliquée : 300 mg/j en 1 prise, pendant 3 jours",
                     "atb_moderee": "Aucune donnée",
                     "atb_severe": "Aucune donnée",
-                    "atb_terminale": "Aucune donnée"
+                    "atb_terminale": "Aucune donnée",
+                    "source": "RCP Delprim | SPILF 2023"
           },
           {
                     "dci": "Trimipramine",
@@ -13502,7 +13662,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Actifed | Beers 2023"
           },
           {
                     "dci": "Tropatepine",
@@ -13638,7 +13799,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Depamide | HAS Epilepsie 2020"
           },
           {
                     "dci": "Valsartan",
@@ -13694,7 +13856,8 @@ const MASTER_DB = {
                     "atb_legere": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
                     "atb_moderee": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
                     "atb_severe": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
-                    "atb_terminale": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre"
+                    "atb_terminale": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
+                    "source": "RCP Vancomycine | SPILF 2023 ; IDSA 2020"
           },
           {
                     "dci": "Venlafaxine",
@@ -14011,7 +14174,8 @@ const MASTER_DB = {
                     "atb_legere": "Infection respiratoire communautaire, pyélonéphrite non compliquée : 1 g/12h *",
                     "atb_moderee": "Infection respiratoire communautaire, pyélonéphrite non compliquée : 1 g/12h *",
                     "atb_severe": "1 g/24h",
-                    "atb_terminale": "1 g/24h"
+                    "atb_terminale": "1 g/24h",
+                    "source": "RCP Axépim | SPILF 2023"
           },
           {
                     "dci": "Cefpodoxime",
@@ -14035,7 +14199,8 @@ const MASTER_DB = {
                     "atb_legere": "100 à 200 mg/12 à 24h",
                     "atb_moderee": "100 à 200 mg/12 à 24h",
                     "atb_severe": "100 à 200 mg/24h",
-                    "atb_terminale": "100 à 200 mg/24h"
+                    "atb_terminale": "100 à 200 mg/24h",
+                    "source": "RCP Orelox | SPILF 2023"
           },
           {
                     "dci": "Ceftaroline",
@@ -14061,7 +14226,8 @@ const MASTER_DB = {
                     "atb_legere": "600 mg/12h",
                     "atb_moderee": "400 mg/12h",
                     "atb_severe": "300 mg/12h",
-                    "atb_terminale": "200 mg/12h"
+                    "atb_terminale": "200 mg/12h",
+                    "source": "RCP Zinforo | SPILF 2023"
           },
           {
                     "dci": "Colistine",
@@ -14088,7 +14254,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Colimycine | SPILF 2023"
           },
           {
                     "dci": "darifenacine",
@@ -14115,7 +14282,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Enablex | Beers 2023"
           },
           {
                     "dci": "Domperidone2",
@@ -14142,7 +14310,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Motilium | ANSM 2014"
           },
           {
                     "dci": "formoterole",
@@ -14164,7 +14333,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Foradil | GINA 2023"
           },
           {
                     "dci": "Mitiglitinide",
@@ -14189,7 +14359,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Glufast | HAS DT2 2023"
           },
           {
                     "dci": "ticagrelore",
@@ -14211,7 +14382,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Brilique | ESC 2024"
           },
           {
                     "dci": "Mianserine",
@@ -14238,7 +14410,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Athymil | HAS Depression 2017"
           },
           {
                     "dci": "Potassium",
@@ -14263,7 +14436,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Diffu-K | Pharmacopée"
           },
           {
                     "dci": "Aldactazine",
@@ -14289,7 +14463,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Aldactazine | ESC IC 2023"
           },
           {
                     "dci": "Ibuprofene",
@@ -14316,7 +14491,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Advil | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Ketoprofene",
@@ -14343,7 +14519,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Profenid | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Naproxene",
@@ -14370,7 +14547,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Naprosyne | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Diclofenac",
@@ -14397,7 +14575,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Voltarene | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Etoricoxib",
@@ -14424,7 +14603,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Arcoxia | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Meloxicam",
@@ -14451,7 +14631,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Mobic | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Piroxicam",
@@ -14478,7 +14659,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Feldene | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Acide tiaprofenique",
@@ -14505,7 +14687,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Surgam | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Nimesulide",
@@ -14532,7 +14715,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Nexen | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Indometacine",
@@ -14559,7 +14743,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Indocid | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Sulindac",
@@ -14586,7 +14771,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Arthrocine | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Nabumetone",
@@ -14613,7 +14799,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Nabucox | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Aceclofenac",
@@ -14640,7 +14827,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Cartrex | EULAR 2023 ; Beers 2023"
           },
           {
                     "dci": "Clonidine",
@@ -14664,7 +14852,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Catapressan | ESC HTA 2023 ; Beers 2023"
           },
           {
                     "dci": "Dalteparine",
@@ -14690,7 +14879,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Fragmine | ESC 2024"
           },
           {
                     "dci": "Desvenlafaxine",
@@ -14717,7 +14907,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "IRSNA — risque dose-dépendant (surtout surdosage)"
+                    "epileptogene_desc": "IRSNA — risque dose-dépendant (surtout surdosage)",
+                    "source": "RCP Pristiq | HAS Depression 2017"
           },
           {
                     "dci": "Dosulpine",
@@ -14743,7 +14934,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Prothiaden | HAS Depression 2017 ; Beers 2023"
           },
           {
                     "dci": "Enoxaparine",
@@ -14769,7 +14961,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Lovenox | ESC 2024"
           },
           {
                     "dci": "Fluconazole",
@@ -14796,7 +14989,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Triflucan | ESCMID 2022"
           },
           {
                     "dci": "Fondaparinux",
@@ -14821,7 +15015,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Arixtra | ESC 2024"
           },
           {
                     "dci": "Hydroxychloroquine",
@@ -14848,7 +15043,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Plaquenil | HAS Rhumatologie 2019"
           },
           {
                     "dci": "Leflunomide",
@@ -14875,7 +15071,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Arava | HAS Rhumatologie 2019"
           },
           {
                     "dci": "Methotrexate",
@@ -14903,7 +15100,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Novatrex | HAS Rhumatologie 2019"
           },
           {
                     "dci": "Methyldopa",
@@ -14929,7 +15127,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Aldomet | ESC HTA 2023 ; Beers 2023"
           },
           {
                     "dci": "Metopimazine",
@@ -14955,7 +15154,8 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "epileptogene": "faible",
-                    "epileptogene_desc": "Antiémétique — abaissement modeste du seuil"
+                    "epileptogene_desc": "Antiémétique — abaissement modeste du seuil",
+                    "source": "RCP Vogalene | RCP"
           },
           {
                     "dci": "Ondansetron",
@@ -14981,7 +15181,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Zophren | RCP"
           },
           {
                     "dci": "Posaconazole",
@@ -15008,7 +15209,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Noxafil | ESCMID 2022"
           },
           {
                     "dci": "Primidone",
@@ -15033,7 +15235,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Mysoline | HAS Epilepsie 2020 ; Beers 2023"
           },
           {
                     "dci": "Propafenone",
@@ -15058,7 +15261,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Rythmol | ESC Arythmie 2020"
           },
           {
                     "dci": "Propericiazine",
@@ -15084,7 +15288,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Neuleptil | HAS 2017"
           },
           {
                     "dci": "Tinzaparine",
@@ -15110,7 +15315,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Innohep | ESC 2024"
           },
           {
                     "dci": "Voriconazole",
@@ -15137,7 +15343,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Vfend | ESCMID 2022"
           },
           {
                     "dci": "Mélatonine",
@@ -15159,7 +15366,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Circadin | HAS Insomnie 2019"
           },
           {
                     "dci": "Donépézil",
@@ -15181,7 +15389,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Aricept | HAS Alzheimer 2018"
           },
           {
                     "dci": "Rivastigmine",
@@ -15203,7 +15412,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Exelon | HAS Alzheimer 2018"
           },
           {
                     "dci": "Galantamine",
@@ -15225,7 +15435,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Reminyl | HAS Alzheimer 2018"
           },
           {
                     "dci": "Ropinirole",
@@ -15247,7 +15458,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Requip | HAS Parkinson 2016"
           },
           {
                     "dci": "Rotigotine",
@@ -15269,7 +15481,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Neupro | HAS Parkinson 2016"
           },
           {
                     "dci": "Rasagiline",
@@ -15291,7 +15504,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Azilect | HAS Parkinson 2016"
           },
           {
                     "dci": "Safinamide",
@@ -15313,7 +15527,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Xadago | HAS Parkinson 2016"
           },
           {
                     "dci": "Opicapone",
@@ -15335,7 +15550,8 @@ const MASTER_DB = {
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
-                    "atb_terminale": ""
+                    "atb_terminale": "",
+                    "source": "RCP Ongentys | HAS Parkinson 2016"
           },
           {
                     "dci": "Finastéride",
