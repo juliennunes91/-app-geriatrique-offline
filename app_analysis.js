@@ -740,7 +740,7 @@ function analyserPrescription() {
             let imputStr = causes.length > 0 ? `<br><em>Imputabilité iatrogène détectée :</em> <b>${causes.join(', ').toUpperCase()}</b>` : '';
             let isSevere = String(s.GRAVITE).includes('Sévère') || String(s.GRAVITE).includes('Severe');
             addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${s.NOM_SYNDROME}</strong>${imputStr}<br><em>Conduite :</em> ${s.CONDUITE_IMMEDIATE || 'Surveillance'}</div>`, 'bio');
-        } catch(e) {}
+        } catch(e) { GeriaLog.warn('Erreur syndrome bio:', e.message); }
     };
 
     // --- SYND_001 : Cytolyse Hépatique (ASAT > 3N ou ALAT > 3N) ---

@@ -226,6 +226,59 @@ test('Score 10 → C', () => assert.strictEqual(childPughClass(2, 2, 2, 2, 2), '
 test('Score 15 → C', () => assert.strictEqual(childPughClass(3, 3, 3, 3, 3), 'C'));
 
 // ============================================================================
+// 9. DRUG CLASS MATCHING (index inversé)
+// ============================================================================
+console.log('\n🧪 matchesDrugClass (index inversé)');
+
+// Load drug_classes.js via Function constructor to get const-scoped vars
+const fs = require('fs');
+const _dcCode = fs.readFileSync(__dirname + '/drug_classes.js', 'utf8');
+const _dcFn = new Function('sanitizeText', _dcCode + '\nreturn {DRUG_CLASSES, _ALIAS_EXACT_INDEX, matchesDrugClass, matchesDrugClassAnsm};');
+const _dc = _dcFn(sanitizeText);
+const matchesDrugClass = _dc.matchesDrugClass;
+const matchesDrugClassAnsm = _dc.matchesDrugClassAnsm;
+
+test('ibuprofene → ains: true', () => assert.ok(matchesDrugClass('ibuprofene', '', 'ains')));
+test('bisoprolol → betabloquant: true', () => assert.ok(matchesDrugClass('bisoprolol', '', 'betabloquant')));
+test('apixaban → anticoag: true', () => assert.ok(matchesDrugClass('apixaban', '', 'anticoag')));
+test('ramipril → iec (suffix pril): true', () => assert.ok(matchesDrugClass('ramipril', '', 'iec')));
+test('losartan → ara2 (suffix sartan): true', () => assert.ok(matchesDrugClass('losartan', '', 'ara2')));
+test('amlodipine → inhibiteurcalcique: true', () => assert.ok(matchesDrugClass('amlodipine', '', 'inhibiteurcalcique')));
+test('paracetamol → ains: false', () => assert.ok(!matchesDrugClass('paracetamol', '', 'ains')));
+test('bisoprolol → antihypertenseur: true (composite)', () => assert.ok(matchesDrugClass('bisoprolol', '', 'antihypertenseur')));
+test('amlodipine → antihypertenseur: true (composite)', () => assert.ok(matchesDrugClass('amlodipine', '', 'antihypertenseur')));
+test('omeprazole → ipp: true', () => assert.ok(matchesDrugClass('omeprazole', '', 'ipp')));
+test('haloperidol → antipsychotique: true', () => assert.ok(matchesDrugClass('haloperidol', '', 'antipsychotique')));
+test('morphine → opioid: true', () => assert.ok(matchesDrugClass('morphine', '', 'opioid')));
+test('diazepam → benzodiazepine: true', () => assert.ok(matchesDrugClass('diazepam', '', 'benzodiazepine')));
+test('digoxine → digitalique: true', () => assert.ok(matchesDrugClass('digoxine', '', 'digitalique')));
+test('metformine → antidiabetique: true', () => assert.ok(matchesDrugClass('metformine', '', 'antidiabetique')));
+
+// ANSM variant (pluriel, accents)
+test('ANSM: ibuprofene → antiinflammatoires: true', () => assert.ok(matchesDrugClassAnsm('ibuprofene', '', 'antiinflammatoires')));
+test('ANSM: bisoprolol → betabloquants: true', () => assert.ok(matchesDrugClassAnsm('bisoprolol', '', 'betabloquants')));
+test('ANSM: furosemide → diuretiques: true', () => assert.ok(matchesDrugClassAnsm('furosemide', '', 'diuretiques')));
+
+// ============================================================================
+// 10. FREQUENCY SCORING (suivi bio)
+// ============================================================================
+console.log('\n🧪 Fréquences suivi biologique');
+
+const _FREQ_PRIORITY_T = { 'hebdomadaire': 1, '/semaine': 1, 'mensuel': 3, '/mois': 3, '/1-3m': 4, 'trimestriel': 5, '/3m': 5, '/3 mois': 5, 'semestriel': 7, '/6m': 7, '/6 mois': 7, 'annuel': 10, '/an': 10, '/12m': 10 };
+function getFreqScoreTest(f) {
+    if (!f) return 99;
+    let fl = f.toLowerCase();
+    for (const [k, v] of Object.entries(_FREQ_PRIORITY_T)) { if (fl.includes(k)) return v; }
+    return 8;
+}
+
+test('hebdomadaire = 1', () => assert.strictEqual(getFreqScoreTest('hebdomadaire'), 1));
+test('mensuel = 3', () => assert.strictEqual(getFreqScoreTest('NFS (mensuel)'), 3));
+test('trimestriel = 5', () => assert.strictEqual(getFreqScoreTest('/3 mois'), 5));
+test('annuel = 10', () => assert.strictEqual(getFreqScoreTest('Annuel'), 10));
+test('vide = 99', () => assert.strictEqual(getFreqScoreTest(''), 99));
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log(`\n${'='.repeat(50)}`);

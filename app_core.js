@@ -116,7 +116,7 @@ function _restorePatientData(data) {
 window._saveSession = function() {
     try {
         sessionStorage.setItem('geriaassist_session', JSON.stringify(_collectPatientData()));
-    } catch(e) { /* quota exceeded — ignore */ }
+    } catch(e) { GeriaLog.warn('Session save failed (quota?):', e.message); }
 };
 
 window._restoreSession = function() {
@@ -126,7 +126,7 @@ window._restoreSession = function() {
         const data = JSON.parse(raw);
         _restorePatientData(data);
         return true;
-    } catch(e) { return false; }
+    } catch(e) { GeriaLog.warn('Session restore failed:', e.message); return false; }
 };
 
 // ============================================================================

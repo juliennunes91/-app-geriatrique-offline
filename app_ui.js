@@ -85,21 +85,57 @@ function setupAutocomplete(inputId, listId, searchFunc, selectFunc) {
     const input = document.getElementById(inputId); const list = document.getElementById(listId);
     if(!input || !list) return;
     input.setAttribute('role', 'combobox'); input.setAttribute('aria-autocomplete', 'list'); input.setAttribute('aria-expanded', 'false');
-    input.addEventListener('input', function() {
-        const val = this.value.trim(); list.innerHTML = '';
+    input.setAttribute('aria-owns', listId);
+    let _debounceTimer = null;
+    let _activeIdx = -1;
+
+    function _updateList() {
+        const val = input.value.trim(); list.innerHTML = ''; _activeIdx = -1;
         if(val.length < 2) { list.style.display = 'none'; input.setAttribute('aria-expanded', 'false'); return; }
         const matches = searchFunc(val);
         if(matches.length > 0) {
-            matches.slice(0, 5).forEach(match => {
-                let li = document.createElement('li'); li.textContent = match.display; li.setAttribute('role', 'option');
-                li.onclick = () => { input.value = ''; list.style.display = 'none'; input.setAttribute('aria-expanded', 'false'); selectFunc(match.data); }; list.appendChild(li);
+            matches.slice(0, 8).forEach((match, i) => {
+                let li = document.createElement('li'); li.textContent = match.display;
+                li.setAttribute('role', 'option'); li.setAttribute('data-idx', i);
+                li.addEventListener('click', () => { input.value = ''; list.style.display = 'none'; input.setAttribute('aria-expanded', 'false'); selectFunc(match.data); });
+                list.appendChild(li);
             }); list.style.display = 'block'; input.setAttribute('aria-expanded', 'true');
         } else {
             let li = document.createElement('li'); li.textContent = 'Aucun résultat'; li.className = 'text-muted fst-italic'; li.style.pointerEvents = 'none';
             list.appendChild(li); list.style.display = 'block'; input.setAttribute('aria-expanded', 'true');
         }
+    }
+
+    input.addEventListener('input', function() {
+        clearTimeout(_debounceTimer);
+        _debounceTimer = setTimeout(_updateList, 150);
     });
-    document.addEventListener('click', function(e) { if (e.target !== input && e.target !== list) list.style.display = 'none'; });
+
+    // Navigation clavier : flèches haut/bas + Entrée + Échap
+    input.addEventListener('keydown', function(e) {
+        const items = list.querySelectorAll('li[role="option"]');
+        if (!items.length) return;
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            _activeIdx = Math.min(_activeIdx + 1, items.length - 1);
+            items.forEach((li, i) => li.classList.toggle('bg-primary', i === _activeIdx));
+            items.forEach((li, i) => li.classList.toggle('text-white', i === _activeIdx));
+            items[_activeIdx].scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            _activeIdx = Math.max(_activeIdx - 1, 0);
+            items.forEach((li, i) => li.classList.toggle('bg-primary', i === _activeIdx));
+            items.forEach((li, i) => li.classList.toggle('text-white', i === _activeIdx));
+            items[_activeIdx].scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'Enter' && _activeIdx >= 0) {
+            e.preventDefault();
+            items[_activeIdx].click();
+        } else if (e.key === 'Escape') {
+            list.style.display = 'none'; input.setAttribute('aria-expanded', 'false'); _activeIdx = -1;
+        }
+    });
+
+    document.addEventListener('click', function(e) { if (e.target !== input && !list.contains(e.target)) { list.style.display = 'none'; _activeIdx = -1; } });
 }
 
 function searchComorbList(val) { const cleanVal = sanitizeText(val); return allComorbs.filter(c => c.search.includes(cleanVal) || c.id.toLowerCase().includes(cleanVal)).map(c => ({display: c.label, data: c.id})); }
@@ -140,15 +176,39 @@ function renderTags() {
     if(elMeds) {
         const frag = document.createDocumentFragment();
         activeMeds.forEach(m => {
-            let eDci = escapeHtml(m.dci); let eLabel = escapeHtml(m.label);
             let span = document.createElement('span'); span.className = 'badge bg-primary tag-badge';
-            span.innerHTML = `${eLabel} <span title="Suspendre" onclick="toggleSuspend('${eDci}')" style="cursor:pointer;" aria-label="Suspendre ${eDci}">⏸️</span> <span onclick="removeMed('${eDci}')" style="cursor:pointer; color:#ffcccc;" aria-label="Retirer ${eDci}">✖</span>`;
+            let labelNode = document.createTextNode(m.label + ' ');
+            let btnSuspend = document.createElement('span');
+            btnSuspend.textContent = '⏸️'; btnSuspend.title = 'Suspendre'; btnSuspend.style.cursor = 'pointer';
+            btnSuspend.setAttribute('aria-label', 'Suspendre ' + m.dci);
+            btnSuspend.setAttribute('role', 'button'); btnSuspend.setAttribute('tabindex', '0');
+            btnSuspend.addEventListener('click', () => toggleSuspend(m.dci));
+            btnSuspend.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSuspend(m.dci); } });
+            let btnRemove = document.createElement('span');
+            btnRemove.textContent = '✖'; btnRemove.style.cssText = 'cursor:pointer;color:#ffcccc;margin-left:4px;';
+            btnRemove.setAttribute('aria-label', 'Retirer ' + m.dci);
+            btnRemove.setAttribute('role', 'button'); btnRemove.setAttribute('tabindex', '0');
+            btnRemove.addEventListener('click', () => removeMed(m.dci));
+            btnRemove.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); removeMed(m.dci); } });
+            span.appendChild(labelNode); span.appendChild(btnSuspend); span.appendChild(btnRemove);
             frag.appendChild(span);
         });
         window.suspendedMeds.forEach(m => {
-            let eDci = escapeHtml(m.dci); let eLabel = escapeHtml(m.label);
             let span = document.createElement('span'); span.className = 'badge bg-light text-muted border tag-badge'; span.style.textDecoration = 'line-through';
-            span.innerHTML = `${eLabel} <span title="Réactiver" onclick="toggleSuspend('${eDci}')" style="cursor:pointer;" aria-label="Réactiver ${eDci}">▶️</span> <span onclick="window.suspendedMeds = window.suspendedMeds.filter(x=>x.dci!=='${eDci}');renderTags();" style="cursor:pointer;" aria-label="Supprimer ${eDci}">✖</span>`;
+            let labelNode = document.createTextNode(m.label + ' ');
+            let btnResume = document.createElement('span');
+            btnResume.textContent = '▶️'; btnResume.title = 'Réactiver'; btnResume.style.cursor = 'pointer';
+            btnResume.setAttribute('aria-label', 'Réactiver ' + m.dci);
+            btnResume.setAttribute('role', 'button'); btnResume.setAttribute('tabindex', '0');
+            btnResume.addEventListener('click', () => toggleSuspend(m.dci));
+            btnResume.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSuspend(m.dci); } });
+            let btnDel = document.createElement('span');
+            btnDel.textContent = '✖'; btnDel.style.cssText = 'cursor:pointer;margin-left:4px;';
+            btnDel.setAttribute('aria-label', 'Supprimer ' + m.dci);
+            btnDel.setAttribute('role', 'button'); btnDel.setAttribute('tabindex', '0');
+            btnDel.addEventListener('click', () => { window.suspendedMeds = window.suspendedMeds.filter(x => x.dci !== m.dci); renderTags(); });
+            btnDel.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.suspendedMeds = window.suspendedMeds.filter(x => x.dci !== m.dci); renderTags(); } });
+            span.appendChild(labelNode); span.appendChild(btnResume); span.appendChild(btnDel);
             frag.appendChild(span);
         });
         elMeds.innerHTML = ''; elMeds.appendChild(frag);
