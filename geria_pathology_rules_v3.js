@@ -3278,6 +3278,31 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
     "PAT_029": [
         { terme: "avk", condition: "si DFG < 15 sans dialyse", raison: "Calciphylaxie possible — surveillance INR renforcée", gravite: "PRUDENCE" },
         { terme: "aod", condition: "selon seuils DFG spécifiques", raison: "Accumulation si IRC sévère — adapter ou CI selon molécule (EHRA 2024)", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_037 — Sarcopénie (classes thérapeutiques)
+    "PAT_037": [
+        { terme: "corticoide", condition: "systémique > 1 mois", raison: "Myopathie cortisonique — catabolisme protéique musculaire accéléré (EWGSOP2 2019)", gravite: "DECONSEILLE au long cours" },
+        { terme: "statine", condition: "si myalgies ou CPK > 5N", raison: "Myopathie statinoïde — réévaluer bénéfice/risque (ICFSR 2022)", gravite: "PRUDENCE" },
+        { terme: "fluoroquinolone", raison: "Tendinopathie + myotoxicité (ANSM 2019, FDA 2018)", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_038 — Dysphagie / Troubles de déglutition (classes)
+    "PAT_038": [
+        { terme: "antipsychotique", raison: "Altère réflexe de déglutition → pneumopathie d'inhalation (ESSD 2021)", gravite: "DECONSEILLE sauf psychiatrie" },
+        { terme: "anticholinergique", raison: "Xérostomie aggravant la déglutition + sédation", gravite: "PRUDENCE" },
+        { terme: "benzodiazepine", raison: "Sédation → diminution réflexes protecteurs voies aériennes", gravite: "PRUDENCE" },
+        { terme: "opioid", raison: "Sédation + diminution réflexe toux → risque inhalation", gravite: "PRUDENCE" },
+        { terme: "anticholinesterase", raison: "Nausées/sialorrhée — paradoxalement peut aider ou nuire selon le type de dysphagie", gravite: "PRUDENCE" }
+    ],
+
+    // PAT_039 — Incontinence urinaire (classes)
+    "PAT_039": [
+        { terme: "anticholinergique", raison: "Oxybutynine et apparentés : ACB élevé, confusion cognitive chez le sujet âgé (Beers 2023, STOPP H2). Préférer mirabégron.", gravite: "DECONSEILLE" },
+        { terme: "diuretique", condition: "si incontinence par hyperactivité", raison: "Aggrave l'incontinence par augmentation du volume urinaire (STOPP v3 B10)", gravite: "PRUDENCE — réévaluer indication" },
+        { terme: "alpha-bloquant", condition: "chez la femme", raison: "Aggravation incontinence d'effort par relâchement sphinctérien", gravite: "PRUDENCE" },
+        { terme: "isrs", raison: "Peuvent aggraver l'incontinence urinaire (effet sérotoninergique sur détrusor)", gravite: "PRUDENCE" },
+        { terme: "lithium", raison: "Polyurie + diabète insipide néphrogénique → aggravation incontinence", gravite: "PRUDENCE" }
     ]
 };
 

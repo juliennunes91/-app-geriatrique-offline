@@ -279,6 +279,262 @@ test('annuel = 10', () => assert.strictEqual(getFreqScoreTest('Annuel'), 10));
 test('vide = 99', () => assert.strictEqual(getFreqScoreTest(''), 99));
 
 // ============================================================================
+// 6. VALIDATION CROISÉE PAT ↔ PATHOLOGY_RULES_DB
+// ============================================================================
+console.log('\n🧪 Validation croisée PAT ↔ règles');
+{
+    const fs = require('fs');
+
+    // Load geria_database.js
+    const dbCode = fs.readFileSync(__dirname + '/geria_database.js', 'utf8');
+    const dbMatch = dbCode.match(/const MASTER_DB\s*=\s*({[\s\S]*});/);
+    const MASTER_DB = dbMatch ? eval('(' + dbMatch[1] + ')') : null;
+
+    // Load geria_pathology_rules_v3.js
+    const rulesCode = fs.readFileSync(__dirname + '/geria_pathology_rules_v3.js', 'utf8');
+    const rulesFn = new Function(rulesCode + '\nreturn { PATHOLOGY_RULES_DB, PATHO_SYNDROME_MAP, PATHO_MED_INTERDITS };');
+    const rules = rulesFn();
+
+    const allPats = MASTER_DB ? Object.keys(MASTER_DB.PATHOLOGIES) : [];
+
+    test('MASTER_DB loaded with pathologies', () => assert.ok(allPats.length >= 39));
+    test('PATHOLOGY_RULES_DB loaded', () => assert.ok(Object.keys(rules.PATHOLOGY_RULES_DB).length >= 39));
+
+    // Every PAT in MASTER_DB must exist in PATHOLOGY_RULES_DB
+    let missingRules = [];
+    allPats.forEach(patId => {
+        if (!rules.PATHOLOGY_RULES_DB[patId]) missingRules.push(patId);
+    });
+    test('All PATs have PATHOLOGY_RULES_DB entry', () => {
+        assert.strictEqual(missingRules.length, 0, 'Missing: ' + missingRules.join(', '));
+    });
+
+    // Every PAT in MASTER_DB must exist in PATHO_SYNDROME_MAP
+    let missingSyndMap = [];
+    allPats.forEach(patId => {
+        if (rules.PATHO_SYNDROME_MAP[patId] === undefined) missingSyndMap.push(patId);
+    });
+    test('All PATs have PATHO_SYNDROME_MAP entry', () => {
+        assert.strictEqual(missingSyndMap.length, 0, 'Missing: ' + missingSyndMap.join(', '));
+    });
+
+    // Every PATHOLOGY_RULES_DB entry must have TRAITEMENTS and BIOLOGIE
+    let missingStructure = [];
+    allPats.forEach(patId => {
+        const rule = rules.PATHOLOGY_RULES_DB[patId];
+        if (!rule) return;
+        if (!rule.TRAITEMENTS) missingStructure.push(patId + ':TRAITEMENTS');
+        if (!rule.BIOLOGIE) missingStructure.push(patId + ':BIOLOGIE');
+        if (!rule.BIOLOGIE || !rule.BIOLOGIE.SURVEILLANCE_CIBLE) missingStructure.push(patId + ':BIO.SURVEILLANCE_CIBLE');
+    });
+    test('All rules have TRAITEMENTS + BIOLOGIE + SURVEILLANCE_CIBLE', () => {
+        assert.strictEqual(missingStructure.length, 0, 'Missing: ' + missingStructure.join(', '));
+    });
+
+    // PAT_037, PAT_038, PAT_039 specific checks
+    ['PAT_037', 'PAT_038', 'PAT_039'].forEach(patId => {
+        const rule = rules.PATHOLOGY_RULES_DB[patId];
+        test(`${patId} has INITIER`, () => assert.ok(rule && rule.TRAITEMENTS && rule.TRAITEMENTS.INITIER && rule.TRAITEMENTS.INITIER.length > 0, `${patId} missing INITIER`));
+        test(`${patId} has EVITER`, () => assert.ok(rule && rule.TRAITEMENTS && rule.TRAITEMENTS.EVITER && rule.TRAITEMENTS.EVITER.length > 0, `${patId} missing EVITER`));
+        test(`${patId} has MED_INTERDITS`, () => assert.ok(rules.PATHO_MED_INTERDITS[patId] && rules.PATHO_MED_INTERDITS[patId].length > 0, `${patId} missing MED_INTERDITS`));
+    });
+
+    // Verify BIOLOGIE IDs in SURVEILLANCE_CIBLE reference real BIO entries
+    let invalidBioRefs = [];
+    allPats.forEach(patId => {
+        const rule = rules.PATHOLOGY_RULES_DB[patId];
+        if (!rule || !rule.BIOLOGIE || !rule.BIOLOGIE.SURVEILLANCE_CIBLE) return;
+        rule.BIOLOGIE.SURVEILLANCE_CIBLE.forEach(bioId => {
+            if (MASTER_DB.BIOLOGIE && !MASTER_DB.BIOLOGIE[bioId]) {
+                invalidBioRefs.push(`${patId}→${bioId}`);
+            }
+        });
+    });
+    test('All BIO refs in SURVEILLANCE_CIBLE exist in MASTER_DB', () => {
+        assert.strictEqual(invalidBioRefs.length, 0, 'Invalid: ' + invalidBioRefs.join(', '));
+    });
+}
+
+// ============================================================================
+// 7. TEST D'INTÉGRATION — checkMedContraPathologies
+// ============================================================================
+console.log('\n🧪 Intégration checkMedContraPathologies');
+{
+    const fs = require('fs');
+    const rulesCode = fs.readFileSync(__dirname + '/geria_pathology_rules_v3.js', 'utf8');
+    const rulesFn = new Function(rulesCode + '\nreturn { PATHOLOGY_RULES_DB, PATHO_MED_INTERDITS, checkMedContraPathologies };');
+    const { checkMedContraPathologies } = rulesFn();
+
+    // PAT_039 (Incontinence) + oxybutynine → CI
+    test('Incontinence + oxybutynine → CI détectée', () => {
+        const alerts = checkMedContraPathologies('oxybutynine', '', ['PAT_039']);
+        assert.ok(alerts.length > 0, 'Aucune alerte');
+        assert.ok(alerts.some(a => a.gravite.includes('CONTRE-INDICATION')), 'Pas de CI');
+    });
+
+    // PAT_039 (Incontinence) + mirabégron → pas de CI
+    test('Incontinence + mirabégron → pas de CI', () => {
+        const alerts = checkMedContraPathologies('mirabégron', 'agoniste beta3', ['PAT_039']);
+        assert.strictEqual(alerts.length, 0, 'CI inattendue pour mirabégron');
+    });
+
+    // PAT_038 (Dysphagie) + halopéridol → CI (antipsychotique)
+    test('Dysphagie + haloperidol → alerte détectée', () => {
+        const alerts = checkMedContraPathologies('haloperidol', 'antipsychotique', ['PAT_038']);
+        assert.ok(alerts.length > 0, 'Aucune alerte pour haloperidol + dysphagie');
+    });
+
+    // PAT_037 (Sarcopénie) + prednisone → CI corticoïde
+    test('Sarcopénie + prednisone → alerte corticoïde', () => {
+        const alerts = checkMedContraPathologies('prednisone', 'corticoide', ['PAT_037']);
+        assert.ok(alerts.length > 0, 'Aucune alerte pour corticoïde + sarcopénie');
+    });
+
+    // PAT_001 (IC) + ibuprofène → CI AINS
+    test('IC + ibuprofène → CI AINS', () => {
+        const alerts = checkMedContraPathologies('ibuprofène', 'ains', ['PAT_001']);
+        assert.ok(alerts.length > 0 && alerts.some(a => a.gravite.includes('CONTRE-INDICATION')));
+    });
+
+    // Multi-pathologie: PAT_039 + PAT_010 + oxybutynine → multiple CIs
+    test('Incontinence + Démence + oxybutynine → multiples CI', () => {
+        const alerts = checkMedContraPathologies('oxybutynine', 'anticholinergique', ['PAT_039', 'PAT_010']);
+        assert.ok(alerts.length >= 2, 'Attendu ≥ 2 alertes, trouvé ' + alerts.length);
+    });
+
+    // PAT_035 (Bradycardie) + bisoprolol → CI bétabloquant
+    test('Bradycardie + bisoprolol → CI bétabloquant', () => {
+        const alerts = checkMedContraPathologies('bisoprolol', 'betabloquant', ['PAT_035']);
+        assert.ok(alerts.length > 0 && alerts.some(a => a.gravite.includes('CONTRE-INDICATION')));
+    });
+
+    // PAT_039 + furosémide → DECONSEILLE
+    test('Incontinence + furosémide → déconseillé', () => {
+        const alerts = checkMedContraPathologies('furosemide', 'diuretique', ['PAT_039']);
+        assert.ok(alerts.length > 0, 'Aucune alerte furosémide + incontinence');
+    });
+}
+
+// ============================================================================
+// 8. TEST D'INTÉGRATION E2E — Patient complet
+// ============================================================================
+console.log('\n🧪 Intégration E2E — Patient gériatrique complet');
+{
+    const fs = require('fs');
+
+    // Load all DBs
+    const dbCode = fs.readFileSync(__dirname + '/geria_database.js', 'utf8');
+    const dbMatch = dbCode.match(/const MASTER_DB\s*=\s*({[\s\S]*});/);
+    const MASTER_DB = dbMatch ? eval('(' + dbMatch[1] + ')') : null;
+
+    const rulesCode = fs.readFileSync(__dirname + '/geria_pathology_rules_v3.js', 'utf8');
+    const rulesFn = new Function(rulesCode + '\nreturn { PATHOLOGY_RULES_DB, PATHO_SYNDROME_MAP, PATHO_MED_INTERDITS, checkMedContraPathologies };');
+    const rules = rulesFn();
+
+    // Simulate patient: 85 ans, F, fragile, IC + FA + Incontinence + Dysphagie
+    // Médicaments: furosémide, bisoprolol, apixaban, oxybutynine, diazépam, oméprazole
+    const patientComorbs = ['PAT_001', 'PAT_006', 'PAT_039', 'PAT_038'];
+    const patientMeds = [
+        { dci: 'furosemide', classe: 'diuretique' },
+        { dci: 'bisoprolol', classe: 'betabloquant' },
+        { dci: 'apixaban', classe: 'anticoagulant' },
+        { dci: 'oxybutynine', classe: 'anticholinergique' },
+        { dci: 'diazepam', classe: 'benzodiazepine' },
+        { dci: 'omeprazole', classe: 'ipp' }
+    ];
+
+    // 1. All comorbidities should have rules
+    test('E2E: Toutes les comorbidités du patient ont des règles', () => {
+        patientComorbs.forEach(patId => {
+            assert.ok(rules.PATHOLOGY_RULES_DB[patId], `${patId} manquant dans PATHOLOGY_RULES_DB`);
+        });
+    });
+
+    // 2. checkMedContraPathologies should find contraindications
+    let allAlerts = [];
+    patientMeds.forEach(med => {
+        const alerts = rules.checkMedContraPathologies(med.dci, med.classe, patientComorbs);
+        allAlerts.push(...alerts);
+    });
+
+    test('E2E: Oxybutynine + Incontinence → CI détectée', () => {
+        assert.ok(allAlerts.some(a => a.med === 'oxybutynine' && a.patho === 'PAT_039'));
+    });
+
+    test('E2E: Oxybutynine + Dysphagie → alerte anticholinergique', () => {
+        assert.ok(allAlerts.some(a => a.med === 'oxybutynine' && a.patho === 'PAT_038'));
+    });
+
+    test('E2E: Diazépam + Dysphagie → alerte BZD', () => {
+        assert.ok(allAlerts.some(a => a.med === 'diazepam' && a.patho === 'PAT_038'));
+    });
+
+    test('E2E: Furosémide + Incontinence → alerte diurétique', () => {
+        assert.ok(allAlerts.some(a => a.med === 'furosemide' && a.patho === 'PAT_039'));
+    });
+
+    test('E2E: Total alertes ≥ 5 pour ce patient', () => {
+        assert.ok(allAlerts.length >= 5, `Seulement ${allAlerts.length} alertes trouvées`);
+    });
+
+    // 3. All comorbidities should have bio surveillance targets
+    let allBioTargets = new Set();
+    patientComorbs.forEach(patId => {
+        const rule = rules.PATHOLOGY_RULES_DB[patId];
+        if (rule && rule.BIOLOGIE && rule.BIOLOGIE.SURVEILLANCE_CIBLE) {
+            rule.BIOLOGIE.SURVEILLANCE_CIBLE.forEach(b => allBioTargets.add(b));
+        }
+    });
+    test('E2E: ≥ 5 paramètres bio à surveiller', () => {
+        assert.ok(allBioTargets.size >= 5, `Seulement ${allBioTargets.size} paramètres`);
+    });
+
+    // 4. Bio targets should exist in MASTER_DB
+    test('E2E: Tous les bio targets existent dans MASTER_DB.BIOLOGIE', () => {
+        let invalid = [];
+        allBioTargets.forEach(bioId => {
+            if (!MASTER_DB.BIOLOGIE[bioId]) invalid.push(bioId);
+        });
+        assert.strictEqual(invalid.length, 0, 'Invalides: ' + invalid.join(', '));
+    });
+
+    // 5. PAT_039 INITIER should recommend mirabégron
+    test('E2E: PAT_039 recommande mirabégron en INITIER', () => {
+        const rule = rules.PATHOLOGY_RULES_DB['PAT_039'];
+        const initier = rule.TRAITEMENTS.INITIER;
+        assert.ok(initier.some(t => (t.classe || '').toLowerCase().includes('mirabégron') || (t.dci_exemples || []).some(d => d.includes('mirabegron'))));
+    });
+
+    // 6. PATHO_SYNDROME_MAP coverage for new pathologies
+    test('E2E: PATHO_SYNDROME_MAP couvre PAT_037/038/039', () => {
+        assert.ok(rules.PATHO_SYNDROME_MAP['PAT_037'] !== undefined, 'PAT_037 absent');
+        assert.ok(rules.PATHO_SYNDROME_MAP['PAT_038'] !== undefined, 'PAT_038 absent');
+        assert.ok(rules.PATHO_SYNDROME_MAP['PAT_039'] !== undefined, 'PAT_039 absent');
+    });
+
+    // 7. Verify the cascade: PAT_039 + furosémide flagged + recommends switching
+    test('E2E: PAT_039 EVITER mentionne diurétiques/furosémide', () => {
+        const eviter = rules.PATHOLOGY_RULES_DB['PAT_039'].TRAITEMENTS.EVITER;
+        assert.ok(eviter.some(e => (e.classe || '').toLowerCase().includes('diur') || (e.classe || '').toLowerCase().includes('furos')));
+    });
+
+    // 8. Second patient: 78 ans, sarcopénie + prednisone → alerte
+    test('E2E: Sarcopénie + prednisone → alerte corticoïde', () => {
+        const alerts = rules.checkMedContraPathologies('prednisone', 'corticoide', ['PAT_037']);
+        assert.ok(alerts.length > 0 && alerts[0].patho === 'PAT_037');
+    });
+
+    // 9. All PAT IDs referenced in PATHO_MED_INTERDITS should exist in MASTER_DB
+    test('E2E: Tous les PAT dans MED_INTERDITS existent dans MASTER_DB', () => {
+        let invalidPats = [];
+        Object.keys(rules.PATHO_MED_INTERDITS).forEach(patId => {
+            if (!MASTER_DB.PATHOLOGIES[patId]) invalidPats.push(patId);
+        });
+        assert.strictEqual(invalidPats.length, 0, 'Invalides: ' + invalidPats.join(', '));
+    });
+}
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log(`\n${'='.repeat(50)}`);
