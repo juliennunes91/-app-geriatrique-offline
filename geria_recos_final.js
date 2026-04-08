@@ -29,8 +29,7 @@ const GERIA_RECOS_DB = {
         "PRISCUS":   { nom: "PRISCUS 2.0",           annee: 2022, ref: "Holt S. et al., Dtsch Arztebl Int 2022" },
         "EU7PIM":    { nom: "EU(7)-PIM List",        annee: 2015, ref: "Renom-Guiteras A. et al., Eur J Clin Pharmacol 2015" },
         "STOPPFRAIL":{ nom: "STOPPFrail v2",         annee: 2021, ref: "Curtin D. et al., Age Ageing 2021" },
-        "REMEDIES":  { nom: "REMEDIES",              annee: 2020, ref: "McIntosh J. et al., Expert Opin Drug Saf 2020" },
-        "ESC_HF":    { nom: "ESC HF 2021/2023",       annee: 2023, ref: "McDonagh TA et al. Eur Heart J 2021 + 2023 Focused Update" }
+        "REMEDIES":  { nom: "REMEDIES",              annee: 2020, ref: "McIntosh J. et al., Expert Opin Drug Saf 2020" }
     },
 
     // ========================================================================
@@ -2164,7 +2163,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B05",
-            sources: ["ESC_HF", "STOPP3"],
+            sources: ["STOPP3", "FORTA"],
             ref_code: "START3-B5",
             section: "Cardiovasculaire",
             titre: "IEC (ou ARA2) pour HFrEF",
@@ -2178,7 +2177,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B06",
-            sources: ["ESC_HF", "STOPP3"],
+            sources: ["STOPP3", "FORTA"],
             ref_code: "START3-B6",
             section: "Cardiovasculaire",
             titre: "Bêtabloquant cardiosélectif pour HFrEF stable",
@@ -2192,7 +2191,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B07",
-            sources: ["ESC_HF", "STOPP3"],
+            sources: ["STOPP3", "FORTA"],
             ref_code: "START3-B7",
             section: "Cardiovasculaire",
             titre: "Anti-aldostérone (ARM) pour IC sans IRC sévère",
@@ -2207,7 +2206,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B08",
-            sources: ["ESC_HF", "STOPP3"],
+            sources: ["STOPP3", "FORTA"],
             ref_code: "START3-B8",
             section: "Cardiovasculaire",
             titre: "iSGLT2 pour IC symptomatique (avec ou sans diabète)",
@@ -2221,7 +2220,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B09",
-            sources: ["ESC_HF", "STOPP3"],
+            sources: ["STOPP3"],
             ref_code: "START3-B9",
             section: "Cardiovasculaire",
             titre: "Sacubitril/Valsartan si HFrEF persistante sous IEC/ARA2 optimal",
@@ -2249,7 +2248,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B11",
-            sources: ["ESC_HF", "STOPP3"],
+            sources: ["STOPP3"],
             ref_code: "START3-B11",
             section: "Cardiovasculaire",
             titre: "Fer IV pour HFrEF symptomatique avec carence martiale",

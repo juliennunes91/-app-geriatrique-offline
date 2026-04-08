@@ -268,9 +268,12 @@ const GeriaEngineV2 = (() => {
      * Point d'entrée principal — Évalue toutes les recommandations
      * avec index inversé, scoring et triage.
      */
+    let _lastActiveComorbs = []; // Stored for findEbmSource during rendering
+
     function evaluer(ctx) {
         const t0 = performance.now();
-        
+        _lastActiveComorbs = ctx.activeComorbs || [];
+
         // Construire l'index si nécessaire
         buildIndex();
         
@@ -575,42 +578,57 @@ const GeriaEngineV2 = (() => {
      * dans PATHOLOGY_RULES_DB pour enrichir l'affichage au-delà du simple "STOPP/START".
      */
     function findEbmSource(alert) {
-        if (typeof PATHOLOGY_RULES_DB === 'undefined' || typeof activeComorbs === 'undefined') return '';
+        if (typeof PATHOLOGY_RULES_DB === 'undefined' || !_lastActiveComorbs || _lastActiveComorbs.length === 0) return '';
         const c = alert.condition;
         if (!c) return '';
 
-        // Collecter les med_keys de l'alerte pour chercher dans SOURCES_EBM
-        const medKeys = [...(c.med_keys || []), ...(c.med_keys_2 || [])];
-        if (medKeys.length === 0) return '';
+        // Collecter TOUS les termes de l'alerte (med_keys pour EVITER, med_absent pour INITIER, + titre)
+        const medKeys = [...(c.med_keys || []), ...(c.med_keys_2 || []), ...(c.med_absent || [])];
+        const titleTerms = (alert.titre || '').toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/).filter(t => t.length > 3);
+
+        // Identifier les pathologies ciblées par cette règle
+        const targetPathos = [...(c.comorbs || []), ...(c.comorbs_any || [])];
 
         const category = alert._type === 'initier' ? 'INITIER' : 'EVITER';
         let found = [];
 
-        activeComorbs.forEach(pathoId => {
-            const rule = PATHOLOGY_RULES_DB[pathoId];
-            if (!rule || !rule.SOURCES_EBM || !rule.SOURCES_EBM[category]) return;
-            const ebmCat = rule.SOURCES_EBM[category];
+        // Chercher d'abord dans les pathologies ciblées par la règle, sinon dans toutes les actives
+        const pathosToSearch = targetPathos.length > 0 ? targetPathos.filter(p => _lastActiveComorbs.includes(p)) : _lastActiveComorbs;
 
-            for (const [classKey, ref] of Object.entries(ebmCat)) {
-                const cleanKey = classKey.toLowerCase().replace(/[^a-z0-9]/g, '');
-                if (medKeys.some(mk => {
-                    const cleanMk = mk.toLowerCase().replace(/[^a-z0-9]/g, '');
-                    return cleanMk.includes(cleanKey) || cleanKey.includes(cleanMk);
-                })) {
-                    // Resolve full reference if possible
-                    let fullRef = ref;
-                    if (typeof GUIDELINE_INDEX !== 'undefined') {
-                        const guidelineKeys = ref.match(/[A-Z][A-Z0-9_]+/g);
-                        if (guidelineKeys) {
-                            guidelineKeys.forEach(gk => {
-                                if (GUIDELINE_INDEX[gk] && !found.some(f => f.includes(gk))) {
-                                    found.push(`${ref} → ${GUIDELINE_INDEX[gk].ref}`);
-                                }
-                            });
+        pathosToSearch.forEach(pathoId => {
+            const rule = PATHOLOGY_RULES_DB[pathoId];
+            if (!rule) return;
+
+            // Chercher dans SOURCES_EBM si disponible
+            if (rule.SOURCES_EBM && rule.SOURCES_EBM[category] && (medKeys.length > 0 || titleTerms.length > 0)) {
+                const ebmCat = rule.SOURCES_EBM[category];
+                for (const [classKey, ref] of Object.entries(ebmCat)) {
+                    const cleanKey = classKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const matched = medKeys.some(mk => {
+                        const cleanMk = mk.toLowerCase().replace(/[^a-z0-9]/g, '');
+                        return cleanMk.includes(cleanKey) || cleanKey.includes(cleanMk);
+                    }) || titleTerms.some(t => cleanKey.includes(t) || t.includes(cleanKey));
+
+                    if (matched) {
+                        let fullRef = ref;
+                        if (typeof GUIDELINE_INDEX !== 'undefined') {
+                            const guidelineKeys = ref.match(/[A-Z][A-Z0-9_]+/g);
+                            if (guidelineKeys) {
+                                guidelineKeys.forEach(gk => {
+                                    if (GUIDELINE_INDEX[gk] && !found.some(f => f.includes(gk))) {
+                                        found.push(`${ref}`);
+                                    }
+                                });
+                            }
                         }
+                        if (found.length === 0) found.push(ref);
                     }
-                    if (found.length === 0) found.push(ref);
                 }
+            }
+
+            // Fallback: utiliser le REFERENCE de la pathologie (source société savante)
+            if (found.length === 0 && rule.REFERENCE) {
+                found.push(rule.REFERENCE.split('|')[0].trim());
             }
         });
 
