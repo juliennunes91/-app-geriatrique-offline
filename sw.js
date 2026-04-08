@@ -33,7 +33,6 @@ const APP_ASSETS = [
 // Fichiers de données (stale-while-revalidate, volumineux)
 const DATA_ASSETS = [
     './geria_database.js',
-    './geria_db_enrichment.js',
     './geria_pathology_rules_v3.js',
     './geria_recos_final.js',
     './geria_integration_module.js',

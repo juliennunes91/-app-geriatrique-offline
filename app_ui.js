@@ -3,23 +3,7 @@ function initUI() {
     if(typeof MASTER_DB === 'undefined') return;
 
     // =====================================================================
-    // 1. Intégrer les 48 médicaments d'enrichissement dans MASTER_DB
-    // =====================================================================
-    if (typeof MISSING_MEDS_ENRICHMENT !== 'undefined') {
-        const existingDcis = new Set(MASTER_DB.MEDICAMENTS.map(m => sanitizeText(m.dci)));
-        let added = 0;
-        MISSING_MEDS_ENRICHMENT.forEach(m => {
-            if (!existingDcis.has(sanitizeText(m.dci))) {
-                MASTER_DB.MEDICAMENTS.push(m);
-                existingDcis.add(sanitizeText(m.dci));
-                added++;
-            }
-        });
-        console.log(`[ENRICHMENT] ${added}/${MISSING_MEDS_ENRICHMENT.length} médicaments ajoutés (doublons ignorés)`);
-    }
-
-    // =====================================================================
-    // 2. DDI : ddi_general.js (ANSM+BNF fusionnées) + ddi_merged_V2.js (AUC)
+    // 1. DDI : ddi_general.js (ANSM+BNF fusionnées) + ddi_merged_V2.js (AUC)
     // =====================================================================
     if (typeof DDI_GENERAL_DB !== 'undefined') {
         console.log(`[DDI] DDI_GENERAL_DB chargé : ${DDI_GENERAL_DB.length} interactions (ANSM + BNF/Micromedex fusionnées)`);
