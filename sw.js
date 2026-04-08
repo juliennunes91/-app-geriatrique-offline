@@ -7,6 +7,7 @@ const CACHE_NAME = `geriaassist-v51-${BUILD_ID}`;
 const APP_ASSETS = [
     './',
     './index.html',
+    './index_modern.html',
     './offline.html',
     './manifest.json',
     './lib/bootstrap.min.css',
