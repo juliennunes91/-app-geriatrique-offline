@@ -3396,7 +3396,8 @@ function checkMedContraPathologies(medDci, medClasse, activePathoList) {
                     med: medDci,
                     raison: rule.raison,
                     gravite: rule.gravite,
-                    condition: rule.condition || null
+                    condition: rule.condition || null,
+                    exception: rule.exception || null
                 });
             }
         });

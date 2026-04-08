@@ -468,6 +468,7 @@ function analyserPrescription() {
 
     preCalculerScores();
     const patientAge = getVal('patientAge'); const sexe = getStr('patientSexe'); const isFragile = isChecked('patientFragile') || getVal('scoreCFS') >= 7;
+    let cpClass = null; // Hoisted for use in posology section
     // Validation entrées critiques
     if (patientAge <= 0 || patientAge > 120) {
         let el = document.getElementById('alertes-scores');
@@ -705,7 +706,7 @@ function analyserPrescription() {
         let cpManualEl = document.getElementById('cpManual');
         let cpManualVal = cpManualEl ? cpManualEl.value : '0';
         let cpScore = 0;
-        let cpClass = null;
+        cpClass = null; // reset (declared at function scope)
         let cpSource = '';
 
         if (cpManualVal !== '0') {
@@ -799,7 +800,7 @@ function analyserPrescription() {
             if(s.IMPUTABILITE_FREQ) s.IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(x=>x).forEach(c => { if(patientHasMedClass(c)) causes.push(c); });
             let imputStr = causes.length > 0 ? `<br><em>Imputabilité iatrogène détectée :</em> <b>${causes.join(', ').toUpperCase()}</b>` : '';
             let isSevere = String(s.GRAVITE).includes('Sévère') || String(s.GRAVITE).includes('Severe');
-            addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${s.NOM_SYNDROME}</strong>${imputStr}<br><em>Conduite :</em> ${s.CONDUITE_IMMEDIATE || 'Surveillance'}</div>`, 'bio');
+            addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${s.NOM_SYNDROME}</strong>${imputStr}<br><small>${s.CONDUITE_IMMEDIATE || 'Surveillance'}</small></div>`, 'bio');
         } catch(e) { GeriaLog.warn('Erreur syndrome bio:', e.message); }
     };
 
@@ -872,12 +873,12 @@ function analyserPrescription() {
         if (tsh > 4.0) {
             let isOvert = (t4 > 0 && t4 < 60) || tsh > 10;
             checkBioSyndrome(isOvert ? 'SYND_013' : 'SYND_013', true);
-            let thyroLabel = isOvert ? 'Hypothyroïdie avérée' : 'Hypothyroïdie subclinique';
             let thyroSev = isOvert ? 'danger' : 'warning';
             let thyroCauses = [];
             let hypoTerms = MASTER_DB.SYNDROMES['SYND_013'] && MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
             hypoTerms.forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
             let thyroImput = thyroCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${thyroCauses.join(', ').toUpperCase()}</b>` : '';
+            let thyroLabel = isOvert ? (thyroCauses.length > 0 ? 'Hypothyroïdie iatrogène avérée' : 'Hypothyroïdie avérée') : (thyroCauses.length > 0 ? 'Hypothyroïdie iatrogène subclinique' : 'Hypothyroïdie subclinique');
             let thyroConc = isOvert ? 'Traitement substitutif par lévothyroxine recommandé. Débuter 12.5-25 µg/j chez le sujet âgé, titrer par paliers de 12.5 µg toutes les 6-8 semaines.' : (tsh > 10 ? 'TSH > 10 — substitution recommandée même si subclinique.' : 'TSH 4-10 — à contrôler à 6-8 semaines, substituer si symptômes ou progression.');
             addAlert('alertes-bio', `<div class="alert alert-${thyroSev} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4 ' + t4 + ' nmol/L' : ''})${thyroImput}<br><em>Conduite :</em> ${thyroConc}</div>`, 'bio');
         } else if (tsh < 0.4 && tsh > 0) {
@@ -1139,7 +1140,8 @@ function analyserPrescription() {
         cascadePatterns.forEach(p => {
             let triggerMeds = activeMeds.filter(m => p.trigger.some(cls => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), cls)));
             if (triggerMeds.length === 0) return;
-            let cascadeMeds = p.cascade.length > 0 ? activeMeds.filter(m => p.cascade.some(cls => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), cls))) : [];
+            const triggerDcis = new Set(triggerMeds.map(m => sanitizeText(m.dci)));
+            let cascadeMeds = p.cascade.length > 0 ? activeMeds.filter(m => !triggerDcis.has(sanitizeText(m.dci)) && p.cascade.some(cls => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), cls))) : [];
             if (p.cascade.length > 0 && cascadeMeds.length === 0) return;
             let trigNames = triggerMeds.map(m => m.dci.toUpperCase()).join(', ');
             let cascNames = cascadeMeds.length > 0 ? cascadeMeds.map(m => m.dci.toUpperCase()).join(', ') : '';
@@ -1246,6 +1248,7 @@ function analyserPrescription() {
             const alerts = checkMedContraPathologies(m.dci, m.classe, activeComorbs);
             alerts.forEach(a => {
                 let isSevere = String(a.gravite).includes('CONTRE-INDICATION') || String(a.gravite).includes('ABSOLUE');
+                let alertPrefix = isSevere ? 'CI' : (String(a.gravite).includes('PRUDENCE') ? 'Prudence' : 'Déconseillé');
                 // Enrichir avec source ESC si disponible
                 let sourceLabel = 'Pathology Rules';
                 if (typeof PATHOLOGY_RULES_DB !== 'undefined' && PATHOLOGY_RULES_DB[a.patho]) {
@@ -1262,12 +1265,12 @@ function analyserPrescription() {
                     }
                 }
                 addAlert('alertes-eviter', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm">
-                    <strong>${isSevere ? '🚨' : '⚠️'} ${escapeHtml(m.dci.toUpperCase())} — CI ${escapeHtml(a.patho_nom)}</strong>
+                    <strong>${isSevere ? '🚨' : '⚠️'} ${escapeHtml(m.dci.toUpperCase())} — ${alertPrefix} ${escapeHtml(a.patho_nom)}</strong>
                     <span class="badge bg-secondary float-end" style="font-size:0.65em;" title="${sourceLabel}">${sourceLabel.length > 30 ? sourceLabel.substring(0, 30) + '...' : sourceLabel}</span>
-                    <br><span class="small">${a.raison}${a.condition ? ` <em class="text-muted">(${a.condition})</em>` : ''}</span>
+                    <br><span class="small">${a.raison}${a.condition ? ` <em class="text-muted">(${a.condition})</em>` : ''}${a.exception ? `<br><em class="text-info">Exception : ${a.exception}</em>` : ''}</span>
                     <br><span class="badge bg-${isSevere ? 'danger' : 'warning'} text-${isSevere ? 'white' : 'dark'}" style="font-size:0.7em;">${a.gravite}</span>
                 </div>`, 'eviter');
-                _regAddMed(m.dci, 'eviter', { severity: isSevere ? 'danger' : 'warning', text: `CI ${a.patho_nom} — ${a.raison}`, gravite: a.gravite, source: sourceLabel });
+                _regAddMed(m.dci, 'eviter', { severity: isSevere ? 'danger' : 'warning', text: `${alertPrefix} ${a.patho_nom} — ${a.raison}`, gravite: a.gravite, source: sourceLabel });
             });
         });
     }
@@ -1438,6 +1441,17 @@ function analyserPrescription() {
                 html += `</div>`;
             }
             if (alb >= 85) html += `<span class="text-danger small d-block border-top pt-1 mt-1 border-success border-opacity-25"><em>🩸 Forte liaison à l'albumine :</em> <b>${alb}%</b> (Risque surdosage si dénutrition).</span>`;
+            // Child-Pugh per-med hepatic adaptation
+            if (typeof CHILD_PUGH_ADAPTATIONS !== 'undefined' && cpClass) {
+                let cpKey = ref.dci.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+                let cpAdapt = CHILD_PUGH_ADAPTATIONS[cpKey];
+                if (!cpAdapt) { for (let k of Object.keys(CHILD_PUGH_ADAPTATIONS)) { if (cpKey.includes(k) || k.includes(cpKey)) { cpAdapt = CHILD_PUGH_ADAPTATIONS[k]; break; } } }
+                if (cpAdapt && cpAdapt[cpClass]) {
+                    let cpInfo = cpAdapt[cpClass];
+                    let cpMedColor = cpInfo.ci ? 'danger' : (cpInfo.reduire ? 'warning' : 'info');
+                    html += `<span class="text-${cpMedColor} small d-block border-top pt-1 mt-1 border-success border-opacity-25"><em>🫁 Hépatique (Child-Pugh ${cpClass}) :</em> <b>${cpInfo.msg}</b>${cpAdapt.src ? ` <small class="text-muted">[${cpAdapt.src}]</small>` : ''}</span>`;
+                }
+            }
             html += `</div>`;
             addAlert('alertes-usage', html, 'usage');
             // Registre: adaptation posologique
@@ -1445,6 +1459,12 @@ function analyserPrescription() {
             if (ref.poso_ger) usageDetails.push('Dose gériatrique');
             if (ref.poso_ren && dfg > 0 && dfg < 60) usageDetails.push('Adaptation rénale');
             if (alb >= 85) usageDetails.push('Forte liaison albumine');
+            if (typeof CHILD_PUGH_ADAPTATIONS !== 'undefined' && cpClass) {
+                let cpKey2 = ref.dci.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+                let cpA2 = CHILD_PUGH_ADAPTATIONS[cpKey2];
+                if (!cpA2) { for (let k of Object.keys(CHILD_PUGH_ADAPTATIONS)) { if (cpKey2.includes(k) || k.includes(cpKey2)) { cpA2 = CHILD_PUGH_ADAPTATIONS[k]; break; } } }
+                if (cpA2 && cpA2[cpClass]) usageDetails.push(`Hépatique CP-${cpClass}`);
+            }
             if (usageDetails.length) _regAddMed(m.dci, 'usage', { text: usageDetails.join(', '), severity: 'info' });
         }
 
@@ -1891,7 +1911,13 @@ function analyserPrescription() {
                     badges.push(`<span class="badge bg-${hasDanger ? 'danger' : 'warning text-dark'} me-1">${hasDanger ? '🔴' : '🟠'} ${d.eviter.length} CI</span>`);
                 }
                 if (d.interact) badges.push(`<span class="badge bg-danger me-1">⚡ ${d.interact.length} interact</span>`);
-                if (d.usage) badges.push(`<span class="badge bg-info me-1">💊 Adapter</span>`);
+                if (d.usage) {
+                    badges.push(`<span class="badge bg-info me-1">💊 Adapter</span>`);
+                    d.usage.forEach(u => {
+                        if (u.text && u.text.includes('rénale')) badges.push(`<span class="badge bg-warning text-dark me-1">🧪 Rénal</span>`);
+                        if (u.text && u.text.includes('Hépatique')) badges.push(`<span class="badge bg-secondary me-1">🫁 Hépatique</span>`);
+                    });
+                }
                 if (d.suivi) badges.push(`<span class="badge bg-primary me-1">👁️ Suivi</span>`);
 
                 let details = [];
@@ -1984,6 +2010,14 @@ function analyserPrescription() {
                 synthHtml += `<div class="mt-2 text-muted small fst-italic">⚠️ ${bioMissing} paramètre(s) non renseigné(s) — voir onglet Suivi pour le détail</div>`;
             }
             synthHtml += `</div></div>`;
+        }
+
+        // ── Commentaire libre (si renseigné) ──
+        let freeText = (document.getElementById('freeTextNote') || {}).value || '';
+        if (freeText.trim()) {
+            synthHtml += `<div class="card mb-3 border-secondary"><div class="card-header py-2 bg-light">
+                <strong>Commentaire clinique</strong>
+            </div><div class="card-body p-2"><span class="small" style="white-space:pre-wrap;">${freeText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span></div></div>`;
         }
 
         if (!synthHtml) synthHtml = '<div class="alert alert-light">Lancez l\'analyse pour voir la synthèse.</div>';
