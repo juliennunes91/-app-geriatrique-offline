@@ -276,11 +276,74 @@
                     <div id="selectedComorbs" class="mb-3"></div>
 
                     <h4>3. Médicaments</h4>
-                    <div class="autocomplete-container mb-2">
-                        <input class="form-control" type="text" id="inputMed" placeholder="DCI, Princeps..." autocomplete="off">
-                        <ul class="autocomplete-list" id="listMed" role="listbox" aria-label="Suggestions de médicaments"></ul>
+                    <div class="d-flex gap-2 mb-2">
+                        <div class="autocomplete-container flex-grow-1">
+                            <input class="form-control" type="text" id="inputMed" placeholder="DCI, Princeps..." autocomplete="off">
+                            <ul class="autocomplete-list" id="listMed" role="listbox" aria-label="Suggestions de médicaments"></ul>
+                        </div>
+                        <button class="btn btn-outline-secondary btn-sm" id="btnOcrImport" onclick="ocrOpenModal()" title="Importer depuis image/capture" style="white-space:nowrap;height:38px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:-2px;">
+                                <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
+                            </svg> OCR
+                        </button>
                     </div>
                     <div id="selectedMeds" class="mb-3"></div>
+
+                    <!-- OCR Modal -->
+                    <div class="modal fade" id="ocrModal" tabindex="-1" aria-labelledby="ocrModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ocrModalLabel">Importer ordonnance / capture</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="ocrStep1">
+                                        <p class="text-muted mb-3">Importez une photo d'ordonnance, un CR d'hospitalisation, ou collez une capture d'ecran (Ctrl+V).</p>
+                                        <div class="d-flex gap-2 mb-3">
+                                            <label class="btn btn-outline-primary flex-grow-1" for="ocrFileInput">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:-2px;"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg>
+                                                Choisir un fichier
+                                            </label>
+                                            <input type="file" id="ocrFileInput" accept="image/*" style="display:none;" onchange="ocrHandleFile(this.files[0])">
+                                            <button class="btn btn-outline-secondary flex-grow-1" onclick="ocrPasteClipboard()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:-2px;"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+                                                Coller (Ctrl+V)
+                                            </button>
+                                        </div>
+                                        <div id="ocrDropZone" style="border:2px dashed #ccc;border-radius:8px;padding:40px;text-align:center;color:#999;cursor:pointer;" ondragover="event.preventDefault();this.style.borderColor='#0d9488';" ondragleave="this.style.borderColor='#ccc';" ondrop="event.preventDefault();this.style.borderColor='#ccc';ocrHandleFile(event.dataTransfer.files[0]);">
+                                            Glisser-deposer une image ici
+                                        </div>
+                                    </div>
+                                    <div id="ocrStep2" style="display:none;">
+                                        <div class="d-flex gap-3 mb-3">
+                                            <div style="flex:0 0 40%;max-height:300px;overflow:auto;">
+                                                <img id="ocrPreviewImg" src="" alt="Apercu" style="width:100%;border-radius:4px;">
+                                            </div>
+                                            <div style="flex:1;">
+                                                <div id="ocrProgress" class="mb-2">
+                                                    <div class="progress" style="height:6px;">
+                                                        <div id="ocrProgressBar" class="progress-bar bg-info" style="width:0%;transition:width 0.3s;"></div>
+                                                    </div>
+                                                    <small id="ocrProgressText" class="text-muted">Initialisation OCR...</small>
+                                                </div>
+                                                <div id="ocrRawText" style="display:none;max-height:150px;overflow-y:auto;font-size:0.8em;background:#f8f9fa;padding:8px;border-radius:4px;margin-bottom:8px;white-space:pre-wrap;"></div>
+                                                <div id="ocrResults" style="display:none;">
+                                                    <h6 class="mb-2">Medicaments detectes :</h6>
+                                                    <div id="ocrMedList"></div>
+                                                    <div id="ocrNoMatch" style="display:none;" class="text-warning small mt-2">Aucun medicament reconnu. Verifiez la qualite de l'image.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" id="ocrFooter" style="display:none;">
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="ocrReset()">Nouvelle image</button>
+                                    <button class="btn btn-primary btn-sm" id="ocrBtnValidate" onclick="ocrValidateSelection()">Ajouter les medicaments coches</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <button class="btn btn-primary w-100 mt-3" id="btnAnalyse" onclick="this.disabled=true;this.textContent='Analyse en cours...';try{analyserPrescription();}finally{this.disabled=false;this.textContent='Lancer l\u0027Analyse Clinique';}">Lancer l'Analyse Clinique</button>
                 </div>
@@ -388,8 +451,10 @@
     <script src="geria_engine_v2.js"></script>
 
     <!-- Application -->
+    <script src="lib/tesseract.min.js"></script>
     <script src="app_core.js"></script>
     <script src="app_ui.js"></script>
+    <script src="ocr_module.js"></script>
     <script src="child_pugh_adaptations.js"></script>
     <script src="app_analysis.js"></script>
     <div id="session-restore-banner" style="display:none; z-index:10000; max-width:350px;" class="alert alert-warning alert-dismissible position-fixed bottom-0 end-0 m-3 shadow py-2 px-3">

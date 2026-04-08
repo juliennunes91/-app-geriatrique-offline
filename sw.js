@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.50 (refactored)
+// Service Worker - GeriaAssist v0.51 (OCR module)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260404';
-const CACHE_NAME = `geriaassist-v50-${BUILD_ID}`;
+const BUILD_ID = '20260408';
+const CACHE_NAME = `geriaassist-v51-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
@@ -13,6 +13,12 @@ const APP_ASSETS = [
     './geria-theme.css',
     './lib/bootstrap.bundle.min.js',
     './lib/html2pdf.bundle.min.js',
+    './lib/tesseract.min.js',
+    './lib/tesseract-worker.min.js',
+    './lib/tesseract-core-simd.wasm.js',
+    './lib/tesseract-core.wasm.js',
+    './lib/tessdata/fra.traineddata.gz',
+    './ocr_module.js',
     './utils.js',
     './patient_state.js',
     './app_core.js',

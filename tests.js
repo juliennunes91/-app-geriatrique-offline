@@ -535,6 +535,136 @@ console.log('\n🧪 Intégration E2E — Patient gériatrique complet');
 }
 
 // ============================================================================
+// OCR — Matching Engine (unit tests)
+// ============================================================================
+console.log('\n🧪 OCR — Extraction de médicaments');
+{
+    const fs = require('fs');
+    const dbCode = fs.readFileSync('./geria_database.js', 'utf8');
+    const dbMatch = dbCode.match(/const MASTER_DB\s*=\s*({[\s\S]*});/);
+    const MASTER_DB = dbMatch ? eval('(' + dbMatch[1] + ')') : null;
+    if (!MASTER_DB) { console.log('  ⚠️ MASTER_DB non chargé, OCR tests skippés'); }
+
+    // Simulate OcrModule matching functions
+    function levenshtein(a, b) {
+        if (a.length === 0) return b.length;
+        if (b.length === 0) return a.length;
+        const matrix = [];
+        for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+        for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+        for (let i = 1; i <= b.length; i++) {
+            for (let j = 1; j <= a.length; j++) {
+                const cost = b.charAt(i - 1) === a.charAt(j - 1) ? 0 : 1;
+                matrix[i][j] = Math.min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j - 1] + cost);
+            }
+        }
+        return matrix[b.length][a.length];
+    }
+
+    // Build a mini search index from MASTER_DB
+    const searchTerms = [];
+    MASTER_DB.MEDICAMENTS.forEach(m => {
+        const key = sanitizeText(m.dci);
+        if (!key) return;
+        const data = { dci_pure: m.dci, princeps: m.princeps || "", classe: m.classe || "", core_id: key, db_ref: m };
+        searchTerms.push({ clean: key, dci: m.dci, princeps: m.princeps || "", data });
+        if (m.princeps) {
+            m.princeps.split(/[\/,]+/).forEach(p => {
+                const cp = sanitizeText(p.trim());
+                if (cp.length >= 3) searchTerms.push({ clean: cp, dci: m.dci, princeps: m.princeps, data });
+            });
+        }
+    });
+
+    function extractCandidates(rawText) {
+        const words = rawText.split(/[\s,;:\-\(\)\[\]\/\n\r\t\|]+/);
+        const candidates = [];
+        const seen = new Set();
+        for (const w of words) {
+            const cleaned = w.replace(/[^a-zA-ZÀ-ÿ0-9]/g, '').trim();
+            if (cleaned.length < 3) continue;
+            const key = sanitizeText(cleaned);
+            if (key.length < 3 || seen.has(key)) continue;
+            seen.add(key);
+            candidates.push({ original: cleaned, clean: key });
+        }
+        return candidates;
+    }
+
+    function matchMedications(candidates) {
+        const matches = new Map();
+        for (const candidate of candidates) {
+            for (const term of searchTerms) {
+                let score = 0;
+                const cLen = candidate.clean.length;
+                const tLen = term.clean.length;
+                if (candidate.clean === term.clean) { score = 100; }
+                else if (cLen >= 4 && tLen >= 4) {
+                    if (term.clean.includes(candidate.clean) && cLen >= tLen * 0.6) score = 80;
+                    else if (candidate.clean.includes(term.clean) && tLen >= cLen * 0.6) score = 80;
+                    else {
+                        const pl = Math.min(cLen, tLen, 8);
+                        if (candidate.clean.substring(0, pl) === term.clean.substring(0, pl)) score = 70;
+                    }
+                }
+                if (score === 0 && cLen >= 5 && tLen >= 5) {
+                    const maxDist = Math.max(1, Math.floor(Math.min(cLen, tLen) * 0.25));
+                    const dist = levenshtein(candidate.clean, term.clean);
+                    if (dist <= maxDist) score = Math.max(0, 60 - dist * 10);
+                }
+                if (score > 0) {
+                    const dciKey = sanitizeText(term.dci);
+                    const existing = matches.get(dciKey);
+                    if (!existing || existing.score < score) {
+                        matches.set(dciKey, { dci: term.dci, princeps: term.princeps, data: term.data, score, matchedText: candidate.original });
+                    }
+                }
+            }
+        }
+        return Array.from(matches.values()).sort((a, b) => b.score - a.score);
+    }
+
+    // Test 1: exact DCI match
+    const t1 = matchMedications(extractCandidates("Amoxicilline 1g matin et soir"));
+    test('OCR: "Amoxicilline" exact match', () => {
+        assert(t1.some(m => sanitizeText(m.dci) === 'amoxicilline'), 'Amoxicilline non trouvée');
+        assert(t1.find(m => sanitizeText(m.dci) === 'amoxicilline').score === 100, 'Score devrait être 100');
+    });
+
+    // Test 2: princeps match
+    const t2 = matchMedications(extractCandidates("Augmentin 500mg/62.5mg"));
+    test('OCR: "Augmentin" princeps match', () => {
+        assert(t2.some(m => m.dci.includes('Amoxicilline')), 'Augmentin → Amoxicilline non trouvé');
+    });
+
+    // Test 3: fuzzy match (OCR typo)
+    const t3 = matchMedications(extractCandidates("Amoxiciline 1g"));
+    test('OCR: "Amoxiciline" fuzzy match (1 char missing)', () => {
+        assert(t3.some(m => sanitizeText(m.dci) === 'amoxicilline'), 'Fuzzy match échoué');
+    });
+
+    // Test 4: multiple medications in ordonnance text
+    const ordoText = "Bisoprolol 2.5mg\nMetformine 1000mg\nAtorvastatin 20mg\nOmeprazole 20mg";
+    const t4 = matchMedications(extractCandidates(ordoText));
+    test('OCR: ordonnance multi-lignes — au moins 3 meds détectés', () => {
+        assert(t4.length >= 3, `Seulement ${t4.length} meds trouvés`);
+    });
+
+    // Test 5: no false positives on common words
+    const t5 = matchMedications(extractCandidates("Le patient est en bon etat general, pas de fievre"));
+    test('OCR: pas de faux positifs sur texte non-médical', () => {
+        assert(t5.length === 0, `Faux positifs: ${t5.map(m => m.dci).join(', ')}`);
+    });
+
+    // Test 6: princeps with accent tolerance
+    const t6 = matchMedications(extractCandidates("Doliprane 1000mg"));
+    test('OCR: "Doliprane" → Paracetamol', () => {
+        const hasPara = t6.some(m => sanitizeText(m.dci) === 'paracetamol');
+        assert(hasPara, 'Doliprane non reconnu');
+    });
+}
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log(`\n${'='.repeat(50)}`);

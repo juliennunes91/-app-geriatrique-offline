@@ -246,4 +246,155 @@ function syncFoieToChildPugh() {
     }
 }
 
+// ============================================================================
+// OCR — Fonctions UI pour le modal d'import d'ordonnance
+// ============================================================================
+let _ocrModal = null;
+
+function ocrOpenModal() {
+    if (!_ocrModal) _ocrModal = new bootstrap.Modal(document.getElementById('ocrModal'));
+    ocrReset();
+    _ocrModal.show();
+}
+
+function ocrReset() {
+    document.getElementById('ocrStep1').style.display = '';
+    document.getElementById('ocrStep2').style.display = 'none';
+    document.getElementById('ocrFooter').style.display = 'none';
+    document.getElementById('ocrResults').style.display = 'none';
+    document.getElementById('ocrRawText').style.display = 'none';
+    document.getElementById('ocrProgressBar').style.width = '0%';
+    document.getElementById('ocrProgressText').textContent = '';
+    document.getElementById('ocrMedList').innerHTML = '';
+    document.getElementById('ocrNoMatch').style.display = 'none';
+    const fi = document.getElementById('ocrFileInput');
+    if (fi) fi.value = '';
+}
+
+function ocrHandleFile(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+        document.getElementById('ocrPreviewImg').src = reader.result;
+        document.getElementById('ocrStep1').style.display = 'none';
+        document.getElementById('ocrStep2').style.display = '';
+        _ocrRunRecognition(reader.result);
+    };
+    reader.readAsDataURL(file);
+}
+
+async function ocrPasteClipboard() {
+    try {
+        const items = await navigator.clipboard.read();
+        for (const item of items) {
+            const imageType = item.types.find(t => t.startsWith('image/'));
+            if (imageType) {
+                const blob = await item.getType(imageType);
+                ocrHandleFile(new File([blob], 'clipboard.png', { type: imageType }));
+                return;
+            }
+        }
+        alert('Aucune image dans le presse-papiers. Copiez d\'abord une capture (Ctrl+C).');
+    } catch (e) {
+        alert('Impossible de lire le presse-papiers. Utilisez Ctrl+V dans la fenetre ou choisissez un fichier.');
+    }
+}
+
+async function _ocrRunRecognition(imageData) {
+    const progressBar = document.getElementById('ocrProgressBar');
+    const progressText = document.getElementById('ocrProgressText');
+    const resultsDiv = document.getElementById('ocrResults');
+    const rawTextDiv = document.getElementById('ocrRawText');
+    const medListDiv = document.getElementById('ocrMedList');
+    const noMatchDiv = document.getElementById('ocrNoMatch');
+    const footerDiv = document.getElementById('ocrFooter');
+
+    function onProgress(status, progress) {
+        const pct = Math.round(progress * 100);
+        progressBar.style.width = pct + '%';
+        progressText.textContent = status + ' (' + pct + '%)';
+    }
+
+    try {
+        const result = await OcrModule.recognize(imageData, onProgress);
+
+        // Show raw text (collapsed)
+        rawTextDiv.textContent = result.rawText || '(aucun texte detecte)';
+        rawTextDiv.style.display = '';
+
+        // Show medication matches
+        if (result.medications.length === 0) {
+            noMatchDiv.style.display = '';
+            resultsDiv.style.display = '';
+            footerDiv.style.display = '';
+            return;
+        }
+
+        medListDiv.innerHTML = '';
+        const alreadyActive = new Set(activeMeds.map(m => sanitizeText(m.dci)));
+
+        result.medications.forEach((med, idx) => {
+            const isAlready = alreadyActive.has(sanitizeText(med.dci));
+            const confidence = med.score >= 80 ? 'text-success' : med.score >= 50 ? 'text-warning' : 'text-danger';
+            const confidenceLabel = med.score >= 80 ? 'Fiable' : med.score >= 50 ? 'Probable' : 'Incertain';
+
+            const div = document.createElement('div');
+            div.className = 'form-check mb-1';
+            div.innerHTML =
+                '<input class="form-check-input" type="checkbox" id="ocrMed' + idx + '" value="' + idx + '"' +
+                (isAlready ? ' disabled' : ' checked') + '>' +
+                '<label class="form-check-label" for="ocrMed' + idx + '">' +
+                '<strong>' + escapeHtml(med.dci) + '</strong>' +
+                (med.princeps ? ' <small class="text-muted">(' + escapeHtml(med.princeps) + ')</small>' : '') +
+                ' <span class="badge bg-light border ' + confidence + '" style="font-size:0.7em;">' + confidenceLabel + '</span>' +
+                (isAlready ? ' <span class="badge bg-secondary" style="font-size:0.7em;">Deja ajoute</span>' : '') +
+                '</label>';
+            medListDiv.appendChild(div);
+        });
+
+        // Store matches for validation
+        window._ocrMatches = result.medications;
+        resultsDiv.style.display = '';
+        footerDiv.style.display = '';
+        document.getElementById('ocrProgress').style.display = 'none';
+    } catch (e) {
+        console.error('[OCR] Recognition error:', e);
+        progressText.textContent = 'Erreur : ' + e.message;
+        progressText.className = 'text-danger small';
+    }
+}
+
+function ocrValidateSelection() {
+    if (!window._ocrMatches) return;
+    const checkboxes = document.querySelectorAll('#ocrMedList input[type="checkbox"]:checked:not(:disabled)');
+    let added = 0;
+    checkboxes.forEach(cb => {
+        const idx = parseInt(cb.value);
+        const med = window._ocrMatches[idx];
+        if (med && med.data) {
+            selectMed(med.data);
+            added++;
+        }
+    });
+    window._ocrMatches = null;
+    if (_ocrModal) _ocrModal.hide();
+    // Free OCR worker memory after use
+    OcrModule.terminate();
+}
+
+// Ctrl+V paste handler on the modal
+document.addEventListener('paste', function(e) {
+    const modal = document.getElementById('ocrModal');
+    if (!modal || !modal.classList.contains('show')) return;
+    const items = e.clipboardData.items;
+    for (const item of items) {
+        if (item.type.startsWith('image/')) {
+            e.preventDefault();
+            const file = item.getAsFile();
+            if (file) ocrHandleFile(file);
+            return;
+        }
+    }
+});
+
 window.onload = initUI;
