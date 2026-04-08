@@ -148,24 +148,61 @@ const OcrModule = (() => {
         return Array.from(matches.values()).sort((a, b) => b.score - a.score);
     }
 
+    // Pre-fetch language data with progress tracking so Tesseract finds it in HTTP cache
+    async function _prefetchLangData(onProgress) {
+        const base = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+        const url = base + 'lib/tessdata/fra.traineddata.gz';
+        let response;
+        try {
+            response = await fetch(url);
+        } catch (e) {
+            throw new Error('Impossible de charger les données OCR françaises : ' + e.message);
+        }
+        if (!response.ok) throw new Error('Données OCR introuvables (HTTP ' + response.status + ')');
+
+        const total = parseInt(response.headers.get('Content-Length') || '0');
+        const reader = response.body.getReader();
+        let received = 0;
+        // Consume the stream so the browser caches the response
+        // and to track real download progress
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            received += value.length;
+            if (onProgress) {
+                const pct = total > 0 ? received / total : 0.3;
+                onProgress('Chargement modèle français (' + Math.round(pct * 100) + '%)...', pct * 0.6);
+            }
+        }
+    }
+
     // Initialize Tesseract worker
     async function init(onProgress) {
         if (_ready) return;
         if (_initializing) return;
         _initializing = true;
         try {
-            const basePath = window.location.href.replace(/\/[^\/]*$/, '/');
+            const base = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+
+            // Step 1: pre-fetch language data ourselves (tracks 0→60% progress)
+            if (onProgress) onProgress('Chargement modèle français...', 0);
+            await _prefetchLangData(onProgress);
+            if (onProgress) onProgress('Initialisation OCR...', 0.65);
+
+            // Step 2: create worker — language data is now in HTTP cache, loads instantly
             _worker = await Tesseract.createWorker('fra', 1, {
-                workerPath: basePath + 'lib/tesseract-worker.min.js',
-                corePath: basePath + 'lib/tesseract-core-simd.wasm.js',
-                langPath: basePath + 'lib/tessdata',
+                workerPath: base + 'lib/tesseract-worker.min.js',
+                corePath: base + 'lib/tesseract-core-simd.wasm.js',
+                langPath: base + 'lib/tessdata',
+                cacheMethod: 'none',   // évite les blocages IndexedDB
                 logger: m => {
-                    if (onProgress && m.progress !== undefined) {
-                        onProgress(m.status, m.progress);
+                    if (onProgress && m.status === 'recognizing text') {
+                        onProgress('Lecture OCR...', 0.7 + m.progress * 0.25);
                     }
                 }
             });
             _ready = true;
+            if (onProgress) onProgress('Prêt', 0.95);
         } catch (e) {
             console.error('[OCR] Init failed:', e);
             _initializing = false;
@@ -176,13 +213,13 @@ const OcrModule = (() => {
     // Run OCR on image and extract medications
     async function recognize(imageSource, onProgress) {
         if (!_ready) await init(onProgress);
-        if (onProgress) onProgress('Lecture OCR en cours...', 0.5);
+        if (onProgress) onProgress('Analyse de l\'image...', 0.97);
         const result = await _worker.recognize(imageSource);
         const rawText = result.data.text;
-        if (onProgress) onProgress('Extraction des medicaments...', 0.9);
+        if (onProgress) onProgress('Recherche des médicaments...', 0.99);
         const candidates = _extractCandidates(rawText);
         const medications = _matchMedications(candidates);
-        if (onProgress) onProgress('Termine', 1);
+        if (onProgress) onProgress('Terminé', 1);
         return { rawText, medications };
     }
 

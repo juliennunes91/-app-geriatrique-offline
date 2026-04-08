@@ -293,10 +293,15 @@ async function _ocrRunRecognition(imageData) {
     const noMatchDiv = document.getElementById('ocrNoMatch');
     const footerDiv = document.getElementById('ocrFooter');
 
+    // Afficher immédiatement un état de démarrage visible
+    progressBar.style.width = '5%';
+    progressText.textContent = 'Démarrage...';
+    document.getElementById('ocrProgress').style.display = '';
+
     function onProgress(status, progress) {
-        const pct = Math.round(progress * 100);
+        const pct = Math.max(5, Math.round(progress * 100));
         progressBar.style.width = pct + '%';
-        progressText.textContent = status + ' (' + pct + '%)';
+        progressText.textContent = status;
     }
 
     try {
