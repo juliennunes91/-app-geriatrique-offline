@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="GeriaAssist - Interface moderne Tailwind">
+    <meta name="theme-color" content="#00677d">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <title>GeriaAssist — UI Moderne</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="lib/html2pdf.bundle.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00151b",
+                        "primary-container": "#002b36",
+                        "secondary": "#00677d",
+                        "secondary-container": "#50d9fe",
+                        "secondary-fixed": "#b3ebff",
+                        "on-secondary-fixed": "#001f27",
+                        "surface": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface": "#191c1e",
+                        "on-surface-variant": "#41484b",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "outline": "#71787b",
+                        "outline-variant": "#c1c7cb",
+                        "tertiary": "#230b00",
+                        "tertiary-container": "#3d1f0b"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Manrope", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* ============================================================
+           BOOTSTRAP COMPAT — re-stylelise les classes générées par JS
+           ============================================================ */
+        .mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}
+        .mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}
+        .ms-1{margin-left:.25rem}.ms-2{margin-left:.5rem}.me-1{margin-right:.25rem}.me-2{margin-right:.5rem}
+        .p-2{padding:.5rem}.p-3{padding:.75rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}
+        .py-2{padding-top:.5rem;padding-bottom:.5rem}.px-2{padding-left:.5rem;padding-right:.5rem}
+        .px-3{padding-left:.75rem;padding-right:.75rem}
+        .d-flex{display:flex}.d-block{display:block}.d-none{display:none!important}.d-inline-block{display:inline-block}
+        .align-items-center{align-items:center}.align-items-start{align-items:flex-start}
+        .justify-content-between{justify-content:space-between}.justify-content-end{justify-content:flex-end}
+        .flex-grow-1{flex-grow:1}.flex-wrap{flex-wrap:wrap}
+        .gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}
+        .w-100{width:100%}.border-bottom{border-bottom:1px solid #dee2e6}.border-top{border-top:1px solid #dee2e6}
+        .rounded{border-radius:.375rem}.rounded-pill{border-radius:9999px}
+        .fw-bold{font-weight:600}.fw-normal{font-weight:400}.small{font-size:.85em}
+        .text-muted{color:#6b7280}.text-danger{color:#dc2626}.text-warning{color:#d97706}
+        .text-success{color:#16a34a}.text-info{color:#0891b2}.text-primary{color:#00677d}
+        .text-secondary{color:#6b7280}.text-dark{color:#1f2937}.text-white{color:#fff}
+        .bg-light{background-color:#f8f9fa}
+        .position-fixed{position:fixed}.bottom-0{bottom:0}.end-0{right:0}.m-3{margin:.75rem}
+        .shadow{box-shadow:0 2px 8px rgba(0,0,0,.12)}
+
+        /* Alerts */
+        .alert{position:relative;padding:.65rem .9rem;margin-bottom:.6rem;border-radius:.5rem;border:1px solid transparent;font-size:.88rem;line-height:1.5;page-break-inside:avoid}
+        .alert-danger{background:#fef2f2;border-color:#fecaca;color:#991b1b;border-left:4px solid #ef4444}
+        .alert-warning{background:#fffbeb;border-color:#fde68a;color:#92400e;border-left:4px solid #f59e0b}
+        .alert-info{background:#f0f9ff;border-color:#bae6fd;color:#075985;border-left:4px solid #38bdf8}
+        .alert-success{background:#f0fdf4;border-color:#bbf7d0;color:#166534;border-left:4px solid #22c55e}
+        .alert-secondary{background:#f9fafb;border-color:#e5e7eb;color:#374151;border-left:4px solid #9ca3af}
+        .alert-light{background:#fff;border-color:#e5e7eb;color:#374151}
+        .alert-primary{background:#eff6ff;border-color:#bfdbfe;color:#1e40af;border-left:4px solid #3b82f6}
+        .alert-dismissible{padding-right:2.5rem}
+        .alert-stopp{background:#fef2f2;border-color:#fecaca;color:#991b1b;border-left:5px solid #dc2626}
+        .alert-start{background:#f0fdf4;border-color:#bbf7d0;color:#166534;border-left:5px solid #16a34a}
+        .alert-frail{background:#f1f5f9;border-color:#cbd5e1;color:#475569;border-left:5px solid #94a3b8}
+        .alert-ignored{border:2px dashed #9ca3af;background:#f9fafb;color:#9ca3af}
+        .alert-interact{background:#fff7ed;border-color:#fed7aa;color:#9a3412;border-left:5px solid #f97316}
+        .alert-remedies{background:#ecfeff;border-color:#a5f3fc;color:#155e75;border-left:5px solid #06b6d4}
+        .alert-hidden{display:none!important}
+        .compare-removed{background-color:rgba(220,53,69,.08)!important;border-left:4px solid #dc2626!important;text-decoration:line-through;opacity:.7}
+        .compare-added{background-color:rgba(22,163,74,.08)!important;border-left:4px solid #16a34a!important}
+        #compare-panel{display:none}
+        #compare-panel.active{display:block}
+
+        /* Badges */
+        .badge{display:inline-block;padding:.2em .55em;font-size:.72em;font-weight:600;line-height:1;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:9999px}
+        .bg-danger,.badge.bg-danger{background-color:#ef4444;color:#fff}
+        .bg-warning,.badge.bg-warning{background-color:#f59e0b;color:#fff}
+        .bg-success,.badge.bg-success{background-color:#22c55e;color:#fff}
+        .bg-info,.badge.bg-info{background-color:#38bdf8;color:#fff}
+        .bg-secondary,.badge.bg-secondary{background-color:#6b7280;color:#fff}
+        .bg-primary,.badge.bg-primary{background-color:#00677d;color:#fff}
+        .bg-dark,.badge.bg-dark{background-color:#1f2937;color:#fff}
+        .bg-light,.badge.bg-light{background-color:#f3f4f6;color:#374151}
+        .bg-white{background-color:#fff}
+
+        /* Buttons (generated content) */
+        .btn{display:inline-flex;align-items:center;justify-content:center;padding:.35rem .75rem;font-size:.85rem;font-weight:500;border-radius:.375rem;border:1px solid transparent;cursor:pointer;text-decoration:none;line-height:1.4;transition:all .15s ease}
+        .btn-sm{padding:.2rem .5rem;font-size:.78rem}
+        .btn-primary{background:#00677d;color:#fff;border-color:#00677d}
+        .btn-primary:hover{background:#005a6e}
+        .btn-outline-primary{background:transparent;color:#00677d;border-color:#00677d}
+        .btn-outline-primary:hover{background:#00677d;color:#fff}
+        .btn-outline-secondary{background:transparent;color:#6b7280;border-color:#d1d5db}
+        .btn-outline-secondary:hover{background:#f3f4f6}
+        .btn-outline-danger{background:transparent;color:#dc2626;border-color:#fca5a5}
+        .btn-outline-danger:hover{background:#fef2f2}
+        .btn-outline-info{background:transparent;color:#0891b2;border-color:#7dd3fc}
+        .btn-outline-info:hover{background:#f0f9ff}
+        .btn-outline-warning{background:transparent;color:#d97706;border-color:#fcd34d}
+        .btn-warning{background:#f59e0b;color:#fff}
+        .btn-warning:hover{background:#d97706}
+        .btn-close{background:none;border:none;cursor:pointer;font-size:1.2rem;color:#6b7280;padding:.2rem}
+        .btn-close::before{content:"×"}
+        .btn-group{display:inline-flex}
+        .btn-group .btn{border-radius:0}
+        .btn-group .btn:first-child{border-radius:.375rem 0 0 .375rem}
+        .btn-group .btn:last-child{border-radius:0 .375rem .375rem 0}
+        .btn-group-sm .btn{padding:.15rem .4rem;font-size:.78rem}
+        .btn-check{display:none}
+        .btn-check:checked+.btn-outline-info{background:#0891b2;color:#fff}
+
+        /* Progress */
+        .progress{background:#e5e7eb;border-radius:9999px;overflow:hidden}
+        .progress-bar{height:100%;transition:width .3s ease}
+        .progress-bar.bg-info{background:#38bdf8}
+
+        /* Tab panes */
+        .tab-pane{display:none}
+        .tab-pane.active.show{display:block}
+        .tab-counter{font-size:.6em;vertical-align:middle;margin-left:.2em}
+
+        /* Tag badges */
+        .tag-badge{font-size:.82em;padding:5px 9px;margin:3px;display:inline-block;cursor:pointer;border-radius:9999px;border:1px solid;transition:opacity .15s}
+        .tag-badge:hover{opacity:.7;text-decoration:line-through}
+
+        /* Autocomplete */
+        .autocomplete-container{position:relative;width:100%}
+        .autocomplete-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #e5e7eb;border-radius:0 0 .5rem .5rem;z-index:1000;max-height:160px;overflow-y:auto;display:none;padding:0;margin:0;list-style:none;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+        .autocomplete-list li{padding:8px 12px;cursor:pointer;font-size:.875rem;border-bottom:1px solid #f3f4f6}
+        .autocomplete-list li:hover{background-color:#f0f9ff}
+        .autocomplete-list li:last-child{border-bottom:none}
+
+        /* Tooltips */
+        .tooltip-custom{cursor:help;border-bottom:1px dotted #000;text-decoration:underline dotted #0891b2}
+        .score-tooltip{position:relative;cursor:help}
+        .score-tooltip .score-tip-text{visibility:hidden;width:280px;background:#1f2937;color:#fff;text-align:left;border-radius:6px;padding:8px 10px;position:absolute;z-index:1001;bottom:125%;left:0;font-size:.75rem;line-height:1.4;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+        .score-tooltip:hover .score-tip-text,.score-tooltip:focus .score-tip-text{visibility:visible}
+
+        /* Suivi tableau croisé */
+        .suivi-cross-table{font-size:.78em;width:100%;border-collapse:collapse}
+        .suivi-cross-table th{position:sticky;top:0;background:#fff;z-index:2}
+        .suivi-cross-table thead th.rotate{writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);white-space:nowrap;padding:6px 4px;max-width:42px;vertical-align:bottom;font-weight:500;font-size:.72em;overflow:hidden;text-overflow:ellipsis}
+        .suivi-cross-table td.cell-check{text-align:center;padding:2px;min-width:34px}
+        .suivi-cross-table td.cell-check.freq-hebdo{background:rgba(220,53,69,.12)}
+        .suivi-cross-table td.cell-check.freq-mensuel{background:rgba(253,126,20,.10)}
+        .suivi-cross-table td.cell-check.freq-trimestriel{background:rgba(13,202,240,.10)}
+        .suivi-cross-table td.cell-check.freq-annuel{background:rgba(108,117,125,.06)}
+        .suivi-cross-table .bio-row-name{white-space:nowrap;font-weight:600;min-width:120px}
+        .suivi-cross-table .bio-val{text-align:center;min-width:60px}
+
+        /* Suivi par médicament */
+        .suivi-med-card{border-left:4px solid #38bdf8;background:#f8fafc;border-radius:6px;padding:10px 14px;margin-bottom:10px}
+        .suivi-med-card h6{color:#00677d;margin-bottom:6px;font-weight:600}
+        .suivi-med-card .suivi-section{margin-bottom:4px}
+        .suivi-med-card .suivi-label{font-weight:600;font-size:.82em;color:#374151}
+
+        /* Section box (compat) */
+        .section-box{background:#fff;padding:16px;border-radius:.75rem;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:16px}
+
+        /* Modals */
+        .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center;padding:1rem}
+        .modal.show{display:flex}
+        .modal-dialog{width:100%;max-width:700px;max-height:90vh;display:flex;flex-direction:column}
+        .modal-dialog.modal-xl{max-width:1100px}
+        .modal-content{background:#fff;border-radius:.75rem;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden;display:flex;flex-direction:column;max-height:90vh}
+        .modal-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid #e5e7eb;background:#f9fafb;flex-shrink:0}
+        .modal-body{padding:1.25rem;overflow-y:auto;flex:1}
+        .modal-footer{display:flex;align-items:center;justify-content:flex-end;gap:.5rem;padding:.75rem 1.25rem;border-top:1px solid #e5e7eb;background:#f9fafb;flex-shrink:0}
+        .modal-title{font-weight:600;font-size:1rem;color:#00677d}
+
+        /* Dark mode compat */
+        .dark .alert-light{background:#1e293b;color:#e5e7eb}
+        .dark .suivi-cross-table th{background:#1e293b}
+        .dark .modal-content{background:#1e293b}
+        .dark .modal-header,.dark .modal-footer{background:#111827;border-color:#374151}
+        .dark .autocomplete-list{background:#1e293b;border-color:#374151}
+        .dark .autocomplete-list li{border-color:#374151}
+        .dark .autocomplete-list li:hover{background:#0f3a47}
+        .dark .bg-light{background-color:#1e293b!important}
+        .dark .text-muted{color:#9ca3af!important}
+
+        /* Print */
+        @media print {
+            header,footer,.no-print,#ocrModal,#legendModal,#session-restore-banner,#sw-update-banner{display:none!important}
+            .tab-pane{display:block!important}
+            .tab-pane:not(:empty)::before{content:attr(data-print-title);font-weight:bold;display:block;border-bottom:1px solid #333;margin-bottom:8px}
+            body{font-size:10pt}
+            .alert{page-break-inside:avoid}
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar{width:6px;height:6px}
+        ::-webkit-scrollbar-track{background:transparent}
+        ::-webkit-scrollbar-thumb{background:#c1c7cb;border-radius:9999px}
+        ::-webkit-scrollbar-thumb:hover{background:#71787b}
+
+        summary{outline:none;user-select:none}
+        summary::-webkit-details-marker{display:none}
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen">
+
+<noscript><div class="alert alert-danger m-3">JavaScript est requis pour utiliser GeriaAssist.</div></noscript>
+
+<!-- ==================== HEADER ==================== -->
+<header class="bg-primary text-white shadow-lg sticky top-0 z-50 no-print">
+    <div class="max-w-[1700px] mx-auto px-4 py-2.5 flex items-center justify-between gap-2 flex-wrap">
+        <h1 class="font-headline text-lg font-bold tracking-tight leading-none">
+            <span class="text-secondary-container">Geria</span>Assist
+            <span class="text-white/50 text-xs font-normal ml-1.5">Décision Pharmaco-Clinique</span>
+        </h1>
+        <div class="flex flex-wrap gap-1 items-center">
+            <button onclick="resetPatient()" title="Nouveau patient (Ctrl+N)" class="px-2.5 py-1.5 text-xs font-medium border border-white/25 rounded-lg hover:bg-white/10 transition-colors">Nouveau</button>
+            <button onclick="openLegendModal()" class="px-2.5 py-1.5 text-xs font-medium border border-white/25 rounded-lg hover:bg-white/10 transition-colors">Lexique</button>
+            <button id="btnCopier" onclick="copierSynthese()" style="display:none" class="px-2.5 py-1.5 text-xs font-medium bg-secondary-container text-on-secondary-fixed rounded-lg hover:opacity-90">Copier</button>
+            <button id="btnPdf" onclick="exporterPDF()" style="display:none" title="Export PDF (Ctrl+P)" class="px-2.5 py-1.5 text-xs font-medium bg-error-container text-on-error-container rounded-lg hover:opacity-90">PDF</button>
+            <div class="relative group" id="btnPrint" style="display:none">
+                <button class="px-2.5 py-1.5 text-xs font-medium border border-white/25 rounded-lg hover:bg-white/10 transition-colors">Imprimer ▾</button>
+                <div class="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-xl border border-gray-200 min-w-[160px] hidden group-hover:block z-50">
+                    <a href="#" onclick="imprimerSynthese('synthese');return false" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Synthèse seule</a>
+                    <a href="#" onclick="imprimerSynthese('complet');return false" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">Rapport complet</a>
+                </div>
+            </div>
+            <div class="flex border border-white/25 rounded-lg overflow-hidden">
+                <button onclick="exporterPatientJSON()" class="px-2.5 py-1.5 text-xs font-medium hover:bg-white/10 transition-colors border-r border-white/25">Export</button>
+                <button onclick="importerPatientJSON()" class="px-2.5 py-1.5 text-xs font-medium hover:bg-white/10 transition-colors">Import</button>
+            </div>
+            <button id="btnDarkMode" onclick="toggleDarkMode()" class="px-2.5 py-1.5 text-xs font-medium border border-white/25 rounded-lg hover:bg-white/10 transition-colors">Mode sombre</button>
+            <a href="index.html" class="px-2.5 py-1.5 text-xs font-medium border border-secondary-container/50 text-secondary-container rounded-lg hover:bg-secondary-container/10 transition-colors">← Classique</a>
+        </div>
+    </div>
+</header>
+
+<!-- SW Update Banner -->
+<div id="sw-update-banner" style="display:none" class="bg-blue-50 border-b border-blue-200 px-4 py-2 text-sm text-blue-800 flex items-center justify-between no-print">
+    <span>Nouvelle version disponible. <a href="#" onclick="location.reload();return false" class="font-semibold underline ml-1">Mettre à jour</a></span>
+    <button onclick="this.parentElement.style.display='none'" class="text-blue-600 ml-4 text-lg leading-none">&times;</button>
+</div>
+
+<!-- ==================== MAIN LAYOUT ==================== -->
+<main class="max-w-[1700px] mx-auto px-3 py-4 flex gap-4 items-start">
+
+    <!-- ========== LEFT PANEL ========== -->
+    <div class="w-[42%] flex-shrink-0 sticky top-[56px] max-h-[calc(100vh-64px)] overflow-y-auto pr-1 space-y-3">
+
+        <!-- 1. Profil & Biologie -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-4">
+            <h3 class="font-headline text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-secondary text-white text-[10px] flex items-center justify-center font-bold flex-shrink-0">1</span>
+                Profil &amp; Biologie
+            </h3>
+
+            <div class="grid grid-cols-2 gap-2 mb-2">
+                <div class="col-span-2">
+                    <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5" for="patientNom">Identifiant patient</label>
+                    <input type="text" id="patientNom" placeholder="Nom ou identifiant (optionnel)" class="w-full px-2.5 py-1.5 text-xs border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5" for="patientAge">Âge</label>
+                    <input type="number" id="patientAge" value="80" min="18" max="120" oninput="calculerDFG()" class="w-full px-2.5 py-1.5 text-xs border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5">Sexe</label>
+                    <select id="patientSexe" onchange="calculerDFG()" class="w-full px-2.5 py-1.5 text-xs border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                        <option value="F">F</option><option value="M">M</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5" for="patientPoids">Poids <span class="font-normal opacity-60">(kg)</span></label>
+                    <input type="number" id="patientPoids" min="20" max="300" oninput="calculerDFG()" class="w-full px-2.5 py-1.5 text-xs border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5">IMC <span class="font-normal opacity-60">(kg/m²)</span></label>
+                    <input type="number" id="patientBmi" class="w-full px-2.5 py-1.5 text-xs border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-secondary mb-0.5" for="bioCreat">Créat <span class="font-normal opacity-70">(µmol/L)</span></label>
+                    <input type="number" id="bioCreat" min="0" max="2000" oninput="calculerDFG()" class="w-full px-2.5 py-1.5 text-xs border-2 border-secondary/40 rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary">
+                </div>
+                <div class="col-span-2">
+                    <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5">DFGe estimé <span class="font-normal opacity-60">(ml/min)</span></label>
+                    <div class="flex gap-1">
+                        <input type="number" id="patientDFG" value="45" oninput="document.getElementById('dfgMethodSelect').value='manuel'" class="flex-1 px-2.5 py-1.5 text-xs font-bold border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                        <select id="dfgMethodSelect" onchange="calculerDFG(false)" style="max-width:118px;font-size:0.72em" class="px-2 py-1 border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none">
+                            <option value="manuel">Manuel</option>
+                            <option value="cg">Cockcroft</option>
+                            <option value="ckdepi">CKD-EPI 2021</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Biologie complète -->
+            <details class="mb-2 border border-outline-variant rounded-lg overflow-hidden">
+                <summary class="px-3 py-2 text-[11px] font-semibold text-secondary cursor-pointer bg-surface-container-low hover:bg-surface-container select-none">➕ Iono &amp; Biologie complète</summary>
+                <div class="p-3 grid grid-cols-3 gap-1.5">
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5 font-semibold">Kaliémie (mmol/L)</label><input type="number" step="0.1" id="patientK" value="4.0" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5 font-semibold">Natrémie (mmol/L)</label><input type="number" id="patientNa" value="140" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-secondary mb-0.5 font-semibold">Albumine sg (g/L)</label><input type="number" id="bioAlbumSg" placeholder="ex: 38" class="w-full px-2 py-1 text-[11px] border border-secondary/30 rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Urée (mmol/L)</label><input type="number" id="bioUree" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Magnésium (mmol/L)</label><input type="number" step="0.01" id="bioMg" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Calcémie (mmol/L)</label><input type="number" step="0.01" id="bioCa" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Uricémie (µmol/L)</label><input type="number" id="bioUric" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Hb NFS (g/dL)</label><input type="number" step="0.1" id="bioHb" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Plaquettes (G/L)</label><input type="number" id="bioPlaq" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Ferritine (µg/L)</label><input type="number" id="bioFer" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">CST (%)</label><input type="number" id="bioCst" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Vit. B12 (pmol/L)</label><input type="number" id="bioB12" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Vit. B9 (nmol/L)</label><input type="number" id="bioB9" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Vitamine D (ng/mL)</label><input type="number" id="bioVitD" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">CPK (UI/L)</label><input type="number" id="bioCpk" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">ASAT (UI/L)</label><input type="number" id="bioAsat" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">ALAT (UI/L)</label><input type="number" id="bioAlat" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">PAL (UI/L)</label><input type="number" id="bioPal" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">GGT (UI/L)</label><input type="number" id="bioGgt" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">TSH (mUI/L)</label><input type="number" step="0.1" id="bioTsh" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">T4 (nmol/L)</label><input type="number" step="0.1" id="bioT4" placeholder="60-120" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">T3 (nmol/L)</label><input type="number" step="0.01" id="bioT3" placeholder="1.2-2.7" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">NT-proBNP (pg/mL)</label><input type="number" id="bioBnp" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">LDL-C (g/L)</label><input type="number" step="0.1" id="bioLdl" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">HDL (g/L)</label><input type="number" step="0.1" id="bioHdl" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Triglycérides (g/L)</label><input type="number" step="0.1" id="bioTg" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div class="col-span-3"><label class="block text-[10px] text-on-surface-variant mb-0.5">CRP (mg/L)</label><input type="number" id="bioCrp" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+
+                    <div class="col-span-3 border-t border-outline-variant pt-2 mt-1">
+                        <p class="text-[10px] font-bold text-error mb-1.5">NFS étendue / Hémostase / Métabolisme</p>
+                        <div class="grid grid-cols-3 gap-1.5">
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">GB (G/L)</label><input type="number" step="0.1" id="bioGb" placeholder="4-10" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">PNN (G/L)</label><input type="number" step="0.1" id="bioPnn" placeholder="1.5-7" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">INR (ratio)</label><input type="number" step="0.1" id="bioInr" placeholder="0.8-1.2" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Glycémie (mmol/L)</label><input type="number" step="0.1" id="bioGly" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">HbA1c (%)</label><input type="number" step="0.1" id="bioHba1c" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Bilirubine (µmol/L)</label><input type="number" id="bioBili" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Phosphore (mmol/L)</label><input type="number" step="0.01" id="bioPhos" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Lactates (mmol/L)</label><input type="number" step="0.1" id="bioLact" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-3 border-t border-outline-variant pt-2 mt-1">
+                        <p class="text-[10px] font-bold text-error mb-1.5">Marqueurs spécialisés / Urgence</p>
+                        <div class="grid grid-cols-3 gap-1.5">
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">PCT (ng/mL)</label><input type="number" step="0.01" id="bioPct" placeholder="&lt;0.5" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Lithiémie (mEq/L)</label><input type="number" step="0.1" id="bioLithium" placeholder="0.6-1.2" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Lipase (UI/L)</label><input type="number" id="bioLipase" placeholder="&lt;60" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">D-Dimères (µg/L)</label><input type="number" id="bioDdim" placeholder="&lt;500" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Troponine (ng/L)</label><input type="number" step="0.1" id="bioTropo" placeholder="&lt;14" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Temp. (°C)</label><input type="number" step="0.1" id="bioTemp" placeholder="36.5-37.5" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-3 border-t border-outline-variant pt-2 mt-1">
+                        <p class="text-[10px] font-bold text-error mb-1.5">Biomarqueurs complémentaires</p>
+                        <div class="grid grid-cols-4 gap-1.5">
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">TP (%)</label><input type="number" id="bioTp" placeholder="70-100" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Chlore (mmol/L)</label><input type="number" id="bioChlore" placeholder="98-106" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Osmolalité</label><input type="number" id="bioOsm" placeholder="280-295" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                            <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Préalbumine (g/L)</label><input type="number" step="0.01" id="bioPrealb" placeholder="0.20-0.40" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Paramètres cliniques / Scores -->
+            <details class="mb-2 border border-outline-variant rounded-lg overflow-hidden">
+                <summary class="px-3 py-2 text-[11px] font-semibold text-emerald-700 cursor-pointer bg-surface-container-low hover:bg-surface-container select-none">🧮 Paramètres cliniques pour Scores</summary>
+                <div class="p-3">
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-on-surface-variant mb-0.5">Score Fragilité (CFS)</label>
+                            <select id="scoreCFS" onchange="checkFrail()" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                                <option value="0">Non évalué</option>
+                                <option value="1">1 - Très en forme</option>
+                                <option value="2">2 - En forme</option>
+                                <option value="3">3 - Gère bien</option>
+                                <option value="4">4 - Vulnérable</option>
+                                <option value="5">5 - Légèrement fragile</option>
+                                <option value="6">6 - Modérément fragile</option>
+                                <option value="7">7 - Sévèrement fragile</option>
+                                <option value="8">8 - Très sév. fragile</option>
+                                <option value="9">9 - Phase terminale</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-on-surface-variant mb-0.5">QTc de base (ms)</label>
+                            <input type="number" id="bioQtc" placeholder="ex: 430" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="border-t border-outline-variant pt-3">
+                        <p class="text-[10px] font-bold text-secondary mb-2">Score de Child-Pugh (si hépatopathie)</p>
+                        <div class="mb-2">
+                            <label class="block text-[10px] text-on-surface-variant mb-0.5">Classe Child-Pugh (saisie directe)</label>
+                            <select id="cpManual" onchange="toggleCpDetails(this.value)" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                                <option value="0">— Calcul automatique (remplir ci-dessous) —</option>
+                                <option value="A">Child-Pugh A (5-6 pts) — Compensée</option>
+                                <option value="B">Child-Pugh B (7-9 pts) — Modérée</option>
+                                <option value="C">Child-Pugh C (10-15 pts) — Sévère</option>
+                            </select>
+                        </div>
+                        <div id="cpDetailsBlock" class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] text-on-surface-variant mb-0.5">Bilirubine tot.</label>
+                                <select id="cpBili" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                                    <option value="1">&lt; 35 µmol/L</option><option value="2">35-50 µmol/L</option><option value="3">&gt; 50 µmol/L</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-on-surface-variant mb-0.5">Albumine sg</label>
+                                <select id="cpAlb" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                                    <option value="1">&gt; 35 g/L</option><option value="2">28-35 g/L</option><option value="3">&lt; 28 g/L</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-on-surface-variant mb-0.5">TP / INR</label>
+                                <select id="cpTp" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                                    <option value="1">TP &gt; 54% (INR &lt; 1.7)</option><option value="2">TP 44-54% (1.7-2.3)</option><option value="3">TP &lt; 44% (INR &gt; 2.3)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-on-surface-variant mb-0.5">Ascite</label>
+                                <select id="cpAscite" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                                    <option value="1">Absente</option><option value="2">Modérée</option><option value="3">Tendue</option>
+                                </select>
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-[10px] text-on-surface-variant mb-0.5">Encéphalopathie</label>
+                                <select id="cpEnceph" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                                    <option value="1">Absente</option><option value="2">Grade I-II</option><option value="3">Grade III-IV</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Antécédents -->
+                    <div class="border-t border-outline-variant pt-3 mt-3">
+                        <p class="text-[10px] font-bold text-secondary mb-2">Habitudes de vie &amp; État général</p>
+                        <div class="space-y-1">
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAlcool" class="accent-secondary"><span>Alcool excessif</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAnorexie" class="accent-secondary"><span>Anorexie / Dénutrition sévère</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTabac" class="accent-secondary"><span>Fumeur actif (Tabagisme)</span></label>
+                        </div>
+                        <p class="text-[10px] font-bold text-secondary mb-2 mt-3">Antécédents Cardiovasculaires</p>
+                        <div class="space-y-1">
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAvc" class="accent-secondary"><span>ATCD d'AVC / AIT</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTvp" class="accent-secondary"><span>ATCD d'EP / TVP</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSaignement" class="accent-secondary"><span>ATCD de Saignement majeur</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkBrady" class="accent-secondary"><span>Bradycardie sévère (&lt; 45 bpm)</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkHtaNonControlee" class="accent-secondary"><span>HTA non contrôlée (&gt;160 mmHg)</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkArret" class="accent-secondary"><span>Post-Arrêt Cardiaque / Cardioversion FA</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkScaAigu" class="accent-secondary"><span>Syndrome Coronarien Aigu (IDM récent)</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkStent" class="accent-secondary"><span>Stent coronaire récent (&lt; 6 mois)</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkLqts" class="accent-secondary"><span>Syndrome du QT Long Congénital</span></label>
+                        </div>
+                        <p class="text-[10px] font-bold text-secondary mb-2 mt-3">Insuffisances d'Organes &amp; État Aigu</p>
+                        <div class="space-y-1">
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkDialyse" class="accent-secondary"><span>Hémodialyse</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkFoie" class="accent-secondary" onchange="syncFoieToChildPugh()"><span>Hépatopathie / Cirrhose <span class="opacity-60">(préciser le Child-Pugh ci-dessus)</span></span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSepsis" class="accent-secondary"><span>Sepsis / Maladie aiguë en cours</span></label>
+                        </div>
+                        <p class="text-[10px] font-bold text-secondary mb-2 mt-3">Gériatrie &amp; Syndromes</p>
+                        <div class="space-y-1">
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkPalliatif" class="accent-secondary"><span>Soins palliatifs / Espérance de vie &lt; 1 an</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAtcdUlcere" class="accent-secondary"><span>ATCD d'Ulcère ou Saignement digestif</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkChutes" class="accent-secondary"><span>Chutes fréquentes</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkDepression" class="accent-secondary"><span>Dépression majeure caractérisée</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkIncontinence" class="accent-secondary"><span>Incontinence urinaire</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkHbp" class="accent-secondary"><span>HBP / Rétention urinaire</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkConstipation" class="accent-secondary"><span>Constipation chronique sévère</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkDysphagie" class="accent-secondary"><span>Dysphagie / Troubles de déglutition</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkLewy" class="accent-secondary"><span>Démence à Corps de Lewy (DCL)</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkGlaucome" class="accent-secondary"><span>Glaucome à angle fermé</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkStenoseAortique" class="accent-secondary"><span>Sténose aortique serrée symptomatique</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAspirineForte" class="accent-secondary"><span>Aspirine &gt; 100 mg/j (Dose élevée)</span></label>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Fragile toggle -->
+            <div class="flex items-center gap-3 p-2.5 bg-error-container/20 border border-error/20 rounded-lg">
+                <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                    <input type="checkbox" id="patientFragile" class="sr-only peer" onchange="onFragileChange()">
+                    <div class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:bg-error after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-4"></div>
+                </label>
+                <span class="text-xs font-semibold text-error">Patient Très Fragile (STOPPFrail)</span>
+            </div>
+        </div>
+
+        <!-- 2. Comorbidités -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-4">
+            <h3 class="font-headline text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-secondary text-white text-[10px] flex items-center justify-center font-bold flex-shrink-0">2</span>
+                Comorbidités
+            </h3>
+            <div class="autocomplete-container mb-2">
+                <input class="w-full px-3 py-2 text-sm border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary" type="text" id="inputComorb" placeholder="Taper une pathologie..." autocomplete="off">
+                <ul class="autocomplete-list" id="listComorb" role="listbox" aria-label="Suggestions de pathologies"></ul>
+            </div>
+            <div id="selectedComorbs" class="min-h-[24px]"></div>
+        </div>
+
+        <!-- 3. Médicaments -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-4">
+            <h3 class="font-headline text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-secondary text-white text-[10px] flex items-center justify-center font-bold flex-shrink-0">3</span>
+                Médicaments
+            </h3>
+            <div class="flex gap-2 mb-2">
+                <div class="autocomplete-container flex-1">
+                    <input class="w-full px-3 py-2 text-sm border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary" type="text" id="inputMed" placeholder="DCI, Princeps..." autocomplete="off">
+                    <ul class="autocomplete-list" id="listMed" role="listbox" aria-label="Suggestions de médicaments"></ul>
+                </div>
+                <button id="btnOcrImport" onclick="ocrOpenModal()" title="Importer depuis image/capture" class="flex items-center gap-1.5 px-3 py-2 text-xs font-medium border border-outline-variant rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant transition-colors whitespace-nowrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                    OCR
+                </button>
+            </div>
+            <div id="selectedMeds" class="min-h-[24px] mb-3"></div>
+
+            <details class="mb-3">
+                <summary class="text-xs font-semibold text-on-surface-variant cursor-pointer select-none">Commentaire libre</summary>
+                <textarea id="freeTextNote" rows="3" placeholder="Notes cliniques, contexte particulier, observations..." class="w-full mt-2 px-3 py-2 text-sm border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-y"></textarea>
+            </details>
+
+            <button id="btnAnalyse" onclick="this.disabled=true;this.textContent='Analyse en cours...';try{analyserPrescription();}finally{this.disabled=false;this.textContent='Lancer l\'Analyse Clinique';}" class="w-full py-3 px-4 bg-secondary text-white font-semibold rounded-xl hover:bg-secondary/90 active:scale-[0.99] transition-all shadow-md text-sm tracking-wide">
+                Lancer l'Analyse Clinique
+            </button>
+        </div>
+
+    </div><!-- end left panel -->
+
+    <!-- ========== RIGHT PANEL ========== -->
+    <div class="flex-1 min-w-0">
+
+        <!-- Toolbar -->
+        <div class="flex items-center gap-2 mb-3 flex-wrap no-print">
+            <input type="text" id="searchAlertes" placeholder="Filtrer les alertes..." oninput="filterAlertes(this.value)" style="max-width:220px" class="px-3 py-1.5 text-sm border border-outline-variant rounded-lg bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary">
+            <button id="btnCompare" onclick="toggleCompareMode()" title="Comparer ordonnances" style="display:none" class="px-3 py-1.5 text-xs font-medium border border-outline-variant rounded-lg hover:bg-surface-container text-on-surface-variant transition-colors whitespace-nowrap">Comparer</button>
+        </div>
+
+        <!-- Tabs container -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+
+            <!-- Tab nav -->
+            <div class="border-b border-outline-variant overflow-x-auto no-print">
+                <div id="myTab" class="flex min-w-max" role="tablist">
+                    <button class="nav-link tab-btn active px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-secondary text-secondary bg-secondary/5 transition-colors" data-tab="synthese" role="tab" aria-selected="true" aria-label="Synthèse intelligente">Synthèse</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="scores" role="tab" aria-selected="false" aria-label="Calculs et Scores">Scores</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="eviter" role="tab" aria-selected="false" aria-label="Prescriptions inappropriées">Éviter</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="initier" role="tab" aria-selected="false" aria-label="Omissions thérapeutiques">Omissions</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="interact" role="tab" aria-selected="false" aria-label="Interactions médicamenteuses">Interactions</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="auc" role="tab" aria-selected="false" aria-label="Pharmacocinétique AUC">PK/AUC</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="ansm" role="tab" aria-selected="false" aria-label="Interactions ANSM France">ANSM</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="bio" role="tab" aria-selected="false" aria-label="Syndromes biologiques">Bio</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="usage" role="tab" aria-selected="false" aria-label="Adaptations posologiques">Doses</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="suivi" role="tab" aria-selected="false" aria-label="Suivi biologique">Suivi</button>
+                    <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="guidelines" role="tab" aria-selected="false" aria-label="Guidelines par pathologie">Recos</button>
+                </div>
+            </div>
+
+            <!-- Tab content -->
+            <div class="tab-content p-4" id="myTabContent">
+                <div class="tab-pane active show" id="tab-synthese" role="tabpanel" data-print-title="Synthèse intelligente">
+                    <div id="alertes-synthese" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur "Lancer l'Analyse Clinique" pour voir la synthèse intelligente...</div>
+                </div>
+                <div class="tab-pane" id="tab-scores" role="tabpanel" data-print-title="Scores"><div id="alertes-scores" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+                <div class="tab-pane" id="tab-eviter" role="tabpanel" data-print-title="Prescriptions à éviter"><div id="alertes-eviter" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+                <div class="tab-pane" id="tab-initier" role="tabpanel" data-print-title="Omissions thérapeutiques"><div id="alertes-initier" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+                <div class="tab-pane" id="tab-interact" role="tabpanel" data-print-title="Interactions médicamenteuses"><div id="alertes-interact" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+                <div class="tab-pane" id="tab-auc" role="tabpanel" data-print-title="Pharmacocinétique / AUC"><div id="alertes-auc" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+                <div class="tab-pane" id="tab-ansm" role="tabpanel" data-print-title="Interactions ANSM"><div id="alertes-ansm" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+                <div class="tab-pane" id="tab-bio" role="tabpanel" data-print-title="Syndromes biologiques"><div id="alertes-bio" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+                <div class="tab-pane" id="tab-usage" role="tabpanel" data-print-title="Adaptations posologiques"><div id="alertes-usage" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+                <div class="tab-pane" id="tab-suivi" role="tabpanel" data-print-title="Suivi biologique">
+                    <div id="suivi-mode-toggle" class="mb-3 no-print" style="display:none">
+                        <div class="inline-flex rounded-lg overflow-hidden border border-outline-variant" role="group">
+                            <input type="radio" class="btn-check" name="suiviMode" id="suiviModeCroix" value="croix" checked>
+                            <label class="btn btn-outline-info px-3 py-1.5 text-xs cursor-pointer" for="suiviModeCroix">Tableau croisé</label>
+                            <input type="radio" class="btn-check" name="suiviMode" id="suiviModeMed" value="med">
+                            <label class="btn btn-outline-info px-3 py-1.5 text-xs border-l border-outline-variant cursor-pointer" for="suiviModeMed">Par médicament</label>
+                        </div>
+                    </div>
+                    <div id="alertes-suivi" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div>
+                </div>
+                <div class="tab-pane" id="tab-guidelines" role="tabpanel" data-print-title="Guidelines par pathologie"><div id="alertes-guidelines" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+            </div>
+        </div>
+
+        <!-- Compare panel -->
+        <div id="compare-panel" class="mt-3"></div>
+
+    </div><!-- end right panel -->
+
+</main>
+
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 text-[0.68rem] text-on-surface-variant bg-surface-container-lowest/92 px-3 py-1 border-t border-r border-outline-variant rounded-tr-md z-40 leading-tight max-w-[420px] pointer-events-none no-print" style="backdrop-filter:blur(4px)">
+    version 0.49 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+    Merci aux testeurs (Dr Juliette Muffet)<br>
+    <em>Outil d'aide à la décision pharmaco-clinique. Résultats à valider par l'utilisateur.</em>
+</footer>
+
+<!-- ==================== OCR MODAL ==================== -->
+<div class="modal" id="ocrModal" tabindex="-1" aria-labelledby="ocrModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ocrModalLabel">Importer ordonnance / capture</h5>
+                <button type="button" class="btn-close" onclick="closeModal('ocrModal')" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <div id="ocrStep1">
+                    <p class="text-sm text-on-surface-variant mb-3">Importez une photo d'ordonnance, un CR d'hospitalisation, ou collez une capture d'écran (Ctrl+V).</p>
+                    <div class="d-flex gap-2 mb-3">
+                        <label class="btn btn-outline-primary flex-grow-1" for="ocrFileInput" style="cursor:pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:-2px;margin-right:5px"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg>
+                            Choisir un fichier
+                        </label>
+                        <input type="file" id="ocrFileInput" accept="image/*" style="display:none" onchange="ocrHandleFile(this.files[0])">
+                        <button class="btn btn-outline-secondary flex-grow-1" onclick="ocrPasteClipboard()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:-2px;margin-right:5px"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+                            Coller (Ctrl+V)
+                        </button>
+                    </div>
+                    <div id="ocrDropZone" style="border:2px dashed #c1c7cb;border-radius:10px;padding:36px;text-align:center;color:#71787b;cursor:pointer" ondragover="event.preventDefault();this.style.borderColor='#00677d'" ondragleave="this.style.borderColor='#c1c7cb'" ondrop="event.preventDefault();this.style.borderColor='#c1c7cb';ocrHandleFile(event.dataTransfer.files[0])">
+                        Glisser-déposer une image ici
+                    </div>
+                </div>
+                <div id="ocrStep2" style="display:none">
+                    <div class="d-flex gap-3 mb-3">
+                        <div style="flex:0 0 40%;max-height:300px;overflow:auto">
+                            <img id="ocrPreviewImg" src="" alt="Aperçu" style="width:100%;border-radius:6px">
+                        </div>
+                        <div style="flex:1">
+                            <div id="ocrProgress" class="mb-2">
+                                <div class="progress" style="height:6px">
+                                    <div id="ocrProgressBar" class="progress-bar bg-info" style="width:0%;transition:width 0.3s"></div>
+                                </div>
+                                <small id="ocrProgressText" class="text-muted">Initialisation OCR...</small>
+                            </div>
+                            <div id="ocrRawText" style="display:none;max-height:150px;overflow-y:auto;font-size:.8em;background:#f9fafb;padding:8px;border-radius:6px;margin-bottom:8px;white-space:pre-wrap;border:1px solid #e5e7eb"></div>
+                            <div id="ocrResults" style="display:none">
+                                <h6 class="mb-2 small fw-bold">Médicaments détectés :</h6>
+                                <div id="ocrMedList"></div>
+                                <div id="ocrNoMatch" style="display:none" class="text-warning small mt-2">Aucun médicament reconnu. Vérifiez la qualité de l'image.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="ocrFooter" style="display:none">
+                <button class="btn btn-outline-secondary btn-sm" onclick="ocrReset()">Nouvelle image</button>
+                <button class="btn btn-primary btn-sm" id="ocrBtnValidate" onclick="ocrValidateSelection()">Ajouter les médicaments cochés</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== LEGEND MODAL ==================== -->
+<div class="modal" id="legendModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title text-primary fw-bold">ℹ️ Lexique &amp; Signification des Alertes</h5>
+                <button type="button" class="btn-close" onclick="closeModal('legendModal')" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="legendContainer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== SESSION RESTORE BANNER ==================== -->
+<div id="session-restore-banner" style="display:none;position:fixed;bottom:1rem;right:1rem;z-index:10000;max-width:350px" class="alert alert-warning shadow">
+    Session précédente détectée. <a href="#" onclick="_restoreSession();document.getElementById('session-restore-banner').style.display='none';return false" class="fw-bold">Restaurer</a>
+    <button type="button" class="btn-close btn-sm ms-2" onclick="this.parentElement.style.display='none';sessionStorage.removeItem('geriaassist_session')"></button>
+</div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script src="ddi_general.js" defer></script>
+<script src="ddi_merged_V2.js" defer></script>
+<script src="app_legend.js"></script>
+<script src="geria_database.js"></script>
+<script src="geria_pathology_rules_v3.js"></script>
+<script src="geria_recos_final.js"></script>
+<script src="geria_integration_module.js"></script>
+<script src="utils.js"></script>
+<script src="patient_state.js"></script>
+<script src="drug_classes.js"></script>
+<script src="geria_engine_v2.js"></script>
+<script src="lib/tesseract.min.js"></script>
+<script src="app_core.js"></script>
+<script src="app_ui.js"></script>
+<script src="ocr_module.js"></script>
+<script src="child_pugh_adaptations.js"></script>
+<script src="app_analysis.js"></script>
+
+<script>
+    // ================================================================
+    // BOOTSTRAP MODAL POLYFILL
+    // ================================================================
+    window.bootstrap = window.bootstrap || {};
+    window.bootstrap.Modal = class {
+        constructor(el) { this._el = (typeof el === 'string') ? document.querySelector(el) : el; }
+        show() {
+            if (!this._el) return;
+            this._el.style.display = 'flex';
+            this._el.classList.add('show');
+            this._el.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+        hide() {
+            if (!this._el) return;
+            this._el.style.display = 'none';
+            this._el.classList.remove('show');
+            this._el.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+        toggle() { this._el && this._el.classList.contains('show') ? this.hide() : this.show(); }
+        static getInstance(el) { return new window.bootstrap.Modal(el); }
+        static getOrCreateInstance(el) { return new window.bootstrap.Modal(el); }
+    };
+
+    function closeModal(id) { new bootstrap.Modal(document.getElementById(id)).hide(); }
+    function openLegendModal() { new bootstrap.Modal(document.getElementById('legendModal')).show(); }
+
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal')) closeModal(e.target.id);
+        const dismiss = e.target.closest('[data-bs-dismiss="modal"]');
+        if (dismiss) { const m = dismiss.closest('.modal'); if (m) closeModal(m.id); }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') document.querySelectorAll('.modal.show').forEach(m => closeModal(m.id));
+    });
+
+    // ================================================================
+    // TAB SWITCHING — vanilla JS
+    // ================================================================
+    function activateTab(tabName) {
+        document.querySelectorAll('#myTab .nav-link').forEach(btn => {
+            const on = btn.dataset.tab === tabName;
+            btn.classList.toggle('active', on);
+            btn.classList.toggle('border-secondary', on);
+            btn.classList.toggle('text-secondary', on);
+            btn.classList.toggle('bg-secondary/5', on);
+            btn.classList.toggle('border-transparent', !on);
+            btn.classList.toggle('text-on-surface-variant', !on);
+            btn.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        document.querySelectorAll('#myTabContent .tab-pane').forEach(pane => {
+            const on = pane.id === 'tab-' + tabName;
+            pane.classList.toggle('active', on);
+            pane.classList.toggle('show', on);
+        });
+    }
+    document.querySelectorAll('#myTab .tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+    });
+
+    // ================================================================
+    // SERVICE WORKER
+    // ================================================================
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').then(reg => {
+            console.log('SW enregistré:', reg.scope);
+            reg.addEventListener('updatefound', () => {
+                const nw = reg.installing;
+                if (nw) nw.addEventListener('statechange', () => {
+                    if (nw.state === 'activated' && navigator.serviceWorker.controller) {
+                        const b = document.getElementById('sw-update-banner');
+                        if (b) b.style.display = 'flex';
+                    }
+                });
+            });
+        }).catch(e => console.warn('SW erreur:', e));
+    }
+
+    // ================================================================
+    // DARK MODE
+    // ================================================================
+    function toggleDarkMode() {
+        const html = document.documentElement;
+        const isDark = html.classList.contains('dark');
+        html.classList.toggle('dark', !isDark);
+        html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('geriaassist-theme', isDark ? 'light' : 'dark');
+        const btn = document.getElementById('btnDarkMode');
+        if (btn) btn.textContent = isDark ? 'Mode sombre' : 'Mode clair';
+    }
+    (function() {
+        const saved = localStorage.getItem('geriaassist-theme');
+        if (saved === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
+            const btn = document.getElementById('btnDarkMode');
+            if (btn) btn.textContent = 'Mode clair';
+        }
+    })();
+
+    // ================================================================
+    // KEYBOARD SHORTCUTS
+    // ================================================================
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); const b = document.getElementById('btnAnalyse'); if (b && !b.disabled) b.click(); }
+        if (e.ctrlKey && e.key === 'n' && !e.shiftKey) { e.preventDefault(); if (typeof resetPatient === 'function') resetPatient(); }
+        if (e.ctrlKey && e.key === 'p') {
+            const b = document.getElementById('btnPdf');
+            if (b && b.style.display !== 'none') { e.preventDefault(); if (typeof exporterPDF === 'function') exporterPDF(); }
+        }
+        if (e.ctrlKey && e.key === 's' && !e.shiftKey) { e.preventDefault(); if (typeof exporterPatientJSON === 'function') exporterPatientJSON(); }
+        if (e.ctrlKey && e.key === 'o') { e.preventDefault(); if (typeof importerPatientJSON === 'function') importerPatientJSON(); }
+        if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)) {
+            const tabs = Array.from(document.querySelectorAll('#myTab .nav-link'));
+            const active = tabs.findIndex(t => t.classList.contains('active'));
+            if (active >= 0) {
+                const next = e.key === 'ArrowRight' ? (active + 1) % tabs.length : (active - 1 + tabs.length) % tabs.length;
+                activateTab(tabs[next].dataset.tab);
+            }
+        }
+    });
+
+    // ================================================================
+    // FILTER ALERTS
+    // ================================================================
+    function filterAlertes(query) {
+        const q = query.toLowerCase().trim();
+        document.querySelectorAll('.tab-content .alert').forEach(el => {
+            if (!q) { el.classList.remove('alert-hidden'); return; }
+            el.classList.toggle('alert-hidden', !el.textContent.toLowerCase().includes(q));
+        });
+    }
+
+    // ================================================================
+    // TAB COUNTERS
+    // ================================================================
+    function updateTabCounters() {
+        const tabMap = {
+            'alertes-synthese':0,'alertes-scores':1,'alertes-eviter':2,'alertes-initier':3,
+            'alertes-interact':4,'alertes-auc':5,'alertes-ansm':6,
+            'alertes-bio':7,'alertes-usage':8,'alertes-suivi':9,'alertes-guidelines':10
+        };
+        const tabs = document.querySelectorAll('#myTab .nav-link');
+        for (const [divId, idx] of Object.entries(tabMap)) {
+            const el = document.getElementById(divId);
+            if (!el || !tabs[idx]) continue;
+            const count = el.querySelectorAll('.alert:not(.alert-light)').length;
+            const btn = tabs[idx];
+            const existing = btn.querySelector('.tab-counter');
+            if (existing) existing.remove();
+            if (count > 0) {
+                const badge = document.createElement('span');
+                badge.className = 'tab-counter badge bg-danger rounded-pill ms-1';
+                badge.style.fontSize = '0.6em';
+                badge.textContent = count;
+                btn.appendChild(badge);
+            }
+        }
+    }
+
+    // ================================================================
+    // COMPARE MODE
+    // ================================================================
+    let _compareSnapshot = null;
+    function toggleCompareMode() {
+        const btn = document.getElementById('btnCompare');
+        const ids = ['alertes-eviter','alertes-initier','alertes-interact','alertes-ansm','alertes-auc','alertes-bio','alertes-usage','alertes-suivi'];
+        if (!_compareSnapshot) {
+            _compareSnapshot = {};
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) _compareSnapshot[id] = Array.from(el.querySelectorAll('.alert')).map(a => a.textContent.trim().substring(0,100));
+            });
+            if (btn) { btn.textContent = 'Comparer maintenant'; btn.classList.replace('btn-outline-secondary','btn-warning'); }
+        } else {
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const old = _compareSnapshot[id] || [];
+                el.querySelectorAll('.alert').forEach(a => { if (!old.includes(a.textContent.trim().substring(0,100))) a.classList.add('compare-added'); });
+                const cur = Array.from(el.querySelectorAll('.alert')).map(a => a.textContent.trim().substring(0,100));
+                old.forEach(ot => {
+                    if (!cur.some(ct => ct === ot)) {
+                        const div = document.createElement('div');
+                        div.className = 'alert compare-removed mb-2 py-1 px-2 small';
+                        div.textContent = '(Retiré) ' + ot;
+                        el.appendChild(div);
+                    }
+                });
+            });
+            _compareSnapshot = null;
+            if (btn) { btn.textContent = 'Comparer'; btn.classList.replace('btn-warning','btn-outline-secondary'); }
+        }
+    }
+
+    // ================================================================
+    // SESSION RESTORE + SUIVI MODE
+    // ================================================================
+    window.addEventListener('DOMContentLoaded', function() {
+        if (sessionStorage.getItem('geriaassist_session')) {
+            const b = document.getElementById('session-restore-banner');
+            if (b) b.style.display = 'block';
+        }
+        document.querySelectorAll('input[name="suiviMode"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (typeof renderSuiviBiologique === 'function') renderSuiviBiologique(this.value);
+            });
+        });
+    });
+</script>
+</body>
+</html>
