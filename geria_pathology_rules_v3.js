@@ -2482,6 +2482,15 @@ const PATHOLOGY_RULES_DB = {
         NOM: "Glaucome à angle fermé",
         REFERENCE: "AAO Preferred Practice Pattern 2024 | EGS Guidelines 2024 | STOPP/START v3",
         SOURCES_EBM: {
+            "INITIER": {
+                "Iridotomie laser": "AAO_PPP_2024 (traitement curatif de référence)",
+                "Bêtabloquant topique": "EGS_2024 §4.2",
+                "Analogue prostaglandines": "EGS_2024 §4.3",
+                "Inhibiteur anhydrase carbonique topique": "EGS_2024 §4.4",
+                "Alpha2-agoniste topique": "EGS_2024 §4.5",
+                "Pilocarpine": "AAO_PPP_2024 (crise aiguë)",
+                "Acétazolamide PO/IV": "AAO_PPP_2024 (crise aiguë)"
+            },
             "EVITER": {
                 "Anticholinergiques": "STOPP_START_V3 D1 + BEERS_2023",
                 "LAMA inhalés": "STOPP_START_V3 G3",
@@ -2491,15 +2500,25 @@ const PATHOLOGY_RULES_DB = {
         },
         TRAITEMENTS: {
             PRINCIPES: [
-                { note: "Contre-indication absolue des anticholinergiques systémiques (risque de crise aiguë de fermeture). Collyres myotiques autorisés." }
+                { note: "Urgence ophtalmologique en cas de crise aiguë (douleur oculaire, vision trouble, halos, nausées). Traitement définitif = iridotomie laser périphérique (YAG) ± chirurgie (iridectomie, phacoexérèse). Contre-indication absolue des anticholinergiques systémiques (risque de crise aiguë de fermeture). Collyres myotiques (pilocarpine) autorisés voire recommandés en aigu." }
+            ],
+            INITIER: [
+                { classe: "Iridotomie laser périphérique (YAG)", indication: "Traitement curatif de référence du glaucome à angle fermé et prophylaxie de l'œil adelphe", niveau_preuve: "A", ref: "AAO PPP 2024" },
+                { classe: "Collyre bêtabloquant (timolol 0.25-0.5%)", posologie: "1 goutte x2/j", indication: "1re ligne hypotonisante chronique — attention absorption systémique (bradycardie, bronchospasme)", ref: "EGS 2024" },
+                { classe: "Analogue prostaglandines (latanoprost, bimatoprost, travoprost)", posologie: "1 goutte le soir", indication: "Hypotonisant puissant — 1re ligne souvent préférée chez le sujet âgé (pas d'absorption systémique significative)", ref: "EGS 2024" },
+                { classe: "Inhibiteur anhydrase carbonique topique (dorzolamide, brinzolamide)", posologie: "1 goutte x2-3/j", indication: "Association ou 2e ligne", ref: "EGS 2024" },
+                { classe: "Alpha2-agoniste topique (brimonidine)", posologie: "1 goutte x2/j", indication: "Association — CI chez le sujet très âgé (somnolence, hypoTA)", ref: "EGS 2024" },
+                { classe: "Pilocarpine collyre 1-2%", posologie: "1 goutte x3-4/j en aigu", indication: "CRISE AIGUË : myotique → lève le bloc pupillaire avant iridotomie", ref: "AAO PPP 2024" },
+                { classe: "Acétazolamide (Diamox) PO/IV", posologie: "500 mg IV en aigu, puis 250 mg x2-4/j PO", indication: "CRISE AIGUË — inhibiteur anhydrase carbonique systémique (attention K+, acidose, lithiase)", ref: "AAO PPP 2024" },
+                { classe: "Mannitol 20% IV", posologie: "1-2 g/kg IV lente", indication: "CRISE AIGUË réfractaire (osmotique) — prudence chez IC, IRC", ref: "AAO PPP 2024" }
             ],
             EVITER: [
-                { classe: "Anticholinergiques systémiques (oxybutynine, trospium, solifenacine, toltérodine)", raison: "Mydriase → crise de fermeture de l'angle", ref: "STOPP D1" },
-                { classe: "Antidépresseurs tricycliques", raison: "Effets anticholinergiques → mydriase", ref: "STOPP D1" },
-                { classe: "LAMA inhalés (tiotropium, aclidinium)", raison: "Effets anticholinergiques à dose systémique", ref: "STOPP G3" },
-                { classe: "Antihistaminiques H1 1ère gén (hydroxyzine, dexchlorphéniramine)", raison: "Effets anticholinergiques", ref: "Beers 2023" },
-                { classe: "Antispasmodiques (atropine, scopolamine, butylscopolamine)", raison: "Anticholinergiques puissants", ref: "Beers 2023" },
-                { classe: "Ipratropium nébulisé", raison: "Contact oculaire direct → crise glaucome", ref: "AAO PPP" }
+                { classe: "Anticholinergiques systémiques (oxybutynine, trospium, solifenacine, toltérodine)", raison: "Mydriase → crise de fermeture de l'angle", ref: "STOPP D1", gravite: "CONTRE-INDICATION" },
+                { classe: "Antidépresseurs tricycliques", raison: "Effets anticholinergiques → mydriase", ref: "STOPP D1", gravite: "CONTRE-INDICATION" },
+                { classe: "LAMA inhalés (tiotropium, aclidinium)", raison: "Effets anticholinergiques à dose systémique", ref: "STOPP G3", gravite: "A EVITER" },
+                { classe: "Antihistaminiques H1 1ère gén (hydroxyzine, dexchlorphéniramine)", raison: "Effets anticholinergiques", ref: "Beers 2023", gravite: "A EVITER" },
+                { classe: "Antispasmodiques (atropine, scopolamine, butylscopolamine)", raison: "Anticholinergiques puissants", ref: "Beers 2023", gravite: "CONTRE-INDICATION" },
+                { classe: "Ipratropium nébulisé", raison: "Contact oculaire direct → crise glaucome", ref: "AAO PPP", gravite: "A EVITER" }
             ]
         },
         BIOLOGIE: {

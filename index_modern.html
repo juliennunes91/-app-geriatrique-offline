@@ -337,8 +337,24 @@
                     <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Plaquettes (G/L)</label><input type="number" id="bioPlaq" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
                     <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Ferritine (µg/L)</label><input type="number" id="bioFer" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
                     <div><label class="block text-[10px] text-on-surface-variant mb-0.5">CST (%)</label><input type="number" id="bioCst" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
-                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Vit. B12 (pmol/L)</label><input type="number" id="bioB12" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
-                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Vit. B9 (nmol/L)</label><input type="number" id="bioB9" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5" title="Norme : ≥ 150 pmol/L (≈ ≥ 200 ng/L)">Vit. B12</label>
+                        <div class="flex gap-1">
+                            <input type="number" id="bioB12" class="flex-1 w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                            <select id="bioB12Unit" class="px-1 py-1 text-[10px] border border-outline-variant rounded bg-surface-container-low focus:outline-none" style="max-width:72px;">
+                                <option value="pmol/L" selected>pmol/L</option>
+                                <option value="ng/L">ng/L</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div><label class="block text-[10px] text-on-surface-variant mb-0.5" title="Norme : ≥ 7 nmol/L (≈ ≥ 3 µg/L)">Vit. B9</label>
+                        <div class="flex gap-1">
+                            <input type="number" id="bioB9" class="flex-1 w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
+                            <select id="bioB9Unit" class="px-1 py-1 text-[10px] border border-outline-variant rounded bg-surface-container-low focus:outline-none" style="max-width:72px;">
+                                <option value="nmol/L" selected>nmol/L</option>
+                                <option value="µg/L">µg/L</option>
+                            </select>
+                        </div>
+                    </div>
                     <div><label class="block text-[10px] text-on-surface-variant mb-0.5">Vitamine D (ng/mL)</label><input type="number" id="bioVitD" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
                     <div><label class="block text-[10px] text-on-surface-variant mb-0.5">CPK (UI/L)</label><input type="number" id="bioCpk" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>
                     <div><label class="block text-[10px] text-on-surface-variant mb-0.5">ASAT (UI/L)</label><input type="number" id="bioAsat" class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none"></div>

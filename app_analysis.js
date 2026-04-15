@@ -345,6 +345,32 @@ function _initEngine() {
     }
 }
 
+/** Lit la valeur d'un <select> d'unité ; retourne l'unité par défaut si absent. */
+function _getUnit(selectId, fallback) {
+    const el = document.getElementById(selectId);
+    return (el && el.value) ? el.value : fallback;
+}
+
+/**
+ * Convertit une B12 en pmol/L (unité canonique interne).
+ * 1 pmol/L = 1.355 ng/L (= pg/mL). Norme : ≥ 150 pmol/L (≈ 200 ng/L).
+ */
+function _convertB12ToPmol(val, unit) {
+    if (!val || val <= 0) return val;
+    if (unit === 'ng/L' || unit === 'pg/mL') return Math.round((val / 1.355) * 10) / 10;
+    return val; // pmol/L par défaut
+}
+
+/**
+ * Convertit une B9 (folates) en nmol/L (unité canonique interne).
+ * 1 nmol/L = 0.441 µg/L (= ng/mL). Norme : ≥ 7 nmol/L (≈ 3 µg/L).
+ */
+function _convertB9ToNmol(val, unit) {
+    if (!val || val <= 0) return val;
+    if (unit === 'µg/L' || unit === 'ug/L' || unit === 'ng/mL') return Math.round((val / 0.441) * 10) / 10;
+    return val; // nmol/L par défaut
+}
+
 /** Construit le contexte patient (bioValues, comorbidités, checkboxes) */
 function _buildPatientContext(patientAge, sexe, isFragile) {
     const bioValues = {
@@ -353,7 +379,10 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'BIO_009': getVal('bioHb'), 'BIO_010': getVal('bioPlaq'), 'BIO_011': getVal('bioGb'), 'BIO_012': getVal('bioPnn'),
         'BIO_013': getVal('bioAsat'), 'BIO_014': getVal('bioAlat'), 'BIO_015': getVal('bioGgt'), 'BIO_016': getVal('bioPal'),
         'BIO_017': getVal('bioBili'), 'BIO_018': getVal('bioCpk'), 'BIO_019': getVal('bioTsh'),
-        'BIO_020': getVal('bioFer'), 'BIO_021': getVal('bioB12'), 'BIO_022': getVal('bioB9'), 'BIO_023': getVal('bioVitD'),
+        'BIO_020': getVal('bioFer'),
+        'BIO_021': _convertB12ToPmol(getVal('bioB12'), _getUnit('bioB12Unit', 'pmol/L')),
+        'BIO_022': _convertB9ToNmol(getVal('bioB9'), _getUnit('bioB9Unit', 'nmol/L')),
+        'BIO_023': getVal('bioVitD'),
         'BIO_024': getVal('bioCrp'), 'BIO_025': getVal('bioGly'), 'BIO_026': getVal('bioHba1c'),
         'BIO_027_LDL': getVal('bioLdl'), 'BIO_027_TG': getVal('bioTg'),
         'BIO_028': getVal('bioBnp'), 'BIO_030': getVal('bioInr'), 'BIO_031': getVal('bioQtc'),
@@ -656,8 +685,12 @@ function analyserPrescription() {
 
         // Charge Anticholinergique (ACB + CIA) avec distinction BHE
         let acbClass = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
-        let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé — confusion, chutes, démence' : (scoreACB_global >= 1 ? 'Charge modérée, surveiller' : 'Charge faible');
-        let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé — chutes, somnolence' : (scoreCIA_global >= 1 ? 'Charge modérée' : 'Charge faible');
+        let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé — confusion, chutes, démence'
+            : (scoreACB_global >= 1 ? 'Charge modérée, surveiller'
+            : 'Charge nulle — aucun médicament anticholinergique détecté');
+        let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé — chutes, somnolence'
+            : (scoreCIA_global >= 1 ? 'Charge modérée'
+            : 'Charge nulle — aucun médicament sédatif détecté');
         // Classer les médicaments ACB par passage de la BHE
         let acbCentral = []; let acbPeripheral = []; let acbUnknown = [];
         activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0).forEach(m => {
@@ -826,8 +859,14 @@ function analyserPrescription() {
             let fer = bioValues['BIO_020']; let cst = bioValues['BIO_CST']; let crp = bioValues['BIO_024'];
             let b12 = bioValues['BIO_021']; let b9 = bioValues['BIO_022']; let dfg = bioValues['BIO_004'];
 
-            // SYND_006 : Anémie Ferriprive (Hb basse + Ferritine < 30 ou CST < 20%)
-            if ((fer > 0 && fer < 30) || (cst > 0 && cst < 20)) {
+            // SYND_006 : Anémie Ferriprive (critères ESC 2023 / HAS 2022)
+            //   - Ferritine < 30 µg/L (carence absolue, pas d'inflammation requise)
+            //   - OU Ferritine 30-299 + CST < 20% + CRP > 5 mg/L (carence fonctionnelle inflammatoire)
+            //   - Ne PAS déclencher sur CST < 20% isolé si ferritine normale et pas d'inflammation
+            //     (peut être dû à thalassémie, hypothyroïdie, variations préanalytiques)
+            const ferBas = (fer > 0 && fer < 30);
+            const ferFonctionnel = (fer > 0 && fer < 300 && cst > 0 && cst < 20 && crp > 5);
+            if (ferBas || ferFonctionnel) {
                 checkBioSyndrome('SYND_006', true);
             } else if (fer <= 0 && cst <= 0 && hb < seuilAnemia) {
                 // Ferritine et CST non dosés → recommander le bilan martial
@@ -1110,9 +1149,10 @@ function analyserPrescription() {
     // =========================================================
     {
         const cascadePatterns = [
-            { trigger: ['antihypertenseur', 'diuretique', 'betabloquant', 'inhibiteurcalcique', 'iec', 'ara2'],
-              effect: 'hypotension/chutes', cascade: ['antihypertenseur'],
-              desc: 'Antihypertenseur → Hypotension orthostatique → Chutes → Fractures. Envisager réduction posologique ou déprescription si PA < 130/70.' },
+            // NB : la combinaison IEC + bêtabloquant + diurétique est un SOCLE THÉRAPEUTIQUE légitime
+            // dans l'IC/HTA (ESC 2021/2023). On ne la traite donc plus comme une cascade iatrogène.
+            // La détection d'hypotension / chutes iatrogène est couverte par les alertes
+            // spécifiques (EV_K01, EV_K02, dashboard polypharmacie).
             { trigger: ['neuroleptique', 'antipsychotique'],
               effect: 'syndrome extrapyramidal', cascade: ['antiparkinsonien', 'levodopa'],
               desc: 'Neuroleptique → Syndrome extrapyramidal → Ajout antiparkinsonien. Privilégier l\'arrêt du neuroleptique plutôt que l\'ajout.' },
@@ -1237,6 +1277,76 @@ function analyserPrescription() {
                 <div class="card-header py-2" style="background:linear-gradient(135deg,#ffecd2,#fcb69f);"><strong>📋 Protocoles de déprescription guidée (${deprescriptionGuides.length})</strong></div>
                 <div class="card-body p-2">${depHtml}</div>
             </div>`, 'eviter');
+        }
+    }
+
+    // =========================================================
+    // 3a-bis. DÉTECTION DE DOUBLONS THÉRAPEUTIQUES (même classe)
+    //   — Alerte "A EVITER" lorsque ≥ 2 médicaments d'une même classe
+    //     sont co-prescrits sans justification EBM documentée.
+    // =========================================================
+    if (typeof DRUG_CLASSES !== 'undefined' && typeof matchesDrugClass === 'function') {
+        // Classes à surveiller pour doublon — avec justification autorisée éventuelle
+        const DUPLICATE_WATCH = [
+            { key: 'iec',                          label: 'IEC',                          note: "Association IEC non recommandée (risque hyperK+/IRA ; ESC 2021)." },
+            { key: 'ara2',                         label: 'ARA2',                         note: "Association ARA2 non recommandée (ONTARGET, VA NEPHRON-D)." },
+            { key: 'betabloquant',                 label: 'Bêtabloquants',                note: "Association BB systémiques non recommandée (bradycardie, hypoTA)." },
+            { key: 'isrs',                         label: 'ISRS',                         note: "Association ISRS = syndrome sérotoninergique (Beers 2023, STOPP D14)." },
+            { key: 'irsn',                         label: 'IRSN',                         note: "Association IRSN non justifiée (sérotoninergique)." },
+            { key: 'antidepresseur_tricyclique',   label: 'Antidépresseurs tricycliques', note: "Association ATC non justifiée (anticholinergique, cardiotox)." },
+            { key: 'benzodiazepine',               label: 'Benzodiazépines',              note: "Association BZD déconseillée (STOPP D5, Beers 2023) — chutes, confusion.", exception: "Exception parfois : 1 hypnotique court + 1 anxiolytique, mais à éviter chez le sujet âgé." },
+            { key: 'ipp',                          label: 'IPP',                          note: "Association IPP non justifiée." },
+            { key: 'ains',                         label: 'AINS',                         note: "Association AINS formellement contre-indiquée (saignements, IRA)." },
+            { key: 'antipsychotique',              label: 'Antipsychotiques',             note: "Association neuroleptiques à éviter (QT, sédation, surmortalité démence).", exception: "Exception transitoire possible pendant un switch progressif." },
+            { key: 'diuretique_thiazidique',       label: 'Diurétiques thiazidiques',     note: "Association thiazidique non justifiée." },
+            { key: 'diuretique_anse',              label: 'Diurétiques de l\'anse',       note: "Association de l\'anse non justifiée." },
+            { key: 'opioid',                       label: 'Opioïdes',                     note: "Association opioïdes forts déconseillée (sédation, dépression respiratoire).", exception: "Exception : 1 opioïde fond + 1 opioïde interdose (même DCI ou LP+IR) si douleur chronique cancéreuse." },
+            { key: 'statine',                      label: 'Statines',                     note: "Association de statines non justifiée." },
+            { key: 'sulfamide_hypoglycemiant',     label: 'Sulfamides hypoglycémiants',   note: "Association sulfamides contre-indiquée (hypoglycémie sévère)." },
+            { key: 'glinide',                      label: 'Glinides',                     note: "Association glinides non justifiée." },
+            { key: 'anticoagulant',                label: 'Anticoagulants curatifs',      note: "Association AOD/AVK/HBPM curative = risque hémorragique majeur.", exception: "Exception : bridge AVK/HBPM transitoire péri-opératoire." },
+            { key: 'antiagregant',                 label: 'Antiagrégants',                note: "Association d\'antiagrégants = risque hémorragique accru.", exception: "Exception : DAPT post-SCA/stent (aspirine + inhibiteur P2Y12) pendant durée limitée (ESC)." },
+            { key: 'macrolide',                    label: 'Macrolides',                   note: "Association macrolides non justifiée." },
+            { key: 'fluoroquinolone',              label: 'Fluoroquinolones',             note: "Association FQ non justifiée." }
+        ];
+
+        const dupFound = [];
+        DUPLICATE_WATCH.forEach(cls => {
+            const members = activeMeds.filter(m => {
+                const dci = sanitizeText(m.dci || '');
+                const classe = sanitizeText(m.classe || '');
+                return matchesDrugClass(dci, classe, cls.key);
+            });
+            // Dédupliquer par DCI (ignorer 2 formes du même médicament : LP + IR)
+            const uniqDcis = [...new Set(members.map(m => (m.dci || '').toLowerCase().trim()))];
+            if (uniqDcis.length >= 2) {
+                dupFound.push({
+                    label: cls.label,
+                    note: cls.note,
+                    exception: cls.exception || '',
+                    dcis: uniqDcis
+                });
+            }
+        });
+
+        if (dupFound.length > 0) {
+            dupFound.forEach(d => {
+                const dciList = d.dcis.map(x => `<strong>${escapeHtml(x.toUpperCase())}</strong>`).join(' + ');
+                addAlert('alertes-eviter', `<div class="alert alert-warning border-warning shadow-sm">
+                    <strong>⚠️ Doublon thérapeutique — ${escapeHtml(d.label)}</strong>
+                    <span class="badge bg-dark float-end" style="font-size:0.65em;">Doublon classe</span>
+                    <br><span class="small">${dciList}</span>
+                    <br><small>${escapeHtml(d.note)}</small>
+                    ${d.exception ? `<br><small class="text-info fst-italic">${escapeHtml(d.exception)}</small>` : ''}
+                    <br><span class="badge bg-warning text-dark" style="font-size:0.7em;">A ÉVITER sauf justification EBM</span>
+                </div>`, 'eviter');
+                d.dcis.forEach(dci => _regAddMed(dci, 'eviter', {
+                    severity: 'warning',
+                    text: `Doublon thérapeutique (${d.label}) : ${d.dcis.join(' + ')}`,
+                    gravite: 'A EVITER',
+                    source: 'Doublon classe'
+                }));
+            });
         }
     }
 
@@ -1512,15 +1622,23 @@ function analyserPrescription() {
             } catch(e) { console.error("Erreur BioMonitor:", e); }
         }
 
-        // Source 3: SURVEILLANCE_CIBLE from PATHOLOGY_RULES_DB
+        // Source 3: SURVEILLANCE_CIBLE + BIOLOGIE.REGLES from PATHOLOGY_RULES_DB
         if (typeof PATHOLOGY_RULES_DB !== 'undefined') {
             activeComorbs.forEach(patId => {
                 const rule = PATHOLOGY_RULES_DB[patId];
-                if (!rule || !rule.BIOLOGIE || !rule.BIOLOGIE.SURVEILLANCE_CIBLE) return;
+                if (!rule || !rule.BIOLOGIE) return;
                 let patName = rule.NOM || patId;
-                rule.BIOLOGIE.SURVEILLANCE_CIBLE.forEach(bioId => {
+                (rule.BIOLOGIE.SURVEILLANCE_CIBLE || []).forEach(bioId => {
                     if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
                     if (!bioPlan[bioId].pathos.includes(patName)) bioPlan[bioId].pathos.push(patName);
+                });
+                // Fréquences explicites définies dans BIOLOGIE.REGLES (ex: ECG annuel démence)
+                (rule.BIOLOGIE.REGLES || []).forEach(r => {
+                    if (!r || !r.bio || !r.frequence) return;
+                    if (!bioPlan[r.bio]) bioPlan[r.bio] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
+                    if (!bioPlan[r.bio].pathos.includes(patName)) bioPlan[r.bio].pathos.push(patName);
+                    if (!bioPlan[r.bio].freqs.includes(r.frequence)) bioPlan[r.bio].freqs.push(r.frequence);
+                    bioPlan[r.bio].freqByOrigin[patName] = r.frequence;
                 });
             });
         }
@@ -1720,6 +1838,33 @@ function analyserPrescription() {
                         guidelinesHtml += `<div class="small ps-3 mb-1"><strong>${d.dci || ''}</strong> : ${d.dose_pleine || ''} ${d.dose_reduite ? `| Réduite : ${d.dose_reduite}` : ''} ${d.ci_dfg ? `| CI : DFG ${d.ci_dfg}` : ''}</div>`;
                     });
                 }
+            }
+
+            // CONTROLE_FREQUENCE (ex: FA — bêtabloquants, diltiazem, digoxine)
+            const cFreq = rule.TRAITEMENTS.CONTROLE_FREQUENCE;
+            if (cFreq) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-success small">CONTRÔLE DE LA FRÉQUENCE</strong></div>`;
+                const pl = Array.isArray(cFreq.premiere_ligne) ? cFreq.premiere_ligne.join(', ') : (cFreq.premiere_ligne || '');
+                guidelinesHtml += `<div class="alert alert-success py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #198754;">
+                    ${pl ? `<strong class="small">1re ligne :</strong> <small>${pl}</small>` : ''}
+                    ${cFreq.cible_fc ? `<br><small><strong>Cible FC :</strong> ${cFreq.cible_fc}</small>` : ''}
+                    ${cFreq.cible_fc_strict ? `<br><small><strong>Cible stricte :</strong> ${cFreq.cible_fc_strict}</small>` : ''}
+                    ${Array.isArray(cFreq.notes) ? `<ul class="ps-3 mb-0 mt-1">${cFreq.notes.map(n => `<li class="small text-muted">${n}</li>`).join('')}</ul>` : ''}
+                </div>`;
+            }
+
+            // CONTROLE_RYTHME (ex: FA — antiarythmiques)
+            const cRyt = rule.TRAITEMENTS.CONTROLE_RYTHME;
+            if (cRyt && Array.isArray(cRyt.antiarythmiques) && cRyt.antiarythmiques.length > 0) {
+                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-info small">CONTRÔLE DU RYTHME (antiarythmiques)</strong></div>`;
+                cRyt.antiarythmiques.forEach(a => {
+                    guidelinesHtml += `<div class="alert alert-info py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #0dcaf0;">
+                        <strong class="small">${a.dci || ''}</strong>
+                        ${a.indication ? `<br><small>${a.indication}</small>` : ''}
+                        ${a.note ? `<br><small class="text-muted fst-italic">${a.note}</small>` : ''}
+                        ${a.ci ? `<br><small class="text-danger">CI : ${a.ci}</small>` : ''}
+                    </div>`;
+                });
             }
 
             // EVITER (liste déroulante — médicaments non prescrits)

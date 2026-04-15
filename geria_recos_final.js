@@ -29,7 +29,12 @@ const GERIA_RECOS_DB = {
         "PRISCUS":   { nom: "PRISCUS 2.0",           annee: 2022, ref: "Holt S. et al., Dtsch Arztebl Int 2022" },
         "EU7PIM":    { nom: "EU(7)-PIM List",        annee: 2015, ref: "Renom-Guiteras A. et al., Eur J Clin Pharmacol 2015" },
         "STOPPFRAIL":{ nom: "STOPPFrail v2",         annee: 2021, ref: "Curtin D. et al., Age Ageing 2021" },
-        "REMEDIES":  { nom: "REMEDIES",              annee: 2020, ref: "McIntosh J. et al., Expert Opin Drug Saf 2020" }
+        "REMEDIES":  { nom: "REMEDIES",              annee: 2020, ref: "McIntosh J. et al., Expert Opin Drug Saf 2020" },
+        "ESC_HF":    { nom: "ESC 2021/2023 IC",      annee: 2023, ref: "McDonagh TA et al., Eur Heart J 2021 + 2023 Focused Update | PARADIGM-HF | DAPA-HF | EMPEROR-Reduced | STRONG-HF" },
+        "ESC_AF":    { nom: "ESC 2024 AF",           annee: 2024, ref: "Van Gelder IC et al., Eur Heart J 2024 AF-CARE Guidelines" },
+        "ADA":       { nom: "ADA Standards of Care", annee: 2025, ref: "American Diabetes Association Standards of Care in Diabetes 2025" },
+        "KDIGO":     { nom: "KDIGO CKD",             annee: 2024, ref: "KDIGO 2024 Clinical Practice Guideline for CKD Evaluation and Management" },
+        "ESMO":      { nom: "ESMO/EAU",              annee: 2024, ref: "ESMO Clinical Practice Guidelines" }
     },
 
     // ========================================================================
@@ -2163,25 +2168,25 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B05",
-            sources: ["STOPP3", "FORTA"],
+            sources: ["ESC_HF", "STOPP3", "FORTA"],
             ref_code: "START3-B5",
             section: "Cardiovasculaire",
-            titre: "IEC (ou ARA2) pour HFrEF",
-            message: "IEC (ou ARA2 si intolérance) pour IC à fraction d'éjection réduite (HFrEF) — pilier pronostique majeur.",
+            titre: "IEC/ARA2/ARNI pour HFrEF (pilier 1)",
+            message: "IEC, ARA2 (si intolérance IEC) ou sacubitril/valsartan (ARNI) pour HFrEF — pilier pronostique majeur (ESC 2021/2023). Les trois options sont équivalentes au niveau de cette ligne thérapeutique.",
             severite: "danger",
             condition: {
                 comorbs: ["PAT_002"],
                 med_absent: ["iec", "ara2", "arni", "sacubitril"]
             },
-            alternatives: "Ramipril, énalapril, périndopril, ou valsartan si CI IEC, ou sacubitril/valsartan"
+            alternatives: "Ramipril, énalapril, périndopril, ou valsartan si CI IEC, ou sacubitril/valsartan (Entresto)"
         },
         {
             id: "IN_B06",
-            sources: ["STOPP3", "FORTA"],
+            sources: ["ESC_HF", "STOPP3", "FORTA"],
             ref_code: "START3-B6",
             section: "Cardiovasculaire",
-            titre: "Bêtabloquant cardiosélectif pour HFrEF stable",
-            message: "Bêtabloquant cardiosélectif (bisoprolol, nébivolol, métoprolol, carvédilol) pour HFrEF stable — réduction de mortalité démontrée.",
+            titre: "Bêtabloquant cardiosélectif pour HFrEF stable (pilier 2)",
+            message: "Bêtabloquant cardiosélectif (bisoprolol, nébivolol, métoprolol succinate, carvédilol) pour HFrEF stable — réduction de mortalité démontrée (ESC 2021/2023).",
             severite: "danger",
             condition: {
                 comorbs: ["PAT_002"],
@@ -2191,11 +2196,11 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B07",
-            sources: ["STOPP3", "FORTA"],
+            sources: ["ESC_HF", "STOPP3", "FORTA"],
             ref_code: "START3-B7",
             section: "Cardiovasculaire",
-            titre: "Anti-aldostérone (ARM) pour IC sans IRC sévère",
-            message: "Anti-aldostérone (spironolactone, éplérénone) pour IC sans atteinte rénale sévère (DFG > 30) — pilier pronostique.",
+            titre: "Anti-aldostérone (ARM) pour HFrEF sans IRC sévère (pilier 3)",
+            message: "Anti-aldostérone (spironolactone, éplérénone) pour HFrEF sans atteinte rénale sévère (DFG > 30) — pilier pronostique (ESC 2021/2023 ; EMPHASIS-HF).",
             severite: "warning",
             condition: {
                 comorbs: ["PAT_002"],
@@ -2206,11 +2211,11 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B08",
-            sources: ["STOPP3", "FORTA"],
+            sources: ["ESC_HF", "STOPP3", "FORTA"],
             ref_code: "START3-B8",
             section: "Cardiovasculaire",
-            titre: "iSGLT2 pour IC symptomatique (avec ou sans diabète)",
-            message: "Inhibiteur SGLT2 (dapagliflozine, empagliflozine) pour IC symptomatique, avec ou sans FE réduite, indépendamment du diabète — bénéfice pronostique démontré.",
+            titre: "iSGLT2 pour IC symptomatique (pilier 4)",
+            message: "Inhibiteur SGLT2 (dapagliflozine, empagliflozine) pour IC symptomatique, avec ou sans FE réduite, indépendamment du diabète — bénéfice pronostique démontré (ESC 2023 Focused Update ; DAPA-HF, EMPEROR-Reduced/Preserved).",
             severite: "warning",
             condition: {
                 comorbs_any: ["PAT_001", "PAT_002", "PAT_003"],
@@ -2218,47 +2223,36 @@ const GERIA_RECOS_DB = {
             },
             alternatives: "Dapagliflozine 10 mg ou empagliflozine 10 mg"
         },
-        {
-            id: "IN_B09",
-            sources: ["STOPP3"],
-            ref_code: "START3-B9",
-            section: "Cardiovasculaire",
-            titre: "Sacubitril/Valsartan si HFrEF persistante sous IEC/ARA2 optimal",
-            message: "Sacubitril/valsartan pour HFrEF avec symptômes persistants malgré IEC ou ARA2 à dose optimale — remplacement de l'IEC/ARA2.",
-            severite: "warning",
-            condition: {
-                comorbs: ["PAT_002"],
-                med_absent: ["sacubitril"]
-            },
-            alternatives: "Sacubitril/valsartan (Entresto) 24/26 mg x2/j → titration"
-        },
+        // IN_B09 (Sacubitril/Valsartan isolé) retiré : IEC, ARA2 et ARNI sont au
+        // même niveau dans le pilier 1 HFrEF (cf. IN_B05 med_absent ["iec","ara2","arni","sacubitril"]).
+        // Si un IEC est prescrit, le pilier 1 est considéré comme couvert (ESC 2021/2023).
         {
             id: "IN_B10",
-            sources: ["STOPP3"],
+            sources: ["ESC_AF", "STOPP3"],
             ref_code: "START3-B10",
             section: "Cardiovasculaire",
             titre: "Bêtabloquant pour FA chronique (contrôle de fréquence)",
-            message: "Bêtabloquant pour FA chronique avec fréquence ventriculaire non contrôlée.",
+            message: "Bêtabloquant (bisoprolol, métoprolol, nébivolol, aténolol) pour contrôle de fréquence en FA chronique. 1re ligne recommandée (ESC 2024 AF Guidelines, AF-CARE). Objectif FC repos < 110 bpm (contrôle souple) ou < 80 bpm (contrôle strict si symptomatique).",
             severite: "warning",
             condition: {
                 comorbs: ["PAT_006"],
-                med_absent: ["betabloquant", "bisoprolol", "metoprolol", "atenolol", "nebivolol"]
+                med_absent: ["betabloquant", "bisoprolol", "metoprolol", "atenolol", "nebivolol", "carvedilol"]
             },
-            alternatives: "Bisoprolol 2.5-10 mg, métoprolol"
+            alternatives: "Bisoprolol 2.5-10 mg/j, métoprolol 50-200 mg/j, nébivolol 2.5-10 mg/j. Alternative : diltiazem/vérapamil (si FEVG préservée et CI BB)."
         },
         {
             id: "IN_B11",
-            sources: ["STOPP3"],
+            sources: ["ESC_HF", "STOPP3"],
             ref_code: "START3-B11",
             section: "Cardiovasculaire",
             titre: "Fer IV pour HFrEF symptomatique avec carence martiale",
-            message: "Fer intraveineux pour HFrEF symptomatique avec carence martiale documentée (ferritine < 100 µg/L ou 100-299 avec CST < 20%).",
+            message: "Fer intraveineux pour HFrEF symptomatique avec carence martiale documentée (ferritine < 100 µg/L ou 100-299 avec CST < 20%) — ESC 2023, AFFIRM-AHF, IRONMAN.",
             severite: "warning",
             condition: {
                 comorbs: ["PAT_002"],
                 bio: { "BIO_020": { op: "<", val: 100 } }
             },
-            alternatives: "Carboxymaltose ferrique IV (Ferinject)"
+            alternatives: "Carboxymaltose ferrique IV (Ferinject) 500-1000 mg"
         },
 
         // ====================================================================
@@ -4149,12 +4143,12 @@ const CROSS_REF_GROUPS = [
     // ========================================================================
     {
         group_id: "GRP_IC_START",
-        theme: "Omissions thérapeutiques dans l'IC FE réduite",
-        merged_sources: ["STOPP3", "FORTA"],
-        rule_ids: ["IN_B05", "IN_B06", "IN_B07", "IN_B08", "IN_B09", "IN_B11"],
+        theme: "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
+        merged_sources: ["ESC_HF", "STOPP3", "FORTA"],
+        rule_ids: ["IN_B05", "IN_B06", "IN_B07", "IN_B08", "IN_B11"],
         pim_dict_keys: ["spironolactone", "empagliflozin", "dapagliflozin"],
         fusion_strategy: "merge_display",
-        note: "Les 4 piliers IC (IEC/ARA2/ARNI, BB, ARM, iSGLT2) + fer IV. STOPP3 et FORTA convergent totalement. Afficher comme un seul bloc 'piliers pronostiques'."
+        note: "Les 4 piliers HFrEF (IEC/ARA2/ARNI, BB, ARM, iSGLT2) + fer IV. ESC 2021/2023 + STOPP3 + FORTA convergent. IN_B09 retiré : IEC et Sacubitril/Valsartan sont au même niveau dans le pilier 1."
     },
 
     // ========================================================================

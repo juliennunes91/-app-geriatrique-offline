@@ -303,6 +303,11 @@ const DRUG_CLASSES = {
 const _ALIAS_EXACT_INDEX = new Map();   // alias exact → [classId, ...]
 const _ALIAS_SUBSTR_LIST = [];          // [{alias, classId}] pour matching substring
 const _DCI_SET = new Map();             // classId → Set de dcis (pour O(1) lookup)
+const _ALL_DCIS_SET = new Set();        // Ensemble global de toutes les DCIs connues
+// DCIs ambiguës : substring d'une autre DCI (ex: citalopram ⊂ escitalopram).
+// Pour ces clés, on exige un match EXACT afin d'éviter les faux positifs.
+// Clé = DCI courte, Valeurs = DCIs la contenant comme substring.
+const _DCI_AMBIGUOUS = new Map();
 
 (function _buildDrugClassIndex() {
     for (const [classId, def] of Object.entries(DRUG_CLASSES)) {
@@ -317,6 +322,18 @@ const _DCI_SET = new Map();             // classId → Set de dcis (pour O(1) lo
         });
         // Set de DCIs pour lookup rapide
         _DCI_SET.set(classId, new Set(def.dcis));
+        // Ensemble global
+        def.dcis.forEach(d => _ALL_DCIS_SET.add(d));
+    }
+    // Calcul des ambiguïtés (DCI contenue dans une autre DCI)
+    const allDcis = Array.from(_ALL_DCIS_SET);
+    for (const a of allDcis) {
+        for (const b of allDcis) {
+            if (a !== b && b.includes(a)) {
+                if (!_DCI_AMBIGUOUS.has(a)) _DCI_AMBIGUOUS.set(a, []);
+                _DCI_AMBIGUOUS.get(a).push(b);
+            }
+        }
     }
 })();
 
@@ -325,7 +342,10 @@ function _classMatchesMed(classId, dci, classe) {
     if (!def) return false;
     if (def.classeMatch.some(cm => classe.includes(cm))) return true;
     if (_DCI_SET.get(classId).has(dci)) return true;
-    // Fallback inclusion pour DCIs composées (ex: "acideacetylsalicylique" contient "aspirine" non)
+    // Fallback inclusion pour DCIs composées (ex: "acideacetylsalicylique").
+    // Protection anti-collision : si la DCI testée est elle-même une DCI connue,
+    // on exige un match EXACT pour éviter citalopram ⊂ escitalopram.
+    if (_ALL_DCIS_SET.has(dci)) return false;
     if (def.dcis.some(d => dci.includes(d))) return true;
     if (def.dciSuffix && def.dciSuffix.some(s => dci.includes(s))) return true;
     return false;
@@ -372,6 +392,11 @@ function matchesDrugClass(dci, classe, key) {
         if (foundAlias) return false;
     }
     // Fallback : matching direct DCI/classe
+    // Protection anti-collision : si key ou dci est une DCI connue, exiger match EXACT
+    // afin d'éviter p.ex. key="citalopram" matchant dci="escitalopram".
+    if (_ALL_DCIS_SET.has(key) || _ALL_DCIS_SET.has(dci)) {
+        return dci === key || classe === key;
+    }
     return dci.includes(key) || classe.includes(key) || key.includes(dci);
 }
 
@@ -385,8 +410,13 @@ function matchesDrugClassAnsm(dci, classe, rawTerm) {
     if (t.endsWith('s') && !t.includes('ains') && !t.includes('isrs')) t = t.slice(0, -1);
     if (t.endsWith('aux')) t = t.replace(/aux$/, 'al');
     // Matching direct DCI/classe avant le référentiel
-    if (dci.includes(t) || t.includes(dci)) return true;
-    if (classe.includes(t) || t.includes(classe)) return true;
+    // Protection anti-collision : exiger match EXACT si t ou dci est une DCI connue.
+    if (_ALL_DCIS_SET.has(t) || _ALL_DCIS_SET.has(dci)) {
+        if (dci === t || classe === t) return true;
+    } else {
+        if (dci.includes(t) || t.includes(dci)) return true;
+        if (classe.includes(t) || t.includes(classe)) return true;
+    }
     // Matching via référentiel (essai avec et sans pluriel)
     if (matchesDrugClass(dci, classe, t)) return true;
     // Essai supplémentaire : singulariser les pluriels internes (ex: inhibiteursselectifs → inhibiteurselectif)

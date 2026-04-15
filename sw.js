@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.51 (OCR module)
+// Service Worker - GeriaAssist v0.52 (11 correctifs cliniques : IC/FA/Glaucome/Démence/ACB/Anémie/B12-B9/escitalopram/doublons/cascade)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260408';
-const CACHE_NAME = `geriaassist-v51-${BUILD_ID}`;
+const BUILD_ID = '20260415';
+const CACHE_NAME = `geriaassist-v52-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
