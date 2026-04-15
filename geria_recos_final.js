@@ -4144,11 +4144,11 @@ const CROSS_REF_GROUPS = [
     {
         group_id: "GRP_IC_START",
         theme: "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
-        merged_sources: ["ESC_HF", "STOPP3", "FORTA"],
+        merged_sources: ["ESC_HF"],
         rule_ids: ["IN_B05", "IN_B06", "IN_B07", "IN_B08", "IN_B11"],
         pim_dict_keys: ["spironolactone", "empagliflozin", "dapagliflozin"],
         fusion_strategy: "merge_display",
-        note: "Les 4 piliers HFrEF (IEC/ARA2/ARNI, BB, ARM, iSGLT2) + fer IV. ESC 2021/2023 + STOPP3 + FORTA convergent. IN_B09 retiré : IEC et Sacubitril/Valsartan sont au même niveau dans le pilier 1."
+        note: "Les 4 piliers HFrEF (IEC/ARA2/ARNI, BB, ARM, iSGLT2) + fer IV. Source unique affichée : ESC 2021/2023. STOPP3 et FORTA restent la base réglementaire mais ne sont pas affichés (ESC fait référence)."
     },
 
     // ========================================================================
