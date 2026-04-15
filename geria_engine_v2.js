@@ -657,9 +657,15 @@ const GeriaEngineV2 = (() => {
             compHtml = `<ul class="mb-1 ps-3 mt-1" style="font-size:0.88em;">${a.complementary_messages.map(m => `<li>${m}</li>`).join('')}</ul>`;
         }
 
-        // Enrichir avec la source EBM spécifique (société savante / essai clinique)
+        // Enrichir avec la source EBM spécifique (société savante / essai clinique).
+        // On supprime le badge ebm quand :
+        //  - l'alerte est fusionnée (merged_count > 1) : la source est déjà dans le header via sources_label
+        //  - l'ebmSource est déjà contenu dans sources_label (évite le doublon ESC/ESC)
         const ebmSource = findEbmSource(a);
-        const ebmBadge = ebmSource
+        const srcLabelLc = String(a.sources_label || '').toLowerCase();
+        const ebmSrcLc = String(ebmSource || '').toLowerCase();
+        const alreadyShown = a.merged_count > 1 || (ebmSrcLc && srcLabelLc && (srcLabelLc.includes(ebmSrcLc.substring(0, 10)) || ebmSrcLc.includes(srcLabelLc.substring(0, 10))));
+        const ebmBadge = (ebmSource && !alreadyShown)
             ? `<br><span class="badge" style="font-size:0.6em; background-color:#6f42c1;" title="${ebmSource}">${ebmSource.length > 60 ? ebmSource.substring(0,60)+'...' : ebmSource}</span>`
             : '';
 

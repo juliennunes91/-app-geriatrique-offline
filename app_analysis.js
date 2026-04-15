@@ -534,6 +534,14 @@ function analyserPrescription() {
         if(_htmlBuffers[targetId]) _htmlBuffers[targetId].push(htmlStr);
         else { let el = document.getElementById(targetId); if(el) el.innerHTML += htmlStr; }
         if(countKey) counts[countKey]++;
+        // Registre transverse : enregistrer les alertes bio pour la Synthèse
+        if (targetId === 'alertes-bio') {
+            // Extraction best-effort du titre (<strong>…</strong>) et de la sévérité
+            const titleMatch = String(htmlStr).match(/<strong[^>]*>([\s\S]*?)<\/strong>/i);
+            const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '').trim() : '';
+            const severity = /alert-danger|alert-stopp/.test(htmlStr) ? 'danger' : 'warning';
+            if (title) _regAddDomain('bio', { titre: title, message: '', severity });
+        }
     };
     const flushAlerts = () => {
         for(const [id, parts] of Object.entries(_htmlBuffers)) {
@@ -579,7 +587,14 @@ function analyserPrescription() {
                 _regAddDomain('eviter', { titre: a.titre || '', meds: a.med_keys || [], severity: a.severite || 'warning' });
             });
             if (recos.initier) recos.initier.forEach(a => {
-                _regAddDomain('initier', { titre: a.titre || '', meds: a.med_absent || [], severity: 'info' });
+                _regAddDomain('initier', {
+                    titre: a.titre || '',
+                    message: a.message || '',
+                    alternatives: a.alternatives || '',
+                    sources_label: a.sources_label || '',
+                    meds: a.med_absent || [],
+                    severity: 'info'
+                });
             });
         } else {
             addAlert('alertes-scores', `<div class="alert alert-warning">Le moteur d'évaluation n'a retourné aucun résultat.</div>`);
@@ -1656,6 +1671,72 @@ function analyserPrescription() {
             });
         }
 
+        // ── FALLBACK : fréquences par défaut (pratique gériatrique standard) ──
+        //   Appliqué uniquement si AUCUNE fréquence n'a été renseignée par le
+        //   pathology rules, le médicament, ou le bio monitor. Conservateur.
+        //   Référence : HAS bilan gériatrique, pratique de médecine interne du sujet âgé.
+        const _DEFAULT_BIO_FREQ = {
+            'BIO_001': 'Semestriel (trimestriel si diurétique/IEC/ARM)',
+            'BIO_002': 'Semestriel (trimestriel si ISRS/thiazide)',
+            'BIO_003': 'Semestriel',
+            'BIO_004': 'Semestriel',
+            'BIO_005': 'Annuel',
+            'BIO_006': 'Annuel (selon contexte : IPP, diurétique)',
+            'BIO_007': 'Semestriel si IC ou IR',
+            'BIO_008': 'Annuel (si goutte ou diurétique)',
+            'BIO_009': 'Annuel (NFS)',
+            'BIO_010': 'Annuel (NFS)',
+            'BIO_011': 'Annuel (NFS)',
+            'BIO_012': 'Annuel (NFS)',
+            'BIO_013': 'Annuel',
+            'BIO_014': 'Annuel',
+            'BIO_015': 'Annuel',
+            'BIO_016': 'Annuel',
+            'BIO_017': 'Annuel',
+            'BIO_018': 'À l\'introduction statine/fibrate, puis à la demande',
+            'BIO_019': 'Annuel',
+            'BIO_020': 'Annuel',
+            'BIO_021': 'Annuel',
+            'BIO_022': 'Annuel',
+            'BIO_023': 'Annuel',
+            'BIO_024': 'À la demande (pas de surveillance systématique)',
+            'BIO_025': 'Annuel (ou selon suivi diabète)',
+            'BIO_026': 'Semestriel (diabète)',
+            'BIO_027_LDL': 'Annuel',
+            'BIO_027_TG': 'Annuel',
+            'BIO_028': 'Semestriel (IC)',
+            'BIO_029': 'Trimestriel sous lithium',
+            'BIO_030': 'Mensuel sous AVK (ou selon stabilité)',
+            'BIO_031': 'Annuel',
+            'BIO_032': 'À la demande (marqueur aigu)',
+            'BIO_033': 'À la demande',
+            'BIO_034': 'À la demande (aigu)',
+            'BIO_035': 'Annuel',
+            'BIO_036': 'À la demande',
+            'BIO_037': 'À la demande (aigu)',
+            'BIO_038': 'À la demande (bilan anémie)',
+            'BIO_039': 'Annuel (NFS)',
+            'BIO_040': 'Annuel (mensuel si AVK)',
+            'BIO_041': 'Semestriel (ionogramme)',
+            'BIO_042': 'À la demande (dysnatrémie)',
+            'BIO_043': 'À la demande (bilan nutritionnel)',
+            'BIO_CST': 'Annuel',
+            'BIO_PHOS': 'Annuel',
+            'BIO_TEMP': 'À la demande',
+            'BIO_T4': 'Selon TSH',
+            'BIO_T3': 'Selon TSH',
+            'BIO_TP': 'Annuel (mensuel si AVK)',
+            'BIO_CL': 'Semestriel (ionogramme)',
+            'BIO_OSM': 'À la demande',
+            'BIO_PREALB': 'À la demande (nutrition)'
+        };
+        for (const [bioId, entry] of Object.entries(bioPlan)) {
+            if (entry.freqs.length === 0 && _DEFAULT_BIO_FREQ[bioId]) {
+                entry.freqs.push(_DEFAULT_BIO_FREQ[bioId]);
+                entry.freqByOrigin['Défaut gériatrique'] = _DEFAULT_BIO_FREQ[bioId];
+            }
+        }
+
         // Collecter les données suivi per-médicament (pour le mode "par médicament")
         const suiviPerMed = [];
         activeMeds.forEach(m => {
@@ -1881,17 +1962,20 @@ function analyserPrescription() {
                         }
                     }
                     if (trt.classe || trt.raison) {
-                    eviterItems += `<div class="alert alert-danger py-1 px-2 mb-1 shadow-sm" style="border-left:3px solid #dc3545;">
-                        <strong class="small">${trt.classe || ''}</strong>
-                        ${trt.gravite ? ` <span class="badge bg-${trt.gravite === 'CONTRE-INDICATION' || String(trt.gravite).includes('ABSOLUE') ? 'danger' : 'warning text-dark'}" style="font-size:0.6em;">${trt.gravite}</span>` : ''}
-                        ${srcEbm ? ` <span class="badge bg-dark float-end" style="font-size:0.6em;" title="${srcEbm}">${srcEbm.length > 40 ? srcEbm.substring(0,40)+'...' : srcEbm}</span>` : ''}
-                        ${!srcEbm && trt.ref_stopp ? ` <span class="badge bg-secondary float-end me-1" style="font-size:0.6em;">${trt.ref_stopp}</span>` : ''}
-                        ${trt.raison ? `<br><small>${trt.raison}</small>` : ''}
+                    // alert-light : ne pas compter dans le badge du tab Guidelines
+                    // (updateTabCounters exclut .alert-light). Cf. user : les "à éviter"
+                    // ne sont PAS prescrits chez ce patient — simple information de principe.
+                    eviterItems += `<div class="alert alert-light py-1 px-2 mb-1" style="border-left:3px solid #adb5bd;">
+                        <strong class="small text-muted">${trt.classe || ''}</strong>
+                        ${trt.gravite ? ` <span class="badge bg-light text-muted border" style="font-size:0.6em;">${trt.gravite}</span>` : ''}
+                        ${srcEbm ? ` <span class="badge bg-light text-muted border float-end" style="font-size:0.6em;" title="${srcEbm}">${srcEbm.length > 40 ? srcEbm.substring(0,40)+'...' : srcEbm}</span>` : ''}
+                        ${!srcEbm && trt.ref_stopp ? ` <span class="badge bg-light text-muted border float-end me-1" style="font-size:0.6em;">${trt.ref_stopp}</span>` : ''}
+                        ${trt.raison ? `<br><small class="text-muted">${trt.raison}</small>` : ''}
                         ${trt.condition ? `<br><small class="text-muted fst-italic">${trt.condition}</small>` : ''}
                     </div>`;
                     }
                 });
-                guidelinesHtml += `<details class="mb-2 mt-2"><summary class="text-danger small fw-bold" style="cursor:pointer;">A EVITER (${eviter.length}) — cliquer pour dérouler</summary><div class="mt-1">${eviterItems}</div></details>`;
+                guidelinesHtml += `<details class="mb-2 mt-2"><summary class="text-muted small fw-bold" style="cursor:pointer;">À éviter en cas de prescription future (${eviter.length}) — information de principe</summary><div class="mt-1">${eviterItems}</div></details>`;
             }
 
             // DEPRESCRIPTION (soins palliatifs, fragilité)
@@ -1999,165 +2083,110 @@ function analyserPrescription() {
     }
 
     // =========================================================
-    // 🧠 BLOC SYNTHÈSE INTELLIGENTE
+    // 🧠 SYNTHÈSE — version recentrée (v0.53)
+    //   Contenu ciblé :
+    //    1. Médicaments à AJOUTER (omissions INITIER)
+    //    2. Médicaments à RETIRER / SUBSTITUER (CI, PIM, doublons)
+    //    3. Problèmes biologiques (anomalies détectées)
+    //   L'utilisateur ne souhaite PAS voir ici :
+    //    - la vue transversale par médicament
+    //    - le schéma de surveillance bio (déjà dans onglet Suivi)
+    //    - les indicateurs chiffrés (déjà dans les badges d'onglets)
     // =========================================================
     {
         let synthHtml = '';
 
-        // ── Indicateurs clés ──
-        let critCount = counts.eviter;
-        let interactCount = counts.interact + counts.ansm;
-        let bioAnomalyCount = counts.bio;
-        let bioMissing = 0;
-        if (_registry.bioPlan) {
-            Object.keys(_registry.bioPlan).forEach(bioId => { if (!bioValues[bioId] || bioValues[bioId] <= 0) bioMissing++; });
-        }
-        synthHtml += `<div class="row g-2 mb-3 ga-indicator-row">
-            <div class="col-3"><div class="card text-center border-${critCount > 0 ? 'danger' : 'success'}"><div class="card-body">
-                <div class="ga-indicator-value text-${critCount > 0 ? 'danger' : 'success'}">${critCount}</div>
-                <div class="ga-indicator-label">CI / PIM</div>
-            </div></div></div>
-            <div class="col-3"><div class="card text-center border-${interactCount > 0 ? 'warning' : 'success'}"><div class="card-body">
-                <div class="ga-indicator-value text-${interactCount > 0 ? 'warning' : 'success'}">${interactCount}</div>
-                <div class="ga-indicator-label">Interactions</div>
-            </div></div></div>
-            <div class="col-3"><div class="card text-center border-${scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success')}"><div class="card-body">
-                <div class="ga-indicator-value text-${scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success')}">${scoreACB_global}</div>
-                <div class="ga-indicator-label">Score ACB</div>
-            </div></div></div>
-            <div class="col-3"><div class="card text-center border-${bioAnomalyCount > 0 ? 'danger' : 'success'}"><div class="card-body">
-                <div class="ga-indicator-value text-${bioAnomalyCount > 0 ? 'danger' : 'success'}">${bioAnomalyCount}</div>
-                <div class="ga-indicator-label">Anomalies bio</div>
-            </div></div></div>
-        </div>`;
+        // ── 1. MÉDICAMENTS À AJOUTER ──
+        const toAdd = (_registry.byDomain.initier || []).map(a => ({
+            titre: a.titre || '',
+            message: a.message || '',
+            alternatives: a.alternatives || '',
+            source: a.sources_label || ''
+        }));
 
-        // ── Anomalies biologiques détectées (résumé) ──
-        if (bioAnomalyCount > 0) {
-            synthHtml += `<div class="alert alert-danger border-danger shadow-sm py-2 mb-3">
-                <strong>🧪 Anomalies biologiques détectées (${bioAnomalyCount})</strong>
-                <span class="small text-muted ms-2">— Détails dans l'onglet Bio</span>
-            </div>`;
-        }
-
-        // ── Synthèse transversale par médicament ──
-        const medKeys = Object.keys(_registry.byMed);
-        if (medKeys.length > 0) {
-            synthHtml += `<div class="card mb-3"><div class="card-header py-2 ga-card-header-primary">
-                <strong>Vue transversale par medicament</strong>
-            </div><div class="card-body p-2">`;
-
-            const medSorted = medKeys.map(k => ({ dci: k, domains: _registry.byMed[k], count: Object.values(_registry.byMed[k]).reduce((s, arr) => s + arr.length, 0) })).sort((a, b) => b.count - a.count);
-
-            medSorted.forEach(med => {
-                let badges = [];
-                const d = med.domains;
-                if (d.eviter) {
-                    let hasDanger = d.eviter.some(e => e.severity === 'danger' || (e.gravite && e.gravite.includes('CONTRE-INDICATION')));
-                    badges.push(`<span class="badge bg-${hasDanger ? 'danger' : 'warning text-dark'} me-1">${hasDanger ? '🔴' : '🟠'} ${d.eviter.length} CI</span>`);
-                }
-                if (d.interact) badges.push(`<span class="badge bg-danger me-1">⚡ ${d.interact.length} interact</span>`);
-                if (d.usage) {
-                    badges.push(`<span class="badge bg-info me-1">💊 Adapter</span>`);
-                    d.usage.forEach(u => {
-                        if (u.text && u.text.includes('rénale')) badges.push(`<span class="badge bg-warning text-dark me-1">🧪 Rénal</span>`);
-                        if (u.text && u.text.includes('Hépatique')) badges.push(`<span class="badge bg-secondary me-1">🫁 Hépatique</span>`);
-                    });
-                }
-                if (d.suivi) badges.push(`<span class="badge bg-primary me-1">👁️ Suivi</span>`);
-
-                let details = [];
-                if (d.eviter) d.eviter.forEach(e => details.push(`<span class="text-${e.severity || 'warning'} small">• ${e.text}</span>`));
-                if (d.interact) d.interact.forEach(e => details.push(`<span class="text-danger small">• ${e.text}</span>`));
-                if (d.usage) d.usage.forEach(e => details.push(`<span class="text-info small">• ${e.text}</span>`));
-
-                synthHtml += `<div class="border-bottom py-1">
-                    <div class="d-flex align-items-center">
-                        <strong class="me-2" style="min-width:120px;">${med.dci.charAt(0).toUpperCase() + med.dci.slice(1)}</strong>
-                        <div>${badges.join('')}</div>
-                    </div>
-                    ${details.length > 0 ? `<div class="ps-3" style="line-height:1.6;">${details.join('<br>')}</div>` : ''}
-                </div>`;
-            });
-            synthHtml += `</div></div>`;
-        }
-
-        // ── Actions concrètes priorisées (sans bio) ──
-        let actions = [];
+        // ── 2. MÉDICAMENTS À RETIRER / SUBSTITUER ──
+        //    (CI, PIM, doublons — classés par gravité)
+        const toRemove = [];
         for (const [dci, domains] of Object.entries(_registry.byMed)) {
-            if (domains.eviter) {
-                domains.eviter.forEach(e => {
-                    if (e.gravite && (e.gravite.includes('CONTRE-INDICATION') || e.gravite.includes('ABSOLUE'))) {
-                        actions.push({ priority: 1, type: 'ARRÊTER', icon: '🔴', color: 'danger', med: dci, detail: e.text });
-                    } else {
-                        actions.push({ priority: 2, type: 'SUBSTITUER', icon: '🟠', color: 'warning', med: dci, detail: e.text });
-                    }
+            if (!domains.eviter) continue;
+            domains.eviter.forEach(e => {
+                let isCI = e.gravite && (String(e.gravite).includes('CONTRE-INDICATION') || String(e.gravite).includes('ABSOLUE'));
+                toRemove.push({
+                    dci: dci,
+                    action: isCI ? 'ARRÊTER' : 'SUBSTITUER / RÉÉVALUER',
+                    severity: isCI ? 'danger' : 'warning',
+                    priority: isCI ? 1 : 2,
+                    reason: e.text || '',
+                    source: e.source || ''
                 });
-            }
-            if (domains.usage) {
-                domains.usage.forEach(e => {
-                    actions.push({ priority: 3, type: 'ADAPTER', icon: '🟡', color: 'info', med: dci, detail: e.text });
+            });
+        }
+        toRemove.sort((a, b) => a.priority - b.priority);
+
+        // ── 3. PROBLÈMES BIOLOGIQUES ──
+        //    On récupère les alertes de l'onglet Bio (SYND_xxx déclenchés)
+        const bioIssues = (_registry.byDomain.bio || []).map(a => ({
+            titre: a.titre || a.text || '',
+            message: a.message || '',
+            severity: a.severity || 'warning'
+        }));
+
+        // ── Rendu ──
+        if (toAdd.length === 0 && toRemove.length === 0 && bioIssues.length === 0) {
+            synthHtml = '<div class="alert alert-success shadow-sm"><strong>✅ Aucune action majeure identifiée</strong><br><small>Aucune omission, aucune prescription inappropriée, aucune anomalie biologique significative.</small></div>';
+        } else {
+
+            // Section 1 : à AJOUTER
+            if (toAdd.length > 0) {
+                synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#d1e7dd,#a3cfbb);color:#0f5132;">
+                    <strong>➕ Médicaments à ajouter (${toAdd.length})</strong>
+                    <span class="small ms-2" style="opacity:0.85;">Omissions thérapeutiques identifiées</span>
+                </div><div class="card-body p-2">`;
+                toAdd.forEach(a => {
+                    synthHtml += `<div class="border-start border-success border-3 ps-2 py-1 mb-2">
+                        <strong class="small">${escapeHtml(a.titre)}</strong>
+                        ${a.source ? ` <span class="badge bg-light text-muted border float-end" style="font-size:0.6em;">${escapeHtml(a.source)}</span>` : ''}
+                        ${a.message ? `<br><span class="small">${escapeHtml(a.message)}</span>` : ''}
+                        ${a.alternatives ? `<br><em class="text-success small">Exemples : ${escapeHtml(a.alternatives)}</em>` : ''}
+                    </div>`;
                 });
-            }
-        }
-        if (_registry.byDomain.initier) {
-            _registry.byDomain.initier.forEach(a => {
-                actions.push({ priority: 5, type: 'INITIER', icon: '🟢', color: 'success', med: a.titre, detail: '' });
-            });
-        }
-        actions.sort((a, b) => a.priority - b.priority);
-
-        if (actions.length > 0) {
-            synthHtml += `<div class="card mb-3"><div class="card-header py-2 ga-card-header-actions">
-                <strong>Actions concretes priorisees</strong>
-                <span class="badge bg-light text-dark float-end">${actions.length}</span>
-            </div><div class="card-body p-0">
-            <table class="table table-sm table-hover mb-0" style="font-size:0.9em;">
-            <tbody>`;
-            actions.forEach(a => {
-                synthHtml += `<tr>
-                    <td style="width:30px;" class="text-center">${a.icon}</td>
-                    <td style="width:90px;"><span class="badge bg-${a.color}">${a.type}</span></td>
-                    <td><strong>${a.med.charAt(0).toUpperCase() + a.med.slice(1)}</strong>${a.detail ? ` <span class="text-muted small">— ${a.detail}</span>` : ''}</td>
-                </tr>`;
-            });
-            synthHtml += `</tbody></table></div></div>`;
-        }
-
-        // ── Schéma de surveillance biologique (groupé par fréquence) ──
-        if (_registry.bioPlan && Object.keys(_registry.bioPlan).length > 0) {
-            const freqPriority = { 'hebdomadaire': 1, '/semaine': 1, 'bimensuel': 2, '/2sem': 2, 'mensuel': 3, '/mois': 3, '/1m': 3, '/1-3m': 4, 'trimestriel': 5, '/3m': 5, '/3 mois': 5, 'semestriel': 7, '/6m': 7, '/6 mois': 7, 'annuel': 10, '/an': 10, '/12m': 10 };
-            const getFreqScore = (f) => { let fl = f.toLowerCase(); for (const [k, v] of Object.entries(freqPriority)) { if (fl.includes(k)) return v; } return 8; };
-            const freqLabels = { 1: 'Hebdomadaire', 2: 'Bimensuel', 3: 'Mensuel', 4: '1 à 3 mois', 5: 'Trimestriel', 7: 'Semestriel', 8: 'Selon contexte', 10: 'Annuel', 99: 'Fréquence non précisée' };
-
-            // Grouper par fréquence
-            const byFreq = {};
-            for (const [bioId, data] of Object.entries(_registry.bioPlan)) {
-                let bioName = (MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
-                let freqScore = data.freqs.length > 0 ? Math.min(...data.freqs.map(f => getFreqScore(f))) : 99;
-                if (!byFreq[freqScore]) byFreq[freqScore] = [];
-                byFreq[freqScore].push(bioName);
+                synthHtml += `</div></div>`;
             }
 
-            let freqKeys = Object.keys(byFreq).map(Number).sort((a, b) => a - b);
-            synthHtml += `<div class="card mb-3"><div class="card-header py-2 ga-card-header-bio">
-                <strong>Schema de surveillance biologique</strong>
-                <span class="small ms-2" style="opacity:0.8;">Details dans l'onglet Suivi</span>
-            </div><div class="card-body p-2">`;
-            freqKeys.forEach(score => {
-                let label = freqLabels[score] || `Fréquence ${score}`;
-                let bios = byFreq[score];
-                synthHtml += `<div class="mb-2">
-                    <span class="badge bg-primary me-2">${label}</span>
-                    <span class="small">${bios.join(', ')}</span>
-                </div>`;
-            });
-            if (bioMissing > 0) {
-                synthHtml += `<div class="mt-2 text-muted small fst-italic">⚠️ ${bioMissing} paramètre(s) non renseigné(s) — voir onglet Suivi pour le détail</div>`;
+            // Section 2 : à RETIRER / SUBSTITUER
+            if (toRemove.length > 0) {
+                synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#f8d7da,#f1aeb5);color:#58151c;">
+                    <strong>➖ Médicaments à retirer ou substituer (${toRemove.length})</strong>
+                    <span class="small ms-2" style="opacity:0.85;">Prescriptions inappropriées identifiées</span>
+                </div><div class="card-body p-2">`;
+                toRemove.forEach(a => {
+                    synthHtml += `<div class="border-start border-${a.severity} border-3 ps-2 py-1 mb-2">
+                        <span class="badge bg-${a.severity} me-1" style="font-size:0.65em;">${a.action}</span>
+                        <strong class="small">${escapeHtml(a.dci.toUpperCase())}</strong>
+                        ${a.source ? ` <span class="badge bg-light text-muted border float-end" style="font-size:0.6em;">${escapeHtml(a.source)}</span>` : ''}
+                        ${a.reason ? `<br><span class="small text-muted">${escapeHtml(a.reason)}</span>` : ''}
+                    </div>`;
+                });
+                synthHtml += `</div></div>`;
             }
-            synthHtml += `</div></div>`;
+
+            // Section 3 : PROBLÈMES BIOLOGIQUES
+            if (bioIssues.length > 0) {
+                synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#fff3cd,#ffe69c);color:#664d03;">
+                    <strong>🧪 Problèmes biologiques (${bioIssues.length})</strong>
+                    <span class="small ms-2" style="opacity:0.85;">Anomalies à prendre en compte</span>
+                </div><div class="card-body p-2">`;
+                bioIssues.forEach(b => {
+                    synthHtml += `<div class="border-start border-${b.severity} border-3 ps-2 py-1 mb-2">
+                        <strong class="small">${escapeHtml(b.titre)}</strong>
+                        ${b.message ? `<br><span class="small text-muted">${escapeHtml(b.message)}</span>` : ''}
+                    </div>`;
+                });
+                synthHtml += `</div></div>`;
+            }
         }
 
-        // ── Commentaire libre (si renseigné) ──
+        // Commentaire libre (si renseigné)
         let freeText = (document.getElementById('freeTextNote') || {}).value || '';
         if (freeText.trim()) {
             synthHtml += `<div class="card mb-3 border-secondary"><div class="card-header py-2 bg-light">

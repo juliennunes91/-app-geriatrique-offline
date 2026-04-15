@@ -282,54 +282,69 @@ function buildPdfContent() {
         html += `</div>`;
     }
 
-    // Section synthèse transversale (depuis registre)
-    const reg = window._analysisRegistry;
-    if (reg && reg.byMed && Object.keys(reg.byMed).length > 0) {
-        html += `<div style="border:1px solid #0d6efd;border-radius:4px;padding:4px;margin-bottom:6px;">
-            <strong style="font-size:9px;color:#0d6efd;">Synthèse par médicament</strong><br>`;
-        for (const [dci, domains] of Object.entries(reg.byMed)) {
-            let tags = [];
-            if (domains.eviter) tags.push(`<span style="color:#dc3545;font-weight:bold;">${domains.eviter.length} CI</span>`);
-            if (domains.interact) tags.push(`<span style="color:#fd7e14;font-weight:bold;">${domains.interact.length} inter</span>`);
-            if (domains.usage) tags.push(`<span style="color:#0d6efd;">adapter</span>`);
-            if (tags.length > 0) html += `<div style="font-size:8px;margin:1px 0;"><strong>${escapeHtml(dci.toUpperCase())}</strong> — ${tags.join(' | ')}</div>`;
-        }
-        html += `</div>`;
-    }
+    // Retiré volontairement : la "Synthèse par médicament" (liste des DCI
+    // en cause). L'utilisateur ne souhaite plus voir les médicaments en
+    // cause dans l'export PDF (confidentialité / concision).
 
-    // Alertes par section
+    // Alertes par section — sélection : scores, prescriptions inappropriées,
+    // omissions, et bilans à faire sur l'année. Pas d'interactions ni d'alertes
+    // bio détaillées (consultables dans l'app, pas sur le PDF de synthèse).
     const sections = [
-        { id: 'alertes-eviter', titre: 'Prescriptions inappropriées', color: '#dc3545' },
-        { id: 'alertes-initier', titre: 'Omissions thérapeutiques', color: '#198754' },
-        { id: 'alertes-interact', titre: 'Interactions cliniques', color: '#fd7e14' },
-        { id: 'alertes-ansm', titre: 'Interactions ANSM', color: '#6f42c1' },
-        { id: 'alertes-bio', titre: 'Syndromes biologiques', color: '#20c997' },
-        { id: 'alertes-usage', titre: 'Adaptations posologiques', color: '#0d6efd' },
-        { id: 'alertes-suivi', titre: 'Suivi biologique', color: '#6c757d' },
-        { id: 'alertes-guidelines', titre: 'Guidelines par pathologie', color: '#6f42c1' }
+        { id: 'alertes-eviter',   titre: 'Prescriptions inappropriées', color: '#dc3545' },
+        { id: 'alertes-initier',  titre: 'Omissions thérapeutiques',    color: '#198754' }
     ];
 
     sections.forEach(s => {
         const el = document.getElementById(s.id);
         if (!el) return;
-        const alerts = el.querySelectorAll('.alert');
+        const alerts = el.querySelectorAll('.alert:not(.alert-light)');
         if (alerts.length === 0) return;
-        const hasContent = Array.from(alerts).some(a => !a.classList.contains('alert-light') || a.querySelectorAll('strong').length > 1);
-        if (!hasContent && alerts.length === 1 && alerts[0].textContent.includes('Aucun')) return;
 
         html += `<div style="border-left:3px solid ${s.color};padding-left:6px;margin-bottom:6px;">
             <strong style="font-size:10px;color:${s.color};">${s.titre} (${alerts.length})</strong>`;
         alerts.forEach(a => {
             const strong = a.querySelector('strong');
-            const title = strong ? strong.textContent.trim() : '';
-            // Extraire aussi le détail (texte après le titre)
+            let title = strong ? strong.textContent.trim() : '';
+            // Pour "prescriptions inappropriées", le titre peut contenir un nom
+            // de DCI (ex: "🚨 BISOPROLOL — CI Parkinson"). L'utilisateur souhaite
+            // conserver ces sections mais masquer le DCI en cause. On anonymise
+            // les noms de médicaments (ALLCAPS ≥ 4 lettres) en "[médicament]".
+            if (s.id === 'alertes-eviter') {
+                title = title.replace(/\b([A-ZÀ-ÜÇ]{4,})\b/g, '[médicament]');
+            }
+            // Extraire le détail (texte après le titre) — sans DCI en cause non plus
             let detail = '';
             const smalls = a.querySelectorAll('small, em, span.small');
-            if (smalls.length > 0) detail = smalls[0].textContent.trim().substring(0, 120);
+            if (smalls.length > 0) detail = smalls[0].textContent.trim().substring(0, 150);
+            if (s.id === 'alertes-eviter') {
+                detail = detail.replace(/\b([A-ZÀ-ÜÇ]{4,})\b/g, '[médicament]');
+            }
             html += `<div style="font-size:9px;margin:2px 0;">• <strong>${escapeHtml(title)}</strong>${detail ? ' — <span style="color:#555;">' + escapeHtml(detail) + '</span>' : ''}</div>`;
         });
         html += `</div>`;
     });
+
+    // Bilans à faire sur l'année (annuel + semestriel + trimestriel) — SANS DCI
+    if (reg && reg.bioPlan && Object.keys(reg.bioPlan).length > 0) {
+        const freqPriority = { 'hebdomadaire': 1, '/semaine': 1, 'bimensuel': 2, '/2sem': 2, 'mensuel': 3, '/mois': 3, '/1m': 3, '/1-3m': 4, 'trimestriel': 5, '/3m': 5, '/3 mois': 5, 'semestriel': 7, '/6m': 7, '/6 mois': 7, 'annuel': 10, '/an': 10, '/12m': 10, 'à la demande': 20 };
+        const getFreqScore = (f) => { let fl = String(f || '').toLowerCase(); for (const [k, v] of Object.entries(freqPriority)) { if (fl.includes(k)) return v; } return 15; };
+        const freqLabels = { 1: 'Hebdomadaire', 2: 'Bimensuel', 3: 'Mensuel', 5: 'Trimestriel', 7: 'Semestriel', 10: 'Annuel', 15: 'Selon contexte', 20: 'À la demande' };
+        const byFreq = {};
+        for (const [bioId, data] of Object.entries(reg.bioPlan)) {
+            const bioName = (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
+            const freqScore = data.freqs.length > 0 ? Math.min(...data.freqs.map(f => getFreqScore(f))) : 15;
+            if (!byFreq[freqScore]) byFreq[freqScore] = [];
+            byFreq[freqScore].push(bioName);
+        }
+        const keys = Object.keys(byFreq).map(Number).sort((a, b) => a - b);
+        html += `<div style="border-left:3px solid #6c757d;padding-left:6px;margin-bottom:6px;">
+            <strong style="font-size:10px;color:#6c757d;">Bilans à prévoir sur l'année</strong>`;
+        keys.forEach(score => {
+            const lbl = freqLabels[score] || 'Variable';
+            html += `<div style="font-size:9px;margin:2px 0;"><strong>${lbl} :</strong> <span style="color:#555;">${byFreq[score].map(b => escapeHtml(b)).join(', ')}</span></div>`;
+        });
+        html += `</div>`;
+    }
 
     html += `<div style="text-align:center;margin-top:6px;font-size:7px;color:#aaa;">Document généré par GeriaAssist — Usage professionnel uniquement</div>`;
     html += `</div>`;
