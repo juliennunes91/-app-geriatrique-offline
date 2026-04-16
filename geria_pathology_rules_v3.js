@@ -1545,11 +1545,12 @@ const PATHOLOGY_RULES_DB = {
                 }
             ],
             CIBLES_HBA1C: {
-                general: { max: 7.0, note: "La plupart des adultes" },
-                sujet_age_robuste: { max: 7.5, note: "Espérance de vie > 10 ans, peu de comorbidités" },
-                sujet_age_fragile: { max: 8.0, max_haut: 8.5, note: "Espérance de vie limitée, polymédication, risque hypoglycémie" },
-                fin_de_vie: { note: "Éviter hyperglycémie symptomatique, pas de cible stricte" },
-                ref: "ADA 2025 — Older Adults"
+                general: { max: 7.0, note: "Adulte non âgé, sans risque d'hypoglycémie" },
+                sujet_age_robuste: { min: 7.0, max: 7.5, note: "Sujet âgé en bonne santé (peu de comorbidités, fonctions cognitives et autonomie préservées)" },
+                sujet_age_complexe: { max: 8.0, note: "Santé intermédiaire/complexe (comorbidités multiples, ≥ 2 IADL altérées, ou troubles cognitifs légers-modérés)" },
+                sujet_age_tres_fragile: { max: 8.5, note: "Santé très complexe (EHPAD, pathologie chronique terminale, troubles cognitifs modérés-sévères, ≥ 2 ADL altérées)" },
+                fin_de_vie: { note: "Pas de cible stricte — éviter l'hyperglycémie symptomatique et toute hypoglycémie" },
+                ref: "ADA 2025 Standards of Care §13 — Older Adults (Table 13.1)"
             },
             EVITER: [
                 { classe: "Sulfamides hypoglycémiants (Glibenclamide)", raison: "Risque hypoglycémie prolongée majeur chez le sujet âgé", gravite: "CONTRE-INDICATION en gériatrie", ref_stopp: "STOPP J1", ref_beers: "AGS 2023" },
@@ -2407,7 +2408,7 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "IPP > 8 semaines sans indication claire", action: "Réduction progressive puis arrêt", ref: "STOPP F1" },
                 { classe: "Statines", action: "Discuter arrêt si espérance de vie < 2-3 ans et pas d'événement CV récent", ref: "Contexte fragile/palliatif" },
                 { classe: "Antihypertenseurs", action: "Déprescrire si PAS < 120 ou symptômes (vertiges, chutes)", ref: "STOPP B6" },
-                { classe: "Hypoglycémiants (sulfamides)", action: "Déprescrire en priorité. Relâcher cible HbA1c à 8-8.5%", ref: "ADA 2025 Older Adults" },
+                { classe: "Hypoglycémiants (sulfamides)", action: "Déprescrire en priorité. Cible HbA1c individualisée : < 8% (complexe) ou < 8.5% (très fragile)", ref: "ADA 2025 §13 Older Adults" },
                 { classe: "Anticholinergiques (ACB ≥ 3)", action: "Réduire charge anticholinergique totale", ref: "STOPP D1-D5" },
                 { classe: "Antipsychotiques > 12 semaines", action: "Réévaluer indication, sevrage progressif", ref: "STOPP D3" }
             ],

@@ -658,16 +658,26 @@ const GeriaEngineV2 = (() => {
         }
 
         // Enrichir avec la source EBM spécifique (société savante / essai clinique).
-        // On supprime le badge ebm quand :
-        //  - l'alerte est fusionnée (merged_count > 1) : la source est déjà dans le header via sources_label
-        //  - l'ebmSource est déjà contenu dans sources_label (évite le doublon ESC/ESC)
+        // Pour les INITIER (omissions) : la source pertinente est le guideline EBM (ESC, GOLD, KDIGO…),
+        // pas l'outil de screening (STOPP/START, FORTA). On remplace sources_label par l'EBM source.
+        // Pour les EVITER : on garde sources_label (l'outil PIM EST la source) + badge EBM complémentaire.
         const ebmSource = findEbmSource(a);
-        const srcLabelLc = String(a.sources_label || '').toLowerCase();
-        const ebmSrcLc = String(ebmSource || '').toLowerCase();
-        const alreadyShown = a.merged_count > 1 || (ebmSrcLc && srcLabelLc && (srcLabelLc.includes(ebmSrcLc.substring(0, 10)) || ebmSrcLc.includes(srcLabelLc.substring(0, 10))));
-        const ebmBadge = (ebmSource && !alreadyShown)
-            ? `<br><span class="badge" style="font-size:0.6em; background-color:#6f42c1;" title="${ebmSource}">${ebmSource.length > 60 ? ebmSource.substring(0,60)+'...' : ebmSource}</span>`
-            : '';
+        let displaySourceLabel = a.sources_label || '';
+        let ebmBadge = '';
+        if (ebmSource) {
+            if (a._type === 'initier') {
+                // Omission : le guideline EBM remplace STOPP/START dans le header
+                displaySourceLabel = ebmSource;
+            } else {
+                // EVITER : badge EBM secondaire sauf si déjà affiché dans le header
+                const srcLabelLc = String(a.sources_label || '').toLowerCase();
+                const ebmSrcLc = ebmSource.toLowerCase();
+                const alreadyShown = a.merged_count > 1 || (srcLabelLc.includes(ebmSrcLc.substring(0, 10)) || ebmSrcLc.includes(srcLabelLc.substring(0, 10)));
+                if (!alreadyShown) {
+                    ebmBadge = `<br><span class="badge" style="font-size:0.6em; background-color:#6f42c1;" title="${ebmSource}">${ebmSource.length > 60 ? ebmSource.substring(0,60)+'...' : ebmSource}</span>`;
+                }
+            }
+        }
 
         const esc = typeof escapeHtml === 'function' ? escapeHtml : s => String(s||'');
         // Titre amélioré pour les recommandations groupées (multi-thérapie)
@@ -681,7 +691,7 @@ const GeriaEngineV2 = (() => {
         }
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass});">
             ${scoreBadge}<strong>${displayTitle}</strong>${mergedBadge}
-            <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(a.sources_label || '')}</span>
+            <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(displaySourceLabel)}</span>
             ${a.merged_count > 1 ? '<br><span class="small fw-bold">• ' + esc(a.titre) + '</span>' : ''}
             <br><span class="small">${a.message}</span>
             ${compHtml}

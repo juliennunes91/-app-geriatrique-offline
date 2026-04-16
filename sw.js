@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.53 (synthèse recentrée + PDF anonymisé + suivis bio complets + IC sources dédupliquées)
+// Service Worker - GeriaAssist v0.54 (préalbumine révisée + HbA1c ADA 2025 + sources omissions corrigées)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260415b';
-const CACHE_NAME = `geriaassist-v53-${BUILD_ID}`;
+const BUILD_ID = '20260416';
+const CACHE_NAME = `geriaassist-v54-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

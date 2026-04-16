@@ -1096,14 +1096,23 @@ function analyserPrescription() {
             <br><em>Conduite :</em> ${bioValues['BIO_OSM'] > 320 ? 'Déshydratation sévère — réhydratation IV par soluté hypotonique. Rechercher coma hyperosmolaire si diabétique.' : 'Déshydratation modérée — réhydratation PO/IV, adapter diurétiques.'}</div>`, 'bio');
     }
 
-    // --- Préalbumine basse (< 0.11 g/L) — Dénutrition aiguë ---
-    if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.11) {
-        addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 Préalbumine effondrée (${bioValues['BIO_PREALB']} g/L)</strong>
-            <br><em>Interprétation :</em> Dénutrition aiguë sévère (demi-vie 2 jours, marqueur précoce). Attention : baissée aussi en inflammation.
-            <br><em>Conduite :</em> Support nutritionnel urgent, CNO hypercaloriques/hyperprotidiques, envisager nutrition entérale. Adapter posologies des médicaments fortement liés aux protéines.</div>`, 'bio');
+    // --- Préalbumine (transthyrétine) — Marqueur de suivi nutritionnel ---
+    // Normes : 0.20-0.40 g/L | Seuils révisés (Bouillanne 2017) : sévère < 0.12, modéré < 0.17
+    // NB : HAS 2021 ne retient plus la préalbumine comme critère diagnostique de dénutrition,
+    //       mais reste utile en suivi d'efficacité de la renutrition (demi-vie 2-4 jours).
+    if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.12) {
+        addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 Préalbumine très basse (${bioValues['BIO_PREALB']} g/L) — dénutrition sévère</strong>
+            <br><em>Normes :</em> 0.20 – 0.40 g/L | Seuil sévère < 0.12 g/L (Bouillanne 2017)
+            <br><em>Interprétation :</em> Dénutrition protéino-énergétique sévère (marqueur précoce, demi-vie 2-4 jours). Attention : abaissée aussi en syndrome inflammatoire (CRP élevée) et insuffisance hépatique.
+            <br><em>Conduite :</em> Support nutritionnel urgent : CNO hypercaloriques/hyperprotidiques, envisager nutrition entérale. Adapter posologies des médicaments à forte liaison protéique. Contrôle à J15.</div>`, 'bio');
+    } else if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.17) {
+        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Préalbumine basse (${bioValues['BIO_PREALB']} g/L) — dénutrition modérée</strong>
+            <br><em>Normes :</em> 0.20 – 0.40 g/L | Seuil modéré < 0.17 g/L (Bouillanne 2017)
+            <br><em>Conduite :</em> Enrichissement des repas, CNO, réévaluation à J15. Éliminer un syndrome inflammatoire surajouté (CRP).</div>`, 'bio');
     } else if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.20) {
-        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Préalbumine basse (${bioValues['BIO_PREALB']} g/L)</strong>
-            <br><em>Conduite :</em> Dénutrition modérée. CNO, enrichissement des repas, réévaluation à J15.</div>`, 'bio');
+        addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Préalbumine limite basse (${bioValues['BIO_PREALB']} g/L)</strong>
+            <br><em>Normes :</em> 0.20 – 0.40 g/L
+            <br><em>Conduite :</em> Surveillance nutritionnelle rapprochée. Enrichir les repas, peser régulièrement. Contrôle à 1 mois.</div>`, 'bio');
     }
 
     // --- Supplémentation vitamine D systématique si âge avancé (sans carence documentée) ---
@@ -1123,17 +1132,17 @@ function analyserPrescription() {
             <br><em>Conduite :</em> Supplémentation B12 IM ou forte dose PO (1000 µg/j), contrôle à 3 mois. Neuropathie périphérique possible même sans anémie.</div>`, 'bio');
     }
 
-    // --- HbA1c informative (cibles gériatriques adaptées) ---
+    // --- HbA1c informative (cibles gériatriques individualisées — ADA 2025 §13 Table 13.1) ---
     if (bioValues['BIO_026'] > 0) {
         let hba1c = bioValues['BIO_026'];
         if (hba1c > 8.5 && patientAge >= 75) {
             addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 HbA1c élevée chez le sujet âgé</strong> (HbA1c ${hba1c}%)
-                <br><em>Cibles gériatriques :</em> HbA1c 7-8% si robuste, 8-8.5% si fragile, 8.5-9% si très dépendant (ADA/EASD 2022).
+                <br><em>Cibles ADA 2025 :</em> < 7.5% (robuste) | < 8% (complexe) | < 8.5% (très fragile/EHPAD)
                 <br><em>Conduite :</em> Réévaluer traitement antidiabétique, attention hypoglycémies sous sulfamides/insuline.</div>`, 'bio');
         } else if (hba1c < 6.5 && patientAge >= 75 && (patientHasMedClass('sulfamide') || patientHasMedClass('insuline') || patientHasMedClass('glinide'))) {
             addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ HbA1c basse sous traitement hypoglycémiant</strong> (HbA1c ${hba1c}%)
                 <br><em>Risque :</em> Hypoglycémie iatrogène chez le sujet âgé (chutes, confusion, AVC).
-                <br><em>Conduite :</em> Envisager réduction de dose ou arrêt sulfamide/insuline. Cible HbA1c gériatrique : 7-8%.</div>`, 'bio');
+                <br><em>Conduite :</em> Envisager réduction de dose ou arrêt sulfamide/insuline. Cibles ADA 2025 : < 7.5% (robuste), < 8% (complexe), < 8.5% (très fragile).</div>`, 'bio');
         }
     }
 

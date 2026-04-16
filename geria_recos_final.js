@@ -1645,7 +1645,7 @@ const GERIA_RECOS_DB = {
                 med_keys: ["insuline"],
                 contexte_clinique: "sliding_scale"
             },
-            alternatives: "Schéma basal-bolus adapté, cibles HbA1c < 8% si fragile"
+            alternatives: "Schéma basal-bolus adapté, cibles HbA1c individualisées (< 7.5% robuste, < 8% complexe, < 8.5% très fragile — ADA 2025)"
         },
         {
             id: "EV_BEERS_03",
@@ -1754,8 +1754,8 @@ const GERIA_RECOS_DB = {
             sources: ["STOPPFRAIL"],
             ref_code: "STOPPFrail-3",
             section: "Endocrine",
-            titre: "Antidiabétique oral si HbA1c < 8% chez fragile",
-            message: "STOPPFrail : Antidiabétiques oraux à réévaluer chez les patients très fragiles si HbA1c < 8%. Cibles glycémiques assouplies (HbA1c 7.5-8.5%). Risque d'hypoglycémie > bénéfice.",
+            titre: "Antidiabétique oral si HbA1c à cible chez fragile",
+            message: "STOPPFrail : Antidiabétiques oraux à réévaluer chez les patients très fragiles si HbA1c déjà à cible (< 8-8.5% selon ADA 2025 §13). Risque d'hypoglycémie > bénéfice. Simplifier le schéma, déprescrire les sulfamides en priorité.",
             severite: "warning",
             condition: {
                 med_keys: ["metformine", "gliclazide", "glibenclamide", "glimepiride", "sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "repaglinide"],
