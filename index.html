@@ -111,6 +111,14 @@
                         <button class="btn btn-outline-secondary" onclick="importerPatientJSON()" title="Importer un patient JSON">Import</button>
                     </div>
                     <button class="btn btn-outline-secondary btn-sm" onclick="toggleDarkMode()" id="btnDarkMode" title="Mode sombre">Mode sombre</button>
+                    <div class="position-relative d-inline-block">
+                        <button class="btn btn-outline-secondary btn-sm" onclick="toggleUiPrefsPopover(event)" id="btnUiPrefs" title="Préférences d'affichage" aria-expanded="false">⚙️</button>
+                        <div id="uiPrefsPopover" class="position-absolute end-0 mt-1 p-3 bg-white border rounded shadow-sm" style="display:none; z-index:1030; min-width:240px;">
+                            <div class="small fw-bold mb-2">Troubles cognitifs &amp; neuropsycho</div>
+                            <div class="form-check"><input type="radio" name="spcDisplayMode" id="spcDisplayAccordion" value="accordion" class="form-check-input" onchange="setSpcDisplayMode('accordion')"><label class="form-check-label small" for="spcDisplayAccordion">Accordéon (inline)</label></div>
+                            <div class="form-check"><input type="radio" name="spcDisplayMode" id="spcDisplayModal" value="modal" class="form-check-input" onchange="setSpcDisplayMode('modal')"><label class="form-check-label small" for="spcDisplayModal">Fenêtre modale</label></div>
+                        </div>
+                    </div>
                     <a href="index_modern.html" class="btn btn-outline-info btn-sm" title="Nouvelle interface moderne">UI Moderne</a>
                 </div>
             </div>
@@ -259,6 +267,8 @@
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAspirineForte"><label class="form-check-label small">Aspirine &gt; 100 mg/j (Dose élevée)</label></div>
 
                                 <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Troubles cognitifs &amp; neuropsychocomportementaux <small class="text-muted fst-italic">(SFGG 2024 SPC)</small></h6>
+                                <button type="button" id="btnOpenSpcModal" class="btn btn-outline-primary btn-sm mb-2" style="display:none;" onclick="openSpcModal()">Ouvrir la rubrique</button>
+                                <div id="spcInlineSlot"><div id="spcSection">
                                 <div class="small text-muted fst-italic mb-2">Cochez une catégorie principale ; les sous-options apparaissent en cascade.</div>
 
                                 <!-- 1. Maladie neurocognitive majeure (démence) -->
@@ -321,6 +331,7 @@
                                     <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSjsr"><label class="form-check-label small">Syndrome des jambes sans repos (SJSR)</label></div>
                                     <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSaos"><label class="form-check-label small">Syndrome d'apnées obstructives du sommeil (SAOS)</label></div>
                                 </div>
+                                </div></div>
 
                             </div>
                         </div>
@@ -695,6 +706,93 @@
                 });
             });
         });
+
+        // ================================================================
+        // PRÉFÉRENCES UI — Rubrique SPC (accordéon inline / fenêtre modale)
+        // ================================================================
+        window.toggleUiPrefsPopover = function(e) {
+            if (e) e.stopPropagation();
+            const pop = document.getElementById('uiPrefsPopover');
+            if (!pop) return;
+            const visible = pop.style.display !== 'none' && pop.style.display !== '';
+            pop.style.display = visible ? 'none' : 'block';
+            document.getElementById('btnUiPrefs')?.setAttribute('aria-expanded', String(!visible));
+        };
+        document.addEventListener('click', (e) => {
+            const pop = document.getElementById('uiPrefsPopover');
+            const btn = document.getElementById('btnUiPrefs');
+            if (!pop || pop.style.display === 'none') return;
+            if (e.target === btn || btn?.contains(e.target) || pop.contains(e.target)) return;
+            pop.style.display = 'none';
+            btn?.setAttribute('aria-expanded', 'false');
+        });
+
+        window.setSpcDisplayMode = function(mode) {
+            localStorage.setItem('geriaassist-spc-display', mode);
+            applySpcDisplayMode(mode);
+        };
+        function applySpcDisplayMode(mode) {
+            const btn = document.getElementById('btnOpenSpcModal');
+            const section = document.getElementById('spcSection');
+            const slot = document.getElementById('spcInlineSlot');
+            const overlay = document.getElementById('spcModalOverlay');
+            if (!btn || !section || !slot) return;
+            if (mode === 'modal') {
+                btn.style.display = '';
+                section.style.display = 'none';
+                if (section.parentElement && section.parentElement.id !== 'spcInlineSlot') {
+                    slot.appendChild(section);
+                }
+                if (overlay) overlay.style.display = 'none';
+            } else {
+                btn.style.display = 'none';
+                section.style.display = '';
+                if (section.parentElement && section.parentElement.id !== 'spcInlineSlot') {
+                    slot.appendChild(section);
+                }
+                if (overlay) overlay.style.display = 'none';
+            }
+        }
+        window.openSpcModal = function() {
+            const section = document.getElementById('spcSection');
+            const body = document.getElementById('spcModalBody');
+            const overlay = document.getElementById('spcModalOverlay');
+            if (!section || !body || !overlay) return;
+            body.appendChild(section);
+            section.style.display = '';
+            overlay.style.display = 'block';
+        };
+        window.closeSpcModal = function() {
+            const section = document.getElementById('spcSection');
+            const slot = document.getElementById('spcInlineSlot');
+            const overlay = document.getElementById('spcModalOverlay');
+            if (!section || !slot || !overlay) return;
+            slot.appendChild(section);
+            overlay.style.display = 'none';
+            const mode = localStorage.getItem('geriaassist-spc-display') || 'accordion';
+            if (mode === 'modal') section.style.display = 'none';
+        };
+        (function initSpcDisplayMode() {
+            const saved = localStorage.getItem('geriaassist-spc-display') || 'accordion';
+            const init = () => {
+                const radio = document.getElementById(saved === 'modal' ? 'spcDisplayModal' : 'spcDisplayAccordion');
+                if (radio) radio.checked = true;
+                applySpcDisplayMode(saved);
+            };
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+            else init();
+        })();
     </script>
+
+    <!-- Modal overlay pour la rubrique SPC (utilisée si mode = modal) -->
+    <div id="spcModalOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1055;" onclick="if(event.target===this)closeSpcModal()">
+        <div class="bg-white rounded shadow-lg" style="position:absolute; top:5%; left:5%; right:5%; bottom:5%; overflow:auto; padding:1.25rem;">
+            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+                <h5 class="mb-0 text-primary">Troubles cognitifs &amp; neuropsychocomportementaux <small class="text-muted fst-italic">(SFGG 2024 SPC)</small></h5>
+                <button type="button" class="btn-close" aria-label="Fermer" onclick="closeSpcModal()"></button>
+            </div>
+            <div id="spcModalBody"></div>
+        </div>
+    </div>
 </body>
 </html>

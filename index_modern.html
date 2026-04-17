@@ -258,6 +258,14 @@
                 <button onclick="importerPatientJSON()" class="px-2.5 py-1.5 text-xs font-medium hover:bg-white/10 transition-colors">Import</button>
             </div>
             <button id="btnDarkMode" onclick="toggleDarkMode()" class="px-2.5 py-1.5 text-xs font-medium border border-white/25 rounded-lg hover:bg-white/10 transition-colors">Mode sombre</button>
+            <div class="relative">
+                <button id="btnUiPrefs" onclick="toggleUiPrefsPopover(event)" aria-expanded="false" title="Préférences d'affichage" class="px-2.5 py-1.5 text-xs font-medium border border-white/25 rounded-lg hover:bg-white/10 transition-colors">⚙️</button>
+                <div id="uiPrefsPopover" class="absolute right-0 mt-1 p-3 bg-white rounded-lg shadow-lg border border-outline-variant text-on-surface" style="display:none; z-index:1030; min-width:240px;">
+                    <div class="text-xs font-bold mb-2">Troubles cognitifs &amp; neuropsycho</div>
+                    <label class="flex items-center gap-2 text-[11px] cursor-pointer mb-1"><input type="radio" name="spcDisplayMode" id="spcDisplayAccordion" value="accordion" class="accent-secondary" onchange="setSpcDisplayMode('accordion')"><span>Accordéon (inline)</span></label>
+                    <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="spcDisplayMode" id="spcDisplayModal" value="modal" class="accent-secondary" onchange="setSpcDisplayMode('modal')"><span>Fenêtre modale</span></label>
+                </div>
+            </div>
             <a href="index.html" class="px-2.5 py-1.5 text-xs font-medium border border-secondary-container/50 text-secondary-container rounded-lg hover:bg-secondary-container/10 transition-colors">← Classique</a>
         </div>
     </div>
@@ -520,6 +528,8 @@
                         </div>
 
                         <p class="text-[10px] font-bold text-secondary mb-1 mt-3">Troubles cognitifs &amp; neuropsychocomportementaux <span class="opacity-60 font-normal italic">(SFGG 2024 SPC)</span></p>
+                        <button type="button" id="btnOpenSpcModal" class="mb-2 px-3 py-1.5 text-xs font-semibold border border-secondary/40 text-secondary rounded-lg hover:bg-secondary/10" style="display:none;" onclick="openSpcModal()">Ouvrir la rubrique</button>
+                        <div id="spcInlineSlot"><div id="spcSection">
                         <p class="text-[10px] text-on-surface-variant/70 italic mb-2">Cochez une catégorie principale ; les sous-options apparaissent en cascade.</p>
                         <div class="space-y-1">
                             <!-- 1. Démence -->
@@ -578,6 +588,7 @@
                                 <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSaos" class="accent-secondary"><span>Syndrome d'apnées obstructives du sommeil (SAOS)</span></label>
                             </div>
                         </div>
+                        </div></div>
                     </div>
                 </div>
             </details>
@@ -1011,6 +1022,88 @@
             });
         });
     });
+
+    // ================================================================
+    // PRÉFÉRENCES UI — Rubrique SPC (accordéon inline / fenêtre modale)
+    // ================================================================
+    window.toggleUiPrefsPopover = function(e) {
+        if (e) e.stopPropagation();
+        const pop = document.getElementById('uiPrefsPopover');
+        if (!pop) return;
+        const visible = pop.style.display !== 'none' && pop.style.display !== '';
+        pop.style.display = visible ? 'none' : 'block';
+        document.getElementById('btnUiPrefs')?.setAttribute('aria-expanded', String(!visible));
+    };
+    document.addEventListener('click', (e) => {
+        const pop = document.getElementById('uiPrefsPopover');
+        const btn = document.getElementById('btnUiPrefs');
+        if (!pop || pop.style.display === 'none') return;
+        if (e.target === btn || btn?.contains(e.target) || pop.contains(e.target)) return;
+        pop.style.display = 'none';
+        btn?.setAttribute('aria-expanded', 'false');
+    });
+    window.setSpcDisplayMode = function(mode) {
+        localStorage.setItem('geriaassist-spc-display', mode);
+        applySpcDisplayMode(mode);
+    };
+    function applySpcDisplayMode(mode) {
+        const btn = document.getElementById('btnOpenSpcModal');
+        const section = document.getElementById('spcSection');
+        const slot = document.getElementById('spcInlineSlot');
+        const overlay = document.getElementById('spcModalOverlay');
+        if (!btn || !section || !slot) return;
+        if (mode === 'modal') {
+            btn.style.display = '';
+            section.style.display = 'none';
+            if (section.parentElement && section.parentElement.id !== 'spcInlineSlot') slot.appendChild(section);
+            if (overlay) overlay.style.display = 'none';
+        } else {
+            btn.style.display = 'none';
+            section.style.display = '';
+            if (section.parentElement && section.parentElement.id !== 'spcInlineSlot') slot.appendChild(section);
+            if (overlay) overlay.style.display = 'none';
+        }
+    }
+    window.openSpcModal = function() {
+        const section = document.getElementById('spcSection');
+        const body = document.getElementById('spcModalBody');
+        const overlay = document.getElementById('spcModalOverlay');
+        if (!section || !body || !overlay) return;
+        body.appendChild(section);
+        section.style.display = '';
+        overlay.style.display = 'flex';
+    };
+    window.closeSpcModal = function() {
+        const section = document.getElementById('spcSection');
+        const slot = document.getElementById('spcInlineSlot');
+        const overlay = document.getElementById('spcModalOverlay');
+        if (!section || !slot || !overlay) return;
+        slot.appendChild(section);
+        overlay.style.display = 'none';
+        const mode = localStorage.getItem('geriaassist-spc-display') || 'accordion';
+        if (mode === 'modal') section.style.display = 'none';
+    };
+    (function initSpcDisplayMode() {
+        const saved = localStorage.getItem('geriaassist-spc-display') || 'accordion';
+        const init = () => {
+            const radio = document.getElementById(saved === 'modal' ? 'spcDisplayModal' : 'spcDisplayAccordion');
+            if (radio) radio.checked = true;
+            applySpcDisplayMode(saved);
+        };
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+        else init();
+    })();
 </script>
+
+<!-- Modal overlay pour la rubrique SPC (utilisée si mode = modal) -->
+<div id="spcModalOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1055; align-items:flex-start; justify-content:center;" onclick="if(event.target===this)closeSpcModal()">
+    <div class="bg-surface-container-lowest rounded-xl shadow-xl" style="position:relative; width:90vw; max-width:720px; max-height:90vh; overflow:auto; padding:1.25rem; margin-top:4vh;">
+        <div class="flex justify-between items-center mb-3 pb-2 border-b border-outline-variant">
+            <h5 class="font-headline text-sm font-bold text-primary">Troubles cognitifs &amp; neuropsychocomportementaux <span class="opacity-60 font-normal italic">(SFGG 2024 SPC)</span></h5>
+            <button type="button" aria-label="Fermer" onclick="closeSpcModal()" class="text-on-surface-variant hover:text-on-surface text-lg leading-none px-2">&times;</button>
+        </div>
+        <div id="spcModalBody"></div>
+    </div>
+</div>
 </body>
 </html>
