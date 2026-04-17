@@ -434,14 +434,36 @@ window.resetPatient = function() {
         'chkPalliatif', 'chkAtcdUlcere', 'chkChutes', 'chkDepression',
         'chkIncontinence', 'chkHbp', 'chkConstipation', 'chkDysphagie',
         'chkGlaucome', 'chkStenoseAortique', 'chkAspirineForte',
-        'chkLewy', 'patientFragile'
+        'patientFragile',
+        // Troubles cognitifs & neuropsychocomportementaux (SFGG 2024)
+        'chkDemence', 'chkMci', 'chkPsyPrim', 'chkDelirium', 'chkSommeil',
+        'chkSpcAgitation', 'chkSpcPsychose', 'chkSpcApathie', 'chkSpcDepressionSpc',
+        'chkSpcInsomnie', 'chkSpcDesinhibition', 'chkSpcTca',
+        'chkMbiMotiv', 'chkMbiAffect', 'chkMbiImpuls', 'chkMbiSocial', 'chkMbiIdeat',
+        'chkAnxieteTAG', 'chkPsychoseTardive', 'chkBipolaire', 'chkCatatonie',
+        'chkInsomnie', 'chkTcsp', 'chkSjsr', 'chkSaos'
     ];
     checkboxes.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.checked = false;
     });
 
-    // 4b. Réinitialiser le cache d'analyse
+    // 4a. Radios : démence (cascade) et delirium
+    ['demTypeMA','chkLewy','demTypeDP','demTypeDLFT','demTypeVasc','demTypeMixte'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.checked = false;
+    });
+    const demNP = document.getElementById('demTypeNP'); if (demNP) demNP.checked = true;
+    ['delHyper','delHypo'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.checked = false;
+    });
+    const delMix = document.getElementById('delMixte'); if (delMix) delMix.checked = true;
+
+    // 4b. Masquer toutes les cascades
+    ['cascadeDemence','cascadeMci','cascadePsyPrim','cascadeDelirium','cascadeSommeil'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.style.display = 'none';
+    });
+
+    // 4c. Réinitialiser le cache d'analyse
     if (typeof _lastAnalysisHash !== 'undefined') _lastAnalysisHash = null;
     if (typeof _lastAnalysisResult !== 'undefined') _lastAnalysisResult = null;
     if (typeof window.engineInitialized !== 'undefined') window.engineInitialized = false;

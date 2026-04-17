@@ -403,7 +403,21 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'chkFoie': 'PAT_034', 'chkBrady': 'PAT_035', 'chkTvp': 'PAT_036',
         'chkStent': 'PAT_004', 'chkScaAigu': 'PAT_004', 'chkHtaNonControlee': 'PAT_005',
         'chkIncontinence': 'PAT_039', 'chkDysphagie': 'PAT_038',
-        'chkLewy': 'PAT_040'
+        'chkLewy': 'PAT_040',
+        // Troubles cognitifs & neuropsychocomportementaux (SFGG 2024 SPC)
+        'chkDemence': 'PAT_010',
+        'demTypeMA': 'PAT_011', 'demTypeDP': 'PAT_014', 'demTypeDLFT': 'PAT_013',
+        'demTypeVasc': 'PAT_041', 'demTypeMixte': 'PAT_042',
+        'chkMci': 'PAT_043',
+        'chkAnxieteTAG': 'PAT_044',
+        'chkPsychoseTardive': 'PAT_045',
+        'chkBipolaire': 'PAT_046',
+        'chkCatatonie': 'PAT_047',
+        'chkDelirium': 'PAT_048',
+        'chkInsomnie': 'PAT_049',
+        'chkTcsp': 'PAT_050',
+        'chkSjsr': 'PAT_051',
+        'chkSaos': 'PAT_052'
     };
     for (const [chkId, patCode] of Object.entries(checkboxPatMap)) {
         if (isChecked(chkId) && !activeComorbs.includes(patCode)) {
@@ -445,6 +459,40 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(isChecked('chkArret')) ctxClinique.push("arret_cardiaque");
     if(isChecked('chkLqts')) ctxClinique.push("qt_long_congenital");
 
+    // Troubles cognitifs & neuropsychocomportementaux (SFGG 2024 SPC)
+    if(isChecked('chkDemence')) ctxClinique.push("demence", "trouble_neurocognitif_majeur");
+    if(isChecked('demTypeMA')) ctxClinique.push("alzheimer");
+    if(isChecked('chkLewy')) ctxClinique.push("corps_de_lewy", "dcl");
+    if(isChecked('demTypeDP')) ctxClinique.push("demence_parkinsonienne");
+    if(isChecked('demTypeDLFT')) ctxClinique.push("dlft");
+    if(isChecked('demTypeVasc')) ctxClinique.push("demence_vasculaire");
+    if(isChecked('demTypeMixte')) ctxClinique.push("demence_mixte");
+    if(isChecked('chkSpcAgitation')) ctxClinique.push("spc_agitation", "agitation");
+    if(isChecked('chkSpcPsychose')) ctxClinique.push("spc_psychose", "hallucinations");
+    if(isChecked('chkSpcApathie')) ctxClinique.push("spc_apathie");
+    if(isChecked('chkSpcDepressionSpc')) ctxClinique.push("spc_depression");
+    if(isChecked('chkSpcInsomnie')) ctxClinique.push("spc_insomnie", "inversion_nycthemerale");
+    if(isChecked('chkSpcDesinhibition')) ctxClinique.push("spc_desinhibition", "errance");
+    if(isChecked('chkSpcTca')) ctxClinique.push("spc_tca");
+    if(isChecked('chkMci')) ctxClinique.push("mci", "tnc_leger");
+    if(isChecked('chkMbiMotiv') || isChecked('chkMbiAffect') || isChecked('chkMbiImpuls') || isChecked('chkMbiSocial') || isChecked('chkMbiIdeat')) ctxClinique.push("mbi");
+    if(isChecked('chkPsyPrim')) ctxClinique.push("psy_primaire");
+    if(isChecked('chkAnxieteTAG')) ctxClinique.push("tag", "anxiete_generalisee");
+    if(isChecked('chkPsychoseTardive')) ctxClinique.push("psychose_tardive");
+    if(isChecked('chkBipolaire')) ctxClinique.push("trouble_bipolaire");
+    if(isChecked('chkCatatonie')) ctxClinique.push("catatonie");
+    if(isChecked('chkDelirium')) {
+        ctxClinique.push("delirium", "confusion");
+        if(isChecked('delHyper')) ctxClinique.push("delirium_hyperactif");
+        else if(isChecked('delHypo')) ctxClinique.push("delirium_hypoactif");
+        else ctxClinique.push("delirium_mixte");
+    }
+    if(isChecked('chkSommeil')) ctxClinique.push("trouble_sommeil_primaire");
+    if(isChecked('chkInsomnie')) ctxClinique.push("insomnie_chronique");
+    if(isChecked('chkTcsp')) ctxClinique.push("tcsp");
+    if(isChecked('chkSjsr')) ctxClinique.push("sjsr");
+    if(isChecked('chkSaos')) ctxClinique.push("saos");
+
     return { bioValues, ctxClinique };
 }
 
@@ -473,7 +521,16 @@ function _computeAnalysisHash() {
      'chkBrady','chkHtaNonControlee','chkArret','chkScaAigu','chkLqts','chkDialyse',
      'chkFoie','chkSepsis','chkPalliatif','chkAtcdUlcere','chkChutes','chkDepression',
      'chkIncontinence','chkHbp','chkConstipation','chkDysphagie','chkGlaucome',
-     'chkStenoseAortique','chkAspirineForte','chkLewy'].forEach(id => parts.push(isChecked(id)));
+     'chkStenoseAortique','chkAspirineForte','chkLewy',
+     // Troubles cognitifs & neuropsychocomportementaux
+     'chkDemence','demTypeMA','demTypeDP','demTypeDLFT','demTypeVasc','demTypeMixte',
+     'chkSpcAgitation','chkSpcPsychose','chkSpcApathie','chkSpcDepressionSpc',
+     'chkSpcInsomnie','chkSpcDesinhibition','chkSpcTca',
+     'chkMci','chkMbiMotiv','chkMbiAffect','chkMbiImpuls','chkMbiSocial','chkMbiIdeat',
+     'chkPsyPrim','chkAnxieteTAG','chkPsychoseTardive','chkBipolaire','chkCatatonie',
+     'chkDelirium','delHyper','delHypo','delMixte',
+     'chkSommeil','chkInsomnie','chkTcsp','chkSjsr','chkSaos'
+    ].forEach(id => parts.push(isChecked(id)));
     ['bioTp','bioChlore','bioOsm','bioPrealb'].forEach(id => parts.push(getVal(id)));
     return parts.join('|');
 }

@@ -250,15 +250,77 @@
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkPalliatif"><label class="form-check-label small">Soins palliatifs / Espérance de vie &lt; 1 an</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAtcdUlcere"><label class="form-check-label small">ATCD d'Ulcère ou Saignement digestif</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkChutes"><label class="form-check-label small">Chutes fréquentes</label></div>
-                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDepression"><label class="form-check-label small">Dépression majeure caractérisée</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkIncontinence"><label class="form-check-label small">Incontinence urinaire</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkHbp"><label class="form-check-label small">HBP / Rétention urinaire</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkConstipation"><label class="form-check-label small">Constipation chronique sévère</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDysphagie"><label class="form-check-label small">Dysphagie / Troubles de déglutition</label></div>
-                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkLewy"><label class="form-check-label small">Démence à Corps de Lewy (DCL)</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkGlaucome"><label class="form-check-label small">Glaucome à angle fermé</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkStenoseAortique"><label class="form-check-label small">Sténose aortique serrée symptomatique</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAspirineForte"><label class="form-check-label small">Aspirine &gt; 100 mg/j (Dose élevée)</label></div>
+
+                                <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Troubles cognitifs &amp; neuropsychocomportementaux <small class="text-muted fst-italic">(SFGG 2024 SPC)</small></h6>
+                                <div class="small text-muted fst-italic mb-2">Cochez une catégorie principale ; les sous-options apparaissent en cascade.</div>
+
+                                <!-- 1. Maladie neurocognitive majeure (démence) -->
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDemence" onchange="toggleCascade('chkDemence','cascadeDemence')"><label class="form-check-label small fw-semibold">Maladie neurocognitive majeure (démence)</label></div>
+                                <div id="cascadeDemence" class="ms-3 border-start border-2 border-info ps-2 mt-1 mb-2" style="display:none;">
+                                    <div class="small text-muted mb-1">Type (DSM-5 / HAS) :</div>
+                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeMA" value="MA"><label class="form-check-label small" for="demTypeMA">Maladie d'Alzheimer (MA)</label></div>
+                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="chkLewy" value="DCL"><label class="form-check-label small" for="chkLewy">Démence à corps de Lewy (DCL)</label></div>
+                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeDP" value="DP"><label class="form-check-label small" for="demTypeDP">Démence parkinsonienne</label></div>
+                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeDLFT" value="DLFT"><label class="form-check-label small" for="demTypeDLFT">Dégénérescence lobaire fronto-temporale (DLFT)</label></div>
+                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeVasc" value="VASC"><label class="form-check-label small" for="demTypeVasc">Démence vasculaire</label></div>
+                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeMixte" value="MIXTE"><label class="form-check-label small" for="demTypeMixte">Démence mixte</label></div>
+                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeNP" value="NP" checked><label class="form-check-label small" for="demTypeNP">Non précisée</label></div>
+
+                                    <div class="small text-muted mt-2 mb-1">Symptômes psycho-comportementaux (NPI-C) :</div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSpcAgitation"><label class="form-check-label small">Agitation / agressivité (IPA 2015)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSpcPsychose"><label class="form-check-label small">Idées délirantes / hallucinations</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSpcApathie"><label class="form-check-label small">Apathie</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSpcDepressionSpc"><label class="form-check-label small">Dépression / anxiété associée</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSpcInsomnie"><label class="form-check-label small">Troubles du sommeil / inversion nycthémérale</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSpcDesinhibition"><label class="form-check-label small">Désinhibition / CMA / errance</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSpcTca"><label class="form-check-label small">Troubles du comportement alimentaire</label></div>
+                                </div>
+
+                                <!-- 2. MCI / MBI -->
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkMci" onchange="toggleCascade('chkMci','cascadeMci')"><label class="form-check-label small fw-semibold">Trouble neurocognitif léger (MCI) / MBI</label></div>
+                                <div id="cascadeMci" class="ms-3 border-start border-2 border-info ps-2 mt-1 mb-2" style="display:none;">
+                                    <div class="small text-muted mb-1">MBI-C (symptômes ≥ 6 mois, âge ≥ 50 ans) :</div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkMbiMotiv"><label class="form-check-label small">Baisse de motivation / intérêt</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkMbiAffect"><label class="form-check-label small">Dérégulation affective (anxiété, dysphorie)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkMbiImpuls"><label class="form-check-label small">Impulsivité / dérégulation du contrôle</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkMbiSocial"><label class="form-check-label small">Inadéquation sociale / désinhibition</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkMbiIdeat"><label class="form-check-label small">Idéation / perception anormale (contenu psychotique léger)</label></div>
+                                </div>
+
+                                <!-- 3. Trouble psychiatrique primaire -->
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkPsyPrim" onchange="toggleCascade('chkPsyPrim','cascadePsyPrim')"><label class="form-check-label small fw-semibold">Trouble psychiatrique primaire</label></div>
+                                <div id="cascadePsyPrim" class="ms-3 border-start border-2 border-info ps-2 mt-1 mb-2" style="display:none;">
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDepression"><label class="form-check-label small">Dépression majeure caractérisée (EDM)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAnxieteTAG"><label class="form-check-label small">Trouble anxieux généralisé (TAG)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkPsychoseTardive"><label class="form-check-label small">Psychose tardive (VLOSLP) / schizophrénie tardive</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkBipolaire"><label class="form-check-label small">Trouble bipolaire</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkCatatonie"><label class="form-check-label small">Catatonie</label></div>
+                                </div>
+
+                                <!-- 4. Delirium -->
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDelirium" onchange="toggleCascade('chkDelirium','cascadeDelirium')"><label class="form-check-label small fw-semibold">Syndrome confusionnel (delirium)</label></div>
+                                <div id="cascadeDelirium" class="ms-3 border-start border-2 border-info ps-2 mt-1 mb-2" style="display:none;">
+                                    <div class="small text-muted mb-1">Sous-type (CAM / 4AT) :</div>
+                                    <div class="form-check"><input type="radio" name="delType" class="form-check-input" id="delHyper" value="hyper"><label class="form-check-label small" for="delHyper">Hyperactif</label></div>
+                                    <div class="form-check"><input type="radio" name="delType" class="form-check-input" id="delHypo" value="hypo"><label class="form-check-label small" for="delHypo">Hypoactif</label></div>
+                                    <div class="form-check"><input type="radio" name="delType" class="form-check-input" id="delMixte" value="mixte" checked><label class="form-check-label small" for="delMixte">Mixte / non précisé</label></div>
+                                </div>
+
+                                <!-- 5. Trouble du sommeil primaire -->
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSommeil" onchange="toggleCascade('chkSommeil','cascadeSommeil')"><label class="form-check-label small fw-semibold">Trouble du sommeil primaire</label></div>
+                                <div id="cascadeSommeil" class="ms-3 border-start border-2 border-info ps-2 mt-1 mb-2" style="display:none;">
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkInsomnie"><label class="form-check-label small">Insomnie chronique</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTcsp"><label class="form-check-label small">Trouble comportemental du sommeil paradoxal (TCSP)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSjsr"><label class="form-check-label small">Syndrome des jambes sans repos (SJSR)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSaos"><label class="form-check-label small">Syndrome d'apnées obstructives du sommeil (SAOS)</label></div>
+                                </div>
 
                             </div>
                         </div>

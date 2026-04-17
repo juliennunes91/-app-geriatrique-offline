@@ -510,15 +510,73 @@
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkPalliatif" class="accent-secondary"><span>Soins palliatifs / Espérance de vie &lt; 1 an</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAtcdUlcere" class="accent-secondary"><span>ATCD d'Ulcère ou Saignement digestif</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkChutes" class="accent-secondary"><span>Chutes fréquentes</span></label>
-                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkDepression" class="accent-secondary"><span>Dépression majeure caractérisée</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkIncontinence" class="accent-secondary"><span>Incontinence urinaire</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkHbp" class="accent-secondary"><span>HBP / Rétention urinaire</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkConstipation" class="accent-secondary"><span>Constipation chronique sévère</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkDysphagie" class="accent-secondary"><span>Dysphagie / Troubles de déglutition</span></label>
-                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkLewy" class="accent-secondary"><span>Démence à Corps de Lewy (DCL)</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkGlaucome" class="accent-secondary"><span>Glaucome à angle fermé</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkStenoseAortique" class="accent-secondary"><span>Sténose aortique serrée symptomatique</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAspirineForte" class="accent-secondary"><span>Aspirine &gt; 100 mg/j (Dose élevée)</span></label>
+                        </div>
+
+                        <p class="text-[10px] font-bold text-secondary mb-1 mt-3">Troubles cognitifs &amp; neuropsychocomportementaux <span class="opacity-60 font-normal italic">(SFGG 2024 SPC)</span></p>
+                        <p class="text-[10px] text-on-surface-variant/70 italic mb-2">Cochez une catégorie principale ; les sous-options apparaissent en cascade.</p>
+                        <div class="space-y-1">
+                            <!-- 1. Démence -->
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer font-semibold"><input type="checkbox" id="chkDemence" class="accent-secondary" onchange="toggleCascade('chkDemence','cascadeDemence')"><span>Maladie neurocognitive majeure (démence)</span></label>
+                            <div id="cascadeDemence" class="ml-4 border-l-2 border-info/40 pl-2 mt-1 mb-1 space-y-1" style="display:none;">
+                                <p class="text-[10px] text-on-surface-variant/70 mb-0.5">Type (DSM-5 / HAS) :</p>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeMA" value="MA" class="accent-secondary"><span>Maladie d'Alzheimer (MA)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="chkLewy" value="DCL" class="accent-secondary"><span>Démence à corps de Lewy (DCL)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeDP" value="DP" class="accent-secondary"><span>Démence parkinsonienne</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeDLFT" value="DLFT" class="accent-secondary"><span>Dégénérescence lobaire fronto-temporale (DLFT)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeVasc" value="VASC" class="accent-secondary"><span>Démence vasculaire</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeMixte" value="MIXTE" class="accent-secondary"><span>Démence mixte</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeNP" value="NP" class="accent-secondary" checked><span>Non précisée</span></label>
+                                <p class="text-[10px] text-on-surface-variant/70 mt-1 mb-0.5">Symptômes psycho-comportementaux (NPI-C) :</p>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSpcAgitation" class="accent-secondary"><span>Agitation / agressivité (IPA 2015)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSpcPsychose" class="accent-secondary"><span>Idées délirantes / hallucinations</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSpcApathie" class="accent-secondary"><span>Apathie</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSpcDepressionSpc" class="accent-secondary"><span>Dépression / anxiété associée</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSpcInsomnie" class="accent-secondary"><span>Troubles du sommeil / inversion nycthémérale</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSpcDesinhibition" class="accent-secondary"><span>Désinhibition / CMA / errance</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSpcTca" class="accent-secondary"><span>Troubles du comportement alimentaire</span></label>
+                            </div>
+                            <!-- 2. MCI / MBI -->
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer font-semibold"><input type="checkbox" id="chkMci" class="accent-secondary" onchange="toggleCascade('chkMci','cascadeMci')"><span>Trouble neurocognitif léger (MCI) / MBI</span></label>
+                            <div id="cascadeMci" class="ml-4 border-l-2 border-info/40 pl-2 mt-1 mb-1 space-y-1" style="display:none;">
+                                <p class="text-[10px] text-on-surface-variant/70 mb-0.5">MBI-C (symptômes ≥ 6 mois, âge ≥ 50 ans) :</p>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkMbiMotiv" class="accent-secondary"><span>Baisse de motivation / intérêt</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkMbiAffect" class="accent-secondary"><span>Dérégulation affective (anxiété, dysphorie)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkMbiImpuls" class="accent-secondary"><span>Impulsivité / dérégulation du contrôle</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkMbiSocial" class="accent-secondary"><span>Inadéquation sociale / désinhibition</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkMbiIdeat" class="accent-secondary"><span>Idéation / perception anormale (contenu psychotique léger)</span></label>
+                            </div>
+                            <!-- 3. Psy primaire -->
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer font-semibold"><input type="checkbox" id="chkPsyPrim" class="accent-secondary" onchange="toggleCascade('chkPsyPrim','cascadePsyPrim')"><span>Trouble psychiatrique primaire</span></label>
+                            <div id="cascadePsyPrim" class="ml-4 border-l-2 border-info/40 pl-2 mt-1 mb-1 space-y-1" style="display:none;">
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkDepression" class="accent-secondary"><span>Dépression majeure caractérisée (EDM)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAnxieteTAG" class="accent-secondary"><span>Trouble anxieux généralisé (TAG)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkPsychoseTardive" class="accent-secondary"><span>Psychose tardive (VLOSLP) / schizophrénie tardive</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkBipolaire" class="accent-secondary"><span>Trouble bipolaire</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkCatatonie" class="accent-secondary"><span>Catatonie</span></label>
+                            </div>
+                            <!-- 4. Delirium -->
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer font-semibold"><input type="checkbox" id="chkDelirium" class="accent-secondary" onchange="toggleCascade('chkDelirium','cascadeDelirium')"><span>Syndrome confusionnel (delirium)</span></label>
+                            <div id="cascadeDelirium" class="ml-4 border-l-2 border-info/40 pl-2 mt-1 mb-1 space-y-1" style="display:none;">
+                                <p class="text-[10px] text-on-surface-variant/70 mb-0.5">Sous-type (CAM / 4AT) :</p>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="delType" id="delHyper" value="hyper" class="accent-secondary"><span>Hyperactif</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="delType" id="delHypo" value="hypo" class="accent-secondary"><span>Hypoactif</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="delType" id="delMixte" value="mixte" class="accent-secondary" checked><span>Mixte / non précisé</span></label>
+                            </div>
+                            <!-- 5. Sommeil primaire -->
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer font-semibold"><input type="checkbox" id="chkSommeil" class="accent-secondary" onchange="toggleCascade('chkSommeil','cascadeSommeil')"><span>Trouble du sommeil primaire</span></label>
+                            <div id="cascadeSommeil" class="ml-4 border-l-2 border-info/40 pl-2 mt-1 mb-1 space-y-1" style="display:none;">
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkInsomnie" class="accent-secondary"><span>Insomnie chronique</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTcsp" class="accent-secondary"><span>Trouble comportemental du sommeil paradoxal (TCSP)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSjsr" class="accent-secondary"><span>Syndrome des jambes sans repos (SJSR)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSaos" class="accent-secondary"><span>Syndrome d'apnées obstructives du sommeil (SAOS)</span></label>
+                            </div>
                         </div>
                     </div>
                 </div>

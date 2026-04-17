@@ -2831,6 +2831,346 @@ const PATHOLOGY_RULES_DB = {
             SURVEILLANCE_CIBLE: [],
             REGLES: []
         }
+    },
+    "PAT_041": {
+        ID: "PAT_041",
+        NOM: "Démence vasculaire",
+        REFERENCE: "HAS 2018 MNC | O'Brien Lancet Neurol 2015 | ESH/ESC 2023",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Contrôle FDRCV": "HAS 2018 — pilier du traitement",
+                "Donépézil": "HAS 2018 — bénéfice modeste (grade B)",
+                "Galantamine": "HAS 2018 — démence vasculaire + composante Alzheimer"
+            },
+            "EVITER": {
+                "Antipsychotiques": "Surmortalité CV démontrée (Schneider 2005)"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Contrôle strict des FDRCV (HTA cible <140/90 adapté à la fragilité, LDL, diabète, AVK/AOD si FA, antiagrégation). IAChE bénéfice modeste." }
+            ],
+            INITIER: [
+                { classe: "Donépézil (5-10 mg/j)", indication: "Bénéfice cognitif modeste", niveau_preuve: "B" },
+                { classe: "Galantamine (16-24 mg/j LP)", indication: "Formes mixtes vasculaire + Alzheimer", niveau_preuve: "B" },
+                { classe: "Antihypertenseurs", indication: "Cible TA selon CFS/fragilité (SPRINT-MIND vs fragilité)", niveau_preuve: "A" },
+                { classe: "Statine", indication: "Prévention secondaire post-AVC", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Antipsychotiques au long cours", raison: "↑ mortalité CV et AVC (Schneider 2005, FDA black box)", gravite: "DECONSEILLE", ref_stopp: "STOPP K1" },
+                { classe: "Benzodiazépines au long cours", raison: "Chutes, aggravation cognitive", gravite: "DECONSEILLE", ref_stopp: "STOPP B7" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [], REGLES: [] }
+    },
+    "PAT_042": {
+        ID: "PAT_042",
+        NOM: "Démence mixte (Alzheimer + vasculaire)",
+        REFERENCE: "HAS 2018 | Kalaria Lancet Neurol 2016",
+        SOURCES_EBM: {
+            "INITIER": {
+                "IAChE": "HAS 2018 — indication MA + vasculaire",
+                "Mémantine": "HAS 2018 — stade modéré à sévère"
+            },
+            "EVITER": { "Antipsychotiques": "Schneider 2005" }
+        },
+        TRAITEMENTS: {
+            INITIER: [
+                { classe: "Donépézil / Galantamine / Rivastigmine", indication: "Stade léger à modéré (MMSE 10-26)", niveau_preuve: "B" },
+                { classe: "Mémantine (5-20 mg/j)", indication: "Stade modéré à sévère (MMSE ≤ 19)", niveau_preuve: "B" },
+                { classe: "Contrôle FDRCV (HTA, LDL, diabète, AAP/AOD)", indication: "Prévention aggravation vasculaire", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Antipsychotiques au long cours", raison: "↑ mortalité CV et AVC", gravite: "DECONSEILLE", ref_stopp: "STOPP K1" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [], REGLES: [] }
+    },
+    "PAT_043": {
+        ID: "PAT_043",
+        NOM: "Trouble neurocognitif léger (MCI) / MBI",
+        REFERENCE: "Petersen Neurology 2018 | Ismail MBI-C 2017 | SFGG 2024",
+        SOURCES_EBM: {
+            "INITIER": { "Intervention non médicamenteuse": "Petersen 2018 — activité physique aérobie (niveau B)" },
+            "EVITER": { "IAChE dans MCI": "Petersen 2018 — absence de bénéfice démontré, non recommandé hors essai" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "MCI : pas d'indication aux IAChE (HAS/AAN). MBI = marqueur de risque de conversion vers démence, justifie surveillance rapprochée." }
+            ],
+            INITIER: [
+                { classe: "Activité physique aérobie régulière", indication: "Réduction du risque de conversion", niveau_preuve: "B" },
+                { classe: "Stimulation cognitive", indication: "Bénéfice fonctionnel", niveau_preuve: "C" },
+                { classe: "Correction des facteurs modifiables (sommeil, audition, dépression, polymédication)", indication: "Prévention", niveau_preuve: "B" }
+            ],
+            EVITER: [
+                { classe: "IAChE et Mémantine", raison: "Aucun bénéfice démontré dans le MCI (Petersen 2018)", gravite: "DECONSEILLE" },
+                { classe: "Anticholinergiques (score ACB ≥ 2)", raison: "Aggravation cognitive documentée", gravite: "EVITER" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [], REGLES: [] }
+    },
+    "PAT_044": {
+        ID: "PAT_044",
+        NOM: "Trouble anxieux généralisé (TAG) du sujet âgé",
+        REFERENCE: "WFSBP 2023 | APA 2020 | SFGG 2024",
+        SOURCES_EBM: {
+            "INITIER": {
+                "ISRS (escitalopram, sertraline)": "WFSBP 2023 — 1ère intention",
+                "IRSN (duloxétine, venlafaxine)": "WFSBP 2023 — 2e intention",
+                "TCC": "APA 2020 — 1ère intention non médicamenteuse"
+            },
+            "EVITER": { "Benzodiazépines au long cours": "STOPP B7 — chutes, dépendance, troubles cognitifs" }
+        },
+        TRAITEMENTS: {
+            INITIER: [
+                { classe: "Escitalopram (5-10 mg/j)", indication: "1ère intention", titration: "Démarrer 5 mg, augmenter à 4 semaines", surveillance_cardiaque: "QTc (dose max 10 mg chez > 65 ans)", niveau_preuve: "A" },
+                { classe: "Sertraline (25-100 mg/j)", indication: "Alternative ISRS (profil QT favorable)", niveau_preuve: "A" },
+                { classe: "Duloxétine (30-60 mg/j)", indication: "TAG + douleur neuropathique", niveau_preuve: "A" },
+                { classe: "Buspirone (10-30 mg/j)", indication: "Alternative non sédative", niveau_preuve: "B" },
+                { classe: "TCC / relaxation", indication: "1ère ligne avant pharmaco", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Benzodiazépines > 4 semaines", raison: "Chutes, dépendance, aggravation cognitive", gravite: "DECONSEILLE", ref_stopp: "STOPP B7" },
+                { classe: "Hydroxyzine au long cours", raison: "Anticholinergique + QT long", gravite: "EVITER" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Natrémie", cible: ">135", note: "Risque SIADH sous ISRS/IRSN"}], REGLES: [] }
+    },
+    "PAT_045": {
+        ID: "PAT_045",
+        NOM: "Psychose tardive (VLOSLP) / schizophrénie tardive",
+        REFERENCE: "Howard Lancet Psychiatry 2018 | SFGG 2024 | Reinhardt & Cohen AJGP 2015",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Antipsychotiques atypiques à faible dose": "Howard 2018 — rispéridone, aripiprazole, olanzapine",
+                "Évaluation cause secondaire": "SFGG 2024 — démence, iatrogène, sensoriel, somatique"
+            },
+            "EVITER": {
+                "Halopéridol à dose non gériatrique": "Effets extrapyramidaux majeurs",
+                "Clozapine en 1ère intention": "Risque agranulocytose, hypotension"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Éliminer une cause organique (delirium, démence, iatrogène, sensorielle). Dose ≤ 1/4 de la dose adulte. Titration très lente (« start low, go slow »)." }
+            ],
+            INITIER: [
+                { classe: "Rispéridone (0.25-2 mg/j)", indication: "1ère intention — psychose non-DCL", surveillance_cardiaque: "QTc, TA", niveau_preuve: "B" },
+                { classe: "Aripiprazole (2-10 mg/j)", indication: "Profil métabolique favorable", niveau_preuve: "B" },
+                { classe: "Olanzapine (2.5-7.5 mg/j)", indication: "Si sédation recherchée, attention au syndrome métabolique", niveau_preuve: "B" },
+                { classe: "Quétiapine (12.5-100 mg/j)", indication: "DCL/Parkinson associé", niveau_preuve: "C" }
+            ],
+            EVITER: [
+                { classe: "Halopéridol > 1 mg/j", raison: "Effets extrapyramidaux, QT long, sédation", gravite: "EVITER" },
+                { classe: "Chlorpromazine", raison: "Anticholinergique, hypotension orthostatique, QT", gravite: "EVITER" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Glycémie / HbA1c / bilan lipidique", cible: "Baseline + 3 mois", note: "Syndrome métabolique sous AP atypiques"}], REGLES: [] }
+    },
+    "PAT_046": {
+        ID: "PAT_046",
+        NOM: "Trouble bipolaire du sujet âgé",
+        REFERENCE: "CANMAT 2018 | Sajatovic AJGP 2015 | SFGG 2024",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Lithium (0.4-0.8 mmol/L cible sujet âgé)": "CANMAT 2018 — 1ère ligne",
+                "Valproate": "CANMAT 2018 — alternative",
+                "Lamotrigine": "CANMAT 2018 — dépression bipolaire"
+            },
+            "EVITER": { "Carbamazépine": "Inducteur enzymatique, hyponatrémie, interactions ++" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Lithiémie cible 0.4-0.8 mmol/L chez le sujet âgé (vs 0.6-1.0 chez adulte). Surveillance rénale et thyroïdienne trimestrielle." }
+            ],
+            INITIER: [
+                { classe: "Lithium", indication: "Maintien, efficacité anti-suicide", titration: "150-300 mg/j initial, dosage à J5", bio_suivi: "Lithiémie, créatinine, TSH, Ca++", niveau_preuve: "A" },
+                { classe: "Valproate (500-1500 mg/j)", indication: "Manie mixte ou CI au lithium", bio_suivi: "NFS, ASAT/ALAT, ammoniémie si confusion", niveau_preuve: "B" },
+                { classe: "Lamotrigine (25-200 mg/j)", indication: "Dépression bipolaire, maintien", titration: "Très lente (risque Stevens-Johnson)", niveau_preuve: "A" },
+                { classe: "Quétiapine (50-300 mg/j)", indication: "Manie ou dépression bipolaire", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Antidépresseurs en monothérapie", raison: "Risque de virage maniaque", gravite: "DECONSEILLE" },
+                { classe: "Carbamazépine", raison: "Inducteur enzymatique puissant, SIADH, interactions multiples", gravite: "EVITER" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Lithiémie", cible: "0.4-0.8 mmol/L", note: "Tous les 3 mois en phase stable"}, {param: "DFG, TSH", cible: "Tous les 6 mois", note: "Toxicité rénale et hypothyroïdie"}], REGLES: [] }
+    },
+    "PAT_047": {
+        ID: "PAT_047",
+        NOM: "Catatonie",
+        REFERENCE: "Rasmussen Neuropsychobiology 2016 | Sienaert BMC Psychiatry 2014",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Lorazépam test (1-2 mg IV/IM)": "Rasmussen 2016 — test diagnostique et thérapeutique",
+                "ECT": "Sienaert 2014 — catatonie sévère/maligne, réponse rapide"
+            },
+            "EVITER": { "Antipsychotiques typiques": "Risque de syndrome malin (SNM) et aggravation" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Urgence diagnostique (Bush-Francis Catatonia Rating Scale). Arrêter tout antipsychotique suspect. Lorazépam test en 1ère intention." }
+            ],
+            INITIER: [
+                { classe: "Lorazépam (1-2 mg IV/IM, répétable)", indication: "Test diagnostique puis traitement", niveau_preuve: "A" },
+                { classe: "ECT", indication: "Catatonie maligne, échec lorazépam à 48-72h", niveau_preuve: "A" },
+                { classe: "Support symptomatique (hydratation, prévention MTEV, nutrition)", indication: "Systématique", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Antipsychotiques typiques", raison: "Syndrome malin des neuroleptiques, aggravation catatonie", gravite: "CONTRE-INDICATION" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "CPK, Na, K, créatinine, température", cible: "Quotidien en phase aiguë", note: "Dépister catatonie maligne (CPK↑, hyperthermie, rhabdomyolyse)"}], REGLES: [] }
+    },
+    "PAT_048": {
+        ID: "PAT_048",
+        NOM: "Syndrome confusionnel (delirium)",
+        REFERENCE: "HAS 2009 confusion âgée | NICE CG103 2023 | SFGG 2024",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Mesures non pharmacologiques (HELP)": "NICE 2023 — 1ère intention",
+                "Halopéridol faible dose": "NICE 2023 — agitation sévère uniquement, dernier recours"
+            },
+            "EVITER": {
+                "Benzodiazépines sauf sevrage OH/BZD": "Aggravent le delirium",
+                "Anticholinergiques": "Précipitent et aggravent le delirium"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Chercher et traiter la cause (iatrogène, infection, globe, fécalome, douleur, sevrage, AVC, désordre métabolique). Mesures non pharmacologiques en 1ère intention. Pas d'antipsychotique prophylactique." }
+            ],
+            INITIER: [
+                { classe: "Mesures HELP (réorientation, hydratation, mobilisation, appareillage sensoriel, sommeil)", indication: "1ère intention", niveau_preuve: "A" },
+                { classe: "Halopéridol (0.25-0.5 mg PO/IM, max 2 mg/24h)", indication: "Agitation sévère avec danger, après échec non-pharmaco", surveillance_cardiaque: "QTc, pas si Parkinson/DCL", niveau_preuve: "B" },
+                { classe: "Rispéridone (0.25-0.5 mg) ou Olanzapine (2.5-5 mg)", indication: "Alternative à halopéridol", niveau_preuve: "C" },
+                { classe: "Quétiapine (12.5-25 mg)", indication: "Delirium sur DCL/Parkinson", niveau_preuve: "C" }
+            ],
+            EVITER: [
+                { classe: "Benzodiazépines (sauf sevrage OH/BZD)", raison: "Aggravent le delirium, sédation paradoxale", gravite: "EVITER", ref_stopp: "STOPP B7" },
+                { classe: "Anticholinergiques (score ACB ≥ 2)", raison: "Précipitent le delirium", gravite: "EVITER" },
+                { classe: "Contention physique au long cours", raison: "Aggrave agitation, risque de blessure", gravite: "EVITER" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Ionogramme, créatinine, glycémie, CRP, NFS, BU, ECG", cible: "Bilan étiologique initial", note: ""}], REGLES: [] }
+    },
+    "PAT_049": {
+        ID: "PAT_049",
+        NOM: "Insomnie chronique du sujet âgé",
+        REFERENCE: "AASM 2021 | HAS 2006 sommeil | SFGG 2024",
+        SOURCES_EBM: {
+            "INITIER": {
+                "TCC-I": "AASM 2021 — 1ère intention",
+                "Mélatonine LP (2 mg)": "AASM 2021 — ≥55 ans, 1-2h avant coucher"
+            },
+            "EVITER": { "BZD et apparentés (zopiclone, zolpidem)": "STOPP B7 — chutes, dépendance" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "TCC-I = gold standard. Éviter hypnotiques BZD/apparentés au long cours (max 4 semaines si indispensable)." }
+            ],
+            INITIER: [
+                { classe: "TCC-I", indication: "1ère ligne", niveau_preuve: "A" },
+                { classe: "Hygiène du sommeil", indication: "Systématique", niveau_preuve: "A" },
+                { classe: "Mélatonine LP (2 mg)", indication: "≥ 55 ans, max 13 semaines", niveau_preuve: "B" },
+                { classe: "Daridorexant (25-50 mg)", indication: "Antagoniste orexines — alternative", niveau_preuve: "B" }
+            ],
+            EVITER: [
+                { classe: "Zopiclone / Zolpidem > 4 semaines", raison: "Chutes, dépendance, troubles mnésiques", gravite: "DECONSEILLE", ref_stopp: "STOPP B7" },
+                { classe: "BZD à demi-vie longue (diazépam, flunitrazépam)", raison: "Accumulation, chutes", gravite: "EVITER", ref_stopp: "STOPP B1" },
+                { classe: "Antihistaminiques H1 (hydroxyzine, doxylamine)", raison: "Anticholinergiques, sédation résiduelle", gravite: "EVITER", ref_beers: "Beers 2023" },
+                { classe: "Trazodone > 50 mg en 1ère intention", raison: "Preuves faibles au long cours", gravite: "PRUDENCE" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [], REGLES: [] }
+    },
+    "PAT_050": {
+        ID: "PAT_050",
+        NOM: "Trouble comportemental en sommeil paradoxal (TCSP)",
+        REFERENCE: "AASM 2023 RBD | Schenck Sleep 2013 | SFGG 2024",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Mélatonine LI (3-12 mg)": "AASM 2023 — 1ère intention (sécurité supérieure au clonazépam)",
+                "Clonazépam (0.25-0.5 mg)": "AASM 2023 — 2e intention"
+            },
+            "EVITER": { "Antidépresseurs sérotoninergiques (ISRS, IRSN, TCA)": "Peuvent induire/aggraver TCSP" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Sécuriser la chambre (matelas au sol, dégager objets). Prodrome fréquent de synucléinopathie (Parkinson, DCL) — surveillance neurologique." }
+            ],
+            INITIER: [
+                { classe: "Mélatonine LI à forte dose (3-12 mg au coucher)", indication: "1ère intention", niveau_preuve: "B" },
+                { classe: "Clonazépam (0.25-0.5 mg au coucher, max 1 mg)", indication: "2e intention — attention chutes, confusion", niveau_preuve: "B" },
+                { classe: "Aménagement de la chambre", indication: "Systématique", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "ISRS/IRSN/TCA (sauf indication psychiatrique forte)", raison: "Induisent ou aggravent le TCSP", gravite: "PRUDENCE" },
+                { classe: "Bêta-bloquants", raison: "Peuvent aggraver les troubles du sommeil", gravite: "PRUDENCE" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [], REGLES: [] }
+    },
+    "PAT_051": {
+        ID: "PAT_051",
+        NOM: "Syndrome des jambes sans repos (SJSR)",
+        REFERENCE: "AASM 2024 RLS | EFNS 2012 | SFGG 2024",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Bilan martial (ferritine, coefficient saturation)": "AASM 2024 — cible ferritine > 75 ng/mL",
+                "Gabapentine / Gabapentin énacarbil": "AASM 2024 — 1ère intention sujet âgé",
+                "Ropinirole / Pramipexole faible dose": "AASM 2024 — alternative (risque d'augmentation)"
+            },
+            "EVITER": {
+                "Antidopaminergiques (métoclopramide, antipsychotiques)": "Aggravent le SJSR",
+                "Antidépresseurs sérotoninergiques": "Peuvent aggraver (sauf bupropion)"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Corriger carence martiale (ferritine < 75 → fer PO/IV). Éviter agonistes dopaminergiques en 1ère intention (augmentation paradoxale)." }
+            ],
+            INITIER: [
+                { classe: "Fer oral ou IV si ferritine < 75 ng/mL", indication: "1ère intention étiologique", niveau_preuve: "A" },
+                { classe: "Gabapentine (300-900 mg au coucher)", indication: "1ère intention pharmaco chez sujet âgé", niveau_preuve: "A" },
+                { classe: "Prégabaline (75-300 mg)", indication: "Alternative gabapentinoïde", niveau_preuve: "A" },
+                { classe: "Ropinirole (0.25-1 mg) / Pramipexole (0.125-0.5 mg)", indication: "Échec gabapentinoïdes — surveiller augmentation", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Métoclopramide, antipsychotiques", raison: "Antidopaminergiques — aggravation SJSR", gravite: "EVITER" },
+                { classe: "ISRS/IRSN (sauf bupropion)", raison: "Peuvent aggraver le SJSR", gravite: "PRUDENCE" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Ferritine", cible: "> 75 ng/mL", note: "Carence martiale fréquente et curable"}, {param: "Coefficient saturation transferrine", cible: "> 20%", note: ""}], REGLES: [] }
+    },
+    "PAT_052": {
+        ID: "PAT_052",
+        NOM: "Syndrome d'apnées obstructives du sommeil (SAOS)",
+        REFERENCE: "ERS/ESC 2023 | HAS 2014 SAOS | SFGG 2024",
+        SOURCES_EBM: {
+            "INITIER": {
+                "PPC": "HAS 2014 — 1ère intention si IAH ≥ 30 ou IAH 15-30 symptomatique",
+                "Règles hygiéno-diététiques (poids, OH, décubitus)": "HAS 2014"
+            },
+            "EVITER": { "Hypnotiques (BZD, opioïdes)": "Aggravent le SAOS" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Dépister devant ronflements, somnolence, HTA résistante, FA, hypoxie nocturne. PPC + règles hygiéno-diététiques. Éviter sédatifs." }
+            ],
+            INITIER: [
+                { classe: "PPC nocturne", indication: "IAH ≥ 30 ou IAH 15-30 avec comorbidités CV/somnolence", niveau_preuve: "A" },
+                { classe: "Orthèse d'avancée mandibulaire", indication: "SAOS léger/modéré ou intolérance PPC", niveau_preuve: "B" },
+                { classe: "Perte de poids, arrêt OH, décubitus latéral", indication: "Systématique", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Benzodiazépines, zopiclone, zolpidem", raison: "Aggravent obstruction pharyngée et hypoxie", gravite: "EVITER", ref_stopp: "STOPP B7" },
+                { classe: "Opioïdes au long cours", raison: "Dépression respiratoire centrale", gravite: "PRUDENCE" },
+                { classe: "Alcool vespéral", raison: "Aggrave obstruction et désaturations", gravite: "EVITER" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "TA, glycémie, FA/rythme", cible: "Comorbidités CV associées", note: ""}], REGLES: [] }
     }
 };
 
@@ -2874,7 +3214,19 @@ const PATHO_SYNDROME_MAP = {
     "PAT_037": ["SYND_033", "SYND_025"],
     "PAT_038": ["SYND_033"],
     "PAT_039": [],
-    "PAT_040": []
+    "PAT_040": [],
+    "PAT_041": ["SYND_013", "SYND_027", "SYND_009"],
+    "PAT_042": ["SYND_013", "SYND_009"],
+    "PAT_043": ["SYND_013"],
+    "PAT_044": ["SYND_004", "SYND_013"],
+    "PAT_045": ["SYND_013", "SYND_004"],
+    "PAT_046": ["SYND_004", "SYND_013"],
+    "PAT_047": ["SYND_013", "SYND_033"],
+    "PAT_048": ["SYND_013", "SYND_009"],
+    "PAT_049": ["SYND_013", "SYND_009"],
+    "PAT_050": ["SYND_009", "SYND_013"],
+    "PAT_051": ["SYND_009"],
+    "PAT_052": ["SYND_009", "SYND_003"]
 };
 
 const PATHO_MED_INTERDITS = {

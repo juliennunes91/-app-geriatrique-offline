@@ -36,3 +36,12 @@ const getVal = id => {
 };
 const getStr = id => { let el = document.getElementById(id); return el ? el.value : ""; };
 const isChecked = id => { let el = document.getElementById(id); return el ? el.checked : false; };
+
+// Affiche/cache un conteneur de sous-options en fonction de l'état d'une checkbox parente.
+// Utilisé par la rubrique « Troubles cognitifs & neuropsychocomportementaux » (SFGG 2024).
+window.toggleCascade = function(parentId, containerId) {
+    const parent = document.getElementById(parentId);
+    const container = document.getElementById(containerId);
+    if (!parent || !container) return;
+    container.style.display = parent.checked ? '' : 'none';
+};
