@@ -224,6 +224,7 @@ function buildSyntheseText() {
  * Construit un élément HTML formaté pour l'export PDF (1 page, compact).
  */
 function buildPdfContent() {
+    const reg = window._analysisRegistry;
     const nom = document.getElementById('patientNom')?.value || '';
     const age = document.getElementById('patientAge')?.value || '—';
     const sexe = document.getElementById('patientSexe')?.value || '';
@@ -355,19 +356,32 @@ function buildPdfContent() {
  * Exporte la synthèse en PDF via html2pdf.js (1 page A4).
  */
 window.exporterPDF = function() {
-    const content = document.createElement('div');
-    content.innerHTML = buildPdfContent();
+    if (typeof html2pdf === 'undefined') {
+        GeriaLog.error('html2pdf non chargé');
+        alert('Erreur : bibliothèque PDF non chargée. Recharge la page.');
+        return;
+    }
+    try {
+        const content = document.createElement('div');
+        content.innerHTML = buildPdfContent();
 
-    const opt = {
-        margin: [5, 5, 5, 5],
-        filename: 'GeriaAssist_' + (document.getElementById('patientNom')?.value || 'Patient').replace(/[^a-zA-Z0-9àâäéèêëïîôùûüÿçÀÂÄÉÈÊËÏÎÔÙÛÜŸÇ_ -]/g, '') + '_' + new Date().toISOString().slice(0, 10) + '.pdf',
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all'] }
-    };
+        const opt = {
+            margin: [5, 5, 5, 5],
+            filename: 'GeriaAssist_' + (document.getElementById('patientNom')?.value || 'Patient').replace(/[^a-zA-Z0-9àâäéèêëïîôùûüÿçÀÂÄÉÈÊËÏÎÔÙÛÜŸÇ_ -]/g, '') + '_' + new Date().toISOString().slice(0, 10) + '.pdf',
+            image: { type: 'jpeg', quality: 0.95 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all'] }
+        };
 
-    html2pdf().set(opt).from(content).save();
+        html2pdf().set(opt).from(content).save().catch(err => {
+            GeriaLog.error('Échec export PDF:', err);
+            alert('Échec de l\'export PDF : ' + (err && err.message ? err.message : err));
+        });
+    } catch (err) {
+        GeriaLog.error('Échec export PDF:', err);
+        alert('Échec de l\'export PDF : ' + (err && err.message ? err.message : err));
+    }
 };
 
 /**
