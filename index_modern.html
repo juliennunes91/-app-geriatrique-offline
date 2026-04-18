@@ -535,14 +535,14 @@
                             <!-- 1. Démence -->
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer font-semibold"><input type="checkbox" id="chkDemence" class="accent-secondary" onchange="toggleCascade('chkDemence','cascadeDemence')"><span>Maladie neurocognitive majeure (démence)</span></label>
                             <div id="cascadeDemence" class="ml-4 border-l-2 border-info/40 pl-2 mt-1 mb-1 space-y-1" style="display:none;">
-                                <p class="text-[10px] text-on-surface-variant/70 mb-0.5">Type (DSM-5 / HAS) :</p>
-                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeMA" value="MA" class="accent-secondary"><span>Maladie d'Alzheimer (MA)</span></label>
-                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="chkLewy" value="DCL" class="accent-secondary"><span>Démence à corps de Lewy (DCL)</span></label>
-                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeDP" value="DP" class="accent-secondary"><span>Démence parkinsonienne</span></label>
-                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeDLFT" value="DLFT" class="accent-secondary"><span>Dégénérescence lobaire fronto-temporale (DLFT)</span></label>
-                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeVasc" value="VASC" class="accent-secondary"><span>Démence vasculaire</span></label>
-                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeMixte" value="MIXTE" class="accent-secondary"><span>Démence mixte</span></label>
-                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="radio" name="demType" id="demTypeNP" value="NP" class="accent-secondary" checked><span>Non précisée</span></label>
+                                <p class="text-[10px] text-on-surface-variant/70 mb-0.5">Type (DSM-5 / HAS) — <em>sélection multiple possible (ex : Lewy + vasculaire)</em> :</p>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="demTypeMA" value="MA" class="accent-secondary"><span>Maladie d'Alzheimer (MA)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkLewy" value="DCL" class="accent-secondary"><span>Démence à corps de Lewy (DCL)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="demTypeDP" value="DP" class="accent-secondary"><span>Démence parkinsonienne</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="demTypeDLFT" value="DLFT" class="accent-secondary"><span>Dégénérescence lobaire fronto-temporale (DLFT)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="demTypeVasc" value="VASC" class="accent-secondary"><span>Démence vasculaire</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="demTypeMixte" value="MIXTE" class="accent-secondary"><span>Démence mixte (Alzheimer + vasculaire)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="demTypeNP" value="NP" class="accent-secondary"><span>Non précisée</span></label>
                                 <p class="text-[10px] text-on-surface-variant/70 mt-1 mb-0.5">Symptômes psycho-comportementaux (NPI-C) :</p>
                                 <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSpcAgitation" class="accent-secondary"><span>Agitation / agressivité (IPA 2015)</span></label>
                                 <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSpcPsychose" class="accent-secondary"><span>Idées délirantes / hallucinations</span></label>

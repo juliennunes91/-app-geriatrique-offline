@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.55 (rubrique SPC SFGG 2024 + PAT_041-052 + nouveaux médicaments)
+// Service Worker - GeriaAssist v0.56 (bugfixes : titre multi-thérapie, PDF, déprescription, démence multi-type)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260417-spc';
-const CACHE_NAME = `geriaassist-v55-${BUILD_ID}`;
+const BUILD_ID = '20260418-bugfixes';
+const CACHE_NAME = `geriaassist-v56-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

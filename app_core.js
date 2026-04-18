@@ -83,6 +83,19 @@ function _restorePatientData(data) {
             const el = document.getElementById(id); if (el) el.checked = val;
         }
     }
+    // Synchroniser la visibilité des cascades (démence, MCI, psychose primaire,
+    // delirium, sommeil) pour que l'utilisateur voie ce qui est coché.
+    // Sans cela, le parent reste coché en arrière-plan et PAT_010 apparaît dans
+    // les recos alors que la cascade est masquée (bug d'affichage fantôme).
+    if (typeof window.toggleCascade === 'function') {
+        [
+            ['chkDemence',   'cascadeDemence'],
+            ['chkMci',       'cascadeMci'],
+            ['chkPsyPrim',   'cascadePsyPrim'],
+            ['chkDelirium',  'cascadeDelirium'],
+            ['chkSommeil',   'cascadeSommeil']
+        ].forEach(([p, c]) => window.toggleCascade(p, c));
+    }
     // Restore comorbs
     if (data.comorbs) {
         data.comorbs.forEach(c => { if (!activeComorbs.includes(c)) activeComorbs.push(c); });
@@ -305,21 +318,10 @@ function buildPdfContent() {
             <strong style="font-size:10px;color:${s.color};">${s.titre} (${alerts.length})</strong>`;
         alerts.forEach(a => {
             const strong = a.querySelector('strong');
-            let title = strong ? strong.textContent.trim() : '';
-            // Pour "prescriptions inappropriées", le titre peut contenir un nom
-            // de DCI (ex: "🚨 BISOPROLOL — CI Parkinson"). L'utilisateur souhaite
-            // conserver ces sections mais masquer le DCI en cause. On anonymise
-            // les noms de médicaments (ALLCAPS ≥ 4 lettres) en "[médicament]".
-            if (s.id === 'alertes-eviter') {
-                title = title.replace(/\b([A-ZÀ-ÜÇ]{4,})\b/g, '[médicament]');
-            }
-            // Extraire le détail (texte après le titre) — sans DCI en cause non plus
+            const title = strong ? strong.textContent.trim() : '';
             let detail = '';
             const smalls = a.querySelectorAll('small, em, span.small');
             if (smalls.length > 0) detail = smalls[0].textContent.trim().substring(0, 150);
-            if (s.id === 'alertes-eviter') {
-                detail = detail.replace(/\b([A-ZÀ-ÜÇ]{4,})\b/g, '[médicament]');
-            }
             html += `<div style="font-size:9px;margin:2px 0;">• <strong>${escapeHtml(title)}</strong>${detail ? ' — <span style="color:#555;">' + escapeHtml(detail) + '</span>' : ''}</div>`;
         });
         html += `</div>`;
@@ -462,11 +464,10 @@ window.resetPatient = function() {
         if (el) el.checked = false;
     });
 
-    // 4a. Radios : démence (cascade) et delirium
-    ['demTypeMA','chkLewy','demTypeDP','demTypeDLFT','demTypeVasc','demTypeMixte'].forEach(id => {
+    // 4a. Types de démence (checkboxes multi-sélection) et delirium (radios)
+    ['demTypeMA','chkLewy','demTypeDP','demTypeDLFT','demTypeVasc','demTypeMixte','demTypeNP'].forEach(id => {
         const el = document.getElementById(id); if (el) el.checked = false;
     });
-    const demNP = document.getElementById('demTypeNP'); if (demNP) demNP.checked = true;
     ['delHyper','delHypo'].forEach(id => {
         const el = document.getElementById(id); if (el) el.checked = false;
     });

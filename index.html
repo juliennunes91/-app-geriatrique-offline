@@ -274,14 +274,14 @@
                                 <!-- 1. Maladie neurocognitive majeure (démence) -->
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDemence" onchange="toggleCascade('chkDemence','cascadeDemence')"><label class="form-check-label small fw-semibold">Maladie neurocognitive majeure (démence)</label></div>
                                 <div id="cascadeDemence" class="ms-3 border-start border-2 border-info ps-2 mt-1 mb-2" style="display:none;">
-                                    <div class="small text-muted mb-1">Type (DSM-5 / HAS) :</div>
-                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeMA" value="MA"><label class="form-check-label small" for="demTypeMA">Maladie d'Alzheimer (MA)</label></div>
-                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="chkLewy" value="DCL"><label class="form-check-label small" for="chkLewy">Démence à corps de Lewy (DCL)</label></div>
-                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeDP" value="DP"><label class="form-check-label small" for="demTypeDP">Démence parkinsonienne</label></div>
-                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeDLFT" value="DLFT"><label class="form-check-label small" for="demTypeDLFT">Dégénérescence lobaire fronto-temporale (DLFT)</label></div>
-                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeVasc" value="VASC"><label class="form-check-label small" for="demTypeVasc">Démence vasculaire</label></div>
-                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeMixte" value="MIXTE"><label class="form-check-label small" for="demTypeMixte">Démence mixte</label></div>
-                                    <div class="form-check"><input type="radio" name="demType" class="form-check-input" id="demTypeNP" value="NP" checked><label class="form-check-label small" for="demTypeNP">Non précisée</label></div>
+                                    <div class="small text-muted mb-1">Type (DSM-5 / HAS) — <em>sélection multiple possible pour formes mixtes (ex : Lewy + vasculaire)</em> :</div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="demTypeMA" value="MA"><label class="form-check-label small" for="demTypeMA">Maladie d'Alzheimer (MA)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkLewy" value="DCL"><label class="form-check-label small" for="chkLewy">Démence à corps de Lewy (DCL)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="demTypeDP" value="DP"><label class="form-check-label small" for="demTypeDP">Démence parkinsonienne</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="demTypeDLFT" value="DLFT"><label class="form-check-label small" for="demTypeDLFT">Dégénérescence lobaire fronto-temporale (DLFT)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="demTypeVasc" value="VASC"><label class="form-check-label small" for="demTypeVasc">Démence vasculaire</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="demTypeMixte" value="MIXTE"><label class="form-check-label small" for="demTypeMixte">Démence mixte (Alzheimer + vasculaire)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="demTypeNP" value="NP"><label class="form-check-label small" for="demTypeNP">Non précisée</label></div>
 
                                     <div class="small text-muted mt-2 mb-1">Symptômes psycho-comportementaux (NPI-C) :</div>
                                     <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSpcAgitation"><label class="form-check-label small">Agitation / agressivité (IPA 2015)</label></div>

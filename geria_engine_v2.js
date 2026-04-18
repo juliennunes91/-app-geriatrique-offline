@@ -681,18 +681,20 @@ const GeriaEngineV2 = (() => {
 
         const esc = typeof escapeHtml === 'function' ? escapeHtml : s => String(s||'');
         // Titre amélioré pour les recommandations groupées (multi-thérapie)
+        // On calque sur le format INITIER : titre générique (cross_ref_theme)
+        // + badge "N critères fusionnés", sans bullet redondante avec la classe.
         let displayTitle = esc(a.titre);
         let mergedBadge = '';
         if (a.merged_count > 1) {
-            displayTitle = `${triage.icon} Multi-thérapie — ${a.merged_count} traitements recommandés`;
-            mergedBadge = a.cross_ref_theme ? ` <span class="badge bg-primary" style="font-size:0.65em;">${esc(a.cross_ref_theme)}</span>` : '';
+            const genericTitle = a.cross_ref_theme || `Multi-thérapie — ${a.merged_count} traitements recommandés`;
+            displayTitle = `${triage.icon} ${esc(genericTitle)}`;
+            mergedBadge = ` <span class="badge bg-primary" style="font-size:0.65em;">${a.merged_count} critères fusionnés</span>`;
         } else {
             displayTitle = `${triage.icon} ${displayTitle}`;
         }
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass});">
             ${scoreBadge}<strong>${displayTitle}</strong>${mergedBadge}
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(displaySourceLabel)}</span>
-            ${a.merged_count > 1 ? '<br><span class="small fw-bold">• ' + esc(a.titre) + '</span>' : ''}
             <br><span class="small">${a.message}</span>
             ${compHtml}
             ${pimBadges}

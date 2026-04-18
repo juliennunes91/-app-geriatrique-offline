@@ -2044,38 +2044,72 @@ function analyserPrescription() {
                 guidelinesHtml += `<details class="mb-2 mt-2"><summary class="text-muted small fw-bold" style="cursor:pointer;">À éviter en cas de prescription future (${eviter.length}) — information de principe</summary><div class="mt-1">${eviterItems}</div></details>`;
             }
 
+            // Helper : ne proposer une déprescription que si le patient prend
+            // réellement un médicament de la classe visée.
+            const _activeMedsHasClass = (classLabel) => {
+                if (!classLabel || typeof activeMeds === 'undefined' || activeMeds.length === 0) return false;
+                // Extraire le mot-clé principal : ignorer parenthèses, conditions
+                // ("si ...", "> 8 semaines", "(ACB ≥ 3)") pour ne garder que
+                // la classe thérapeutique.
+                const core = String(classLabel)
+                    .split('(')[0]
+                    .split(/\s+si\s+/i)[0]
+                    .split(/\s+>\s*/)[0]
+                    .split(/\s+\d/)[0]
+                    .trim();
+                const key = (typeof sanitizeText === 'function') ? sanitizeText(core) : core.toLowerCase();
+                if (!key || key.length < 3) return false;
+                return activeMeds.some(m => {
+                    const dci = (typeof sanitizeText === 'function') ? sanitizeText(m.dci || '') : (m.dci || '').toLowerCase();
+                    const cls = (typeof sanitizeText === 'function') ? sanitizeText(m.classe || '') : (m.classe || '').toLowerCase();
+                    if (typeof matchesDrugClassAnsm === 'function') return matchesDrugClassAnsm(dci, cls, key);
+                    if (typeof matchesDrugClass === 'function') return matchesDrugClass(dci, cls, key);
+                    return dci.includes(key) || cls.includes(key) || key.includes(cls);
+                });
+            };
+
             // DEPRESCRIPTION (soins palliatifs, fragilité)
+            // On filtre par activeMeds pour ne pas proposer de déprescrire
+            // un médicament que le patient ne prend pas (bug #3).
             const deprescription = rule.TRAITEMENTS.DEPRESCRIPTION;
             if (deprescription) {
                 if (deprescription.a_arreter_systematiquement) {
-                    guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">DEPRESCRIPTION</strong></div>`;
-                    deprescription.a_arreter_systematiquement.forEach(d => {
-                        guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1" style="border-left:3px solid #ffc107;">
-                            <strong class="small">${d.classe || ''}</strong>${d.raison ? `<br><small>${d.raison}</small>` : ''}
-                        </div>`;
-                    });
+                    const aArr = deprescription.a_arreter_systematiquement.filter(d => _activeMedsHasClass(d.classe));
+                    if (aArr.length > 0) {
+                        guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">DEPRESCRIPTION</strong></div>`;
+                        aArr.forEach(d => {
+                            guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1" style="border-left:3px solid #ffc107;">
+                                <strong class="small">${d.classe || ''}</strong>${d.raison ? `<br><small>${d.raison}</small>` : ''}
+                            </div>`;
+                        });
+                    }
                 }
                 if (deprescription.a_conserver) {
-                    guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-success small">A CONSERVER</strong></div>`;
+                    guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-success small">A CONSERVER / OPTIONS UTILES</strong></div>`;
                     deprescription.a_conserver.forEach(d => {
+                        const onBoard = _activeMedsHasClass(d.classe);
+                        const badge = onBoard ? ' <span class="badge bg-success" style="font-size:0.6em;">en cours</span>' : ' <span class="badge bg-light text-muted border" style="font-size:0.6em;">option à envisager</span>';
                         guidelinesHtml += `<div class="alert alert-success py-1 px-2 mb-1" style="border-left:3px solid #198754;">
-                            <strong class="small">${d.classe || ''}</strong>${d.indication ? `<br><small>${d.indication}</small>` : ''}
+                            <strong class="small">${d.classe || ''}</strong>${badge}${d.indication ? `<br><small>${d.indication}</small>` : ''}
                         </div>`;
                     });
                 }
             }
 
-            // DEPRESCRIPTION_CIBLES (fragilité)
+            // DEPRESCRIPTION_CIBLES (fragilité) — filtrer par activeMeds
             const depCibles = rule.TRAITEMENTS.DEPRESCRIPTION_CIBLES;
             if (depCibles) {
-                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">CIBLES DE DEPRESCRIPTION</strong></div>`;
-                depCibles.forEach(d => {
-                    guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1" style="border-left:3px solid #ffc107;">
-                        <strong class="small">${d.classe || ''}</strong>
-                        ${d.ref ? ` <span class="badge bg-secondary float-end" style="font-size:0.6em;">${d.ref}</span>` : ''}
-                        ${d.action ? `<br><small>${d.action}</small>` : ''}
-                    </div>`;
-                });
+                const depFilt = depCibles.filter(d => _activeMedsHasClass(d.classe));
+                if (depFilt.length > 0) {
+                    guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-warning small">CIBLES DE DEPRESCRIPTION</strong></div>`;
+                    depFilt.forEach(d => {
+                        guidelinesHtml += `<div class="alert alert-warning py-1 px-2 mb-1" style="border-left:3px solid #ffc107;">
+                            <strong class="small">${d.classe || ''}</strong>
+                            ${d.ref ? ` <span class="badge bg-secondary float-end" style="font-size:0.6em;">${d.ref}</span>` : ''}
+                            ${d.action ? `<br><small>${d.action}</small>` : ''}
+                        </div>`;
+                    });
+                }
             }
 
             // CIBLES HbA1c (diabète)
