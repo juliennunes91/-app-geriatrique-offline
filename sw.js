@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.56 (bugfixes : titre multi-thérapie, PDF, déprescription, démence multi-type)
+// Service Worker - GeriaAssist v0.57 (UI moderne : sidebar nav + patient chips + Material Symbols)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260418-bugfixes';
-const CACHE_NAME = `geriaassist-v56-${BUILD_ID}`;
+const BUILD_ID = '20260419-ui-shell';
+const CACHE_NAME = `geriaassist-v57-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

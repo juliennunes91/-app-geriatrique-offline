@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0..1,0">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="lib/html2pdf.bundle.min.js"></script>
     <script>
@@ -228,11 +229,71 @@
 
         summary{outline:none;user-select:none}
         summary::-webkit-details-marker{display:none}
+
+        /* ============================================================
+           SHELL — Sidebar nav + chip band + hero scaffold
+           ============================================================ */
+        .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24;font-size:22px;line-height:1}
+        .app-sidebar{position:fixed;top:0;left:0;bottom:0;width:64px;background:#00151b;color:#cfe8f0;z-index:60;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;border-right:1px solid rgba(255,255,255,.08)}
+        .app-sidebar .side-logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#50d9fe,#00677d);color:#001f27;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:Manrope,sans-serif;font-size:18px;margin-bottom:8px;box-shadow:0 4px 10px rgba(80,217,254,.25)}
+        .app-sidebar .side-btn{width:46px;height:46px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#b3ebff;background:transparent;border:none;cursor:pointer;transition:all .15s;font-size:9px;font-weight:600;font-family:Inter,sans-serif;letter-spacing:.02em}
+        .app-sidebar .side-btn:hover{background:rgba(80,217,254,.12);color:#fff}
+        .app-sidebar .side-btn.active{background:rgba(80,217,254,.18);color:#50d9fe;box-shadow:inset 3px 0 0 #50d9fe}
+        .app-sidebar .side-btn .material-symbols-outlined{font-size:20px}
+        .app-sidebar .side-sep{width:32px;height:1px;background:rgba(255,255,255,.1);margin:8px 0}
+        .app-shell{padding-left:64px}
+        @media (max-width:640px){
+            .app-sidebar{flex-direction:row;left:0;right:0;bottom:0;top:auto;height:56px;width:auto;padding:0 8px;justify-content:space-around;gap:2px;border-right:0;border-top:1px solid rgba(255,255,255,.08)}
+            .app-sidebar .side-logo{display:none}
+            .app-sidebar .side-sep{display:none}
+            .app-sidebar .side-btn{height:44px;width:52px}
+            .app-shell{padding-left:0;padding-bottom:56px}
+        }
+        .patient-chips{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;background:linear-gradient(180deg,#f7f9fb,#eceef0);border-bottom:1px solid #c1c7cb}
+        .patient-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#fff;border:1px solid #c1c7cb;border-radius:9999px;font-size:11px;font-weight:600;color:#41484b}
+        .patient-chip .material-symbols-outlined{font-size:14px;color:#00677d}
+        .patient-chip.chip-warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
+        .patient-chip.chip-warn .material-symbols-outlined{color:#d97706}
+        .patient-chip.chip-err{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+        .patient-chip.chip-err .material-symbols-outlined{color:#dc2626}
+        .patient-chip.chip-ok{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
+        .patient-chip.chip-ok .material-symbols-outlined{color:#16a34a}
+        .patient-chip.chip-muted{opacity:.55}
+        .dark .patient-chips{background:linear-gradient(180deg,#0f1e26,#111827);border-color:#1f2937}
+        .dark .patient-chip{background:#1e293b;border-color:#374151;color:#e5e7eb}
     </style>
 </head>
 <body class="bg-surface font-body text-on-surface min-h-screen">
 
 <noscript><div class="alert alert-danger m-3">JavaScript est requis pour utiliser GeriaAssist.</div></noscript>
+
+<!-- ==================== SIDEBAR NAV ==================== -->
+<aside class="app-sidebar no-print" aria-label="Navigation principale">
+    <div class="side-logo" title="GeriaAssist">G</div>
+    <button type="button" class="side-btn" data-nav="dossier" onclick="navigateShell('dossier')" aria-label="Dossier patient">
+        <span class="material-symbols-outlined">medical_information</span>
+        <span>Dossier</span>
+    </button>
+    <div class="side-sep"></div>
+    <button type="button" class="side-btn active" data-nav="synthese" onclick="navigateShell('synthese')" aria-label="Synthèse">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Synthèse</span>
+    </button>
+    <button type="button" class="side-btn" data-nav="scores" onclick="navigateShell('scores')" aria-label="Scores">
+        <span class="material-symbols-outlined">calculate</span>
+        <span>Scores</span>
+    </button>
+    <button type="button" class="side-btn" data-nav="suivi" onclick="navigateShell('suivi')" aria-label="Suivi biologique">
+        <span class="material-symbols-outlined">monitoring</span>
+        <span>Suivi</span>
+    </button>
+    <button type="button" class="side-btn" data-nav="guidelines" onclick="navigateShell('guidelines')" aria-label="Guidelines">
+        <span class="material-symbols-outlined">menu_book</span>
+        <span>Recos</span>
+    </button>
+</aside>
+
+<div class="app-shell">
 
 <!-- ==================== HEADER ==================== -->
 <header class="bg-primary text-white shadow-lg sticky top-0 z-50 no-print">
@@ -275,6 +336,17 @@
 <div id="sw-update-banner" style="display:none" class="bg-blue-50 border-b border-blue-200 px-4 py-2 text-sm text-blue-800 flex items-center justify-between no-print">
     <span>Nouvelle version disponible. <a href="#" onclick="location.reload();return false" class="font-semibold underline ml-1">Mettre à jour</a></span>
     <button onclick="this.parentElement.style.display='none'" class="text-blue-600 ml-4 text-lg leading-none">&times;</button>
+</div>
+
+<!-- ==================== PATIENT CHIPS BAND ==================== -->
+<div id="patientChipsBand" class="patient-chips no-print" aria-label="Résumé patient en temps réel">
+    <span class="patient-chip" id="chipIdentity"><span class="material-symbols-outlined">person</span><span id="chipIdentityText">Nouveau patient</span></span>
+    <span class="patient-chip" id="chipAge"><span class="material-symbols-outlined">calendar_today</span><span id="chipAgeText">80 ans · F</span></span>
+    <span class="patient-chip" id="chipDfg"><span class="material-symbols-outlined">water_drop</span><span id="chipDfgText">DFG 45 ml/min</span></span>
+    <span class="patient-chip chip-muted" id="chipCfs"><span class="material-symbols-outlined">accessibility_new</span><span id="chipCfsText">CFS —</span></span>
+    <span class="patient-chip chip-muted" id="chipChildPugh"><span class="material-symbols-outlined">local_hospital</span><span id="chipChildText">Foie —</span></span>
+    <span class="patient-chip chip-muted" id="chipMeds"><span class="material-symbols-outlined">medication</span><span id="chipMedsText">0 médicament</span></span>
+    <span class="patient-chip chip-muted" id="chipComorbs"><span class="material-symbols-outlined">monitor_heart</span><span id="chipComorbsText">0 comorbidité</span></span>
 </div>
 
 <!-- ==================== MAIN LAYOUT ==================== -->
@@ -711,7 +783,7 @@
 </main>
 
 <!-- Footer -->
-<footer class="fixed bottom-0 left-0 text-[0.68rem] text-on-surface-variant bg-surface-container-lowest/92 px-3 py-1 border-t border-r border-outline-variant rounded-tr-md z-40 leading-tight max-w-[420px] pointer-events-none no-print" style="backdrop-filter:blur(4px)">
+<footer class="fixed bottom-0 text-[0.68rem] text-on-surface-variant bg-surface-container-lowest/92 px-3 py-1 border-t border-r border-outline-variant rounded-tr-md z-40 leading-tight max-w-[420px] pointer-events-none no-print" style="backdrop-filter:blur(4px); left:64px;">
     version 0.49 — créé par Dr Julien Nunes à l'aide de l'IA<br>
     Merci aux testeurs (Dr Juliette Muffet)<br>
     <em>Outil d'aide à la décision pharmaco-clinique. Résultats à valider par l'utilisateur.</em>
@@ -792,6 +864,8 @@
     <button type="button" class="btn-close btn-sm ms-2" onclick="this.parentElement.style.display='none';sessionStorage.removeItem('geriaassist_session')"></button>
 </div>
 
+</div><!-- end .app-shell -->
+
 <!-- ==================== SCRIPTS ==================== -->
 <script src="ddi_general.js" defer></script>
 <script src="ddi_merged_V2.js" defer></script>
@@ -867,6 +941,9 @@
             const on = pane.id === 'tab-' + tabName;
             pane.classList.toggle('active', on);
             pane.classList.toggle('show', on);
+        });
+        document.querySelectorAll('.app-sidebar .side-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.nav === tabName);
         });
     }
     document.querySelectorAll('#myTab .tab-btn').forEach(btn => {
@@ -1021,7 +1098,109 @@
                 if (typeof renderSuiviBiologique === 'function') renderSuiviBiologique(this.value);
             });
         });
+        refreshPatientChips();
+        ['patientNom','patientAge','patientSexe','patientPoids','bioCreat','patientDFG','scoreCFS','cpManual','chkFoie']
+            .forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', refreshPatientChips);
+                if (el) el.addEventListener('change', refreshPatientChips);
+            });
+        const _mo = new MutationObserver(refreshPatientChips);
+        ['selectedMeds','selectedComorbs'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) _mo.observe(el, { childList: true, subtree: true });
+        });
     });
+
+    // ================================================================
+    // SHELL NAV — sidebar → activate tab + scroll main
+    // ================================================================
+    window.navigateShell = function(key) {
+        document.querySelectorAll('.app-sidebar .side-btn').forEach(b => b.classList.toggle('active', b.dataset.nav === key));
+        if (key === 'dossier') {
+            document.getElementById('patientAge')?.scrollIntoView({ behavior:'smooth', block:'start' });
+            return;
+        }
+        if (typeof activateTab === 'function') activateTab(key);
+        document.getElementById('myTab')?.scrollIntoView({ behavior:'smooth', block:'start' });
+    };
+
+    // ================================================================
+    // PATIENT CHIPS — live sync
+    // ================================================================
+    function refreshPatientChips() {
+        const get = id => document.getElementById(id);
+        const txt = id => { const el = get(id); return el ? el.textContent.trim() : ''; };
+
+        const nom = (get('patientNom')?.value || '').trim();
+        const identityEl = get('chipIdentityText');
+        if (identityEl) identityEl.textContent = nom || 'Nouveau patient';
+
+        const age = get('patientAge')?.value || '—';
+        const sexe = get('patientSexe')?.value || '';
+        const poids = get('patientPoids')?.value;
+        const ageTxt = `${age} ans${sexe ? ' · ' + sexe : ''}${poids ? ' · ' + poids + ' kg' : ''}`;
+        const ageEl = get('chipAgeText'); if (ageEl) ageEl.textContent = ageTxt;
+
+        const dfg = parseFloat(get('patientDFG')?.value);
+        const dfgEl = get('chipDfgText');
+        const dfgChip = get('chipDfg');
+        if (dfgEl && dfgChip) {
+            if (Number.isFinite(dfg)) {
+                dfgEl.textContent = `DFG ${Math.round(dfg)} ml/min`;
+                dfgChip.classList.remove('chip-warn','chip-err','chip-ok','chip-muted');
+                if (dfg < 30) dfgChip.classList.add('chip-err');
+                else if (dfg < 60) dfgChip.classList.add('chip-warn');
+                else dfgChip.classList.add('chip-ok');
+            } else {
+                dfgEl.textContent = 'DFG —';
+                dfgChip.classList.add('chip-muted');
+            }
+        }
+
+        const cfsRaw = parseInt(get('scoreCFS')?.value || '0', 10);
+        const cfsChip = get('chipCfs');
+        const cfsEl = get('chipCfsText');
+        if (cfsChip && cfsEl) {
+            cfsChip.classList.remove('chip-warn','chip-err','chip-ok','chip-muted');
+            if (!cfsRaw) { cfsEl.textContent = 'CFS —'; cfsChip.classList.add('chip-muted'); }
+            else {
+                cfsEl.textContent = `CFS ${cfsRaw}`;
+                if (cfsRaw >= 7) cfsChip.classList.add('chip-err');
+                else if (cfsRaw >= 5) cfsChip.classList.add('chip-warn');
+                else cfsChip.classList.add('chip-ok');
+            }
+        }
+
+        const cp = get('cpManual')?.value;
+        const foie = get('chkFoie')?.checked;
+        const cpEl = get('chipChildText');
+        const cpChip = get('chipChildPugh');
+        if (cpEl && cpChip) {
+            cpChip.classList.remove('chip-warn','chip-err','chip-ok','chip-muted');
+            if (cp === 'C') { cpEl.textContent = 'Child-Pugh C'; cpChip.classList.add('chip-err'); }
+            else if (cp === 'B') { cpEl.textContent = 'Child-Pugh B'; cpChip.classList.add('chip-warn'); }
+            else if (cp === 'A') { cpEl.textContent = 'Child-Pugh A'; cpChip.classList.add('chip-ok'); }
+            else if (foie) { cpEl.textContent = 'Hépatopathie'; cpChip.classList.add('chip-warn'); }
+            else { cpEl.textContent = 'Foie —'; cpChip.classList.add('chip-muted'); }
+        }
+
+        const medsCount = document.querySelectorAll('#selectedMeds .tag-badge').length;
+        const medsEl = get('chipMedsText'); const medsChip = get('chipMeds');
+        if (medsEl && medsChip) {
+            medsEl.textContent = `${medsCount} médicament${medsCount > 1 ? 's' : ''}`;
+            medsChip.classList.toggle('chip-muted', medsCount === 0);
+            medsChip.classList.toggle('chip-warn', medsCount >= 10);
+            medsChip.classList.toggle('chip-err', medsCount >= 15);
+        }
+        const comCount = document.querySelectorAll('#selectedComorbs .tag-badge').length;
+        const comEl = get('chipComorbsText'); const comChip = get('chipComorbs');
+        if (comEl && comChip) {
+            comEl.textContent = `${comCount} comorbidité${comCount > 1 ? 's' : ''}`;
+            comChip.classList.toggle('chip-muted', comCount === 0);
+        }
+    }
+    window.refreshPatientChips = refreshPatientChips;
 
     // ================================================================
     // PRÉFÉRENCES UI — Rubrique SPC (accordéon inline / fenêtre modale)
