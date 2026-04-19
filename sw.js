@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.57 (UI moderne : sidebar nav + patient chips + Material Symbols)
+// Service Worker - GeriaAssist v0.58 (UI Precision Curator : sidebar+header pills+hero+preview cards)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260419-ui-shell';
-const CACHE_NAME = `geriaassist-v57-${BUILD_ID}`;
+const BUILD_ID = '20260420-precision-curator';
+const CACHE_NAME = `geriaassist-v58-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
