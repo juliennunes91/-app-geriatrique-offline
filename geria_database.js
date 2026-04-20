@@ -16674,7 +16674,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "94%",
                     "qt_risque": "",
-                    "ddi_interact": "IEC (CI absolue — wash-out 36h) | AINS (risque IRA + hyperK) | Diuretiques epargneurs K (hyperK) | Lithium (augmentation lithiemie) | Aliskiren (CI si diabete/IRC)",
+                    "ddi_interact": "Enalapril | Lisinopril | Ramipril | Perindopril | Quinapril | Benazepril | Captopril | Fosinopril | Trandolapril (IEC - CI absolue, wash-out 36h) | AINS (risque IRA + hyperK) | Spironolactone | Eplerenone (diuretiques epargneurs K, hyperK) | Lithium (augmentation lithiemie) | Aliskiren (CI si diabete/IRC)",
                     "suivi_initial": "TA | Creatinine + DFG | Kalieme | Natremie | BNP/NT-proBNP",
                     "suivi_periodique": "TA (chaque consultation) | Creatinine + K (J7, J14, M1, puis /3 mois) | NT-proBNP (/6 mois) | Symptomes IC (NYHA)",
                     "alerte_clinique": "Hypotension symptomatique → reduire diuretique d'abord | Hyperkaliemie > 5.5 → arret temporaire | Angio-oedeme (rare) → arret definitif | Ne JAMAIS associer a un IEC (risque angio-oedeme grave)",

@@ -320,8 +320,9 @@ function buildPdfContent() {
             const strong = a.querySelector('strong');
             const title = strong ? strong.textContent.trim() : '';
             let detail = '';
-            const smalls = a.querySelectorAll('small, em, span.small');
-            if (smalls.length > 0) detail = smalls[0].textContent.trim().substring(0, 150);
+            // Cibler prioritairement le corps du message ; tomber sur small/em en fallback
+            const msgNode = a.querySelector('div.small, span.small, small, em');
+            if (msgNode) detail = msgNode.textContent.trim().substring(0, 200);
             html += `<div style="font-size:9px;margin:2px 0;">• <strong>${escapeHtml(title)}</strong>${detail ? ' — <span style="color:#555;">' + escapeHtml(detail) + '</span>' : ''}</div>`;
         });
         html += `</div>`;

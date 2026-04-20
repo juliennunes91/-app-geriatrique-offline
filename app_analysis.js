@@ -1484,9 +1484,21 @@ function analyserPrescription() {
             if(ref.ddi_interact && ref.ddi_interact !== "Aucune majeure documentee" && ref.ddi_interact !== "nan") {
                 let interactors = ref.ddi_interact.split(/[,\/]/).map(x=>x.trim()).filter(x=>x.length > 2);
                 let found = [];
+                const selfKey = sanitizeText(ref.dci || '');
                 interactors.forEach(inter => {
                     let cInter = sanitizeText(inter);
-                    if(patientHasMedClass(cInter) || activeMeds.some(am => sanitizeText(am.dci).includes(cInter) || sanitizeText(am.classe).includes(cInter))) found.push(inter);
+                    if (!cInter) return;
+                    // Self-match guard : ne pas flagger le médicament contre sa propre dci
+                    if (selfKey && (selfKey.includes(cInter) || cInter.includes(selfKey))) return;
+                    // Chercher uniquement parmi les AUTRES médicaments (exclure la source)
+                    const hasOther = activeMeds.some(am => {
+                        if (am === m) return false;
+                        const amDci = sanitizeText(am.dci);
+                        const amClasse = sanitizeText(am.classe);
+                        if (amDci.includes(cInter) || amClasse.includes(cInter)) return true;
+                        return (typeof matchesDrugClass === 'function') && matchesDrugClass(amDci, amClasse, cInter);
+                    });
+                    if (hasOther) found.push(inter);
                 });
                 if(found.length > 0) {
                     addAlert('alertes-interact', `<div class="alert alert-danger shadow-sm"><strong>🚨 Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}</strong><br>Interaction détectée avec : <b>${found.map(f => escapeHtml(f)).join(', ')}</b></div>`, 'interact');

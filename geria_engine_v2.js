@@ -241,7 +241,16 @@ const GeriaEngineV2 = (() => {
         if (c.bio) {
             for (const [bioId, crit] of Object.entries(c.bio)) {
                 const val = ctx.bioValues && ctx.bioValues[bioId];
-                if (!val || val <= 0) return false; // Bio requise mais non renseignée → ne pas déclencher
+                if (!val || val <= 0) {
+                    // Bio requise mais non renseignée
+                    // Pour les règles INITIER (omissions), on NE bloque PAS : la bio conditionnelle
+                    // est remontée en caveat dans le message. Pour les règles EVITER, on reste prudent
+                    // et on ne déclenche pas (évite les faux positifs danger sans donnée).
+                    if (rule._type === 'initier') {
+                        continue;
+                    }
+                    return false;
+                }
                 if (crit.op === '<' && !(val < crit.val)) return false;
                 if (crit.op === '>' && !(val > crit.val)) return false;
                 if (crit.op === '<=' && !(val <= crit.val)) return false;
@@ -253,8 +262,12 @@ const GeriaEngineV2 = (() => {
         if (c.fragile === true && !ctx.isFragile) return false;
         if (c.acb_cumul && c.acb_seuil) {
             if (!ctx.scoreACB_global || ctx.scoreACB_global < c.acb_seuil) return false;
-            // Exiger au moins 2 médicaments avec ACB > 0 (le titre dit "≥ 2 concomitants")
-            let acbMedCount = ctx.activeMeds ? ctx.activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0).length : 0;
+            // Exiger au moins 2 médicaments avec ACB ≥ 2 (anticholinergique cliniquement significatif)
+            // — évite les faux positifs quand un seul médicament fort (ACB 3) + un ACB=1 trivial
+            // (furosémide, digoxine) font artificiellement franchir le seuil cumulatif.
+            let acbMedCount = ctx.activeMeds
+                ? ctx.activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) >= 2).length
+                : 0;
             if (acbMedCount < 2) return false;
         }
         if (c.acb_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && parseFloat(m.db_ref.acb) >= 2))) return false;
@@ -270,8 +283,26 @@ const GeriaEngineV2 = (() => {
      */
     let _lastActiveComorbs = []; // Stored for findEbmSource during rendering
 
+    // Normalisation des comorbidités mutuellement exclusives.
+    // Si un sous-type spécifique est coché, le générique est retiré pour éviter les doublons d'alertes.
+    const COMORB_GENERIC_OVERRIDES = {
+        "PAT_010": ["PAT_011", "PAT_012", "PAT_013"], // Syndrome démentiel générique → Alzheimer / DCL / DFT
+    };
+    function normalizeActiveComorbs(list) {
+        if (!Array.isArray(list) || list.length === 0) return list || [];
+        const set = new Set(list);
+        Object.entries(COMORB_GENERIC_OVERRIDES).forEach(([generic, specifics]) => {
+            if (set.has(generic) && specifics.some(s => set.has(s))) {
+                set.delete(generic);
+            }
+        });
+        return Array.from(set);
+    }
+
     function evaluer(ctx) {
         const t0 = performance.now();
+        // Normalisation : retirer les comorbidités génériques quand un sous-type est coché
+        if (ctx.activeComorbs) ctx.activeComorbs = normalizeActiveComorbs(ctx.activeComorbs);
         _lastActiveComorbs = ctx.activeComorbs || [];
 
         // Construire l'index si nécessaire
@@ -556,16 +587,21 @@ const GeriaEngineV2 = (() => {
             html += importants.map(a => renderSingleAlert(a)).join('');
         }
         
-        // INFORMATIFS — repliables par défaut
+        // INFORMATIFS — repliables par défaut.
+        // Fallback vanilla JS + ARIA (n'impose pas Bootstrap JS).
         if (informatifs.length > 0) {
             const collapseId = `collapse_${type}_info_${Math.random().toString(36).substr(2,5)}`;
+            const toggleJs = `(function(btn){var c=document.getElementById('${collapseId}');if(!c)return;var open=c.classList.toggle('show');c.style.display=open?'':'none';btn.setAttribute('aria-expanded',open?'true':'false');btn.innerHTML=open?'🔵 Informatifs (${informatifs.length}) — masquer ▴':'🔵 Informatifs (${informatifs.length}) — cliquer pour voir ▾';})(this);return false;`;
             html += `
             <div class="mb-2 mt-3">
-                <a class="text-info text-decoration-none" data-bs-toggle="collapse" href="#${collapseId}" role="button" aria-expanded="false">
+                <a href="#${collapseId}" class="text-info text-decoration-none" role="button" aria-expanded="false"
+                   style="cursor:pointer; display:inline-block; padding:4px 0;"
+                   onclick="${toggleJs.replace(/"/g,'&quot;')}"
+                   data-bs-toggle="collapse" data-bs-target="#${collapseId}">
                     🔵 Informatifs (${informatifs.length}) — cliquer pour voir ▾
                 </a>
             </div>
-            <div class="collapse" id="${collapseId}">
+            <div class="collapse" id="${collapseId}" style="display:none;">
                 ${informatifs.map(a => renderSingleAlert(a)).join('')}
             </div>`;
         }
@@ -589,11 +625,16 @@ const GeriaEngineV2 = (() => {
         // Identifier les pathologies ciblées par cette règle
         const targetPathos = [...(c.comorbs || []), ...(c.comorbs_any || [])];
 
+        // ⚠ Règle pathologie-agnostique (pas de comorbs ciblés)
+        // → ne pas chercher dans les SOURCES_EBM des pathologies actives
+        // (sinon ESC/GOLD/KDIGO fuitent sur des alertes sans lien, ex : anticholinergiques + HFrEF).
+        if (targetPathos.length === 0) return '';
+
+        const pathosToSearch = targetPathos.filter(p => _lastActiveComorbs.includes(p));
+        if (pathosToSearch.length === 0) return '';
+
         const category = alert._type === 'initier' ? 'INITIER' : 'EVITER';
         let found = [];
-
-        // Chercher d'abord dans les pathologies ciblées par la règle, sinon dans toutes les actives
-        const pathosToSearch = targetPathos.length > 0 ? targetPathos.filter(p => _lastActiveComorbs.includes(p)) : _lastActiveComorbs;
 
         pathosToSearch.forEach(pathoId => {
             const rule = PATHOLOGY_RULES_DB[pathoId];
@@ -604,30 +645,22 @@ const GeriaEngineV2 = (() => {
                 const ebmCat = rule.SOURCES_EBM[category];
                 for (const [classKey, ref] of Object.entries(ebmCat)) {
                     const cleanKey = classKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    // Match strict : on exige un recouvrement sur med_keys (classe pharmaco).
+                    // Le match sur titleTerms est trop permissif (ex: "anticholinergique" matchait ESC).
                     const matched = medKeys.some(mk => {
                         const cleanMk = mk.toLowerCase().replace(/[^a-z0-9]/g, '');
-                        return cleanMk.includes(cleanKey) || cleanKey.includes(cleanMk);
-                    }) || titleTerms.some(t => cleanKey.includes(t) || t.includes(cleanKey));
+                        return cleanMk && cleanKey && (cleanMk.includes(cleanKey) || cleanKey.includes(cleanMk));
+                    });
 
                     if (matched) {
-                        let fullRef = ref;
-                        if (typeof GUIDELINE_INDEX !== 'undefined') {
-                            const guidelineKeys = ref.match(/[A-Z][A-Z0-9_]+/g);
-                            if (guidelineKeys) {
-                                guidelineKeys.forEach(gk => {
-                                    if (GUIDELINE_INDEX[gk] && !found.some(f => f.includes(gk))) {
-                                        found.push(`${ref}`);
-                                    }
-                                });
-                            }
-                        }
                         if (found.length === 0) found.push(ref);
                     }
                 }
             }
 
-            // Fallback: utiliser le REFERENCE de la pathologie (source société savante)
-            if (found.length === 0 && rule.REFERENCE) {
+            // Fallback: référence générale de la pathologie, uniquement si la règle cible
+            // explicitement cette pathologie ET porte sur des médicaments (med_keys/med_absent).
+            if (found.length === 0 && rule.REFERENCE && medKeys.length > 0) {
                 found.push(rule.REFERENCE.split('|')[0].trim());
             }
         });
@@ -692,14 +725,14 @@ const GeriaEngineV2 = (() => {
         } else {
             displayTitle = `${triage.icon} ${displayTitle}`;
         }
-        return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass});">
+        return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass}); padding-left: 0.9rem;">
             ${scoreBadge}<strong>${displayTitle}</strong>${mergedBadge}
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(displaySourceLabel)}</span>
-            <br><span class="small">${a.message}</span>
+            <div class="small mt-1" style="padding-left: 0.25rem;">${a.message}</div>
             ${compHtml}
             ${pimBadges}
             ${ebmBadge}
-            ${a.alternatives ? `<br><em class="text-success small">${a.alternatives}</em>` : ''}
+            ${a.alternatives ? `<div class="text-success small mt-1" style="padding-left: 0.25rem;"><em>${a.alternatives}</em></div>` : ''}
         </div>`;
     }
 

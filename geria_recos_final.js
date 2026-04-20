@@ -615,16 +615,16 @@ const GERIA_RECOS_DB = {
         {
             id: "EV_D05",
             sources: ["STOPP3", "BEERS", "FORTA"],
-            ref_code: "STOPP3-D5",
+            ref_code: "STOPP3-D5 / STOPP3-D15",
             section: "SNC",
-            titre: "Antipsychotique pour SCPD > 3 mois sans réévaluation",
-            message: "Antipsychotique pour symptômes comportementaux et psychologiques de la démence (SCPD) à dose inchangée > 3 mois sans réévaluation : risque d'effets extrapyramidaux, déclin cognitif, morbi-mortalité cardiovasculaire majorée.",
-            severite: "danger",
+            titre: "Antipsychotique chez patient dément — durée et réévaluation",
+            message: "Antipsychotique chez un patient dément : la durée d'exposition doit être réévaluée (STOPP-D5 > 3 mois, STOPP-D15 > 12 semaines). Si usage ponctuel ou SCPD non confirmé, documenter l'indication et planifier la décroissance. Risques : AVC, infarctus, effets extrapyramidaux, déclin cognitif, chutes.",
+            severite: "warning",
             condition: {
                 med_keys: ["antipsychotique"],
                 comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"]
             },
-            alternatives: "Réévaluation à 3 mois, approche non pharmacologique (musicothérapie, Montessori, DICE), réduction progressive"
+            alternatives: "Si SCPD confirmé ≥ 3 mois : décroissance progressive 25 %/2-4 sem. Approches non pharmacologiques (musicothérapie, Montessori, DICE). Si usage hors SCPD : reconsidérer l'indication."
         },
         {
             id: "EV_D06",
@@ -736,18 +736,20 @@ const GERIA_RECOS_DB = {
             alternatives: "Médicaments à faible charge anticholinergique"
         },
         {
+            // Fusionné dans EV_D05 (STOPP3-D5 + STOPP3-D15 — conditions identiques).
+            // Conservé comme duplication_check pour traçabilité ; ne se déclenche plus.
             id: "EV_D15",
             sources: ["STOPP3", "BEERS"],
             ref_code: "STOPP3-D15",
             section: "SNC",
-            titre: "Antipsychotique > 12 semaines pour SCPD (sauf sévérité extrême)",
-            message: "Antipsychotique > 12 semaines pour symptômes non cognitifs de la démence (sauf si symptômes sévères et échec des autres traitements) : risque d'AVC, d'infarctus du myocarde.",
-            severite: "danger",
+            titre: "Antipsychotique > 12 semaines pour SCPD — fusionné dans EV_D05",
+            message: "Critère fusionné avec EV_D05 (même condition clinique).",
+            severite: "warning",
             condition: {
-                med_keys: ["antipsychotique"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"]
+                type: "duplication_check",
+                merged_into: "EV_D05"
             },
-            alternatives: "Réévaluation à 12 semaines, réduction progressive, approche non pharmacologique"
+            alternatives: ""
         },
         {
             id: "EV_D16",
@@ -2200,14 +2202,14 @@ const GERIA_RECOS_DB = {
             ref_code: "START3-B7",
             section: "Cardiovasculaire",
             titre: "Anti-aldostérone / ARM (pilier 3)",
-            message: "Anti-aldostérone (spironolactone, éplérénone) pour HFrEF sans atteinte rénale sévère (DFG > 30) — pilier pronostique (EMPHASIS-HF).",
+            message: "Anti-aldostérone (spironolactone, éplérénone) pour HFrEF — pilier pronostique (EMPHASIS-HF). ⚠ Vérifier DFG > 30 ml/min et K+ < 5.0 avant introduction.",
             severite: "warning",
             condition: {
                 comorbs: ["PAT_002"],
                 bio: { "BIO_004": { op: ">", val: 30 } },
                 med_absent: ["spironolactone", "eplerenone", "aldactazine"]
             },
-            alternatives: "Spironolactone 25 mg ou éplérénone 25 mg, avec monitorage K+"
+            alternatives: "Spironolactone 25 mg ou éplérénone 25 mg, avec monitorage K+ et créatinine à J7, J14, M1, puis /3 mois"
         },
         {
             id: "IN_B08",
