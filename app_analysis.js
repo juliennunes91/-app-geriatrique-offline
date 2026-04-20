@@ -689,7 +689,7 @@ function analyserPrescription() {
         // CHA₂DS₂-VA (ESC 2024 — sexe retiré du calcul)
         let scoreCha = 0; let ttCha = [];
         if(patientAge >= SA.cha_75) { scoreCha += 2; ttCha.push("Âge ≥75 (+2)"); } else if(patientAge >= SA.cha_65) { scoreCha += 1; ttCha.push("Âge ≥65 (+1)"); }
-        if(activeComorbs.some(c=>['PAT_001','PAT_002','PAT_003'].includes(c))) { scoreCha += 1; ttCha.push("IC (+1)"); }
+        if(activeComorbs.some(c=>['PAT_002','PAT_003'].includes(c))) { scoreCha += 1; ttCha.push("IC (+1)"); }
         if(activeComorbs.includes('PAT_005')) { scoreCha += 1; ttCha.push("HTA (+1)"); }
         if(activeComorbs.includes('PAT_016')) { scoreCha += 1; ttCha.push("Diabète (+1)"); }
         if(activeComorbs.includes('PAT_008')) { scoreCha += 2; ttCha.push("ATCD AVC (+2)"); }
@@ -727,7 +727,7 @@ function analyserPrescription() {
         if(patientHasMedClass('ains')) { scoreDoac += 1; ttDoac.push("AINS (+1)"); }
         if(activeComorbs.includes('PAT_016')) { scoreDoac += 1; ttDoac.push("Diabète (+1)"); }
         if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < SB.anemia_M) || (sexe === 'F' && bioValues['BIO_009'] < SB.anemia_F))) { scoreDoac += 1; ttDoac.push("Anémie (+1)"); }
-        if(activeComorbs.some(c=>['PAT_001','PAT_002','PAT_003'].includes(c))) { scoreDoac += 1; ttDoac.push("IC (+1)"); }
+        if(activeComorbs.some(c=>['PAT_002','PAT_003'].includes(c))) { scoreDoac += 1; ttDoac.push("IC (+1)"); }
         renderScore(SC.DOAC, scoreDoac, ttDoac);
 
         // RISQ-PATH
@@ -739,7 +739,7 @@ function analyserPrescription() {
         if(bioValues['BIO_005'] > 0 && bioValues['BIO_005'] < SB.hypoCa) { scoreRisq += 2; ttRisq.push("HypoCa (+2)"); }
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] <= SB.irc_severe) { scoreRisq += 2; ttRisq.push("IRC Sévère (+2)"); }
         if(bioValues['BIO_024'] > 5) { scoreRisq += 1; ttRisq.push("Inflammation (+1)"); }
-        if(['PAT_005','PAT_001','PAT_002','PAT_003'].some(c=>activeComorbs.includes(c))) { scoreRisq += 1; ttRisq.push("HTA/IC (+1)"); }
+        if(['PAT_005','PAT_002','PAT_003'].some(c=>activeComorbs.includes(c))) { scoreRisq += 1; ttRisq.push("HTA/IC (+1)"); }
         if(activeComorbs.includes('PAT_006')) { scoreRisq += 1; ttRisq.push("FA (+1)"); }
         if(['PAT_010','PAT_011','PAT_012','PAT_013','PAT_014'].some(c=>activeComorbs.includes(c))) { scoreRisq += 1; ttRisq.push("Démence/Park (+1)"); }
         if(globalQT_CountKR > 0) { scoreRisq += (3 * globalQT_CountKR); ttRisq.push(`Médoc QT (+${3*globalQT_CountKR})`); }
@@ -1481,6 +1481,63 @@ function analyserPrescription() {
 
         activeMeds.forEach(m => {
             let ref = m.db_ref; if(!ref) return;
+
+            // ------ Schéma v2 structuré (ddi_interact_v2) ------
+            // Chaque entrée : { classe, dcis:[], commentaire, severite } — on matche uniquement sur
+            // les DCIs nominatives, avec self-guard sur la source (DCI + classe du médicament courant).
+            if (Array.isArray(ref.ddi_interact_v2) && ref.ddi_interact_v2.length > 0) {
+                const selfDci = sanitizeText(ref.dci || '');
+                const selfClasse = sanitizeText(ref.classe || '');
+                // Tokens atomiques de la DCI source (ex. "Sacubitril/Valsartan" → ["sacubitril","valsartan"])
+                const selfParts = selfDci.split(/[\/\+\s,-]+/).filter(p => p && p.length >= 4);
+
+                const foundGroups = []; // { classe, matched:[{dci, interactor}], commentaire, severite }
+                ref.ddi_interact_v2.forEach(entry => {
+                    if (!entry || !Array.isArray(entry.dcis) || entry.dcis.length === 0) return;
+                    const matched = [];
+                    entry.dcis.forEach(dciCanon => {
+                        const cDci = sanitizeText(dciCanon);
+                        if (!cDci) return;
+                        // Self-guard sur DCI (composants)
+                        for (const sp of selfParts) {
+                            if (cDci === sp || (sp.length >= 4 && cDci.includes(sp)) || (cDci.length >= 4 && sp.includes(cDci))) return;
+                        }
+                        // Chercher dans les AUTRES meds actifs (hors source)
+                        const hit = activeMeds.find(am => {
+                            if (am === m) return false;
+                            const amDci = sanitizeText(am.dci);
+                            if (amDci.includes(cDci) || cDci.includes(amDci)) return true;
+                            return false;
+                        });
+                        if (hit) matched.push({ dci: dciCanon, interactor: hit.dci });
+                    });
+                    if (matched.length > 0) {
+                        foundGroups.push({
+                            classe: entry.classe || '',
+                            matched,
+                            commentaire: entry.commentaire || '',
+                            severite: entry.severite || 'warning',
+                        });
+                    }
+                });
+
+                if (foundGroups.length > 0) {
+                    const isDanger = foundGroups.some(g => g.severite === 'danger');
+                    const groupHtml = foundGroups.map(g => {
+                        const drugs = g.matched.map(x => escapeHtml(x.interactor.toUpperCase())).join(', ');
+                        const com = g.commentaire ? ` <em class="text-muted">(${escapeHtml(g.commentaire)})</em>` : '';
+                        return `<li><b>${escapeHtml(g.classe)}</b> → ${drugs}${com}</li>`;
+                    }).join('');
+                    const alertClass = isDanger ? 'alert-danger' : 'alert-warning';
+                    const icon = isDanger ? '🚨' : '⚠️';
+                    addAlert('alertes-interact', `<div class="alert ${alertClass} shadow-sm"><strong>${icon} Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}</strong><ul class="mb-0 mt-1">${groupHtml}</ul></div>`, 'interact');
+                    const flatList = foundGroups.map(g => `${g.classe}:${g.matched.map(x=>x.interactor).join('/')}`).join(' | ');
+                    _regAddMed(m.dci, 'interact', { text: `Interaction ${flatList}`, severity: isDanger ? 'danger' : 'warning' });
+                }
+                return; // v2 traité : on ne retombe pas sur le chemin texte libre pour cette entrée
+            }
+
+            // ------ Fallback : schéma texte libre (ddi_interact) ------
             if(ref.ddi_interact && ref.ddi_interact !== "Aucune majeure documentee" && ref.ddi_interact !== "nan") {
                 let interactors = ref.ddi_interact.split(/[,\/]/).map(x=>x.trim()).filter(x=>x.length > 2);
                 let found = [];

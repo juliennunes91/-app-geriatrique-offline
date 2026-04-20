@@ -303,15 +303,9 @@ const MASTER_DB = {
         }
     },
     "PATHOLOGIES": {
-        "PAT_001": {
-            "ID_PATHO": "PAT_001",
-            "CIM_10": "I50",
-            "NOM_STANDARD": "Insuffisance Cardiaque Globale (IC)",
-            "CATEGORIE": "Cardiologie",
-            "SYNONYMES": "IC, Insuffisance cardiaque",
-            "BIO_SURVEILLANCE": "BIO_028, BIO_001, BIO_002, BIO_003, BIO_009",
-            "SYND_RISQUE": "SYND_029, SYND_010, SYND_009, SYND_039"
-        },
+        // PAT_001 (IC Globale générique) supprimée — chevauchait PAT_002 (HFrEF) et PAT_003 (HFpEF).
+        // Le phénotype doit être précisé (FEVG réduite vs préservée) car les implications
+        // pharmacologiques divergent (ARMi/iSGLT2/ARNI ont une preuve différente).
         "PAT_002": {
             "ID_PATHO": "PAT_002",
             "CIM_10": "I50.1",
@@ -698,7 +692,7 @@ const MASTER_DB = {
             "CONDITION": ">= 450 ms (H) / >= 460 ms (F)",
             "GRAVITE": "Sévère (Risque Torsades de Pointes)",
             "IMPUTABILITE_FREQ": "Amiodarone, Macrolides, Quétiapine, Citalopram, Halopéridol, Méthadone, Hydroxychloroquine",
-            "ID_PATHO_ASSOC": "PAT_006, PAT_001",
+            "ID_PATHO_ASSOC": "PAT_006, PAT_002",
             "BIO_SECONDAIRE": "BIO_001, BIO_005, BIO_006, BIO_029",
             "CONDUITE_IMMEDIATE": "Corriger hypokaliémie/hypomagnésémie (cibles K>4, Mg>0.9), ECG monitoring continu, discuter arrêt médicament",
             "SEUIL_CRITIQUE": ">= 500 ms → arrêt immédiat médicament suspect, avis cardio urgent",
@@ -763,7 +757,7 @@ const MASTER_DB = {
             "CONDITION": "Urée/Créatinine > 100 (µmol/µmol)",
             "GRAVITE": "Alerte Déshydratation",
             "IMPUTABILITE_FREQ": "Diurétiques, IEC, ARA2, AINS (trio à risque en contexte de déshydratation)",
-            "ID_PATHO_ASSOC": "PAT_001, PAT_005, PAT_029",
+            "ID_PATHO_ASSOC": "PAT_002, PAT_005, PAT_029",
             "BIO_SECONDAIRE": "BIO_001, BIO_002, BIO_004",
             "CONDUITE_IMMEDIATE": "Arrêt temporaire AINS/IEC/ARA2, réhydratation orale ou IV, réévaluer diurétiques, contrôle créatinine à 48-72h",
             "SEUIL_CRITIQUE": "Créatinine doublée ou DFG < 30 → arrêt IEC/ARA2, avis néphro",
@@ -776,7 +770,7 @@ const MASTER_DB = {
             "CONDITION": "< 130 mmol/L",
             "GRAVITE": "Sévère (Risque Neuro)",
             "IMPUTABILITE_FREQ": "Thiazidiques, ISRS, Carbamazépine, IPP (hypoMg → SIADH indirect), Cyclophosphamide",
-            "ID_PATHO_ASSOC": "PAT_001, PAT_029, PAT_017, PAT_015",
+            "ID_PATHO_ASSOC": "PAT_002, PAT_029, PAT_017, PAT_015",
             "BIO_SECONDAIRE": "BIO_007, BIO_003, BIO_019, BIO_001",
             "CONDUITE_IMMEDIATE": "Restriction hydrique 500-750 mL/j, traitement étiologique (arrêt médicament suspect), correction max 8 mmol/L/24h",
             "SEUIL_CRITIQUE": "< 120 mmol/L ou signes neurologiques → correction urgente, risque myélinolyse centropontine",
@@ -789,7 +783,7 @@ const MASTER_DB = {
             "CONDITION": "> 5.0 mmol/L",
             "GRAVITE": "Modérée à Sévère",
             "IMPUTABILITE_FREQ": "IEC, ARA2, Spironolactone, Eplérénone, Triméthoprime, Potassium IV",
-            "ID_PATHO_ASSOC": "PAT_001, PAT_005, PAT_029",
+            "ID_PATHO_ASSOC": "PAT_002, PAT_005, PAT_029",
             "BIO_SECONDAIRE": "BIO_031, BIO_003, BIO_004",
             "CONDUITE_IMMEDIATE": "Arrêt IEC/ARA2/diurétique épargneur K, régime pauvre en K, kayexalate ou patiromer, ECG monitoring",
             "SEUIL_CRITIQUE": "> 6.5 mmol/L ou anomalies ECG → gluconate Ca IV, insuline-glucose, dialyse urgente si anurie",
@@ -802,7 +796,7 @@ const MASTER_DB = {
             "CONDITION": "< 3.5 mmol/L",
             "GRAVITE": "Modérée à Sévère",
             "IMPUTABILITE_FREQ": "Diurétique de l'anse, Thiazidique, Amphotéricine B, Corticoïdes, Laxatifs stimulants",
-            "ID_PATHO_ASSOC": "PAT_001, PAT_006, PAT_005",
+            "ID_PATHO_ASSOC": "PAT_002, PAT_006, PAT_005",
             "BIO_SECONDAIRE": "BIO_006, BIO_031",
             "CONDUITE_IMMEDIATE": "Supplémentation K+ per os ou IV (max 40 mEq/h IV), corriger hypomagnésémie associée, adapter diurétique",
             "SEUIL_CRITIQUE": "< 3.0 mmol/L avec ECG modifié ou < 2.5 mmol/L → IV sous scope, urgence rythmologique",
@@ -945,7 +939,7 @@ const MASTER_DB = {
             "CONDITION": "< 0.75 mmol/L",
             "GRAVITE": "Modérée (aggrave troubles rythme et résistance hypokaliémie)",
             "IMPUTABILITE_FREQ": "IPP long cours (défaut absorption Mg), Diurétiques de l'anse, Amphotéricine B, Alcool, Cisplatine",
-            "ID_PATHO_ASSOC": "PAT_001, PAT_016",
+            "ID_PATHO_ASSOC": "PAT_002, PAT_016",
             "BIO_SECONDAIRE": "BIO_001, BIO_031, BIO_005",
             "CONDUITE_IMMEDIATE": "Supplémenter Mg per os (glycérophosphate Mg) ou IV si symptômes, corriger l'hypokaliémie et l'hypocalcémie résistantes",
             "SEUIL_CRITIQUE": "< 0.5 mmol/L avec arythmies ou crampes sévères → Mg sulfate IV sous scope",
@@ -1036,7 +1030,7 @@ const MASTER_DB = {
             "CONDITION": "NT-proBNP > 450 pg/mL (< 50 ans) ou > 900 pg/mL (50-75 ans) ou > 1800 pg/mL (> 75 ans)",
             "GRAVITE": "Modérée à Sévère",
             "IMPUTABILITE_FREQ": "AINS (rétention hydrosodée), Thiazolidinediones (Pioglitazone), ICa dihydropyridines à forte dose, Doxorubicine (cardiotoxicité)",
-            "ID_PATHO_ASSOC": "PAT_001, PAT_002, PAT_003, PAT_004",
+            "ID_PATHO_ASSOC": "PAT_002, PAT_003, PAT_004",
             "BIO_SECONDAIRE": "BIO_001, BIO_002, BIO_003, BIO_009, BIO_034",
             "CONDUITE_IMMEDIATE": "Adaptation diurétiques de l'anse (titrer sur poids/diurèse), arrêt AINS, bilan ionique et rénal rapproché, avis cardiologique",
             "SEUIL_CRITIQUE": "NT-proBNP > 5000 + détresse respiratoire → décompensation aiguë, hospitalisation",
@@ -1166,7 +1160,7 @@ const MASTER_DB = {
             "CONDITION": "Hb < 11 g/dL + DFG < 45 mL/min (anémie normocytaire normochrome)",
             "GRAVITE": "Modérée",
             "IMPUTABILITE_FREQ": "AINS (aggravation IRC), IEC (diminuent EPO indirectement), Cisplatine (néphrotoxique + aplasie)",
-            "ID_PATHO_ASSOC": "PAT_029, PAT_001",
+            "ID_PATHO_ASSOC": "PAT_029, PAT_002",
             "BIO_SECONDAIRE": "BIO_020, BIO_023, BIO_021, BIO_003",
             "CONDUITE_IMMEDIATE": "Supplémentation fer IV si CSat < 20%, EPO/ASE si Hb < 10 g/dL après correction carence martiale, avis néphrologue",
             "SEUIL_CRITIQUE": "Hb < 8 g/dL + DFG < 30 → traitement EPO prioritaire, transfusion si symptômes cardio-respiratoires",
@@ -1226,6 +1220,7 @@ const MASTER_DB = {
                     "albumine": "0,25",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Glycemie si diabete | Créatinine | ANA (lupus medicamenteux)",
                     "suivi_periodique": "FC/TA (consultations) | Glycemie (annuelle si DT2) | ANA si symptomes lupiques",
                     "alerte_clinique": "Bradycardie → ECG | Lupus medicamenteux (arthralgies + ANA) → arret immediat",
@@ -1254,6 +1249,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine",
                     "suivi_periodique": "INR (tous les 8 a 28 jours selon stabilit  objectif 2-3 ou 2,5-3,5) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Saignement → INR urgente + Hb | INR > 5 → adaptation dose ou antidote (Vit K)",
@@ -1284,6 +1280,7 @@ const MASTER_DB = {
                     "albumine": "80 - 90 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Créatinine | Bilan hépatique si a forte dose | Temps de saignement si chirurgie",
                     "suivi_periodique": "NFS (annuelle) | Créatinine (annuelle) | Recherche sang dans les selles si anemie",
                     "alerte_clinique": "Saignement digestif → NFS + rectorragie | Insuffisance renale → créatinine",
@@ -1313,6 +1310,39 @@ const MASTER_DB = {
                     "albumine": "97",
                     "qt_risque": "",
                     "ddi_interact": "Statines (rhabdomyolyse), AVK, Ciclosporine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "rhabdomyolyse",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | INR si AVK | CPK si statines",
                     "suivi_periodique": "Bilan hépatique mensuel si traitement > 7j",
                     "alerte_clinique": "Hépatotoxicité → bilan hépatique urgent | Rhabdomyolyse si statines → CPK urgente | Augmentation INR",
@@ -1341,6 +1371,19 @@ const MASTER_DB = {
                     "albumine": "22 - 56 %",
                     "qt_risque": "",
                     "ddi_interact": "Aminosides, Diuretiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aminosides",
+                                        "dcis": [
+                                                  "gentamicine",
+                                                  "amikacine",
+                                                  "tobramycine",
+                                                  "streptomycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Calcemie | Phosphatemie | Créatinine/DFG (CI si DFG < 35) | 25-OH vitamine D | Bilan dentaire",
                     "suivi_periodique": "Calcemie (avant chaque perfusion) | Créatinine (avant chaque perfusion) | DMO (tous les 3 a 5 ans)",
                     "alerte_clinique": "Douleur machoire (osteonecrose) | Fracture femorale atypique | Symptomes hypocalcmie post-perfusion",
@@ -1370,6 +1413,7 @@ const MASTER_DB = {
                     "albumine": "0,7",
                     "qt_risque": "",
                     "ddi_interact": "Peu d'interaction",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS-plaquettes | Bilan hépatique (ASAT/ALAT) | Créatinine",
                     "suivi_periodique": "NFS + bilan hépatique (toutes les 2 semaines si traitement prolonge  echinococcose) | Créatinine (annuelle)",
                     "alerte_clinique": "Leucopenie/thrombopenie → NFS urgente | Ictère → bilan hépatique urgent | Alopecie (examen clinique)",
@@ -1400,6 +1444,32 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Calcium, Fer, Omeprazole",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Calcium",
+                                        "dcis": [
+                                                  "calcium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fer",
+                                        "dcis": [
+                                                  "fer"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Omeprazole",
+                                        "dcis": [
+                                                  "omeprazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Calcemie | Phosphatemie | Créatinine/DFG | 25-OH vitamine D",
                     "suivi_periodique": "Calcemie (annuelle) | Créatinine (annuelle) | DMO (tous les 3 a 5 ans sous traitement)",
                     "alerte_clinique": "Douleur machoire (osteonecrose) | Douleur femorale (fracture atypique) | Symptomes hypocalcmie",
@@ -1428,6 +1498,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Calcemie | Phosphatemie | Créatinine/DFG | PTH",
                     "suivi_periodique": "Calcemie + phosphatemie (tous les 3 mois) | PTH (tous les 6 mois) | Créatinine (annuelle)",
                     "alerte_clinique": "Hypercalcemie → calcemie urgente",
@@ -1456,6 +1527,7 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc) | TA (hypotension orthostatique)",
                     "suivi_periodique": "TA (consultations) | ECG (annuel si facteur de a risque QTc) | PSA (annuel  ne pas confondre avec cancer prostate)",
                     "alerte_clinique": "Hypotension orthostatique sévère → TA debout/couch | Allongement QTc",
@@ -1482,6 +1554,7 @@ const MASTER_DB = {
                     "albumine": "> 90 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Depresseurs SNC",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Agranulocytose (fievre → NFS urgente) | Allongement QTc",
@@ -1512,6 +1585,7 @@ const MASTER_DB = {
                     "albumine": "< 5 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Uricemie | Créatinine/DFG | NFS | Bilan hépatique | HLA-B*58:01 si origine asiatique",
                     "suivi_periodique": "Uricemie (tous les 3 a 6 mois jusqu'a objectif < 360 µmol/L, puis annuel) | Créatinine (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Eruption cutanee severe (SJS/TEN - risque HLA-B*58:01) → arret immediat | Syndrome d'hypersensibilite (DRESS) → arret immediat | Cytolyse → bilan hépatique urgent | Aplasie → NFS urgente",
@@ -1543,6 +1617,7 @@ const MASTER_DB = {
                     "albumine": "0,2",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG (ajustement de dose) | Bilan hépatique | Lipase",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Ictère/cytolyse → bilan hépatique urgent (hépatotoxicitédocumente) | Pancreatite → lipase",
@@ -1574,6 +1649,7 @@ const MASTER_DB = {
                     "albumine": "0,8",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique | NFS si usage prolonge",
                     "suivi_periodique": "Pas de biologie systematique  évaluation clinique de dependance/sevrage",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -1601,6 +1677,7 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique | Pas de bilan systematique habituel",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique leger (retention urinaire, constipation) - ACB=1",
@@ -1624,6 +1701,16 @@ const MASTER_DB = {
                     "albumine": "67",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Anticholinergiques (confusion), Diuretiques (elimination renale), Bupropion (convulsions)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bupropion",
+                                        "dcis": [
+                                                  "bupropion"
+                                        ],
+                                        "commentaire": "convulsions",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG (elimination renale exclusive) | Bilan cardiaque (ECG) | Bilan psychiatrique",
                     "suivi_periodique": "Créatinine (annuelle) | ECG (annuel) | Evaluation psychiatrique (annuelle)",
                     "alerte_clinique": "Insuffisance renale aigue → créatinine urgente (accumulation dangereuse) | Confusion/psychose → arret | Livedo reticularis (examen clinique - cutane benin) | Allongement QTc → ECG",
@@ -1651,6 +1738,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Peu d'interaction",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS (anemie dilutionnelle) | Hb | Test de grossesse | Bilan lipidique | Créatinine",
                     "suivi_periodique": "Bilan hépatique (mensuel) | NFS + Hb (tous les 3 mois) | Test de grossesse (mensuel si femme en age de procreer)",
                     "alerte_clinique": "ALAT/ASAT > 3N → adaptation dose ou arret | Anemie severe → NFS urgente",
@@ -1681,6 +1769,32 @@ const MASTER_DB = {
                     "albumine": "0-11",
                     "qt_risque": "",
                     "ddi_interact": "Vancomycine, furosemide, ciclosporine, cefalotine, curares",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Vancomycine",
+                                        "dcis": [
+                                                  "vancomycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "furosemide",
+                                        "dcis": [
+                                                  "furosemide"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Bilan auditif (audiogramme) | Ionogramme (hypomagnesiemie) | Dosage pic et residuelle",
                     "suivi_periodique": "Dosage serique: pic > 60mg/L (1 injection/j), residuelle < 2.5mg/L avant injection | Créatinine (quotidienne en hospitalisation)",
                     "alerte_clinique": "Nephrotoxicite → créatinine + dosage urgents (IRA tubulaire proximale) | Ototoxicite irreversible → bilan auditif (atteinte cochleaire et vestibulaire) | Hypomagnesiemie → ionogramme",
@@ -1709,6 +1823,7 @@ const MASTER_DB = {
                     "albumine": "10 - 20 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme complet | Créatinine/DFG | Kaliemie",
                     "suivi_periodique": "Ionogramme + créatinine (annuel)",
                     "alerte_clinique": "Hyperkaliemie | Hyponatremie",
@@ -1737,6 +1852,16 @@ const MASTER_DB = {
                     "albumine": "40-60",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Memes interactions theophylline | Adeneralsine (antagonisme - relais test de stress)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Memes interactions theophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | ECG | Bilan renal | Dosage serique theophylline | Ionogramme (kaliemie)",
                     "suivi_periodique": "Dosage serique theophylline (frequente en hospitalisation) | ECG (quotidien en hospitalisation si IV)",
                     "alerte_clinique": "Surdosage (arythmies, convulsions) → dosage serique urgent + ECG | Hypokaliemie → ionogramme | Tachycardie",
@@ -1767,6 +1892,7 @@ const MASTER_DB = {
                     "albumine": "> 96 %",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "CYP3A4/1A2 inhibiteur puissant, QT long",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc) | Bilan thyroidien (TSH + FT4 + FT3) | Bilan hépatique | NFS | Bilan pulmonaire (EFR + radio) | Bilan ophtalmique | Iode urinaire | Créatinine",
                     "suivi_periodique": "ECG (QTc - tous les 6 mois) | TSH + FT4 (tous les 6 mois) | Bilan hépatique (tous les 6 mois) | EFR + radio thorax (annuel) | Bilan ophtalmique (annuel) | Bilan thyroidien avant chaque chirurgie",
                     "alerte_clinique": "Hypothyroidie → TSH eleve | Hyperthyroidie/thyrotoxicose → TSH effondree (ECG urgent + avis endocrino) | Pneumopathie interstitielle → EFR urgente | Cytolyse → bilan hépatique urgent | Allongement QTc → ECG monitoring",
@@ -1799,6 +1925,7 @@ const MASTER_DB = {
                     "albumine": "0,16",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | Glycemie/HbA1c | Bilan lipidique | ECG (QTc) | Prolactinemie | Poids/IMC | Ionogramme",
                     "suivi_periodique": "NFS (annuelle) | Glycemie/HbA1c (annuelle) | Bilan lipidique (annuel) | ECG (QTc annuel) | Prolactinemie (si symptomes) | Poids (a chaque consultation)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Syndrome malin neuroleptique (fievre + rigidit → CPK urgente) | Agranulocytose → NFS urgente",
@@ -1832,6 +1959,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO - Serotoninergiques - Anticholinergiques",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Glycemie si diabete",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel) | Ionogramme (natremie) (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Surdosage cardiaque (BAV, TV) → ECG urgent + dosage | Ictère | SIADH",
@@ -1866,6 +1994,36 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "",
                     "ddi_interact": "Macrolides, Diltiazem, Verapamil, Grapefruit",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "diltiazem",
+                                                  "verapamil"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Grapefruit",
+                                        "dcis": [
+                                                  "pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA | Bilan hépatique (prudence si insuffisance hépatique sévère)",
                     "suivi_periodique": "TA (consultations) | Bilan hépatique si symptomes (ictère rare)",
                     "alerte_clinique": "Ictère → bilan hépatique | œdemes des membres infrieurs (examen clinique)",
@@ -1893,6 +2051,16 @@ const MASTER_DB = {
                     "albumine": "90",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), Alcool, QT-prolongateurs, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Glycemie",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Syndrome extrapyramidal (metabolite actif antipsychotique D2) | Dyskinesie tardive | Convulsions (abaisse seuil)",
@@ -1922,6 +2090,7 @@ const MASTER_DB = {
                     "albumine": "18-25",
                     "qt_risque": "",
                     "ddi_interact": "Probiotiques (absorption), contraceptifs oraux",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal si IRC | NFS si traitement prolonge | Bilan hépatique si allergie sulfamide",
                     "suivi_periodique": "Pas de biologie systematique (traitement court) | Créatinine si IRC",
                     "alerte_clinique": "Eruption cutanee (allergie) | Reaction anaphylactique | Hepatite cholestatique si ac.clav associe | Aplasie si traitement prolonge → NFS urgente",
@@ -1948,6 +2117,38 @@ const MASTER_DB = {
                     "albumine": "25",
                     "qt_risque": "? Risque Conditionnel (QT faible)",
                     "ddi_interact": "IPP (absorption), Methotrexate, AVK (potentiation)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IPP",
+                                        "dcis": [
+                                                  "omeprazole",
+                                                  "esomeprazole",
+                                                  "lansoprazole",
+                                                  "pantoprazole",
+                                                  "rabeprazole"
+                                        ],
+                                        "commentaire": "absorption",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS | Créatinine si IRC",
                     "suivi_periodique": "Bilan hépatique si traitement > 2 semaines | Pas de biologie systematique usage court",
                     "alerte_clinique": "Hepatite cholestatique (risque major avec ac.clav) → bilan hépatique urgent | Eruption cutanee | Diarrhee a C.difficile",
@@ -1975,6 +2176,26 @@ const MASTER_DB = {
                     "albumine": "15-25",
                     "qt_risque": "",
                     "ddi_interact": "Methotrexate, AVK",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | NFS | Bilan hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Eruption cutanee (mononucleose +++) | Hepatite → bilan hépatique",
@@ -2002,6 +2223,18 @@ const MASTER_DB = {
                     "albumine": "28-38",
                     "qt_risque": "",
                     "ddi_interact": "AVK (potentiation)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | NFS | Bilan hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Eruption cutanee | Hepatite cholestatique",
@@ -2029,6 +2262,39 @@ const MASTER_DB = {
                     "albumine": "87",
                     "qt_risque": "",
                     "ddi_interact": "AINS, Aspirine, Fluconazole",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Aspirine",
+                                        "dcis": [
+                                                  "aspirine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fluconazole",
+                                        "dcis": [
+                                                  "fluconazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG (CI si DFG < 15) | Bilan hépatique | NFS | INR si relais AVK | Hb/Ht",
                     "suivi_periodique": "Créatinine + bilan hépatique (annuel) | NFS (annuelle) | Hb si suspicion saignement occulte",
                     "alerte_clinique": "Saignement → Hb urgente | Insuffisance renale aigu → créatinine urgente",
@@ -2060,6 +2326,7 @@ const MASTER_DB = {
                     "albumine": "Faible",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA si insuffisance cardiovasculaire",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique)",
                     "alerte_clinique": "Allergie conjonctivale locale (examen ophtalmologique)",
@@ -2084,6 +2351,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "CYP3A4 substrat/inducteur",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique (prudence si insuffisance hépatique severe)",
                     "suivi_periodique": "Pas de biologie systematique (utilisation courte)",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -2111,6 +2379,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | Glycemie/HbA1c | Bilan lipidique | ECG (QTc) | Poids/IMC",
                     "suivi_periodique": "Glycemie/HbA1c (annuelle) | Bilan lipidique (annuel) | NFS (annuelle) | Poids (a chaque consultation)",
                     "alerte_clinique": "Syndrome malin neuroleptique → CPK urgente | Hypoglycemie si associations",
@@ -2146,6 +2415,7 @@ const MASTER_DB = {
                     "albumine": "> 90 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS + reticulocytes | Ferritine | Fer serique + transferrine + CSat",
                     "suivi_periodique": "NFS + reticulocytes (a 4 semaines) | Ferritine (a 3 mois) | Bilan martial (a 6 mois)",
                     "alerte_clinique": "Absence de reponse → bilan etiologique",
@@ -2174,6 +2444,16 @@ const MASTER_DB = {
                     "albumine": "95",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, QT-prolongateurs, Inhibiteurs CYP1A2 (fluvoxamine)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie/HbA1c | Bilan lipidique | Poids/IMC",
                     "suivi_periodique": "Glycemie/HbA1c (annuelle) | Bilan lipidique (annuel) | NFS (annuelle) | ECG (QTc annuel) | Bilan hépatique (annuel) | Poids (chaque consultation)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Syndrome malin neuroleptique → CPK urgente | Reactions d'hypersensibilite cutanees severes → arret immediat",
@@ -2206,6 +2486,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Protease VHC (CYP3A4)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique (ALAT/ASAT/bilirubine) | NFS | Créatinine",
                     "suivi_periodique": "Bilan hépatique (tous les 3 mois) | NFS (mensuelle si anemiante)",
                     "alerte_clinique": "Cytolyse severe → bilan hépatique urgent",
@@ -2236,6 +2517,7 @@ const MASTER_DB = {
                     "albumine": "0,86",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Protease (CYP3A4)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique (bilirubine +++) | NFS | Bilan lipidique | Glycemie | Créatinine | Srologie VHB/VHC | ECG (PR)",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a 6 mois) | Bilan lipidique (annuel) | Glycemie (annuelle) | ECG (annuel) | Charge virale + CD4",
                     "alerte_clinique": "Ictère (hyperbilirubinemie indirecte benigneee, sans hépatotoxicité) → bilirubine | BAV (allongement PR) → ECG urgent | Lithiase renale",
@@ -2268,6 +2550,7 @@ const MASTER_DB = {
                     "albumine": "< 10 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Glycemie/HbA1c si diabte | Créatinine/DFG | ECG",
                     "suivi_periodique": "FC/TA (consultations) | Créatinine (annuelle) | Glycemie (annuelle si DT2)",
                     "alerte_clinique": "Bradycardie → ECG",
@@ -2297,6 +2580,23 @@ const MASTER_DB = {
                     "albumine": "5 % (Atenolol) et 75 % (Chlortalidone)",
                     "qt_risque": "",
                     "ddi_interact": "Antiarythmiques - AINS - Lithium",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme complet | Créatinine/DFG | ECG | Glycemie/HbA1c | Uricemie | Bilan lipidique",
                     "suivi_periodique": "Ionogramme + créatinine (annuel) | Glycemie (annuelle) | Uricemie (annuelle) | ECG (annuel) | TA/FC (consultations)",
                     "alerte_clinique": "Hypokaliemie (chlortalidone) | Bradycardie (atenolol) → ECG | Hyperuricemie/goutte",
@@ -2330,6 +2630,27 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Macrolides, Azoles, Amiodarone, Protease",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Amiodarone",
+                                        "dcis": [
+                                                  "amiodarone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (ASAT/ALAT) | CPK | Glycemie/HbA1c | Bilan lipidique complet",
                     "suivi_periodique": "Bilan lipidique ( 6 a 8 semaines puis annuel) | ASAT/ALAT (si symptomes hépatiques) | CPK si myalgies | HbA1c (annuelle  lgre augmentation a risque DT2)",
                     "alerte_clinique": "Myalgies/crampes → CPK (rhabdomyolyse si CPK > 10N) | Ictère → ASAT/ALAT urgente",
@@ -2361,6 +2682,7 @@ const MASTER_DB = {
                     "albumine": "0,5",
                     "qt_risque": "",
                     "ddi_interact": "N/A en local (interactions si passage systemique)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG si usage systmique (tachycardie) | Pas de biologie specifique si usage ponctuel",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Tachycardie → ECG | Retention urinaire | Glaucome aigu",
@@ -2387,6 +2709,49 @@ const MASTER_DB = {
                     "albumine": "> 20",
                     "qt_risque": "",
                     "ddi_interact": "Allopurinol (CI absolue ou reduction dose 75% - accumulation 6-mercaptopurine fatale +++), AVK (reduction efficacite), AINS, Co-trimoxazole (myelosuppression additive), Methotrexate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Allopurinol",
+                                        "dcis": [
+                                                  "allopurinol"
+                                        ],
+                                        "commentaire": "CI absolue ou reduction dose 75% - accumulation 6-mercaptopurine fatale +++",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "reduction efficacite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS-plaquettes (OBLIGATOIRE myelosuppression dose-dependante) | Bilan hépatique | Créatinine | Bilan infectieux | TPMT/NUDT15 genotypage (si possible) | Bilan thyroidien (maladie auto-immune)",
                     "suivi_periodique": "NFS (hebdomadaire 1er mois, bimensuelle 3 mois, mensuelle ensuite) | Bilan hépatique (mensuel 1er trimestre puis trimestriel) | Créatinine (trimestrielle)",
                     "alerte_clinique": "Myelosuppression (leucopenie, thrombopenie, anemie) → NFS urgente | Hépatotoxicité (VOD, veino-occlusive hépatique, peliose) → bilan hépatique urgent | Lymphome (risque cumule) | Pancreatite → lipase urgente | Cancers cutanes (surveillance clinique annuelle)",
@@ -2418,6 +2783,47 @@ const MASTER_DB = {
                     "albumine": "51",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "Statines (rhabdomyolyse), AVK (potentiation), Colchicine, Digoxine, QT-prolongateurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "rhabdomyolyse",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Colchicine",
+                                        "dcis": [
+                                                  "colchicine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Bilan hépatique | Bilan renal si insuffisance renale severe",
                     "suivi_periodique": "ECG si traitement > 5j ou FR QTc",
                     "alerte_clinique": "Allongement QTc (risque doses-dependant) → ECG urgent | Hépatotoxicité cholestatique → bilan hépatique urgent | Interaction pharmacocinetique majeure (inhibiteur CYP3A4 modere)",
@@ -2445,6 +2851,19 @@ const MASTER_DB = {
                     "albumine": "56%",
                     "qt_risque": "",
                     "ddi_interact": "Pas d interaction majeure | Surveillance si association aminosides (nephrotoxicite)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aminosides",
+                                        "dcis": [
+                                                  "gentamicine",
+                                                  "amikacine",
+                                                  "tobramycine",
+                                                  "streptomycine"
+                                        ],
+                                        "commentaire": "nephrotoxicite",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine | NFS | Bilan hépatique",
                     "suivi_periodique": "Créatinine (2x/sem si IRC) | NFS (hebdomadaire si traitement prolonge)",
                     "alerte_clinique": "Allergie croisee rare avec penicillines (< 1%) | Diarrhee a Clostridioides | Thrombophlebite au site IV",
@@ -2472,6 +2891,51 @@ const MASTER_DB = {
                     "albumine": "30",
                     "qt_risque": "",
                     "ddi_interact": "Alcool (coma), Benzodiazepines (depression respiratoire), Lithium (neurotoxicite), Tramadol (seuil epilepsie)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "coma",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "depression respiratoire",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "neurotoxicite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "seuil epilepsie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | Créatinine/DFG (elimination renale) | Bilan neurologique (seuil epilepsie) | Bilan psychiatrique",
                     "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle) | Evaluation psychiatrique (annuelle) | Evaluation clinique sevrage (systematique)",
                     "alerte_clinique": "Surdosage (coma, depression respiratoire, confusion) → urgence | Sevrage brutal dangereux (convulsions, hallucinations) → toujours arret progressif | Hépatotoxicité (rare) → bilan hépatique | Confusion/somnolence (debut traitement)",
@@ -2502,6 +2966,7 @@ const MASTER_DB = {
                     "albumine": "0,87",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Cortisol si a forte dose/traitement prolonge (bilan surrenalien)",
                     "suivi_periodique": "Cortisol matinal (annuel si >1000 g/j prolonge) | Densitometrie osseuse (si facteurs de a risque + a forte dose)",
                     "alerte_clinique": "Insuffisance surrenalienne aigu (surtout si arret brutal ou chirurgie)",
@@ -2528,6 +2993,41 @@ const MASTER_DB = {
                     "albumine": "99.9",
                     "qt_risque": "Risque Etabli (RE) - surveiller ECG mensuel",
                     "ddi_interact": "Inducteurs/inhibiteurs CYP3A4, Clofazimine (QT additif +++), Alcool, Voriconazole",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Voriconazole",
+                                        "dcis": [
+                                                  "voriconazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc - allongement dose-dependant) | Bilan hépatique | NFS | Bilan renal | Dosage serique si possible",
                     "suivi_periodique": "ECG (mensuel) | Bilan hépatique (mensuel) | NFS (mensuelle)",
                     "alerte_clinique": "Allongement QTc (risque TdP - surtout si clofazimine associe) → ECG urgent | Hépatotoxicité (mortelle documentee) → bilan hépatique urgent | Nausees graves",
@@ -2556,6 +3056,16 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques (cumul ACB +++)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Evaluation cognitive chez sujet age | ECG si cardiopathie | Bilan ophtalmique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique severe (alcaloides belladone - ACB=3) | Tachycardie | Glaucome aigu | EVITER sujet age",
@@ -2581,6 +3091,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | NFS",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Angio-oedeme (clinique)",
@@ -2609,6 +3120,7 @@ const MASTER_DB = {
                     "albumine": "50-60",
                     "qt_risque": "",
                     "ddi_interact": "Probiotiques, tetracyclines (antagonisme)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal si IRC | Recherche allergie penicilline",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Reaction de Jarisch-Herxheimer (syphilis) | Anaphylaxie",
@@ -2634,6 +3146,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Uricosurique",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Uricémie | Créatinine/DFG (CI si DFG<20) | Bilan hépatique (hépatotoxicité) | NFS",
                     "suivi_periodique": "Uricémie (tous les 3 à 6 mois jusqu'à cible puis annuel) | Bilan hépatique (tous les 3 mois la 1ère année — hépatotoxicité sévère documentée) | Créatinine (annuelle)",
                     "alerte_clinique": "Ictère → arrêt immédiat + bilan hépatique urgent (hépatite fulminante documentée) | Colique néphrétique (uricosurique → lithiase)",
@@ -2665,6 +3178,16 @@ const MASTER_DB = {
                     "albumine": "95",
                     "qt_risque": "",
                     "ddi_interact": "Alcool, Anticholinergiques (cumul ACB)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Evaluation cognitive | Bilan ophtalmique | Bilan urologique",
                     "suivi_periodique": "Evaluation cognitive (annuelle) | Pression intraoculaire (annuelle)",
                     "alerte_clinique": "Syndrome anticholinergique severe | EVITER sujet age (ACB=3)",
@@ -2688,6 +3211,7 @@ const MASTER_DB = {
                     "albumine": "60 - 65 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Glycemie/HbA1c | Ionogramme (kalimie) | Bilan lipidique | Cortisol matinal (si traitement prolonge) | NFS | Créatinine | Densitometrie osseuse si traitement >3 mois",
                     "suivi_periodique": "Glycemie (semestrielle) | Ionogramme (annuel) | Bilan lipidique (annuel) | Cortisol (annuel) | Densitometrie osseuse (tous les 2 ans si traitement prolonge) | DMO/vitamine D/calcium si traitement prolonge",
                     "alerte_clinique": "Hyperglycemie → glycémie urgente | Hypokaliemie → ionogramme urgent | Insuffisance surrenalienne  l'arret",
@@ -2721,6 +3245,7 @@ const MASTER_DB = {
                     "albumine": "0,5",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Glycemie si diabte",
                     "suivi_periodique": "FC/TA (consultations) | Glycemie (annuelle si DT2)",
                     "alerte_clinique": "Bradycardie → ECG",
@@ -2748,6 +3273,7 @@ const MASTER_DB = {
                     "albumine": "0,88",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie systematique",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique trimestriel)",
                     "alerte_clinique": "Inflammation oculaire (examen ophtalmologique)",
@@ -2772,6 +3298,16 @@ const MASTER_DB = {
                     "albumine": "0,94",
                     "qt_risque": "",
                     "ddi_interact": "Anticholinergiques - Quinidine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Anticholinergiques - Quinidine",
+                                        "dcis": [
+                                                  "quinidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire | Glaucome aigu",
@@ -2796,6 +3332,16 @@ const MASTER_DB = {
                     "albumine": "< 5",
                     "qt_risque": "",
                     "ddi_interact": "Antiacides, lait (deprotegent enrobage)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme si utilisation chronique (hypokaliemie) | Bilan renal si IRC",
                     "suivi_periodique": "Ionogramme annuel si usage chronique",
                     "alerte_clinique": "Hypokaliemie (laxatif stimulant) → ionogramme | Melanose colique si usage chronique (benigneee) | Douleurs abdominales",
@@ -2821,6 +3367,7 @@ const MASTER_DB = {
                     "albumine": "0,3",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Glycemie/HbA1c si diabte | Créatinine si IRC",
                     "suivi_periodique": "FC (consultation) | Glycemie (annuelle si DT2)",
                     "alerte_clinique": "Bradycardie/BAV → ECG",
@@ -2850,6 +3397,7 @@ const MASTER_DB = {
                     "albumine": "0,75",
                     "qt_risque": "",
                     "ddi_interact": "Protease VHC",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS-plaquettes (anemie+++) | Bilan hépatique | Créatinine | Bilan hormonal",
                     "suivi_periodique": "NFS (toutes les 2 semaines la 1ere annee) | Bilan hépatique (tous les 3 mois)",
                     "alerte_clinique": "Anemie severe → NFS urgente (necessite EPO souvent) | Thrombopenie → NFS urgente | Cytolyse → bilan hépatique urgent",
@@ -2880,6 +3428,20 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "CYP3A4 inducteur puissant",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique COMPLET (REMS  programme de surveillance obligatoire) | NFS (anemie) | Hemoglobine | Créatinine | Bilan lipidique | Test de grossesse (teratogene  CI absolue)",
                     "suivi_periodique": "Bilan hépatique MENSUEL OBLIGATOIRE (programme REMS EU) | NFS + Hb (tous les a 3 mois  anemie dilutionnelle) | Test de grossesse mensuel si femme en ge de procrer | Bilan lipidique (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "ALAT/ASAT > 3N → adaptation dose ou arret (REMS) | > 5N → arret immediat | Anemie sévère → NFS urgente",
@@ -2910,6 +3472,7 @@ const MASTER_DB = {
                     "albumine": "0,29",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA si traitement systmique hypotenseur associ",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique)",
                     "alerte_clinique": "Hypotension (surtout si btabloquants systmiques associs)",
@@ -2934,6 +3497,7 @@ const MASTER_DB = {
                     "albumine": "0,6",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG si IRC (CI si DFG < 30) | Calcemie (inhibiteur anhydrase carbonique)",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique) | Créatinine (annuelle si IRC)",
                     "alerte_clinique": "Acidose metabolique (insuffisance renale sévère)",
@@ -2961,6 +3525,7 @@ const MASTER_DB = {
                     "albumine": "0,7",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -2988,6 +3553,27 @@ const MASTER_DB = {
                     "albumine": "96",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Macrolides (augmente concentration), Antihypertenseurs (hypotension additive), Alcool (vomissements)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "augmente concentration",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "vomissements",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | ECG (arythmies) | Bilan pulmonaire (fibrose pleurale si traitement prolonge) | TA | Bilan ophtalmique",
                     "suivi_periodique": "Bilan hépatique (annuel) | ECG (annuel) | TA (chaque consultation) | EFR (tous les 2 ans si dose > 30mg/j)",
                     "alerte_clinique": "Fibrose pleurale/retroperitoneale (traitement prolonge > forte dose) → EFR + imagerie | Arythmies → ECG urgent | Hypotension orthostatique | Erythromelalgie (douleur + rougeur membres)",
@@ -3015,6 +3601,16 @@ const MASTER_DB = {
                     "albumine": "> 95",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques, QT-prolongateurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG si FR QTc | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique (EVITER sujet age - ACB=2) | Allongement QTc",
@@ -3040,6 +3636,7 @@ const MASTER_DB = {
                     "albumine": "85 - 90 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Cortisol si a forte dose | Glycemie si DT2 (effet hyperglycmiant possible  a forte dose)",
                     "suivi_periodique": "Cortisol (annuel si a forte dose prolongee) | Densitometrie osseuse (si facteurs de a risque)",
                     "alerte_clinique": "Insuffisance surrenalienne",
@@ -3067,6 +3664,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme complet | Créatinine/DFG | Uricemie",
                     "suivi_periodique": "Ionogramme + créatinine (tous les 3 a 6 mois)",
                     "alerte_clinique": "Hypokaliemie | Hyponatremie | Deshydratation",
@@ -3096,6 +3694,7 @@ const MASTER_DB = {
                     "albumine": "0,96",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique (hépatotoxicité documentee) | Créatinine/DFG | NFS | Dosage urinaire (compliance)",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a 6 mois la 1ere annee) | Créatinine (annuelle)",
                     "alerte_clinique": "Hépatotoxicité surtout IV illicite → bilan hépatique urgent | Depression respiratoire si benzodiazepines associees",
@@ -3126,6 +3725,7 @@ const MASTER_DB = {
                     "albumine": "0,84",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "CYP2D6 inhibiteur puissant",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | ECG si cardiopathie | NFS | Bilan hépatique | Glycemie/HbA1c",
                     "suivi_periodique": "TA (consultations) | Bilan hépatique (annuel) | NFS (annuelle)",
                     "alerte_clinique": "Convulsions (examen clinique  a risque eepilepsie  dose leve) | HTA → TA",
@@ -3158,6 +3758,7 @@ const MASTER_DB = {
                     "albumine": "0,86",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "CYP3A4 substrat",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -3185,6 +3786,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "25-OH vitamine D | Calcemie | Phosphatemie | Créatinine/DFG | PTH",
                     "suivi_periodique": "25-OH vitamine D ( a 3 mois puis annuelle  objectif 30-60 ng/mL) | Calcemie (annuelle) | PTH (annuelle si IRC)",
                     "alerte_clinique": "Hypercalcemie → calcmie urgente",
@@ -3214,6 +3816,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Calcemie | Phosphatemie | Créatinine/DFG | PTH",
                     "suivi_periodique": "Calcemie + phosphatmie (tous les a 3 mois) | PTH (tous les a 6 mois) | Créatinine (annuelle)",
                     "alerte_clinique": "Hypercalcemie → calcmie urgente",
@@ -3242,6 +3845,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG (CI si DFG < 30) | Kaliemie | Bilan lipidique | ECBU",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine/DFG (annuelle) | Calcemie/Phosphatemie (prudence en cas d'IRC)",
                     "alerte_clinique": "Cetonemie (acidocetose) | Fractures (risque osseux) | Amputation (surveillance pieds)",
@@ -3273,6 +3877,7 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -3301,6 +3906,7 @@ const MASTER_DB = {
                     "albumine": "0,3",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | NFS | Proteinurie (2 a 3 fois/semaine debut)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel) | NFS (si maladies auto-immunes)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Neutropenie → NFS urgente (fievre) | Angio-oedeme",
@@ -3331,6 +3937,29 @@ const MASTER_DB = {
                     "albumine": "70 - 80 %",
                     "qt_risque": "",
                     "ddi_interact": "Warfarine, Contraceptifs, Statines",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Warfarine",
+                                        "dcis": [
+                                                  "warfarine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | Ionogramme (SIADH) | ECG | Créatinine | Bilan thyroidien | Dosage serologique (fenetre 4-12 mg/L)",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | Ionogramme (annuel - risque SIADH) | ECG (annuel) | Dosage serique (a M1 puis annuel)",
                     "alerte_clinique": "Hyponatremie (SIADH) → ionogramme urgent | Eruption cutanee severe (SJS/NET) → arret immediat | Aplasie → NFS urgente (fievre) | Cytolyse → bilan hépatique urgent",
@@ -3363,6 +3992,16 @@ const MASTER_DB = {
                     "albumine": "36",
                     "qt_risque": "",
                     "ddi_interact": "IMAO (CI absolue), Fer (chelation)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Fer",
+                                        "dcis": [
+                                                  "fer"
+                                        ],
+                                        "commentaire": "chelation",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS",
                     "suivi_periodique": "Bilan hépatique (annuel) | NFS (annuelle)",
                     "alerte_clinique": "Psychose/hallucinations | Dyskinesies | Nausees (transitoires)",
@@ -3390,6 +4029,7 @@ const MASTER_DB = {
                     "albumine": "0,4",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS-plaquettes | Bilan hépatique | TSH + FT4 | Bilan renal",
                     "suivi_periodique": "NFS (hebdomadaire les 3 premieres semaines, puis mensuel la 1ere annee) | TSH + FT4 (tous les 4-6 semaines) | Bilan hépatique (si symptomes)",
                     "alerte_clinique": "Agranulocytose → NFS urgente (fievre) | Ictère → bilan hépatique | Hypothyroidie → TSH",
@@ -3421,6 +4061,16 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG si FR QTc | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique (EVITER sujet age - ACB=3) | Allongement QTc",
@@ -3446,6 +4096,7 @@ const MASTER_DB = {
                     "albumine": "~ 45 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Calcemie | Phosphatemie | Créatinine/DFG",
                     "suivi_periodique": "Calcemie (annuelle) | Créatinine (annuelle si IRC)",
                     "alerte_clinique": "Hypercalcemie (syndrome lait-alcalin si surdosage) | Constipation (examen clinique)",
@@ -3473,6 +4124,7 @@ const MASTER_DB = {
                     "albumine": "0,15",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Glycemie si diabte",
                     "suivi_periodique": "FC/TA (consultations)",
                     "alerte_clinique": "Bradycardie → ECG",
@@ -3500,6 +4152,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Bilan hépatique (limination hépatique) | Glycemie/HbA1c | Bilan lipidique",
                     "suivi_periodique": "FC/TA (consultations) | Bilan hépatique (si symptomes) | Glycemie (annuelle)",
                     "alerte_clinique": "Bradycardie → ECG | Ictère → bilan hépatique",
@@ -3530,6 +4183,7 @@ const MASTER_DB = {
                     "albumine": "> 97 %",
                     "qt_risque": "",
                     "ddi_interact": "CYP3A4 substrat",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique (utilisation courte)",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -3557,6 +4211,7 @@ const MASTER_DB = {
                     "albumine": "25",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal si IRC | NFS",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Maladie serique (eruption + arthralgie) | Reaction allergique",
@@ -3582,6 +4237,7 @@ const MASTER_DB = {
                     "albumine": "20",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal si IRC",
                     "suivi_periodique": "Créatinine si IRC",
                     "alerte_clinique": "Reaction allergique croisee penicilline (5-10%)",
@@ -3607,6 +4263,7 @@ const MASTER_DB = {
                     "albumine": "15",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal si IRC",
                     "suivi_periodique": "Créatinine si IRC",
                     "alerte_clinique": "Reaction allergique",
@@ -3632,6 +4289,26 @@ const MASTER_DB = {
                     "albumine": "74",
                     "qt_risque": "",
                     "ddi_interact": "AVK, alcool (effet antabuse)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "effet antabuse",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | INR (effet antivitamine K) | Bilan renal",
                     "suivi_periodique": "INR si traitement > 5 jours",
                     "alerte_clinique": "Hypoprothrombinemie (effet anti-vitamine K) → INR | Reaction antabuse si alcool",
@@ -3658,6 +4335,18 @@ const MASTER_DB = {
                     "albumine": "74-86",
                     "qt_risque": "",
                     "ddi_interact": "AVK (deplacee albumine)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "deplacee albumine",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | NFS si traitement prolonge",
                     "suivi_periodique": "Créatinine si traitement > 7 jours",
                     "alerte_clinique": "Reaction allergique | Neutropenie si prolonge → NFS",
@@ -3685,6 +4374,7 @@ const MASTER_DB = {
                     "albumine": "40",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal (ajustement obligatoire) | NFS | Bilan hépatique",
                     "suivi_periodique": "Créatinine (regulier en UCI)",
                     "alerte_clinique": "Nephrotoxicite possible",
@@ -3713,6 +4403,7 @@ const MASTER_DB = {
                     "albumine": "65",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal si IRC",
                     "suivi_periodique": "Créatinine si IRC",
                     "alerte_clinique": "Reaction allergique | Diarrhee a C.difficile",
@@ -3738,6 +4429,7 @@ const MASTER_DB = {
                     "albumine": "40",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal | NFS si traitement prolonge | Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique (traitement court)",
                     "alerte_clinique": "Reaction allergique | Neutropenie si prolonge",
@@ -3765,6 +4457,18 @@ const MASTER_DB = {
                     "albumine": "73",
                     "qt_risque": "",
                     "ddi_interact": "AVK (deplacee albumine)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "deplacee albumine",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | NFS",
                     "suivi_periodique": "Créatinine si IRC",
                     "alerte_clinique": "Reaction allergique",
@@ -3791,6 +4495,7 @@ const MASTER_DB = {
                     "albumine": "17",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal | NFS si traitement prolonge",
                     "suivi_periodique": "Créatinine si traitement > 7 jours",
                     "alerte_clinique": "Neutropenie si prolonge → NFS | Reaction allergique",
@@ -3819,6 +4524,7 @@ const MASTER_DB = {
                     "albumine": "8",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal (ajustement obligatoire) | NFS",
                     "suivi_periodique": "Créatinine (regulier en UCI)",
                     "alerte_clinique": "Neurotoxicite si IRC | Neutropenie",
@@ -3847,6 +4553,7 @@ const MASTER_DB = {
                     "albumine": "16",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal | NFS",
                     "suivi_periodique": "Créatinine si traitement > 7 jours",
                     "alerte_clinique": "Reaction allergique | Neutropenie",
@@ -3875,6 +4582,7 @@ const MASTER_DB = {
                     "albumine": "16-30",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal (ajustement obligatoire) | NFS",
                     "suivi_periodique": "Créatinine (regulier en UCI)",
                     "alerte_clinique": "Nephrotoxicite | Neutropenie",
@@ -3903,6 +4611,16 @@ const MASTER_DB = {
                     "albumine": "85-96",
                     "qt_risque": "",
                     "ddi_interact": "Calcium IV (precipitation - CI administration simultanee)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Calcium IV",
+                                        "dcis": [
+                                                  "calcium"
+                                        ],
+                                        "commentaire": "precipitation - CI administration simultanee",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal si IRC severe | Bilan hépatique si insuffisance hépatique | Calcemie (faux positif)",
                     "suivi_periodique": "Pas de biologie systematique (usage courant court)",
                     "alerte_clinique": "Precipitation bilirubine (ictère neonatal - CI nouveau-ne) | Cholestase pseudo-lithiasique (traitement prolonge) | Faux positif calcemie",
@@ -3931,6 +4649,7 @@ const MASTER_DB = {
                     "albumine": "33-50",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal si IRC",
                     "suivi_periodique": "Créatinine si IRC",
                     "alerte_clinique": "Reaction allergique | Diarrhee",
@@ -3956,6 +4675,42 @@ const MASTER_DB = {
                     "albumine": "97",
                     "qt_risque": "",
                     "ddi_interact": "AVK (potentiation), IEC/ARA2 (nephrotoxicite additive), Diuretiques, Lithium (augmente lithiemie), Acide fusidique (deplacent albumine)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "nephrotoxicite additive",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "augmente lithiemie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal (risque IRA) | Bilan hépatique | NFS | TA | Bilan cardiovasculaire (CI si ATCD cardiovasculaire majeur)",
                     "suivi_periodique": "Créatinine (annuelle) | TA (chaque consultation) | NFS (annuelle si usage prolonge)",
                     "alerte_clinique": "Insuffisance renale aigue (inhibition prostaglandines renales) → créatinine urgente | HTA | Risque cardiovasculaire (CI si IC classe III/IV, post-SCA) → TA + ECG | Hépatotoxicité → bilan hépatique | Saignement digestif (moindre que AINS classiques mais reel)",
@@ -3986,6 +4741,7 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Glycemie si diabte | Créatinine",
                     "suivi_periodique": "FC/TA (consultations)",
                     "alerte_clinique": "Bradycardie → ECG",
@@ -4014,6 +4770,7 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Glycemie si diabete | Créatinine",
                     "suivi_periodique": "FC/TA (consultations)",
                     "alerte_clinique": "Bradycardie → ECG",
@@ -4041,6 +4798,7 @@ const MASTER_DB = {
                     "albumine": "0,93",
                     "qt_risque": "",
                     "ddi_interact": "Non sedatif",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG si IRC sévère (ajustement de dose)",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Pas de biologie d'alerte specifique",
@@ -4067,6 +4825,33 @@ const MASTER_DB = {
                     "albumine": "96%",
                     "qt_risque": "",
                     "ddi_interact": "Alcool et depresseurs SNC (sedation additive) | Inhibiteurs CYP3A4 (augmentation exposition) | Opioides (depression respiratoire)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool et depresseurs SNC",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "sedation additive",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "augmentation exposition",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | Créatinine | Echelle de sedation",
                     "suivi_periodique": "Reevaluation reguliere de l indication (max 4 semaines) | Echelle de sedation | Risque de chutes",
                     "alerte_clinique": "PIM ABSOLU en geriatrie (Beers 2023) — demi-vie > 100h | Sevrage progressif obligatoire | Risque chutes ++ | Confusion",
@@ -4093,6 +4878,32 @@ const MASTER_DB = {
                     "albumine": "55-65",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "Digoxine (augmente concentration), Ciclosporine, QT-prolongateurs, Ampicilline, Amiodarone",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "augmente concentration",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Amiodarone",
+                                        "dcis": [
+                                                  "amiodarone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Bilan ophtalmique (fond d'oeil + champ visuel) | Bilan renal | G6PD si origine africaine/asiatique",
                     "suivi_periodique": "Bilan ophtalmique (annuel apres 5 ans de traitement) | NFS (annuelle) | Bilan hépatique (annuel) | ECG (annuel)",
                     "alerte_clinique": "Retinopathie irreversible (irresponsable si detection tardive) → bilan ophtalmique regulier OBLIGATOIRE | Myelotoxicite → NFS urgente | Allongement QTc → ECG urgent | Convulsions/psychose | Anemie hemolytique si deficit G6PD",
@@ -4122,6 +4933,7 @@ const MASTER_DB = {
                     "albumine": "0,72",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Sedatif, Anticholinergique",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire (examen clinique)",
@@ -4146,6 +4958,36 @@ const MASTER_DB = {
                     "albumine": "95 - 98 %",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Haloperidol, Metoclopramide, Tricycliques, QT long",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Haloperidol",
+                                        "dcis": [
+                                                  "haloperidol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Metoclopramide",
+                                        "dcis": [
+                                                  "metoclopramide"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tricycliques",
+                                        "dcis": [
+                                                  "amitriptyline",
+                                                  "clomipramine",
+                                                  "imipramine",
+                                                  "desipramine",
+                                                  "nortriptyline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Pas de biologie spcifique",
                     "suivi_periodique": "Pas de biologie systmatique",
                     "alerte_clinique": "Rtention urinaire (examen clinique)",
@@ -4169,6 +5011,36 @@ const MASTER_DB = {
                     "albumine": "95 - 98 %",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Haloperidol, Metoclopramide, Tricycliques, QT long",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Haloperidol",
+                                        "dcis": [
+                                                  "haloperidol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Metoclopramide",
+                                        "dcis": [
+                                                  "metoclopramide"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tricycliques",
+                                        "dcis": [
+                                                  "amitriptyline",
+                                                  "clomipramine",
+                                                  "imipramine",
+                                                  "desipramine",
+                                                  "nortriptyline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Bilan lipidique | Poids/IMC | TA",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie (annuelle) | Poids (a chaque consultation)",
                     "alerte_clinique": "Agranulocytose → NFS urgente (fievre) | Ictère → bilan hépatique urgent | Syndrome malin neuroleptique → CPK urgente | Allongement QTc",
@@ -4203,6 +5075,32 @@ const MASTER_DB = {
                     "albumine": "> 75",
                     "qt_risque": "",
                     "ddi_interact": "IEC/ARA2 (hypotension, hyperkaliemie), Lithium (augmente lithiemie), Digitaliques (risque hypokaliemie)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "hypotension, hyperkaliemie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "augmente lithiemie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme complet | Créatinine/DFG | Uricemie | Glycemie | Bilan lipidique",
                     "suivi_periodique": "Ionogramme + créatinine (annuel) | Glycemie (annuelle) | Uricemie (annuelle)",
                     "alerte_clinique": "Hypokaliemie | Hyponatremie | Hyperuricemie/goutte | Hyperglycemie",
@@ -4233,6 +5131,55 @@ const MASTER_DB = {
                     "albumine": "75%",
                     "qt_risque": "(QT) - Hypokaliemie → allongement QTc indirect",
                     "ddi_interact": "Lithium (augmentation lithemie) | AINS (diminution effet diuretique) | Digoxine (hypokaliemie → toxicite) | IEC/ARA2 (hypotension 1ere dose)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "augmentation lithemie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "diminution effet diuretique",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "hypokaliemie → toxicite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "hypotension 1ere dose",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme (K+, Na+) | Créatinine | Glycemie | Uricemie | TA couche/debout",
                     "suivi_periodique": "Ionogramme (1 mois puis trimestriel) | Créatinine | Glycemie (annuelle) | Uricemie (si ATCD goutte)",
                     "alerte_clinique": "Hyponatremie (surtout sujet age feminin) → ionogramme urgent | Hypokaliemie → ECG + supplementation | Hyperuricemie → crise de goutte | Hypotension orthostatique",
@@ -4261,6 +5208,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "25-OH vitamine D | Calcemie | Créatinine/DFG",
                     "suivi_periodique": "25-OH vitamine D ( 3 a a 6 mois de la correction puis annuelle) | Calcemie (annuelle)",
                     "alerte_clinique": "Hypercalcemie (surdosage massif uniquement  rare aux doses therapeutiques)",
@@ -4289,6 +5237,7 @@ const MASTER_DB = {
                     "albumine": "0,99",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Cortisol si a forte dose",
                     "suivi_periodique": "Cortisol (annuel si a forte dose prolongee)",
                     "alerte_clinique": "Insuffisance surrenalienne (rare aux doses therapeutiques)",
@@ -4315,6 +5264,39 @@ const MASTER_DB = {
                     "albumine": "95%",
                     "qt_risque": "",
                     "ddi_interact": "Lithium (augmentation lithemie) | AINS (diminution efficacite) | Digoxine (hypokaliemie)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "augmentation lithemie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "diminution efficacite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "hypokaliemie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme | Créatinine | TA couche/debout",
                     "suivi_periodique": "Ionogramme (1 mois puis trimestriel) | Créatinine | TA",
                     "alerte_clinique": "Hyponatremie → ionogramme | Hypokaliemie | Peu utilise en pratique courante",
@@ -4343,6 +5325,7 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme | Créatinine | Uricemie",
                     "suivi_periodique": "Ionogramme + créatinine (annuel)",
                     "alerte_clinique": "Hypokaliemie | Hyponatremie",
@@ -4371,6 +5354,7 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "(CR) - QTc rapporté en cas de magnésémie basse",
                     "ddi_interact": "CYP3A4 substrat puissant",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Bilan hépatique | Ionogramme | TA | NFS | Bilan lipidique | Uricemie | Dosage serique C0 ou C2",
                     "suivi_periodique": "Créatinine + dosage C0 (tous les 3 mois) | Bilan hépatique (tous les 3 mois) | Ionogramme (tous les 3 mois) | TA (chaque consultation) | Bilan lipidique (annuel)",
                     "alerte_clinique": "Nephrotoxicite → créatinine + dosage urgents | Hyperkaliemie → ionogramme | Hépatotoxicité → bilan hépatique | Hyperuricemie/goutte → uricemie | HTA refractaire → TA + adaptation dose",
@@ -4406,6 +5390,7 @@ const MASTER_DB = {
                     "albumine": "25 - 30 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Angio-oedeme",
@@ -4434,6 +5419,7 @@ const MASTER_DB = {
                     "albumine": "95 - 98 %",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "CYP3A4 substrat",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS-plaquettes | ECG (QTc) | Bilan hépatique | Créatinine/DFG",
                     "suivi_periodique": "NFS-plaquettes (annuelle) | ECG (annuel) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Thrombocytopenie → NFS urgente | Allongement QTc → ECG urgent | Insuffisance cardiaque (CONTRE-INDIQU si FEVG altre)",
@@ -4463,6 +5449,7 @@ const MASTER_DB = {
                     "albumine": "0,2",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "CYP3A4/2D6 inhibiteur",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Bilan hépatique | NFS",
                     "suivi_periodique": "Créatinine (annuelle  elevation créatinine par inhibition secretion tubulaire) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Cytolyse → bilan hépatique urgent",
@@ -4493,6 +5480,57 @@ const MASTER_DB = {
                     "albumine": "20-40",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "AVK (potentiation), AINS (epilepsie), Methotrexate, Theophylline, Antiacides",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "epilepsie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Theophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | ECG (QTc) | NFS | Glycemie si diabete",
                     "suivi_periodique": "Créatinine (annuelle) | ECG si traitement prolonge ou facteur de risque QT",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Tendino-rupture (tendon d'Achille - surtout si corticoides associes) → clinique | Hypoglycemie si antidiabetiques oraux (sulfamides) → glycemie urgente | Diarrhee a C.difficile",
@@ -4522,6 +5560,19 @@ const MASTER_DB = {
                     "albumine": "0,8",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "IMAO, Macrolides, QT long",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme (natremie) | ECG (QTc - allongement documente) | Bilan hépatique",
                     "suivi_periodique": "Natremie (a M1 puis annuelle) | ECG (QTc annuel - dose-dependant)",
                     "alerte_clinique": "Hyponatremie (SIADH) | Allongement QTc (dose-dependant, max 40 mg/j) → ECG urgent",
@@ -4551,6 +5602,71 @@ const MASTER_DB = {
                     "albumine": "42-70",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "Statines (rhabdomyolyse +++) , AVK, Digoxine, Colchicine, Tacrolimus, Ciclosporine, Carbamazepine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "rhabdomyolyse +++",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Colchicine",
+                                        "dcis": [
+                                                  "colchicine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tacrolimus",
+                                        "dcis": [
+                                                  "tacrolimus"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Carbamazepine",
+                                        "dcis": [
+                                                  "carbamazepine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Bilan hépatique | Bilan renal | Bilan lipidique si statines associees",
                     "suivi_periodique": "ECG annuel ou si symptomes | Bilan hépatique si traitement > 14j",
                     "alerte_clinique": "Allongement QTc majeur → ECG urgent | Hépatotoxicité cholestatique → bilan hépatique urgent | Rhabdomyolyse si statines (inhibiteur CYP3A4 puissant) → CPK urgente",
@@ -4580,6 +5696,16 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG si FR QTc | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique (ACB=2) | Allongement QTc",
@@ -4605,6 +5731,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | Bilan lipidique (mulsion lipidique IV) | Triglycrides",
                     "suivi_periodique": "Surveillance continue TA (usage hospitalier) | Triglycrides (si perfusion prolongee)",
                     "alerte_clinique": "Effet rebond HTA  l'arret",
@@ -4631,6 +5758,16 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "",
                     "ddi_interact": "Alcool, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique (EVITER sujet age - ACB=3) | Retention urinaire | Glaucome aigu",
@@ -4654,6 +5791,24 @@ const MASTER_DB = {
                     "albumine": "92%",
                     "qt_risque": "",
                     "ddi_interact": "Curares (potentialisation bloc neuromusculaire) | Erythromycine (antagonisme — ne pas associer) | Ciclosporine (diminution absorption ciclosporine)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Erythromycine",
+                                        "dcis": [
+                                                  "erythromycine"
+                                        ],
+                                        "commentaire": "antagonisme — ne pas associer",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "diminution absorption ciclosporine",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | Créatinine",
                     "suivi_periodique": "Surveillance diarrhee (C. difficile) | NFS si traitement > 10 jours | BH si traitement prolonge",
                     "alerte_clinique": "Colite pseudomembraneuse a C. difficile (toute diarrhee = suspicion) | Arret immediat si diarrhee sanglante | Reaction allergique cutanee",
@@ -4680,6 +5835,7 @@ const MASTER_DB = {
                     "albumine": "0,85",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS",
                     "suivi_periodique": "Bilan hépatique (annuel) | NFS (annuelle)",
                     "alerte_clinique": "Cytolyse → bilan hépatique",
@@ -4709,6 +5865,21 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO - ISRS - Depresseurs SNC",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Ictère → bilan hépatique urgent | SIADH → natremie urgente",
@@ -4742,6 +5913,7 @@ const MASTER_DB = {
                     "albumine": "0,85",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS",
                     "suivi_periodique": "Bilan hépatique (annuel) | NFS (annuelle)",
                     "alerte_clinique": "Ictère → bilan hépatique urgent",
@@ -4771,6 +5943,47 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Omeprazole, AINS, Warfarine, Lansoprazole",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Omeprazole",
+                                        "dcis": [
+                                                  "omeprazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Warfarine",
+                                        "dcis": [
+                                                  "warfarine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lansoprazole",
+                                        "dcis": [
+                                                  "lansoprazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | Créatinine",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "PTT thrombotique (fievre + thrombopenie + anemie → NFS urgente) | Saignement",
@@ -4801,6 +6014,7 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -4828,6 +6042,7 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -4855,6 +6070,18 @@ const MASTER_DB = {
                     "albumine": "95",
                     "qt_risque": "",
                     "ddi_interact": "AVK (deplacee de albumine), autres medicaments tres lies albumine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "deplacee de albumine",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (hépatotoxicité documentee) | NFS | Bilan renal",
                     "suivi_periodique": "Bilan hépatique si traitement > 2 semaines",
                     "alerte_clinique": "Hepatite cholestatique (risque significatif) → bilan hépatique urgent | Neutropenie → NFS urgente",
@@ -4884,6 +6111,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS-plaquettes (OBLIGATOIRE avant initiation) | Bilan hépatique | Glycemie/HbA1c | Bilan lipidique | ECG (QTc) | Troponine (myocardite) | Poids/IMC | TA",
                     "suivi_periodique": "NFS HEBDOMADAIRE les 18 premires semaines  OBLIGATOIRE (risque agranulocytose) | NFS bimensuelle de la semaine 19  a M12 | NFS mensuelle  vie ensuite | Glycemie/HbA1c (tous les 3 a a 6 mois) | Bilan lipidique (tous les a 6 mois) | ECG (QTc annuel + si symptomes) | Troponine (si fievre/dyspne  myocardite) | Poids (a chaque consultation)",
                     "alerte_clinique": "NFS < 3000 GB ou < 1500 PNN → arret immediat (ANSM) | Fievre → NFS urgente (agranulocytose) | Myocardite (troponine + ECG si fievre+dyspne  J15-J30) | Tachycardie sinusale inexplique → ECG + troponine",
@@ -4921,6 +6149,25 @@ const MASTER_DB = {
                     "albumine": "97 - 98 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "CYP3A4 inhibiteur puissant",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG (fausse elevation créatinine par inhibition secretion tubulaire) | Bilan hépatique | NFS | Bilan lipidique | ECG",
                     "suivi_periodique": "Créatinine (tous les 3 a a 6 mois  attention: elevation de ≈ 0,1 mg/dL normale avec cobicistat) | Bilan hépatique (tous les a 6 mois) | Bilan lipidique (annuel) | Charge virale + CD4",
                     "alerte_clinique": "elevation créatinine > 0,4 mg/dL vs baseline → vraie nephrotoxicite  explorer | Ictère (bilirubine)",
@@ -4950,6 +6197,7 @@ const MASTER_DB = {
                     "albumine": "7 - 25 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | Créatinine/DFG | Genotype CYP2D6 si conversion rapide suspecte",
                     "suivi_periodique": "Pas de biologie systematique (usage court en general)",
                     "alerte_clinique": "Depression respiratoire (metaboliseurs ultra-rapides CYP2D6) | Surdosage → urgence",
@@ -4978,6 +6226,7 @@ const MASTER_DB = {
                     "albumine": "0,39",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | Créatinine/DFG | CPK",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | Créatinine (annuelle) | CPK si myalgies",
                     "alerte_clinique": "Aplasie → NFS urgente (surtout si IRC ou associations CYP3A4/P-gp) | Rhabdomyolyse → CPK urgent | Troubles digestifs severes (diarrhee profuse) → ionogramme",
@@ -5009,6 +6258,27 @@ const MASTER_DB = {
                     "albumine": "50%",
                     "qt_risque": "",
                     "ddi_interact": "Aminosides (nephrotoxicite + neurotoxicite additive — eviter) | Curares (potentialisation bloc NM) | Vancomycine (nephrotoxicite additive)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aminosides",
+                                        "dcis": [
+                                                  "gentamicine",
+                                                  "amikacine",
+                                                  "tobramycine",
+                                                  "streptomycine"
+                                        ],
+                                        "commentaire": "nephrotoxicite + neurotoxicite additive — eviter",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Vancomycine",
+                                        "dcis": [
+                                                  "vancomycine"
+                                        ],
+                                        "commentaire": "nephrotoxicite additive",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine | Ionogramme | NFS | Bilan hépatique",
                     "suivi_periodique": "Créatinine QUOTIDIENNE | Ionogramme (Mg2+, Ca2+) | Diurese | Signes neurotoxicite",
                     "alerte_clinique": "Nephrotoxicite dose-dependante (IRA dans 20-60%) | Neurotoxicite (paresthesies, ataxie, confusion) | Reserve aux BMR (BGN resistants)",
@@ -5036,6 +6306,7 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Glycemie/HbA1c | Ionogramme | TA | NFS | Bilan lipidique | Cortisol (si test de substitution)",
                     "suivi_periodique": "Glycemie (semestrielle) | Ionogramme (annuel) | Bilan lipidique (annuel) | Cortisol (annuel) | Densitometrie (tous les 2 ans si traitement prolonge)",
                     "alerte_clinique": "Hyperglycemie | Hypokaliemie | Insuffisance surrenalienne  l'arret",
@@ -5067,6 +6338,50 @@ const MASTER_DB = {
                     "albumine": "70",
                     "qt_risque": "",
                     "ddi_interact": "AVK (potentiation +++), MTX (toxicite), IEC/ARA2 (hyperkaliemie +++), Cyclosporine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "MTX",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "toxicite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "hyperkaliemie +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Cyclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | NFS (myelotoxicite) | Ionogramme (hyperkaliemie) | Bilan hépatique | Glycemie si DT2",
                     "suivi_periodique": "NFS (mensuelle si traitement prophylactique) | Créatinine (mensuelle) | Ionogramme (mensuel)",
                     "alerte_clinique": "Hyperkaliemie (bloque secretion tubulaire K - effet spironolactone-like) → ionogramme urgent | Myelotoxicite (leucopenie, thrombopenie) → NFS urgente | Elevation créatinine sans nefrotoxicite reelle (inhibe secretion tubulaire créatinine) | Hépatotoxicité → bilan hépatique",
@@ -5098,6 +6413,7 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Allongement QT - Depresseurs SNC",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | TA",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Agranulocytose → NFS urgente | Syndrome malin neuroleptique → CPK | Allongement QTc",
@@ -5131,6 +6447,29 @@ const MASTER_DB = {
                     "albumine": "93",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI +++), ISRS (syndrome serotoninergique), Alcool, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc - analogue tricyclique) | Bilan hépatique | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "ECG (annuel) | Bilan hépatique si traitement prolonge",
                     "alerte_clinique": "Allongement QTc (structure tricyclique) → ECG urgent | Syndrome anticholinergique (EVITER sujet age - ACB=3) | EVITER chez sujet age",
@@ -5158,6 +6497,32 @@ const MASTER_DB = {
                     "albumine": "0-20",
                     "qt_risque": "",
                     "ddi_interact": "Isoniazide (neurotoxicite additive), Alcool (psychose), Phenytoine (toxicite), Vit B6 supplement systematique",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Isoniazide",
+                                        "dcis": [
+                                                  "isoniazide"
+                                        ],
+                                        "commentaire": "neurotoxicite additive",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "psychose",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Phenytoine",
+                                        "dcis": [
+                                                  "phenytoine"
+                                        ],
+                                        "commentaire": "toxicite",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan neurologique (psychose, convulsions) | Bilan hépatique | NFS | Vitamine B6 (supplement)",
                     "suivi_periodique": "Evaluation neurologique (mensuelle) | Bilan hépatique (mensuel) | Dosage serique (cible 20-35 mg/L)",
                     "alerte_clinique": "Psychose/convulsions (neurotoxicite) → arret immediat + bilan psychiatrique | Polyneuropathie peripherique (deficit B6) | Hépatotoxicité",
@@ -5185,6 +6550,21 @@ const MASTER_DB = {
                     "albumine": "96-99",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "ISRS (antagonisme), Anticholinergiques (cumul ACB), IMAO (CI)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "antagonisme",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | Poids (stimulation appetit) | ECG si FR QTc",
                     "suivi_periodique": "Bilan hépatique si traitement prolonge | Poids (chaque consultation - prise de poids frequente)",
                     "alerte_clinique": "Hépatotoxicité (rare) | Prise de poids (effet orexigene - informer patient) | Syndrome anticholinergique",
@@ -5211,6 +6591,24 @@ const MASTER_DB = {
                     "albumine": "0,35",
                     "qt_risque": "",
                     "ddi_interact": "Clarithromycine, Azoles, Ciclosporine, Antiviraux",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Clarithromycine",
+                                        "dcis": [
+                                                  "clarithromycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG (CI si DFG<30) | NFS | Hb/Ht | Bilan hépatique",
                     "suivi_periodique": "Créatinine (annuelle + avant chirurgie) | NFS (annuelle)",
                     "alerte_clinique": "Saignement → Hb urgente | Insuffisance renale aigue → créatinine urgente (elimination renale exclusive 80%)",
@@ -5240,6 +6638,7 @@ const MASTER_DB = {
                     "albumine": "0,99",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "NS5A",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS | Créatinine | ECG (bradycardie si sofosbuvir associe)",
                     "suivi_periodique": "Bilan hépatique (tous les 3 mois) | ECG (si sofosbuvir)",
                     "alerte_clinique": "Bradycardie severe (si sofosbuvir + amiodarone associes) → ECG urgent | Cytolyse → bilan hépatique",
@@ -5269,6 +6668,16 @@ const MASTER_DB = {
                     "albumine": "93",
                     "qt_risque": "",
                     "ddi_interact": "Warfarine (potentielle)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Warfarine",
+                                        "dcis": [
+                                                  "warfarine"
+                                        ],
+                                        "commentaire": "potentielle",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Bilan hépatique | NFS",
                     "suivi_periodique": "Créatinine (si 2eme injection) | Pas de biologie systematique si dose unique",
                     "alerte_clinique": "Hypersensibilite (red man syndrome) | Hépatotoxicité possible → bilan hépatique",
@@ -5297,6 +6706,7 @@ const MASTER_DB = {
                     "albumine": "0,91",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Kaliemie | ECBU",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine/DFG (annuelle)",
                     "alerte_clinique": "Cetonemie si symptomes d'acidocetose | Fasciite de Fournier",
@@ -5327,6 +6737,39 @@ const MASTER_DB = {
                     "albumine": "90-93",
                     "qt_risque": "",
                     "ddi_interact": "Statines (rhabdomyolyse +++ - stopper statine), AVK, Tobramycine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "rhabdomyolyse +++ - stopper statine",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tobramycine",
+                                        "dcis": [
+                                                  "tobramycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "CPK (rhabdomyolyse dose-dependante) | Bilan renal | NFS | Bilan hépatique | Bilan musculaire si statines",
                     "suivi_periodique": "CPK (hebdomadaire - myelotoxicite musculaire cumulee obligatoire) | Créatinine (hebdomadaire) | NFS (hebdomadaire)",
                     "alerte_clinique": "Rhabdomyolyse (dose et frequence-dependante surtout si DFG<30 ou statines) → CPK urgente | Pneumopathie eosinophile (toux + eosinophilie) → NFS + radiologie urgente | Nephrotoxicite → créatinine",
@@ -5356,6 +6799,25 @@ const MASTER_DB = {
                     "albumine": "98",
                     "qt_risque": "",
                     "ddi_interact": "Inhibiteurs CYP3A4 (ketoconazole augmente x7 concentration), Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "ketoconazole augmente x7 concentration",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (elimination hépatique CYP3A4) | Créatinine | ECG si FR QTc",
                     "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Syndrome anticholinergique (modere ACB=2) | Hépatotoxicité rare → bilan hépatique | EVITER sujet age",
@@ -5384,6 +6846,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "",
                     "ddi_interact": "Protease (CYP3A4)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique (sulfonamide  CI si allergie sulfa) | NFS | Bilan lipidique | Glycemie | Créatinine",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a a 6 mois) | Bilan lipidique (annuel) | Glycemie (annuelle) | Charge virale + CD4",
                     "alerte_clinique": "Ictère/cytolyse → bilan hépatique urgent | Eruption cutane → NFS + bilan hépatique (sulfonamide)",
@@ -5415,6 +6878,24 @@ const MASTER_DB = {
                     "albumine": "84",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Antiacides, Methotrexate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | ECG si FR QTc | Bilan hépatique",
                     "suivi_periodique": "Créatinine si traitement prolonge",
                     "alerte_clinique": "Allongement QTc (risque modere) | Hépatotoxicité",
@@ -5443,6 +6924,28 @@ const MASTER_DB = {
                     "albumine": "99.5",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "Inducteurs CYP3A4, Moxifloxacine, Clofazimine (QT)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Moxifloxacine",
+                                        "dcis": [
+                                                  "moxifloxacine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Bilan hépatique | NFS | Albumine serique (albumine basse augmente exposition libre)",
                     "suivi_periodique": "ECG (mensuel) | Bilan hépatique (mensuel) | Albumine (mensuelle)",
                     "alerte_clinique": "Allongement QTc (plus fort si hypoalbuminemie) → ECG urgent + albumine | Hépatotoxicité → bilan hépatique urgente",
@@ -5471,6 +6974,29 @@ const MASTER_DB = {
                     "albumine": "73-92",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), Alcool, QT-prolongateurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Glycemie",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Ictère → bilan hépatique | SIADH → natremie",
@@ -5501,6 +7027,7 @@ const MASTER_DB = {
                     "albumine": "82-87",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique severe",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Peu d'effets indesirables serieux",
@@ -5524,6 +7051,25 @@ const MASTER_DB = {
                     "albumine": "96%",
                     "qt_risque": "(QT) - Allongement QTc dose-dependant (prudence si > 2 mg x2/j)",
                     "ddi_interact": "Inhibiteurs CYP3A4 (ketoconazole, itraconazole → reduire dose) | Inhibiteurs CYP2D6 (fluoxetine, paroxetine) | Autres anticholinergiques (cumul ACB)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "ketoconazole, itraconazole → reduire dose",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "RPM (residu post-mictionnel) | ECG si FDR QT | Evaluation cognitive (MoCA/MMSE)",
                     "suivi_periodique": "Reevaluation 3 mois (efficacite + cognition) | RPM | ACB cumule",
                     "alerte_clinique": "PIM geriatrie (Beers 2023/STOPP) — ACB 3 | Confusion/deterioration cognitive → arret | Retention urinaire | Secheresse buccale/constipation | Glaucome angle ferme = CI",
@@ -5553,6 +7099,7 @@ const MASTER_DB = {
                     "albumine": "0,77",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Glycemie/HbA1c | Ionogramme | NFS | Bilan lipidique | Cortisol (dpiste le syndrome de Cushing iatrogne)",
                     "suivi_periodique": "Glycemie (semestrielle) | Ionogramme (annuel) | Bilan lipidique (annuel) | Cortisol (annuel si traitement prolonge) | Densitometrie (tous les 2 ans)",
                     "alerte_clinique": "Hyperglycemie sévère | Hypokaliemie | Insuffisance surrenalienne  l'arret brutal",
@@ -5584,6 +7131,16 @@ const MASTER_DB = {
                     "albumine": "0,72",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Depresseurs SNC - Alcool",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Depresseurs SNC - Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire",
@@ -5608,6 +7165,29 @@ const MASTER_DB = {
                     "albumine": "50-70",
                     "qt_risque": "",
                     "ddi_interact": "ISRS (syndrome serotoninergique), IMAO (CI absolue), Fluoxetine/Paroxetine (inhibiteurs CYP2D6 - accumulation)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Fluoxetine/Paroxetine",
+                                        "dcis": [
+                                                  "fluoxetine"
+                                        ],
+                                        "commentaire": "inhibiteurs CYP2D6 - accumulation",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique (usage court antitussif)",
                     "alerte_clinique": "Syndrome serotoninergique si ISRS/IMAO-B associes → urgence | Psychose/hallucinations si abus | Somnolence",
@@ -5634,6 +7214,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS",
                     "suivi_periodique": "Bilan hépatique (annuel si traitement prolonge)",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -5663,6 +7244,16 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Alcool, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Evaluation cognitive chez sujet age | Bilan urologique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique (retention urinaire, glaucome, confusion) | EVITER sujet age (ACB=2-3)",
@@ -5686,6 +7277,7 @@ const MASTER_DB = {
                     "albumine": "0,25",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Amiodarone - Hypokaliemiants (diuretiques) - Calcium",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Ionogramme complet (kaliemie, magnesemie, calcemie +++) | Créatinine/DFG | NFS | Dosage serologique (fenetre 0.8-2.0 ng/mL residuelle)",
                     "suivi_periodique": "Dosage serique (C0, 12h post-dose) (tous les 3 a 6 mois en phase stable) | Ionogramme (tous les 3 a 6 mois) | Créatinine (tous les 3 a 6 mois) | ECG (annuel)",
                     "alerte_clinique": "Intoxication digitalique (BAV, bigeminisme, TV) → dosage + ECG urgents | Hypokaliemie/hypomagnesiemie potentialisent toxicite → ionogramme urgent | Insuffisance renale → dosage urgent (elimination renale exclusive)",
@@ -5717,6 +7309,7 @@ const MASTER_DB = {
                     "albumine": "0,5",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Bilan hépatique",
                     "suivi_periodique": "Créatinine (annuelle)",
                     "alerte_clinique": "Dpression respiratoire (surdosage)",
@@ -5745,6 +7338,43 @@ const MASTER_DB = {
                     "albumine": "0,8",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Beta-bloquants, Statines, Digoxine, CYP3A4",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (PR) | TA | Bilan hépatique | Glycemie si diabete | FC",
                     "suivi_periodique": "ECG (annuel + si changement dose) | TA/FC (consultations) | Bilan hépatique (si symptomes)",
                     "alerte_clinique": "Bradycardie/BAV → ECG urgent | Ictère → bilan hépatique urgent",
@@ -5774,6 +7404,16 @@ const MASTER_DB = {
                     "albumine": "98",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques, QT-prolongateurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG si cardiopathie | Evaluation cognitive avant usage chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique | Allongement QTc → ECG | EVITER chez sujet age (Beers)",
@@ -5799,6 +7439,35 @@ const MASTER_DB = {
                     "albumine": "98-99",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Benzodiazepines, Autres anticholinergiques (cumul ACB +++), QT-prolongateurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan anticholinergique (etat cognitif avant initiation chez sujet age) | ECG (QTc) si cardiopathie",
                     "suivi_periodique": "Evaluation cognitive (MMS/MMSE) si usage prolonge | Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique (confusion, retention urinaire, glaucome, constipation) | Allongement QTc → ECG | EVITER chez sujet age (Beers ++)",
@@ -5824,6 +7493,41 @@ const MASTER_DB = {
                     "albumine": "97-99",
                     "qt_risque": "",
                     "ddi_interact": "AVK (potentiation anticoagulante), Adenosine (potentiation bradycardie), AINS, Antihypertenseurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation anticoagulante",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Adenosine",
+                                        "dcis": [
+                                                  "adenosine"
+                                        ],
+                                        "commentaire": "potentiation bradycardie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG | Bilan hépatique | Bilan coagulation (INR si AVK) | NFS",
                     "suivi_periodique": "ECG (annuel) | Bilan hépatique (annuel) | INR si AVK (renforce efficacite) | NFS (annuelle)",
                     "alerte_clinique": "Syndrome coronarien (bradycardie + hypotension si test pharmacologique) → EC urgente | Cephalees (frequentes) | Interaction AVK → INR | Saignement",
@@ -5853,6 +7557,7 @@ const MASTER_DB = {
                     "albumine": "50 - 80 %",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Anticholinergique leger",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc) | Ionogramme | Créatinine/DFG | Bilan hépatique | TA | Glycemie",
                     "suivi_periodique": "ECG (QTc annuel) | Ionogramme (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Allongement QTc severe → ECG urgent | Hypoglycemie (effet insulino-secretagogue) → glycemie urgente | Retention urinaire (anticholinergique) → examen clinique",
@@ -5884,6 +7589,33 @@ const MASTER_DB = {
                     "albumine": "91-93",
                     "qt_risque": "Risque Etabli (RE) - risque mort subite documente",
                     "ddi_interact": "CYP3A4 inhibiteurs (ketoconazole doubleconcentration), QT-prolongateurs (CI), Alcool",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "ketoconazole doubleconcentration",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc - CI si QTc prolonge - arret cardiaque documente) | Bilan hépatique | Ionogramme",
                     "suivi_periodique": "ECG (annuel ou si symptomes) | Bilan hépatique si traitement prolonge",
                     "alerte_clinique": "Allongement QTc (risque majeur TdP - mort subite documentee) → ECG urgent | Hépatotoxicité → bilan hépatique | EVITER chez sujet age et cardiaques",
@@ -5912,6 +7644,7 @@ const MASTER_DB = {
                     "albumine": "0,76",
                     "qt_risque": "",
                     "ddi_interact": "INNTI",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS | Créatinine | Bilan lipidique",
                     "suivi_periodique": "Bilan hépatique (tous les a 6 mois) | Bilan lipidique (annuel) | Charge virale + CD4",
                     "alerte_clinique": "Cytolyse → bilan hépatique urgent",
@@ -5942,6 +7675,7 @@ const MASTER_DB = {
                     "albumine": "0,33",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG (CI si DFG < 30)",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique) | Créatinine (annuelle si IRC)",
                     "alerte_clinique": "Acidose metabolique si IRC sévère",
@@ -5968,6 +7702,29 @@ const MASTER_DB = {
                     "albumine": "84",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "IMAO (CI +++), Alcool, QT-prolongateurs, Anticholinergiques, ISRS (syndrome serotoninergique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Glycemie si DT2",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Allongement QTc (risque letal en surdosage - particulierement dangereux) → ECG urgent | Ictère → bilan hépatique | SIADH → natremie | Anticholinergique (confusion, retention urinaire)",
@@ -5998,6 +7755,7 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA (hypotension orthostatique) | Bilan lipidique",
                     "suivi_periodique": "TA (consultations) | Bilan lipidique (annuel)",
                     "alerte_clinique": "Hypotension orthostatique sévère",
@@ -6024,6 +7782,7 @@ const MASTER_DB = {
                     "albumine": "0,76",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO - Depresseurs SNC",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Ictère | SIADH",
@@ -6057,6 +7816,50 @@ const MASTER_DB = {
                     "albumine": "82-93",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Antiacides, Fer, Bismuth (chelation), AVK, Contraceptifs oraux, Retinoides (HTIC)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fer",
+                                        "dcis": [
+                                                  "fer"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bismuth",
+                                        "dcis": [
+                                                  "bismuth"
+                                        ],
+                                        "commentaire": "chelation",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Retinoides",
+                                        "dcis": [
+                                                  "retinoides"
+                                        ],
+                                        "commentaire": "HTIC",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | Bilan renal si IRC severe | NFS si traitement prolonge",
                     "suivi_periodique": "Bilan hépatique si traitement > 2 semaines | Pas de biologie systematique (usage court)",
                     "alerte_clinique": "Hépatotoxicité → bilan hépatique urgent | Photosensibilite (clinique) | Oesophagite (si prise couchee sans eau)",
@@ -6085,6 +7888,16 @@ const MASTER_DB = {
                     "albumine": "~ 25 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Depresseurs SNC - Alcool",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Depresseurs SNC - Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire (examen clinique)",
@@ -6109,6 +7922,25 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "CYP3A4 inhibiteur",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc + PR) | Bilan hépatique | Bilan thyroidien | NFS | Créatinine",
                     "suivi_periodique": "ECG (tous les 6 mois) | Bilan hépatique (tous les 6 mois) | Créatinine (annuelle)",
                     "alerte_clinique": "Hépatotoxicité severe (hepatite fulminante documentee) → bilan hépatique urgent | Allongement QTc → ECG urgent | Elevation créatinine (sans nefrotoxicite reelle - inhibition secretion tubulaire) | Bradycardie → ECG",
@@ -6141,6 +7973,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Lipase",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle)",
                     "alerte_clinique": "Pancreatite (douleur epigastrique)",
@@ -6170,6 +8003,7 @@ const MASTER_DB = {
                     "albumine": "> 90 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique (CI si insuffisance hépatique) | Glycemie/HbA1c | TA | Ionogramme",
                     "suivi_periodique": "Bilan hépatique (si symptomes) | TA (consultations) | Glycemie si diabte",
                     "alerte_clinique": "Ictère → bilan hépatique urgent | Hypertension → TA | SIADH → natrmie",
@@ -6202,6 +8036,7 @@ const MASTER_DB = {
                     "albumine": "0,55",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG (CI si DFG<15) | NFS | Hb/Ht",
                     "suivi_periodique": "Créatinine (annuelle) | NFS (annuelle)",
                     "alerte_clinique": "Saignement → Hb urgente | Reduction dose obligatoire si DFG 15-50 ou poids < 60 kg",
@@ -6231,6 +8066,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "INNTI (CYP3A4 inducteur)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS | Bilan lipidique | Glycemie | Créatinine | Bilan psychiatrique (exclure ATCD psychose)",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a a 6 mois) | Bilan lipidique (annuel) | Charge virale + CD4",
                     "alerte_clinique": "Cytolyse sévère → bilan hépatique urgent | Symptomes psychiatriques (évaluation clinique) | Eruption cutane sévère (SJS rare)",
@@ -6262,6 +8098,7 @@ const MASTER_DB = {
                     "albumine": "0,85",
                     "qt_risque": "",
                     "ddi_interact": "CYP3A4 substrat",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique (CI si sévère) | ECG si cardiopathie",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Douleur thoracique → ECG (vasoconstriction coronaire)",
@@ -6290,6 +8127,7 @@ const MASTER_DB = {
                     "albumine": "0,86",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Kaliemie | ECBU",
                     "suivi_periodique": "HbA1c (tous les 3 a 6 mois) | Créatinine/DFG (annuelle)",
                     "alerte_clinique": "Cetonemie si symptomes d'acidocetose | Fasciite de Fournier | IU recurrentes",
@@ -6320,6 +8158,7 @@ const MASTER_DB = {
                     "albumine": "< 4 %",
                     "qt_risque": "",
                     "ddi_interact": "INTI",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Serologie VHB (risque flare  l'arret si VHB+) | NFS | Bilan hépatique",
                     "suivi_periodique": "Créatinine (tous les 3 a a 6 mois) | Charge virale VIH + CD4 | AgHBs/VHB si co-infection",
                     "alerte_clinique": "Pousse hpatite B  l'arret → bilan hépatique urgent | Acidose lactique (asthnie + nausees → lactatmie urgente)",
@@ -6349,6 +8188,7 @@ const MASTER_DB = {
                     "albumine": "0,5",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | NFS",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Angio-oedeme",
@@ -6377,6 +8217,23 @@ const MASTER_DB = {
                     "albumine": "98",
                     "qt_risque": "",
                     "ddi_interact": "IMAO (CI), Adrenergiques, AINS (deplacent albumine)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "deplacent albumine",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (hépatotoxicité rare mais documentee) | NFS | Bilan renal",
                     "suivi_periodique": "Bilan hépatique (tous les 6 mois) | NFS (annuelle)",
                     "alerte_clinique": "Hépatotoxicité (rare mais severe) → bilan hépatique urgent | Coloration jaune-orange urine (informer patient) | Dyskinesies (effet dopaminergique augmente)",
@@ -6405,6 +8262,16 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI absolue - crise hypertensive mortelle), Antidepresseurs, Guanethidine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Guanethidine",
+                                        "dcis": [
+                                                  "guanethidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA | ECG | Ionogramme | Glycemie si DT2",
                     "suivi_periodique": "TA (chaque consultation) | ECG si symptomes",
                     "alerte_clinique": "HTA (effet sympathomimetique) → TA urgente | Tachycardie → ECG | Interaction nombreuse (IMAO)",
@@ -6430,6 +8297,7 @@ const MASTER_DB = {
                     "albumine": "0,5",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Kaliemie | Créatinine/DFG (CI si DFG<30) | Bilan hépatique",
                     "suivi_periodique": "Kaliemie + créatinine (apres 4-8 semaines puis annuel)",
                     "alerte_clinique": "Hyperkaliemie (risque majeur si DFG bas ou associations IEC/ARA2) → ionogramme urgent",
@@ -6459,6 +8327,7 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | Bilan hépatique",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -6489,6 +8358,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "25-OH vitamine D | Calcemie | Créatinine/DFG",
                     "suivi_periodique": "25-OH vitamine D ( 3 a a 6 mois puis annuelle) | Calcemie (annuelle)",
                     "alerte_clinique": "Hypercalcemie (surdosage)",
@@ -6517,6 +8387,16 @@ const MASTER_DB = {
                     "albumine": "92",
                     "qt_risque": "",
                     "ddi_interact": "Valproate (reduit concentrations valproate +++, risque epilepsie)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Valproate",
+                                        "dcis": [
+                                                  "valproate"
+                                        ],
+                                        "commentaire": "reduit concentrations valproate +++, risque epilepsie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | NFS | Bilan neurologique (antecedents epilepsie)",
                     "suivi_periodique": "Créatinine si traitement > 7j",
                     "alerte_clinique": "Convulsions (risque encephalopathie si IRC ou traitement prolonge - surtout si antecedents) | Neutropenie",
@@ -6545,6 +8425,7 @@ const MASTER_DB = {
                     "albumine": "0,93",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG (CI si DFG < 30) | Kaliemie",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine/DFG (annuelle)",
                     "alerte_clinique": "Cetonemie (acidocetose) | Fasciite de Fournier",
@@ -6575,6 +8456,55 @@ const MASTER_DB = {
                     "albumine": "70-90",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "Statines, AVK, Digoxine, Theophylline, Colchicine (inhibiteur CYP3A4 fort)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Theophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Colchicine",
+                                        "dcis": [
+                                                  "colchicine"
+                                        ],
+                                        "commentaire": "inhibiteur CYP3A4 fort",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Bilan hépatique | Bilan renal",
                     "suivi_periodique": "ECG si traitement prolonge ou FR QTc | Bilan hépatique si traitement > 14j",
                     "alerte_clinique": "Allongement QTc → ECG urgent (risque TdP) | Hépatotoxicité cholestatique → bilan hépatique urgent | Surdite (doses elevees, IRC)",
@@ -6602,6 +8532,7 @@ const MASTER_DB = {
                     "albumine": "0,56",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme (natrmie) | ECG (QTc) | Bilan hépatique",
                     "suivi_periodique": "Natremie ( a M1 puis annuelle) | ECG (QTc  annuel si facteur de a risque)",
                     "alerte_clinique": "Hyponatremie | Allongement QTc",
@@ -6631,6 +8562,35 @@ const MASTER_DB = {
                     "albumine": "43-45",
                     "qt_risque": "",
                     "ddi_interact": "Benzodiazepines, Propofol, IMAO, Sympathomimetiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Propofol",
+                                        "dcis": [
+                                                  "propofol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA (HTA transitoire - surveiller) | ECG si cardiopathie | Bilan psychiatrique | Bilan hépatique | Bilan urologique si usage prolonge",
                     "suivi_periodique": "TA (apres chaque administration) | Bilan psychiatrique (mensuel) | Bilan hépatique (mensuel si > 2 mois) | Bilan urologique si symptomes",
                     "alerte_clinique": "HTA transitoire (pic 40 min post-administration, retour baseline 1-2h) → TA monitoring obligatoire | Dissociation/hallucinations (usage en milieu protege obligatoire) | Cystite interstitielle (usage chronique) → bilan urologique",
@@ -6658,6 +8618,7 @@ const MASTER_DB = {
                     "albumine": "0,55",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | TA (usage IV uniquement)",
                     "suivi_periodique": "FC/TA continue (usage hospitalier uniquement)",
                     "alerte_clinique": "Bradycardie severe → arret immediat",
@@ -6684,6 +8645,7 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Magnesemie si traitement prolonge | Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Magnesemie (annuelle si usage prolonge > 1 an) | Vitamine B12 (tous les 2 a 3 ans)",
                     "alerte_clinique": "Hypomagnesiemie | NFS si anemie inexpliquee",
@@ -6711,6 +8673,7 @@ const MASTER_DB = {
                     "albumine": "0,93",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -6738,6 +8701,16 @@ const MASTER_DB = {
                     "albumine": "40",
                     "qt_risque": "",
                     "ddi_interact": "Aluminium (chelation - espacer 2h)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aluminium",
+                                        "dcis": [
+                                                  "aluminium"
+                                        ],
+                                        "commentaire": "chelation - espacer 2h",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Acuite visuelle + vision couleurs (champ visuel si possible) | Bilan renal | Uricemie",
                     "suivi_periodique": "Acuite visuelle et vision couleurs (mensuelle) | Créatinine (mensuelle) | Uricemie (mensuelle - hyperuricemie)",
                     "alerte_clinique": "Nevrite optique retrobulbaire irreversible (vision couleurs vert-rouge, baisse acuite visuelle) → arret immediat + urgence ophtalmo | Hyperuricemie → uricemie + adaptation allopurinol",
@@ -6765,6 +8738,7 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Lipase/Amylase (si antecedent pancreatite)",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle)",
                     "alerte_clinique": "Douleur epigastrique intense → Lipase/Amylase (pancreatite)",
@@ -6794,6 +8768,7 @@ const MASTER_DB = {
                     "albumine": "15 - 20 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Minimal d'interaction",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG si IRC",
                     "suivi_periodique": "Créatinine (annuelle si IRC)",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -6820,6 +8795,24 @@ const MASTER_DB = {
                     "albumine": "99%",
                     "qt_risque": "",
                     "ddi_interact": "Azathioprine/6-mercaptopurine (CI — inhibition XO → accumulation toxique) | Theophylline (augmentation concentrations)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Azathioprine/6-mercaptopurine",
+                                        "dcis": [
+                                                  "azathioprine"
+                                        ],
+                                        "commentaire": "CI — inhibition XO → accumulation toxique",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Theophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "augmentation concentrations",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Uricemie | Créatinine | Bilan hépatique | NFS",
                     "suivi_periodique": "Uricemie (cible < 360 umol/L, < 300 si tophus) | BH (trimestriel 1ere annee) | Créatinine",
                     "alerte_clinique": "Crise de goutte paradoxale a l initiation (prophylaxie colchicine) | Hépatotoxicité → BH | Risque cardiovasculaire (FDA warning — preferer allopurinol si ATCD CV) | Rash cutane",
@@ -6849,6 +8842,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Uricemie | Créatinine/DFG | Bilan hépatique (ALAT/ASAT) | ECG (risque CV)",
                     "suivi_periodique": "Uricemie (tous les 3 a 6 mois jusqu'a cible puis annuel) | Bilan hépatique (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Ictère → bilan hépatique urgent | Douleur thoracique → ECG (risque CV majore vs allopurinol selon etude CARES)",
@@ -6878,6 +8872,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "TA (consultations)",
                     "alerte_clinique": "œdemes | Tachycardie reflexe → ECG si symptomes",
@@ -6902,6 +8897,7 @@ const MASTER_DB = {
                     "albumine": "80 - 85 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique | Créatinine",
                     "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Dpression respiratoire (surdosage → urgence) | Surdosage par patch mal positionn",
@@ -6930,6 +8926,25 @@ const MASTER_DB = {
                     "albumine": "50 % (pour son metabolite actif)",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Inhibiteurs CYP3A4",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Bilan hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire | Allongement QTc si facteur de a risque → ECG",
@@ -6958,6 +8973,7 @@ const MASTER_DB = {
                     "albumine": "60 - 70 %",
                     "qt_risque": "",
                     "ddi_interact": "Non sedatif, Substrat P-gp",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG si IRC sévère",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Pas de biologie d'alerte specifique",
@@ -6984,6 +9000,16 @@ const MASTER_DB = {
                     "albumine": "> 99",
                     "qt_risque": "",
                     "ddi_interact": "Ciclosporine (augmente concentration fidaxomicine)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "augmente concentration fidaxomicine",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | Créatinine",
                     "suivi_periodique": "Pas de biologie systematique (traitement court 10 jours)",
                     "alerte_clinique": "Hépatotoxicité rare | Reaction d'hypersensibilite",
@@ -7011,6 +9037,7 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Anticholinergiques (additif)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de bilan systematique | ECG si cardiopathie",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique leger (ACB=1) | Nausees | Vertiges",
@@ -7034,6 +9061,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine",
                     "suivi_periodique": "INR (tous les 8 a 28 jours selon stabilit) | NFS (annuelle)",
                     "alerte_clinique": "Saignement → INR + Hb urgente | INR > 5 | Allergie (NFS + eosinophiles)",
@@ -7064,6 +9092,24 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO, Tramadol, Warfarine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Warfarine",
+                                        "dcis": [
+                                                  "warfarine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme (natrmie) | Bilan hépatique | NFS | Glycemie si diabte",
                     "suivi_periodique": "Natremie ( a M1 puis annuelle) | Glycemie (annuelle si DT2) | Bilan hépatique si symptomes",
                     "alerte_clinique": "Hyponatremie (confusion) | Saignements (thrombopenie → NFS)",
@@ -7094,6 +9140,7 @@ const MASTER_DB = {
                     "albumine": "0,99",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "LevoDOPA - Depresseurs SNC",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Bilan lipidique | Poids/IMC",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie + bilan lipidique (annuel)",
                     "alerte_clinique": "Syndrome malin neuroleptique → CPK urgente | Allongement QTc",
@@ -7126,6 +9173,28 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Lithium, Tricycliques, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tricycliques",
+                                        "dcis": [
+                                                  "amitriptyline",
+                                                  "clomipramine",
+                                                  "imipramine",
+                                                  "desipramine",
+                                                  "nortriptyline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Poids/IMC",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie (annuelle)",
                     "alerte_clinique": "Agranulocytose → NFS urgente | Syndrome malin neuroleptique → CPK",
@@ -7157,6 +9226,7 @@ const MASTER_DB = {
                     "albumine": "0,99",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Cortisol si a forte dose (fluticasone : puissance leve) | Glycemie si DT2",
                     "suivi_periodique": "Cortisol (annuel si a forte dose prolongee) | Densitometrie osseuse (si facteurs de a risque) | Glycemie (annuelle)",
                     "alerte_clinique": "Insuffisance surrenalienne (inhibition axe HHA  a forte dose) | Cataracte/glaucome (examen ophtalmique)",
@@ -7184,6 +9254,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | CPK | Bilan lipidique complet",
                     "suivi_periodique": "Bilan lipidique ( 6 a 8 semaines puis annuel) | ASAT/ALAT (si symptomes) | CPK si myalgies",
                     "alerte_clinique": "Myalgies → CPK | Ictère → bilan hépatique urgent",
@@ -7213,6 +9284,7 @@ const MASTER_DB = {
                     "albumine": "0,8",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique (hépatotoxicitépossible) | Ionogramme | ECG si cardiopathie",
                     "suivi_periodique": "Bilan hépatique (trimestriel la 1ere annee) | Natremie (annuelle)",
                     "alerte_clinique": "Ictère → bilan hépatique urgent | Hyponatremie",
@@ -7242,6 +9314,7 @@ const MASTER_DB = {
                     "albumine": "50 - 65 %",
                     "qt_risque": "? Risque Special (SR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG si cardiopathie (tachycardie) | Kaliemie (hypokalimie possible)",
                     "suivi_periodique": "Kaliemie si a forte dose (annuelle) | ECG si symptomes",
                     "alerte_clinique": "Hypokaliemie (notamment si diuretiques associs) | Tachycardie → ECG",
@@ -7269,6 +9342,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Metabolite actif aprepitant",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique (utilisation courte)",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -7296,6 +9370,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Pas d'interactions majeures PO; IV: surveillance ionique",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal | Ionogramme (surcharge sodee IV) | Glycemie (excipient glucose IV)",
                     "suivi_periodique": "Créatinine (quotidienne si IV en UCI)",
                     "alerte_clinique": "Surcharge sodee (8g Na/g fosfomycine IV - risque HTA, OAP) → ionogramme + surveillance cardiovasculaire | Hypokaliemie (IV) → ionogramme",
@@ -7323,6 +9398,7 @@ const MASTER_DB = {
                     "albumine": "> 95 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | Bilan hépatique (elimination biliaire)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -7353,6 +9429,7 @@ const MASTER_DB = {
                     "albumine": "0,15",
                     "qt_risque": "",
                     "ddi_interact": "Minimal CYP3A4",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG si cardiopathie",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Douleur thoracique → ECG",
@@ -7379,6 +9456,7 @@ const MASTER_DB = {
                     "albumine": "> 90 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS + reticulocytes | Ferritine | Fer serique + transferrine + CSat",
                     "suivi_periodique": "NFS + reticulocytes ( a 4 semaines) | Ferritine ( a 3 mois) | Bilan martial ( a 6 mois)",
                     "alerte_clinique": "Absence de reponse → bilan eetiologique",
@@ -7407,6 +9485,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme complet | Créatinine/DFG | Uricemie | Bilan hépatique",
                     "suivi_periodique": "Ionogramme + créatinine (tous les 3 a 6 mois si IRC) | Uricemie (annuelle)",
                     "alerte_clinique": "Hypokaliemie | Hyponatremie | Hyperuricemie/goutte | Deshydratation",
@@ -7437,6 +9516,7 @@ const MASTER_DB = {
                     "albumine": "< 3 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG (ajustement de dose selon DFG)",
                     "suivi_periodique": "Créatinine (annuelle)",
                     "alerte_clinique": "Insuffisance renale → créatinine urgente (risque surdosage) | Dpression respiratoire si associations opiodes",
@@ -7464,6 +9544,47 @@ const MASTER_DB = {
                     "albumine": "0-10",
                     "qt_risque": "",
                     "ddi_interact": "Vancomycine, furosemide, ciclosporine, AINS, curares",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Vancomycine",
+                                        "dcis": [
+                                                  "vancomycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "furosemide",
+                                        "dcis": [
+                                                  "furosemide"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Bilan auditif | Dosage pic (cible > 15 mg/L) et residuelle (< 1 mg/L avant inj)",
                     "suivi_periodique": "Dosage serique (chaque injection) | Créatinine (quotidienne en hospitalisation) | Bilan auditif si traitement > 5 jours",
                     "alerte_clinique": "Nephrotoxicite → créatinine + dosage urgents | Ototoxicite irreversible (cochleaire + vestibulaire)",
@@ -7492,6 +9613,7 @@ const MASTER_DB = {
                     "albumine": "38 - 41 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie specifique systematique",
                     "suivi_periodique": "EFR (annuelle si BPCO)",
                     "alerte_clinique": "Retention urinaire/glaucome (examen clinique)",
@@ -7516,6 +9638,7 @@ const MASTER_DB = {
                     "albumine": "< 10",
                     "qt_risque": "",
                     "ddi_interact": "Anticoagulants (potentiation possible a forte dose)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de bilan systematique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Nephrotoxicite urique si insuffisance renale (forte dose) | Nausees | Somnolence legere",
@@ -7539,6 +9662,40 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "ISRS, Metoclopramide, Macrolides, QT long",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Metoclopramide",
+                                        "dcis": [
+                                                  "metoclopramide"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Ionogramme | Prolactine | Poids/IMC",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Ionogramme (annuel) | Glycemie (annuelle)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Syndrome malin neuroleptique → CPK urgente | Ictère cholestatique → bilan hépatique",
@@ -7573,6 +9730,37 @@ const MASTER_DB = {
                     "albumine": "87",
                     "qt_risque": "",
                     "ddi_interact": "Betabloquants (potentiation hypotension), IMAO, Dioxyde d'azote, AINS",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "potentiation hypotension",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS (lupus induit) | Bilan hépatique | TA | ECG | ANA (si traitement > 6 mois) | Bilan renal",
                     "suivi_periodique": "TA (chaque consultation) | NFS (annuelle) | ANA (tous les 6 mois si > 200mg/j) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Syndrome lupique induit (arthralgies + ANA positifs + rash malar) → arret immediat | Tachycardie reflex (frequente) → ECG | Retention hydrosodee (usage avec diuretique)",
@@ -7602,6 +9790,44 @@ const MASTER_DB = {
                     "albumine": "40 - 68 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Lithium, AINS, K+, Corticoides",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme | Créatinine | Uricemie | Glycemie | Bilan lipidique",
                     "suivi_periodique": "Ionogramme + créatinine (annuel) | Glycemie (annuelle) | Uricemie (annuelle)",
                     "alerte_clinique": "Hypokaliemie | Hyponatremie | Hyperuricemie/goutte",
@@ -7633,6 +9859,7 @@ const MASTER_DB = {
                     "albumine": "> 90 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Glycemie/HbA1c | Ionogramme | Cortisol (bilan surrenalien si substitution) | NFS | Créatinine",
                     "suivi_periodique": "Cortisol + ACTH (annuels si insuffisance surrenalienne) | Glycemie (semestrielle) | Ionogramme (annuel) | Rnine si maladie d'Addison",
                     "alerte_clinique": "Insuffisance surrenalienne aigu (urgence absolue  TA + ionogramme + glycémie) | Hyperglycemie",
@@ -7662,6 +9889,7 @@ const MASTER_DB = {
                     "albumine": "8 - 19 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | Créatinine/DFG",
                     "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Dpression respiratoire",
@@ -7691,6 +9919,7 @@ const MASTER_DB = {
                     "albumine": "0,8",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Medicaments allongeant le QT - Depresseurs SNC",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc  allongement document) | Créatinine/DFG si IRC",
                     "suivi_periodique": "ECG (annuel si facteur de a risque QTc)",
                     "alerte_clinique": "Allongement QTc → ECG urgent",
@@ -7718,6 +9947,16 @@ const MASTER_DB = {
                     "albumine": "< 50",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Evaluation cognitive chez sujet age | ECG | Bilan ophtalmique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique (EVITER sujet age - ACB=3) | Tachycardie | Glaucome aigu | Retention urinaire",
@@ -7743,6 +9982,7 @@ const MASTER_DB = {
                     "albumine": "0,85",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Calcemie | Créatinine/DFG (CI si DFG < 30) | 25-OH vitamine D",
                     "suivi_periodique": "Calcemie (annuelle) | Créatinine (annuelle)",
                     "alerte_clinique": "Douleur machoire | Symptomes hypocalcmie",
@@ -7771,6 +10011,24 @@ const MASTER_DB = {
                     "albumine": "20",
                     "qt_risque": "",
                     "ddi_interact": "Ganciclovir/Valaciclovir (convulsions), Valproate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Ganciclovir/Valaciclovir",
+                                        "dcis": [
+                                                  "ganciclovir"
+                                        ],
+                                        "commentaire": "convulsions",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Valproate",
+                                        "dcis": [
+                                                  "valproate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal (ajustement systematique) | NFS | Bilan neurologique si epilepsie",
                     "suivi_periodique": "Créatinine (regulier en UCI)",
                     "alerte_clinique": "Convulsions (risque epilepsie - plus eleve que autres carbapenemes) → urgence | Neutropenie | Diarrhee a C.difficile",
@@ -7801,6 +10059,24 @@ const MASTER_DB = {
                     "albumine": "20%",
                     "qt_risque": "",
                     "ddi_interact": "Valproate (diminution majeure concentrations valproate → CI) | Ganciclovir (risque convulsif additif)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Valproate",
+                                        "dcis": [
+                                                  "valproate"
+                                        ],
+                                        "commentaire": "diminution majeure concentrations valproate → CI",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ganciclovir",
+                                        "dcis": [
+                                                  "ganciclovir"
+                                        ],
+                                        "commentaire": "risque convulsif additif",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine | NFS | Bilan hépatique | ECG si FDR",
                     "suivi_periodique": "Créatinine (3x/sem) | NFS (2x/sem) | BH (hebdomadaire) | Surveillance convulsions",
                     "alerte_clinique": "Convulsions (surtout si IRC, ATCD epilepsie, dose elevee) | CI avec valproate | Colite C. difficile | Reserve ATB de dernier recours (BMR/BHRe)",
@@ -7830,6 +10106,16 @@ const MASTER_DB = {
                     "albumine": "0,86",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "IMAO - Clonidine - Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IMAO - Clonidine - Anticholinergiques",
+                                        "dcis": [
+                                                  "clonidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Glycemie",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Ictère → bilan hépatique urgent | SIADH",
@@ -7864,6 +10150,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "? Risque Special (SR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG si cardiopathie | Kaliemie",
                     "suivi_periodique": "EFR (annuelle si BPCO) | Kaliemie (annuelle)",
                     "alerte_clinique": "Hypokaliemie | Tachycardie → ECG",
@@ -7891,6 +10178,7 @@ const MASTER_DB = {
                     "albumine": "0,79",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme | Créatinine | Uricemie | Glycemie",
                     "suivi_periodique": "Ionogramme + créatinine (annuel) | Uricemie (annuelle)",
                     "alerte_clinique": "Hypokaliemie | Hyponatremie",
@@ -7920,6 +10208,7 @@ const MASTER_DB = {
                     "albumine": "0 - 9 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Glycemie capillaire | Kaliemie | NFS | Créatinine/DFG",
                     "suivi_periodique": "HbA1c (tous les a 3 mois) | Glycemie capillaire (auto-surveillance quotidienne) | Bilan renal + ophtalmique + podologique (annuel) | Kaliemie (annuelle  a risque hypokalimie)",
                     "alerte_clinique": "Hypoglycemie sévère → glycémie urgente | Hypokaliemie → ionogramme",
@@ -7950,6 +10239,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Glycemie capillaire | Créatinine/DFG",
                     "suivi_periodique": "HbA1c (tous les a 3 mois) | Glycemie capillaire (auto-surveillance quotidienne) | Bilan renal + ophtalmique + podologique (annuel)",
                     "alerte_clinique": "Hypoglycemie sévère → glycémie urgente",
@@ -7979,6 +10269,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Glycemie capillaire | Créatinine/DFG",
                     "suivi_periodique": "HbA1c (tous les a 3 mois) | Glycemie capillaire (auto-surveillance) | Bilan renal + ophtalmique + podologique (annuel)",
                     "alerte_clinique": "Hypoglycemie sévère",
@@ -8008,6 +10299,7 @@ const MASTER_DB = {
                     "albumine": "Faible",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Glycemie capillaire | Créatinine/DFG",
                     "suivi_periodique": "HbA1c (tous les a 3 mois) | Glycemie capillaire (auto-surveillance) | Bilan renal + ophtalmique + podologique (annuel)",
                     "alerte_clinique": "Hypoglycemie sévère",
@@ -8037,6 +10329,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Glycemie capillaire",
                     "suivi_periodique": "HbA1c (tous les a 3 mois) | Glycemie capillaire (auto-surveillance)",
                     "alerte_clinique": "Hypoglycemie sévère",
@@ -8064,6 +10357,7 @@ const MASTER_DB = {
                     "albumine": "< 5 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Glycemie capillaire | Kaliemie",
                     "suivi_periodique": "HbA1c (tous les a 3 mois) | Glycemie capillaire (auto-surveillance) | Kaliemie (annuelle) | Bilan renal + ophtalmique (annuel)",
                     "alerte_clinique": "Hypoglycemie sévère | Hypokaliemie",
@@ -8094,6 +10388,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Glycemie capillaire",
                     "suivi_periodique": "HbA1c (tous les a 3 mois) | Glycemie capillaire (auto-surveillance)",
                     "alerte_clinique": "Hypoglycemie sévère",
@@ -8121,6 +10416,7 @@ const MASTER_DB = {
                     "albumine": "< 9 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "EFR (annuelle si BPCO)",
                     "alerte_clinique": "Retention urinaire (examen clinique) | Glaucome aigu (douleur oculaire → urgence ophtalmo)",
@@ -8145,6 +10441,61 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "",
                     "ddi_interact": "ISRS (mortel +++), Tramadol, Dextromethorphane, Meperidine, Triptans, Sympathomimetiques, Tyramine alimentaire, Methadone",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "mortel +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Dextromethorphane",
+                                        "dcis": [
+                                                  "dextromethorphane"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Meperidine",
+                                        "dcis": [
+                                                  "meperidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Triptans",
+                                        "dcis": [
+                                                  "triptans"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methadone",
+                                        "dcis": [
+                                                  "methadone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (hépatotoxicité majeure - IMAO irreversible) | TA | NFS | Bilan neurologique",
                     "suivi_periodique": "Bilan hépatique (tous les 3 mois la 1ere annee, puis annuel) | TA (chaque consultation)",
                     "alerte_clinique": "Hépatotoxicité severe (ictre fulminant) → bilan hépatique urgent | Interactions alimentaires tyramine (crise hypertensive - fromages, charcuteries, alcool fermente) → informer patient | Syndrome serotoninergique si ISRS → urgence vitale (arret + traitement) | CI absolue nombreuses (voir notice)",
@@ -8172,6 +10523,7 @@ const MASTER_DB = {
                     "albumine": "0,96",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Proteinurie (diabetiques)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -8200,6 +10552,26 @@ const MASTER_DB = {
                     "albumine": "0-10",
                     "qt_risque": "",
                     "ddi_interact": "Rifampicine (hépatotoxicité additive), Carbamazepine (augmentation toxicite), Phenytoine (augmentation concentration), Alcool (hépatotoxicité)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "carbamazepine",
+                                                  "phenytoine"
+                                        ],
+                                        "commentaire": "hépatotoxicité additive; augmentation toxicite; augmentation concentration",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "hépatotoxicité",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (ALAT/ASAT) | Bilan neurologique (neuropathie peripherique) | Vitamine B6 (prevention neuropathie) | Acetylation rapide/lente si possible",
                     "suivi_periodique": "Bilan hépatique (mensuel les 3 premiers mois puis trimestriel) | Evaluation neuropathie (mensuelle) | Vitamine B6 (dosage si symptomes)",
                     "alerte_clinique": "Hépatotoxicité (severe, surtout acetylateurs lents et si alcool + rifampicine associes) → bilan hépatique urgent | Neuropathie peripherique (deficit B6 - supplement systematique recommande) | Syndrome lupique induit",
@@ -8229,6 +10601,16 @@ const MASTER_DB = {
                     "albumine": "> 99",
                     "qt_risque": "",
                     "ddi_interact": "IPDE5 (sildenafil - CI absolue: hypotension severe), Alcool, Antihypertenseurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA (hypotension orthostatique) | ECG | Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "TA (chaque consultation) | ECG (annuel)",
                     "alerte_clinique": "Hypotension orthostatique (frequente - tolerance developpee mais intervalle libre necessaire) | Cephalees (frequentes debut, puis resolution) | Methemoglobinemie (rare, fortes doses)",
@@ -8256,6 +10638,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA",
                     "suivi_periodique": "TA (consultations)",
                     "alerte_clinique": "œdemes priphriques",
@@ -8280,6 +10663,43 @@ const MASTER_DB = {
                     "albumine": "12",
                     "qt_risque": "",
                     "ddi_interact": "Atropine (tachydysrhythmie), Benzodiazepines (potentiation), Thyroide (arythmies), Halothane",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Atropine",
+                                        "dcis": [
+                                                  "atropine"
+                                        ],
+                                        "commentaire": "tachydysrhythmie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "potentiation",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Halothane",
+                                        "dcis": [
+                                                  "halothane"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA | ECG | Bilan hépatique (hépatotoxicité si usage chronique) | Bilan psychiatrique (psychose, hallucinations)",
                     "suivi_periodique": "Bilan hépatique (mensuel si usage recreatif chronique ou douleur rebelle) | ECG (si cardiovasculaire) | TA (chaque consultation)",
                     "alerte_clinique": "Hépatotoxicité (cystite et hepatite si usage chronique/detournement) → bilan hépatique urgent | Dissociation/hallucinations | HTA (effet sympathomimetique) → TA urgente",
@@ -8307,6 +10727,7 @@ const MASTER_DB = {
                     "albumine": "0,5",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Bilan hépatique | TA | NFS",
                     "suivi_periodique": "Bilan hépatique (régulier à risque hépatotoxicité) | FC/TA (consultations)",
                     "alerte_clinique": "Hpatite medicamenteuse (ALAT/ASAT si symptomes)",
@@ -8337,6 +10758,7 @@ const MASTER_DB = {
                     "albumine": "< 15 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (PR allongement) | Bilan hépatique | NFS",
                     "suivi_periodique": "ECG (si symptomes) | Bilan hépatique (annuel) | NFS (annuelle)",
                     "alerte_clinique": "BAV → ECG urgent | Ictère → bilan hépatique",
@@ -8367,6 +10789,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme si diarrhe prolongee",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Deshydratation (ionogramme + créatinine)",
@@ -8394,6 +10817,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme si diarrhe prolongee | Ammoniemie (indication encephalopathie hépatique)",
                     "suivi_periodique": "Ammoniemie si encephalopathie hépatique (selon clinique)",
                     "alerte_clinique": "Deshydratation → ionogramme",
@@ -8421,6 +10845,16 @@ const MASTER_DB = {
                     "albumine": "0,55",
                     "qt_risque": "",
                     "ddi_interact": "Contraceptifs, Valproate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Valproate",
+                                        "dcis": [
+                                                  "valproate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS | ECG si cardiopathie | Créatinine",
                     "suivi_periodique": "Bilan hépatique (annuel) | NFS (annuelle)",
                     "alerte_clinique": "Eruption cutanee severe (SJS/NET) → arret immediat (titration obligatoire) | Cytolyse → bilan hépatique urgent",
@@ -8451,6 +10885,24 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Clopidogrel, Anticoagulants, Methotrexate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Clopidogrel",
+                                        "dcis": [
+                                                  "clopidogrel"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Magnesemie si traitement prolonge | Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Magnesemie (annuelle si usage prolonge >1 an) | Vitamine B12 (tous les 2 a 3 ans si usage prolonge)",
                     "alerte_clinique": "Hypomagnsmie | NFS si anemie inexplique",
@@ -8478,6 +10930,7 @@ const MASTER_DB = {
                     "albumine": "0,87",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie systematique",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique)",
                     "alerte_clinique": "Uvite/inflammation → examen ophtalmologique",
@@ -8502,6 +10955,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | Bilan hépatique (CI si insuffisance hépatique sévère) | Créatinine",
                     "suivi_periodique": "TA (consultations)",
                     "alerte_clinique": "œdemes",
@@ -8528,6 +10982,7 @@ const MASTER_DB = {
                     "albumine": "< 10 %",
                     "qt_risque": "(CR) - QTc rapporté en surdosage",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG (ajustement de dose) | NFS | Bilan hépatique",
                     "suivi_periodique": "Créatinine (annuelle) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Troubles du comportement graves (examen clinique)",
@@ -8559,6 +11014,7 @@ const MASTER_DB = {
                     "albumine": "91-92",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG si IRC (ajustement obligatoire) | Pas de bilan systematique habituel",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Peu d'effets indesirables serieux | Somnolence (prudence conducteurs)",
@@ -8584,6 +11040,39 @@ const MASTER_DB = {
                     "albumine": "oct-30",
                     "qt_risque": "",
                     "ddi_interact": "IMAO (crise hypertensive +++), Fer (chelation - absorption reduite), Antipsychotiques (antagonisme), Domperidone (stimule peristaltisme - aide nausee)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Fer",
+                                        "dcis": [
+                                                  "fer"
+                                        ],
+                                        "commentaire": "chelation - absorption reduite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antipsychotiques",
+                                        "dcis": [
+                                                  "haloperidol",
+                                                  "olanzapine",
+                                                  "risperidone",
+                                                  "quetiapine",
+                                                  "aripiprazole",
+                                                  "clozapine",
+                                                  "chlorpromazine",
+                                                  "levomepromazine"
+                                        ],
+                                        "commentaire": "antagonisme",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Domperidone",
+                                        "dcis": [
+                                                  "domperidone"
+                                        ],
+                                        "commentaire": "stimule peristaltisme - aide nausee",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS | Ionogramme | Bilan cardiaque (ECG) | Evaluation psychiatrique | Glycemie si DT2",
                     "suivi_periodique": "Bilan hépatique (annuel) | NFS (annuelle) | ECG (annuel) | Evaluation psychiatrique (annuelle) | Glycemie (annuelle si DT2)",
                     "alerte_clinique": "Psychose/hallucinations → evaluation psychiatrique | Hypotension orthostatique → TA debout/couche | Nausees au debut (transitoires) | Dyskinesies (fluctuations motrices - examen clinique)",
@@ -8612,6 +11101,34 @@ const MASTER_DB = {
                     "albumine": "24-38",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "AVK, Antiacides, Theophylline, Antidiabetiques oraux",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Theophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal (ajustement systematique si DFG<50) | ECG (QTc) | Glycemie si diabete",
                     "suivi_periodique": "Créatinine (annuelle) | ECG annuel ou si symptomes",
                     "alerte_clinique": "Allongement QTc (risque > ciprofloxacine) → ECG urgent | Tendino-rupture | Troubles psychiatriques (confusion, psychose) | Hypoglycemie/hyperglycemie si diabete",
@@ -8642,6 +11159,16 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Alcool, Depresseurs SNC, Anticholinergiques, QT",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | TA (hypotension orthostatique)",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | TA (consultations)",
                     "alerte_clinique": "Agranulocytose → NFS urgente | Ictère → bilan hépatique | Syndrome malin neuroleptique → CPK",
@@ -8673,6 +11200,16 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Alcool, Depresseurs SNC, Anticholinergiques, QT",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | TA (hypotension orthostatique)",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | TA (consultations)",
                     "alerte_clinique": "Agranulocytose → NFS urgente | Ictère → bilan hépatique | Syndrome malin neuroleptique → CPK",
@@ -8703,6 +11240,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TSH + FT4 | ECG si cardiopathie | Ionogramme | Glycemie si diabete | Densitometrie osseuse si post-menopause (traitement prolonge)",
                     "suivi_periodique": "TSH (a 6-8 semaines apres initiation ou changement de dose, puis annuel) | ECG (annuel si > 65 ans ou cardiopathie)",
                     "alerte_clinique": "Surdosage → TSH effondree + symptomes hyperthyroidie (tachycardie, amaigrissement) → ECG urgent | Insuffisance coronarienne demasquee par substitution → ECG",
@@ -8732,6 +11270,29 @@ const MASTER_DB = {
                     "albumine": "31",
                     "qt_risque": "",
                     "ddi_interact": "ISRS/IMAO (syndrome serotoninergique +++), Tyramine (crise hypertensive), Dextromethorphane",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique +++",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Dextromethorphane",
+                                        "dcis": [
+                                                  "dextromethorphane"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS-plaquettes (myelotoxicite cumulee dose-dependante) | Bilan ophtalmique si traitement > 4 semaines | Bilan neurologique | Bilan hépatique | Dosage serologique si IRC",
                     "suivi_periodique": "NFS-plaquettes (HEBDOMADAIRE - myelotoxicite cumulee OBLIGATOIRE) | Bilan hépatique (hebdomadaire) | Bilan ophtalmique (si traitement > 28 jours) | Surveillance neuropathie peripherique",
                     "alerte_clinique": "Thrombopenie severe (dose et duree-dependante) → NFS urgente (obligation hebdomadaire) | Aplasie medullaire → NFS urgente | Neuropathie optique irreversible si traitement > 28j → examen ophtalmique | Neuropathie peripherique | Syndrome serotoninergique si ISRS/IMAO associes",
@@ -8761,6 +11322,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TSH + FT3 + FT4 | ECG | Ionogramme",
                     "suivi_periodique": "TSH + FT3 (a 4-6 semaines puis annuel) | ECG (annuel)",
                     "alerte_clinique": "Surdosage → tachyarythmie → ECG urgent | Insuffisance coronarienne",
@@ -8788,6 +11350,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TSH + FT3 + FT4 | ECG",
                     "suivi_periodique": "TSH + FT3 (a 4-6 semaines puis annuel)",
                     "alerte_clinique": "Surdosage → tachyarythmie",
@@ -8815,6 +11378,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Anticoagulants leger effet",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Lipase | Bilan thyroidien si ATCD",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle) | FC (tachycardie possible)",
                     "alerte_clinique": "Douleur epigastrique → lipase (pancreatite) | Nodule thyroidien → TSH + eechographie",
@@ -8845,6 +11409,31 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "AINS, K+, Spironolactone, Diuretiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Spironolactone",
+                                        "dcis": [
+                                                  "spironolactone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Proteinurie (diabetiques)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Angio-oedeme",
@@ -8873,6 +11462,73 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "(PR) - Anomalies ECG (onde T), allongement QTc possible",
                     "ddi_interact": "IEC/ARA2/AINS (augmentent lithiemie +++), Thiazidiques (augmentent lithiemie +), Diuretiques de l'anse (attention: augmentent lithiemie), Carbamazepine (neurotoxicite), Haloperidol (neurotoxicite), ISRS (syndrome serotoninergique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "augmentent lithiemie +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Diurétiques thiazidiques",
+                                        "dcis": [
+                                                  "hydrochlorothiazide",
+                                                  "indapamide",
+                                                  "chlortalidone"
+                                        ],
+                                        "commentaire": "augmentent lithiemie +",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Diurétiques de l'anse",
+                                        "dcis": [
+                                                  "furosemide",
+                                                  "bumetanide",
+                                                  "torsemide"
+                                        ],
+                                        "commentaire": "attention: augmentent lithiemie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Carbamazepine",
+                                        "dcis": [
+                                                  "carbamazepine"
+                                        ],
+                                        "commentaire": "neurotoxicite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Haloperidol",
+                                        "dcis": [
+                                                  "haloperidol"
+                                        ],
+                                        "commentaire": "neurotoxicite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (natremie +++) | TSH + FT4 | ECG | Bilan parathyroidien (PTH, calcemie) | Hemogramme | Dosage serique (fenetre 0.6-1.2 mEq/L prophylaxie)",
                     "suivi_periodique": "Lithiemie C0 (residuelle 12h post-dose) (mensuelle 1ere annee puis tous les 3-6 mois) | Créatinine + ionogramme (tous les 3-6 mois) | TSH + FT4 (annuel) | Calcemie + PTH (annuel - hyperparathyroidie) | ECG (annuel)",
                     "alerte_clinique": "Intoxication lithique (tremblements, confusion, ataxie, vomissements) → lithiemie urgente | Hypothyroidie (TSH + FT4 urgents) | Insuffisance renale (accumulation) → créatinine + lithiemie urgents | Hyperparathyroidie (hypercalcemie) → calcemie + PTH urgents | Aplatissement/inversion ondes T ECG (benigneee)",
@@ -8906,6 +11562,7 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Inhibiteurs de la P-gp (Ketoconazole - Itraconazole)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie specifique si usage ponctuel | ECG (QTc) si usage prolonge ou haute dose",
                     "suivi_periodique": "ECG si usage prolonge ou haute dose (allongement QTc/arythmies  dose supratherapeutique)",
                     "alerte_clinique": "Allongement QTc  a forte dose → ECG urgent | Ilus paralytique (examen clinique)",
@@ -8932,6 +11589,7 @@ const MASTER_DB = {
                     "albumine": "98 - 99 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Protease (CYP3A4)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | Bilan lipidique | Glycemie/HbA1c | ECG (QTc) | Créatinine",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a a 6 mois) | Bilan lipidique (annuel) | Glycemie (annuelle) | ECG (annuel) | Charge virale + CD4",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Ictère → bilan hépatique urgent | Dyslipidemie sévère",
@@ -8965,6 +11623,7 @@ const MASTER_DB = {
                     "albumine": "0,8",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -8992,6 +11651,7 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "",
                     "ddi_interact": "Non sedatif",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique sévère",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Pas de biologie d'alerte specifique",
@@ -9019,6 +11679,7 @@ const MASTER_DB = {
                     "albumine": "0,85",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS",
                     "suivi_periodique": "Bilan hépatique (annuel si traitement prolonge)",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -9048,6 +11709,7 @@ const MASTER_DB = {
                     "albumine": "0,85",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -9075,6 +11737,47 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "",
                     "ddi_interact": "AINS, K+, Spironolactone, IEC",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Spironolactone",
+                                        "dcis": [
+                                                  "spironolactone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Uricemie (losartan uricosurique)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel) | Uricemie (annuelle)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -9104,6 +11807,16 @@ const MASTER_DB = {
                     "albumine": "90",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "Alcool, Anticholinergiques, QT-prolongateurs, IMAO",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Poids/IMC",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie (annuelle)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Syndrome malin neuroleptique → CPK urgente | Agranulocytose → NFS urgente (fievre) | Ictère → bilan hépatique",
@@ -9134,6 +11847,32 @@ const MASTER_DB = {
                     "albumine": "60-80",
                     "qt_risque": "",
                     "ddi_interact": "Antiacides, fer, bismuth",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "fer",
+                                        "dcis": [
+                                                  "fer"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "bismuth",
+                                        "dcis": [
+                                                  "bismuth"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique si traitement prolonge | Bilan renal si IRC",
                     "suivi_periodique": "Bilan hépatique si traitement > 3 mois (acne)",
                     "alerte_clinique": "Hépatotoxicité rare → bilan hépatique | Photosensibilite",
@@ -9160,6 +11899,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme si insuffisance renale ou traitement prolonge",
                     "suivi_periodique": "Pas de biologie systematique (peu absorb)",
                     "alerte_clinique": "Deshydratation si diarrhe importante",
@@ -9187,6 +11927,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | Créatinine",
                     "suivi_periodique": "TA (consultations)",
                     "alerte_clinique": "œdemes",
@@ -9213,6 +11954,37 @@ const MASTER_DB = {
                     "albumine": "88",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), Alcool, QT-prolongateurs, Carbamazepine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Carbamazepine",
+                                        "dcis": [
+                                                  "carbamazepine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS (thrombopenie) | Bilan hépatique | Ionogramme | Glycemie si DT2",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel) | Ionogramme (natremie) (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Convulsions (abaisse seuil epileptique - plus que tricycliques) | Agranulocytose (rare) → NFS urgente | SIADH → natremie",
@@ -9245,6 +12017,16 @@ const MASTER_DB = {
                     "albumine": "(non documente)",
                     "qt_risque": "",
                     "ddi_interact": "Alcool et depresseurs SNC (sedation additive) | Anticholinergiques (cumul ACB) | IMAO (potentialisation effets anticholinergiques)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool et depresseurs SNC",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "sedation additive",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Evaluation cognitive | Risque de chutes",
                     "suivi_periodique": "Reevaluation indication (< 8 semaines) | Score ACB cumule | Cognition",
                     "alerte_clinique": "PIM geriatrie — ACB 3 (Beers 2023) | Sedation et chutes | Confusion | Retention urinaire | Glaucome angle ferme = CI | Ne pas utiliser au long cours",
@@ -9268,6 +12050,21 @@ const MASTER_DB = {
                     "albumine": "65-75",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI absolue - deces), ISRS (syndrome serotoninergique), MAO-B inhibiteurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal (CI si DFG<60 - accumulation metabolite neurotoxique normemeperidine) | Bilan neurologique | Bilan hépatique",
                     "suivi_periodique": "Créatinine (regulier) | Evaluation neurologique",
                     "alerte_clinique": "Neurotoxicite par accumulation normemeperidine si IRC (convulsions, tremblements, MYOCLONIES - CI si DFG<60) | Depression respiratoire | Syndrome serotoninergique si ISRS/IMAO → urgence",
@@ -9296,6 +12093,7 @@ const MASTER_DB = {
                     "albumine": "50-70",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "QT-prolongateurs, Anticholinergiques",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique | ECG si FR QTc",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Allongement QTc (risque modere) → ECG | Syndrome anticholinergique modere (confusion, retention)",
@@ -9323,6 +12121,16 @@ const MASTER_DB = {
                     "albumine": "2",
                     "qt_risque": "",
                     "ddi_interact": "Valproate (reduit concentrations)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Valproate",
+                                        "dcis": [
+                                                  "valproate"
+                                        ],
+                                        "commentaire": "reduit concentrations",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal (ajustement systematique) | NFS | Bilan neurologique si epilepsie",
                     "suivi_periodique": "Créatinine (regulier en UCI)",
                     "alerte_clinique": "Convulsions (risque moins eleve que imipenem) | Neutropenie | Diarrhee a C.difficile",
@@ -9353,6 +12161,24 @@ const MASTER_DB = {
                     "albumine": "2% (meropenem)",
                     "qt_risque": "",
                     "ddi_interact": "Valproate (diminution majeure concentrations valproate → CI) | Probenecide (augmentation concentrations meropenem)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Valproate",
+                                        "dcis": [
+                                                  "valproate"
+                                        ],
+                                        "commentaire": "diminution majeure concentrations valproate → CI",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Probenecide",
+                                        "dcis": [
+                                                  "probenecide"
+                                        ],
+                                        "commentaire": "augmentation concentrations meropenem",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine | NFS | Bilan hépatique",
                     "suivi_periodique": "Créatinine (3x/sem) | NFS | BH (hebdomadaire) | Surveillance digestive",
                     "alerte_clinique": "CI avec valproate | Reserve aux infections a KPC (K. pneumoniae productrice de carbapenemase) | Colite C. difficile | Bien tolere sur le plan neurologique",
@@ -9382,6 +12208,27 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Contraste iode, Alcool, Diuretiques, SGLT2i",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "iSGLT2",
+                                        "dcis": [
+                                                  "dapagliflozine",
+                                                  "empagliflozine",
+                                                  "canagliflozine",
+                                                  "ertugliflozine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG (CI si DFG < 30) | Bilan hépatique | Vitamine B12 | NFS | Glycemie/HbA1c",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois jusqu' objectif puis annuel ou biannuel) | Créatinine/DFG (annuelle  suspension si DFG < 30) | Vitamine B12 (tous les 2 ans  a risque carence par malabsorption)",
                     "alerte_clinique": "Insuffisance renale aigu → créatinine urgente + suspension | Acidose lactique (nausees + douleurs musculaires + créatinine) → urgence",
@@ -9414,6 +12261,60 @@ const MASTER_DB = {
                     "albumine": "86-90",
                     "qt_risque": "Risque Etabli (RE) - surveillance ECG obligatoire",
                     "ddi_interact": "Rifampicine (reduction efficacite), QT-prolongateurs (CI relative), Benzodiazepines (depression respiratoire +++), Alcool, Inhibiteurs CYP3A4/CYP2D6",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Rifampicine",
+                                        "dcis": [
+                                                  "rifampicine"
+                                        ],
+                                        "commentaire": "reduction efficacite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "depression respiratoire +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc - allongement majeur dose-dependant) | Ionogramme | Bilan hépatique | Dosage serique (fenetre therapeutique large) | Bilan infectieux (VIH, VHB, VHC)",
                     "suivi_periodique": "ECG (avant initiation + a 1 mois + tous les 6 mois) | Ionogramme (mensuel initiation puis trimestriel) | Bilan hépatique (tous les 3 mois) | Dosage serique (si doute observance ou symptomes)",
                     "alerte_clinique": "Allongement QTc majeur (dose-dependant - surveillance stricte) → ECG + monitoring urgent | Surdosage (depression respiratoire) → urgence (naloxone) | Intoxication si association benzos, alcool | Hypokaliemie/hypomagnesiemie amplifient risque QT → ionogramme urgent",
@@ -9444,6 +12345,7 @@ const MASTER_DB = {
                     "albumine": "0,46",
                     "qt_risque": "",
                     "ddi_interact": "Depresseurs SNC",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique | Créatinine/DFG si IRC",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -9472,6 +12374,7 @@ const MASTER_DB = {
                     "albumine": "0,77",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Glycemie/HbA1c | Ionogramme | NFS | Bilan lipidique | Cortisol si traitement prolonge",
                     "suivi_periodique": "Glycemie (semestrielle) | Ionogramme (annuel) | Bilan lipidique (annuel) | Cortisol (annuel) | Densitometrie (tous les 2 ans)",
                     "alerte_clinique": "Hyperglycemie | Hypokaliemie | Insuffisance surrenalienne  l'arret",
@@ -9503,6 +12406,23 @@ const MASTER_DB = {
                     "albumine": "0,3",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "LevoDOPA (antagonisme) - Neuroleptiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antipsychotiques",
+                                        "dcis": [
+                                                  "haloperidol",
+                                                  "olanzapine",
+                                                  "risperidone",
+                                                  "quetiapine",
+                                                  "aripiprazole",
+                                                  "clozapine",
+                                                  "chlorpromazine",
+                                                  "levomepromazine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Créatinine/DFG | Prolactinemie si amnorrhe",
                     "suivi_periodique": "ECG (annuel si facteur de a risque QTc) | évaluation clinique syndrome extrapyramidal (traitement court recommand)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Mouvements anormaux (dyskinesie tardive  arret immediat) | Syndrome malin neuroleptique (rare)",
@@ -9529,6 +12449,7 @@ const MASTER_DB = {
                     "albumine": "10 - 12 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Glycemie/HbA1c si diabte | Bilan lipidique",
                     "suivi_periodique": "FC/TA (consultations) | Glycemie (annuelle si DT2)",
                     "alerte_clinique": "Bradycardie → ECG",
@@ -9557,6 +12478,42 @@ const MASTER_DB = {
                     "albumine": "< 20",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool (antabuse +++), AVK (potentiation +++), Lithium, Phenobarbital",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "antabuse +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Phenobarbital",
+                                        "dcis": [
+                                                  "phenobarbital"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (metabolisme hépatique exclusif) | NFS | Bilan neurologique si traitement prolonge",
                     "suivi_periodique": "Bilan hépatique si traitement > 10j | NFS si traitement > 7j",
                     "alerte_clinique": "Effet antabuse (alcool ABSOLUMENT contre-indique) → informer patient | Neuropathie peripherique si traitement prolonge (> 6 semaines) → examen neurologique | Syndrome cerebeleux / encephalopathie si IRC severe | Allongement QT (modere)",
@@ -9586,6 +12543,49 @@ const MASTER_DB = {
                     "albumine": "96-97",
                     "qt_risque": "",
                     "ddi_interact": "Inhibiteurs CYP3A4 (ketoconazole, clarithromycine augmentent x10), Alcool, Opiodes, Propofol, Grapefruit (oral)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "ketoconazole, clarithromycine augmentent x10",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Propofol",
+                                        "dcis": [
+                                                  "propofol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Grapefruit",
+                                        "dcis": [
+                                                  "pamplemousse"
+                                        ],
+                                        "commentaire": "oral",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (metabolisme CYP3A4 exclusif) | Créatinine/DFG | Bilan neurologique",
                     "suivi_periodique": "Bilan hépatique si usage > 48h | Pas de biologie systematique (usage ponctuel)",
                     "alerte_clinique": "Depression respiratoire (surdosage ou interaction CYP3A4 inhibiteurs) → urgence (flumazenil antagoniste) | Accumulation si IRC (metabolites glucuronides) | Hépatotoxicité si insuffisance hépatique",
@@ -9613,6 +12613,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Bilan hépatique | Créatinine/DFG",
                     "suivi_periodique": "HbA1c (tous les 3 a 6 mois) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Hypoglycemie severe → glycemie urgente",
@@ -9643,6 +12644,7 @@ const MASTER_DB = {
                     "albumine": "0,13",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | FC | Créatinine/DFG | Ionogramme",
                     "suivi_periodique": "TA/FC (consultations) | Créatinine (annuelle)",
                     "alerte_clinique": "HTA → TA | Retention urinaire → examen clinique",
@@ -9669,6 +12671,42 @@ const MASTER_DB = {
                     "albumine": "75",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Antiacides, fer, isotretinoine (HTIC), AVK",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "fer",
+                                        "dcis": [
+                                                  "fer"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "isotretinoine",
+                                        "dcis": [
+                                                  "isotretinoine"
+                                        ],
+                                        "commentaire": "HTIC",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS | Auto-anticorps (lupus induit si traitement prolonge)",
                     "suivi_periodique": "Bilan hépatique (si traitement > 3 mois) | ANA + anti-dsDNA (tous les 6 mois si traitement > 6 mois)",
                     "alerte_clinique": "Lupus induit par minocycline (arthralgies + ANA positifs) → arret immediat | Hépatotoxicité → bilan hépatique urgent | Vertige/ataxie (vestibulotoxicite dose-dependante)",
@@ -9696,6 +12734,7 @@ const MASTER_DB = {
                     "albumine": "0,85",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Anticholinergique leger",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS (agranulocytose rare) | Bilan hépatique | Glycemie/HbA1c | Bilan lipidique (prise de poids frquente)",
                     "suivi_periodique": "NFS (si fievre/angine  agranulocytose) | Bilan lipidique + glycémie (annuels) | Bilan hépatique (annuel) | Poids (a chaque consultation)",
                     "alerte_clinique": "Fievre + angine → NFS urgente (agranulocytose rare) | Ictère → bilan hépatique urgent",
@@ -9730,6 +12769,7 @@ const MASTER_DB = {
                     "albumine": "0,5",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | Bilan hépatique",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -9758,6 +12798,7 @@ const MASTER_DB = {
                     "albumine": "0,35",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | Créatinine/DFG (accumulation mtabolites actifs si IRC)",
                     "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle  ajustement de dose si DFG diminu)",
                     "alerte_clinique": "Dpression respiratoire | Surdosage → urgence",
@@ -9787,6 +12828,39 @@ const MASTER_DB = {
                     "albumine": "47-52",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "AVK, antiarythmiques QT, Antacides, Sucralfate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiarythmiques",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "dronedarone",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "sotalol",
+                                                  "quinidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Sucralfate",
+                                        "dcis": [
+                                                  "sucralfate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc - allongement important) | Bilan hépatique | Glycemie si diabete",
                     "suivi_periodique": "ECG (annuel et avant prescription si FR QT)",
                     "alerte_clinique": "Allongement QTc majeur → ECG urgent (CI si QTc prolonge, AVK, hypokaliemie) | Hépatotoxicité severe documentee → bilan hépatique urgent | Diarrhee a C.difficile",
@@ -9817,6 +12891,7 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Peu d'interactions",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS-plaquettes (myelosuppression) | Bilan hépatique | Créatinine | Bilan infectieux",
                     "suivi_periodique": "NFS (toutes les 2 semaines les 3 premiers mois, puis mensuel jusqu'a 1 an, puis tous les 3 mois)",
                     "alerte_clinique": "Leucopenie/Neutropenie → NFS urgente | Aplasie → NFS urgente | Diarrhee profuse (effet dose-dependant) → ionogramme + créatinine",
@@ -9848,6 +12923,7 @@ const MASTER_DB = {
                     "albumine": "0,3",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Créatinine/DFG | Glycemie si diabte",
                     "suivi_periodique": "FC/TA (consultations) | Créatinine (annuelle)",
                     "alerte_clinique": "Bradycardie → ECG",
@@ -9876,6 +12952,27 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Autres opiodes (antagonisme et sevrage possible), Benzodiazepines (depression respiratoire)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "depression respiratoire",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | Bilan renal",
                     "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Depression respiratoire (moindre que morphine mais reelle) | Syndrome de sevrage si dependance opiodes anterieures | Nausees/vomissements",
@@ -9903,6 +13000,7 @@ const MASTER_DB = {
                     "albumine": "0,29",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Faible CYP3A4",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG (CI si DFG < 15) | ECG si cardiopathie",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Douleur thoracique → ECG",
@@ -9930,6 +13028,7 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Bilan hépatique (CI si insuffisance hépatique severe) | Créatinine/DFG",
                     "suivi_periodique": "HbA1c (tous les 3 a 6 mois) | Bilan hépatique (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Hypoglycemie severe → glycemie urgente",
@@ -9960,6 +13059,7 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Bilan hépatique (CI si insuffisance hépatique) | Glycemie si diabte",
                     "suivi_periodique": "FC/TA (consultations) | Glycemie (annuelle si DT2)",
                     "alerte_clinique": "Bradycardie → ECG",
@@ -9989,6 +13089,7 @@ const MASTER_DB = {
                     "albumine": "0,73",
                     "qt_risque": "(CR) - Tachycardie + anomalies ECG rapportées",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG si cardiopathie (tachycardie) | TA",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Tachycardie/sueurs → ECG + bilan clinique",
@@ -10015,6 +13116,7 @@ const MASTER_DB = {
                     "albumine": "> 95 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | ECG | Bilan hépatique",
                     "suivi_periodique": "TA (consultations) | Bilan hépatique si traitement prolonge",
                     "alerte_clinique": "Tachycardie reflexe → ECG",
@@ -10042,6 +13144,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | ECG",
                     "suivi_periodique": "TA (consultations)",
                     "alerte_clinique": "Tachycardie reflexe → ECG | Aggravation angor (formes LP)",
@@ -10068,6 +13171,7 @@ const MASTER_DB = {
                     "albumine": "> 95 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | Bilan hépatique (CI si insuffisance hépatique sévère)",
                     "suivi_periodique": "TA (consultations lors de l'usage aigu)",
                     "alerte_clinique": "Hypotension",
@@ -10095,6 +13199,7 @@ const MASTER_DB = {
                     "albumine": "0,87",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique",
                     "suivi_periodique": "Bilan hépatique (annuel)",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -10122,6 +13227,7 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA",
                     "suivi_periodique": "TA (consultations)",
                     "alerte_clinique": "Tachycardie reflexe",
@@ -10146,6 +13252,28 @@ const MASTER_DB = {
                     "albumine": "20-60",
                     "qt_risque": "",
                     "ddi_interact": "Antiacides (absorption), Fluoroquinolones (antagonisme)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "absorption",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Quinolones",
+                                        "dcis": [
+                                                  "ciprofloxacine",
+                                                  "levofloxacine",
+                                                  "moxifloxacine",
+                                                  "ofloxacine",
+                                                  "norfloxacine"
+                                        ],
+                                        "commentaire": "antagonisme",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal (CI si DFG<45) | Bilan hépatique si traitement > 3 mois | NFS (anemie hemolytique si deficit G6PD) | Bilan pulmonaire si traitement chronique",
                     "suivi_periodique": "Bilan hépatique (annuel si prophylaxie) | NFS (annuel si prophylaxie) | EFR si prophylaxie > 6 mois",
                     "alerte_clinique": "Hépatotoxicité (chronique surtout) → bilan hépatique urgent | Pneumopathie interstitielle (aigue ou chronique) → EFR urgente | Neuropathie peripherique si IRC (CI si DFG<45)",
@@ -10175,6 +13303,7 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -10202,6 +13331,34 @@ const MASTER_DB = {
                     "albumine": "15",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Antiacides, AVK, Theophylline",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Theophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | ECG si FR QTc | Glycemie si diabete",
                     "suivi_periodique": "Créatinine si IRC",
                     "alerte_clinique": "Allongement QTc (risque modere) | Tendino-rupture | Hypoglycemie si sulfamides",
@@ -10231,6 +13388,29 @@ const MASTER_DB = {
                     "albumine": "87-95",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), QT-prolongateurs, Alcool",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Dosage serique (fenetre 50-150 ng/mL)",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Ictère → bilan hépatique | SIADH → natremie",
@@ -10261,6 +13441,41 @@ const MASTER_DB = {
                     "albumine": "32",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Antiacides, AVK, AINS",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | ECG si FR QTc | Glycemie si diabete",
                     "suivi_periodique": "Créatinine si IRC",
                     "alerte_clinique": "Allongement QTc → ECG | Tendino-rupture | Hypoglycemie si sulfamides",
@@ -10290,6 +13505,7 @@ const MASTER_DB = {
                     "albumine": "0,93",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | Glycemie/HbA1c | Bilan lipidique | ECG | Poids/IMC | TA",
                     "suivi_periodique": "Glycemie/HbA1c (tous les 3 a a 6 mois) | Bilan lipidique (tous les a 6 mois) | Bilan hépatique (annuel) | NFS (annuelle) | Poids (a chaque consultation)",
                     "alerte_clinique": "Syndrome malin neuroleptique → CPK urgente | Hyperglycemie sévère → glycémie urgente | Ictère → bilan hépatique urgent",
@@ -10325,6 +13541,7 @@ const MASTER_DB = {
                     "albumine": "0,99",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | Bilan hépatique | Poids (enteropathie)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel) | Evaluation clinique enteropathie",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Enteropathie olmesartan (diarrhee severe + amaigrissement → arret immediat)",
@@ -10354,6 +13571,32 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Clopidogrel, Methotrexate, Atazanavir",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Clopidogrel",
+                                        "dcis": [
+                                                  "clopidogrel"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Atazanavir",
+                                        "dcis": [
+                                                  "atazanavir"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Magnesemie si traitement prolonge | Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Magnesemie (annuelle si usage prolonge) | Vitamine B12 (tous les 2 a 3 ans)",
                     "alerte_clinique": "Hypomagnesiemie | NFS si anemie inexpliquee",
@@ -10381,6 +13624,18 @@ const MASTER_DB = {
                     "albumine": "85",
                     "qt_risque": "",
                     "ddi_interact": "AVK (interference tests SEULEMENT - pas interaction reelle)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "interference tests SEULEMENT - pas interaction reelle",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Bilan hépatique | INR (interference avec test coagulation)",
                     "suivi_periodique": "INR faussement eleve → utiliser test anti-Xa pour surveillance AVK pendant 120h post-dose",
                     "alerte_clinique": "Hépatotoxicité → bilan hépatique | Interference tests coagulation (INR faussement eleve 7-12x jusqu'a 120h post-dose)",
@@ -10409,6 +13664,16 @@ const MASTER_DB = {
                     "albumine": "95",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "QT-prolongateurs, Alcool, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Evaluation cognitive chez sujet age | Bilan hépatique",
                     "suivi_periodique": "ECG (annuel si traitement prolonge) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Syndrome anticholinergique severe (EVITER sujet age - ACB=3) | Allongement QTc → ECG | Hépatotoxicité → bilan hépatique",
@@ -10436,6 +13701,24 @@ const MASTER_DB = {
                     "albumine": "94%",
                     "qt_risque": "",
                     "ddi_interact": "Methotrexate (diminution elimination renale MTX) | Warfarine (augmentation INR possible)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "diminution elimination renale MTX",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Warfarine",
+                                        "dcis": [
+                                                  "warfarine"
+                                        ],
+                                        "commentaire": "augmentation INR possible",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | Créatinine",
                     "suivi_periodique": "BH (2x/semaine si > 14 jours — hépatotoxicité) | NFS | Créatinine",
                     "alerte_clinique": "Hépatotoxicité (cholestase) si traitement prolonge > 14j | Nephrite interstitielle | Allergie croisee penicillines | Voie orale peu fiable",
@@ -10463,6 +13746,7 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -10490,6 +13774,7 @@ const MASTER_DB = {
                     "albumine": "0,4",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme (SIADH frequent ++) | NFS | Bilan hépatique | Créatinine",
                     "suivi_periodique": "Ionogramme (a 2 semaines puis annuel - risque SIADH ++++) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Hyponatremie severe (SIADH - plus frequent que carbamazepine) → ionogramme urgent | Eruption cutanee → arret",
@@ -10520,6 +13805,25 @@ const MASTER_DB = {
                     "albumine": "83 u 85 %",
                     "qt_risque": "",
                     "ddi_interact": "Autres anticholinergiques - Inhibiteurs CYP3A4",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG si IRC | ECG si QTc prolonge",
                     "suivi_periodique": "Pas de biologie systematique | ECG si symptomes",
                     "alerte_clinique": "Retention urinaire (examen clinique) | Glaucome aigu",
@@ -10547,6 +13851,7 @@ const MASTER_DB = {
                     "albumine": "0,45",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | Créatinine/DFG",
                     "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Dpression respiratoire | Surdosage",
@@ -10576,6 +13881,7 @@ const MASTER_DB = {
                     "albumine": "0,74",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Glycemie/HbA1c | Bilan lipidique | ECG (QTc) | Créatinine/DFG | Prolactinemie | Poids/IMC",
                     "suivi_periodique": "Glycemie/HbA1c (annuelle) | Bilan lipidique (annuel) | Créatinine (annuelle) | ECG (QTc annuel) | Prolactinemie (si symptomes) | Poids (a chaque consultation)",
                     "alerte_clinique": "Allongement QTc → ECG | Syndrome malin neuroleptique → CPK",
@@ -10608,6 +13914,24 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Clopidogrel, Methotrexate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Clopidogrel",
+                                        "dcis": [
+                                                  "clopidogrel"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Magnesemie si traitement prolonge | Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Magnesemie (annuelle si usage prolonge) | Vitamine B12 (tous les 2 a 3 ans)",
                     "alerte_clinique": "Hypomagnsmie",
@@ -10635,6 +13959,7 @@ const MASTER_DB = {
                     "albumine": "10 - 25 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique ou alcoolisme | INR si AVK (interaction  a forte dose)",
                     "suivi_periodique": "Bilan hépatique (annuel si usage quotidien prolonge) | INR si AVK associ (semestriel)",
                     "alerte_clinique": "Surdosage → ASAT/ALAT/TP/INR/créatinine EN URGENCE | Ictère → bilan hépatique urgent",
@@ -10663,6 +13988,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme (natrmie) | Bilan hépatique | NFS",
                     "suivi_periodique": "Natremie ( a M1 puis annuelle) | Bilan hépatique si symptomes",
                     "alerte_clinique": "Hyponatremie (SIADH) | Syndrome serotoninergique si associations",
@@ -10692,6 +14018,7 @@ const MASTER_DB = {
                     "albumine": "10 - 20 % (Pour le metabolite actif)",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Angio-oedeme",
@@ -10720,6 +14047,33 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Anticholinergiques, Tricycliques, ISRS",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Tricycliques",
+                                        "dcis": [
+                                                  "amitriptyline",
+                                                  "clomipramine",
+                                                  "imipramine",
+                                                  "desipramine",
+                                                  "nortriptyline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Agranulocytose → NFS urgente | Syndrome malin neuroleptique → CPK",
@@ -10750,6 +14104,16 @@ const MASTER_DB = {
                     "albumine": "> 70",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques, IMAO",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG si FR QTc | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique (EVITER sujet age - ACB=2-3) | Allongement QTc",
@@ -10775,6 +14139,63 @@ const MASTER_DB = {
                     "albumine": "45-60",
                     "qt_risque": "",
                     "ddi_interact": "AVK (induction CYP +++), Contraceptifs oraux, Corticoides, Hormones thyroidiennes, Antiretroviraux, Ciclosporine, Methadone, Theophylline, Acide valproique (augmente phenobarbital)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "induction CYP +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methadone",
+                                        "dcis": [
+                                                  "methadone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Theophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Acide valproique",
+                                        "dcis": [
+                                                  "valproate"
+                                        ],
+                                        "commentaire": "augmente phenobarbital",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS | Ionogramme | Dosage serique (fenetre 15-40 mg/L residuelle) | Bilan thyroidien | 25-OH vitamine D | Bilan de coagulation (TP)",
                     "suivi_periodique": "Dosage serique (a M1 puis tous les 6 mois) | Bilan hépatique (annuel) | NFS (annuelle) | 25-OH Vitamine D (annuelle - induction CYP catabolisme) | Ionogramme (annuel)",
                     "alerte_clinique": "Surdosage (depression respiratoire, coma) → dosage urgent | Eruption cutanee severe (SJS/TEN) → arret immediat | Aplasie (rare) → NFS urgente | Hépatotoxicité → bilan hépatique | Carence vitamine D (induction CYP) → 25-OH-D",
@@ -10805,6 +14226,7 @@ const MASTER_DB = {
                     "albumine": "~ 45 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Calcemie",
                     "suivi_periodique": "Calcemie (annuelle)",
                     "alerte_clinique": "Hypercalcemie (rare aux doses therapeutiques)",
@@ -10831,6 +14253,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie systematique",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique)",
                     "alerte_clinique": "Bradycardie/bronchospasme si absorption systmique importante",
@@ -10855,6 +14278,44 @@ const MASTER_DB = {
                     "albumine": "98",
                     "qt_risque": "Risque Etabli (RE) - CI si QTc > 450ms",
                     "ddi_interact": "Macrolides (CI +++), Azoles antifongiques (CI), Alcool, QT-prolongateurs, Inhibiteurs CYP3A4/1A2",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "CI +++",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc - CI si QTc prolonge) | NFS | Bilan hépatique | Glycemie | Ionogramme | Dosage serique",
                     "suivi_periodique": "ECG (QTc tous les 3 a 6 mois) | NFS (annuelle) | Bilan hépatique (annuel) | Glycemie (annuelle)",
                     "alerte_clinique": "Allongement QTc majeur (risque TdP eleve) → ECG monitoring obligatoire | Syndrome malin neuroleptique → CPK urgente | Aplasie → NFS urgente",
@@ -10886,6 +14347,7 @@ const MASTER_DB = {
                     "albumine": "40 - 57 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Glycemie si diabte",
                     "suivi_periodique": "FC/TA (consultations)",
                     "alerte_clinique": "Bradycardie → ECG",
@@ -10913,6 +14375,16 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, QT-prolongateurs, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | TA",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie (annuelle)",
                     "alerte_clinique": "Allongement QTc (modere) → ECG | Syndrome malin neuroleptique → CPK urgente | Agranulocytose → NFS urgente",
@@ -10943,6 +14415,19 @@ const MASTER_DB = {
                     "albumine": "16",
                     "qt_risque": "",
                     "ddi_interact": "Aminosides (nephrotoxicite additive)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aminosides",
+                                        "dcis": [
+                                                  "gentamicine",
+                                                  "amikacine",
+                                                  "tobramycine",
+                                                  "streptomycine"
+                                        ],
+                                        "commentaire": "nephrotoxicite additive",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme (hypokalimie frequente) | Bilan hépatique | NFS",
                     "suivi_periodique": "Ionogramme si traitement prolonge",
                     "alerte_clinique": "Hypokaliemie (forte dose) → ionogramme | Neutropenie",
@@ -10972,6 +14457,37 @@ const MASTER_DB = {
                     "albumine": "30",
                     "qt_risque": "",
                     "ddi_interact": "Aminosides, MTX, AVK",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aminosides",
+                                        "dcis": [
+                                                  "gentamicine",
+                                                  "amikacine",
+                                                  "tobramycine",
+                                                  "streptomycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "MTX",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme (hypokalimie) | Bilan hépatique | NFS | Créatinine",
                     "suivi_periodique": "Ionogramme si traitement prolonge | NFS si aplasie",
                     "alerte_clinique": "Hypokaliemie → ionogramme | Neutropenie → NFS urgente | Hepatite",
@@ -11001,6 +14517,7 @@ const MASTER_DB = {
                     "albumine": "Forte (> 90 %)",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Medicaments abaissant le seuil epileptogene",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Agranulocytose → NFS urgente | Syndrome malin neuroleptique → CPK",
@@ -11032,6 +14549,7 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme | Créatinine",
                     "suivi_periodique": "Ionogramme + créatinine (tous les 3 a a 6 mois)",
                     "alerte_clinique": "Hypokaliemie | Deshydratation",
@@ -11059,6 +14577,7 @@ const MASTER_DB = {
                     "albumine": "5",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal si IRC | NFS",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Eruption cutanee",
@@ -11084,6 +14603,7 @@ const MASTER_DB = {
                     "albumine": "Variable (Morphine 35%, Codeine 7%)",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | Créatinine/DFG",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Depression respiratoire",
@@ -11112,6 +14632,39 @@ const MASTER_DB = {
                     "albumine": "15",
                     "qt_risque": "",
                     "ddi_interact": "Antipsychotiques (antagonisme), Metoclopramide (antagonisme), Cimetidine (augmente concentration)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antipsychotiques",
+                                        "dcis": [
+                                                  "haloperidol",
+                                                  "olanzapine",
+                                                  "risperidone",
+                                                  "quetiapine",
+                                                  "aripiprazole",
+                                                  "clozapine",
+                                                  "chlorpromazine",
+                                                  "levomepromazine"
+                                        ],
+                                        "commentaire": "antagonisme",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Metoclopramide",
+                                        "dcis": [
+                                                  "metoclopramide"
+                                        ],
+                                        "commentaire": "antagonisme",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Cimetidine",
+                                        "dcis": [
+                                                  "cimetidine"
+                                        ],
+                                        "commentaire": "augmente concentration",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal (elimination renale 90%) | ECG si cardiopathie | Evaluation psychiatrique | TA",
                     "suivi_periodique": "Créatinine (annuelle) | Evaluation psychiatrique (annuelle - TCI: jeu pathologique, hyperphagie, hypersexualite)",
                     "alerte_clinique": "Troubles du controle des impulsions (TCI) → evaluation psychiatrique systematique | Somnolence excessive → clinique | Hallucinations | Insuffisance renale → créatinine urgente (accumulation) | Oedemes peripheriques",
@@ -11138,6 +14691,7 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique (CI si insuffisance hépatique sévère) | Poids/âge (dose réduite si < 60 kg ou > 75 ans)",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Saignement → NFS + Hb urgente | PTT (thrombopenie + anemie)",
@@ -11167,6 +14721,7 @@ const MASTER_DB = {
                     "albumine": "0,5",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | CPK | Bilan lipidique complet",
                     "suivi_periodique": "Bilan lipidique ( 6 a 8 semaines puis annuel) | ASAT/ALAT (si symptomes) | CPK si myalgies",
                     "alerte_clinique": "Myalgies → CPK | Ictère → bilan hépatique urgent",
@@ -11196,6 +14751,7 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -11223,6 +14779,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | Bilan lipidique",
                     "suivi_periodique": "TA (consultations)",
                     "alerte_clinique": "Hypotension orthostatique (premire dose)",
@@ -11249,6 +14806,7 @@ const MASTER_DB = {
                     "albumine": "70 - 90 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Glycemie/HbA1c | Ionogramme | NFS | Bilan lipidique | Cortisol si traitement >3 mois | Densitometrie si traitement prolonge",
                     "suivi_periodique": "Glycemie (semestrielle) | Ionogramme (annuel) | Bilan lipidique (annuel) | Cortisol (annuel) | Densitometrie (tous les 2 ans) | 25-OH vitamine D (annuelle)",
                     "alerte_clinique": "Hyperglycemie | Hypokaliemie | Insuffisance surrenalienne  l'arret",
@@ -11281,6 +14839,7 @@ const MASTER_DB = {
                     "albumine": "70 - 73 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Glycemie/HbA1c | Ionogramme | NFS | Bilan lipidique | Cortisol si traitement >3 mois",
                     "suivi_periodique": "Glycemie (semestrielle) | Ionogramme (annuel) | Bilan lipidique (annuel) | Cortisol (annuel) | Densitometrie (tous les 2 ans)",
                     "alerte_clinique": "Hyperglycemie | Hypokaliemie | Insuffisance surrenalienne  l'arret",
@@ -11312,6 +14871,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "(CR) - QTc rapporté en surdosage / association",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG (ajustement de dose) | Glycemie si diabte",
                     "suivi_periodique": "Créatinine (annuelle)",
                     "alerte_clinique": "Insuffisance renale → créatinine urgente",
@@ -11340,6 +14900,26 @@ const MASTER_DB = {
                     "albumine": "40-60",
                     "qt_risque": "",
                     "ddi_interact": "Contraceptifs oraux, AVK, Theophylline",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Theophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS | Bilan renal",
                     "suivi_periodique": "Bilan hépatique si traitement > 10 jours",
                     "alerte_clinique": "Hépatotoxicité (rare) → bilan hépatique | Neutropenie (rare) → NFS urgente (fievre)",
@@ -11368,6 +14948,16 @@ const MASTER_DB = {
                     "albumine": "90",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, QT-prolongateurs, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Syndrome malin neuroleptique → CPK urgente | Agranulocytose → NFS urgente (fievre) | Effets extrapyramidaux",
@@ -11397,6 +14987,7 @@ const MASTER_DB = {
                     "albumine": "80 u 90 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Depresseurs SNC - Autres anticholinergiques",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc) | NFS (agranulocytose rare) | Bilan hépatique",
                     "suivi_periodique": "NFS (annuelle si traitement prolonge) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Agranulocytose (fievre → NFS urgente) | Allongement QTc → ECG urgent | Ictère cholestatique → bilan hépatique",
@@ -11427,6 +15018,16 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "",
                     "ddi_interact": "Alcool, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Evaluation cognitive chez sujet age | Bilan ophtalmique | Bilan urologique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Syndrome anticholinergique severe (EVITER sujet age - ACB=3) | Retention urinaire | Glaucome aigu",
@@ -11450,6 +15051,16 @@ const MASTER_DB = {
                     "albumine": "85-90",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "QT-prolongateurs, Alcool, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | ECG (QTc) | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Créatinine (annuelle) | ECG (annuel si FR QTc)",
                     "alerte_clinique": "Syndrome anticholinergique (modere ACB=2) | Allongement QTc → ECG | EVITER sujet age",
@@ -11476,6 +15087,7 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG | Glycemie/HbA1c si diabte | TSH (si hyperthyrodie)",
                     "suivi_periodique": "FC/TA (consultations) | Glycemie (annuelle si DT2) | Bilan hépatique si symptomes",
                     "alerte_clinique": "Bradycardie/BAV → ECG | Hypoglycemie masque (diabte)",
@@ -11505,6 +15117,7 @@ const MASTER_DB = {
                     "albumine": "0,8",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS-plaquettes | Bilan hépatique | TSH + FT4 | ANCA",
                     "suivi_periodique": "NFS (hebdomadaire 1er mois, puis mensuel) | TSH + FT4 (tous les 4-6 semaines) | Bilan hépatique (si symptomes)",
                     "alerte_clinique": "Agranulocytose → NFS urgente (fievre) | Hépatotoxicité severe (hepatite fulminante) → bilan hépatique urgent | Vascularite ANCA → NFS + ANCA",
@@ -11536,6 +15149,7 @@ const MASTER_DB = {
                     "albumine": "20-50",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI absolue), Antihypertenseurs (antagonisme)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | ECG si cardiopathie | Bilan prostatique",
                     "suivi_periodique": "Pas de biologie systematique (usage court)",
                     "alerte_clinique": "HTA (deconseille si HTA) | Tachycardie → ECG | Retention urinaire (anticholinergique leger)",
@@ -11559,6 +15173,16 @@ const MASTER_DB = {
                     "albumine": "10",
                     "qt_risque": "",
                     "ddi_interact": "Allopurinol (reduction efficacite hyperuricemie)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Allopurinol",
+                                        "dcis": [
+                                                  "allopurinol"
+                                        ],
+                                        "commentaire": "reduction efficacite hyperuricemie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (hépatotoxicité dose-dependante) | Uricemie | Glycemie si DT2 | Bilan renal",
                     "suivi_periodique": "Bilan hépatique (mensuel les 3 premiers mois) | Uricemie (mensuelle - hyperuricemie frequente et symptomatique)",
                     "alerte_clinique": "Hépatotoxicité severe (dose-dependante surtout > 35mg/kg) → bilan hépatique urgent | Hyperuricemie/acces goutteux → uricemie + colchicine | Arthralgies diffuses (effet uricosurethique inverse)",
@@ -11587,6 +15211,7 @@ const MASTER_DB = {
                     "albumine": "0,83",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | Glycemie/HbA1c | Bilan lipidique | ECG (QTc) | Poids/IMC | TSH (hypothyrodie possible) | TA",
                     "suivi_periodique": "Glycemie/HbA1c (tous les 3 a a 6 mois) | Bilan lipidique (tous les a 6 mois) | Bilan hépatique (annuel) | NFS (annuelle) | TSH (annuelle) | ECG (QTc annuel) | Poids (a chaque consultation)",
                     "alerte_clinique": "Hyperglycemie → glycémie urgente | Syndrome malin neuroleptique → CPK urgente | QTc > 500 ms → arret",
@@ -11623,6 +15248,7 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Bilan hépatique",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -11651,6 +15277,42 @@ const MASTER_DB = {
                     "albumine": "80-90",
                     "qt_risque": "Risque Etabli (RE) - antiarythmique proarythmique",
                     "ddi_interact": "Digoxine (double concentration digoxine +++), AVK (augmente INR), Antiacides, QT-prolongateurs, Alcool, CYP3A4 inducteurs/inhibiteurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "double concentration digoxine +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "augmente INR",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc - allongement obligatoire dose-dependant) | Ionogramme (kaliemie, magnesemie) | Bilan hépatique | NFS (thrombopenie immunologique) | Dosage serique (fenetre 2-5 mg/L)",
                     "suivi_periodique": "ECG (QTc tous les 3 a 6 mois) | Ionogramme (mensuel) | NFS (mensuelle) | Bilan hépatique (annuel) | Dosage serique (tous les 3 mois)",
                     "alerte_clinique": "Allongement QTc majeur (arythmie ventriculaire/TdP) → ECG monitoring obligatoire | Thrombopenie immunologique (syndrome pseudolupique) → NFS urgente | Hépatotoxicité granulomateuse → bilan hépatique urgent | Cinchonisme (acouphenes, cephalees, vision floue) | Hypoglycemie (rare) → glycemie",
@@ -11682,6 +15344,7 @@ const MASTER_DB = {
                     "albumine": "0,97",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Magnesemie (annuelle si usage prolonge) | Vitamine B12 (tous les 2 a 3 ans)",
                     "alerte_clinique": "Hypomagnsmie",
@@ -11709,6 +15372,31 @@ const MASTER_DB = {
                     "albumine": "0,73",
                     "qt_risque": "",
                     "ddi_interact": "AINS, K+, Spironolactone, Diuretiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Spironolactone",
+                                        "dcis": [
+                                                  "spironolactone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Proteinurie (diabetiques)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Angio-oedeme",
@@ -11737,6 +15425,34 @@ const MASTER_DB = {
                     "albumine": "15",
                     "qt_risque": "",
                     "ddi_interact": "AVK (potentiation), Metformine (augmente concentration), Alcool (augmente biodisponibilite)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Metformine",
+                                        "dcis": [
+                                                  "metformine"
+                                        ],
+                                        "commentaire": "augmente concentration",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "augmente biodisponibilite",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Bilan hépatique | NFS si traitement prolonge",
                     "suivi_periodique": "Créatinine (annuelle) | Bilan hépatique (annuel si usage prolonge)",
                     "alerte_clinique": "Cytolyse → bilan hépatique urgent | ATTENTION: ranitidine retiree du marche en 2020 (contamination NDMA - impuretes nitrosamine cancerigenes) | Elevation créatinine (inhibition secretion tubulaire - fausse elevation sans nephrotoxicite)",
@@ -11765,6 +15481,26 @@ const MASTER_DB = {
                     "albumine": "85",
                     "qt_risque": "",
                     "ddi_interact": "Antiretroviraux (inducteur CYP3A4 modere < rifampicine), AVK, Fluconazole (augmente concentration rifabutine - uveite)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fluconazole",
+                                        "dcis": [
+                                                  "fluconazole"
+                                        ],
+                                        "commentaire": "augmente concentration rifabutine - uveite",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS (leucopenie, uveite) | Bilan ophtalmique | Bilan thyroidien (moins inducteur que rifampicine)",
                     "suivi_periodique": "NFS (mensuelle) | Bilan hépatique (mensuel) | Bilan ophtalmique (mensuel si traitement prolonge)",
                     "alerte_clinique": "Uveite (douleur oculaire + photophobie) → urgence ophtalmologique | Leucopenie → NFS urgente | Hépatotoxicité → bilan hépatique",
@@ -11793,6 +15529,76 @@ const MASTER_DB = {
                     "albumine": "89",
                     "qt_risque": "",
                     "ddi_interact": "AVK (induction ++ - dosage INR frequent), Contraceptifs oraux (perte efficacite ++), Hormones thyroidiennes, Corticoides, Antiretroviraux, Ciclosporine, Tacrolimus, Statines, Methadone, Digoxine, Anti-epileptiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "induction ++ - dosage INR frequent",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tacrolimus",
+                                        "dcis": [
+                                                  "tacrolimus"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methadone",
+                                        "dcis": [
+                                                  "methadone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique COMPLET (ALAT/ASAT/GGT/bilirubine/TP) | NFS | Bilan renal | Bilan thyroidien | Bilan contraceptif | Dosage medicaments cibles CYP3A4",
                     "suivi_periodique": "Bilan hépatique (mensuel les 2-3 premiers mois puis trimestriel) | NFS (mensuelle) | INR si AVK (hebdomadaire initiation) | Bilan thyroidien (annuel si T4 exogene) | Bilan lipidique (annuel)",
                     "alerte_clinique": "Hépatotoxicité (severe, surtout si isoniazide + rifampicine) → bilan hépatique urgent | Coloration rouge des secretions (urine, larmes - informer patient) | Induction enzymatique majeure (CYP3A4 +++) → perte d'efficacite nombreux medicaments | Aplasie (thrombopenie) → NFS urgente",
@@ -11825,6 +15631,36 @@ const MASTER_DB = {
                     "albumine": "0,24",
                     "qt_risque": "",
                     "ddi_interact": "Calcium, IPP, Fer",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Calcium",
+                                        "dcis": [
+                                                  "calcium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IPP",
+                                        "dcis": [
+                                                  "omeprazole",
+                                                  "esomeprazole",
+                                                  "lansoprazole",
+                                                  "pantoprazole",
+                                                  "rabeprazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fer",
+                                        "dcis": [
+                                                  "fer"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Calcemie | Phosphatemie | Créatinine/DFG | 25-OH vitamine D",
                     "suivi_periodique": "Calcemie (annuelle) | Créatinine (annuelle) | DMO (tous les 3 a 5 ans)",
                     "alerte_clinique": "Douleur machoire | Douleur femorale atypique",
@@ -11853,6 +15689,7 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique | Glycemie/HbA1c | Bilan lipidique | ECG (QTc) | Prolactine | Poids/IMC | Créatinine",
                     "suivi_periodique": "Glycemie/HbA1c (annuelle) | Bilan lipidique (annuel) | Créatinine (annuelle) | ECG (QTc annuel) | Prolactine (si symptomes) | Poids (chaque consultation)",
                     "alerte_clinique": "Allongement QTc → ECG | Syndrome malin neuroleptique → CPK urgente | Hyperprolactinemie (gynaecomastie, amenorrhee)",
@@ -11889,6 +15726,7 @@ const MASTER_DB = {
                     "albumine": "98 - 99 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Protease inhibitor (CYP3A4 puissant)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Bilan hépatique (ASAT/ALAT/GGT/bilirubine) | Créatinine/DFG | Bilan lipidique | Glycemie/HbA1c | INR si AVK | ECG (QTc) | Serologies VHB/VHC",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a a 6 mois) | Bilan lipidique (annuel) | Glycemie/HbA1c (annuelle) | NFS (annuelle) | ECG (annuel) | Charge virale + CD4 (selon protocole VIH)",
                     "alerte_clinique": "Cytolyse sévère → bilan hépatique urgent | Allongement QTc → ECG urgent | Hyperglycemie → glycémie urgente",
@@ -11923,6 +15761,35 @@ const MASTER_DB = {
                     "albumine": "92 - 95 %",
                     "qt_risque": "",
                     "ddi_interact": "Macrolides, Ketoconazole, Fluconazole",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ketoconazole",
+                                        "dcis": [
+                                                  "ketoconazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fluconazole",
+                                        "dcis": [
+                                                  "fluconazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG (CI si DFG < 15) | Bilan hépatique | NFS | Hb/Ht",
                     "suivi_periodique": "Créatinine + bilan hépatique (annuel) | NFS (annuelle)",
                     "alerte_clinique": "Saignement → Hb urgente | Ictère → bilan hépatique urgence",
@@ -11954,6 +15821,24 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "",
                     "ddi_interact": "Cyclosporine, Atazanavir",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Cyclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Atazanavir",
+                                        "dcis": [
+                                                  "atazanavir"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | CPK | Bilan lipidique complet | Créatinine (protinurie rare)",
                     "suivi_periodique": "Bilan lipidique ( 6 a 8 semaines puis annuel) | ASAT/ALAT (si symptomes) | CPK si myalgies | Bandelette urinaire (protinurie) si a forte dose",
                     "alerte_clinique": "Myalgies → CPK | Proteinurie → bandelette + créatinine",
@@ -11984,6 +15869,42 @@ const MASTER_DB = {
                     "albumine": "96",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Ciclosporine, Digoxine, Ergotamine, AVK",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ergotamine",
+                                        "dcis": [
+                                                  "ergotamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | ECG si FR QTc",
                     "suivi_periodique": "Bilan hépatique si traitement > 2 semaines",
                     "alerte_clinique": "Hépatotoxicité (rare) → bilan hépatique | Allongement QTc (risque modere)",
@@ -12011,6 +15932,7 @@ const MASTER_DB = {
                     "albumine": "0,1",
                     "qt_risque": "? Risque Special (SR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Kaliemie si a forte dose ou BPCO sévère",
                     "suivi_periodique": "Kaliemie (annuelle si a forte dose) | ECG si cardiopathie",
                     "alerte_clinique": "Hypokaliemie (surtout si fortes doses + diuretiques) | Tachycardie → ECG",
@@ -12038,6 +15960,7 @@ const MASTER_DB = {
                     "albumine": "0,96",
                     "qt_risque": "? Risque Special (SR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG si cardiopathie | Kaliemie",
                     "suivi_periodique": "EFR (annuelle si BPCO) | Kaliemie (annuelle)",
                     "alerte_clinique": "Hypokaliemie | Tachycardie → ECG",
@@ -12065,6 +15988,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG (ajustement de dose si DFG < 50) | Bilan hépatique",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Pancreatite → lipase | Insuffisance cardiaque (surveillance clinique)",
@@ -12095,6 +16019,7 @@ const MASTER_DB = {
                     "albumine": "0,1",
                     "qt_risque": "",
                     "ddi_interact": "Autres anticholinergiques",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire | Glaucome aigu | Confusion (examen clinique)",
@@ -12119,6 +16044,45 @@ const MASTER_DB = {
                     "albumine": "94",
                     "qt_risque": "",
                     "ddi_interact": "ISRS/IRSNA (syndrome serotoninergique +++), Dextromethorphane (CI), Meperidine (CI), Tramadol, Sympathomimetiques, Tyramine alimentaire (doses > 10mg/j)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique +++",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Dextromethorphane",
+                                        "dcis": [
+                                                  "dextromethorphane"
+                                        ],
+                                        "commentaire": "CI",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Meperidine",
+                                        "dcis": [
+                                                  "meperidine"
+                                        ],
+                                        "commentaire": "CI",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | TA | ECG si cardiopathie | Evaluation psychiatrique | Bilan nutritionnel (tyramine)",
                     "suivi_periodique": "Bilan hépatique (annuel) | TA (chaque consultation) | Evaluation psychiatrique (annuelle)",
                     "alerte_clinique": "Syndrome serotoninergique si ISRS/IRSNA associes → urgence (arret) | Crise hypertensive si tyramine (fromages, charcuteries) si forte dose | Hypotension orthostatique | Insomnie (prendre matin + midi, jamais le soir)",
@@ -12145,6 +16109,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Lipase | Bilan ophtalmique (retinopathie)",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle) | Fond d'il (si retinopathie diabtique connue)",
                     "alerte_clinique": "Pancreatite | Aggravation retinopathie",
@@ -12174,6 +16139,32 @@ const MASTER_DB = {
                     "albumine": "> 98 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO, Tramadol, Lithium, Warfarine, QT",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Warfarine",
+                                        "dcis": [
+                                                  "warfarine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme (natrmie) | Bilan hépatique | INR si AVK associ",
                     "suivi_periodique": "Natremie ( a M1 puis annuelle) | Bilan hépatique si symptomes",
                     "alerte_clinique": "Hyponatremie | Saignements",
@@ -12203,6 +16194,7 @@ const MASTER_DB = {
                     "albumine": "0,96",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA | Créatinine/DFG (CI si DFG < 30) | Bilan hépatique",
                     "suivi_periodique": "Créatinine (annuelle)",
                     "alerte_clinique": "Hypotension orthostatique",
@@ -12231,6 +16223,36 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "",
                     "ddi_interact": "Macrolides, Fluconazole, Clarithromycine, Verapamil",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fluconazole",
+                                        "dcis": [
+                                                  "fluconazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "clarithromycine",
+                                                  "verapamil"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | CPK | Bilan lipidique complet",
                     "suivi_periodique": "Bilan lipidique ( 6 a 8 semaines puis annuel) | ASAT/ALAT (si symptomes) | CPK si myalgies",
                     "alerte_clinique": "Myalgies/crampes → CPK (rhabdomyolyse  a risque lev si > 80 mg/j ou associations CYP3A4) | Ictère → bilan hépatique urgent",
@@ -12260,6 +16282,7 @@ const MASTER_DB = {
                     "albumine": "0,38",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG (ajustement si DFG<45) | NFS | Bilan hépatique",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle)",
                     "alerte_clinique": "Pancreatite → Lipase/Amylase | Eruption cutanée sévère → arrêt (réactions d'hypersensibilité)",
@@ -12290,6 +16313,7 @@ const MASTER_DB = {
                     "albumine": "61 - 65 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Polymerase inhibiteur",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS | Créatinine/DFG (CI si DFG<30) | ECG si amiodarone associee",
                     "suivi_periodique": "Bilan hépatique (tous les 3 mois) | Créatinine (annuelle)",
                     "alerte_clinique": "Bradycardie severe fatale si amiodarone concomitante → ECG monitoring obligatoire | Cytolyse → bilan hépatique",
@@ -12320,6 +16344,25 @@ const MASTER_DB = {
                     "albumine": "~ 98 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Inhibiteurs puissants du CYP3A4 (ketoconazole)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "ketoconazole",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG (ajustement si DFG < 30) | Bilan hépatique si insuffisance hépatique | ECG (QTc)",
                     "suivi_periodique": "ECG (QTc annuel si facteur de a risque) | Créatinine (annuelle)",
                     "alerte_clinique": "Allongement QTc → ECG | Retention urinaire",
@@ -12349,6 +16392,7 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc obligatoire) | Ionogramme | Créatinine/DFG | Glycemie si diabete",
                     "suivi_periodique": "ECG (QTc annuel + si modification dose ou kaliemie) | Ionogramme (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Allongement QTc (torsades de pointes risque majeur) → ECG urgent | Bradycardie → ECG | Hypokaliemie amplifie risque QT → ionogramme urgent",
@@ -12378,6 +16422,7 @@ const MASTER_DB = {
                     "albumine": "oct-25",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | ECG si FR QTc",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Hépatotoxicité rare | Allongement QTc faible risque",
@@ -12405,6 +16450,26 @@ const MASTER_DB = {
                     "albumine": "25-40",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool (antabuse), AVK",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "antabuse",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | ECG si FR QTc | Bilan neurologique si epilepsie",
                     "suivi_periodique": "Pas de biologie systematique (usage court)",
                     "alerte_clinique": "Hépatotoxicité | Effet antabuse (alcool + metronidazole) | Neuropathie si traitement prolonge",
@@ -12434,6 +16499,60 @@ const MASTER_DB = {
                     "albumine": "> 90 %",
                     "qt_risque": "",
                     "ddi_interact": "IEC, ARA2, AINS, K+, Lithium, Trimethoprime",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ARA2",
+                                        "dcis": [
+                                                  "losartan",
+                                                  "valsartan",
+                                                  "irbesartan",
+                                                  "candesartan",
+                                                  "telmisartan",
+                                                  "olmesartan"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Kaliemie | Créatinine/DFG | Bilan hépatique | Natremia | Bilan hormonal si gynaecomastia",
                     "suivi_periodique": "Kaliemie + créatinine (apres 4-8 semaines puis annuel)",
                     "alerte_clinique": "Hyperkaliemie (risque majeur si DFG<45 ou IEC/ARA2 associe) → ionogramme urgent | Gynaecomastie (examen clinique)",
@@ -12464,6 +16583,50 @@ const MASTER_DB = {
                     "albumine": "38-48",
                     "qt_risque": "",
                     "ddi_interact": "MTX, AVK, IEC/ARA2 (hyperkaliemie), Phenytoine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "MTX",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "hyperkaliemie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Phenytoine",
+                                        "dcis": [
+                                                  "phenytoine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal (lithiase urique - alcaliniser urines) | NFS | Ionogramme | Bilan hépatique",
                     "suivi_periodique": "NFS (mensuelle) | Créatinine (mensuelle) | pH urinaire (objectif > 7.5)",
                     "alerte_clinique": "Cristallurie renale → assurer hydratation ++ et alcaliniser urines (pH > 7.5) | Myelotoxicite → NFS urgente | Hépatotoxicité",
@@ -12493,6 +16656,7 @@ const MASTER_DB = {
                     "albumine": "> 90 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS + reticulocytes | Ferritine | Fer serique + transferrine + CSat",
                     "suivi_periodique": "NFS + reticulocytes ( a 4 semaines) | Ferritine ( a 3 mois) | Bilan martial ( a 6 mois)",
                     "alerte_clinique": "Absence de reponse → bilan eetiologique",
@@ -12521,6 +16685,24 @@ const MASTER_DB = {
                     "albumine": "40",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "QT-prolongateurs, Alcool, Antiacides (absorption)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiacides",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "absorption",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan renal (elimination renale exclusive) | ECG (QTc) | Prolactine | Glycemie | Bilan lipidique",
                     "suivi_periodique": "Créatinine (annuelle) | NFS (annuelle) | ECG (QTc annuel) | Prolactine (si symptomes) | Glycemie (annuelle)",
                     "alerte_clinique": "Allongement QTc (modere) → ECG | Hyperprolactinemie (gynaecomastie, amenorrhee) | Syndrome malin neuroleptique → CPK urgente",
@@ -12551,6 +16733,7 @@ const MASTER_DB = {
                     "albumine": "14 - 21 %",
                     "qt_risque": "(PR) - Vasospasme coronaire, QTc possible",
                     "ddi_interact": "Faible metabolisme",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG si cardiopathie",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Douleur thoracique/oppression → ECG (vasoconstriction coronaire)",
@@ -12577,6 +16760,7 @@ const MASTER_DB = {
                     "albumine": "0,99",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "CYP3A4 substrat, Inducteur leger",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Bilan hépatique | Glycemie/HbA1c | Ionogramme | NFS | Bilan lipidique | Dosage serique C0",
                     "suivi_periodique": "Créatinine + dosage C0 (tous les 3 mois en phase stable) | Glycemie (tous les 3 a 6 mois - NODAT) | Bilan hépatique (tous les 3 mois) | Ionogramme (tous les 3 mois)",
                     "alerte_clinique": "Nephrotoxicite → créatinine + dosage urgents | Diabete post-transplantation (NODAT) → glycemie | Neurotoxicite (tremblements, confusion) → dosage urgent | Hyperkaliemie → ionogramme urgent",
@@ -12612,6 +16796,7 @@ const MASTER_DB = {
                     "albumine": "0,99",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie systematique",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique)",
                     "alerte_clinique": "Inflammation oculaire",
@@ -12636,6 +16821,7 @@ const MASTER_DB = {
                     "albumine": "0,99",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA",
                     "suivi_periodique": "TA (consultations)",
                     "alerte_clinique": "Hypotension orthostatique",
@@ -12660,6 +16846,7 @@ const MASTER_DB = {
                     "albumine": "0,2",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique (CI si insuffisance hépatique sévère) | Créatinine",
                     "suivi_periodique": "Bilan hépatique (annuel si traitement prolonge)",
                     "alerte_clinique": "Dpression respiratoire | Syndrome serotoninergique si ISRS associ",
@@ -12690,6 +16877,21 @@ const MASTER_DB = {
                     "albumine": "70-90",
                     "qt_risque": "",
                     "ddi_interact": "ISRS/IMAO (syndrome serotoninergique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "NFS-plaquettes (moins myelotoxique que linezolide) | Bilan hépatique",
                     "suivi_periodique": "NFS (hebdomadaire recommande) | Bilan hépatique si traitement prolonge",
                     "alerte_clinique": "Thrombopenie (moins severe que linezolide) → NFS | Syndrome serotoninergique si ISRS associes",
@@ -12718,6 +16920,27 @@ const MASTER_DB = {
                     "albumine": "90-95",
                     "qt_risque": "",
                     "ddi_interact": "Aminosides (additivite), Furosemide",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aminosides",
+                                        "dcis": [
+                                                  "gentamicine",
+                                                  "amikacine",
+                                                  "tobramycine",
+                                                  "streptomycine"
+                                        ],
+                                        "commentaire": "additivite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Furosemide",
+                                        "dcis": [
+                                                  "furosemide"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | NFS | Bilan auditif si traitement > 2 semaines | Dosage serique (cible C0 > 15-20 mg/L infections severes)",
                     "suivi_periodique": "Dosage serique C0 (tous les 2-3j puis hebdomadaire) | Créatinine (regulier)",
                     "alerte_clinique": "Nephrotoxicite (moins que vancomycine) → créatinine + dosage | Ototoxicite possible → bilan auditif si prolonge",
@@ -12745,6 +16968,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | Bilan hépatique (prudence si insuffisance hépatique)",
                     "suivi_periodique": "Créatinine + kalimie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigu | Hyperkaliemie",
@@ -12773,6 +16997,16 @@ const MASTER_DB = {
                     "albumine": "85%",
                     "qt_risque": "",
                     "ddi_interact": "Probenecide (augmentation concentrations) | Pas d interaction majeure",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Probenecide",
+                                        "dcis": [
+                                                  "probenecide"
+                                        ],
+                                        "commentaire": "augmentation concentrations",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine | NFS",
                     "suivi_periodique": "Créatinine (2x/sem si IRC) | NFS si traitement prolonge",
                     "alerte_clinique": "Spectre etroit (BGN — pas les anaerobes ni SARM) | Alternative carbapenemes pour BLSE | Bonne tolerance generale",
@@ -12798,6 +17032,7 @@ const MASTER_DB = {
                     "albumine": "90 - 94 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA (hypotension orthostatique) | Bilan lipidique",
                     "suivi_periodique": "TA (consultations) | Bilan lipidique (annuel)",
                     "alerte_clinique": "Hypotension orthostatique severe",
@@ -12824,6 +17059,7 @@ const MASTER_DB = {
                     "albumine": "0,25",
                     "qt_risque": "? Risque Special (SR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Kaliemie si a forte dose",
                     "suivi_periodique": "Kaliemie (annuelle si a forte dose)",
                     "alerte_clinique": "Hypokaliemie | Tachycardie",
@@ -12850,6 +17086,68 @@ const MASTER_DB = {
                     "albumine": "40-60",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Macrolides (augmente concentration +++), Fluoroquinolones (augmente concentration), Rifampicine (diminue concentration), Carbamazepine (diminue), Phenobarbital (diminue), Cimetidine (augmente), Benzodiazepines",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "augmente concentration +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Quinolones",
+                                        "dcis": [
+                                                  "ciprofloxacine",
+                                                  "levofloxacine",
+                                                  "moxifloxacine",
+                                                  "ofloxacine",
+                                                  "norfloxacine"
+                                        ],
+                                        "commentaire": "augmente concentration",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "carbamazepine",
+                                                  "phenobarbital"
+                                        ],
+                                        "commentaire": "diminue concentration",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Cimetidine",
+                                        "dcis": [
+                                                  "cimetidine"
+                                        ],
+                                        "commentaire": "augmente",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | ECG | Bilan renal | Dosage serique (fenetre 10-20 mg/L) | Glycemie si DT2 | Ionogramme (kaliemie)",
                     "suivi_periodique": "Dosage serique (tous les 3 a 6 mois) | Bilan hépatique (annuel) | ECG (annuel) | Ionogramme (annuel)",
                     "alerte_clinique": "Surdosage (arythmies, convulsions, nausees/vomissements graves) → dosage serique urgent + ECG | Hypokaliemie (activation beta2) → ionogramme urgente | Tachycardie sinusale (frequente, dose-dependante)",
@@ -12881,6 +17179,23 @@ const MASTER_DB = {
                     "albumine": "0,13",
                     "qt_risque": "",
                     "ddi_interact": "AINS (risque epileptogene potentiel)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "risque epileptogene potentiel",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Pas de biologie specifique systematique",
                     "suivi_periodique": "Pas de biologie systematique (usage court)",
                     "alerte_clinique": "Pas de biologie d'alerte specifique (usage court  <7 jours)",
@@ -12905,6 +17220,16 @@ const MASTER_DB = {
                     "albumine": "> 95",
                     "qt_risque": "Risque Etabli (RE) - CI nombreuses",
                     "ddi_interact": "Alcool, QT-prolongateurs (CI multiples), CYP2D6 inhibiteurs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc - risque TdP majeur) | NFS | Bilan hépatique | Glycemie | Poids | Bilan ophtalmique",
                     "suivi_periodique": "ECG (QTc mensuel) | NFS (annuelle) | Bilan hépatique (annuel) | Bilan ophtalmique (tous les 6 mois - retinopathie pigmentaire)",
                     "alerte_clinique": "Allongement QTc majeur (arythmie ventriculaire) → ECG monitoring obligatoire | Retinopathie pigmentaire irreversible (dose et duree-dependante) → bilan ophtalmique regulier | Agranulocytose → NFS urgente",
@@ -12935,6 +17260,7 @@ const MASTER_DB = {
                     "albumine": "< 10 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Créatinine/DFG | ECG (QTc) | Prolactinemie",
                     "suivi_periodique": "NFS (annuelle) | Créatinine (annuelle) | ECG (QTc annuel) | Prolactinemie (si symptomes)",
                     "alerte_clinique": "Allongement QTc → ECG | Syndrome malin neuroleptique → CPK",
@@ -12964,6 +17290,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS | Créatinine (surveillance uricemie/créatinine) | Bilan hépatique | Uricemie",
                     "suivi_periodique": "NFS (annuelle) | Créatinine + uricemie (annuelle  a risque hyperuricemie) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Saignement → NFS + Hb urgente | Dyspne (effet direct non thrombotique  examen clinique)",
@@ -12994,6 +17321,7 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "NFS-plaquettes | Bilan hépatique",
                     "suivi_periodique": "NFS-plaquettes (toutes les 2 semaines les 3 premiers mois  OBLIGATOIRE) | Bilan hépatique (mensuel les 3 premiers mois)",
                     "alerte_clinique": "Thrombopenie → arret immediat | PTT → urgence hematologique | Neutropenie → arret",
@@ -13023,6 +17351,7 @@ const MASTER_DB = {
                     "albumine": "0,1",
                     "qt_risque": "",
                     "ddi_interact": "Autres anticholinergiques",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire (examen clinique) | Glaucome aigu",
@@ -13047,6 +17376,18 @@ const MASTER_DB = {
                     "albumine": "71-89",
                     "qt_risque": "",
                     "ddi_interact": "AVK (potentiation)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "potentiation",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS | Bilan coagulation (TP allonge possible) | Lipasemie si symptomes",
                     "suivi_periodique": "Bilan hépatique si traitement > 7j | NFS si traitement > 7j",
                     "alerte_clinique": "Hépatotoxicité (severe documentee) → bilan hépatique urgent | Pancreatite aigue (rare) → lipase urgente | Complications neonatales (CI grossesse)",
@@ -13077,6 +17418,7 @@ const MASTER_DB = {
                     "albumine": "0,6",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG si cardiopathie (absorption systmique possible) | VEMS/DEP si asthme (CI si asthme)",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique) | FC si traitement systmique associ",
                     "alerte_clinique": "Bradycardie (surtout si btabloquants systmiques associs) | Bronchospasme",
@@ -13103,6 +17445,7 @@ const MASTER_DB = {
                     "albumine": "0,72",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG (prudence si DFG < 50) | Pas de bilan biologique systematique",
                     "suivi_periodique": "EFR (annuelle si BPCO) | Créatinine (annuelle)",
                     "alerte_clinique": "Retention urinaire | Glaucome aigu",
@@ -13129,6 +17472,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TSH | T3L | T4L | ECG",
                     "suivi_periodique": "TSH + T3L + T4L (tous les a 3 mois puis annuel)",
                     "alerte_clinique": "Surdosage → tachyarythmie",
@@ -13156,6 +17500,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Lipase | Bilan lipidique",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle) | Bilan lipidique (annuel)",
                     "alerte_clinique": "Pancreatite | Cholelithiase (douleur biliaire)",
@@ -13186,6 +17531,32 @@ const MASTER_DB = {
                     "albumine": "30",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Fluvoxamine (CI absolue - augmente x33 tizanidine), Ciprofloxacine (CI absolue - augmente x10), CYP1A2 inhibiteurs, Antihypertenseurs (hypotension additive), Alcool",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Fluvoxamine",
+                                        "dcis": [
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "CI absolue - augmente x33 tizanidine",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ciprofloxacine",
+                                        "dcis": [
+                                                  "ciprofloxacine"
+                                        ],
+                                        "commentaire": "CI absolue - augmente x10",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (hépatotoxicité documentee) | TA | Créatinine si IRC | ECG (bradycardie)",
                     "suivi_periodique": "Bilan hépatique (mensuel les 4 premiers mois puis trimestriel) | TA (chaque consultation) | ECG si symptomes",
                     "alerte_clinique": "Hépatotoxicité (grave, rare mais severe) → bilan hépatique urgent | Hypotension orthostatique (severe + bradycardie) → TA urgente | Somnolence excessive | Allongement QTc (modere)",
@@ -13213,6 +17584,32 @@ const MASTER_DB = {
                     "albumine": "10",
                     "qt_risque": "",
                     "ddi_interact": "Vancomycine, furosemide, ciclosporine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Vancomycine",
+                                        "dcis": [
+                                                  "vancomycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "furosemide",
+                                        "dcis": [
+                                                  "furosemide"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Bilan auditif | Dosage pic et residuelle",
                     "suivi_periodique": "Dosage serique | Créatinine (quotidienne) | Bilan auditif si traitement > 5j",
                     "alerte_clinique": "Nephrotoxicite → créatinine + dosage urgents | Ototoxicite irreversible",
@@ -13241,6 +17638,7 @@ const MASTER_DB = {
                     "albumine": "15 - 41 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Bicarbonates | NFS | Bilan hépatique | Poids | Acide urique",
                     "suivi_periodique": "Créatinine (annuelle) | Bicarbonates (annuels - acidose metabolique) | Poids (chaque consultation - anorexie) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Calcul renal (douleur lombaire → echographie) | Acidose metabolique → bicarbonates | Hyperthermie oligurique → urgence | Glaucome aigu de fermeture → urgence ophtalmologique",
@@ -13270,6 +17668,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Ionogramme | Créatinine | Uricemie",
                     "suivi_periodique": "Ionogramme + créatinine (tous les 3 a a 6 mois)",
                     "alerte_clinique": "Hypokaliemie | Hyponatremie",
@@ -13299,6 +17698,7 @@ const MASTER_DB = {
                     "albumine": "0,2",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique | Créatinine si IRC",
                     "suivi_periodique": "Pas de biologie systematique  évaluation clinique",
                     "alerte_clinique": "Surdosage → urgence clinique | Syndrome serotoninergique si ISRS associ",
@@ -13329,6 +17729,7 @@ const MASTER_DB = {
                     "albumine": "> 80 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | Bilan hépatique",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -13359,6 +17760,7 @@ const MASTER_DB = {
                     "albumine": "Faible",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie systematique",
                     "suivi_periodique": "Pression intraoculaire (contrle ophtalmologique)",
                     "alerte_clinique": "Uvite/inflammation",
@@ -13383,6 +17785,37 @@ const MASTER_DB = {
                     "albumine": "89-95",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), Alcool, QT-prolongateurs, Carbamazepine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Carbamazepine",
+                                        "dcis": [
+                                                  "carbamazepine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Bilan hépatique | Ionogramme (hyponatremie) | NFS",
                     "suivi_periodique": "ECG (annuel) | Ionogramme natremie (a M1 puis annuelle) | Bilan hépatique (annuel) | NFS (annuelle si traitement prolonge)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Hyponatremie (SIADH) → natremie urgente | Hépatotoxicité → bilan hépatique | Priapisme (clinique - urgence urologique si > 4h)",
@@ -13413,6 +17846,22 @@ const MASTER_DB = {
                     "albumine": "90-94%",
                     "qt_risque": "",
                     "ddi_interact": "Antihypertenseurs (hypotension additive) | IPDE5 (hypotension severe) | Betabloquants (hypotension 1ere dose majoree)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "hypotension 1ere dose majoree",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA couche/debout | FC | Créatinine | PSA (si HBP)",
                     "suivi_periodique": "TA orthostatique (chaque consultation) | Evaluation chutes | PSA annuel | Symptomes mictionnels (IPSS)",
                     "alerte_clinique": "Hypotension orthostatique severe (1ere dose ++) → debuter au coucher | Effet 1ere dose (syncope) | STOPP: eviter si hypotension orthostatique recurrente | Floppy iris syndrome (si chirurgie cataracte)",
@@ -13438,6 +17887,24 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "",
                     "ddi_interact": "Hypoglycemiants (antagonisme), IEC/ARA2 (hyperkaliemie additive), Diuretiques (hypokaliemie additive), Vaccins vivants (CI)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "hyperkaliemie additive",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Glycemie/HbA1c | Ionogramme (kaliemie) | Bilan lipidique | Cortisol matinal (si traitement prolonge) | NFS | Créatinine | Densitometrie osseuse si > 3 mois",
                     "suivi_periodique": "Glycemie (semestrielle) | Ionogramme (annuel) | Bilan lipidique (annuel) | Cortisol (annuel) | Densitometrie (tous les 2 ans si traitement prolonge)",
                     "alerte_clinique": "Hyperglycemie → glycemie urgente | Hypokaliemie → ionogramme urgent | Insuffisance surrenalienne a l'arret brutal",
@@ -13468,6 +17935,47 @@ const MASTER_DB = {
                     "albumine": "67",
                     "qt_risque": "",
                     "ddi_interact": "IEC/ARA2 (hyperkaliemie additive), AINS (reduction excretion renale), Lithium",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "hyperkaliemie additive",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "reduction excretion renale",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Kaliemie | Créatinine/DFG | Bilan hépatique | Acide folique (antagoniste)",
                     "suivi_periodique": "Kaliemie + créatinine (apres 4-8 semaines puis annuel) | Bilan hépatique si traitement prolonge",
                     "alerte_clinique": "Hyperkaliemie (risque majeur si DFG bas ou IEC/ARA2) → ionogramme urgent | Lithiase renale (precipite sous forme de cristaux) → echographie si douleur lombaire",
@@ -13496,6 +18004,24 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, QT-prolongateurs, Lithium",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Glycemie",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Syndrome malin neuroleptique → CPK urgente | Agranulocytose → NFS urgente",
@@ -13525,6 +18051,7 @@ const MASTER_DB = {
                     "albumine": "~ 50 %",
                     "qt_risque": "",
                     "ddi_interact": "Anticholinergiques (majoration des effets)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "",
                     "suivi_periodique": "",
                     "alerte_clinique": "",
@@ -13548,6 +18075,7 @@ const MASTER_DB = {
                     "albumine": "~ 50 %",
                     "qt_risque": "",
                     "ddi_interact": "Anticholinergiques (majoration des effets)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie specifique systematique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire | Glaucome aigu | Confusion (examen clinique  anticholinergique fort)",
@@ -13572,6 +18100,42 @@ const MASTER_DB = {
                     "albumine": "45",
                     "qt_risque": "",
                     "ddi_interact": "IEC/ARA2 (hyperkaliemie), AVK, MTX",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "hyperkaliemie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "MTX",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal | Ionogramme (hyperkaliemie) | NFS",
                     "suivi_periodique": "Créatinine (annuelle si prophylaxie) | Ionogramme (annuel)",
                     "alerte_clinique": "Hyperkaliemie (effet amiloride-like) → ionogramme | Elevation créatinine (sans nefrotoxicite) | Myelotoxicite",
@@ -13599,6 +18163,7 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "IMAO - Antihypertenseurs centraux",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Ictère",
@@ -13632,6 +18197,16 @@ const MASTER_DB = {
                     "albumine": "(non documente)",
                     "qt_risque": "",
                     "ddi_interact": "Alcool et depresseurs SNC (sedation additive) | Anticholinergiques (cumul ACB) | IMAO (potentialisation)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool et depresseurs SNC",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "sedation additive",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Evaluation cognitive | Risque de chutes | Pression intraoculaire si ATCD glaucome",
                     "suivi_periodique": "Non indique au long cours — duree < 7 jours",
                     "alerte_clinique": "PIM geriatrie (Beers 2023) — antihistaminique 1ere generation | Sedation + chutes | Confusion | Retention urinaire | Glaucome angle ferme = CI | ALTERNATIVE: cetirizine, fexofenadine (2eme gen.)",
@@ -13655,6 +18230,7 @@ const MASTER_DB = {
                     "albumine": "Forte",
                     "qt_risque": "",
                     "ddi_interact": "Anticholinergiques",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire | Glaucome aigu",
@@ -13679,6 +18255,7 @@ const MASTER_DB = {
                     "albumine": "50 u 80 %",
                     "qt_risque": "",
                     "ddi_interact": "Anticholinergiques",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG (CI si DFG < 30)",
                     "suivi_periodique": "Créatinine (annuelle)",
                     "alerte_clinique": "Retention urinaire",
@@ -13705,6 +18282,7 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "EFR (annuelle si BPCO)",
                     "alerte_clinique": "Retention urinaire (examen clinique)",
@@ -13729,6 +18307,24 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "",
                     "ddi_interact": "Warfarine, Lamotrigine, Methotrexate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Warfarine",
+                                        "dcis": [
+                                                  "warfarine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (ALAT/ASAT/bilirubine/TP) | NFS-plaquettes | Ammoniemie | Coagulation (TP, TCA) | Glycemie",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a 6 mois la 1ere annee puis annuel) | NFS-plaquettes (annuel) | Ammoniemie (si encephalopathie, si somnolence inexpliquee) | Dosage serique (fenetre 50-100 mg/L - residuelle)",
                     "alerte_clinique": "Hépatotoxicité severe (surtout < 2 ans) → bilan hépatique urgent | Thrombopenie → NFS urgente | Encephalopathie hyperammonemiante (confusion + somnolence sans cytolyse) → ammoniemie urgente | Pancreatite → lipase",
@@ -13761,6 +18357,16 @@ const MASTER_DB = {
                     "albumine": "> 90",
                     "qt_risque": "",
                     "ddi_interact": "Memes interactions que valproate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Memes interactions que valproate",
+                                        "dcis": [
+                                                  "valproate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (ALAT/ASAT/bilirubine/TP) | NFS-plaquettes | Ammoniemie | Coagulation | Glycemie",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a 6 mois la 1ere annee puis annuel) | NFS-plaquettes (annuel) | Ammoniemie (si symptomes) | Dosage serique valproate (equivalent)",
                     "alerte_clinique": "Hépatotoxicité (comme valproate) → bilan hépatique urgent | Thrombopenie → NFS urgente | Encephalopathie hyperammoniante → ammoniemie urgente | Pancreatite → lipase",
@@ -13792,6 +18398,59 @@ const MASTER_DB = {
                     "albumine": "0,95",
                     "qt_risque": "",
                     "ddi_interact": "AINS, K+, Spironolactone, IEC, ARA2",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Spironolactone",
+                                        "dcis": [
+                                                  "spironolactone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ARA2",
+                                        "dcis": [
+                                                  "losartan",
+                                                  "irbesartan",
+                                                  "candesartan",
+                                                  "telmisartan",
+                                                  "olmesartan"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Bilan hépatique",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -13822,6 +18481,37 @@ const MASTER_DB = {
                     "albumine": "55",
                     "qt_risque": "",
                     "ddi_interact": "Aminosides (nephrotoxicite additive +++), Diuretiques de l'anse, Ciclosporine, Curares",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aminosides",
+                                        "dcis": [
+                                                  "gentamicine",
+                                                  "amikacine",
+                                                  "tobramycine",
+                                                  "streptomycine"
+                                        ],
+                                        "commentaire": "nephrotoxicite additive +++",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Diurétiques de l'anse",
+                                        "dcis": [
+                                                  "furosemide",
+                                                  "bumetanide",
+                                                  "torsemide"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Bilan auditif | NFS | Dosage AUC (cible AUC/CMI 400-600 mg.h/L) | Bilan renal complet",
                     "suivi_periodique": "Dosage serique AUC ou residuelle C0 (< 15-20 mg/L ancienne methode) apres 3-4 doses | Créatinine (regulier toutes les 48h en hospitalisation) | Bilan auditif si traitement prolonge",
                     "alerte_clinique": "Nephrotoxicite (créatinine + dosage urgents) | Ototoxicite irreversible → bilan auditif (surtout si aminosides associes) | Syndrome homme rouge (flush cutane - reaction infusion) → ralentir perfusion | Red man syndrome",
@@ -13849,6 +18539,24 @@ const MASTER_DB = {
                     "albumine": "27 - 30 %",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "IMAO, Lithium, Tramadol, QT",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA (HTA possible) | FC | Ionogramme (natrmie) | ECG si cardiopathie | Bilan hépatique",
                     "suivi_periodique": "TA/FC (consultations rgulires) | Natremie ( a M1 puis annuelle) | Bilan hépatique si symptomes",
                     "alerte_clinique": "HTA → TA | Hyponatremie | Syndrome serotoninergique",
@@ -13879,6 +18587,38 @@ const MASTER_DB = {
                     "albumine": "0,9",
                     "qt_risque": "",
                     "ddi_interact": "Beta-bloquants, Digoxine, Carbamazepine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Carbamazepine",
+                                        "dcis": [
+                                                  "carbamazepine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (PR) | TA | Bilan hépatique | Ionogramme | FC",
                     "suivi_periodique": "ECG (annuel + si changement dose) | TA/FC (consultations) | Bilan hépatique (si symptomes)",
                     "alerte_clinique": "Bradycardie/BAV severe → ECG urgent (CI avec betabloquants IV) | Constipation severe (clinique) | Ictère → bilan hépatique",
@@ -13907,6 +18647,7 @@ const MASTER_DB = {
                     "albumine": "0,09",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Bilan hépatique (hépatotoxicité CI si ALAT ou ASAT > 3N)",
                     "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Bilan hépatique (tous les a 3 mois la 1ere annee puis annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Cytolyse → bilan hépatique urgent | Pancreatite → lipase",
@@ -13937,6 +18678,58 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aspirine, AINS, Macrolides, Fluconazole, Methotrexate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aspirine",
+                                        "dcis": [
+                                                  "aspirine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "roxithromycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fluconazole",
+                                        "dcis": [
+                                                  "fluconazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine",
                     "suivi_periodique": "INR (tous les 8 a 28 jours selon stabilit) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Saignement → INR + Hb urgente | INR > 5 → adaptation ou antidote",
@@ -13967,6 +18760,7 @@ const MASTER_DB = {
                     "albumine": "0,88",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -13995,6 +18789,7 @@ const MASTER_DB = {
                     "albumine": "0,25",
                     "qt_risque": "",
                     "ddi_interact": "CYP1A2 substrat",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "ECG si cardiopathie | Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Douleur thoracique → ECG",
@@ -14023,6 +18818,7 @@ const MASTER_DB = {
                     "albumine": "0,92",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique  évaluation clinique de dependance",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -14050,6 +18846,7 @@ const MASTER_DB = {
                     "albumine": "40 - 50 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine | Bicarbonates | NFS | Bilan hépatique",
                     "suivi_periodique": "Créatinine (annuelle) | Bicarbonates (annuels  acidose metabolique) | NFS (annuelle) | Poids (a chaque consultation  anorexie)",
                     "alerte_clinique": "Hyperthermie oligurique (oligohydrose)  urgence pdiatrique | Calcul renal (douleur lombaire)",
@@ -14080,6 +18877,7 @@ const MASTER_DB = {
                     "albumine": "0,45",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Ictère → bilan hépatique",
@@ -14107,6 +18905,23 @@ const MASTER_DB = {
                     "albumine": "0,98",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "LevoDOPA - Autres neuroleptiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antipsychotiques",
+                                        "dcis": [
+                                                  "haloperidol",
+                                                  "olanzapine",
+                                                  "risperidone",
+                                                  "quetiapine",
+                                                  "aripiprazole",
+                                                  "clozapine",
+                                                  "chlorpromazine",
+                                                  "levomepromazine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Bilan lipidique",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie + bilan lipidique (annuel)",
                     "alerte_clinique": "Syndrome malin neuroleptique → CPK urgente | Allongement QTc",
@@ -14139,6 +18954,7 @@ const MASTER_DB = {
                     "albumine": "20",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal (neurotoxicite dose-dependante si IRC) | NFS",
                     "suivi_periodique": "Créatinine (annuelle) | NFS si aplasie",
                     "alerte_clinique": "Encephalopathie (neurotoxicite si IRC - urgence dosage + DFG) | Neutropenie → NFS urgente",
@@ -14167,6 +18983,20 @@ const MASTER_DB = {
                     "albumine": "25",
                     "qt_risque": "",
                     "ddi_interact": "IPP (absorption reduite)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IPP",
+                                        "dcis": [
+                                                  "omeprazole",
+                                                  "esomeprazole",
+                                                  "lansoprazole",
+                                                  "pantoprazole",
+                                                  "rabeprazole"
+                                        ],
+                                        "commentaire": "absorption reduite",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan renal si IRC",
                     "suivi_periodique": "Créatinine si IRC",
                     "alerte_clinique": "Reaction allergique",
@@ -14192,6 +19022,7 @@ const MASTER_DB = {
                     "albumine": "20",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan renal | NFS",
                     "suivi_periodique": "Créatinine si traitement prolonge",
                     "alerte_clinique": "Anemie hemolytique (Coombs direct+) → NFS + bilan hemolytique | Neutropenie",
@@ -14219,6 +19050,27 @@ const MASTER_DB = {
                     "albumine": "50",
                     "qt_risque": "",
                     "ddi_interact": "Aminosides, Vancomycine (nephrotoxicite additive +++), Curares (blocage NM additif)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aminosides",
+                                        "dcis": [
+                                                  "gentamicine",
+                                                  "amikacine",
+                                                  "tobramycine",
+                                                  "streptomycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Vancomycine",
+                                        "dcis": [
+                                                  "vancomycine"
+                                        ],
+                                        "commentaire": "nephrotoxicite additive +++",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG (nephrotoxicite majeure dose-dependante) | Bilan neurologique | NFS | Dosage serique si disponible",
                     "suivi_periodique": "Créatinine (quotidienne en UCI) | Bilan neurologique (hebdomadaire) | NFS (hebdomadaire) | Potassium (hebdomadaire)",
                     "alerte_clinique": "Nephrotoxicite majeure (dose-dependante, IRA frequente) → créatinine quotidienne | Neurotoxicite (confusion, paresthesies, blocage neuromusculaire) → surveillance neurologique quotidienne",
@@ -14247,6 +19099,25 @@ const MASTER_DB = {
                     "albumine": "98",
                     "qt_risque": "",
                     "ddi_interact": "Inhibiteurs CYP3A4 (ketoconazole augmente x7 concentration), Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "ketoconazole augmente x7 concentration",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique (elimination hépatique CYP3A4) | Créatinine | ECG si FR QTc",
                     "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle)",
                     "alerte_clinique": "Syndrome anticholinergique (modere ACB=2) | Hépatotoxicité rare → bilan hépatique | EVITER sujet age",
@@ -14275,6 +19146,25 @@ const MASTER_DB = {
                     "albumine": "91-93",
                     "qt_risque": "Risque Etabli (RE)",
                     "ddi_interact": "CYP3A4 inhibiteurs, QT-prolongateurs (CI)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Bilan hépatique | Ionogramme",
                     "suivi_periodique": "ECG (annuel ou si symptomes) | Bilan hépatique si traitement prolonge",
                     "alerte_clinique": "Allongement QTc (risque majeur) → ECG urgent | Hépatotoxicité → bilan hépatique",
@@ -14303,6 +19193,7 @@ const MASTER_DB = {
                     "albumine": "50 - 65 %",
                     "qt_risque": "? Risque Special (SR)",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "",
                     "suivi_periodique": "",
                     "alerte_clinique": "",
@@ -14326,6 +19217,30 @@ const MASTER_DB = {
                     "albumine": "99%",
                     "qt_risque": "",
                     "ddi_interact": "Betabloquants non cardioselectifs (masquage hypoglycemie) | Inhibiteurs CYP2C9 (augmentation exposition) | Gemfibrozil (augmentation concentrations)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "masquage hypoglycemie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Gemfibrozil",
+                                        "dcis": [
+                                                  "gemfibrozil"
+                                        ],
+                                        "commentaire": "augmentation concentrations",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "HbA1c | Glycemie a jeun | Créatinine | Bilan hépatique",
                     "suivi_periodique": "HbA1c (trimestrielle) | Glycemie capillaire | Créatinine (semestrielle) | BH",
                     "alerte_clinique": "Hypoglycemie (moins que sulfamides mais possible) | Administrer juste avant les repas | Sauter la dose si repas saute | Peu disponible en France",
@@ -14352,6 +19267,7 @@ const MASTER_DB = {
                     "albumine": "> 99 %",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "",
                     "suivi_periodique": "",
                     "alerte_clinique": "",
@@ -14375,6 +19291,16 @@ const MASTER_DB = {
                     "albumine": "95%",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "IMAO, Dépresseurs du SNC, Alcool",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Agranulocytose → NFS urgente (fièvre) | Sédation excessive",
@@ -14403,6 +19329,37 @@ const MASTER_DB = {
                     "albumine": "0",
                     "qt_risque": "",
                     "ddi_interact": "Diurétiques épargneurs de potassium, IEC, ARA2",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ARA2",
+                                        "dcis": [
+                                                  "losartan",
+                                                  "valsartan",
+                                                  "irbesartan",
+                                                  "candesartan",
+                                                  "telmisartan",
+                                                  "olmesartan"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme (Kaliémie) | Créatinine",
                     "suivi_periodique": "Kaliémie (tous les 3 à 6 mois)",
                     "alerte_clinique": "Hyperkaliémie sévère → Ionogramme urgent | Ulcération digestive (prendre avec grand verre d'eau)",
@@ -14429,6 +19386,45 @@ const MASTER_DB = {
                     "albumine": "90%",
                     "qt_risque": "",
                     "ddi_interact": "IEC, ARA2, Potassium (Hyperkaliémie), Lithium",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ARA2",
+                                        "dcis": [
+                                                  "losartan",
+                                                  "valsartan",
+                                                  "irbesartan",
+                                                  "candesartan",
+                                                  "telmisartan",
+                                                  "olmesartan"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme complet | Créatinine",
                     "suivi_periodique": "Ionogramme + Créatinine (régulier)",
                     "alerte_clinique": "Hyperkaliémie (Spironolactone) ou Hypokaliémie (Altizide) | Gynécomastie",
@@ -14456,6 +19452,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14484,6 +19508,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14512,6 +19564,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Demi-vie longue. Corticoïdes, ISRS (Saignement).",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14540,6 +19620,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Risque Cardiovasculaire majoré par rapport aux autres AINS. Corticoïdes, ISRS.",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14568,6 +19676,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Corticoïdes, ISRS. CI si HTA non contrôlée.",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14596,6 +19732,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14624,6 +19788,7 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Demi-vie très longue (>50h) : DÉCONSEILLÉ CHEZ LE SUJET AGÉ. Haut risque d'ulcère.",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14652,6 +19817,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14680,6 +19873,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Hépatotoxique (Usage restreint max 15j). Corticoïdes, ISRS.",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14708,6 +19929,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Effets indésirables centraux fréquents en gériatrie. Corticoïdes, ISRS.",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14736,6 +19985,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14764,6 +20041,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -14792,6 +20097,37 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 99%",
                     "ddi_interact": "Anticoagulants, ISRS, Lithium, Methotrexate",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Methotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme | PA",
                     "suivi_periodique": "Créatinine | PA | Hb si usage prolongé",
                     "alerte_clinique": "Saignement digestif | Rétention hydrosodée | HTA",
@@ -14820,6 +20156,53 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "20-40%",
                     "ddi_interact": "Bêtabloquants (rebond HTA à l'arrêt), Antidépresseurs tricycliques, BZD",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "rebond HTA à l'arrêt",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tricycliques",
+                                        "dcis": [
+                                                  "amitriptyline",
+                                                  "clomipramine",
+                                                  "imipramine",
+                                                  "desipramine",
+                                                  "nortriptyline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "PA/FC | Créatinine | ECG",
                     "suivi_periodique": "PA/FC régulière | Créatinine annuelle",
                     "alerte_clinique": "Sécheresse buccale | Somnolence | Rebond hypertensif à l'arrêt brutal",
@@ -14845,6 +20228,45 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "",
                     "ddi_interact": "AINS, Antiagrégants, AVK (risque hémorragique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiagrégants",
+                                        "dcis": [
+                                                  "aspirine",
+                                                  "clopidogrel",
+                                                  "ticagrelor",
+                                                  "prasugrel",
+                                                  "ticlopidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "risque hémorragique",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS-Plaquettes | Créatinine/DFG | TP/TCA",
                     "suivi_periodique": "Plaquettes 2x/sem (J5-J21) | Anti-Xa si indication | Créatinine",
                     "alerte_clinique": "TIH (thrombocytopénie) → arrêt immédiat | Saignement actif",
@@ -14872,6 +20294,29 @@ const MASTER_DB = {
                     "qt_risque": "Faible",
                     "albumine": "30%",
                     "ddi_interact": "IMAO (CI absolue), ISRS (syndrome sérotoninergique), Tramadol",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome sérotoninergique",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Natrémie | PA | ECG si facteurs QT",
                     "suivi_periodique": "Natrémie à J14 puis trimestrielle | PA",
                     "alerte_clinique": "Hyponatrémie | Syndrome sérotoninergique | Syndrome d'arrêt",
@@ -14900,6 +20345,35 @@ const MASTER_DB = {
                     "qt_risque": "Modéré",
                     "albumine": "> 90%",
                     "ddi_interact": "IMAO (CI), Alcool, BZD, Anticholinergiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Natrémie | Bilan hépatique",
                     "suivi_periodique": "ECG | Natrémie | Glycémie",
                     "alerte_clinique": "Allongement QT | Rétention urinaire | Confusion | Chutes",
@@ -14927,6 +20401,45 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "",
                     "ddi_interact": "AINS, Antiagrégants, AVK (risque hémorragique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiagrégants",
+                                        "dcis": [
+                                                  "aspirine",
+                                                  "clopidogrel",
+                                                  "ticagrelor",
+                                                  "prasugrel",
+                                                  "ticlopidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "risque hémorragique",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS-Plaquettes | Créatinine/DFG | TP/TCA",
                     "suivi_periodique": "Plaquettes 2x/sem (J5-J21) | Anti-Xa si IRC | Créatinine",
                     "alerte_clinique": "TIH → arrêt immédiat | Saignement | Hématome spinal si péridural",
@@ -14954,6 +20467,47 @@ const MASTER_DB = {
                     "qt_risque": "Modéré",
                     "albumine": "11%",
                     "ddi_interact": "AVK (augmentation INR), Statines, Ciclosporine, Phénytoïne",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "augmentation INR",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Phénytoïne",
+                                        "dcis": [
+                                                  "phenytoine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique | Créatinine | ECG si QT à risque",
                     "suivi_periodique": "BH hebdomadaire si traitement prolongé | Créatinine",
                     "alerte_clinique": "Hépatotoxicité | Allongement QT | Interactions CYP2C9/CYP3A4",
@@ -14982,6 +20536,35 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "94%",
                     "ddi_interact": "AINS, Antiagrégants (risque hémorragique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiagrégants",
+                                        "dcis": [
+                                                  "aspirine",
+                                                  "clopidogrel",
+                                                  "ticagrelor",
+                                                  "prasugrel",
+                                                  "ticlopidine"
+                                        ],
+                                        "commentaire": "risque hémorragique",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS-Plaquettes | Créatinine/DFG",
                     "suivi_periodique": "Créatinine régulière | NFS si usage prolongé",
                     "alerte_clinique": "Saignement | Pas de TIH (avantage vs HBPM)",
@@ -15008,6 +20591,16 @@ const MASTER_DB = {
                     "qt_risque": "Modéré",
                     "albumine": "40%",
                     "ddi_interact": "Digoxine (augmentation taux), Tamoxifène, Méfloquine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "augmentation taux",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Examen ophtalmologique (rétine) | ECG | NFS | BH",
                     "suivi_periodique": "Fond d'œil annuel après 5 ans | ECG | NFS annuelle",
                     "alerte_clinique": "Rétinopathie (irréversible) | Allongement QT | Hypoglycémie",
@@ -15036,6 +20629,34 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "> 99%",
                     "ddi_interact": "Méthotrexate (hépatotoxicité), AVK, Rifampicine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Méthotrexate",
+                                        "dcis": [
+                                                  "methotrexate"
+                                        ],
+                                        "commentaire": "hépatotoxicité",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Rifampicine",
+                                        "dcis": [
+                                                  "rifampicine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | BH complet | PA | Créatinine",
                     "suivi_periodique": "BH mensuel pendant 6 mois puis trimestriel | NFS | PA",
                     "alerte_clinique": "Hépatotoxicité | Cytopénie | HTA | Neuropathie périphérique",
@@ -15064,6 +20685,35 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "50%",
                     "ddi_interact": "AINS (toxicité rénale), Triméthoprime (pancytopénie), IPP",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "toxicité rénale",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IPP",
+                                        "dcis": [
+                                                  "omeprazole",
+                                                  "esomeprazole",
+                                                  "lansoprazole",
+                                                  "pantoprazole",
+                                                  "rabeprazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | BH | Créatinine/DFG | Radio thorax | Sérologies hépatites",
                     "suivi_periodique": "NFS + BH mensuel pendant 3 mois puis trimestriel | Créatinine",
                     "alerte_clinique": "Pancytopénie (urgence) | Fibrose pulmonaire | Hépatotoxicité | Stomatite",
@@ -15093,6 +20743,24 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "< 15%",
                     "ddi_interact": "Lithium, IMAO, Fer oral (réduction absorption)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fer oral",
+                                        "dcis": [
+                                                  "fer"
+                                        ],
+                                        "commentaire": "réduction absorption",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | BH | Test de Coombs | PA",
                     "suivi_periodique": "NFS | BH trimestriel | Test Coombs si anémie",
                     "alerte_clinique": "Anémie hémolytique (Coombs+) | Hépatite | Dépression | Sédation",
@@ -15120,6 +20788,27 @@ const MASTER_DB = {
                     "qt_risque": "Modéré",
                     "albumine": "",
                     "ddi_interact": "Dopaminergiques (antagonisme), Allongeurs du QT, BZD",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG si facteurs QT",
                     "suivi_periodique": "Réévaluation si > 5 jours",
                     "alerte_clinique": "Allongement QT | Syndrome extrapyramidal | Neuroleptique caché",
@@ -15147,6 +20836,17 @@ const MASTER_DB = {
                     "qt_risque": "Élevé (KR)",
                     "albumine": "70-76%",
                     "ddi_interact": "Allongeurs du QT, Tramadol (réduction efficacité analgésique), Apomorphine (CI)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Opioïdes forts",
+                                        "dcis": [
+                                                  "tramadol",
+                                                  "morphine"
+                                        ],
+                                        "commentaire": "réduction efficacité analgésique; CI",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "ECG | Ionogramme (K+, Mg2+)",
                     "suivi_periodique": "ECG si traitement prolongé",
                     "alerte_clinique": "Allongement QT (dose-dépendant) | Constipation | Céphalées",
@@ -15174,6 +20874,48 @@ const MASTER_DB = {
                     "qt_risque": "Modéré",
                     "albumine": "> 98%",
                     "ddi_interact": "Inhibiteur puissant CYP3A4: Statines (CI), Ciclosporine, Tacrolimus, Sirolimus",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "CI",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tacrolimus",
+                                        "dcis": [
+                                                  "tacrolimus"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Sirolimus",
+                                        "dcis": [
+                                                  "sirolimus"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "BH | Créatinine | ECG | Taux résiduel",
                     "suivi_periodique": "BH hebdomadaire | Taux résiduel | Créatinine",
                     "alerte_clinique": "Hépatotoxicité | Interactions CYP3A4 multiples | QT",
@@ -15202,6 +20944,57 @@ const MASTER_DB = {
                     "qt_risque": "(PR) - Risque possible via métabolites",
                     "albumine": "20%",
                     "ddi_interact": "Inducteur CYP: AVK, AOD, Contraceptifs, Statines, Corticoïdes",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Anticoagulants oraux directs (AOD)",
+                                        "dcis": [
+                                                  "apixaban",
+                                                  "rivaroxaban",
+                                                  "edoxaban",
+                                                  "dabigatran"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": [
+                                                  "prednisone",
+                                                  "prednisolone",
+                                                  "methylprednisolone",
+                                                  "hydrocortisone",
+                                                  "dexamethasone",
+                                                  "betamethasone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | BH | Taux phénobarbital",
                     "suivi_periodique": "Taux résiduel phénobarbital | NFS | BH | Vitamine D/Calcium",
                     "alerte_clinique": "Sédation | Dépendance | Ostéomalacie (long terme) | Anémie mégaloblastique",
@@ -15228,6 +21021,48 @@ const MASTER_DB = {
                     "qt_risque": "Faible",
                     "albumine": "85-97%",
                     "ddi_interact": "Digoxine (augmentation taux), Bêtabloquants, AVK, Ciclosporine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "augmentation taux",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QRS, PR, QTc) | BH | NFS",
                     "suivi_periodique": "ECG trimestriel | BH annuel",
                     "alerte_clinique": "Élargissement QRS > 25% → arrêt | Effet proarythmique | Dysgueusie",
@@ -15254,6 +21089,35 @@ const MASTER_DB = {
                     "qt_risque": "Modéré",
                     "albumine": "> 90%",
                     "ddi_interact": "L-Dopa (antagonisme), Allongeurs du QT, BZD, Alcool",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG | Glycémie | Bilan lipidique | NFS",
                     "suivi_periodique": "Glycémie/HbA1c trimestrielle | ECG annuel | Poids",
                     "alerte_clinique": "Syndrome extrapyramidal | Syndrome malin | QT | Syndrome métabolique",
@@ -15281,6 +21145,45 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "albumine": "",
                     "ddi_interact": "AINS, Antiagrégants, AVK (risque hémorragique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiagrégants",
+                                        "dcis": [
+                                                  "aspirine",
+                                                  "clopidogrel",
+                                                  "ticagrelor",
+                                                  "prasugrel",
+                                                  "ticlopidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "risque hémorragique",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS-Plaquettes | Créatinine/DFG | TP/TCA",
                     "suivi_periodique": "Plaquettes 2x/sem (J5-J21) | Anti-Xa si IRC ou > 75 ans",
                     "alerte_clinique": "TIH → arrêt immédiat | Avantage: utilisable si DFG 20-30",
@@ -15308,6 +21211,53 @@ const MASTER_DB = {
                     "qt_risque": "Modéré",
                     "albumine": "58%",
                     "ddi_interact": "Inhibiteur puissant CYP2C19/CYP3A4: Rifampicine (CI), Statines, Ciclosporine, Tacrolimus, Sirolimus (CI)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteur puissant CYP2C19/CYP3A4: Rifampicine",
+                                        "dcis": [
+                                                  "rifampicine"
+                                        ],
+                                        "commentaire": "CI",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tacrolimus",
+                                        "dcis": [
+                                                  "tacrolimus"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Sirolimus",
+                                        "dcis": [
+                                                  "sirolimus"
+                                        ],
+                                        "commentaire": "CI",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "BH | Créatinine | ECG | Taux résiduel (cible 1-5.5 mg/L)",
                     "suivi_periodique": "Taux résiduel hebdomadaire | BH | ECG | Acuité visuelle",
                     "alerte_clinique": "Hépatotoxicité | Troubles visuels (fréquents) | Phototoxicité | QT",
@@ -15336,6 +21286,32 @@ const MASTER_DB = {
                     "albumine": "60%",
                     "qt_risque": "",
                     "ddi_interact": "Fluvoxamine (CI — inhibiteur CYP1A2), Ciprofloxacine, Carbamazépine (inducteur)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Fluvoxamine",
+                                        "dcis": [
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "CI — inhibiteur CYP1A2",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ciprofloxacine",
+                                        "dcis": [
+                                                  "ciprofloxacine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Carbamazépine",
+                                        "dcis": [
+                                                  "carbamazepine"
+                                        ],
+                                        "commentaire": "inducteur",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "",
                     "suivi_periodique": "Réévaluation efficacité à 3 semaines",
                     "alerte_clinique": "Somnolence diurne si dose excessive | Préférer à toute benzodiazépine chez le sujet âgé",
@@ -15359,6 +21335,47 @@ const MASTER_DB = {
                     "albumine": "96%",
                     "qt_risque": "(PR) - Bradycardie et allongement PR, pas QTc directement",
                     "ddi_interact": "Betabloquants, Digoxine, Diltiazem, Verapamil (bradycardie additive) | Anticholinergiques (antagonisme pharmacologique) | Inhibiteurs CYP3A4/2D6 (augmentation exposition)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "bradycardie additive; augmentation exposition",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (FC, PR, QTc) | Poids | Creatinine | Bilan hepatique",
                     "suivi_periodique": "FC (chaque consultation) | ECG si bradycardisant co-prescrit | MMSE/MoCA (annuel) | Reevaluation benefice a 6-12 mois",
                     "alerte_clinique": "Bradycardie < 50/min → ECG urgent, discuter arret | Syncope → arret et bilan cardiologique | Nausees/diarrhee/anorexie (dose-dependant) | Reevaluer si MMSE < 10 (STOPPFrail)",
@@ -15387,6 +21404,30 @@ const MASTER_DB = {
                     "albumine": "40%",
                     "qt_risque": "",
                     "ddi_interact": "Betabloquants, Digoxine (bradycardie) | Anticholinergiques (antagonisme) | Succinylcholine (prolongation bloc NM)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "bradycardie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG | Poids | NFS | Bilan hepatique",
                     "suivi_periodique": "FC | Poids (perte poids sous traitement) | MMSE/MoCA annuel | Surveillance cutanee (patch)",
                     "alerte_clinique": "Bradycardie → ECG | Nausees/vomissements (surtout forme orale) | Perte poids significative → reevaluer | Indication specifique MCL et Parkinson-Demence (START)",
@@ -15414,6 +21455,46 @@ const MASTER_DB = {
                     "albumine": "18%",
                     "qt_risque": "",
                     "ddi_interact": "Betabloquants, Digoxine (bradycardie) | Anticholinergiques (antagonisme) | Ketoconazole, Paroxetine (inhibiteurs CYP2D6/3A4 — augmentation exposition)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "bradycardie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ketoconazole",
+                                        "dcis": [
+                                                  "ketoconazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Paroxetine",
+                                        "dcis": [
+                                                  "paroxetine"
+                                        ],
+                                        "commentaire": "inhibiteurs CYP2D6/3A4 — augmentation exposition",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG | Creatinine/DFG | Bilan hepatique",
                     "suivi_periodique": "FC | Creatinine (semestriel) | MMSE/MoCA annuel",
                     "alerte_clinique": "Bradycardie → ECG | Adaptation renale obligatoire | Nausees dose-dependantes",
@@ -15441,6 +21522,31 @@ const MASTER_DB = {
                     "albumine": "40%",
                     "qt_risque": "",
                     "ddi_interact": "Ciprofloxacine (inhibiteur CYP1A2 — augmente exposition) | Antipsychotiques (antagonisme dopaminergique) | Hormones de substitution estrogenes (augmentation exposition)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Ciprofloxacine",
+                                        "dcis": [
+                                                  "ciprofloxacine"
+                                        ],
+                                        "commentaire": "inhibiteur CYP1A2 — augmente exposition",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antipsychotiques",
+                                        "dcis": [
+                                                  "haloperidol",
+                                                  "olanzapine",
+                                                  "risperidone",
+                                                  "quetiapine",
+                                                  "aripiprazole",
+                                                  "clozapine",
+                                                  "chlorpromazine",
+                                                  "levomepromazine"
+                                        ],
+                                        "commentaire": "antagonisme dopaminergique",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA orthostatique | Évaluation somnolence",
                     "suivi_periodique": "TA | Somnolence diurne (conduite) | Troubles du controle des impulsions (jeu, achats, hypersexualite) | Dyskiniesies",
                     "alerte_clinique": "START — Parkinson avec handicap fonctionnel | Hypotension orthostatique (surtout debut) | Somnolence subite (conduite) | Troubles controle impulsions (rechercher activement) | Syndrome de sevrage si arret brutal",
@@ -15466,6 +21572,31 @@ const MASTER_DB = {
                     "albumine": "92%",
                     "qt_risque": "",
                     "ddi_interact": "Antipsychotiques (antagonisme) | Metoclopramide (antagonisme D2)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antipsychotiques",
+                                        "dcis": [
+                                                  "haloperidol",
+                                                  "olanzapine",
+                                                  "risperidone",
+                                                  "quetiapine",
+                                                  "aripiprazole",
+                                                  "clozapine",
+                                                  "chlorpromazine",
+                                                  "levomepromazine"
+                                        ],
+                                        "commentaire": "antagonisme",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Metoclopramide",
+                                        "dcis": [
+                                                  "metoclopramide"
+                                        ],
+                                        "commentaire": "antagonisme D2",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA couche/debout | Poids | Etat cutane",
                     "suivi_periodique": "TA | Somnolence | Troubles controle impulsions | Site d'application (rotation, reactions cutanees)",
                     "alerte_clinique": "START — Parkinson | Avantage du patch: liberation continue, moins de fluctuations | Reactions cutanees au site d'application (rotation obligatoire) | Troubles controle impulsions",
@@ -15491,6 +21622,32 @@ const MASTER_DB = {
                     "albumine": "88%",
                     "qt_risque": "",
                     "ddi_interact": "Antidepresseurs serotoninergiques (ISRS, IRSN, tricycliques — risque syndrome serotoninergique, delai 14j) | Tramadol, Pethidine (CI) | Ciprofloxacine (inhibiteur CYP1A2)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Pethidine",
+                                        "dcis": [
+                                                  "meperidine"
+                                        ],
+                                        "commentaire": "CI",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ciprofloxacine",
+                                        "dcis": [
+                                                  "ciprofloxacine"
+                                        ],
+                                        "commentaire": "inhibiteur CYP1A2",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hepatique | Liste medicaments co-prescrits (interactions ++)",
                     "suivi_periodique": "Bilan hepatique annuel | Surveillance interactions",
                     "alerte_clinique": "Bien tolere en geriatrie | CI avec tramadol, pethidine, dextromethorphane | Delai 14j avant introduction ISRS/IRSN apres arret | Tyramine: interaction dietetique negligeable avec IMAO-B selectif",
@@ -15517,6 +21674,37 @@ const MASTER_DB = {
                     "albumine": "92%",
                     "qt_risque": "",
                     "ddi_interact": "ISRS, IRSN (syndrome serotoninergique — CI) | Pethidine, Tramadol (CI) | Substrats BCRP (rosuvastatine — augmentation exposition)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Pethidine",
+                                        "dcis": [
+                                                  "meperidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "CI",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "Bilan hepatique | Examen ophtalmologique (retine)",
                     "suivi_periodique": "Bilan hepatique semestriel | Examen ophtalmologique annuel (maculopathie rare) | Dyskiniesies (ajuster L-DOPA si besoin)",
                     "alerte_clinique": "Adjuvant a la L-DOPA dans Parkinson avec fluctuations motrices | Double mecanisme IMAO-B + antiglutamate | CI si insuffisance hepatique severe | Surveiller oeil (degenerescence maculaire)",
@@ -15544,6 +21732,24 @@ const MASTER_DB = {
                     "albumine": "99.9% (tres forte liaison)",
                     "qt_risque": "",
                     "ddi_interact": "IMAO non selectifs (CI) | Antidepresseurs (prudence avec ISRS/IRSN) | Warfarine (surveiller INR — inhibe CYP2C9 in vitro) | Fer oral (chelation — espacement 1h)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Warfarine",
+                                        "dcis": [
+                                                  "warfarine"
+                                        ],
+                                        "commentaire": "surveiller INR — inhibe CYP2C9 in vitro",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Fer oral",
+                                        "dcis": [
+                                                  "fer"
+                                        ],
+                                        "commentaire": "chelation — espacement 1h",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique",
                     "suivi_periodique": "Bilan hepatique (M3, M6, puis annuel) | Dyskiniesies (reduire L-DOPA de 10-30% si besoin)",
                     "alerte_clinique": "Adjuvant L-DOPA: prolonge l'effet (reduit OFF) | Avantage: 1 prise/j au coucher | Souvent necessaire de reduire la dose de L-DOPA | CI si insuffisance hepatique severe | Coloration urine (brun-rouge, benin)",
@@ -15570,6 +21776,7 @@ const MASTER_DB = {
                     "albumine": "90%",
                     "qt_risque": "",
                     "ddi_interact": "",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "PSA (à interpréter : divisé par 2 sous traitement) | Bilan hépatique",
                     "suivi_periodique": "PSA (/6 mois la 1ère année puis annuel) | Fonction hépatique (annuel)",
                     "alerte_clinique": "Baisse du PSA de 50% attendue — ajuster l'interprétation du dépistage | Gynécomastie | Troubles sexuels (1-2%)",
@@ -15593,6 +21800,25 @@ const MASTER_DB = {
                     "albumine": "99%",
                     "qt_risque": "",
                     "ddi_interact": "Inhibiteurs CYP3A4 (prudence)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "prudence",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "PSA (à interpréter : divisé par 2 sous traitement) | Bilan hépatique",
                     "suivi_periodique": "PSA (/6 mois la 1ère année puis annuel) | Fonction hépatique (annuel)",
                     "alerte_clinique": "Baisse du PSA de 50% attendue — ajuster l'interprétation du dépistage | Gynécomastie | Troubles sexuels",
@@ -15616,6 +21842,16 @@ const MASTER_DB = {
                     "albumine": "45%",
                     "qt_risque": "",
                     "ddi_interact": "Amantadine (synergie NMDA — EI majores) | Dextromethorphane, Ketamine (interaction NMDA) | Alcalinisants urinaires (diminuent elimination)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Dextromethorphane",
+                                        "dcis": [
+                                                  "dextromethorphane"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Creatinine/DFG | MMSE",
                     "suivi_periodique": "Creatinine (semestriel) | MMSE/MoCA annuel | Reevaluation benefice a 6-12 mois",
                     "alerte_clinique": "Vertiges, cephalees (debut traitement) | STOPP3-D19: CI si epilepsie active | STOPPFrail: reevaluer si demence severe (MMSE < 10)",
@@ -15642,6 +21878,45 @@ const MASTER_DB = {
                     "albumine": "94-97%",
                     "qt_risque": "",
                     "ddi_interact": "Miconazole, Fluconazole (hypoglycemie majeure — CI) | AINS, Sulfamides ATB (deplace liaison albumine) | Betabloquants (masquent symptomes hypo)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Fluconazole",
+                                        "dcis": [
+                                                  "fluconazole"
+                                        ],
+                                        "commentaire": "hypoglycemie majeure — CI",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "masquent symptomes hypo",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Glycemie a jeun | HbA1c | Creatinine/DFG | Bilan hepatique",
                     "suivi_periodique": "HbA1c (trimestriel) | Glycemie capillaire | Creatinine (semestriel) | Poids",
                     "alerte_clinique": "Hypoglycemie (surtout si IRC, denutrition, saut de repas) | Risque moindre que glibenclamide/glimepiride | Assouplir cibles si fragile (HbA1c 7.5-8.5%)",
@@ -15671,6 +21946,45 @@ const MASTER_DB = {
                     "albumine": "99%",
                     "qt_risque": "",
                     "ddi_interact": "Miconazole (CI absolue — hypoglycemie severe) | Fluconazole, AINS, Sulfamides ATB | Betabloquants non selectifs (masquent hypo)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Fluconazole",
+                                        "dcis": [
+                                                  "fluconazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "masquent hypo",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Glycemie | HbA1c | Creatinine/DFG | NFS",
                     "suivi_periodique": "HbA1c (trimestriel) | Glycemie capillaire frequente | Creatinine (semestriel)",
                     "alerte_clinique": "PIM ABSOLU en geriatrie — hypoglycemie prolongee (demi-vie 10-16h, metabolites actifs) | Remplacer par gliclazide LM ou iDPP4 | STOPP3-J1, Beers, PRISCUS, FORTA-D",
@@ -15699,6 +22013,45 @@ const MASTER_DB = {
                     "albumine": "99.5%",
                     "qt_risque": "",
                     "ddi_interact": "Miconazole, Fluconazole | AINS, Sulfamides ATB | Betabloquants non selectifs",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Fluconazole",
+                                        "dcis": [
+                                                  "fluconazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Glycemie | HbA1c | Creatinine/DFG",
                     "suivi_periodique": "HbA1c trimestriel | Glycemie capillaire | Creatinine semestriel",
                     "alerte_clinique": "PIM en geriatrie — hypoglycemie prolongee | Preferer gliclazide LM ou iDPP4 | STOPP3-J1, Beers, PRISCUS, FORTA-D",
@@ -15727,6 +22080,24 @@ const MASTER_DB = {
                     "albumine": "99%",
                     "qt_risque": "",
                     "ddi_interact": "Insuline (risque oedeme + hypoglycemie) | Gemfibrozil (augmente exposition x3 — CI)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Insuline",
+                                        "dcis": [
+                                                  "insuline"
+                                        ],
+                                        "commentaire": "risque oedeme + hypoglycemie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Gemfibrozil",
+                                        "dcis": [
+                                                  "gemfibrozil"
+                                        ],
+                                        "commentaire": "augmente exposition x3 — CI",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hepatique | ECG | Poids | Recherche IC",
                     "suivi_periodique": "Bilan hepatique trimestriel | Poids | Signes d'IC | Densitometrie si FdR osteoporose",
                     "alerte_clinique": "CI ABSOLUE si IC (toute FEVG) — retention hydrosodee, decompensation | Fractures (femmes ++) | Cancer vesical (controverse) | Beers/PRISCUS/FORTA-D",
@@ -15756,6 +22127,24 @@ const MASTER_DB = {
                     "albumine": "70-80% (liaison concentration-dependante)",
                     "qt_risque": "",
                     "ddi_interact": "Rifampicine (diminue efficacite — inducteur P-gp) | Sulfamides, Insuline (risque hypo si association)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Rifampicine",
+                                        "dcis": [
+                                                  "rifampicine"
+                                        ],
+                                        "commentaire": "diminue efficacite — inducteur P-gp",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Insuline",
+                                        "dcis": [
+                                                  "insuline"
+                                        ],
+                                        "commentaire": "risque hypo si association",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "HbA1c | Glycemie",
                     "suivi_periodique": "HbA1c trimestriel",
                     "alerte_clinique": "Tres bonne tolerance geriatrique — pas d'ajustement renal (FORTA-A) | Rare: pancreatite, arthralgie | Prefere aux sulfamides si IRC",
@@ -15782,6 +22171,32 @@ const MASTER_DB = {
                     "albumine": "98%",
                     "qt_risque": "",
                     "ddi_interact": "Gemfibrozil + Itraconazole (CI absolue — augmentation majeure exposition) | Clopidogrel (inhibiteur CYP2C8 — x5 exposition) | Ciclosporine",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Gemfibrozil + Itraconazole",
+                                        "dcis": [
+                                                  "itraconazole"
+                                        ],
+                                        "commentaire": "CI absolue — augmentation majeure exposition",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Clopidogrel",
+                                        "dcis": [
+                                                  "clopidogrel"
+                                        ],
+                                        "commentaire": "inhibiteur CYP2C8 — x5 exposition",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Glycemie | HbA1c | Bilan hepatique",
                     "suivi_periodique": "HbA1c trimestriel | Glycemie capillaire | Bilan hepatique annuel",
                     "alerte_clinique": "PRISCUS PIM-B / EU7-PIM | Hypoglycemie possible mais demi-vie courte (moins que sulfamides) | Prise preprandiale obligatoire | Eviter si repas sautes",
@@ -15810,6 +22225,24 @@ const MASTER_DB = {
                     "albumine": "Faible (action locale intestinale)",
                     "qt_risque": "",
                     "ddi_interact": "Digoxine (diminution absorption) | Charbon actif (antagonise effet) | Insuline/sulfamides: traiter hypo avec glucose pur (pas sucrose)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "diminution absorption",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Insuline/sulfamides: traiter hypo avec glucose pur",
+                                        "dcis": [
+                                                  "insuline"
+                                        ],
+                                        "commentaire": "pas sucrose",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "HbA1c | Bilan hepatique",
                     "suivi_periodique": "HbA1c trimestriel | Transaminases si > 6 mois",
                     "alerte_clinique": "PRISCUS PIM / FORTA-D — flatulences, diarrhee, mauvaise observance | Si hypo sous association: donner GLUCOSE PUR (le sucrose n'est pas absorbe) | Hepatotoxicite rare",
@@ -15838,6 +22271,49 @@ const MASTER_DB = {
                     "albumine": "7% (faible liaison)",
                     "qt_risque": "",
                     "ddi_interact": "Autres antihypertenseurs (hypotension additive) | BZD, Alcool (sedation) | Betabloquants (bradycardie)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "sedation",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "bradycardie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA couche/debout | FC | Creatinine/DFG",
                     "suivi_periodique": "TA | FC | Creatinine semestriel",
                     "alerte_clinique": "PIM absolu geriatrie — sedation, secheresse buccale, hypotension orthostatique | CI ABSOLUE si HFrEF (MOXCON: surmortalite) | Ne pas arreter brutalement (rebond HTA)",
@@ -15864,6 +22340,16 @@ const MASTER_DB = {
                     "albumine": "10%",
                     "qt_risque": "",
                     "ddi_interact": "Autres antihypertenseurs | Sedatifs | Alcool",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA couche/debout | FC",
                     "suivi_periodique": "TA | Recherche hypotension orthostatique",
                     "alerte_clinique": "PIM geriatrie — hypotension orthostatique, somnolence | Ne pas arreter brutalement",
@@ -15889,6 +22375,24 @@ const MASTER_DB = {
                     "albumine": "71%",
                     "qt_risque": "(PR) - Allongement QTc possible a forte dose",
                     "ddi_interact": "Digoxine (augmente Cmax +11%) | Substrats CYP2D6 (inhibiteur modere: augmente metoprolol, desipramine) | Warfarine (surveiller INR)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "augmente Cmax +11%",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Warfarine",
+                                        "dcis": [
+                                                  "warfarine"
+                                        ],
+                                        "commentaire": "surveiller INR",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA | FC | Creatinine/DFG | ECG si FdR QTc",
                     "suivi_periodique": "TA (mensuel les 3 premiers mois) | Residuel post-mictionnel si HBP",
                     "alerte_clinique": "STOPP3-I6: CI si HTA severe ou labile | Alternative FORTA-B aux antimuscariniques (pas de passage BHE, pas d'ACB) | Surveiller TA",
@@ -15916,6 +22420,7 @@ const MASTER_DB = {
                     "albumine": "N/A (anticorps monoclonal)",
                     "qt_risque": "",
                     "ddi_interact": "Aucune interaction medicamenteuse significative",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Calcemie | Vitamine D (corriger avant initiation) | Creatinine/DFG | Bilan dentaire",
                     "suivi_periodique": "Calcemie (2 semaines post-injection si IRC) | Vitamine D | Bilan dentaire annuel | DMO (18-24 mois)",
                     "alerte_clinique": "⚠️ REBOND FRACTURAIRE A L'ARRET — ne jamais arreter sans relais bisphosphonate | Hypocalcemie (surtout si IRC/carence vit D) | Osteonecroses de la machoire (rare) | Supplementer vit D + Ca systematiquement",
@@ -15944,6 +22449,38 @@ const MASTER_DB = {
                     "albumine": "40%",
                     "qt_risque": "(KR) - Elargit QRS (pas QTc directement mais pro-arythmie si cardiopathie)",
                     "ddi_interact": "Amiodarone (augmente flecainide x2) | Betabloquants (bradycardie + inotrope negatif) | Ritonavir (CI — augmentation majeure) | CYP2D6 inhibiteurs (paroxetine, fluoxetine)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Amiodarone",
+                                        "dcis": [
+                                                  "amiodarone"
+                                        ],
+                                        "commentaire": "augmente flecainide x2",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "bradycardie + inotrope negatif",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ritonavir",
+                                        "dcis": [
+                                                  "ritonavir"
+                                        ],
+                                        "commentaire": "CI — augmentation majeure",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "ECG 12D (QRS, PR, QTc) | Creatinine/DFG | Bilan hepatique | Echo cardio (exclure cardiopathie structurelle)",
                     "suivi_periodique": "ECG (mensuel les 3 premiers mois, puis semestriel) | Creatinine | Dosage plasmatique si IRC ou association CYP2D6",
                     "alerte_clinique": "CI ABSOLUE si cardiopathie structurelle (IC, post-IDM, valvulopathie — CAST: surmortalite) | PRISCUS PIM / PIM-Check | Pro-arythmie si elargissement QRS > 25% | Toujours associer a un betabloquant ou ICa ralentisseur",
@@ -15973,6 +22510,25 @@ const MASTER_DB = {
                     "albumine": "70%",
                     "qt_risque": "(CR) - Bradycardie sinusale, pas QTc directement",
                     "ddi_interact": "Inhibiteurs CYP3A4 puissants (ketoconazole, itraconazole, clarithromycine — CI) | Verapamil, Diltiazem (bradycardie — CI) | Allongeants QTc (prudence)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "ketoconazole, itraconazole, clarithromycine — CI; bradycardie — CI",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "ECG (FC, rythme sinusal confirme) | TA",
                     "suivi_periodique": "FC repos (chaque consultation) | ECG semestriel",
                     "alerte_clinique": "NE PAS utiliser si FA/flutter (inefficace) | Phosphenes (lumineux) frequents debut | Bradycardie < 50 → reduire | CI: rythme non sinusal, BAV III, IC aigue",
@@ -15998,6 +22554,53 @@ const MASTER_DB = {
                     "albumine": "92%",
                     "qt_risque": "",
                     "ddi_interact": "Inhibiteurs CYP3A4 puissants (CI — augmentation majeure) | Inducteurs CYP3A4 (diminuent efficacite) | IEC/ARA2 + iSGLT2 (hyperkaliemie — surveiller K++)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "CI — augmentation majeure",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "diminuent efficacite",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "hyperkaliemie — surveiller K++",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Kaliemie (doit etre ≤ 4.8) | Creatinine/DFG | Bilan hepatique",
                     "suivi_periodique": "Kaliemie a M1, M3, puis trimestriel | DFG trimestriel | Transaminases",
                     "alerte_clinique": "NE PAS initier si K+ > 5.0 | Arreter si K+ > 5.5 | FIDELIO-DKD/FIGARO-DKD: reduction progression MRC + evenements CV | Complementaire aux IEC/ARA2 et iSGLT2 dans la nephropathie diabetique",
@@ -16027,6 +22630,27 @@ const MASTER_DB = {
                     "albumine": "90% (ATTENTION: cinetique non lineaire — variation albumine change fortement la fraction libre)",
                     "qt_risque": "",
                     "ddi_interact": "INDUCTEUR PUISSANT CYP (reduit warfarine, AOD, statines, ICa, corticoides, contraceptifs) | Interactions bidirectionnelles nombreuses | Valproate (deplace liaison albumine + inhibe metabolisme)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "reduit warfarine, AOD, statines, ICa, corticoides, contraceptifs",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Valproate",
+                                        "dcis": [
+                                                  "valproate"
+                                        ],
+                                        "commentaire": "deplace liaison albumine + inhibe metabolisme",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Phenytoinemie | NFS | Bilan hepatique | Calcemie | Vitamine D | Albumine",
                     "suivi_periodique": "Phenytoinemie (cible 10-20 µg/mL ou libre 1-2 µg/mL) | NFS | Calcemie/VitD (osteoporose induite) | Bilan hepatique",
                     "alerte_clinique": "PIM ABSOLU geriatrie — cinetique non lineaire (petite variation dose = grande variation taux) | Inducteur enzymatique majeur (interactions ++) | Osteoporose, neuropathie, hyperplasie gingivale, acne | Preferer lamotrigine ou levetiracetam",
@@ -16059,6 +22683,23 @@ const MASTER_DB = {
                     "albumine": "Donnees limitees",
                     "qt_risque": "(CR) - QTc rapporté à forte dose",
                     "ddi_interact": "Antipsychotiques (antagonisme) | Tetrabenazine (antagonisme)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Antipsychotiques",
+                                        "dcis": [
+                                                  "haloperidol",
+                                                  "olanzapine",
+                                                  "risperidone",
+                                                  "quetiapine",
+                                                  "aripiprazole",
+                                                  "clozapine",
+                                                  "chlorpromazine",
+                                                  "levomepromazine"
+                                        ],
+                                        "commentaire": "antagonisme",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA couche/debout",
                     "suivi_periodique": "TA | Somnolence | Troubles controle impulsions",
                     "alerte_clinique": "START — Parkinson | Nausees frequentes (prendre au milieu du repas) | Somnolence | Troubles controle impulsions | Molecule specificiquement francaise",
@@ -16086,6 +22727,54 @@ const MASTER_DB = {
                     "albumine": "Faible (peptide)",
                     "qt_risque": "",
                     "ddi_interact": "AINS, ISRS, Carbamazepine, Thiazidiques (majorent hyponatremie ++) | Loperamide (augmente absorption — risque surcharge hydrique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Carbamazepine",
+                                        "dcis": [
+                                                  "carbamazepine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Diurétiques thiazidiques",
+                                        "dcis": [
+                                                  "hydrochlorothiazide",
+                                                  "indapamide",
+                                                  "chlortalidone"
+                                        ],
+                                        "commentaire": "majorent hyponatremie ++",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Natremie AVANT initiation | Poids | Volume hydrique",
                     "suivi_periodique": "Natremie a J3, J7, M1, puis mensuel les 3 premiers mois | Poids | Restriction hydrique le soir (< 250 mL apres prise)",
                     "alerte_clinique": "STOPP3-J10 — Risque d'hyponatremie symptomatique (convulsions, coma) | CI relative chez > 65 ans | Si utilise: restriction hydrique le soir, Na+ frequent | Indications residuelles: enuresie, diabete insipide",
@@ -16113,6 +22802,26 @@ const MASTER_DB = {
                     "albumine": "N/A (peptide)",
                     "qt_risque": "",
                     "ddi_interact": "Digoxine (hypercalcemie potentialise toxicite digitalique) | Diuretiques thiazidiques (hypercalcemie additive)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "hypercalcemie potentialise toxicite digitalique",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Diurétiques thiazidiques",
+                                        "dcis": [
+                                                  "hydrochlorothiazide",
+                                                  "indapamide",
+                                                  "chlortalidone"
+                                        ],
+                                        "commentaire": "hypercalcemie additive",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Calcemie | Vitamine D | Creatinine/DFG | Uricemie | PAL",
                     "suivi_periodique": "Calcemie a M1, M3 puis semestriel | Calciurie si ATCD lithiase | DMO a 18-24 mois",
                     "alerte_clinique": "Duree limitee a 24 mois (risque osteosarcome chez le rat — non confirme humain) | TOUJOURS relayer par anti-resorptif apres arret (bisphosphonate ou denosumab) | Hypercalcemie transitoire (3-6h post-injection) | Hypotension orthostatique (1eres injections)",
@@ -16142,6 +22851,29 @@ const MASTER_DB = {
                     "albumine": "58-75%",
                     "qt_risque": "(CR) - QTc rapporté en surdosage",
                     "ddi_interact": "IMAO (CI ABSOLUE — crise hypertensive, hyperthermie maligne) | ISRS (syndrome serotoninergique) | Phenytoine (augmente metabolite toxique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "syndrome serotoninergique",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Phenytoine",
+                                        "dcis": [
+                                                  "phenytoine"
+                                        ],
+                                        "commentaire": "augmente metabolite toxique",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ne pas prescrire",
                     "suivi_periodique": "Ne pas prescrire",
                     "alerte_clinique": "PIM ABSOLU — ne JAMAIS utiliser chez le sujet age | Metabolite norpethidine: neurotoxique (convulsions, agitation, hallucinations) | Demi-vie prolongee chez l'age | Remplacer par morphine, oxycodone ou fentanyl",
@@ -16170,6 +22902,28 @@ const MASTER_DB = {
                     "albumine": "15-20%",
                     "qt_risque": "",
                     "ddi_interact": "Depresseurs SNC (sedation majeure) | Alcool (CI) | Inducteur enzymatique",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "CI",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ne pas prescrire (retire)",
                     "suivi_periodique": "Si patient encore sous traitement ancien: sevrage progressif obligatoire",
                     "alerte_clinique": "RETIRE DU MARCHE (France 2012, Europe) | PIM absolu Beers/PRISCUS | Si encore prescrit (importation, ancien stock): SEVRAGE PROGRESSIF — risque de convulsions si arret brutal | Remplacer par BZD courte duree (oxazepam) si sevrage necessaire",
@@ -16195,6 +22949,16 @@ const MASTER_DB = {
                     "albumine": "Faible",
                     "qt_risque": "",
                     "ddi_interact": "Anticoagulants (majore risque hemorragique) | Theophylline (augmente taux) | Antihypertenseurs (hypotension additive)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Theophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "augmente taux",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Creatinine/DFG",
                     "suivi_periodique": "Reevaluation de l'indication",
                     "alerte_clinique": "FORTA-D / REMEDIES — efficacite non prouvee en AOMI | Vertiges, nausees, cephalees | Preferer exercice physique supervise et revascularisation si indiquee | Deprescrire si deja en cours",
@@ -16220,6 +22984,25 @@ const MASTER_DB = {
                     "albumine": "96%",
                     "qt_risque": "(CR) - Modeste allongement QTc",
                     "ddi_interact": "Derives nitres (CI ABSOLUE — hypotension severe) | Alpha-bloquants (hypotension) | Inhibiteurs CYP3A4 (augmentation exposition) | Riociguat (CI)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "augmentation exposition",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA | ECG si FdR CV",
                     "suivi_periodique": "TA",
                     "alerte_clinique": "STOPP3-B14: CI si IC severe PAS < 90 ou derives nitres concomitants — risque de collapsus | Priapisme (rare) | Perte audition/vision (rare, urgence)",
@@ -16243,6 +23026,25 @@ const MASTER_DB = {
                     "albumine": "94%",
                     "qt_risque": "(CR) - Modeste allongement QTc",
                     "ddi_interact": "Derives nitres (CI ABSOLUE) | Alpha-bloquants | Inhibiteurs CYP3A4",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA",
                     "suivi_periodique": "TA",
                     "alerte_clinique": "STOPP3-B14: memes CI que sildenafil | Demi-vie longue (36h): interactions prolongees | Douleurs dorsolombaires (frequentes debut)",
@@ -16266,6 +23068,24 @@ const MASTER_DB = {
                     "albumine": "60%",
                     "qt_risque": "",
                     "ddi_interact": "Cimetidine (augmente exposition) | Depresseurs SNC | Alcool",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Cimetidine",
+                                        "dcis": [
+                                                  "cimetidine"
+                                        ],
+                                        "commentaire": "augmente exposition",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Evaluation insomnie (cause secondaire)",
                     "suivi_periodique": "Reevaluer a 2 semaines — sevrage si > 2 sem",
                     "alerte_clinique": "STOPP3-D11/K4: PIM si ≥ 2 semaines ou patient chuteur | Demi-vie ultra-courte (1h): plutot endormissement que maintien | Comportements complexes du sommeil (somnambulisme)",
@@ -16289,6 +23109,67 @@ const MASTER_DB = {
                     "albumine": "99.8%",
                     "qt_risque": "(CR) - Allongement QTc par inhibition CYP3A4 (accumulation substrats)",
                     "ddi_interact": "INHIBITEUR PUISSANT CYP3A4 + P-gp — interactions majeures avec AOD, statines, ICa, immunosuppresseurs, opiacees, BZD | AOD: STOPP3-C14 risque hemorragique | Simvastatine/Lovastatine CI | Domperidone CI (QTc)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Anticoagulants oraux directs (AOD)",
+                                        "dcis": [
+                                                  "apixaban",
+                                                  "rivaroxaban",
+                                                  "edoxaban",
+                                                  "dabigatran"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "BZD",
+                                        "dcis": [
+                                                  "diazepam",
+                                                  "bromazepam",
+                                                  "lorazepam",
+                                                  "oxazepam",
+                                                  "alprazolam",
+                                                  "clorazepate",
+                                                  "nordazepam",
+                                                  "clobazam",
+                                                  "clonazepam",
+                                                  "nitrazepam",
+                                                  "lormetazepam",
+                                                  "midazolam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Simvastatine/Lovastatine CI",
+                                        "dcis": [
+                                                  "simvastatine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Domperidone CI",
+                                        "dcis": [
+                                                  "domperidone"
+                                        ],
+                                        "commentaire": "QTc",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hepatique | ECG (QTc) | Liste complete co-medications",
                     "suivi_periodique": "Bilan hepatique mensuel | ECG si QTc FdR",
                     "alerte_clinique": "STOPP3-C14: interaction P-gp avec AOD — risque hemorragique | Inhibiteur CYP3A4 le plus puissant — verifier TOUTES les co-prescriptions | Hepatotoxicite | IC: inotrope negatif, eviter si IC",
@@ -16317,6 +23198,36 @@ const MASTER_DB = {
                     "albumine": "99%",
                     "qt_risque": "(CR) - Allongement QTc",
                     "ddi_interact": "INHIBITEUR PUISSANT CYP3A4 — memes interactions que itraconazole | IPP, Anti-H2 (diminuent absorption — pH-dependante)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IPP",
+                                        "dcis": [
+                                                  "omeprazole",
+                                                  "esomeprazole",
+                                                  "lansoprazole",
+                                                  "pantoprazole",
+                                                  "rabeprazole"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Bilan hepatique | ECG",
                     "suivi_periodique": "Bilan hepatique hebdomadaire si > 2 semaines",
                     "alerte_clinique": "Usage systemique tres restreint (syndrome de Cushing, cancer prostate) | Hepatotoxicite severe (Black Box FDA) | STOPP3-C14: interaction P-gp avec AOD | Usage topique (shampooing) n'a pas ces risques",
@@ -16346,6 +23257,19 @@ const MASTER_DB = {
                     "albumine": "99%",
                     "qt_risque": "(PR) - Allongement QTc modere",
                     "ddi_interact": "Inhibiteurs CYP2D6 (paroxetine, fluoxetine — reduisent formation endoxifene actif, eviter ++) | AOD (inhibiteur P-gp — STOPP3-C14) | Anticoagulants (augmente INR AVK)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Anticoagulants oraux directs (AOD)",
+                                        "dcis": [
+                                                  "apixaban",
+                                                  "rivaroxaban",
+                                                  "edoxaban",
+                                                  "dabigatran"
+                                        ],
+                                        "commentaire": "inhibiteur P-gp — STOPP3-C14",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Examen gyneco | Bilan hepatique | NFS | Calcemie | Examen ophtalmologique",
                     "suivi_periodique": "Examen gyneco annuel (endometre) | Bilan hepatique semestriel | Examen ophtalmologique (retinopathie) | DMO (perte osseuse pre-menopause)",
                     "alerte_clinique": "STOPP3-C14: inhibiteur P-gp — interaction AOD | STOPP3-C15: CI si ATCD MTEV | NE PAS associer ISRS inhibiteurs CYP2D6 (paroxetine, fluoxetine) — perte d'efficacite anti-tumorale | Risque thrombo-embolique, cancer endometre, retinopathie",
@@ -16374,6 +23298,7 @@ const MASTER_DB = {
                     "albumine": "91%",
                     "qt_risque": "(CR) - QTc rapporté",
                     "ddi_interact": "Depresseurs SNC (sedation additive) | Anti-Parkinson (antagonisme — CI)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Recherche syndrome parkinsonien",
                     "suivi_periodique": "Syndrome parkinsonien (survenue progressive) | Prise de poids | Depression",
                     "alerte_clinique": "EU7-PIM — risque de parkinsonisme iatrogene (D2 blocker faible) | Depression | Prise de poids | Somnolence | Max 4-8 semaines",
@@ -16397,6 +23322,7 @@ const MASTER_DB = {
                     "albumine": "99%",
                     "qt_risque": "(PR) - Bloqueur calcique — QTc possible",
                     "ddi_interact": "Depresseurs SNC | Anti-Parkinson (antagonisme)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Recherche syndrome parkinsonien | Humeur",
                     "suivi_periodique": "Syndrome parkinsonien | Depression | Prise de poids",
                     "alerte_clinique": "EU7-PIM — risque parkinsonisme + depression (plus eleve que cinnarizine) | Prise de poids importante | CI si Parkinson ou depression | Max 2 mois",
@@ -16420,6 +23346,7 @@ const MASTER_DB = {
                     "albumine": "Faible (< 5%)",
                     "qt_risque": "",
                     "ddi_interact": "Antihistaminiques H1 (antagonisme pharmacologique) | IMAO (metabolisme retarde)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Diagnostic ORL (Meniere vs autre cause)",
                     "suivi_periodique": "Reevaluation de l'indication a 3 mois",
                     "alerte_clinique": "REMEDIES — efficacite limitee au-dela de la crise de Meniere | Etude BEMED (2022): pas de superiorite vs placebo en prevention | Reevaluer et deprescrire si > 3 mois | Troubles GI frequents",
@@ -16443,6 +23370,7 @@ const MASTER_DB = {
                     "albumine": "Donnees limitees",
                     "qt_risque": "",
                     "ddi_interact": "Aucune interaction majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hepatique",
                     "suivi_periodique": "Reevaluation de l'indication",
                     "alerte_clinique": "REMEDIES/EU7-PIM — efficacite non prouvee | Hepatotoxicite rare | Troubles GI | Preferer exercice physique et revascularisation si AOMI | Deprescrire",
@@ -16469,6 +23397,7 @@ const MASTER_DB = {
                     "albumine": "90%",
                     "qt_risque": "",
                     "ddi_interact": "Antihypertenseurs (hypotension additive) | Anticoagulants (faible effet antiagreg)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "TA",
                     "suivi_periodique": "TA | Reevaluation indication",
                     "alerte_clinique": "REMEDIES — efficacite non prouvee dans troubles cognitifs vasculaires | Derive de l'ergot: fibrose rare (retro-peritoneale, valvulaire) | Deprescrire",
@@ -16492,6 +23421,7 @@ const MASTER_DB = {
                     "albumine": "95%",
                     "qt_risque": "",
                     "ddi_interact": "Inhibiteurs CYP1A2 puissants (fluvoxamine, ciprofloxacine — CI, augmentation majeure exposition) | Tabac (inducteur CYP1A2 — diminue efficacite)",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hepatique OBLIGATOIRE (transaminases avant traitement)",
                     "suivi_periodique": "Transaminases a S3, S6, S12, S24 puis si augmentation dose | Arret si > 3N",
                     "alerte_clinique": "FORTA-C — hepatotoxicite (surveillance transaminases obligatoire) | CI si transaminases > 3N | Peu de donnees > 75 ans | Pas d'effet anticholinergique ni serotoninergique | Pas de syndrome de sevrage | CI avec fluvoxamine/ciprofloxacine",
@@ -16520,6 +23450,16 @@ const MASTER_DB = {
                     "albumine": "Faible",
                     "qt_risque": "",
                     "ddi_interact": "Anticoagulants (thyrotoxicose modifie sensibilite — surveiller INR) | Iode, Amiodarone (interfere avec traitement)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Amiodarone",
+                                        "dcis": [
+                                                  "amiodarone"
+                                        ],
+                                        "commentaire": "interfere avec traitement",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS + formule (avant traitement — reference) | TSH, T3L, T4L | Bilan hepatique",
                     "suivi_periodique": "NFS si fievre ou angine (agranulocytose — urgence) | TSH/T4L toutes les 4-6 semaines puis trimestriel | Bilan hepatique mensuel les 3 premiers mois",
                     "alerte_clinique": "Agranulocytose (0.2-0.5%) — informer le patient: fievre + angine = NFS urgente | Hepatotoxicite (cholestatique, parfois cytolytique) | Arthralgies, rash | Thyrotoxicose a l'amiodarone: avis endocrinologue",
@@ -16549,6 +23489,30 @@ const MASTER_DB = {
                     "albumine": "Faible",
                     "qt_risque": "",
                     "ddi_interact": "Betabloquants (bradycardie reflexe augmentee) | Digoxine (bradycardie) | Alpha-bloquants (antagonisme)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Bêta-bloquants",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol",
+                                                  "sotalol"
+                                        ],
+                                        "commentaire": "bradycardie reflexe augmentee",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "bradycardie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA couche/debout + decubitus | FC",
                     "suivi_periodique": "TA debout ET couche (risque HTA decubitus) | FC | Residuel vesical (risque retention)",
                     "alerte_clinique": "Indication: hypotension orthostatique severe apres echec mesures non pharmacologiques | NE PAS donner le soir (HTA decubitus nocturne) | Retention urinaire possible (alpha-1 agoniste) | Pilotaxis | Prurit cuir chevelu",
@@ -16574,6 +23538,21 @@ const MASTER_DB = {
                     "albumine": "97%",
                     "qt_risque": "(CR) - Interaction QTc via inhibition CYP2C8",
                     "ddi_interact": "Statines (rhabdomyolyse — surtout simvastatine, lovastatine = CI. Prudence ++) | Repaglinide (augmentation x8 — CI) | Anticoagulants (augmente INR) | Pioglitazone (augmente exposition x3)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Statines",
+                                        "dcis": [
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine",
+                                                  "pitavastatine"
+                                        ],
+                                        "commentaire": "rhabdomyolyse — surtout simvastatine, lovastatine = CI. Prudence ++",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "Bilan lipidique | CPK | Bilan hepatique | Creatinine | NFS",
                     "suivi_periodique": "Bilan lipidique trimestriel | CPK si myalgies | Bilan hepatique semestriel | NFS",
                     "alerte_clinique": "INHIBITEUR PUISSANT CYP2C8 — interactions majeures avec statines (rhabdomyolyse), repaglinide (hypo severe) | CI avec simvastatine/lovastatine | Preferer fenofibrate (moins d'interactions) | Cholelithiase",
@@ -16603,6 +23582,28 @@ const MASTER_DB = {
                     "albumine": "N/A (action topique)",
                     "qt_risque": "",
                     "ddi_interact": "DIMINUE ABSORPTION de nombreux medicaments (fluoroquinolones, levothyroxine, phenytoine, ketoconazole, digoxine, warfarine) — espacer ≥ 2h | Antiacides aluminiques (surcharge aluminium si IRC)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Quinolones",
+                                        "dcis": [
+                                                  "ciprofloxacine",
+                                                  "levofloxacine",
+                                                  "moxifloxacine",
+                                                  "ofloxacine",
+                                                  "norfloxacine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiacides aluminiques",
+                                        "dcis": [
+                                                  "antiacides"
+                                        ],
+                                        "commentaire": "surcharge aluminium si IRC",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Creatinine/DFG | Liste co-medications (espacement ≥ 2h)",
                     "suivi_periodique": "Creatinine si usage prolonge | Phosphoremie si IRC (hypophosphatemie)",
                     "alerte_clinique": "EU7-PIM/PRISCUS — constipation, interactions absorption multiples | CI si IRC severe (encephalopathie aluminique) | Espacer TOUS les medicaments de ≥ 2h | Preferer IPP a demi-dose",
@@ -16629,6 +23630,7 @@ const MASTER_DB = {
                     "albumine": "75%",
                     "qt_risque": "",
                     "ddi_interact": "Aucune interaction majeure documentee",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Diagnostic SII confirme",
                     "suivi_periodique": "Reevaluation a 3 mois — deprescrire si pas de benefice",
                     "alerte_clinique": "PRISCUS PIM / EU7-PIM / REMEDIES — efficacite non prouvee en continu | Reevaluer a 3 mois | Alternatives: regles hygienodietetiques, psyllium (fibres solubles) | Cephalees, vertiges rares",
@@ -16652,6 +23654,7 @@ const MASTER_DB = {
                     "albumine": "Faible",
                     "qt_risque": "",
                     "ddi_interact": "Aucune interaction significative",
+                    "ddi_interact_v2": [],
                     "suivi_initial": "Aucun",
                     "suivi_periodique": "Reevaluation de l'indication",
                     "alerte_clinique": "REMEDIES — usage PRN acceptable, usage chronique a reevaluer | Pas d'effet anticholinergique (avantage sur butylscopolamine) | Bonne tolerance geriatrique en aigu",
@@ -16675,6 +23678,56 @@ const MASTER_DB = {
                     "albumine": "94%",
                     "qt_risque": "",
                     "ddi_interact": "Enalapril | Lisinopril | Ramipril | Perindopril | Quinapril | Benazepril | Captopril | Fosinopril | Trandolapril (IEC - CI absolue, wash-out 36h) | AINS (risque IRA + hyperK) | Spironolactone | Eplerenone (diuretiques epargneurs K, hyperK) | Lithium (augmentation lithiemie) | Aliskiren (CI si diabete/IRC)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IEC",
+                                        "dcis": [
+                                                  "enalapril",
+                                                  "lisinopril",
+                                                  "ramipril",
+                                                  "perindopril",
+                                                  "quinapril",
+                                                  "benazepril",
+                                                  "captopril",
+                                                  "fosinopril",
+                                                  "trandolapril"
+                                        ],
+                                        "commentaire": "IEC - CI absolue, wash-out 36h",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "risque IRA + hyperK",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Diurétiques épargneurs K",
+                                        "dcis": [
+                                                  "spironolactone",
+                                                  "eplerenone"
+                                        ],
+                                        "commentaire": "diuretiques epargneurs K, hyperK",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "augmentation lithiemie",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "TA | Creatinine + DFG | Kalieme | Natremie | BNP/NT-proBNP",
                     "suivi_periodique": "TA (chaque consultation) | Creatinine + K (J7, J14, M1, puis /3 mois) | NT-proBNP (/6 mois) | Symptomes IC (NYHA)",
                     "alerte_clinique": "Hypotension symptomatique → reduire diuretique d'abord | Hyperkaliemie > 5.5 → arret temporaire | Angio-oedeme (rare) → arret definitif | Ne JAMAIS associer a un IEC (risque angio-oedeme grave)",
@@ -16703,6 +23756,72 @@ const MASTER_DB = {
                     "albumine": "",
                     "qt_risque": "",
                     "ddi_interact": "CONTRE-INDIQUÉ avec : anticoagulants oraux (diminution INR), ciclosporine, tacrolimus, digoxine, antirétroviraux, contraceptifs oraux, ISRS, venlafaxine, méthadone, théophylline, irinotécan, imatinib — Inducteur puissant CYP3A4/CYP1A2/CYP2C9/P-gp",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "ciclosporine",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "tacrolimus",
+                                        "dcis": [
+                                                  "tacrolimus"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "digoxine",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS",
+                                        "dcis": [
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "sertraline",
+                                                  "fluvoxamine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "méthadone",
+                                        "dcis": [
+                                                  "methadone"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "théophylline",
+                                        "dcis": [
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Inventaire complet des traitements en cours",
                     "suivi_periodique": "Vérifier interactions à chaque modification de traitement",
                     "alerte_clinique": "Le millepertuis est un inducteur enzymatique PUISSANT responsable de nombreuses interactions graves. En gériatrie : arrêt recommandé si tout autre traitement à marge thérapeutique étroite",
@@ -16729,6 +23848,37 @@ const MASTER_DB = {
                     "albumine": "95%",
                     "qt_risque": "(KR) - Prolongation QTc dose-dépendante",
                     "ddi_interact": "Inhibiteurs puissants CYP3A4 (kétoconazole, clarithromycine, ritonavir) → ↓ dose à 10 mg | Inducteurs CYP3A4 (rifampicine, phénytoïne, carbamazépine) : éviter | Autres allongeurs QT (CI relative)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG (QTc) | Bilan hépatique | DFG",
                     "suivi_periodique": "QTc si ajout de médicament QT-prolongateur | Surveillance chutes, œdèmes, confusion",
                     "alerte_clinique": "Indication : psychose liée à la maladie de Parkinson — réservée à la psychose non contrôlée par ajustement du traitement antiparkinsonien | Pas d'AMM démence à corps de Lewy (hors AMM) | Mortalité ↑ chez patients déments : FDA black box partagée avec autres antipsychotiques",
@@ -16752,6 +23902,36 @@ const MASTER_DB = {
                     "albumine": "98%",
                     "qt_risque": "Pas d'allongement QT significatif (profil favorable)",
                     "ddi_interact": "Inhibiteurs puissants CYP2D6 (paroxétine, fluoxétine, bupropion) → ↓ dose de moitié | Inducteurs (rifampicine, carbamazépine, phénytoïne) → éviter ou doubler dose | IMAO CI (syndrome sérotoninergique) | Tramadol, linézolide prudence",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs puissants CYP2D6 (paroxétine, fluoxétine, bupropion) → ↓ dose de moitié",
+                                        "dcis": [
+                                                  "fluoxetine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Tramadol",
+                                        "dcis": [
+                                                  "tramadol"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Natrémie | Bilan hépatique | Évaluation risque suicidaire",
                     "suivi_periodique": "Natrémie à 2 semaines puis semestrielle (risque SIADH) | Surveillance clinique (idéation suicidaire, nausées initiales) | Évaluation efficacité à 4-6 semaines",
                     "alerte_clinique": "Bénéfice cognitif démontré chez sujet âgé (FOCUS, Katona 2012) — intéressant en dépression avec plainte cognitive | Nausées fréquentes en début de traitement (20-30%) | SIADH/hyponatrémie possible | Pas d'effet anticholinergique",
@@ -16777,6 +23957,53 @@ const MASTER_DB = {
                     "albumine": "99%",
                     "qt_risque": "Pas d'allongement QT cliniquement significatif",
                     "ddi_interact": "Inhibiteurs puissants CYP3A4 (kétoconazole, itraconazole, clarithromycine, ritonavir) : CI | Inhibiteurs modérés (érythromycine, diltiazem, vérapamil) : max 25 mg | Inducteurs (rifampicine, carbamazépine, phénytoïne) : éviter | Alcool : sédation additive",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "diltiazem",
+                                                  "verapamil",
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs modérés (érythromycine, diltiazem, vérapamil) : max 25 mg",
+                                        "dcis": [
+                                                  "erythromycine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Alcool : sédation additive",
+                                        "dcis": [
+                                                  "alcool"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Évaluation cause de l'insomnie (dépression, SAOS, SJSR, iatrogène) | Bilan hépatique",
                     "suivi_periodique": "Réévaluation bénéfice à 4 semaines | Surveillance somnolence diurne, chutes, effet résiduel matinal",
                     "alerte_clinique": "Alternative aux BZD/Z-drugs chez sujet âgé (pas de tolérance, peu de rebond à l'arrêt) | CI : narcolepsie | Prudence : SAOS non appareillé, insuffisance hépatique sévère (Child-Pugh C : CI) | Conseiller ≥ 7h de sommeil après prise pour éviter somnolence résiduelle",
@@ -16789,3 +24016,4 @@ const MASTER_DB = {
           }
 ]
 };
+
