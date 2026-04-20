@@ -736,22 +736,6 @@ const GERIA_RECOS_DB = {
             alternatives: "Médicaments à faible charge anticholinergique"
         },
         {
-            // Fusionné dans EV_D05 (STOPP3-D5 + STOPP3-D15 — conditions identiques).
-            // Conservé comme duplication_check pour traçabilité ; ne se déclenche plus.
-            id: "EV_D15",
-            sources: ["STOPP3", "BEERS"],
-            ref_code: "STOPP3-D15",
-            section: "SNC",
-            titre: "Antipsychotique > 12 semaines pour SCPD — fusionné dans EV_D05",
-            message: "Critère fusionné avec EV_D05 (même condition clinique).",
-            severite: "warning",
-            condition: {
-                type: "duplication_check",
-                merged_into: "EV_D05"
-            },
-            alternatives: ""
-        },
-        {
             id: "EV_D16",
             sources: ["STOPP3"],
             ref_code: "STOPP3-D16",
@@ -1001,7 +985,7 @@ const GERIA_RECOS_DB = {
             message: "Bisphosphonate oral ou IV avec DFG < 30 ml/min : risque d'insuffisance rénale aiguë.",
             severite: "danger",
             condition: {
-                med_keys: ["alendronate", "risedronate", "acide zoledronique", "acide zoledronique", "ibandronate"],
+                med_keys: ["alendronate", "risedronate", "acide zoledronique", "ibandronate"],
                 bio: { "BIO_004": { op: "<", val: 30 } }
             },
             alternatives: "Dénosumab (pas de CI rénale), surveillance calcémie"
