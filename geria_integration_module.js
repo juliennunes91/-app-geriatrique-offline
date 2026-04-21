@@ -1993,7 +1993,6 @@ const PATHO_BIO_MONITOR = [
     {
         "id": "BIO_MON_IC",
         "pathos": [
-            "PAT_001",
             "PAT_002",
             "PAT_003"
         ],

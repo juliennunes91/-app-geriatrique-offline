@@ -125,7 +125,7 @@ function calcCHA2DS2(age, sexe, comorbs) {
     if (age >= 75) score += 2;
     else if (age >= 65) score += 1;
     if (sexe === 'F') score += 1;
-    if (comorbs.some(c => ['PAT_001','PAT_002','PAT_003'].includes(c))) score += 1; // IC
+    if (comorbs.some(c => ['PAT_002','PAT_003'].includes(c))) score += 1; // IC
     if (comorbs.includes('PAT_005')) score += 1; // HTA
     if (comorbs.includes('PAT_016')) score += 1; // Diabète
     if (comorbs.includes('PAT_008')) score += 2; // AVC
@@ -137,7 +137,7 @@ test('80F pas de comorbidité → 3 (age75+2, F+1)', () => assert.strictEqual(ca
 test('60M pas de comorbidité → 0', () => assert.strictEqual(calcCHA2DS2(60, 'M', []), 0));
 test('70M HTA+diabète → 3 (age65+1, HTA+1, diab+1)', () => assert.strictEqual(calcCHA2DS2(70, 'M', ['PAT_005', 'PAT_016']), 3));
 test('80M AVC → 4 (age75+2, AVC+2)', () => assert.strictEqual(calcCHA2DS2(80, 'M', ['PAT_008']), 4));
-test('85F IC+HTA+AVC+diabète+vasc → 9 (max)', () => assert.strictEqual(calcCHA2DS2(85, 'F', ['PAT_001','PAT_005','PAT_008','PAT_016','PAT_004']), 9));
+test('85F IC+HTA+AVC+diabète+vasc → 9 (max)', () => assert.strictEqual(calcCHA2DS2(85, 'F', ['PAT_002','PAT_005','PAT_008','PAT_016','PAT_004']), 9));
 test('65M → 1 (age65+1)', () => assert.strictEqual(calcCHA2DS2(65, 'M', []), 1));
 test('74M → 1 (age>=65)', () => assert.strictEqual(calcCHA2DS2(74, 'M', []), 1));
 test('64M → 0 (age<65)', () => assert.strictEqual(calcCHA2DS2(64, 'M', []), 0));
@@ -390,9 +390,9 @@ console.log('\n🧪 Intégration checkMedContraPathologies');
         assert.ok(alerts.length > 0, 'Aucune alerte pour corticoïde + sarcopénie');
     });
 
-    // PAT_001 (IC) + ibuprofène → CI AINS
+    // PAT_002 (HFrEF) + ibuprofène → CI AINS
     test('IC + ibuprofène → CI AINS', () => {
-        const alerts = checkMedContraPathologies('ibuprofène', 'ains', ['PAT_001']);
+        const alerts = checkMedContraPathologies('ibuprofène', 'ains', ['PAT_002']);
         assert.ok(alerts.length > 0 && alerts.some(a => a.gravite.includes('CONTRE-INDICATION')));
     });
 
@@ -433,7 +433,7 @@ console.log('\n🧪 Intégration E2E — Patient gériatrique complet');
 
     // Simulate patient: 85 ans, F, fragile, IC + FA + Incontinence + Dysphagie
     // Médicaments: furosémide, bisoprolol, apixaban, oxybutynine, diazépam, oméprazole
-    const patientComorbs = ['PAT_001', 'PAT_006', 'PAT_039', 'PAT_038'];
+    const patientComorbs = ['PAT_002', 'PAT_006', 'PAT_039', 'PAT_038'];
     const patientMeds = [
         { dci: 'furosemide', classe: 'diuretique' },
         { dci: 'bisoprolol', classe: 'betabloquant' },

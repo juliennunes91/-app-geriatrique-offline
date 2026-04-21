@@ -178,7 +178,7 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["furosemide", "bumetanide"],
                 comorbs: ["PAT_005"],
-                comorbs_absent: ["PAT_001", "PAT_002", "PAT_003"]
+                comorbs_absent: ["PAT_002", "PAT_003"]
             },
             alternatives: "Thiazidique/apparenté, IEC/ARA2, inhibiteur calcique"
         },
@@ -192,7 +192,7 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["furosemide", "bumetanide"],
-                comorbs_absent: ["PAT_001", "PAT_002", "PAT_003", "PAT_029"]
+                comorbs_absent: ["PAT_002", "PAT_003", "PAT_029"]
             },
             alternatives: "Surélévation des jambes, contention veineuse"
         },
@@ -362,7 +362,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["ains", "corticoide"],
-                comorbs_any: ["PAT_001", "PAT_002", "PAT_003"]
+                comorbs_any: ["PAT_002", "PAT_003"]
             },
             alternatives: "Paracétamol, corticothérapie locale, alternatives"
         },
@@ -1310,7 +1310,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["pioglitazone", "rosiglitazone"],
-                comorbs_any: ["PAT_001", "PAT_002", "PAT_003"]
+                comorbs_any: ["PAT_002", "PAT_003"]
             },
             alternatives: "Metformine, iDPP4, iSGLT2 (bénéfice cardiovasculaire)"
         },
@@ -1834,7 +1834,7 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["digoxine"],
-                comorbs_any: ["PAT_001", "PAT_002", "PAT_003"],
+                comorbs_any: ["PAT_002", "PAT_003"],
                 comorbs_absent: ["PAT_006"]
             },
             alternatives: "Optimiser IEC/ARA2/ARNI, bêtabloquant, ARM, iSGLT2"
@@ -1879,7 +1879,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["dronedarone"],
-                comorbs_any: ["PAT_001", "PAT_002", "PAT_003"]
+                comorbs_any: ["PAT_002", "PAT_003"]
             },
             alternatives: "Amiodarone (si nécessaire et sous surveillance) ou bêtabloquant"
         },
@@ -1893,7 +1893,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["flecainide", "propafenone"],
-                comorbs_any: ["PAT_001", "PAT_002", "PAT_003", "PAT_004"]
+                comorbs_any: ["PAT_002", "PAT_003", "PAT_004"]
             },
             alternatives: "Amiodarone, ablation de FA, contrôle de fréquence"
         },
@@ -2204,7 +2204,7 @@ const GERIA_RECOS_DB = {
             message: "Inhibiteur SGLT2 (dapagliflozine, empagliflozine) pour IC symptomatique, avec ou sans FE réduite, indépendamment du diabète — bénéfice pronostique démontré (DAPA-HF, EMPEROR-Reduced/Preserved).",
             severite: "warning",
             condition: {
-                comorbs_any: ["PAT_001", "PAT_002", "PAT_003"],
+                comorbs_any: ["PAT_002", "PAT_003"],
                 med_absent: ["dapagliflozin", "empagliflozin", "canagliflozin", "sglt2", "isglt2"]
             },
             alternatives: "Dapagliflozine 10 mg ou empagliflozine 10 mg"

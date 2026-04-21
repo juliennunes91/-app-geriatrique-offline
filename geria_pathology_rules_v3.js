@@ -78,146 +78,9 @@ const GUIDELINE_INDEX = {
 
 const PATHOLOGY_RULES_DB = {
 
-    "PAT_001": {
-        ID: "PAT_001",
-        NOM: "Insuffisance Cardiaque Globale (IC)",
-        REFERENCE: "ESC 2021 + Focused Update 2023 | ACC/AHA 2022 | STRONG-HF",
-        SOURCES_EBM: {
-                  "INITIER": {
-                            "iSGLT2": "ESC_HF_2023, Rec Table 1, Class IA",
-                            "Diurétique": "ESC_HF_2021, §5.3, Class IC"
-                  },
-                  "EVITER": {
-                            "AINS": "ESC_HF_2021 §5.12 + STOPP H2",
-                            "Calciques": "STOPP H4",
-                            "Thiazolidinediones": "ESC_HF_2021 §11.4",
-                            "DPP-4": "ADA_2025 §9 + SAVOR-TIMI"
-                  }
-        },
+    // PAT_001 (IC Globale générique) supprimée — chevauchait PAT_002/PAT_003.
+    // Le phénotype d'IC doit être précisé (FEVG réduite vs préservée).
 
-        TRAITEMENTS: {
-            INITIER: [
-                {
-                    classe: "iSGLT2",
-                    dci_exemples: ["Dapagliflozine", "Empagliflozine"],
-                    indication: "Recommandé sur tout le spectre de FEVG (Class I, LOE A - ESC 2023 Update)",
-                    condition: "Tous les patients IC symptomatiques, y compris HFpEF",
-                    bio_pre_requis: ["BIO_003", "BIO_004", "BIO_001"],
-                    contre_indication_dfg: "Ne pas initier si DFG < 20 mL/min (mais poursuivre si déjà en cours)",
-                    niveau_preuve: "IA"
-                },
-                {
-                    classe: "Diurétique de l'anse",
-                    dci_exemples: ["Furosémide", "Bumétanide"],
-                    indication: "Soulagement des symptômes congestifs (Class I, LOE C)",
-                    condition: "Signes/symptômes de congestion",
-                    bio_pre_requis: ["BIO_001", "BIO_002", "BIO_003"],
-                    niveau_preuve: "IC"
-                }
-            ],
-            EVITER: [
-                {
-                    classe: "AINS",
-                    raison: "Rétention hydrosodée, décompensation IC, néphrotoxicité",
-                    gravite: "CONTRE-INDICATION",
-                    ref_stopp: "STOPP H2",
-                    syndromes_risque: ["SYND_029", "SYND_010", "SYND_015"]
-                },
-                {
-                    classe: "Inhibiteurs Calciques non-DHP (Vérapamil, Diltiazem)",
-                    raison: "Effet inotrope négatif, aggravation IC si FEVG réduite",
-                    gravite: "CONTRE-INDICATION si HFrEF",
-                    condition: "Si FEVG ≤ 40%",
-                    ref_stopp: "STOPP H4"
-                },
-                {
-                    classe: "Thiazolidinediones (Pioglitazone)",
-                    raison: "Rétention hydrosodée, augmentation risque décompensation IC",
-                    gravite: "CONTRE-INDICATION",
-                    syndromes_risque: ["SYND_029"]
-                },
-                {
-                    classe: "Inhibiteurs DPP-4 (Saxagliptine, Alogliptine)",
-                    raison: "Risque accru d'hospitalisation pour IC (SAVOR-TIMI 53, EXAMINE)",
-                    gravite: "DECONSEILLE",
-                    condition: "Préférer iSGLT2 ou GLP-1 RA"
-                }
-            ]
-        },
-
-        BIOLOGIE: {
-            SURVEILLANCE_CIBLE: ["BIO_028", "BIO_001", "BIO_002", "BIO_003", "BIO_004", "BIO_009", "BIO_034"],
-            REGLES: [
-                {
-                    bio: "BIO_028",
-                    nom: "NT-proBNP",
-                    seuils: {
-                        normal: { max: 125, unite: "pg/mL", note: "Exclut IC si < 125 (ambulatoire)" },
-                        alerte: { min: 450, note: "Suspecter décompensation si < 50 ans" },
-                        alerte_75: { min: 1800, note: "Seuil ajusté > 75 ans" },
-                        critique: { min: 5000, note: "Décompensation aiguë, hospitalisation" }
-                    },
-                    frequence: "Tous les 3-6 mois stable, immédiat si symptômes",
-                    syndrome_declenche: "SYND_029"
-                },
-                {
-                    bio: "BIO_001",
-                    nom: "Kaliémie",
-                    seuils: {
-                        bas: { max: 3.5, action: "Risque arythmie sous diurétiques, supplémenter K+" },
-                        haut: { min: 5.0, action: "Réduire IEC/ARA2/ARM, contrôler" },
-                        critique_haut: { min: 5.5, action: "Arrêt ARM, Kayexalate/Patiromer, ECG" },
-                        critique_tres_haut: { min: 6.0, action: "Urgence — gluconate Ca IV, insuline-glucose" }
-                    },
-                    frequence: "J3-J7 après introduction/titration IEC-ARA2-ARM, puis mensuel x3, puis trimestriel",
-                    syndromes: ["SYND_010", "SYND_011"]
-                },
-                {
-                    bio: "BIO_003",
-                    nom: "Créatininémie",
-                    seuils: {
-                        hausse_acceptable: { delta_pct: 30, note: "Hausse ≤30% acceptable après introduction IEC/ARA2/iSGLT2 (dip hémodynamique)" },
-                        hausse_alerte: { delta_pct: 50, note: "Hausse > 50% → réévaluer, arrêter si nécessaire" }
-                    },
-                    frequence: "J7-J14 après chaque titration, puis trimestriel"
-                },
-                {
-                    bio: "BIO_009",
-                    nom: "Hémoglobine",
-                    seuils: {
-                        carence_fer: { max: 13, note: "Rechercher carence martiale si Hb < 13 g/dL (H) ou < 12 (F)" },
-                        indication_fer_iv: { condition: "Ferritine < 100 µg/L OU (Ferritine 100-299 + CST < 20%)", note: "Fer IV recommandé (Class I, LOE A - ESC 2023)" }
-                    },
-                    syndrome_declenche: "SYND_005"
-                }
-            ]
-        },
-
-        INTERACTIONS_CRITIQUES: [
-            {
-                combinaison: ["IEC ou ARA2", "ARM (Spironolactone/Éplérénone)", "iSGLT2"],
-                risque: "Hyperkaliémie",
-                surveillance: "BIO_001 — Kaliémie à J7, J14, M1, puis trimestriel",
-                conduite: "Arrêter ARM si K+ > 5.5. Patiromer/SZC si récurrent et ARM nécessaire."
-            },
-            {
-                combinaison: ["Diurétique de l'anse", "IEC ou ARA2"],
-                risque: "Insuffisance rénale fonctionnelle, hyponatrémie",
-                surveillance: "BIO_002, BIO_003 — Créatinine + Na à J3-J7",
-                conduite: "Adapter diurétique en premier, ne pas arrêter IEC/ARA2 en première intention"
-            }
-        ],
-
-        DECOMPENSATION_BIO: {
-            syndrome_principal: "SYND_029",
-            triggers: [
-                { bio: "BIO_028", condition: "> seuil âge-adapté", action: "Optimiser diurétiques, arrêt AINS, bilan rénal/iono" },
-                { bio: "BIO_001", condition: "> 5.5 mmol/L", action: "Réduire ARM, contrôle ECG" },
-                { bio: "BIO_002", condition: "< 130 mmol/L", action: "Restriction hydrique, adapter diurétiques" },
-                { bio: "BIO_003", condition: "Hausse > 50%", action: "Suspendre IEC/ARA2/iSGLT2, rechercher cause" }
-            ]
-        }
-    },
 
     "PAT_002": {
         ID: "PAT_002",
@@ -740,7 +603,7 @@ const PATHOLOGY_RULES_DB = {
         SCORES: {
             CHA2DS2_VA: {
                 composants: [
-                    { item: "IC", points: 1, patho: ["PAT_001", "PAT_002", "PAT_003"] },
+                    { item: "IC", points: 1, patho: ["PAT_002", "PAT_003"] },
                     { item: "HTA", points: 1, patho: "PAT_005" },
                     { item: "Âge ≥ 75", points: 2 },
                     { item: "Diabète", points: 1, patho: "PAT_016" },
@@ -2017,7 +1880,7 @@ const PATHOLOGY_RULES_DB = {
         TRAITEMENTS: {
             CRISE_AIGUE: [
                 { classe: "Colchicine 0.5-1 mg (J1 : 1mg puis 0.5mg 1h après, puis 0.5mg/j)", indication: "Crise < 12h", note: "Adapter si DFG < 30 : réduire dose. CI si DFG < 10.", bio_suivi: ["BIO_003", "BIO_004"] },
-                { classe: "AINS courte durée (3-5j max)", indication: "Si pas de CI (IC, IRC, UGD)", gravite_si_ci: "CI si PAT_001/PAT_002/PAT_003 ou DFG < 30" },
+                { classe: "AINS courte durée (3-5j max)", indication: "Si pas de CI (IC, IRC, UGD)", gravite_si_ci: "CI si PAT_002/PAT_003 ou DFG < 30" },
                 { classe: "Corticoïdes (Prednisolone 30-35 mg/j x 3-5j)", indication: "Si CI colchicine + AINS" },
                 { classe: "Infiltration intra-articulaire corticoïdes", indication: "Mono-arthrite accessible" }
             ],
@@ -3175,7 +3038,6 @@ const PATHOLOGY_RULES_DB = {
 };
 
 const PATHO_SYNDROME_MAP = {
-    "PAT_001": ["SYND_029", "SYND_010", "SYND_009", "SYND_011"],
     "PAT_002": ["SYND_029", "SYND_010", "SYND_036"],
     "PAT_003": ["SYND_029", "SYND_010"],
     "PAT_004": ["SYND_036", "SYND_027", "SYND_030"],
@@ -3230,14 +3092,6 @@ const PATHO_SYNDROME_MAP = {
 };
 
 const PATHO_MED_INTERDITS = {
-    "PAT_001": [
-        { terme: "ains", raison: "Décompensation IC (rétention Na/H2O)", gravite: "CONTRE-INDICATION" },
-        { terme: "pioglitazone", raison: "Rétention hydrosodée, aggravation IC", gravite: "CONTRE-INDICATION" },
-        { terme: "verapamil", raison: "Inotrope négatif (CI si FEVG ≤ 40%)", gravite: "PRUDENCE" },
-        { terme: "diltiazem", raison: "Inotrope négatif (CI si FEVG ≤ 40%)", gravite: "PRUDENCE" },
-        { terme: "saxagliptine", raison: "Risque hospitalisation IC (SAVOR-TIMI)", gravite: "DECONSEILLE" },
-        { terme: "alogliptine", raison: "Signal hospitalisation IC", gravite: "DECONSEILLE" }
-    ],
     "PAT_002": [
         { terme: "ains", raison: "CI absolue dans HFrEF", gravite: "CONTRE-INDICATION" },
         { terme: "dronedarone", raison: "Surmortalité HFrEF (ANDROMEDA)", gravite: "CONTRE-INDICATION" },
@@ -3462,14 +3316,6 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
 // ============================================================================
 const PATHO_MED_INTERDITS_V4_CLASSES = {
 
-    // PAT_001 — Insuffisance cardiaque
-    "PAT_001": [
-        { terme: "glitazone", raison: "Rétention hydrosodée → décompensation IC (ESC 2023 classe III)", gravite: "CONTRE-INDICATION" },
-        { terme: "inhibiteur calcique", condition: "DHP sauf amlodipine/felodipine", raison: "Effet inotrope négatif potentiel (ESC 2023)", gravite: "PRUDENCE" },
-        { terme: "pregabaline", raison: "Rétention hydrique → œdèmes → décompensation IC", gravite: "PRUDENCE" },
-        { terme: "corticoide", condition: "systémique", raison: "Rétention hydrosodée → décompensation", gravite: "PRUDENCE" },
-        { terme: "irsna", raison: "Rétention hydrique possible, prudence si IC sévère", gravite: "PRUDENCE" }
-    ],
 
     // PAT_002 — Cardiopathie (générale)
     "PAT_002": [
