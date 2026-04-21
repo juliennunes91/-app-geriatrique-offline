@@ -287,6 +287,7 @@ const GeriaEngineV2 = (() => {
     // Si un sous-type spécifique est coché, le générique est retiré pour éviter les doublons d'alertes.
     const COMORB_GENERIC_OVERRIDES = {
         "PAT_010": ["PAT_011", "PAT_012", "PAT_013"], // Syndrome démentiel générique → Alzheimer / DCL / DFT
+        "PAT_016": ["PAT_016a", "PAT_016b"],          // Diabète non précisé → DT1 / DT2
     };
     function normalizeActiveComorbs(list) {
         if (!Array.isArray(list) || list.length === 0) return list || [];

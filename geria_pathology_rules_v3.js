@@ -1360,9 +1360,152 @@ const PATHOLOGY_RULES_DB = {
         }
     },
 
+    // PAT_016 — umbrella "Diabète non précisé" : conservé pour rétrocompatibilité.
+    // Les règles spécifiques sont dans PAT_016a (DT1) et PAT_016b (DT2). Si un type
+    // précis est sélectionné par le clinicien, le moteur (COMORB_GENERIC_OVERRIDES)
+    // supprime PAT_016 du calcul pour éviter les doublons.
     "PAT_016": {
         ID: "PAT_016",
-        NOM: "Diabète (Type 2 ou 1)",
+        NOM: "Diabète (type non précisé)",
+        REFERENCE: "ADA Standards 2025-2026 | ESC 2023 | KDIGO 2024 | EASD 2024",
+        NOTE: "Umbrella — préférer PAT_016a (DT1) ou PAT_016b (DT2) pour des recommandations ciblées.",
+        SOURCES_EBM: {
+                  "INITIER": {
+                            "Prise en charge spécialisée": "ADA_2025 §13.14 — DT1 vs DT2 ont des prises en charge distinctes"
+                  }
+        },
+        TRAITEMENTS: {
+            CIBLES_HBA1C: {
+                general: { max: 7.0, note: "Adulte non âgé, sans risque d'hypoglycémie" },
+                sujet_age_robuste: { min: 7.0, max: 7.5, note: "Sujet âgé robuste" },
+                sujet_age_complexe: { max: 8.0, note: "Santé intermédiaire (≥ 2 IADL altérées)" },
+                sujet_age_tres_fragile: { max: 8.5, note: "Santé très complexe (EHPAD, cognition sévère)" },
+                fin_de_vie: { note: "Pas de cible stricte — éviter symptômes hyperglycémiques et hypoglycémies" },
+                ref: "ADA 2025 Standards of Care §13 — Older Adults (Table 13.1)"
+            }
+        }
+    },
+
+    // PAT_016a — Diabète de type 1
+    // Référentiel : ADA 2025 Standards of Care §9.6 + §13 (Older Adults) ;
+    // ISPAD Clinical Practice Consensus Guidelines 2022 ; SFD 2023 ; EASD 2022 (older adults with T1D).
+    "PAT_016a": {
+        ID: "PAT_016a",
+        NOM: "Diabète de type 1",
+        REFERENCE: "ADA Standards 2025-2026 §9.6+§13 | ISPAD 2022 | SFD 2023 | EASD 2022 older adults T1D",
+        SOURCES_EBM: {
+                  "INITIER": {
+                            "Insuline basale-bolus": "ADA_2025 §9.6, A — seul traitement validé en DT1",
+                            "Pompe à insuline + CGM": "ADA_2025 §7.10 + Battelino Diabetes Care 2019 — Time-in-Range cible 70%",
+                            "Hybrid closed-loop (AID)": "ADA_2025 §7.16, IA — réduit hypoglycémies et améliore TIR chez ≥ 65 ans (Boughton Lancet Healthy Longev 2022)"
+                  },
+                  "EVITER": {
+                            "Metformine / iSGLT2 / GLP-1 en monothérapie": "ADA_2025 §9.6 — ne remplacent PAS l'insuline en DT1",
+                            "iSGLT2 sans surveillance cétose": "FDA DKA warning 2015 + ADA_2025 §9.6 — risque DKA euglycémique",
+                            "Arrêt brusque de l'insuline": "ISPAD 2022 — risque acidocétose diabétique en 12-24h",
+                            "Sulfamides / Glinides": "ADA_2025 §9.6 — inefficaces en DT1 (déficit absolu d'insuline)"
+                  }
+        },
+
+        TRAITEMENTS: {
+            INITIER: [
+                {
+                    classe: "Insuline basale (analogue lent : Glargine U100/U300, Détémir, Dégludec)",
+                    indication: "Couverture basale obligatoire en DT1 — même en période de jeûne",
+                    note: "Chez le sujet âgé : privilégier Glargine U300 ou Dégludec (variabilité moindre → hypoglycémies réduites). Débuter 0.2-0.3 U/kg/j, titrer sur glycémie à jeun.",
+                    bio_suivi: ["BIO_025", "BIO_026"],
+                    niveau_preuve: "IA"
+                },
+                {
+                    classe: "Insuline prandiale (analogue rapide : Aspart, Lispro, Glulisine, FiAsp)",
+                    indication: "Bolus à chaque repas, adapté aux glucides (insulin:carb ratio) et à la glycémie préprandiale",
+                    note: "Schéma basal-bolus standard. Chez le sujet âgé avec troubles cognitifs : simplifier (doses fixes aux repas) si calcul de glucides non faisable.",
+                    bio_suivi: ["BIO_025"],
+                    niveau_preuve: "IA"
+                },
+                {
+                    classe: "Pompe à insuline + CGM (ou AID hybride)",
+                    indication: "DT1 avec HbA1c hors cible, hypoglycémies sévères/non ressenties, ou variabilité glycémique importante",
+                    note: "Cible Time-in-Range ≥ 70 % (70-180 mg/dL) ; Time-below-Range < 4 %. Chez ≥ 65 ans : cibles assouplies (TIR ≥ 50 %, TBR < 1 %).",
+                    bio_suivi: ["BIO_025", "BIO_026"],
+                    niveau_preuve: "IA (Boughton 2022, Bergenstal 2022)"
+                },
+                {
+                    classe: "Éducation thérapeutique (ETP) + glucagon d'urgence (nasal ou IM)",
+                    indication: "Tous patients DT1, à renouveler — surtout chez aidants familiaux en gériatrie",
+                    note: "Glucagon nasal (Baqsimi) recommandé si accès IV difficile ; kit à jour, date de péremption vérifiée.",
+                    niveau_preuve: "A (ADA 2025 §6)"
+                }
+            ],
+            CIBLES_HBA1C: {
+                adulte_jeune: { max: 7.0, note: "Adulte DT1 sans hypoglycémies sévères (ADA §6.5)" },
+                sujet_age_robuste: { min: 7.0, max: 7.5, note: "DT1 âgé robuste — éviter hypoglycémies" },
+                sujet_age_complexe: { min: 7.5, max: 8.0, note: "Comorbidités multiples, cognition altérée" },
+                sujet_age_tres_fragile: { max: 8.5, note: "Très fragile — éviter hypoglycémies +++ (priorité absolue)" },
+                fin_de_vie: { note: "Insuline basale seule à dose minimale pour éviter cétose ; pas de cible glycémique stricte" },
+                ref: "ADA 2025 Standards §13.14 + EASD 2022 older adults T1D"
+            },
+            EVITER: [
+                { classe: "Arrêt de l'insuline basale", raison: "Acidocétose diabétique en 12-24h (déficit absolu)", gravite: "CONTRE-INDICATION ABSOLUE", ref: "ISPAD 2022" },
+                { classe: "Metformine / sulfamides / glinides en monothérapie", raison: "Inefficaces en DT1 (ne substituent pas l'insuline)", gravite: "CONTRE-INDICATION", ref: "ADA 2025 §9.6" },
+                { classe: "iSGLT2 en DT1 sans cadre spécialisé + éducation cétose", raison: "Risque acidocétose euglycémique (FDA warning 2015)", gravite: "PRUDENCE / ÉVITER en gériatrie", ref: "ADA 2025 §9.6" },
+                { classe: "Bêta-bloquant non cardiosélectif", raison: "Masque symptômes d'hypoglycémie (tachycardie, tremblements)", gravite: "PRUDENCE", ref: "STOPP3-J3" },
+                { classe: "Objectif HbA1c < 7 % chez DT1 âgé fragile", raison: "Risque hypoglycémie sévère > bénéfice micro-vasculaire", gravite: "DÉPRESCRIRE", ref: "ADA 2025 Table 13.1" }
+            ]
+        },
+
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_025", "BIO_026", "BIO_003", "BIO_004", "BIO_006", "BIO_019"],
+            REGLES: [
+                {
+                    bio: "BIO_026",
+                    nom: "HbA1c",
+                    frequence: "Tous les 3 mois (DT1 → surveillance plus rapprochée qu'en DT2)",
+                    seuils: {
+                        objectif: { note: "Individualisé (voir CIBLES_HBA1C)" },
+                        alerte_haute: { min: 9.0, note: "Intensifier schéma insulinique / envisager CGM ou pompe" },
+                        alerte_basse: { max: 6.5, note: "Sur-traitement en gériatrie → relâcher les cibles, surveiller hypoglycémies" }
+                    }
+                },
+                {
+                    bio: "BIO_025",
+                    nom: "Glycémie capillaire / CGM",
+                    seuils: {
+                        hypoglycemie: { max: 3.9, action: "Resucrage 15g glucides, recontrôle à 15 min", syndrome: "SYND_017" },
+                        hypoglycemie_severe: { max: 2.5, action: "Glucagon IM/nasal, G30% IV si coma, urgence", syndrome: "SYND_017" },
+                        hyperglycemie_severe: { min: 15, action: "Bolus correctif + recherche cétonurie/cétonémie", syndrome: "SYND_018" },
+                        cetoacidose: { min: 20, note: "+ cétonémie ≥ 3 mmol/L ou cétonurie ≥ ++ → urgence DKA", action: "Hospitalisation, insuline IV + hydratation", syndrome: "SYND_018" }
+                    }
+                },
+                {
+                    bio: "BIO_019",
+                    nom: "TSH",
+                    frequence: "Annuel (DT1 → association fréquente avec thyroïdite auto-immune)",
+                    note: "ADA 2025 §4.7 — dépister hypothyroïdie/hyperthyroïdie à la découverte puis annuellement"
+                },
+                {
+                    bio: "BIO_003",
+                    nom: "Créatinine/DFG + albuminurie",
+                    frequence: "Annuel minimum ; trimestriel si DFG < 60 ou albuminurie présente",
+                    note: "Rechercher néphropathie diabétique dès 5 ans d'évolution"
+                }
+            ]
+        },
+
+        DECOMPENSATION_BIO: {
+            triggers: [
+                { bio: "BIO_025", condition: "< 3.9 mmol/L", action: "Resucrage 15g glucides rapides, recontrôle 15 min, revoir schéma insulinique", syndrome: "SYND_017" },
+                { bio: "BIO_025", condition: "≥ 15 mmol/L + cétonémie ≥ 0.6 mmol/L", action: "Bolus correctif, hydratation, surveillance rapprochée ; hospitaliser si cétonémie ≥ 3", syndrome: "SYND_018" },
+                { bio: "BIO_025", condition: "Coma hypoglycémique", action: "Glucagon 1 mg IM/nasal immédiat OU G30% 30 mL IV ; si récurrent → reconsidérer doses, CGM, AID", syndrome: "SYND_017" },
+                { bio: "BIO_006", condition: "Hypokaliémie pendant DKA", action: "Supplémenter K avant reprise insuline", syndrome: "SYND_018" }
+            ]
+        }
+    },
+
+    // PAT_016b — Diabète de type 2 (bloc historique de PAT_016)
+    "PAT_016b": {
+        ID: "PAT_016b",
+        NOM: "Diabète de type 2",
         REFERENCE: "ADA Standards 2025-2026 | ESC 2023 | KDIGO 2024 | EASD 2024",
         SOURCES_EBM: {
                   "INITIER": {
@@ -3053,6 +3196,8 @@ const PATHO_SYNDROME_MAP = {
     "PAT_014": ["SYND_009", "SYND_011", "SYND_013"],
     "PAT_015": ["SYND_007", "SYND_009", "SYND_001"],
     "PAT_016": ["SYND_017", "SYND_018", "SYND_015"],
+    "PAT_016a": ["SYND_017", "SYND_018", "SYND_015", "SYND_038"],
+    "PAT_016b": ["SYND_017", "SYND_018", "SYND_015", "SYND_038"],
     "PAT_017": ["SYND_013", "SYND_020"],
     "PAT_018": ["SYND_012", "SYND_019", "SYND_003"],
     "PAT_019": ["SYND_030", "SYND_002"],
@@ -3155,6 +3300,16 @@ const PATHO_MED_INTERDITS_V2_ADDITIONS = {
         { terme: "bupropion", raison: "Abaisse seuil épileptogène", gravite: "CONTRE-INDICATION" }
     ],
     "PAT_016": [
+        { terme: "glibenclamide", raison: "Hypoglycémie prolongée grave chez le sujet âgé", gravite: "CONTRE-INDICATION gériatrique" },
+        { terme: "pioglitazone", raison: "Rétention hydrosodée si IC, fractures si ostéoporose", gravite: "PRUDENCE" }
+    ],
+    "PAT_016a": [
+        { terme: "glibenclamide", raison: "Inefficace en DT1 + hypoglycémie prolongée", gravite: "CONTRE-INDICATION" },
+        { terme: "gliclazide", raison: "Inefficace en DT1 (déficit absolu d'insuline)", gravite: "CONTRE-INDICATION" },
+        { terme: "metformine", raison: "Ne substitue pas l'insuline en DT1", gravite: "DECONSEILLE en monothérapie" },
+        { terme: "pioglitazone", raison: "Non indiqué en DT1", gravite: "DECONSEILLE" }
+    ],
+    "PAT_016b": [
         { terme: "glibenclamide", raison: "Hypoglycémie prolongée grave chez le sujet âgé", gravite: "CONTRE-INDICATION gériatrique" },
         { terme: "pioglitazone", raison: "Rétention hydrosodée si IC, fractures si ostéoporose", gravite: "PRUDENCE" }
     ],
@@ -3396,8 +3551,20 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
         { terme: "isrs", condition: "à dose élevée", raison: "Hyponatrémie → convulsions (rare)", gravite: "PRUDENCE" }
     ],
 
-    // PAT_016 — Hypoglycémies
+    // PAT_016 — Hypoglycémies (umbrella)
     "PAT_016": [
+        { terme: "sulfamide", raison: "Risque hypoglycémique élevé chez le sujet âgé", gravite: "PRUDENCE" },
+        { terme: "glinide", raison: "Sécrétagogue insuline — risque hypoglycémie", gravite: "PRUDENCE" },
+        { terme: "fluoroquinolone", raison: "Dysglycémie (hypo et hyper) — FDA warning", gravite: "PRUDENCE" }
+    ],
+    // PAT_016a — Risques DT1
+    "PAT_016a": [
+        { terme: "betabloquant", raison: "Masque symptômes d'hypoglycémie (tachycardie, tremblements) ; favoriser cardiosélectif", gravite: "PRUDENCE" },
+        { terme: "fluoroquinolone", raison: "Dysglycémie (hypo et hyper) — FDA warning", gravite: "PRUDENCE" },
+        { terme: "corticoide", raison: "Hyperglycémie — réadapter l'insuline systématiquement", gravite: "PRUDENCE" }
+    ],
+    // PAT_016b — Hypoglycémies DT2
+    "PAT_016b": [
         { terme: "sulfamide", raison: "Risque hypoglycémique élevé chez le sujet âgé", gravite: "PRUDENCE" },
         { terme: "glinide", raison: "Sécrétagogue insuline — risque hypoglycémie", gravite: "PRUDENCE" },
         { terme: "fluoroquinolone", raison: "Dysglycémie (hypo et hyper) — FDA warning", gravite: "PRUDENCE" }

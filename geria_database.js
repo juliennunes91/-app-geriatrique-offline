@@ -434,11 +434,30 @@ const MASTER_DB = {
         },
         "PAT_016": {
             "ID_PATHO": "PAT_016",
-            "CIM_10": "E11",
-            "NOM_STANDARD": "Diabète (Type 2 ou 1)",
+            "CIM_10": "E14",
+            "NOM_STANDARD": "Diabète (type non précisé)",
             "CATEGORIE": "Endocrinologie",
-            "SYNONYMES": "DIABETE, DT2, DT1",
+            "SYNONYMES": "DIABETE",
             "BIO_SURVEILLANCE": "BIO_025, BIO_026, BIO_003, BIO_004, BIO_021",
+            "SYND_RISQUE": "SYND_017, SYND_018, SYND_007, SYND_015, SYND_038",
+            "NOTE": "Umbrella conservé pour rétrocompatibilité. Si le phénotype est connu, préférer PAT_016a (DT1) ou PAT_016b (DT2) — les recommandations divergent (insulinothérapie vs. metformine/iSGLT2/GLP-1)."
+        },
+        "PAT_016a": {
+            "ID_PATHO": "PAT_016a",
+            "CIM_10": "E10",
+            "NOM_STANDARD": "Diabète de type 1",
+            "CATEGORIE": "Endocrinologie",
+            "SYNONYMES": "DT1, Diabète insulinodépendant, DID",
+            "BIO_SURVEILLANCE": "BIO_025, BIO_026, BIO_003, BIO_004, BIO_006, BIO_019",
+            "SYND_RISQUE": "SYND_017, SYND_018, SYND_007, SYND_015, SYND_038"
+        },
+        "PAT_016b": {
+            "ID_PATHO": "PAT_016b",
+            "CIM_10": "E11",
+            "NOM_STANDARD": "Diabète de type 2",
+            "CATEGORIE": "Endocrinologie",
+            "SYNONYMES": "DT2, Diabète non insulinodépendant, DNID",
+            "BIO_SURVEILLANCE": "BIO_025, BIO_026, BIO_003, BIO_004, BIO_021, BIO_027, BIO_009",
             "SYND_RISQUE": "SYND_017, SYND_018, SYND_007, SYND_015, SYND_038"
         },
         "PAT_017": {
