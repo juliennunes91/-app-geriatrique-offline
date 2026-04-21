@@ -4965,59 +4965,6 @@ const MASTER_DB = {
                     "source": "RCP Polaramine ; Beers 2023"
           },
           {
-                    "dci": "Chlorphniramine",
-                    "princeps": "Largactil",
-                    "classe": "Neuroleptiques atypiques",
-                    "poso_hab": "50-300 mg/jour",
-                    "poso_ger": "25-50 mg/jour",
-                    "poso_ren": "Pas d'ajustement majeur",
-                    "acb": 3,
-                    "cia": 3,
-                    "bhe": "1.0",
-                    "albumine": "95 - 98 %",
-                    "qt_risque": "?? Risque Connu (KR)",
-                    "ddi_interact": "Haloperidol, Metoclopramide, Tricycliques, QT long",
-                    "ddi_interact_v2": [
-                              {
-                                        "classe": "Haloperidol",
-                                        "dcis": [
-                                                  "haloperidol"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Metoclopramide",
-                                        "dcis": [
-                                                  "metoclopramide"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Tricycliques",
-                                        "dcis": [
-                                                  "amitriptyline",
-                                                  "clomipramine",
-                                                  "imipramine",
-                                                  "desipramine",
-                                                  "nortriptyline"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
-                    ],
-                    "suivi_initial": "Pas de biologie spcifique",
-                    "suivi_periodique": "Pas de biologie systmatique",
-                    "alerte_clinique": "Rtention urinaire (examen clinique)",
-                    "bio_cible": [],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "source": "RCP Polaramine | Beers 2023"
-          },
-          {
                     "dci": "Chlorpromazine",
                     "princeps": "Largactil",
                     "classe": "Antipsychotique FGA (phenothiazine)",
@@ -5144,8 +5091,8 @@ const MASTER_DB = {
                     "poso_hab": "12.5-50 mg/j en 1 prise",
                     "poso_ger": "12.5 mg/j — dose minimale, demi-vie longue (40-60h)",
                     "poso_ren": "DFG < 30: inefficace comme diuretique (mais garde effet antihypertenseur partiel)",
-                    "acb": 0,
-                    "cia": 0,
+                    "acb": 1,
+                    "cia": 1,
                     "bhe": "0",
                     "albumine": "75%",
                     "qt_risque": "(QT) - Hypokaliemie → allongement QTc indirect",
@@ -6426,7 +6373,7 @@ const MASTER_DB = {
                     "poso_hab": "25 u 300 mg/jour (selon indication)",
                     "poso_ger": "12.5 u 25 mg/jour (u manier avec precaution)",
                     "poso_ren": "Prudence",
-                    "acb": 0,
+                    "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
                     "albumine": "0,9",
@@ -6559,11 +6506,11 @@ const MASTER_DB = {
           {
                     "dci": "Cyproheptadine",
                     "princeps": "Periactine",
-                    "classe": "Antihistaminique H1 + antagoniste 5-HT2 (orexigene - ACB=2)",
+                    "classe": "Antihistaminique H1 + antagoniste 5-HT2 (orexigene - ACB=3)",
                     "poso_hab": "4mg/6-8h PO",
-                    "poso_ger": "Eviter chez sujet age (ACB=2)",
+                    "poso_ger": "Eviter chez sujet age (ACB=3)",
                     "poso_ren": "Pas d'adaptation renale stricte",
-                    "acb": 2,
+                    "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
                     "albumine": "96-99",
@@ -19104,53 +19051,6 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "source": "RCP Colimycine | SPILF 2023"
-          },
-          {
-                    "dci": "darifenacine",
-                    "princeps": "Emselex / Enablex",
-                    "classe": "Anticholinergique urinaire selectif M3 (ACB=2)",
-                    "poso_hab": "7.5-15mg/j PO (forme LP)",
-                    "poso_ger": "7.5mg/j",
-                    "poso_ren": "DFG<30: 7.5mg/j maximum | CI si insuffisance hépatique severe",
-                    "acb": 3,
-                    "cia": 0,
-                    "bhe": "",
-                    "albumine": "98",
-                    "qt_risque": "",
-                    "ddi_interact": "Inhibiteurs CYP3A4 (ketoconazole augmente x7 concentration), Anticholinergiques",
-                    "ddi_interact_v2": [
-                              {
-                                        "classe": "Inhibiteurs CYP3A4",
-                                        "dcis": [
-                                                  "ketoconazole",
-                                                  "itraconazole",
-                                                  "voriconazole",
-                                                  "posaconazole",
-                                                  "ritonavir",
-                                                  "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
-                                        ],
-                                        "commentaire": "ketoconazole augmente x7 concentration",
-                                        "severite": "warning"
-                              }
-                    ],
-                    "suivi_initial": "Bilan hépatique (elimination hépatique CYP3A4) | Créatinine | ECG si FR QTc",
-                    "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle)",
-                    "alerte_clinique": "Syndrome anticholinergique (modere ACB=2) | Hépatotoxicité rare → bilan hépatique | EVITER sujet age",
-                    "bio_cible": [
-                              "BIO_013",
-                              "BIO_014",
-                              "BIO_003",
-                              "BIO_031"
-                    ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "source": "RCP Enablex | Beers 2023"
           },
           {
                     "dci": "Domperidone2",

@@ -755,10 +755,16 @@ function analyserPrescription() {
         if(globalQT_CountKR > 0) { scoreTisdale += 3; ttTisdale.push("Médoc QT (+3)"); }
         renderScore(SC.TISDALE, scoreTisdale, ttTisdale);
 
-        // Charge Anticholinergique (ACB + CIA) avec distinction BHE
+        // Charge Anticholinergique — Boustani 2008 ACB Scale (révisée AGS Beers 2023)
+        // Seuils retenus :
+        //   ACB ≥ 3   : haute charge — RR confusion x1.5, RR mortalité x1.26 (Fox 2011 JAGS)
+        //   ACB 1-2   : charge modérée — surveillance
+        //   ACB = 0   : aucune
+        // CIA (Carnahan 2006, ADS) sert d'échelle complémentaire (charge sédative/cognitive)
+        // BHE (Rudolph 2008 ARS) distingue passage central vs périphérique pour cibler la déprescription.
         let acbClass = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
-        let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé — confusion, chutes, démence'
-            : (scoreACB_global >= 1 ? 'Charge modérée, surveiller'
+        let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé — confusion, chutes, mortalité (Fox 2011, Beers 2023)'
+            : (scoreACB_global >= 1 ? 'Charge modérée, surveiller (Boustani 2008)'
             : 'Charge nulle — aucun médicament anticholinergique détecté');
         let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé — chutes, somnolence'
             : (scoreCIA_global >= 1 ? 'Charge modérée'

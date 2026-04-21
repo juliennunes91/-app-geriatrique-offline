@@ -1383,6 +1383,13 @@ const PATHOLOGY_RULES_DB = {
                 fin_de_vie: { note: "Pas de cible stricte — éviter symptômes hyperglycémiques et hypoglycémies" },
                 ref: "ADA 2025 Standards of Care §13 — Older Adults (Table 13.1)"
             }
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_025", "BIO_026", "BIO_003", "BIO_004"],
+            REGLES: [
+                { bio: "BIO_026", nom: "HbA1c", frequence: "Trimestriel à semestriel selon stabilité", note: "Voir PAT_016a (DT1) ou PAT_016b (DT2) pour cibles détaillées" },
+                { bio: "BIO_025", nom: "Glycémie", note: "Voir PAT_016a/PAT_016b pour seuils décompensation" }
+            ]
         }
     },
 

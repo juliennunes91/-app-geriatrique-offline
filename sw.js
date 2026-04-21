@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.60 (ddi_interact v2 schema + PAT_001 suppr + PAT_016 split DT1/DT2)
+// Service Worker - GeriaAssist v0.61 (ACB rescoring Boustani 2008 + dedup tests + ARS docs)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260421-ddi-v2-diabetes-split';
-const CACHE_NAME = `geriaassist-v60-${BUILD_ID}`;
+const BUILD_ID = '20260421-acb-rescoring';
+const CACHE_NAME = `geriaassist-v61-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

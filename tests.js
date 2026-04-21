@@ -665,6 +665,59 @@ console.log('\n🧪 OCR — Extraction de médicaments');
 }
 
 // ============================================================================
+// 12. INTÉGRITÉ DE LA BASE — Dédup DCI + cohérence ACB
+// ============================================================================
+console.log('\n🧪 Intégrité base MEDICAMENTS');
+{
+    const fsx = require('fs');
+    const dbSrc = fsx.readFileSync(__dirname + '/geria_database.js', 'utf-8');
+    const tmpDb = require('os').tmpdir() + '/_db_tests.js';
+    fsx.writeFileSync(tmpDb, dbSrc + '\nmodule.exports = MASTER_DB;');
+    delete require.cache[require.resolve(tmpDb)];
+    const DB = require(tmpDb);
+    const meds = DB.MEDICAMENTS || [];
+
+    test('MEDICAMENTS : aucun DCI dupliqué (sensibilité casse + accents)', () => {
+        const seen = new Map();
+        const dups = [];
+        meds.forEach(m => {
+            const k = sanitizeText(m.dci);
+            if (seen.has(k)) dups.push(`${m.dci} ⇄ ${seen.get(k)}`);
+            else seen.set(k, m.dci);
+        });
+        assert.strictEqual(dups.length, 0, `Doublons : ${dups.join(' | ')}`);
+    });
+
+    test('MEDICAMENTS : ACB ∈ {0,1,2,3} (Boustani 2008)', () => {
+        const invalid = meds.filter(m => {
+            if (m.acb === undefined || m.acb === '' || m.acb === null) return false;
+            const v = parseFloat(m.acb);
+            return isNaN(v) || v < 0 || v > 3 || !Number.isInteger(v);
+        });
+        assert.strictEqual(invalid.length, 0,
+            `Scores invalides : ${invalid.map(m => `${m.dci}=${m.acb}`).join(', ')}`);
+    });
+
+    test('MEDICAMENTS : anticholinergiques canoniques scorés ≥ Boustani 2008', () => {
+        const required = {
+            // Sample représentatif — extension possible
+            amitriptyline: 3, oxybutynine: 3, hydroxyzine: 3, diphenhydramine: 3,
+            paroxetine: 3, quetiapine: 3, olanzapine: 3, solifenacine: 3,
+            cyproheptadine: 3, cyamemazine: 3, dexchlorpheniramine: 3,
+            chlorthalidone: 1, digoxine: 1, ranitidine: 1, paliperidone: 1,
+        };
+        const issues = [];
+        for (const [k, expected] of Object.entries(required)) {
+            const m = meds.find(x => sanitizeText(x.dci) === k);
+            if (!m) { issues.push(`${k} : absent`); continue; }
+            const cur = parseFloat(m.acb) || 0;
+            if (cur < expected) issues.push(`${m.dci} : ACB=${cur} < ${expected}`);
+        }
+        assert.strictEqual(issues.length, 0, issues.join(' | '));
+    });
+}
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log(`\n${'='.repeat(50)}`);
