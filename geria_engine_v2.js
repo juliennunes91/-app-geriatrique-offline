@@ -611,6 +611,135 @@ const GeriaEngineV2 = (() => {
     }
     
     /**
+     * Registre des classes EBM canoniques.
+     * Phase 5 : on n'a pas réécrit les 189 clés texte de PATHOLOGY_RULES_DB.SOURCES_EBM
+     * (au profit de la lisibilité éditoriale), mais on normalise les clés ET les med_keys
+     * vers un code de classe canonique avant matching, pour éliminer les disparités
+     * synonymes/casse/pluriel ("AOD" vs "DOAC", "Statine" vs "Statines", "BZD" vs
+     * "Benzodiazépines", etc.). Étendre ici pour couvrir de nouveaux synonymes.
+     */
+    const EBM_CLASS_REGISTRY = {
+        CLS_IEC:           ['iec', 'inhibiteurs ec', 'ieca', 'enalapril', 'lisinopril', 'ramipril', 'perindopril', 'captopril', 'quinapril', 'benazepril', 'fosinopril', 'trandolapril'],
+        CLS_ARA2:          ['ara2', 'ara ii', 'sartan', 'sartans', 'losartan', 'valsartan', 'irbesartan', 'candesartan', 'telmisartan', 'olmesartan'],
+        CLS_IECARA2:       ['iec/ara2', 'iec ara2', 'iec + ara2', 'rasi'],
+        CLS_BB:            ['bb', 'bêtabloquant', 'bêtabloquants', 'betabloquant', 'betabloquants', 'beta bloquant'],
+        CLS_BB_NS:         ['bb non sélectifs', 'bb non sélectif', 'propranolol', 'sotalol', 'nadolol'],
+        CLS_DIURETIQUE_ANSE: ['diurétique de l\'anse', 'diurétiques de l\'anse', 'furosemide', 'bumetanide', 'torasemide'],
+        CLS_DIURETIQUE_THIAZIDIQUE: ['thiazidique', 'thiazidiques', 'hydrochlorothiazide', 'indapamide', 'chlortalidone'],
+        CLS_DIURETIQUE:    ['diurétique', 'diurétiques', 'diuretique', 'diuretiques'],
+        CLS_ARM:           ['arm', 'armi', 'spironolactone', 'eplerenone', 'antialdosterone', 'finerenone'],
+        CLS_FINERENONE:    ['finerenone', 'finérénone'],
+        CLS_AOD:           ['aod', 'doac', 'anticoagulants oraux directs', 'apixaban', 'rivaroxaban', 'edoxaban', 'dabigatran'],
+        CLS_AVK:           ['avk', 'warfarine', 'acenocoumarol', 'fluindione'],
+        CLS_ANTICOAGULANT: ['anticoagulant', 'anticoagulants', 'anticoagulation', 'hbpm relais avk', 'hbpm'],
+        CLS_AAP:           ['antiagrégant', 'antiagrégants', 'aspirine', 'clopidogrel', 'ticagrelor', 'prasugrel', 'aspirine faible dose'],
+        CLS_DAPT:          ['dapt', 'dapt courte', 'bithérapie', 'monothérapie antiagrégante'],
+        CLS_AINS:          ['ains', 'ibuprofene', 'naproxene', 'diclofenac', 'ketoprofene', 'celecoxib', 'meloxicam'],
+        CLS_BZD:           ['bzd', 'benzodiazépines', 'benzodiazepines', 'bzd et apparentés', 'bzd/opioïdes', 'diazepam', 'lorazepam', 'oxazepam', 'midazolam', 'alprazolam', 'bromazepam', 'clonazepam'],
+        CLS_ZDRUGS:        ['zopiclone', 'zolpidem', 'eszopiclone'],
+        CLS_OPIOIDES:      ['opioïdes', 'opioides', 'morphine', 'oxycodone', 'fentanyl', 'tramadol', 'codeine', 'hydromorphone'],
+        CLS_ISRS:          ['isrs', 'ssri', 'citalopram', 'escitalopram', 'fluoxetine', 'sertraline', 'paroxetine', 'fluvoxamine'],
+        CLS_IRSN:          ['irsn', 'snri', 'duloxetine', 'venlafaxine', 'milnacipran'],
+        CLS_TCA:           ['tricycliques', 'tricyclique', 'tca', 'amitriptyline', 'clomipramine', 'imipramine', 'nortriptyline'],
+        CLS_ANTIDEP:       ['antidépresseurs', 'antidepresseurs', 'antidépresseur sérotoninergique', 'antidépresseurs sérotoninergiques', 'mirtazapine'],
+        CLS_ANTIPSY:       ['antipsychotiques', 'antipsychotique', 'neuroleptiques', 'neuroleptique', 'haloperidol', 'rispéridone', 'risperidone', 'olanzapine', 'quetiapine', 'aripiprazole', 'clozapine', 'antipsychotiques typiques', 'antipsychotiques atypiques à faible dose'],
+        CLS_ANTICHOL:      ['anticholinergiques', 'anticholinergique', 'oxybutynine', 'solifenacine', 'trospium', 'tolterodine', 'fesoterodine', 'darifenacin'],
+        CLS_ANTI_H1:       ['antihistaminiques h1', 'antihistaminique h1', 'hydroxyzine', 'doxylamine', 'cetirizine'],
+        CLS_STATINE:       ['statine', 'statines', 'atorvastatine', 'rosuvastatine', 'simvastatine', 'pravastatine', 'fluvastatine'],
+        CLS_FIBRATE:       ['fibrate', 'fibrates', 'gemfibrozil', 'fenofibrate'],
+        CLS_EZETIMIBE:     ['ézétimibe', 'ezetimibe'],
+        CLS_PCSK9:         ['anti-pcsk9', 'pcsk9', 'evolocumab', 'alirocumab'],
+        CLS_BEMPEDOIQUE:   ['bempédoïque', 'bempedoique'],
+        CLS_METFORMINE:    ['metformine', 'metformin'],
+        CLS_ISGLT2:        ['isglt2', 'sglt2', 'dapagliflozine', 'empagliflozine', 'canagliflozine', 'ertugliflozine'],
+        CLS_GLP1:          ['glp-1', 'glp1', 'glp-1 ra', 'liraglutide', 'semaglutide', 'sémaglutide', 'dulaglutide', 'exenatide'],
+        CLS_DPP4:          ['dpp-4', 'dpp4', 'sitagliptine', 'vildagliptine', 'linagliptine', 'saxagliptine', 'alogliptine'],
+        CLS_SULFAMIDE:     ['sulfamides', 'sulfamide', 'sulfamides hypoglycémiants', 'sulfamides / glinides', 'glimepiride', 'gliclazide', 'glibenclamide', 'glipizide'],
+        CLS_GLINIDE:       ['glinides', 'glinide', 'repaglinide'],
+        CLS_PIOGLITAZONE:  ['pioglitazone', 'thiazolidinedione'],
+        CLS_INSULINE:      ['insuline', 'insulin', 'insuline basale', 'insuline basale-bolus', 'glargine', 'detemir', 'degludec', 'aspart', 'lispro'],
+        CLS_DIGOXINE:      ['digoxine', 'digoxin'],
+        CLS_AMIODARONE:    ['amiodarone'],
+        CLS_DRONEDARONE:   ['dronedarone', 'dronédarone'],
+        CLS_VERAPAMIL:     ['verapamil', 'vérapamil', 'verapamil/diltiazem'],
+        CLS_DILTIAZEM:     ['diltiazem'],
+        CLS_IVABRADINE:    ['ivabradine'],
+        CLS_VERICIGUAT:    ['vericiguat'],
+        CLS_HYDRALAZINE:   ['hydralazine'],
+        CLS_NITRES:        ['isosorbide', 'nitré', 'nitrés', 'dérivés nitrés'],
+        CLS_IPP:           ['ipp', 'omeprazole', 'esomeprazole', 'lansoprazole', 'pantoprazole', 'rabeprazole', 'ipp long cours'],
+        CLS_ARH2:          ['anti-h2', 'ranitidine', 'famotidine', 'cimetidine'],
+        CLS_LAXATIF:       ['lactulose', 'macrogol', 'sennosides', 'bisacodyl'],
+        CLS_BISPHOSPHONATE:['bisphosphonates', 'bisphosphonate', 'alendronate', 'risedronate', 'zoledronique', 'ibandronate'],
+        CLS_DENOSUMAB:     ['dénosumab', 'denosumab'],
+        CLS_TERIPARATIDE:  ['tériparatide', 'teriparatide'],
+        CLS_VITAMINE_D:    ['vitamine d', 'cholecalciferol', 'calciferol'],
+        CLS_CORTICOIDE:    ['corticoïdes', 'corticoides', 'corticoïde', 'corticoide', 'prednisone', 'prednisolone', 'methylprednisolone', 'dexamethasone'],
+        CLS_IMMUNOTHERAPIE:['immunothérapie', 'immunotherapie', 'methotrexate', 'azathioprine', 'leflunomide'],
+        CLS_COLCHICINE:    ['colchicine'],
+        CLS_ALLOPURINOL:   ['allopurinol'],
+        CLS_FEBUXOSTAT:    ['febuxostat', 'fébuxostat'],
+        CLS_ALPHABLOQ:     ['alpha-bloquants', 'alpha bloquant', 'alphabloquant', 'tamsulosine', 'alfuzosine', 'doxazosine'],
+        CLS_MIRABEGRON:    ['mirabégron', 'mirabegron'],
+        CLS_OXYBUTYNINE:   ['oxybutynine', 'oxybutynin'],
+        CLS_LEVOTHYROXINE: ['lévothyroxine', 'levothyroxine', 'lt4'],
+        CLS_THIAMAZOLE:    ['thiamazole', 'carbimazole'],
+        CLS_PTU:           ['ptu', 'propylthiouracile'],
+        CLS_LEVODOPA:      ['lévodopa', 'levodopa', 'l-dopa'],
+        CLS_AGONISTE_DA:   ['agonistes da', 'pramipexole', 'ropinirole', 'rotigotine'],
+        CLS_IMAOB:         ['imao-b', 'rasagiline', 'sélégiline', 'selegiline', 'safinamide'],
+        CLS_IMAO:          ['imao', 'iproniazide', 'moclobemide', 'imao-b+péthidine'],
+        CLS_ICOMT:         ['icomt', 'entacapone', 'tolcapone', 'opicapone'],
+        CLS_IACHE:         ['iache', 'inhibiteurs cholinestérase', 'donépézil', 'donepezil', 'rivastigmine', 'galantamine'],
+        CLS_MEMANTINE:     ['mémantine', 'memantine'],
+        CLS_ANTIEPILEPTIQUE:['valproate', 'phénytoïne', 'phenytoin', 'carbamazépine', 'carbamazepine', 'lamotrigine', 'lévétiracétam', 'levetiracetam', 'lacosamide', 'phénobarbital', 'phenobarbital', 'gabapentine', 'gabapentin'],
+        CLS_LITHIUM:       ['lithium'],
+        CLS_MELATONINE:    ['mélatonine', 'melatonine'],
+        CLS_FLUOROQUINOLONE:['fluoroquinolone', 'ciprofloxacine', 'lévofloxacine', 'levofloxacine', 'moxifloxacine', 'ofloxacine', 'fq 1ère intention'],
+        CLS_MACROLIDE:     ['macrolides', 'azithromycine', 'clarithromycine', 'erythromycine'],
+        CLS_AMINOSIDE:     ['aminosides', 'gentamicine', 'amikacine', 'tobramycine'],
+        CLS_FOSFOMYCINE:   ['fosfomycine'],
+        CLS_NITROFURANTOINE:['nitrofurantoïne', 'nitrofurantoine'],
+        CLS_CSI:           ['csi', 'csi seul', 'csi-formoterol', 'corticostéroïde inhalé'],
+        CLS_LAMA:          ['lama', 'lama inhalés', 'tiotropium', 'umeclidinium', 'glycopyrronium'],
+        CLS_LABA:          ['laba', 'salmeterol', 'formoterol', 'indacaterol'],
+        CLS_SABA:          ['saba', 'saba seul', 'salbutamol', 'terbutaline'],
+        CLS_MIDODRINE:     ['midodrine'],
+        CLS_FLUDROCORTISONE:['fludrocortisone'],
+        CLS_BETAHISTINE:   ['bétahistine', 'betahistine'],
+        CLS_FER_IV:        ['fer iv', 'carboxymaltose ferrique', 'fer injectable'],
+        CLS_RIFAXIMINE:    ['rifaximine'],
+        CLS_ECT:           ['ect', 'électroconvulsivothérapie'],
+        CLS_TCC:           ['tcc', 'tcc-i', 'thérapie cognitivo-comportementale'],
+    };
+
+    // Cache : pré-calcule la map normalisée terme → code de classe (au premier appel).
+    let _ebmTermToCode = null;
+    function _buildEbmTermIndex() {
+        if (_ebmTermToCode) return _ebmTermToCode;
+        _ebmTermToCode = new Map();
+        const norm = s => String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+        for (const [code, terms] of Object.entries(EBM_CLASS_REGISTRY)) {
+            for (const t of terms) {
+                const k = norm(t);
+                if (k) _ebmTermToCode.set(k, code);
+            }
+        }
+        return _ebmTermToCode;
+    }
+    function _resolveEbmCode(term) {
+        const idx = _buildEbmTermIndex();
+        const norm = String(term||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+        if (!norm) return null;
+        if (idx.has(norm)) return idx.get(norm);
+        // Fallback : recherche par préfixe (ex. "iec/ara2" → CLS_IECARA2 si présent ; sinon CLS_IEC ou CLS_ARA2)
+        for (const [k, code] of idx) {
+            if (k.length >= 4 && (norm.includes(k) || k.includes(norm))) return code;
+        }
+        return null;
+    }
+
+    /**
      * Recherche la source EBM spécifique (société savante / essai clinique)
      * dans PATHOLOGY_RULES_DB pour enrichir l'affichage au-delà du simple "STOPP/START".
      */
@@ -641,21 +770,34 @@ const GeriaEngineV2 = (() => {
             const rule = PATHOLOGY_RULES_DB[pathoId];
             if (!rule) return;
 
-            // Chercher dans SOURCES_EBM si disponible
-            if (rule.SOURCES_EBM && rule.SOURCES_EBM[category] && (medKeys.length > 0 || titleTerms.length > 0)) {
+            // Chercher dans SOURCES_EBM si disponible.
+            // Phase 5 : matching par code de classe canonique (EBM_CLASS_REGISTRY) pour éviter
+            // les disparités synonymes/casse/pluriel. Fallback substring conservé si la clé
+            // texte n'est pas (encore) cataloguée dans le registre.
+            if (rule.SOURCES_EBM && rule.SOURCES_EBM[category] && medKeys.length > 0) {
                 const ebmCat = rule.SOURCES_EBM[category];
-                for (const [classKey, ref] of Object.entries(ebmCat)) {
-                    const cleanKey = classKey.toLowerCase().replace(/[^a-z0-9]/g, '');
-                    // Match strict : on exige un recouvrement sur med_keys (classe pharmaco).
-                    // Le match sur titleTerms est trop permissif (ex: "anticholinergique" matchait ESC).
-                    const matched = medKeys.some(mk => {
-                        const cleanMk = mk.toLowerCase().replace(/[^a-z0-9]/g, '');
-                        return cleanMk && cleanKey && (cleanMk.includes(cleanKey) || cleanKey.includes(cleanMk));
-                    });
+                // Pré-résoudre chaque medKey vers son code de classe (peut être null).
+                const medCodes = medKeys.map(mk => ({ mk, code: _resolveEbmCode(mk) }));
 
-                    if (matched) {
-                        if (found.length === 0) found.push(ref);
+                for (const [classKey, ref] of Object.entries(ebmCat)) {
+                    const keyCode = _resolveEbmCode(classKey);
+                    let matched = false;
+
+                    if (keyCode) {
+                        // Match canonique par code de classe.
+                        matched = medCodes.some(({ code }) => code && code === keyCode);
                     }
+
+                    if (!matched) {
+                        // Fallback legacy substring (clé/medKey hors registre).
+                        const cleanKey = classKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+                        matched = medKeys.some(mk => {
+                            const cleanMk = mk.toLowerCase().replace(/[^a-z0-9]/g, '');
+                            return cleanMk && cleanKey && (cleanMk.includes(cleanKey) || cleanKey.includes(cleanMk));
+                        });
+                    }
+
+                    if (matched && found.length === 0) found.push(ref);
                 }
             }
 

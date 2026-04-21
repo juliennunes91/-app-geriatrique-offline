@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.61 (ACB rescoring Boustani 2008 + dedup tests + ARS docs)
+// Service Worker - GeriaAssist v0.62 (SOURCES_EBM matching par code de classe canonique)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260421-acb-rescoring';
-const CACHE_NAME = `geriaassist-v61-${BUILD_ID}`;
+const BUILD_ID = '20260421-sources-ebm-codes';
+const CACHE_NAME = `geriaassist-v62-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
