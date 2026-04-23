@@ -259,7 +259,12 @@ const GeriaEngineV2 = (() => {
         }
 
         if (c.age_min && (!ctx.patientAge || ctx.patientAge < c.age_min)) return false;
+        if (c.age_max && ctx.patientAge && ctx.patientAge > c.age_max) return false;
         if (c.fragile === true && !ctx.isFragile) return false;
+        // Symétrique : exclut la règle si le patient est fragile (utile pour les START
+        // dont le bénéfice s'effondre en fin de vie ou fragilité sévère — STOPPFrail v2,
+        // ex. statine prévention 2° si EV < 1-2 ans).
+        if (c.frailty_exclude === true && ctx.isFragile) return false;
         if (c.acb_cumul && c.acb_seuil) {
             if (!ctx.scoreACB_global || ctx.scoreACB_global < c.acb_seuil) return false;
             // Exiger au moins 2 médicaments avec ACB ≥ 2 (anticholinergique cliniquement significatif)

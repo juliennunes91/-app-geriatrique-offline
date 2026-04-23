@@ -1736,6 +1736,20 @@ const GERIA_RECOS_DB = {
             alternatives: "Réduction des doses, déprescription progressive"
         },
         {
+            id: "EV_SF02b",
+            sources: ["STOPPFRAIL", "ESC_HTN_2024"],
+            ref_code: "STOPPFrail-2bis",
+            section: "Prévention",
+            titre: "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+            message: "Toute prescription d'antihypertenseur, antidépresseur sérotoninergique, alpha-bloquant, antiparkinsonien dopaminergique ou antipsychotique chez un patient ≥ 75 ans impose une mesure de TA couché-debout (1 et 3 min) à chaque consultation. Hypotension orthostatique = chute PAS ≥ 20 mmHg ou PAD ≥ 10 mmHg dans les 3 min après lever. Si symptomatique (vertige, chute, syncope) ou ∆ PAS ≥ 30 mmHg : déprescrire l'antihypertenseur le plus récent ou le plus iatrogène (priorité : alpha-bloquant > diurétique > IEC/ARA2 > BB > IC). Réf. : ESC 2024 HTN §6.5 ; STOPPFrail v2 ; Lavan/Gallagher 2017 (Lancet Healthy Longev).",
+            severite: "info",
+            condition: {
+                med_keys: ["iec", "ara2", "inhibiteur calcique", "diuretique", "betabloquant", "alpha-bloquant", "tamsulosine", "alfuzosine", "doxazosine", "isrs", "irsn", "tricyclique", "levodopa", "agoniste da", "antipsychotique"],
+                age_min: 75
+            },
+            alternatives: "Tracer la mesure TA couché-debout dans le dossier ; éducation patient sur le passage progressif assis→debout ; bas de contention si HO sévère ; midodrine 2.5 mg x 3/j en dernier recours (ESC 2024)"
+        },
+        {
             id: "EV_SF03",
             sources: ["STOPPFRAIL"],
             ref_code: "STOPPFrail-3",
@@ -2130,13 +2144,15 @@ const GERIA_RECOS_DB = {
             ref_code: "START3-B2",
             section: "Cardiovasculaire",
             titre: "Statine en prévention secondaire (sauf fin de vie / fragile sévère)",
-            message: "Statine en prévention secondaire cardiovasculaire (coronaropathie, AVC, AOMI), sauf si statut de fin de vie ou fragilité modérée-sévère établie.",
+            message: "Statine en prévention secondaire cardiovasculaire (coronaropathie, AVC, AOMI), sauf si statut de fin de vie ou fragilité modérée-sévère établie. Si patient fragile (CFS ≥ 7 ou EV < 1-2 ans), cette règle ne s'applique pas — voir EV_SF01 pour discuter la déprescription.",
             severite: "warning",
             condition: {
                 comorbs_any: ["PAT_004", "PAT_007", "PAT_008"],
-                med_absent: ["statine", "atorvastatine", "rosuvastatine", "simvastatine", "pravastatine", "fluvastatine"]
+                med_absent: ["statine", "atorvastatine", "rosuvastatine", "simvastatine", "pravastatine", "fluvastatine"],
+                frailty_exclude: true,
+                age_max: 89
             },
-            alternatives: "Atorvastatine 20-40 mg, rosuvastatine 5-10 mg"
+            alternatives: "Atorvastatine 20-40 mg, rosuvastatine 5-10 mg — réévaluer annuellement (STOPPFrail v2 : déprescrire si EV < 1-2 ans)"
         },
         {
             id: "IN_B03",

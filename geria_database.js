@@ -300,6 +300,13 @@ const MASTER_DB = {
             "NOM_STANDARD": "Préalbumine (Transthyrétine)",
             "UNITE": "g/L",
             "SYNONYMES": "Prealbumine, Transthyretine, TTR, Marqueur nutritionnel, Denutrition"
+        },
+        "BIO_044": {
+            "ID_BIO": "BIO_044",
+            "LOINC": "10535-3",
+            "NOM_STANDARD": "Digoxinémie",
+            "UNITE": "ng/mL",
+            "SYNONYMES": "Digoxinemie, Digoxine plasmatique, Concentration digoxine, Taux digoxine"
         }
     },
     "PATHOLOGIES": {
@@ -7244,10 +7251,11 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "Amiodarone - Hypokaliemiants (diuretiques) - Calcium",
                     "ddi_interact_v2": [],
-                    "suivi_initial": "ECG | Ionogramme complet (kaliemie, magnesemie, calcemie +++) | Créatinine/DFG | NFS | Dosage serologique (fenetre 0.8-2.0 ng/mL residuelle)",
-                    "suivi_periodique": "Dosage serique (C0, 12h post-dose) (tous les 3 a 6 mois en phase stable) | Ionogramme (tous les 3 a 6 mois) | Créatinine (tous les 3 a 6 mois) | ECG (annuel)",
-                    "alerte_clinique": "Intoxication digitalique (BAV, bigeminisme, TV) → dosage + ECG urgents | Hypokaliemie/hypomagnesiemie potentialisent toxicite → ionogramme urgent | Insuffisance renale → dosage urgent (elimination renale exclusive)",
+                    "suivi_initial": "ECG | Ionogramme complet (kaliemie, magnesemie, calcemie +++) | Créatinine/DFG | NFS | Digoxinémie residuelle (cible 0.5-0.9 ng/mL chez ≥ 70 ans — DIG trial Rathore 2003 ; ESC 2024 AF §6.2)",
+                    "suivi_periodique": "Digoxinémie (C0, 6-8 h post-dose, à J7 de toute modif posologique) annuelle si DFG stable, trimestrielle si DFG < 45 ou poly-medication | Ionogramme (tous les 3-6 mois) | Créatinine (tous les 3-6 mois) | ECG (annuel)",
+                    "alerte_clinique": "Digoxinémie > 0.9 ng/mL chez âgé = sur-dosage → réduire dose. > 1.5 ng/mL OU symptômes (anorexie, vision jaune, BAV, ESV) = toxicité → arrêt + Fab anti-digoxine si arythmie grave | Hypokaliémie/hypomagnésémie potentialisent toxicité | Insuffisance rénale aiguë → dosage urgent (élimination rénale exclusive)",
                     "bio_cible": [
+                              "BIO_044",
                               "BIO_031",
                               "BIO_001",
                               "BIO_006",

@@ -76,6 +76,98 @@ const GUIDELINE_INDEX = {
 };
 
 
+/**
+ * EV_DEPRESCRIPTION — Tableau de référence des seuils d'espérance de vie (EV) et de
+ * fragilité au-delà desquels une classe thérapeutique doit être déprescrite ou ne plus
+ * être initiée chez le sujet âgé (STOPPFrail v2 / Curtin 2021 / Lavan 2017 / SFAP 2024 /
+ * EAPC 2023). Exploitable par le moteur (helper `shouldDeprescribe(medClass, ctx)`)
+ * pour pondérer les règles START et générer des suggestions de déprescription.
+ *
+ * Convention :
+ *   - ev_min_mois : EV minimale au-dessous de laquelle la classe n'a plus de bénéfice
+ *   - cfs_max     : Clinical Frailty Scale au-delà de laquelle la classe est à déprescrire
+ *   - mmse_min    : MMSE en deçà duquel la classe est à déprescrire (démence)
+ *   - condition   : sous-conditions cliniques (prévention 1° vs 2°, etc.)
+ */
+const EV_DEPRESCRIPTION = {
+    "STATINE_PREVENTION_PRIMAIRE": {
+        classes: ["statine"],
+        ev_min_mois: null,           // pas de bénéfice démontré en 1° au-delà de 75 ans fragile
+        cfs_max: 6,                  // CFS ≥ 7 → déprescrire
+        condition: "Prévention primaire — pas d'ATCD CV documenté",
+        ref: "STOPPFrail v2 SF01 ; STAREE 2024 ; SCORE2-OP",
+        action: "Déprescription si EV < 1 an ou CFS ≥ 7 ou ≥ 85 ans sans ATCD CV"
+    },
+    "STATINE_PREVENTION_SECONDAIRE": {
+        classes: ["statine"],
+        ev_min_mois: 12,             // bénéfice CV à ≥ 12 mois
+        cfs_max: 7,
+        condition: "Prévention secondaire (post-IDM, AVC, AOMI documentés)",
+        ref: "STOPPFrail v2 ; ESC 2024 Dyslipidaemia",
+        action: "Déprescription si EV < 12 mois ou CFS ≥ 8 (fin de vie)"
+    },
+    "ANTIAGREGANT_PREVENTION_PRIMAIRE": {
+        classes: ["aspirine", "clopidogrel"],
+        ev_min_mois: null,
+        cfs_max: 5,
+        condition: "Prévention primaire — pas d'ATCD CV/cérébrovasculaire/AOMI",
+        ref: "ASPREE 2018 NEJM ; ESC 2021 CV Prevention",
+        action: "Déprescription quasi systématique si > 70 ans en prévention 1° (rapport bénéfice/saignement défavorable)"
+    },
+    "BISPHOSPHONATE": {
+        classes: ["bisphosphonate", "alendronate", "risedronate", "acide zoledronique", "denosumab"],
+        ev_min_mois: 12,             // bénéfice fracturaire à 12-24 mois
+        cfs_max: 7,
+        condition: "Prévention fracturaire post-DMO (T-score ≤ -2.5 ou fracture sévère)",
+        ref: "STOPPFrail v2 SF04 ; ASBMR 2022",
+        action: "Déprescription si EV < 12-24 mois. Attention : dénosumab nécessite un relais bisphosphonate à l'arrêt (rebond fracturaire)"
+    },
+    "ANTIDIABETIQUE_INTENSIF": {
+        classes: ["sulfamide", "glinide", "insuline rapide", "insuline mix"],
+        ev_min_mois: null,
+        cfs_max: 7,
+        hba1c_max: 7.0,              // si déjà à cible basse → sur-traitement
+        condition: "Sur-traitement si HbA1c < 7 % chez complexe ou < 7.5 % chez très fragile",
+        ref: "STOPPFrail v2 SF03 ; ADA 2025 §13.5 ; EASD 2022",
+        action: "Déprescription sulfamide en priorité, simplification schéma insuline, cible HbA1c assouplie 7-8 % (complexe) ou 7.5-8.5 % (très fragile)"
+    },
+    "IACHE_MEMANTINE": {
+        classes: ["donepezil", "rivastigmine", "galantamine", "memantine"],
+        ev_min_mois: 6,
+        mmse_min: 10,                // déprescrire si MMSE < 10 (démence sévère)
+        cfs_max: 7,
+        condition: "Démence : déprescription progressive si pas de bénéfice ou stade très avancé",
+        ref: "STOPPFrail v2 SF06 ; HAS 2018",
+        action: "Arrêt progressif sur 4-6 sem, surveillance comportementale ; reprise possible si décompensation"
+    },
+    "IPP_LONG_COURS": {
+        classes: ["ipp", "omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole"],
+        ev_min_mois: null,
+        cfs_max: 7,
+        condition: "Pas d'indication active (RGO sévère, ulcère récent, Barrett, double antiagrégation/anticoagulation)",
+        ref: "STOPPFrail v2 SF05 ; REMEDIES",
+        action: "Déprescription progressive (demi-dose 2-4 sem puis arrêt)"
+    },
+    "ANTIHYPERTENSEUR_TRES_FRAGILE": {
+        classes: ["iec", "ara2", "diuretique", "betabloquant", "inhibiteur calcique", "alpha-bloquant"],
+        ev_min_mois: null,
+        cfs_max: 7,
+        pas_max: 120,                // déprescription si PAS < 120 chez fragile
+        condition: "Très fragile (CFS ≥ 7) ET PAS < 120 OU hypotension orthostatique symptomatique",
+        ref: "STOPPFrail v2 SF02 ; ESC 2024 HTN §6.5",
+        action: "Réduction de dose ou arrêt de l'antihypertenseur le plus iatrogène (alpha-bloquant > diurétique > IEC/ARA2 > BB > IC). Cible PAS 140-150 chez ≥ 80 fragile"
+    },
+    "ANTICOAGULANT_FA_TRES_FRAGILE": {
+        classes: ["aod", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "avk", "warfarine", "fluindione"],
+        ev_min_mois: 6,
+        cfs_max: 8,
+        condition: "FA + très fragile + risque hémorragique majeur (HAS-BLED ≥ 4 + chutes répétées + démence sévère)",
+        ref: "FRAIL-AF 2023 NEJM ; ESC 2024 AF §5",
+        action: "Discussion individualisée : maintenir AOD à dose réduite si possible. Arrêt si EV < 6 mois ou hémorragie majeure récidivante. AVK déconseillés (FRAIL-AF)"
+    }
+};
+
+
 const PATHOLOGY_RULES_DB = {
 
     // PAT_001 (IC Globale générique) supprimée — chevauchait PAT_002/PAT_003.
@@ -431,11 +523,13 @@ const PATHOLOGY_RULES_DB = {
                 }
             ],
             CIBLES: {
-                general: { PAS: "120-130 mmHg si toléré", note: "SPRINT / STEP" },
-                sujet_age_75: { PAS: "130-139 mmHg", note: "Individualiser, attention à l'hypotension orthostatique" },
-                sujet_fragile: { PAS: "< 150 mmHg", note: "Déprescription si PAS < 110 ou symptômes" },
-                diabetique: { PAS: "< 130 mmHg", note: "ADA 2025" },
-                mrc: { PAS: "< 120 mmHg si protéinurie", note: "KDIGO 2024" }
+                general: { PAS: "120-130 mmHg si toléré", PAD: "70-80 mmHg", note: "Adulte < 75 ans (SPRINT / STEP / ESC 2024)" },
+                sujet_age_75_79: { PAS: "130-139 mmHg", PAD: "70-80 mmHg", note: "Cible individualisée — vérifier orthostatisme à chaque consultation (HYVET / SPRINT-Senior / ESC 2024)" },
+                sujet_age_80_robuste: { PAS: "130-139 mmHg si bien toléré", PAD: "70-80 mmHg", note: "≥ 80 ans robuste (G8 > 14 ou CFS ≤ 4) — viser 130-139 si pas d'OH ni chute (ESC 2024 §6.5, IIaB)" },
+                sujet_age_80_fragile: { PAS: "140-150 mmHg", PAD: "< 90 mmHg", note: "≥ 80 ans fragile (G8 ≤ 10 ou CFS ≥ 5 ou EHPAD) — cible HYVET, ne pas viser < 130 (ESC 2024 §6.5, IIIB)" },
+                seuil_deprescription: { PAS_couche: "< 120 mmHg", PAS_debout: "< 110 mmHg ou chute orthostatique > 20 mmHg", note: "Déprescrire l'antihypertenseur le plus récent ou plus iatrogène si symptômes (vertige, chute, syncope) — STOPPFrail v2" },
+                diabetique: { PAS: "< 130 mmHg si toléré, sinon 130-139", note: "ADA 2025 §10.1 — éviter PAS < 120 chez âgé fragile" },
+                mrc: { PAS: "< 120 mmHg si protéinurie ≥ A2 et tolérance", note: "KDIGO 2024 — assouplir à 130-139 si DFG < 30 ou âge ≥ 80 fragile" }
             },
             EVITER: [
                 { classe: "IEC + ARA2 simultanément", raison: "Pas de bénéfice additionnel, risque hyperkaliémie + IRA (ONTARGET)", gravite: "CONTRE-INDICATION" },
@@ -467,9 +561,12 @@ const PATHOLOGY_RULES_DB = {
 
         DECOMPENSATION_BIO: {
             triggers: [
-                { bio: "BIO_001", condition: "> 5.5 sous IEC/ARA2/ARM", action: "Adapter traitement, rechercher cause" },
-                { bio: "BIO_002", condition: "< 130 sous thiazidique", action: "Réduire ou arrêter thiazidique", syndrome: "SYND_009" },
-                { bio: "BIO_004", condition: "Chute > 25% en < 3 mois", action: "Rechercher sténose artère rénale, adapter posologie" }
+                { bio: "BIO_001", condition: "K+ > 5.5 sous IEC/ARA2 isolé", action: "Vérifier observance, régime, suspendre supplémentation K+ et/ou diurétique épargneur, contrôler à 48-72h. Réduire dose IEC/ARA2 si K+ > 5.5 confirmé. Arrêter si K+ > 6.0 ou ECG. (KDIGO 2024 Module Hyperkalemia §3)" },
+                { bio: "BIO_001", condition: "K+ > 5.5 sous spironolactone/éplérénone (ARM stéroïdien)", action: "ARM stéroïdien moins tolérant : réduire de moitié si K+ 5.5-6.0, ARRÊTER si K+ > 6.0 ou symptomatique. Surveillance K+/créat à J7. (RALES, EMPHASIS-HF, ESC 2023 HF §5.4)" },
+                { bio: "BIO_001", condition: "K+ > 5.5 sous finerenone (ARM non stéroïdien)", action: "Finerenone tolère mieux : poursuivre si K+ 4.8-5.5 (contrôle 4 sem), suspendre si K+ > 5.5 jusqu'à K+ ≤ 5.0, reprendre à demi-dose. ARRÊT définitif si K+ > 6.0 récidivant. (FIDELIO-DKD/FIGARO-DKD ; KDIGO 2024)" },
+                { bio: "BIO_001", condition: "K+ > 6.0 quel que soit le RAASi", action: "URGENCE : ECG (ondes T pointues, QRS larges), gluconate Ca IV si signes ECG, insuline-glucose, salbutamol nébulisé, résine échangeuse (patiromer, SZC) ou hémodialyse. Arrêt RAASi. (KDIGO 2024 §3.4)" },
+                { bio: "BIO_002", condition: "Na+ < 130 sous thiazidique", action: "Réduire ou arrêter thiazidique, rechercher SIADH/déplétion, ne pas corriger > 8 mmol/L/24h (risque myélinolyse pontine)", syndrome: "SYND_009" },
+                { bio: "BIO_004", condition: "Chute DFGe > 25% en < 3 mois", action: "Rechercher sténose artère rénale, NTA iatrogène (AINS, produit de contraste), adapter posologie ; tolérer hausse créat ≤ 30% post-IEC/ARA2 sans arrêt (RAASi-IRA débat)" }
             ]
         }
     },
@@ -562,7 +659,7 @@ const PATHOLOGY_RULES_DB = {
         },
 
         BIOLOGIE: {
-            SURVEILLANCE_CIBLE: ["BIO_031", "BIO_030", "BIO_019", "BIO_001", "BIO_003", "BIO_004", "BIO_009", "BIO_013", "BIO_014"],
+            SURVEILLANCE_CIBLE: ["BIO_031", "BIO_030", "BIO_019", "BIO_001", "BIO_003", "BIO_004", "BIO_009", "BIO_013", "BIO_014", "BIO_044"],
             REGLES: [
                 {
                     bio: "BIO_031",
@@ -572,6 +669,18 @@ const PATHOLOGY_RULES_DB = {
                         critique: { min: 500, note: "Arrêt immédiat du médicament suspect, avis cardio" }
                     },
                     frequence: "Avant et après introduction antiarythmique, puis semestriel sous amiodarone",
+                    syndrome_declenche: "SYND_003"
+                },
+                {
+                    bio: "BIO_044",
+                    nom: "Digoxinémie",
+                    frequence: "Dosage 6-8 h après prise, à ≥ 7 jours de toute modification de dose ou de DFG. Annuel si DFG stable, trimestriel si DFG < 45 ou poly-médication.",
+                    seuils: {
+                        cible_geriatrique: { min: 0.5, max: 0.9, note: "Cible 0.5-0.9 ng/mL chez ≥ 70 ans (DIG trial post-hoc Rathore 2003 NEJM ; ESC 2024 AF §6.2)" },
+                        alerte: { min: 1.0, note: "Digoxinémie > 1 ng/mL = sur-dosage chez âgé → réduire dose (passer à 0.0625-0.125 mg/j ou espacer la prise)" },
+                        toxique: { min: 1.5, note: "Toxicité digitalique probable (anorexie, nausées, vision jaune, BAV, ESV) → arrêt immédiat, surveillance ECG/K+/Mg, antidote (Fab) si troubles du rythme graves" }
+                    },
+                    facteurs_aggravants: ["Hypokaliémie", "Hypomagnésémie", "Hypercalcémie", "Hypothyroïdie", "Insuffisance rénale aiguë", "Inhibiteur P-gp (amiodarone, vérapamil, clarithromycine)"],
                     syndrome_declenche: "SYND_003"
                 },
                 {
@@ -638,7 +747,9 @@ const PATHOLOGY_RULES_DB = {
                 { bio: "BIO_031", condition: "QTc ≥ 500 ms", action: "Arrêt antiarythmique, scope, avis cardio", syndrome: "SYND_003" },
                 { bio: "BIO_030", condition: "INR > 5", action: "Vitamine K per os, adapter dose AVK", syndrome: "SYND_027" },
                 { bio: "BIO_019", condition: "TSH effondrée < 0.1 sous amiodarone", action: "Avis endocrino urgent, thiamazole ± corticoïdes", syndrome: "SYND_012" },
-                { bio: "BIO_009", condition: "Chute Hb > 2 g/dL sous anticoagulant", action: "Rechercher saignement, endoscopie, arrêt AOD si hémorragie grave + antidote spécifique" }
+                { bio: "BIO_009", condition: "Chute Hb > 2 g/dL sous anticoagulant", action: "Rechercher saignement, endoscopie, arrêt AOD si hémorragie grave + antidote spécifique" },
+                { bio: "BIO_044", condition: "Digoxinémie > 0.9 ng/mL chez ≥ 70 ans", action: "Réduire dose digoxine (passer à 0.0625-0.125 mg/j ou espacer la prise) — cible 0.5-0.9 ng/mL en gériatrie (DIG trial post-hoc Rathore 2003 NEJM)", syndrome: "SYND_003" },
+                { bio: "BIO_044", condition: "Digoxinémie > 1.5 ng/mL OU symptômes (anorexie, vision jaune, BAV, ESV)", action: "ARRÊT immédiat digoxine, ECG, kaliémie/magnésémie, antidote (Fab anti-digoxine) si trouble du rythme grave ou K+ > 5.5", syndrome: "SYND_003" }
             ]
         }
     },
@@ -1378,10 +1489,10 @@ const PATHOLOGY_RULES_DB = {
             CIBLES_HBA1C: {
                 general: { max: 7.0, note: "Adulte non âgé, sans risque d'hypoglycémie" },
                 sujet_age_robuste: { min: 7.0, max: 7.5, note: "Sujet âgé robuste" },
-                sujet_age_complexe: { max: 8.0, note: "Santé intermédiaire (≥ 2 IADL altérées)" },
-                sujet_age_tres_fragile: { max: 8.5, note: "Santé très complexe (EHPAD, cognition sévère)" },
+                sujet_age_complexe: { min: 7.0, max: 8.0, note: "Santé intermédiaire (≥ 2 IADL altérées) — HbA1c < 7 % = sur-traitement (ADA 2025 §13.5)" },
+                sujet_age_tres_fragile: { min: 7.5, max: 8.5, note: "Santé très complexe (EHPAD, cognition sévère) — HbA1c < 7.5 % = sur-traitement, hypoglycémies majeures" },
                 fin_de_vie: { note: "Pas de cible stricte — éviter symptômes hyperglycémiques et hypoglycémies" },
-                ref: "ADA 2025 Standards of Care §13 — Older Adults (Table 13.1)"
+                ref: "ADA 2025 Standards of Care §13 — Older Adults (Table 13.1) | EASD 2022 older adults"
             }
         },
         BIOLOGIE: {
@@ -1447,8 +1558,8 @@ const PATHOLOGY_RULES_DB = {
             CIBLES_HBA1C: {
                 adulte_jeune: { max: 7.0, note: "Adulte DT1 sans hypoglycémies sévères (ADA §6.5)" },
                 sujet_age_robuste: { min: 7.0, max: 7.5, note: "DT1 âgé robuste — éviter hypoglycémies" },
-                sujet_age_complexe: { min: 7.5, max: 8.0, note: "Comorbidités multiples, cognition altérée" },
-                sujet_age_tres_fragile: { max: 8.5, note: "Très fragile — éviter hypoglycémies +++ (priorité absolue)" },
+                sujet_age_complexe: { min: 7.5, max: 8.0, note: "Comorbidités multiples, cognition altérée — HbA1c < 7.5 % = sur-traitement DT1 âgé" },
+                sujet_age_tres_fragile: { min: 8.0, max: 8.5, note: "Très fragile — éviter hypoglycémies +++ (priorité absolue) — HbA1c < 8 % = sur-traitement" },
                 fin_de_vie: { note: "Insuline basale seule à dose minimale pour éviter cétose ; pas de cible glycémique stricte" },
                 ref: "ADA 2025 Standards §13.14 + EASD 2022 older adults T1D"
             },
@@ -1560,10 +1671,10 @@ const PATHOLOGY_RULES_DB = {
             CIBLES_HBA1C: {
                 general: { max: 7.0, note: "Adulte non âgé, sans risque d'hypoglycémie" },
                 sujet_age_robuste: { min: 7.0, max: 7.5, note: "Sujet âgé en bonne santé (peu de comorbidités, fonctions cognitives et autonomie préservées)" },
-                sujet_age_complexe: { max: 8.0, note: "Santé intermédiaire/complexe (comorbidités multiples, ≥ 2 IADL altérées, ou troubles cognitifs légers-modérés)" },
-                sujet_age_tres_fragile: { max: 8.5, note: "Santé très complexe (EHPAD, pathologie chronique terminale, troubles cognitifs modérés-sévères, ≥ 2 ADL altérées)" },
+                sujet_age_complexe: { min: 7.0, max: 8.0, note: "Santé intermédiaire/complexe (comorbidités multiples, ≥ 2 IADL altérées, ou troubles cognitifs légers-modérés) — HbA1c < 7 % = sur-traitement (ADA 2025 §13.5)" },
+                sujet_age_tres_fragile: { min: 7.5, max: 8.5, note: "Santé très complexe (EHPAD, pathologie chronique terminale, troubles cognitifs modérés-sévères, ≥ 2 ADL altérées) — HbA1c < 7.5 % = sur-traitement, hypoglycémies majeures" },
                 fin_de_vie: { note: "Pas de cible stricte — éviter l'hyperglycémie symptomatique et toute hypoglycémie" },
-                ref: "ADA 2025 Standards of Care §13 — Older Adults (Table 13.1)"
+                ref: "ADA 2025 Standards of Care §13 — Older Adults (Table 13.1) | EASD 2022 older adults"
             },
             EVITER: [
                 { classe: "Sulfamides hypoglycémiants (Glibenclamide)", raison: "Risque hypoglycémie prolongée majeur chez le sujet âgé", gravite: "CONTRE-INDICATION en gériatrie", ref_stopp: "STOPP J1", ref_beers: "AGS 2023" },
@@ -1582,7 +1693,9 @@ const PATHOLOGY_RULES_DB = {
                     seuils: {
                         objectif: { note: "Individualisé (voir CIBLES_HBA1C)" },
                         alerte_haute: { min: 9.0, note: "Considérer insuline ou intensification" },
-                        alerte_basse: { max: 6.0, note: "Sur-traitement si sujet âgé → déprescrire" }
+                        alerte_basse_complexe: { max: 7.0, note: "HbA1c < 7 % chez sujet âgé complexe = sur-traitement → déprescrire sulfamide/insuline (ADA 2025 §13.5)" },
+                        alerte_basse_fragile: { max: 7.5, note: "HbA1c < 7.5 % chez sujet âgé très fragile = sur-traitement majeur → arrêter sulfamide, réduire insuline (EASD 2022)" },
+                        alerte_basse_critique: { max: 6.0, note: "HbA1c < 6 % chez âgé = risque hypoglycémie sévère, déprescription urgente quel que soit le profil" }
                     }
                 },
                 {
@@ -1637,7 +1750,12 @@ const PATHOLOGY_RULES_DB = {
                     posologie_adulte: "1.6 µg/kg/j (dose cible théorique)",
                     posologie_geriatrique: "Débuter 25 µg/j (12.5 µg si coronarien, IC, ou > 80 ans)",
                     titration: "Paliers de 12.5-25 µg toutes les 6-8 semaines selon TSH",
-                    cible_tsh: { general: "0.5-4.0 mUI/L", sujet_age_75: "1.0-5.0 mUI/L", sujet_age_80: "1.0-6.0 mUI/L (TRUST trial : pas de bénéfice à traiter si TSH 4-10 chez > 80 ans)" },
+                    cible_tsh: {
+                        general: "0.5-4.0 mUI/L",
+                        sujet_age_75: "1.0-5.0 mUI/L",
+                        sujet_age_80: "1.0-6.0 mUI/L (TSH cible UNE FOIS le traitement décidé — voir critères ci-dessous)",
+                        decision_traiter_age_80: "Hypothyroïdie patente (TSH > 10 mUI/L) ou symptômes (myxœdème, ralentissement, dyslipidémie sévère) : DÉBUTER LT4 12.5-25 µg/j. TSH 4-10 asymptomatique chez > 80 ans : NE PAS TRAITER (TRUST 2017 NEJM Stott — pas de bénéfice fonctionnel ni QoL ; risque FA et ostéoporose). TSH 7-10 récidivante avec symptômes : essai LT4 12.5 µg avec réévaluation à 6 mois."
+                    },
                     administration: "À jeun, 30-60 min avant le petit-déjeuner. OU au coucher ≥ 3h après dernier repas.",
                     interactions_absorption: [
                         { medicament: "IPP (Oméprazole)", effet: "↓ absorption 30-40%", conduite: "Augmenter dose LT4 ou espacer 4h" },
@@ -1655,8 +1773,8 @@ const PATHOLOGY_RULES_DB = {
                 }
             ],
             EVITER: [
-                { classe: "Surdosage LT4 (TSH < 0.4)", raison: "FA, ostéoporose, angor, agitation", gravite: "RISQUE IMPORTANT chez le sujet âgé" },
-                { classe: "Traitement hypothyroïdie subclinique chez > 80 ans si TSH < 10", raison: "TRUST trial : pas de bénéfice", gravite: "DISCUTER avant de traiter" }
+                { classe: "Surdosage LT4 (TSH < 0.4)", raison: "FA, ostéoporose, angor, agitation — sur-traitement gériatrique fréquent", gravite: "RISQUE IMPORTANT chez le sujet âgé — réduire dose LT4" },
+                { classe: "Traitement hypothyroïdie subclinique chez > 80 ans si TSH 4-10", raison: "TRUST 2017 NEJM (Stott) : pas de bénéfice fonctionnel ni QoL chez ≥ 80 ans, risque FA + ostéoporose", gravite: "NE PAS TRAITER sauf symptômes francs ou TSH > 10 confirmée" }
             ]
         },
         BIOLOGIE: {

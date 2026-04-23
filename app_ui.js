@@ -49,20 +49,32 @@ function calculerDFG(autoSwitch = true) {
     if (age > 0 && creat > 0) {
         let scrMgDl = creat / 88.4; let kappa = (sexe === 'F') ? 0.7 : 0.9; let alpha = (sexe === 'F') ? -0.241 : -0.302;
         let min = Math.min(scrMgDl / kappa, 1); let max = Math.max(scrMgDl / kappa, 1);
+        // CKD-EPI 2021 race-free (Inker NEJM 2021) — préféré par KDIGO 2024 pour le diagnostic CKD.
         ckdEpiValue = 142 * Math.pow(min, alpha) * Math.pow(max, -1.200) * Math.pow(0.9938, age) * (sexe === 'F' ? 1.012 : 1);
+        // Cockcroft-Gault — encore utilisé par les RCP/AMM pour adapter les posologies (DOAC, gabapentine, allopurinol).
         if (poids > 0) { let constante = (sexe === 'M') ? 1.23 : 1.04; cgValue = ((140 - age) * poids * constante) / creat; }
     }
     if (autoSwitch && methodSelect.value === 'manuel' && creat > 0 && age > 0) methodSelect.value = poids > 0 ? 'cg' : 'ckdepi';
-    
-    if (methodSelect.value === 'cg') { 
+
+    if (methodSelect.value === 'cg') {
         if (cgValue > 0) { dfgInput.value = Math.round(cgValue); dfgInput.placeholder = ""; } else dfgInput.value = "";
-        dfgInput.className = "form-control fw-bold bg-warning bg-opacity-25 text-dark"; 
-    } 
-    else if (methodSelect.value === 'ckdepi') { 
+        dfgInput.className = "form-control fw-bold bg-warning bg-opacity-25 text-dark";
+    }
+    else if (methodSelect.value === 'ckdepi') {
         if (ckdEpiValue > 0) { dfgInput.value = Math.round(ckdEpiValue); dfgInput.placeholder = ""; } else dfgInput.value = "";
-        dfgInput.className = "form-control fw-bold bg-info bg-opacity-25 text-dark"; 
-    } 
+        dfgInput.className = "form-control fw-bold bg-info bg-opacity-25 text-dark";
+    }
     else dfgInput.className = "form-control fw-bold";
+
+    // Avertissement sarcopénie : DFGe surestime la fonction rénale réelle quand la masse musculaire
+    // s'effondre (sujet âgé, dénutri, IMC < 21, poids < 50 kg, créat < 50 µmol/L). KDIGO 2024
+    // recommande la cystatine C dans ce cas pour confirmer le DFG.
+    if (dfgInput && age >= 75 && creat > 0 && creat < 50 && (poids > 0 && poids < 50)) {
+        dfgInput.title = 'DFGe possiblement surestimé (sarcopénie : créat < 50 µmol/L + poids < 50 kg). Confirmer par DFGe-cystatine C (KDIGO 2024).';
+        dfgInput.classList.add('border-warning');
+    } else if (dfgInput) {
+        dfgInput.classList.remove('border-warning');
+    }
 }
 
 function setupAutocomplete(inputId, listId, searchFunc, selectFunc) {

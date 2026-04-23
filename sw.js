@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.62 (SOURCES_EBM matching par code de classe canonique)
+// Service Worker - GeriaAssist v0.63 (Phase 6 audit clinique-logique : TA strates, HbA1c min/max, digoxinémie, K+ RAASi, frailty exclude, EV_DEPRESCRIPTION, OH transversale, sarcopénie DFG, TSH TRUST)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260421-sources-ebm-codes';
-const CACHE_NAME = `geriaassist-v62-${BUILD_ID}`;
+const BUILD_ID = '20260423-clinical-audit-phase6';
+const CACHE_NAME = `geriaassist-v63-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
