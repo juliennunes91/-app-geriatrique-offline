@@ -202,7 +202,7 @@ const PATHOLOGY_RULES_DB = {
                         { rang: 1, classe: "IEC/ARA2 ou ARNI (Sacubitril-Valsartan)", niveau: "IA", note: "ARNI préféré si toléré (PARADIGM-HF). Switch IEC→ARNI après 36h de washout." },
                         { rang: 2, classe: "Bêtabloquant (Bisoprolol, Carvédilol, Nébivolol, Métoprolol succinate)", niveau: "IA", note: "Initier à faible dose, titrer toutes les 2 semaines. CI si FC < 50 ou BAV 2-3." },
                         { rang: 3, classe: "ARM (Spironolactone ou Éplérénone)", niveau: "IA", note: "Si K+ < 5.0 et DFG > 30. Éplérénone si gynécomastie sous spironolactone." },
-                        { rang: 4, classe: "iSGLT2 (Dapagliflozine ou Empagliflozine)", niveau: "IA", note: "Bénéfice indépendant du diabète. Peut être initié en premier." }
+                        { rang: 4, classe: "iSGLT2 (Dapagliflozine ou Empagliflozine)", niveau: "IA", note: "Bénéfice indépendant du diabète. Peut être initié en premier. Initier si DFG ≥ 20 mL/min et poursuivre même si DFG descend < 20 en cours de traitement (KDIGO 2024 + DAPA-HF/EMPEROR-Reduced ; bénéfice cardio-rénal maintenu). Ne pas initier si DFG < 20." }
                     ],
                     indication: "TOUS les patients HFrEF (FEVG ≤ 40%) symptomatiques (NYHA II-IV)",
                     strategie: "Initiation rapide et simultanée des 4 piliers (STRONG-HF : high-intensity care dans les 2 semaines post-hospitalisation)"
@@ -328,6 +328,7 @@ const PATHOLOGY_RULES_DB = {
                 {
                     classe: "iSGLT2 (Dapagliflozine, Empagliflozine)",
                     indication: "Recommandé pour réduire les hospitalisations pour IC (Class I, LOE A - ESC 2023)",
+                    condition: "DFG ≥ 20 mL/min pour initiation ; poursuivre même si DFG descend < 20 en cours de traitement (KDIGO 2024 — bénéfice cardio-rénal maintenu)",
                     note: "EMPEROR-Preserved + DELIVER : bénéfice confirmé sur tout le spectre FEVG > 40%",
                     niveau_preuve: "IA"
                 },
@@ -432,16 +433,25 @@ const PATHOLOGY_RULES_DB = {
                     niveau_preuve: "IA"
                 },
                 {
-                    classe: "Bêtabloquant",
+                    classe: "Bêtabloquant cardiosélectif",
+                    dci_exemples: ["Bisoprolol 1.25-10 mg/j", "Métoprolol succinate 12.5-200 mg/j", "Nébivolol 2.5-10 mg/j"],
                     indication: "Si post-infarctus récent ou angor résiduel ou FEVG ≤ 40%",
-                    note: "Bénéfice pronostique post-IDM remis en question chez patients sans dysfonction VG (ABYSS trial)",
+                    note: "Bénéfice pronostique post-IDM remis en question chez patients sans dysfonction VG (ABYSS trial). Éviter aténolol (hydrophile, moindre cardiosélectivité — STOPP/START v3). Carvédilol alternatif si HFrEF associée (PAT_002).",
                     niveau_preuve: "IA post-IDM, IIb si pas d'IC"
                 },
                 {
                     classe: "Rivaroxaban 2.5 mg x2/j + Aspirine (Stratégie COMPASS)",
                     indication: "Considérer si haut risque athéromateux (polyvasculaire, diabète) sans haut risque hémorragique",
                     condition: "HAS-BLED acceptable",
+                    note: "⚠️ Stratégie DISTINCTE de l'anticoagulation FA : dose vasculaire 2.5 mg x 2 (COMPASS/VOYAGER-PAD) vs dose anticoagulante 20 mg/j (PAT_006 FA). Ne pas confondre — cf. PAT_006 pour dose FA.",
                     niveau_preuve: "IIaB"
+                },
+                {
+                    classe: "GLP-1 RA (Sémaglutide, Liraglutide, Dulaglutide)",
+                    indication: "DT2 associé + coronaropathie stable — réduction MACE (ESC 2024 CCS §5.4 ; ADA 2025 §10.3). Choisir un GLP-1 avec bénéfice CV prouvé (sémaglutide/LEADER, liraglutide/LEADER, dulaglutide/REWIND).",
+                    condition: "DT2 concomitant (PAT_016b)",
+                    note: "Bénéfice MACE additionnel indépendant de l'HbA1c. Bénéfice pondéral associé. Ne pas cumuler avec DPP-4.",
+                    niveau_preuve: "IA"
                 }
             ],
             EVITER: [
@@ -519,6 +529,7 @@ const PATHOLOGY_RULES_DB = {
                     classe: "Spironolactone 25-50 mg",
                     indication: "HTA résistante confirmée (4ème ligne - PATHWAY-2)",
                     condition: "Si K+ < 4.5 et DFG > 45",
+                    note: "Seuils d'initiation plus stricts qu'en HFrEF/HFpEF/MRC (K+ < 5.0 / DFG > 30) car l'HTA n'est pas une indication vitale pour un ARM : on cherche ici à maximiser la marge de sécurité. Si le patient a une co-indication (HFrEF, MRC albuminurique), c'est le seuil de l'indication PRIMAIRE qui prévaut (K+ < 5.0 / DFG > 30) et la spironolactone s'intègre dans la quadrithérapie, pas comme 4ème antihypertenseur.",
                     niveau_preuve: "IB"
                 }
             ],
@@ -636,12 +647,13 @@ const PATHOLOGY_RULES_DB = {
                 ]
             },
             CONTROLE_FREQUENCE: {
-                premiere_ligne: ["Bêtabloquant", "Diltiazem", "Vérapamil (si FEVG > 40%)", "Digoxine"],
+                premiere_ligne: ["Bêtabloquant cardiosélectif (Bisoprolol, Métoprolol succinate, Nébivolol)", "Diltiazem", "Vérapamil (si FEVG > 40%)", "Digoxine"],
                 cible_fc: "< 110 bpm au repos (stratégie lenient - RACE II)",
                 cible_fc_strict: "< 80 bpm si symptômes persistants",
                 notes: [
+                    "BB cardiosélectifs de référence en FA + sujet âgé : bisoprolol, métoprolol succinate, nébivolol. Carvédilol accepté si HFrEF associée. Éviter aténolol (hydrophile, moindre efficacité — STOPP/START v3). Sotalol réservé au contrôle du rythme avec surveillance QTc.",
                     "Diltiazem/Vérapamil CI si FEVG ≤ 40%",
-                    "Digoxine : dose faible (digoxinémie cible 0.5-0.9 ng/mL), prudence chez le sujet âgé",
+                    "Digoxine : dose faible (digoxinémie cible 0.5-0.9 ng/mL chez ≥ 70 ans — DIG trial Rathore 2003), prudence chez le sujet âgé",
                     "Association bêtabloquant + diltiazem : risque bradycardie sévère"
                 ]
             },
@@ -820,7 +832,7 @@ const PATHOLOGY_RULES_DB = {
             EVITER: [
                 { classe: "DAPT (Aspirine + Clopidogrel) au long cours", raison: "Pas de bénéfice prouvé vs monothérapie en AOMI stable, risque hémorragique accru (CHARISMA)", gravite: "DECONSEILLE sauf post-revascularisation récente (1-6 mois)" },
                 { classe: "Anticoagulation curative seule sans antiagrégant", raison: "WAVE trial : pas de bénéfice, plus de saignements", gravite: "DECONSEILLE" },
-                { classe: "Bêtabloquants non sélectifs", raison: "Risque théorique d'aggravation claudication (non confirmé dans méta-analyses récentes — ESC 2024 : pas de CI absolue)", gravite: "PRUDENCE, ne pas contre-indiquer si indication cardiaque" }
+                { classe: "Bêtabloquants non sélectifs", raison: "Risque théorique d'aggravation claudication (non confirmé dans méta-analyses récentes — ESC 2024 : pas de CI absolue). Note cohérence inter-pathos : les BB cardiosélectifs (bisoprolol, métoprolol succinate, nébivolol, carvédilol) validés en HFrEF (PAT_002 IA) restent recommandés et ne sont PAS concernés par cette prudence — la restriction vise uniquement propranolol/sotalol/nadolol.", gravite: "PRUDENCE, ne pas contre-indiquer si indication cardiaque" }
             ]
         },
 
@@ -939,7 +951,7 @@ const PATHOLOGY_RULES_DB = {
                 {
                     classe: "Statine haute intensité",
                     indication: "Cible LDL < 1.4 mmol/L — prévention secondaire (SPARCL : atorvastatine 80mg)",
-                    note: "Si AVC sous statine : considérer LDL < 1.0 mmol/L (ajout ézétimibe/anti-PCSK9)",
+                    note: "Si récidive d'événement athérothrombotique dans les 2 ans sous statine haute intensité à dose max tolérée : cible LDL < 1.0 mmol/L (ajout ézétimibe puis anti-PCSK9) — ESC 2019/2024 Dyslipidaemia §6.",
                     niveau_preuve: "IA",
                     bio_cible: "BIO_027"
                 },
@@ -971,7 +983,7 @@ const PATHOLOGY_RULES_DB = {
                     nom: "Bilan Lipidique (LDL-C)",
                     seuils: {
                         cible: { max_mmol: 1.4, note: "Prévention secondaire AVC athérothrombotique" },
-                        cible_recidive: { max_mmol: 1.0, note: "Si récidive sous statine max" }
+                        cible_recidive: { max_mmol: 1.0, note: "Si récidive d'événement athérothrombotique dans les 2 ans sous statine haute intensité à dose max tolérée — ESC 2019/2024 Dyslipidaemia §6" }
                     },
                     frequence: "6-8 semaines post-introduction, puis annuel"
                 },
@@ -1824,7 +1836,7 @@ const PATHOLOGY_RULES_DB = {
             INITIER: [
                 { classe: "Thiamazole (Thyrozol) 10-40 mg/j OU Carbimazole (Néo-Mercazole) 15-60 mg/j", indication: "Maladie de Basedow, adénome toxique en attente chirurgie/IRA", titration: "Dose d'attaque x 4-6 semaines, puis entretien 5-15 mg/j", duree: "12-18 mois dans Basedow, puis tentative d'arrêt", niveau_preuve: "IA" },
                 { classe: "Propylthiouracile (PTU) 300-600 mg/j", indication: "UNIQUEMENT si : T1 grossesse OU allergie thiamazole/carbimazole OU tempête thyroïdienne", note: "Hépatotoxicité grave → pas de traitement au long cours" },
-                { classe: "Bêtabloquant (Propranolol 40-120 mg/j OU Aténolol 50-100 mg/j)", indication: "Contrôle symptomatique (tachycardie, tremblements, anxiété)", note: "Propranolol inhibe aussi conversion T4→T3", niveau_preuve: "IC" },
+                { classe: "Bêtabloquant (Propranolol 40-120 mg/j OU Aténolol 50-100 mg/j OU Bisoprolol 2.5-10 mg/j en alternative gériatrique)", indication: "Contrôle symptomatique (tachycardie, tremblements, anxiété)", note: "Propranolol inhibe aussi la conversion T4→T3 (double bénéfice) mais son caractère lipophile + non sélectif le rend moins maniable chez l'âgé (confusion, bronchospasme, hypotension). Chez ≥ 75 ans, privilégier bisoprolol cardiosélectif (moins de chutes, meilleure tolérance) — accepter la perte de l'effet anti-conversion T4→T3. Aténolol : hydrophile, moindre cardiosélectivité, déconseillé chez l'âgé (STOPP/START v3).", niveau_preuve: "IC" },
                 { classe: "Lugol / Iode en pré-opératoire", indication: "10-14j avant thyroïdectomie pour réduire la vascularisation" }
             ],
             EVITER: [
