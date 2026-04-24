@@ -16,10 +16,10 @@ const CHILD_PUGH_ADAPTATIONS = {
     // ANTICOAGULANTS
     // ========================================================================
     "apixaban": {
-        src: "RCP Eliquis | EHRA 2021",
+        src: "RCP Eliquis | EHRA 2024",
         A: { msg: "Pas d'adaptation nécessaire", ci: false, reduire: false },
-        B: { msg: "Utilisation avec prudence — données limitées. Pas de réduction systématique mais surveillance clinique renforcée.", ci: false, reduire: false },
-        C: { msg: "CONTRE-INDIQUÉ — Coagulopathie cliniquement significative et risque hémorragique.", ci: true, reduire: false }
+        B: { msg: "À ÉVITER — EHRA 2024 : déconseillé en Child B (coagulopathie + INR augmenté faussement, monitoring impossible). Si AOD indispensable, préférer apixaban à dose réduite (2.5 mg x2) sous surveillance hémorragique étroite ; sinon HBPM.", ci: false, reduire: true },
+        C: { msg: "CONTRE-INDIQUÉ — Coagulopathie cliniquement significative et risque hémorragique majeur.", ci: true, reduire: false }
     },
     "rivaroxaban": {
         src: "RCP Xarelto | EHRA 2021",
@@ -288,10 +288,10 @@ const CHILD_PUGH_ADAPTATIONS = {
         C: { msg: "Réduire de 50% — Demi-vie peut être prolongée", ci: false, reduire: true }
     },
     "diazepam": {
-        src: "RCP | HAS 2015 BZD",
-        A: { msg: "Prudence — Demi-vie déjà longue", ci: false, reduire: true },
-        B: { msg: "ÉVITER — Demi-vie très prolongée (>100h), métabolites actifs accumulés", ci: false, reduire: true },
-        C: { msg: "CONTRE-INDIQUÉ — Accumulation majeure, coma possible", ci: true, reduire: false }
+        src: "RCP | HAS 2015 BZD | Beers 2023",
+        A: { msg: "Prudence — Demi-vie déjà longue, métabolites actifs accumulés. Préférer oxazépam/lorazépam.", ci: false, reduire: true },
+        B: { msg: "CONTRE-INDIQUÉ — Demi-vie très prolongée (>100h), métabolites actifs accumulés, risque encéphalopathie hépatique. Switch oxazépam ou lorazépam (sans métabolites actifs).", ci: true, reduire: false },
+        C: { msg: "CONTRE-INDIQUÉ — Accumulation majeure, encéphalopathie hépatique, coma possible", ci: true, reduire: false }
     },
     "alprazolam": {
         src: "RCP | HAS 2015 BZD",

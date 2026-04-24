@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.65 (Phase 8 DDI asymétries + SYND_043-051 composites : sérotonine, dépression respi, triple whammy, chutes FRID, délirium ACB, constipation opioïde, GIOP, incontinence, QT charge)
+// Service Worker - GeriaAssist v0.66 (Phase 9 audit EBM : poso_ger/poso_ren AOD-opioïdes-antiépileptiques-paroxetine-rispéridone-LT4 ; alertes cliniques top-iatro ; Child-Pugh diazepam/apixaban)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260424-ddi-syndromes-composites-phase8';
-const CACHE_NAME = `geriaassist-v65-${BUILD_ID}`;
+const BUILD_ID = '20260424-poso-alertes-childpugh-phase9';
+const CACHE_NAME = `geriaassist-v66-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
