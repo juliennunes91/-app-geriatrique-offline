@@ -46,6 +46,7 @@ const GeriaEngineV2 = (() => {
             const keys = [
                 ...(c.med_keys || []),
                 ...(c.med_keys_2 || []),
+                ...(c.med_keys_3 || []),
                 ...(c.med_absent || [])
             ];
             
@@ -224,6 +225,8 @@ const GeriaEngineV2 = (() => {
 
         if (c.med_keys && !c.med_keys.some(k => hasMedKeyCached(k, ctx))) return false;
         if (c.med_keys_2 && !c.med_keys_2.some(k => hasMedKeyCached(k, ctx))) return false;
+        // med_keys_3 : pour les règles nécessitant 3 classes distinctes (ex : triple whammy AINS+IEC+diurétique → SYND_045)
+        if (c.med_keys_3 && !c.med_keys_3.some(k => hasMedKeyCached(k, ctx))) return false;
         if (c.med_absent && c.med_absent.some(k => hasMedKeyCached(k, ctx))) return false;
         if (c.comorbs && !c.comorbs.every(p => ctx.activeComorbs && ctx.activeComorbs.includes(p))) return false;
         if (c.comorbs_any && !c.comorbs_any.some(p => ctx.activeComorbs && ctx.activeComorbs.includes(p))) return false;

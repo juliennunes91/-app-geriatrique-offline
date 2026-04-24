@@ -2610,10 +2610,27 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: {
-            SURVEILLANCE_CIBLE: ["BIO_001", "BIO_019", "BIO_003"],
+            SURVEILLANCE_CIBLE: ["BIO_002", "BIO_001", "BIO_019", "BIO_003", "BIO_031"],
             REGLES: [
-                { bio: "BIO_001", frequence: "J14 puis trimestriel (natrémie sous ISRS)", syndrome: "SYND_004" },
-                { bio: "BIO_019", frequence: "Annuel (TSH pour exclure cause thyroïdienne)" }
+                {
+                    bio: "BIO_002",
+                    nom: "Natrémie",
+                    frequence: "Avant introduction ISRS/IRSN, à J7-J14, puis M1, puis trimestriel × 1 an (SIADH iatrogène : 5-40 % sous ISRS chez ≥ 65 ans — plus fréquent avec citalopram/escitalopram)",
+                    seuils: {
+                        alerte: { max: 135, action: "Surveiller ionogramme à J7 ; si baisse progressive → déprescription progressive" },
+                        critique: { max: 130, action: "SIADH iatrogène : arrêter ISRS progressivement, restriction hydrique 800-1000 mL/j, éviter correction > 8 mmol/L/24h (myélinolyse pontine)" }
+                    },
+                    syndrome_declenche: "SYND_009"
+                },
+                { bio: "BIO_001", nom: "Kaliémie", frequence: "Annuel si pas de diurétique associé" },
+                { bio: "BIO_019", frequence: "Annuel (TSH pour exclure cause thyroïdienne)" },
+                { bio: "BIO_031", nom: "QTc", frequence: "ECG avant citalopram > 20 mg, escitalopram > 10 mg ; répéter à J7", seuils: { alerte: { min: 470, action: "Réduire dose" }, critique: { min: 500, action: "Arrêt + switch sertraline/mirtazapine" } }, syndrome_declenche: "SYND_051" }
+            ]
+        },
+        DECOMPENSATION_BIO: {
+            triggers: [
+                { bio: "BIO_002", condition: "< 130 mmol/L sous ISRS/IRSN", action: "Arrêt progressif ISRS, restriction hydrique, switch vers agomélatine ou mirtazapine (moins de risque SIADH)", syndrome: "SYND_009" },
+                { bio: "BIO_031", condition: "QTc ≥ 500 ms sous citalopram/escitalopram", action: "Arrêt immédiat + scope + bilan K+/Mg", syndrome: "SYND_051" }
             ]
         }
     },
@@ -3321,34 +3338,34 @@ const PATHO_SYNDROME_MAP = {
     "PAT_002": ["SYND_029", "SYND_010", "SYND_036"],
     "PAT_003": ["SYND_029", "SYND_010"],
     "PAT_004": ["SYND_036", "SYND_027", "SYND_030"],
-    "PAT_005": ["SYND_010", "SYND_009", "SYND_011", "SYND_015"],
+    "PAT_005": ["SYND_010", "SYND_009", "SYND_011", "SYND_015", "SYND_045", "SYND_046", "SYND_050", "SYND_051"],
     "PAT_006": ["SYND_003", "SYND_027", "SYND_012", "SYND_010"],
     "PAT_007": ["SYND_027", "SYND_030"],
     "PAT_008": ["SYND_027", "SYND_035", "SYND_036"],
-    "PAT_009": ["SYND_009", "SYND_011", "SYND_013"],
-    "PAT_010": ["SYND_013", "SYND_009"],
-    "PAT_011": ["SYND_013", "SYND_017", "SYND_009"],
-    "PAT_012": ["SYND_013", "SYND_009"],
-    "PAT_013": ["SYND_013"],
+    "PAT_009": ["SYND_009", "SYND_011", "SYND_013", "SYND_046", "SYND_050"],
+    "PAT_010": ["SYND_013", "SYND_009", "SYND_046", "SYND_047", "SYND_048"],
+    "PAT_011": ["SYND_013", "SYND_017", "SYND_009", "SYND_046", "SYND_047", "SYND_048"],
+    "PAT_012": ["SYND_013", "SYND_009", "SYND_046", "SYND_047"],
+    "PAT_013": ["SYND_013", "SYND_046", "SYND_047"],
     "PAT_014": ["SYND_009", "SYND_011", "SYND_013"],
     "PAT_015": ["SYND_007", "SYND_009", "SYND_001"],
     "PAT_016": ["SYND_017", "SYND_018", "SYND_015"],
     "PAT_016a": ["SYND_017", "SYND_018", "SYND_015", "SYND_038"],
-    "PAT_016b": ["SYND_017", "SYND_018", "SYND_015", "SYND_038"],
+    "PAT_016b": ["SYND_017", "SYND_018", "SYND_015", "SYND_038", "SYND_046"],
     "PAT_017": ["SYND_013", "SYND_020"],
     "PAT_018": ["SYND_012", "SYND_019", "SYND_003"],
     "PAT_019": ["SYND_030", "SYND_002"],
-    "PAT_020": ["SYND_004", "SYND_014", "SYND_033"],
+    "PAT_020": ["SYND_004", "SYND_014", "SYND_033", "SYND_049"],
     "PAT_021": ["SYND_005", "SYND_006"],
     "PAT_022": ["SYND_011"],
     "PAT_023": ["SYND_015"],
     "PAT_024": ["SYND_016", "SYND_015"],
-    "PAT_025": ["SYND_025", "SYND_020"],
+    "PAT_025": ["SYND_025", "SYND_020", "SYND_049"],
     "PAT_026": ["SYND_023", "SYND_024"],
     "PAT_027": ["SYND_013"],
     "PAT_028": ["SYND_009"],
-    "PAT_029": ["SYND_015", "SYND_010", "SYND_020"],
-    "PAT_030": ["SYND_005", "SYND_033"],
+    "PAT_029": ["SYND_015", "SYND_010", "SYND_020", "SYND_045"],
+    "PAT_030": ["SYND_005", "SYND_033", "SYND_049"],
     "PAT_031": ["SYND_033", "SYND_025", "SYND_017"],
     "PAT_032": ["SYND_004", "SYND_013"],
     "PAT_033": [],

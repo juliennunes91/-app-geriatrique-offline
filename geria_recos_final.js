@@ -1823,6 +1823,162 @@ const GERIA_RECOS_DB = {
         },
 
         // ====================================================================
+        // SYNDROMES COMPOSITES MÉDICAMENTEUX (SYND_043 → SYND_051)
+        // Règles multi-médicaments — détection automatique via med_keys + med_keys_2
+        // ====================================================================
+        {
+            id: "EV_SYND_043",
+            sources: ["BEERS", "STOPP3", "ANSM"],
+            ref_code: "SYND-043-SEROTONIN",
+            section: "Interaction critique",
+            titre: "Risque de syndrome sérotoninergique — association sérotoninergique + tramadol/IMAO/linézolide",
+            message: "SYND_043 : Association de ≥ 2 médicaments sérotoninergiques (Tramadol + ISRS/IRSN, Linézolide + ISRS, IMAO-B + Tramadol, Mirtazapine + Tramadol) → syndrome sérotoninergique potentiellement létal. Hunter Criteria : clonus, agitation, hyperthermie, hyperréflexie. Mortalité 2-12 % si forme sévère. CONTRE-INDICATION avec IMAO/Linézolide (wash-out 14 j).",
+            severite: "danger",
+            condition: {
+                med_keys: ["tramadol"],
+                med_keys_2: ["isrs", "citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "irsn", "duloxetine", "venlafaxine", "milnacipran", "mirtazapine", "linezolide", "rasagiline", "selegiline", "safinamide", "moclobemide", "iproniazide"]
+            },
+            syndrome_declenche: "SYND_043",
+            alternatives: "Alternatives à tramadol en cas de douleur : paracétamol, AINS courte durée si pas CI, opioïde faible non sérotoninergique (codéine PRUDENCE), palier 3 faible dose. Si ISRS indispensable : prégabaline ou gabapentine pour douleur neuropathique."
+        },
+        {
+            id: "EV_SYND_043b",
+            sources: ["BEERS", "STOPP3", "ANSM"],
+            ref_code: "SYND-043-LINEZO-ISRS",
+            section: "Interaction critique",
+            titre: "CI ABSOLUE : Linézolide + ISRS/IRSN/Tramadol/IMAO",
+            message: "SYND_043 : Linézolide (IMAO non sélectif réversible) + tout agent sérotoninergique = CONTRE-INDICATION ABSOLUE (ANSM/EMA). Syndrome sérotoninergique sévère décrit. Wash-out 14 j si ISRS longue ½ vie (fluoxétine).",
+            severite: "danger",
+            condition: {
+                med_keys: ["linezolide"],
+                med_keys_2: ["isrs", "citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "duloxetine", "venlafaxine", "milnacipran", "mirtazapine", "tramadol", "rasagiline", "selegiline"]
+            },
+            syndrome_declenche: "SYND_043",
+            alternatives: "Alternative antibiotique : daptomycine, vancomycine, ceftaroline selon indication"
+        },
+        {
+            id: "EV_SYND_044",
+            sources: ["FDA", "STOPP3", "BEERS"],
+            ref_code: "SYND-044-RESPIR",
+            section: "Interaction critique",
+            titre: "Risque de dépression respiratoire — BZD/Z-drug + opioïde (FDA Black Box 2016)",
+            message: "SYND_044 : Association BZD/Z-drug + opioïde fort = FDA Black Box (mortalité x4). Synergie GABA/µ-opioïde → dépression respiratoire, surdose fatale. Gabapentinoïdes (gabapentine, prégabaline) aggravent encore le risque.",
+            severite: "danger",
+            condition: {
+                med_keys: ["diazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "bromazepam", "midazolam", "zopiclone", "zolpidem", "eszopiclone"],
+                med_keys_2: ["morphine", "oxycodone", "fentanyl", "hydromorphone", "tramadol", "codeine", "methadone", "tapentadol", "buprenorphine"]
+            },
+            syndrome_declenche: "SYND_044",
+            alternatives: "Déprescrire la BZD (sevrage progressif 10 % / semaine) ou swap vers mélatonine LP / TCC-I pour le sommeil. Si opioïde indispensable : doses minimales, courte durée, surveillance SpO2, prescription de naloxone IN (Prenoxad) à l'entourage."
+        },
+        {
+            id: "EV_SYND_045",
+            sources: ["KDIGO", "STOPP3", "ANSM"],
+            ref_code: "SYND-045-TRIPLE-WHAMMY",
+            section: "Interaction critique",
+            titre: "Triple whammy : AINS + IEC/ARA2 + diurétique — risque IRA",
+            message: "SYND_045 : Triple whammy AINS + IEC/ARA2 + diurétique = cause la plus fréquente d'IRA iatrogène en gériatrie (Lapi BMJ 2013). NTA ischémique, hyperkaliémie. Déshydratation intercurrente (fièvre, gastro-entérite, jeûne, contraste iodé) précipite. STOP à l'AINS, sick day rules pour IEC/diurétique.",
+            severite: "danger",
+            condition: {
+                med_keys: ["ains", "ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam", "indometacine"],
+                med_keys_2: ["iec", "ramipril", "perindopril", "enalapril", "lisinopril", "captopril", "quinapril", "benazepril", "ara2", "losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan"],
+                med_keys_3: ["diuretique", "furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone"]
+            },
+            syndrome_declenche: "SYND_045",
+            alternatives: "ARRÊT AINS (remplacer par paracétamol ± opioïde faible si douleur). Contrôle créat/K+ à J3-J7. Éducation patient : sick day rules (suspendre IEC/ARA2/diurétique 48 h si déshydratation/fièvre/gastro). Si douleur chronique sous AINS : physiothérapie, infiltration locale, capsaïcine topique."
+        },
+        {
+            id: "EV_SYND_046",
+            sources: ["BEERS", "STOPP3", "HAS"],
+            ref_code: "SYND-046-CHUTES",
+            section: "Risque fonctionnel",
+            titre: "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+            message: "SYND_046 : ≥ 2 classes à risque de chute (BZD/Z-drugs, opioïdes, antipsychotiques, antihypertenseurs multiples, anticholinergiques ACB ≥ 2, hypoglycémiants, antiépileptiques). Score FRID ≥ 3 = OR chute 1.5-2.5 (Seppala JAMDA 2018). Test up-and-go, TA couché-debout, revue médicamenteuse priorisée.",
+            severite: "warning",
+            condition: {
+                med_keys: ["benzodiazepine", "bzd", "diazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "bromazepam", "zopiclone", "zolpidem"],
+                med_keys_2: ["morphine", "oxycodone", "fentanyl", "tramadol", "codeine", "antipsychotique", "halopéridol", "haloperidol", "risperidone", "olanzapine", "quetiapine", "oxybutynine", "hydroxyzine", "amitriptyline"]
+            },
+            syndrome_declenche: "SYND_046",
+            alternatives: "Déprescription hiérarchisée : BZD (sevrage) > anticholinergiques (swap oxybutynine → mirabégron) > opioïdes (réduction progressive). TA couché-debout systématique. Vitamine D si < 75 nmol/L. Kinésithérapie équilibre (Otago, Tai Chi)."
+        },
+        {
+            id: "EV_SYND_047",
+            sources: ["BEERS", "STOPP3", "FORTA"],
+            ref_code: "SYND-047-DELIRIUM",
+            section: "Risque cognitif",
+            titre: "Risque de délirium — charge anticholinergique élevée (ACB ≥ 3)",
+            message: "SYND_047 : Score ACB cumulatif ≥ 3 (Boustani 2008) ou ≥ 1 médicament ACB fort (oxybutynine, amitriptyline, hydroxyzine, paroxétine) chez ≥ 75 ans = facteur majeur de délirium iatrogène. Inouye NEJM 2014 : OR 2-3. ACB ≥ 6 = déclin cognitif significatif à 2 ans. Rechercher CAM (Confusion Assessment Method), PRISME (Pain/Rétention/Infection/Stool/Médicaments/Environnement).",
+            severite: "warning",
+            condition: {
+                acb_cumul: true,
+                acb_seuil: 3
+            },
+            syndrome_declenche: "SYND_047",
+            alternatives: "Revue ACB : swap oxybutynine → mirabégron, amitriptyline → duloxétine (douleur neuropathique), hydroxyzine → mélatonine LP, paroxétine → sertraline. Réorientation, lumière diurne, hydratation. ÉVITER antipsychotiques (sauf agitation sévère : halopéridol 0.25-0.5 mg, courte durée)."
+        },
+        {
+            id: "EV_SYND_048",
+            sources: ["ESMO", "BEERS", "STOPP3"],
+            ref_code: "SYND-048-CONSTIPATION",
+            section: "Risque fonctionnel",
+            titre: "Constipation opioïde / anticholinergique — prophylaxie laxative requise",
+            message: "SYND_048 : Toute prescription d'opioïde régulier impose un laxatif prophylactique (constipation 40-90 %, pas de tolérance — ESMO 2018). Association opioïde + anticholinergique (ACB ≥ 1) + vérapamil/diltiazem + fer oral = constipation réfractaire, impaction, agitation, délirium chez l'âgé.",
+            severite: "warning",
+            condition: {
+                med_keys: ["morphine", "oxycodone", "fentanyl", "hydromorphone", "tramadol", "codeine", "tapentadol"],
+                med_absent: ["macrogol", "lactulose", "sennosides", "bisacodyl", "naloxegol", "methylnaltrexone", "laxatif"]
+            },
+            syndrome_declenche: "SYND_048",
+            alternatives: "Macrogol 1 sachet/j systématique dès J1 de l'opioïde. Si constipation persistante : bisacodyl 5-10 mg, naloxégol 25 mg/j (PAMORA — spécifique opioïde). Hydratation ≥ 1.5 L/j, fibres, mobilisation."
+        },
+        {
+            id: "EV_SYND_049",
+            sources: ["ACR", "IOF", "STOPP3"],
+            ref_code: "SYND-049-GIOP",
+            section: "Risque métabolique/osseux",
+            titre: "Corticoïde systémique ≥ 3 mois — prévention sarcopénie/ostéoporose GIOP",
+            message: "SYND_049 : Corticothérapie systémique ≥ 7.5 mg prednisolone/j pendant ≥ 3 mois → sarcopénie (catabolisme protéique) + ostéoporose cortico-induite (GIOP : risque fracturaire ↑ 2-10x dès 10 mg/j). ACR 2017 : Ca/vit D systématique, bisphosphonate si ≥ 7.5 mg/j prolongé ou T-score ≤ -1.5.",
+            severite: "warning",
+            condition: {
+                med_keys: ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone", "betamethasone"],
+                med_absent: ["alendronate", "risedronate", "ibandronate", "acide zoledronique", "denosumab", "teriparatide"]
+            },
+            syndrome_declenche: "SYND_049",
+            alternatives: "Ca 1000 mg/j + vit D 800-1200 UI/j dès J1. DMO à M0, M12. Bisphosphonate (alendronate 70 mg/sem) si T-score ≤ -1.5 OU corticothérapie ≥ 7.5 mg/j prolongée OU femme ménopausée. Apport protéique 1.2-1.5 g/kg/j. Activité physique adaptée (résistance + équilibre)."
+        },
+        {
+            id: "EV_SYND_050",
+            sources: ["ICI", "BEERS", "STOPP3"],
+            ref_code: "SYND-050-INCONT",
+            section: "Risque fonctionnel",
+            titre: "Incontinence urinaire iatrogène — revue médicamenteuse",
+            message: "SYND_050 : Diurétique vespéral + sédatif (BZD, opioïde) + anticholinergique (rétention paradoxale) + alpha-bloquant (chez femme) + IEC (toux) = incontinence urinaire iatrogène. Calendrier mictionnel + déprescription priorisée évite l'entrée en EHPAD.",
+            severite: "info",
+            condition: {
+                med_keys: ["furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"],
+                med_keys_2: ["diazepam", "lorazepam", "oxazepam", "alprazolam", "zopiclone", "zolpidem", "oxybutynine", "hydroxyzine", "amitriptyline", "tamsulosine", "alfuzosine", "doxazosine"]
+            },
+            syndrome_declenche: "SYND_050",
+            alternatives: "Déplacer le diurétique au matin. Swap oxybutynine → mirabégron. Déprescrire BZD (sevrage). Retirer alpha-bloquant chez femme. Switch IEC → ARA2 si toux iatrogène. Rééducation périnéale (+ biofeedback)."
+        },
+        {
+            id: "EV_SYND_051",
+            sources: ["CredibleMeds", "BEERS", "ESC"],
+            ref_code: "SYND-051-QT",
+            section: "Risque rythmique",
+            titre: "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+            message: "SYND_051 : Association ≥ 2 médicaments CredibleMeds Risk_KR (citalopram > 20, halopéridol, quétiapine, dompéridone, ondansétron, méthadone, fluoroquinolones, macrolides, antifongiques azolés, sotalol, amiodarone) ± hypokaliémie/hypomagnésémie/bradycardie = risque torsades de pointes. ECG obligatoire avant, à J7 puis si modif.",
+            severite: "warning",
+            condition: {
+                qt_check: true,
+                med_keys: ["citalopram", "escitalopram", "haloperidol", "halopéridol", "quetiapine", "dompéridone", "domperidone", "ondansetron", "methadone", "sotalol", "amiodarone", "fluoroquinolone", "ciprofloxacine", "levofloxacine", "moxifloxacine", "macrolide", "clarithromycine", "erythromycine", "ketoconazole", "itraconazole", "voriconazole"]
+            },
+            syndrome_declenche: "SYND_051",
+            alternatives: "ECG avant introduction + J7. Corriger K+ > 4.0, Mg++ > 0.85. Si QTc 470-499 : déprescrire le médicament le moins indispensable (citalopram > 20 → escitalopram 10 ; halopéridol → rispéridone faible dose ; fluoroquinolone → β-lactamine). Si QTc ≥ 500 : ARRÊT immédiat, scope, MgSO4 2 g IV."
+        },
+
+        // ====================================================================
         // FORTA-D SPÉCIFIQUES (à éviter formellement)
         // ====================================================================
         {

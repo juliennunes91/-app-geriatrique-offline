@@ -1230,6 +1230,123 @@ const MASTER_DB = {
             "CONDUITE_IMMEDIATE": "Réhydratation progressive par voie orale ou G5%, correction max 10 mmol/L/24h (risque œdème cérébral si trop rapide)",
             "SEUIL_CRITIQUE": "> 155 mmol/L + troubles conscience → urgence neurologique, correction lente (0.5 mmol/L/h max)",
             "SOURCE": "SFNDT 2020 | BMJ Best Practice"
+        },
+        "SYND_043": {
+            "ID_SYNDROME": "SYND_043",
+            "NOM_SYNDROME": "Syndrome Sérotoninergique",
+            "BIO_CIBLE": null,
+            "CONDITION": "Composite : association de ≥ 2 médicaments sérotoninergiques (ISRS/IRSN/Tramadol/IMAO/Linézolide/Triptans/Mirtazapine) + signes cliniques (confusion, tremblements, clonus, hyperréflexie, mydriase, hyperthermie, diarrhée)",
+            "GRAVITE": "Sévère à Critique (mortalité 2-12 % si forme sévère)",
+            "IMPUTABILITE_FREQ": "Tramadol + ISRS (le plus fréquent en gériatrie), Linézolide + ISRS, IMAO-B (rasagiline/sélégiline) + Tramadol, Mirtazapine + Tramadol",
+            "ID_PATHO_ASSOC": "PAT_010, PAT_011, PAT_012, PAT_013",
+            "BIO_SECONDAIRE": "BIO_018 (CPK si rhabdomyolyse), BIO_013, BIO_014",
+            "CONDUITE_IMMEDIATE": "ARRÊT immédiat de TOUS les sérotoninergiques. Refroidissement actif si T° > 38.5°C. Hydratation. BZD (diazépam) pour agitation/myoclonies. Cyproheptadine 12 mg PO (antagoniste 5-HT2A) si forme modérée-sévère. Réanimation si T° > 39.5° ou trouble conscience.",
+            "SEUIL_CRITIQUE": "Hunter Criteria : clonus spontané OU clonus inductible + agitation/diaphorèse OU clonus oculaire + agitation/diaphorèse OU hypertonie + T° > 38°C + clonus oculaire/inductible",
+            "SOURCE": "Boyer & Shannon NEJM 2005 ; Beers 2023 ; STOPP/START v3 K2 ; ANSM Tramadol 2020"
+        },
+        "SYND_044": {
+            "ID_SYNDROME": "SYND_044",
+            "NOM_SYNDROME": "Dépression Respiratoire Iatrogène",
+            "BIO_CIBLE": null,
+            "CONDITION": "Composite : association BZD/Z-drugs/sédatifs + opioïdes ± gabapentinoïdes ± alcool, avec FR < 10/min ou SpO2 < 92 % en air ambiant",
+            "GRAVITE": "Critique (engage le pronostic vital)",
+            "IMPUTABILITE_FREQ": "BZD longue ½ vie (diazépam, clonazépam) + opioïdes forts (morphine, oxycodone, fentanyl) ; ajout de gabapentinoïdes ou alcool aggrave",
+            "ID_PATHO_ASSOC": "PAT_022, PAT_023, PAT_010",
+            "BIO_SECONDAIRE": "BIO_037 (Lactates si hypoxie), gaz du sang",
+            "CONDUITE_IMMEDIATE": "Stimulation, oxygène, BAVU si hypoventilation. Naloxone IV/IM/IN 0.4 mg (titration toutes 2-3 min jusqu'à FR ≥ 12) si suspicion opioïde. Flumazénil 0.2 mg IV (max 1 mg) si BZD pure (PRUDENCE chez utilisateur chronique : risque convulsions). Surveillance scope, EVITER de réintroduire l'association.",
+            "SEUIL_CRITIQUE": "FR < 8/min OU SpO2 < 88 % OU score de Glasgow < 12 → réa, intubation possible. FDA Black Box (2016) : BZD + opioïdes = mortalité ↑ 4x",
+            "SOURCE": "FDA Black Box 2016 ; STOPP/START v3 K1+K2 ; Beers 2023 ; HAS Douleur 2022"
+        },
+        "SYND_045": {
+            "ID_SYNDROME": "SYND_045",
+            "NOM_SYNDROME": "Triple Whammy — IRA Iatrogène",
+            "BIO_CIBLE": "BIO_004",
+            "CONDITION": "Composite : association AINS + IEC/ARA2 + diurétique (anse ou thiazidique) + facteur déclenchant (déshydratation, fièvre, gastro-entérite, jeûne, contraste iodé) → chute DFGe > 30 % en < 7 j ou créat ↑ > 50 % de la baseline",
+            "GRAVITE": "Sévère (NTA ischémique, dialyse possible)",
+            "IMPUTABILITE_FREQ": "Patient âgé sous IEC/diurétique au long cours qui se voit prescrire un AINS ponctuel (lombalgie, arthrose) — combinaison « la plus fréquente cause iatrogène d'IRA en gériatrie » (BMJ 2013 Lapi)",
+            "ID_PATHO_ASSOC": "PAT_005, PAT_002, PAT_003, PAT_029",
+            "BIO_SECONDAIRE": "BIO_001, BIO_002, BIO_003, BIO_007",
+            "CONDUITE_IMMEDIATE": "ARRÊT immédiat de l'AINS. Suspendre IEC/ARA2 + diurétique 48-72 h (sick day rules). Réhydratation IV si déshydratation. Contrôle créat/K+ à J3-J7. Reprise IEC/diurétique à dose réduite après normalisation. Éducation patient pour éviter récidive.",
+            "SEUIL_CRITIQUE": "Chute DFGe > 50 % OU K+ > 6.0 OU oligurie < 0.5 mL/kg/h → hospitalisation, néphro, dialyse possible",
+            "SOURCE": "Lapi BMJ 2013 ; KDIGO 2024 ; STOPP/START v3 D1-D2 ; ANSM AINS 2018"
+        },
+        "SYND_046": {
+            "ID_SYNDROME": "SYND_046",
+            "NOM_SYNDROME": "Risque de Chutes — Charge Médicamenteuse",
+            "BIO_CIBLE": null,
+            "CONDITION": "Composite : ≥ 2 des classes suivantes : BZD/Z-drugs, opioïdes forts, anticholinergiques (ACB ≥ 2 cumulé ≥ 3), antipsychotiques, antihypertenseurs (≥ 3 classes), hypoglycémiants (sulfamides/insuline), antiépileptiques. Score Fall Risk-Increasing Drugs (FRID) ≥ 3.",
+            "GRAVITE": "Modérée à Sévère (chute = entrée dans la dépendance, fracture col fémur 30 % de mortalité à 1 an)",
+            "IMPUTABILITE_FREQ": "BZD seules ou + opioïdes (OR chute = 1.5-2.5), polyantihypertenseurs avec hypotension orthostatique, anticholinergiques (oxybutynine, hydroxyzine, amitriptyline)",
+            "ID_PATHO_ASSOC": "PAT_005, PAT_009, PAT_010, PAT_011, PAT_012, PAT_013, PAT_016b",
+            "BIO_SECONDAIRE": "BIO_002 (hyponatrémie aggrave), BIO_001 (hypokaliémie), BIO_021 (B12), BIO_022 (B9), 25-OH-vitamine D",
+            "CONDUITE_IMMEDIATE": "Test up-and-go, mesure TA couché-debout (1 et 3 min), revue STOPP/START + ACB, déprescription priorisée (alpha-bloquant > BZD > opioïde > thiazidique > anticholinergique), kinésithérapie équilibre, vitamine D si carence",
+            "SEUIL_CRITIQUE": "≥ 2 chutes dans les 12 derniers mois OU 1 chute avec traumatisme grave → bilan complet (cardio, ORL, neuro, médicamenteux), aménagement du domicile",
+            "SOURCE": "Beers 2023 ; STOPP/START v3 K1-K2-K4 ; HAS 2009 (chutes répétées) ; FRID Score Seppala JAMDA 2018"
+        },
+        "SYND_047": {
+            "ID_SYNDROME": "SYND_047",
+            "NOM_SYNDROME": "Délirium Iatrogène / Charge Anticholinergique",
+            "BIO_CIBLE": null,
+            "CONDITION": "Composite : score ACB cumulatif ≥ 3 (Boustani 2008) OU prise d'un anticholinergique fort (ACB = 3 : amitriptyline, oxybutynine, hydroxyzine, paroxétine) chez sujet ≥ 75 ans ; BZD longue ½ vie ; opioïdes forts ; corticoïdes systémiques > 20 mg/j ; lithium > 1.0 mEq/L ; fluoroquinolones (effet GABA-ergique central)",
+            "GRAVITE": "Sévère (prolonge l'hospitalisation, ↑ mortalité, déclin cognitif persistant)",
+            "IMPUTABILITE_FREQ": "Polypharmacie anticholinergique (oxybutynine + hydroxyzine + amitriptyline = ACB 9), BZD post-introduction, corticoïdes en bolus, fluoroquinolone chez le sujet âgé",
+            "ID_PATHO_ASSOC": "PAT_010, PAT_011, PAT_012, PAT_013, PAT_022",
+            "BIO_SECONDAIRE": "BIO_002 (hyponatrémie), BIO_004 (IRC), BIO_032 (PCT/CRP — délirium = présentation atypique de sepsis chez l'âgé)",
+            "CONDUITE_IMMEDIATE": "Score CAM (Confusion Assessment Method). Recherche cause réversible (PRISME : Pain, Retention urinaire, Infection, Stool/constipation, Médicaments, Environnement). Déprescription urgente des anticholinergiques/BZD/sédatifs. Réorientation, lumière, hydratation. ÉVITER les antipsychotiques (agitation seulement, halopéridol 0.25-0.5 mg/dose, courte durée).",
+            "SEUIL_CRITIQUE": "ACB cumulatif ≥ 6 OU délirium hyperactif sévère → recherche urgente cause organique (TDM cérébral, ECBU, PL si sepsis suspect)",
+            "SOURCE": "Boustani 2008 ACB Scale ; Beers 2023 ; AGS Delirium 2015 ; FORTA-D ; Inouye NEJM 2014"
+        },
+        "SYND_048": {
+            "ID_SYNDROME": "SYND_048",
+            "NOM_SYNDROME": "Constipation Opioïde / Anticholinergique",
+            "BIO_CIBLE": null,
+            "CONDITION": "Composite : opioïde régulier (palier 2-3) ± anticholinergique (ACB ≥ 1 cumulé ≥ 2) ± antagoniste calcique (vérapamil, diltiazem) ± fer oral ± ondansétron, sans laxatif prophylactique",
+            "GRAVITE": "Modérée (impaction fécale, syndrome occlusif fonctionnel, agitation, délirium)",
+            "IMPUTABILITE_FREQ": "Opioïdes ++ (constipation chez 40-90 % — pas de tolérance), oxybutynine, amitriptyline, vérapamil, fer oral",
+            "ID_PATHO_ASSOC": "PAT_010, PAT_036",
+            "BIO_SECONDAIRE": "BIO_001 (hypokaliémie aggrave), TSH (hypothyroïdie associée)",
+            "CONDUITE_IMMEDIATE": "Prescription PROPHYLACTIQUE de laxatif osmotique (macrogol 1 sachet/j) à toute initiation d'opioïde. Si constipation opioïde résistante : naloxégol 25 mg/j ou méthylnaltrexone SC. Hydratation, fibres, mobilisation. Si impaction : lavement, désimpaction manuelle.",
+            "SEUIL_CRITIQUE": "Pas de selle > 5 jours + douleur abdominale + vomissements → ASP (rechercher syndrome occlusif), désimpaction urgente",
+            "SOURCE": "ESMO 2018 (constipation opioïde) ; Beers 2023 ; STOPP/START v3 F2"
+        },
+        "SYND_049": {
+            "ID_SYNDROME": "SYND_049",
+            "NOM_SYNDROME": "Sarcopénie / Ostéoporose Cortico-induite",
+            "BIO_CIBLE": null,
+            "CONDITION": "Composite : corticoïdes systémiques ≥ 7.5 mg équivalent prednisolone/j pendant ≥ 3 mois ; OU IPP au long cours ≥ 1 an + carence B12/Mg ; OU antiépileptiques inducteurs (phénytoïne, carbamazépine, phénobarbital) ≥ 1 an ; OU ISRS au long cours (risque fracturaire +20 %)",
+            "GRAVITE": "Modérée à Sévère (perte autonomie, fractures vertébrales/col fémoral)",
+            "IMPUTABILITE_FREQ": "Corticoïdes : risque fracturaire ↑ 2-10x dès 10 mg prednisolone/j. IPP : ↓ Ca/Mg/B12. Antiépileptiques inducteurs : ↑ catabolisme vitamine D.",
+            "ID_PATHO_ASSOC": "PAT_025, PAT_020",
+            "BIO_SECONDAIRE": "BIO_005 (Ca), BIO_006 (Mg), 25-OH-vitamine D, BIO_021 (B12), BIO_035 (albumine), DMO (densitométrie)",
+            "CONDUITE_IMMEDIATE": "Prévention dès J1 corticothérapie ≥ 3 mois : Ca 1000 mg + vitamine D 800-1200 UI/j ; bisphosphonate (alendronate 70 mg/sem) si T-score ≤ -1.5 OU dose corticoïde ≥ 7.5 mg/j prolongée OU femme ménopausée. DMO à M0, M12. Apport protéique 1.2-1.5 g/kg/j (sarcopénie). Activité physique adaptée.",
+            "SEUIL_CRITIQUE": "Fracture vertébrale silencieuse (perte de taille > 3 cm) → DMO + radio rachis, bisphosphonate IV (acide zolédronique 5 mg/an) ou tériparatide si fractures multiples",
+            "SOURCE": "ACR 2017 (GIOP) ; IOF 2024 ; HAS 2018 ostéoporose ; STOPP/START v3 F1"
+        },
+        "SYND_050": {
+            "ID_SYNDROME": "SYND_050",
+            "NOM_SYNDROME": "Incontinence Urinaire Iatrogène",
+            "BIO_CIBLE": null,
+            "CONDITION": "Composite : diurétique (urgence mictionnelle) ± sédatif (BZD, Z-drug, opioïde — perception réduite du besoin) ± anticholinergique (rétention paradoxale → incontinence par regorgement) ± alpha-bloquant chez la femme (sphincter urétral) ± IEC (toux → incontinence d'effort)",
+            "GRAVITE": "Modérée (entrée en EHPAD, escarres, infections urinaires à répétition, dépression)",
+            "IMPUTABILITE_FREQ": "Diurétiques surtout vespéraux (nycturie + chutes), BZD au coucher, oxybutynine (rétention paradoxale), tamsulosine/alfuzosine chez femme",
+            "ID_PATHO_ASSOC": "PAT_009, PAT_037, PAT_038, PAT_039",
+            "BIO_SECONDAIRE": "ECBU si suspicion infection, résidu post-mictionnel échographique",
+            "CONDUITE_IMMEDIATE": "Calendrier mictionnel sur 3 jours. Revue médicamenteuse : déplacer le diurétique le matin, déprescrire BZD, swap oxybutynine → mirabégron, retirer alpha-bloquant chez femme, switch IEC → ARA2 si toux. Rééducation périnéale.",
+            "SEUIL_CRITIQUE": "Rétention urinaire aiguë (globe vésical) → sondage urgent ; incontinence + escarre → soins infirmiers renforcés",
+            "SOURCE": "ICI 2017 (Incontinence) ; Beers 2023 ; HAS 2007 incontinence urinaire SF ; STOPP/START v3 K4"
+        },
+        "SYND_051": {
+            "ID_SYNDROME": "SYND_051",
+            "NOM_SYNDROME": "QT Long Iatrogène — Charge Médicamenteuse",
+            "BIO_CIBLE": "BIO_031",
+            "CONDITION": "Composite : ≥ 2 médicaments allongeant le QT (CredibleMeds Risk_KR : citalopram > 20 mg, escitalopram > 10 mg, halopéridol, quétiapine, dompéridone, ondansétron, méthadone, fluoroquinolones, macrolides, antifongiques azolés, sotalol, amiodarone) ± hypokaliémie/hypomagnésémie/bradycardie/insuffisance hépatique",
+            "GRAVITE": "Sévère (torsades de pointes → mort subite)",
+            "IMPUTABILITE_FREQ": "Citalopram > 20 mg + halopéridol (couple gériatrique fréquent), fluoroquinolone + amiodarone, macrolide + statine, ondansétron en chimio + antiémétique",
+            "ID_PATHO_ASSOC": "PAT_006, PAT_010, PAT_022",
+            "BIO_SECONDAIRE": "BIO_001 (K+ < 4.0 = facteur précipitant), BIO_006 (Mg++ < 0.7), BIO_005 (Ca), bilan hépatique",
+            "CONDUITE_IMMEDIATE": "ECG avant introduction tout médicament Risk_KR si âgé ou polymédication. Recontrôle ECG à J7. Corriger K+ > 4.0 et Mg++ > 0.85. Si QTc 470-499 : déprescrire le médicament le moins indispensable. Si QTc ≥ 500 : ARRÊT immédiat, télémétrie, sulfate de magnésium 2 g IV.",
+            "SEUIL_CRITIQUE": "QTc ≥ 500 ms OU Δ QTc > 60 ms après introduction OU torsades documentées → urgence, scope, MgSO4 IV, isoprénaline si bradycardie",
+            "SOURCE": "CredibleMeds.org (mise à jour annuelle) ; Beers 2023 ; ESC 2022 Ventricular Arrhythmias ; ANSM Citalopram 2011"
         }
     },
     "MEDICAMENTS": [
@@ -2287,7 +2404,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "87",
                     "qt_risque": "",
-                    "ddi_interact": "AINS, Aspirine, Fluconazole",
+                    "ddi_interact": "AINS, Aspirine, Inhibiteurs P-gp/CYP3A4 (Clarithromycine, Verapamil, Diltiazem, Antifongiques azoles, Ritonavir), Inducteurs (Rifampicine, Carbamazepine, Phenytoine, Millepertuis)",
                     "ddi_interact_v2": [
                               {
                                         "classe": "AINS",
@@ -2301,24 +2418,60 @@ const MASTER_DB = {
                                                   "etoricoxib",
                                                   "meloxicam"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Risque hemorragique majeur — eviter au long cours, prefer paracetamol. Si AINS indispensable : courte duree + IPP",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Aspirine",
+                                        "classe": "Aspirine / Antiagregants",
                                         "dcis": [
-                                                  "aspirine"
+                                                  "aspirine",
+                                                  "clopidogrel",
+                                                  "ticagrelor",
+                                                  "prasugrel"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Bitherapie/tritherapie antithrombotique : duree minimale (1-12 mois max post-stent), reevaluation reguliere",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Fluconazole",
+                                        "classe": "Inhibiteurs forts P-gp + CYP3A4 (CONTRE-INDICATION)",
                                         "dcis": [
-                                                  "fluconazole"
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "cobicistat"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "↑ exposition apixaban x 2-4 — CONTRE-INDICATION (RCP Eliquis). Choisir alternative",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs moderes P-gp / CYP3A4",
+                                        "dcis": [
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "verapamil",
+                                                  "diltiazem",
+                                                  "fluconazole",
+                                                  "ciclosporine",
+                                                  "tacrolimus",
+                                                  "amiodarone",
+                                                  "dronedarone"
+                                        ],
+                                        "commentaire": "↑ moderee exposition apixaban — surveillance hemorragique accrue. Si patient deja a dose reduite (2.5 mg x2) : evaluer benefice/risque, prefer azithromycine vs clarithromycine",
                                         "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs P-gp / CYP3A4 (efficacite reduite)",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "carbamazepine",
+                                                  "phenytoine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "↓ exposition apixaban (efficacite anticoagulante reduite, risque thrombotique) — eviter, prefer AVK avec INR si indispensable",
+                                        "severite": "danger"
                               }
                     ],
                     "suivi_initial": "Créatinine/DFG (CI si DFG < 15) | Bilan hépatique | NFS | INR si relais AVK | Hb/Ht",
@@ -2655,26 +2808,80 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 98 %",
                     "qt_risque": "",
-                    "ddi_interact": "Macrolides, Azoles, Amiodarone, Protease",
+                    "ddi_interact": "Macrolides (clarithromycine/erythromycine = danger), Azoles (ketoconazole/itraconazole = danger), Ciclosporine, Amiodarone, Verapamil/Diltiazem, Inhibiteurs protease, Colchicine, Pamplemousse",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Macrolides",
+                                        "classe": "Macrolides forts (CYP3A4)",
                                         "dcis": [
                                                   "erythromycine",
-                                                  "clarithromycine",
+                                                  "clarithromycine"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4 → ↑ atorvastatine x 4-10 → rhabdomyolyse (risque vital). CONTRE-INDICATION pratique : suspendre la statine pendant l'antibiotherapie ou prefer azithromycine (effet moindre)",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Macrolides faibles",
+                                        "dcis": [
                                                   "azithromycine",
                                                   "roxithromycine"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Risque myotoxique faible mais possible — surveiller CPK si myalgies",
                                         "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antifongiques azoles forts",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4 → rhabdomyolyse. Suspendre statine ou switch vers pravastatine/rosuvastatine (moins CYP3A4)",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ciclosporine / Tacrolimus",
+                                        "dcis": [
+                                                  "ciclosporine",
+                                                  "tacrolimus"
+                                        ],
+                                        "commentaire": "↑ atorvastatine x 8-10 — eviter, prefer pravastatine (max 20 mg) ou fluvastatine",
+                                        "severite": "danger"
                               },
                               {
                                         "classe": "Amiodarone",
                                         "dcis": [
                                                   "amiodarone"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "↑ atorvastatine moderee — limiter dose atorvastatine a 40 mg",
                                         "severite": "warning"
+                              },
+                              {
+                                        "classe": "Verapamil / Diltiazem",
+                                        "dcis": [
+                                                  "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "↑ exposition statine — limiter dose atorvastatine a 40 mg, surveiller CPK si myalgies",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Colchicine",
+                                        "dcis": [
+                                                  "colchicine"
+                                        ],
+                                        "commentaire": "Risque additif de rhabdomyolyse — surveillance CPK si myalgies",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs protease (VIH/VHC)",
+                                        "dcis": [
+                                                  "ritonavir",
+                                                  "cobicistat",
+                                                  "darunavir"
+                                        ],
+                                        "commentaire": "↑ majeure atorvastatine — CONTRE-INDICATION ou doses minimales (10 mg max)",
+                                        "severite": "danger"
                               }
                     ],
                     "suivi_initial": "Bilan hépatique (ASAT/ALAT) | CPK | Glycemie/HbA1c | Bilan lipidique complet",
@@ -5915,14 +6122,33 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 98 %",
                     "qt_risque": "",
-                    "ddi_interact": "Omeprazole, AINS, Warfarine, Lansoprazole",
+                    "ddi_interact": "IPP forts inhibiteurs CYP2C19 (Omeprazole, Esomeprazole — DECONSEILLES, prefer Pantoprazole/Rabeprazole) - AINS - Warfarine - Repaglinide - ISRS (paroxetine, fluoxetine, fluvoxamine = inhibiteurs CYP2C19)",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Omeprazole",
+                                        "classe": "IPP forts inhibiteurs CYP2C19 (DECONSEILLES)",
                                         "dcis": [
-                                                  "omeprazole"
+                                                  "omeprazole",
+                                                  "esomeprazole"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "↓ activation clopidogrel (prodrogue CYP2C19) → reduction efficacite antiagregante ~ 30-50 %, risque thrombotique. PREFER pantoprazole ou rabeprazole (faibles inhibiteurs CYP2C19). Si IPP indispensable et clopidogrel : switch vers pantoprazole. (FDA Drug Safety 2010 ; ANSM 2011)",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "IPP acceptables (faibles inhibiteurs CYP2C19)",
+                                        "dcis": ["pantoprazole", "rabeprazole"],
+                                        "commentaire": "Effet negligeable sur clopidogrel — IPP de choix si association indispensable",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "Lansoprazole",
+                                        "dcis": ["lansoprazole"],
+                                        "commentaire": "Inhibition CYP2C19 intermediaire — donnees moins solides, prefer pantoprazole en couple avec clopidogrel",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS inhibiteurs CYP2C19",
+                                        "dcis": ["fluoxetine", "fluvoxamine", "paroxetine"],
+                                        "commentaire": "↓ activation clopidogrel (memes voies que les IPP forts) — surveiller plutot ticagrelor ou prasugrel si association",
                                         "severite": "warning"
                               },
                               {
@@ -5937,23 +6163,17 @@ const MASTER_DB = {
                                                   "etoricoxib",
                                                   "meloxicam"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Risque hemorragique majeur — eviter, prefer paracetamol",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Warfarine",
+                                        "classe": "Warfarine / AVK",
                                         "dcis": [
-                                                  "warfarine"
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
                                         ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Lansoprazole",
-                                        "dcis": [
-                                                  "lansoprazole"
-                                        ],
-                                        "commentaire": "",
+                                        "commentaire": "Bithérapie antithrombotique : risque hemorragique, INR cible bas (2.0-2.5), reevaluation reguliere",
                                         "severite": "warning"
                               }
                     ],
@@ -6198,11 +6418,42 @@ const MASTER_DB = {
                     "bhe": "0.0",
                     "albumine": "0,39",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "NFS | Bilan hépatique | Créatinine/DFG | CPK",
-                    "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | Créatinine (annuelle) | CPK si myalgies",
-                    "alerte_clinique": "Aplasie → NFS urgente (surtout si IRC ou associations CYP3A4/P-gp) | Rhabdomyolyse → CPK urgent | Troubles digestifs severes (diarrhee profuse) → ionogramme",
+                    "ddi_interact": "Macrolides (clarithromycine, erythromycine) - Statines - Ciclosporine - Verapamil - Diltiazem - Pamplemousse - Antifongiques azoles",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Macrolides (inhibiteurs CYP3A4 + P-gp)",
+                                        "dcis": ["clarithromycine", "erythromycine"],
+                                        "commentaire": "Toxicite colchicine majeure (rhabdomyolyse, aplasie medullaire, neuropathie, deces decrits) — CONTRE-INDICATION ABSOLUE chez IRC. Si DFG normal : reduire colchicine de 50-75 % et surveillance NFS/CPK rapprochee. Azithromycine possible (effet moindre)",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Antifongiques azoles",
+                                        "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "fluconazole"],
+                                        "commentaire": "Toxicite colchicine (CYP3A4) — eviter ou reduire dose drastiquement",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ciclosporine / Tacrolimus",
+                                        "dcis": ["ciclosporine", "tacrolimus"],
+                                        "commentaire": "Inhibition P-gp + CYP3A4 — toxicite colchicine majeure (rhabdomyolyse), CONTRE-INDICATION RELATIVE",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Verapamil / Diltiazem",
+                                        "dcis": ["verapamil", "diltiazem"],
+                                        "commentaire": "Inhibition P-gp ↑ exposition colchicine — reduire dose, surveiller NFS/CPK",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Statines",
+                                        "dcis": ["simvastatine", "atorvastatine", "rosuvastatine", "pravastatine", "fluvastatine"],
+                                        "commentaire": "Risque additif de rhabdomyolyse (myotoxicite cumulative) — informer patient, surveiller CPK si myalgies",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "NFS | Bilan hépatique | Créatinine/DFG | CPK | Recherche d'inhibiteurs CYP3A4/P-gp en cours",
+                    "suivi_periodique": "NFS (annuelle, plus si association CYP3A4/P-gp) | Bilan hépatique (annuel) | Créatinine (annuelle) | CPK si myalgies",
+                    "alerte_clinique": "Aplasie → NFS urgente (surtout si IRC ou associations CYP3A4/P-gp comme clarithromycine, ciclosporine) | Rhabdomyolyse → CPK urgent (risque amplifie par statine ou macrolide) | Troubles digestifs severes (diarrhee profuse) → ionogramme",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_011",
@@ -7249,8 +7500,57 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,25",
                     "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "Amiodarone - Hypokaliemiants (diuretiques) - Calcium",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Amiodarone - Verapamil - Diltiazem - Quinidine - Macrolides (clarithromycine, erythromycine) - Hypokaliemiants (diuretiques anse/thiazidiques) - Calcium IV - Spironolactone",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Amiodarone",
+                                        "dcis": ["amiodarone"],
+                                        "commentaire": "↑ digoxinemie x 1.7-2 (inhibition P-gp) — reduire dose digoxine de 50 % et controler digoxinemie a J7",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Verapamil / Diltiazem",
+                                        "dcis": ["verapamil", "diltiazem"],
+                                        "commentaire": "↑ digoxinemie (inhibition P-gp) + bradycardie additive — reduire dose, surveiller FC + digoxinemie",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Quinidine",
+                                        "dcis": ["quinidine"],
+                                        "commentaire": "↑ majeure digoxinemie — association deconseillee chez l'age",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": ["clarithromycine", "erythromycine", "azithromycine"],
+                                        "commentaire": "↑ digoxinemie (inhibition P-gp intestinale) — surveiller digoxinemie, prefer azithromycine si possible (effet moindre)",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Diuretiques hypokaliemants (anse, thiazidiques)",
+                                        "dcis": ["furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"],
+                                        "commentaire": "Hypokaliemie potentialise toxicite digitalique — surveiller K+ et Mg++, supplementer si besoin",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Calcium IV",
+                                        "dcis": ["calcium"],
+                                        "commentaire": "Bolus calcium IV (notamment hypercalcemie maligne) potentialise toxicite digitalique — eviter en perfusion rapide",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Spironolactone / Eplerenone",
+                                        "dcis": ["spironolactone", "eplerenone"],
+                                        "commentaire": "↑ legere digoxinemie + hyperkaliemie additive — surveiller K+ et digoxinemie",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine / Tacrolimus",
+                                        "dcis": ["ciclosporine", "tacrolimus"],
+                                        "commentaire": "Inhibition P-gp ↑ digoxinemie — surveiller digoxinemie, adapter dose",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "ECG | Ionogramme complet (kaliemie, magnesemie, calcemie +++) | Créatinine/DFG | NFS | Digoxinémie residuelle (cible 0.5-0.9 ng/mL chez ≥ 70 ans — DIG trial Rathore 2003 ; ESC 2024 AF §6.2)",
                     "suivi_periodique": "Digoxinémie (C0, 6-8 h post-dose, à J7 de toute modif posologique) annuelle si DFG stable, trimestrielle si DFG < 45 ou poly-medication | Ionogramme (tous les 3-6 mois) | Créatinine (tous les 3-6 mois) | ECG (annuel)",
                     "alerte_clinique": "Digoxinémie > 0.9 ng/mL chez âgé = sur-dosage → réduire dose. > 1.5 ng/mL OU symptômes (anorexie, vision jaune, BAV, ESV) = toxicité → arrêt + Fab anti-digoxine si arythmie grave | Hypokaliémie/hypomagnésémie potentialisent toxicité | Insuffisance rénale aiguë → dosage urgent (élimination rénale exclusive)",
@@ -9458,11 +9758,48 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 98 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Aminosides (ototoxicite + nephrotoxicite synergiques) - Digoxine (potentialise toxicite via hypokaliemie) - AINS (perte d'efficacite + IRA) - IEC/ARA2 (1ere dose hypotension) - Lithium (intoxication) - Sulfamides hypoglycemiants",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Aminosides",
+                                        "dcis": ["gentamicine", "amikacine", "tobramycine", "netilmicine"],
+                                        "commentaire": "Ototoxicite + nephrotoxicite synergiques (perte auditive irreversible, NTA) — eviter ; si indispensable : monodose, dosage residuelle, audio + creatinine",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS (triple whammy si associe IEC/ARA2)",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "meloxicam", "piroxicam"],
+                                        "commentaire": "↓ effet diuretique + risque IRA fonctionnelle ; triple whammy AINS+IEC+diuretique = NTA ischemique majeure",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Digoxine",
+                                        "dcis": ["digoxine"],
+                                        "commentaire": "Hypokaliemie/hypomagnesemie induite potentialise toxicite digitalique — surveiller K+/Mg++, supplementer",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": ["lithium"],
+                                        "commentaire": "↓ clairance lithium → intoxication. Eviter ou surveiller lithiemie",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "IEC / ARA2",
+                                        "dcis": ["ramipril", "perindopril", "enalapril", "lisinopril", "captopril", "losartan", "valsartan", "irbesartan", "candesartan", "telmisartan"],
+                                        "commentaire": "Premiere dose : hypotension marquee (deplete + RAAS) — debuter a faible dose le soir, surveiller TA/creatinine a J7",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Sulfamides hypoglycemiants",
+                                        "dcis": ["glimepiride", "gliclazide", "glibenclamide", "glipizide"],
+                                        "commentaire": "Diuretique de l'anse aggrave hypokaliemie qui ↓ secretion insuline ; surveillance glycemie + K+",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Ionogramme complet | Créatinine/DFG | Uricemie | Bilan hépatique",
                     "suivi_periodique": "Ionogramme + créatinine (tous les 3 a 6 mois si IRC) | Uricemie (annuelle)",
-                    "alerte_clinique": "Hypokaliemie | Hyponatremie | Hyperuricemie/goutte | Deshydratation",
+                    "alerte_clinique": "Hypokaliemie | Hyponatremie | Hyperuricemie/goutte | Deshydratation | Triple whammy (AINS+IEC+diuretique) → NTA",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_002",
@@ -17671,8 +18008,51 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,2",
                     "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "ISRS/IRSN (syndrome serotoninergique) - IMAO (CONTRE-INDICATION ABSOLUE) - Linezolide - Triptans - Mirtazapine - Lithium - Inducteurs/inhibiteurs CYP2D6 (paroxetine, fluoxetine) - BZD/opioides forts (depression respiratoire)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IMAO / IMAO-B",
+                                        "dcis": ["iproniazide", "moclobemide", "rasagiline", "selegiline", "safinamide", "linezolide"],
+                                        "commentaire": "CONTRE-INDICATION ABSOLUE — syndrome serotoninergique potentiellement letal (hyperthermie, rigidite, instabilite autonome). Wash-out 14 j requis",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "ISRS / IRSN (syndrome serotoninergique)",
+                                        "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "duloxetine", "venlafaxine", "milnacipran"],
+                                        "commentaire": "Syndrome serotoninergique : confusion, agitation, mydriase, hyperreflexie, clonus, hyperthermie, tremblements. Eviter chez l'age (Beers 2023, STOPP/START v3) ; si indispensable : doses minimales, surveillance clinique J1-J7",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Mirtazapine / Antidepresseurs serotoninergiques",
+                                        "dcis": ["mirtazapine"],
+                                        "commentaire": "Risque serotoninergique modere — surveillance clinique",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": ["lithium"],
+                                        "commentaire": "↑ risque serotoninergique + abaissement du seuil epileptogene",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Triptans",
+                                        "dcis": ["sumatriptan", "zolmitriptan", "rizatriptan", "almotriptan", "naratriptan"],
+                                        "commentaire": "Syndrome serotoninergique additif",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP2D6 (↓ activation)",
+                                        "dcis": ["paroxetine", "fluoxetine", "bupropion", "duloxetine"],
+                                        "commentaire": "↓ conversion en O-desmethyl tramadol → analgesie reduite ET concentrations parentales accrues (effets indesirables)",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "BZD / Opioides forts (depression respiratoire)",
+                                        "dcis": ["diazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "midazolam", "zopiclone", "zolpidem", "morphine", "oxycodone", "fentanyl", "hydromorphone"],
+                                        "commentaire": "Synergie sedative + depression respiratoire (FDA black box opioides + BZD) — eviter, sinon doses minimales + surveillance saturometrie",
+                                        "severite": "danger"
+                              }
+                    ],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique | Créatinine si IRC",
                     "suivi_periodique": "Pas de biologie systematique  évaluation clinique",
                     "alerte_clinique": "Surdosage → urgence clinique | Syndrome serotoninergique si ISRS associ",
@@ -21261,7 +21641,7 @@ const MASTER_DB = {
                     "bhe": "1 (passage BHE — action centrale)",
                     "albumine": "96%",
                     "qt_risque": "(PR) - Bradycardie et allongement PR, pas QTc directement",
-                    "ddi_interact": "Betabloquants, Digoxine, Diltiazem, Verapamil (bradycardie additive) | Anticholinergiques (antagonisme pharmacologique) | Inhibiteurs CYP3A4/2D6 (augmentation exposition)",
+                    "ddi_interact": "Betabloquants, Digoxine, Diltiazem, Verapamil (bradycardie additive — risque chute/syncope) | Anticholinergiques (antagonisme pharmacologique — perte d'efficacite) | Inhibiteurs CYP3A4/2D6 (augmentation exposition)",
                     "ddi_interact_v2": [
                               {
                                         "classe": "Bêta-bloquants",
@@ -21274,16 +21654,22 @@ const MASTER_DB = {
                                                   "propranolol",
                                                   "sotalol"
                                         ],
-                                        "commentaire": "",
-                                        "severite": "warning"
+                                        "commentaire": "Bradycardie additive (FC < 50 bpm) → syncope, chutes — surveillance ECG/FC, eviter sotalol (bradycardie + QT)",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs calciques bradycardisants",
+                                        "dcis": ["diltiazem", "verapamil"],
+                                        "commentaire": "Bradycardie additive + bloc AV — risque syncope, chutes ; eviter ou surveiller ECG/FC",
+                                        "severite": "danger"
                               },
                               {
                                         "classe": "Digoxine",
                                         "dcis": [
                                                   "digoxine"
                                         ],
-                                        "commentaire": "",
-                                        "severite": "warning"
+                                        "commentaire": "Bradycardie + bloc AV additifs — surveiller FC, ECG, digoxinemie",
+                                        "severite": "danger"
                               },
                               {
                                         "classe": "Inhibiteurs CYP3A4",
