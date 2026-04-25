@@ -1407,7 +1407,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Demi-vie courte (8–11h). Moins stable que warfarine.",
+                    "notes_cliniques": "AVK demi-vie courte (Sintrom) : INR cible selon indication (2.0-3.0 FA, 2.5-3.5 valve mécanique). Interactions multiples (alimentation, médicaments). Surveillance INR. Antidote vit K. Préférer AOD chez âgé (sauf valve méca, sténose mitrale, FRAIL-AF si déjà équilibré sous AVK).",
                     "source": "RCP Sintrom ; HAS 2008 AVK"
           },
           {
@@ -1499,6 +1499,7 @@ const MASTER_DB = {
                     "atb_moderee": "500 mg/8 à 12h",
                     "atb_severe": "500 mg/8 à 12h",
                     "atb_terminale": "500 mg/8 à 12h",
+                    "notes_cliniques": "Acide fusidique : indication infections staphylococciques cutanées/osseuses. Hépatotoxicité, interaction statines (rhabdomyolyse — atorvastatine en particulier). Surveillance BH.",
                     "source": "RCP Fucidine | SPILF 2023"
           },
           {
@@ -1829,6 +1830,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antispasmodique digestif (Spasmaverine) : effet anticholinergique léger (ACB=1). Indication SII, douleurs digestives spasmodiques. Bonne tolérance générale.",
                     "source": "RCP Spasfon-Lyoc | Pharmacopée"
           },
           {
@@ -1866,6 +1868,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiparkinsonien + antiviral (grippe A) : efficacité modeste. Œdèmes des MI, hallucinations chez âgé, livedo reticularis, troubles cognitifs. Adapter selon DFG.",
                     "source": "RCP Mantadix | HAS Parkinson 2016"
           },
           {
@@ -1951,6 +1954,7 @@ const MASTER_DB = {
                     "atb_moderee": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
                     "atb_severe": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
                     "atb_terminale": "En cas de situation clinique justifiant l’administration, la posologie unitaire ne doit pas être diminuée. Dans la majorité des cas, une injection unique suffit. Si plusieurs injections sont nécessaires, il est indispensable de réaliser des dosages du résiduel et d’espacer les doses.",
+                    "notes_cliniques": "Aminoside : ototoxicité (irréversible) + néphrotoxicité dose-cumulative. Privilégier 1 injection/j (15 mg/kg/j), durée la plus courte possible (≤ 5 j en gériatrie). Dosages plasmatiques (résiduel < 5 mg/L). Beers 2023 : éviter si DFG < 30 sauf alternative.",
                     "source": "RCP Amiklin | SPILF 2023"
           },
           {
@@ -2020,6 +2024,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "eleve",
                     "epileptogene_desc": "Pro-convulsivant (métabolite = théophylline)",
+                    "notes_cliniques": "Bronchodilatateur xanthine (théophylline + éthylènediamine) IV : marge thérapeutique étroite (10-20 mg/L). Tachycardie, troubles SNC (convulsions), interactions CYP1A2 (ciprofloxacine, fluvoxamine ↑ taux). À ÉVITER chez âgé sauf indication précise (Beers 2023).",
                     "source": "RCP Aminophylline | GINA 2023"
           },
           {
@@ -2218,6 +2223,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Tricyclique tétracyclique : profil similaire amitriptyline. ACB élevé, EPS possibles, cardiotoxicité. À ÉVITER chez âgé (Beers 2023, STOPP/START v3 D1).",
                     "source": "RCP Defanyl | HAS Depression 2017 ; Beers 2023"
           },
           {
@@ -2245,6 +2251,7 @@ const MASTER_DB = {
                     "atb_moderee": "DC de 1 g puis 750 mg/24h",
                     "atb_severe": "DC de 1 g puis 750 mg/24h",
                     "atb_terminale": "DC de 1 g puis 750 mg/24h",
+                    "notes_cliniques": "Pénicilline A : allergies croisées β-lactamines (10 % toutes pénicillines, 1-2 % entre pénicillines et céphalosporines C3G). Diarrhée fréquente. Adapter si DFG < 30. Risque C. difficile.",
                     "source": "RCP Clamoxyl | SPILF 2023"
           },
           {
@@ -2304,6 +2311,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Augmentin : risque hépatotoxicité (cholestase, J5-J45 post-cure, ↑ avec âge), C. difficile, diarrhée. Adapter si DFG < 30. Durée la plus courte possible.",
                     "source": "RCP Augmentin | SPILF 2023"
           },
           {
@@ -2351,6 +2359,7 @@ const MASTER_DB = {
                     "atb_moderee": "Posologie usuelle : 1 à 2 g /6 à 12h",
                     "atb_severe": "Posologie usuelle : 1 à 2 g /6 à 12h",
                     "atb_terminale": "DC de 1 g puis 500 mg/12h",
+                    "notes_cliniques": "Pénicilline A IV/IM : profil similaire à amoxicilline. Adapter si DFG < 30. Allergie croisée β-lactamines.",
                     "source": "RCP Totapen | SPILF 2023"
           },
           {
@@ -2390,6 +2399,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Pénicilline + inhibiteur BL : indications étendues vs ampi seule. Hépatotox possible (sulbactam). Adapter DFG.",
                     "source": "RCP Unasyn | SPILF 2023"
           },
           {
@@ -2650,6 +2660,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipsychotique SGA sublingual : indication trouble bipolaire. Sédation, prise de poids, EPS modérés. Mortalité ↑ chez déments (Beers 2023 : éviter sauf indication psychiatrique formelle).",
                     "source": "RCP Sycrest | HAS 2017 ; Beers 2023"
           },
           {
@@ -3001,6 +3012,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Immunosuppresseur (pro-drogue 6-MP) : myélotoxicité (NFS hebdo M1-M3 puis mensuelle), hépatotoxicité, lymphome, infections. INTERACTION CRITIQUE avec allopurinol (Phase 8 — toxicité hématologique majeure, réduire dose 75 %). Test TPMT/NUDT15 recommandé pré-cure.",
                     "source": "RCP Imurel | HAS 2022"
           },
           {
@@ -3069,6 +3081,7 @@ const MASTER_DB = {
                     "atb_moderee": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
                     "atb_severe": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
                     "atb_terminale": "Selon indication : 1 g en prise unique OU 500 mg de J1 à J3 OU 500 mg à J1 puis 250 mg de J2 à J5",
+                    "notes_cliniques": "Macrolide d'élimination biliaire — pas de CI rénale, peu d'interactions CYP3A4 (préférée chez âgé). Allongement QT modéré (signal FDA 2013, alerte si QTc > 470 ou cardiopathie). Demi-vie longue (durée 3-5 j).",
                     "source": "RCP Zithromax | SPILF 2023"
           },
           {
@@ -3109,6 +3122,7 @@ const MASTER_DB = {
                     "atb_moderee": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
                     "atb_severe": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
                     "atb_terminale": "Cystite aiguë ou infection gonococcique non compliquée : 1 g dose unique",
+                    "notes_cliniques": "Aztreonam : indication infections Gram- (alternative β-lactamines en cas d'allergie). Pas d'allergie croisée pénicillines/céphalosporines (sauf ceftazidime). Adapter DFG.",
                     "source": "RCP Azactam | SPILF 2023"
           },
           {
@@ -3184,6 +3198,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "modere",
                     "epileptogene_desc": "Sevrage brutal = convulsions — ne jamais arrêter brutalement",
+                    "notes_cliniques": "Myorelaxant (agoniste GABA-B) : sédation, confusion chez âgé, syndrome de sevrage si arrêt brutal (convulsions, hallucinations). Adapter selon DFG. Beers 2023 : prudence.",
                     "source": "RCP Lioresal | HAS 2023"
           },
           {
@@ -3274,6 +3289,7 @@ const MASTER_DB = {
                     "atb_moderee": "Semaines 1 et 2 : 400 mg, 1 fois par jour Semaines 3 à 24 : 200 mg, 3 fois par semaine, avec un intervalle d’au moins 48 heures entre chaque prise",
                     "atb_severe": "Semaines 1 et 2 : 400 mg, 1 fois par jour Semaines 3 à 24 : 200 mg, 3 fois par semaine, avec un intervalle d’au moins 48 heures entre chaque prise",
                     "atb_terminale": "Aucune donnée",
+                    "notes_cliniques": "Antituberculeux MDR : QT prolongé majeur (ECG mensuel), hépatotoxicité. Réservé tuberculose multirésistante. Demi-vie très longue.",
                     "source": "RCP Sirturo | OMS TB 2022"
           },
           {
@@ -3309,6 +3325,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anticholinergique végétal (atropine + scopolamine) : ACB élevé. À ÉVITER chez âgé (Beers 2023 — confusion, rétention urinaire, glaucome).",
                     "source": "Pharmacopée | Beers 2023"
           },
           {
@@ -3364,6 +3381,7 @@ const MASTER_DB = {
                     "atb_moderee": "1,8 MUI tous les 8 jours",
                     "atb_severe": "1,8 MUI tous les 8 jours",
                     "atb_terminale": "1,8 MUI tous les 8 jours",
+                    "notes_cliniques": "Pénicilline G retard IM (Extencilline) : indication syphilis, prophylaxie RAA. 1 injection IM profonde. Allergie pénicillines : CI absolue.",
                     "source": "RCP Extencilline | SPILF 2023"
           },
           {
@@ -3429,6 +3447,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiparkinsonien anticholinergique (ACB=3) : indication EPS aux neuroleptiques. À ÉVITER chez âgé (Beers 2023, STOPP D1 — confusion, chutes).",
                     "source": "RCP Cogentin | Beers 2023"
           },
           {
@@ -3585,6 +3604,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Laxatif stimulant : indication 2e ligne (après macrogol/lactulose). Crampes abdominales. Pas en usage chronique (atonie colique). Acceptable en gériatrie pour constipation opioïde résistante.",
                     "source": "RCP Dulcolax | SNFGE 2018"
           },
           {
@@ -3819,6 +3839,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Agoniste DA ergoline : indication Parkinson (rare en 1ère intention) + hyperprolactinémie. Risque valvulopathie cardiaque (FDA warning) → préférer non-ergot (ropinirole, rotigotine, pramipexole). Rare chez âgé.",
                     "source": "RCP Parlodel | HAS Parkinson 2016"
           },
           {
@@ -3854,6 +3875,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Dimegan | Beers 2023"
           },
           {
@@ -4247,6 +4269,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur DDC périphérique : toujours associé à lévodopa (Sinemet, Stalevo). Pas d'effet propre. Adaptation dose selon réponse motrice + dyskinésies.",
                     "source": "RCP Sinemet | HAS Parkinson 2016"
           },
           {
@@ -4314,6 +4337,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP | Beers 2023"
           },
           {
@@ -4455,6 +4479,7 @@ const MASTER_DB = {
                     "atb_moderee": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
                     "atb_severe": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
                     "atb_terminale": "250 à 500 mg/8h Posologie max : 1500 mg/24h",
+                    "notes_cliniques": "Céphalosporine 2e génération : couverture Gram+/Gram- élargie. Allergie croisée pénicillines. Adapter DFG. Risque C. difficile.",
                     "source": "RCP Alfatil | SPILF 2023"
           },
           {
@@ -4481,6 +4506,7 @@ const MASTER_DB = {
                     "atb_moderee": "1 g/12h",
                     "atb_severe": "1 g/12h",
                     "atb_terminale": "500 mg/12h",
+                    "notes_cliniques": "Céphalosporine 1ère génération : Gram+ (cocci, S. aureus méti-S). Allergie croisée pénicillines (5-10 %). Adapter selon DFG. Risque C. difficile.",
                     "source": "RCP Oracéfal | SPILF 2023"
           },
           {
@@ -4507,6 +4533,7 @@ const MASTER_DB = {
                     "atb_moderee": "500 mg/12h",
                     "atb_severe": "500 mg/12h",
                     "atb_terminale": "500 mg/12h",
+                    "notes_cliniques": "Céphalosporine 1ère génération : Gram+ (cocci, S. aureus méti-S). Allergie croisée pénicillines (5-10 %). Adapter selon DFG. Risque C. difficile.",
                     "source": "RCP Keforal | SPILF 2023"
           },
           {
@@ -4553,6 +4580,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Céphalosporine 2e génération : couverture Gram+/Gram- élargie. Allergie croisée pénicillines. Adapter DFG. Risque C. difficile.",
                     "source": "RCP Cefamandole | SPILF 2023"
           },
           {
@@ -4592,6 +4620,7 @@ const MASTER_DB = {
                     "atb_moderee": "DC de 500 mg puis 125 à 250 mg/12h",
                     "atb_severe": "DC de 500 mg puis 125 à 250 mg/12h",
                     "atb_terminale": "DC de 500 mg puis 125 à 250 mg/12h",
+                    "notes_cliniques": "Céphalosporine 1ère génération : Gram+ (cocci, S. aureus méti-S). Allergie croisée pénicillines (5-10 %). Adapter selon DFG. Risque C. difficile.",
                     "source": "RCP Cefazoline | SPILF 2023"
           },
           {
@@ -4621,6 +4650,7 @@ const MASTER_DB = {
                     "atb_moderee": "1,5 g/8h",
                     "atb_severe": "1,5 g/8h",
                     "atb_terminale": "1,5 g/8h",
+                    "notes_cliniques": "Céfidérocol : siderophore actif sur BMR (BLSE, KPC, NDM, OXA, Pseudomonas/Acinetobacter MDR). Réservé aux infections sans alternative. Prescription spécialisée.",
                     "source": "RCP Fetcroja | SPILF 2023"
           },
           {
@@ -4647,6 +4677,7 @@ const MASTER_DB = {
                     "atb_moderee": "200 mg/12h",
                     "atb_severe": "200 mg/12h",
                     "atb_terminale": "200 mg/12h",
+                    "notes_cliniques": "Céphalosporine 3e génération orale : indications ORL, urinaires. Biodisponibilité variable. Adapter DFG. Risque C. difficile.",
                     "source": "RCP Oroken | SPILF 2023"
           },
           {
@@ -4675,6 +4706,7 @@ const MASTER_DB = {
                     "atb_moderee": "1 à 2 g/12h",
                     "atb_severe": "750 à 1500 mg/12h",
                     "atb_terminale": "750 à 1500 mg/24h",
+                    "notes_cliniques": "Céphalosporine 3e génération IV : large spectre Gram-/Gram+. Adapter DFG. Risque C. difficile +++.",
                     "source": "RCP Claforan | SPILF 2023"
           },
           {
@@ -4713,6 +4745,7 @@ const MASTER_DB = {
                     "atb_moderee": "1 à 2 g/8 à 12h",
                     "atb_severe": "1 à 2 g/12 à 24h",
                     "atb_terminale": "1 à 2 g/12 à 24h",
+                    "notes_cliniques": "Céphalosporine 2e génération : couverture Gram+/Gram- élargie. Allergie croisée pénicillines. Adapter DFG. Risque C. difficile.",
                     "source": "RCP Mefoxin | SPILF 2023"
           },
           {
@@ -4742,6 +4775,7 @@ const MASTER_DB = {
                     "atb_moderee": "2 g/12h",
                     "atb_severe": "2 g/24h",
                     "atb_terminale": "1 g/24h",
+                    "notes_cliniques": "Ceftazidime : couverture Pseudomonas. Adapter selon DFG (élimination rénale). Risque C. difficile, neurotoxicité chez IRC.",
                     "source": "RCP Fortum | SPILF 2023"
           },
           {
@@ -4771,6 +4805,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Céphalosporine 3G + inhibiteur β-lactamase : actif sur entérobactéries productrices de BLSE (et certains carbapénémases selon molécule). Réservé aux BMR. Prescription spécialisée.",
                     "source": "RCP Zavicefta | SPILF 2023"
           },
           {
@@ -4800,6 +4835,7 @@ const MASTER_DB = {
                     "atb_moderee": "500 mg/12h",
                     "atb_severe": "250 mg/12h",
                     "atb_terminale": "250 mg/24h",
+                    "notes_cliniques": "Céphalosporine 5G anti-MRSA : réservée infections compliquées (peau, pneumopathie nosocomiale). Prescription hospitalière spécialisée. Adapter DFG.",
                     "source": "RCP Zevtera | SPILF 2023"
           },
           {
@@ -4829,6 +4865,7 @@ const MASTER_DB = {
                     "atb_moderee": "500 mg/8h 1 g/8h",
                     "atb_severe": "250 mg /8h 500 mg/8h",
                     "atb_terminale": "DC de 500 mg puis 8h plus tard 100 mg/8h DC 1500 mg puis 8h plus tard 300 mg/8h",
+                    "notes_cliniques": "Céphalosporine 3G + inhibiteur β-lactamase : actif sur entérobactéries productrices de BLSE (et certains carbapénémases selon molécule). Réservé aux BMR. Prescription spécialisée.",
                     "source": "RCP Zerbaxa | SPILF 2023"
           },
           {
@@ -4867,6 +4904,7 @@ const MASTER_DB = {
                     "atb_moderee": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
                     "atb_severe": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
                     "atb_terminale": "Infection modérée : 1 à 2 g/24h Infection sévère : 2 à 4 g/24h Si infection neuroméningée : 75 à 100 mg/kg/24h ; Aucune donnée chez l’insuffisant rénal",
+                    "notes_cliniques": "Ceftriaxone : 1 inj/j (demi-vie 8 h, élimination biliaire — pas d'adaptation rénale). Risque biliaire (boue/lithiase chez âgé), C. difficile, neurotoxicité (encéphalopathie chez IRC sévère). Allergie croisée pénicillines 1-2 %.",
                     "source": "RCP Rocéphine | SPILF 2023"
           },
           {
@@ -4893,6 +4931,7 @@ const MASTER_DB = {
                     "atb_moderee": "250 à 500 mg/12h",
                     "atb_severe": "250 à 500 mg/24h",
                     "atb_terminale": "250 à 500 mg/48h",
+                    "notes_cliniques": "Céphalosporine 2e génération : couverture Gram+/Gram- élargie. Allergie croisée pénicillines. Adapter DFG. Risque C. difficile.",
                     "source": "RCP Zinnat | SPILF 2023"
           },
           {
@@ -4959,6 +4998,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Coxib (COX-2 sélectif) : moins de risque digestif que AINS classiques mais risque CV (HTA, IC, MTEV). Précautions : éviter si MCV/IC, durée la plus courte. Beers 2023 : prudence.",
                     "source": "RCP Celebrex | EULAR 2023 ; Beers 2023"
           },
           {
@@ -5016,6 +5056,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Bêtabloquant : surveillance FC (cible > 50 bpm) et TA. Bradycardie additive avec digoxine, vérapamil/diltiazem, IACHE (Phase 8). Préférer cardiosélectifs en gériatrie (bisoprolol, métoprolol succinate, nébivolol — STOPP/START v3).",
                     "source": "RCP Celectol | ESC HTA 2023"
           },
           {
@@ -5096,6 +5137,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Benzodiazépine : sédation, chutes, confusion, dépression respi (avec opioïdes — SYND_044), tolérance/dépendance. À ÉVITER chez âgé sauf indication précise courte (Beers 2023, STOPP D5). Préférer lorazépam ou oxazépam (½ vie courte).",
                     "source": "RCP Librium | HAS BZD 2022 ; Beers 2023"
           },
           {
@@ -5151,6 +5193,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipaludéen + anti-inflammatoire : rétinopathie cumulative (ophtalmologie annuelle si > 5 ans), QT prolongé, hypoglycémie. Préférer hydroxychloroquine (mieux tolérée).",
                     "source": "RCP Nivaquine | Pharmacopée"
           },
           {
@@ -5296,6 +5339,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Diurétique : hypokaliémie, hyponatrémie (thiazidiques surtout), déshydratation, hyperuricémie. Surveillance ionogramme/créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
                     "source": "RCP Hygroton | ESC HTA 2023"
           },
           {
@@ -5373,6 +5417,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Diurétique : hypokaliémie, hyponatrémie (thiazidiques surtout), déshydratation, hyperuricémie. Surveillance ionogramme/créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
                     "source": "RCP Hygroton | ESC HTA 2023"
           },
           {
@@ -5519,6 +5564,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Diurétique : hypokaliémie, hyponatrémie (thiazidiques surtout), déshydratation, hyperuricémie. Surveillance ionogramme/créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
                     "source": "RCP Tenstaten | ESC HTA 2023"
           },
           {
@@ -5725,6 +5771,7 @@ const MASTER_DB = {
                     "atb_terminale": "250-500 mg/24h",
                     "epileptogene": "modere",
                     "epileptogene_desc": "FQ — risque convulsif",
+                    "notes_cliniques": "Fluoroquinolone : allongement QT, tendinopathie achilléenne (risque ↑ si corticoïdes ou ≥ 60 ans), dissection aortique (FDA 2018), hypoglycémie sous antidiabétiques (FDA 2018), troubles SNC (confusion, convulsions). Inhibiteur CYP1A2 (theophylline). À ÉVITER en 1ère intention si alternative chez âgé (Beers 2023).",
                     "source": "RCP Ciflox | SPILF 2023"
           },
           {
@@ -5861,6 +5908,7 @@ const MASTER_DB = {
                     "atb_moderee": "250 mg/24h",
                     "atb_severe": "250 mg/24h",
                     "atb_terminale": "250 mg/24h",
+                    "notes_cliniques": "Macrolide : inhibiteur CYP3A4 puissant + QT prolongé. Interactions vitales : statines (CI atorva/simva), colchicine (CI si IRC), AOD (↑ apixaban/rivaro), vérapamil. Demi-dose si DFG < 30. Préférer azithromycine si possible. Beers 2023.",
                     "source": "RCP Zeclar | SPILF 2023"
           },
           {
@@ -5896,6 +5944,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Tavegyl | Beers 2023"
           },
           {
@@ -5956,6 +6005,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antispasmodique anticholinergique : ACB=3. À ÉVITER chez âgé (Beers 2023, STOPP D1).",
                     "source": "RCP Librax | Beers 2023"
           },
           {
@@ -6000,6 +6050,7 @@ const MASTER_DB = {
                     "atb_moderee": "600 mg/6 à 8h",
                     "atb_severe": "600 mg/6 à 8h",
                     "atb_terminale": "600 mg/6 à 8h",
+                    "notes_cliniques": "Clindamycine : RISQUE C. DIFFICILE MAJEUR (1ère cause iatrogène — Beers 2023, IDSA 2021). Indications infections anaérobies, alternative β-lactamines en cas d'allergie. Adapter en gériatrie. Surveillance diarrhée.",
                     "source": "RCP Dalacine | SPILF 2023"
           },
           {
@@ -6289,6 +6340,7 @@ const MASTER_DB = {
                     "atb_moderee": "50 mg/kg/24h en 3 prises (sans dépasser 4 g/24h)",
                     "atb_severe": "50 mg/kg/24h en 3 prises (sans dépasser 4 g/24h)",
                     "atb_terminale": "Aucune donnée",
+                    "notes_cliniques": "Pénicilline M antistaphylococcique : indication SARM-/SAMS. Doses élevées (8-12 g/j) en endocardite. Hépatotoxicité possible.",
                     "source": "RCP Orbenine | SPILF 2023"
           },
           {
@@ -6515,6 +6567,7 @@ const MASTER_DB = {
                     "atb_moderee": "DC de 9 MUI puis 5,5 à 7,5 MUI/24h en 2 perfusions",
                     "atb_severe": "DC de 9 MUI puis 4,5 à 5,5 MUI/24h en 2 perfusion",
                     "atb_terminale": "DC de 9 MUI puis 4,5 à 5,5 MUI/24h en 2 perfusion",
+                    "notes_cliniques": "Polymyxine IV : néphrotoxicité importante, neurotoxicité (paresthésies, vertige). Réservée infections BMR (Pseudomonas/Acinetobacter MDR). Adapter selon DFG. Prescription spécialisée.",
                     "source": "RCP Colimycine | SPILF 2023"
           },
           {
@@ -6622,6 +6675,7 @@ const MASTER_DB = {
                     "atb_moderee": "800 mg/160 mg/24h",
                     "atb_severe": "Contre-indiqué",
                     "atb_terminale": "Contre-indiqué",
+                    "notes_cliniques": "Sulfaméthoxazole/triméthoprime : hyperkaliémie (synergique IEC/ARM/spironolactone), hyponatrémie, allergie cutanée (Stevens-Johnson rare), pancytopénie. Adapter selon DFG. Surveillance K+/Na+/NFS.",
                     "source": "RCP Bactrim | SPILF 2023"
           },
           {
@@ -6706,6 +6760,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antidépresseur tricyclique : ACB élevé (anticholinergique fort), QT, hypotension orthostatique, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1, FORTA-D, PRISCUS).",
                     "source": "RCP Flexeril | Beers 2023"
           },
           {
@@ -6759,6 +6814,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antituberculeux 2e ligne : neurotoxicité MAJEURE (psychose, convulsions, dépression — ↑ avec âge et IRC). Adapter selon DFG. Surveillance psychiatrique.",
                     "source": "RCP Seromycine | OMS TB 2022"
           },
           {
@@ -6800,6 +6856,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Periactin | Beers 2023"
           },
           {
@@ -6915,6 +6972,7 @@ const MASTER_DB = {
                     "atb_moderee": "1500 mg en une seule perfusion OU 1000 mg en perfusion de 30 min suivi de 500 mg 7 jours après",
                     "atb_severe": "1000 mg en une seule perfusion OU 750 mg suivi de 375 mg 7 jours après",
                     "atb_terminale": "1000 mg en une seule perfusion OU 750 mg suivi de 375 mg 7 jours après",
+                    "notes_cliniques": "Lipoglycopeptide IV à durée d'action prolongée (1 inj/sem ou 1 dose unique). Réservée infections cutanées MRSA. Pas d'AMM endocardite. Coût élevé. Pas d'expérience large en gériatrie.",
                     "source": "RCP Xydalba | SPILF 2023"
           },
           {
@@ -7008,6 +7066,7 @@ const MASTER_DB = {
                     "atb_moderee": "Infection non sévère : 6 à 8 mg/kg en perfusion de 30 min, 1 fois/24h",
                     "atb_severe": "6 à 8 mg/48h",
                     "atb_terminale": "6 à 8 mg/48h",
+                    "notes_cliniques": "Lipopeptide IV : myotoxicité (CPK hebdomadaire, arrêt si > 5N), pneumopathie éosinophile rare. CI dans pneumopathies (inactivée par surfactant). Adapter DFG.",
                     "source": "RCP Cubicin | SPILF 2023"
           },
           {
@@ -7055,6 +7114,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anticholinergique urinaire sélectif M3 : ACB=2. Effets anticholinergiques moindres que oxybutynine mais persistance. Préférer mirabégron (Beers 2023, STOPPFrail).",
                     "source": "RCP Enablex | Beers 2023"
           },
           {
@@ -7133,6 +7193,7 @@ const MASTER_DB = {
                     "atb_moderee": "450 mg/12h",
                     "atb_severe": "450 mg/12h",
                     "atb_terminale": "450 mg/12h",
+                    "notes_cliniques": "Fluoroquinolone anionique (anti-MRSA), réservée infections compliquées peau/poumon. QT moindre que moxifloxacine. Pas d'expérience suffisante en gériatrie.",
                     "source": "RCP Quofenix | SPILF 2023"
           },
           {
@@ -7183,6 +7244,7 @@ const MASTER_DB = {
                     "atb_moderee": "100 mg deux fois par jour pendant 24 semaines",
                     "atb_severe": "100 mg deux fois par jour pendant 24 semaines",
                     "atb_terminale": "Aucune donnée",
+                    "notes_cliniques": "Antituberculeux MDR : QT prolongé, hépatotoxicité. Réservé MDR-TB. Prescription spécialisée.",
                     "source": "RCP Deltyba | OMS TB 2022"
           },
           {
@@ -7236,6 +7298,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antidépresseur tricyclique : ACB élevé (anticholinergique fort), QT, hypotension orthostatique, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1, FORTA-D, PRISCUS).",
                     "source": "RCP Pertofran | Beers 2023"
           },
           {
@@ -7260,6 +7323,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Aerius | RCP"
           },
           {
@@ -7423,6 +7487,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antitussif : agoniste µ faible + NMDA. Risque sérotoninergique avec ISRS/IMAO/Tramadol (rare mais documenté). Préférer toux non productive : ambroxol, paracétamol.",
                     "source": "RCP Tussidane | Beers 2023"
           },
           {
@@ -7486,6 +7551,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antispasmodique anticholinergique : ACB=2-3. À ÉVITER chez âgé (Beers 2023, STOPP D1).",
                     "source": "RCP Bentyl | Beers 2023"
           },
           {
@@ -7698,6 +7764,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Nausicalm | Beers 2023"
           },
           {
@@ -7752,6 +7819,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Nautamine | Beers 2023"
           },
           {
@@ -7816,6 +7884,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiagrégant + vasodilatateur : à ÉVITER chez âgé (FORTA-D — hypotension, syncope, bénéfice CV non démontré en monothérapie). Beers 2023 : éviter.",
                     "source": "RCP Persantine | ESC 2024"
           },
           {
@@ -7903,6 +7972,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiémétique D2 périphérique : ALLONGEMENT QT MAJEUR (Risk_KR — Black Box ANSM 2014 : surmortalité), restrictions strictes (durée ≤ 7 j, dose minimale, ECG si > 60 ans). Préférer métoclopramide courte durée ou ondansétron.",
                     "source": "RCP Motilium | ANSM 2014"
           },
           {
@@ -8014,6 +8084,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antidépresseur tricyclique : ACB élevé (anticholinergique fort), QT, hypotension orthostatique, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1, FORTA-D, PRISCUS).",
                     "source": "RCP Prothiaden | HAS Depression 2017 ; Beers 2023"
           },
           {
@@ -8147,6 +8218,7 @@ const MASTER_DB = {
                     "atb_moderee": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
                     "atb_severe": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
                     "atb_terminale": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
+                    "notes_cliniques": "Tétracycline : photosensibilité, œsophagite (rester debout 30 min après PO), pas d'adaptation rénale. Bien tolérée chez âgé. Indication Lyme, BPCO exacerbation, acné, prophylaxie palu.",
                     "source": "RCP Doxy | SPILF 2023"
           },
           {
@@ -8521,6 +8593,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur COMT : associé lévodopa (Stalevo) pour fluctuations motrices. Coloration urines orange, diarrhée, dyskinésies (réduire lévodopa de 20-30 %). Tolérable chez âgé.",
                     "source": "RCP Comtan | HAS Parkinson 2016"
           },
           {
@@ -8556,6 +8629,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Sympathomimétique : indication hypotension peropératoire, asthme rare. À ÉVITER chez âgé (Beers 2023 — HTA, tachycardie, agitation, insomnie). Préférer salbutamol pour asthme.",
                     "source": "RCP Ephedrine | Beers 2023"
           },
           {
@@ -8684,6 +8758,7 @@ const MASTER_DB = {
                     "atb_moderee": "1 g/ 24h",
                     "atb_severe": "1 g/ 24h",
                     "atb_terminale": "1 g/ 24h",
+                    "notes_cliniques": "Carbapénème 1 inj/j (couvre BLSE mais PAS Pseudomonas/Acinetobacter). Profil rénal : adapter si DFG < 30. Convulsions possibles si surdosage chez âgé/IRC.",
                     "source": "RCP Invanz | SPILF 2023"
           },
           {
@@ -8791,6 +8866,7 @@ const MASTER_DB = {
                     "atb_moderee": "500 à 750 mg/8 à 12h",
                     "atb_severe": "500 à 750 mg/8 à 12h",
                     "atb_terminale": "500 à 750 mg/8 à 12h",
+                    "notes_cliniques": "Macrolide : inhibiteur CYP3A4 fort + allongement QT (Risk_KR CredibleMeds). Interactions majeures : statines (rhabdomyolyse), AOD/AVK (saignement), colchicine (toxicité), digoxine (↑ exposition). Préférer azithromycine ou pristinamycine chez âgé. Beers 2023 prudence.",
                     "source": "RCP Erythrocine | SPILF 2023"
           },
           {
@@ -8877,6 +8953,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anesthésique NMDA spray nasal : indication dépression résistante. Hallucinations, dissociation, HTA. Prescription spécialisée hospitalière. Pas d'expérience large en gériatrie.",
                     "source": "RCP Spravato | RCP ; HAS 2022"
           },
           {
@@ -8931,7 +9008,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Prendre 30 min avant repas. Réévaluation annuelle si usage prolongé.",
+                    "notes_cliniques": "IPP isomère S de l'oméprazole : INHIBITEUR CYP2C19 fort (interaction clopidogrel — Phase 8 B8 = DANGER). Mêmes risques que oméprazole (carence B12, ostéoporose, néphrite, C. diff, pneumopathie). REMEDIES : déprescrire si pas d'indication active. STOPPFrail SF05.",
                     "source": "RCP Inexium ; HAS 2020 IPP"
           },
           {
@@ -8997,6 +9074,7 @@ const MASTER_DB = {
                     "atb_moderee": "10 mg/kg/j",
                     "atb_severe": "10 mg/kg/j",
                     "atb_terminale": "10 mg/kg/j",
+                    "notes_cliniques": "Antituberculeux : NÉVRITE OPTIQUE dose-dépendante (ophtalmologie M0, M2, M4). Adapter selon DFG. Hyperuricémie possible.",
                     "source": "RCP Dexambutol | OMS TB 2022"
           },
           {
@@ -9131,6 +9209,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur xanthine oxydase (Adénuric) : alternative allopurinol si intolérance. SURMORTALITÉ CARDIOVASCULAIRE décrite (CARES trial 2018) — prudence si MCV. Surveillance BH initiale.",
                     "source": "RCP Adenuric | EULAR Goutte 2023"
           },
           {
@@ -9296,6 +9375,7 @@ const MASTER_DB = {
                     "atb_moderee": "200 mg/12h",
                     "atb_severe": "200 mg/12h",
                     "atb_terminale": "200 mg/12h",
+                    "notes_cliniques": "Macrolide non absorbé — réservé à C. difficile (1ère intention récidive selon ESCMID 2021). Pas d'interactions systémiques. Coût élevé.",
                     "source": "RCP Dificlir | SPILF 2023 ; ESCMID C. difficile 2021"
           },
           {
@@ -9320,6 +9400,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antispasmodique musculotrope (vessie hyperactive) : ACB=1. Efficacité modeste vs anticholinergiques sélectifs/mirabégron. Préférer mirabégron en gériatrie.",
                     "source": "RCP Urispas | Beers 2023"
           },
           {
@@ -9657,6 +9738,7 @@ const MASTER_DB = {
                     "atb_moderee": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
                     "atb_severe": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
                     "atb_terminale": "Cystite aiguë non compliquée de la femme et adolescente de + de 12 ans : 3 g en prise unique",
+                    "notes_cliniques": "Fosfomycine : 1ère intention infection urinaire basse (femme — 1 sachet 3 g dose unique). Bien toléré, alternative à nitrofurantoïne si DFG < 45. Pas d'AMM systémique au long cours.",
                     "source": "RCP Monuril | SPILF 2023"
           },
           {
@@ -9909,6 +9991,7 @@ const MASTER_DB = {
                     "atb_moderee": "3 à 8 mg/kg/j",
                     "atb_severe": "3 à 8 mg/kg/j",
                     "atb_terminale": "3 à 8 mg/kg/j",
+                    "notes_cliniques": "Aminoside : ototoxicité + néphrotoxicité. 1 injection/j (3-7 mg/kg). Dosage résiduel < 1 mg/L. Surveillance audio + créat avant et 2x/sem. Synergie ototoxique avec furosémide IV (Phase 8 SYND_044/B5).",
                     "source": "RCP Gentalline | SPILF 2023"
           },
           {
@@ -9958,6 +10041,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Expectorant : faible ACB. Bonne tolérance. Indication symptomatique toux productive. Efficacité modeste.",
                     "source": "RCP Mucinex | Pharmacopée"
           },
           {
@@ -10086,6 +10170,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Vasodilatateur artériolaire direct : indication HFrEF + intolérance IEC/ARA2 (avec ISDN — V-HeFT). Tachycardie réflexe, lupus iatrogène. Rare en 1ère intention.",
                     "source": "RCP Nepresol | ESC HTA 2023"
           },
           {
@@ -10278,6 +10363,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Alcaloïde belladone anticholinergique : ACB=3. À ÉVITER chez âgé (Beers 2023, STOPP D1).",
                     "source": "RCP | Beers 2023"
           },
           {
@@ -10355,6 +10441,7 @@ const MASTER_DB = {
                     "atb_terminale": "500 mg/8h",
                     "epileptogene": "eleve",
                     "epileptogene_desc": "Carbapénème le plus pro-convulsivant (3-33% selon dose/IRC)",
+                    "notes_cliniques": "Carbapénème large spectre : risque convulsivant chez âgé (surtout si IRC + dose non adaptée). Adapter selon DFG. Réserver aux infections sévères BLSE/Pseudomonas.",
                     "source": "RCP Tienam | SPILF 2023"
           },
           {
@@ -10402,6 +10489,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "eleve",
                     "epileptogene_desc": "Carbapénème le plus pro-convulsivant (3-33% selon dose/IRC)",
+                    "notes_cliniques": "Carbapénème + inhibiteur BL : réservé aux infections à BMR (Pseudomonas/Enterobacter producteurs de KPC). Risque convulsivant. Prescription hospitalière spécialisée.",
                     "source": "RCP Recarbrio | SPILF 2023"
           },
           {
@@ -10819,6 +10907,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "IMAO irréversible non sélectif (Marsilid) : MOLÉCULE LA PLUS HÉPATOTOXIQUE de la classe. Crises HTA si tyramine alimentaire. Interactions multiples (sérotoninergiques — SYND_043). Très peu utilisée.",
                     "source": "RCP Marsilid | Beers 2023"
           },
           {
@@ -10897,6 +10986,7 @@ const MASTER_DB = {
                     "atb_terminale": "Max : 200 mg/j",
                     "epileptogene": "modere",
                     "epileptogene_desc": "Déplétion pyridoxine → convulsions (prévention par B6)",
+                    "notes_cliniques": "Antituberculeux : hépatotoxicité (↑ avec âge — bilan hépatique mensuel), neuropathie périphérique (associer pyridoxine B6 25-50 mg/j systématiquement chez âgé/diabétique/dénutri). Inhibiteur CYP2C9/2E1.",
                     "source": "RCP Rimifon | OMS TB 2022"
           },
           {
@@ -10934,6 +11024,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Dérivé nitré : indication angor stable, IC (V-HeFT). Tolérance (intervalle libre 8-12 h/j obligatoire). Hypotension, céphalées. Pas avec sildénafil/tadalafil (CI absolue).",
                     "source": "RCP Risordan | ESC IC 2023"
           },
           {
@@ -11023,6 +11114,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anesthésique NMDA : usage hospitalier en analgésie multimodale (post-op, douleur cancer). Hallucinations, élévation TA, troubles cognitifs chez âgé. Pas en ambulatoire gériatrique.",
                     "source": "RCP Ketalar | RCP ; SFAR 2023"
           },
           {
@@ -11336,6 +11428,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Xyzall | RCP"
           },
           {
@@ -11397,6 +11490,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Précurseur dopamine : 1ère intention Parkinson. Fluctuations motrices, dyskinésies, hypotension orthostatique, hallucinations chez âgé. Toujours associé à carbidopa ou bensérazide. Adapter selon réponse.",
                     "source": "RCP Modopar | HAS Parkinson 2016"
           },
           {
@@ -11455,6 +11549,7 @@ const MASTER_DB = {
                     "atb_terminale": "DC de 500 mg puis 250 mg/24 à 48h",
                     "epileptogene": "modere",
                     "epileptogene_desc": "FQ — risque convulsif",
+                    "notes_cliniques": "Fluoroquinolone : QT, tendinopathie, anévrisme/dissection aortique, hypoglycémie, neurotox SA (confusion, délirium). 1 prise/j, élimination rénale (adapter DFG). À ÉVITER en 1ère intention chez âgé (Beers 2023).",
                     "source": "RCP Tavanic | SPILF 2023"
           },
           {
@@ -11496,6 +11591,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "modere",
                     "epileptogene_desc": "Phénothiazine — risque convulsif",
+                    "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Nozinan | HAS 2017"
           },
           {
@@ -11618,6 +11714,7 @@ const MASTER_DB = {
                     "atb_moderee": "600 mg/12h",
                     "atb_severe": "600 mg/24h",
                     "atb_terminale": "600 mg/24h",
+                    "notes_cliniques": "Oxazolidinone : SYNDROME SÉROTONINERGIQUE si association ISRS/IRSN/Tramadol/IMAO (Phase 8 SYND_043 + EV_SYND_043b — wash-out 14 j ISRS). Thrombopénie/anémie (NFS hebdomadaire), neuropathie périphérique/optique si > 28 j. Réservé MRSA/VRE.",
                     "source": "RCP Zyvoxid | SPILF 2023"
           },
           {
@@ -11858,6 +11955,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "modere",
                     "epileptogene_desc": "Risque si lithiémie élevée (neurotoxicité)",
+                    "notes_cliniques": "Stabilisateur thymique : MARGE THÉRAPEUTIQUE TRÈS ÉTROITE — cible 0.4-0.8 mEq/L chez > 70 ans (vs 0.6-1.2 adulte). Lithiémie 12 h post-dose : 2x/sem en initiation, mensuelle puis trimestrielle. Néphrotoxicité chronique, hypothyroïdie, tremblements, polyurie. Interactions IEC/AINS/diurétiques (intoxication). Surveillance TSH/créat semestrielle. ANSM 2017 : QT à doses suprathérapeutiques.",
                     "source": "RCP Teralithe | HAS Bipolaire 2015"
           },
           {
@@ -12143,6 +12241,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Loxapac | HAS 2017"
           },
           {
@@ -12195,6 +12294,7 @@ const MASTER_DB = {
                     "atb_moderee": "Aucune donnée",
                     "atb_severe": "Aucune donnée",
                     "atb_terminale": "Aucune donnée",
+                    "notes_cliniques": "Tétracycline : photosensibilité, œsophagite (rester debout 30 min après PO), interaction absorption (Ca, Mg, fer, antiacides — espacer 2 h). Adapter selon DFG (sauf doxycycline).",
                     "source": "RCP Tetralysal | SPILF 2023"
           },
           {
@@ -12313,6 +12413,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "eleve",
                     "epileptogene_desc": "Risque élevé de convulsions (tétracyclique)",
+                    "notes_cliniques": "Antidépresseur : bénéfice/risque à évaluer chez âgé. Préférer ISRS (sertraline, escitalopram) ou mirtazapine (si insomnie/dénutrition). Risque hyponatrémie (SIADH), saignement, sérotoninergique (Phase 8 SYND_043).",
                     "source": "RCP Ludiomil | HAS Depression 2017 ; Beers 2023"
           },
           {
@@ -12346,6 +12447,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Agyrax | Beers 2023"
           },
           {
@@ -12389,6 +12491,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Opioïde phenylpiperidine : ANTI-RECOMMANDÉ chez âgé (Beers 2023, PIM ABSOLU). Métabolite normépéridine neurotoxique (convulsions chez âgé/IRC). Préférer morphine, oxycodone ou fentanyl.",
                     "source": "RCP Pethidine | Beers 2023"
           },
           {
@@ -12417,6 +12520,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Primalan | Beers 2023"
           },
           {
@@ -12457,6 +12561,7 @@ const MASTER_DB = {
                     "atb_terminale": "1 à 2 g/12h",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Risque moindre que imipénème mais existant",
+                    "notes_cliniques": "Carbapénème large spectre, mieux toléré que imipenem (moins convulsivant). Adapter selon DFG. Réservé infections sévères BLSE/Pseudomonas.",
                     "source": "RCP Meronem | SPILF 2023"
           },
           {
@@ -12504,6 +12609,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Risque moindre que imipénème mais existant",
+                    "notes_cliniques": "Carbapénème + inhibiteur BL : actif sur entérobactéries productrices de KPC. Réservé aux BMR. Prescription spécialisée.",
                     "source": "RCP Vaborem | SPILF 2023"
           },
           {
@@ -12641,6 +12747,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Opioïde fort + antagoniste NMDA. ALLONGEMENT QT MAJEUR dose-dépendant (Risk_KR — ECG initial, J3, J7, mensuel). Demi-vie longue et variable (15-60 h) → risque accumulation et surdosage retardé. Réservé sevrage opioïde et douleur réfractaire. Prescription spécialisée.",
                     "source": "RCP Methadone | RCP ; HAS Douleur 2016"
           },
           {
@@ -12669,7 +12776,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Sédation fréquente. Usage lombalgies/contractures.",
+                    "notes_cliniques": "Myorelaxant central : à ÉVITER chez âgé (Beers 2023 — sédation, chutes, confusion, ACB modéré). Bénéfice marginal, durée courte si indispensable.",
                     "source": "RCP Lumirelax"
           },
           {
@@ -12839,6 +12946,7 @@ const MASTER_DB = {
                     "atb_terminale": "1,5 MUI (spiramycine) + 125 mg (métronidazole) /8h",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Neurotoxicité si traitement prolongé",
+                    "notes_cliniques": "Métronidazole : effet antabuse (éviter alcool 24-48 h post-cure), interaction AVK (↑ INR), neuropathie périphérique si > 4 sem. Adapter selon BH.",
                     "source": "RCP Flagyl | SPILF 2023"
           },
           {
@@ -12909,6 +13017,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Benzodiazépine : sédation, chutes, confusion, dépression respi (avec opioïdes — SYND_044), tolérance/dépendance. À ÉVITER chez âgé sauf indication précise courte (Beers 2023, STOPP D5). Préférer lorazépam ou oxazépam (½ vie courte).",
                     "source": "RCP Hypnovel | HAS BZD 2022"
           },
           {
@@ -13030,6 +13139,7 @@ const MASTER_DB = {
                     "atb_moderee": "200 mg/j en 2 prises",
                     "atb_severe": "200 mg/j en 2 prises",
                     "atb_terminale": "200 mg/j en 2 prises",
+                    "notes_cliniques": "Tétracycline : photosensibilité, œsophagite (rester debout 30 min après PO), interaction absorption (Ca, Mg, fer, antiacides — espacer 2 h). Adapter selon DFG (sauf doxycycline).",
                     "source": "RCP Minocycline | SPILF 2023"
           },
           {
@@ -13187,6 +13297,7 @@ const MASTER_DB = {
                     "atb_terminale": "400 mg/24h",
                     "epileptogene": "modere",
                     "epileptogene_desc": "FQ — risque convulsif",
+                    "notes_cliniques": "Fluoroquinolone : QT le PLUS allongeant de la classe (Risk_KR CredibleMeds). Hépatotoxicité grave décrite. Pas d'AMM dans les infections urinaires. Réservée pneumopathies/sinusites résistantes. À ÉVITER chez âgé.",
                     "source": "RCP Izilox | SPILF 2023"
           },
           {
@@ -13296,6 +13407,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Opioïde agoniste-antagoniste µ : usage hospitalier (douleur post-op, obstétrique). Effet plafond. Pas en gériatrie ambulatoire.",
                     "source": "RCP Nubain | RCP"
           },
           {
@@ -13466,7 +13578,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Formes IR CI en HTA",
+                    "notes_cliniques": "Inhibiteur calcique DHP courte durée : à ÉVITER chez âgé (Beers 2023 — formes IR : hypotension brutale, IDM, AVC). Préférer formes LP ou amlodipine.",
                     "source": "RCP Adalate ; ESC HTA 2023"
           },
           {
@@ -13494,7 +13606,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Indication spécifique : vasospasme après HSA",
+                    "notes_cliniques": "Inhibiteur calcique DHP cérébral : indication prévention vasospasme post-HSA. Bonne tolérance. Pas en HTA chronique.",
                     "source": "RCP Nimotop"
           },
           {
@@ -13599,6 +13711,7 @@ const MASTER_DB = {
                     "atb_moderee": "Déconseillé",
                     "atb_severe": "Contre-indiqué",
                     "atb_terminale": "Contre-indiqué",
+                    "notes_cliniques": "Voir entrée Nitrofurantoine déjà mise à jour Phase 9 — CONTRE-INDICATION si DFG < 45 (EMA) ou < 30 (Beers 2023, prendre le seuil le plus strict). À ÉVITER en prophylaxie au long cours (pneumopathie, fibrose pulmonaire, hépatotoxicité — alertes ANSM). Indication : cystite aiguë non compliquée femme.",
                     "source": "RCP Furadantine | SPILF 2023"
           },
           {
@@ -13684,6 +13797,7 @@ const MASTER_DB = {
                     "atb_terminale": "400 mg/24h",
                     "epileptogene": "modere",
                     "epileptogene_desc": "FQ — risque convulsif",
+                    "notes_cliniques": "Fluoroquinolone urinaire (concentrations systémiques faibles). Indication restreinte : infection urinaire basse. Peu d'usage actuel — préférer fosfomycine ou nitrofurantoïne (si DFG ≥ 45). Beers 2023 : prudence.",
                     "source": "RCP Noroxine | SPILF 2023"
           },
           {
@@ -13737,6 +13851,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antidépresseur tricyclique : ACB élevé (anticholinergique fort), QT, hypotension orthostatique, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1, FORTA-D, PRISCUS).",
                     "source": "RCP Aventyl | Beers 2023"
           },
           {
@@ -13801,6 +13916,7 @@ const MASTER_DB = {
                     "atb_terminale": "200 mg/48h",
                     "epileptogene": "modere",
                     "epileptogene_desc": "FQ — risque convulsif",
+                    "notes_cliniques": "Fluoroquinolone : profil similaire à ciprofloxacine. Élimination rénale prédominante. À ÉVITER en 1ère intention chez âgé (Beers 2023).",
                     "source": "RCP Oflocet | SPILF 2023"
           },
           {
@@ -13960,6 +14076,7 @@ const MASTER_DB = {
                     "atb_moderee": "1200 mg (dose unique) en perfusion de 3h",
                     "atb_severe": "Aucune donnée",
                     "atb_terminale": "Aucune donnée",
+                    "notes_cliniques": "Lipoglycopeptide IV en dose unique. Réservée infections cutanées MRSA. Pas d'AMM endocardite. Coût élevé.",
                     "source": "RCP Tenkasi | SPILF 2023"
           },
           {
@@ -13997,6 +14114,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiparkinsonien anticholinergique : ACB=3. À ÉVITER chez âgé (Beers 2023 — confusion, chutes, EPS).",
                     "source": "RCP Disipal | Beers 2023"
           },
           {
@@ -14042,6 +14160,7 @@ const MASTER_DB = {
                     "atb_moderee": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
                     "atb_severe": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
                     "atb_terminale": "100 à 200 mg/kg/24h en 6 perfusions de 30 à 60 min toutes les 4h OU DC de 2 g en perfusion de 60 min puis 100 à 200 mg/kg/24h en perfusion continue",
+                    "notes_cliniques": "Pénicilline M : profil similaire à cloxacilline. Hépatotoxicité documentée chez âgé.",
                     "source": "RCP Bristopen | SPILF 2023"
           },
           {
@@ -14435,6 +14554,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Fervex | Beers 2023"
           },
           {
@@ -14522,6 +14642,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiépileptique : surveillance taux plasmatiques pour molécules à marge étroite (phénytoïne, valproate, carbamazépine). Interactions CYP nombreuses. Ostéoporose au long cours (inducteurs).",
                     "source": "RCP Gardenal | HAS Epilepsie 2020 ; Beers 2023"
           },
           {
@@ -14643,6 +14764,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Orap | HAS 2017"
           },
           {
@@ -14711,6 +14833,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Dipiperon | HAS 2017"
           },
           {
@@ -14753,6 +14876,7 @@ const MASTER_DB = {
                     "atb_moderee": "4 g/6 à 8h",
                     "atb_severe": "4 g/ 8h",
                     "atb_terminale": "4 g/ 8h",
+                    "notes_cliniques": "Pénicilline : allergies croisées β-lactamines (10 % toutes pénicillines, 1-2 % entre pénicillines et céphalosporines C3G). Risque C. difficile. Adapter selon DFG.",
                     "source": "RCP Piperacilline | SPILF 2023"
           },
           {
@@ -14813,6 +14937,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Pénicilline : allergies croisées β-lactamines (10 % toutes pénicillines, 1-2 % entre pénicillines et céphalosporines C3G). Risque C. difficile. Adapter selon DFG.",
                     "source": "RCP Tazocilline | SPILF 2023"
           },
           {
@@ -14899,6 +15024,7 @@ const MASTER_DB = {
                     "atb_moderee": "400 mg/8 à 12h",
                     "atb_severe": "DC de 400 mg puis 200 mg/8 à 12h",
                     "atb_terminale": "DC de 400 mg puis 200 mg/8 à 12h",
+                    "notes_cliniques": "Pénicilline M PO : indication infections urinaires basses (pivot). Bonne tolérance. Pas d'effet sur flore digestive.",
                     "source": "RCP Selexid | SPILF 2023"
           },
           {
@@ -14987,6 +15113,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiparkinsonien : adapter selon stade Parkinson. Effets gériatriques : hypotension orthostatique, somnolence, hallucinations, troubles compulsifs. Démarrage dose minimale, titration lente.",
                     "source": "RCP Sifrol | HAS Parkinson 2016"
           },
           {
@@ -15244,6 +15371,7 @@ const MASTER_DB = {
                     "atb_moderee": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
                     "atb_severe": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
                     "atb_terminale": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
+                    "notes_cliniques": "Streptogramine PO (Pyostacine) : alternative à β-lactamines/macrolides chez allergique. Indication infections cutanées MSSA, ORL. Bonne tolérance digestive. Pas d'allongement QT significatif. Pas d'adaptation rénale.",
                     "source": "RCP Pyostacine | SPILF 2023"
           },
           {
@@ -15283,6 +15411,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Stemetil | Beers 2023"
           },
           {
@@ -15313,7 +15442,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Beers 2023 : À ÉVITER (EPS, QTc, sédation, anticholinergique).",
+                    "notes_cliniques": "Antihistaminique H1 1ère gén + neuroleptique faible : ACB=3. À ÉVITER chez âgé (Beers 2023 — sédation, chutes, EPS, anticholinergique).",
                     "source": "RCP Phénergan ; Beers 2023"
           },
           {
@@ -15347,6 +15476,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anticholinergique : ACB élevé en gériatrie — risque de confusion/délirium (Phase 8 SYND_047), rétention urinaire, glaucome, constipation, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1). Préférer mirabégron (urinaire) ou alternatives non-anticholinergiques.",
                     "source": "RCP Pro-Banthine | Beers 2023"
           },
           {
@@ -15383,6 +15513,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anticholinergique : ACB élevé en gériatrie — risque de confusion/délirium (Phase 8 SYND_047), rétention urinaire, glaucome, constipation, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1). Préférer mirabégron (urinaire) ou alternatives non-anticholinergiques.",
                     "source": "RCP Mictonorm | Beers 2023"
           },
           {
@@ -15469,6 +15600,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Sympathomimétique : à ÉVITER chez âgé (Beers 2023 — HTA, tachycardie, agitation). Indications restreintes (anesthésie, urgence).",
                     "source": "RCP Sudafed | Beers 2023"
           },
           {
@@ -15507,6 +15639,7 @@ const MASTER_DB = {
                     "atb_moderee": "30 mg/kg/24h en 1 prise /j",
                     "atb_severe": "30 mg/kg/24h en 1 prise /j",
                     "atb_terminale": "30 mg/kg/48h",
+                    "notes_cliniques": "Antituberculeux : hépatotoxicité (↑ avec âge), hyperuricémie/goutte fréquente. Bilan hépatique + uricémie mensuels. Adapter selon DFG.",
                     "source": "RCP Pirilene | OMS TB 2022"
           },
           {
@@ -15640,6 +15773,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiarythmique Ia : QT prolongé majeur, thrombopénie immunoallergique. Inhibiteur CYP2D6 et P-gp (interactions digoxine ++). À ÉVITER chez âgé (Beers 2023, FORTA-D).",
                     "source": "RCP Serecor | ESC Arythmie 2020"
           },
           {
@@ -15777,6 +15911,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "RETIRÉ DU MARCHÉ MONDIAL EN 2020 (contamination NDMA — ANSM/EMA/FDA). Ne plus prescrire. Switch vers famotidine ou IPP selon indication.",
                     "source": "RCP Azantac | ANSM retrait 2020 ; Beers 2023"
           },
           {
@@ -15825,6 +15960,7 @@ const MASTER_DB = {
                     "atb_moderee": "Traitement curatif des infections à Mycobacterium avium complexe chez les sujets VIH + : poids > 50 kg : 600 mg/j - poids < 50 kg : 450 mg/j Si association avec la Clarithromycine : 300 mg/j",
                     "atb_severe": "Traitement curatif des infections à Mycobacterium avium complexe chez les sujets VIH + : poids > 50 kg : 600 mg/j - poids < 50 kg : 450 mg/j Si association avec la Clarithromycine : 300 mg/j",
                     "atb_terminale": "Poids > 50 kg : 300 mg/24h Poids < 50 kg : 450 mg/48h Si association avec la Clarithromycine : 150 mg/j",
+                    "notes_cliniques": "Antituberculeux + antimycobactérien (M. avium) : alternative rifampicine (moins inducteur CYP). Hépatotox, uvéite, neutropénie. Adapter selon BH.",
                     "source": "RCP Ansatipine | OMS TB 2022"
           },
           {
@@ -15927,6 +16063,7 @@ const MASTER_DB = {
                     "atb_moderee": "Tuberculose : 8 à 12 mg/kg/24h",
                     "atb_severe": "Tuberculose : 8 à 12 mg/kg/24h",
                     "atb_terminale": "Tuberculose : 8 à 12 mg/kg/24h",
+                    "notes_cliniques": "Antituberculeux : INDUCTEUR CYP3A4 puissant → interactions multiples (AOD, statines, ISRS, anticoagulants, contraceptifs). Hépatotox, coloration orange (urine, larmes). Bilan hépatique mensuel.",
                     "source": "RCP Rifadine | OMS TB 2022"
           },
           {
@@ -16228,6 +16365,7 @@ const MASTER_DB = {
                     "atb_moderee": "150 mg/24h",
                     "atb_severe": "150 mg/24h",
                     "atb_terminale": "150 mg/24h",
+                    "notes_cliniques": "Macrolide intermédiaire (entre érythromycine et azithromycine). Inhibition CYP3A4 modérée. Allongement QT possible. Préférer azithromycine si possible chez âgé.",
                     "source": "RCP Rulid | SPILF 2023"
           },
           {
@@ -16405,6 +16543,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "IMAO-B (Parkinson) : adjuvant lévodopa. Insomnie (prendre matin), HTA si tyramine forte dose. Interaction CRITIQUE avec ISRS/IRSN/Tramadol/Linézolide (SYND_043 — Beers 2023). Préférer rasagiline (moins d'amphétamine).",
                     "source": "RCP Deprenyl | HAS Parkinson 2016"
           },
           {
@@ -16746,6 +16885,7 @@ const MASTER_DB = {
                     "atb_moderee": "Per os : 3 MUI/8 à 12h",
                     "atb_severe": "Per os : 3 MUI/8 à 12h",
                     "atb_terminale": "Per os : 3 MUI/8 à 12h",
+                    "notes_cliniques": "Macrolide à faible interaction CYP3A4 (préféré chez polymédiqué). Indications : ORL, toxoplasmose grossesse. Pas d'allongement QT significatif.",
                     "source": "RCP Rovamycine | SPILF 2023"
           },
           {
@@ -16795,6 +16935,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Neurotoxicité si traitement prolongé",
+                    "notes_cliniques": "Association ORL/dentaire/abcès. Métronidazole : effet antabuse (éviter alcool 24-48 h post-cure), interaction AVK (↑ INR), prurit/glossite. Durée standard 6-7 j.",
                     "source": "RCP Rodogyl | SPILF 2023"
           },
           {
@@ -16952,6 +17093,7 @@ const MASTER_DB = {
                     "atb_moderee": "Aucune donnée",
                     "atb_severe": "Aucune donnée",
                     "atb_terminale": "Aucune donnée",
+                    "notes_cliniques": "Sulfamide antibactérien : indication toxoplasmose (souvent + pyriméthamine). Néphrolithiase (cristallurie — hydratation +++), hyperkaliémie, allergie cutanée (Stevens-Johnson). Adapter selon DFG. Surveillance NFS/créat.",
                     "source": "RCP Adiazine | SPILF 2023"
           },
           {
@@ -17029,6 +17171,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Dogmatil | HAS 2017"
           },
           {
@@ -17216,6 +17359,7 @@ const MASTER_DB = {
                     "atb_moderee": "200 mg/24h",
                     "atb_severe": "200 mg/24h",
                     "atb_terminale": "200 mg/24h",
+                    "notes_cliniques": "Oxazolidinone 2e génération (1 prise/j, 6 j) : moins de thrombopénie que linézolide, moins d'effet sérotoninergique mais surveillance similaire. Réservé infections cutanées MRSA.",
                     "source": "RCP Sivextro | SPILF 2023"
           },
           {
@@ -17264,6 +17408,7 @@ const MASTER_DB = {
                     "atb_moderee": "DC de 6 mg/kg/12h les 3 premières injections puis 3 mg/kg/24h ou 6 mg/kg/48h",
                     "atb_severe": "DC de 6 mg/kg/12h les 3 premières injections puis 2 mg/kg/24h ou 6 mg/kg/72h",
                     "atb_terminale": "DC de 6 mg/kg/12h les 3 premières injections puis 2 mg/kg/24h ou 6 mg/kg/72h",
+                    "notes_cliniques": "Glycopeptide IV/IM : alternative à vancomycine, moins néphrotoxique. Dose de charge nécessaire (J1-J3 puis 1 inj/j ou tous les 2 j). Cible résiduelle 20-30 mg/L (endocardite : 30-40). TDM utile.",
                     "source": "RCP Targocid | SPILF 2023"
           },
           {
@@ -17328,6 +17473,7 @@ const MASTER_DB = {
                     "atb_moderee": "1 g/12h",
                     "atb_severe": "1 g/24h",
                     "atb_terminale": "1 g/24h",
+                    "notes_cliniques": "Pénicilline anti-BLSE : alternative aux carbapénèmes pour entérobactéries productrices de BLSE (CMI sensible). Pas d'activité Pseudomonas. Adapter DFG.",
                     "source": "RCP Negaban | SPILF 2023"
           },
           {
@@ -17475,6 +17621,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "eleve",
                     "epileptogene_desc": "Xanthine pro-convulsivante — surtout si taux > 25 mg/L",
+                    "notes_cliniques": "Bronchodilatateur xanthine PO : marge étroite (10-20 mg/L). Mêmes risques aminophylline (tachycardie, convulsions, interactions CYP1A2). À ÉVITER chez âgé (Beers 2023, FORTA-D).",
                     "source": "RCP Euphylline | GINA 2023"
           },
           {
@@ -17515,7 +17662,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "ANSM : max 7 jours (génotoxicité potentielle). Usage lombalgies aiguës.",
+                    "notes_cliniques": "Myorelaxant : restrictions ANSM 2014 (génotoxicité, dose max 16 mg/j x 7 j). Peu de bénéfice clinique. À ÉVITER chez âgé.",
                     "source": "RCP Miorel ; ANSM 2013"
           },
           {
@@ -17556,6 +17703,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipsychotique typique : RETIRÉ DU MARCHÉ EU 2005 (allongement QT majeur, mort subite). Ne plus utiliser.",
                     "source": "RCP Melleril | Beers 2023"
           },
           {
@@ -17646,7 +17794,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "NFS bimensuelle obligatoire 3 premiers mois. Quasi-abandonné (PTT, agranulocytose).",
+                    "notes_cliniques": "Antiagrégant P2Y12 ancien : à ÉVITER (Beers 2023 — neutropénie, thrombopénie, PTT). Remplacé par clopidogrel.",
                     "source": "RCP Ticlid ; ANSM"
           },
           {
@@ -17714,6 +17862,7 @@ const MASTER_DB = {
                     "atb_moderee": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
                     "atb_severe": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
                     "atb_terminale": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
+                    "notes_cliniques": "Glycylcycline IV : surmortalité décrite (FDA Black Box) — réservée aux infections compliquées sans alternative. Nausées fréquentes.",
                     "source": "RCP Tygacil | SPILF 2023"
           },
           {
@@ -17880,6 +18029,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Myorelaxant α2 central : sédation marquée, hypotension, hépatotoxicité (BH avant et mensuelle x 6 mois). Interactions CYP1A2 (CIPROFLOXACINE = CI absolue, fluvoxamine). À ÉVITER chez âgé (Beers 2023).",
                     "source": "RCP Sirdalud | Beers 2023"
           },
           {
@@ -17934,6 +18084,7 @@ const MASTER_DB = {
                     "atb_moderee": "3 à 8 mg/kg/j",
                     "atb_severe": "3 à 8 mg/kg/j",
                     "atb_terminale": "3 à 8 mg/kg/j",
+                    "notes_cliniques": "Aminoside : profil similaire à gentamicine. 1 inj/j (3-7 mg/kg) ou nébulisation (mucoviscidose). Surveillance audio + créat. Beers 2023 : prudence chez âgé.",
                     "source": "RCP Nebcine | SPILF 2023"
           },
           {
@@ -18185,6 +18336,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antidépresseur : bénéfice/risque à évaluer chez âgé. Préférer ISRS (sertraline, escitalopram) ou mirtazapine (si insomnie/dénutrition). Risque hyponatrémie (SIADH), saignement, sérotoninergique (Phase 8 SYND_043).",
                     "source": "RCP Desyrel | HAS Depression 2017"
           },
           {
@@ -18226,6 +18378,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Alpha-1 bloquant non sélectif : indication HTA résistante, hypertrophie prostate. Hypotension orthostatique majeure (1ère dose au coucher). Prudence chez âgé chuteur.",
                     "source": "RCP Minipress | ESC HTA 2023"
           },
           {
@@ -18274,6 +18427,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Corticoïde systémique : surveillance glycémie, K+, TA, ostéoporose (Ca/vit D systématique, bisphosphonate si ≥ 7.5 mg prednisolone/j prolongé — GIOP ACR 2017, Phase 8 SYND_049). Décroissance progressive si > 3 sem (insuffisance surrénale).",
                     "source": "RCP Kenacort | HAS Corticothérapie"
           },
           {
@@ -18343,6 +18497,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Diurétique : hypokaliémie, hyponatrémie (thiazidiques surtout), déshydratation, hyperuricémie. Surveillance ionogramme/créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
                     "source": "RCP Teriam | ESC HTA 2023"
           },
           {
@@ -18390,6 +18545,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Terfluzine | Beers 2023"
           },
           {
@@ -18414,6 +18570,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiparkinsonien : adapter selon stade Parkinson. Effets gériatriques : hypotension orthostatique, somnolence, hallucinations, troubles compulsifs. Démarrage dose minimale, titration lente.",
                     "source": "RCP Artane | Beers 2023"
           },
           {
@@ -18438,7 +18595,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Beers 2023 : À ÉVITER (confusion, hallucinations, rétention urinaire, glaucome).",
+                    "notes_cliniques": "Antiparkinsonien anticholinergique : ACB=3. À ÉVITER chez âgé (Beers 2023, STOPP D1 — confusion, chutes).",
                     "source": "RCP Artane ; HAS Parkinson 2016 ; Beers 2023"
           },
           {
@@ -18502,6 +18659,7 @@ const MASTER_DB = {
                     "atb_moderee": "Aucune donnée",
                     "atb_severe": "Aucune donnée",
                     "atb_terminale": "Aucune donnée",
+                    "notes_cliniques": "Triméthoprime : infections urinaires basses. Risque HYPERKALIÉMIE (effet bloqueur Na+ tubulaire — synergique avec IEC/ARM/spironolactone — Phase 8 SYND_045 indirect). Anémie mégaloblastique. Adapter DFG.",
                     "source": "RCP Delprim | SPILF 2023"
           },
           {
@@ -18569,6 +18727,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihistaminique H1 : 1ère génération (hydroxyzine, dexchlorpheniramine) à ÉVITER (ACB élevé, sédation, chutes — Beers 2023). 2e génération (cétirizine, loratadine) acceptables.",
                     "source": "RCP Actifed | Beers 2023"
           },
           {
@@ -18620,7 +18779,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Peu de passage BHE → moins de confusion cognitive que autres antimuscariniques. Préféré chez SA.",
+                    "notes_cliniques": "Anticholinergique urinaire (vessie hyperactive) : peu de passage BHE (ACB faible, < confusion que oxybutynine). Adapter si DFG < 30 (1 prise/2 j). Mais reste à éviter — préférer mirabégron.",
                     "source": "RCP Ceris ; EAU OAB 2023"
           },
           {
@@ -18737,6 +18896,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiépileptique : surveillance taux plasmatiques pour molécules à marge étroite (phénytoïne, valproate, carbamazépine). Interactions CYP nombreuses. Ostéoporose au long cours (inducteurs).",
                     "source": "RCP Depamide | HAS Epilepsie 2020"
           },
           {
@@ -18878,6 +19038,7 @@ const MASTER_DB = {
                     "atb_moderee": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
                     "atb_severe": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
                     "atb_terminale": "DC, puis adapter en fonction de la concentration plasmatique à l’équilibre",
+                    "notes_cliniques": "Glycopeptide IV : néphrotoxicité + ototoxicité dose-dépendantes. Cible vancocinémie résiduelle 15-20 mg/L (15-25 si bactériémie/endocardite/pneumopathie). Adapter dose au DFG, dosages plasmatiques OBLIGATOIRES. Syndrome homme rouge (perfusion lente). Beers 2023 surveillance étroite.",
                     "source": "RCP Vancomycine | SPILF 2023 ; IDSA 2020"
           },
           {
@@ -18985,7 +19146,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Inhibiteur modéré CYP3A4 + P-gp. Nombreuses interactions.",
+                    "notes_cliniques": "Inhibiteur calcique non-DHP : bradycardie, BAV, constipation, CI si FEVG ≤ 40 % (HFrEF). Bradycardie additive avec BB, digoxine, IACHE (Phase 8). Inhibiteur CYP3A4 (interactions statines, AOD).",
                     "source": "RCP Isoptine ; ESC 2023"
           },
           {
@@ -19292,7 +19453,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Acuphase (acétate) : agitation aiguë — effet 72h",
+                    "notes_cliniques": "Antipsychotique typique (FGA) : sédation marquée, EPS, mortalité ↑ chez déments (FDA/ANSM Black Box). Réservé indications psychiatriques formelles. Beers 2023 : éviter.",
                     "source": "RCP Clopixol ; HAS 2017"
           },
           {
@@ -19322,6 +19483,7 @@ const MASTER_DB = {
                     "atb_moderee": "Infection respiratoire communautaire, pyélonéphrite non compliquée : 1 g/12h *",
                     "atb_severe": "1 g/24h",
                     "atb_terminale": "1 g/24h",
+                    "notes_cliniques": "Céfépime : large spectre incluant Pseudomonas. RISQUE NEUROTOXIQUE (encéphalopathie chez IRC + dose non adaptée — alerte ANSM 2018). Adapter strictement DFG. Beers 2023 : prudence.",
                     "source": "RCP Axépim | SPILF 2023"
           },
           {
@@ -19361,6 +19523,7 @@ const MASTER_DB = {
                     "atb_moderee": "100 à 200 mg/12 à 24h",
                     "atb_severe": "100 à 200 mg/24h",
                     "atb_terminale": "100 à 200 mg/24h",
+                    "notes_cliniques": "Céphalosporine 3e génération orale : indications ORL, urinaires. Biodisponibilité variable. Adapter DFG. Risque C. difficile.",
                     "source": "RCP Orelox | SPILF 2023"
           },
           {
@@ -19389,6 +19552,7 @@ const MASTER_DB = {
                     "atb_moderee": "400 mg/12h",
                     "atb_severe": "300 mg/12h",
                     "atb_terminale": "200 mg/12h",
+                    "notes_cliniques": "Céphalosporine 5G anti-MRSA : réservée infections compliquées (peau, pneumopathie nosocomiale). Prescription hospitalière spécialisée. Adapter DFG.",
                     "source": "RCP Zinforo | SPILF 2023"
           },
           {
@@ -19438,6 +19602,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Polymyxine E IV : ULTIME RECOURS pour BGN multirésistants. Néphrotoxicité +++, neurotoxicité (paresthésies, vertiges). Adapter selon DFG. Prescription hospitalière spécialisée.",
                     "source": "RCP Colimycine | SPILF 2023"
           },
           {
@@ -19485,6 +19650,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Doublon administratif probable — voir Dompéridone. ALLONGEMENT QT MAJEUR (Risk_KR), restrictions ANSM 2014 (durée ≤ 7 j, ECG si > 60 ans).",
                     "source": "RCP Motilium | ANSM 2014"
           },
           {
@@ -19509,6 +19675,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "β2-mimétique LABA inhalé : indication asthme, BPCO. Toujours associé à CSI (asthme). Tachycardie, tremblements, hypokaliémie. Bien toléré chez âgé.",
                     "source": "RCP Foradil | GINA 2023"
           },
           {
@@ -19559,6 +19726,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Glinide (répaglinide) : sécrétagogue d'insuline rapide. Hypoglycémies prandiales, peu d'expérience chez âgé. Préférer iDPP4 ou iSGLT2.",
                     "source": "RCP Glufast | HAS DT2 2023"
           },
           {
@@ -19583,6 +19751,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiagrégant P2Y12 réversible : alternative au clopidogrel post-SCA. 2 prises/j. Dyspnée fréquente, saignements, bradycardie. Pas de pré-test génétique requis (vs clopidogrel CYP2C19).",
                     "source": "RCP Brilique | ESC 2024"
           },
           {
@@ -19621,6 +19790,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antidépresseur tétracyclique : profil sédatif, prise de poids, agranulocytose rare (NFS si fièvre). Alternative en ambulatoire si insomnie/anxiété mais préférer mirtazapine (mieux étudiée chez âgé).",
                     "source": "RCP Athymil | HAS Depression 2017"
           },
           {
@@ -19678,6 +19848,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Supplément K+ PO/IV : indication hypokaliémie iatrogène (diurétiques) ou symptomatique. Surveillance kaliémie. RISQUE HYPERKALIÉMIE si association IEC/ARM/AINS (Phase 8 SYND_045 indirect). Adapter selon DFG. Ne pas écraser les comprimés LP (Diffu-K, Kaleorid).",
                     "source": "RCP Diffu-K | Pharmacopée"
           },
           {
@@ -19744,6 +19915,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Thiazidique : hyponatrémie (surtout chez âgé — Beers 2023), hypokaliémie, hyperuricémie/goutte, hyperglycémie, hypercalcémie. Surveillance Na+/K+/uricémie/glycémie.",
                     "source": "RCP Aldactazine | ESC IC 2023"
           },
           {
@@ -19800,6 +19972,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : à ÉVITER chez âgé (Beers 2023, STOPP/START v3 H2). Risques digestifs (ulcère, hémorragie), rénaux (NTA + triple whammy SYND_045), CV (HTA, IC), interactions AOD/AVK. Si indispensable : durée la plus courte + IPP. Préférer paracétamol.",
                     "source": "RCP Advil | EULAR 2023 ; Beers 2023"
           },
           {
@@ -19856,6 +20029,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : à ÉVITER chez âgé. Mêmes risques que ibuprofène (Beers 2023, STOPP H2). Inhibiteur PG fort.",
                     "source": "RCP Profenid | EULAR 2023 ; Beers 2023"
           },
           {
@@ -19912,6 +20086,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : à ÉVITER chez âgé. Mêmes risques que ibuprofène ; profil CV intermédiaire (mieux que diclofénac).",
                     "source": "RCP Naprosyne | EULAR 2023 ; Beers 2023"
           },
           {
@@ -19968,6 +20143,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : risque CV LE PLUS élevé (équivalent rofécoxib retiré — ESC/ANSM 2013). À ÉVITER chez âgé (Beers 2023, STOPP H2).",
                     "source": "RCP Voltarene | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20024,6 +20200,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Coxib : risque CV ↑ vs autres coxibs. Éviter si HTA non contrôlée ou IC. Beers 2023 : prudence.",
                     "source": "RCP Arcoxia | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20080,6 +20257,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS sélectif COX-2 préférentiel : moins de risque digestif que ibuprofène mais persistance des risques rénaux/CV. À ÉVITER chez âgé (Beers 2023).",
                     "source": "RCP Mobic | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20109,6 +20287,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : longue ½ vie, accumulation chez âgé. À ÉVITER (Beers 2023, PRISCUS, FORTA-D).",
                     "source": "RCP Feldene | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20165,6 +20344,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS dérivé propionique : risque cystite chimique spécifique (FDA warning). À ÉVITER chez âgé.",
                     "source": "RCP Surgam | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20221,6 +20401,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : restrictions ANSM 2011 (hépatotoxicité grave) — durée max 15 j, indication restreinte. À ÉVITER chez âgé.",
                     "source": "RCP Nexen | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20277,6 +20458,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : neurotoxicité (céphalées, confusion, troubles psychiatriques). À ÉVITER chez âgé (Beers 2023 : PIM ABSOLU).",
                     "source": "RCP Indocid | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20333,6 +20515,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : moins néphrotoxique théorique mais risques digestifs/CV identiques. À ÉVITER chez âgé.",
                     "source": "RCP Arthrocine | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20389,6 +20572,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : pro-drogue, profil intermédiaire. À ÉVITER chez âgé (Beers 2023).",
                     "source": "RCP Nabucox | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20448,6 +20632,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "AINS : analogue diclofénac, mêmes risques CV. À ÉVITER chez âgé.",
                     "source": "RCP Cartrex | EULAR 2023 ; Beers 2023"
           },
           {
@@ -20520,6 +20705,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihypertenseur central α2 : à ÉVITER chez âgé (Beers 2023, FORTA-D — sédation, hypotension orthostatique, bradycardie, REBOND HTA si arrêt brutal). Indication restreinte (HTA résistante, sevrage opioïde).",
                     "source": "RCP Catapressan | ESC HTA 2023 ; Beers 2023"
           },
           {
@@ -20586,6 +20772,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "HBPM : adapter dose selon DFG (1 mg/kg/j en curatif si DFG < 30 au lieu de 2x ; CI fondaparinux si DFG < 20). Anti-Xa si DFG borderline. Surveillance plaquettes (TIH).",
                     "source": "RCP Fragmine | ESC 2024"
           },
           {
@@ -20637,6 +20824,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "modere",
                     "epileptogene_desc": "IRSNA — risque dose-dépendant (surtout surdosage)",
+                    "notes_cliniques": "IRSN : indication dépression + douleur neuropathique. Mêmes risques que ISRS (SIADH, saignement, sérotonine). Surveillance TA (effet noradrénergique).",
                     "source": "RCP Pristiq | HAS Depression 2017"
           },
           {
@@ -20693,6 +20881,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antidépresseur tricyclique : ACB élevé (anticholinergique fort), QT, hypotension orthostatique, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1, FORTA-D, PRISCUS).",
                     "source": "RCP Prothiaden | HAS Depression 2017 ; Beers 2023"
           },
           {
@@ -20759,6 +20948,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "HBPM : adapter dose selon DFG (1 mg/kg/j en curatif si DFG < 30 au lieu de 2x ; CI fondaparinux si DFG < 20). Anti-Xa si DFG borderline. Surveillance plaquettes (TIH).",
                     "source": "RCP Lovenox | ESC 2024"
           },
           {
@@ -20828,6 +21018,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antifongique azolé : inhibiteur CYP3A4/2C9/2C19 → interactions multiples (statines, AOD, AVK, sulfamides, phénytoïne). Adapter selon DFG. Hépatotoxicité, allongement QT à doses élevées.",
                     "source": "RCP Triflucan | ESCMID 2022"
           },
           {
@@ -20883,6 +21074,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur sélectif Xa SC : alternative HBPM. Pas de TIH. CI si DFG < 20 (curatif) ou < 30 (prophylactique). Surveillance plaquettes possible. Pas d'antidote spécifique.",
                     "source": "RCP Arixtra | ESC 2024"
           },
           {
@@ -20921,6 +21113,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipaludéen + DMARD (PR, lupus) : RÉTINOPATHIE CUMULATIVE (ophtalmologie M0, M12, puis annuelle si > 5 ans ou dose > 5 mg/kg/j). Allongement QT (ECG si âgé/cardiopathie). Bonne tolérance globale.",
                     "source": "RCP Plaquenil | HAS Rhumatologie 2019"
           },
           {
@@ -20977,6 +21170,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "DMARD immunomodulateur (PR, rhumatisme psoriasique) : hépatotoxicité (BH M0, M1, M2, puis trimestrielle), HTA, leucopénie, alopécie, neuropathie. Demi-vie longue (wash-out cholestyramine si effet indésirable grave). Surveillance bilan immunitaire pré-cure (TB, HBV, HCV).",
                     "source": "RCP Arava | HAS Rhumatologie 2019"
           },
           {
@@ -21035,6 +21229,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Immunosuppresseur PR/cancer : prise HEBDOMADAIRE (jamais quotidienne — surdosages mortels documentés ANSM). Acide folique 5 mg/sem prévention (jour différent). Adapter si DFG < 60, CI si DFG < 30. Surveillance NFS/BH/créat (Phase 9 P4.2). Interaction triméthoprime/AINS = pancytopénie.",
                     "source": "RCP Novatrex | HAS Rhumatologie 2019"
           },
           {
@@ -21080,6 +21275,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihypertenseur central : à ÉVITER chez âgé (Beers 2023 — sédation, hypotension orthostatique, dépression, hépatotoxicité, anémie hémolytique auto-immune). Indication actuelle : HTA gravidique (jamais en gériatrie).",
                     "source": "RCP Aldomet | ESC HTA 2023 ; Beers 2023"
           },
           {
@@ -21128,6 +21324,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Antiémétique — abaissement modeste du seuil",
+                    "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Vogalene | RCP"
           },
           {
@@ -21166,6 +21363,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiémétique 5-HT3 : ALLONGEMENT QT (Risk_KR — surtout dose IV unique > 16 mg, ANSM 2012). Constipation, céphalées. Indication chimio, post-op. ECG avant si âgé/cardiopathie/QT à risque. Phase 8 SYND_051.",
                     "source": "RCP Zophren | RCP"
           },
           {
@@ -21236,6 +21434,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antifongique : interactions CYP3A4 (statines, AOD, AVK, sulfamides), hépatotoxicité, allongement QT (azolés). Surveillance BH + ECG selon classe.",
                     "source": "RCP Noxafil | ESCMID 2022"
           },
           {
@@ -21313,6 +21512,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiépileptique barbiturique (métabolisé en phénobarbital) : sédation, ataxie, induction CYP3A4 puissante, ostéoporose. À ÉVITER chez âgé (Beers 2023, STOPP D2). Indications quasi obsolètes (tremblement essentiel — préférer propranolol).",
                     "source": "RCP Mysoline | HAS Epilepsie 2020 ; Beers 2023"
           },
           {
@@ -21381,6 +21581,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiarythmique Ic : à ÉVITER si cardiopathie structurelle (proarythmie — surmortalité documentée). Beers 2023 : prudence.",
                     "source": "RCP Rythmol | ESC Arythmie 2020"
           },
           {
@@ -21437,6 +21638,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Neuleptil | HAS 2017"
           },
           {
@@ -21503,6 +21705,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "HBPM : adapter dose selon DFG (1 mg/kg/j en curatif si DFG < 30 au lieu de 2x ; CI fondaparinux si DFG < 20). Anti-Xa si DFG borderline. Surveillance plaquettes (TIH).",
                     "source": "RCP Innohep | ESC 2024"
           },
           {
@@ -21578,6 +21781,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antifongique azolé : hépatotox, troubles visuels, hallucinations, photosensibilité. Inhibiteur CYP3A4 puissant. TDM (cible 1-5.5 mg/L). Adapter selon BH. Prescription spécialisée.",
                     "source": "RCP Vfend | ESCMID 2022"
           },
           {
@@ -21627,6 +21831,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Agoniste mélatoninergique 2 mg LP : 1ère intention insomnie chez sujet âgé (avant BZD/Z-drugs — Beers 2023). Prendre 1-2 h avant coucher. Bonne tolérance. STOPP/START v3 D5 (alternative BZD).",
                     "source": "RCP Circadin | HAS Insomnie 2019"
           },
           {
@@ -21702,6 +21907,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur acétylcholinestérase (Alzheimer léger-modéré-sévère). Bradycardie, BAV, syncopes, troubles digestifs. ECG avant initiation + à 1 mois (Phase 8 SYND_046/B7 : interactions BB/diltiazem/digoxine). STOPPFrail SF06 : déprescrire si MMSE < 10 ou pas de bénéfice.",
                     "source": "RCP Aricept | HAS Alzheimer 2018"
           },
           {
@@ -21753,6 +21959,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "IACHE patch ou PO (Alzheimer + démence parkinsonienne) : troubles digestifs+++ (préférer patch si intolérance PO), bradycardie, syncope. Pas d'interaction CYP majeure. STOPPFrail SF06.",
                     "source": "RCP Exelon | HAS Alzheimer 2018"
           },
           {
@@ -21820,6 +22027,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "IACHE + modulateur nicotinique : efficacité cognitive similaire donépézil. Bradycardie, troubles digestifs. Métabolisme CYP3A4/2D6 (interactions paroxétine, fluoxétine, kétoconazole). STOPPFrail SF06.",
                     "source": "RCP Reminyl | HAS Alzheimer 2018"
           },
           {
@@ -21870,6 +22078,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Agoniste DA non-ergot : Parkinson, syndrome des jambes sans repos. Hypotension orthostatique, somnolence diurne (attaques de sommeil), troubles compulsifs (jeu, shopping). Prudence chez âgé.",
                     "source": "RCP Requip | HAS Parkinson 2016"
           },
           {
@@ -21920,6 +22129,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Agoniste DA patch transdermique : Parkinson, SJSR. Réactions cutanées site application, somnolence, troubles compulsifs. Adapter selon stade Parkinson.",
                     "source": "RCP Neupro | HAS Parkinson 2016"
           },
           {
@@ -21972,6 +22182,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiparkinsonien : adapter selon stade Parkinson. Effets gériatriques : hypotension orthostatique, somnolence, hallucinations, troubles compulsifs. Démarrage dose minimale, titration lente.",
                     "source": "RCP Azilect | HAS Parkinson 2016"
           },
           {
@@ -22030,6 +22241,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiparkinsonien : adapter selon stade Parkinson. Effets gériatriques : hypotension orthostatique, somnolence, hallucinations, troubles compulsifs. Démarrage dose minimale, titration lente.",
                     "source": "RCP Xadago | HAS Parkinson 2016"
           },
           {
@@ -22074,6 +22286,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antiparkinsonien : adapter selon stade Parkinson. Effets gériatriques : hypotension orthostatique, somnolence, hallucinations, troubles compulsifs. Démarrage dose minimale, titration lente.",
                     "source": "RCP Ongentys | HAS Parkinson 2016"
           },
           {
@@ -22098,6 +22311,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur 5α-réductase (HBP, alopécie) : ↓ PSA d'environ 50 % (interpréter ×2 pour dépistage cancer prostate). Gynécomastie, dysfonction érectile, troubles humeur. Profil acceptable en gériatrie.",
                     "source": "RCP Chibro-Proscar | EAU BPH 2024"
           },
           {
@@ -22140,6 +22354,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur 5α-réductase double (type I et II) : profil similaire finastéride mais plus puissant. ↓ PSA d'environ 50-60 %. Demi-vie longue (5 sem).",
                     "source": "RCP Avodart | EAU BPH 2024"
           },
           {
@@ -22176,6 +22391,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antagoniste NMDA (Alzheimer modéré-sévère, MMSE 3-19). Bonne tolérance, alternative ou ajout aux IACHE. Adapter selon DFG (max 20 mg/j si DFG > 50 ; 10 mg si DFG 30-50 ; 5 mg si DFG < 30). STOPPFrail SF06 : déprescrire si MMSE < 5 ou pas de bénéfice.",
                     "source": "RCP Ebixa | NICE Dementia 2023"
           },
           {
@@ -22244,6 +22460,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Sulfamide hypoglycémiant : risque hypoglycémie prolongée +++ chez âgé. À ÉVITER (Beers 2023, STOPP J1, FORTA-D, PRISCUS). Si indispensable : gliclazide LM (FORTA-C) à dose minimale. Préférer iDPP4 ou iSGLT2.",
                     "source": "RCP Diamicron | SFD 2021"
           },
           {
@@ -22311,6 +22528,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Sulfamide hypoglycémiant longue ½ vie (10-16 h) avec métabolites actifs : HYPOGLYCÉMIE PROLONGÉE chez âgé/IRC. À ÉVITER absolument (Beers 2023, STOPP/START v3 J1, FORTA-D, PRISCUS). Si inévitable : 1.25 mg max. Switch vers gliclazide LM ou iDPP4.",
                     "source": "RCP Daonil | HAS DT2 2023 ; Beers 2023"
           },
           {
@@ -22378,6 +22596,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Sulfamide hypoglycémiant : risque hypoglycémique majeur chez âgé. À ÉVITER (Beers 2023, STOPP/START v3 J1, FORTA-D). Si inévitable : 1 mg max. Switch vers gliclazide LM ou iDPP4 (sitagliptine, linagliptine).",
                     "source": "RCP Amarel | HAS DT2 2023 ; Beers 2023"
           },
           {
@@ -22425,6 +22644,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Pioglitazone (TZD) : CI dans IC (rétention hydrosodée), risque fractures, cancer vessie. Très peu utilisée chez âgé.",
                     "source": "RCP Actos | HAS DT2 2023 ; Beers 2023"
           },
           {
@@ -22469,6 +22689,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "iDPP-4 : neutre métaboliquement, bonne tolérance gériatrique. Adapter selon DFG (sauf linagliptine — élimination biliaire). Pancréatite rare. Préférer sitagliptine, linagliptine.",
                     "source": "RCP Trajenta | HAS DT2 2023"
           },
           {
@@ -22523,6 +22744,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Glinide (répaglinide) : sécrétagogue d'insuline rapide. Hypoglycémies prandiales, peu d'expérience chez âgé. Préférer iDPP4 ou iSGLT2.",
                     "source": "RCP Novonorm | HAS DT2 2023"
           },
           {
@@ -22569,6 +22791,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur α-glucosidase : indication post-prandiale DT2. Effets digestifs +++ (flatulences, diarrhée — observance médiocre). À ÉVITER chez âgé (PRISCUS, FORTA-D — bénéfice marginal).",
                     "source": "RCP Glucor | HAS DT2 2023 ; PRISCUS 2.0"
           },
           {
@@ -22638,6 +22861,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihypertenseur central agoniste I1 : SURMORTALITÉ démontrée en HFrEF (MOXCON trial 2003 — CI absolue HFrEF). PIM Beers 2023 / FORTA-D. À ÉVITER chez âgé.",
                     "source": "RCP Physiotens | ESC HTA 2023 ; Beers 2023"
           },
           {
@@ -22673,6 +22897,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antihypertenseur central agoniste I1 : profil similaire moxonidine. À ÉVITER chez âgé (PIM, sédation, hypotension orthostatique). Indication restreinte HTA résistante.",
                     "source": "RCP Hyperium | ESC HTA 2023 ; Beers 2023"
           },
           {
@@ -22718,6 +22943,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Agoniste β3 (vessie hyperactive) : alternative GÉRIATRIQUE aux anticholinergiques (oxybutynine, etc. — ACB élevé). Pas d'effet anticholinergique. Surveillance TA (légère ↑). FORTA-B. Beers 2023.",
                     "source": "RCP Betmiga | EAU Incontinence 2023"
           },
           {
@@ -22747,6 +22973,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anti-RANKL (ostéoporose) : 1 inj SC/6 mois. Effet rebond fracturaire à l'arrêt → relais bisphosphonate impératif (Phase 6 EV_DEPRESCRIPTION). Hypocalcémie possible (vit D + Ca avant). Adapter si DFG < 30.",
                     "source": "RCP Prolia | HAS Ostéoporose 2019"
           },
           {
@@ -22808,6 +23035,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Neurotoxicité possible en surdosage",
+                    "notes_cliniques": "Antiarythmique Ic : à ÉVITER si cardiopathie structurelle (CAST trial : surmortalité post-IDM). Indication réservée FA paroxystique sans cardiopathie. ECG avant initiation.",
                     "source": "RCP Flecaine | ESC Arythmie 2020"
           },
           {
@@ -22852,6 +23080,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur courant If (bradycardisant sinusal pur) : indication HFrEF + FC ≥ 70 bpm en rythme sinusal sous BB max toléré (SHIFT trial). Phosphènes lumineux. CI dans FA (efficacité nulle). Adapter selon FC, surveillance ECG.",
                     "source": "RCP Procoralan | ESC IC 2023"
           },
           {
@@ -22928,6 +23157,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "ARM non stéroïdien (DT2 + MRC albuminurique). FIDELIO/FIGARO-DKD. Surveillance K+ à J7, M1, trimestrielle (Phase 8 SYND_045 — moins de gynécomastie que spironolactone). K+ < 5.0 pour initier.",
                     "source": "RCP Kerendia | ESC IC 2023 ; KDIGO 2024"
           },
           {
@@ -22981,6 +23211,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Antiépileptique paradoxalement pro-convulsivant en surdosage",
+                    "notes_cliniques": "Antiépileptique à marge thérapeutique étroite : taux 10-20 mg/L. Inducteur CYP3A4 puissant (interactions multiples). Hyperplasie gingivale, ataxie, nystagmus, ostéomalacie (sup. vit D), neuropathie. À ÉVITER chez âgé (Beers 2023, STOPP/START v3, FORTA-D). Si inévitable : 100 mg, doser phénytoïnémie.",
                     "source": "RCP Di-Hydan | HAS Epilepsie 2020 ; Beers 2023"
           },
           {
@@ -23025,6 +23256,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Agoniste dopaminergique — risque faible",
+                    "notes_cliniques": "Agoniste DA non-ergot : indication Parkinson + déclin cognitif (faible niveau de preuve). Hypotension orthostatique, somnolence diurne, hallucinations chez âgé. Prudence.",
                     "source": "RCP Trivastal | HAS Parkinson 2016"
           },
           {
@@ -23100,6 +23332,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Analogue vasopressine : indication diabète insipide, énurésie. RISQUE HYPONATRÉMIE SÉVÈRE chez âgé (Beers 2023 : éviter pour énurésie nocturne — surveillance Na+ obligatoire J3, J7, mensuelle).",
                     "source": "RCP Minirin | Beers 2023"
           },
           {
@@ -23149,6 +23382,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anabolique osseux PTH (ostéoporose sévère). 1 inj SC/j x 24 mois max. Hypercalcémie possible. Indication restreinte (T-score ≤ -2.5 + ≥ 2 fractures vertébrales). Coût élevé.",
                     "source": "RCP Forsteo | HAS Ostéoporose 2019"
           },
           {
@@ -23200,6 +23434,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "eleve",
                     "epileptogene_desc": "Métabolite norpéthidine pro-convulsivant — PIM absolu",
+                    "notes_cliniques": "Opioïde phenylpiperidine = méperidine : PIM ABSOLU (Beers 2023). Neurotoxicité métabolite (convulsions). Interaction IMAO = syndrome sérotoninergique létal. Ne plus utiliser.",
                     "source": "RCP Dolosal | Beers 2023"
           },
           {
@@ -23247,6 +23482,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "modere",
                     "epileptogene_desc": "Sevrage brutal → convulsions — PIM absolu",
+                    "notes_cliniques": "Carbamate anxiolytique : RETIRÉ DU MARCHÉ EU 2012 (ANSM — sédation, dépendance, surdoses fatales). Ne plus prescrire.",
                     "source": "ANSM retrait 2012 ; Beers 2023"
           },
           {
@@ -23282,6 +23518,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Vasodilatateur xanthine (Torental) : indication AOMI (efficacité modeste — claudication intermittente). À ÉVITER chez âgé (FORTA-D — bénéfice non démontré, troubles digestifs).",
                     "source": "RCP Torental | FORTA-D"
           },
           {
@@ -23324,6 +23561,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur PDE5 (Viagra) : indication dysfonction érectile, HTAP. CI absolue avec dérivés nitrés (hypotension grave). Risque hypotension orthostatique, troubles visuels. Adapter selon DFG/BH.",
                     "source": "RCP Revatio | RCP"
           },
           {
@@ -23366,6 +23604,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur PDE5 longue ½ vie (36 h) : indication dysfonction érectile, HBP, HTAP. CI absolue avec dérivés nitrés. Profil similaire sildénafil. Adapter selon DFG/BH.",
                     "source": "RCP Cialis | RCP"
           },
           {
@@ -23407,6 +23646,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Z-drug ultra-courte ½ vie : indication insomnie initiale. Mêmes risques BZD/Z-drug en gériatrie (chutes, dépendance). Beers 2023 : éviter.",
                     "source": "RCP Sonata | HAS BZD 2022 ; Beers 2023"
           },
           {
@@ -23496,6 +23736,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antifongique : interactions CYP3A4 (statines, AOD, AVK, sulfamides), hépatotoxicité, allongement QT (azolés). Surveillance BH + ECG selon classe.",
                     "source": "RCP Sporanox | ESCMID 2022"
           },
           {
@@ -23555,6 +23796,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Neurotoxicité rapportée à forte dose",
+                    "notes_cliniques": "Antifongique : interactions CYP3A4 (statines, AOD, AVK, sulfamides), hépatotoxicité, allongement QT (azolés). Surveillance BH + ECG selon classe.",
                     "source": "RCP Nizoral | ANSM restrictions 2013"
           },
           {
@@ -23596,6 +23838,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anti-œstrogène SERM (cancer sein hormono-dépendant). Risque thromboembolique veineux (CI si ATCD MTEV), cancer endomètre, bouffées vasomotrices. Dépistage gynéco annuel.",
                     "source": "RCP Nolvadex | ASCO 2019"
           },
           {
@@ -23620,6 +23863,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antivertigineux pipérazine : à ÉVITER chez âgé (Beers 2023, PRISCUS — somnolence, parkinsonisme iatrogène, prise de poids). Préférer bétahistine.",
                     "source": "RCP Sureptil | Beers 2023"
           },
           {
@@ -23644,6 +23888,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antivertigineux pipérazine bloqueur calcique : à ÉVITER chez âgé (PRISCUS — sédation, dépression, parkinsonisme iatrogène).",
                     "source": "RCP Sibelium | ANSM ; Beers 2023"
           },
           {
@@ -23668,6 +23913,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antivertigineux histaminergique (vertige Ménière). Bonne tolérance. Pas d'évidence forte d'efficacité au-delà du placebo. Pas de risque chez âgé.",
                     "source": "RCP Serc | Cochrane 2016"
           },
           {
@@ -23695,6 +23941,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Vasodilatateur périphérique (Praxilène) : indication AOMI claudication, vertiges. Efficacité modeste. Bonne tolérance globale.",
                     "source": "RCP Praxilene | FORTA-D"
           },
           {
@@ -23719,6 +23966,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Vasodilatateur ergot (Sermion) : indication troubles cognitifs vasculaires (efficacité modeste). À ÉVITER chez âgé (FORTA-D — bénéfice non démontré, hypotension orthostatique).",
                     "source": "RCP Sermion | FORTA-D ; Beers 2023"
           },
           {
@@ -23748,6 +23996,7 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Risque faible mais rapporté",
+                    "notes_cliniques": "Antidépresseur : bénéfice/risque à évaluer chez âgé. Préférer ISRS (sertraline, escitalopram) ou mirtazapine (si insomnie/dénutrition). Risque hyponatrémie (SIADH), saignement, sérotoninergique (Phase 8 SYND_043).",
                     "source": "RCP Valdoxan | HAS Depression 2017"
           },
           {
@@ -23787,6 +24036,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antithyroïdien thionamide : indication hyperthyroïdie (Basedow). AGRANULOCYTOSE (NFS si fièvre/angine — surveillance hebdo M1, mensuelle ensuite), hépatotoxicité. CI grossesse 1er trimestre (préférer PTU). Surveillance TSH/FT4 tous les 4-6 sem en titration.",
                     "source": "RCP Thyrozol | HAS Thyroïde 2022"
           },
           {
@@ -23836,6 +24086,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Alpha-1 agoniste oral : indication hypotension orthostatique sévère (SFAR 2024). Prendre matin/midi/15h (PAS le soir — HTA décubitus). Adapter selon TA debout.",
                     "source": "RCP Gutron | ESC Syncope 2018"
           },
           {
@@ -23880,6 +24131,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Fibrate : INTERACTION CRITIQUE avec statines (rhabdomyolyse — CI absolue, Phase 8). Inhibiteur puissant CYP2C8 (interaction répaglinide ↑ ×8). À ÉVITER en association statine ; préférer fénofibrate.",
                     "source": "RCP Lipur | ESC Dyslipidémie 2019"
           },
           {
@@ -23928,6 +24180,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Pansement gastrique : indication ulcère duodénal, prévention ulcère stress. Constipation, interactions absorption (LT4, fluoroquinolones — espacer 2 h). Adapter si DFG < 30 (accumulation aluminium).",
                     "source": "RCP Ulcar | SNFGE 2018"
           },
           {
@@ -23952,6 +24205,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Antispasmodique musculotrope (Duspatalin) : indication SII. Bonne tolérance. Pas d'effet anticholinergique systémique. Acceptable chez âgé.",
                     "source": "RCP Duspatalin | Pharmacopée"
           },
           {
@@ -23976,6 +24230,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Anticholinergique : ACB élevé en gériatrie — risque de confusion/délirium (Phase 8 SYND_047), rétention urinaire, glaucome, constipation, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1). Préférer mirabégron (urinaire) ou alternatives non-anticholinergiques.",
                     "source": "RCP Spasfon | Pharmacopée"
           },
           {
@@ -24054,6 +24309,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "ARNI (HFrEF) : remplace IEC après wash-out 36 h obligatoire (angiœdème). Hyperkaliémie, hypotension, IRA. Adapter selon DFG. Surveillance K+/créat à J7-J14-M1 puis trimestrielle. ESC 2023 HF.",
                     "source": "RCP Entresto | ESC IC 2023"
           },
           {
@@ -24200,6 +24456,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
+                    "notes_cliniques": "Agoniste inverse 5-HT2A : indication psychose dans Parkinson (USA — pas d'AMM EU). QT prolongé, mortalité augmentée chez déments (Black Box FDA).",
                     "source": "FDA Nuplazid 2023 | AAN Parkinson 2023"
           },
           {
@@ -24255,6 +24512,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "CI si DFG < 15 (données insuffisantes)",
+                    "notes_cliniques": "ISRS : 1ère intention dépression chez âgé. Hyponatrémie/SIADH (Na+ J7-J14, M1, trim x 1 an), risque saignement (interaction AINS/AOD), syndrome sérotoninergique (avec tramadol/IMAO/linézolide — SYND_043). Préférer sertraline ou escitalopram.",
                     "source": "RCP Brintellix | Katona Int Clin Psychopharmacol 2012 | McIntyre 2016"
           },
           {
@@ -24325,6 +24583,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "25 mg max",
                     "atb_terminale": "Non recommandé",
+                    "notes_cliniques": "Antagoniste double orexines (DORA) : indication insomnie chronique. Alternative aux BZD/Z-drugs. Demi-vie 8 h. Données gériatriques limitées mais profil tolérance favorable.",
                     "source": "RCP Quviviq | AASM 2023 | EMA 2022"
           }
 ]

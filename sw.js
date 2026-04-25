@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.66 (Phase 9 audit EBM : poso_ger/poso_ren AOD-opioïdes-antiépileptiques-paroxetine-rispéridone-LT4 ; alertes cliniques top-iatro ; Child-Pugh diazepam/apixaban)
+// Service Worker - GeriaAssist v0.67 (Phase 10 — enrichissement notes_cliniques sur 259 médicaments absents : antibiotiques/antifongiques/antipsy/antiparkinsoniens/AINS/IACHE/sulfamides/AOD/anticoag/etc.)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260424-poso-alertes-childpugh-phase9';
-const CACHE_NAME = `geriaassist-v66-${BUILD_ID}`;
+const BUILD_ID = '20260424-notes-cliniques-mass-phase10';
+const CACHE_NAME = `geriaassist-v67-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
