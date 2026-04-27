@@ -262,9 +262,20 @@ label.fw-bold {
 }
 
 .tab-content .alert-info {
-    border-left-color: var(--ga-info) !important;
-    background: var(--ga-info-bg) !important;
+    /* Sévérité visuelle ATTÉNUÉE pour les notes informatives :
+       fond très pâle, bordure fine, texte secondaire — ne doit PAS attirer
+       l'œil au même niveau qu'une alerte danger/warning. */
+    border-left: 2px solid var(--ga-info, #0dcaf0) !important;
+    border-color: rgba(13, 202, 240, 0.18) !important;
+    background: rgba(207, 244, 252, 0.35) !important;
+    color: var(--ga-text-secondary, #495057) !important;
+    box-shadow: none !important;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    font-size: 0.9em;
 }
+.tab-content .alert-info strong { color: var(--ga-text-primary, #212529) !important; font-weight: 600; }
+.tab-content .alert-info .badge { opacity: 0.85; }
 
 .tab-content .alert-light {
     border-left-color: var(--ga-border-accent) !important;

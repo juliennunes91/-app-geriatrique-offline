@@ -2615,7 +2615,8 @@ const PATHOLOGY_RULES_DB = {
                 {
                     bio: "BIO_002",
                     nom: "Natrémie",
-                    frequence: "Avant introduction ISRS/IRSN, à J7-J14, puis M1, puis trimestriel × 1 an (SIADH iatrogène : 5-40 % sous ISRS chez ≥ 65 ans — plus fréquent avec citalopram/escitalopram)",
+                    frequence: "Avant introduction puis J7-J14, M1, trimestriel × 1 an si antidépresseur sérotoninergique",
+                    note: "SIADH iatrogène 5-40 % sous ISRS/IRSN chez ≥ 65 ans (plus fréquent sous citalopram/escitalopram). Si baisse progressive → déprescription progressive ; si Na < 130 → arrêt + restriction hydrique.",
                     seuils: {
                         alerte: { max: 135, action: "Surveiller ionogramme à J7 ; si baisse progressive → déprescription progressive" },
                         critique: { max: 130, action: "SIADH iatrogène : arrêter ISRS progressivement, restriction hydrique 800-1000 mL/j, éviter correction > 8 mmol/L/24h (myélinolyse pontine)" }
@@ -2624,7 +2625,7 @@ const PATHOLOGY_RULES_DB = {
                 },
                 { bio: "BIO_001", nom: "Kaliémie", frequence: "Annuel si pas de diurétique associé" },
                 { bio: "BIO_019", frequence: "Annuel (TSH pour exclure cause thyroïdienne)" },
-                { bio: "BIO_031", nom: "QTc", frequence: "ECG avant citalopram > 20 mg, escitalopram > 10 mg ; répéter à J7", seuils: { alerte: { min: 470, action: "Réduire dose" }, critique: { min: 500, action: "Arrêt + switch sertraline/mirtazapine" } }, syndrome_declenche: "SYND_051" }
+                { bio: "BIO_031", nom: "QTc", frequence: "ECG avant introduction antidépresseur QT-allongeant, puis à J7", note: "Citalopram > 20 mg ou escitalopram > 10 mg : ECG obligatoire (Risk_KR CredibleMeds). Switch vers sertraline/mirtazapine si QTc ≥ 470.", seuils: { alerte: { min: 470, action: "Réduire dose" }, critique: { min: 500, action: "Arrêt + switch sertraline/mirtazapine" } }, syndrome_declenche: "SYND_051" }
             ]
         },
         DECOMPENSATION_BIO: {

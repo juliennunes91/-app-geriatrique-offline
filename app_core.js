@@ -510,6 +510,33 @@ window.resetPatient = function() {
         const target = document.querySelector(firstTab.getAttribute('data-bs-target'));
         if (target) { target.classList.add('show', 'active'); }
     }
+
+    // 9. Vider les badges de comptage (counters d'onglet)
+    document.querySelectorAll('#myTab .tab-counter, .tab-counter').forEach(c => c.remove());
+
+    // 10. Vider les zones secondaires : OCR results, modals patient, autocompletes
+    ['ocrResults', 'ocrPreview', 'ocrText', 'ocrFilename'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.value = '';
+            else el.innerHTML = '';
+        }
+    });
+    // Fermer les listes d'autocomplete encore ouvertes
+    document.querySelectorAll('.autocomplete-container ul, [id^="auto"][id$="List"]').forEach(ul => {
+        ul.style.display = 'none';
+        ul.innerHTML = '';
+    });
+
+    // 11. Vider le titre patient et le compteur de meds dans le header (index_modern)
+    ['hdrPatientName'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = 'Nouveau patient';
+    });
+
+    // 12. Reset cache analysis hash dans window (au cas où une autre référence existe)
+    window._lastAnalysisHash = null;
+    window._lastAnalysisResult = null;
 };
 
 // ============================================================================

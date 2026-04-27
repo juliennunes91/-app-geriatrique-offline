@@ -597,20 +597,22 @@ const GeriaEngineV2 = (() => {
         }
         
         // INFORMATIFS — repliables par défaut.
-        // Fallback vanilla JS + ARIA (n'impose pas Bootstrap JS).
+        // Fallback vanilla JS + ARIA. ATTENTION : ne PAS utiliser data-bs-toggle/target
+        // en plus de l'onclick — provoque un double-toggle (le bouton reste fermé).
         if (informatifs.length > 0) {
             const collapseId = `collapse_${type}_info_${Math.random().toString(36).substr(2,5)}`;
-            const toggleJs = `(function(btn){var c=document.getElementById('${collapseId}');if(!c)return;var open=c.classList.toggle('show');c.style.display=open?'':'none';btn.setAttribute('aria-expanded',open?'true':'false');btn.innerHTML=open?'🔵 Informatifs (${informatifs.length}) — masquer ▴':'🔵 Informatifs (${informatifs.length}) — cliquer pour voir ▾';})(this);return false;`;
+            const labelClosed = `🔵 Informatifs (${informatifs.length}) — cliquer pour voir ▾`;
+            const labelOpen = `🔵 Informatifs (${informatifs.length}) — masquer ▴`;
+            const toggleJs = `(function(btn){var c=document.getElementById('${collapseId}');if(!c)return;var hidden=c.style.display==='none'||c.style.display==='';c.style.display=hidden?'block':'none';btn.setAttribute('aria-expanded',hidden?'true':'false');btn.innerHTML=hidden?'${labelOpen}':'${labelClosed}';})(this);return false;`;
             html += `
             <div class="mb-2 mt-3">
-                <a href="#${collapseId}" class="text-info text-decoration-none" role="button" aria-expanded="false"
-                   style="cursor:pointer; display:inline-block; padding:4px 0;"
-                   onclick="${toggleJs.replace(/"/g,'&quot;')}"
-                   data-bs-toggle="collapse" data-bs-target="#${collapseId}">
-                    🔵 Informatifs (${informatifs.length}) — cliquer pour voir ▾
-                </a>
+                <button type="button" class="btn btn-link text-info text-decoration-none p-1" aria-expanded="false"
+                   style="cursor:pointer;"
+                   onclick="${toggleJs.replace(/"/g,'&quot;')}">
+                    ${labelClosed}
+                </button>
             </div>
-            <div class="collapse" id="${collapseId}" style="display:none;">
+            <div id="${collapseId}" style="display:none;">
                 ${informatifs.map(a => renderSingleAlert(a)).join('')}
             </div>`;
         }
@@ -876,10 +878,17 @@ const GeriaEngineV2 = (() => {
         } else {
             displayTitle = `${triage.icon} ${displayTitle}`;
         }
+        // Fallback : si aucun message, on affiche au moins le ref_code et l'indication minimale.
+        // Évite que l'utilisateur voie un titre STOPP sans détail.
+        const safeMessage = (a.message && String(a.message).trim() !== '')
+            ? a.message
+            : (a.ref_code
+                ? `<em>Critère ${esc(a.ref_code)} — détail non documenté dans la base.</em>`
+                : '<em>Détail clinique non documenté.</em>');
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass}); padding-left: 0.9rem;">
             ${scoreBadge}<strong>${displayTitle}</strong>${mergedBadge}
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(displaySourceLabel)}</span>
-            <div class="small mt-1" style="padding-left: 0.25rem;">${a.message}</div>
+            <div class="small mt-1" style="padding-left: 0.25rem;">${safeMessage}</div>
             ${compHtml}
             ${pimBadges}
             ${ebmBadge}

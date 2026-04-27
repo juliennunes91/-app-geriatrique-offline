@@ -13172,7 +13172,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Stimulation appétit utile chez SA dénutri. Moins sédatif à forte dose.",
+                    "notes_cliniques": "Antidépresseur NaSSA (≠ ISRS/IRSN). Stimulation appétit utile chez SA dénutri (FORTA-A en gériatrie). Moins sédatif à forte dose. Association avec ISRS/IRSN (ex. mirtazapine + venlafaxine = « California Rocket Fuel », Stahl 2007) ACCEPTÉE en dépression résistante — n'est PAS un doublon thérapeutique.",
                     "source": "RCP Norset ; HAS 2017",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Risque faible mais rapporté"
@@ -19790,7 +19790,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Antidépresseur tétracyclique : profil sédatif, prise de poids, agranulocytose rare (NFS si fièvre). Alternative en ambulatoire si insomnie/anxiété mais préférer mirtazapine (mieux étudiée chez âgé).",
+                    "notes_cliniques": "Antidépresseur tétracyclique apparenté NaSSA (≠ ISRS/IRSN) : profil sédatif, prise de poids, agranulocytose rare (NFS si fièvre/angine). Association avec ISRS/IRSN n'est PAS un doublon thérapeutique (potentialisation acceptée — Stahl 2007). Préférer mirtazapine (mieux étudiée chez âgé) si choix entre les deux NaSSA.",
                     "source": "RCP Athymil | HAS Depression 2017"
           },
           {

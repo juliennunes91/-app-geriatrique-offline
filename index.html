@@ -480,7 +480,7 @@
     </div>
 
     <footer class="version-footer">
-        version 0.49 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+        version 0.67 — créé par Dr Julien Nunes à l'aide de l'IA<br>
         Merci aux testeurs (Dr Juliette Muffet)<br>
         <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
     </footer>
@@ -624,6 +624,9 @@
 
         // ================================================================
         // TAB COUNTERS — Updated after analysis
+        // Ne compte que les alertes ACTIONNABLES : danger + warning + success.
+        // Les .alert-info (purement informatives) et .alert-light (containers
+        // de score) NE SONT PAS comptées pour ne pas gonfler les badges.
         // ================================================================
         function updateTabCounters() {
             const tabMap = {
@@ -635,7 +638,8 @@
             for (const [divId, tabIdx] of Object.entries(tabMap)) {
                 const el = document.getElementById(divId);
                 if (!el || !tabs[tabIdx]) continue;
-                const alerts = el.querySelectorAll('.alert:not(.alert-light)');
+                // Sélection stricte : on ne compte ni alert-light ni alert-info ni alert-secondary
+                const alerts = el.querySelectorAll('.alert.alert-danger, .alert.alert-warning, .alert.alert-success');
                 const count = alerts.length;
                 const btn = tabs[tabIdx];
                 // Remove existing counter badge
@@ -643,7 +647,11 @@
                 if (existing) existing.remove();
                 if (count > 0) {
                     const badge = document.createElement('span');
-                    badge.className = 'tab-counter badge bg-danger rounded-pill ms-1';
+                    // Couleur du badge selon le pire niveau présent
+                    const hasDanger = el.querySelector('.alert.alert-danger');
+                    const hasWarning = el.querySelector('.alert.alert-warning');
+                    const badgeClass = hasDanger ? 'bg-danger' : (hasWarning ? 'bg-warning text-dark' : 'bg-success');
+                    badge.className = 'tab-counter badge ' + badgeClass + ' rounded-pill ms-1';
                     badge.style.fontSize = '0.6em';
                     badge.textContent = count;
                     btn.appendChild(badge);

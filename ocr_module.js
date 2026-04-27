@@ -156,9 +156,15 @@ const OcrModule = (() => {
         try {
             response = await fetch(url);
         } catch (e) {
-            throw new Error('Impossible de charger les données OCR françaises : ' + e.message);
+            // Erreur typique : le Service Worker n'a pas (encore) caché le fichier ou le SW est obsolète.
+            // On suggère explicitement la procédure de récupération.
+            const isOffline = !navigator.onLine;
+            const hint = isOffline
+                ? "Vous semblez être hors ligne et le modèle OCR n'est pas encore en cache. Connectez-vous une première fois en ligne pour télécharger le modèle français (≈ 6 Mo)."
+                : "Si l'application a été mise à jour récemment, videz le cache (Ctrl+Shift+Suppr) ou désactivez puis réactivez le service worker (DevTools → Application → Service Workers → Unregister).";
+            throw new Error('Impossible de charger les données OCR françaises (' + e.message + '). ' + hint);
         }
-        if (!response.ok) throw new Error('Données OCR introuvables (HTTP ' + response.status + ')');
+        if (!response.ok) throw new Error('Données OCR introuvables (HTTP ' + response.status + '). Vérifiez que lib/tessdata/fra.traineddata.gz est bien servi par votre serveur.');
 
         const total = parseInt(response.headers.get('Content-Length') || '0');
         const reader = response.body.getReader();

@@ -1178,13 +1178,11 @@ function analyserPrescription() {
             <br><em>Conduite :</em> Surveillance nutritionnelle rapprochée. Enrichir les repas, peser régulièrement. Contrôle à 1 mois.</div>`, 'bio');
     }
 
-    // --- Supplémentation vitamine D systématique si âge avancé (sans carence documentée) ---
-    if (patientAge >= 70 && (!bioValues['BIO_023'] || bioValues['BIO_023'] <= 0) && !patientHasMedClass('cholecalciferol') && !patientHasMedClass('vitamine d') && !patientHasMedClass('calcifediol')) {
-        addAlert('alertes-initier', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Vitamine D — supplémentation systématique recommandée</strong>
-            <span class="badge bg-secondary float-end" style="font-size:0.65em;">HAS 2011 / Sociétés savantes</span>
-            <br><span class="small">Chez le sujet âgé ≥ 70 ans, notamment institutionnalisé ou à risque de chute/fracture, un apport systématique de vitamine D par voie orale (800-1000 UI/j) est recommandé sans dosage préalable obligatoire.</span>
-        </div>`, 'initier');
-    }
+    // --- Supplémentation vitamine D : couverture déléguée à STOPP/START v3 ---
+    // L'ancienne alerte HAS 2011 hardcodée a été retirée pour éviter le doublon avec
+    // IN_H03 (vit D ostéoporose) + IN_H05 (vit D carence < 20 ng/mL) du moteur
+    // GERIA_RECOS_DB. Voir geria_recos_final.js.
+
 
     // --- Carence B12 isolée (sans anémie) — fréquente sous metformine/IPP ---
     if (bioValues['BIO_021'] > 0 && bioValues['BIO_021'] < 150 && !(bioValues['BIO_009'] > 0 && bioValues['BIO_009'] < 12)) {
@@ -1378,8 +1376,8 @@ function analyserPrescription() {
             { key: 'iec',                          label: 'IEC',                          note: "Association IEC non recommandée (risque hyperK+/IRA ; ESC 2021)." },
             { key: 'ara2',                         label: 'ARA2',                         note: "Association ARA2 non recommandée (ONTARGET, VA NEPHRON-D)." },
             { key: 'betabloquant',                 label: 'Bêtabloquants',                note: "Association BB systémiques non recommandée (bradycardie, hypoTA)." },
-            { key: 'isrs',                         label: 'ISRS',                         note: "Association ISRS = syndrome sérotoninergique (Beers 2023, STOPP D14)." },
-            { key: 'irsn',                         label: 'IRSN',                         note: "Association IRSN non justifiée (sérotoninergique)." },
+            { key: 'isrs',                         label: 'ISRS',                         note: "Association de 2 ISRS = syndrome sérotoninergique (Beers 2023, STOPP D14).", exception: "Exception : NaSSA (mirtazapine, miansérine) + ISRS/IRSN n'est PAS un doublon (« California Rocket Fuel » de Stahl 2007 — augmentation potentialisatrice acceptée en dépression résistante chez l'âgé). Cette association sort du DUPLICATE_WATCH." },
+            { key: 'irsn',                         label: 'IRSN',                         note: "Association de 2 IRSN non justifiée (sérotoninergique).", exception: "Exception : NaSSA (mirtazapine, miansérine) + IRSN n'est PAS un doublon (« California Rocket Fuel »). Cette association sort du DUPLICATE_WATCH." },
             { key: 'antidepresseur_tricyclique',   label: 'Antidépresseurs tricycliques', note: "Association ATC non justifiée (anticholinergique, cardiotox)." },
             { key: 'benzodiazepine',               label: 'Benzodiazépines',              note: "Association BZD déconseillée (STOPP D5, Beers 2023) — chutes, confusion.", exception: "Exception parfois : 1 hypnotique court + 1 anxiolytique, mais à éviter chez le sujet âgé." },
             { key: 'ipp',                          label: 'IPP',                          note: "Association IPP non justifiée." },
@@ -1398,6 +1396,11 @@ function analyserPrescription() {
         ];
 
         const dupFound = [];
+        // Exception « California Rocket Fuel » (Stahl 2007) :
+        // NaSSA (mirtazapine, miansérine) + ISRS/IRSN n'est PAS un doublon thérapeutique
+        // mais une potentialisation acceptée en dépression résistante chez l'âgé.
+        const NASSA_DCIS = new Set(['mirtazapine', 'mianserine']);
+        const hasNaSSA = activeMeds.some(m => NASSA_DCIS.has((m.dci || '').toLowerCase().trim()));
         DUPLICATE_WATCH.forEach(cls => {
             const members = activeMeds.filter(m => {
                 const dci = sanitizeText(m.dci || '');
@@ -1405,7 +1408,11 @@ function analyserPrescription() {
                 return matchesDrugClass(dci, classe, cls.key);
             });
             // Dédupliquer par DCI (ignorer 2 formes du même médicament : LP + IR)
-            const uniqDcis = [...new Set(members.map(m => (m.dci || '').toLowerCase().trim()))];
+            let uniqDcis = [...new Set(members.map(m => (m.dci || '').toLowerCase().trim()))];
+            // Filtrer NaSSA + ISRS/IRSN (California Rocket Fuel — exception légitime)
+            if (hasNaSSA && (cls.key === 'isrs' || cls.key === 'irsn' || cls.key === 'antidepresseur')) {
+                uniqDcis = uniqDcis.filter(d => !NASSA_DCIS.has(d));
+            }
             if (uniqDcis.length >= 2) {
                 dupFound.push({
                     label: cls.label,

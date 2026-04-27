@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.67 (Phase 10 — enrichissement notes_cliniques sur 259 médicaments absents : antibiotiques/antifongiques/antipsy/antiparkinsoniens/AINS/IACHE/sulfamides/AOD/anticoag/etc.)
+// Service Worker - GeriaAssist v0.68 (Phase 11 fixes UI/logique : version sync, vit D dédup, NaSSA+IRSN exception California Rocket Fuel, OCR diagnostic, reset patient complet, toggle infos non-bloquant, badges count actionnables, couleurs index_modern, sévérité visuelle infos)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260424-notes-cliniques-mass-phase10';
-const CACHE_NAME = `geriaassist-v67-${BUILD_ID}`;
+const BUILD_ID = '20260424-ui-fixes-phase11';
+const CACHE_NAME = `geriaassist-v68-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
