@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.68 (Phase 11 fixes UI/logique : version sync, vit D dédup, NaSSA+IRSN exception California Rocket Fuel, OCR diagnostic, reset patient complet, toggle infos non-bloquant, badges count actionnables, couleurs index_modern, sévérité visuelle infos)
+// Service Worker - GeriaAssist v0.69 (Phase 12 — switch OCR vers tessdata_best : 6.3 MB → 3.3 MB compressé, LSTM haute précision)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260424-ui-fixes-phase11';
-const CACHE_NAME = `geriaassist-v68-${BUILD_ID}`;
+const BUILD_ID = '20260427-ocr-tessdata-best';
+const CACHE_NAME = `geriaassist-v69-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
