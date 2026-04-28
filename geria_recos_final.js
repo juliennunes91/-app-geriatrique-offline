@@ -34,7 +34,19 @@ const GERIA_RECOS_DB = {
         "ESC_AF":    { nom: "ESC 2024 AF",           annee: 2024, ref: "Van Gelder IC et al., Eur Heart J 2024 AF-CARE Guidelines" },
         "ADA":       { nom: "ADA Standards of Care", annee: 2025, ref: "American Diabetes Association Standards of Care in Diabetes 2025" },
         "KDIGO":     { nom: "KDIGO CKD",             annee: 2024, ref: "KDIGO 2024 Clinical Practice Guideline for CKD Evaluation and Management" },
-        "ESMO":      { nom: "ESMO/EAU",              annee: 2024, ref: "ESMO Clinical Practice Guidelines" }
+        "ESMO":      { nom: "ESMO/EAU",              annee: 2024, ref: "ESMO Clinical Practice Guidelines" },
+        "SFGG_SF3PA_SFPC_2026": { nom: "SFGG/SF3PA/SFPC 2026 Antidépresseurs SA", annee: 2026, ref: "Houix M. et al., Optimizing Antidepressant Use in Geriatric Depression — Expert Consensus from French societies of geriatrics, old age psychiatry and clinical pharmacy. Eur Psychiatry 2026 ; DOI 10.1192/j.eurpsy.2026.12206" },
+        "FDA":       { nom: "FDA Drug Safety",       annee: 2024, ref: "U.S. Food & Drug Administration — Drug Safety Communications" },
+        "ANSM":      { nom: "ANSM",                  annee: 2024, ref: "Agence nationale de sécurité du médicament — Alertes & RCP" },
+        "EMA":       { nom: "EMA",                   annee: 2025, ref: "European Medicines Agency — SmPC & PSUSA" },
+        "CredibleMeds": { nom: "CredibleMeds QT",    annee: 2024, ref: "AZCERT QT Drug Lists (Risk_KR/Risk_PR/Risk_CR/Risk_TdP)" },
+        "ESC":       { nom: "ESC Guidelines",        annee: 2024, ref: "European Society of Cardiology Clinical Practice Guidelines" },
+        "ESC_HTN":   { nom: "ESC 2024 HTN",          annee: 2024, ref: "Mancia G et al., 2024 ESC Guidelines for the management of elevated blood pressure" },
+        "IDSA":      { nom: "IDSA",                  annee: 2021, ref: "Infectious Diseases Society of America Clinical Practice Guidelines" },
+        "ACR":       { nom: "ACR",                   annee: 2017, ref: "American College of Rheumatology — Glucocorticoid-Induced Osteoporosis Guideline" },
+        "IOF":       { nom: "IOF",                   annee: 2024, ref: "International Osteoporosis Foundation Recommendations" },
+        "ICI":       { nom: "ICI",                   annee: 2017, ref: "International Continence Society / International Consultation on Incontinence" },
+        "CredibleMeds_KR": { nom: "CredibleMeds Risk_KR", annee: 2024, ref: "Known Risk of Torsades de Pointes (CredibleMeds 2024)" }
     },
 
     // ========================================================================
@@ -1855,6 +1867,125 @@ const GERIA_RECOS_DB = {
             },
             syndrome_declenche: "SYND_043",
             alternatives: "Alternative antibiotique : daptomycine, vancomycine, ceftaroline selon indication"
+        },
+        {
+            id: "EV_SFGG_AD_01",
+            sources: ["SFGG_SF3PA_SFPC_2026"],
+            ref_code: "SFGG-AD-49",
+            section: "SNC — Antidépresseurs",
+            titre: "Combinaison de 3 antidépresseurs (CI absolue)",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 (item 49) : ne JAMAIS prescrire 3 antidépresseurs en association — aucune indication validée, risque iatrogène majeur (sérotoninergique, sédation, hypotension).",
+            severite: "danger",
+            condition: {
+                med_keys: ["sertraline", "citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "venlafaxine", "duloxetine", "milnacipran", "mirtazapine", "mianserine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine"],
+                polypharmacie: true,
+                seuil: 3
+            },
+            alternatives: "Réévaluer le schéma. Stratégies validées : ISRS/IRSN + mirtazapine (combinaison 2 — item 51), augmentation par aripiprazole/lithium/quétiapine (items 52-53), ECT (item 56)."
+        },
+        {
+            id: "EV_SFGG_AD_02",
+            sources: ["SFGG_SF3PA_SFPC_2026", "BEERS"],
+            ref_code: "SFGG-AD-50",
+            section: "SNC — Antidépresseurs",
+            titre: "Combinaisons d'antidépresseurs interdites (2 ISRS, 2 IRSN, ISRS+IRSN, ISRS-IRSN+IMAO/TCA)",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 (item 50) : ne pas associer 2 ISRS, 2 IRSN, ISRS+IRSN, ou ISRS/IRSN avec IMAO ou TCA — risque sérotoninergique majeur (SYND_043), redondance pharmacologique sans bénéfice supplémentaire.",
+            severite: "danger",
+            condition: {
+                med_keys: ["sertraline", "citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine"],
+                med_keys_2: ["venlafaxine", "duloxetine", "milnacipran", "amitriptyline", "clomipramine", "imipramine", "iproniazide", "moclobemide", "rasagiline", "selegiline"]
+            },
+            syndrome_declenche: "SYND_043",
+            alternatives: "Stratégie validée 2e ligne : ISRS/IRSN + MIRTAZAPINE (« California Rocket Fuel », item 51) — n'est PAS une combinaison interdite. Augmentation aripiprazole 1-5 mg/j en 1ère ligne après échec 2 monothérapies."
+        },
+        {
+            id: "EV_SFGG_AD_03",
+            sources: ["SFGG_SF3PA_SFPC_2026", "ANSM"],
+            ref_code: "SFGG-AD-30",
+            section: "SNC — Antidépresseurs",
+            titre: "Citalopram > 20 mg ou Escitalopram > 10 mg ou TCA en cas d'arythmie / QT prolongé / hypokaliémie",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 (item 30) : NE PAS prescrire TCA, citalopram, escitalopram en cas d'arythmie, QT prolongé (≥ 470 ms) ou hypokaliémie (K+ < 3.5). Préférer sertraline ou mirtazapine (item 29). ECG à J7 si QT borderline (item 31).",
+            severite: "danger",
+            condition: {
+                med_keys: ["citalopram", "escitalopram", "amitriptyline", "clomipramine", "imipramine", "doxepine"],
+                comorbs_any: ["PAT_006", "PAT_035"]
+            },
+            alternatives: "Switch vers sertraline (1ère intention sans cardio-toxicité — item 29) ou mirtazapine (orexigène/insomnie). Vortioxétine si bénéfice cognitif recherché (item 47)."
+        },
+        {
+            id: "EV_SFGG_AD_04",
+            sources: ["SFGG_SF3PA_SFPC_2026", "ANSM"],
+            ref_code: "SFGG-AD-10",
+            section: "SNC — Antidépresseurs",
+            titre: "Miansérine — préférer mirtazapine (alerte ANSM)",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 (item 10) : préférer mirtazapine à miansérine chez le sujet âgé (alerte ANSM Athymil 2014 : sédation marquée, agranulocytose, hépatite, convulsions). Mirtazapine = meilleure tolérance, plus d'évidence en gériatrie.",
+            severite: "warning",
+            condition: { med_keys: ["mianserine"] },
+            alternatives: "Switch vers mirtazapine 15-45 mg/j (item 12 — orexigène/sédation utile chez l'âgé dénutri ou insomniaque)."
+        },
+        {
+            id: "EV_SFGG_AD_05",
+            sources: ["SFGG_SF3PA_SFPC_2026", "EMA"],
+            ref_code: "SFGG-AD-AGOMELATINE",
+            section: "SNC — Antidépresseurs",
+            titre: "Agomélatine ≥ 75 ans — éviter (RCP Valdoxan 2025)",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 + RCP Valdoxan 2025 (EMA) : agomélatine NON recommandée ≥ 75 ans (manque de données + hépatotoxicité grave documentée). Si maintenue : BH OBLIGATOIRE M0, S3, S6, S12, S24 et arrêt si transaminases > 3 × LSN (item 38).",
+            severite: "warning",
+            condition: { med_keys: ["agomelatine"], age_min: 75 },
+            alternatives: "Sertraline (1ère intention — item 11), mirtazapine si insomnie/dénutrition (item 12), vortioxétine si plainte cognitive (item 47)."
+        },
+        {
+            id: "EV_SFGG_AD_06",
+            sources: ["SFGG_SF3PA_SFPC_2026", "EMA"],
+            ref_code: "SFGG-AD-TIANEPTINE",
+            section: "SNC — Antidépresseurs",
+            titre: "Tianéptine — éviter chez le sujet âgé (risque dépendance)",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 : tianéptine EXCLUE du panel d'antidépresseurs recommandés chez le sujet âgé (activité µ-opioïde partielle → risque de dépendance documenté, EMA PSUSA 2019). Cadre prescriptif spécifique requis.",
+            severite: "warning",
+            condition: { med_keys: ["tianeptine"] },
+            alternatives: "Sertraline 1ère intention (item 11) ou alternatives ISRS/IRSN selon profil. Si maintien indispensable : prescription sécurisée + surveillance abus."
+        },
+        {
+            id: "EV_SFGG_AD_07",
+            sources: ["SFGG_SF3PA_SFPC_2026"],
+            ref_code: "SFGG-AD-44",
+            section: "SNC — Antidépresseurs",
+            titre: "ISRS / IRSN / Vortioxétine + AINS — risque hémorragique majoré",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 (item 44) : éviter l'association ISRS/IRSN/vortioxétine + AINS (risque hémorragique additif, surtout digestif). Éducation patient sur les signes d'alerte.",
+            severite: "warning",
+            condition: {
+                med_keys: ["sertraline", "citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "venlafaxine", "duloxetine", "milnacipran", "vortioxetine"],
+                med_keys_2: ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "meloxicam", "piroxicam", "indometacine"]
+            },
+            alternatives: "Préférer paracétamol pour la douleur. Si AINS indispensable : courte durée + IPP de couverture. En cas de saignement récent : préférer mirtazapine (1ère choix) ou IRSN (item 45)."
+        },
+        {
+            id: "EV_SFGG_AD_08",
+            sources: ["SFGG_SF3PA_SFPC_2026"],
+            ref_code: "SFGG-AD-9",
+            section: "SNC — Antidépresseurs",
+            titre: "Tricyclique (TCA) en 1ère ligne pour dépression",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 (item 9) : ne pas prescrire de tricyclique (amitriptyline, clomipramine, imipramine, doxépine, dosulépine, nortriptyline, trimipramine) en 1ère ligne d'un EDM chez le sujet âgé — ACB élevé, QT, hypotension orthostatique, chutes, confusion. Clomipramine = uniquement 4e ligne hospitalière (item 55).",
+            severite: "danger",
+            condition: {
+                med_keys: ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "dosulpine"],
+                comorbs: ["PAT_032"]
+            },
+            alternatives: "Sertraline 1ère intention (item 11), citalopram/escitalopram (item 11), mirtazapine si insomnie/dénutrition (item 12). IRSN en 2e ligne (item 13)."
+        },
+        {
+            id: "IN_SFGG_AD_01",
+            sources: ["SFGG_SF3PA_SFPC_2026"],
+            ref_code: "SFGG-AD-11",
+            section: "SNC — Antidépresseurs",
+            titre: "Sertraline en 1ère intention pour dépression du sujet âgé",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 (item 11) : prescrire un ISRS — préférentiellement SERTRALINE — comme antidépresseur de 1ère intention chez le sujet âgé déprimé. Meilleur rapport bénéfice/risque (Kok & Reynolds JAMA 2017).",
+            severite: "info",
+            condition: {
+                comorbs: ["PAT_032"],
+                med_absent: ["sertraline", "citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "mirtazapine", "venlafaxine", "duloxetine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine"]
+            },
+            alternatives: "Sertraline 25 mg/j × 1 sem puis 50 mg/j ; titration 25-50 mg/1-2 sem. Cible thérapeutique en 4-12 sem. Mirtazapine 15-45 mg/j si insomnie/dénutrition (item 12)."
         },
         {
             id: "EV_SYND_044",

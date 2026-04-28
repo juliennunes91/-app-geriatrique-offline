@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.69 (Phase 12 — switch OCR vers tessdata_best : 6.3 MB → 3.3 MB compressé, LSTM haute précision)
+// Service Worker - GeriaAssist v0.70 (Phase 13 — intégration consensus SFGG/SF3PA/SFPC 2026 antidépresseurs SA : PAT_032 stepped-care, vortioxétine, tianéptine, EVITER combinaisons, alertes Citalopram QT, mianserine, agomélatine ≥75)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260427-ocr-tessdata-best';
-const CACHE_NAME = `geriaassist-v69-${BUILD_ID}`;
+const BUILD_ID = '20260428-sfgg-sf3pa-sfpc-2026-antidepresseurs';
+const CACHE_NAME = `geriaassist-v70-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

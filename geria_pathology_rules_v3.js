@@ -2581,58 +2581,142 @@ const PATHOLOGY_RULES_DB = {
     // ═══════════════════════════════════════════════════════════════════════════
     "PAT_032": {
         ID: "PAT_032",
-        NOM: "Dépression",
-        REFERENCE: "NICE Depression 2022 | APA Practice Guideline 2023 | STOPP/START v3 | Beers 2023",
+        NOM: "Dépression (sujet âgé / Late-Life Depression)",
+        REFERENCE: "Houix M et al. SFGG/SF3PA/SFPC consensus Eur Psychiatry 2026 (DOI 10.1192/j.eurpsy.2026.12206) | NICE CG90 2022 | APA 2023 | STOPP/START v3 | Beers 2023 | CANMAT 2016",
         SOURCES_EBM: {
             "INITIER": {
-                "ISRS": "STOPP_START_V3 START-D2 + NICE CG90",
-                "Mirtazapine": "STOPP_START_V3 START-D2 + Beers acceptable"
+                "ISRS sertraline 1ère intention": "SFGG/SF3PA/SFPC 2026 item 11 — meilleur rapport bénéfice/risque",
+                "ISRS citalopram/escitalopram": "SFGG/SF3PA/SFPC 2026 item 11 + Kok & Reynolds JAMA 2017",
+                "Mirtazapine 1ère ligne (orexigène/insomnie)": "SFGG/SF3PA/SFPC 2026 item 12 — alternative ISRS si dénutrition ou insomnie",
+                "IRSN venlafaxine/duloxétine 2e ligne": "SFGG/SF3PA/SFPC 2026 item 13 — si échec ISRS/mirtazapine, hors HTA non contrôlée",
+                "Vortioxétine 2e-3e ligne": "SFGG/SF3PA/SFPC 2026 item 47 — bénéfice cognitif (Katona 2012, FOCUS, Moon 2023, VESPA 2024)"
             },
             "EVITER": {
-                "Tricycliques": "STOPP_START_V3 D1 + BEERS_2023 + PRISCUS",
-                "IMAO": "BEERS_2023",
-                "Benzodiazépines": "STOPP_START_V3 D5"
+                "Tricycliques 1ère ligne (sauf clomipramine 4e ligne)": "SFGG/SF3PA/SFPC 2026 items 9 + 55 + STOPP D1 + Beers 2023 + PRISCUS",
+                "Paroxétine (ACB élevé)": "SFGG/SF3PA/SFPC 2026 items 14 + 40 + Beers 2023",
+                "Citalopram > 20 mg / Escitalopram > 10 mg si arythmie/QT/hypoK+": "SFGG/SF3PA/SFPC 2026 item 30 + ANSM 2011",
+                "Miansérine (préférer mirtazapine)": "SFGG/SF3PA/SFPC 2026 item 10 — alerte ANSM agranulocytose, hépatite, sédation, convulsions",
+                "Agomélatine ≥ 75 ans": "SFGG/SF3PA/SFPC 2026 — RCP Valdoxan 2025 (manque de données + hépatotoxicité)",
+                "Tianeptine": "SFGG/SF3PA/SFPC 2026 — risque dépendance (PSUSA EMA 2019)",
+                "IMAO (sauf 4e ligne hospitalière)": "SFGG/SF3PA/SFPC 2026 + Beers 2023",
+                "Benzodiazépines pour dépression": "SFGG/SF3PA/SFPC 2026 + STOPP D5",
+                "Combinaison 2 ISRS / 2 IRSN / ISRS+IRSN / ISRS-IRSN+IMAO/TCA": "SFGG/SF3PA/SFPC 2026 item 50",
+                "Combinaison 3 antidépresseurs": "SFGG/SF3PA/SFPC 2026 item 49 — JAMAIS"
             }
         },
         TRAITEMENTS: {
+            FRAMEWORK_PRESCRIPTION: {
+                note: "AVANT toute prescription d'antidépresseur chez ≥ 75 ans (ou ≥ 65 ans + ≥ 3 comorbidités) — SFGG/SF3PA/SFPC 2026 items 1-8 :",
+                checklist: [
+                    "1. Comorbidités CV : ECG de référence (arythmie, QT prolongé), TA debout/couché",
+                    "2. Recherche signes de trouble neurocognitif (plainte mnésique, perte autonomie)",
+                    "3. Revue médicaments : ACB cumulatif, sédatifs, QT-allongeurs, anticoagulants/antiagrégants, tramadol, inducteurs/inhibiteurs CYP (table HUG)",
+                    "4. Médicaments dépressogènes : corticoïdes, antirétroviraux, antipaludéens, hormonothérapie, immunothérapie — alternatives ou ↓ dose",
+                    "5. Cause organique : SAOS, hypothyroïdie, hypercortisolisme, neurologique, auto-immun, addiction",
+                    "6. Comorbidités : hyponatrémie < 130, glaucome angle fermé, rétention urinaire, saignement récent < 1 mois",
+                    "7. IRC (DFG < 60) ou hépatopathie (cirrhose, hépatite)",
+                    "8. Risque de chutes : chute < 6 mois, test de marche"
+                ]
+            },
             PRINCIPES: [
-                { note: "Première intention : ISRS (sertraline, escitalopram). Mirtazapine si insomnie/dénutrition. Éviter tricycliques (anticholinergiques, QT, chutes)." }
+                { note: "Algorithme stepped-care (SFGG/SF3PA/SFPC 2026) : 1) ISRS sertraline → 2) si échec, IRSN ou mirtazapine → 3) si partiel, ISRS/IRSN+mirtazapine ou vortioxétine → 4) augmentation aripiprazole/lithium/quétiapine/lamotrigine → 5) ECT (gold standard si sévère/résistant)" },
+                { note: "Initier à 25-50 % de la dose cible, augmenter toutes les 1-2 sem ; cible thérapeutique à atteindre en 4-12 sem (item 17). Réévaluer dose à 4 puis 12 sem." },
+                { note: "Doses MAX RCP (item 18) : sertraline 200 / escitalopram 10 / citalopram 20 / fluvoxamine 300 / duloxétine 120 / venlafaxine 300 / milnacipran 100 / mirtazapine 45 / miansérine 90 / vortioxétine 20 mg/j." },
+                { note: "Surveillance clinique tolérance + efficacité : 1-3 mois jusqu'à stabilité puis 3-6 mois (items 19-20)." },
+                { note: "Durée minimale (item 24) : 1er épisode = 1 an post-rémission ; 2e = 2 ans ; ≥ 3e = 3 ans à vie." },
+                { note: "Arrêt : décroissance 25 % de la dose initiale sur 2-5 sem (item 25). Demi-vie < 24 h (venlafaxine, duloxétine, paroxétine) = risque syndrome d'arrêt." }
             ],
             INITIER: [
-                { classe: "ISRS (sertraline, escitalopram)", posologie: "Sertraline 25→50 mg/j, Escitalopram 5→10 mg/j", ref: "START-D2" },
-                { classe: "Mirtazapine", posologie: "15-30 mg/j (sédation utile si insomnie)", ref: "NICE CG90" },
-                { classe: "Venlafaxine/Duloxétine", posologie: "37.5→75 mg/j / 30→60 mg/j (2e ligne)", ref: "NICE CG90" }
+                { classe: "Sertraline (ISRS — 1ère intention)", posologie: "25-50 mg/j initiation, max 200 mg/j", note: "Meilleur rapport bénéfice/risque chez âgé (Kok & Reynolds JAMA 2017). Profil QT favorable.", ref: "SFGG/SF3PA/SFPC 2026 item 11", niveau_preuve: "A" },
+                { classe: "Citalopram / Escitalopram (ISRS — alternatives 1ère intention)", posologie: "Citalopram 10-20 mg/j (max 20) ; Escitalopram 5-10 mg/j (max 10)", note: "Surveillance ECG si âgé/cardiopathie (Risk_KR CredibleMeds). CI si arythmie, QT prolongé, hypokaliémie.", ref: "SFGG/SF3PA/SFPC 2026 items 11 + 30", niveau_preuve: "A" },
+                { classe: "Mirtazapine (NaSSA — 1ère ligne si insomnie/dénutrition)", posologie: "15 mg/j initiation (au coucher), titration vers 30-45 mg/j", note: "Effet orexigène + sédatif utile chez le sujet âgé dénutri ou insomniaque. Moins de SIADH que ISRS/IRSN.", ref: "SFGG/SF3PA/SFPC 2026 items 12 + 45", niveau_preuve: "A" },
+                { classe: "IRSN (Venlafaxine, Duloxétine, Milnacipran) — 2e ligne", posologie: "Venlafaxine 37.5-75 mg/j initiation (max 300, surveillance TA si > 150 mg/j) ; Duloxétine 30-60 mg/j (max 120)", note: "À envisager après échec ISRS/mirtazapine. CI si HTA non contrôlée. Vigilance niveau anxiété initial. Préférer duloxétine si arythmie ou QT à risque (item 59).", ref: "SFGG/SF3PA/SFPC 2026 items 13 + 28", niveau_preuve: "A" },
+                { classe: "Vortioxétine (multimodal 5-HT)", posologie: "5 mg/j initiation puis 10 mg/j à 1-2 sem, max 20 mg/j", note: "Bénéfice cognitif démontré (Katona 2012 FOCUS). Indication 2e-3e ligne après échec ISRS/IRSN. Profil QT favorable.", ref: "SFGG/SF3PA/SFPC 2026 item 47", niveau_preuve: "B" },
+                { classe: "Combinaison ISRS/IRSN + Mirtazapine (« California Rocket Fuel »)", posologie: "Selon doses individuelles", note: "Stratégie 2e ligne après échec de 2 monothérapies. ACCEPTÉE par consensus (item 51, Stahl 2007).", ref: "SFGG/SF3PA/SFPC 2026 item 51", niveau_preuve: "B" },
+                { classe: "Augmentation par antipsychotique atypique (3e-4e ligne)", posologie: "Aripiprazole 1-5 mg/j (max 10) en 1ère intention OU Quétiapine 50-150 mg/j en 2e (tolérance moindre)", note: "Sur échec/résistance, courte durée + surveillance EPS, métabolisme, QT, mortalité chez dément. OPTIMUM trial : aripiprazole > switch bupropion (rémission 28.9 % vs 19.3 %).", ref: "SFGG/SF3PA/SFPC 2026 item 52", niveau_preuve: "B" },
+                { classe: "Augmentation par lithium (3e ligne)", posologie: "Lithiémie résiduelle cible 0.4-0.6 mmol/L (≠ 0.4-0.8 du Lithium en monothérapie)", note: "Si DFG > 60 (sauf accord néphro), hauts taux de récidive suicidaire, ATCD réponse familiale au lithium, suspicion bipolaire.", ref: "SFGG/SF3PA/SFPC 2026 item 53", niveau_preuve: "B" },
+                { classe: "Lamotrigine (3e-4e ligne, hors AMM)", posologie: "Titration 25 mg/sem, surveillance toxidermie", note: "Si suspicion de spectre bipolaire atténué, échec aripiprazole/lithium ou CI.", ref: "SFGG/SF3PA/SFPC 2026 item 54", niveau_preuve: "C" },
+                { classe: "Clomipramine (4e ligne — usage hospitalier)", posologie: "Initiation 10 mg/j, montée jusqu'à 75 mg/j max", note: "Réservée si neurocognitif et CV stables. Sous supervision spécialisée.", ref: "SFGG/SF3PA/SFPC 2026 item 55", niveau_preuve: "C" },
+                { classe: "ECT (gold standard pour résistance ou sévérité)", indication: "Échec 4 lignes OU dépression sévère avec risque vital (dénutrition, suicidalité, escarres), perte d'autonomie, comorbidité neurodégénérative, idées délirantes, catatonie", ref: "SFGG/SF3PA/SFPC 2026 item 56 + CANMAT 2016", niveau_preuve: "A" },
+                { classe: "rTMS (Stimulation magnétique transcrânienne)", indication: "Échec 2 lignes OU CI/intolérance aux antidépresseurs (sauf crise suicidaire / symptômes psychotiques où ECT prime)", ref: "SFGG/SF3PA/SFPC 2026 item 57", niveau_preuve: "B" },
+                { classe: "Psychothérapie / TCC", indication: "Dépression légère à modérée — 1ère ligne non médicamenteuse (NICE)", note: "Ne pas négliger en complément du traitement médicamenteux." }
             ],
             EVITER: [
-                { classe: "Tricycliques (amitriptyline, clomipramine, imipramine, dosulpine)", raison: "ACB élevé, QT, chutes, confusion", ref: "STOPP D1 + Beers" },
-                { classe: "IMAO (phénelzine, tranylcypromine)", raison: "Interactions alimentaires et médicamenteuses dangereuses", ref: "Beers 2023" },
-                { classe: "Benzodiazépines", raison: "Pas d'indication dans la dépression, risque de dépendance", ref: "STOPP D5" }
-            ]
+                { classe: "Tricycliques en 1ère ligne", raison: "ACB élevé, QT, hypotension orthostatique, chutes, confusion", gravite: "DECONSEILLE 1ère ligne", ref: "SFGG/SF3PA/SFPC 2026 item 9 + STOPP D1 + Beers 2023 + PRISCUS" },
+                { classe: "Paroxétine", raison: "ACB=3 (anticholinergique fort), inhibiteur CYP2D6 puissant, sevrage difficile", gravite: "EVITER", ref: "SFGG/SF3PA/SFPC 2026 items 14 + 40", note: "Préférer sertraline ou escitalopram" },
+                { classe: "Miansérine", raison: "Alerte ANSM (sédation, agranulocytose, hépatite, convulsions). Niveau de preuve moindre que mirtazapine en gériatrie.", gravite: "DECONSEILLE — préférer mirtazapine", ref: "SFGG/SF3PA/SFPC 2026 item 10" },
+                { classe: "Agomélatine", raison: "RCP Valdoxan : manque de données chez ≥ 75 ans + hépatotoxicité grave (BH M0, M3, M6, M12)", gravite: "EVITER ≥ 75 ans", ref: "SFGG/SF3PA/SFPC 2026 + EMA 2025" },
+                { classe: "Tianeptine", raison: "Risque de dépendance documenté (EMA PSUSA 2019)", gravite: "EVITER chez âgé", ref: "SFGG/SF3PA/SFPC 2026 + EMA 2019" },
+                { classe: "IMAO non sélectifs (phénelzine, tranylcypromine, iproniazide)", raison: "Interactions alimentaires (tyramine = crise HTA) et médicamenteuses dangereuses (sérotoninergique)", gravite: "DECONSEILLE sauf 4e ligne hospitalière", ref: "Beers 2023 + SFGG/SF3PA/SFPC 2026" },
+                { classe: "Benzodiazépines pour la dépression", raison: "Pas d'indication dans la dépression — chutes, dépendance, troubles cognitifs", gravite: "DECONSEILLE", ref: "STOPP D5 + SFGG/SF3PA/SFPC 2026" },
+                { classe: "Combinaison 2 ISRS / 2 IRSN / ISRS+IRSN / ISRS-IRSN+IMAO/TCA", raison: "Syndrome sérotoninergique, redondance pharmacologique", gravite: "CONTRE-INDICATION", ref: "SFGG/SF3PA/SFPC 2026 item 50" },
+                { classe: "Combinaison de 3 antidépresseurs", raison: "Aucune indication validée", gravite: "CONTRE-INDICATION ABSOLUE", ref: "SFGG/SF3PA/SFPC 2026 item 49" },
+                { classe: "Tramadol + ISRS/IRSN/TCA", raison: "Syndrome sérotoninergique (Phase 8 SYND_043) — réévaluer indication antalgique", gravite: "EVITER, ÉDUCATION patient si maintenu (diarrhée, tachycardie, sueurs, tremblements, confusion)", ref: "SFGG/SF3PA/SFPC 2026 item 42" },
+                { classe: "AINS + ISRS/IRSN/Vortioxétine", raison: "Risque hémorragique additif (digestif et général)", gravite: "EVITER, éducation patient", ref: "SFGG/SF3PA/SFPC 2026 item 44" },
+                { classe: "ISRS/IRSN/Vortioxétine en cas de saignement récent (< 1 mois, surtout digestif)", raison: "Risque hémorragique", gravite: "PREFERER mirtazapine (1ère intention) ou IRSN (2e)", ref: "SFGG/SF3PA/SFPC 2026 item 45" },
+                { classe: "Antidépresseur à ACB élevé si plainte cognitive précoce ou MCI", raison: "Aggravation cognitive, démence iatrogène (Zheng 2021 méta-analyse)", gravite: "SWITCH vers ACB faible (sertraline, escitalopram, mirtazapine)", ref: "SFGG/SF3PA/SFPC 2026 item 33" }
+            ],
+            ADAPTATIONS_RENALES: {
+                source: "SFGG/SF3PA/SFPC 2026 items 34-37",
+                modere_30_60: "Paroxétine 10 mg/j init puis lente titration ; Milnacipran ≤ 50 mg/j",
+                severe_15_30_irsn: "Pas de duloxétine ; venlafaxine max 187.5 mg/j ; milnacipran max 25 mg/j",
+                severe_15_30_isrs: "Préférer sertraline / escitalopram / citalopram à dose minimale, titration très progressive. Si fluoxétine/fluvoxamine/paroxétine déjà en place, maintenir mêmes doses sous surveillance.",
+                mirtazapine: "Initier 15 mg/j et augmenter très lentement selon tolérance",
+                terminale_15: "Idem sévère ; dosage plasmatique si escalade nécessaire"
+            },
+            ADAPTATIONS_HEPATIQUES: {
+                source: "SFGG/SF3PA/SFPC 2026 items 38-39 + EMA 2025 + EMA 2019",
+                ci_absolue: ["Agomélatine (hépatotoxicité)", "Duloxétine (insuffisance hépatique)", "Miansérine (hépatite)"],
+                preferes: ["Fluoxétine à demi-dose", "Citalopram à demi-dose", "Milnacipran sans ajustement"],
+                seuils_ci: "Transaminases > 3 × LSN ou TP < 50 % → arrêt agomélatine/duloxétine/miansérine"
+            }
         },
         BIOLOGIE: {
-            SURVEILLANCE_CIBLE: ["BIO_002", "BIO_001", "BIO_019", "BIO_003", "BIO_031"],
+            SURVEILLANCE_CIBLE: ["BIO_002", "BIO_001", "BIO_019", "BIO_003", "BIO_031", "BIO_009", "BIO_013", "BIO_014"],
             REGLES: [
                 {
                     bio: "BIO_002",
                     nom: "Natrémie",
-                    frequence: "Avant introduction puis J7-J14, M1, trimestriel × 1 an si antidépresseur sérotoninergique",
-                    note: "SIADH iatrogène 5-40 % sous ISRS/IRSN chez ≥ 65 ans (plus fréquent sous citalopram/escitalopram). Si baisse progressive → déprescription progressive ; si Na < 130 → arrêt + restriction hydrique.",
+                    frequence: "Avant introduction puis J7-J14, M1, trimestriel × 1 an si antidépresseur sérotoninergique (SFGG/SF3PA/SFPC 2026 items 15-16)",
+                    note: "SIADH iatrogène 5-40 % sous ISRS/IRSN/Vortioxétine chez ≥ 65 ans. Si Na < 130 sous ISRS/IRSN : revoir thiazidique/IEC/laxatifs co-prescrits + considérer mirtazapine (moindre risque SIADH).",
                     seuils: {
-                        alerte: { max: 135, action: "Surveiller ionogramme à J7 ; si baisse progressive → déprescription progressive" },
+                        alerte: { max: 135, action: "Surveiller ionogramme à J7 ; si baisse progressive → déprescription progressive ou switch mirtazapine" },
                         critique: { max: 130, action: "SIADH iatrogène : arrêter ISRS progressivement, restriction hydrique 800-1000 mL/j, éviter correction > 8 mmol/L/24h (myélinolyse pontine)" }
                     },
                     syndrome_declenche: "SYND_009"
                 },
-                { bio: "BIO_001", nom: "Kaliémie", frequence: "Annuel si pas de diurétique associé" },
-                { bio: "BIO_019", frequence: "Annuel (TSH pour exclure cause thyroïdienne)" },
-                { bio: "BIO_031", nom: "QTc", frequence: "ECG avant introduction antidépresseur QT-allongeant, puis à J7", note: "Citalopram > 20 mg ou escitalopram > 10 mg : ECG obligatoire (Risk_KR CredibleMeds). Switch vers sertraline/mirtazapine si QTc ≥ 470.", seuils: { alerte: { min: 470, action: "Réduire dose" }, critique: { min: 500, action: "Arrêt + switch sertraline/mirtazapine" } }, syndrome_declenche: "SYND_051" }
+                { bio: "BIO_001", nom: "Kaliémie", frequence: "Avant introduction citalopram/escitalopram (CI si hypoK+ < 3.5 — item 30) ; annuelle ensuite si pas de diurétique" },
+                { bio: "BIO_019", frequence: "Annuel (TSH pour exclure cause thyroïdienne — item 5)" },
+                { bio: "BIO_003", nom: "Créatinine/DFG", frequence: "Avant introduction puis annuel — item 7", note: "Adapter posologie selon DFG (items 34-37)" },
+                { bio: "BIO_013", nom: "ASAT/ALAT", frequence: "Avant introduction agomélatine/duloxétine puis M3, M6, M12 ; à la demande pour autres antidépresseurs", note: "Si > 3N ou TP < 50 % → arrêt agomélatine/duloxétine/miansérine (item 38)" },
+                {
+                    bio: "BIO_031",
+                    nom: "QTc",
+                    frequence: "ECG de référence avant prescription (item 1) ; recontrôle à J7 si arythmie/QT borderline ou prolongé (item 31)",
+                    note: "CI si arythmie, QT prolongé, hypokaliémie : pas de TCA, citalopram, escitalopram (item 30). Préférer sertraline ou mirtazapine (item 29).",
+                    seuils: { alerte: { min: 470, action: "Réduire dose" }, critique: { min: 500, action: "Arrêt + switch sertraline/mirtazapine + scope" } },
+                    syndrome_declenche: "SYND_051"
+                },
+                { bio: "BIO_009", nom: "NFS", frequence: "Avant miansérine ; en urgence si fièvre/angine sous miansérine (item 21 — risque agranulocytose ANSM)" }
             ]
         },
         DECOMPENSATION_BIO: {
             triggers: [
-                { bio: "BIO_002", condition: "< 130 mmol/L sous ISRS/IRSN", action: "Arrêt progressif ISRS, restriction hydrique, switch vers agomélatine ou mirtazapine (moins de risque SIADH)", syndrome: "SYND_009" },
-                { bio: "BIO_031", condition: "QTc ≥ 500 ms sous citalopram/escitalopram", action: "Arrêt immédiat + scope + bilan K+/Mg", syndrome: "SYND_051" }
+                { bio: "BIO_002", condition: "< 130 mmol/L sous ISRS/IRSN/Vortioxétine", action: "Arrêt progressif sérotoninergique, restriction hydrique, switch vers mirtazapine (moindre risque SIADH — item 16)", syndrome: "SYND_009" },
+                { bio: "BIO_031", condition: "QTc ≥ 500 ms sous citalopram/escitalopram/TCA", action: "Arrêt immédiat + scope + bilan K+/Mg + switch sertraline/mirtazapine", syndrome: "SYND_051" },
+                { bio: "BIO_013", condition: "Transaminases > 3 × LSN sous agomélatine/duloxétine/miansérine", action: "Arrêt immédiat, bilan hépatique de contrôle, switch antidépresseur à faible extraction hépatique (fluoxétine ou citalopram à demi-dose) — item 38", syndrome: "SYND_001" },
+                { bio: "BIO_009", condition: "PNN < 1.5 G/L sous miansérine + fièvre/angine", action: "ARRÊT immédiat miansérine, hospitalisation si PNN < 0.5, ATB large spectre si fièvre — item 21 + ANSM", syndrome: "SYND_014" }
             ]
+        },
+        STRATEGIE_RESISTANCE: {
+            source: "SFGG/SF3PA/SFPC 2026 items 47-57",
+            etape_1: "ISRS sertraline (ou citalopram/escitalopram) à dose efficace × 4-12 sem",
+            etape_2: "Si échec : switch vers IRSN (venlafaxine ou duloxétine) ou mirtazapine — item 13/12",
+            etape_3a: "Si réponse partielle après 2 monothérapies : combinaison ISRS/IRSN + mirtazapine (item 51) OU vortioxétine (item 47)",
+            etape_3b: "Si toujours résistant : augmentation par aripiprazole 1-5 mg/j (1ère intention — OPTIMUM trial) OU quétiapine 50-150 mg/j (2e)",
+            etape_4: "Échec ou CI antipsychotique : lithium 0.4-0.6 mmol/L (item 53) OU lamotrigine off-label si suspicion bipolaire (item 54)",
+            etape_5_hospitalier: "Clomipramine ≤ 75 mg/j (item 55) — uniquement hospitalier",
+            etape_ultime: "ECT (gold standard) — item 56. Alternative rTMS si pas de crise suicidaire/psychose — item 57"
         }
     },
 

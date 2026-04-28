@@ -14411,7 +14411,7 @@ const MASTER_DB = {
                     "classe": "ISRS",
                     "poso_hab": "20-60 mg/j",
                     "poso_ger": "ÉVITER chez le sujet âgé (Beers 2023, STOPP/START v3 D1 — ACB=3 anticholinergique fort, sédation, chutes, sevrage difficile). Si patient stable depuis longtemps : maintenir 10-20 mg/j ; sinon swap vers sertraline 25-50 mg/j ou escitalopram 5-10 mg/j.",
-                    "poso_ren": "DFG < 30 : 10 mg/j max (mais ÉVITER l'introduction).",
+                    "poso_ren": "DFG modérée 30-60 : initier 10 mg/j (½ dose initiale habituelle) puis titration lente selon tolérance (consensus SFGG/SF3PA/SFPC 2026 item 34). DFG < 30 : 10 mg/j max (mais ÉVITER l'introduction).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -14432,8 +14432,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Effets anticholinergiques marqués. Inhibiteur puissant CYP2D6.",
-                    "source": "RCP Deroxat ; HAS 2017"
+                    "notes_cliniques": "Paroxétine ÉVITER chez le sujet âgé (Beers 2023, STOPP/START v3 D1, SFGG/SF3PA/SFPC 2026 items 14 + 40) : ACB=3 anticholinergique fort, sédation, chutes, sevrage difficile (½ vie courte → syndrome de discontinuation). Inhibiteur PUISSANT CYP2D6 (interactions multiples : tramadol — risque sérotoninergique, vortioxétine — ↓ dose moitié, antiarythmiques, tamoxifène). Si maintenue chez patient stable au long cours, NE PAS interrompre brutalement. Si introduction : SWAP vers sertraline (1ère intention SFGG/SF3PA/SFPC 2026 item 11) ou escitalopram.",
+                    "source": "RCP Deroxat ; HAS 2017 ; SFGG/SF3PA/SFPC 2026 ; Beers 2023 ; STOPP/START v3"
           },
           {
                     "dci": "Perindopril",
@@ -16581,13 +16581,13 @@ const MASTER_DB = {
                     "princeps": "Zoloft",
                     "classe": "ISRS",
                     "poso_hab": "50-200 mg/j",
-                    "poso_ger": "50 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "poso_ger": "Initier 25 mg/j × 1 sem puis 50 mg/j ; titration 25-50 mg toutes les 1-2 sem selon tolérance ; max 200 mg/j (dose RCP — SFGG/SF3PA/SFPC 2026 item 18). Cible thérapeutique en 4-12 sem. Atteindre la dose efficace, ne pas sous-doser.",
+                    "poso_ren": "Pas d'ajustement systématique. Préférée en IRC sévère (consensus SFGG/SF3PA/SFPC 2026 item 36).",
                     "acb": 1,
                     "cia": 1,
                     "bhe": "1.0",
                     "albumine": "> 98 %",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "? Risque Conditionnel (CR — favorable vs citalopram/escitalopram)",
                     "ddi_interact": "IMAO, Tramadol, Lithium, Warfarine, QT",
                     "ddi_interact_v2": [
                               {
@@ -16617,7 +16617,7 @@ const MASTER_DB = {
                     ],
                     "suivi_initial": "Ionogramme (natrmie) | Bilan hépatique | INR si AVK associ",
                     "suivi_periodique": "Natremie ( a M1 puis annuelle) | Bilan hépatique si symptomes",
-                    "alerte_clinique": "Hyponatremie | Saignements",
+                    "alerte_clinique": "Hyponatrémie/SIADH (Na+ J7-J14, M1, trim x 1 an) — surtout si diurétiques thiazidiques/IEC/laxatifs co-prescrits | Risque hémorragique additif si AINS/AOD/AVK | Syndrome sérotoninergique si tramadol/IMAO/linézolide (SYND_043) — ÉVITER tramadol",
                     "bio_cible": [
                               "BIO_002",
                               "BIO_013",
@@ -16628,8 +16628,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "ISRS de choix en 1ère intention chez SA",
-                    "source": "RCP Zoloft ; HAS 2017"
+                    "notes_cliniques": "Sertraline = ANTIDÉPRESSEUR DE 1ère INTENTION chez le sujet âgé (SFGG/SF3PA/SFPC 2026 item 11 — meilleur rapport bénéfice/risque). Bonne tolérance globale. Profil QT favorable (Risk_CR vs Risk_KR pour citalopram/escitalopram). Pas d'adaptation rénale (préférée en IRC sévère — item 36). Surveillance Na+ J7-J14, M1, puis trimestrielle × 1 an (SIADH 5-40 % chez ≥ 65 ans). En cas de saignement digestif récent : préférer mirtazapine 1ère intention puis IRSN (item 45).",
+                    "source": "RCP Zoloft ; HAS 2017 ; SFGG/SF3PA/SFPC 2026 ; Kok & Reynolds JAMA 2017"
           },
           {
                     "dci": "Silodosine",
@@ -17864,6 +17864,47 @@ const MASTER_DB = {
                     "atb_terminale": "Infection non sévère : DC de 100 mg puis 50 mg/12h",
                     "notes_cliniques": "Glycylcycline IV : surmortalité décrite (FDA Black Box) — réservée aux infections compliquées sans alternative. Nausées fréquentes.",
                     "source": "RCP Tygacil | SPILF 2023"
+          },
+          {
+                    "dci": "Tianeptine",
+                    "princeps": "Stablon",
+                    "classe": "Antidépresseur atypique (modulateur glutamatergique + agoniste µ-opioïde partiel)",
+                    "poso_hab": "12.5 mg x 3/j",
+                    "poso_ger": "À ÉVITER chez le sujet âgé (consensus SFGG/SF3PA/SFPC 2026 — exclu d'emblée). Risque de dépendance documenté (mésusage opioïde-like, EMA PSUSA 2019). Si maintenue : 12.5 mg x 2/j max, prescription sécurisée, surveillance abus.",
+                    "poso_ren": "DFG < 30 : 12.5 mg x 2/j max",
+                    "acb": 0,
+                    "cia": 0,
+                    "bhe": "1.0",
+                    "albumine": "94%",
+                    "qt_risque": "",
+                    "ddi_interact": "IMAO (CI absolue, syndrome sérotoninergique) | Sédatifs/opioïdes (additif sédation, dépression respiratoire) | Tramadol (sérotoninergique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "IMAO",
+                                        "dcis": ["iproniazide", "moclobemide", "rasagiline", "selegiline", "linezolide"],
+                                        "commentaire": "CI absolue — syndrome sérotoninergique potentiel + agoniste µ",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "BZD / Z-drug / opioïdes",
+                                        "dcis": ["diazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "zopiclone", "zolpidem", "morphine", "oxycodone", "fentanyl", "tramadol"],
+                                        "commentaire": "Synergie sédative + dépression respiratoire (SYND_044)",
+                                        "severite": "danger"
+                              }
+                    ],
+                    "suivi_initial": "Bilan hépatique | Évaluation risque addictif (ATCD mésusage opioïde, alcool, BZD)",
+                    "suivi_periodique": "Surveillance comportementale (mésusage, escalade de dose) | Bilan hépatique annuel | Réévaluer indication tous les 3-6 mois",
+                    "alerte_clinique": "RISQUE DE DÉPENDANCE/MÉSUSAGE (EMA PSUSA 2019 — réévaluation périodique du rapport bénéfice/risque) | Hépatite cytolytique rare | Sevrage progressif si arrêt | Pas en gériatrie (consensus SFGG/SF3PA/SFPC 2026)",
+                    "bio_cible": [
+                              "BIO_013",
+                              "BIO_014"
+                    ],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "Tianéptine = antidépresseur atypique avec activité agoniste µ-opioïde partiel → risque de DÉPENDANCE (alerte EMA 2019, restriction de prescription). EXCLU du consensus SFGG/SF3PA/SFPC 2026 (non recommandée chez le sujet âgé — risque addictif + cadre prescriptif spécifique). Préférer ISRS sertraline en 1ère intention.",
+                    "source": "RCP Stablon | EMA PSUSA/00002943/201806 (2019) | SFGG/SF3PA/SFPC 2026"
           },
           {
                     "dci": "Timolol",
@@ -19790,8 +19831,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Antidépresseur tétracyclique apparenté NaSSA (≠ ISRS/IRSN) : profil sédatif, prise de poids, agranulocytose rare (NFS si fièvre/angine). Association avec ISRS/IRSN n'est PAS un doublon thérapeutique (potentialisation acceptée — Stahl 2007). Préférer mirtazapine (mieux étudiée chez âgé) si choix entre les deux NaSSA.",
-                    "source": "RCP Athymil | HAS Depression 2017"
+                    "notes_cliniques": "Antidépresseur tétracyclique apparenté NaSSA (≠ ISRS/IRSN). Consensus SFGG/SF3PA/SFPC 2026 (item 10) : DÉCONSEILLÉE chez le sujet âgé — alerte ANSM (sédation marquée, AGRANULOCYTOSE — NFS si fièvre/angine, hépatite, convulsions). PRÉFÉRER MIRTAZAPINE (mieux étudiée). Si maintenue : NFS avant + en urgence si fièvre/angine (item 21). CI hépatique stricte (transaminases > 3N) — item 38. Association avec ISRS/IRSN n'est PAS un doublon (« California Rocket Fuel », Stahl 2007 + item 51).",
+                    "source": "RCP Athymil | ANSM Athymil 2014 | SFGG/SF3PA/SFPC 2026 | HAS Dépression 2017"
           },
           {
                     "dci": "Potassium",
@@ -23974,7 +24015,7 @@ const MASTER_DB = {
                     "princeps": "Valdoxan",
                     "classe": "Antidepresseur melatoninergique (MT1/MT2 agoniste, 5-HT2C antagoniste)",
                     "poso_hab": "25-50 mg/j au coucher",
-                    "poso_ger": "25 mg/j. FORTA-C (peu de donnees geriatriques)",
+                    "poso_ger": "À ÉVITER ≥ 75 ans (RCP Valdoxan 2025 — manque de données + hépatotoxicité grave). Si maintenue : 25 mg/j au coucher, surveillance BH stricte.",
                     "poso_ren": "Pas d'ajustement renal",
                     "acb": 0,
                     "cia": 0,
@@ -23996,8 +24037,8 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "epileptogene": "faible",
                     "epileptogene_desc": "Risque faible mais rapporté",
-                    "notes_cliniques": "Antidépresseur : bénéfice/risque à évaluer chez âgé. Préférer ISRS (sertraline, escitalopram) ou mirtazapine (si insomnie/dénutrition). Risque hyponatrémie (SIADH), saignement, sérotoninergique (Phase 8 SYND_043).",
-                    "source": "RCP Valdoxan | HAS Depression 2017"
+                    "notes_cliniques": "Agomélatine = mélatoninergique : ÉVITER ≥ 75 ans (consensus SFGG/SF3PA/SFPC 2026 + RCP Valdoxan 2025). Pas d'AMM dans ce groupe d'âge (manque de données + hépatotoxicité grave documentée). Si maintenue : BH OBLIGATOIRE à M0, S3, S6, S12, S24. CI si transaminases > 3N. Pas de syndrome sérotoninergique (intéressant en remplacement ISRS si SIADH récurrente, mais RCP > 75 ans = à éviter). Inhibiteurs CYP1A2 puissants (fluvoxamine, ciprofloxacine) = CI absolue.",
+                    "source": "RCP Valdoxan 2025 | EMA Valdoxan 2025 | SFGG/SF3PA/SFPC 2026 | HAS Dépression 2017"
           },
           {
                     "dci": "Thiamazole",
@@ -24512,8 +24553,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "CI si DFG < 15 (données insuffisantes)",
-                    "notes_cliniques": "ISRS : 1ère intention dépression chez âgé. Hyponatrémie/SIADH (Na+ J7-J14, M1, trim x 1 an), risque saignement (interaction AINS/AOD), syndrome sérotoninergique (avec tramadol/IMAO/linézolide — SYND_043). Préférer sertraline ou escitalopram.",
-                    "source": "RCP Brintellix | Katona Int Clin Psychopharmacol 2012 | McIntyre 2016"
+                    "notes_cliniques": "Vortioxétine = antidépresseur multimodal (ISRS + modulateur 5-HT1A/1B/3/7). Consensus SFGG/SF3PA/SFPC 2026 (item 47) : indication 2e-3e ligne après échec ISRS/IRSN, profil tolérance favorable, BÉNÉFICE COGNITIF démontré (Katona 2012 FOCUS, Moon 2023, VESPA 2024). Pas d'allongement QT significatif. ACB nul. Hyponatrémie/SIADH possible (Na+ J7-J14, M1, trim × 1 an). Risque saignement modéré (éviter AINS, prudence AOD/AVK). Pas en monothérapie 1ère intention car expérience limitée. Doses : 5 mg/j initiation, 10 mg/j à 1-2 sem, max 20 mg/j (item 18).",
+                    "source": "RCP Brintellix | Katona Int Clin Psychopharmacol 2012 | McIntyre 2016 | SFGG/SF3PA/SFPC 2026 | Moon Front Psychiatry 2023 | Ostuzzi VESPA EClinicalMedicine 2024"
           },
           {
                     "dci": "Daridorexant",
