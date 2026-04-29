@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GeriaAssist — Décision Pharmaco-Clinique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300,0..1,0">
+<link rel="stylesheet" href="geria-styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+<noscript><p style="padding:20px;color:red">JavaScript est requis.</p></noscript>
+
+<div class="app">
+
+  <!-- ═══ SIDEBAR ═══════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <span class="material-symbols-outlined ms" style="font-variation-settings:'FILL' 1;">medical_services</span>
+      </div>
+      <div>
+        <div class="brand-name">GeriaAssist</div>
+        <div class="brand-sub">Precision Curator</div>
+      </div>
+    </div>
+
+    <button class="btn-new-patient" onclick="resetPatient();showView('dossier')">
+      <span class="material-symbols-outlined ms" style="font-size:16px">add</span>
+      Nouveau patient
+    </button>
+
+    <nav class="nav">
+      <button class="nav-item" data-view="dossier" onclick="showView('dossier')">
+        <span class="material-symbols-outlined ms">edit_document</span>Dossier
+      </button>
+      <button class="nav-item" data-view="analyse" onclick="showView('analyse')">
+        <span class="material-symbols-outlined ms">analytics</span>Analyse
+      </button>
+      <button class="nav-item" data-view="scores" onclick="showView('scores')">
+        <span class="material-symbols-outlined ms">calculate</span>Scores
+      </button>
+      <button class="nav-item" data-view="suivi" onclick="showView('suivi')">
+        <span class="material-symbols-outlined ms">history_edu</span>Suivi
+      </button>
+      <button class="nav-item" data-view="recos" onclick="showView('recos')">
+        <span class="material-symbols-outlined ms">description</span>Recos
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-inner">
+        <div class="sidebar-avatar">
+          <span class="material-symbols-outlined ms">stethoscope</span>
+        </div>
+        <div>
+          <div class="sidebar-user-name">Praticien</div>
+          <div class="sidebar-version">GeriaAssist v0.70</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ═══════════════════════════════════════════════ -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <div class="patient-pill">
+          <span class="material-symbols-outlined ms">person</span>
+          <span class="patient-pill-name">Patient : <span id="hdrPatientName">Nouveau patient</span></span>
+        </div>
+        <div class="chips">
+          <span id="hdrChipAge" class="chip">80 ans · F</span>
+          <span id="hdrChipDfg" class="chip">DFG 45</span>
+          <span id="hdrChipCfs" class="chip hidden">CFS —</span>
+          <span id="hdrChipMeds" class="chip hidden">0 Rx</span>
+          <span id="hdrChipComorbs" class="chip hidden">0 cond.</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="search-wrap">
+          <span class="material-symbols-outlined ms">search</span>
+          <input class="search-input" id="searchAlertes" oninput="filterAlertes(this.value)" type="text" placeholder="Filtrer les alertes…">
+        </div>
+        <div class="dropdown">
+          <button class="icon-btn" onclick="toggleDropdown('shareMenu',event)" title="Partager / Exporter">
+            <span class="material-symbols-outlined ms">ios_share</span>
+          </button>
+          <div class="dropdown-menu" id="shareMenu">
+            <button class="dropdown-item" id="btnCopier" onclick="copierSynthese()">Copier la synthèse</button>
+            <button class="dropdown-item" onclick="exporterPatientJSON()">Exporter patient (JSON)</button>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="icon-btn" onclick="toggleDropdown('printMenu',event)" title="Imprimer / PDF">
+            <span class="material-symbols-outlined ms">print</span>
+          </button>
+          <div class="dropdown-menu" id="printMenu">
+            <button class="dropdown-item" id="btnPdf" onclick="exporterPDF()">Export PDF</button>
+            <button class="dropdown-item" onclick="imprimerSynthese('complet')">Imprimer rapport complet</button>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="icon-btn" onclick="toggleDropdown('settingsMenu',event)" title="Réglages">
+            <span class="material-symbols-outlined ms">settings</span>
+          </button>
+          <div class="dropdown-menu" id="settingsMenu">
+            <button class="dropdown-item" onclick="toggleDarkMode()">Mode sombre</button>
+            <button class="dropdown-item" onclick="openLegendModal();hideAllDropdowns()">Lexique des alertes</button>
+            <div class="dropdown-sep"></div>
+            <span class="dropdown-label">Interface</span>
+            <button class="dropdown-item" onclick="showView('dossier');hideAllDropdowns()">← Revenir au Dossier</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SCROLL AREA -->
+    <div class="scroll-area">
+      <div class="content-inner">
+
+        <!-- ══ DOSSIER VIEW ═════════════════════════════════ -->
+        <section class="view-pane" data-view="dossier">
+          <h1 class="view-title">Dossier patient</h1>
+
+          <!-- Profil & Biologie -->
+          <div class="card">
+            <div class="card-title">
+              <span class="card-step">1</span>Profil &amp; Biologie
+            </div>
+            <div class="field-grid-2" style="margin-bottom:10px">
+              <div style="grid-column:span 2">
+                <label class="field-label">Identifiant patient</label>
+                <input class="f-input" type="text" id="patientNom" placeholder="Nom ou identifiant (optionnel)">
+              </div>
+              <div>
+                <label class="field-label">Âge</label>
+                <input class="f-input" type="number" id="patientAge" value="80" min="18" max="120" oninput="calculerDFG()">
+              </div>
+              <div>
+                <label class="field-label">Sexe</label>
+                <select class="f-select" id="patientSexe" onchange="calculerDFG()">
+                  <option value="F">Femme</option>
+                  <option value="M">Homme</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label">Poids (kg)</label>
+                <input class="f-input" type="number" id="patientPoids" placeholder="—" oninput="calculerDFG()">
+              </div>
+              <div>
+                <label class="field-label">IMC (kg/m²)</label>
+                <input class="f-input" type="number" id="patientBmi" placeholder="—">
+              </div>
+              <div>
+                <label class="field-label accent">Créatinine µmol/L</label>
+                <input class="f-input" type="number" id="bioCreat" placeholder="ex: 95" oninput="calculerDFG()">
+              </div>
+              <div>
+                <label class="field-label accent">DFGe ml/min</label>
+                <div class="dfg-row">
+                  <input class="f-input" type="number" id="patientDFG" value="45" oninput="document.getElementById('dfgMethodSelect').value='manuel'">
+                  <select class="f-select" id="dfgMethodSelect" onchange="calculerDFG(false)">
+                    <option value="manuel">Manuel</option>
+                    <option value="cg">Cockcroft</option>
+                    <option value="ckdepi">CKD-EPI 2021</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Biologie complète -->
+            <details>
+              <summary>➕ Iono &amp; Biologie complète</summary>
+              <div class="details-body">
+                <div class="field-grid-3" style="margin-bottom:8px">
+                  <div><label class="field-label">Kaliémie mmol/L</label><input class="f-input" type="number" step="0.1" id="patientK" value="4.0"></div>
+                  <div><label class="field-label">Natrémie mmol/L</label><input class="f-input" type="number" id="patientNa" value="140"></div>
+                  <div><label class="field-label accent">Albumine g/L</label><input class="f-input" type="number" id="bioAlbumSg" placeholder="ex: 38"></div>
+                  <div><label class="field-label">Urée mmol/L</label><input class="f-input" type="number" id="bioUree"></div>
+                  <div><label class="field-label">Magnésium mmol/L</label><input class="f-input" type="number" step="0.01" id="bioMg"></div>
+                  <div><label class="field-label">Calcémie mmol/L</label><input class="f-input" type="number" step="0.01" id="bioCa"></div>
+                  <div><label class="field-label">Uricémie µmol/L</label><input class="f-input" type="number" id="bioUric"></div>
+                  <div><label class="field-label">Hb g/dL</label><input class="f-input" type="number" step="0.1" id="bioHb"></div>
+                  <div><label class="field-label">Plaquettes G/L</label><input class="f-input" type="number" id="bioPlaq"></div>
+                  <div><label class="field-label">Ferritine µg/L</label><input class="f-input" type="number" id="bioFer"></div>
+                  <div><label class="field-label">CST %</label><input class="f-input" type="number" id="bioCst"></div>
+                  <div><label class="field-label">Vit B12 pmol/L</label><input class="f-input" type="number" id="bioB12"></div>
+                  <div><label class="field-label">Vit B9 nmol/L</label><input class="f-input" type="number" id="bioB9"></div>
+                  <div><label class="field-label">Vit D ng/mL</label><input class="f-input" type="number" id="bioVitD"></div>
+                  <div><label class="field-label">CPK UI/L</label><input class="f-input" type="number" id="bioCpk"></div>
+                  <div><label class="field-label">ASAT UI/L</label><input class="f-input" type="number" id="bioAsat"></div>
+                  <div><label class="field-label">ALAT UI/L</label><input class="f-input" type="number" id="bioAlat"></div>
+                  <div><label class="field-label">PAL UI/L</label><input class="f-input" type="number" id="bioPal"></div>
+                  <div><label class="field-label">GGT UI/L</label><input class="f-input" type="number" id="bioGgt"></div>
+                  <div><label class="field-label">TSH mUI/L</label><input class="f-input" type="number" step="0.1" id="bioTsh"></div>
+                  <div><label class="field-label">FT4 pmol/L</label><input class="f-input" type="number" step="0.1" id="bioFt4"></div>
+                  <div><label class="field-label">FT3 pmol/L</label><input class="f-input" type="number" step="0.1" id="bioFt3"></div>
+                  <div><label class="field-label">NT-proBNP pg/mL</label><input class="f-input" type="number" id="bioBnp"></div>
+                  <div><label class="field-label">LDL-C g/L</label><input class="f-input" type="number" step="0.1" id="bioLdl"></div>
+                  <div><label class="field-label">HDL g/L</label><input class="f-input" type="number" step="0.1" id="bioHdl"></div>
+                  <div><label class="field-label">Triglycérides g/L</label><input class="f-input" type="number" step="0.1" id="bioTg"></div>
+                  <div><label class="field-label">QTc ms</label><input class="f-input" type="number" id="bioQtc" placeholder="ex: 430"></div>
+                  <div style="grid-column:span 3"><label class="field-label accent">CRP mg/L</label><input class="f-input" type="number" id="bioCrp"></div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Scores cliniques -->
+            <details>
+              <summary>🧮 Paramètres cliniques &amp; Scores</summary>
+              <div class="details-body">
+                <div class="field-grid-2" style="margin-bottom:12px">
+                  <div>
+                    <label class="field-label">Score Fragilité (CFS)</label>
+                    <select class="f-select" id="scoreCFS" onchange="checkFrail()">
+                      <option value="0">Non évalué</option>
+                      <option value="1">1 — Très en forme</option>
+                      <option value="2">2 — En forme</option>
+                      <option value="3">3 — Gère bien</option>
+                      <option value="4">4 — Vulnérable</option>
+                      <option value="5">5 — Légèrement fragile</option>
+                      <option value="6">6 — Modérément fragile</option>
+                      <option value="7">7 — Sévèrement fragile</option>
+                      <option value="8">8 — Très sévèrement fragile</option>
+                      <option value="9">9 — Phase terminale</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="field-label">Child-Pugh (hépatopathie)</label>
+                    <select class="f-select" id="cpManual" onchange="toggleCpDetails(this.value)">
+                      <option value="0">— Non applicable —</option>
+                      <option value="A">Child-Pugh A (5-6 pts)</option>
+                      <option value="B">Child-Pugh B (7-9 pts)</option>
+                      <option value="C">Child-Pugh C (10-15 pts)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="chk-group-title">Habitudes de vie</div>
+                <label class="chk-item"><input type="checkbox" id="chkTabac"><span class="chk-label warn">🚬 Fumeur actif (Tabagisme)</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkAlcool"><span class="chk-label">Alcool excessif</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkAnorexie"><span class="chk-label">Anorexie / Dénutrition sévère</span></label>
+
+                <div class="chk-group-title">Antécédents Cardiovasculaires</div>
+                <label class="chk-item"><input type="checkbox" id="chkAvc"><span class="chk-label">ATCD d'AVC / AIT</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkTvp"><span class="chk-label">ATCD d'EP / TVP</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkSaignement"><span class="chk-label danger">ATCD de Saignement majeur</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkBrady"><span class="chk-label">Bradycardie sévère (&lt; 45 bpm)</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkHtaNonControlee"><span class="chk-label">HTA non contrôlée (&gt;160 mmHg)</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkArret"><span class="chk-label">Post-Arrêt Cardiaque / Cardioversion FA</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkScaAigu"><span class="chk-label">Syndrome Coronarien Aigu (IDM récent)</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkStent"><span class="chk-label">Stent coronaire récent (&lt; 6 mois)</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkLqts"><span class="chk-label">Syndrome du QT Long Congénital</span></label>
+
+                <div class="chk-group-title">Insuffisances d'organes &amp; Aigu</div>
+                <label class="chk-item"><input type="checkbox" id="chkDialyse"><span class="chk-label">Hémodialyse</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkFoie"><span class="chk-label">Hépatopathie sévère / Cirrhose</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkSepsis"><span class="chk-label">Sepsis / Maladie aiguë en cours</span></label>
+
+                <div class="chk-group-title">Gériatrie &amp; Syndromes</div>
+                <label class="chk-item"><input type="checkbox" id="chkPalliatif"><span class="chk-label danger">Soins palliatifs / Espérance de vie &lt; 1 an</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkAtcdUlcere"><span class="chk-label warn">ATCD d'Ulcère ou Saignement digestif</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkChutes"><span class="chk-label warn">Chutes fréquentes</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkDepression"><span class="chk-label">Dépression majeure caractérisée</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkIncontinence"><span class="chk-label">Incontinence urinaire</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkHbp"><span class="chk-label">HBP / Rétention urinaire</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkConstipation"><span class="chk-label">Constipation chronique sévère</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkDysphagie"><span class="chk-label">Dysphagie / Troubles de déglutition</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkGlaucome"><span class="chk-label">Glaucome à angle fermé</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkStenoseAortique"><span class="chk-label">Sténose aortique serrée symptomatique</span></label>
+                <label class="chk-item"><input type="checkbox" id="chkAspirineForte"><span class="chk-label danger">Aspirine &gt; 100 mg/j (Dose élevée)</span></label>
+
+                <div class="chk-group-title">Troubles cognitifs &amp; psychiatriques</div>
+                <label class="chk-item"><input type="checkbox" id="chkDemence" onchange="toggleCascade('chkDemence','cascadeDemence')"><span class="chk-label">Maladie neurocognitive majeure (démence)</span></label>
+                <div id="cascadeDemence" style="display:none;margin-left:22px;padding-left:12px;border-left:2px solid var(--c-outline-v)">
+                  <label class="chk-item"><input type="checkbox" id="demTypeMA"><span class="chk-label">Maladie d'Alzheimer</span></label>
+                  <label class="chk-item"><input type="checkbox" id="chkLewy"><span class="chk-label">Démence à corps de Lewy</span></label>
+                  <label class="chk-item"><input type="checkbox" id="demTypeVasc"><span class="chk-label">Démence vasculaire</span></label>
+                  <label class="chk-item"><input type="checkbox" id="chkSpcAgitation"><span class="chk-label">Agitation / agressivité</span></label>
+                  <label class="chk-item"><input type="checkbox" id="chkSpcPsychose"><span class="chk-label">Idées délirantes / hallucinations</span></label>
+                  <label class="chk-item"><input type="checkbox" id="chkSpcInsomnie"><span class="chk-label">Troubles du sommeil</span></label>
+                </div>
+                <label class="chk-item"><input type="checkbox" id="chkDelirium" onchange="toggleCascade('chkDelirium','cascadeDelirium')"><span class="chk-label">Syndrome confusionnel (delirium)</span></label>
+                <div id="cascadeDelirium" style="display:none;margin-left:22px;padding-left:12px;border-left:2px solid var(--c-outline-v)">
+                  <label class="chk-item"><input type="radio" name="delType" id="delHyper" value="hyper"><span class="chk-label">Hyperactif</span></label>
+                  <label class="chk-item"><input type="radio" name="delType" id="delHypo" value="hypo"><span class="chk-label">Hypoactif</span></label>
+                  <label class="chk-item"><input type="radio" name="delType" id="delMixte" value="mixte" checked><span class="chk-label">Mixte</span></label>
+                </div>
+              </div>
+            </details>
+
+            <!-- Fragile toggle -->
+            <div class="frail-row">
+              <span class="frail-label">Patient Très Fragile (STOPPFrail)</span>
+              <label class="toggle">
+                <input type="checkbox" id="patientFragile">
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Comorbidités -->
+          <div class="card">
+            <div class="card-title"><span class="card-step">2</span>Comorbidités</div>
+            <div class="autocomplete-container" style="margin-bottom:4px">
+              <div class="ac-row">
+                <div class="autocomplete-container">
+                  <input class="f-input" type="text" id="inputComorb" placeholder="Taper une pathologie…" autocomplete="off">
+                  <ul class="autocomplete-list" id="listComorb"></ul>
+                </div>
+                <button style="padding:7px 14px;background:var(--c-surface-ctr);border:1px solid var(--c-outline-v);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;white-space:nowrap;font-family:inherit" onclick="addComorbManual()">Ajouter</button>
+              </div>
+            </div>
+            <div class="tags" id="selectedComorbs"></div>
+          </div>
+
+          <!-- Médicaments -->
+          <div class="card">
+            <div class="card-title"><span class="card-step">3</span>Médicaments</div>
+            <div class="ac-row" style="margin-bottom:4px">
+              <div class="autocomplete-container">
+                <input class="f-input" type="text" id="inputMed" placeholder="DCI, Princeps…" autocomplete="off">
+                <ul class="autocomplete-list" id="listMed"></ul>
+              </div>
+              <button style="padding:7px 14px;background:var(--c-surface-ctr);border:1px solid var(--c-outline-v);border-radius:var(--radius-xs);font-size:12px;cursor:pointer;white-space:nowrap;font-family:inherit" onclick="addMedManual()">Ajouter</button>
+            </div>
+            <div class="tags" id="selectedMeds" style="margin-bottom:14px"></div>
+            <button class="btn-analyse" id="btnAnalyse" onclick="this.disabled=true;this.textContent='Analyse en cours…';try{analyserPrescription();}finally{setTimeout(()=>{this.disabled=false;this.textContent='Lancer l\'Analyse Clinique'},500);}">
+              Lancer l'Analyse Clinique
+            </button>
+          </div>
+        </section>
+
+        <!-- ══ ANALYSE VIEW ══════════════════════════════════ -->
+        <section class="view-pane" data-view="analyse">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px">
+            <h1 class="view-title" style="margin-bottom:0">Analyse de l'Ordonnance</h1>
+            <span id="analyseUpdatedAt" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c-on-surface-v);background:var(--c-surface-ctr);padding:4px 10px;border-radius:6px">En attente</span>
+          </div>
+
+          <!-- Hero -->
+          <div class="hero-card">
+            <div class="hero-eyebrow">
+              <span class="material-symbols-outlined ms" id="heroIcon">info</span>
+              <span id="heroLabel">Synthèse Clinique</span>
+            </div>
+            <div class="hero-title" id="heroTitle">Lancez l'analyse clinique pour voir la synthèse.</div>
+            <div class="hero-sub" id="heroSub">Saisissez les données dans l'onglet Dossier puis cliquez sur « Lancer l'Analyse Clinique ».</div>
+            <div class="hero-chips" id="heroChips"></div>
+          </div>
+
+          <!-- Preview cards -->
+          <div class="preview-grid">
+            <button class="preview-card" onclick="activateTab('eviter')" type="button">
+              <div class="preview-card-header">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div class="preview-card-icon red"><span class="material-symbols-outlined ms" style="font-variation-settings:'FILL' 1">do_not_disturb_on</span></div>
+                  <h4>Critères STOPP</h4>
+                </div>
+                <span class="preview-badge red" id="previewStoppBadge">—</span>
+              </div>
+              <div class="preview-body red" id="previewStoppContent">Lancez l'analyse pour voir les prescriptions à éviter.</div>
+            </button>
+            <button class="preview-card" onclick="activateTab('initier')" type="button">
+              <div class="preview-card-header">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div class="preview-card-icon green"><span class="material-symbols-outlined ms" style="font-variation-settings:'FILL' 1">add_circle</span></div>
+                  <h4>Critères START</h4>
+                </div>
+                <span class="preview-badge green" id="previewStartBadge">—</span>
+              </div>
+              <div class="preview-body green" id="previewStartContent">Lancez l'analyse pour voir les omissions thérapeutiques.</div>
+            </button>
+            <button class="preview-card" onclick="activateTab('interact')" type="button">
+              <div class="preview-card-header">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div class="preview-card-icon amber"><span class="material-symbols-outlined ms" style="font-variation-settings:'FILL' 1">sync_problem</span></div>
+                  <h4>Interactions</h4>
+                </div>
+                <span class="preview-badge amber" id="previewInteractBadge">—</span>
+              </div>
+              <div class="preview-body amber" id="previewInteractContent">Lancez l'analyse pour voir les interactions médicamenteuses.</div>
+            </button>
+          </div>
+
+          <!-- Sub-tabs -->
+          <div class="subtabs-card">
+            <div class="subtabs-nav" id="myTab" role="tablist">
+              <button class="subtab-btn active" data-tab="synthese">Synthèse</button>
+              <button class="subtab-btn" data-tab="eviter">À Éviter</button>
+              <button class="subtab-btn" data-tab="initier">Omissions</button>
+              <button class="subtab-btn" data-tab="interact">Interactions</button>
+              <button class="subtab-btn" data-tab="auc">PK / AUC</button>
+              <button class="subtab-btn" data-tab="ansm">ANSM</button>
+              <button class="subtab-btn" data-tab="bio">Bio</button>
+              <button class="subtab-btn" data-tab="usage">Doses</button>
+            </div>
+            <div class="subtabs-body">
+              <div class="subtab-pane active" id="tab-synthese"><div id="alertes-synthese" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur « Lancer l'Analyse Clinique »…</div></div>
+              <div class="subtab-pane" id="tab-eviter"><div id="alertes-eviter" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser…</div></div>
+              <div class="subtab-pane" id="tab-initier"><div id="alertes-initier" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser…</div></div>
+              <div class="subtab-pane" id="tab-interact"><div id="alertes-interact" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser…</div></div>
+              <div class="subtab-pane" id="tab-auc"><div id="alertes-auc" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser…</div></div>
+              <div class="subtab-pane" id="tab-ansm"><div id="alertes-ansm" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser…</div></div>
+              <div class="subtab-pane" id="tab-bio"><div id="alertes-bio" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser…</div></div>
+              <div class="subtab-pane" id="tab-usage"><div id="alertes-usage" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser…</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ SCORES VIEW ═══════════════════════════════════ -->
+        <section class="view-pane" data-view="scores">
+          <h1 class="view-title">Scores gériatriques</h1>
+          <div class="card">
+            <div id="alertes-scores" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser pour voir les scores…</div>
+          </div>
+        </section>
+
+        <!-- ══ SUIVI VIEW ════════════════════════════════════ -->
+        <section class="view-pane" data-view="suivi">
+          <h1 class="view-title">Suivi biologique</h1>
+          <div class="card">
+            <div id="alertes-suivi" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser…</div>
+          </div>
+        </section>
+
+        <!-- ══ RECOS VIEW ════════════════════════════════════ -->
+        <section class="view-pane" data-view="recos">
+          <h1 class="view-title">Recommandations par pathologie</h1>
+          <div class="card">
+            <div id="alertes-guidelines" style="color:var(--c-on-surface-v);font-size:13px">Cliquez sur Analyser…</div>
+          </div>
+        </section>
+
+      </div><!-- /content-inner -->
+    </div><!-- /scroll-area -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ══ LEGEND MODAL ════════════════════════════════════════ -->
+<div class="modal-overlay" id="legendModal" onclick="if(event.target===this)closeLegendModal()">
+  <div class="modal-box modal-xl">
+    <div class="modal-header">
+      <span class="modal-title">Lexique &amp; Signification des Alertes</span>
+      <button class="modal-close" onclick="closeLegendModal()">✕</button>
+    </div>
+    <div class="modal-body" id="legendContainer"></div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════ -->
+<footer class="app-footer">
+  v0.70 — Dr Julien Nunes · Aide à la décision pharmaco-clinique · Résultats à valider par l'utilisateur.
+</footer>
+
+<!-- ══ DATA SCRIPTS ════════════════════════════════════════ -->
+<script src="ddi_data.js"></script>
+<script src="gpt_ddi_data_filtered.js"></script>
+<script src="guidelines_data.js"></script>
+<script src="anticholinergics_data.js"></script>
+<script src="ansm_ddi_data.js"></script>
+<script src="ddi_auc_data.js"></script>
+<script src="app_legend.js"></script>
+<script src="geria_database.js"></script>
+<script src="geria_pathology_rules_v3.js"></script>
+<script src="geria_recos_final.js"></script>
+<script src="geria_integration_module.js"></script>
+<script src="geria_engine_v2.js"></script>
+<script src="app_core.js"></script>
+<script src="app_ui.js"></script>
+<script src="app_analysis.js"></script>
+
+<!-- ══ SHELL (navigation, UI) ═════════════════════════════ -->
+<script src="geria-shell.js"></script>
+
+<!-- ══ ANALYSE HOOK — enrichit la synthèse après analyse ══ -->
+<script>
+(function patchAnalyse() {
+  const orig = window.analyserPrescription;
+  if (typeof orig !== 'function') return;
+  window.analyserPrescription = function () {
+    orig.apply(this, arguments);
+    // Mise à jour Hero Card
+    const nE = document.getElementById('alertes-eviter')?.querySelectorAll('.alert').length || 0;
+    const nI = document.getElementById('alertes-initier')?.querySelectorAll('.alert').length || 0;
+    const nX = document.getElementById('alertes-interact')?.querySelectorAll('.alert').length || 0;
+    if (typeof updateHeroCard === 'function') updateHeroCard(nE, nI, nX);
+    // Badges sous-tabs
+    if (typeof updateSubTabBadge === 'function') {
+      updateSubTabBadge('eviter',   nE, 'red');
+      updateSubTabBadge('initier',  nI, 'green');
+      updateSubTabBadge('interact', nX, 'amber');
+      updateSubTabBadge('auc',   document.getElementById('alertes-auc')?.querySelectorAll('.alert').length || 0, 'amber');
+      updateSubTabBadge('ansm',  document.getElementById('alertes-ansm')?.querySelectorAll('.alert').length || 0, 'amber');
+      updateSubTabBadge('bio',   document.getElementById('alertes-bio')?.querySelectorAll('.alert').length || 0, 'amber');
+      updateSubTabBadge('usage', document.getElementById('alertes-usage')?.querySelectorAll('.alert').length || 0, 'green');
+    }
+    // Synthèse auto
+    const synth = document.getElementById('alertes-synthese');
+    if (synth) {
+      const scores = document.getElementById('alertes-scores')?.innerHTML || '';
+      synth.innerHTML = scores || '<span style="color:var(--c-on-surface-v)">Analyse effectuée. Consultez les onglets ci-dessous.</span>';
+    }
+    // Update header chips
+    if (typeof updateHeaderChips === 'function') updateHeaderChips();
+    // Navigate to analyse view
+    if (typeof showView === 'function') showView('analyse');
+  };
+})();
+</script>
+</body>
+</html>
