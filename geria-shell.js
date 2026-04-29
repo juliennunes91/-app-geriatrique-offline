@@ -97,35 +97,40 @@ function filterAlertes(query) {
 }
 
 /* ── RESET PATIENT ───────────────────────────────────────── */
-function resetPatient() {
-  // Reset inputs
-  ['patientAge','patientPoids','patientBmi','bioCreat','patientNa','patientK','bioAlbumSg'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = id === 'patientAge' ? 80 : id === 'patientNa' ? 140 : id === 'patientK' ? 4.0 : '';
-  });
-  document.getElementById('patientDFG').value = 45;
-  document.getElementById('dfgMethodSelect').value = 'manuel';
-  // Reset checkboxes
-  document.querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = false; });
-  document.getElementById('scoreCFS').value = '0';
-  // Reset state
-  if (typeof activeComorbs !== 'undefined') activeComorbs.length = 0;
-  if (typeof activeMeds !== 'undefined') activeMeds.length = 0;
-  if (typeof window.suspendedMeds !== 'undefined') window.suspendedMeds.length = 0;
-  // Clear tags
-  ['selectedComorbs','selectedMeds'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = ''; });
-  // Clear results
-  ['alertes-eviter','alertes-initier','alertes-interact','alertes-auc','alertes-ansm',
-   'alertes-bio','alertes-usage','alertes-suivi','alertes-scores','alertes-synthese','alertes-guidelines'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = '<span class="text-muted">Cliquez sur Analyser...</span>';
-  });
-  // Reset hero
-  const ht = document.getElementById('heroTitle');
-  if (ht) ht.textContent = 'Lancez l\'analyse clinique pour voir la synthèse.';
-  const hs = document.getElementById('heroSub');
-  if (hs) hs.textContent = 'Saisissez les données dans l\'onglet Dossier puis cliquez sur « Lancer l\'Analyse Clinique ».';
-  updateHeaderChips();
-}
+/* La logique principale de reset est dans app_core.js (window.resetPatient).
+   Ici on AJOUTE seulement les nettoyages V2-spécifiques (hero, header chips)
+   en wrappant la fonction d'origine. NE PAS écraser app_core.js. */
+(function wrapResetPatient() {
+  if (typeof window.resetPatient !== 'function') return;
+  const _origReset = window.resetPatient;
+  window.resetPatient = function () {
+    _origReset.apply(this, arguments);
+    // Reset hero V2
+    const ht = document.getElementById('heroTitle');
+    if (ht) ht.textContent = "Lancez l'analyse clinique pour voir la synthèse.";
+    const hs = document.getElementById('heroSub');
+    if (hs) hs.textContent = "Saisissez les données dans l'onglet Dossier puis cliquez sur « Lancer l'Analyse Clinique ».";
+    const ts = document.getElementById('analyseUpdatedAt');
+    if (ts) ts.textContent = 'En attente';
+    // Vide les chips hero + preview cards V2
+    const chipsEl = document.getElementById('heroChips');
+    if (chipsEl) chipsEl.innerHTML = '';
+    ['previewStoppContent','previewStartContent','previewInteractContent'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = 'Lancez l\'analyse pour voir les alertes.';
+    });
+    ['previewStoppBadge','previewStartBadge','previewInteractBadge'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.textContent = '—'; el.className = 'preview-badge'; }
+    });
+    // Vide les badges compteurs des sous-onglets
+    document.querySelectorAll('.subtab-btn .subtab-badge').forEach(b => b.remove());
+    // Met à jour les chips header (DFG défaut 45, etc.)
+    if (typeof updateHeaderChips === 'function') updateHeaderChips();
+    // Force la vue Dossier après reset
+    if (typeof showView === 'function') showView('dossier');
+  };
+})();
 
 /* ── CASCADE CHECKBOXES (SPC) ────────────────────────────── */
 function toggleCascade(chkId, cascadeId) {
@@ -267,17 +272,28 @@ function toggleCompareMode() {}
 function imprimerSynthese(mode) { window.print(); hideAllDropdowns(); }
 
 /* ── INIT ────────────────────────────────────────────────── */
+/* Au démarrage : vue Dossier active, dark mode restauré, sous-onglets prêts.
+   IMPORTANT : la vraie initialisation des autocompletes / DFG / engine est
+   pilotée par initUI() de app_ui.js (déclenché par window.onload). geria-shell
+   ne fait QUE la décoration UI (navigation V2). */
 document.addEventListener('DOMContentLoaded', function () {
   initDarkMode();
-  showView('analyse');
+  showView('dossier');
   initSubTabs();
 
   // Live chip update on key inputs
-  ['patientAge','patientSexe','patientDFG','scoreCFS','patientNom'].forEach(id => {
+  ['patientAge','patientSexe','patientDFG','scoreCFS','patientNom','patientPoids','bioCreat'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.addEventListener('input', updateHeaderChips);
-    if (el) el.addEventListener('change', updateHeaderChips);
+    if (!el) return;
+    el.addEventListener('input', updateHeaderChips);
+    el.addEventListener('change', updateHeaderChips);
   });
 
   updateHeaderChips();
+});
+
+/* Refresh chips after initUI (window.onload runs after DOMContentLoaded) :
+   garantit l'affichage du DFG après calcul automatique au chargement. */
+window.addEventListener('load', function () {
+  if (typeof updateHeaderChips === 'function') updateHeaderChips();
 });

@@ -1,17 +1,20 @@
-// Service Worker - GeriaAssist v0.70 (Phase 13 — intégration consensus SFGG/SF3PA/SFPC 2026 antidépresseurs SA : PAT_032 stepped-care, vortioxétine, tianéptine, EVITER combinaisons, alertes Citalopram QT, mianserine, agomélatine ≥75)
+// Service Worker - GeriaAssist v0.71 (Phase 14 — fix index_modern_V2 : scripts critiques manquants, resetPatient préservé, init order, onFragile handler)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260428-sfgg-sf3pa-sfpc-2026-antidepresseurs';
-const CACHE_NAME = `geriaassist-v70-${BUILD_ID}`;
+const BUILD_ID = '20260429-fix-modern-v2';
+const CACHE_NAME = `geriaassist-v71-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
     './',
     './index.html',
     './index_modern.html',
+    './index_modern_V2.html',
     './offline.html',
     './manifest.json',
     './lib/bootstrap.min.css',
     './geria-theme.css',
+    './geria-styles.css',
+    './geria-shell.js',
     './lib/bootstrap.bundle.min.js',
     './lib/html2pdf.bundle.min.js',
     './lib/tesseract.min.js',

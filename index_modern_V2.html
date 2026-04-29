@@ -58,7 +58,7 @@
         </div>
         <div>
           <div class="sidebar-user-name">Praticien</div>
-          <div class="sidebar-version">GeriaAssist v0.70</div>
+          <div class="sidebar-version">GeriaAssist v0.71</div>
         </div>
       </div>
     </div>
@@ -299,7 +299,7 @@
             <div class="frail-row">
               <span class="frail-label">Patient Très Fragile (STOPPFrail)</span>
               <label class="toggle">
-                <input type="checkbox" id="patientFragile">
+                <input type="checkbox" id="patientFragile" onchange="onFragileChange()">
                 <span class="toggle-track"></span>
               </label>
             </div>
@@ -456,27 +456,37 @@
 
 <!-- ══ FOOTER ══════════════════════════════════════════════ -->
 <footer class="app-footer">
-  v0.70 — Dr Julien Nunes · Aide à la décision pharmaco-clinique · Résultats à valider par l'utilisateur.
+  v0.71 — Dr Julien Nunes · Aide à la décision pharmaco-clinique · Résultats à valider par l'utilisateur.
 </footer>
 
 <!-- ══ DATA SCRIPTS ════════════════════════════════════════ -->
-<script src="ddi_data.js"></script>
-<script src="gpt_ddi_data_filtered.js"></script>
-<script src="guidelines_data.js"></script>
+<!-- Ordre identique à index.html (référence) — toute modification doit garder
+     les dépendances : utils → patient_state → drug_classes → engine → app_*. -->
+<script src="lib/bootstrap.bundle.min.js"></script>
+<script src="ddi_general.js" defer></script>
+<script src="ddi_merged_V2.js" defer></script>
 <script src="anticholinergics_data.js"></script>
 <script src="ansm_ddi_data.js"></script>
-<script src="ddi_auc_data.js"></script>
+<script src="gpt_ddi_data_filtered.js"></script>
 <script src="app_legend.js"></script>
 <script src="geria_database.js"></script>
 <script src="geria_pathology_rules_v3.js"></script>
 <script src="geria_recos_final.js"></script>
 <script src="geria_integration_module.js"></script>
+<script src="utils.js"></script>
+<script src="patient_state.js"></script>
+<script src="drug_classes.js"></script>
 <script src="geria_engine_v2.js"></script>
+<script src="lib/tesseract.min.js"></script>
 <script src="app_core.js"></script>
 <script src="app_ui.js"></script>
+<script src="ocr_module.js"></script>
+<script src="child_pugh_adaptations.js"></script>
 <script src="app_analysis.js"></script>
 
-<!-- ══ SHELL (navigation, UI) ═════════════════════════════ -->
+<!-- ══ SHELL (navigation, UI V2) ═════════════════════════════ -->
+<!-- chargé EN DERNIER : geria-shell définit showView/activateTab/dropdowns
+     spécifiques à V2 mais NE doit PAS écraser resetPatient/calculerDFG. -->
 <script src="geria-shell.js"></script>
 
 <!-- ══ ANALYSE HOOK — enrichit la synthèse après analyse ══ -->
