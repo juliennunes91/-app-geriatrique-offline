@@ -38,7 +38,7 @@
         .autocomplete-list li { padding: 8px 12px; cursor: pointer; font-size: 0.9em; border-bottom: 1px solid #eee; }
         .autocomplete-list li:hover { background-color: #f0f8ff; }
         .autocomplete-list li:last-child { border-bottom: none; }
-        .version-footer { position: fixed; bottom: 0; left: 0; font-size: 0.7rem; color: #6c757d; z-index: 500; background: rgba(255,255,255,0.92); padding: 4px 12px; border-top-right-radius: 6px; border-top: 1px solid #dee2e6; border-right: 1px solid #dee2e6; max-width: 420px; line-height: 1.3; pointer-events: none; }
+        .version-footer { display: block; font-size: 0.7rem; color: #6c757d; padding: 10px 0; margin-top: 16px; border-top: 1px solid #dee2e6; line-height: 1.4; }
         /* Accessibilité : tailles minimales sur mobile */
         @media (max-width: 576px) {
             body { font-size: 1rem; }
@@ -477,13 +477,12 @@
                 </div>
             </div>
         </div>
+        <footer class="version-footer">
+            version 0.70 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            Merci aux testeurs (Dr Juliette Muffet)<br>
+            <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
+        </footer>
     </div>
-
-    <footer class="version-footer">
-        version 0.70 — créé par Dr Julien Nunes à l'aide de l'IA<br>
-        Merci aux testeurs (Dr Juliette Muffet)<br>
-        <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
-    </footer>
 
     <div class="modal fade" id="legendModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-xl">
