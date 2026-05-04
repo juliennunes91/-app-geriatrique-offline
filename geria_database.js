@@ -682,6 +682,15 @@ const MASTER_DB = {
             "SYNONYMES": "DLB, LEWY, Corps de Lewy, Démence corps lewy, DCL",
             "BIO_SURVEILLANCE": "",
             "SYND_RISQUE": ""
+        },
+        "PAT_053": {
+            "ID_PATHO": "PAT_053",
+            "CIM_10": "K21",
+            "NOM_STANDARD": "Reflux gastro-œsophagien (RGO)",
+            "CATEGORIE": "Gastro-entérologie",
+            "SYNONYMES": "RGO, REFLUX, Pyrosis, Régurgitations, Œsophagite peptique, Endobrachyœsophage, EBO, GERD",
+            "BIO_SURVEILLANCE": "BIO_006, BIO_021, BIO_005, BIO_009, BIO_020",
+            "SYND_RISQUE": "SYND_005, SYND_006, SYND_022, SYND_007"
         }
     },
     "SYNDROMES": {
@@ -20801,19 +20810,19 @@ const MASTER_DB = {
                                         "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "NFS-Plaquettes | Créatinine/DFG | TP/TCA",
+                    "suivi_initial": "NFS-Plaquettes | Créatinine/DFG",
                     "suivi_periodique": "Plaquettes 2x/sem (J5-J21) | Anti-Xa si indication | Créatinine",
                     "alerte_clinique": "TIH (thrombocytopénie) → arrêt immédiat | Saignement actif",
                     "bio_cible": [
                               "BIO_009",
-                              "BIO_003",
-                              "BIO_030"
+                              "BIO_010",
+                              "BIO_003"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "HBPM : adapter dose selon DFG (1 mg/kg/j en curatif si DFG < 30 au lieu de 2x ; CI fondaparinux si DFG < 20). Anti-Xa si DFG borderline. Surveillance plaquettes (TIH).",
+                    "notes_cliniques": "HBPM : NE PAS surveiller par INR (INR = AVK uniquement) ni TP/TCA (peu sensibles à l'effet anti-Xa des HBPM). Si monitorage nécessaire (DFG limite, poids extrêmes, grossesse), doser l'activité anti-Xa 4 h après injection. CI curatif si DFG < 30 — préférer tinzaparine (utilisable jusqu'à DFG 20). Surveillance plaquettes (TIH J5-J21).",
                     "source": "RCP Fragmine | ESC 2024"
           },
           {
@@ -20977,19 +20986,19 @@ const MASTER_DB = {
                                         "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "NFS-Plaquettes | Créatinine/DFG | TP/TCA",
+                    "suivi_initial": "NFS-Plaquettes | Créatinine/DFG",
                     "suivi_periodique": "Plaquettes 2x/sem (J5-J21) | Anti-Xa si IRC | Créatinine",
                     "alerte_clinique": "TIH → arrêt immédiat | Saignement | Hématome spinal si péridural",
                     "bio_cible": [
                               "BIO_009",
-                              "BIO_003",
-                              "BIO_030"
+                              "BIO_010",
+                              "BIO_003"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "HBPM : adapter dose selon DFG (1 mg/kg/j en curatif si DFG < 30 au lieu de 2x ; CI fondaparinux si DFG < 20). Anti-Xa si DFG borderline. Surveillance plaquettes (TIH).",
+                    "notes_cliniques": "HBPM : NE PAS surveiller par INR (INR = AVK uniquement) ni TP/TCA (peu sensibles à l'effet anti-Xa des HBPM). Si monitorage nécessaire (DFG limite 30-15, poids extrêmes < 50 ou > 100 kg, grossesse), doser l'activité anti-Xa 4 h après injection (cible 0.5-1.0 UI/mL en curatif). Adapter dose selon DFG (1 mg/kg/j en curatif si DFG 15-30 au lieu de 2x/j ; CI si DFG < 15). Surveillance plaquettes (TIH).",
                     "source": "RCP Lovenox | ESC 2024"
           },
           {
@@ -21734,19 +21743,19 @@ const MASTER_DB = {
                                         "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "NFS-Plaquettes | Créatinine/DFG | TP/TCA",
+                    "suivi_initial": "NFS-Plaquettes | Créatinine/DFG",
                     "suivi_periodique": "Plaquettes 2x/sem (J5-J21) | Anti-Xa si IRC ou > 75 ans",
                     "alerte_clinique": "TIH → arrêt immédiat | Avantage: utilisable si DFG 20-30",
                     "bio_cible": [
                               "BIO_009",
-                              "BIO_003",
-                              "BIO_030"
+                              "BIO_010",
+                              "BIO_003"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "HBPM : adapter dose selon DFG (1 mg/kg/j en curatif si DFG < 30 au lieu de 2x ; CI fondaparinux si DFG < 20). Anti-Xa si DFG borderline. Surveillance plaquettes (TIH).",
+                    "notes_cliniques": "HBPM : NE PAS surveiller par INR (INR = AVK uniquement) ni TP/TCA (peu sensibles à l'effet anti-Xa des HBPM). Si monitorage nécessaire (DFG limite, poids extrêmes, grossesse, âge > 75 ans), doser l'activité anti-Xa 4 h après injection. Tinzaparine = seule HBPM utilisable en curatif si DFG 20-30 (avec anti-Xa obligatoire). Surveillance plaquettes (TIH J5-J21).",
                     "source": "RCP Innohep | ESC 2024"
           },
           {

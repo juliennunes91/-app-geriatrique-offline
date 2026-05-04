@@ -3416,6 +3416,106 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "TA, glycémie, FA/rythme", cible: "Comorbidités CV associées", note: ""}], REGLES: [] }
+    },
+    "PAT_053": {
+        ID: "PAT_053",
+        NOM: "Reflux gastro-œsophagien (RGO)",
+        REFERENCE: "SNFGE 2024 | HAS | ACG 2022 (Katz) | AGA 2022 (Yadlapati) | ESGE 2022 | STOPP/START v3",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Mesures hygiéno-diététiques (perte poids, surélévation tête de lit, repas fractionnés, arrêt tabac/alcool)": "ACG 2022 — 1ère intention systématique, IIA",
+                "Alginate (Gaviscon)": "SNFGE — symptômes post-prandiaux, sujet âgé, à la demande",
+                "Antiacides (Maalox, Rennie)": "ACG 2022 — soulagement ponctuel",
+                "IPP demi-dose 4-8 sem (oméprazole 10-20, pantoprazole 20)": "ACG 2022 §3, A — RGO typique fréquent",
+                "IPP pleine dose 8 sem (oméprazole 20-40)": "ACG 2022 §3, A — œsophagite érosive endoscopique",
+                "Endoscopie haute (FOGD)": "SNFGE — drapeaux rouges (dysphagie, anémie, AEG, hémorragie, > 50 ans)"
+            },
+            "EVITER": {
+                "IPP > 8 semaines sans réévaluation": "STOPP F1 ; ACG 2022 — step-down après cicatrisation",
+                "Métoclopramide chronique > 75 ans": "Beers 2023, STOPP K2 — risque extrapyramidal",
+                "Dompéridone fortes doses ou prolongée": "ANSM 2014 — torsades de pointes, mort subite",
+                "IPP + clopidogrel (oméprazole/ésoméprazole)": "FDA Black Box — préférer pantoprazole ou rabéprazole",
+                "Antiacides + tétracyclines/quinolones/bisphosphonates simultanés": "RCP — chélation, ↓ absorption majeure"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Diagnostic clinique si symptômes typiques (pyrosis, régurgitations) sans drapeau rouge — pas d'endoscopie d'emblée chez < 50 ans. Drapeaux rouges (dysphagie, odynophagie, perte poids, anémie, méléna, AEG, > 50 ans avec NOUVEAU symptôme) → FOGD impérative." },
+                { note: "Sujet âgé : RGO souvent atypique (toux, asthme, douleur thoracique) ; tolérance accrue aux symptômes ; risque accru d'œsophagite sévère asymptomatique → seuil d'endoscopie plus bas." },
+                { note: "Stratégie en escalier : (1) règles hygiéno-diététiques + alginate/antiacide à la demande → (2) IPP demi-dose 4 sem si symptômes ≥ 2/sem → (3) IPP pleine dose si œsophagite documentée → (4) step-down dès cicatrisation." },
+                { note: "Déprescription IPP : essai après 8 sem si RGO non érosif. Step-down (pleine dose → demi-dose → à la demande → arrêt) sur 4-8 sem pour limiter le rebond acide. STOPP F1 — réévaluer toute prescription IPP > 8 sem." }
+            ],
+            INITIER: [
+                { classe: "Mesures hygiéno-diététiques", indication: "Systématique, 1ère intention", note: "Perte de poids si IMC > 25 (efficacité forte) | Surélévation tête de lit 15-20 cm si symptômes nocturnes | Pas de décubitus dans les 3 h post-repas | Repas fractionnés | Arrêt tabac/alcool/café/chocolat/menthe/agrumes/repas gras | Arrêt OH vespéral", niveau_preuve: "IIA" },
+                { classe: "Alginate (Gaviscon, Topaal) — sachet ou suspension", indication: "Symptômes post-prandiaux, à la demande, 1ère intention chez sujet âgé", note: "Effet barrière physique (raft) sur le contenu gastrique. Pas d'effet systémique. Pris APRÈS les repas et au coucher. Peu d'interactions (sauf chélation tétracyclines/quinolones/bisphosphonates → décaler ≥ 2 h).", niveau_preuve: "B" },
+                { classe: "Antiacides (Maalox, Rennie, Phosphalugel)", indication: "Soulagement symptomatique ponctuel", note: "Décaler ≥ 2 h des autres médicaments (chélation). Éviter usage chronique chez sujet âgé (charge sodée, hypermagnésémie si IRC, alcalose).", niveau_preuve: "C" },
+                { classe: "IPP demi-dose 4-8 semaines (oméprazole 10 mg, pantoprazole 20 mg, ésoméprazole 20 mg, lansoprazole 15 mg, rabéprazole 10 mg)", indication: "RGO typique fréquent (≥ 2 épisodes/sem) ou symptômes invalidants", note: "Prise 30-60 min AVANT le petit-déjeuner. Réévaluation à 4-8 sem : si efficace, step-down vers à-la-demande puis arrêt.", niveau_preuve: "IA" },
+                { classe: "IPP pleine dose 8 semaines (oméprazole 20-40 mg, pantoprazole 40 mg, ésoméprazole 40 mg, lansoprazole 30 mg, rabéprazole 20 mg)", indication: "Œsophagite érosive (LA-A à LA-D), endobrachyœsophage, sténose peptique", note: "Contrôle endoscopique post-traitement si grade C/D. Maintenance long cours uniquement si EBO ou récidive systématique à l'arrêt.", niveau_preuve: "IA" },
+                { classe: "Anti-H2 (famotidine 20-40 mg)", indication: "Alternative à l'IPP si intolérance ou symptômes nocturnes résiduels sous IPP", note: "Tachyphylaxie en 4-6 sem (perte d'efficacité). Ranitidine RETIRÉE du marché (NDMA, 2020). Cimétidine à éviter chez sujet âgé (anticholinergique, interactions CYP).", niveau_preuve: "B" },
+                { classe: "FOGD (endoscopie haute)", indication: "Drapeaux rouges : dysphagie, odynophagie, perte de poids, anémie ferriprive, méléna/hématémèse, vomissements persistants, échec IPP pleine dose 8 sem, > 50 ans avec nouveau symptôme, surveillance EBO", note: "Permet diagnostic œsophagite (Los Angeles), EBO, sténose, exclusion néoplasie", niveau_preuve: "IA" }
+            ],
+            ABSORPTION_INTERACTIONS: {
+                note: "Le RGO et son traitement modifient l'absorption de nombreux médicaments — point clé chez le sujet âgé polymédiqué.",
+                IPP_DIMINUE_ABSORPTION: [
+                    { medicament: "Kétoconazole, itraconazole", mecanisme: "Besoin d'acidité gastrique pour dissolution", action: "Préférer fluconazole, voriconazole, posaconazole comprimés gastrorésistants ou suspension à jeun", gravite: "MAJEURE" },
+                    { medicament: "Fer oral (sulfate, fumarate)", mecanisme: "Acidité réduit Fe³⁺ → Fe²⁺ absorbable", action: "Privilégier voie IV si carence martiale documentée sous IPP au long cours, ou décaler ≥ 4 h (efficacité réduite mais non nulle)", gravite: "MODÉRÉE" },
+                    { medicament: "Calcium carbonate", mecanisme: "Solubilisation pH-dépendante", action: "Préférer calcium citrate (absorption pH-indépendante) chez sujet âgé sous IPP au long cours, surtout si ostéoporose", gravite: "MODÉRÉE" },
+                    { medicament: "Vitamine B12 (cyanocobalamine)", mecanisme: "Acidité requise pour libération de la B12 alimentaire (pas la forme synthétique)", action: "Doser B12 si IPP > 12 mois ; supplémenter PO ou IM si carence", gravite: "MODÉRÉE — long cours uniquement" },
+                    { medicament: "Lévothyroxine", mecanisme: "Absorption pH-dépendante", action: "Augmenter la dose de 10-30% si IPP introduit chez patient équilibré ; recontrôler TSH à 6 sem", gravite: "MODÉRÉE" },
+                    { medicament: "Rilpivirine, atazanavir, dasatinib, erlotinib, gefitinib, pazopanib", mecanisme: "Solubilisation pH-dépendante", action: "CONTRE-INDICATION ou décalage strict (atazanavir + IPP : éviter)", gravite: "MAJEURE — onco/VIH" }
+                ],
+                ANTIACIDES_DIMINUE_ABSORPTION: [
+                    { medicament: "Tétracyclines (doxycycline, minocycline)", mecanisme: "Chélation par cations divalents (Mg²⁺, Al³⁺, Ca²⁺)", action: "Décaler ≥ 2 h", gravite: "MAJEURE" },
+                    { medicament: "Fluoroquinolones (ciprofloxacine, ofloxacine, lévofloxacine, moxifloxacine)", mecanisme: "Chélation cations", action: "Décaler ≥ 2 h (antiacide pris APRÈS la quinolone)", gravite: "MAJEURE" },
+                    { medicament: "Bisphosphonates (alendronate, risédronate)", mecanisme: "Chélation Ca²⁺/Mg²⁺/Al³⁺", action: "Décaler ≥ 30-60 min (alendronate prise à jeun seul, antiacide ≥ 2 h après)", gravite: "MAJEURE" },
+                    { medicament: "Lévothyroxine", mecanisme: "Adsorption sur Al³⁺", action: "Décaler ≥ 4 h ; surveillance TSH si association régulière", gravite: "MODÉRÉE" },
+                    { medicament: "Digoxine, énoxacine, fer oral, isoniazide, kétoconazole, pénicillamine", mecanisme: "Chélation/adsorption", action: "Décaler ≥ 2 h", gravite: "MODÉRÉE" }
+                ],
+                ALGINATES_DIMINUE_ABSORPTION: [
+                    { medicament: "Tétracyclines, fluoroquinolones, bisphosphonates, lévothyroxine, sels de fer", mecanisme: "Chélation/adsorption locale (effet moindre que les antiacides)", action: "Décaler ≥ 2 h par sécurité", gravite: "MODÉRÉE" }
+                ],
+                IPP_AUTRES_INTERACTIONS_PHARMACOCINETIQUES: [
+                    { medicament: "Clopidogrel + oméprazole/ésoméprazole", mecanisme: "Inhibition CYP2C19 → ↓ activation clopidogrel", action: "PRÉFÉRER pantoprazole ou rabéprazole (peu d'inhibition CYP2C19) — FDA Black Box", gravite: "MAJEURE" },
+                    { medicament: "Méthotrexate haute dose + IPP", mecanisme: "↓ excrétion rénale MTX", action: "Suspendre IPP 24-48 h avant MTX HD ; remplacer par H2 ou alginate", gravite: "MAJEURE" },
+                    { medicament: "Tacrolimus + oméprazole/ésoméprazole", mecanisme: "Inhibition CYP3A4/2C19 → ↑ taux tacrolimus", action: "Préférer pantoprazole/rabéprazole + monitorage taux tacrolimus", gravite: "MODÉRÉE" },
+                    { medicament: "AVK (warfarine, fluindione) + oméprazole/ésoméprazole", mecanisme: "↑ INR (inhibition CYP2C9/2C19)", action: "Surveillance INR rapprochée à l'introduction ; préférer pantoprazole", gravite: "MODÉRÉE" }
+                ]
+            },
+            EVITER: [
+                { classe: "AINS au long cours", raison: "Aggravation RGO et risque ulcéreux ; gastroprotection IPP requise si AINS indispensable", gravite: "PRUDENCE", ref_stopp: "STOPP F2" },
+                { classe: "IPP > 8 semaines sans réévaluation ni indication documentée", raison: "Hypomagnésémie, carence B12, fractures ostéoporotiques (hanche/vertèbres), C. difficile, pneumopathie communautaire, néphrite interstitielle aiguë, démence (lien controversé)", gravite: "DEPRESCRIRE — step-down (demi-dose → à la demande → arrêt sur 4-8 sem)", ref_stopp: "STOPP F1" },
+                { classe: "Métoclopramide (Primpéran) au long cours, surtout > 75 ans", raison: "Effets extrapyramidaux (dyskinésies tardives, parkinsonisme), majoration risque chute, effet anticholinergique central limité mais réel", gravite: "EVITER si > 75 ans ou Parkinson", ref_stopp: "STOPP K2 ; Beers 2023" },
+                { classe: "Dompéridone (Motilium) fortes doses ou > 1 sem", raison: "Allongement QT, torsades de pointes, mort subite (ANSM 2014). Si nécessaire : 10 mg x3/j max, 1 semaine, ECG préalable, éviter associations QT-allongeurs", gravite: "PRUDENCE — réservé situations spécifiques" },
+                { classe: "Cimétidine", raison: "Anticholinergique central, confusion, gynécomastie, inhibiteur CYP majeur (interactions multiples : warfarine, théophylline, phénytoïne)", gravite: "EVITER chez sujet âgé", ref_stopp: "STOPP B6 ; Beers 2023" },
+                { classe: "Ranitidine", raison: "RETIRÉE du marché (NDMA potentielle cancérogène, ANSM 2020)", gravite: "RETIRÉE — ne plus prescrire" },
+                { classe: "Tétracyclines/quinolones/bisphosphonates pris simultanément aux antiacides ou alginates", raison: "Chélation → ↓ absorption majeure (échec thérapeutique)", gravite: "DECALER ≥ 2 h" },
+                { classe: "Atazanavir, rilpivirine, dasatinib, erlotinib, gefitinib + IPP", raison: "Absorption pH-dépendante : IPP CONTRE-INDIQUÉ ou réduit gravement l'efficacité", gravite: "CONTRE-INDICATION (selon molécule)" }
+            ],
+            DEPRESCRIPTION: {
+                indication: "RGO non érosif après 8 sem d'IPP avec contrôle des symptômes",
+                methode: "Step-down progressif sur 4-8 sem : pleine dose → demi-dose 2-4 sem → à-la-demande 2-4 sem → arrêt avec alginate/antiacide à la demande",
+                rebond_acide: "Possible 2-4 sem après arrêt brutal — gérer avec alginate, ne pas reprendre IPP en réflexe",
+                contre_indication_arret: "EBO documenté, œsophagite récidivante grade C/D, sténose peptique, double antithrombotique au long cours",
+                ref: "STOPP F1 ; HAS 2018 — déprescription IPP"
+            }
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_006", "BIO_021", "BIO_005", "BIO_009", "BIO_020"],
+            REGLES: [
+                { bio: "BIO_006", frequence: "Si IPP > 6 mois", seuils: { bas: { max: 0.75, note: "HypoMg sous IPP — supplémenter Mg PO ou arrêter IPP" } }, syndrome: "SYND_022" },
+                { bio: "BIO_021", frequence: "Si IPP > 12 mois", note: "Carence B12 par achlorhydrie — supplémenter si < 200 pg/mL", syndrome: "SYND_007" },
+                { bio: "BIO_005", frequence: "Annuel si IPP > 12 mois", note: "Hypocalcémie indirecte (via hypoMg) ; surveillance ostéoporose si IPP + corticoïdes ou inhibiteur aromatase" },
+                { bio: "BIO_009", frequence: "Si saignement aigu (méléna/hématémèse) → urgent ; sinon dépistage anémie 6-12 mois si symptômes atypiques", syndrome: "SYND_005" },
+                { bio: "BIO_020", frequence: "Si anémie (Hb < 12)", note: "Rechercher saignement digestif occulte sur RGO compliqué (œsophagite ulcérée, EBO, sténose)", syndrome: "SYND_006" }
+            ]
+        },
+        DECOMPENSATION_BIO: {
+            triggers: [
+                { bio: "BIO_009", condition: "Chute Hb > 2 g/dL + méléna/hématémèse", action: "Urgence hémorragique — endoscopie < 24h, IPP IV double dose, arrêt AINS/antithrombotique", syndrome: "SYND_005" },
+                { bio: "BIO_006", condition: "< 0.5 mmol/L sous IPP", action: "Arrêt IPP, supplémentation Mg sulfate IV si symptômes, puis Mg per os ; switch vers anti-H2 ou alginate", syndrome: "SYND_022" },
+                { bio: "BIO_021", condition: "B12 < 150 pg/mL sous IPP > 12 mois", action: "Supplémentation B12 PO (1 mg/j) ou IM (1 mg/sem x 4 puis mensuel)", syndrome: "SYND_007" }
+            ]
+        }
     }
 };
 
@@ -3472,7 +3572,8 @@ const PATHO_SYNDROME_MAP = {
     "PAT_049": ["SYND_013", "SYND_009"],
     "PAT_050": ["SYND_009", "SYND_013"],
     "PAT_051": ["SYND_009"],
-    "PAT_052": ["SYND_009", "SYND_003"]
+    "PAT_052": ["SYND_009", "SYND_003"],
+    "PAT_053": ["SYND_005", "SYND_006", "SYND_022", "SYND_007"]
 };
 
 const PATHO_MED_INTERDITS = {
@@ -3983,6 +4084,17 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
     "PAT_040": [
         { terme: "antipsychotique", raison: "Sensibilité neuroleptique sévère (30-50% DCL) — risque SNM, coma (McKeith 2017)", gravite: "PRUDENCE EXTREME", exception: "Quétiapine à dose minimale si psychose réfractaire aux IAChE" },
         { terme: "anticholinergique", raison: "Aggrave hallucinations et cognition en DCL (Watts 2022)", gravite: "CONTRE-INDICATION" }
+    ],
+
+    // PAT_053 — RGO (classes & molécules à risque)
+    "PAT_053": [
+        { terme: "ains", raison: "Aggravation RGO + risque ulcère/œsophagite peptique. Si AINS indispensable → gastroprotection IPP (STOPP F2)", gravite: "PRUDENCE" },
+        { terme: "metoclopramide", condition: "âge > 75 ans ou Parkinson", raison: "Effets extrapyramidaux, dyskinésies tardives, chutes (STOPP K2 ; Beers 2023)", gravite: "EVITER" },
+        { terme: "domperidone", raison: "Allongement QT, torsades de pointes, mort subite (ANSM 2014). Max 10 mg x3/j, 1 sem, ECG préalable", gravite: "PRUDENCE" },
+        { terme: "cimetidine", raison: "Anticholinergique central + inhibiteur CYP majeur — confusion, gynécomastie, interactions multiples (STOPP B6 ; Beers 2023)", gravite: "EVITER" },
+        { terme: "ranitidine", raison: "Médicament RETIRÉ du marché (NDMA potentielle, ANSM 2020)", gravite: "RETIRE — ne plus prescrire" },
+        { terme: "atazanavir", raison: "IPP CONTRE-INDIQUÉ (absorption pH-dépendante)", gravite: "CONTRE-INDICATION si IPP associé" },
+        { terme: "rilpivirine", raison: "IPP contre-indiqué (↓ absorption)", gravite: "CONTRE-INDICATION si IPP associé" }
     ]
 };
 
