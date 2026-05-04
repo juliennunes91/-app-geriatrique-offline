@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.73 (Phase 18 — corrections structurelles automatiques : 12 pathologies manquantes (PAT_041-052), MTX bio_cible enrichi (NFS complète), affinage script audit INR contextuel)
+// Service Worker - GeriaAssist v0.74 (Phase 19+20 — anticoagulants Lot 1+2 : doublon ticagrelore supprimé, Dipyridamole INR/QTc retirés, AOD bio_cible enrichi (transaminases), AVK calcémie ajoutée, HNF créée + BIO_045 TCA, antidotes harmonisés, HAS-BLED ≥3 dans notes)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260504-phase18-struct-fixes';
-const CACHE_NAME = `geriaassist-v73-${BUILD_ID}`;
+const BUILD_ID = '20260504-phase20-anticoag-deepreview';
+const CACHE_NAME = `geriaassist-v74-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

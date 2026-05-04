@@ -307,6 +307,13 @@ const MASTER_DB = {
             "NOM_STANDARD": "Digoxinémie",
             "UNITE": "ng/mL",
             "SYNONYMES": "Digoxinemie, Digoxine plasmatique, Concentration digoxine, Taux digoxine"
+        },
+        "BIO_045": {
+            "ID_BIO": "BIO_045",
+            "LOINC": "14979-9",
+            "NOM_STANDARD": "TCA (Temps de Céphaline Activée)",
+            "UNITE": "ratio (vs témoin)",
+            "SYNONYMES": "TCA, aPTT, APTT, Heparine non fractionnee, HNF, Cephaline, Hemostase"
         }
     },
     "PATHOLOGIES": {
@@ -1510,21 +1517,22 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
                     "ddi_interact_v2": [],
-                    "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine",
-                    "suivi_periodique": "INR (tous les 8 a 28 jours selon stabilit  objectif 2-3 ou 2,5-3,5) | NFS (annuelle) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Saignement → INR urgente + Hb | INR > 5 → adaptation dose ou antidote (Vit K)",
+                    "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine | Calcémie (baseline ostéoporose)",
+                    "suivi_periodique": "INR (tous les 8 à 28 jours selon stabilité, objectif 2-3 ou 2,5-3,5) | NFS (annuelle) | Bilan hépatique (annuel) | Calcémie + DMO si AVK long cours (> 12 mois)",
+                    "alerte_clinique": "Saignement → INR urgente + Hb. ANTIDOTE : vitamine K1 (Konakion) 1-5 mg PO si INR 5-10 sans saignement ; PPSB (Octaplex/Confidex 25-50 UI/kg) IV + vitamine K1 5-10 mg IV si saignement majeur ou INR > 8. HAS-BLED ≥ 3 → réévaluer indication, contrôle INR rapproché.",
                     "bio_cible": [
                               "BIO_030",
                               "BIO_009",
                               "BIO_013",
                               "BIO_014",
-                              "BIO_003"
+                              "BIO_003",
+                              "BIO_005"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "AVK demi-vie courte (Sintrom) : INR cible selon indication (2.0-3.0 FA, 2.5-3.5 valve mécanique). Interactions multiples (alimentation, médicaments). Surveillance INR. Antidote vit K. Préférer AOD chez âgé (sauf valve méca, sténose mitrale, FRAIL-AF si déjà équilibré sous AVK).",
+                    "notes_cliniques": "AVK demi-vie courte (Sintrom 8-11 h) : INR cible selon indication (2.0-3.0 FA, 2.5-3.5 valve mécanique). Interactions multiples (alimentation/médicaments). Surveillance INR. ANTIDOTE : vitamine K1 (Konakion) ± PPSB. Risque ostéoporotique au long cours (↓ DMO via inhibition carboxylation ostéocalcine — Veronese 2015) → calcémie + DMO périodique chez âgé. HAS-BLED ≥ 3 → réévaluer rapport bénéfice/risque, AOD à privilégier sauf valve méca/sténose mitrale/FRAIL-AF déjà équilibré.",
                     "source": "RCP Sintrom ; HAS 2008 AVK"
           },
           {
@@ -2616,7 +2624,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Réduction FA : 2 critères sur 3 (âge/poids/créatinine)",
+                    "notes_cliniques": "Réduction FA : 2 critères sur 3 (âge ≥ 80 ans / poids ≤ 60 kg / créatinine ≥ 133 µmol/L) → 2.5 mg x2/j. AOD préférentiel chez âgé fragile (ELDERCARE-AF, ARISTOTLE). HAS-BLED ≥ 3 → réévaluer indication, ne pas réduire la dose pour saigner moins (sous-dosage = perte d'efficacité sans bénéfice hémorragique).",
                     "source": "RCP Eliquis ; HAS 2023 ; ESC FA 2020"
           },
           {
@@ -7009,7 +7017,7 @@ const MASTER_DB = {
                     ],
                     "suivi_initial": "Créatinine/DFG (CI si DFG<30) | NFS | Hb/Ht | Bilan hépatique",
                     "suivi_periodique": "Créatinine (annuelle + avant chirurgie) | NFS (annuelle)",
-                    "alerte_clinique": "Saignement → Hb urgente | Insuffisance renale aigue → créatinine urgente (elimination renale exclusive 80%)",
+                    "alerte_clinique": "Saignement majeur → NFS + Hb + créatinine urgentes ; ANTIDOTE : idarucizumab (Praxbind) 5 g IV (2×2.5 g en 5-10 min) si hémorragie engageant le pronostic vital ou geste invasif urgent — réversion en quelques minutes. Insuffisance rénale aiguë → créatinine urgente (élimination rénale exclusive 80%) + adapter dose ou suspendre. Hémodialyse possible (60% épuration en 4 h) si pas de Praxbind disponible.",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -7022,7 +7030,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Élimination rénale exclusive (80 %). Ajustement DFG obligatoire. Surveillance hépatique annuelle (RCP Pradaxa : ALT/AST — hépatotoxicité rare mais documentée).",
+                    "notes_cliniques": "Élimination rénale exclusive (80 %). Ajustement DFG obligatoire. Surveillance hépatique annuelle (RCP Pradaxa : ALT/AST — hépatotoxicité rare). HAS-BLED ≥ 3 → préférer 110 mg x2/j (RE-LY sous-groupe). Vérapamil concomitant → 110 mg x2/j. ANTIDOTE : idarucizumab (Praxbind, seul AOD avec antidote spécifique). Hémodialyse possible.",
                     "source": "RCP Pradaxa ; HAS 2023 ; ESC FA 2020"
           },
           {
@@ -8502,7 +8510,7 @@ const MASTER_DB = {
                     "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG (CI si DFG<15) | NFS | Hb/Ht",
                     "suivi_periodique": "Créatinine (annuelle) | NFS (annuelle)",
-                    "alerte_clinique": "Saignement → Hb urgente | Reduction dose obligatoire si DFG 15-50 ou poids < 60 kg",
+                    "alerte_clinique": "Saignement majeur → NFS + Hb + créatinine urgentes ; ANTIDOTE : andexanet alfa (Ondexxya) IV bolus + perfusion 2 h si hémorragie engageant le pronostic vital ; concentrés de complexe prothrombique (PPSB 50 UI/kg) en relais. Réduction dose obligatoire si DFG 15-50 ou poids < 60 kg ou inhibiteur P-gp puissant.",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -8515,7 +8523,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Réduction à 30 mg/j si DFG 15–50 ou poids ≤60 kg ou inhibiteur P-gp puissant. Surveillance hépatique annuelle (RCP Lixiana : ALT/AST).",
+                    "notes_cliniques": "Réduction à 30 mg/j si DFG 15-50 ou poids ≤ 60 kg ou inhibiteur P-gp puissant (ciclosporine, dronédarone, érythromycine, kétoconazole). Surveillance hépatique annuelle (RCP Lixiana : ALT/AST). HAS-BLED ≥ 3 → réévaluer indication, ne pas sous-doser (perte d'efficacité sans bénéfice hémorragique).",
                     "source": "RCP Savaysa ; HAS 2023 ; ESC FA 2020"
           },
           {
@@ -9536,22 +9544,23 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
                     "ddi_interact_v2": [],
-                    "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine",
-                    "suivi_periodique": "INR (tous les 8 a 28 jours selon stabilit) | NFS (annuelle)",
-                    "alerte_clinique": "Saignement → INR + Hb urgente | INR > 5 | Allergie (NFS + eosinophiles)",
+                    "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine | Calcémie (baseline ostéoporose)",
+                    "suivi_periodique": "INR (tous les 8 à 28 jours selon stabilité) | NFS (annuelle) | Bilan hépatique (annuel) | Calcémie + DMO si AVK long cours (> 12 mois)",
+                    "alerte_clinique": "Saignement → INR + Hb urgente. ANTIDOTE : vitamine K1 (Konakion) 1-5 mg PO si INR 5-10 sans saignement ; PPSB (Octaplex/Confidex 25-50 UI/kg) IV + vitamine K1 5-10 mg IV si saignement majeur ou INR > 8. Allergie (FIÈVRE + RASH + EOSINOPHILIE) → ARRÊT IMMÉDIAT (réactions immuno-allergiques cutanées et hépato-rénales graves spécifiques fluindione, ANSM 2018 — INDICATION RESTREINTE depuis 2018). HAS-BLED ≥ 3 → réévaluer indication.",
                     "bio_cible": [
                               "BIO_030",
                               "BIO_009",
                               "BIO_013",
                               "BIO_014",
-                              "BIO_003"
+                              "BIO_003",
+                              "BIO_005"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Seul indanedione disponible en France",
-                    "source": "RCP Previscan ; HAS 2008 AVK"
+                    "notes_cliniques": "Seul indanedione disponible en France. INDICATION RESTREINTE depuis ANSM 2018 (relais d'un autre AVK uniquement, pas en initiation) — préférer warfarine ou AOD. Réactions immuno-allergiques graves possibles (rein, foie, peau) à dépister à 6 mois. ANTIDOTE : vitamine K1 ± PPSB. Risque ostéoporotique au long cours (↓ DMO). HAS-BLED ≥ 3 → réévaluer.",
+                    "source": "RCP Previscan ; HAS 2008 AVK ; ANSM 2018"
           },
           {
                     "dci": "Fluoxetine",
@@ -16372,7 +16381,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "À prendre au cours du repas (biodisponibilité ++)",
+                    "notes_cliniques": "À prendre au cours du repas (biodisponibilité ++ pour 15-20 mg). Réduction FA : 15 mg/j si DFG 15-49. ATTENTION : dose vasculaire 2.5 mg x2/j (COMPASS/VOYAGER-PAD) ≠ dose anticoagulante 20 mg/j en FA (ne pas confondre). HAS-BLED ≥ 3 → réévaluer, ne pas sous-doser (perte d'efficacité sans gain hémorragique).",
                     "source": "RCP Xarelto ; HAS 2023 ; ESC FA 2020"
           },
           {
@@ -19406,21 +19415,22 @@ const MASTER_DB = {
                                         "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine",
-                    "suivi_periodique": "INR (tous les 8 a 28 jours selon stabilit) | NFS (annuelle) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Saignement → INR + Hb urgente | INR > 5 → adaptation ou antidote",
+                    "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine | Calcémie (baseline ostéoporose)",
+                    "suivi_periodique": "INR (tous les 8 à 28 jours selon stabilité) | NFS (annuelle) | Bilan hépatique (annuel) | Calcémie + DMO si AVK long cours (> 12 mois)",
+                    "alerte_clinique": "Saignement → INR + Hb urgente. ANTIDOTE : vitamine K1 (Konakion) 1-5 mg PO si INR 5-10 sans saignement ; PPSB (Octaplex/Confidex 25-50 UI/kg) IV + vitamine K1 5-10 mg IV si saignement majeur ou INR > 8. HAS-BLED ≥ 3 → réévaluer indication, contrôle INR rapproché.",
                     "bio_cible": [
                               "BIO_030",
                               "BIO_009",
                               "BIO_013",
                               "BIO_014",
-                              "BIO_003"
+                              "BIO_003",
+                              "BIO_005"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Référence internationale. Antidote : vitamine K.",
+                    "notes_cliniques": "AVK demi-vie longue (Coumadine 36-42 h) — référence internationale. INR cible selon indication (2.0-3.0 FA, 2.5-3.5 valve mécanique). ANTIDOTE : vitamine K1 (Konakion) ± PPSB. Risque ostéoporotique au long cours (↓ DMO via inhibition carboxylation ostéocalcine — Veronese 2015) → calcémie + DMO périodique chez âgé. HAS-BLED ≥ 3 → réévaluer rapport bénéfice/risque, AOD à privilégier sauf valve méca/sténose mitrale/FRAIL-AF.",
                     "source": "RCP Coumadine ; HAS 2008 AVK ; ESC FA 2020"
           },
           {
@@ -20898,7 +20908,7 @@ const MASTER_DB = {
                     ],
                     "suivi_initial": "NFS-Plaquettes | Créatinine/DFG",
                     "suivi_periodique": "Plaquettes 2x/sem (J5-J21) | Anti-Xa si indication | Créatinine",
-                    "alerte_clinique": "TIH (thrombocytopénie) → arrêt immédiat | Saignement actif",
+                    "alerte_clinique": "TIH (chute plaquettes > 50% ou < 100 G/L à J5-J21) → ARRÊT IMMÉDIAT, switch vers anticoagulant non-héparinique. Saignement majeur → NFS + Hb urgentes ; ANTIDOTE : sulfate de protamine (1 mg neutralise ~100 UI anti-Xa de la dernière heure ; efficacité partielle ~60% — moindre encore pour daltéparine que pour énoxaparine).",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_010",
@@ -20908,7 +20918,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "HBPM : NE PAS surveiller par INR (INR = AVK uniquement) ni TP/TCA (peu sensibles à l'effet anti-Xa des HBPM). Si monitorage nécessaire (DFG limite, poids extrêmes, grossesse), doser l'activité anti-Xa 4 h après injection. CI curatif si DFG < 30 — préférer tinzaparine (utilisable jusqu'à DFG 20). Surveillance plaquettes (TIH J5-J21).",
+                    "notes_cliniques": "HBPM : NE PAS surveiller par INR (INR = AVK uniquement) ni TP/TCA (peu sensibles à l'effet anti-Xa des HBPM). Si monitorage nécessaire (DFG limite, poids extrêmes, grossesse), doser l'activité anti-Xa 4 h après injection. CI curatif si DFG < 30 — préférer tinzaparine (utilisable jusqu'à DFG 20). Surveillance plaquettes (TIH J5-J21). ANTIDOTE : protamine (efficacité partielle).",
                     "source": "RCP Fragmine | ESC 2024"
           },
           {
@@ -21074,7 +21084,7 @@ const MASTER_DB = {
                     ],
                     "suivi_initial": "NFS-Plaquettes | Créatinine/DFG",
                     "suivi_periodique": "Plaquettes 2x/sem (J5-J21) | Anti-Xa si IRC | Créatinine",
-                    "alerte_clinique": "TIH → arrêt immédiat | Saignement | Hématome spinal si péridural",
+                    "alerte_clinique": "TIH (chute plaquettes > 50% ou < 100 G/L à J5-J21) → ARRÊT IMMÉDIAT, switch vers anticoagulant non-héparinique (argatroban, danaparoïde, fondaparinux). Saignement majeur → NFS + Hb urgentes ; ANTIDOTE : sulfate de protamine (1 mg neutralise ~100 UI anti-Xa de la dernière heure ; efficacité partielle ~60%, décroît avec délai d'injection HBPM) — max 50 mg par dose. Hématome spinal si péridural.",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_010",
@@ -21084,7 +21094,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "HBPM : NE PAS surveiller par INR (INR = AVK uniquement) ni TP/TCA (peu sensibles à l'effet anti-Xa des HBPM). Si monitorage nécessaire (DFG limite 30-15, poids extrêmes < 50 ou > 100 kg, grossesse), doser l'activité anti-Xa 4 h après injection (cible 0.5-1.0 UI/mL en curatif). Adapter dose selon DFG (1 mg/kg/j en curatif si DFG 15-30 au lieu de 2x/j ; CI si DFG < 15). Surveillance plaquettes (TIH).",
+                    "notes_cliniques": "HBPM : NE PAS surveiller par INR (INR = AVK uniquement) ni TP/TCA (peu sensibles à l'effet anti-Xa des HBPM). Si monitorage nécessaire (DFG limite 30-15, poids extrêmes < 50 ou > 100 kg, grossesse), doser l'activité anti-Xa 4 h après injection (cible 0.5-1.0 UI/mL en curatif). Adapter dose selon DFG (1 mg/kg/j en curatif si DFG 15-30 au lieu de 2x/j ; CI si DFG < 15). Surveillance plaquettes (TIH J5-J21). ANTIDOTE : protamine (efficacité partielle ~60%).",
                     "source": "RCP Lovenox | ESC 2024"
           },
           {
@@ -21158,6 +21168,74 @@ const MASTER_DB = {
                     "source": "RCP Triflucan | ESCMID 2022"
           },
           {
+                    "dci": "Heparine sodique",
+                    "princeps": "Heparine Choay (IV) / Calciparine (SC)",
+                    "classe": "HNF (Heparine Non Fractionnee)",
+                    "poso_hab": "Curatif IV : bolus 80 UI/kg puis perfusion continue 18 UI/kg/h ajustee TCA cible 1.5-2.5x temoin (anti-Xa cible 0.3-0.7 UI/mL alternative). Curatif SC (Calciparine) : 250 UI/kg x2/j ajuste TCA. Preventif SC : 5000 UI x2-3/j (dose fixe, pas de monitorage TCA).",
+                    "poso_ger": "Identique. Anti-Xa preferable au TCA si > 75 ans (allongement TCA basal). Surveillance plaquettes (TIH) imperative.",
+                    "poso_ren": "PAS d'ajustement renal (elimination hepatique + reticulo-endotheliale, pas renale). HNF privilegie aux HBPM si IRC severe (DFG < 30) ou hemodialyse.",
+                    "acb": 0,
+                    "cia": 0,
+                    "bhe": "0",
+                    "qt_risque": "",
+                    "albumine": "",
+                    "ddi_interact": "AINS, Antiagregants, AVK (risque hemorragique)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "piroxicam",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "meloxicam"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiagregants",
+                                        "dcis": [
+                                                  "aspirine",
+                                                  "clopidogrel",
+                                                  "ticagrelor",
+                                                  "prasugrel",
+                                                  "ticlopidine"
+                                        ],
+                                        "commentaire": "",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "acenocoumarol",
+                                                  "fluindione"
+                                        ],
+                                        "commentaire": "risque hemorragique en relais",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "NFS-Plaquettes | Creatinine/DFG | TCA si curatif IV | Bilan hepatique | Bilan coagulation (TP)",
+                    "suivi_periodique": "TCA toutes les 6 h en initiation IV puis 1x/j a l'equilibre (cible 1.5-2.5x temoin) | Plaquettes 2x/sem (J5-J21) pour TIH | Anti-Xa alternative au TCA (cible 0.3-0.7 UI/mL en curatif) | PAS de TCA en preventif SC",
+                    "alerte_clinique": "TIH (chute plaquettes > 50% ou < 100 G/L a J5-J21) → ARRET IMMEDIAT, switch vers anticoagulant non-heparinique (argatroban, danaparoide, fondaparinux). Saignement majeur → NFS + Hb urgentes ; ANTIDOTE : sulfate de protamine (1 mg neutralise 100 UI HNF de la derniere heure ; reversion COMPLETE et rapide ~5 min — contrairement aux HBPM ou la reversion est partielle). Hematome spinal si peridural.",
+                    "bio_cible": [
+                              "BIO_009",
+                              "BIO_010",
+                              "BIO_003",
+                              "BIO_045"
+                    ],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "HNF : reference en reanimation/hospitalier (perfusion IV continue + TCA toutes les 6 h). Avantages vs HBPM : demi-vie courte (1-2 h IV → arret rapide en cas de geste invasif), antagonisation COMPLETE par protamine, pas d'accumulation en IRC. Inconvenients : monitorage rapproche (TCA 6h), TIH 1-3% (vs <1% HBPM), osteoporose si > 4 mois. SURVEILLANCE TCA UNIQUEMENT EN CURATIF IV (cible 1.5-2.5x temoin) — PAS en preventif SC ou Calciparine prophylactique a dose fixe. Anti-Xa alternative recommandee si TCA basal allonge (lupique, cirrhose, > 75 ans). Privilegier HNF aux HBPM si DFG < 30 ou hemodialyse.",
+                    "source": "RCP Heparine Choay ; RCP Calciparine ; ESC 2024 ; HAS"
+          },
+          {
                     "dci": "Fondaparinux",
                     "princeps": "Arixtra",
                     "classe": "Anticoagulant (inhibiteur sélectif facteur Xa)",
@@ -21201,7 +21279,7 @@ const MASTER_DB = {
                     ],
                     "suivi_initial": "NFS-Plaquettes | Créatinine/DFG",
                     "suivi_periodique": "Créatinine régulière | NFS si usage prolongé",
-                    "alerte_clinique": "Saignement | Pas de TIH (avantage vs HBPM)",
+                    "alerte_clinique": "Saignement majeur → NFS + Hb + créatinine urgentes. PAS d'ANTIDOTE spécifique (protamine inactif ; andexanet alfa hors AMM mais utilisé en sauvetage). En urgence : arrêt + transfusion + facteur VII activé recombinant (rFVIIa, Novoseven) hors AMM si saignement vital. Avantage vs HBPM : pas de TIH.",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_003"
@@ -21210,7 +21288,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Inhibiteur sélectif Xa SC : alternative HBPM. Pas de TIH. CI si DFG < 20 (curatif) ou < 30 (prophylactique). Surveillance plaquettes possible. Pas d'antidote spécifique.",
+                    "notes_cliniques": "Inhibiteur sélectif Xa SC : alternative HBPM. PAS de TIH (mécanisme différent — pentasaccharide synthétique). CI si DFG < 20 (curatif) ou < 30 (prophylactique). Surveillance plaquettes possible mais non systématique. PAS d'ANTIDOTE spécifique (rFVIIa hors AMM en dernier recours).",
                     "source": "RCP Arixtra | ESC 2024"
           },
           {
@@ -21834,7 +21912,7 @@ const MASTER_DB = {
                     ],
                     "suivi_initial": "NFS-Plaquettes | Créatinine/DFG",
                     "suivi_periodique": "Plaquettes 2x/sem (J5-J21) | Anti-Xa si IRC ou > 75 ans",
-                    "alerte_clinique": "TIH → arrêt immédiat | Avantage: utilisable si DFG 20-30",
+                    "alerte_clinique": "TIH (chute plaquettes > 50% ou < 100 G/L à J5-J21) → ARRÊT IMMÉDIAT, switch vers anticoagulant non-héparinique. Saignement majeur → NFS + Hb urgentes ; ANTIDOTE : sulfate de protamine (1 mg neutralise ~100 UI anti-Xa, efficacité partielle ~60-80% — Tinzaparine = HBPM la mieux antagonisée par protamine). Avantage : utilisable si DFG 20-30.",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_010",
@@ -21844,7 +21922,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "HBPM : NE PAS surveiller par INR (INR = AVK uniquement) ni TP/TCA (peu sensibles à l'effet anti-Xa des HBPM). Si monitorage nécessaire (DFG limite, poids extrêmes, grossesse, âge > 75 ans), doser l'activité anti-Xa 4 h après injection. Tinzaparine = seule HBPM utilisable en curatif si DFG 20-30 (avec anti-Xa obligatoire). Surveillance plaquettes (TIH J5-J21).",
+                    "notes_cliniques": "HBPM : NE PAS surveiller par INR (INR = AVK uniquement) ni TP/TCA (peu sensibles à l'effet anti-Xa des HBPM). Si monitorage nécessaire (DFG limite, poids extrêmes, grossesse, âge > 75 ans), doser l'activité anti-Xa 4 h après injection. Tinzaparine = seule HBPM utilisable en curatif si DFG 20-30 (avec anti-Xa obligatoire). Surveillance plaquettes (TIH J5-J21). ANTIDOTE : protamine (efficacité ~60-80%, meilleure que énoxaparine).",
                     "source": "RCP Innohep | ESC 2024"
           },
           {
