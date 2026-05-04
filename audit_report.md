@@ -1,8 +1,8 @@
 # Audit structurel — base GeriaAssist
-Date : 2026-05-04T13:52:59.593Z
+Date : 2026-05-04T13:59:37.564Z
 
 ## Synthèse
-- Médicaments scannés : **556**
+- Médicaments scannés : **555**
 - Biologies : **44**
 - Pathologies : **54** (master) / **54** (rules)
 - Syndromes : **51**
@@ -78,11 +78,11 @@ Date : 2026-05-04T13:52:59.593Z
    - Texte mentionne QT/QTc mais BIO_031 absent
 33. [INF] **[STR-MED-COH-QT]** MED[386] Sertraline
    - Texte mentionne QT/QTc mais BIO_031 absent
-34. [INF] **[STR-MED-COH-QT]** MED[483] Desvenlafaxine
+34. [INF] **[STR-MED-COH-QT]** MED[482] Desvenlafaxine
    - Texte mentionne QT/QTc mais BIO_031 absent
-35. [INF] **[STR-MED-COH-QT]** MED[553] Pimavansérine
+35. [INF] **[STR-MED-COH-QT]** MED[552] Pimavansérine
    - Texte mentionne QT/QTc mais BIO_031 absent
-36. [INF] **[STR-MED-COH-QT]** MED[554] Vortioxétine
+36. [INF] **[STR-MED-COH-QT]** MED[553] Vortioxétine
    - Texte mentionne QT/QTc mais BIO_031 absent
 37. [INF] **[STR-MED-POSREN]** MED[7] Alfacalcidol
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Adaptation necessaire"
@@ -176,25 +176,25 @@ Date : 2026-05-04T13:52:59.593Z
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Adapter si IRC severe (valproate libre augmente si IRC)"
 82. [INF] **[STR-MED-POSREN]** MED[456] Zuclopenthixol
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence"
-83. [INF] **[STR-MED-POSREN]** MED[484] Dosulpine
+83. [INF] **[STR-MED-POSREN]** MED[483] Dosulpine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC sévère."
-84. [INF] **[STR-MED-POSREN]** MED[520] Rilmenidine
+84. [INF] **[STR-MED-POSREN]** MED[519] Rilmenidine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC (elimination renale partielle)"
-85. [INF] **[STR-MED-POSREN]** MED[526] Phenytoine
+85. [INF] **[STR-MED-POSREN]** MED[525] Phenytoine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Ajuster selon phenytoinemie libre si IRC (liaison albumine diminuee)"
-86. [INF] **[STR-MED-POSREN]** MED[527] Piribedil
+86. [INF] **[STR-MED-POSREN]** MED[526] Piribedil
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC severe"
-87. [INF] **[STR-MED-POSREN]** MED[530] Pethidine
+87. [INF] **[STR-MED-POSREN]** MED[529] Pethidine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "CI si IRC (accumulation norpethidine neurotoxique)"
-88. [INF] **[STR-MED-POSREN]** MED[531] Meprobamate
+88. [INF] **[STR-MED-POSREN]** MED[530] Meprobamate
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Sans objet (retire)"
-89. [INF] **[STR-MED-POSREN]** MED[541] Betahistine
+89. [INF] **[STR-MED-POSREN]** MED[540] Betahistine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC"
-90. [INF] **[STR-MED-POSREN]** MED[542] Naftidrofuryl
+90. [INF] **[STR-MED-POSREN]** MED[541] Naftidrofuryl
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC"
-91. [INF] **[STR-MED-POSREN]** MED[543] Nicergoline
+91. [INF] **[STR-MED-POSREN]** MED[542] Nicergoline
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC"
-92. [INF] **[STR-MED-POSREN]** MED[546] Midodrine
+92. [INF] **[STR-MED-POSREN]** MED[545] Midodrine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC (accumulation metabolite actif)"
 
 ## PATH (1)

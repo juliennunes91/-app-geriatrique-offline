@@ -7014,13 +7014,15 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_004",
                               "BIO_009",
-                              "BIO_010"
+                              "BIO_010",
+                              "BIO_013",
+                              "BIO_014"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Élimination rénale exclusive. Ajustement DFG obligatoire.",
+                    "notes_cliniques": "Élimination rénale exclusive (80 %). Ajustement DFG obligatoire. Surveillance hépatique annuelle (RCP Pradaxa : ALT/AST — hépatotoxicité rare mais documentée).",
                     "source": "RCP Pradaxa ; HAS 2023 ; ESC FA 2020"
           },
           {
@@ -7987,15 +7989,13 @@ const MASTER_DB = {
                                         "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "ECG | Bilan hépatique | Bilan coagulation (INR si AVK) | NFS",
-                    "suivi_periodique": "ECG (annuel) | Bilan hépatique (annuel) | INR si AVK (renforce efficacite) | NFS (annuelle)",
-                    "alerte_clinique": "Syndrome coronarien (bradycardie + hypotension si test pharmacologique) → EC urgente | Cephalees (frequentes) | Interaction AVK → INR | Saignement",
+                    "suivi_initial": "Bilan hépatique | NFS",
+                    "suivi_periodique": "Bilan hépatique (annuel) | NFS (annuelle) | INR si AVK associé (potentialisation) — ne s'applique PAS au dipyridamole seul",
+                    "alerte_clinique": "Syndrome coronarien (bradycardie + hypotension si test pharmacologique IV) → ECG urgente | Céphalées (fréquentes) | Saignement (effet antiagrégant)",
                     "bio_cible": [
-                              "BIO_031",
-                              "BIO_030",
+                              "BIO_009",
                               "BIO_013",
-                              "BIO_014",
-                              "BIO_009"
+                              "BIO_014"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -8507,13 +8507,15 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_004",
                               "BIO_009",
-                              "BIO_010"
+                              "BIO_010",
+                              "BIO_013",
+                              "BIO_014"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Réduction à 30 mg/j si DFG 15–50 ou poids ≤60 kg",
+                    "notes_cliniques": "Réduction à 30 mg/j si DFG 15–50 ou poids ≤60 kg ou inhibiteur P-gp puissant. Surveillance hépatique annuelle (RCP Lixiana : ALT/AST).",
                     "source": "RCP Savaysa ; HAS 2023 ; ESC FA 2020"
           },
           {
@@ -17902,6 +17904,7 @@ const MASTER_DB = {
                     "suivi_periodique": "NFS-plaquettes (toutes les 2 semaines les 3 premiers mois  OBLIGATOIRE) | Bilan hépatique (mensuel les 3 premiers mois)",
                     "alerte_clinique": "Thrombopenie → arret immediat | PTT → urgence hematologique | Neutropenie → arret",
                     "bio_cible": [
+                              "BIO_009",
                               "BIO_010",
                               "BIO_011",
                               "BIO_013",
@@ -17911,7 +17914,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Antiagrégant P2Y12 ancien : à ÉVITER (Beers 2023 — neutropénie, thrombopénie, PTT). Remplacé par clopidogrel.",
+                    "notes_cliniques": "Antiagrégant P2Y12 ancien : à ÉVITER (Beers 2023 — neutropénie, thrombopénie, PTT). Remplacé par clopidogrel. Surveillance Hb (saignement) + NFS rapprochée à l'initiation (NFS bimensuelle 3 mois — neutropénie/thrombopénie/PTT).",
                     "source": "RCP Ticlid ; ANSM"
           },
           {
@@ -19886,31 +19889,6 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "notes_cliniques": "Glinide (répaglinide) : sécrétagogue d'insuline rapide. Hypoglycémies prandiales, peu d'expérience chez âgé. Préférer iDPP4 ou iSGLT2.",
                     "source": "RCP Glufast | HAS DT2 2023"
-          },
-          {
-                    "dci": "ticagrelore",
-                    "princeps": "Brilique",
-                    "classe": "Antiagregants",
-                    "poso_hab": "600 mg puis 60-90 mg x2/j",
-                    "poso_ger": "Identique",
-                    "poso_ren": "Pas d'ajustement",
-                    "acb": 0,
-                    "cia": 0,
-                    "bhe": "",
-                    "albumine": "> 99 %",
-                    "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "",
-                    "suivi_periodique": "",
-                    "alerte_clinique": "",
-                    "bio_cible": [],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Antiagrégant P2Y12 réversible : alternative au clopidogrel post-SCA. 2 prises/j. Dyspnée fréquente, saignements, bradycardie. Pas de pré-test génétique requis (vs clopidogrel CYP2C19).",
-                    "source": "RCP Brilique | ESC 2024"
           },
           {
                     "dci": "Mianserine",
