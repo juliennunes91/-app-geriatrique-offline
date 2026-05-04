@@ -271,10 +271,20 @@ MASTER_DB.MEDICAMENTS.forEach((m, i) => {
 
     // 3.5 COHÉRENCE TEXTUELLE notes/suivi ↔ bio_cible
     const txt = (m.notes_cliniques || '') + ' || ' + (m.suivi_initial || '') + ' || ' + (m.suivi_periodique || '') + ' || ' + (m.alerte_clinique || '');
-    if (/\bINR\b/i.test(txt) && !bc.includes('BIO_030')
+    // Ne flag QUE les mentions INR comme surveillance auto (≠ DDI avec AVK).
+    // On découpe par phrases (séparateurs . ; |) puis on garde les phrases contenant INR
+    // qui ne sont PAS des avertissements de DDI avec AVK (relais, interaction, ↑, potentiation).
+    const inrPhrases = (txt.match(/[^.;|]*\bINR\b[^.;|]*/gi) || []);
+    const inrSelfMonitoring = inrPhrases.some(p =>
+        !/\bAVK\b/i.test(p)
+        && !/\brelais\b/i.test(p)
+        && !/\binteraction/i.test(p)
+        && !/[↑↓]\s*INR/i.test(p)
+        && !/potentiat/i.test(p));
+    if (inrSelfMonitoring && !bc.includes('BIO_030')
         && !cHas(cl, 'HBPM', 'heparine de bas poids')) {
         add('MED', 'warning', 'STR-MED-COH-INR',
-            `Texte mentionne "INR" mais BIO_030 absent de bio_cible`, ctx);
+            `Texte mentionne "INR" comme surveillance propre mais BIO_030 absent de bio_cible`, ctx);
     }
     if (/\bCPK\b|rhabdomyolyse|myalgi/i.test(txt) && !bc.includes('BIO_018')) {
         add('MED', 'info', 'STR-MED-COH-CPK',

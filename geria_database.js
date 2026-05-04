@@ -683,6 +683,114 @@ const MASTER_DB = {
             "BIO_SURVEILLANCE": "",
             "SYND_RISQUE": ""
         },
+        "PAT_041": {
+            "ID_PATHO": "PAT_041",
+            "CIM_10": "F01",
+            "NOM_STANDARD": "Démence vasculaire",
+            "CATEGORIE": "Neurologie",
+            "SYNONYMES": "DV, DEMENCE VASCULAIRE, Démence multi-infarctus, Vascular dementia, VaD",
+            "BIO_SURVEILLANCE": "",
+            "SYND_RISQUE": "SYND_013, SYND_027, SYND_009"
+        },
+        "PAT_042": {
+            "ID_PATHO": "PAT_042",
+            "CIM_10": "F00.2",
+            "NOM_STANDARD": "Démence mixte (Alzheimer + vasculaire)",
+            "CATEGORIE": "Neurologie",
+            "SYNONYMES": "DEMENCE MIXTE, Mixed dementia, Alzheimer vasculaire",
+            "BIO_SURVEILLANCE": "",
+            "SYND_RISQUE": "SYND_013, SYND_009"
+        },
+        "PAT_043": {
+            "ID_PATHO": "PAT_043",
+            "CIM_10": "F06.7",
+            "NOM_STANDARD": "Trouble neurocognitif léger (MCI) / MBI",
+            "CATEGORIE": "Neurologie",
+            "SYNONYMES": "MCI, MBI, Mild Cognitive Impairment, Mild Behavioral Impairment, Trouble cognitif léger",
+            "BIO_SURVEILLANCE": "",
+            "SYND_RISQUE": "SYND_013"
+        },
+        "PAT_044": {
+            "ID_PATHO": "PAT_044",
+            "CIM_10": "F41.1",
+            "NOM_STANDARD": "Trouble anxieux généralisé (TAG) du sujet âgé",
+            "CATEGORIE": "Psychiatrie",
+            "SYNONYMES": "TAG, ANXIETE, Trouble anxieux généralisé, Generalized Anxiety Disorder, GAD",
+            "BIO_SURVEILLANCE": "",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_045": {
+            "ID_PATHO": "PAT_045",
+            "CIM_10": "F22",
+            "NOM_STANDARD": "Psychose tardive (VLOSLP) / schizophrénie tardive",
+            "CATEGORIE": "Psychiatrie",
+            "SYNONYMES": "VLOSLP, Very Late Onset Schizophrenia-Like Psychosis, Schizophrénie tardive, Psychose tardive",
+            "BIO_SURVEILLANCE": "",
+            "SYND_RISQUE": "SYND_013, SYND_004"
+        },
+        "PAT_046": {
+            "ID_PATHO": "PAT_046",
+            "CIM_10": "F31",
+            "NOM_STANDARD": "Trouble bipolaire du sujet âgé",
+            "CATEGORIE": "Psychiatrie",
+            "SYNONYMES": "BIPOLAIRE, BD, Trouble bipolaire, Maniaco-dépressif, PMD",
+            "BIO_SURVEILLANCE": "BIO_029, BIO_019, BIO_003",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_047": {
+            "ID_PATHO": "PAT_047",
+            "CIM_10": "F06.1",
+            "NOM_STANDARD": "Catatonie",
+            "CATEGORIE": "Psychiatrie",
+            "SYNONYMES": "CATATONIE, Catatonia, Stupeur catatonique",
+            "BIO_SURVEILLANCE": "BIO_018, BIO_009",
+            "SYND_RISQUE": "SYND_013, SYND_033"
+        },
+        "PAT_048": {
+            "ID_PATHO": "PAT_048",
+            "CIM_10": "F05",
+            "NOM_STANDARD": "Syndrome confusionnel (delirium)",
+            "CATEGORIE": "Psychiatrie",
+            "SYNONYMES": "CONFUSION, DELIRIUM, Syndrome confusionnel, Etat confusionnel aigu",
+            "BIO_SURVEILLANCE": "BIO_001, BIO_002, BIO_003, BIO_009, BIO_024",
+            "SYND_RISQUE": "SYND_013, SYND_009"
+        },
+        "PAT_049": {
+            "ID_PATHO": "PAT_049",
+            "CIM_10": "G47.0",
+            "NOM_STANDARD": "Insomnie chronique du sujet âgé",
+            "CATEGORIE": "Sommeil",
+            "SYNONYMES": "INSOMNIE CHRONIQUE, Trouble du sommeil chronique, Chronic insomnia",
+            "BIO_SURVEILLANCE": "",
+            "SYND_RISQUE": "SYND_013, SYND_009"
+        },
+        "PAT_050": {
+            "ID_PATHO": "PAT_050",
+            "CIM_10": "G47.52",
+            "NOM_STANDARD": "Trouble comportemental en sommeil paradoxal (TCSP)",
+            "CATEGORIE": "Sommeil",
+            "SYNONYMES": "TCSP, RBD, REM sleep Behavior Disorder, Trouble comportemental sommeil paradoxal",
+            "BIO_SURVEILLANCE": "",
+            "SYND_RISQUE": "SYND_009, SYND_013"
+        },
+        "PAT_051": {
+            "ID_PATHO": "PAT_051",
+            "CIM_10": "G25.81",
+            "NOM_STANDARD": "Syndrome des jambes sans repos (SJSR)",
+            "CATEGORIE": "Sommeil",
+            "SYNONYMES": "SJSR, RLS, Restless Legs Syndrome, Maladie de Willis-Ekbom",
+            "BIO_SURVEILLANCE": "BIO_020",
+            "SYND_RISQUE": "SYND_009"
+        },
+        "PAT_052": {
+            "ID_PATHO": "PAT_052",
+            "CIM_10": "G47.33",
+            "NOM_STANDARD": "Syndrome d'apnées obstructives du sommeil (SAOS)",
+            "CATEGORIE": "Sommeil",
+            "SYNONYMES": "SAOS, OSA, Apnée du sommeil, Obstructive Sleep Apnea, Apnées obstructives",
+            "BIO_SURVEILLANCE": "",
+            "SYND_RISQUE": "SYND_009, SYND_003"
+        },
         "PAT_053": {
             "ID_PATHO": "PAT_053",
             "CIM_10": "K21",
@@ -21270,6 +21378,9 @@ const MASTER_DB = {
                     "alerte_clinique": "PANCYTOPÉNIE (fièvre, angine, purpura, mucite, saignement) → NFS urgente, ARRÊT MTX, sauvetage par ACIDE FOLINIQUE (folinate de calcium) 15 mg/6h IV jusqu'à hématopoïèse + glucarpidase si insuffisance rénale + dosage MTX. Pneumopathie interstitielle (toux, dyspnée, fièvre) → arrêt + corticoïdes + scanner thoracique. Hépatotoxicité (cytolyse persistante > 3N) → arrêt + bilan hépatique. Stomatite/mucite → folinique + bain de bouche + arrêt. Toujours associer acide folique 5 mg/sem en prévention (sauf jour MTX).",
                     "bio_cible": [
                               "BIO_009",
+                              "BIO_010",
+                              "BIO_011",
+                              "BIO_012",
                               "BIO_013",
                               "BIO_014",
                               "BIO_003",
@@ -21279,7 +21390,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Immunosuppresseur PR/cancer : prise HEBDOMADAIRE (jamais quotidienne — surdosages mortels documentés ANSM). Acide folique 5 mg/sem prévention (jour différent). Adapter si DFG < 60, CI si DFG < 30. Surveillance NFS/BH/créat (Phase 9 P4.2). Interaction triméthoprime/AINS = pancytopénie.",
+                    "notes_cliniques": "Immunosuppresseur PR/cancer : prise HEBDOMADAIRE (jamais quotidienne — surdosages mortels documentés ANSM). Acide folique 5 mg/sem prévention (jour différent). Adapter si DFG < 60, CI si DFG < 30. Surveillance NFS COMPLETE (Hb + plaquettes + leucocytes/PNN — pancytopénie possible) + BH + créat. Interaction triméthoprime/AINS = pancytopénie.",
                     "source": "RCP Novatrex | HAS Rhumatologie 2019"
           },
           {

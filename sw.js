@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.72 (Phase 16 — pathologie RGO (PAT_053) complète + correction confusion HBPM/INR (BIO_030 retiré pour Lovenox/Fragmine/Innohep) + nav tri-directionnelle)
+// Service Worker - GeriaAssist v0.73 (Phase 18 — corrections structurelles automatiques : 12 pathologies manquantes (PAT_041-052), MTX bio_cible enrichi (NFS complète), affinage script audit INR contextuel)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260504-rgo-hbpm-fix';
-const CACHE_NAME = `geriaassist-v72-${BUILD_ID}`;
+const BUILD_ID = '20260504-phase18-struct-fixes';
+const CACHE_NAME = `geriaassist-v73-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
