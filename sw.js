@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.76 (Phase 23 — anticoagulants Lot 5 (final) : PAT_036 MTEV enrichi (durée traitement, transitions HBPM↔AOD↔AVK, BIO_030 contextualisé), PAT_006 FA CHA₂DS₂-VA reformulé (ESC 2024 retire critère sexe), Aspirine poso_ren détaillé)
+// Service Worker - GeriaAssist v0.77 (Phase 24 — diurétiques Eplérénone/Pirétanide/Triamtérène : Na+ ajouté en bio_cible, Pirétanide enrichie (Mg/uricémie comme furosémide), audit clean 0/0)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260505-phase23-anticoag-final';
-const CACHE_NAME = `geriaassist-v76-${BUILD_ID}`;
+const BUILD_ID = '20260505-phase24-diuretiques-clean';
+const CACHE_NAME = `geriaassist-v77-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

@@ -8933,6 +8933,7 @@ const MASTER_DB = {
                     "alerte_clinique": "Hyperkaliemie (risque majeur si DFG bas ou associations IEC/ARA2) → ionogramme urgent",
                     "bio_cible": [
                               "BIO_001",
+                              "BIO_002",
                               "BIO_003",
                               "BIO_013",
                               "BIO_014"
@@ -8941,7 +8942,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Ne pas associer IEC+ARA2+anti-aldostérone (triple blocage SRA)",
+                    "notes_cliniques": "Ne pas associer IEC+ARA2+anti-aldostérone (triple blocage SRA). Hyponatrémie possible (moins fréquente que sous diurétiques de l'anse/thiazidiques) — surveillance Na+ recommandée chez sujet âgé.",
                     "source": "RCP Inspra ; ESC HF 2021"
           },
           {
@@ -15336,19 +15337,22 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
                     "ddi_interact_v2": [],
-                    "suivi_initial": "Ionogramme | Créatinine",
-                    "suivi_periodique": "Ionogramme + créatinine (tous les 3 a a 6 mois)",
-                    "alerte_clinique": "Hypokaliemie | Deshydratation",
+                    "suivi_initial": "Ionogramme complet (Na+/K+/Mg+) | Créatinine/DFG | Uricémie | Bilan hépatique si IC",
+                    "suivi_periodique": "Ionogramme + créatinine (tous les 3 à 6 mois ; mensuel à l'introduction et après modification de dose). Magnésémie + uricémie semestrielles.",
+                    "alerte_clinique": "Hypokaliémie (risque trouble du rythme, surtout si associé à digoxine) | Hyponatrémie (sujet âgé ++) | Hypomagnésémie | Déshydratation/IRA fonctionnelle | Hyperuricémie/poussée de goutte",
                     "bio_cible": [
                               "BIO_001",
-                              "BIO_003"
+                              "BIO_002",
+                              "BIO_003",
+                              "BIO_006",
+                              "BIO_008"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Usage HTA et IC",
-                    "source": "RCP Eurelix"
+                    "notes_cliniques": "Diurétique de l'anse — usage HTA et IC. Surveillance ionogramme COMPLET (Na+/K+/Mg++) + créat + uricémie. Triple whammy AINS+IEC/ARA2+diurétique = SYND_045 IRA fonctionnelle. Préférer prise matinale (nycturie). Risque hyponatrémie élevé chez sujet âgé.",
+                    "source": "RCP Eurelix ; ESC HF 2021"
           },
           {
                     "dci": "Pivmecillinam",
@@ -18989,6 +18993,7 @@ const MASTER_DB = {
                     "alerte_clinique": "Hyperkaliemie (risque majeur si DFG bas ou IEC/ARA2) → ionogramme urgent | Lithiase renale (precipite sous forme de cristaux) → echographie si douleur lombaire",
                     "bio_cible": [
                               "BIO_001",
+                              "BIO_002",
                               "BIO_003",
                               "BIO_013",
                               "BIO_014"
@@ -18997,7 +19002,7 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Diurétique : hypokaliémie, hyponatrémie (thiazidiques surtout), déshydratation, hyperuricémie. Surveillance ionogramme/créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
+                    "notes_cliniques": "Diurétique épargneur de potassium (canal sodium distal). Risques : hyperkaliémie (++ si DFG < 60 ou association IEC/ARA2/ARM), hyponatrémie (sujet âgé), déshydratation, lithiase rénale (cristaux de triamtérène). Surveillance ionogramme COMPLET (Na+/K+) + créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
                     "source": "RCP Teriam | ESC HTA 2023"
           },
           {
