@@ -1515,8 +1515,75 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 98 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Amiodarone, Métronidazole, Macrolides, Antifongiques azolés, AINS, ISRS, Méthotrexate, Inducteurs enzymatiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Amiodarone (potentialisation majeure CYP2C9)",
+                                        "dcis": ["amiodarone"],
+                                        "commentaire": "↑ INR majeure — réduire dose AVK 30-50% à l'introduction et INR 2x/sem pendant 4-6 sem. Effet persistant à l'arrêt amiodarone (demi-vie 60 j).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Métronidazole/Ornidazole",
+                                        "dcis": ["metronidazole", "ornidazole", "spiramycine + metronidazole"],
+                                        "commentaire": "↑ INR — INR à J2-J3 du début de l'ATB, adapter dose AVK.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": ["clarithromycine", "erythromycine", "azithromycine", "josamycine"],
+                                        "commentaire": "↑ INR (clarithromycine ++). Préférer azithromycine si association nécessaire.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antifongiques azolés",
+                                        "dcis": ["fluconazole", "itraconazole", "voriconazole", "posaconazole", "ketoconazole"],
+                                        "commentaire": "↑ INR majeure (inhibition CYP2C9 + 3A4). Réduire dose AVK 50% si traitement prolongé, INR rapproché.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Risque hémorragique synergique (saignement digestif). Éviter au long cours, préférer paracétamol. Si AINS indispensable : courte durée + IPP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Aspirine/Antiagrégants",
+                                        "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor"],
+                                        "commentaire": "Bithérapie/trithérapie antithrombotique : durée minimale (1-12 mois post-SCA/stent), réévaluation HAS-BLED.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS/IRSN (effet plaquettaire + CYP)",
+                                        "dcis": ["citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine", "fluvoxamine", "venlafaxine", "duloxetine"],
+                                        "commentaire": "↑ INR (variable selon ISRS) + risque hémorragique digestif via inhibition recapture sérotonine plaquettaire.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Méthotrexate",
+                                        "dcis": ["methotrexate"],
+                                        "commentaire": "↓ excrétion MTX par AVK + ↑ INR par MTX. Surveillance NFS + INR rapprochée.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Paracétamol forte dose chronique",
+                                        "dcis": ["paracetamol"],
+                                        "commentaire": "Dose > 2 g/j > 1 sem : ↑ INR modeste. Privilégier paracétamol comme antalgique mais surveiller INR si dose forte prolongée.",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"],
+                                        "commentaire": "↓ INR (perte d'efficacité, risque thrombotique). Surveillance INR, adaptation à la hausse possible.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Statines (rosuvastatine, fluvastatine)",
+                                        "dcis": ["rosuvastatine", "fluvastatine"],
+                                        "commentaire": "↑ INR modeste (compétition CYP). Pas de modification habituelle, INR à 7-14 j si introduction.",
+                                        "severite": "info"
+                              }
+                    ],
                     "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine | Calcémie (baseline ostéoporose)",
                     "suivi_periodique": "INR (tous les 8 à 28 jours selon stabilité, objectif 2-3 ou 2,5-3,5) | NFS (annuelle) | Bilan hépatique (annuel) | Calcémie + DMO si AVK long cours (> 12 mois)",
                     "alerte_clinique": "Saignement → INR urgente + Hb. ANTIDOTE : vitamine K1 (Konakion) 1-5 mg PO si INR 5-10 sans saignement ; PPSB (Octaplex/Confidex 25-50 UI/kg) IV + vitamine K1 5-10 mg IV si saignement majeur ou INR > 8. HAS-BLED ≥ 3 → réévaluer indication, contrôle INR rapproché.",
@@ -1547,8 +1614,57 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "80 - 90 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "AINS, AVK/AOD/HBPM/HNF/Fondaparinux, Autres antiagrégants, ISRS, Corticoïdes, Méthotrexate, IEC/ARA2/Diurétiques, Lithium",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Compétition COX1 → ↓ effet antiagrégant aspirine + ↑ risque ulcère gastro-duodénal. Si AINS chronique nécessaire, espacer aspirine ≥ 30 min avant ibuprofène (ou choisir COX2 sélectif).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AVK/AOD/HBPM/HNF/Fondaparinux",
+                                        "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "enoxaparine", "dalteparine", "tinzaparine", "heparine sodique", "fondaparinux"],
+                                        "commentaire": "Synergie hémorragique. Bithérapie anticoagulant + aspirine UNIQUEMENT si SCA/stent récent (1-12 mois max), réévaluation HAS-BLED systématique.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Autres antiagrégants",
+                                        "dcis": ["clopidogrel", "prasugrel", "ticagrelor", "ticlopidine", "dipyridamole"],
+                                        "commentaire": "Bithérapie standard post-SCA/PCI (12 mois max). Réévaluation à durée minimale chez âgé (HAS-BLED).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS/IRSN (effet plaquettaire)",
+                                        "dcis": ["citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine", "fluvoxamine", "venlafaxine", "duloxetine"],
+                                        "commentaire": "↑ risque hémorragique digestif via inhibition recapture sérotonine plaquettaire. Gastroprotection IPP recommandée si association > 65 ans.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Corticoïdes systémiques",
+                                        "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone"],
+                                        "commentaire": "↑ risque UGD majeur (synergie). Gastroprotection IPP IMPÉRATIVE.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Méthotrexate",
+                                        "dcis": ["methotrexate"],
+                                        "commentaire": "↓ excrétion rénale MTX → ↑ toxicité (hématologique, hépatique). Surveillance NFS rapprochée.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "IEC/ARA2/Diurétiques",
+                                        "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "furosemide", "bumetanide", "hydrochlorothiazide", "indapamide"],
+                                        "commentaire": "Triple whammy (IEC/ARA2 + diurétique + AINS/aspirine forte dose) → IRA. À dose antiagrégante (75-100 mg) effet rénal modeste mais réel chez âgé/IRC. Surveillance créatinine.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium",
+                                        "dcis": ["lithium"],
+                                        "commentaire": "↑ lithiémie via ↓ excrétion rénale (vasoconstriction PG-dépendante). Surveillance lithiémie rapprochée si association.",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Créatinine | Bilan hépatique si a forte dose | Temps de saignement si chirurgie",
                     "suivi_periodique": "NFS (annuelle) | Créatinine (annuelle) | Recherche sang dans les selles si anemie",
                     "alerte_clinique": "Saignement digestif → NFS + rectorragie | Insuffisance renale → créatinine",
@@ -6996,22 +7112,36 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,35",
                     "qt_risque": "",
-                    "ddi_interact": "Clarithromycine, Azoles, Ciclosporine, Antiviraux",
+                    "ddi_interact": "Inhibiteurs P-gp puissants (CI : ketoconazole, itraconazole, ciclosporine, tacrolimus, dronedarone), Inhibiteurs P-gp modérés (vérapamil, amiodarone, quinidine, clarithromycine), Inducteurs P-gp (rifampicine, millepertuis)",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Clarithromycine",
-                                        "dcis": [
-                                                  "clarithromycine"
-                                        ],
-                                        "commentaire": "",
+                                        "classe": "Inhibiteurs P-gp puissants — CONTRE-INDICATION",
+                                        "dcis": ["ketoconazole", "itraconazole", "ciclosporine", "tacrolimus", "dronedarone"],
+                                        "commentaire": "↑ exposition dabigatran majeure → risque hémorragique grave. CONTRE-INDICATION (RCP Pradaxa). Choisir alternative anticoagulante (apixaban + autre antifongique non azolé, etc.).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs P-gp modérés — réduction dose 110 mg x2/j",
+                                        "dcis": ["verapamil", "amiodarone", "quinidine", "clarithromycine"],
+                                        "commentaire": "↑ exposition dabigatran modérée. Vérapamil : 110 mg x2/j obligatoire (RCP Pradaxa). Amiodarone : surveillance hémorragique accrue, considérer 110 mg x2/j si HAS-BLED ≥ 3.",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Ciclosporine",
-                                        "dcis": [
-                                                  "ciclosporine"
-                                        ],
-                                        "commentaire": "",
+                                        "classe": "Inducteurs P-gp — à éviter (efficacité réduite)",
+                                        "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine"],
+                                        "commentaire": "↓ exposition dabigatran (perte d'efficacité, risque thrombotique). Éviter ; switch vers AVK avec INR si rifampicine indispensable.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Risque hémorragique majeur — éviter au long cours. Si AINS indispensable : courte durée + IPP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Aspirine/Antiagrégants",
+                                        "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor"],
+                                        "commentaire": "Bithérapie/trithérapie antithrombotique : durée minimale post-SCA/stent (1-12 mois max), réévaluation HAS-BLED.",
                                         "severite": "warning"
                               }
                     ],
@@ -8506,8 +8636,33 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,55",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Inhibiteurs P-gp puissants (réduction dose 30 mg/j : ciclosporine, dronedarone, érythromycine, kétoconazole), Inducteurs P-gp (à éviter : rifampicine, millepertuis), AINS, Antiagrégants",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs P-gp puissants — réduction dose 30 mg/j obligatoire",
+                                        "dcis": ["ciclosporine", "dronedarone", "erythromycine", "ketoconazole"],
+                                        "commentaire": "↑ exposition edoxaban — réduction dose à 30 mg/j obligatoire si association maintenue (RCP Lixiana). Préférer alternative non-P-gp si possible.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inducteurs P-gp — à éviter (efficacité réduite)",
+                                        "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine"],
+                                        "commentaire": "↓ exposition edoxaban (perte d'efficacité, risque thrombotique). Éviter ; switch vers AVK avec INR si rifampicine indispensable.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Risque hémorragique majeur — éviter au long cours. Si AINS indispensable : courte durée + IPP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Aspirine/Antiagrégants",
+                                        "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor"],
+                                        "commentaire": "Bithérapie/trithérapie antithrombotique : durée minimale post-SCA/stent (1-12 mois max), réévaluation HAS-BLED.",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "Créatinine/DFG (CI si DFG<15) | NFS | Hb/Ht",
                     "suivi_periodique": "Créatinine (annuelle) | NFS (annuelle)",
                     "alerte_clinique": "Saignement majeur → NFS + Hb + créatinine urgentes ; ANTIDOTE : andexanet alfa (Ondexxya) IV bolus + perfusion 2 h si hémorragie engageant le pronostic vital ; concentrés de complexe prothrombique (PPSB 50 UI/kg) en relais. Réduction dose obligatoire si DFG 15-50 ou poids < 60 kg ou inhibiteur P-gp puissant.",
@@ -9542,8 +9697,75 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 98 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Amiodarone, Métronidazole, Macrolides, Antifongiques azolés, AINS, ISRS, Méthotrexate, Inducteurs enzymatiques",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Amiodarone (potentialisation majeure CYP2C9)",
+                                        "dcis": ["amiodarone"],
+                                        "commentaire": "↑ INR majeure — réduire dose AVK 30-50% à l'introduction et INR 2x/sem pendant 4-6 sem. Effet persistant à l'arrêt amiodarone (demi-vie 60 j).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Métronidazole/Ornidazole",
+                                        "dcis": ["metronidazole", "ornidazole", "spiramycine + metronidazole"],
+                                        "commentaire": "↑ INR — INR à J2-J3 du début de l'ATB, adapter dose AVK.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Macrolides",
+                                        "dcis": ["clarithromycine", "erythromycine", "azithromycine", "josamycine"],
+                                        "commentaire": "↑ INR (clarithromycine ++). Préférer azithromycine si association nécessaire.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antifongiques azolés",
+                                        "dcis": ["fluconazole", "itraconazole", "voriconazole", "posaconazole", "ketoconazole"],
+                                        "commentaire": "↑ INR majeure (inhibition CYP2C9 + 3A4). Réduire dose AVK 50% si traitement prolongé, INR rapproché.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Risque hémorragique synergique. Éviter au long cours, préférer paracétamol. Si AINS indispensable : courte durée + IPP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Aspirine/Antiagrégants",
+                                        "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor"],
+                                        "commentaire": "Bithérapie/trithérapie antithrombotique : durée minimale post-SCA/stent, réévaluation HAS-BLED.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ISRS/IRSN (effet plaquettaire + CYP)",
+                                        "dcis": ["citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine", "fluvoxamine", "venlafaxine", "duloxetine"],
+                                        "commentaire": "↑ INR + risque hémorragique digestif via inhibition recapture sérotonine plaquettaire.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Méthotrexate",
+                                        "dcis": ["methotrexate"],
+                                        "commentaire": "↓ excrétion MTX par AVK + ↑ INR par MTX. Surveillance NFS + INR rapprochée.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Paracétamol forte dose chronique",
+                                        "dcis": ["paracetamol"],
+                                        "commentaire": "Dose > 2 g/j > 1 sem : ↑ INR modeste. Surveiller INR si dose forte prolongée.",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"],
+                                        "commentaire": "↓ INR (perte d'efficacité, risque thrombotique). Surveillance INR.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Statines (rosuvastatine, fluvastatine)",
+                                        "dcis": ["rosuvastatine", "fluvastatine"],
+                                        "commentaire": "↑ INR modeste (compétition CYP). INR à 7-14 j si introduction.",
+                                        "severite": "info"
+                              }
+                    ],
                     "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine | Calcémie (baseline ostéoporose)",
                     "suivi_periodique": "INR (tous les 8 à 28 jours selon stabilité) | NFS (annuelle) | Bilan hépatique (annuel) | Calcémie + DMO si AVK long cours (> 12 mois)",
                     "alerte_clinique": "Saignement → INR + Hb urgente. ANTIDOTE : vitamine K1 (Konakion) 1-5 mg PO si INR 5-10 sans saignement ; PPSB (Octaplex/Confidex 25-50 UI/kg) IV + vitamine K1 5-10 mg IV si saignement majeur ou INR > 8. Allergie (FIÈVRE + RASH + EOSINOPHILIE) → ARRÊT IMMÉDIAT (réactions immuno-allergiques cutanées et hépato-rénales graves spécifiques fluindione, ANSM 2018 — INDICATION RESTREINTE depuis 2018). HAS-BLED ≥ 3 → réévaluer indication.",
@@ -15256,8 +15478,33 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 98 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "AINS, AVK/AOD/HBPM/HNF/Fondaparinux, Aspirine (bithérapie SCA), ISRS",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Risque hémorragique majeur — éviter au long cours. Si AINS indispensable : courte durée + IPP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AVK/AOD/HBPM/HNF/Fondaparinux",
+                                        "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "enoxaparine", "dalteparine", "tinzaparine", "heparine sodique", "fondaparinux"],
+                                        "commentaire": "Synergie hémorragique. Triple thérapie (anticoagulant + aspirine + prasugrel) UNIQUEMENT si stent récent (1 mois max), réévaluation HAS-BLED.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Aspirine (association SCA standard)",
+                                        "dcis": ["aspirine"],
+                                        "commentaire": "Bithérapie standard post-SCA/PCI (12 mois). Pas une CI mais surveillance hémorragique. Réévaluation à 12 mois.",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "ISRS/IRSN (effet plaquettaire)",
+                                        "dcis": ["citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine", "fluvoxamine", "venlafaxine", "duloxetine"],
+                                        "commentaire": "↑ risque hémorragique digestif via inhibition recapture sérotonine plaquettaire.",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique (CI si insuffisance hépatique sévère) | Poids/âge (dose réduite si < 60 kg ou > 75 ans)",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Saignement → NFS + Hb urgente | PTT (thrombopenie + anemie)",
@@ -16336,33 +16583,36 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "92 - 95 %",
                     "qt_risque": "",
-                    "ddi_interact": "Macrolides, Ketoconazole, Fluconazole",
+                    "ddi_interact": "Inhibiteurs CYP3A4 + P-gp puissants (CI : ritonavir, kétoconazole, itraconazole, voriconazole, posaconazole), Inducteurs CYP3A4 + P-gp (rifampicine, millepertuis), Macrolides, Fluconazole, AINS, Antiagrégants",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Macrolides",
-                                        "dcis": [
-                                                  "erythromycine",
-                                                  "clarithromycine",
-                                                  "azithromycine",
-                                                  "roxithromycine"
-                                        ],
-                                        "commentaire": "",
+                                        "classe": "Inhibiteurs CYP3A4 + P-gp puissants — CONTRE-INDICATION",
+                                        "dcis": ["ritonavir", "ketoconazole", "itraconazole", "voriconazole", "posaconazole", "cobicistat"],
+                                        "commentaire": "↑ exposition rivaroxaban x 2-3 — CONTRE-INDICATION (RCP Xarelto). Choisir alternative anticoagulante ou antifongique non-azolé.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 + P-gp — à éviter (efficacité réduite)",
+                                        "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"],
+                                        "commentaire": "↓ exposition rivaroxaban — perte d'efficacité, risque thrombotique. Éviter ; switch vers AVK avec INR si rifampicine indispensable.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4/P-gp modérés",
+                                        "dcis": ["erythromycine", "clarithromycine", "azithromycine", "fluconazole", "diltiazem", "verapamil", "amiodarone", "dronedarone", "ciclosporine", "tacrolimus"],
+                                        "commentaire": "↑ exposition rivaroxaban modérée — surveillance hémorragique accrue. Préférer azithromycine (vs clarithromycine).",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Ketoconazole",
-                                        "dcis": [
-                                                  "ketoconazole"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Risque hémorragique majeur — éviter au long cours. Si AINS indispensable : courte durée + IPP.",
+                                        "severite": "danger"
                               },
                               {
-                                        "classe": "Fluconazole",
-                                        "dcis": [
-                                                  "fluconazole"
-                                        ],
-                                        "commentaire": "",
+                                        "classe": "Aspirine/Antiagrégants",
+                                        "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor"],
+                                        "commentaire": "Bithérapie/trithérapie antithrombotique : durée minimale post-SCA/stent (1-12 mois max), réévaluation HAS-BLED. Note : 2.5 mg x2/j + aspirine = dose vasculaire COMPASS (≠ dose anticoagulante).",
                                         "severite": "warning"
                               }
                     ],
@@ -17876,8 +18126,57 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 99 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Inhibiteurs CYP3A4 puissants (CI : kétoconazole, itraconazole, ritonavir, clarithromycine), Inducteurs CYP3A4 (rifampicine, phénytoïne, millepertuis), Simvastatine (max 40 mg/j), Digoxine (P-gp), AINS, AVK/AOD/HBPM, ISRS",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4 puissants — CONTRE-INDICATION",
+                                        "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "posaconazole"],
+                                        "commentaire": "↑ exposition ticagrelor majeure → risque hémorragique grave. CONTRE-INDICATION (RCP Brilique).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — à éviter (efficacité réduite)",
+                                        "dcis": ["rifampicine", "phenytoine", "millepertuis", "carbamazepine", "phenobarbital"],
+                                        "commentaire": "↓ exposition ticagrelor (perte d'efficacité, risque thrombotique). Éviter ; switch clopidogrel ou prasugrel.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Simvastatine (max 40 mg/j)",
+                                        "dcis": ["simvastatine"],
+                                        "commentaire": "↑ exposition simvastatine via inhibition CYP3A4 → risque myopathie/rhabdomyolyse. Ne pas dépasser 40 mg/j (RCP Brilique). Alternative : pravastatine, rosuvastatine, atorvastatine.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Digoxine (transport P-gp)",
+                                        "dcis": ["digoxine"],
+                                        "commentaire": "↑ digoxinémie via inhibition P-gp. Surveillance digoxinémie + adaptation dose.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Risque hémorragique majeur — éviter au long cours. Si AINS indispensable : courte durée + IPP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AVK/AOD/HBPM/HNF/Fondaparinux",
+                                        "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "enoxaparine", "dalteparine", "tinzaparine", "heparine sodique", "fondaparinux"],
+                                        "commentaire": "Synergie hémorragique. Triple thérapie anticoagulant + ticagrelor + aspirine UNIQUEMENT si stent récent (1 mois max), réévaluation HAS-BLED.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Aspirine (association SCA standard)",
+                                        "dcis": ["aspirine"],
+                                        "commentaire": "Bithérapie standard post-SCA/PCI (12 mois). Aspirine ≤ 100 mg/j (PLATO : doses > 100 mg ↓ efficacité ticagrelor).",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "ISRS/IRSN (effet plaquettaire)",
+                                        "dcis": ["citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine", "fluvoxamine", "venlafaxine", "duloxetine"],
+                                        "commentaire": "↑ risque hémorragique digestif via inhibition recapture sérotonine plaquettaire.",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS | Créatinine (surveillance uricemie/créatinine) | Bilan hépatique | Uricemie",
                     "suivi_periodique": "NFS (annuelle) | Créatinine + uricemie (annuelle  a risque hyperuricemie) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Saignement → NFS + Hb urgente | Dyspne (effet direct non thrombotique  examen clinique)",
@@ -17907,8 +18206,39 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,98",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "AINS, AVK/AOD/HBPM, ISRS, Cimétidine (déconseillé), Aspirine (bithérapie SCA)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Risque hémorragique majeur — éviter au long cours. Si AINS indispensable : courte durée + IPP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AVK/AOD/HBPM/HNF/Fondaparinux",
+                                        "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "enoxaparine", "dalteparine", "tinzaparine", "heparine sodique", "fondaparinux"],
+                                        "commentaire": "Synergie hémorragique. Bithérapie/trithérapie antithrombotique uniquement si stent récent, durée minimale + réévaluation HAS-BLED.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Aspirine (association SCA standard)",
+                                        "dcis": ["aspirine"],
+                                        "commentaire": "Bithérapie standard post-SCA/PCI (12 mois). Note : ticlopidine remplacée par clopidogrel en 1ère intention (Beers 2023 : éviter ticlopidine — neutropénie/PTT).",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "ISRS/IRSN (effet plaquettaire)",
+                                        "dcis": ["citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine", "fluvoxamine", "venlafaxine", "duloxetine"],
+                                        "commentaire": "↑ risque hémorragique digestif via inhibition recapture sérotonine plaquettaire.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Cimétidine — fortement déconseillé",
+                                        "dcis": ["cimetidine"],
+                                        "commentaire": "↑ exposition ticlopidine (inhibition CYP). Préférer famotidine ou IPP.",
+                                        "severite": "warning"
+                              }
+                    ],
                     "suivi_initial": "NFS-plaquettes | Bilan hépatique",
                     "suivi_periodique": "NFS-plaquettes (toutes les 2 semaines les 3 premiers mois  OBLIGATOIRE) | Bilan hépatique (mensuel les 3 premiers mois)",
                     "alerte_clinique": "Thrombopenie → arret immediat | PTT → urgence hematologique | Neutropenie → arret",
@@ -19362,57 +19692,73 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "> 99 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aspirine, AINS, Macrolides, Fluconazole, Methotrexate",
+                    "ddi_interact": "Amiodarone, Métronidazole, Macrolides, Antifongiques azolés, AINS, Aspirine/Antiagrégants, ISRS, Méthotrexate, Inducteurs enzymatiques, Statines",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Aspirine",
-                                        "dcis": [
-                                                  "aspirine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
+                                        "classe": "Amiodarone (potentialisation majeure CYP2C9)",
+                                        "dcis": ["amiodarone"],
+                                        "commentaire": "↑ INR majeure — réduire dose AVK 30-50% à l'introduction et INR 2x/sem pendant 4-6 sem. Effet persistant à l'arrêt amiodarone (demi-vie 60 j).",
+                                        "severite": "danger"
                               },
                               {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
+                                        "classe": "Métronidazole/Ornidazole",
+                                        "dcis": ["metronidazole", "ornidazole", "spiramycine + metronidazole"],
+                                        "commentaire": "↑ INR — INR à J2-J3 du début de l'ATB, adapter dose AVK.",
                                         "severite": "warning"
                               },
                               {
                                         "classe": "Macrolides",
-                                        "dcis": [
-                                                  "erythromycine",
-                                                  "clarithromycine",
-                                                  "azithromycine",
-                                                  "roxithromycine"
-                                        ],
-                                        "commentaire": "",
+                                        "dcis": ["clarithromycine", "erythromycine", "azithromycine", "roxithromycine", "josamycine"],
+                                        "commentaire": "↑ INR (clarithromycine ++). Préférer azithromycine si association nécessaire.",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Fluconazole",
-                                        "dcis": [
-                                                  "fluconazole"
-                                        ],
-                                        "commentaire": "",
+                                        "classe": "Antifongiques azolés",
+                                        "dcis": ["fluconazole", "itraconazole", "voriconazole", "posaconazole", "ketoconazole"],
+                                        "commentaire": "↑ INR majeure (inhibition CYP2C9 + 3A4). Réduire dose AVK 50% si traitement prolongé, INR rapproché.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS",
+                                        "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"],
+                                        "commentaire": "Risque hémorragique synergique (saignement digestif). Éviter au long cours, préférer paracétamol. Si AINS indispensable : courte durée + IPP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Aspirine/Antiagrégants",
+                                        "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor"],
+                                        "commentaire": "Bithérapie/trithérapie antithrombotique : durée minimale (1-12 mois post-SCA/stent), réévaluation HAS-BLED.",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Methotrexate",
-                                        "dcis": [
-                                                  "methotrexate"
-                                        ],
-                                        "commentaire": "",
+                                        "classe": "ISRS/IRSN (effet plaquettaire + CYP)",
+                                        "dcis": ["citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine", "fluvoxamine", "venlafaxine", "duloxetine"],
+                                        "commentaire": "↑ INR (variable selon ISRS) + risque hémorragique digestif via inhibition recapture sérotonine plaquettaire.",
                                         "severite": "warning"
+                              },
+                              {
+                                        "classe": "Méthotrexate",
+                                        "dcis": ["methotrexate"],
+                                        "commentaire": "↓ excrétion MTX par AVK + ↑ INR par MTX. Surveillance NFS + INR rapprochée.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Paracétamol forte dose chronique",
+                                        "dcis": ["paracetamol"],
+                                        "commentaire": "Dose > 2 g/j > 1 sem : ↑ INR modeste. Privilégier paracétamol comme antalgique mais surveiller INR si dose forte prolongée.",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "Inducteurs enzymatiques",
+                                        "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"],
+                                        "commentaire": "↓ INR (perte d'efficacité, risque thrombotique). Surveillance INR, adaptation à la hausse possible.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Statines (rosuvastatine, fluvastatine)",
+                                        "dcis": ["rosuvastatine", "fluvastatine"],
+                                        "commentaire": "↑ INR modeste (compétition CYP). Pas de modification habituelle, INR à 7-14 j si introduction.",
+                                        "severite": "info"
                               }
                     ],
                     "suivi_initial": "INR | NFS | Bilan hépatique | Créatinine | Calcémie (baseline ostéoporose)",

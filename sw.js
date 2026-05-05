@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.74 (Phase 19+20 — anticoagulants Lot 1+2 : doublon ticagrelore supprimé, Dipyridamole INR/QTc retirés, AOD bio_cible enrichi (transaminases), AVK calcémie ajoutée, HNF créée + BIO_045 TCA, antidotes harmonisés, HAS-BLED ≥3 dans notes)
+// Service Worker - GeriaAssist v0.75 (Phase 21+22 — anticoagulants Lot 3+4 : posologies corrigées (Prasugrel 60mg / Ticagrelor 180mg / AVK init gériatrique / Aspirine antiagrégant 75-100mg) + ddi_interact_v2 enrichi pour AVKx3/AOD x4/Antiagrégants x5)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260504-phase20-anticoag-deepreview';
-const CACHE_NAME = `geriaassist-v74-${BUILD_ID}`;
+const BUILD_ID = '20260505-phase22-anticoag-ddi';
+const CACHE_NAME = `geriaassist-v75-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
