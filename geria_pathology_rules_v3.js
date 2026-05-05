@@ -599,7 +599,7 @@ const PATHOLOGY_RULES_DB = {
 
         TRAITEMENTS: {
             ANTICOAGULATION: {
-                indication: "Tous les patients FA avec CHA₂DS₂-VA ≥ 1 (homme) ou ≥ 2 (femme) — ESC 2024 remplace CHA₂DS₂-VASc par CHA₂DS₂-VA (retire le critère sexe du score)",
+                indication: "Tous les patients FA avec CHA₂DS₂-VA ≥ 2 (≥ 1 acceptable selon profil — discussion bénéfice/risque individualisée). ESC 2024 AF-CARE supprime le critère sexe (le S de CHA₂DS₂-VASc disparaît, devient CHA₂DS₂-VA), seuil unifié homme/femme. CHA₂DS₂-VA = IC, HTA, Âge ≥ 75 (2 pts), Diabète, AVC/AIT/TE (2 pts), Maladie Vasculaire, Âge 65-74.",
                 premiere_ligne: {
                     classe: "AOD (DOAC)",
                     dci_exemples: ["Apixaban", "Dabigatran", "Edoxaban", "Rivaroxaban"],
@@ -2869,26 +2869,42 @@ const PATHOLOGY_RULES_DB = {
     "PAT_036": {
         ID: "PAT_036",
         NOM: "Maladie thromboembolique veineuse (MTEV)",
-        REFERENCE: "ESC Guidelines for PE/DVT 2024 | ASH VTE Guidelines 2023 | ACCP Antithrombotic Guidelines 2024",
+        REFERENCE: "ESC Guidelines for PE/DVT 2024 | ASH VTE Guidelines 2023 | ACCP Antithrombotic Guidelines 2024 | HOKUSAI-VTE | RE-COVER",
         SOURCES_EBM: {
             "INITIER": {
-                "AOD": "ESC PE 2024 + ASH 2023 (1ère intention)",
-                "HBPM relais AVK": "ESC PE 2024 (si AOD CI)"
+                "AOD (apixaban, rivaroxaban)": "ESC PE 2024 + ASH 2023 — 1ère intention, initiables d'emblée sans relais HBPM",
+                "AOD (edoxaban, dabigatran)": "ESC PE 2024 + ASH 2023 — nécessitent 5 jours d'HBPM curative préalable (HOKUSAI-VTE, RE-COVER)",
+                "HBPM (enoxaparine, tinzaparine)": "ASH 2023 — 1ère intention si cancer actif, ou si CI AOD",
+                "AVK (warfarine, acénocoumarol)": "ESC PE 2024 — alternative si CI AOD, après HBPM ≥ 5j et INR ≥ 2"
             },
             "EVITER": {
-                "AINS": "ESC PE 2024 (risque hémorragique)",
-                "Œstrogènes": "ESC PE 2024 (CI absolue)"
+                "AINS": "ESC PE 2024 — risque hémorragique majoré sous anticoagulation",
+                "Œstrogènes": "ESC PE 2024 — CI absolue si ATCD MTEV"
             }
         },
         TRAITEMENTS: {
             PRINCIPES: [
-                { note: "AOD en première intention (apixaban, rivaroxaban) pour TVP/EP. HBPM (enoxaparine, tinzaparine) si cancer actif ou CI AOD. Durée : ≥ 3 mois, évaluation bénéfice/risque pour prolongation." }
+                { note: "AOD en 1ère intention (apixaban, rivaroxaban initiables d'emblée ; edoxaban, dabigatran après 5j HBPM). HBPM si cancer actif ou CI AOD. AVK si CI AOD et pas d'option HBPM long cours." },
+                { note: "DURÉE DE TRAITEMENT : ≥ 3 mois minimum. Prolongation selon facteur déclenchant : (1) MTEV provoquée par chirurgie/immobilisation transitoire = 3 mois suffisent. (2) MTEV provoquée par facteur persistant non chirurgical (cancer actif, MICI, alitement chronique) = tant que le facteur persiste. (3) MTEV non provoquée (idiopathique) = 3 mois puis évaluation ; récidive = anticoagulation à durée indéfinie. (4) Première EP idiopathique > 65 ans = favoriser long cours (HERDOO2, DASH score). (5) Cancer actif = tant que le cancer évolue (HBPM > AOD si tumeur GI/urothéliale per Kraaijpoel CARAVAGGIO). (6) Récidive sous anticoagulant = changer de classe + long cours." },
+                { note: "Sujet âgé : risque hémorragique accru, mais bénéfice de l'anticoagulation prolongée souvent supérieur si MTEV non provoquée. HAS-BLED ≥ 3 → réévaluation systématique mais NON arrêt automatique." }
             ],
             INITIER: [
-                { classe: "AOD (apixaban, rivaroxaban)", posologie: "Apixaban 10mg x2/j 7j puis 5mg x2/j. Rivaroxaban 15mg x2/j 21j puis 20mg/j", ref: "ESC PE 2024" },
-                { classe: "HBPM (enoxaparine, tinzaparine) si cancer", posologie: "Enoxaparine 100 UI/kg x2/j ou Tinzaparine 175 UI/kg/j", ref: "ASH 2023 Cancer VTE" },
-                { classe: "AVK si CI AOD", posologie: "Après HBPM ≥ 5j, INR cible 2-3", ref: "ESC PE 2024" }
+                { classe: "AOD (apixaban, rivaroxaban) — initiation d'emblée", posologie: "Apixaban : 10 mg x2/j J1-J7 puis 5 mg x2/j (2.5 mg x2/j en prévention secondaire après 6 mois). Rivaroxaban : 15 mg x2/j J1-J21 puis 20 mg/j (10 mg/j en prévention secondaire après 6 mois).", ref: "ESC PE 2024 ; AMPLIFY ; EINSTEIN" },
+                { classe: "AOD (edoxaban, dabigatran) — après 5j HBPM préalable", posologie: "Edoxaban : 60 mg/j (30 mg/j si DFG 15-50 ou poids ≤ 60 kg ou inhibiteur P-gp). Dabigatran : 150 mg x2/j (110 mg x2/j si ≥ 80 ans, vérapamil, ou HAS-BLED ≥ 3).", ref: "HOKUSAI-VTE ; RE-COVER" },
+                { classe: "HBPM curative (enoxaparine, tinzaparine) — cancer actif ou CI AOD", posologie: "Enoxaparine 100 UI/kg x2/j (1 mg/kg x2/j) ou Tinzaparine 175 UI/kg/j en 1 injection. Cancer : préférer Tinzaparine (CARAVAGGIO comparable à apixaban hors GI/urothélial).", ref: "ASH 2023 Cancer VTE ; CLOT" },
+                { classe: "AVK (warfarine, acénocoumarol) — si CI AOD et HBPM long cours non envisageable", posologie: "Initiation après HBPM ≥ 5 j ; INR cible 2-3 ; chevauchement HBPM + AVK jusqu'à INR ≥ 2 sur 2 prélèvements consécutifs.", ref: "ESC PE 2024" }
             ],
+            TRANSITIONS: {
+                HBPM_vers_AOD: [
+                    { dci: "Apixaban", schema: "Initiable d'emblée (10 mg x2/j x 7j puis 5 mg x2/j) — pas de relais HBPM nécessaire." },
+                    { dci: "Rivaroxaban", schema: "Initiable d'emblée (15 mg x2/j x 21j puis 20 mg/j) — pas de relais HBPM nécessaire." },
+                    { dci: "Edoxaban", schema: "Après 5 jours d'HBPM curative préalable obligatoire (HOKUSAI-VTE). Arrêt HBPM 12-24 h avant 1ère prise edoxaban." },
+                    { dci: "Dabigatran", schema: "Après 5 jours d'HBPM curative préalable obligatoire (RE-COVER). Arrêt HBPM 0-2 h avant 1ère prise dabigatran." }
+                ],
+                HBPM_vers_AVK: { schema: "Chevauchement HBPM + AVK ≥ 5 jours ET INR ≥ 2 sur 2 prélèvements consécutifs avant arrêt HBPM. Initier AVK J1 (le même jour que HBPM)." },
+                AOD_vers_AVK: { schema: "Spécifique selon AOD — Apixaban/Rivaroxaban : prendre AOD jusqu'à INR ≥ 2 puis arrêter, INR à dater de J-2 du switch. Dabigatran : commencer AVK 1-3 j avant arrêt selon DFG (3 j si DFG ≥ 50, 2 j si 30-50). Edoxaban : commencer AVK + 1 demi-dose edoxaban (30 mg) jusqu'à INR ≥ 2." },
+                AVK_vers_AOD: { schema: "Arrêter AVK et initier AOD lorsque INR < 2 (apixaban, rivaroxaban) ou ≤ 2.5 (dabigatran, edoxaban)." }
+            },
             EVITER: [
                 { classe: "AINS", raison: "Risque hémorragique majoré sous anticoagulation", ref: "ESC PE 2024" },
                 { classe: "Œstrogènes (contraceptifs, THS)", raison: "CI absolue si ATCD MTEV", ref: "ESC PE 2024" },
@@ -2896,11 +2912,12 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: {
-            SURVEILLANCE_CIBLE: ["BIO_003", "BIO_004", "BIO_009", "BIO_030"],
+            SURVEILLANCE_CIBLE: ["BIO_003", "BIO_004", "BIO_009", "BIO_010"],
             REGLES: [
-                { bio: "BIO_003", frequence: "Créatinine avant AOD, puis trimestrielle (clearance)" },
-                { bio: "BIO_009", frequence: "NFS-Plaquettes mensuelle sous HBPM" },
-                { bio: "BIO_030", frequence: "INR 2x/sem puis mensuel si AVK" }
+                { bio: "BIO_003", frequence: "Créatinine avant AOD/HBPM, puis trimestrielle (clearance — ajustement dose)" },
+                { bio: "BIO_009", frequence: "Hb avant introduction puis si suspicion saignement" },
+                { bio: "BIO_010", frequence: "Plaquettes 2x/sem (J5-J21) sous HBPM ou HNF — TIH" },
+                { bio: "BIO_030", frequence: "INR 2x/sem puis mensuel UNIQUEMENT si AVK choisi (CI AOD ou pas d'option HBPM long cours). Pas de surveillance INR pour AOD ou HBPM seuls." }
             ]
         }
     },

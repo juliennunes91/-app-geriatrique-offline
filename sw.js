@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.75 (Phase 21+22 — anticoagulants Lot 3+4 : posologies corrigées (Prasugrel 60mg / Ticagrelor 180mg / AVK init gériatrique / Aspirine antiagrégant 75-100mg) + ddi_interact_v2 enrichi pour AVKx3/AOD x4/Antiagrégants x5)
+// Service Worker - GeriaAssist v0.76 (Phase 23 — anticoagulants Lot 5 (final) : PAT_036 MTEV enrichi (durée traitement, transitions HBPM↔AOD↔AVK, BIO_030 contextualisé), PAT_006 FA CHA₂DS₂-VA reformulé (ESC 2024 retire critère sexe), Aspirine poso_ren détaillé)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260505-phase22-anticoag-ddi';
-const CACHE_NAME = `geriaassist-v75-${BUILD_ID}`;
+const BUILD_ID = '20260505-phase23-anticoag-final';
+const CACHE_NAME = `geriaassist-v76-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

@@ -1608,7 +1608,7 @@ const MASTER_DB = {
                     "classe": "Antiagregant (anti-COX1)",
                     "poso_hab": "Antiagrégant (effet antiplaquettaire) : 75-160 mg/j (dose usuelle 75-100 mg/j). Antalgique/antipyrétique : 500-1000 mg x 3-4/j (max 4 g/j).",
                     "poso_ger": "Antiagrégant : 75-100 mg/j. ÉVITER comme antalgique chez ≥ 65 ans (Beers 2023, STOPP D — UGD, saignement) — préférer paracétamol. Gastroprotection IPP recommandée si > 65 ans + ATCD UGD ou si association à anticoagulant/AINS/corticoïde.",
-                    "poso_ren": "Pas d'ajustement",
+                    "poso_ren": "Antiagrégant 75-100 mg/j : pas d'ajustement (effet rénal modeste). Antalgique fortes doses (> 1 g/j) : éviter si DFG < 30 (néphrotoxicité PG-dépendante). Triple whammy à éviter (aspirine forte dose + IEC/ARA2 + diurétique → IRA, surtout chez âgé déshydraté).",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
