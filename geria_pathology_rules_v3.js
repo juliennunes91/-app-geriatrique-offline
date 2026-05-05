@@ -1065,8 +1065,19 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "Dompéridone 10 mg x3/j", indication: "Si nausées/gastroparésie associée (Parkinson)", note: "Surveillance QTc (ECG avant et après 1 semaine)", bio_suivi: ["BIO_031"] },
                 { classe: "Droxidopa (si disponible)", indication: "Hypotension orthostatique neurogène (Parkinson, AMS)", note: "Non disponible en France en 2026" }
             ],
+            EVITER: [
+                { classe: "Alpha-bloquants (Tamsulosine, Alfuzosine, Doxazosine, Prazosine)", raison: "Hypotension orthostatique majeure (effet alpha-1)", gravite: "EVITER", ref_stopp: "STOPP K1" },
+                { classe: "Antidépresseurs tricycliques (Amitriptyline, Clomipramine, Imipramine, Doxépine)", raison: "Effet hypotenseur alpha-bloquant + anticholinergique → chutes", gravite: "DECONSEILLE", ref_stopp: "STOPP D4 ; Beers 2023" },
+                { classe: "Diurétiques (surdosage ou non indiqués)", raison: "Hypovolémie aggravante", gravite: "PRUDENCE — réévaluer indication", ref_stopp: "STOPP B10" },
+                { classe: "Antihypertenseurs (si PAS < 120 mmHg debout)", raison: "Sur-traitement antihypertenseur — TA cible plus permissive chez âgé orthostatique", gravite: "DEPRESCRIRE le plus hypotenseur en premier", ref_stopp: "STOPP B6" },
+                { classe: "Neuroleptiques classiques (Halopéridol, Chlorpromazine, Lévomépromazine)", raison: "Alpha-bloquant + extrapyramidal → chutes, surmortalité", gravite: "PRUDENCE — préférer quétiapine basse dose si nécessaire", ref_stopp: "Beers 2023" },
+                { classe: "Dérivés nitrés (Trinitrine, Isosorbide)", raison: "Vasodilatation systémique aggravant l'orthostatisme", gravite: "REEVALUER l'indication" },
+                { classe: "Agonistes dopaminergiques (Pramipexole, Ropinirole)", raison: "Hypotension orthostatique iatrogène (Parkinson) — réduire si possible, compenser par lévodopa", gravite: "PRUDENCE" },
+                { classe: "Opioïdes forts", raison: "Hypotension + sédation + chutes", gravite: "PRUDENCE — réduire dose, hydratation, paliers 1-2 si possible" },
+                { classe: "Benzodiazépines / Z-drugs", raison: "Sédation + hypotension + chutes", gravite: "EVITER — sevrage progressif", ref_stopp: "STOPP K1, K2 ; Beers 2023" }
+            ],
             DEPRESCRIPTION: {
-                description: "ÉTAPE CLÉ : Rechercher et réduire/arrêter les médicaments aggravants AVANT toute introduction",
+                description: "ÉTAPE CLÉ : Rechercher et réduire/arrêter les médicaments aggravants AVANT toute introduction de traitement spécifique de l'hypotension orthostatique",
                 classes_en_cause: [
                     { classe: "Alpha-bloquants (Tamsulosine, Alfuzosine, Doxazosine)", action: "Arrêter ou réduire dose. Envisager Dutastéride si indication prostatique." },
                     { classe: "Diurétiques (surdosage ou non nécessaires)", action: "Réduire dose, surtout furosémide et thiazidiques" },
@@ -1277,28 +1288,50 @@ const PATHOLOGY_RULES_DB = {
     "PAT_013": {
         ID: "PAT_013",
         NOM: "Démence Fronto-Temporale (DFT)",
-        REFERENCE: "FTD Consortium 2023",
+        REFERENCE: "FTD Consortium 2023 | International FTD Research Symposium 2024 | AFTD Expert Recommendations | Lebert 2004 (trazodone) | ALBA-FTD trial | STOPP/START v3 | Beers 2023",
         SOURCES_EBM: {
                   "INITIER": {
-                            "ISRS": "FTD Consortium 2023 §4, C"
+                            "ISRS / Trazodone": "FTD Consortium 2023 §4, C ; Lebert 2004 (trazodone hyperphagie/compulsions)",
+                            "Quétiapine basse dose": "FTD Consortium 2023 §5 — alternative aux antipsychotiques classiques si agitation/psychose réfractaire",
+                            "Mesures non pharmacologiques": "AFTD 2024 — orthophonie, accompagnement aidant, PEC environnementale"
                   },
                   "EVITER": {
-                            "IAChE": "FTD Consortium 2023, B"
+                            "IAChE": "FTD Consortium 2023, B — pas de déficit cholinergique",
+                            "Antipsychotiques classiques": "FTD Consortium 2023 + Beers 2023 — sensibilité extrapyramidale",
+                            "Benzodiazépines": "STOPP K1 — chutes/confusion",
+                            "Mémantine": "ALBA-FTD trial — pas de bénéfice démontré sauf forme mixte Alzheimer"
                   }
         },
         TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "DFT = pas de traitement modificateur de la maladie. Stratégie symptomatique des troubles comportementaux (désinhibition, apathie, compulsions, hyperphagie) + accompagnement non pharmacologique. Différencier DFT comportementale (bvFTD) vs aphasie primaire progressive (APP, agrammatique/sémantique). Toujours préférer mesures non médicamenteuses + faibles doses si médicaments." },
+                { note: "Recherche systématique de la composante surajoutée (souvent dégénérescence motoneuronale type SLA-DFT, ou superposition Alzheimer dans 10-15%) — ces composantes guident le traitement." }
+            ],
             INITIER: [
-                { classe: "ISRS (Sertraline, Citalopram, Trazodone)", indication: "Troubles comportementaux (désinhibition, compulsions, apathie)", note: "Pas d'IAChE prouvé efficace dans DFT" }
+                { classe: "Mesures non pharmacologiques", indication: "PREMIÈRE INTENTION SYSTÉMATIQUE", composants: ["Orthophonie (APP)", "Accompagnement aidant (formation aux comportements DFT)", "PEC environnementale (sécurisation, simplification routine)", "Soutien psychologique aidant", "Plateformes d'accompagnement DFT spécialisées"], niveau_preuve: "C" },
+                { classe: "ISRS (Sertraline 25-100 mg, Citalopram 10-20 mg, Escitalopram 5-10 mg)", indication: "Troubles comportementaux (désinhibition, compulsions, apathie, irritabilité)", note: "Démarrer faible dose, titration lente. Surveiller hyponatrémie (BIO_002), allongement QT (citalopram > 20 mg/j à éviter chez âgé).", niveau_preuve: "C" },
+                { classe: "Trazodone 50-150 mg/j (au coucher)", indication: "Hyperphagie, compulsions alimentaires, agitation vespérale, troubles du sommeil", note: "Lebert 2004 — efficacité démontrée sur compulsions DFT. Surveiller hypotension orthostatique. Bonne tolérance gériatrique vs ISRS.", niveau_preuve: "B" },
+                { classe: "Quétiapine très basse dose (12.5-25 mg)", indication: "Agitation/psychose réfractaire AUX ISRS — uniquement après échec des autres mesures", note: "Préférer quétiapine aux antipsychotiques classiques (moins d'effets extrapyramidaux). Surveiller QT, sédation, chutes. Réévaluer à 4-6 semaines, désescalader si possible.", ci: ["Allongement QT documenté", "DCL associée (sensibilité neuroleptique)"], niveau_preuve: "C" },
+                { classe: "Mémantine (controverse)", indication: "Forme mixte DFT + Alzheimer documentée uniquement", note: "ALBA-FTD trial négatif sur bvFTD pure. Pas indiquée dans DFT pure.", niveau_preuve: "C — non recommandée en DFT pure" }
             ],
             EVITER: [
-                { classe: "IAChE (Donépézil, Rivastigmine, Galantamine)", raison: "Pas de déficit cholinergique dans DFT, risque d'aggravation comportementale", gravite: "DECONSEILLE" },
-                { classe: "Antipsychotiques", raison: "Sensibilité accrue, syndrome extrapyramidal", gravite: "DECONSEILLE" }
+                { classe: "IAChE (Donépézil, Rivastigmine, Galantamine)", raison: "Pas de déficit cholinergique dans DFT — risque d'aggravation comportementale (désinhibition accrue)", gravite: "DECONSEILLE" },
+                { classe: "Antipsychotiques classiques (Halopéridol, Chlorpromazine, Lévomépromazine)", raison: "Sensibilité extrapyramidale accrue, sédation, chutes, surmortalité (Beers 2023)", gravite: "DECONSEILLE" },
+                { classe: "Antipsychotiques à fort effet anticholinergique (Olanzapine, Quétiapine forte dose)", raison: "Aggravation cognitive + chutes. Si nécessaire : quétiapine 12.5-25 mg max.", gravite: "PRUDENCE EXTREME" },
+                { classe: "Benzodiazépines / Z-drugs (Zolpidem, Zopiclone)", raison: "Sensibilité accrue chez DFT — chutes, confusion, désinhibition paradoxale", gravite: "EVITER", ref_stopp: "STOPP K1, K2 ; Beers 2023" },
+                { classe: "Opioïdes forts", raison: "Sédation, chutes, confusion — privilégier paliers 1-2", gravite: "PRUDENCE" },
+                { classe: "Anticholinergiques (oxybutynine, tolterodine, ATC)", raison: "Aggravation cognitive et comportementale", gravite: "EVITER", ref_stopp: "Beers 2023 ; STOPP B6, D4" },
+                { classe: "Valproate (Dépakine)", raison: "Études contradictoires sur bvFTD ; effets indésirables (hépatotoxicité, thrombopénie, hyperammoniémie) chez âgé", gravite: "PRUDENCE — réservé aux formes très agressives non contrôlées" }
             ]
         },
         BIOLOGIE: {
-            SURVEILLANCE_CIBLE: ["BIO_019", "BIO_009"],
+            SURVEILLANCE_CIBLE: ["BIO_019", "BIO_009", "BIO_002", "BIO_013", "BIO_014", "BIO_031"],
             REGLES: [
-                { bio: "BIO_002", note: "Hyponatrémie sous ISRS (SIADH)" }
+                { bio: "BIO_002", nom: "Natrémie", frequence: "À 1 mois post-introduction ISRS, puis trimestrielle", seuils: { bas: { max: 130, note: "Hyponatrémie sous ISRS (SIADH) — fréquente chez sujet âgé. Si < 130 : arrêt ISRS, switch trazodone." } }, syndrome: "SYND_009" },
+                { bio: "BIO_019", nom: "TSH", frequence: "Bilan étiologique initial (exclure pseudodémence hypothyroïdienne)", note: "Hypothyroïdie peut mimer DFT (apathie, ralentissement)" },
+                { bio: "BIO_009", nom: "Hémoglobine", frequence: "Annuel", note: "Anémie aggrave fatigue et apathie — corriger si < 11 g/dL" },
+                { bio: "BIO_013", nom: "ASAT", frequence: "Si valproate introduit (mensuel x3 puis trimestriel)", note: "Hépatotoxicité valproate", syndrome: "SYND_001" },
+                { bio: "BIO_031", nom: "QTc", frequence: "Avant et 1 mois après introduction quétiapine ou citalopram > 20 mg/j", note: "Allongement QT — surveillance ECG", syndrome: "SYND_003" }
             ]
         }
     },
@@ -2048,7 +2081,7 @@ const PATHOLOGY_RULES_DB = {
     "PAT_022": {
         ID: "PAT_022",
         NOM: "Asthme",
-        REFERENCE: "GINA 2024",
+        REFERENCE: "GINA 2024 | SPLF 2021 (Asthme adulte) | HAS 2018 (Asthme adulte) | ERS/ATS 2020 (Severe Asthma) | Beers 2023 | STOPP/START v3",
         SOURCES_EBM: {
                   "INITIER": {
                             "CSI-Formotérol": "GINA_2024 Fig 3.1 Track 1"
@@ -2092,7 +2125,7 @@ const PATHOLOGY_RULES_DB = {
     "PAT_023": {
         ID: "PAT_023",
         NOM: "BPCO",
-        REFERENCE: "GOLD 2024",
+        REFERENCE: "GOLD 2024 | SPLF 2023 (BPCO) | HAS 2014 BPCO | ERS/ATS 2017 | IMPACT trial | ETHOS trial | Beers 2023 | STOPP/START v3",
         SOURCES_EBM: {
                   "INITIER": {
                             "LAMA": "GOLD_2024 §3.4, A",

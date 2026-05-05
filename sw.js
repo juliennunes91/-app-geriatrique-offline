@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.77 (Phase 24 — diurétiques Eplérénone/Pirétanide/Triamtérène : Na+ ajouté en bio_cible, Pirétanide enrichie (Mg/uricémie comme furosémide), audit clean 0/0)
+// Service Worker - GeriaAssist v0.78 (Phase 25 — Lot C1 pathologies : PAT_013 DFT enrichissement substantiel (5 INITIER/7 EVITER/5 BIO REGLES), PAT_022 Asthme REF (SPLF/HAS/ERS-ATS), PAT_023 BPCO REF (SPLF/HAS/IMPACT/ETHOS), PAT_009 Hypotension EVITER ajouté)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260505-phase24-diuretiques-clean';
-const CACHE_NAME = `geriaassist-v77-${BUILD_ID}`;
+const BUILD_ID = '20260505-phase25-pathologies-c1';
+const CACHE_NAME = `geriaassist-v78-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
