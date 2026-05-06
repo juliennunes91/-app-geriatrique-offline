@@ -403,7 +403,7 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'chkFoie': 'PAT_034', 'chkBrady': 'PAT_035', 'chkTvp': 'PAT_036',
         'chkStent': 'PAT_004', 'chkScaAigu': 'PAT_004', 'chkHtaNonControlee': 'PAT_005',
         'chkIncontinence': 'PAT_039', 'chkDysphagie': 'PAT_038',
-        'chkLewy': 'PAT_040',
+        'chkLewy': 'PAT_012',
         // Troubles cognitifs & neuropsychocomportementaux (SFGG 2024 SPC)
         'chkDemence': 'PAT_010',
         'demTypeMA': 'PAT_011', 'demTypeDP': 'PAT_014', 'demTypeDLFT': 'PAT_013',

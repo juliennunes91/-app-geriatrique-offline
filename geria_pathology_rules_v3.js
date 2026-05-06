@@ -1131,6 +1131,9 @@ const PATHOLOGY_RULES_DB = {
         },
 
         TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "DÉMARCHE SYSTÉMATIQUE en 5 étapes : (1) Confirmation diagnostique (MMSE, MoCA, IRM, biomarqueurs CSF/PET-amyloïde si Alzheimer suspecté). (2) EXCLUSION DES ÉTIOLOGIES RÉVERSIBLES : hypothyroïdie (TSH), carence B12 (BIO_021), syphilis/HIV, hématome sous-dural (TDM), dépression masquée gériatrique, iatrogénie (anticholinergiques, BZD, opioïdes, ATC), troubles métaboliques (Na+, glycémie). (3) PRÉFÉRER PATHOLOGIE SPÉCIFIQUE pour règles dédiées : PAT_011 Alzheimer, PAT_012 DCL, PAT_013 DFT, PAT_041 vasculaire, PAT_042 mixte. (4) BPSD (Behavioral and Psychological Symptoms of Dementia) : interventions NON MÉDICAMENTEUSES en 1ère intention TOUJOURS (PEC environnementale, accompagnement aidant, repérage causes somatiques douleur/IU/constipation). Médicaments réservés aux situations de danger pour le patient/entourage ou souffrance majeure. (5) CHARGE ANTICHOLINERGIQUE (ACB cumulé) à minimiser systématiquement — ré-évaluer toute prescription contributive." }
+            ],
             INITIER: [
                 {
                     classe: "Inhibiteur de l'Acétylcholinestérase (IAChE)",
@@ -1210,13 +1213,14 @@ const PATHOLOGY_RULES_DB = {
     "PAT_011": {
         ID: "PAT_011",
         NOM: "Maladie d'Alzheimer",
-        REFERENCE: "EAN 2023 | NIA-AA 2024 | HAS 2024",
+        REFERENCE: "EAN 2023 | NIA-AA 2024 | HAS 2024 | CLARITY-AD (Lecanemab NEJM 2023) | TRAILBLAZER-ALZ 2 (Donanemab JAMA 2023) | EMA 2024",
         SOURCES_EBM: {
                   "INITIER": {
                             "Donépézil": "EAN_DEMENTIA_2023 §4.1, A",
                             "Rivastigmine": "EAN_DEMENTIA_2023 §4.1, A",
                             "Galantamine": "EAN_DEMENTIA_2023 §4.1, A",
-                            "Mémantine": "EAN_DEMENTIA_2023 §4.2, A"
+                            "Mémantine": "EAN_DEMENTIA_2023 §4.2, A",
+                            "Anti-amyloïdes (Lecanemab, Donanemab)": "FDA 2023-2024 + EMA 2024 — accès très restreint, NON remboursés en France 2025"
                   },
                   "EVITER": {
                             "Anticholinergiques": "STOPP_START_V3 D1 + BEERS_2023",
@@ -1228,7 +1232,8 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "Donépézil 5→10 mg/j", indication: "Stade léger à modéré (MMSE 10-26)", titration: "5 mg x 4 semaines puis 10 mg", surveillance: "ECG (bradycardie), poids, transit", niveau_preuve: "IA" },
                 { classe: "Rivastigmine patch 4.6→9.5→13.3 mg/24h", indication: "Alternative, meilleur profil digestif en patch", note: "Préféré si problème d'observance ou nausées sous oral" },
                 { classe: "Galantamine LP 8→16→24 mg/j", indication: "Alternative, peut bénéficier composante vasculaire", note: "CI si DFG < 9" },
-                { classe: "Mémantine 5→10→15→20 mg/j", indication: "Stade modéré à sévère (MMSE < 20)", note: "Association IAChE + mémantine = bénéfice additif (Tariot 2004)", ci_dfg: "Dose max 10 mg si DFG < 30", niveau_preuve: "IA" }
+                { classe: "Mémantine 5→10→15→20 mg/j", indication: "Stade modéré à sévère (MMSE < 20)", note: "Association IAChE + mémantine = bénéfice additif (Tariot 2004)", ci_dfg: "Dose max 10 mg si DFG < 30", niveau_preuve: "IA" },
+                { classe: "Anti-amyloïdes (Lecanemab/Leqembi, Donanemab/Kisunla)", indication: "Maladie d'Alzheimer légère ou MCI Alzheimer (biomarqueurs amyloïdes positifs CSF/PET-amyloïde)", note: "Indication très restreinte. APOE4 hétérozygote ou non-porteur préféré (homozygotes : risque ARIA majeur). IRM cérébrales périodiques pour ARIA-E/H (œdème, microhémorragies). Équipe spécialisée. NON REMBOURSÉS en France au 2025 (accès sous ATU/RTU). Bénéfice clinique modeste (CDR-SB Δ -0.45 dans CLARITY-AD vs placebo). Mention pour information.", niveau_preuve: "B (CLARITY-AD, TRAILBLAZER-ALZ 2)", ci: ["APOE4 homozygote (risque ARIA)", "Anticoagulation thérapeutique", "ATCD AVC hémorragique", "Microhémorragies multiples (> 4) à l'IRM"] }
             ],
             EVITER: [
                 { classe: "Anticholinergiques (ACB ≥ 1)", raison: "Antagonise directement l'IAChE prescrit", gravite: "CONTRE-INDICATION PHARMACOLOGIQUE" },
@@ -1254,33 +1259,45 @@ const PATHOLOGY_RULES_DB = {
 
     "PAT_012": {
         ID: "PAT_012",
-        NOM: "Démence à Corps de Lewy",
-        REFERENCE: "McKeith 2023 DLB Consortium | EAN 2023",
+        NOM: "Démence à Corps de Lewy (DCL)",
+        REFERENCE: "McKeith 2023 DLB Consortium | McKeith Neurology 2017 | EAN 2023 | NICE DLB 2018 | Watts Aging Ment Health 2022",
         SOURCES_EBM: {
-                  "INITIER": {
-                            "Rivastigmine": "McKeith DLB 2023 §5.1, A"
-                  },
-                  "EVITER": {
-                            "Neuroleptiques": "McKeith DLB 2023 §5.3, CI absolue"
-                  }
+            "INITIER": {
+                "Rivastigmine": "McKeith DLB 2023 §5.1, A — niveau 2 (NICE)",
+                "Donépézil": "NICE DLB 2018 — niveau 1 (hallucinations)",
+                "Mémantine": "NICE DLB 2018 — niveau 2 (adjuvant ou alternative)"
+            },
+            "EVITER": {
+                "Neuroleptiques classiques": "McKeith 2017 + DLB 2023 §5.3 — CI absolue (sensibilité neuroleptique sévère)",
+                "Clozapine": "Watts 2022 Aging Ment Health — coma documenté en DCL",
+                "Anticholinergiques": "McKeith 2023 — aggravent hallucinations et confusion"
+            }
         },
         TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Sensibilité neuroleptique majeure (30-50% des patients DCL — risque SNM, rigidité, coma, décès). ÉPUISER les options non-antipsychotiques avant tout AP. Quétiapine uniquement si indispensable, à dose minimale, titration lente, surveillance motrice étroite." }
+            ],
             INITIER: [
-                { classe: "Rivastigmine", indication: "Traitement de choix (meilleur niveau de preuve dans MCL)", note: "Bénéfice sur hallucinations et cognition" },
-                { classe: "Donépézil", indication: "Alternative à rivastigmine" },
-                { classe: "Quetiapine faible dose (12.5-50 mg)", indication: "SPCD sévères (hallucinations, agitation) si IAChE insuffisant", note: "SEUL antipsychotique toléré dans MCL (moindre risque extrapyramidal)" }
+                { classe: "Rivastigmine (patch 4.6-9.5 mg/24h ou PO 3-12 mg/j)", indication: "1ère intention — bénéfice cognitif + neuropsychiatrique (hallucinations)", note: "Patch préféré chez sujet âgé (meilleure tolérance digestive vs PO)", niveau_preuve: "A — niveau 2 NICE" },
+                { classe: "Donépézil (5-10 mg/j)", indication: "Alternative — hallucinations visuelles ++ | bénéfice cognitif. Niveau 1 NICE pour hallucinations.", niveau_preuve: "1" },
+                { classe: "Mémantine (5-20 mg/j)", indication: "Adjuvant aux IAChE (stade modéré-sévère) ou alternative si IAChE non toléré", niveau_preuve: "2" },
+                { classe: "Quétiapine 6.25-50 mg/j (faible dose)", indication: "Psychose/agitation sévère réfractaire aux IAChE uniquement", note: "SEUL antipsychotique relativement toléré dans DCL (moindre risque extrapyramidal). Titration très lente. Arrêt immédiat si aggravation motrice. Surveillance QTc.", niveau_preuve: "C" }
             ],
             EVITER: [
-                { classe: "Neuroleptiques classiques (Halopéridol, etc.)", raison: "Hypersensibilité sévère aux neuroleptiques = critère diagnostique MCL. Risque syndrome malin, rigidité, décès.", gravite: "CONTRE-INDICATION ABSOLUE" },
-                { classe: "Rispéridone, Olanzapine", raison: "Syndrome extrapyramidal sévère", gravite: "CONTRE-INDICATION FORTE" },
-                { classe: "Anticholinergiques", raison: "Aggravent hallucinations et confusion", gravite: "CONTRE-INDICATION" },
-                { classe: "Métoclopramide", raison: "Antagoniste D2 → syndrome parkinsonien", gravite: "CONTRE-INDICATION" }
+                { classe: "Neuroleptiques classiques (Halopéridol, Chlorpromazine, Lévomépromazine)", raison: "Hypersensibilité neuroleptique sévère = critère diagnostique DCL. Risque SNM, rigidité, coma, décès.", gravite: "CONTRE-INDICATION ABSOLUE", ref_stopp: "STOPP K1" },
+                { classe: "Clozapine", raison: "Cas documentés de coma après dose unique en DCL (Watts 2022). Risque >> bénéfice.", gravite: "CONTRE-INDICATION" },
+                { classe: "Rispéridone, Olanzapine", raison: "Syndrome extrapyramidal sévère, sédation, aggravation parkinsonienne", gravite: "CONTRE-INDICATION FORTE / DECONSEILLE" },
+                { classe: "Anticholinergiques (bipéridène, trihexyphénidyle, oxybutynine, ATC)", raison: "Aggravent hallucinations, confusion et déficit cognitif", gravite: "CONTRE-INDICATION" },
+                { classe: "Métoclopramide, Dompéridone (forte dose)", raison: "Antagoniste D2 → syndrome parkinsonien aggravé", gravite: "CONTRE-INDICATION" },
+                { classe: "Benzodiazépines / Z-drugs", raison: "Sensibilité accrue, chutes, confusion, sédation paradoxale", gravite: "EVITER", ref_stopp: "STOPP K1, K2 ; Beers 2023" }
             ]
         },
         BIOLOGIE: {
-            SURVEILLANCE_CIBLE: ["BIO_019", "BIO_009", "BIO_002"],
+            SURVEILLANCE_CIBLE: ["BIO_019", "BIO_009", "BIO_002", "BIO_031"],
             REGLES: [
-                { bio: "BIO_031", note: "Surveillance QTc si quétiapine" }
+                { bio: "BIO_031", nom: "QTc", note: "Surveillance QTc si quétiapine (effet allongement QT). ECG avant et 1 mois après introduction.", syndrome: "SYND_003" },
+                { bio: "BIO_002", nom: "Natrémie", note: "Hyponatrémie sous IAChE (rare) ou si IAChE associé à ISRS", syndrome: "SYND_009" },
+                { bio: "BIO_019", nom: "TSH", note: "Bilan étiologique initial (exclure pseudodémence hypothyroïdienne)" }
             ]
         }
     },
@@ -3125,44 +3142,6 @@ const PATHOLOGY_RULES_DB = {
         }
     },
 
-    "PAT_040": {
-        ID: "PAT_040",
-        NOM: "Démence à Corps de Lewy (DCL)",
-        REFERENCE: "Watts et al. Aging Ment Health 2022 | McKeith et al. Neurology 2017 | NICE DLB 2018",
-        SOURCES_EBM: {
-            "INITIER": {
-                "Rivastigmine": "NICE DLB — niveau 2",
-                "Donépézil": "NICE DLB — niveau 1 (hallucinations)",
-                "Mémantine": "NICE DLB — niveau 2"
-            },
-            "EVITER": {
-                "Antipsychotiques typiques": "McKeith 2017 — sensibilité neuroleptique sévère",
-                "Clozapine": "Watts 2022 — risque coma documenté en DCL"
-            }
-        },
-        TRAITEMENTS: {
-            PRINCIPES: [
-                { note: "Sensibilité neuroleptique majeure (30-50%). Épuiser les options non-AP avant tout antipsychotique. Quétiapine uniquement si indispensable, à dose minimale." }
-            ],
-            INITIER: [
-                { classe: "Rivastigmine (patch 4.6-9.5 mg/24h)", indication: "1ère intention — bénéfice cognitif + neuropsychiatrique", niveau_preuve: "2" },
-                { classe: "Donépézil (5-10 mg/j)", indication: "Hallucinations visuelles ++ | bénéfice cognitif", niveau_preuve: "1" },
-                { classe: "Mémantine (5-20 mg/j)", indication: "Adjuvant ou alternative si IAChE non toléré", niveau_preuve: "2" },
-                { classe: "Quétiapine (6.25-50 mg/j)", indication: "Psychose réfractaire aux IAChE uniquement. Dose minimale. Surveillance étroite.", niveau_preuve: "C", note: "Titration très lente. Arrêt si aggravation motrice." }
-            ],
-            EVITER: [
-                { classe: "Antipsychotiques typiques (halopéridol, chlorpromazine...)", raison: "Sensibilité neuroleptique sévère — risque de SNM, coma, décès", gravite: "CONTRE-INDICATION ABSOLUE", ref_stopp: "STOPP K1" },
-                { classe: "Clozapine", raison: "Cas documentés de coma après dose unique en DCL (Watts 2022). Risque >> bénéfice.", gravite: "CONTRE-INDICATION" },
-                { classe: "Rispéridone, Olanzapine", raison: "Aggravation parkinsonienne, sédation, sensibilité neuroleptique", gravite: "DECONSEILLE" },
-                { classe: "Anticholinergiques (bipéridène, trihexyphénidyle)", raison: "Aggravent les troubles cognitifs et les hallucinations", gravite: "CONTRE-INDICATION" },
-                { classe: "Métoclopramide", raison: "Antidopaminergique central — aggravation motrice et confusion", gravite: "CONTRE-INDICATION" }
-            ]
-        },
-        BIOLOGIE: {
-            SURVEILLANCE_CIBLE: [],
-            REGLES: []
-        }
-    },
     "PAT_041": {
         ID: "PAT_041",
         NOM: "Démence vasculaire",
@@ -3197,25 +3176,46 @@ const PATHOLOGY_RULES_DB = {
     "PAT_042": {
         ID: "PAT_042",
         NOM: "Démence mixte (Alzheimer + vasculaire)",
-        REFERENCE: "HAS 2018 | Kalaria Lancet Neurol 2016",
+        REFERENCE: "HAS 2018 MNC | Kalaria Lancet Neurol 2016 | NICE Dementia 2018 | STOPP/START v3 | Beers 2023",
         SOURCES_EBM: {
             "INITIER": {
                 "IAChE": "HAS 2018 — indication MA + vasculaire",
-                "Mémantine": "HAS 2018 — stade modéré à sévère"
+                "Mémantine": "HAS 2018 — stade modéré à sévère",
+                "Contrôle FDRCV": "Kalaria 2016 — prévention aggravation vasculaire"
             },
-            "EVITER": { "Antipsychotiques": "Schneider 2005" }
+            "EVITER": {
+                "Antipsychotiques": "Schneider 2005 + FDA Black Box",
+                "Anticholinergiques": "STOPP D1-D5 + Beers 2023",
+                "Benzodiazépines": "STOPP D5 + Beers 2023"
+            }
         },
         TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Démence mixte = cumul des contraintes Alzheimer + vasculaire. Double surveillance : antagonisme IAChE par anticholinergiques + risque hémorragique sous antithrombotiques (CI relative à dépister)." }
+            ],
             INITIER: [
                 { classe: "Donépézil / Galantamine / Rivastigmine", indication: "Stade léger à modéré (MMSE 10-26)", niveau_preuve: "B" },
-                { classe: "Mémantine (5-20 mg/j)", indication: "Stade modéré à sévère (MMSE ≤ 19)", niveau_preuve: "B" },
-                { classe: "Contrôle FDRCV (HTA, LDL, diabète, AAP/AOD)", indication: "Prévention aggravation vasculaire", niveau_preuve: "A" }
+                { classe: "Mémantine (5-20 mg/j)", indication: "Stade modéré à sévère (MMSE ≤ 19)", note: "Association IAChE + mémantine = bénéfice additif", niveau_preuve: "B" },
+                { classe: "Contrôle FDRCV (HTA, LDL, diabète, AAP/AOD selon indication FA/AVC)", indication: "Prévention aggravation vasculaire — TA cible 130-140/80-85, LDL < 1.0 g/L si AVC, AAP en post-AVC", niveau_preuve: "A" }
             ],
             EVITER: [
-                { classe: "Antipsychotiques au long cours", raison: "↑ mortalité CV et AVC", gravite: "DECONSEILLE", ref_stopp: "STOPP K1" }
+                { classe: "Anticholinergiques (ACB cumulé ≥ 3)", raison: "Antagonise directement l'IAChE + aggravation cognitive — double risque en démence mixte", gravite: "EVITER", ref_stopp: "STOPP D1-D5 ; Beers 2023" },
+                { classe: "Antipsychotiques classiques au long cours", raison: "↑ mortalité CV et AVC (FDA Black Box) — risque doublé en démence vasculaire", gravite: "DECONSEILLE", ref_stopp: "STOPP K1, D3 ; Beers 2023" },
+                { classe: "Benzodiazépines / Z-drugs", raison: "Chutes, confusion, dépendance — sensibilité accrue en démence", gravite: "EVITER", ref_stopp: "STOPP D5 ; Beers 2023" },
+                { classe: "Opioïdes forts au long cours", raison: "Sédation, chutes, confusion — préférer paliers 1-2", gravite: "PRUDENCE" },
+                { classe: "AINS au long cours", raison: "Risque hémorragique (si AAP associé) + IRA + HTA — fortement déconseillés", gravite: "EVITER", ref_stopp: "STOPP F2" },
+                { classe: "Statines à très haute dose si pas de bénéfice CV démontré", raison: "Tolérance cognitive controversée à fortes doses (myalgies, asthénie). Dose-effect prouvé en prévention secondaire post-AVC.", gravite: "PRUDENCE — adapter selon tolérance" }
             ]
         },
-        BIOLOGIE: { SURVEILLANCE_CIBLE: [], REGLES: [] }
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_019", "BIO_009", "BIO_021", "BIO_031", "BIO_003", "BIO_027"],
+            REGLES: [
+                { bio: "BIO_031", nom: "QTc", frequence: "ECG avant IAChE, à 1 mois, puis annuel", note: "Bradycardie sous IAChE" },
+                { bio: "BIO_019", nom: "TSH", frequence: "Bilan étiologique initial (exclure pseudodémence) + annuel" },
+                { bio: "BIO_021", nom: "B12", frequence: "Bilan étiologique + annuel (carence aggrave cognition)" },
+                { bio: "BIO_027", nom: "Bilan lipidique", frequence: "Annuel — cible LDL < 1.0 g/L si ATCD AVC ischémique" }
+            ]
+        }
     },
     "PAT_043": {
         ID: "PAT_043",
@@ -3646,7 +3646,6 @@ const PATHO_SYNDROME_MAP = {
     "PAT_037": ["SYND_033", "SYND_025"],
     "PAT_038": ["SYND_033"],
     "PAT_039": [],
-    "PAT_040": [],
     "PAT_041": ["SYND_013", "SYND_027", "SYND_009"],
     "PAT_042": ["SYND_013", "SYND_009"],
     "PAT_043": ["SYND_013"],
@@ -3679,10 +3678,14 @@ const PATHO_MED_INTERDITS = {
         { terme: "chlorpromazine", raison: "Anticholinergique + sédation + chutes", gravite: "DECONSEILLE" }
     ],
     "PAT_012": [
-        { terme: "haloperidol", raison: "Hypersensibilité aux NL dans MCL — risque vital", gravite: "CONTRE-INDICATION ABSOLUE" },
-        { terme: "risperidone", raison: "Syndrome extrapyramidal sévère dans MCL", gravite: "CONTRE-INDICATION" },
-        { terme: "olanzapine", raison: "Syndrome extrapyramidal dans MCL", gravite: "CONTRE-INDICATION" },
-        { terme: "metoclopramide", raison: "Anti-D2 → parkinsonisme", gravite: "CONTRE-INDICATION" }
+        { terme: "haloperidol", raison: "Sensibilité neuroleptique sévère en DCL — risque SNM/coma (McKeith 2017)", gravite: "CONTRE-INDICATION ABSOLUE" },
+        { terme: "chlorpromazine", raison: "Antipsychotique typique CI absolue en DCL", gravite: "CONTRE-INDICATION ABSOLUE" },
+        { terme: "clozapine", raison: "Risque de coma documenté en DCL (Watts 2022)", gravite: "CONTRE-INDICATION" },
+        { terme: "risperidone", raison: "Aggravation parkinsonienne, sensibilité neuroleptique en DCL", gravite: "DECONSEILLE" },
+        { terme: "olanzapine", raison: "Sensibilité neuroleptique, sédation excessive en DCL", gravite: "DECONSEILLE" },
+        { terme: "metoclopramide", raison: "Antidopaminergique central — aggravation motrice en DCL", gravite: "CONTRE-INDICATION" },
+        { terme: "biperidene", raison: "Anticholinergique — aggrave cognition et hallucinations en DCL", gravite: "CONTRE-INDICATION" },
+        { terme: "trihexyphenidyle", raison: "Anticholinergique — aggrave cognition et hallucinations en DCL", gravite: "CONTRE-INDICATION" }
     ],
     "PAT_014": [
         { terme: "haloperidol", raison: "Anti-D2 → aggravation parkinsonisme", gravite: "CONTRE-INDICATION ABSOLUE" },
@@ -3877,16 +3880,6 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
         { terme: "fesoterodine", raison: "Anticholinergique — charge cognitive. Préférer mirabégron.", gravite: "DECONSEILLE" },
         { terme: "furosemide", condition: "si HTA seule indication", raison: "Aggrave l'incontinence par polyurie — switch vers thiazidique si possible", gravite: "DECONSEILLE" }
     ],
-    "PAT_040": [
-        { terme: "haloperidol", raison: "Sensibilité neuroleptique sévère en DCL — risque SNM/coma (McKeith 2017)", gravite: "CONTRE-INDICATION ABSOLUE" },
-        { terme: "chlorpromazine", raison: "Antipsychotique typique CI absolue en DCL", gravite: "CONTRE-INDICATION ABSOLUE" },
-        { terme: "clozapine", raison: "Risque de coma documenté en DCL (Watts 2022)", gravite: "CONTRE-INDICATION" },
-        { terme: "risperidone", raison: "Aggravation parkinsonienne, sensibilité neuroleptique en DCL", gravite: "DECONSEILLE" },
-        { terme: "olanzapine", raison: "Sensibilité neuroleptique, sédation excessive en DCL", gravite: "DECONSEILLE" },
-        { terme: "metoclopramide", raison: "Antidopaminergique central — aggravation motrice en DCL", gravite: "CONTRE-INDICATION" },
-        { terme: "biperidene", raison: "Anticholinergique — aggrave cognition et hallucinations en DCL", gravite: "CONTRE-INDICATION" },
-        { terme: "trihexyphenidyle", raison: "Anticholinergique — aggrave cognition et hallucinations en DCL", gravite: "CONTRE-INDICATION" }
-    ]
 };
 
 // ============================================================================
@@ -4166,9 +4159,8 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
         { terme: "lithium", raison: "Polyurie + diabète insipide néphrogénique → aggravation incontinence", gravite: "PRUDENCE" }
     ],
 
-    // PAT_040 — Démence à Corps de Lewy (classes)
-    "PAT_040": [
-        { terme: "antipsychotique", raison: "Sensibilité neuroleptique sévère (30-50% DCL) — risque SNM, coma (McKeith 2017)", gravite: "PRUDENCE EXTREME", exception: "Quétiapine à dose minimale si psychose réfractaire aux IAChE" },
+    // PAT_012 — Démence à Corps de Lewy (classes) — fusionné depuis l'ancien PAT_040 (déduplication automatique par 'terme' lors du merge)
+    "PAT_012": [
         { terme: "anticholinergique", raison: "Aggrave hallucinations et cognition en DCL (Watts 2022)", gravite: "CONTRE-INDICATION" }
     ],
 

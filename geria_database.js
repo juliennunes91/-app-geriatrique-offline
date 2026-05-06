@@ -412,11 +412,11 @@ const MASTER_DB = {
         },
         "PAT_012": {
             "ID_PATHO": "PAT_012",
-            "CIM_10": "G31.8",
-            "NOM_STANDARD": "Démence à Corps de Lewy",
+            "CIM_10": "G31.83",
+            "NOM_STANDARD": "Démence à Corps de Lewy (DCL)",
             "CATEGORIE": "Neurologie",
-            "SYNONYMES": "DEMENCE_CORPS_LEWY, MCL",
-            "BIO_SURVEILLANCE": "BIO_019, BIO_009, BIO_002",
+            "SYNONYMES": "DCL, DLB, MCL, LEWY, Corps de Lewy, Démence corps lewy, DEMENCE_CORPS_LEWY",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_009, BIO_002, BIO_031",
             "SYND_RISQUE": "SYND_013, SYND_009"
         },
         "PAT_013": {
@@ -679,15 +679,6 @@ const MASTER_DB = {
             "CATEGORIE": "Gériatrie",
             "SYNONYMES": "Incontinence, Fuites urinaires, Impériosité mictionnelle, Vessie hyperactive",
             "BIO_SURVEILLANCE": "BIO_003, BIO_004",
-            "SYND_RISQUE": ""
-        },
-        "PAT_040": {
-            "ID_PATHO": "PAT_040",
-            "CIM_10": "G31.83",
-            "NOM_STANDARD": "Démence à Corps de Lewy (DCL)",
-            "CATEGORIE": "Neurologie",
-            "SYNONYMES": "DLB, LEWY, Corps de Lewy, Démence corps lewy, DCL",
-            "BIO_SURVEILLANCE": "",
             "SYND_RISQUE": ""
         },
         "PAT_041": {

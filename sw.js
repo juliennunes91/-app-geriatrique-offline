@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.79 (Phase 26 — Lot C2 pathologies : PAT_030 Soins Palliatifs EVITER (9 classes à déprescrire), PAT_031 Fragilité EVITER (10 classes Beers/STOPP), PAT_035 Bradycardie INITIER ajouté (atropine, isoprénaline, pacemaker ESC 2021))
+// Service Worker - GeriaAssist v0.80 (Phase 27 — Lot C3 pathologies démences : FUSION PAT_040→PAT_012 DCL (doublon supprimé), PAT_011 Alzheimer anti-amyloïdes ajoutés (Lecanemab/Donanemab), PAT_042 démence mixte EVITER enrichi, PAT_010 PRINCIPES démarche systématique 5 étapes)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260506-phase26-pathologies-c2';
-const CACHE_NAME = `geriaassist-v79-${BUILD_ID}`;
+const BUILD_ID = '20260506-phase27-pathologies-c3';
+const CACHE_NAME = `geriaassist-v80-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

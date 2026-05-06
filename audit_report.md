@@ -1,10 +1,10 @@
 # Audit structurel — base GeriaAssist
-Date : 2026-05-06T04:41:54.697Z
+Date : 2026-05-06T10:15:35.795Z
 
 ## Synthèse
 - Médicaments scannés : **556**
 - Biologies : **45**
-- Pathologies : **54** (master) / **54** (rules)
+- Pathologies : **53** (master) / **53** (rules)
 - Syndromes : **51**
 - Erreurs : **0** | Avertissements : **0** | Infos : **90**
 - Total findings : **90**
