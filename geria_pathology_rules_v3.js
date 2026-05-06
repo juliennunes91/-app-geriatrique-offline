@@ -2536,6 +2536,17 @@ const PATHOLOGY_RULES_DB = {
                     { classe: "Antiépileptique (si épilepsie active)", indication: "Maintenir pour éviter crises. Voie SC (midazolam) ou rectale si PO impossible." }
                 ]
             },
+            EVITER: [
+                { classe: "Statines", raison: "Aucun bénéfice en fin de vie (espérance < 6-12 mois) ; arrêt bien toléré (Kutner 2015 JAMA Intern Med)", gravite: "DEPRESCRIRE" },
+                { classe: "Bisphosphonates", raison: "Bénéfice à ≥ 6 mois — inutile si pronostic court", gravite: "DEPRESCRIRE" },
+                { classe: "Antihypertenseurs (si PAS < 110 ou pronostic < 3 mois)", raison: "Risque chute/malaise > bénéfice", gravite: "DEPRESCRIRE" },
+                { classe: "Hypoglycémiants (sulfamides, metformine, insuline basale fortes doses)", raison: "Cible glycémique relâchée, éviter UNIQUEMENT hyperglycémie symptomatique. Risque hypoglycémie majeur en fin de vie.", gravite: "REEVALUER — relâcher cible" },
+                { classe: "Anticoagulants en prévention primaire (FA sans ATCD AVC)", raison: "Saignement > prévention en fin de vie", gravite: "REEVALUER bénéfice/risque" },
+                { classe: "Antidépresseurs si pas de bénéfice perçu", raison: "Sevrage progressif", gravite: "DEPRESCRIRE" },
+                { classe: "Vitamines (D, B12, fer PO) sans carence symptomatique", raison: "Pas de bénéfice symptomatique immédiat", gravite: "DEPRESCRIRE" },
+                { classe: "Béta-bloquants (si pas d'IC/post-IDM aigu)", raison: "Évaluer bénéfice symptomatique vs risque chute/bradycardie", gravite: "REEVALUER" },
+                { classe: "IPP au long cours sans saignement actif/GERD symptomatique", raison: "Pas de bénéfice symptomatique en fin de vie", gravite: "DEPRESCRIRE" }
+            ],
             HYDRATATION: {
                 note: "Hydratation en fin de vie : débat éthique. Hypodermoclyse 500-1000 mL/24h peut soulager soif/confusion par déshydratation. À discuter avec patient/famille."
             }
@@ -2597,7 +2608,19 @@ const PATHOLOGY_RULES_DB = {
                     { bio: "BIO_009", note: "Anémie fréquente et souvent multifactorielle (carence Fe, B12, inflammation, IRC)" },
                     { bio: "BIO_025", note: "Cible glycémique assouplie. Éviter hypoglycémie en priorité." }
                 ]
-            }
+            },
+            EVITER: [
+                { classe: "Benzodiazépines / Z-drugs", raison: "Chutes, confusion, dépendance — STOPP D5 + Beers 2023. Sevrage progressif obligatoire si > 4 sem.", gravite: "EVITER", ref_stopp: "STOPP D5 ; Beers 2023" },
+                { classe: "IPP > 8 semaines sans indication claire", raison: "HypoMg, fractures, C. difficile, B12, néphrite interstitielle — STOPP F1", gravite: "DEPRESCRIRE", ref_stopp: "STOPP F1" },
+                { classe: "Statines (espérance de vie < 2-3 ans, prévention primaire)", raison: "Bénéfice CV non démontré chez sujet fragile/EHPAD ; effets secondaires (myalgies, asthénie, troubles cognitifs) impactant la qualité de vie", gravite: "REEVALUER — discuter arrêt en concertation" },
+                { classe: "Antihypertenseurs (si PAS < 120 mmHg ou vertiges/chutes)", raison: "Sur-traitement antihypertenseur — TA cible plus permissive chez fragile (PAS < 150 acceptable)", gravite: "DEPRESCRIRE le plus hypotenseur en premier", ref_stopp: "STOPP B6" },
+                { classe: "Sulfamides hypoglycémiants (Glibenclamide, Glimépiride, Glipizide, Gliclazide)", raison: "Risque hypoglycémie sévère majeur chez sujet âgé fragile — Glibenclamide formellement à éviter (Beers 2023, STOPP J1). Préférer iDPP4, GLP-1, iSGLT2 ou metformine si DFG > 30.", gravite: "EVITER", ref_stopp: "Beers 2023 ; STOPP J1 ; ADA 2025 §13" },
+                { classe: "Anticholinergiques (ACB cumulé ≥ 3)", raison: "Charge anticholinergique = ↓ cognition, sécheresse, rétention urinaire, chutes, confusion. Réduire score ACB total.", gravite: "REDUIRE LA CHARGE TOTALE", ref_stopp: "STOPP D1-D5 ; Beers 2023" },
+                { classe: "Antipsychotiques > 12 semaines", raison: "Risque AVC + surmortalité chez patients âgés (FDA Black Box). Sevrage progressif si possible.", gravite: "REEVALUER", ref_stopp: "STOPP D3 ; Beers 2023 ; FDA Black Box" },
+                { classe: "AINS au long cours", raison: "UGD, IRA, HTA, IC — fortement déconseillés chez fragile", gravite: "EVITER", ref_stopp: "STOPP F2 ; Beers 2023" },
+                { classe: "Opioïdes forts en chronique sans réévaluation", raison: "Sédation, chutes, constipation, dépression respiratoire", gravite: "REEVALUER régulièrement (durée minimale efficace)" },
+                { classe: "Bisphosphonates (espérance < 1-2 ans)", raison: "Bénéfice anti-fracturaire à ≥ 1-2 ans — discuter arrêt si pronostic court ou intolérance", gravite: "REEVALUER" }
+            ]
         },
         BIOLOGIE: {
             SURVEILLANCE_CIBLE: ["BIO_009", "BIO_023", "BIO_035", "BIO_025", "BIO_003", "BIO_004", "BIO_019", "BIO_021"],
@@ -2863,8 +2886,14 @@ const PATHOLOGY_RULES_DB = {
     "PAT_035": {
         ID: "PAT_035",
         NOM: "Bradycardie",
-        REFERENCE: "ESC Guidelines for Cardiac Pacing 2021 | STOPP/START v3",
+        REFERENCE: "ESC Guidelines for Cardiac Pacing 2021 | ACLS 2020 (AHA) | STOPP/START v3",
         SOURCES_EBM: {
+            "INITIER": {
+                "Mesures non pharmacologiques (déprescription bradycardisants, correction iono, exclusion étio)": "ESC Pacing 2021 §6, IB",
+                "Atropine 0.5 mg IV": "ACLS 2020 + ESC Pacing 2021 §6.1 — bradycardie symptomatique aiguë",
+                "Isoprénaline IV": "ESC Pacing 2021 §6.1, IIaC — si échec atropine, en attente PM temporaire",
+                "Pacemaker (temporaire/définitif)": "ESC Pacing 2021 §7-8, IA — BAV 2-3, dysfonction sinusale symptomatique"
+            },
             "EVITER": {
                 "Bêtabloquants": "STOPP_START_V3 B4",
                 "Vérapamil/Diltiazem": "STOPP_START_V3 B4",
@@ -2875,7 +2904,14 @@ const PATHOLOGY_RULES_DB = {
         },
         TRAITEMENTS: {
             PRINCIPES: [
-                { note: "Bradycardie sévère (< 45/min) ou symptomatique : réévaluer TOUS les chronotropes négatifs. Éviter association de ≥ 2 bradycardisants." }
+                { note: "Bradycardie sévère (< 45/min) ou symptomatique : réévaluer TOUS les chronotropes négatifs. Éviter association de ≥ 2 bradycardisants." },
+                { note: "Démarche systématique : (1) gravité ? FC < 40, instabilité hémodynamique, BAV 2 Mobitz II/3 → urgence ; (2) cause iatrogène ? réversible (arrêt + atropine) ; (3) cause organique ? bilan (TSH, K+, Mg++, ECG, écho) ; (4) symptômes ? syncope/lipothymie/asthénie/IC → indication PM ; (5) DCL/Parkinson + IAChE = surveillance ECG rapprochée." }
+            ],
+            INITIER: [
+                { classe: "Mesures non pharmacologiques systématiques", indication: "PREMIÈRE INTENTION (cause iatrogène = la plus fréquente)", composants: ["Déprescription des chronotropes négatifs (cf. EVITER) — souvent suffisant", "Correction des troubles ioniques (hyperkaliémie, hypomagnésémie, hypocalcémie)", "Exclusion d'une hypothyroïdie (TSH systématique)", "Exclusion d'une hypothermie", "Recherche d'une étiologie infectieuse/ischémique/inflammatoire", "ECG et monitoring si bradycardie < 45 ou symptomatique"], niveau_preuve: "IB" },
+                { classe: "Atropine 0.5 mg IV (bolus, répétable jusqu'à 3 mg)", indication: "Bradycardie symptomatique aiguë (TA basse, conscience altérée, signes d'instabilité)", note: "Effet transitoire (5-10 min). En attente d'une cause réversible ou d'un pacemaker. CI relative en cas de BAV 2 Mobitz II ou BAV 3 (effet paradoxal possible).", niveau_preuve: "IB" },
+                { classe: "Isoprénaline 0.02-0.06 µg/kg/min IV (en USIC)", indication: "Échec atropine, en attente PM temporaire", note: "Béta-agoniste pur — surveillance scope, ischémie. Préférer pacemaker dès que possible.", niveau_preuve: "IIaC" },
+                { classe: "Pacemaker temporaire (sonde transveineuse) puis définitif", indication: "BAV 2 Mobitz II / BAV 3 / BAV 1 + bloc bifasciculaire / Dysfonction sinusale symptomatique / Bradycardie iatrogène irréversible (ex. amiodarone non substituable)", note: "ESC Pacing 2021 Class I. Chez sujet âgé : balance bénéfice/risque (espérance de vie, fragilité, complications procédurales) à discuter en équipe.", niveau_preuve: "IA" }
             ],
             EVITER: [
                 { classe: "Bêtabloquants", raison: "Chronotrope négatif — aggravation bradycardie", ref: "STOPP B4" },

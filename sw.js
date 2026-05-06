@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.78 (Phase 25 — Lot C1 pathologies : PAT_013 DFT enrichissement substantiel (5 INITIER/7 EVITER/5 BIO REGLES), PAT_022 Asthme REF (SPLF/HAS/ERS-ATS), PAT_023 BPCO REF (SPLF/HAS/IMPACT/ETHOS), PAT_009 Hypotension EVITER ajouté)
+// Service Worker - GeriaAssist v0.79 (Phase 26 — Lot C2 pathologies : PAT_030 Soins Palliatifs EVITER (9 classes à déprescrire), PAT_031 Fragilité EVITER (10 classes Beers/STOPP), PAT_035 Bradycardie INITIER ajouté (atropine, isoprénaline, pacemaker ESC 2021))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260505-phase25-pathologies-c1';
-const CACHE_NAME = `geriaassist-v78-${BUILD_ID}`;
+const BUILD_ID = '20260506-phase26-pathologies-c2';
+const CACHE_NAME = `geriaassist-v79-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
