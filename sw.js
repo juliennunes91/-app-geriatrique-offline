@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.82 (Phase 29 — Lot P1 ISRS : standardisation ddi_interact_v2 (12-15 classes par ISRS), Fluoxetine BIO_031 ajouté, Paroxetine BIO_031 ajouté, Sertraline BIO_030 retiré (DDI contextuelle), spécificités CYP par molécule)
+// Service Worker - GeriaAssist v0.83 (Phase 30 — Lot P2 IRSN : standardisation ddi_interact_v2 (12-14 classes par IRSN), Milnacipran/Desvenlafaxine bio_cible enrichi (Na+/transaminases/créat), Venlafaxine BIO_031 ajouté, Duloxetine spécificité CYP1A2 puissants CI)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260507-phase29-psychotropes-isrs';
-const CACHE_NAME = `geriaassist-v82-${BUILD_ID}`;
+const BUILD_ID = '20260507-phase30-psychotropes-irsn';
+const CACHE_NAME = `geriaassist-v83-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

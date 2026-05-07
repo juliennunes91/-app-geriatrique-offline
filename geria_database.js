@@ -8596,11 +8596,26 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "> 90 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Bilan hépatique (CI si insuffisance hépatique) | Glycemie/HbA1c | TA | Ionogramme",
-                    "suivi_periodique": "Bilan hépatique (si symptomes) | TA (consultations) | Glycemie si diabte",
-                    "alerte_clinique": "Ictère → bilan hépatique urgent | Hypertension → TA | SIADH → natrmie",
+                    "ddi_interact": "IMAO (CI), Linézolide (CI), Triptans, Tramadol, autres ISRS/IRSN/ATC/Mirtazapine, AVK, AOD/HBPM, Antiagrégants, AINS, Lithium, MTX, Thiazidiques, Substrats CYP2D6 (modéré : Tamoxifène, Métoprolol)",
+                    "ddi_interact_v2": [
+                              { "classe": "IMAO non-sélectifs / IMAO-B (CONTRE-INDICATION)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et duloxetine.", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "Triptans", "dcis": ["sumatriptan", "zolmitriptan", "rizatriptan", "almotriptan", "naratriptan", "frovatriptan", "eletriptan"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
+                              { "classe": "Tramadol, Pethidine, Oxycodone", "dcis": ["tramadol", "pethidine", "oxycodone"], "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène.", "severite": "warning" },
+                              { "classe": "Autres ISRS/IRSN/Mirtazapine/ATC/Vortioxétine", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "milnacipran", "desvenlafaxine", "mirtazapine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine", "nortriptyline", "doxepine"], "commentaire": "Cumul sérotoninergique.", "severite": "warning" },
+                              { "classe": "AVK", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "↑ INR + risque hémorragique. Surveillance INR.", "severite": "warning" },
+                              { "classe": "AOD / HBPM / HNF / Fondaparinux", "dcis": ["apixaban", "rivaroxaban", "dabigatran", "edoxaban", "enoxaparine", "dalteparine", "tinzaparine", "heparine sodique", "fondaparinux"], "commentaire": "Risque hémorragique digestif.", "severite": "warning" },
+                              { "classe": "Antiagrégants", "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor", "ticlopidine"], "commentaire": "Risque hémorragique digestif.", "severite": "warning" },
+                              { "classe": "AINS", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "Risque UGD majeur. IPP si > 65 ans.", "severite": "danger" },
+                              { "classe": "Lithium", "dcis": ["lithium"], "commentaire": "Syndrome sérotoninergique + ↑ lithiémie potentielle.", "severite": "warning" },
+                              { "classe": "Méthotrexate", "dcis": ["methotrexate"], "commentaire": "↑ tox MTX.", "severite": "warning" },
+                              { "classe": "Diurétiques thiazidiques", "dcis": ["hydrochlorothiazide", "indapamide"], "commentaire": "Synergie hyponatrémie/SIADH.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP1A2 puissants — CONTRE-INDICATION (↑ duloxetine x2-6)", "dcis": ["fluvoxamine", "ciprofloxacine", "enoxacine"], "commentaire": "Fluvoxamine, ciprofloxacine, énoxacine = inhibiteurs CYP1A2 puissants → ↑ duloxetine x2-6. CI relative — éviter ou réduire dose duloxétine 50%.", "severite": "danger" },
+                              { "classe": "Substrats CYP2D6 (inhibition modérée par duloxetine)", "dcis": ["tamoxifene", "metoprolol", "codeine", "tramadol", "amitriptyline", "risperidone", "atomoxetine"], "commentaire": "Duloxetine = inhibiteur CYP2D6 modéré. Effet clinique généralement modeste.", "severite": "info" }
+                    ],
+                    "suivi_initial": "Bilan hépatique (CI si insuffisance hépatique) | Glycémie/HbA1c | TA (HTA dose-dépendante) | Ionogramme (Na+)",
+                    "suivi_periodique": "Bilan hépatique (si symptômes) | TA à chaque consultation | Glycémie annuelle si diabète | Natrémie à M1 puis annuelle",
+                    "alerte_clinique": "Ictère → bilan hépatique urgent (CI si IH) | Hypertension → TA + adapter | SIADH → natrémie | Sevrage abrupt mal toléré (vertiges, paresthésies, irritabilité) — décroissance progressive sur 4 sem",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014",
@@ -13436,12 +13451,27 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,13",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "TA | FC | Créatinine/DFG | Ionogramme",
-                    "suivi_periodique": "TA/FC (consultations) | Créatinine (annuelle)",
-                    "alerte_clinique": "HTA → TA | Retention urinaire → examen clinique",
+                    "ddi_interact": "IMAO (CI), Linézolide (CI), Triptans, Tramadol, autres ISRS/IRSN/ATC, AVK, AOD/HBPM, Antiagrégants, AINS, Lithium",
+                    "ddi_interact_v2": [
+                              { "classe": "IMAO non-sélectifs / IMAO-B (CONTRE-INDICATION)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et milnacipran.", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "Triptans", "dcis": ["sumatriptan", "zolmitriptan", "rizatriptan", "almotriptan", "naratriptan", "frovatriptan", "eletriptan"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
+                              { "classe": "Tramadol, Pethidine, Oxycodone", "dcis": ["tramadol", "pethidine", "oxycodone"], "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène.", "severite": "warning" },
+                              { "classe": "Autres ISRS/IRSN/Mirtazapine/ATC/Vortioxétine", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "desvenlafaxine", "mirtazapine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine", "nortriptyline", "doxepine"], "commentaire": "Cumul sérotoninergique.", "severite": "warning" },
+                              { "classe": "AVK", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "↑ INR + risque hémorragique.", "severite": "warning" },
+                              { "classe": "AOD / HBPM / HNF / Fondaparinux", "dcis": ["apixaban", "rivaroxaban", "dabigatran", "edoxaban", "enoxaparine", "dalteparine", "tinzaparine", "heparine sodique", "fondaparinux"], "commentaire": "Risque hémorragique digestif.", "severite": "warning" },
+                              { "classe": "Antiagrégants", "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor", "ticlopidine"], "commentaire": "Risque hémorragique digestif.", "severite": "warning" },
+                              { "classe": "AINS", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "Risque UGD majeur. IPP si > 65 ans.", "severite": "danger" },
+                              { "classe": "Lithium", "dcis": ["lithium"], "commentaire": "Syndrome sérotoninergique + ↑ lithiémie potentielle.", "severite": "warning" },
+                              { "classe": "Diurétiques thiazidiques", "dcis": ["hydrochlorothiazide", "indapamide"], "commentaire": "Synergie hyponatrémie/SIADH.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "TA | FC | Créatinine/DFG | Ionogramme (Na+) | Bilan hépatique baseline",
+                    "suivi_periodique": "TA/FC (consultations) | Créatinine (annuelle) | Natrémie à M1 puis annuelle | Bilan hépatique si symptômes",
+                    "alerte_clinique": "HTA dose-dépendante → TA | Rétention urinaire (effet noradrénergique) → examen clinique | SIADH/hyponatrémie → natrémie | Sevrage abrupt mal toléré (décroissance progressive sur 4 sem)",
                     "bio_cible": [
+                              "BIO_002",
+                              "BIO_013",
+                              "BIO_014",
                               "BIO_003"
                     ],
                     "atb_legere": "",
@@ -19587,30 +19617,29 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "IMAO, Lithium, Tramadol, QT",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Lithium",
-                                        "dcis": [
-                                                  "lithium"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Tramadol",
-                                        "dcis": [
-                                                  "tramadol"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IMAO non-sélectifs / IMAO-B (CONTRE-INDICATION)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et venlafaxine.", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "Triptans", "dcis": ["sumatriptan", "zolmitriptan", "rizatriptan", "almotriptan", "naratriptan", "frovatriptan", "eletriptan"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
+                              { "classe": "Tramadol, Pethidine, Oxycodone", "dcis": ["tramadol", "pethidine", "oxycodone"], "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène.", "severite": "warning" },
+                              { "classe": "Autres ISRS/IRSN/Mirtazapine/ATC/Vortioxétine", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "duloxetine", "milnacipran", "desvenlafaxine", "mirtazapine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine", "nortriptyline", "doxepine"], "commentaire": "Cumul sérotoninergique.", "severite": "warning" },
+                              { "classe": "AVK", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "↑ INR + risque hémorragique.", "severite": "warning" },
+                              { "classe": "AOD / HBPM / HNF / Fondaparinux", "dcis": ["apixaban", "rivaroxaban", "dabigatran", "edoxaban", "enoxaparine", "dalteparine", "tinzaparine", "heparine sodique", "fondaparinux"], "commentaire": "Risque hémorragique digestif.", "severite": "warning" },
+                              { "classe": "Antiagrégants", "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor", "ticlopidine"], "commentaire": "Risque hémorragique digestif.", "severite": "warning" },
+                              { "classe": "AINS", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "Risque UGD majeur. IPP si > 65 ans.", "severite": "danger" },
+                              { "classe": "Lithium", "dcis": ["lithium"], "commentaire": "Syndrome sérotoninergique + ↑ lithiémie potentielle.", "severite": "warning" },
+                              { "classe": "Méthotrexate", "dcis": ["methotrexate"], "commentaire": "↑ tox MTX.", "severite": "warning" },
+                              { "classe": "Diurétiques thiazidiques", "dcis": ["hydrochlorothiazide", "indapamide"], "commentaire": "Synergie hyponatrémie/SIADH.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine"], "commentaire": "↑ exposition venlafaxine — surveillance accrue (HTA, sérotoninergique).", "severite": "warning" },
+                              { "classe": "QT-allongeurs (Venlafaxine = PR)", "dcis": ["amiodarone", "sotalol", "azithromycine", "moxifloxacine", "haloperidol", "methadone"], "commentaire": "Risque QT possible (CredibleMeds PR). Surveillance ECG si association ou cardiopathie.", "severite": "warning" }
                     ],
-                    "suivi_initial": "TA (HTA possible) | FC | Ionogramme (natrmie) | ECG si cardiopathie | Bilan hépatique",
-                    "suivi_periodique": "TA/FC (consultations rgulires) | Natremie ( a M1 puis annuelle) | Bilan hépatique si symptomes",
-                    "alerte_clinique": "HTA → TA | Hyponatremie | Syndrome serotoninergique",
+                    "suivi_initial": "TA (HTA dose-dépendante > 200 mg/j) | FC | Ionogramme (natrémie) | ECG (QTc) si cardiopathie ou QT-allongeur | Bilan hépatique",
+                    "suivi_periodique": "TA/FC à chaque consultation | Natrémie à M1 puis annuelle | Bilan hépatique si symptômes | ECG si modif associations",
+                    "alerte_clinique": "HTA dose-dépendante → TA + adapter dose | Hyponatrémie/SIADH | Syndrome sérotoninergique | Sevrage abrupt mal toléré (vertiges, paresthésies) — décroissance progressive sur 4 sem",
                     "bio_cible": [
                               "BIO_002",
                               "BIO_013",
-                              "BIO_014"
+                              "BIO_014",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -21311,36 +21340,29 @@ const MASTER_DB = {
                     "bhe": "0",
                     "qt_risque": "Faible",
                     "albumine": "30%",
-                    "ddi_interact": "IMAO (CI absolue), ISRS (syndrome sérotoninergique), Tramadol",
+                    "ddi_interact": "IMAO (CI), Linézolide (CI), Triptans, Tramadol, autres ISRS/IRSN/ATC, AVK, AOD/HBPM, Antiagrégants, AINS, Lithium, MTX, Thiazidiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "syndrome sérotoninergique",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Tramadol",
-                                        "dcis": [
-                                                  "tramadol"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IMAO non-sélectifs / IMAO-B (CONTRE-INDICATION)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et desvenlafaxine.", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "Triptans", "dcis": ["sumatriptan", "zolmitriptan", "rizatriptan", "almotriptan", "naratriptan", "frovatriptan", "eletriptan"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
+                              { "classe": "Tramadol, Pethidine, Oxycodone", "dcis": ["tramadol", "pethidine", "oxycodone"], "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène.", "severite": "warning" },
+                              { "classe": "Autres ISRS/IRSN/Mirtazapine/ATC/Vortioxétine", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "mirtazapine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine", "nortriptyline", "doxepine"], "commentaire": "Cumul sérotoninergique.", "severite": "warning" },
+                              { "classe": "AVK", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "↑ INR + risque hémorragique.", "severite": "warning" },
+                              { "classe": "AOD / HBPM / HNF / Fondaparinux", "dcis": ["apixaban", "rivaroxaban", "dabigatran", "edoxaban", "enoxaparine", "dalteparine", "tinzaparine", "heparine sodique", "fondaparinux"], "commentaire": "Risque hémorragique digestif.", "severite": "warning" },
+                              { "classe": "Antiagrégants", "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor", "ticlopidine"], "commentaire": "Risque hémorragique digestif.", "severite": "warning" },
+                              { "classe": "AINS", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "Risque UGD majeur. IPP si > 65 ans.", "severite": "danger" },
+                              { "classe": "Lithium", "dcis": ["lithium"], "commentaire": "Syndrome sérotoninergique + ↑ lithiémie potentielle.", "severite": "warning" },
+                              { "classe": "Méthotrexate", "dcis": ["methotrexate"], "commentaire": "↑ tox MTX.", "severite": "warning" },
+                              { "classe": "Diurétiques thiazidiques", "dcis": ["hydrochlorothiazide", "indapamide"], "commentaire": "Synergie hyponatrémie/SIADH.", "severite": "warning" }
                     ],
-                    "suivi_initial": "Natrémie | PA | ECG si facteurs QT",
-                    "suivi_periodique": "Natrémie à J14 puis trimestrielle | PA",
-                    "alerte_clinique": "Hyponatrémie | Syndrome sérotoninergique | Syndrome d'arrêt",
+                    "suivi_initial": "Natrémie | TA (HTA possible) | Bilan hépatique | ECG si facteurs QT",
+                    "suivi_periodique": "Natrémie à J14 puis trimestrielle puis annuelle | TA à chaque consultation | Bilan hépatique si symptômes",
+                    "alerte_clinique": "Hyponatrémie/SIADH | HTA dose-dépendante (surtout > 50 mg/j) | Syndrome sérotoninergique | Sevrage abrupt mal toléré (décroissance progressive sur 4 sem)",
                     "bio_cible": [
-                              "BIO_001",
-                              "BIO_019"
+                              "BIO_002",
+                              "BIO_013",
+                              "BIO_014",
+                              "BIO_003"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
