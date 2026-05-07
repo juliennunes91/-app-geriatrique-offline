@@ -1,5 +1,5 @@
 # Audit structurel — base GeriaAssist
-Date : 2026-05-07T21:24:28.943Z
+Date : 2026-05-07T21:32:46.555Z
 
 ## Synthèse
 - Médicaments scannés : **556**

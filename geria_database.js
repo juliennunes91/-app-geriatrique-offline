@@ -6924,11 +6924,22 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,9",
                     "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "Allongement QT - Depresseurs SNC",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | TA",
-                    "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
-                    "alerte_clinique": "Agranulocytose → NFS urgente | Syndrome malin neuroleptique → CPK | Allongement QTc",
+                    "ddi_interact": "QT-allongeurs (Cyamémazine = PR), Autres APP, Antagonistes D2, Lévodopa, Anticholinergiques (ACB=3), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Inducteurs CYP, Inhibiteurs CYP3A4",
+                    "ddi_interact_v2": [
+                              { "classe": "QT-allongeurs (Cyamémazine = PR)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "erythromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "fluconazole", "voriconazole", "citalopram", "escitalopram", "ondansetron", "domperidone", "methadone", "tramadol", "hydroxyzine"], "commentaire": "Cumul QT — surveillance ECG. CI Pimozide/Thioridazine (RE).", "severite": "warning" },
+                              { "classe": "Autres antipsychotiques (cumul QT + extrapyramidal)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "fluphenazine", "perphenazine", "trifluoperazine", "pimozide", "thioridazine", "loxapine", "sulpiride", "tiapride", "amisulpride", "risperidone", "olanzapine", "quetiapine", "clozapine", "aripiprazole"], "commentaire": "Cumul antipsychotique — éviter sauf transition.", "severite": "danger" },
+                              { "classe": "Antagonistes dopaminergiques (cumul EPS)", "dcis": ["metoclopramide", "domperidone", "metopimazine"], "commentaire": "Cumul antagonisme D2 → ↑ extrapyramidal.", "severite": "warning" },
+                              { "classe": "Lévodopa (antagonisme — ÉVITER en Parkinson)", "dcis": ["levodopa", "carbidopa", "benserazide"], "commentaire": "Antagonisme dopaminergique → ↓ efficacité antiparkinsonienne. ÉVITER.", "severite": "danger" },
+                              { "classe": "Anticholinergiques (cumul ACB) — Cyamémazine ACB=3", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "oxybutynine", "tolterodine", "fesoterodine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "paroxetine"], "commentaire": "Cyamémazine ACB=3 (anticholinergique fort). Cumul à ÉVITER : confusion, sécheresse, rétention urinaire, chutes.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "clorazepate", "zolpidem", "zopiclone", "morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine"], "commentaire": "Sédation et dépression respiratoire additives.", "severite": "warning" },
+                              { "classe": "Lithium", "dcis": ["lithium"], "commentaire": "Risque syndrome neuroleptique malin.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (hypotension orthostatique)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "doxazosine", "tamsulosine", "alfuzosine", "amlodipine", "hydrochlorothiazide", "furosemide", "indapamide"], "commentaire": "Hypotension orthostatique additive — chutes.", "severite": "warning" },
+                              { "classe": "IMAO non-sélectifs", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "Risque SNM. Délai 14 j.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP (↓ efficacité)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition cyamémazine.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycémie | TA",
+                    "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | TA à chaque consultation",
+                    "alerte_clinique": "Agranulocytose → NFS urgente | Syndrome malin neuroleptique → CPK | Allongement QTc → ECG | Effets anticholinergiques (rétention, confusion, chutes) | Hypotension orthostatique",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_011",
@@ -10444,40 +10455,20 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "",
                     "qt_risque": "?? Risque Connu (KR)",
-                    "ddi_interact": "ISRS, Metoclopramide, Macrolides, QT long",
+                    "ddi_interact": "QT-allongeurs (Halopéridol = KR), Autres APP (cumul QT/EPS), Antagonistes D2, Lévodopa (antagonisme), Anticholinergiques, Sédatifs centraux, Lithium (SNM), Antihypertenseurs (hypotension), IMAO, Inducteurs CYP, Inhibiteurs CYP3A4/2D6",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Metoclopramide",
-                                        "dcis": [
-                                                  "metoclopramide"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Macrolides",
-                                        "dcis": [
-                                                  "erythromycine",
-                                                  "clarithromycine",
-                                                  "azithromycine",
-                                                  "roxithromycine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "QT-allongeurs (Halopéridol = Risque Connu KR)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "erythromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "pristinamycine", "fluconazole", "voriconazole", "posaconazole", "citalopram", "escitalopram", "ondansetron", "domperidone", "methadone", "tramadol", "hydroxyzine"], "commentaire": "Cumul QT — torsades de pointes. ECG (QTc) avant et 1 mois après. CI absolue Pimozide/Thioridazine.", "severite": "danger" },
+                              { "classe": "Autres antipsychotiques (cumul QT + extrapyramidal)", "dcis": ["chlorpromazine", "levomepromazine", "fluphenazine", "perphenazine", "trifluoperazine", "cyamemazine", "pipamperone", "pipotiazine", "loxapine", "thioridazine", "pimozide", "sulpiride", "tiapride", "amisulpride", "flupentixol", "zuclopenthixol", "risperidone", "olanzapine", "quetiapine", "clozapine", "aripiprazole", "paliperidone", "asenapine"], "commentaire": "Cumul antipsychotique — éviter sauf indication forte (transition).", "severite": "danger" },
+                              { "classe": "Antagonistes dopaminergiques (cumul EXTRAPYRAMIDAL)", "dcis": ["metoclopramide", "domperidone", "metopimazine"], "commentaire": "Cumul antagonisme D2 → ↑ syndrome extrapyramidal/parkinsonisme.", "severite": "warning" },
+                              { "classe": "Lévodopa (antagonisme)", "dcis": ["levodopa", "carbidopa", "benserazide"], "commentaire": "Antagonisme dopaminergique → ↓ efficacité antiparkinsonienne. ÉVITER chez Parkinson.", "severite": "danger" },
+                              { "classe": "Anticholinergiques (cumul ACB)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "oxybutynine", "tolterodine", "fesoterodine", "solifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "paroxetine"], "commentaire": "Halopéridol ACB=1 — cumul à surveiller. Confusion, sécheresse, rétention urinaire.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "clorazepate", "temazepam", "lormetazepam", "loprazolam", "zolpidem", "zopiclone", "morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine"], "commentaire": "Sédation et dépression respiratoire additives — chutes, inhalation. Réduire doses.", "severite": "warning" },
+                              { "classe": "Lithium", "dcis": ["lithium"], "commentaire": "Risque syndrome neuroleptique malin (combinaison historique halopéridol + lithium). Surveillance lithiémie + clinique.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (hypotension orthostatique additive)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "amlodipine", "nifedipine", "felodipine", "doxazosine", "tamsulosine", "alfuzosine", "clonidine", "methyldopa", "hydrochlorothiazide", "indapamide", "furosemide"], "commentaire": "Hypotension orthostatique additive — chutes chez sujet âgé. TA debout/couché.", "severite": "warning" },
+                              { "classe": "IMAO non-sélectifs / IMAO-B forte dose", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Risque syndrome neuroleptique malin. Délai 14 j entre arrêt IMAO et halopéridol.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP (↓ efficacité)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition halopéridol → perte efficacité, risque rechute.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants (↑ exposition halopéridol)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "posaconazole", "cobicistat"], "commentaire": "↑ exposition halopéridol — surveillance QT et effets indésirables.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP2D6 puissants (↑ exposition halopéridol)", "dcis": ["fluoxetine", "paroxetine", "bupropion", "duloxetine"], "commentaire": "↑ exposition halopéridol via inhibition CYP2D6 (paroxétine, fluoxétine = puissants). Surveillance.", "severite": "warning" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Ionogramme | Prolactine | Poids/IMC",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Ionogramme (annuel) | Glycemie (annuelle)",
