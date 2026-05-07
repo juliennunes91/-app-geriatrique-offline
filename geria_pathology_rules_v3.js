@@ -3254,6 +3254,10 @@ const PATHOLOGY_RULES_DB = {
             "EVITER": { "Benzodiazépines au long cours": "STOPP B7 — chutes, dépendance, troubles cognitifs" }
         },
         TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "DÉMARCHE DIAGNOSTIQUE : (1) Différenciation TAG vs dépression masquée gériatrique (anhédonie/anhédonisme/symptômes somatiques peuvent dominer chez âgé) — comorbidité fréquente dans 50-60% des TAG du sujet âgé. (2) Différenciation TAG vs anxiété de démence débutante (MoCA < 26 + comportements répétitifs) — le TAG isolé sans déficit cognitif n'apparaît rarement après 65 ans pour la première fois. (3) Exclusion d'une CAUSE ORGANIQUE : hyperthyroïdie (TSH), phéochromocytome (rare), syndrome de sevrage BZD/OH, hypoglycémie répétée, iatrogénie (corticoïdes, β-agonistes, théophylline). (4) Échelles validées : GAD-7 (dépistage), HAM-A (sévérité), GDS-15 (dépression associée). (5) TCC en 1ère intention (efficacité ≥ médicamenteuse en gériatrie, AASM 2020)." },
+                { note: "PHARMACOTHÉRAPIE : Démarrer ISRS à demi-dose habituelle puis titration lente (4 semaines entre paliers). Délai d'action 4-6 semaines. Réévaluer à 3 mois ; durée minimale 12 mois après rémission. ÉVITER absolument BZD au long cours et hydroxyzine — substitution progressive si déjà installées." }
+            ],
             INITIER: [
                 { classe: "Escitalopram (5-10 mg/j)", indication: "1ère intention", titration: "Démarrer 5 mg, augmenter à 4 semaines", surveillance_cardiaque: "QTc (dose max 10 mg chez > 65 ans)", niveau_preuve: "A" },
                 { classe: "Sertraline (25-100 mg/j)", indication: "Alternative ISRS (profil QT favorable)", niveau_preuve: "A" },
@@ -3266,7 +3270,14 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "Hydroxyzine au long cours", raison: "Anticholinergique + QT long", gravite: "EVITER" }
             ]
         },
-        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Natrémie", cible: ">135", note: "Risque SIADH sous ISRS/IRSN"}], REGLES: [] }
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_002", "BIO_019", "BIO_031"],
+            REGLES: [
+                { bio: "BIO_002", nom: "Natrémie", seuils: { bas: { max: 130, note: "Hyponatrémie sous ISRS/IRSN (SIADH) — fréquente chez sujet âgé. Si < 130 : arrêt ISRS, switch buspirone ou autre classe." } }, frequence: "Avant introduction ISRS puis à 1 mois (pic SIADH), puis trimestrielle si stable", syndrome: "SYND_009" },
+                { bio: "BIO_019", nom: "TSH", frequence: "Bilan étiologique initial systématique", note: "Exclure hyperthyroïdie (cause d'anxiété traitable). TSH < 0.4 + symptômes anxiété → bilan thyroïdien complet" },
+                { bio: "BIO_031", nom: "QTc", frequence: "ECG avant escitalopram > 10 mg/j ou citalopram > 20 mg/j (à éviter chez âgé), à 1 mois, puis annuel", note: "Allongement QT dose-dépendant — adapter dose ou switch sertraline (profil QT favorable)", syndrome: "SYND_003" }
+            ]
+        }
     },
     "PAT_045": {
         ID: "PAT_045",
@@ -3326,7 +3337,15 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "Carbamazépine", raison: "Inducteur enzymatique puissant, SIADH, interactions multiples", gravite: "EVITER" }
             ]
         },
-        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Lithiémie", cible: "0.4-0.8 mmol/L", note: "Tous les 3 mois en phase stable"}, {param: "DFG, TSH", cible: "Tous les 6 mois", note: "Toxicité rénale et hypothyroïdie"}], REGLES: [] }
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_029", "BIO_019", "BIO_003", "BIO_005"],
+            REGLES: [
+                { bio: "BIO_029", nom: "Lithiémie", frequence: "À J5 de toute modification de dose, puis trimestrielle si stable. Mensuelle si DFG borderline ou polymédication.", seuils: { cible_geriatrique: { min: 0.4, max: 0.8, note: "Cible âgé 0.4-0.8 mmol/L (vs 0.6-1.0 adulte) — meilleure tolérance, efficacité préservée (Sajatovic 2015)" }, alerte: { min: 1.0, note: "Surdosage : tremblements, troubles digestifs, somnolence — réduire dose 25-50%" }, toxique: { min: 1.5, note: "Toxicité aiguë : confusion, ataxie, fasciculations, troubles ECG — arrêt + hydratation IV + dialyse si > 2.5 ou symptômes graves" } }, syndrome: "SYND_028" },
+                { bio: "BIO_019", nom: "TSH", frequence: "Avant introduction lithium, puis semestrielle (annuelle si stable)", note: "Hypothyroïdie sous lithium (10-30%) — supplémenter LT4, ne pas arrêter lithium si efficace" },
+                { bio: "BIO_003", nom: "Créatinine/DFG", frequence: "Trimestrielle sous lithium (mensuelle si DFG < 60 ou diurétiques associés)", note: "Néphrotoxicité lithium (diabète insipide, IRC). DFG < 30 = relais nécessaire (valproate, lamotrigine)" },
+                { bio: "BIO_005", nom: "Calcémie", frequence: "Annuelle sous lithium", note: "Hypercalcémie/hyperparathyroïdie sous lithium long cours (10-15%)" }
+            ]
+        }
     },
     "PAT_047": {
         ID: "PAT_047",
@@ -3384,7 +3403,18 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "Contention physique au long cours", raison: "Aggrave agitation, risque de blessure", gravite: "EVITER" }
             ]
         },
-        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Ionogramme, créatinine, glycémie, CRP, NFS, BU, ECG", cible: "Bilan étiologique initial", note: ""}], REGLES: [] }
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_001", "BIO_002", "BIO_003", "BIO_005", "BIO_009", "BIO_024", "BIO_025"],
+            REGLES: [
+                { bio: "BIO_002", nom: "Natrémie", seuils: { bas: { max: 130, note: "Hyponatrémie = cause fréquente de delirium chez âgé (thiazidiques, ISRS, carbamazépine, ICV — SIADH). Si < 125 : urgence (correction prudente max 8 mmol/L/24h)" } }, frequence: "Bilan initial systématique + à chaque épisode confusionnel", syndrome: "SYND_009" },
+                { bio: "BIO_001", nom: "Kaliémie", seuils: { bas: { max: 3.0, note: "Hypokaliémie sévère → confusion, troubles du rythme — corriger" }, haut: { min: 5.5, note: "Hyperkaliémie → confusion, troubles du rythme" } }, frequence: "Bilan initial", syndrome: "SYND_011" },
+                { bio: "BIO_003", nom: "Créatinine", frequence: "Bilan initial (IRA fonctionnelle = cause fréquente, déshydratation)", note: "Si créat ↑ vs base → adapter doses des médicaments rénaux + hydratation" },
+                { bio: "BIO_005", nom: "Calcémie", seuils: { haut: { min: 2.6, note: "Hypercalcémie maligne ou primitive = cause traitable de confusion" }, bas: { max: 2.0, note: "Hypocalcémie symptomatique (tétanie, confusion)" } }, frequence: "Bilan initial", syndrome: "SYND_021" },
+                { bio: "BIO_025", nom: "Glycémie", seuils: { bas: { max: 3.5, note: "Hypoglycémie (sulfamides, insuline) = urgence — resucrage + arrêt hypoglycémiant" }, haut: { min: 15, note: "Hyperglycémie majeure / cétoacidose / DKD" } }, frequence: "Capillaire systématique + veineux si anomalie", syndrome: "SYND_017" },
+                { bio: "BIO_009", nom: "Hb", seuils: { bas: { max: 8, note: "Anémie sévère → confusion par hypoxie cérébrale — discuter transfusion" } }, frequence: "Bilan initial", syndrome: "SYND_005" },
+                { bio: "BIO_024", nom: "CRP", seuils: { haut: { min: 50, note: "Syndrome inflammatoire → rechercher infection occulte (urine, poumon, peau, intra-abdo)" } }, frequence: "Bilan initial systématique", syndrome: "SYND_023" }
+            ]
+        }
     },
     "PAT_049": {
         ID: "PAT_049",
@@ -3473,7 +3503,13 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "ISRS/IRSN (sauf bupropion)", raison: "Peuvent aggraver le SJSR", gravite: "PRUDENCE" }
             ]
         },
-        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Ferritine", cible: "> 75 ng/mL", note: "Carence martiale fréquente et curable"}, {param: "Coefficient saturation transferrine", cible: "> 20%", note: ""}], REGLES: [] }
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_020", "BIO_009"],
+            REGLES: [
+                { bio: "BIO_020", nom: "Ferritine", seuils: { bas: { max: 75, note: "Cible thérapeutique SJSR > 75 ng/mL (Allen 2018, AASM 2024 RLS). Si < 75 : supplémentation Fer PO 100-200 mg/j ou IV (Ferinject 1000 mg) — efficacité prouvée sur sévérité SJSR. Coefficient saturation transferrine > 20% à viser." }, alerte: { max: 30, note: "Carence martiale franche → Fer IV à privilégier (résorption PO insuffisante)" } }, frequence: "Avant traitement spécifique + 3 mois après supplémentation Fer + annuelle" },
+                { bio: "BIO_009", nom: "Hb", frequence: "Bilan initial", note: "Anémie ferriprive associée à dépister/traiter" }
+            ]
+        }
     },
     "PAT_052": {
         ID: "PAT_052",

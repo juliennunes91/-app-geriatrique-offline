@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.80 (Phase 27 — Lot C3 pathologies démences : FUSION PAT_040→PAT_012 DCL (doublon supprimé), PAT_011 Alzheimer anti-amyloïdes ajoutés (Lecanemab/Donanemab), PAT_042 démence mixte EVITER enrichi, PAT_010 PRINCIPES démarche systématique 5 étapes)
+// Service Worker - GeriaAssist v0.81 (Phase 28 — Lot C4 pathologies psy/sommeil : PAT_046 Bipolaire BIO REGLES (lithiémie/TSH/créat/Ca++), PAT_048 Delirium BIO REGLES (Na+/K+/créat/Ca++/glycémie/Hb/CRP), PAT_051 SJSR ferritine, PAT_044 TAG PRINCIPES + BIO REGLES — Phase C complète)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260506-phase27-pathologies-c3';
-const CACHE_NAME = `geriaassist-v80-${BUILD_ID}`;
+const BUILD_ID = '20260507-phase28-pathologies-c4-final';
+const CACHE_NAME = `geriaassist-v81-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
