@@ -12605,16 +12605,18 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "90",
                     "qt_risque": "Risque Etabli (RE)",
-                    "ddi_interact": "Alcool, Anticholinergiques, QT-prolongateurs, IMAO",
+                    "ddi_interact": "QT-allongeurs (Loxapine = RE — Risque ÉTABLI), Autres APP, Antagonistes D2, Lévodopa (DCL EVITER), Anticholinergiques (ACB=2), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Inducteurs CYP",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "QT-allongeurs (Loxapine = Risque ÉTABLI RE)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "citalopram", "escitalopram", "trazodone", "ondansetron", "haloperidol", "methadone", "hydroxyzine"], "commentaire": "Loxapine = QT RE. Cumul à éviter. CI Pimozide/Thioridazine.", "severite": "danger" },
+                              { "classe": "Autres antipsychotiques (cumul QT + EPS)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "levomepromazine", "perphenazine", "trifluoperazine", "pimozide", "thioridazine", "sulpiride", "tiapride", "amisulpride", "olanzapine", "quetiapine", "risperidone", "clozapine", "aripiprazole"], "commentaire": "Cumul antipsychotique.", "severite": "danger" },
+                              { "classe": "Antagonistes D2 (cumul EPS)", "dcis": ["metoclopramide", "domperidone", "metopimazine"], "commentaire": "Cumul antagonisme D2 → ↑ EPS.", "severite": "warning" },
+                              { "classe": "Lévodopa — ÉVITER en Parkinson/DCL", "dcis": ["levodopa", "carbidopa", "benserazide"], "commentaire": "Antagonisme dopaminergique.", "severite": "danger" },
+                              { "classe": "Anticholinergiques (Loxapine ACB=2 — cumul à éviter)", "dcis": ["amitriptyline", "clomipramine", "doxepine", "oxybutynine", "tolterodine", "atropine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "paroxetine"], "commentaire": "Cumul ACB.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool)", "dcis": ["alprazolam", "lorazepam", "diazepam", "zolpidem", "morphine", "tramadol", "alcool"], "commentaire": "Sédation cumulée — chutes (loxapine = sédative).", "severite": "warning" },
+                              { "classe": "Lithium", "dcis": ["lithium"], "commentaire": "Risque SNM.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (hypotension orthostatique)", "dcis": ["enalapril", "ramipril", "doxazosine", "tamsulosine", "amlodipine", "hydrochlorothiazide", "furosemide"], "commentaire": "Hypotension orthostatique additive.", "severite": "warning" },
+                              { "classe": "IMAO non-sélectifs", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "Risque SNM. Délai 14 j.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP (↓ efficacité)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition loxapine.", "severite": "warning" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Poids/IMC",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie (annuelle)",
@@ -15188,44 +15190,16 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "98",
                     "qt_risque": "Risque Etabli (RE) - CI si QTc > 450ms",
-                    "ddi_interact": "Macrolides (CI +++), Azoles antifongiques (CI), Alcool, QT-prolongateurs, Inhibiteurs CYP3A4/1A2",
+                    "ddi_interact": "INHIBITEURS CYP3A4 PUISSANTS = CI ABSOLUE (Pimozide = QT RE strict — torsades de pointes documentées). Tous les QT-allongeurs CI relative. Antagonistes D2 cumul EPS. Anticholinergiques cumul ACB=2. Sédatifs centraux. Lévodopa antagonisme. IMAO CI.",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Macrolides",
-                                        "dcis": [
-                                                  "erythromycine",
-                                                  "clarithromycine",
-                                                  "azithromycine",
-                                                  "roxithromycine"
-                                        ],
-                                        "commentaire": "CI +++",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Inhibiteurs CYP3A4",
-                                        "dcis": [
-                                                  "ketoconazole",
-                                                  "itraconazole",
-                                                  "voriconazole",
-                                                  "posaconazole",
-                                                  "ritonavir",
-                                                  "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Inhibiteurs CYP3A4 puissants — CONTRE-INDICATION ABSOLUE", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "clarithromycine", "erythromycine", "fluvoxamine", "nefazodone", "cobicistat"], "commentaire": "Pimozide = substrat CYP3A4 majeur. Inhibiteurs puissants → ↑ pimozide → torsades de pointes mortelles. CONTRE-INDICATION ABSOLUE (RCP, FDA Black Box). Aussi : jus de pamplemousse à éviter.", "severite": "danger" },
+                              { "classe": "QT-allongeurs (Pimozide = Risque ÉTABLI RE — torsades documentées)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "fluconazole", "citalopram", "escitalopram", "trazodone", "ondansetron", "domperidone", "methadone", "haloperidol", "chlorpromazine", "thioridazine", "hydroxyzine"], "commentaire": "Pimozide = QT RE (Risque ÉTABLI). CI association toute molécule QT-allongeuse. CI si QTc > 450 ms (RCP). ECG OBLIGATOIRE avant + tous les 3-6 mois.", "severite": "danger" },
+                              { "classe": "Autres antipsychotiques (cumul QT + EPS)", "dcis": ["loxapine", "cyamemazine", "levomepromazine", "fluphenazine", "perphenazine", "trifluoperazine", "sulpiride", "tiapride", "amisulpride", "olanzapine", "quetiapine", "risperidone", "clozapine", "aripiprazole", "paliperidone"], "commentaire": "Cumul antipsychotique — éviter sauf transition.", "severite": "danger" },
+                              { "classe": "Antagonistes D2 (cumul EPS sévère)", "dcis": ["metoclopramide", "domperidone", "metopimazine"], "commentaire": "Cumul antagonisme D2 → risque EPS sévère.", "severite": "warning" },
+                              { "classe": "Lévodopa — ÉVITER en Parkinson/DCL", "dcis": ["levodopa", "carbidopa", "benserazide"], "commentaire": "Antagonisme dopaminergique. ÉVITER chez Parkinson/DCL.", "severite": "danger" },
+                              { "classe": "Anticholinergiques (Pimozide ACB=2 — cumul à éviter)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "oxybutynine", "tolterodine", "atropine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "paroxetine"], "commentaire": "Cumul ACB.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes)", "dcis": ["alprazolam", "lorazepam", "diazepam", "zolpidem", "morphine", "tramadol", "alcool"], "commentaire": "Sédation cumulée — chutes.", "severite": "warning" },
+                              { "classe": "IMAO non-sélectifs", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "Risque SNM.", "severite": "danger" }
                     ],
                     "suivi_initial": "ECG (QTc - CI si QTc prolonge) | NFS | Bilan hépatique | Glycemie | Ionogramme | Dosage serique",
                     "suivi_periodique": "ECG (QTc tous les 3 a 6 mois) | NFS (annuelle) | Bilan hépatique (annuel) | Glycemie (annuelle)",
@@ -17666,23 +17640,17 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "40",
                     "qt_risque": "Risque Conditionnel (CR)",
-                    "ddi_interact": "QT-prolongateurs, Alcool, Antiacides (absorption)",
+                    "ddi_interact": "QT-allongeurs (Sulpiride = CR), Autres APP, Antagonistes D2 (cumul EPS + hyperprolactinémie), Lévodopa (DCL EVITER), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Antiacides/Sucralfate (↓ absorption), Élimination rénale (adapter dose IRC)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Antiacides",
-                                        "dcis": [
-                                                  "antiacides"
-                                        ],
-                                        "commentaire": "absorption",
-                                        "severite": "warning"
+                              { "classe": "QT-allongeurs (Sulpiride = CR — risque dose-dépendant, accumulation IRC)", "dcis": ["amiodarone", "sotalol", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "citalopram", "escitalopram", "trazodone", "ondansetron", "haloperidol", "methadone", "hydroxyzine"], "commentaire": "Cumul QT — surveillance ECG. Élimination rénale → adapter dose si IRC.", "severite": "warning" },
+                              { "classe": "Autres antipsychotiques (cumul QT + EPS)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "pimozide", "thioridazine", "tiapride", "amisulpride", "olanzapine", "quetiapine", "risperidone", "clozapine", "aripiprazole"], "commentaire": "Cumul antipsychotique. Sulpiride/Tiapride/Amisulpride = benzamides similaires.", "severite": "danger" },
+                              { "classe": "Antagonistes D2 (cumul EPS + hyperprolactinémie)", "dcis": ["metoclopramide", "domperidone", "metopimazine"], "commentaire": "Sulpiride = effet pro-prolactine marqué. Cumul à éviter.", "severite": "warning" },
+                              { "classe": "Lévodopa — ÉVITER en Parkinson/DCL", "dcis": ["levodopa", "carbidopa", "benserazide"], "commentaire": "Antagonisme dopaminergique sélectif.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool)", "dcis": ["alprazolam", "lorazepam", "diazepam", "zolpidem", "morphine", "tramadol", "alcool"], "commentaire": "Sédation cumulée — chutes (sulpiride = peu sédatif vs autres FGA).", "severite": "warning" },
+                              { "classe": "Lithium", "dcis": ["lithium"], "commentaire": "Risque SNM + neurotoxicité.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (hypotension orthostatique)", "dcis": ["enalapril", "doxazosine", "tamsulosine", "amlodipine", "hydrochlorothiazide", "furosemide"], "commentaire": "Hypotension orthostatique additive.", "severite": "warning" },
+                              { "classe": "IMAO non-sélectifs", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "Risque SNM.", "severite": "danger" },
+                              { "classe": "Antiacides / Sucralfate (↓ absorption sulpiride)", "dcis": ["maalox", "rennie", "phosphalugel", "sucralfate"], "commentaire": "↓ absorption sulpiride. Décaler ≥ 2 h.", "severite": "warning"
                               }
                     ],
                     "suivi_initial": "NFS | Bilan renal (elimination renale exclusive) | ECG (QTc) | Prolactine | Glycemie | Bilan lipidique",

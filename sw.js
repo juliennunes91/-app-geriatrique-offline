@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.89 (Phase 37 — Miansérine (analogue mirtazapine, agranulocytose rare 1/2000), BZD demi-vie longue Beers EVITER : Clorazepate/Prazepam/Nordazepam/Chlordiazepoxide — bloc DDI standard + alerte EVITER chez âgé)
+// Service Worker - GeriaAssist v0.90 (Phase 38 — FGA secondaires : Pimozide (CYP3A4 puissants CI ABSOLUE — torsades RE), Loxapine (RE), Sulpiride (CR + élimination rénale))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase37-mianserine-bzd-secondaires';
-const CACHE_NAME = `geriaassist-v89-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase38-fga-secondaires';
+const CACHE_NAME = `geriaassist-v90-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
