@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.87 (Phase 35 — Lot P6 ATC partiel (3 ATC majeures) : Amitriptyline/Clomipramine/Imipramine — bloc DDI commun ATC tertiaires (IMAO CI, sérotoninergique, anticholinergique cumul ACB=3 Beers/STOPP, QT, sympathomimétiques crise HTA, CYP2D6, AINS hémorragie))
+// Service Worker - GeriaAssist v0.88 (Phase 36 — Lot P7 partiel : Mirtazapine (NaSSA — sédation paradoxale faible dose, agranulocytose rare, prise poids), Trazodone (QT RE risque ÉTABLI torsades, priapisme, alpha-bloquant hypotension))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase35-atc-tertiaires';
-const CACHE_NAME = `geriaassist-v87-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase36-mirtazapine-trazodone';
+const CACHE_NAME = `geriaassist-v88-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

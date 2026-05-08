@@ -13573,11 +13573,22 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,85",
                     "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "Anticholinergique leger",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "NFS (agranulocytose rare) | Bilan hépatique | Glycemie/HbA1c | Bilan lipidique (prise de poids frquente)",
-                    "suivi_periodique": "NFS (si fievre/angine  agranulocytose) | Bilan lipidique + glycémie (annuels) | Bilan hépatique (annuel) | Poids (a chaque consultation)",
-                    "alerte_clinique": "Fievre + angine → NFS urgente (agranulocytose rare) | Ictère → bilan hépatique urgent",
+                    "ddi_interact": "IMAO non-sélectifs (CI ABSOLUE), Linézolide (CI), ISRS/IRSN/Trazodone/ATC (sérotoninergique), Sédatifs centraux (très sédatif à faible dose), Anticholinergiques (cumul léger ACB=1), QT-allongeurs (PR), Inducteurs CYP3A4 (↓ mirtazapine), Inhibiteurs CYP3A4/2D6/1A2 (↑ mirtazapine), Alcool",
+                    "ddi_interact_v2": [
+                              { "classe": "IMAO non-sélectifs / IMAO-B forte dose — CONTRE-INDICATION ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et mirtazapine.", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "ISRS / IRSN / Trazodone / ATC — sérotoninergique", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "trazodone", "vortioxetine", "amitriptyline", "clomipramine", "imipramine", "nortriptyline", "doxepine"], "commentaire": "Cumul sérotoninergique. NB : association mirtazapine + venlafaxine (« California Rocket Fuel ») validée en dépression résistante — pas un doublon mais surveillance sérotoninergique.", "severite": "warning" },
+                              { "classe": "Tramadol / Triptans / Pethidine — sérotoninergique", "dcis": ["tramadol", "pethidine", "sumatriptan", "zolmitriptan", "rizatriptan"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool) — sédation MAJORÉE à faible dose", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "alcool"], "commentaire": "Mirtazapine = sédation paradoxalement MAJORÉE à faible dose (15 mg) vs forte dose (45 mg). Sédation cumulée importante — chutes chez âgé.", "severite": "warning" },
+                              { "classe": "Anticholinergiques (Mirtazapine ACB=1 — cumul léger)", "dcis": ["amitriptyline", "clomipramine", "oxybutynine", "tolterodine", "atropine", "biperidene", "diphenhydramine", "promethazine", "hydroxyzine", "paroxetine"], "commentaire": "Mirtazapine ACB=1. Cumul léger.", "severite": "info" },
+                              { "classe": "QT-allongeurs (Mirtazapine = PR)", "dcis": ["amiodarone", "sotalol", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "haloperidol", "ondansetron", "methadone"], "commentaire": "Cumul QT — surveillance ECG.", "severite": "warning" },
+                              { "classe": "Inducteurs CYP3A4 (↓ mirtazapine)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition mirtazapine.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4/2D6/1A2 puissants (↑ mirtazapine)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "fluvoxamine", "fluoxetine", "paroxetine"], "commentaire": "↑ exposition mirtazapine — surveillance sédation.", "severite": "warning" },
+                              { "classe": "Antipsychotiques (sédation cumulée)", "dcis": ["haloperidol", "chlorpromazine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation additive. Mirtazapine + Clozapine : risque agranulocytose cumulé (rare mais documenté) — surveillance NFS.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "NFS (agranulocytose rare) | Bilan hépatique | Glycémie/HbA1c | Bilan lipidique (prise de poids fréquente) | Ionogramme (Na+ — SIADH possible)",
+                    "suivi_periodique": "NFS (si fièvre/angine — agranulocytose rare) | Bilan lipidique + glycémie (annuels) | Bilan hépatique (annuel) | Poids à chaque consultation | Natrémie (à M1 puis annuelle)",
+                    "alerte_clinique": "Fièvre + angine → NFS urgente (agranulocytose rare 1/1000) | Ictère → bilan hépatique urgent | Prise de poids importante (effet H1 + 5-HT2C) | SIADH/hyponatrémie | Sédation paradoxalement plus marquée à faible dose (15 mg) — préférer 30-45 mg si prescription antidépressive",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_011",
@@ -18940,41 +18951,23 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "89-95",
                     "qt_risque": "Risque Etabli (RE)",
-                    "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), Alcool, QT-prolongateurs, Carbamazepine",
+                    "ddi_interact": "IMAO non-sélectifs (CI ABSOLUE), Linézolide (CI), QT-allongeurs (Trazodone = RE — risque ÉTABLI torsades), ISRS/IRSN/Mirtazapine/ATC (sérotoninergique), Sédatifs centraux (très sédatif), Antihypertenseurs (hypotension), Inducteurs/Inhibiteurs CYP3A4, Alcool",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "syndrome serotoninergique",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Carbamazepine",
-                                        "dcis": [
-                                                  "carbamazepine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IMAO non-sélectifs / IMAO-B forte dose — CONTRE-INDICATION ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et trazodone.", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "QT-allongeurs (Trazodone = Risque ÉTABLI RE — torsades documentées)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "erythromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "fluconazole", "voriconazole", "citalopram", "escitalopram", "ondansetron", "domperidone", "methadone", "haloperidol", "chlorpromazine", "pimozide", "thioridazine", "hydroxyzine"], "commentaire": "Trazodone = QT RE (risque établi torsades de pointes). CI Pimozide/Thioridazine. ECG OBLIGATOIRE avant et 1 mois après. Surveillance K+/Mg++.", "severite": "danger" },
+                              { "classe": "ISRS / IRSN / Mirtazapine / ATC — sérotoninergique", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "mirtazapine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine", "nortriptyline", "doxepine"], "commentaire": "Cumul sérotoninergique. NB : trazodone basse dose (50-100 mg) souvent associée à ISRS pour insomnie/anxiété — surveillance.", "severite": "warning" },
+                              { "classe": "Tramadol / Triptans / Pethidine — sérotoninergique", "dcis": ["tramadol", "pethidine", "sumatriptan", "zolmitriptan"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool) — sédation MAJEURE", "dcis": ["alprazolam", "lorazepam", "diazepam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "alcool"], "commentaire": "Trazodone = très sédative (utilisée pour insomnie). Sédation cumulée importante — chutes chez âgé.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (hypotension orthostatique additive — alpha-bloquant)", "dcis": ["enalapril", "ramipril", "doxazosine", "tamsulosine", "amlodipine", "hydrochlorothiazide", "furosemide", "clonidine"], "commentaire": "Trazodone = alpha-bloquant. Hypotension orthostatique cumulée — chutes.", "severite": "warning" },
+                              { "classe": "Inducteurs CYP3A4 (↓ trazodone)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition trazodone.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants (↑ trazodone — toxicité QT)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "fluvoxamine"], "commentaire": "↑ exposition trazodone → toxicité (QT, sédation, hypotension). Réduire dose.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (sédation + QT)", "dcis": ["haloperidol", "chlorpromazine", "quetiapine", "olanzapine", "risperidone"], "commentaire": "Sédation + QT cumulés. Surveillance ECG.", "severite": "warning" },
+                              { "classe": "Anticoagulants/Antiagrégants (risque hémorragique)", "dcis": ["warfarine", "apixaban", "rivaroxaban", "aspirine", "clopidogrel"], "commentaire": "Risque hémorragique (effet sérotoninergique plaquettaire).", "severite": "warning" }
                     ],
-                    "suivi_initial": "ECG (QTc) | Bilan hépatique | Ionogramme (hyponatremie) | NFS",
-                    "suivi_periodique": "ECG (annuel) | Ionogramme natremie (a M1 puis annuelle) | Bilan hépatique (annuel) | NFS (annuelle si traitement prolonge)",
-                    "alerte_clinique": "Allongement QTc → ECG urgent | Hyponatremie (SIADH) → natremie urgente | Hépatotoxicité → bilan hépatique | Priapisme (clinique - urgence urologique si > 4h)",
+                    "suivi_initial": "ECG (QTc) — OBLIGATOIRE | Bilan hépatique | Ionogramme (Na+ — hyponatrémie) | NFS",
+                    "suivi_periodique": "ECG (annuel — risque torsades RE) | Natrémie (à M1 puis annuelle) | Bilan hépatique (annuel) | NFS (annuelle si traitement prolongé)",
+                    "alerte_clinique": "Allongement QTc → ECG urgent (Trazodone = RE risque ÉTABLI torsades) | Hyponatrémie (SIADH) → natrémie urgente | Hépatotoxicité → bilan hépatique | PRIAPISME (urgence urologique si > 4 h — patient à informer) | Hypotension orthostatique (alpha-bloquant) → chutes | Sédation diurne",
                     "bio_cible": [
                               "BIO_002",
                               "BIO_031",
