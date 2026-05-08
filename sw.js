@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.84 (Phase 32 — Lot P4 SGA atypiques (8/9 standardisés) : Risperidone/Quetiapine/Olanzapine/Aripiprazole/Clozapine/Tiapride/Amisulpride/Paliperidone/Asenapine — bloc DDI commun antipsychotiques + spécificités CYP/ACB par molécule)
+// Service Worker - GeriaAssist v0.85 (Phase 33 — Lot P5 BZD/Z-drugs partiel (7/20) : Oxazepam/Lorazepam (préférées chez âgé), Diazepam (Beers EVITER), Alprazolam/Bromazepam (anxiolytiques courants), Zolpidem/Zopiclone (Z-drugs principaux) — bloc DDI commun + spécificités CYP3A4)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase32-psychotropes-sga';
-const CACHE_NAME = `geriaassist-v84-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase33-bzd-zdrugs-partiel';
+const CACHE_NAME = `geriaassist-v85-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
