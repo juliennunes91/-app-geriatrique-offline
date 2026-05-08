@@ -11142,10 +11142,18 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "Faible",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Glycemie capillaire | Créatinine/DFG",
-                    "suivi_periodique": "HbA1c (tous les a 3 mois) | Glycemie capillaire (auto-surveillance) | Bilan renal + ophtalmique + podologique (annuel)",
+                    "ddi_interact": "Sulfamides / Glinides / iSGLT2 / GLP-1 RA / Pioglitazone (hypoglycémie additive — réduire dose insuline 10-20% à introduction d'une autre classe), β-bloquants (masquent symptômes hypo), Corticoïdes (effet hyperglycémiant — adapter dose), Alcool (hypoglycémie nocturne), Sulfamides ATB (Cotrimoxazole — hypoglycémie additive)",
+                    "ddi_interact_v2": [
+                              { "classe": "Antidiabétiques oraux (hypoglycémie additive)", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide", "metformine", "pioglitazone", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin", "sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "alogliptine", "liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Hypoglycémie additive (surtout sulfamides, glinides). À l'introduction d'un nouvel antidiabétique : réduire dose insuline basale 10-20%, surveiller glycémies. iSGLT2 + insuline = risque acidocétose euglycémique si jeûne/sepsis.", "severite": "warning" },
+                              { "classe": "β-bloquants (masquent symptômes hypoglycémie)", "dcis": ["bisoprolol", "metoprolol", "atenolol", "nebivolol", "carvedilol", "propranolol", "sotalol", "timolol"], "commentaire": "Masquent symptômes adrénergiques de l'hypoglycémie (tremblements, tachycardie). β1-sélectifs (bisoprolol, métoprolol, nébivolol) masquent moins. β-bloquants non-sélectifs (propranolol, sotalol, carvédilol) à éviter chez diabétique sous insuline.", "severite": "warning" },
+                              { "classe": "Corticoïdes systémiques (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone", "betamethasone", "hydrocortisone"], "commentaire": "Antagonisme. Adapter dose insuline (souvent +30-50% sous corticothérapie). Surveillance glycémie capillaire rapprochée.", "severite": "warning" },
+                              { "classe": "Alcool (potentialise hypoglycémie nocturne)", "dcis": ["alcool"], "commentaire": "Alcool ↓ néoglucogénèse hépatique → hypoglycémies retardées (parfois nocturnes, plusieurs heures après consommation). Éviter à jeun.", "severite": "warning" },
+                              { "classe": "Sulfamides ATB (Cotrimoxazole — hypoglycémie additive chez âgé)", "dcis": ["sulfamethoxazole", "trimethoprime", "cotrimoxazole"], "commentaire": "Cotrimoxazole = hypoglycémie additive chez âgé sous insuline (Juurlink CMAJ 2014). Surveillance glycémie + adapter dose.", "severite": "warning" },
+                              { "classe": "ARA2 / IEC (effet hypoglycémiant additif modeste)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan", "telmisartan"], "commentaire": "Effet hypoglycémiant additif modeste (↑ sensibilité insuline). Surveillance.", "severite": "info" },
+                              { "classe": "IMAO (potentialisent hypoglycémie)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "IMAO peuvent potentialiser effet hypoglycémiant insuline.", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Glycémie capillaire (profil) | Créatinine/DFG | Bilan ophtalmique + podologique baseline | TA",
+                    "suivi_periodique": "HbA1c (tous les 3 mois — cibles assouplies chez âgé : 7-7.5% robuste, 7-8% complexe, 7.5-8.5% très fragile per ADA 2025 §13) | Glycémie capillaire auto-surveillance (au moins 4 contrôles/sem chez âgé sous insuline basale) | Bilan rénal + ophtalmique + podologique (annuel)",
                     "alerte_clinique": "HYPOGLYCÉMIE : signes précoces (sueurs, tremblements, palpitations, faim, asthénie) → glycémie capillaire urgente. Hypoglycémie sévère (confusion, troubles vigilance, convulsions, coma) chez âgé souvent ATYPIQUE (chute, troubles comportement, syncope). Resucrage 15 g (3 sucres ou 100 mL jus) PO si conscient ; sinon GLUCAGON 1 mg IM/IN (Baqsimi nasal) ou G30 % 30 mL IV. Recontrôler glycémie 15 min. ÉDUCATION : aidants formés, glucagon disponible, glucomètre fiable. Adaptation dose si ≥ 1 hypo/sem.",
                     "bio_cible": [
                               "BIO_026",
@@ -12227,11 +12235,18 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 98 %",
                     "qt_risque": "",
-                    "ddi_interact": "Anticoagulants leger effet",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG | Lipase | Bilan thyroidien si ATCD",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle) | FC (tachycardie possible)",
-                    "alerte_clinique": "Douleur epigastrique → lipase (pancreatite) | Nodule thyroidien → TSH + eechographie",
+                    "ddi_interact": "Insuline / Sulfamides / Glinides (hypoglycémie additive — réduire dose à introduction), Médicaments à absorption sensible (Lévothyroxine, Bisphosphonates, AVK, Digoxine — ralentissement vidange gastrique), iDPP4 (REDONDANCE), Tirzepatide (REDONDANCE — ne pas associer)",
+                    "ddi_interact_v2": [
+                              { "classe": "Insuline / Sulfamides / Glinides — hypoglycémie additive", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive. Titration liraglutide 0.6 → 1.2 → 1.8 mg/j. Réduire dose insuline 10-20% et sulfamide à introduction.", "severite": "warning" },
+                              { "classe": "Médicaments à absorption sensible (ralentissement vidange gastrique)", "dcis": ["levothyroxine", "alendronate", "risedronate", "warfarine", "acenocoumarol", "fluindione", "digoxine", "amoxicilline"], "commentaire": "GLP-1 RA ralentit la vidange gastrique. Surveillance INR sous AVK à introduction. Bisphosphonates : prendre 30 min avant si formes orales.", "severite": "warning" },
+                              { "classe": "iDPP4 — REDONDANCE pharmacologique (déconseillé)", "dcis": ["sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "alogliptine"], "commentaire": "GLP-1 RA + iDPP4 = redondance. Pas de bénéfice prouvé. Choisir l'un ou l'autre.", "severite": "warning" },
+                              { "classe": "Autres GLP-1 RA / Tirzepatide — REDONDANCE", "dcis": ["semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Cumul GLP-1 RA = redondance pharmacologique + risque effets indésirables additifs (nausées, hypoglycémie). NE PAS ASSOCIER.", "severite": "danger" },
+                              { "classe": "iSGLT2 / Metformine (synergie favorable)", "dcis": ["empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin", "metformine"], "commentaire": "Associations RECOMMANDÉES (ESC 2023, ADA 2025 §10) — synergie cardiorénale + perte poids.", "severite": "info" },
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme. Adapter dose ou switch insuline.", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG | Lipase | Bilan thyroïdien (TSH, échographie cervicale si ATCD personnel ou familial — CI relative ATCD MEN-2 ou cancer médullaire thyroïde) | Poids/IMC | TA",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois) | Créatinine (annuelle) | FC (tachycardie modeste +2-3 bpm possible) | Poids à chaque consultation (perte 3-7% attendue) | Lipase si douleurs abdo",
+                    "alerte_clinique": "EFFETS GI fréquents (nausées 25-30%, vomissements 10%, diarrhée 10%) — souvent transitoires, titration lente. PANCRÉATITE rare (lipase si douleurs abdo aiguës — arrêt). CANCER MÉDULLAIRE THYROÏDIEN (CI relative chez patients avec ATCD personnel/familial ou MEN-2 — boîte noire FDA basée sur études rongeurs, peu de signal humain). LITHIASES BILIAIRES (effet de la perte rapide de poids). Référence cardio : LEADER (NEJM 2016 — réduction MACE chez DT2 + maladie CV). Indication ESC 2023/ADA 2025 §10 cardio-prévention DT2 + maladie CV. Aussi : Saxenda 3 mg/j en obésité morbide.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -23264,24 +23279,15 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "99%",
                     "qt_risque": "",
-                    "ddi_interact": "Insuline (risque oedeme + hypoglycemie) | Gemfibrozil (augmente exposition x3 — CI)",
+                    "ddi_interact": "Gemfibrozil (CI ABSOLUE — ↑ exposition x3 via inhibition CYP2C8), Insuline (œdème + hypoglycémie + insuffisance cardiaque), Inducteurs CYP2C8 (Rifampicine — ↓ pioglitazone), Sulfamides/Glinides (hypoglycémie additive), Diurétiques de l'anse (potentialisation rétention hydrique paradoxale)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Insuline",
-                                        "dcis": [
-                                                  "insuline"
-                                        ],
-                                        "commentaire": "risque oedeme + hypoglycemie",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Gemfibrozil",
-                                        "dcis": [
-                                                  "gemfibrozil"
-                                        ],
-                                        "commentaire": "augmente exposition x3 — CI",
-                                        "severite": "danger"
-                              }
+                              { "classe": "Gemfibrozil — CONTRE-INDICATION ABSOLUE", "dcis": ["gemfibrozil"], "commentaire": "Gemfibrozil = inhibiteur CYP2C8 majeur → ↑ pioglitazone x3 → toxicité (œdème, IC, prise poids majeure). CI ABSOLUE (RCP). Switch vers fénofibrate ou autre fibrate si dyslipidémie associée.", "severite": "danger" },
+                              { "classe": "Insuline (œdème + IC + hypoglycémie cumulée)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec"], "commentaire": "Insuline + Pioglitazone = risque rétention hydrique majeur (œdème, IC) + hypoglycémies. À ÉVITER (PROactive trial — FDA Black Box). Si association indispensable : surveillance poids, signes IC, glycémie.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP2C8 (↓ pioglitazone)", "dcis": ["rifampicine", "millepertuis", "phenytoine"], "commentaire": "Rifampicine = inducteur CYP2C8 → ↓ pioglitazone 50% → perte efficacité. Adapter dose ou switch.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants / Glinides (hypoglycémie additive)", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive. Surveillance glycémie + ajuster dose sulfamide/glinide.", "severite": "warning" },
+                              { "classe": "Diurétiques de l'anse (potentialisation rétention hydrique paradoxale)", "dcis": ["furosemide", "bumetanide", "torsemide"], "commentaire": "Pioglitazone = rétention hydrosodée → diurétiques nécessaires si œdème, mais peut masquer IC débutante. Surveillance poids + clinique IC.", "severite": "warning" },
+                              { "classe": "AINS (rétention hydrosodée + IRA additive)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "celecoxib"], "commentaire": "Rétention hydrosodée additive — risque OEdème/décompensation IC.", "severite": "warning" },
+                              { "classe": "Œstrogènes / Contraceptifs oraux (↓ contraceptifs, mais peu pertinent en gériatrie)", "dcis": ["ethinylestradiol"], "commentaire": "↓ efficacité contraception (induction). Peu pertinent chez âgé.", "severite": "info" }
                     ],
                     "suivi_initial": "NFS | Bilan hepatique | ECG | Poids | Recherche IC",
                     "suivi_periodique": "Bilan hepatique trimestriel | Poids | Signes d'IC | Densitometrie si FdR osteoporose",
@@ -23312,28 +23318,17 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "70-80% (liaison concentration-dependante)",
                     "qt_risque": "",
-                    "ddi_interact": "Rifampicine (diminue efficacite — inducteur P-gp) | Sulfamides, Insuline (risque hypo si association)",
+                    "ddi_interact": "Rifampicine (↓ exposition linagliptine — inducteur P-gp/CYP3A4), Insuline/Sulfamides/Glinides (hypoglycémie additive — surtout sulfamides), GLP-1 RA (REDONDANCE — déconseillé)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Rifampicine",
-                                        "dcis": [
-                                                  "rifampicine"
-                                        ],
-                                        "commentaire": "diminue efficacite — inducteur P-gp",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Insuline",
-                                        "dcis": [
-                                                  "insuline"
-                                        ],
-                                        "commentaire": "risque hypo si association",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Inducteurs P-gp / CYP3A4 (↓ exposition linagliptine)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition linagliptine 40% (interaction rifampicine documentée). Adapter ou switch.", "severite": "warning" },
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive — surtout sulfamides)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Linagliptine seule = peu d'hypoglycémie. Association à sulfamide ou insuline = risque hypoglycémie (surtout glibenclamide). Réduire dose sulfamide/insuline 25-50% à l'introduction.", "severite": "warning" },
+                              { "classe": "GLP-1 RA — REDONDANCE pharmacologique (déconseillé)", "dcis": ["liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "iDPP4 + GLP-1 RA = redondance (les iDPP4 augmentent les GLP-1 endogènes, les GLP-1 RA agissent directement). Pas de bénéfice prouvé, redondance pharmacologique. Choisir l'un ou l'autre.", "severite": "warning" },
+                              { "classe": "Metformine / iSGLT2 (synergie favorable)", "dcis": ["metformine", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin"], "commentaire": "Associations RECOMMANDÉES — synergie sans hypoglycémie majeure.", "severite": "info" },
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme. Adapter dose.", "severite": "info" }
                     ],
-                    "suivi_initial": "HbA1c | Glycemie",
-                    "suivi_periodique": "HbA1c trimestriel",
-                    "alerte_clinique": "Tres bonne tolerance geriatrique — pas d'ajustement renal (FORTA-A) | Rare: pancreatite, arthralgie | Prefere aux sulfamides si IRC",
+                    "suivi_initial": "HbA1c | Glycémie | Lipase si symptômes abdo (pancréatite rare)",
+                    "suivi_periodique": "HbA1c trimestriel à semestriel | Pas de surveillance rénale spécifique (élimination biliaire)",
+                    "alerte_clinique": "Linagliptine = iDPP4 PRÉFÉRÉE chez âgé/IRC selon ADA 2025 §13, EASD 2024 — PAS d'ajustement rénal (élimination biliaire à 95%). Rare : pancréatite (surveillance lipase si douleurs abdo aiguës), arthralgies (FDA 2015 — réversibles à l'arrêt). Lésions bulleuses (pemphigoïde bulleuse — alerte ANSM 2018, classe iDPP4). Cibles HbA1c assouplies chez âgé. Préférée aux sulfamides chez âgé/IRC. Référence cardio : CARMELINA (NEJM 2019 — sécurité CV neutre).",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026"

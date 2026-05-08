@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.91 (Phase 39 — Antidiabétiques (3 entrées principales) : Glibenclamide (sulfamide à éviter chez âgé ADA/EASD/HAS, Miconazole CI ABSOLUE), Empagliflozin (iSGLT2 référence cardio-rénale EMPA-REG/EMPEROR/EMPA-KIDNEY, ACIDOCÉTOSE EUGLYCÉMIQUE, fasciite Fournier, péri-op), Sémaglutide (GLP-1 SUSTAIN-6/STEP/PIONEER, vidange gastrique ralentie), Metformine (acidose lactique, contraste iodé HAS 2017, B12 long cours))
+// Service Worker - GeriaAssist v0.92 (Phase 40 — Antidiabétiques additionnels : Pioglitazone (Gemfibrozil CI ABSOLUE, IC FDA Black Box PROactive, fractures), Linagliptine (iDPP4 préférée chez âgé/IRC ADA 2025, élimination biliaire, CARMELINA, REDONDANCE GLP-1), Liraglutide (GLP-1 LEADER, CI MEN-2/cancer médullaire, lithiases biliaires, REDONDANCE iDPP4/autres GLP-1), Insuline glargine (référence basale, hypoglycémie additive, β-bloquants masquent, corticoïdes antagonisme, Cotrimoxazole))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase39-antidiabetiques-1';
-const CACHE_NAME = `geriaassist-v91-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase40-antidiabetiques-2';
+const CACHE_NAME = `geriaassist-v92-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
