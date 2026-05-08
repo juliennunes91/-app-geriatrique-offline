@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.90 (Phase 38 — FGA secondaires : Pimozide (CYP3A4 puissants CI ABSOLUE — torsades RE), Loxapine (RE), Sulpiride (CR + élimination rénale))
+// Service Worker - GeriaAssist v0.91 (Phase 39 — Antidiabétiques (3 entrées principales) : Glibenclamide (sulfamide à éviter chez âgé ADA/EASD/HAS, Miconazole CI ABSOLUE), Empagliflozin (iSGLT2 référence cardio-rénale EMPA-REG/EMPEROR/EMPA-KIDNEY, ACIDOCÉTOSE EUGLYCÉMIQUE, fasciite Fournier, péri-op), Sémaglutide (GLP-1 SUSTAIN-6/STEP/PIONEER, vidange gastrique ralentie), Metformine (acidose lactique, contraste iodé HAS 2017, B12 long cours))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase38-fga-secondaires';
-const CACHE_NAME = `geriaassist-v90-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase39-antidiabetiques-1';
+const CACHE_NAME = `geriaassist-v91-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
