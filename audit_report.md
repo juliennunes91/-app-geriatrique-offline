@@ -1,16 +1,16 @@
 # Audit structurel — base GeriaAssist
-Date : 2026-05-08T16:48:57.853Z
+Date : 2026-05-08T16:53:04.097Z
 
 ## Synthèse
 - Médicaments scannés : **556**
 - Biologies : **45**
 - Pathologies : **53** (master) / **53** (rules)
 - Syndromes : **51**
-- Erreurs : **0** | Avertissements : **0** | Infos : **90**
-- Total findings : **90**
+- Erreurs : **0** | Avertissements : **0** | Infos : **88**
+- Total findings : **88**
 
 
-## MED (89)
+## MED (87)
 
 1. [INF] **[STR-MED-COH-CPK]** MED[20] Amisulpride
    - Texte mentionne CPK/rhabdo/myalgies mais BIO_018 absent
@@ -130,65 +130,61 @@ Date : 2026-05-08T16:48:57.853Z
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence"
 59. [INF] **[STR-MED-POSREN]** MED[233] Imipramine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence"
-60. [INF] **[STR-MED-POSREN]** MED[237] Insuline degludec
-   - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Surveillance"
-61. [INF] **[STR-MED-POSREN]** MED[238] Insuline detemir
-   - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Surveillance"
-62. [INF] **[STR-MED-POSREN]** MED[290] Methocarbamol
+60. [INF] **[STR-MED-POSREN]** MED[290] Methocarbamol
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si insuffisance renale severe"
-63. [INF] **[STR-MED-POSREN]** MED[298] Minocycline
+61. [INF] **[STR-MED-POSREN]** MED[298] Minocycline
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC severe"
-64. [INF] **[STR-MED-POSREN]** MED[312] Nimodipine
+62. [INF] **[STR-MED-POSREN]** MED[312] Nimodipine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Surveillance"
-65. [INF] **[STR-MED-POSREN]** MED[328] Oxybutynine
+63. [INF] **[STR-MED-POSREN]** MED[328] Oxybutynine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence (risque d'accumulation des metabolites)"
-66. [INF] **[STR-MED-POSREN]** MED[345] Pipotiazine
+64. [INF] **[STR-MED-POSREN]** MED[345] Pipotiazine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence"
-67. [INF] **[STR-MED-POSREN]** MED[359] Promethazine
+65. [INF] **[STR-MED-POSREN]** MED[359] Promethazine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence"
-68. [INF] **[STR-MED-POSREN]** MED[371] Ranitidine
+66. [INF] **[STR-MED-POSREN]** MED[371] Ranitidine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "RETIRE DU MARCHE - ne pas prescrire"
-69. [INF] **[STR-MED-POSREN]** MED[383] Scopolamine
+67. [INF] **[STR-MED-POSREN]** MED[383] Scopolamine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence (effets centraux accrus)"
-70. [INF] **[STR-MED-POSREN]** MED[400] Tacrolimus
+68. [INF] **[STR-MED-POSREN]** MED[400] Tacrolimus
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Monitoring taux"
-71. [INF] **[STR-MED-POSREN]** MED[411] Thiocolchicoside
+69. [INF] **[STR-MED-POSREN]** MED[411] Thiocolchicoside
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence"
-72. [INF] **[STR-MED-POSREN]** MED[416] Tiemonium
+70. [INF] **[STR-MED-POSREN]** MED[416] Tiemonium
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence"
-73. [INF] **[STR-MED-POSREN]** MED[435] Trihexyphenidyl
+71. [INF] **[STR-MED-POSREN]** MED[435] Trihexyphenidyl
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence majeure (accumulation)"
-74. [INF] **[STR-MED-POSREN]** MED[436] Trihexyphenidyle
+72. [INF] **[STR-MED-POSREN]** MED[436] Trihexyphenidyle
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence majeure (accumulation)"
-75. [INF] **[STR-MED-POSREN]** MED[438] Trimipramine
+73. [INF] **[STR-MED-POSREN]** MED[438] Trimipramine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence"
-76. [INF] **[STR-MED-POSREN]** MED[439] Triprolidine
+74. [INF] **[STR-MED-POSREN]** MED[439] Triprolidine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC severe (peu de donnees)"
-77. [INF] **[STR-MED-POSREN]** MED[440] Tropatepine
+75. [INF] **[STR-MED-POSREN]** MED[440] Tropatepine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence majeure"
-78. [INF] **[STR-MED-POSREN]** MED[444] Valpromide
+76. [INF] **[STR-MED-POSREN]** MED[444] Valpromide
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Adapter si IRC severe (valproate libre augmente si IRC)"
-79. [INF] **[STR-MED-POSREN]** MED[456] Zuclopenthixol
+77. [INF] **[STR-MED-POSREN]** MED[456] Zuclopenthixol
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence"
-80. [INF] **[STR-MED-POSREN]** MED[483] Dosulpine
+78. [INF] **[STR-MED-POSREN]** MED[483] Dosulpine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC sévère."
-81. [INF] **[STR-MED-POSREN]** MED[520] Rilmenidine
+79. [INF] **[STR-MED-POSREN]** MED[520] Rilmenidine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC (elimination renale partielle)"
-82. [INF] **[STR-MED-POSREN]** MED[526] Phenytoine
+80. [INF] **[STR-MED-POSREN]** MED[526] Phenytoine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Ajuster selon phenytoinemie libre si IRC (liaison albumine diminuee)"
-83. [INF] **[STR-MED-POSREN]** MED[527] Piribedil
+81. [INF] **[STR-MED-POSREN]** MED[527] Piribedil
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC severe"
-84. [INF] **[STR-MED-POSREN]** MED[530] Pethidine
+82. [INF] **[STR-MED-POSREN]** MED[530] Pethidine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "CI si IRC (accumulation norpethidine neurotoxique)"
-85. [INF] **[STR-MED-POSREN]** MED[531] Meprobamate
+83. [INF] **[STR-MED-POSREN]** MED[531] Meprobamate
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Sans objet (retire)"
-86. [INF] **[STR-MED-POSREN]** MED[541] Betahistine
+84. [INF] **[STR-MED-POSREN]** MED[541] Betahistine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC"
-87. [INF] **[STR-MED-POSREN]** MED[542] Naftidrofuryl
+85. [INF] **[STR-MED-POSREN]** MED[542] Naftidrofuryl
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC"
-88. [INF] **[STR-MED-POSREN]** MED[543] Nicergoline
+86. [INF] **[STR-MED-POSREN]** MED[543] Nicergoline
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC"
-89. [INF] **[STR-MED-POSREN]** MED[546] Midodrine
+87. [INF] **[STR-MED-POSREN]** MED[546] Midodrine
    - poso_ren ne mentionne ni DFG/Cl créat/ajustement: "Prudence si IRC (accumulation metabolite actif)"
 
 ## PATH (1)
