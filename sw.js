@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.92 (Phase 40 — Antidiabétiques additionnels : Pioglitazone (Gemfibrozil CI ABSOLUE, IC FDA Black Box PROactive, fractures), Linagliptine (iDPP4 préférée chez âgé/IRC ADA 2025, élimination biliaire, CARMELINA, REDONDANCE GLP-1), Liraglutide (GLP-1 LEADER, CI MEN-2/cancer médullaire, lithiases biliaires, REDONDANCE iDPP4/autres GLP-1), Insuline glargine (référence basale, hypoglycémie additive, β-bloquants masquent, corticoïdes antagonisme, Cotrimoxazole))
+// Service Worker - GeriaAssist v0.93 (Phase 41 — Antidiabétiques finalisation : Glimépiride/Gliclazide (sulfamides — Miconazole CI ABSOLUE, Cotrimoxazole, AINS déplacement albumine), 3 iDPP4 (Sitagliptine TECOS / Vildagliptine hépatotoxicité Galvus / Saxagliptine SAVOR-TIMI risque IC, CYP3A4/5 + Alogliptine EXAMINE), 3 iSGLT2 (Dapagliflozin DAPA-HF/CKD / Canagliflozin CANVAS amputation / Ertugliflozin VERTIS-CV), 3 GLP-1 (Dulaglutide REWIND / Exenatide / Tirzepatide GLP-1/GIP SURMOUNT-1), 3 glinides (Repaglinide Gemfibrozil CI ABSOLUE x8, Clopidogrel CI x5 / Nateglinide Miconazole CI / Miglitinide), Acarbose (glucose pur si hypo, à éviter chez âgé HAS))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase40-antidiabetiques-2';
-const CACHE_NAME = `geriaassist-v92-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase41-antidiabetiques-finalisation';
+const CACHE_NAME = `geriaassist-v93-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

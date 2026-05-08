@@ -1992,11 +1992,16 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,2",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG (ajustement de dose) | Bilan hépatique | Lipase",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Ictère/cytolyse → bilan hépatique urgent (hépatotoxicitédocumente) | Pancreatite → lipase",
+                    "ddi_interact": "Insuline / Sulfamides (hypoglycémie additive), GLP-1 RA (REDONDANCE), Adaptation dose rénale (DFG 30-60 : 12.5 mg/j ; DFG<30 : 6.25 mg/j)",
+                    "ddi_interact_v2": [
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive — réduire dose sulfamide/insuline.", "severite": "warning" },
+                              { "classe": "GLP-1 RA — REDONDANCE", "dcis": ["liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Redondance déconseillée.", "severite": "warning" },
+                              { "classe": "Metformine / iSGLT2 (synergie favorable)", "dcis": ["metformine", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin"], "commentaire": "Associations recommandées.", "severite": "info" },
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme.", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG (ajustement DFG 30-60 : 12.5 mg/j ; DFG<30 : 6.25 mg/j) | Bilan hépatique | Lipase si symptômes abdo",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois — cibles assouplies chez âgé) | Créatinine (semestriel — adaptation dose) | Bilan hépatique (annuel)",
+                    "alerte_clinique": "Hépatotoxicité documentée (FDA — surveillance ALAT/ASAT). Pancréatite rare → lipase. Pemphigoïde bulleuse (alerte ANSM 2018 classe iDPP4). Référence : EXAMINE (NEJM 2013 — sécurité CV neutre post-SCA). AJUSTEMENT RÉNAL OBLIGATOIRE. Cibles HbA1c assouplies chez âgé.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -4383,11 +4388,18 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 99 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG (CI si DFG < 30) | Kaliemie | Bilan lipidique | ECBU",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine/DFG (annuelle) | Calcemie/Phosphatemie (prudence en cas d'IRC)",
-                    "alerte_clinique": "Cetonemie (acidocetose) | Fractures (risque osseux) | Amputation (surveillance pieds)",
+                    "ddi_interact": "Diurétiques (déshydratation/IRA), IEC/ARA2 (synergie cardiorénale recommandée), Digoxine (↑ digoxinémie via P-gp — surveillance), Insuline/Sulfamides (hypoglycémie additive), AINS (IRA), Inducteurs UGT (↓ canagliflozin)",
+                    "ddi_interact_v2": [
+                              { "classe": "Diurétiques (déshydratation/IRA)", "dcis": ["furosemide", "bumetanide", "torsemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Effet diurétique additif. Réduire dose diurétique 25-50% à introduction.", "severite": "warning" },
+                              { "classe": "IEC / ARA2 (synergie cardiorénale)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan", "telmisartan"], "commentaire": "Association recommandée. Surveillance créat 1-2 sem.", "severite": "info" },
+                              { "classe": "Digoxine (↑ digoxinémie via inhibition P-gp)", "dcis": ["digoxine"], "commentaire": "Canagliflozin = inhibiteur léger P-gp → ↑ digoxinémie. Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline glargine", "insuline detemir", "insuline degludec", "insuline aspart", "insuline lispro", "insuline humaine", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive. Risque acidocétose euglycémique avec insuline si jeûne/sepsis.", "severite": "warning" },
+                              { "classe": "AINS (↓ DFG)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "celecoxib"], "commentaire": "IRA fonctionnelle si triple whammy.", "severite": "warning" },
+                              { "classe": "Inducteurs UGT (↓ canagliflozin)", "dcis": ["rifampicine", "carbamazepine", "phenytoine", "phenobarbital", "millepertuis"], "commentaire": "↓ exposition canagliflozin → considérer 300 mg/j si DFG ≥ 60.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG | Kaliémie | Bilan lipidique | ECBU | Examen pieds (risque amputation)",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois) | Créatinine/DFG (annuelle) | Examen pieds régulier | Calcémie/Phosphatémie si IRC",
+                    "alerte_clinique": "RISQUE AMPUTATION DOCUMENTÉ — CANVAS (NEJM 2017) : ↑ amputations membres inférieurs (orteils ++) avec canagliflozin. Surveillance pieds (lésions, plaies, AOMI). FRACTURES (risque osseux ↑ — étude CANVAS). Acidocétose euglycémique. Fasciite Fournier. IU/mycoses. ARRÊT péri-opératoire. Référence : CANVAS, CREDENCE (NEJM 2019 — protection rénale DT2 + albuminurie). Préférer empagliflozin/dapagliflozin chez âgé (signal amputation moindre).",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -7291,11 +7303,18 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,91",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG | Kaliemie | ECBU",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine/DFG (annuelle)",
-                    "alerte_clinique": "Cetonemie si symptomes d'acidocetose | Fasciite de Fournier",
+                    "ddi_interact": "Diurétiques (déshydratation/IRA), IEC/ARA2/ARNI (synergie cardiorénale recommandée — surveillance créat à 1-2 sem), Insuline/Sulfamides (hypoglycémie additive), AINS (IRA fonctionnelle), Lithium (↓), Inducteurs UGT (↓ dapagliflozin)",
+                    "ddi_interact_v2": [
+                              { "classe": "Diurétiques (déshydratation, IRA fonctionnelle)", "dcis": ["furosemide", "bumetanide", "torsemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Effet diurétique additif. Réduire dose diurétique 25-50% à introduction. Surveillance TA + créat + iono à J7-14.", "severite": "warning" },
+                              { "classe": "IEC / ARA2 / ARNI (synergie cardiorénale RECOMMANDÉE)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan", "telmisartan", "sacubitril valsartan"], "commentaire": "Association RECOMMANDÉE (DAPA-HF, DAPA-CKD). Surveillance créat 1-2 sem (chute initiale 10-20% transitoire).", "severite": "info" },
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive. Réduire dose sulfamide/insuline 10-20%. iSGLT2 + insuline = risque acidocétose euglycémique si jeûne/sepsis.", "severite": "warning" },
+                              { "classe": "AINS (↓ DFG — IRA fonctionnelle)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib"], "commentaire": "Triple whammy si IEC/ARA2 — éviter.", "severite": "danger" },
+                              { "classe": "Lithium (↓ lithiémie via natriurèse)", "dcis": ["lithium"], "commentaire": "Surveillance lithiémie.", "severite": "info" },
+                              { "classe": "Inducteurs UGT (↓ dapagliflozin)", "dcis": ["rifampicine", "carbamazepine", "phenytoine"], "commentaire": "↓ exposition.", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG | Kaliémie | Natrémie | TA debout/couché | ECBU si symptômes urinaires",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois) | Créatinine/DFG (1-2 sem après introduction puis trimestriel) | Examen périnéal annuel",
+                    "alerte_clinique": "ACIDOCÉTOSE EUGLYCÉMIQUE rare mais grave (cétonémie capillaire si symptômes — vomissements/dyspnée/douleurs abdo, surtout post-op/jeûne/sepsis). FASCIITE FOURNIER (urgence chirurgicale). IU/mycoses fréquentes. ARRÊT 3-4 j avant chirurgie majeure ou jeûne. Référence : DAPA-HF (NEJM 2019 — réduction mortalité HFrEF), DAPA-CKD (NEJM 2020 — protection rénale), DECLARE-TIMI 58 (NEJM 2018 — sécurité CV). Indication étendue : DT2 + maladie CV/IC/MRC, HFrEF/HFpEF, MRC stade 2-4 (avec ou sans DT2). DOSE : 10 mg/j en DT2 (5 mg en HFrEF/MRC). Cibles HbA1c assouplies chez âgé.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -8630,11 +8649,17 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 99 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG | Lipase",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle)",
-                    "alerte_clinique": "Pancreatite (douleur epigastrique)",
+                    "ddi_interact": "Insuline / Sulfamides / Glinides (hypoglycémie additive), Médicaments à absorption sensible (Lévothyroxine, Bisphosphonates, AVK — vidange gastrique ralentie), iDPP4 (REDONDANCE), Autres GLP-1 RA (REDONDANCE — NE PAS ASSOCIER)",
+                    "ddi_interact_v2": [
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive. Réduire dose insuline/sulfamide à introduction.", "severite": "warning" },
+                              { "classe": "Médicaments à absorption sensible (vidange gastrique ralentie)", "dcis": ["levothyroxine", "alendronate", "risedronate", "warfarine", "acenocoumarol", "fluindione", "digoxine", "amoxicilline"], "commentaire": "Surveillance INR sous AVK à introduction.", "severite": "warning" },
+                              { "classe": "iDPP4 — REDONDANCE", "dcis": ["sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "alogliptine"], "commentaire": "Redondance déconseillée.", "severite": "warning" },
+                              { "classe": "Autres GLP-1 RA / Tirzepatide — NE PAS ASSOCIER", "dcis": ["liraglutide", "semaglutide", "exenatide", "tirzepatide"], "commentaire": "Cumul GLP-1 RA = redondance + effets indésirables additifs. NE PAS ASSOCIER.", "severite": "danger" },
+                              { "classe": "iSGLT2 / Metformine (synergie favorable cardiorénal)", "dcis": ["empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin", "metformine"], "commentaire": "Associations RECOMMANDÉES (ESC 2023, ADA 2025).", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG | Lipase | Bilan thyroïdien (CI relative MEN-2/cancer médullaire) | Poids/IMC",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois) | Créatinine (annuelle) | Poids à chaque consultation | Lipase si symptômes abdo",
+                    "alerte_clinique": "Effets GI fréquents (titration lente). Pancréatite rare → lipase. CI relative MEN-2/cancer médullaire thyroïdien. Lithiases biliaires (perte poids rapide). Référence : REWIND (Lancet 2019 — réduction MACE chez DT2 incl. prévention primaire). Indication ESC 2023/ADA 2025 §10. Aussi : SUSTAIN/STEP pour sémaglutide. PERTE DE POIDS à surveiller chez âgé fragile/sarcopénique.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -9137,11 +9162,17 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,93",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG (CI si DFG < 30) | Kaliemie",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine/DFG (annuelle)",
-                    "alerte_clinique": "Cetonemie (acidocetose) | Fasciite de Fournier",
+                    "ddi_interact": "Diurétiques (déshydratation/IRA), IEC/ARA2 (synergie cardiorénale), Insuline/Sulfamides (hypoglycémie additive), AINS (IRA), Inducteurs UGT (↓ ertugliflozin)",
+                    "ddi_interact_v2": [
+                              { "classe": "Diurétiques (déshydratation/IRA)", "dcis": ["furosemide", "bumetanide", "torsemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Effet diurétique additif. Réduire dose diurétique 25-50% à introduction.", "severite": "warning" },
+                              { "classe": "IEC / ARA2 (synergie cardiorénale)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan"], "commentaire": "Surveillance créat 1-2 sem.", "severite": "info" },
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline glargine", "insuline detemir", "insuline degludec", "insuline aspart", "insuline lispro", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive.", "severite": "warning" },
+                              { "classe": "AINS (↓ DFG)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "celecoxib"], "commentaire": "Triple whammy IRA si IEC/ARA2.", "severite": "warning" },
+                              { "classe": "Inducteurs UGT (↓ ertugliflozin)", "dcis": ["rifampicine", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition.", "severite": "info" }
+                            ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG (CI si DFG < 45) | Kaliémie | TA debout/couché",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois) | Créatinine/DFG (annuelle) | Surveillance pieds + périnée",
+                    "alerte_clinique": "Acidocétose euglycémique. Fasciite Fournier. IU/mycoses. ARRÊT péri-opératoire 3-4 j. Référence : VERTIS-CV (NEJM 2020 — sécurité CV neutre, pas de réduction MACE/IC vs placebo). Indication moins étendue que empagliflozin/dapagliflozin (pas de bénéfice cardio-rénal démontré). Cibles HbA1c assouplies chez âgé.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -9465,11 +9496,16 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG | Lipase/Amylase (si antecedent pancreatite)",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle)",
-                    "alerte_clinique": "Douleur epigastrique intense → Lipase/Amylase (pancreatite)",
+                    "ddi_interact": "Insuline / Sulfamides (hypoglycémie additive), Médicaments à absorption sensible (Lévothyroxine, Bisphosphonates, AVK, Digoxine — vidange gastrique ralentie ++ pour exénatide), iDPP4 (REDONDANCE), Autres GLP-1 RA (REDONDANCE)",
+                    "ddi_interact_v2": [
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive.", "severite": "warning" },
+                              { "classe": "Médicaments à absorption sensible (vidange gastrique ralentie ++)", "dcis": ["levothyroxine", "alendronate", "risedronate", "warfarine", "acenocoumarol", "digoxine", "amoxicilline", "atorvastatine"], "commentaire": "Exénatide ralentit fortement la vidange gastrique. Espacer prises — médicaments à prendre 1 h avant exénatide. Surveillance INR sous AVK.", "severite": "warning" },
+                              { "classe": "iDPP4 / Autres GLP-1 RA — REDONDANCE", "dcis": ["sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "alogliptine", "liraglutide", "semaglutide", "dulaglutide", "tirzepatide"], "commentaire": "NE PAS ASSOCIER.", "severite": "danger" },
+                              { "classe": "iSGLT2 / Metformine (synergie favorable)", "dcis": ["empagliflozin", "dapagliflozin", "canagliflozin", "metformine"], "commentaire": "Associations recommandées.", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG (CI si DFG < 30) | Lipase si ATCD pancréatite",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois) | Créatinine (annuelle) | Lipase si douleurs abdo",
+                    "alerte_clinique": "Pancréatite (douleur épigastrique intense → lipase). Effets GI ++ (titration). Référence : EXSCEL (NEJM 2017 — sécurité CV neutre). Élimination rénale → CI si DFG < 30. Forme LP (Bydureon) hebdomadaire vs forme SC bi-quotidienne (Byetta). Cibles HbA1c assouplies chez âgé.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -13437,11 +13473,16 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 98 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Insuline / Sulfamides / Glinides (hypoglycémie additive), Miconazole/Antifongiques azolés (CI relative), AINS (déplacement albumine), β-bloquants (masquent hypo)",
+                    "ddi_interact_v2": [
+                              { "classe": "Miconazole (CI relative — classe sécrétagogue)", "dcis": ["miconazole", "fluconazole", "itraconazole"], "commentaire": "Effet de classe sécrétagogue = risque hypoglycémie.", "severite": "warning" },
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline glargine", "insuline detemir", "insuline aspart", "insuline lispro", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive.", "severite": "warning" },
+                              { "classe": "AINS (déplacement albumine)", "dcis": ["ibuprofene", "naproxene", "diclofenac"], "commentaire": "Déplacement albumine → ↑ miglitinide libre.", "severite": "warning" },
+                              { "classe": "β-bloquants (masquent hypo)", "dcis": ["bisoprolol", "metoprolol", "propranolol"], "commentaire": "Préférer β1-sélectifs.", "severite": "warning" }
+                    ],
                     "suivi_initial": "HbA1c | Bilan hépatique | Créatinine/DFG",
-                    "suivi_periodique": "HbA1c (tous les 3 a 6 mois) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Hypoglycemie severe → glycemie urgente",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois) | Bilan hépatique (annuel)",
+                    "alerte_clinique": "Hypoglycémie sévère → glycémie urgente. Prise préprandiale OBLIGATOIRE. Usage limité en France (peu de données chez âgé).",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -13881,11 +13922,17 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Bilan hépatique (CI si insuffisance hépatique severe) | Créatinine/DFG",
-                    "suivi_periodique": "HbA1c (tous les 3 a 6 mois) | Bilan hépatique (annuel) | Créatinine (annuelle)",
-                    "alerte_clinique": "Hypoglycemie severe → glycemie urgente",
+                    "ddi_interact": "Insuline / Sulfamides (hypoglycémie additive), AINS (déplacement albumine), β-bloquants (masquent hypo), Inhibiteurs CYP2C9 (Fluconazole — ↑ nateglinide), Inducteurs CYP",
+                    "ddi_interact_v2": [
+                              { "classe": "Inhibiteurs CYP2C9 (Fluconazole, Antifongiques azolés — ↑ nateglinide)", "dcis": ["fluconazole", "itraconazole", "voriconazole", "miconazole"], "commentaire": "↑ exposition nateglinide → hypoglycémies. Miconazole gel buccal CI ABSOLUE (ANSM 2014, classe sécrétagogue).", "severite": "danger" },
+                              { "classe": "Insuline / Sulfamides / autres antidiabétiques (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glargine", "insuline detemir", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "metformine", "empagliflozin", "dapagliflozin", "linagliptine", "sitagliptine", "liraglutide", "semaglutide"], "commentaire": "Hypoglycémie additive.", "severite": "warning" },
+                              { "classe": "AINS (déplacement albumine)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene"], "commentaire": "Déplacement albumine → ↑ nateglinide libre.", "severite": "warning" },
+                              { "classe": "β-bloquants (masquent hypo)", "dcis": ["bisoprolol", "metoprolol", "propranolol", "sotalol"], "commentaire": "Préférer β1-sélectifs.", "severite": "warning" },
+                              { "classe": "Inducteurs CYP2C9/3A4 (↓ nateglinide)", "dcis": ["rifampicine", "carbamazepine", "phenytoine", "millepertuis"], "commentaire": "↓ exposition nateglinide.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "HbA1c | Bilan hépatique (CI si insuffisance hépatique sévère) | Créatinine/DFG",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois — cibles assouplies chez âgé) | Bilan hépatique (annuel) | Créatinine (annuelle)",
+                    "alerte_clinique": "Hypoglycémie sévère → glycémie urgente. Demi-vie courte (1.5 h) — moins d'hypoglycémies prolongées que sulfamides. Prise préprandiale OBLIGATOIRE — éviter si repas sautés. Élimination rénale partielle (CI absolue si IH sévère).",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -16964,11 +17011,17 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG (ajustement de dose si DFG < 50) | Bilan hépatique",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Pancreatite → lipase | Insuffisance cardiaque (surveillance clinique)",
+                    "ddi_interact": "Inhibiteurs CYP3A4/5 puissants (Saxagliptine = substrat CYP3A4/5 — réduire dose 2.5 mg/j si association), Insuline / Sulfamides (hypoglycémie additive), GLP-1 RA (REDONDANCE), Inducteurs CYP3A4 (↓ saxagliptine)",
+                    "ddi_interact_v2": [
+                              { "classe": "Inhibiteurs CYP3A4/5 puissants — RÉDUIRE DOSE 2.5 mg/j", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "posaconazole", "fluvoxamine", "cobicistat"], "commentaire": "Saxagliptine = substrat CYP3A4/5 majeur. ↑ exposition x2-4. RÉDUIRE dose à 2.5 mg/j (RCP Onglyza) si association maintenue.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP3A4 (↓ saxagliptine)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition saxagliptine — perte efficacité.", "severite": "warning" },
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive.", "severite": "warning" },
+                              { "classe": "GLP-1 RA — REDONDANCE", "dcis": ["liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Redondance déconseillée.", "severite": "warning" },
+                              { "classe": "Metformine / iSGLT2 (synergie favorable)", "dcis": ["metformine", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin"], "commentaire": "Associations recommandées.", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG (ajustement si DFG < 45 : 2.5 mg/j) | Bilan hépatique | Recherche signes IC",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois — cibles assouplies chez âgé) | Créatinine (annuelle) | Bilan hépatique (annuel) | Surveillance clinique IC",
+                    "alerte_clinique": "RISQUE INSUFFISANCE CARDIAQUE — SAVOR-TIMI 53 (NEJM 2013) : ↑ hospitalisation pour IC avec saxagliptine. À ÉVITER chez patients avec ATCD IC ou risque CV élevé (FDA Drug Safety 2014). Préférer linagliptine (CARMELINA neutre). Pancréatite rare → lipase si douleurs abdo. Pemphigoïde bulleuse (alerte ANSM 2018 classe iDPP4). Cibles HbA1c assouplies chez âgé.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -17252,11 +17305,18 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,38",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG (ajustement si DFG<45) | NFS | Bilan hépatique",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle)",
-                    "alerte_clinique": "Pancreatite → Lipase/Amylase | Eruption cutanée sévère → arrêt (réactions d'hypersensibilité)",
+                    "ddi_interact": "Insuline / Sulfamides / Glinides (hypoglycémie additive — surtout sulfamides), GLP-1 RA (REDONDANCE — déconseillée), Inducteurs P-gp (Rifampicine ↓), Digoxine (↑ légère)",
+                    "ddi_interact_v2": [
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Sitagliptine seule = peu d'hypoglycémie. Association sulfamide/insuline = risque. Réduire dose sulfamide/insuline 25-50% à introduction.", "severite": "warning" },
+                              { "classe": "GLP-1 RA — REDONDANCE pharmacologique", "dcis": ["liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "iDPP4 + GLP-1 RA = redondance (les iDPP4 augmentent les GLP-1 endogènes, les GLP-1 RA agissent directement). Pas de bénéfice prouvé. Choisir l'un.", "severite": "warning" },
+                              { "classe": "Metformine / iSGLT2 (synergie favorable)", "dcis": ["metformine", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin"], "commentaire": "Associations RECOMMANDÉES — synergie sans hypoglycémie majeure.", "severite": "info" },
+                              { "classe": "Digoxine (↑ légère exposition)", "dcis": ["digoxine"], "commentaire": "Sitagliptine = inhibiteur léger P-gp. Surveillance digoxinémie modeste.", "severite": "info" },
+                              { "classe": "Inducteurs P-gp (Rifampicine ↓ sitagliptine modeste)", "dcis": ["rifampicine"], "commentaire": "↓ légère exposition.", "severite": "info" },
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme.", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG (ajustement si DFG<45 : 50 mg/j ; DFG<30 : 25 mg/j) | NFS | Bilan hépatique | Lipase si symptômes abdominaux",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois — cibles assouplies chez âgé) | Créatinine (semestriel — adaptation dose) | Lipase si douleurs abdo",
+                    "alerte_clinique": "Pancréatite rare → lipase si douleurs abdo aiguës (arrêt). Éruption cutanée sévère → arrêt (réactions hypersensibilité, pemphigoïde bulleuse — alerte ANSM 2018 classe iDPP4). Arthralgies (FDA 2015 — réversibles à l'arrêt). AJUSTEMENT RÉNAL OBLIGATOIRE (50 mg si DFG 30-45, 25 mg si < 30 ; vs Linagliptine = pas d'ajustement). Référence : TECOS (NEJM 2015 — sécurité CV neutre). Cibles HbA1c assouplies chez âgé (ADA 2025 §13).",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -18605,11 +18665,17 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 99 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG | Lipase | Bilan lipidique",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Créatinine (annuelle) | Bilan lipidique (annuel)",
-                    "alerte_clinique": "Pancreatite | Cholelithiase (douleur biliaire)",
+                    "ddi_interact": "Insuline / Sulfamides (hypoglycémie additive), Médicaments à absorption sensible (vidange gastrique ralentie), iDPP4 (REDONDANCE), GLP-1 RA classiques (REDONDANCE — NE PAS ASSOCIER), Contraceptifs oraux (perte efficacité — méthode alternative pendant 4 sem)",
+                    "ddi_interact_v2": [
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive. Réduire dose insuline/sulfamide.", "severite": "warning" },
+                              { "classe": "Médicaments à absorption sensible (vidange gastrique ralentie)", "dcis": ["levothyroxine", "alendronate", "risedronate", "warfarine", "acenocoumarol", "fluindione", "digoxine"], "commentaire": "Tirzepatide ralentit la vidange gastrique. Surveillance INR sous AVK.", "severite": "warning" },
+                              { "classe": "iDPP4 / GLP-1 RA — REDONDANCE", "dcis": ["sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "alogliptine", "liraglutide", "semaglutide", "dulaglutide", "exenatide"], "commentaire": "NE PAS ASSOCIER. Tirzepatide = double agoniste GLP-1/GIP, redondance avec autres GLP-1 RA et iDPP4.", "severite": "danger" },
+                              { "classe": "Contraceptifs oraux (perte efficacité durant initiation/changement de dose)", "dcis": ["ethinylestradiol", "levonorgestrel", "desogestrel", "drospirenone"], "commentaire": "RCP Mounjaro : ↓ exposition contraceptifs oraux à l'introduction tirzepatide ou changement dose. Méthode contraceptive alternative (préservatif, DIU) ou non orale pendant 4 semaines après chaque modification de dose. Peu pertinent en gériatrie.", "severite": "warning" },
+                              { "classe": "iSGLT2 / Metformine (synergie favorable)", "dcis": ["empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin", "metformine"], "commentaire": "Associations recommandées en DT2 + obésité.", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG | Lipase | Bilan lipidique | Bilan thyroïdien (CI relative MEN-2/cancer médullaire) | Poids/IMC",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois) | Créatinine (annuelle) | Bilan lipidique (annuel) | Poids à chaque consultation (perte 15-22% attendue à 72 sem dans SURMOUNT-1) | Lipase si symptômes",
+                    "alerte_clinique": "Double agoniste GLP-1/GIP — perte de poids majeure (15-22% à 72 sem dans SURMOUNT-1). PERTE POIDS EXCESSIVE possible chez âgé fragile/sarcopénique → surveillance IMC, masse maigre, dénutrition. Pancréatite rare. Cholélithiases (perte rapide poids). CI relative MEN-2/cancer médullaire thyroïdien. Référence : SURPASS-1 à 6 (DT2), SURMOUNT-1 à 4 (obésité), SURPASS-CVOT (en cours). Indication étendue ESC 2023/ADA 2025 pour DT2 + obésité majeure.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -19784,11 +19850,17 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,09",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "HbA1c | Créatinine/DFG | Bilan hépatique (hépatotoxicité CI si ALAT ou ASAT > 3N)",
-                    "suivi_periodique": "HbA1c (tous les 3 a a 6 mois) | Bilan hépatique (tous les a 3 mois la 1ere annee puis annuel) | Créatinine (annuelle)",
-                    "alerte_clinique": "Cytolyse → bilan hépatique urgent | Pancreatite → lipase",
+                    "ddi_interact": "Insuline / Sulfamides (hypoglycémie additive), GLP-1 RA (REDONDANCE), IEC/Sartans (angioedème — fréquence ↑ documentée RCP)",
+                    "ddi_interact_v2": [
+                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive. Réduire dose sulfamide/insuline à introduction.", "severite": "warning" },
+                              { "classe": "GLP-1 RA — REDONDANCE pharmacologique", "dcis": ["liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Redondance déconseillée.", "severite": "warning" },
+                              { "classe": "Metformine / iSGLT2 (synergie favorable)", "dcis": ["metformine", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin"], "commentaire": "Associations RECOMMANDÉES.", "severite": "info" },
+                              { "classe": "IEC / Sartans (↑ risque angioedème — RCP)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "irbesartan", "candesartan"], "commentaire": "↑ légère fréquence angioedème sous vildagliptine + IEC (RCP Galvus). Surveillance clinique.", "severite": "warning" },
+                              { "classe": "Corticoïdes (antagonisme hyperglycémiant)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme.", "severite": "info" }
+                    ],
+                    "suivi_initial": "HbA1c | Créatinine/DFG | Bilan hépatique (CI ABSOLUE si ALAT ou ASAT > 3N — RCP Galvus) | Lipase si symptômes abdo",
+                    "suivi_periodique": "HbA1c (tous les 3-6 mois — cibles assouplies chez âgé) | Bilan hépatique OBLIGATOIRE (à 3 mois, 6 mois, puis annuel — RCP Galvus, hépatotoxicité documentée) | Créatinine (annuelle)",
+                    "alerte_clinique": "HÉPATOTOXICITÉ DOCUMENTÉE (RCP Galvus — hépatites cliniques) → surveillance hépatique stricte selon RCP. CI ABSOLUE si insuffisance hépatique modérée à sévère ou ALAT/ASAT > 3N. Pancréatite rare → lipase. Pemphigoïde bulleuse (alerte ANSM 2018 classe iDPP4). ↑ légère fréquence angioedème avec IEC. Cibles HbA1c assouplies chez âgé.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -23102,49 +23174,22 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "94-97%",
                     "qt_risque": "",
-                    "ddi_interact": "Miconazole, Fluconazole (hypoglycemie majeure — CI) | AINS, Sulfamides ATB (deplace liaison albumine) | Betabloquants (masquent symptomes hypo)",
+                    "ddi_interact": "Miconazole gel buccal (CI ABSOLUE — hypoglycémies sévères mortelles ANSM 2014), Antifongiques azolés systémiques (CYP2C9 — ↑ gliclazide), Sulfamides ATB (Cotrimoxazole — déplacement albumine), AINS (déplacement albumine), β-bloquants (masquent hypo), Insuline (hypoglycémie additive), Inducteurs CYP2C9 (↓ efficacité), Alcool",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Fluconazole",
-                                        "dcis": [
-                                                  "fluconazole"
-                                        ],
-                                        "commentaire": "hypoglycemie majeure — CI",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Bêta-bloquants",
-                                        "dcis": [
-                                                  "bisoprolol",
-                                                  "metoprolol",
-                                                  "atenolol",
-                                                  "nebivolol",
-                                                  "carvedilol",
-                                                  "propranolol",
-                                                  "sotalol"
-                                        ],
-                                        "commentaire": "masquent symptomes hypo",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Miconazole gel buccal — CONTRE-INDICATION ABSOLUE", "dcis": ["miconazole"], "commentaire": "ANSM 2014 : hypoglycémies sévères mortelles. CI ABSOLUE même topique buccal. Switch nystatine.", "severite": "danger" },
+                              { "classe": "Antifongiques azolés systémiques (CYP2C9 — ↑ gliclazide)", "dcis": ["fluconazole", "itraconazole", "voriconazole", "posaconazole", "ketoconazole"], "commentaire": "↑ gliclazide x2-3 — hypoglycémies. Surveillance ou switch.", "severite": "danger" },
+                              { "classe": "Sulfamides ATB (Cotrimoxazole — déplacement albumine + CYP2C9)", "dcis": ["sulfamethoxazole", "trimethoprime", "cotrimoxazole"], "commentaire": "Cotrimoxazole = ↑ gliclazide → hypoglycémies graves chez âgé (Juurlink CMAJ 2014). Surveillance glycémie.", "severite": "danger" },
+                              { "classe": "AINS (déplacement albumine — sulfamides liés à 94-97%)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "Déplacement albumine → ↑ gliclazide libre. Surveillance.", "severite": "warning" },
+                              { "classe": "β-bloquants (masquent symptômes hypo)", "dcis": ["bisoprolol", "metoprolol", "atenolol", "nebivolol", "carvedilol", "propranolol", "sotalol"], "commentaire": "Masquent symptômes adrénergiques. Préférer β1-sélectifs.", "severite": "warning" },
+                              { "classe": "Insuline / autres antidiabétiques (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "metformine", "pioglitazone", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin", "sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Hypoglycémie additive.", "severite": "warning" },
+                              { "classe": "IEC / ARA2 (effet additif modeste hypoglycémiant)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan"], "commentaire": "Effet hypoglycémiant additif modeste. Surveillance.", "severite": "info" },
+                              { "classe": "Inducteurs CYP2C9 (↓ efficacité)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition gliclazide.", "severite": "warning" },
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme. Adapter dose.", "severite": "info" },
+                              { "classe": "Alcool (potentialise hypoglycémie)", "dcis": ["alcool"], "commentaire": "Éviter à jeun.", "severite": "warning" }
                     ],
-                    "suivi_initial": "Glycemie a jeun | HbA1c | Creatinine/DFG | Bilan hepatique",
-                    "suivi_periodique": "HbA1c (trimestriel) | Glycemie capillaire | Creatinine (semestriel) | Poids",
-                    "alerte_clinique": "Hypoglycemie (surtout si IRC, denutrition, saut de repas) | Risque moindre que glibenclamide/glimepiride | Assouplir cibles si fragile (HbA1c 7.5-8.5%)",
+                    "suivi_initial": "Glycémie à jeun | HbA1c | Créatinine/DFG | Bilan hépatique",
+                    "suivi_periodique": "HbA1c (trimestriel — cibles assouplies chez âgé per ADA 2025 §13) | Glycémie capillaire | Créatinine (semestriel) | Poids",
+                    "alerte_clinique": "Sulfamide PRÉFÉRÉ chez âgé si sulfamide nécessaire (forme LM = libération modifiée — moins d'hypoglycémies que glibenclamide/glimépiride per ADVANCE trial). Risque hypoglycémie (surtout IRC, dénutrition, saut repas, infection). Préférer iDPP4/iSGLT2/GLP-1 RA chez âgé fragile (peu d'hypoglycémies). Cibles HbA1c assouplies chez âgé (7-8% complexe, 7.5-8.5% très fragile per ADA 2025).",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -23211,49 +23256,22 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "99.5%",
                     "qt_risque": "",
-                    "ddi_interact": "Miconazole, Fluconazole | AINS, Sulfamides ATB | Betabloquants non selectifs",
+                    "ddi_interact": "Miconazole gel buccal (CI ABSOLUE — hypoglycémies sévères mortelles ANSM 2014), Antifongiques azolés systémiques (CYP2C9 — ↑ glimépiride), Sulfamides ATB (Cotrimoxazole — déplacement albumine + CYP2C9), AINS (déplacement albumine), β-bloquants (masquent hypo), IEC/ARA2 (effet additif modeste), Inducteurs CYP2C9 (↓ efficacité), Alcool, Insuline (hypoglycémie additive)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Fluconazole",
-                                        "dcis": [
-                                                  "fluconazole"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Bêta-bloquants",
-                                        "dcis": [
-                                                  "bisoprolol",
-                                                  "metoprolol",
-                                                  "atenolol",
-                                                  "nebivolol",
-                                                  "carvedilol",
-                                                  "propranolol",
-                                                  "sotalol"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Miconazole gel buccal — CONTRE-INDICATION ABSOLUE", "dcis": ["miconazole"], "commentaire": "ANSM 2014 : hypoglycémies sévères MORTELLES via CYP2C9. CI ABSOLUE même topique buccal. Switch nystatine.", "severite": "danger" },
+                              { "classe": "Antifongiques azolés systémiques (CYP2C9 — ↑ glimépiride)", "dcis": ["fluconazole", "itraconazole", "voriconazole", "posaconazole", "ketoconazole"], "commentaire": "↑ glimépiride x2-4 — hypoglycémies sévères. Surveillance ou switch.", "severite": "danger" },
+                              { "classe": "Sulfamides ATB (Cotrimoxazole — déplacement albumine + CYP2C9)", "dcis": ["sulfamethoxazole", "trimethoprime", "cotrimoxazole"], "commentaire": "Cotrimoxazole = ↑ glimépiride x2-3 → hypoglycémies graves chez âgé (Juurlink CMAJ 2014). Surveillance glycémie + adapter dose.", "severite": "danger" },
+                              { "classe": "AINS (déplacement albumine — sulfamides liés à 99.5%)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "Déplacement albumine → ↑ glimépiride libre. Surveillance.", "severite": "warning" },
+                              { "classe": "β-bloquants (masquent symptômes hypo)", "dcis": ["bisoprolol", "metoprolol", "atenolol", "nebivolol", "carvedilol", "propranolol", "sotalol"], "commentaire": "Masquent symptômes adrénergiques. Préférer β1-sélectifs.", "severite": "warning" },
+                              { "classe": "Insuline / autres antidiabétiques (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "metformine", "pioglitazone", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin", "sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Hypoglycémie additive. Préférer iDPP4/iSGLT2/GLP-1 chez âgé (moins d'hypoglycémies que sulfamides).", "severite": "warning" },
+                              { "classe": "IEC / ARA2 (effet additif modeste hypoglycémiant)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan"], "commentaire": "Effet hypoglycémiant additif modeste. Surveillance.", "severite": "info" },
+                              { "classe": "Inducteurs CYP2C9 (↓ efficacité)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition glimépiride.", "severite": "warning" },
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme. Adapter dose.", "severite": "info" },
+                              { "classe": "Alcool (potentialise hypoglycémie + effet antabuse possible)", "dcis": ["alcool"], "commentaire": "Alcool potentialise hypoglycémie. Éviter à jeun.", "severite": "warning" }
                     ],
-                    "suivi_initial": "Glycemie | HbA1c | Creatinine/DFG",
-                    "suivi_periodique": "HbA1c trimestriel | Glycemie capillaire | Creatinine semestriel",
-                    "alerte_clinique": "PIM en geriatrie — hypoglycemie prolongee | Preferer gliclazide LM ou iDPP4 | STOPP3-J1, Beers, PRISCUS, FORTA-D",
+                    "suivi_initial": "Glycémie | HbA1c | Créatinine/DFG | Bilan hépatique",
+                    "suivi_periodique": "HbA1c (trimestriel — cibles assouplies chez âgé per ADA 2025 §13) | Glycémie capillaire fréquente | Créatinine (semestriel)",
+                    "alerte_clinique": "À ÉVITER chez sujet âgé fragile (ADA 2025 §13.10, EASD 2024) — risque hypoglycémie sévère prolongée (demi-vie 5-8 h, métabolites peu actifs vs glibenclamide). Moins risqué que glibenclamide mais reste sulfamide → risque hypoglycémie significatif chez âgé. Préférer iDPP4 (linagliptine) ou iSGLT2 ou GLP-1 RA. Si nécessaire absolue : gliclazide LM (moins d'hypoglycémies que glimépiride).",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -23352,36 +23370,18 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "98%",
                     "qt_risque": "",
-                    "ddi_interact": "Gemfibrozil + Itraconazole (CI absolue — augmentation majeure exposition) | Clopidogrel (inhibiteur CYP2C8 — x5 exposition) | Ciclosporine",
+                    "ddi_interact": "Gemfibrozil (CI ABSOLUE — ↑ x8 exposition via inhibition CYP2C8), Clopidogrel (CI relative — inhibiteur CYP2C8, ↑ x5 exposition), Ciclosporine (↑ exposition), Insuline / Sulfamides (hypoglycémie additive), Inducteurs CYP2C8/3A4 (↓ repaglinide), Inhibiteurs CYP3A4",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Gemfibrozil + Itraconazole",
-                                        "dcis": [
-                                                  "itraconazole"
-                                        ],
-                                        "commentaire": "CI absolue — augmentation majeure exposition",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Clopidogrel",
-                                        "dcis": [
-                                                  "clopidogrel"
-                                        ],
-                                        "commentaire": "inhibiteur CYP2C8 — x5 exposition",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Ciclosporine",
-                                        "dcis": [
-                                                  "ciclosporine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Gemfibrozil — CONTRE-INDICATION ABSOLUE (↑ x8 exposition)", "dcis": ["gemfibrozil"], "commentaire": "Gemfibrozil = inhibiteur CYP2C8 majeur → ↑ repaglinide x8 → hypoglycémies sévères mortelles. CONTRE-INDICATION ABSOLUE (RCP, ANSM). Switch vers fénofibrate.", "severite": "danger" },
+                              { "classe": "Clopidogrel — CONTRE-INDICATION RELATIVE (↑ x5 exposition)", "dcis": ["clopidogrel"], "commentaire": "Clopidogrel + métabolite acyl-glucuronide = inhibiteur puissant CYP2C8 → ↑ repaglinide x5 → hypoglycémies sévères. EVITER ou doses minimales repaglinide + surveillance glycémique très rapprochée.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP3A4 / CYP2C8 modérés (Itraconazole, Trimethoprime)", "dcis": ["itraconazole", "ketoconazole", "ritonavir", "trimethoprime", "ciclosporine"], "commentaire": "↑ exposition repaglinide. Surveillance hypoglycémie.", "severite": "warning" },
+                              { "classe": "Insuline / Sulfamides / autres antidiabétiques (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "nateglinide", "metformine", "empagliflozin", "dapagliflozin", "linagliptine", "sitagliptine", "vildagliptine", "saxagliptine", "liraglutide", "semaglutide"], "commentaire": "Hypoglycémie additive.", "severite": "warning" },
+                              { "classe": "Inducteurs CYP2C8/3A4 (↓ repaglinide)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition repaglinide.", "severite": "warning" },
+                              { "classe": "β-bloquants (masquent hypo)", "dcis": ["bisoprolol", "metoprolol", "propranolol", "sotalol"], "commentaire": "Préférer β1-sélectifs.", "severite": "warning" }
                     ],
-                    "suivi_initial": "Glycemie | HbA1c | Bilan hepatique",
-                    "suivi_periodique": "HbA1c trimestriel | Glycemie capillaire | Bilan hepatique annuel",
-                    "alerte_clinique": "PRISCUS PIM-B / EU7-PIM | Hypoglycemie possible mais demi-vie courte (moins que sulfamides) | Prise preprandiale obligatoire | Eviter si repas sautes",
+                    "suivi_initial": "Glycémie | HbA1c | Créatinine/DFG | Bilan hépatique",
+                    "suivi_periodique": "HbA1c trimestriel — cibles assouplies chez âgé per ADA 2025 §13 | Glycémie capillaire fréquente | Bilan hépatique annuel",
+                    "alerte_clinique": "Hypoglycémie possible mais demi-vie courte (1 h vs sulfamides 5-16 h) → moins prolongée. PRISE PRÉPRANDIALE OBLIGATOIRE — éviter si repas sautés (jeûne âgé fragile = arrêt). Adaptation prudente dose initiale 0.5 mg/repas chez âgé. Élimination biliaire majoritaire — peu modifiée par IRC mais surveillance.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
@@ -23407,28 +23407,17 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "Faible (action locale intestinale)",
                     "qt_risque": "",
-                    "ddi_interact": "Digoxine (diminution absorption) | Charbon actif (antagonise effet) | Insuline/sulfamides: traiter hypo avec glucose pur (pas sucrose)",
+                    "ddi_interact": "Insuline / Sulfamides (si hypoglycémie sous association : GLUCOSE PUR — sucrose non absorbé sous acarbose), Digoxine (↓ absorption — surveillance digoxinémie), Charbon actif/Pansements digestifs (antagonisent effet local), Néomycine PO (effet additif diarrhée)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Digoxine",
-                                        "dcis": [
-                                                  "digoxine"
-                                        ],
-                                        "commentaire": "diminution absorption",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Insuline/sulfamides: traiter hypo avec glucose pur",
-                                        "dcis": [
-                                                  "insuline"
-                                        ],
-                                        "commentaire": "pas sucrose",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Insuline / Sulfamides / Glinides (si hypoglycémie : GLUCOSE PUR uniquement)", "dcis": ["insuline aspart", "insuline lispro", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Acarbose inhibe digestion sucrose → si hypoglycémie sous association, traiter avec GLUCOSE PUR (3 sucres, gel, comprimés glucose) — le sucrose (sucre de table) NE SERA PAS absorbé. Adapter dose insuline/sulfamide.", "severite": "warning" },
+                              { "classe": "Digoxine (↓ absorption — surveillance digoxinémie)", "dcis": ["digoxine"], "commentaire": "Acarbose ↓ absorption digoxine. Surveillance digoxinémie + clinique.", "severite": "warning" },
+                              { "classe": "Charbon actif / Pansements digestifs / Cholestyramine (antagonisent effet)", "dcis": ["charbon active", "cholestyramine", "smectite"], "commentaire": "Antagonisent effet local d'acarbose. Espacer prises ≥ 2 h.", "severite": "warning" },
+                              { "classe": "Néomycine PO (effet additif diarrhée)", "dcis": ["neomycine"], "commentaire": "Cumul flatulences/diarrhée.", "severite": "info" },
+                              { "classe": "Metformine / iDPP4 (synergie favorable)", "dcis": ["metformine", "linagliptine", "sitagliptine", "vildagliptine", "saxagliptine"], "commentaire": "Synergie sans hypoglycémie majeure.", "severite": "info" }
                     ],
-                    "suivi_initial": "HbA1c | Bilan hepatique",
-                    "suivi_periodique": "HbA1c trimestriel | Transaminases si > 6 mois",
-                    "alerte_clinique": "PRISCUS PIM / FORTA-D — flatulences, diarrhee, mauvaise observance | Si hypo sous association: donner GLUCOSE PUR (le sucrose n'est pas absorbe) | Hepatotoxicite rare",
+                    "suivi_initial": "HbA1c | Bilan hépatique",
+                    "suivi_periodique": "HbA1c trimestriel — cibles assouplies chez âgé per ADA 2025 §13 | Transaminases (à 6 mois puis annuel — hépatotoxicité rare)",
+                    "alerte_clinique": "À ÉVITER chez sujet âgé (HAS DT2 2023, EASD 2024) : flatulences, diarrhée +++, mauvaise observance, peu d'efficacité (HbA1c -0.5%). PIM-Check classique. Si hypoglycémie sous association sulfamide/insuline : donner GLUCOSE PUR (3 sucres = sucrose non absorbé). Hépatotoxicité rare. Action locale intestinale → peu de DDI systémiques.",
                     "bio_cible": [
                               "BIO_025",
                               "BIO_026",
