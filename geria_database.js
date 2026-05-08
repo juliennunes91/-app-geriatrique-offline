@@ -4462,29 +4462,23 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "70 - 80 %",
                     "qt_risque": "",
-                    "ddi_interact": "Warfarine, Contraceptifs, Statines",
+                    "ddi_interact": "INDUCTEUR ENZYMATIQUE MAJEUR (CYP3A4/2C9/2C19/2B6/UGT) — ↓ efficacité de NOMBREUX médicaments : AVK/AOD, Statines, Contraceptifs, Antirétroviraux, Antifongiques azolés, Ciclosporine/Tacrolimus, Macrolides, IS, etc. + Inhibiteurs CYP3A4 → ↑ carbamazépine (CI relative) + Lithium (neurotoxicité) + Clozapine (CI agranulocytose)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Warfarine",
-                                        "dcis": [
-                                                  "warfarine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Statines",
-                                        "dcis": [
-                                                  "atorvastatine",
-                                                  "rosuvastatine",
-                                                  "simvastatine",
-                                                  "pravastatine",
-                                                  "fluvastatine",
-                                                  "pitavastatine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Inducteur CYP — ↓ AVK / AOD (perte efficacité anticoagulante)", "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "dabigatran", "edoxaban"], "commentaire": "Carbamazépine = inducteur puissant → ↓ INR/anticoagulation x2-3 → risque thrombotique. Surveillance INR rapprochée. Pour AOD : EVITER (perte efficacité majeure).", "severite": "danger" },
+                              { "classe": "Inducteur CYP — ↓ Statines CYP3A4 (perte efficacité)", "dcis": ["atorvastatine", "simvastatine", "lovastatine"], "commentaire": "↓ exposition statines → perte efficacité hypocholestérolémiante. Préférer rosuvastatine/pravastatine (peu de CYP).", "severite": "warning" },
+                              { "classe": "Inducteur CYP — ↓ Contraceptifs oraux (échec contraceptif)", "dcis": ["ethinylestradiol", "levonorgestrel", "desogestrel", "drospirenone"], "commentaire": "↓ exposition → ÉCHEC CONTRACEPTIF. Méthode alternative obligatoire (DIU cuivre, préservatif).", "severite": "danger" },
+                              { "classe": "Inducteur CYP — ↓ Antifongiques azolés", "dcis": ["itraconazole", "voriconazole", "posaconazole", "ketoconazole"], "commentaire": "↓ efficacité antifongique. Surveillance.", "severite": "warning" },
+                              { "classe": "Inducteur CYP — ↓ Immunosuppresseurs", "dcis": ["ciclosporine", "tacrolimus", "sirolimus", "everolimus"], "commentaire": "↓ exposition IS → risque rejet. EVITER ou monitoring taux + adaptation dose.", "severite": "danger" },
+                              { "classe": "Inducteur CYP — ↓ Macrolides / Antiviraux / Anticancéreux", "dcis": ["clarithromycine", "ritonavir", "atazanavir", "darunavir", "imatinib", "sunitinib", "erlotinib"], "commentaire": "↓ exposition. Surveillance ou alternative.", "severite": "warning" },
+                              { "classe": "Inducteur CYP — ↓ Antipsychotiques / Antidépresseurs / BZD", "dcis": ["haloperidol", "quetiapine", "olanzapine", "risperidone", "aripiprazole", "alprazolam", "midazolam", "diazepam", "amitriptyline", "clomipramine"], "commentaire": "↓ efficacité psychotrope.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ carbamazépine (toxicité)", "dcis": ["clarithromycine", "erythromycine", "ketoconazole", "itraconazole", "voriconazole", "ritonavir", "fluconazole", "diltiazem", "verapamil", "fluoxetine", "fluvoxamine"], "commentaire": "↑ exposition carbamazépine → toxicité (vertiges, ataxie, diplopie, somnolence). Réduction dose ou éviter. Pamplemousse aussi (CYP3A4 intestinal).", "severite": "danger" },
+                              { "classe": "Lithium — neurotoxicité MAJEURE", "dcis": ["lithium"], "commentaire": "Neurotoxicité (tremblements, confusion, ataxie) même à lithiémie thérapeutique. EVITER.", "severite": "danger" },
+                              { "classe": "Clozapine — CI ABSOLUE (cumul agranulocytose)", "dcis": ["clozapine"], "commentaire": "CONTRE-INDICATION ABSOLUE — risque agranulocytose cumulé majeur.", "severite": "danger" },
+                              { "classe": "Lamotrigine — ↓ lamotrigine x2 (perte efficacité)", "dcis": ["lamotrigine"], "commentaire": "Carbamazépine ↓ lamotrigine x2. Adaptation dose.", "severite": "warning" },
+                              { "classe": "Valproate — ↑ carbamazépine et son métabolite actif (epoxide) → toxicité", "dcis": ["valproate", "valpromide"], "commentaire": "Valproate inhibe l'epoxide-hydrolase → ↑ métabolite actif carbamazépine-epoxide → toxicité (vertiges, ataxie). Surveillance.", "severite": "warning" },
+                              { "classe": "ISRS / IRSN (potentialisation hyponatrémie SIADH + sérotoninergique)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine"], "commentaire": "Cumul hyponatrémie/SIADH. Surveillance Na+ rapprochée.", "severite": "warning" },
+                              { "classe": "Diurétiques (potentialisation hyponatrémie)", "dcis": ["hydrochlorothiazide", "indapamide", "furosemide"], "commentaire": "Cumul hyponatrémie/SIADH.", "severite": "warning" },
+                              { "classe": "IMAO non-sélectifs — CI ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "CONTRE-INDICATION ABSOLUE. Délai 14 j entre arrêt IMAO et carbamazépine.", "severite": "danger" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | Ionogramme (SIADH) | ECG | Créatinine | Bilan thyroidien | Dosage serologique (fenetre 4-12 mg/L)",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | Ionogramme (annuel - risque SIADH) | ECG (annuel) | Dosage serique (a M1 puis annuel)",
@@ -11688,16 +11682,13 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,55",
                     "qt_risque": "",
-                    "ddi_interact": "Contraceptifs, Valproate",
+                    "ddi_interact": "Valproate (↑ x2 — RISQUE STEVENS-JOHNSON), Inducteurs enzymatiques (↓ lamotrigine), Contraceptifs oraux (↓ lamotrigine), Rifampicine, Atazanavir/Ritonavir",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Valproate",
-                                        "dcis": [
-                                                  "valproate"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Valproate — RISQUE STEVENS-JOHNSON MAJEUR (↑ lamotrigine x2-3)", "dcis": ["valproate", "valpromide"], "commentaire": "Valproate inhibe glucuronidation lamotrigine → ↑ x2-3 → risque éruption sévère (Stevens-Johnson, NET) majoré x10. Si association indispensable : titration ULTRA-LENTE (12.5-25 mg/sem) + dose finale réduite 50%. Toute éruption cutanée → ARRÊT IMMÉDIAT.", "severite": "danger" },
+                              { "classe": "Inducteurs enzymatiques — ↓ lamotrigine x2 (perte efficacité)", "dcis": ["carbamazepine", "phenytoine", "phenobarbital", "primidone", "rifampicine", "millepertuis"], "commentaire": "Inducteurs UGT/CYP → ↓ lamotrigine x2 → perte efficacité. Augmenter dose lamotrigine x2 ou éviter.", "severite": "warning" },
+                              { "classe": "Contraceptifs oraux (↓ lamotrigine — perte efficacité)", "dcis": ["ethinylestradiol", "levonorgestrel", "desogestrel", "drospirenone"], "commentaire": "Œstrogènes ↑ glucuronidation → ↓ lamotrigine 50%. Adapter dose pendant cycle (↑ pendant prise pilule, ↓ pendant placebo). Risque crises pendant arrêt placebo.", "severite": "warning" },
+                              { "classe": "Atazanavir / Ritonavir / Lopinavir (↓ lamotrigine)", "dcis": ["atazanavir", "ritonavir", "lopinavir"], "commentaire": "Antirétroviraux ↓ lamotrigine. Adapter dose.", "severite": "warning" },
+                              { "classe": "Sertraline (↑ lamotrigine — moindre que valproate)", "dcis": ["sertraline"], "commentaire": "↑ modeste lamotrigine. Surveillance clinique.", "severite": "info" }
                     ],
                     "suivi_initial": "Bilan hépatique | NFS | ECG si cardiopathie | Créatinine",
                     "suivi_periodique": "Bilan hépatique (annuel) | NFS (annuelle)",
@@ -12310,73 +12301,21 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0",
                     "qt_risque": "(PR) - Anomalies ECG (onde T), allongement QTc possible",
-                    "ddi_interact": "IEC/ARA2/AINS (augmentent lithiemie +++), Thiazidiques (augmentent lithiemie +), Diuretiques de l'anse (attention: augmentent lithiemie), Carbamazepine (neurotoxicite), Haloperidol (neurotoxicite), ISRS (syndrome serotoninergique)",
+                    "ddi_interact": "AINS (↑ lithiémie ++++ — risque toxicité), IEC/ARA2 (↑ lithiémie +++), Thiazidiques (↑ lithiémie ++), Diurétiques de l'anse (↑ lithiémie modéré), Métronidazole (↑ lithiémie), Carbamazepine (neurotoxicité), Antipsychotiques (SNM), ISRS/IRSN/Tramadol (sérotoninergique), IMAO (CI), Caféine (↓ lithiémie), Régime hyposodé (↑ lithiémie)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "IEC",
-                                        "dcis": [
-                                                  "enalapril",
-                                                  "lisinopril",
-                                                  "ramipril",
-                                                  "perindopril",
-                                                  "quinapril",
-                                                  "benazepril",
-                                                  "captopril",
-                                                  "fosinopril",
-                                                  "trandolapril"
-                                        ],
-                                        "commentaire": "augmentent lithiemie +++",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Diurétiques thiazidiques",
-                                        "dcis": [
-                                                  "hydrochlorothiazide",
-                                                  "indapamide",
-                                                  "chlortalidone"
-                                        ],
-                                        "commentaire": "augmentent lithiemie +",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Diurétiques de l'anse",
-                                        "dcis": [
-                                                  "furosemide",
-                                                  "bumetanide",
-                                                  "torsemide"
-                                        ],
-                                        "commentaire": "attention: augmentent lithiemie",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Carbamazepine",
-                                        "dcis": [
-                                                  "carbamazepine"
-                                        ],
-                                        "commentaire": "neurotoxicite",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Haloperidol",
-                                        "dcis": [
-                                                  "haloperidol"
-                                        ],
-                                        "commentaire": "neurotoxicite",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "syndrome serotoninergique",
-                                        "severite": "danger"
-                              }
+                              { "classe": "AINS — ↑ lithiémie x2-3 (risque toxicité)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam", "indometacine"], "commentaire": "AINS = inhibition synthèse PG → ↓ excrétion rénale lithium → ↑ lithiémie x2-3 (risque toxique). EVITER ou contrôler lithiémie à 5-7 j de l'introduction.", "severite": "danger" },
+                              { "classe": "IEC", "dcis": ["enalapril", "lisinopril", "ramipril", "perindopril", "quinapril", "benazepril", "captopril", "fosinopril", "trandolapril"], "commentaire": "↑ lithiémie +++ (↓ excrétion rénale, hyponatrémie). Surveillance lithiémie + créat + Na+.", "severite": "warning" },
+                              { "classe": "ARA2 (sartans)", "dcis": ["losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "azilsartan"], "commentaire": "↑ lithiémie ++ (similaire IEC). Surveillance lithiémie.", "severite": "warning" },
+                              { "classe": "Diurétiques thiazidiques (↑ lithiémie ++)", "dcis": ["hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "↑ lithiémie ++ (↓ excrétion rénale par hypovolémie). Surveillance lithiémie rapprochée.", "severite": "warning" },
+                              { "classe": "Diurétiques de l'anse (↑ lithiémie modéré)", "dcis": ["furosemide", "bumetanide", "torsemide", "piretanide"], "commentaire": "↑ lithiémie modéré. Surveillance.", "severite": "warning" },
+                              { "classe": "Métronidazole / Spiramycine+métronidazole", "dcis": ["metronidazole", "ornidazole", "spiramycine + metronidazole"], "commentaire": "↑ lithiémie (mécanisme rénal). Surveillance lithiémie à 5-7 j.", "severite": "warning" },
+                              { "classe": "Carbamazepine — neurotoxicité MAJEURE (cumul même à lithiémie normale)", "dcis": ["carbamazepine", "oxcarbazepine"], "commentaire": "Neurotoxicité majeure (tremblements, ataxie, confusion) même à lithiémie thérapeutique. EVITER l'association.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (risque syndrome neuroleptique malin)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "fluphenazine", "perphenazine", "trifluoperazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine", "aripiprazole", "amisulpride"], "commentaire": "Risque SNM (notamment Halopéridol + Lithium = combinaison historiquement à risque). Surveillance clinique + CPK si suspicion. Si association indispensable, doses minimales.", "severite": "warning" },
+                              { "classe": "ISRS/IRSN — syndrome sérotoninergique + ↑ lithiémie", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran", "desvenlafaxine"], "commentaire": "Syndrome sérotoninergique potentiel + ↑ lithiémie. Surveillance lithiémie + clinique.", "severite": "warning" },
+                              { "classe": "Tramadol / Pethidine — sérotoninergique", "dcis": ["tramadol", "pethidine", "oxycodone"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
+                              { "classe": "IMAO non-sélectifs", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "Risque sérotoninergique + SNM. Délai 14 j.", "severite": "danger" },
+                              { "classe": "Caféine (↓ lithiémie)", "dcis": ["cafeine"], "commentaire": "Caféine = diurétique léger → ↓ lithiémie. Sevrage caféine → ↑ lithiémie. Stabilité de la consommation à privilégier.", "severite": "info" },
+                              { "classe": "Régime hyposodé / Régime sans sel (↑ lithiémie)", "dcis": [], "commentaire": "Restriction sodée → ↓ excrétion rénale lithium → ↑ lithiémie. Maintenir apports sodés stables. Éviter régime sans sel strict.", "severite": "warning" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (natremie +++) | TSH + FT4 | ECG | Bilan parathyroidien (PTH, calcemie) | Hemogramme | Dosage serique (fenetre 0.6-1.2 mEq/L prophylaxie)",
                     "suivi_periodique": "Lithiemie C0 (residuelle 12h post-dose) (mensuelle 1ere annee puis tous les 3-6 mois) | Créatinine + ionogramme (tous les 3-6 mois) | TSH + FT4 (annuel) | Calcemie + PTH (annuel - hyperparathyroidie) | ECG (annuel)",
@@ -14689,8 +14628,16 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,4",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Inducteur enzymatique modéré (CYP3A4/5) — ↓ Contraceptifs/Statines/Ciclosporine, Lithium (neurotoxicité), Diurétiques (hyponatrémie), ISRS (SIADH cumul), IMAO (CI)",
+                    "ddi_interact_v2": [
+                              { "classe": "Inducteur CYP3A4 modéré — ↓ Contraceptifs oraux", "dcis": ["ethinylestradiol", "levonorgestrel", "desogestrel", "drospirenone"], "commentaire": "↓ contraceptifs → risque échec contraceptif (effet moins marqué que carbamazépine). Méthode alternative recommandée.", "severite": "warning" },
+                              { "classe": "Inducteur CYP3A4 modéré — ↓ AVK / AOD / Statines / Ciclosporine", "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "atorvastatine", "simvastatine", "ciclosporine", "tacrolimus"], "commentaire": "↓ exposition. Surveillance INR/anti-Xa/taux IS.", "severite": "warning" },
+                              { "classe": "Lithium — neurotoxicité (cumul même à lithiémie normale)", "dcis": ["lithium"], "commentaire": "Neurotoxicité (similaire carbamazépine). EVITER.", "severite": "warning" },
+                              { "classe": "Diurétiques (potentialisation hyponatrémie ++)", "dcis": ["hydrochlorothiazide", "indapamide", "furosemide"], "commentaire": "Cumul hyponatrémie/SIADH (oxcarbazépine = SIADH plus fréquent que carbamazépine). Surveillance Na+ rapprochée.", "severite": "danger" },
+                              { "classe": "ISRS / IRSN (cumul hyponatrémie SIADH)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine"], "commentaire": "Cumul SIADH ++. Surveillance Na+ à 2 semaines puis trimestrielle.", "severite": "warning" },
+                              { "classe": "IMAO non-sélectifs — CI ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "CI absolue. Délai 14 j.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (BZD, opioïdes — sédation)", "dcis": ["alprazolam", "lorazepam", "diazepam", "morphine", "tramadol"], "commentaire": "Sédation additive.", "severite": "warning" }
+                    ],
                     "suivi_initial": "Ionogramme (SIADH frequent ++) | NFS | Bilan hépatique | Créatinine",
                     "suivi_periodique": "Ionogramme (a 2 semaines puis annuel - risque SIADH ++++) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Hyponatremie severe (SIADH - plus frequent que carbamazepine) → ionogramme urgent | Eruption cutanee → arret",
@@ -19509,24 +19456,19 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,9",
                     "qt_risque": "",
-                    "ddi_interact": "Warfarine, Lamotrigine, Methotrexate",
+                    "ddi_interact": "Carbapénems (CI relative — ↓ valproate MAJEUR), Lamotrigine (↑ x2 → Stevens-Johnson), Aspirine (↑ valproate libre), AVK (↑ INR), Méthotrexate (↑ tox), Topiramate (hyperammoniémie), Inducteurs enzymatiques (↓ valproate), Sédatifs centraux, Zidovudine, IMAO",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Warfarine",
-                                        "dcis": [
-                                                  "warfarine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Methotrexate",
-                                        "dcis": [
-                                                  "methotrexate"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Carbapénems — CONTRE-INDICATION RELATIVE (↓ valproate x2-10)", "dcis": ["meropeneme", "imipenem", "ertapenem", "doripenem"], "commentaire": "Carbapénems → ↓ MAJEURE valproate (60-100% en quelques jours) → perte d'efficacité antiépileptique → CRISES. CI relative — éviter ou switch ATB. Si association indispensable : monitoring valproatémie + clinique strict.", "severite": "danger" },
+                              { "classe": "Lamotrigine — risque Stevens-Johnson MAJEUR", "dcis": ["lamotrigine"], "commentaire": "Valproate inhibe glucuronidation → ↑ lamotrigine x2-3 → risque éruption sévère (Stevens-Johnson, NET) majoré x10. Si association indispensable : titration lamotrigine ULTRA-LENTE (12.5-25 mg/sem) + dose finale réduite 50%.", "severite": "danger" },
+                              { "classe": "Aspirine (↑ valproate libre par déplacement albumine)", "dcis": ["aspirine"], "commentaire": "Aspirine = déplace valproate de l'albumine + inhibe oxydation → ↑ valproate libre actif → toxicité. Surveillance clinique.", "severite": "warning" },
+                              { "classe": "AVK (Warfarine, Acénocoumarol, Fluindione)", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "Valproate ↑ INR (déplacement albumine). Surveillance INR rapprochée à l'introduction.", "severite": "warning" },
+                              { "classe": "Méthotrexate", "dcis": ["methotrexate"], "commentaire": "↑ toxicité MTX (compétition liaison protéique).", "severite": "warning" },
+                              { "classe": "Topiramate (hyperammoniémie)", "dcis": ["topiramate"], "commentaire": "Cumul hyperammoniémie → encéphalopathie. Surveillance ammoniémie si association.", "severite": "warning" },
+                              { "classe": "Inducteurs enzymatiques (↓ valproate)", "dcis": ["rifampicine", "carbamazepine", "phenytoine", "phenobarbital", "millepertuis"], "commentaire": "↓ valproate → perte efficacité. Surveillance valproatémie.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD, opioïdes — sédation cumulée)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "morphine", "oxycodone", "fentanyl", "tramadol"], "commentaire": "Sédation additive — chutes. Diazépam : ↑ taux par valproate.", "severite": "warning" },
+                              { "classe": "Zidovudine (AZT)", "dcis": ["zidovudine"], "commentaire": "↑ exposition AZT → toxicité hématologique. Surveillance NFS.", "severite": "warning" },
+                              { "classe": "Antipsychotiques (sédation, EPS)", "dcis": ["haloperidol", "chlorpromazine", "risperidone", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Sédation et EPS additifs. Clozapine + valproate : risque sédation ++.", "severite": "warning" },
+                              { "classe": "Quinolones (↓ seuil épileptogène)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine"], "commentaire": "Quinolones → ↓ seuil épileptogène + ↑ valproate. Risque crises.", "severite": "warning" }
                     ],
                     "suivi_initial": "Bilan hépatique (ALAT/ASAT/bilirubine/TP) | NFS-plaquettes | Ammoniemie | Coagulation (TP, TCA) | Glycemie",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a 6 mois la 1ere annee puis annuel) | NFS-plaquettes (annuel) | Ammoniemie (si encephalopathie, si somnolence inexpliquee) | Dosage serique (fenetre 50-100 mg/L - residuelle)",

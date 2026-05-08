@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.85 (Phase 33 — Lot P5 BZD/Z-drugs partiel (7/20) : Oxazepam/Lorazepam (préférées chez âgé), Diazepam (Beers EVITER), Alprazolam/Bromazepam (anxiolytiques courants), Zolpidem/Zopiclone (Z-drugs principaux) — bloc DDI commun + spécificités CYP3A4)
+// Service Worker - GeriaAssist v0.86 (Phase 34 — Lot P8 Thymorégulateurs : Lithium DDI enrichi (AINS/IEC/ARA2/Métronidazole/Tramadol/IMAO + caféine + régime hyposodé), Valproate (Carbapénems CI relative — ↓ x10, Lamotrigine Stevens-Johnson, Aspirine déplacement albumine), Carbamazépine (INDUCTEUR ENZYMATIQUE MAJEUR — 15 classes), Lamotrigine (Stevens-Johnson titration), Oxcarbazépine (SIADH))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase33-bzd-zdrugs-partiel';
-const CACHE_NAME = `geriaassist-v85-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase34-thymoregulateurs';
+const CACHE_NAME = `geriaassist-v86-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
