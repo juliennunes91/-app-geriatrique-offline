@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.86 (Phase 34 — Lot P8 Thymorégulateurs : Lithium DDI enrichi (AINS/IEC/ARA2/Métronidazole/Tramadol/IMAO + caféine + régime hyposodé), Valproate (Carbapénems CI relative — ↓ x10, Lamotrigine Stevens-Johnson, Aspirine déplacement albumine), Carbamazépine (INDUCTEUR ENZYMATIQUE MAJEUR — 15 classes), Lamotrigine (Stevens-Johnson titration), Oxcarbazépine (SIADH))
+// Service Worker - GeriaAssist v0.87 (Phase 35 — Lot P6 ATC partiel (3 ATC majeures) : Amitriptyline/Clomipramine/Imipramine — bloc DDI commun ATC tertiaires (IMAO CI, sérotoninergique, anticholinergique cumul ACB=3 Beers/STOPP, QT, sympathomimétiques crise HTA, CYP2D6, AINS hémorragie))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase34-thymoregulateurs';
-const CACHE_NAME = `geriaassist-v86-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase35-atc-tertiaires';
+const CACHE_NAME = `geriaassist-v87-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

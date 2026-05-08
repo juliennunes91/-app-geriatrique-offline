@@ -2356,11 +2356,24 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,95",
                     "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "IMAO - Serotoninergiques - Anticholinergiques",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Glycemie si diabete",
-                    "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel) | Ionogramme (natremie) (annuel)",
-                    "alerte_clinique": "Allongement QTc → ECG urgent | Surdosage cardiaque (BAV, TV) → ECG urgent + dosage | Ictère | SIADH",
+                    "ddi_interact": "IMAO non-sélectifs (CI ABSOLUE), Linézolide/Bleu méthylène (CI), ISRS/IRSN/Mirtazapine (sérotoninergique), Anticholinergiques (cumul ACB=3 — MAJEUR), QT-allongeurs (ATC=CR), Sympathomimétiques (crise HTA), Sédatifs centraux, Antihypertenseurs (hypotension), Inhibiteurs CYP2D6 (↑ amitriptyline), Inducteurs CYP, AINS/Antiagrégants",
+                    "ddi_interact_v2": [
+                              { "classe": "IMAO non-sélectifs / IMAO-B forte dose — CONTRE-INDICATION ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal + crise HTA. Délai 14 j entre arrêt IMAO et amitriptyline (5 sem si fluoxetine).", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène (effet IMAO)", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique. CI relative.", "severite": "danger" },
+                              { "classe": "ISRS / IRSN / Mirtazapine / Trazodone — sérotoninergique", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "mirtazapine", "trazodone", "vortioxetine"], "commentaire": "Cumul sérotoninergique. Surveillance.", "severite": "warning" },
+                              { "classe": "Tramadol / Pethidine / Triptans — sérotoninergique", "dcis": ["tramadol", "pethidine", "sumatriptan", "zolmitriptan", "rizatriptan"], "commentaire": "Risque syndrome sérotoninergique + ↓ seuil épileptogène.", "severite": "warning" },
+                              { "classe": "Anticholinergiques — cumul ACB=3 MAJEUR", "dcis": ["clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "oxybutynine", "tolterodine", "fesoterodine", "solifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "paroxetine", "olanzapine", "quetiapine", "chlorpromazine", "levomepromazine", "cyamemazine"], "commentaire": "Amitriptyline ACB=3 (anticholinergique fort). Cumul à ÉVITER ABSOLUMENT chez âgé : confusion, sécheresse, rétention urinaire, constipation, chutes, glaucome ACE. STOPP D5/D6/D7, Beers 2023 EVITER.", "severite": "danger" },
+                              { "classe": "QT-allongeurs (ATC = CR)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "erythromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "fluconazole", "voriconazole", "citalopram", "escitalopram", "haloperidol", "chlorpromazine", "ondansetron", "domperidone", "methadone", "tramadol", "hydroxyzine"], "commentaire": "Cumul QT — surveillance ECG. CI Pimozide/Thioridazine.", "severite": "warning" },
+                              { "classe": "Sympathomimétiques (Adrénaline, Noradrénaline) — crise HTA", "dcis": ["adrenaline", "noradrenaline", "ephedrine", "phenylephrine"], "commentaire": "Hypersensibilité aux catécholamines (potentialisation). Crise hypertensive paradoxale. EVITER ou surveillance étroite.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "zolpidem", "zopiclone", "morphine", "oxycodone", "fentanyl", "tramadol", "codeine"], "commentaire": "Sédation cumulée — chutes.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (hypotension orthostatique additive)", "dcis": ["enalapril", "ramipril", "perindopril", "doxazosine", "tamsulosine", "amlodipine", "hydrochlorothiazide", "furosemide", "indapamide", "clonidine"], "commentaire": "ATC = effet alpha-bloquant. Hypotension orthostatique cumulée → chutes chez âgé.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP2D6 puissants (↑ amitriptyline)", "dcis": ["fluoxetine", "paroxetine", "bupropion", "duloxetine", "terbinafine"], "commentaire": "↑ exposition amitriptyline (parfois x2-4) — risque cardiotoxicité. Réduire dose ATC ou éviter.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP (↓ efficacité)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition amitriptyline.", "severite": "warning" },
+                              { "classe": "AINS / Antiagrégants / AVK / AOD (saignement digestif)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "aspirine", "clopidogrel", "warfarine", "apixaban", "rivaroxaban"], "commentaire": "Risque hémorragique digestif (effet plaquettaire ATC).", "severite": "warning" }
+                    ],
+                    "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme (Na+) | Glycémie si diabète | Bandelette urinaire (rétention)",
+                    "suivi_periodique": "ECG (tous les 6 à 12 mois) | NFS (annuelle) | Bilan hépatique (annuel) | Natrémie (à M1 puis annuelle — risque SIADH) | Surveillance score ACB cumulé",
+                    "alerte_clinique": "Beers 2023 + STOPP D5/D6/D7 : ATC tertiaires (Amitriptyline, Clomipramine, Imipramine, Doxépine, Trimipramine) à ÉVITER chez âgé (anticholinergique majeur ACB=3, cardiotoxicité, hypotension orthostatique). Préférer ATC secondaires (nortriptyline, désipramine) si indispensable. Allongement QTc → ECG urgent | Surdosage cardiaque (BAV, TV, mortalité) → ECG urgent + dosage | Ictère | SIADH | Confusion/chutes (ACB=3) | Rétention urinaire",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_009",
@@ -6362,25 +6375,23 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,97",
                     "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "IMAO - ISRS - Depresseurs SNC",
+                    "ddi_interact": "IMAO non-sélectifs (CI ABSOLUE), Linézolide/Bleu méthylène (CI), ISRS/IRSN/Mirtazapine (sérotoninergique), Anticholinergiques (cumul ACB=3 — MAJEUR), QT-allongeurs (ATC=CR), Sympathomimétiques (crise HTA), Sédatifs centraux, Antihypertenseurs, Inhibiteurs CYP2D6, Inducteurs CYP, AINS/Antiagrégants",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IMAO non-sélectifs / IMAO-B forte dose — CONTRE-INDICATION ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal + crise HTA. Délai 14 j entre arrêt IMAO et clomipramine.", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "ISRS / IRSN / Mirtazapine / Trazodone — sérotoninergique", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "mirtazapine", "trazodone", "vortioxetine"], "commentaire": "Cumul sérotoninergique (clomipramine = ATC le plus sérotoninergique).", "severite": "warning" },
+                              { "classe": "Tramadol / Triptans — sérotoninergique + ↓ seuil épileptogène", "dcis": ["tramadol", "pethidine", "sumatriptan", "zolmitriptan", "rizatriptan"], "commentaire": "Risque syndrome sérotoninergique + ↓ seuil épileptogène (clomipramine = ↓ seuil ++).", "severite": "warning" },
+                              { "classe": "Anticholinergiques — cumul ACB=3 MAJEUR", "dcis": ["amitriptyline", "imipramine", "doxepine", "nortriptyline", "trimipramine", "oxybutynine", "tolterodine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "paroxetine", "olanzapine", "quetiapine", "chlorpromazine", "cyamemazine"], "commentaire": "Clomipramine ACB=3. Cumul à ÉVITER chez âgé. STOPP D5/D6/D7, Beers 2023.", "severite": "danger" },
+                              { "classe": "QT-allongeurs (ATC = CR)", "dcis": ["amiodarone", "sotalol", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "citalopram", "haloperidol", "ondansetron", "methadone"], "commentaire": "Cumul QT — surveillance ECG.", "severite": "warning" },
+                              { "classe": "Sympathomimétiques — crise HTA", "dcis": ["adrenaline", "noradrenaline", "ephedrine", "phenylephrine"], "commentaire": "Hypersensibilité catécholamines. EVITER.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes)", "dcis": ["alprazolam", "lorazepam", "diazepam", "zolpidem", "zopiclone", "morphine", "oxycodone", "fentanyl", "tramadol"], "commentaire": "Sédation cumulée — chutes.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (hypotension orthostatique additive)", "dcis": ["enalapril", "ramipril", "doxazosine", "tamsulosine", "amlodipine", "hydrochlorothiazide", "furosemide"], "commentaire": "Hypotension orthostatique cumulée.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP2D6 puissants (↑ clomipramine)", "dcis": ["fluoxetine", "paroxetine", "bupropion", "duloxetine"], "commentaire": "↑ exposition clomipramine — risque cardiotoxicité.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP (↓ efficacité)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine"], "commentaire": "↓ exposition clomipramine.", "severite": "warning" }
                     ],
-                    "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme",
-                    "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Allongement QTc → ECG urgent | Ictère → bilan hépatique urgent | SIADH → natremie urgente",
+                    "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme (Na+) | Bandelette urinaire (rétention)",
+                    "suivi_periodique": "ECG (tous les 6 à 12 mois) | NFS (annuelle) | Bilan hépatique (annuel) | Natrémie (à M1 puis annuelle — SIADH)",
+                    "alerte_clinique": "Beers 2023 + STOPP D5/D6/D7 : ATC tertiaire à ÉVITER chez âgé. Allongement QTc → ECG urgent | Ictère → bilan hépatique | SIADH → natrémie | Convulsions (clomipramine = ↓ seuil épileptogène ++) | Confusion/chutes (ACB=3) | Rétention urinaire",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_009",
@@ -10939,20 +10950,24 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,86",
                     "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "IMAO - Clonidine - Anticholinergiques",
+                    "ddi_interact": "IMAO non-sélectifs (CI ABSOLUE), Linézolide (CI), ISRS/IRSN (sérotoninergique), Anticholinergiques (cumul ACB=3), QT-allongeurs (PR), Sympathomimétiques, Sédatifs centraux, Antihypertenseurs (Clonidine = antagonisme), Inhibiteurs CYP2D6, Inducteurs CYP",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "IMAO - Clonidine - Anticholinergiques",
-                                        "dcis": [
-                                                  "clonidine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IMAO non-sélectifs / IMAO-B forte dose — CONTRE-INDICATION ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal + crise HTA. Délai 14 j.", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "ISRS / IRSN / Mirtazapine — sérotoninergique", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "mirtazapine", "trazodone", "vortioxetine"], "commentaire": "Cumul sérotoninergique.", "severite": "warning" },
+                              { "classe": "Tramadol / Triptans — sérotoninergique + ↓ seuil épileptogène", "dcis": ["tramadol", "pethidine", "sumatriptan", "zolmitriptan"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
+                              { "classe": "Anticholinergiques — cumul ACB=3 MAJEUR", "dcis": ["amitriptyline", "clomipramine", "doxepine", "nortriptyline", "trimipramine", "oxybutynine", "tolterodine", "atropine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "paroxetine", "olanzapine", "quetiapine", "chlorpromazine"], "commentaire": "Imipramine ACB=3. Cumul à ÉVITER chez âgé.", "severite": "danger" },
+                              { "classe": "QT-allongeurs (Imipramine = PR)", "dcis": ["amiodarone", "sotalol", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "citalopram", "haloperidol", "ondansetron", "methadone"], "commentaire": "Cumul QT — surveillance ECG.", "severite": "warning" },
+                              { "classe": "Sympathomimétiques — crise HTA", "dcis": ["adrenaline", "noradrenaline", "ephedrine"], "commentaire": "Hypersensibilité catécholamines.", "severite": "danger" },
+                              { "classe": "Clonidine — ANTAGONISME (perte effet antihypertenseur)", "dcis": ["clonidine"], "commentaire": "Imipramine antagonise effet antihypertenseur clonidine. Risque rebond HTA si arrêt brutal clonidine. EVITER association.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alprazolam", "lorazepam", "diazepam", "zolpidem", "morphine", "tramadol"], "commentaire": "Sédation cumulée — chutes.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (hypotension orthostatique)", "dcis": ["enalapril", "ramipril", "doxazosine", "tamsulosine", "amlodipine", "hydrochlorothiazide", "furosemide"], "commentaire": "Hypotension orthostatique cumulée.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP2D6 puissants (↑ imipramine)", "dcis": ["fluoxetine", "paroxetine", "bupropion", "duloxetine"], "commentaire": "↑ exposition imipramine — risque cardiotoxicité.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine"], "commentaire": "↓ exposition imipramine.", "severite": "warning" }
                     ],
-                    "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Glycemie",
-                    "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Allongement QTc → ECG urgent | Ictère → bilan hépatique urgent | SIADH",
+                    "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme (Na+) | Glycémie | Bandelette urinaire (rétention)",
+                    "suivi_periodique": "ECG (tous les 6 à 12 mois) | NFS (annuelle) | Bilan hépatique (annuel) | Natrémie (à M1 puis annuelle — SIADH)",
+                    "alerte_clinique": "Beers 2023 + STOPP D5 : ATC tertiaire à ÉVITER chez âgé. Allongement QTc → ECG urgent | Ictère | SIADH | Confusion/chutes (ACB=3) | Rétention urinaire | Antagonisme effet clonidine — crise HTA",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_009",
