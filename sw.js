@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.94 (Phase 42 — Antidiabétiques 32/32 FINALISÉS : 6 insulines (Aspart/Lispro/Glulisine/Detemir/Degludec/Humaine NPH) standardisées avec bloc DDI commun (sulfamides/iSGLT2/GLP-1 hypo additive, β-bloquants masquent, Corticoïdes antagonisme, Alcool, Cotrimoxazole, ARA2/IEC modeste, IMAO))
+// Service Worker - GeriaAssist v0.95 (Phase 43 — Cardio début IEC : Ramipril/Enalapril/Perindopril/Lisinopril (4 IEC majeurs) avec bloc DDI commun ARA2 CI cumul SRA, Sacubitril CI simultanée délai 36 h, ARM hyperkaliémie surveillance, AINS triple whammy IRA, Lithium, Triméthoprime/Cotrimoxazole Antoniou BMJ 2014, Allopurinol, Diurétiques hypotension 1ère dose)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase42-antidiabetiques-finalises';
-const CACHE_NAME = `geriaassist-v94-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase43-cardio-iec-debut';
+const CACHE_NAME = `geriaassist-v95-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

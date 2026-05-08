@@ -8921,11 +8921,21 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,5",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG | Kaliemie | TA | NFS",
-                    "suivi_periodique": "Créatinine + kaliemie (annuel)",
-                    "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Angio-oedeme",
+                    "ddi_interact": "ARA2 (CI cumul SRA), Sacubitril (CI simultanée — délai 36 h), ARM/Diurétiques épargneurs K+/Sels KCl (hyperkaliémie cumulée), AINS (triple whammy → IRA), Lithium, Triméthoprime/Cotrimoxazole (hyperkaliémie additive), Allopurinol, Insuline/Sulfamides, Diurétiques (hypotension 1ère dose)",
+                    "ddi_interact_v2": [
+                              { "classe": "ARA2 (Sartans) — CONTRE-INDICATION ASSOCIATION", "dcis": ["losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "azilsartan", "eprosartan"], "commentaire": "Double blocage SRA = IRA, hyperkaliémie. ESC 2024 EVITER.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan (ARNI) — CI simultanée (délai 36 h)", "dcis": ["sacubitril valsartan"], "commentaire": "Risque angioedème mortel si simultané. PARADIGM-HF.", "severite": "danger" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ / Sels KCl (hyperkaliémie)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "En HFrEF/MRC : association RECOMMANDÉE avec surveillance K+/créat (PARADIGM, EMPHASIS-HF, FIDELIO).", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "IRA fonctionnelle si IEC + diurétique + AINS (SYND_045).", "severite": "danger" },
+                              { "classe": "Lithium (↑ lithiémie)", "dcis": ["lithium"], "commentaire": "Surveillance lithiémie + créat.", "severite": "warning" },
+                              { "classe": "Triméthoprime / Cotrimoxazole (hyperkaliémie additive)", "dcis": ["trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Antoniou BMJ 2014 — surmortalité chez âgé. Surveillance K+.", "severite": "danger" },
+                              { "classe": "Allopurinol (réactions cutanées)", "dcis": ["allopurinol"], "commentaire": "DRESS, Stevens-Johnson rares.", "severite": "warning" },
+                              { "classe": "Insuline / Sulfamides (hypoglycémie additive modeste)", "dcis": ["insuline glargine", "insuline detemir", "glibenclamide", "glimepiride", "gliclazide"], "commentaire": "Effet additif modeste.", "severite": "info" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "bumetanide", "hydrochlorothiazide", "indapamide"], "commentaire": "Réduire dose IEC à initiation. Surveillance TA.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Créatinine/DFG | Kaliémie | TA | NFS",
+                    "suivi_periodique": "Créatinine + kaliémie (à 1-2 sem post-introduction puis annuel — chute initiale créat 10-20% = bénin transitoire, > 30% = recontrôler)",
+                    "alerte_clinique": "Insuffisance rénale aiguë (surveillance créat) | Hyperkaliémie (cumulé avec ARM/AINS/Triméthoprime — Antoniou BMJ 2014) | Angio-œdème (rare 0.1-0.5% mais grave — arrêt définitif, switch ARA2 possible). Toux sèche fréquente (10-20%) — switch ARA2 si invalidante.",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -8935,8 +8945,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Médicament de référence de la classe",
-                    "source": "RCP Renitec ; ESC HTA/HF 2023"
+                    "notes_cliniques": "Médicament de référence de la classe IEC. Indications : HTA, HFrEF, post-IDM, MRC + protéinurie. ESC 2024 HF/HTA/SCC. Bénéfice majeur en HFrEF (CONSENSUS, SOLVD).",
+                    "source": "RCP Renitec ; ESC HTA 2024 ; ESC HF 2024"
           },
           {
                     "dci": "Entacapone",
@@ -12342,31 +12352,14 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0",
                     "qt_risque": "",
-                    "ddi_interact": "AINS, K+, Spironolactone, Diuretiques",
+                    "ddi_interact": "ARA2 (CI cumul SRA), Sacubitril (CI simultanée), ARM/Diurétiques épargneurs K+/KCl (hyperkaliémie), AINS (triple whammy), Lithium, Triméthoprime/Cotrimoxazole (hyperkaliémie additive), Allopurinol, Diurétiques (hypotension 1ère dose)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Spironolactone",
-                                        "dcis": [
-                                                  "spironolactone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ARA2 — CI ASSOCIATION", "dcis": ["losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "azilsartan", "eprosartan"], "commentaire": "Double blocage SRA. ESC 2024 EVITER.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan — CI simultanée (délai 36 h)", "dcis": ["sacubitril valsartan"], "commentaire": "Risque angioedème mortel.", "severite": "danger" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ / KCl (hyperkaliémie)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "Surveillance K+/créat. ATLAS — bénéfice lisinopril HFrEF.", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib"], "commentaire": "IRA fonctionnelle.", "severite": "danger" },
+                              { "classe": "Lithium / Triméthoprime / Cotrimoxazole (hyperkaliémie)", "dcis": ["lithium", "trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Surveillance K+/lithiémie.", "severite": "warning" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Réduire dose IEC à initiation.", "severite": "warning" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Proteinurie (diabetiques)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
@@ -15021,11 +15014,19 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "10 - 20 % (Pour le metabolite actif)",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG | Kaliemie | TA",
-                    "suivi_periodique": "Créatinine + kaliemie (annuel)",
-                    "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Angio-oedeme",
+                    "ddi_interact": "ARA2 (CI cumul SRA), Sacubitril (CI simultanée — délai 36 h), ARM/Diurétiques épargneurs K+ (hyperkaliémie cumulée), AINS (triple whammy → IRA), Lithium, Triméthoprime/Cotrimoxazole (hyperkaliémie additive), Allopurinol, Diurétiques (hypotension 1ère dose)",
+                    "ddi_interact_v2": [
+                              { "classe": "ARA2 — CI ASSOCIATION", "dcis": ["losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "azilsartan", "eprosartan"], "commentaire": "Double blocage SRA = IRA, hyperkaliémie. ESC 2024 EVITER.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan — CI simultanée (délai 36 h)", "dcis": ["sacubitril valsartan"], "commentaire": "Risque angioedème mortel. PARADIGM-HF.", "severite": "danger" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ / KCl (hyperkaliémie)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "Surveillance K+/créat. EUROPA, PROGRESS — bénéfice perindopril.", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib"], "commentaire": "IRA fonctionnelle.", "severite": "danger" },
+                              { "classe": "Lithium / Triméthoprime / Cotrimoxazole (hyperkaliémie)", "dcis": ["lithium", "trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Surveillance K+/lithiémie.", "severite": "warning" },
+                              { "classe": "Allopurinol (réactions cutanées rares)", "dcis": ["allopurinol"], "commentaire": "DRESS rare.", "severite": "info" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Réduire dose IEC à initiation.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Créatinine/DFG | Kaliémie | TA | NFS",
+                    "suivi_periodique": "Créatinine + kaliémie (à 1-2 sem post-introduction puis annuel)",
+                    "alerte_clinique": "IRA aiguë | Hyperkaliémie (cumul ARM/AINS/Triméthoprime — Antoniou BMJ 2014) | Angio-œdème (rare mais grave) | Toux sèche 10-20% (switch ARA2 si invalidante). Indication ESC 2024 HTA/HFrEF/SCC. Études : EUROPA (post-SCA), PROGRESS (post-AVC).",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -16408,31 +16409,18 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,73",
                     "qt_risque": "",
-                    "ddi_interact": "AINS, K+, Spironolactone, Diuretiques",
+                    "ddi_interact": "ARA2 (CI cumul SRA), Sacubitril (CI simultanée — délai 36 h), ARM/Diurétiques épargneurs K+/Sels KCl (hyperkaliémie cumulée), AINS (triple whammy → IRA), Lithium (↑ lithiémie), Allopurinol (réactions cutanées sévères), Triméthoprime/Cotrimoxazole (hyperkaliémie additive âgé), Insuline/Sulfamides (hypoglycémie modeste), Sympathomimétiques (antagonisme)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Spironolactone",
-                                        "dcis": [
-                                                  "spironolactone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ARA2 (Sartans) — CONTRE-INDICATION ASSOCIATION (IRA/hyperkaliémie)", "dcis": ["losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "azilsartan", "eprosartan"], "commentaire": "Double blocage SRA = IRA, hyperkaliémie, hypotension. ESC 2024 HF/HTA : EVITER (sauf cas exceptionnel sous surveillance spécialisée). Préférer ARNI si HFrEF.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan (ARNI) — CI simultanée (délai 36 h)", "dcis": ["sacubitril valsartan"], "commentaire": "DÉLAI 36 H entre arrêt IEC et début ARNI (risque angioedème mortel — PARADIGM-HF). Switch jamais simultané.", "severite": "danger" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ / Sels KCl (hyperkaliémie cumulée)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "Cumul hyperkaliémie. En HFrEF/MRC : association IEC + ARM RECOMMANDÉE (PARADIGM, EMPHASIS-HF, FIDELIO-DKD) avec surveillance K+ + créat.", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY (IEC + diurétique + AINS = IRA fonctionnelle)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "Triple whammy → IRA fonctionnelle (SYND_045). À éviter ou surveillance créat rapprochée.", "severite": "danger" },
+                              { "classe": "Lithium (↑ lithiémie via natriurèse)", "dcis": ["lithium"], "commentaire": "↑ lithiémie x2-3. Surveillance lithiémie + créat.", "severite": "warning" },
+                              { "classe": "Triméthoprime / Cotrimoxazole (hyperkaliémie additive chez âgé)", "dcis": ["trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Triméthoprime = effet épargneur K+ → hyperkaliémie additive (Antoniou BMJ 2014 — surmortalité mort subite chez âgé). Surveillance K+.", "severite": "danger" },
+                              { "classe": "Allopurinol (réactions cutanées + neutropénie — surtout Captopril)", "dcis": ["allopurinol"], "commentaire": "Risque DRESS, Stevens-Johnson, neutropénie.", "severite": "warning" },
+                              { "classe": "Insuline / Sulfamides (hypoglycémie additive modeste)", "dcis": ["insuline glargine", "insuline detemir", "insuline aspart", "insuline lispro", "glibenclamide", "glimepiride", "gliclazide"], "commentaire": "Effet additif modeste.", "severite": "info" },
+                              { "classe": "Diurétiques (effet additif hypotenseur)", "dcis": ["furosemide", "bumetanide", "torsemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Hypotension de 1ère dose — réduire dose IEC à initiation si diurétique. Surveillance TA.", "severite": "warning" },
+                              { "classe": "Sympathomimétiques (effet hypertenseur — antagonisme)", "dcis": ["pseudoephedrine", "phenylephrine", "ephedrine"], "commentaire": "Antagonisme effet antihypertenseur.", "severite": "info" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Proteinurie (diabetiques)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
