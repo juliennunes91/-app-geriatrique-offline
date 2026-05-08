@@ -5376,33 +5376,13 @@ const MASTER_DB = {
                     "bhe": "1 (passage BHE)",
                     "albumine": "96%",
                     "qt_risque": "",
-                    "ddi_interact": "Alcool et depresseurs SNC (sedation additive) | Inhibiteurs CYP3A4 (augmentation exposition) | Opioides (depression respiratoire)",
+                    "ddi_interact": "Opioïdes (CI relative — FDA Black Box, dépression respi), Autres BZD (cumul interdit), Antipsychotiques (sédation + chutes), Sédatifs centraux, Antihistaminiques sédatifs, Alcool, Inhibiteurs CYP3A4 (substrat — Chlordiazépoxide est PIM ABSOLU Beers 2023, demi-vie > 100 h)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool et depresseurs SNC",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "sedation additive",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Inhibiteurs CYP3A4",
-                                        "dcis": [
-                                                  "ketoconazole",
-                                                  "itraconazole",
-                                                  "voriconazole",
-                                                  "posaconazole",
-                                                  "ritonavir",
-                                                  "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
-                                        ],
-                                        "commentaire": "augmentation exposition",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Opioïdes forts (CI relative — FDA Black Box 2016)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine", "buprenorphine"], "commentaire": "Mortalité x4. Antidote flumazénil.", "severite": "danger" },
+                              { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "clorazepate", "prazepam", "nordazepam", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + chutes.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (Antidépresseurs sédatifs, Antihistaminiques, Gabapentinoïdes, Alcool)", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "hydroxyzine", "doxylamine", "diphenhydramine", "promethazine", "gabapentine", "pregabaline", "alcool"], "commentaire": "Sédation cumulée.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants (↑ exposition chlordiazépoxide)", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "clarithromycine", "erythromycine", "diltiazem", "verapamil", "fluvoxamine", "jus de pamplemousse"], "commentaire": "Chlordiazépoxide = substrat CYP3A4, demi-vie > 100 h. ↑ exposition majeure. PIM ABSOLU Beers 2023 — éviter chez âgé.", "severite": "danger" }
                     ],
                     "suivi_initial": "Bilan hépatique | Créatinine | Echelle de sedation",
                     "suivi_periodique": "Reevaluation reguliere de l indication (max 4 semaines) | Echelle de sedation | Risque de chutes",
@@ -6535,11 +6515,17 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,97",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Opioïdes (CI relative — FDA Black Box), Autres BZD (cumul), Antipsychotiques, Sédatifs centraux, Antihistaminiques sédatifs, Alcool, Inhibiteurs CYP3A4 (Clorazepate = prodrogue → nordazépam, métabolite actif demi-vie 30-100 h)",
+                    "ddi_interact_v2": [
+                              { "classe": "Opioïdes forts (CI relative — FDA Black Box 2016)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine", "buprenorphine"], "commentaire": "Mortalité x4. Antidote flumazénil.", "severite": "danger" },
+                              { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "prazepam", "nordazepam", "chlordiazepoxide", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + chutes.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (Antidépresseurs sédatifs, Antihistaminiques sédatifs, Gabapentinoïdes, Alcool)", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "hydroxyzine", "doxylamine", "diphenhydramine", "promethazine", "gabapentine", "pregabaline", "alcool"], "commentaire": "Sédation cumulée.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants (↑ exposition nordazépam)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "fluvoxamine"], "commentaire": "Clorazepate = prodrogue de nordazépam (substrat CYP3A4). ↑ exposition métabolite actif. Préférer oxazépam/lorazépam chez âgé.", "severite": "warning" }
+                    ],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
-                    "suivi_periodique": "Pas de biologie systematique",
-                    "alerte_clinique": "Ictère → bilan hépatique",
+                    "suivi_periodique": "Pas de biologie systématique. Réévaluation indication (durée max 4 sem).",
+                    "alerte_clinique": "Beers 2023 + STOPP K1 : ÉVITER chez âgé (prodrogue → nordazépam métabolite actif demi-vie 30-100 h, accumulation, sédation prolongée, chutes, confusion). Préférer oxazépam/lorazépam si BZD indispensable.",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014"
@@ -6548,8 +6534,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Accumulation chez SA (prodrogue longue demi-vie)",
-                    "source": "RCP Tranxène ; HAS BZD 2022"
+                    "notes_cliniques": "Accumulation chez SA (prodrogue longue demi-vie). Beers 2023 + STOPP K1 EVITER chez âgé.",
+                    "source": "RCP Tranxène ; HAS BZD 2022 ; Beers 2023 ; STOPP/START v3"
           },
           {
                     "dci": "Clotiazepam",
@@ -14147,20 +14133,26 @@ const MASTER_DB = {
           {
                     "dci": "Nordazepam",
                     "princeps": "Nordaz",
-                    "classe": "Benzodiazepine (anxiolytique)",
+                    "classe": "Benzodiazepine (anxiolytique - métabolite actif de diazépam/clorazépate/prazépam, demi-vie 30-100 h)",
                     "poso_hab": "15-30 mg/j",
-                    "poso_ger": "7,5-15 mg/j",
+                    "poso_ger": "Beers 2023 + STOPP K1 — ÉVITER chez âgé (demi-vie longue 30-100 h, accumulation, sédation prolongée, chutes). Si déjà en place : sevrage progressif. Sinon préférer oxazépam/lorazépam.",
                     "poso_ren": "Pas d'ajustement",
                     "acb": 0,
                     "cia": 1,
                     "bhe": "",
                     "albumine": "0,97",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Opioïdes (CI relative — FDA Black Box), Autres BZD (cumul), Antipsychotiques, Sédatifs centraux, Antihistaminiques sédatifs, Alcool, Inhibiteurs CYP3A4 (substrat)",
+                    "ddi_interact_v2": [
+                              { "classe": "Opioïdes forts (CI relative — FDA Black Box 2016)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine"], "commentaire": "Mortalité x4. Antidote flumazénil.", "severite": "danger" },
+                              { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "clorazepate", "prazepam", "chlordiazepoxide", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + chutes.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "hydroxyzine", "doxylamine", "diphenhydramine", "promethazine", "gabapentine", "pregabaline", "alcool"], "commentaire": "Sédation cumulée.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants (↑ exposition nordazépam)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "fluvoxamine"], "commentaire": "Nordazépam = substrat CYP3A4. Préférer oxazépam/lorazépam (sans CYP).", "severite": "warning" }
+                    ],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
-                    "suivi_periodique": "Pas de biologie systematique",
-                    "alerte_clinique": "Ictère → bilan hépatique",
+                    "suivi_periodique": "Pas de biologie systématique. Réévaluation indication (durée max 4 sem).",
+                    "alerte_clinique": "Beers 2023 + STOPP K1 : ÉVITER chez âgé. Sédation prolongée, chutes, confusion (demi-vie 30-100 h).",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014"
@@ -15694,20 +15686,26 @@ const MASTER_DB = {
           {
                     "dci": "Prazepam",
                     "princeps": "Lysanxia",
-                    "classe": "Benzodiazepine (anxiolytique)",
+                    "classe": "Benzodiazepine (anxiolytique - prodrogue nordazépam, longue 1/2 vie)",
                     "poso_hab": "20-60 mg/j",
-                    "poso_ger": "10-20 mg/j",
+                    "poso_ger": "Beers 2023 + STOPP K1 — ÉVITER chez âgé (prodrogue → nordazépam, métabolite actif demi-vie 30-100 h, accumulation, sédation prolongée, chutes). Si déjà en place : sevrage progressif. Sinon préférer oxazépam 7.5-15 mg ou lorazépam 0.5-1 mg.",
                     "poso_ren": "Pas d'ajustement",
                     "acb": 0,
                     "cia": 1,
                     "bhe": "",
                     "albumine": "0,98",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "Opioïdes (CI relative — FDA Black Box), Autres BZD (cumul), Antipsychotiques, Sédatifs centraux, Antihistaminiques sédatifs, Alcool, Inhibiteurs CYP3A4 (Prazepam = prodrogue → nordazépam)",
+                    "ddi_interact_v2": [
+                              { "classe": "Opioïdes forts (CI relative — FDA Black Box 2016)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine", "buprenorphine"], "commentaire": "Mortalité x4. Antidote flumazénil.", "severite": "danger" },
+                              { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "clorazepate", "nordazepam", "chlordiazepoxide", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + chutes.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (Antidépresseurs sédatifs, Antihistaminiques, Gabapentinoïdes, Alcool)", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "hydroxyzine", "doxylamine", "diphenhydramine", "promethazine", "gabapentine", "pregabaline", "alcool"], "commentaire": "Sédation cumulée.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants (↑ exposition nordazépam)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "fluvoxamine"], "commentaire": "Prazepam = prodrogue de nordazépam (substrat CYP3A4). ↑ exposition métabolite actif.", "severite": "warning" }
+                    ],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique",
-                    "suivi_periodique": "Pas de biologie systematique",
-                    "alerte_clinique": "Ictère → bilan hépatique",
+                    "suivi_periodique": "Pas de biologie systématique. Réévaluation indication (durée max 4 sem).",
+                    "alerte_clinique": "Beers 2023 + STOPP K1 : ÉVITER chez âgé. Sédation prolongée, chutes, confusion (accumulation nordazépam).",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014"
@@ -20411,20 +20409,23 @@ const MASTER_DB = {
                     "bhe": "1",
                     "albumine": "95%",
                     "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "IMAO, Dépresseurs du SNC, Alcool",
+                    "ddi_interact": "IMAO non-sélectifs (CI ABSOLUE), Linézolide (CI), ISRS/IRSN/Mirtazapine/ATC (sérotoninergique), Sédatifs centraux (sédation MAJEURE), Antihypertenseurs (hypotension), QT-allongeurs (PR), Inducteurs CYP, Anticholinergiques (ACB=1), Alcool",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IMAO non-sélectifs / IMAO-B forte dose — CONTRE-INDICATION ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et miansérine.", "severite": "danger" },
+                              { "classe": "Linézolide / Bleu de méthylène", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "ISRS / IRSN / Mirtazapine / Trazodone / ATC — sérotoninergique", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "mirtazapine", "trazodone", "vortioxetine", "amitriptyline", "clomipramine", "imipramine", "nortriptyline", "doxepine"], "commentaire": "Cumul sérotoninergique. Miansérine = analogue mirtazapine (NaSSA-like).", "severite": "warning" },
+                              { "classe": "Tramadol / Triptans / Pethidine — sérotoninergique", "dcis": ["tramadol", "pethidine", "sumatriptan", "zolmitriptan"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool) — sédation MAJEURE", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "alcool"], "commentaire": "Miansérine = très sédative (analogue mirtazapine). Sédation cumulée importante — chutes chez âgé.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (hypotension orthostatique additive — alpha-bloquant)", "dcis": ["enalapril", "ramipril", "doxazosine", "tamsulosine", "amlodipine", "hydrochlorothiazide", "furosemide", "clonidine"], "commentaire": "Hypotension orthostatique cumulée — chutes.", "severite": "warning" },
+                              { "classe": "QT-allongeurs (Miansérine = PR)", "dcis": ["amiodarone", "sotalol", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "haloperidol", "ondansetron", "methadone"], "commentaire": "Cumul QT — surveillance ECG.", "severite": "warning" },
+                              { "classe": "Anticholinergiques (Miansérine ACB=1)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "oxybutynine", "tolterodine", "atropine", "biperidene", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "paroxetine", "olanzapine", "quetiapine", "chlorpromazine"], "commentaire": "Miansérine ACB=1 — cumul léger.", "severite": "info" },
+                              { "classe": "Inducteurs CYP (↓ miansérine)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition miansérine.", "severite": "warning" },
+                              { "classe": "Antipsychotiques (sédation + agranulocytose cumulée — Clozapine surveillance NFS)", "dcis": ["haloperidol", "chlorpromazine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation additive. Miansérine + Clozapine : risque agranulocytose cumulé (rare mais documenté). Surveillance NFS.", "severite": "warning" },
+                              { "classe": "Anticoagulants/AVK (modulation modeste INR)", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "↑ modeste INR possible. Surveillance.", "severite": "info" }
                     ],
-                    "suivi_initial": "NFS | Bilan hépatique | ECG",
-                    "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Agranulocytose → NFS urgente (fièvre) | Sédation excessive",
+                    "suivi_initial": "NFS (agranulocytose rare) | Bilan hépatique | ECG (QTc) | Glycémie/HbA1c (prise poids fréquente)",
+                    "suivi_periodique": "NFS (à M1 puis si fièvre/angine — agranulocytose rare) | Bilan hépatique (annuel) | ECG (QTc annuel) | Poids à chaque consultation | Natrémie (à M1 puis annuelle — SIADH possible)",
+                    "alerte_clinique": "Fièvre + angine → NFS urgente (agranulocytose rare 1/2000-5000) | Sédation excessive | Hypotension orthostatique → chutes | Prise de poids | SIADH/hyponatrémie | Hépatotoxicité rare",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_011",

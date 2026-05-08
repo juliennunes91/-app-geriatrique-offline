@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.88 (Phase 36 — Lot P7 partiel : Mirtazapine (NaSSA — sédation paradoxale faible dose, agranulocytose rare, prise poids), Trazodone (QT RE risque ÉTABLI torsades, priapisme, alpha-bloquant hypotension))
+// Service Worker - GeriaAssist v0.89 (Phase 37 — Miansérine (analogue mirtazapine, agranulocytose rare 1/2000), BZD demi-vie longue Beers EVITER : Clorazepate/Prazepam/Nordazepam/Chlordiazepoxide — bloc DDI standard + alerte EVITER chez âgé)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260508-phase36-mirtazapine-trazodone';
-const CACHE_NAME = `geriaassist-v88-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase37-mianserine-bzd-secondaires';
+const CACHE_NAME = `geriaassist-v89-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
