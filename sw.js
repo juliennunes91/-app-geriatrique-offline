@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.83 (Phase 30 — Lot P2 IRSN : standardisation ddi_interact_v2 (12-14 classes par IRSN), Milnacipran/Desvenlafaxine bio_cible enrichi (Na+/transaminases/créat), Venlafaxine BIO_031 ajouté, Duloxetine spécificité CYP1A2 puissants CI)
+// Service Worker - GeriaAssist v0.84 (Phase 32 — Lot P4 SGA atypiques (8/9 standardisés) : Risperidone/Quetiapine/Olanzapine/Aripiprazole/Clozapine/Tiapride/Amisulpride/Paliperidone/Asenapine — bloc DDI commun antipsychotiques + spécificités CYP/ACB par molécule)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260507-phase30-psychotropes-irsn';
-const CACHE_NAME = `geriaassist-v83-${BUILD_ID}`;
+const BUILD_ID = '20260508-phase32-psychotropes-sga';
+const CACHE_NAME = `geriaassist-v84-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
