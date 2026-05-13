@@ -3011,20 +3011,90 @@ const MASTER_DB = {
           {
                     "dci": "Atenolol",
                     "princeps": "Tenormine",
-                    "classe": "Betabloquant cardioselectif",
-                    "poso_hab": "25-100 mg/j",
-                    "poso_ger": "25-50 mg/j",
-                    "poso_ren": "ClCr < 35: 50 mg/j max",
+                    "classe": "Betabloquant cardioselectif (B1) hydrophile",
+                    "poso_hab": "25-100 mg/j en 1 prise",
+                    "poso_ger": "12,5-25 mg/j (PIM Beers 2023 — préférer bisoprolol/nébivolol)",
+                    "poso_ren": "ClCr 15-35 : 50 mg/j max | ClCr < 15 : 25 mg/j ou 50 mg 1j/2 (élimination rénale > 90% — accumulation IRC)",
                     "acb": 1,
                     "cia": 0,
                     "bhe": "0.0",
-                    "albumine": "< 10 %",
+                    "albumine": "< 10%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Glycemie/HbA1c si diabte | Créatinine/DFG | ECG",
-                    "suivi_periodique": "FC/TA (consultations) | Créatinine (annuelle) | Glycemie (annuelle si DT2)",
-                    "alerte_clinique": "Bradycardie → ECG",
+                    "ddi_interact": "CCB non-DHP (vérapamil/diltiazem CI HFrEF), Anti-arythmiques (amiodarone/sotalol/digoxine bradycardie), Clonidine (rebond HTA arrêt brutal), Insuline/Sulfonylurées (masquage hypo), AINS (↓ effet antiHTA), IRC : accumulation (élimination rénale exclusive), Lithium (↑ lithémie via élimination rénale)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "CCB non-DHP — BRADYCARDIE / BAV SÉVÈRE",
+                                        "dcis": [
+                                                  "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "Cumul bradycardisant + inotrope négatif. CI en HFrEF.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Anti-arythmiques bradycardisants / QT",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "dronedarone",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "disopyramide",
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "Bradycardie / BAV / QT additif. Surveillance ECG.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Clonidine / Moxonidine — REBOND HYPERTENSIF",
+                                        "dcis": [
+                                                  "clonidine",
+                                                  "moxonidine",
+                                                  "rilmenidine",
+                                                  "methyldopa"
+                                        ],
+                                        "commentaire": "Arrêter BB en 1er.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Insuline / Sulfonylurées — masquage hypoglycémie",
+                                        "dcis": [
+                                                  "insuline",
+                                                  "glimepiride",
+                                                  "gliclazide",
+                                                  "glibenclamide",
+                                                  "repaglinide"
+                                        ],
+                                        "commentaire": "β1-sélectif (ratio 35:1, < bisoprolol). Surveillance glycémie chez diabétique âgé. FORTA-D.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA, IRA cumulative)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA + IRA → accumulation aténolol (élimination rénale exclusive). FORTA-D.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium (↑ lithémie via clairance rénale partagée)",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "Surveillance lithémie. Préférer BB à élimination hépatique (bisoprolol mixte, métoprolol/nébivolol/carvédilol hépatique).",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "ECG | Glycémie/HbA1c si DT2 | Créatinine/DFG (élimination rénale exclusive +++) | TA couché-debout",
+                    "suivi_periodique": "FC à chaque consultation | TA couché-debout | DFG semestriel (ajustement) | Glycémie annuelle si DT2",
+                    "alerte_clinique": "Bradycardie / BAV → ECG | IRC : accumulation → ajustement OBLIGATOIRE | PIM Beers 2023 / STOPP / FORTA chez sujet âgé fragile — préférer bisoprolol/nébivolol (efficacité moindre en HFrEF, ↑ AVC vs amlodipine LIFE/ASCOT-BPLA) | NE JAMAIS arrêter brutalement",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_025",
@@ -3035,8 +3105,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Élimination rénale exclusive → ajustement IRC obligatoire",
-                    "source": "RCP Ténormine ; ESC HTA 2023"
+                    "notes_cliniques": "BB hydrophile cardiosélectif β1 (35:1). Élimination rénale > 90% → accumulation IRC. PIM Beers 2023 / STOPP-PIM chez sujet âgé : ↑ AVC vs autres antihypertenseurs (LIFE, ASCOT-BPLA), mortalité non démontrée (méta-analyse Lindholm Lancet 2005). NON validé en HFrEF (absent des essais CIBIS/MERIT/COPERNICUS/SENIORS). Avantage : pas de BHE (peu d'effets centraux : moins de cauchemars/dépression que propranolol). Indications : angor stable, HTA jeune sans comorbidité, FA contrôle FC en alternative. À EVITER en 1ère intention HTA sujet âgé.",
+                    "source": "RCP Ténormine ; ESC HTA 2023 ; Beers 2023 ; STOPP v3 2023 ; LIFE 2002 ; ASCOT-BPLA 2005 ; Lindholm Lancet 2005"
           },
           {
                     "dci": "Atenolol + chlortalidone",
@@ -16490,20 +16560,124 @@ const MASTER_DB = {
           {
                     "dci": "Propranolol",
                     "princeps": "Avlocardyl",
-                    "classe": "Betabloquant non cardioselectif",
-                    "poso_hab": "80-320 mg/j en 2-4 prises",
-                    "poso_ger": "40-80 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Betabloquant NON cardioselectif lipophile (BHE+)",
+                    "poso_hab": "80-320 mg/j en 2-4 prises (LP : 1 prise) | Tremblement essentiel : 40-160 mg/j | Migraine prophyl : 80-160 mg/j",
+                    "poso_ger": "20-40 mg/j à initier (PIM Beers / STOPP — effets centraux ++) — préférer bisoprolol/nébivolol",
+                    "poso_ren": "Pas d'ajustement (métabolisme hépatique > 90%). Cirrhose : ↓ dose 50% (1er passage hépatique altéré)",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "",
-                    "albumine": "0,9",
+                    "bhe": "+++",
+                    "albumine": "90%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "ECG | Glycemie/HbA1c si diabte | TSH (si hyperthyrodie)",
-                    "suivi_periodique": "FC/TA (consultations) | Glycemie (annuelle si DT2) | Bilan hépatique si symptomes",
-                    "alerte_clinique": "Bradycardie/BAV → ECG | Hypoglycemie masque (diabte)",
+                    "ddi_interact": "Asthme/BPCO (CI — non cardiosélectif), Inhibiteurs CYP2D6/CYP1A2 (fluoxétine/paroxétine/quinidine/cimétidine/ciprofloxacine ↑ exposition x2-5), CCB non-DHP (vérapamil/diltiazem CI HFrEF), Anti-arythmiques (amiodarone/sotalol bradycardie/QT), Clonidine (rebond HTA arrêt brutal), Lidocaïne (↑ lidocaïnémie via ↓ débit hépatique), Théophylline (↑ théophyllinémie x2), Insuline/Sulfonylurées (masquage hypoglycémie MAJEUR + retard contre-régulation), AINS (↓ effet antiHTA), Triptans (HTA — vasoconstriction additive), Rizatriptan (↑ rizatriptanémie x2 — CI relative)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Asthme bronchique / BPCO sévère — CONTRE-INDICATION ABSOLUE (asthme)",
+                                        "dcis": [
+                                                  "salbutamol",
+                                                  "terbutaline",
+                                                  "formoterol",
+                                                  "salmeterol",
+                                                  "tiotropium",
+                                                  "ipratropium",
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "Propranolol = NON cardiosélectif (β1+β2). CI ABSOLUE en asthme bronchique (bronchospasme fatal). Prudence majeure BPCO. Préférer bisoprolol/nébivolol. ↑ théophyllinémie x2 (inhibition CYP1A2).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP2D6 / CYP1A2 — ↑ exposition x2-5",
+                                        "dcis": [
+                                                  "paroxetine",
+                                                  "fluoxetine",
+                                                  "bupropion",
+                                                  "quinidine",
+                                                  "cimetidine",
+                                                  "ciprofloxacine",
+                                                  "fluvoxamine",
+                                                  "enoxacine",
+                                                  "duloxetine"
+                                        ],
+                                        "commentaire": "Propranolol = substrat CYP2D6 + CYP1A2. Bradycardie/hypotension/effets centraux (somnolence, dépression, cauchemars BHE+++). Surveillance FC.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "CCB non-DHP — BRADYCARDIE / BAV SÉVÈRE",
+                                        "dcis": [
+                                                  "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "CI HFrEF / prudence extrême.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Anti-arythmiques bradycardisants / QT / Lidocaïne",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "dronedarone",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "disopyramide",
+                                                  "digoxine",
+                                                  "lidocaine"
+                                        ],
+                                        "commentaire": "Bradycardie / QT / ↑ lidocaïnémie (↓ débit hépatique propranolol). Surveillance ECG.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Triptans — HTA / vasoconstriction additive (Rizatriptan ↑ x2)",
+                                        "dcis": [
+                                                  "rizatriptan",
+                                                  "sumatriptan",
+                                                  "naratriptan",
+                                                  "zolmitriptan"
+                                        ],
+                                        "commentaire": "Rizatriptan : ↑ exposition x2 (RCP : réduire dose à 5 mg). Autres triptans : vasoconstriction additive — surveillance TA, espacement prises.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Clonidine / Moxonidine — REBOND HYPERTENSIF",
+                                        "dcis": [
+                                                  "clonidine",
+                                                  "moxonidine",
+                                                  "rilmenidine",
+                                                  "methyldopa"
+                                        ],
+                                        "commentaire": "Crise hypertensive grave à l'arrêt simultané (effet rebond α adrénergique non masqué). Arrêter BB en 1er.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Insuline / Sulfonylurées — MASQUAGE HYPOGLYCÉMIE MAJEUR",
+                                        "dcis": [
+                                                  "insuline",
+                                                  "glimepiride",
+                                                  "gliclazide",
+                                                  "glibenclamide",
+                                                  "repaglinide"
+                                        ],
+                                        "commentaire": "BB NON cardiosélectif = masquage adrénergique COMPLET (sueurs persistent seulement) + altération néoglucogenèse hépatique (β2). Hypoglycémie sévère prolongée. PIM Beers chez diabétique âgé. Préférer bisoprolol/nébivolol.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA. FORTA-D AINS.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "ECG (FC, BAV, QT) | Glycémie/HbA1c si DT2 | TSH (hyperthyroïdie indication) | Bilan hépatique | TA couché-debout",
+                    "suivi_periodique": "FC/TA à chaque consultation | Glycémie annuelle si DT2 | Bilan hépatique si symptômes | EFR si BPCO",
+                    "alerte_clinique": "Asthme : CI ABSOLUE | BPCO sévère : CI relative | Bradycardie / BAV → ECG urgence | Effets centraux (somnolence, dépression, cauchemars, hallucinations) chez âgé — BHE+++ — PIM Beers/STOPP | Masquage hypoglycémie MAJEUR (DT2) | NE JAMAIS arrêter brutalement",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_025",
@@ -16514,8 +16688,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Lipophile → effets centraux. Hypoglycémie masquée (DT2).",
-                    "source": "RCP Avlocardyl ; ESC HTA 2023"
+                    "notes_cliniques": "BB de référence historique (1ère molécule, 1964 - James Black, Nobel 1988). NON cardiosélectif (β1+β2). Lipophile → effets centraux +++ (BHE) : somnolence, dépression, cauchemars, hallucinations chez âgé → PIM Beers 2023, STOPP-PIM. NON validé HFrEF (absent essais BB modernes). Indications spécifiques : tremblement essentiel, migraine prophylaxie, hyperthyroïdie (avant β-bloc), phéochromocytome (toujours après α-bloc), hémorragie variqueuse cirrhotique. À ÉVITER chez sujet âgé fragile sauf indication spécifique.",
+                    "source": "RCP Avlocardyl ; Beers 2023 ; STOPP v3 2023 ; ESC HTA 2023"
           },
           {
                     "dci": "Propylthiouracile",
@@ -17824,20 +17998,119 @@ const MASTER_DB = {
           {
                     "dci": "Sotalol",
                     "princeps": "Sotalex",
-                    "classe": "Betabloquant classe III (antiarythmique)",
-                    "poso_hab": "80-320 mg/j en 2 prises",
-                    "poso_ger": "80-160 mg/j",
-                    "poso_ren": "ClCr 30-60: 50% dose",
+                    "classe": "Betabloquant non cardioselectif + antiarythmique classe III (IKr blocker)",
+                    "poso_hab": "80-160 mg x2/j (max 320 mg/j) — initiation hospitalière",
+                    "poso_ger": "40-80 mg x2/j (PIM Beers — risque torsades majoré chez âgé)",
+                    "poso_ren": "ClCr 30-60 : 50% dose (1 prise/j) | ClCr 10-30 : 25% dose | ClCr < 10 : CI ou cas par cas (élimination rénale exclusive)",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0",
-                    "qt_risque": "?? Risque Connu (KR)",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "ECG (QTc obligatoire) | Ionogramme | Créatinine/DFG | Glycemie si diabete",
-                    "suivi_periodique": "ECG (QTc annuel + si modification dose ou kaliemie) | Ionogramme (annuel) | Créatinine (annuelle)",
-                    "alerte_clinique": "Allongement QTc (torsades de pointes risque majeur) → ECG urgent | Bradycardie → ECG | Hypokaliemie amplifie risque QT → ionogramme urgent",
+                    "albumine": "0%",
+                    "qt_risque": "DANGER — Risque CONNU torsades de pointes (CredibleMeds KR)",
+                    "ddi_interact": "Médicaments allongeant QT (amiodarone, dronédarone, quinidine, disopyramide, antipsychotiques, macrolides, fluoroquinolones, antifongiques azolés, ondansétron, méthadone, antiémétiques 5HT3 — CI ASSOCIATION), Diurétiques (thiazidiques/anse — hypokaliémie majore QT — CI), CCB non-DHP (BAV/bradycardie sévère), Digoxine (bradycardie + ↑ digoxinémie via P-gp), Insuline/Sulfonylurées (masquage hypo + ↑ QT si hypoK), Clonidine (rebond HTA), AINS (↓ effet + IRA → accumulation rénale)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Médicaments allongeant QT — CONTRE-INDICATION ASSOCIATION (TORSADES)",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "dronedarone",
+                                                  "quinidine",
+                                                  "disopyramide",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "haloperidol",
+                                                  "ciprofloxacine",
+                                                  "moxifloxacine",
+                                                  "levofloxacine",
+                                                  "clarithromycine",
+                                                  "azithromycine",
+                                                  "erythromycine",
+                                                  "ondansetron",
+                                                  "methadone",
+                                                  "domperidone",
+                                                  "hydroxyzine",
+                                                  "ketoconazole",
+                                                  "fluconazole",
+                                                  "voriconazole",
+                                                  "citalopram",
+                                                  "escitalopram"
+                                        ],
+                                        "commentaire": "Sotalol = bloqueur IKr classe III, risque torsades de pointes CONNU (CredibleMeds KR). Cumul = CI ABSOLUE. Surveillance ECG quotidienne en cas d'initiation conjointe obligatoire (ANSM 2018 — DDI QT).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Diurétiques HYPOKALIÉMIANTS — risque TORSADES majeur",
+                                        "dcis": [
+                                                  "furosemide",
+                                                  "bumetanide",
+                                                  "torasemide",
+                                                  "hydrochlorothiazide",
+                                                  "indapamide",
+                                                  "chlortalidone",
+                                                  "amphotericineb",
+                                                  "corticoides"
+                                        ],
+                                        "commentaire": "Hypokaliémie/hypomagnésémie → torsades de pointes. K+ et Mg++ doivent être OPTIMISÉS (K+ > 4.5, Mg > 1.0) avant et pendant sotalol. Risque accru chez âgé. Préférer ARM ou amiloride en association.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "CCB non-DHP — BRADYCARDIE / BAV SÉVÈRE",
+                                        "dcis": [
+                                                  "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "Cumul bradycardisant + inotrope négatif + QT allongé. À éviter.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Digoxine (bradycardie + ↑ digoxinémie)",
+                                        "dcis": [
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "Bradycardie additive. ↑ digoxinémie modérée. Doser digoxinémie, surveillance ECG.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Insuline / Sulfonylurées — masquage hypoglycémie + QT (si hypoK)",
+                                        "dcis": [
+                                                  "insuline",
+                                                  "glimepiride",
+                                                  "gliclazide",
+                                                  "glibenclamide"
+                                        ],
+                                        "commentaire": "BB non-cardiosélectif → masquage hypo majeur. Hypoglycémie → catécholamines → QT additif → torsades. Préférer bisoprolol/nébivolol si BB de fond nécessaire en DT2.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Clonidine / Moxonidine — REBOND HYPERTENSIF",
+                                        "dcis": [
+                                                  "clonidine",
+                                                  "moxonidine",
+                                                  "rilmenidine",
+                                                  "methyldopa"
+                                        ],
+                                        "commentaire": "Arrêter sotalol en 1er.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AINS (↓ effet antiHTA, IRA → accumulation rénale sotalol)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "IRA → accumulation sotalol (rénal exclusif) → QT accru. FORTA-D AINS.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "ECG (QTc OBLIGATOIRE — CI si > 450 ms) | Ionogramme (K+ ≥ 4.5, Mg++ ≥ 1.0) | Créatinine/DFG | Glycémie si DT2 | TA",
+                    "suivi_periodique": "ECG QTc à J3, J7, M1, puis trimestriel | Ionogramme trimestriel | Créatinine semestrielle (ajustement) | ECG en URGENCE si vomissements/diarrhée/diurétique nouveau",
+                    "alerte_clinique": "QTc > 500 ms → ARRÊT IMMÉDIAT | Torsades de pointes → arrêt + sulfate Mg IV + recharge K+ | Bradycardie < 50 → ECG | Hypokaliémie/hypomagnésémie → CORRIGER avant initiation | Initiation HOSPITALIÈRE obligatoire | IRC ClCr < 10 : CI ou cas par cas | PIM Beers chez âgé fragile — préférer amiodarone si rythme nécessaire",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_001",
@@ -17848,8 +18121,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Initiation hospitalière recommandée. CI si QTc>450ms.",
-                    "source": "RCP Sotalex ; ESC arythmie 2020"
+                    "notes_cliniques": "Double action : BB non-cardiosélectif (β1+β2) + classe III IKr blocker → ↓ FC + ↑ période réfractaire ventriculaire. Indications : FA paroxystique/persistante (maintien rythme sinusal), TV (rare). Initiation hospitalière OBLIGATOIRE avec monitorage ECG x 3-5 jours (charge). Risque torsades dose-dépendant : 1% à 80 mg/j → 4% à 320 mg/j. Élimination rénale exclusive → IRC = accumulation = QT. CI : QTc > 450 ms, hypoK/Mg non corrigée, ClCr < 40 (selon centres), BAV 2-3, IC non-équilibrée, asthme. PIM Beers 2023 chez âgé fragile.",
+                    "source": "RCP Sotalex ; ESC FA 2024 ; ESC arythmie 2022 ; ANSM 2018 (DDI QT) ; Beers 2023 ; CredibleMeds KR"
           },
           {
                     "dci": "Spiramycine",
@@ -24009,19 +24282,19 @@ const MASTER_DB = {
           {
                     "dci": "Ivabradine",
                     "princeps": "Procoralan",
-                    "classe": "Inhibiteur courant If (bradycardisant sinusal pur)",
-                    "poso_hab": "5-7.5 mg x2/j",
-                    "poso_ger": "Debuter 2.5 mg x2/j, titrer selon FC. Cible FC repos 50-60/min",
-                    "poso_ren": "DFG < 15: prudence (peu de donnees)",
+                    "classe": "Inhibiteur courant If (bradycardisant sinusal PUR — node sinoatrial)",
+                    "poso_hab": "5-7,5 mg x2/j (matin + soir au repas)",
+                    "poso_ger": "Débuter 2,5 mg x2/j (≥ 75 ans — recommandation RCP), titrer selon FC. Cible FC repos 50-60/min en HFrEF",
+                    "poso_ren": "DFG ≥ 15 : pas d'ajustement (élimination hépatique CYP3A4) | DFG < 15 : prudence (peu de données) | Cirrhose Child-Pugh C : CI",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "0",
                     "albumine": "70%",
-                    "qt_risque": "(CR) - Bradycardie sinusale, pas QTc directement",
-                    "ddi_interact": "Inhibiteurs CYP3A4 puissants (ketoconazole, itraconazole, clarithromycine — CI) | Verapamil, Diltiazem (bradycardie — CI) | Allongeants QTc (prudence)",
+                    "qt_risque": "Bradycardie sinusale modérée (pas QTc directement allongé, mais bradycardie → risque torsades en cumul)",
+                    "ddi_interact": "Inhibiteurs CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir — CI ABSOLUE ↑ x6-9), Inhibiteurs CYP3A4 MODÉRÉS (vérapamil/diltiazem — CI car double bradycardie ; érythromycine/fluconazole/diltiazem ↑ x2-3), Médicaments QT (sotalol/amiodarone/quinidine — bradycardie majorée → torsades), Diurétiques hypokaliémiants (QT en cas de bradycardie), Inducteurs CYP3A4 (↓ efficacité), Jus de pamplemousse (↑ x2)",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Inhibiteurs CYP3A4",
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS — CONTRE-INDICATION ABSOLUE",
                                         "dcis": [
                                                   "ketoconazole",
                                                   "itraconazole",
@@ -24029,18 +24302,92 @@ const MASTER_DB = {
                                                   "posaconazole",
                                                   "ritonavir",
                                                   "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
+                                                  "telithromycine",
+                                                  "nelfinavir",
+                                                  "cobicistat"
+                                        ],
+                                        "commentaire": "Ivabradine = substrat CYP3A4 majeur. ↑ exposition x6-9 → bradycardie sévère/syncope/BAV. CI ABSOLUE (RCP Procoralan §4.3).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "CCB non-DHP (vérapamil/diltiazem) — CONTRE-INDICATION (double mécanisme bradycardie + ↑ CYP3A4)",
+                                        "dcis": [
                                                   "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "Inhibiteurs CYP3A4 modérés (↑ exposition x2-3) ET bradycardisants intrinsèques + inotropes négatifs. CI ABSOLUE (RCP §4.3, ANSM 2014).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4 MODÉRÉS — réduction de dose recommandée",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "fluconazole",
+                                                  "amiodarone",
+                                                  "ciclosporine",
+                                                  "dronedarone"
+                                        ],
+                                        "commentaire": "↑ exposition x2-3. Débuter à 2,5 mg x2/j, surveillance FC. Amiodarone et dronédarone → bradycardie additive (cumul mécanisme).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Médicaments allongeant QT / bradycardisants — torsades de pointes",
+                                        "dcis": [
+                                                  "sotalol",
+                                                  "amiodarone",
+                                                  "dronedarone",
+                                                  "quinidine",
+                                                  "disopyramide",
+                                                  "ibutilide",
+                                                  "halofantrine",
+                                                  "pentamidine",
+                                                  "moxifloxacine",
+                                                  "ciprofloxacine",
+                                                  "haloperidol",
+                                                  "citalopram",
+                                                  "escitalopram",
+                                                  "methadone"
+                                        ],
+                                        "commentaire": "Bradycardie ivabradine → ↑ risque torsades sur QT prolongé. Éviter ou ECG renforcé.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Diurétiques hypokaliémiants (QT additif si bradycardie)",
+                                        "dcis": [
+                                                  "furosemide",
+                                                  "bumetanide",
+                                                  "torasemide",
+                                                  "hydrochlorothiazide",
+                                                  "indapamide",
+                                                  "chlortalidone"
+                                        ],
+                                        "commentaire": "K+/Mg++ doivent être optimisés (HFrEF souvent associé). Bradycardie + hypoK = torsades. SHIFT trial : association BB + diurétique + ivabradine valide en HFrEF.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — perte d'efficacité",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "↓ exposition x2-3. Éviter association ou ↑ dose si essentielle.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Jus de pamplemousse — ↑ exposition x2",
+                                        "dcis": [
                                                   "jus de pamplemousse"
                                         ],
-                                        "commentaire": "ketoconazole, itraconazole, clarithromycine — CI; bradycardie — CI",
-                                        "severite": "danger"
+                                        "commentaire": "Inhibition CYP3A4 intestinal. Éviter (RCP).",
+                                        "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "ECG (FC, rythme sinusal confirme) | TA",
-                    "suivi_periodique": "FC repos (chaque consultation) | ECG semestriel",
-                    "alerte_clinique": "NE PAS utiliser si FA/flutter (inefficace) | Phosphenes (lumineux) frequents debut | Bradycardie < 50 → reduire | CI: rythme non sinusal, BAV III, IC aigue",
+                    "suivi_initial": "ECG (FC ≥ 70, rythme SINUSAL confirmé — CI si FA) | TA | K+/Mg++ | Bilan hépatique | Ophtalmologie (phosphènes — informer le patient)",
+                    "suivi_periodique": "FC repos à chaque consultation (cible 50-60) | ECG semestriel | ECG en URGENCE si FA suspectée (efficacité nulle si FA — arrêter)",
+                    "alerte_clinique": "FA / flutter : CI ABSOLUE (inefficace, ↑ mortalité — SIGNIFY trial 2014 dans angor) | Phosphènes lumineux (15%, début traitement, réversibles) | Bradycardie < 50 → réduire ou arrêt | Vérapamil/diltiazem : CI (ANSM 2014) | Initiation ≥ 75 ans à 2,5 mg x2/j",
                     "bio_cible": [
                               "BIO_031"
                     ],
@@ -24048,8 +24395,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Inhibiteur courant If (bradycardisant sinusal pur) : indication HFrEF + FC ≥ 70 bpm en rythme sinusal sous BB max toléré (SHIFT trial). Phosphènes lumineux. CI dans FA (efficacité nulle). Adapter selon FC, surveillance ECG.",
-                    "source": "RCP Procoralan | ESC IC 2023"
+                    "notes_cliniques": "Bradycardisant sinusal PUR (inhibition canal If du nœud sinoatrial). N'affecte ni conduction AV, ni inotropisme, ni TA. Indication HFrEF (FEVG ≤ 35%) + rythme sinusal + FC ≥ 70 sous BB dose max tolérée (SHIFT trial 2010, mortalité CV/hospi -18%). Indication angor stable rythme sinusal (rare, si BB CI). NON validé HFpEF. SIGNIFY trial 2014 : pas de bénéfice en angor sans IC, ↑ FA. ANSM 2014 : CI vérapamil/diltiazem. Phosphènes par action sur canal Ih rétinien (≠ canal If cardiaque mais structure similaire).",
+                    "source": "RCP Procoralan ; ESC IC 2023 ; SHIFT trial 2010 (Lancet) ; SIGNIFY 2014 ; ANSM 2014"
           },
           {
                     "dci": "Finerenone",

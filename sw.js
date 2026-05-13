@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.97 (Phase 45 — Cardio Bétabloquants (Bisoprolol CIBIS-II/ELD, Métoprolol-LP MERIT-HF, Nébivolol SENIORS ≥70 ans, Carvédilol COPERNICUS/CAPRICORN/COMET) avec CI vérapamil/diltiazem HFrEF, CYP2D6 inhibiteurs ↑ exposition, masquage hypoglycémie, rebond clonidine arrêt brutal, BPCO/asthme cardiosélectivité, PDE5 hypotension nébivolol-NO)
+// Service Worker - GeriaAssist v0.98 (Phase 46 — Cardio BB complémentaires (Aténolol PIM Beers/STOPP + IRC, Propranolol non-cardiosélectif BHE+++ asthme CI, Sotalol classe III torsades CredibleMeds-KR initiation hospitalière) + Ivabradine SHIFT trial bradycardisant sinusal If avec CI vérapamil/diltiazem ANSM 2014, sources LIFE/ASCOT-BPLA/Lindholm/SHIFT/SIGNIFY)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260513-phase45-cardio-bb';
-const CACHE_NAME = `geriaassist-v97-${BUILD_ID}`;
+const BUILD_ID = '20260513-phase46-cardio-bb2-ivabradine';
+const CACHE_NAME = `geriaassist-v98-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
