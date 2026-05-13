@@ -2400,49 +2400,122 @@ const MASTER_DB = {
           {
                     "dci": "Amlodipine",
                     "princeps": "Amlor",
-                    "classe": "Inhibiteur calcique (DHP)",
-                    "poso_hab": "5-10 mg/j",
-                    "poso_ger": "2,5-5 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Inhibiteur calcique DHP (vasoselectif, longue duree)",
+                    "poso_hab": "5-10 mg/j en 1 prise (matin)",
+                    "poso_ger": "2,5 mg/j à initier, titration toutes 2 sem. HTA âgée : 1ère ligne (ESC 2023, HYVET, ACCOMPLISH)",
+                    "poso_ren": "Pas d'ajustement (métabolisme hépatique CYP3A4). Cirrhose Child C : initier 2,5 mg/j",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,97",
+                    "albumine": "97%",
                     "qt_risque": "",
-                    "ddi_interact": "Macrolides, Diltiazem, Verapamil, Grapefruit",
+                    "ddi_interact": "Inhibiteurs CYP3A4 puissants (kétoconazole/itraconazole/clarithromycine/ritonavir — ↑ x2-3 amlodipine — hypotension), Macrolides (érythromycine/clarithromycine — œdème, hypotension), Simvastatine (↑ simvastatine x1.8 — RCP limite 20 mg/j), Diltiazem/Vérapamil (cumul CCB — hypotension, œdème), Jus de pamplemousse (effet modeste), Inducteurs CYP3A4 (↓ efficacité), Sildénafil/Tadalafil/Vardénafil (hypotension additive), AINS (↓ effet antiHTA), Lithium (neurotoxicité décrite — rare), Ciclosporine/Tacrolimus (↑ leur exposition par compétition CYP3A4)",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Macrolides",
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS — ↑ exposition x2-3 (hypotension, œdème)",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "telithromycine",
+                                                  "cobicistat",
+                                                  "nefazodone"
+                                        ],
+                                        "commentaire": "Amlodipine = substrat CYP3A4 (modeste, vs félodipine x10). ↑ exposition x2-3 → hypotension orthostatique, œdème, chutes. Surveillance TA, débuter à 2,5 mg.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Macrolides (érythromycine/clarithromycine) — œdèmes, hypotension",
                                         "dcis": [
                                                   "erythromycine",
                                                   "clarithromycine",
                                                   "azithromycine",
-                                                  "roxithromycine"
+                                                  "roxithromycine",
+                                                  "telithromycine"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Clarithromycine + amlodipine : ↑ hospitalisations chocs/IRA chez âgé (Gandhi JAMA Intern Med 2013 : OR 3,7). Préférer azithromycine (effet CYP3A4 minime). Prudence ou suspendre amlodipine temporairement.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Simvastatine — ↑ exposition x1.8 (rhabdomyolyse)",
+                                        "dcis": [
+                                                  "simvastatine"
+                                        ],
+                                        "commentaire": "RCP simvastatine : dose limitée à 20 mg/j si amlodipine associée (sinon rhabdomyolyse). Préférer atorvastatine/rosuvastatine/pravastatine (FDA 2011).",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Inhibiteurs CYP3A4",
+                                        "classe": "Ciclosporine / Tacrolimus — ↑ leur exposition",
                                         "dcis": [
-                                                  "diltiazem",
-                                                  "verapamil"
+                                                  "ciclosporine",
+                                                  "tacrolimus",
+                                                  "sirolimus",
+                                                  "everolimus"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Compétition CYP3A4 → ↑ tacrolimémie/ciclosporinémie 25-50%. Doser, ajuster.",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Grapefruit",
+                                        "classe": "CCB non-DHP (vérapamil/diltiazem) — CUMUL hypotension + œdème",
                                         "dcis": [
-                                                  "pamplemousse"
+                                                  "verapamil",
+                                                  "diltiazem"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Cumul vasodilatation + bradycardie + inotropie négative. Association NON recommandée (sauf indication spécialiste, cardiopathie complexe). Œdème DHP majoré.",
                                         "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs PDE5 (hypotension additive)",
+                                        "dcis": [
+                                                  "sildenafil",
+                                                  "tadalafil",
+                                                  "vardenafil"
+                                        ],
+                                        "commentaire": "Hypotension additive. Espacement, prudence chutes âgé.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — ↓ exposition x2-3",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "↓ efficacité antiHTA. Surveiller TA, ↑ dose ou changer.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA. FORTA-D AINS.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Jus de pamplemousse (effet modeste)",
+                                        "dcis": [
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "Amlodipine peu sensible vs félodipine/nifédipine. ↑ ~15%. Modeste, modération suffisante.",
+                                        "severite": "info"
                               }
                     ],
-                    "suivi_initial": "TA | Bilan hépatique (prudence si insuffisance hépatique sévère)",
-                    "suivi_periodique": "TA (consultations) | Bilan hépatique si symptomes (ictère rare)",
-                    "alerte_clinique": "Ictère → bilan hépatique | œdemes des membres infrieurs (examen clinique)",
+                    "suivi_initial": "TA couché-debout (orthostatisme +++) | Bilan hépatique (insuf hép sévère : prudence) | Examen œdèmes MI",
+                    "suivi_periodique": "TA assise + orthostatique à chaque consultation | Examen œdèmes MI semestriel | Bilan hépatique si symptômes",
+                    "alerte_clinique": "Œdèmes des MI bilatéraux (10-20%, dose-dép, surtout > 80 ans) → différencier d'IC (échographie si doute) | Hypotension orthostatique → chutes ÂGÉ | Ictère (rare) → bilan hépatique | NE PAS associer simvastatine > 20 mg/j",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014"
@@ -2451,8 +2524,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Demi-vie très longue (35–50h) = 1 prise/j",
-                    "source": "RCP Amlor ; ESC HTA 2023"
+                    "notes_cliniques": "CCB DHP vasosélectif (canaux L) — pas d'effet inotrope/chronotrope/dromotrope significatif. Demi-vie 35-50h → 1 prise/j, effet stable. HTA 1ère ligne sujet âgé (ESC 2023, HYVET trial > 80 ans, ASCOT-BPLA, ACCOMPLISH). Angor stable, vasospastique (Prinzmetal). Effets secondaires : œdèmes MI (10-20%, dose-dép, NE répond PAS aux diurétiques — diminution de dose ou substitution lercanidipine/manidipine), céphalées, flush, gingivite hypertrophique (rare).",
+                    "source": "RCP Amlor ; ESC HTA 2023 ; HYVET 2008 ; ASCOT-BPLA 2005 ; ACCOMPLISH 2008 ; PRAISE-2 ; Gandhi JAMA Intern Med 2013"
           },
           {
                     "dci": "Amoxapine",
@@ -8280,20 +8353,20 @@ const MASTER_DB = {
           },
           {
                     "dci": "Diltiazem",
-                    "princeps": "Tildiem, Bi-Tildiem",
-                    "classe": "Inhibiteur calcique non-DHP (benzothiazepine)",
-                    "poso_hab": "90-360 mg/j en 3-4 prises",
-                    "poso_ger": "90-180 mg/j",
-                    "poso_ren": "Pas d'ajustement majeur",
+                    "princeps": "Tildiem, Bi-Tildiem, Mono-Tildiem LP",
+                    "classe": "Inhibiteur calcique NON-DHP (benzothiazepine) — bradycardisant + inotrope (-)",
+                    "poso_hab": "90-360 mg/j (LP : 1-2 prises/j)",
+                    "poso_ger": "60-120 mg/j LP à initier (titration prudente — risque BAV, hypotension)",
+                    "poso_ren": "Pas d'ajustement majeur (métabolisme hépatique CYP3A4). Cirrhose : ↓ dose 50%",
                     "acb": 0,
                     "cia": 1,
                     "bhe": "1.0",
-                    "albumine": "0,8",
-                    "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "Beta-bloquants, Statines, Digoxine, CYP3A4",
+                    "albumine": "80%",
+                    "qt_risque": "(CR) Conditionnel — bradycardie + hypoK",
+                    "ddi_interact": "Bêta-bloquants (CI HFrEF — BAV/IC), Digoxine (↑ x1,3-1,5 — bradycardie additive), Statines (↑ atorvastatine x2,5, simvastatine x4,5 — rhabdomyolyse, RCP simva max 20 mg, atorva max 40 mg), Ivabradine (CI ABSOLUE — ANSM 2014), Ciclosporine/Tacrolimus (↑ x2-3), Carbamazépine (↑ x2-3 — neurotoxicité), Théophylline (↑ exposition), Buspirone (↑ x10 — sédation), Inhibiteurs CYP3A4 puissants (↑ diltiazem), Inducteurs CYP3A4 (↓ efficacité), Sildénafil/PDE5 (hypotension), Anesthésiques généraux (hypotension)",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Bêta-bloquants",
+                                        "classe": "Bêta-bloquants — CONTRE-INDICATION en HFrEF / prudence extrême",
                                         "dcis": [
                                                   "bisoprolol",
                                                   "metoprolol",
@@ -8301,36 +8374,127 @@ const MASTER_DB = {
                                                   "nebivolol",
                                                   "carvedilol",
                                                   "propranolol",
-                                                  "sotalol"
+                                                  "sotalol",
+                                                  "acebutolol",
+                                                  "celiprolol",
+                                                  "labetalol",
+                                                  "esmolol",
+                                                  "pindolol",
+                                                  "timolol"
                                         ],
-                                        "commentaire": "",
-                                        "severite": "warning"
+                                        "commentaire": "Cumul bradycardie + BAV + inotrope (-) : BAV complet, IC décompensée, choc cardiogénique. CI ABSOLUE en HFrEF. Prudence extrême voie IV.",
+                                        "severite": "danger"
                               },
                               {
-                                        "classe": "Statines",
+                                        "classe": "Ivabradine — CONTRE-INDICATION ABSOLUE (ANSM 2014)",
                                         "dcis": [
-                                                  "atorvastatine",
-                                                  "rosuvastatine",
-                                                  "simvastatine",
-                                                  "pravastatine",
-                                                  "fluvastatine",
-                                                  "pitavastatine"
+                                                  "ivabradine"
                                         ],
-                                        "commentaire": "",
-                                        "severite": "warning"
+                                        "commentaire": "Double mécanisme : inhibition CYP3A4 (↑ ivabradine x2-3) + bradycardie additive intrinsèque. CI ABSOLUE RCP §4.3.",
+                                        "severite": "danger"
                               },
                               {
-                                        "classe": "Digoxine",
+                                        "classe": "Digoxine — bradycardie + ↑ digoxinémie x1.3-1.5",
                                         "dcis": [
                                                   "digoxine"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Bradycardie additive + ↑ digoxinémie modeste (P-gp). Doser digoxinémie, ECG.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Statines — RHABDOMYOLYSE (simvastatine, atorvastatine)",
+                                        "dcis": [
+                                                  "simvastatine",
+                                                  "atorvastatine",
+                                                  "lovastatine"
+                                        ],
+                                        "commentaire": "Diltiazem = inhibiteur CYP3A4 modéré. ↑ simvastatine x4,5 → RCP : simvastatine max 20 mg/j ; ↑ atorvastatine x2,5 → max 40 mg/j. Préférer rosuvastatine/pravastatine/fluvastatine (non CYP3A4) — FDA 2011.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Anti-arythmiques bradycardisants / QT (cumul)",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "dronedarone",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "disopyramide",
+                                                  "quinidine"
+                                        ],
+                                        "commentaire": "Bradycardie + BAV + QT. Surveillance ECG. Amiodarone + diltiazem rare en pratique (cumul majeur).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ciclosporine / Tacrolimus — ↑ x2-3 (néphrotoxicité)",
+                                        "dcis": [
+                                                  "ciclosporine",
+                                                  "tacrolimus",
+                                                  "sirolimus",
+                                                  "everolimus"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4. Doser, ↓ dose 25-50% à l'initiation.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Anticonvulsivants — neurotoxicité (carbamazépine, phénytoïne)",
+                                        "dcis": [
+                                                  "carbamazepine",
+                                                  "phenytoine"
+                                        ],
+                                        "commentaire": "Carbamazépine : ↑ x2-3 carbamazépinémie → ataxie, vertiges, BAV. Phénytoïne : effet mixte. Doser.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Théophylline / Buspirone (↑ exposition par CYP3A4)",
+                                        "dcis": [
+                                                  "theophylline",
+                                                  "buspirone",
+                                                  "midazolam",
+                                                  "triazolam"
+                                        ],
+                                        "commentaire": "Buspirone ↑ x10 (sédation marquée). Théophyllinémie ↑. BZD courtes (midazolam) ↑ x4 — sédation prolongée chez âgé.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS (↑ diltiazem)",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "cobicistat"
+                                        ],
+                                        "commentaire": "↑ diltiazem → hypotension, BAV. Surveillance, ↓ dose.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — ↓ exposition",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "↓ efficacité antiHTA/anti-angineuse. Surveiller, changer ou ↑ dose.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs PDE5 (hypotension additive)",
+                                        "dcis": [
+                                                  "sildenafil",
+                                                  "tadalafil",
+                                                  "vardenafil"
+                                        ],
+                                        "commentaire": "Hypotension additive. Prudence chez âgé (chute).",
                                         "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "ECG (PR) | TA | Bilan hépatique | Glycemie si diabete | FC",
-                    "suivi_periodique": "ECG (annuel + si changement dose) | TA/FC (consultations) | Bilan hépatique (si symptomes)",
-                    "alerte_clinique": "Bradycardie/BAV → ECG urgent | Ictère → bilan hépatique urgent",
+                    "suivi_initial": "ECG (PR, FC, BAV) | TA couché-debout | Bilan hépatique | Glycémie si DT2 | Créatinine",
+                    "suivi_periodique": "ECG annuel + à chaque modification | TA/FC à chaque consultation | Bilan hépatique si symptômes | Échographie cardiaque si IC suspectée",
+                    "alerte_clinique": "Bradycardie < 50 / BAV → ECG urgence | Décompensation IC (inotrope négatif) → CI ABSOLUE en HFrEF (FEVG ≤ 40%) | Hépatite cytolytique (rare) → bilan hépatique | NE PAS associer aux BB en HFrEF | Constipation +++ chez âgé | Œdèmes MI",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_013",
@@ -8341,8 +8505,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Inhibiteur modéré CYP3A4. Nombreuses interactions.",
-                    "source": "RCP Tildiem ; ESC 2023"
+                    "notes_cliniques": "CCB non-DHP : action ciblée nœuds AV (bradycardisant, BAV) + inotrope négatif modéré (< vérapamil) + vasodilatation. Indications : HTA, angor (vasospastique, stable), FA contrôle FC (alternative aux BB chez asthme/HFpEF — FEVG préservée). CI ABSOLUE : HFrEF (FEVG ≤ 40%), BAV 2-3, dysfonction sinusale, IDM aigu avec IC. PIM Beers/STOPP en HFrEF. Inhibiteur CYP3A4 modéré → nombreuses interactions (statines, ciclosporine, BZD, ivabradine).",
+                    "source": "RCP Tildiem ; ESC HTA 2023 ; ESC FA 2024 ; Beers 2023 ; STOPP v3 2023 ; ANSM 2014 (ivabradine) ; FDA 2011 (statines)"
           },
           {
                     "dci": "Dimenhydrinate",
@@ -9924,27 +10088,109 @@ const MASTER_DB = {
           {
                     "dci": "Felodipine",
                     "princeps": "Flodil",
-                    "classe": "Inhibiteur calcique (DHP)",
-                    "poso_hab": "2,5-10 mg/j",
-                    "poso_ger": "2,5 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Inhibiteur calcique DHP (2eme generation — CYP3A4 +++ jus de pamplemousse)",
+                    "poso_hab": "2,5-10 mg/j en 1 prise LP",
+                    "poso_ger": "2,5 mg/j (préférer amlodipine/lercanidipine — moins d'interactions CYP3A4)",
+                    "poso_ren": "Pas d'ajustement (métabolisme hépatique CYP3A4). Cirrhose : ↓ dose 50%",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "> 99 %",
+                    "albumine": "> 99%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "TA | Bilan hépatique si insuffisance hépatique",
-                    "suivi_periodique": "TA (consultations)",
-                    "alerte_clinique": "œdemes | Tachycardie reflexe → ECG si symptomes",
+                    "ddi_interact": "JUS DE PAMPLEMOUSSE (↑ x3-5 — exemple emblématique CYP3A4 intestinal), Inhibiteurs CYP3A4 puissants (kétoconazole/itraconazole/clarithromycine/ritonavir — ↑ x6-10 — hypotension sévère), Inducteurs CYP3A4 (rifampicine/carbamazépine ↓ x6), Simvastatine (↑ rhabdo), Bétabloquants (cumul hypotension), AINS (↓ effet antiHTA), Sildénafil/PDE5 (hypotension)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "JUS DE PAMPLEMOUSSE — ↑ x3-5 (CONTRE-INDICATION pratique)",
+                                        "dcis": [
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "Félodipine = exemple emblématique d'interaction avec pamplemousse (CYP3A4 intestinal inhibé) : ↑ exposition x3-5 → hypotension sévère, tachycardie réflexe, syncope. ÉVITER consommation (effet persistant 24-72h).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS — ↑ x6-10 (hypotension sévère)",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "telithromycine",
+                                                  "cobicistat"
+                                        ],
+                                        "commentaire": "Hypotension sévère, choc possible. Éviter ou changer pour amlodipine (moins sensible CYP3A4).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — ↓ x6 (perte d'efficacité)",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "Perte d'efficacité majeure. Changer.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Simvastatine — RHABDOMYOLYSE",
+                                        "dcis": [
+                                                  "simvastatine"
+                                        ],
+                                        "commentaire": "Limiter simvastatine à 20 mg/j. Préférer rosuvastatine/pravastatine.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants (cumul hypotension)",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol"
+                                        ],
+                                        "commentaire": "Association possible en HTA.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs PDE5 (hypotension additive)",
+                                        "dcis": [
+                                                  "sildenafil",
+                                                  "tadalafil",
+                                                  "vardenafil"
+                                        ],
+                                        "commentaire": "Hypotension additive.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA. FORTA-D AINS.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "TA couché-debout | Bilan hépatique | ECG (tachycardie réflexe)",
+                    "suivi_periodique": "TA assise + orthostatique | FC | Examen œdèmes MI | Bilan hépatique si symptômes",
+                    "alerte_clinique": "JUS DE PAMPLEMOUSSE : à PROSCRIRE (effet x3-5) | Tachycardie réflexe DHP courte action | Œdèmes MI (10-15%) | Cardiopathie ischémique : prudence | Préférer amlodipine/lercanidipine chez âgé (moins d'interactions)",
                     "bio_cible": [],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Interaction jus de pamplemousse",
-                    "source": "RCP Flodil ; ESC HTA 2023"
+                    "notes_cliniques": "CCB DHP 2ème génération. T½ courte mais formulation LP (Flodil LP). Hautement sensible au CYP3A4 (intestinal +++) → interaction emblématique avec jus de pamplemousse (étude Bailey Lancet 1991, 1ère description). Préférer amlodipine chez âgé : moins d'interactions, T½ longue (35-50h vs 15-25h pour félodipine), moins de tachycardie réflexe.",
+                    "source": "RCP Flodil ; ESC HTA 2023 ; Bailey Lancet 1991 (pamplemousse)"
           },
           {
                     "dci": "Fentanyl",
@@ -12171,20 +12417,110 @@ const MASTER_DB = {
           {
                     "dci": "Lercanidipine",
                     "princeps": "Zanidip",
-                    "classe": "Inhibiteur calcique (DHP)",
-                    "poso_hab": "10-20 mg/j",
-                    "poso_ger": "10 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Inhibiteur calcique DHP (3eme generation, vasoselective ++)",
+                    "poso_hab": "10-20 mg/j en 1 prise (15 min AVANT repas)",
+                    "poso_ger": "10 mg/j (préférable chez âgé — moins d'œdèmes vs amlodipine)",
+                    "poso_ren": "ClCr ≥ 30 : pas d'ajustement | ClCr < 30 : prudence (peu de données) | Insuf hépatique sévère : CI",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "> 98 %",
+                    "albumine": "> 98%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "TA | Bilan hépatique (CI si insuffisance hépatique sévère) | Créatinine",
-                    "suivi_periodique": "TA (consultations)",
-                    "alerte_clinique": "œdemes",
+                    "ddi_interact": "Inhibiteurs CYP3A4 puissants (kétoconazole/itraconazole/clarithromycine/ritonavir — CI ABSOLUE ↑ x10-15), Inducteurs CYP3A4 (↓ x10), Jus de pamplemousse (↑ marquée), Ciclosporine (CI — exposition mutuellement ↑), Simvastatine (↑ exposition), Bétabloquants (cumul hypotension), Digoxine (peu d'effet), AINS (↓ effet antiHTA), Sildénafil (hypotension)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS — CONTRE-INDICATION ABSOLUE",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "telithromycine",
+                                                  "cobicistat"
+                                        ],
+                                        "commentaire": "Lercanidipine = substrat CYP3A4 majeur (effet 1er passage hépatique). ↑ exposition x10-15 → hypotension sévère, choc. CI ABSOLUE (RCP Zanidip §4.3).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ciclosporine — CONTRE-INDICATION",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "Exposition mutuellement ↑ (ciclosporine x2,4, lercanidipine x3). CI ABSOLUE (RCP).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Jus de pamplemousse — éviter (↑ marquée)",
+                                        "dcis": [
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4 intestinal → ↑ exposition marquée. Éviter.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Simvastatine — RHABDOMYOLYSE potentielle",
+                                        "dcis": [
+                                                  "simvastatine"
+                                        ],
+                                        "commentaire": "Lercanidipine inhibe modérément CYP3A4. Prendre lercanidipine matin (à jeun, 15 min avant) et simvastatine soir.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — ↓ exposition x10 (perte d'efficacité)",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "Lercanidipine = 1er passage hépatique très important. Inducteurs ↓ x10 → perte d'efficacité. Changer.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants (cumul hypotension, association possible)",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol"
+                                        ],
+                                        "commentaire": "Cumul possible en HTA (mécanismes différents). Pas de bradycardie additive (DHP). Surveillance TA.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs PDE5 (hypotension additive)",
+                                        "dcis": [
+                                                  "sildenafil",
+                                                  "tadalafil",
+                                                  "vardenafil"
+                                        ],
+                                        "commentaire": "Hypotension additive. Prudence chez âgé.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA. FORTA-D AINS.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "TA couché-debout | Bilan hépatique (CI si insuf hép sévère) | Créatinine",
+                    "suivi_periodique": "TA assise + orthostatique | Examen œdèmes MI (moins fréquents vs amlodipine) | Bilan hépatique si symptômes",
+                    "alerte_clinique": "Prise OBLIGATOIRE 15 min AVANT repas (↓ exposition si pris à jeun ou avec repas riche en graisses) | Œdèmes MI moins fréquents (< 5% vs 10-20% amlodipine) | Hypotension orthostatique → chutes ÂGÉ | CI si insuf hép sévère",
                     "bio_cible": [
                               "BIO_003"
                     ],
@@ -12192,8 +12528,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Prise 15 min avant repas. Moins d'œdèmes.",
-                    "source": "RCP Zanidip ; ESC HTA 2023"
+                    "notes_cliniques": "CCB DHP de 3ème génération à action prolongée (T½ courte mais effet prolongé par liaison aux canaux membranaires). Très vasosélective. Avantage clinique chez âgé : ↓ œdèmes MI vs amlodipine (LERCAN trial, étude ELYPSE). Substrat CYP3A4 avec 1er passage hépatique +++ (biodisponibilité 10%) → grande variabilité, sensible aux inhibiteurs/inducteurs/jus de pamplemousse. PRENDRE 15 MIN AVANT REPAS (sinon biodisponibilité x4). Alternative à amlodipine si œdèmes mal tolérés.",
+                    "source": "RCP Zanidip ; ESC HTA 2023 ; LERCAN ; ELYPSE"
           },
           {
                     "dci": "Levetiracetam",
@@ -13069,20 +13405,102 @@ const MASTER_DB = {
           {
                     "dci": "Manidipine",
                     "princeps": "Iperten",
-                    "classe": "Inhibiteur calcique (DHP)",
-                    "poso_hab": "10-20 mg/j",
-                    "poso_ger": "10 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Inhibiteur calcique DHP (3eme generation, action prolongee)",
+                    "poso_hab": "10-20 mg/j en 1 prise (matin)",
+                    "poso_ger": "10 mg/j (préférable chez âgé — moins d'œdèmes vs amlodipine, néphroprotection diabétique)",
+                    "poso_ren": "ClCr ≥ 10 : pas d'ajustement | ClCr < 10 : prudence | Insuf hépatique sévère : CI",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "> 99 %",
+                    "albumine": "> 99%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "TA | Créatinine",
-                    "suivi_periodique": "TA (consultations)",
-                    "alerte_clinique": "œdemes",
+                    "ddi_interact": "Inhibiteurs CYP3A4 puissants (kétoconazole/itraconazole/clarithromycine/ritonavir — ↑ exposition marquée), Inducteurs CYP3A4 (↓ efficacité), Jus de pamplemousse (↑ exposition), Simvastatine (↑ exposition modérée), Bétabloquants (cumul hypotension), AINS (↓ effet antiHTA), Sildénafil/PDE5 (hypotension)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS — ↑ exposition marquée (hypotension)",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "telithromycine",
+                                                  "cobicistat"
+                                        ],
+                                        "commentaire": "Manidipine = substrat CYP3A4. Hypotension, œdèmes. Éviter ou ↓ dose, surveillance TA.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Jus de pamplemousse — éviter",
+                                        "dcis": [
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4 intestinal. Éviter.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — ↓ efficacité",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "Perte d'efficacité antiHTA. Changer.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Simvastatine (↑ exposition modérée)",
+                                        "dcis": [
+                                                  "simvastatine"
+                                        ],
+                                        "commentaire": "Limiter dose simvastatine à 20 mg/j si association.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants (cumul hypotension)",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol"
+                                        ],
+                                        "commentaire": "Association possible en HTA (mécanismes différents).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs PDE5 (hypotension additive)",
+                                        "dcis": [
+                                                  "sildenafil",
+                                                  "tadalafil",
+                                                  "vardenafil"
+                                        ],
+                                        "commentaire": "Hypotension additive. Prudence chez âgé.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA. FORTA-D AINS.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "TA couché-debout | Créatinine | Bilan hépatique | Examen œdèmes MI",
+                    "suivi_periodique": "TA assise + orthostatique | Examen œdèmes MI (moins fréquents) | Bilan hépatique si symptômes",
+                    "alerte_clinique": "Œdèmes MI moins fréquents (< 5%) | Hypotension orthostatique chez âgé | CI si insuf hép sévère",
                     "bio_cible": [
                               "BIO_003"
                     ],
@@ -13090,8 +13508,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Moins d'œdèmes des membres inférieurs",
-                    "source": "RCP Iperten ; ESC HTA 2023"
+                    "notes_cliniques": "CCB DHP de 3ème génération. Vasosélectivité élevée + action prolongée. Avantages chez âgé : ↓ œdèmes MI vs amlodipine (~5% vs 15-20%), néphroprotection (↓ albuminurie chez diabétique — étude AMANDA, JATOS subanalysis). Indication HTA, particulièrement diabétique/IRC modérée. Pas validé HFrEF (comme tous DHP). Alternative à amlodipine si œdèmes mal tolérés.",
+                    "source": "RCP Iperten ; ESC HTA 2023 ; AMANDA ; JATOS"
           },
           {
                     "dci": "Maprotiline",
@@ -14514,20 +14932,110 @@ const MASTER_DB = {
           {
                     "dci": "Nifedipine",
                     "princeps": "Chronadalate, Adalate",
-                    "classe": "Inhibiteur calcique (DHP)",
-                    "poso_hab": "30-120 mg/j selon forme",
-                    "poso_ger": "30-60 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Inhibiteur calcique DHP (1ere generation — courte duree IR PIM ABSOLU)",
+                    "poso_hab": "Adalate LP : 30-120 mg/j en 1-2 prises | Chronadalate : 30-90 mg/j en 1 prise | Formes IR (rouge) : à ÉVITER",
+                    "poso_ger": "Adalate LP 30 mg/j à initier (PIM Beers/STOPP — préférer amlodipine/lercanidipine/manidipine). Formes IR (Adalate capsule) : CONTRE-INDIQUÉ chez âgé",
+                    "poso_ren": "Pas d'ajustement (métabolisme hépatique CYP3A4). Cirrhose : ↓ dose 50%",
                     "acb": 1,
                     "cia": 0,
                     "bhe": "1.0",
-                    "albumine": "0,95",
+                    "albumine": "95%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "TA | ECG",
-                    "suivi_periodique": "TA (consultations)",
-                    "alerte_clinique": "Tachycardie reflexe → ECG | Aggravation angor (formes LP)",
+                    "ddi_interact": "Inhibiteurs CYP3A4 puissants (kétoconazole/itraconazole/clarithromycine/ritonavir — ↑ x3-5 nifédipine — hypotension sévère), Inducteurs CYP3A4 (rifampicine ↓ x5), Jus de pamplemousse (↑ x2 — éviter), Bétabloquants (cumul hypotension), Magnésium IV (hypotension/blocage neuromusculaire), Sildénafil (hypotension additive), AINS (↓ effet antiHTA), Inhibiteur P-gp (↑ digoxinémie modeste)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "FORME COURTE ACTION (IR — Adalate capsule) — PIM ABSOLU Beers/STOPP",
+                                        "dcis": [
+                                                  "nifedipine forme IR"
+                                        ],
+                                        "commentaire": "Formes courtes action (capsule rouge sublinguale, Adalate 10) ABSOLUMENT CI chez âgé (Beers 2023, STOPP) : hypotension brutale, IDM, AVC, mortalité ↑ (Furberg Circulation 1995 : risque mortalité dose-dépendant). UNIQUEMENT formes LP/chronadalate validées.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS — ↑ x3-5 (hypotension sévère)",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "telithromycine",
+                                                  "cobicistat"
+                                        ],
+                                        "commentaire": "Hypotension sévère, tachycardie réflexe, ischémie. Éviter ou ↓ dose 50%, surveillance TA.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Jus de pamplemousse — ↑ x2 (à éviter)",
+                                        "dcis": [
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4 intestinal. Effet marqué pour nifédipine. Éviter.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Magnésium IV — hypotension / blocage neuromusculaire",
+                                        "dcis": [
+                                                  "magnesium sulfate"
+                                        ],
+                                        "commentaire": "Synergie hypotensive + blocage neuromusculaire potentialisé. Contexte obstétrique surtout.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bêta-bloquants (cumul hypotension)",
+                                        "dcis": [
+                                                  "bisoprolol",
+                                                  "metoprolol",
+                                                  "atenolol",
+                                                  "nebivolol",
+                                                  "carvedilol",
+                                                  "propranolol"
+                                        ],
+                                        "commentaire": "Association possible (mécanismes différents — DHP, pas de bradycardie additive). Cumul hypotension chez âgé.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs PDE5 (hypotension additive)",
+                                        "dcis": [
+                                                  "sildenafil",
+                                                  "tadalafil",
+                                                  "vardenafil"
+                                        ],
+                                        "commentaire": "Hypotension additive.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — ↓ x5 (perte d'efficacité)",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "Perte d'efficacité. Changer.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA. FORTA-D AINS.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "ECG (tachycardie réflexe) | TA couché-debout | Bilan hépatique",
+                    "suivi_periodique": "TA assise + orthostatique | FC (tachycardie réflexe DHP courte action) | Examen œdèmes MI",
+                    "alerte_clinique": "FORMES IR (capsule) : PIM ABSOLU — hypotension brutale, IDM, AVC | Tachycardie réflexe (cardiopathie ischémique : prudence) | Œdèmes MI fréquents | Aggravation angor possible si formes IR | Préférer amlodipine/lercanidipine chez âgé",
                     "bio_cible": [
                               "BIO_031"
                     ],
@@ -14535,8 +15043,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Inhibiteur calcique DHP courte durée : à ÉVITER chez âgé (Beers 2023 — formes IR : hypotension brutale, IDM, AVC). Préférer formes LP ou amlodipine.",
-                    "source": "RCP Adalate ; ESC HTA 2023"
+                    "notes_cliniques": "CCB DHP 1ère génération. Formes IR (capsule sublinguale Adalate 10) historiquement utilisées pour 'crise hypertensive' → ABANDONNÉES depuis 1995 (Furberg Circulation 1995, JAMA 1995 : ↑ mortalité, IDM, AVC). Formes LP (Adalate LP 20/30, Chronadalate 30/60) restent valides en HTA, angor (vasospastique +++). Beers 2023 / STOPP : ÉVITER formes IR. Préférer amlodipine (T½ longue) ou lercanidipine/manidipine (DHP 3ème gen, moins d'œdèmes) chez âgé.",
+                    "source": "RCP Adalate/Chronadalate ; ESC HTA 2023 ; Beers 2023 ; STOPP v3 2023 ; Furberg Circulation 1995"
           },
           {
                     "dci": "Nimodipine",
@@ -20385,19 +20893,19 @@ const MASTER_DB = {
           {
                     "dci": "Verapamil",
                     "princeps": "Isoptine",
-                    "classe": "Inhibiteur calcique non-DHP (phenylalkylamine)",
-                    "poso_hab": "240-480 mg/j en 3-4 prises",
-                    "poso_ger": "120-240 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Inhibiteur calcique NON-DHP (phenylalkylamine) — le plus bradycardisant + inotrope (-) PUISSANT",
+                    "poso_hab": "240-480 mg/j en 3-4 prises (LP : 1-2 prises/j)",
+                    "poso_ger": "120 mg/j LP à initier (PIM Beers/STOPP en HFrEF — risque ↑↑)",
+                    "poso_ren": "Pas d'ajustement (métabolisme hépatique CYP3A4). Cirrhose Child C : ↓ dose 70%",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,9",
-                    "qt_risque": "",
-                    "ddi_interact": "Beta-bloquants, Digoxine, Carbamazepine",
+                    "albumine": "90%",
+                    "qt_risque": "(CR) Conditionnel — bradycardie + hypoK",
+                    "ddi_interact": "Bêta-bloquants (CI ABSOLUE — BAV, asystolie, choc — surtout IV), Digoxine (↑ x1,5-2 — bradycardie + toxicité), Statines (↑ simvastatine x2,5 → max 20 mg, atorvastatine x2 → max 40 mg, rhabdomyolyse), Ivabradine (CI ABSOLUE — ANSM 2014), AOD (↑ exposition dabigatran/édoxaban/apixaban — saignement), Ciclosporine/Tacrolimus (↑ x2-3), Inhibiteurs CYP3A4 puissants (↑ vérapamil), Inducteurs CYP3A4 (↓), Carbamazépine (↑ x2-3 neurotoxicité), Théophylline/Buspirone (↑ exposition), Lithium (neurotoxicité décrite), Anesthésiques (hypotension/BAV) — PRUDENCE EXTRÊME",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Bêta-bloquants",
+                                        "classe": "Bêta-bloquants — CONTRE-INDICATION ABSOLUE (IV) / sévère PO",
                                         "dcis": [
                                                   "bisoprolol",
                                                   "metoprolol",
@@ -20405,31 +20913,144 @@ const MASTER_DB = {
                                                   "nebivolol",
                                                   "carvedilol",
                                                   "propranolol",
-                                                  "sotalol"
+                                                  "sotalol",
+                                                  "acebutolol",
+                                                  "celiprolol",
+                                                  "labetalol",
+                                                  "esmolol",
+                                                  "pindolol",
+                                                  "timolol"
                                         ],
-                                        "commentaire": "",
-                                        "severite": "warning"
+                                        "commentaire": "Cumul bradycardie + BAV + inotrope (-) PUISSANT : BAV complet, asystolie, choc cardiogénique. CI ABSOLUE par voie IV. PO : CI en HFrEF, prudence extrême sinon. Réanimation parfois nécessaire.",
+                                        "severite": "danger"
                               },
                               {
-                                        "classe": "Digoxine",
+                                        "classe": "Ivabradine — CONTRE-INDICATION ABSOLUE (ANSM 2014)",
+                                        "dcis": [
+                                                  "ivabradine"
+                                        ],
+                                        "commentaire": "Double mécanisme : inhibition CYP3A4 (↑ ivabradine x2-3) + bradycardie additive PUISSANTE. CI ABSOLUE RCP §4.3.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "AOD (apixaban/dabigatran/édoxaban/rivaroxaban) — ↑ exposition, saignement",
+                                        "dcis": [
+                                                  "dabigatran",
+                                                  "apixaban",
+                                                  "edoxaban",
+                                                  "rivaroxaban"
+                                        ],
+                                        "commentaire": "Vérapamil = inhibiteur P-gp + CYP3A4. Dabigatran : ↑ x1,5-2 → prendre dabigatran ≥ 2h avant vérapamil. Édoxaban : ↓ dose à 30 mg (RCP). Apixaban/rivaroxaban : prudence chez âgé fragile + IRC.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Digoxine — ↑ digoxinémie x1.5-2 + bradycardie",
                                         "dcis": [
                                                   "digoxine"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Inhibition P-gp. ↓ dose digoxine de 25-50%, doser digoxinémie à J7. Bradycardie additive — ECG.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Statines — RHABDOMYOLYSE (simvastatine, atorvastatine, lovastatine)",
+                                        "dcis": [
+                                                  "simvastatine",
+                                                  "atorvastatine",
+                                                  "lovastatine"
+                                        ],
+                                        "commentaire": "Vérapamil = inhibiteur CYP3A4 modéré-fort. ↑ simvastatine x2,5 → RCP : max 20 mg/j ; atorvastatine ↑ x2 → max 40 mg/j ; lovastatine ↑ x4-5. Préférer rosuvastatine/pravastatine/fluvastatine (FDA 2011).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Anti-arythmiques bradycardisants / QT",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "dronedarone",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "disopyramide",
+                                                  "quinidine"
+                                        ],
+                                        "commentaire": "Cumul bradycardie + BAV + QT. À ÉVITER.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Ciclosporine / Tacrolimus — ↑ x2-3 (néphrotoxicité)",
+                                        "dcis": [
+                                                  "ciclosporine",
+                                                  "tacrolimus",
+                                                  "sirolimus",
+                                                  "everolimus"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4. Doser, ↓ dose 25-50% à l'initiation.",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Carbamazepine",
+                                        "classe": "Carbamazépine — ↑ x2-3 (ataxie, neurotoxicité)",
                                         "dcis": [
-                                                  "carbamazepine"
+                                                  "carbamazepine",
+                                                  "phenytoine"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Carbamazépine : ataxie, vertiges, BAV. Doser carbamazépinémie.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Théophylline / Buspirone / BZD (↑ exposition)",
+                                        "dcis": [
+                                                  "theophylline",
+                                                  "buspirone",
+                                                  "midazolam",
+                                                  "triazolam",
+                                                  "alprazolam"
+                                        ],
+                                        "commentaire": "Buspirone ↑ x10, midazolam ↑ x4 — sédation marquée chez âgé. Préférer lorazépam/oxazépam (non CYP3A4).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Lithium — neurotoxicité (rare mais grave)",
+                                        "dcis": [
+                                                  "lithium"
+                                        ],
+                                        "commentaire": "Lithémie peut diminuer mais neurotoxicité décrite à lithémie normale. Surveillance clinique + dosage.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS (↑ vérapamil)",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "ritonavir",
+                                                  "clarithromycine",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "cobicistat"
+                                        ],
+                                        "commentaire": "↑ vérapamil → BAV, hypotension. ↓ dose 50%, ECG.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — ↓ efficacité",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "Perte d'efficacité antiHTA/anti-arythmique. Changer.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Jus de pamplemousse — ↑ vérapamil",
+                                        "dcis": [
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4 intestinal. Éviter.",
                                         "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "ECG (PR) | TA | Bilan hépatique | Ionogramme | FC",
-                    "suivi_periodique": "ECG (annuel + si changement dose) | TA/FC (consultations) | Bilan hépatique (si symptomes)",
-                    "alerte_clinique": "Bradycardie/BAV severe → ECG urgent (CI avec betabloquants IV) | Constipation severe (clinique) | Ictère → bilan hépatique",
+                    "suivi_initial": "ECG (PR, FC, BAV) | TA couché-debout | Bilan hépatique | Ionogramme | Créatinine | Bilan transit (constipation)",
+                    "suivi_periodique": "ECG semestriel + à chaque modification | TA/FC à chaque consultation | Bilan hépatique si symptômes | Évaluation constipation +++ (lactulose, hydratation)",
+                    "alerte_clinique": "Bradycardie / BAV → ECG urgence | CI ABSOLUE en HFrEF (FEVG ≤ 40%) | CI BB IV (asystolie) | Constipation SÉVÈRE +++ (50% chez âgé — laxatifs systématiques) | Œdèmes MI | Ictère (rare) | Bradycardie/hypotension chez âgé fragile — PIM Beers/STOPP",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_013",
@@ -20439,8 +21060,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Inhibiteur calcique non-DHP : bradycardie, BAV, constipation, CI si FEVG ≤ 40 % (HFrEF). Bradycardie additive avec BB, digoxine, IACHE (Phase 8). Inhibiteur CYP3A4 (interactions statines, AOD).",
-                    "source": "RCP Isoptine ; ESC 2023"
+                    "notes_cliniques": "CCB non-DHP le plus bradycardisant et inotrope (-) PUISSANT (> diltiazem). Indications : FA contrôle FC (alternative BB si HFpEF/asthme), angor stable/vasospastique, HTA, TSV (IV — Adénosine 1er choix). CI ABSOLUE : HFrEF (FEVG ≤ 40%), BAV 2-3, dysfonction sinusale, IC décompensée, FA WPW (CI ABSOLUE — risque FV). Inhibiteur CYP3A4 modéré-fort + P-gp → interactions ++++ (statines, AOD, ciclosporine, digoxine, BZD). Constipation +++ chez âgé (50%, dose-dépendante) → PIM en contexte gériatrique fragile. Préférer diltiazem si non-DHP nécessaire chez âgé (moins de constipation, moins d'inotrope-).",
+                    "source": "RCP Isoptine ; ESC HTA 2023 ; ESC FA 2024 ; Beers 2023 ; STOPP v3 2023 ; ANSM 2014 (ivabradine) ; FDA 2011 (statines)"
           },
           {
                     "dci": "Vildagliptine",

@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.98 (Phase 46 — Cardio BB complémentaires (Aténolol PIM Beers/STOPP + IRC, Propranolol non-cardiosélectif BHE+++ asthme CI, Sotalol classe III torsades CredibleMeds-KR initiation hospitalière) + Ivabradine SHIFT trial bradycardisant sinusal If avec CI vérapamil/diltiazem ANSM 2014, sources LIFE/ASCOT-BPLA/Lindholm/SHIFT/SIGNIFY)
+// Service Worker - GeriaAssist v0.99 (Phase 47 — Cardio CCB principaux : Amlodipine (HYVET/ASCOT-BPLA), Diltiazem (FA contrôle FC), Vérapamil (CCB le + bradycardisant — PIM HFrEF/CI BB IV/AOD/statines), Lercanidipine/Manidipine (DHP 3e gen, moins d'œdèmes), Nifédipine (formes IR PIM ABSOLU Beers — Furberg 1995), Félodipine (jus de pamplemousse Bailey Lancet 1991). DDI commun : CYP3A4 inhibiteurs/inducteurs, statines RCP-limit, BB cumul, AOD vérapamil, ivabradine CI ANSM 2014, ciclosporine, BZD)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260513-phase46-cardio-bb2-ivabradine';
-const CACHE_NAME = `geriaassist-v98-${BUILD_ID}`;
+const BUILD_ID = '20260513-phase47-cardio-ccb';
+const CACHE_NAME = `geriaassist-v99-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
