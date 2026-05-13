@@ -4427,11 +4427,18 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG | Kaliemie | TA",
-                    "suivi_periodique": "Créatinine + kaliemie (annuel)",
-                    "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
+                    "ddi_interact": "IEC (CI cumul SRA), Sacubitril/Valsartan, autres ARA2, ARM/Diurétiques épargneurs K+ (hyperkaliémie), AINS (triple whammy), Lithium, Triméthoprime/Cotrimoxazole, Diurétiques (hypotension)",
+                    "ddi_interact_v2": [
+                              { "classe": "IEC — CI ASSOCIATION (cumul SRA)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "fosinopril", "quinapril", "benazepril", "trandolapril"], "commentaire": "Double blocage SRA. ESC 2024 EVITER.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan + autres ARA2 (CI cumul)", "dcis": ["sacubitril valsartan", "losartan", "valsartan", "irbesartan", "telmisartan", "olmesartan"], "commentaire": "CI cumul ARA2.", "severite": "danger" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ / KCl (hyperkaliémie)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "Surveillance K+/créat. CHARM-Added — bénéfice candesartan HFrEF en addition IEC (mais EVITER chez âgé fragile, préférer ARNI).", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib"], "commentaire": "IRA fonctionnelle.", "severite": "danger" },
+                              { "classe": "Lithium / Triméthoprime / Cotrimoxazole (hyperkaliémie)", "dcis": ["lithium", "trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Surveillance K+/lithiémie.", "severite": "warning" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Réduire dose ARA2 à initiation.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Créatinine/DFG | Kaliémie | TA",
+                    "suivi_periodique": "Créatinine + kaliémie (à 1-2 sem post-introduction puis annuel)",
+                    "alerte_clinique": "IRA aiguë | Hyperkaliémie | Études : CHARM (HFrEF), SCOPE (HTA sujet âgé). ESC 2024 HF/HTA.",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -9042,11 +9049,18 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,5",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Kaliemie | Créatinine/DFG (CI si DFG<30) | Bilan hépatique",
-                    "suivi_periodique": "Kaliemie + créatinine (apres 4-8 semaines puis annuel)",
-                    "alerte_clinique": "Hyperkaliemie (risque majeur si DFG bas ou associations IEC/ARA2) → ionogramme urgent",
+                    "ddi_interact": "IEC/ARA2/ARNI (hyperkaliémie — association recommandée HFrEF avec surveillance), Diurétiques épargneurs K+ (hyperkaliémie), AINS (triple whammy → IRA), Lithium, Triméthoprime/Cotrimoxazole, Inhibiteurs CYP3A4 puissants (Eplérénone = substrat CYP3A4 — CI ABSOLUE avec puissants : kétoconazole, itraconazole, ritonavir, clarithromycine)",
+                    "ddi_interact_v2": [
+                              { "classe": "Inhibiteurs CYP3A4 PUISSANTS — CONTRE-INDICATION ABSOLUE", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "posaconazole", "nelfinavir"], "commentaire": "Eplérénone = substrat CYP3A4 sélectif. Inhibiteurs puissants → ↑ x5 exposition → hyperkaliémie majeure. CONTRE-INDICATION ABSOLUE (RCP Inspra).", "severite": "danger" },
+                              { "classe": "IEC / ARA2 / ARNI (hyperkaliémie cumulée — association HFrEF/post-IDM avec surveillance)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "sacubitril valsartan"], "commentaire": "Association RECOMMANDÉE en HFrEF/post-IDM (EPHESUS NEJM 2003, EMPHASIS-HF NEJM 2011). Surveillance K+/créat à 1-2 sem, 4-6 sem, puis trimestrielle. K+ < 5.0 et DFG > 30 pour initier.", "severite": "warning" },
+                              { "classe": "Diurétiques épargneurs K+ / Spironolactone / Finérénone / KCl — HYPERKALIÉMIE MAJEURE", "dcis": ["spironolactone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "EVITER cumul épargneurs K+.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP3A4 MODÉRÉS (Vérapamil, Diltiazem — réduire dose éplérénone)", "dcis": ["verapamil", "diltiazem", "fluconazole", "erythromycine", "amiodarone"], "commentaire": "↑ exposition éplérénone modérée. Réduire dose éplérénone 25-50%.", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY + IRA", "dcis": ["ibuprofene", "naproxene", "diclofenac", "celecoxib"], "commentaire": "IRA fonctionnelle + ↑ hyperkaliémie.", "severite": "danger" },
+                              { "classe": "Lithium / Triméthoprime / Cotrimoxazole (hyperkaliémie)", "dcis": ["lithium", "trimethoprime", "cotrimoxazole"], "commentaire": "Surveillance K+/lithiémie.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Kaliémie | Créatinine/DFG (CI absolue si DFG < 30) | Bilan hépatique",
+                    "suivi_periodique": "Kaliémie + créatinine (à 1-2 sem, 4-6 sem, puis trimestriel). K+ > 5.5 → réduire ; > 6.0 → arrêt.",
+                    "alerte_clinique": "HYPERKALIÉMIE majeure si DFG < 30, K+ > 5.0 base, ou association IEC/ARA2 + AINS. Préférer éplérénone à spironolactone si gynécomastie sous spironolactone (sélectif aux récepteurs minéralocorticoïdes, pas d'effet anti-androgène). Études : EPHESUS (post-IDM), EMPHASIS-HF (HFrEF NYHA II).",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_002",
@@ -11454,8 +11468,15 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,96",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "IEC (CI cumul SRA), Sacubitril/Valsartan + autres ARA2 (CI cumul), ARM/Diurétiques épargneurs K+ (hyperkaliémie), AINS (triple whammy), Lithium, Triméthoprime/Cotrimoxazole, Diurétiques (hypotension)",
+                    "ddi_interact_v2": [
+                              { "classe": "IEC — CI ASSOCIATION", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "fosinopril", "quinapril", "benazepril", "trandolapril"], "commentaire": "Double blocage SRA. ESC 2024 EVITER.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan + autres ARA2 — CI cumul", "dcis": ["sacubitril valsartan", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan"], "commentaire": "CI cumul ARA2.", "severite": "danger" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ / KCl (hyperkaliémie)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "Surveillance K+/créat. IDNT — bénéfice irbésartan en MRC diabétique.", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "celecoxib"], "commentaire": "IRA fonctionnelle.", "severite": "danger" },
+                              { "classe": "Lithium / Triméthoprime / Cotrimoxazole (hyperkaliémie)", "dcis": ["lithium", "trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Surveillance K+/lithiémie.", "severite": "warning" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Réduire dose ARA2 à initiation.", "severite": "warning" }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Proteinurie (diabetiques)",
                     "suivi_periodique": "Créatinine + kaliemie (annuel)",
                     "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
@@ -12621,51 +12642,20 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,98",
                     "qt_risque": "",
-                    "ddi_interact": "AINS, K+, Spironolactone, IEC",
+                    "ddi_interact": "IEC (CI cumul SRA), Sacubitril (CI simultanée — délai 36 h sauf Valsartan/Sacubitril qui contient déjà valsartan), ARM/Diurétiques épargneurs K+/Sels KCl (hyperkaliémie cumulée), AINS (triple whammy → IRA), Lithium (↑ lithiémie), Triméthoprime/Cotrimoxazole (hyperkaliémie additive), Insuline/Sulfamides (hypoglycémie modeste), Diurétiques (hypotension), Inducteurs CYP3A4/2C9 (↓ losartan — Losartan = substrat CYP2C9 → métabolite actif E-3174)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Spironolactone",
-                                        "dcis": [
-                                                  "spironolactone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "IEC",
-                                        "dcis": [
-                                                  "enalapril",
-                                                  "lisinopril",
-                                                  "ramipril",
-                                                  "perindopril",
-                                                  "quinapril",
-                                                  "benazepril",
-                                                  "captopril",
-                                                  "fosinopril",
-                                                  "trandolapril"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IEC — CONTRE-INDICATION ASSOCIATION (cumul SRA)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "fosinopril", "quinapril", "benazepril", "trandolapril", "zofenopril", "cilazapril", "moexipril"], "commentaire": "Double blocage SRA = IRA, hyperkaliémie, hypotension. ESC 2024 HF/HTA : EVITER.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan (ARNI)", "dcis": ["sacubitril valsartan"], "commentaire": "Pas de problème avec ARA2 autres que valsartan (l'ARNI contient déjà valsartan — éviter cumul valsartan).", "severite": "info" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ / KCl (hyperkaliémie cumulée)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "En HFrEF/MRC : association RECOMMANDÉE avec surveillance K+/créat (FIDELIO-DKD pour Finérénone).", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "IRA fonctionnelle. À éviter.", "severite": "danger" },
+                              { "classe": "Lithium (↑ lithiémie)", "dcis": ["lithium"], "commentaire": "Surveillance lithiémie + créat.", "severite": "warning" },
+                              { "classe": "Triméthoprime / Cotrimoxazole (hyperkaliémie)", "dcis": ["trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Antoniou BMJ 2014 — surmortalité chez âgé. Surveillance K+.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP3A4/2C9 (↓ losartan — substrat CYP2C9)", "dcis": ["rifampicine", "carbamazepine", "phenytoine"], "commentaire": "Losartan = prodrogue, métabolite actif E-3174 via CYP2C9. ↓ exposition.", "severite": "warning" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Réduire dose ARA2 à initiation si diurétique.", "severite": "warning" }
                     ],
-                    "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Uricemie (losartan uricosurique)",
-                    "suivi_periodique": "Créatinine + kaliemie (annuel) | Uricemie (annuelle)",
-                    "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
+                    "suivi_initial": "Créatinine/DFG | Kaliémie | TA | Uricémie (Losartan = effet uricosurique)",
+                    "suivi_periodique": "Créatinine + kaliémie (à 1-2 sem post-introduction puis annuel) | Uricémie annuelle (Losartan ↓ uricémie — avantage si goutte)",
+                    "alerte_clinique": "IRA aiguë | Hyperkaliémie | ARA2 = alternative IEC en cas de TOUX (moins fréquente) ou ANGIO-ŒDÈME (rare mais possible aussi sous ARA2 — switch arrêt définitif). LOSARTAN = effet uricosurique unique parmi ARA2 → préférer si HTA + goutte. Études : LIFE (HTA + HVG), RENAAL (MRC diabétique).",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -14489,11 +14479,18 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,99",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG | Kaliemie | Bilan hépatique | Poids (enteropathie)",
-                    "suivi_periodique": "Créatinine + kaliemie (annuel) | Evaluation clinique enteropathie",
-                    "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie | Enteropathie olmesartan (diarrhee severe + amaigrissement → arret immediat)",
+                    "ddi_interact": "IEC (CI cumul SRA), Sacubitril/Valsartan + autres ARA2 (CI cumul), ARM/Diurétiques épargneurs K+ (hyperkaliémie), AINS (triple whammy), Lithium, Triméthoprime/Cotrimoxazole, Diurétiques (hypotension)",
+                    "ddi_interact_v2": [
+                              { "classe": "IEC — CI ASSOCIATION", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "fosinopril"], "commentaire": "Double blocage SRA. ESC 2024 EVITER.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan + autres ARA2 — CI cumul", "dcis": ["sacubitril valsartan", "losartan", "valsartan", "irbesartan", "candesartan", "telmisartan"], "commentaire": "CI cumul ARA2.", "severite": "danger" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ (hyperkaliémie)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "Surveillance K+/créat.", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "celecoxib"], "commentaire": "IRA fonctionnelle.", "severite": "danger" },
+                              { "classe": "Lithium / Triméthoprime / Cotrimoxazole (hyperkaliémie)", "dcis": ["lithium", "trimethoprime", "cotrimoxazole"], "commentaire": "Surveillance K+.", "severite": "warning" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Réduire dose ARA2.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Créatinine/DFG | Kaliémie | Bilan hépatique | Poids (entéropathie)",
+                    "suivi_periodique": "Créatinine + kaliémie (à 1-2 sem puis annuel) | Évaluation clinique entéropathie",
+                    "alerte_clinique": "IRA aiguë | Hyperkaliémie | ENTÉROPATHIE OLMESARTAN (alerte ANSM/FDA 2013) — diarrhée chronique sévère + amaigrissement + atrophie villositaire (sprue-like) → ARRÊT IMMÉDIAT. Préférer autre ARA2 si entéropathie ou patient à risque dénutrition.",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -17552,64 +17549,20 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 90 %",
                     "qt_risque": "",
-                    "ddi_interact": "IEC, ARA2, AINS, K+, Lithium, Trimethoprime",
+                    "ddi_interact": "IEC/ARA2/ARNI (hyperkaliémie cumulée — surveillance K+/créat ; association RECOMMANDÉE en HFrEF/MRC), Diurétiques épargneurs K+/Sels KCl (hyperkaliémie), AINS (triple whammy → IRA), Lithium (↑), Triméthoprime/Cotrimoxazole (hyperkaliémie additive), Digoxine (↑ digoxinémie + déplacement albumine), AVK (déplacement albumine), Héparine (hyperkaliémie additive)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "IEC",
-                                        "dcis": [
-                                                  "enalapril",
-                                                  "lisinopril",
-                                                  "ramipril",
-                                                  "perindopril",
-                                                  "quinapril",
-                                                  "benazepril",
-                                                  "captopril",
-                                                  "fosinopril",
-                                                  "trandolapril"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ARA2",
-                                        "dcis": [
-                                                  "losartan",
-                                                  "valsartan",
-                                                  "irbesartan",
-                                                  "candesartan",
-                                                  "telmisartan",
-                                                  "olmesartan"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Lithium",
-                                        "dcis": [
-                                                  "lithium"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IEC / ARA2 / ARNI (hyperkaliémie cumulée — association recommandée HFrEF/MRC avec surveillance)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "sacubitril valsartan"], "commentaire": "Association RECOMMANDÉE en HFrEF (RALES NEJM 1999, EPHESUS, EMPHASIS-HF). Surveillance K+/créat à 1-2 sem, 4-6 sem, puis trimestrielle. K+ < 5.0 mEq/L et DFG > 30 pour initier. Diminuer dose ou arrêter si K+ > 5.5.", "severite": "warning" },
+                              { "classe": "Diurétiques épargneurs K+ / Sels KCl — HYPERKALIÉMIE MAJEURE", "dcis": ["amiloride", "triamterene", "eplerenone", "finerenone", "potassium chloride"], "commentaire": "Cumul épargneurs K+ → hyperkaliémie GRAVE. EVITER cumul.", "severite": "danger" },
+                              { "classe": "AINS — TRIPLE WHAMMY + IRA", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "meloxicam"], "commentaire": "Triple whammy → IRA fonctionnelle + ↑ hyperkaliémie.", "severite": "danger" },
+                              { "classe": "Lithium (↑ lithiémie)", "dcis": ["lithium"], "commentaire": "Surveillance lithiémie.", "severite": "warning" },
+                              { "classe": "Triméthoprime / Cotrimoxazole (hyperkaliémie additive)", "dcis": ["trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Antoniou BMJ 2014 — surmortalité mort subite chez âgé. Surveillance K+ rapprochée.", "severite": "danger" },
+                              { "classe": "Digoxine (↑ digoxinémie + déplacement albumine)", "dcis": ["digoxine"], "commentaire": "Spironolactone ↑ digoxinémie. Surveillance digoxinémie + clinique.", "severite": "warning" },
+                              { "classe": "Héparine / HBPM (hyperkaliémie additive)", "dcis": ["heparine sodique", "enoxaparine", "dalteparine", "tinzaparine"], "commentaire": "Effet hyperkaliémiant additif (héparine ↓ aldostérone).", "severite": "warning" },
+                              { "classe": "AVK (déplacement albumine)", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "Déplacement albumine — ↑ INR modeste. Surveillance INR.", "severite": "info" }
                     ],
-                    "suivi_initial": "Kaliemie | Créatinine/DFG | Bilan hépatique | Natremia | Bilan hormonal si gynaecomastia",
-                    "suivi_periodique": "Kaliemie + créatinine (apres 4-8 semaines puis annuel)",
-                    "alerte_clinique": "Hyperkaliemie (risque majeur si DFG<45 ou IEC/ARA2 associe) → ionogramme urgent | Gynaecomastie (examen clinique)",
+                    "suivi_initial": "Kaliémie | Créatinine/DFG (CI absolue si DFG < 30) | Bilan hépatique | Natrémie | Bilan hormonal si gynécomastie (rare effet anti-androgène)",
+                    "suivi_periodique": "Kaliémie + créatinine (à 1-2 sem post-introduction, 4-6 sem, puis trimestrielle). K+ > 5.5 → réduire dose ; > 6.0 → arrêt.",
+                    "alerte_clinique": "HYPERKALIÉMIE (risque majeur si DFG < 30, ou IEC/ARA2 associé + Triméthoprime + AINS — événements graves chez âgé). GYNÉCOMASTIE (10% — effet anti-androgène, switch éplérénone si invalidant). Indications RALES (HFrEF NYHA III-IV, NEJM 1999), AldDO-HF, TOPCAT (HFpEF), PATHWAY-2 (HTA résistante). CI absolue : DFG < 30, K+ > 5.0, addison.",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_002",
@@ -18019,11 +17972,19 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 99 %",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG | Kaliemie | Bilan hépatique (prudence si insuffisance hépatique)",
-                    "suivi_periodique": "Créatinine + kalimie (annuel)",
-                    "alerte_clinique": "Insuffisance renale aigu | Hyperkaliemie",
+                    "ddi_interact": "IEC (CI cumul SRA), Sacubitril/Valsartan + autres ARA2 (CI cumul), ARM/Diurétiques épargneurs K+ (hyperkaliémie), AINS (triple whammy), Lithium, Triméthoprime/Cotrimoxazole, Diurétiques (hypotension), Digoxine (↑ légère)",
+                    "ddi_interact_v2": [
+                              { "classe": "IEC — CI ASSOCIATION", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "fosinopril", "quinapril", "benazepril", "trandolapril"], "commentaire": "Double blocage SRA. ESC 2024 EVITER.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan + autres ARA2 — CI cumul", "dcis": ["sacubitril valsartan", "losartan", "valsartan", "irbesartan", "candesartan", "olmesartan"], "commentaire": "CI cumul ARA2.", "severite": "danger" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ / KCl (hyperkaliémie)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "Surveillance K+/créat. ONTARGET — équivalence avec ramipril.", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib"], "commentaire": "IRA fonctionnelle.", "severite": "danger" },
+                              { "classe": "Lithium / Triméthoprime / Cotrimoxazole (hyperkaliémie)", "dcis": ["lithium", "trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Surveillance K+/lithiémie.", "severite": "warning" },
+                              { "classe": "Digoxine (↑ digoxinémie légère)", "dcis": ["digoxine"], "commentaire": "↑ légère via inhibition P-gp. Surveillance.", "severite": "info" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Réduire dose ARA2 à initiation.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Créatinine/DFG | Kaliémie | Bilan hépatique (prudence si insuffisance hépatique)",
+                    "suivi_periodique": "Créatinine + kaliémie (à 1-2 sem puis annuel)",
+                    "alerte_clinique": "IRA aiguë | Hyperkaliémie | Études : ONTARGET (équivalence ramipril), TRANSCEND. Demi-vie longue 24 h. ESC 2024 HF/HTA.",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -19622,63 +19583,19 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,95",
                     "qt_risque": "",
-                    "ddi_interact": "AINS, K+, Spironolactone, IEC, ARA2",
+                    "ddi_interact": "IEC (CI cumul SRA), Sacubitril/Valsartan (CI car contient déjà valsartan), ARM/Diurétiques épargneurs K+ (hyperkaliémie cumulée), AINS (triple whammy → IRA), Lithium, Triméthoprime/Cotrimoxazole, Diurétiques (hypotension)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Spironolactone",
-                                        "dcis": [
-                                                  "spironolactone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "IEC",
-                                        "dcis": [
-                                                  "enalapril",
-                                                  "lisinopril",
-                                                  "ramipril",
-                                                  "perindopril",
-                                                  "quinapril",
-                                                  "benazepril",
-                                                  "captopril",
-                                                  "fosinopril",
-                                                  "trandolapril"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ARA2",
-                                        "dcis": [
-                                                  "losartan",
-                                                  "irbesartan",
-                                                  "candesartan",
-                                                  "telmisartan",
-                                                  "olmesartan"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IEC — CI ASSOCIATION (cumul SRA)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "fosinopril", "quinapril", "benazepril", "trandolapril", "zofenopril"], "commentaire": "Double blocage SRA. ESC 2024 EVITER.", "severite": "danger" },
+                              { "classe": "Sacubitril/Valsartan — CI (contient déjà valsartan)", "dcis": ["sacubitril valsartan"], "commentaire": "CI cumul valsartan.", "severite": "danger" },
+                              { "classe": "Autres ARA2 — CI cumul", "dcis": ["losartan", "irbesartan", "candesartan", "telmisartan", "olmesartan", "azilsartan", "eprosartan"], "commentaire": "CI cumul ARA2.", "severite": "danger" },
+                              { "classe": "ARM / Diurétiques épargneurs K+ / KCl (hyperkaliémie)", "dcis": ["spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene", "potassium chloride"], "commentaire": "Surveillance K+/créat. Études Val-HeFT, VALIANT — bénéfice valsartan HFrEF/post-IDM.", "severite": "warning" },
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib"], "commentaire": "IRA fonctionnelle.", "severite": "danger" },
+                              { "classe": "Lithium / Triméthoprime / Cotrimoxazole (hyperkaliémie)", "dcis": ["lithium", "trimethoprime", "cotrimoxazole", "sulfamethoxazole"], "commentaire": "Surveillance K+/lithiémie.", "severite": "warning" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "hydrochlorothiazide", "indapamide"], "commentaire": "Réduire dose ARA2 à initiation.", "severite": "warning" }
                     ],
-                    "suivi_initial": "Créatinine/DFG | Kaliemie | TA | Bilan hépatique",
-                    "suivi_periodique": "Créatinine + kaliemie (annuel)",
-                    "alerte_clinique": "Insuffisance renale aigue | Hyperkaliemie",
+                    "suivi_initial": "Créatinine/DFG | Kaliémie | TA | Bilan hépatique",
+                    "suivi_periodique": "Créatinine + kaliémie (à 1-2 sem post-introduction puis annuel)",
+                    "alerte_clinique": "IRA aiguë | Hyperkaliémie | ARA2 = alternative IEC (toux moins fréquente). Études : Val-HeFT (HFrEF), VALIANT (post-IDM). ESC 2024 HF/HTA.",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -23753,10 +23670,10 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "92%",
                     "qt_risque": "",
-                    "ddi_interact": "Inhibiteurs CYP3A4 puissants (CI — augmentation majeure) | Inducteurs CYP3A4 (diminuent efficacite) | IEC/ARA2 + iSGLT2 (hyperkaliemie — surveiller K++)",
+                    "ddi_interact": "Inhibiteurs CYP3A4 puissants (CI ABSOLUE — kétoconazole, itraconazole, ritonavir, clarithromycine), Inhibiteurs CYP3A4 modérés (Verapamil/Diltiazem/Erythromycine — réduire dose finérénone), Inducteurs CYP3A4 (↓ efficacité), IEC/ARA2 (hyperkaliémie — association recommandée MRC diabétique), Spironolactone/Eplérénone (EVITER cumul ARM), AINS (triple whammy), Triméthoprime/Cotrimoxazole",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Inhibiteurs CYP3A4",
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS — CONTRE-INDICATION ABSOLUE",
                                         "dcis": [
                                                   "ketoconazole",
                                                   "itraconazole",
@@ -23764,41 +23681,106 @@ const MASTER_DB = {
                                                   "posaconazole",
                                                   "ritonavir",
                                                   "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
+                                                  "cobicistat",
+                                                  "nelfinavir"
                                         ],
-                                        "commentaire": "CI — augmentation majeure",
+                                        "commentaire": "Finérénone = substrat CYP3A4 majeur. ↑ exposition x5-10 → hyperkaliémie majeure. CONTRE-INDICATION ABSOLUE (RCP Kerendia).",
                                         "severite": "danger"
                               },
                               {
-                                        "classe": "Inducteurs enzymatiques",
+                                        "classe": "Inhibiteurs CYP3A4 MODÉRÉS — réduire dose ou surveillance K+ rapprochée",
+                                        "dcis": [
+                                                  "erythromycine",
+                                                  "verapamil",
+                                                  "diltiazem",
+                                                  "fluconazole",
+                                                  "amiodarone",
+                                                  "ciclosporine",
+                                                  "dronedarone"
+                                        ],
+                                        "commentaire": "↑ exposition x1.5-3 → hyperkaliémie. Réduire dose finérénone ou monitorer K+ étroitement (RCP Kerendia §4.5).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 PUISSANTS — éviter (perte d'efficacité)",
                                         "dcis": [
                                                   "rifampicine",
                                                   "phenytoine",
                                                   "carbamazepine",
                                                   "phenobarbital",
-                                                  "millepertuis"
+                                                  "millepertuis",
+                                                  "efavirenz"
                                         ],
-                                        "commentaire": "diminuent efficacite",
+                                        "commentaire": "↓ exposition finérénone → perte d'efficacité néphroprotectrice. Éviter association.",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "IEC",
+                                        "classe": "Jus de pamplemousse — éviter",
+                                        "dcis": [
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4 intestinal → ↑ exposition. Éviter (RCP Kerendia).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "ARM / Diurétiques épargneurs K+ / KCl — CONTRE-INDICATION (cumul hyperkaliémie majeure)",
+                                        "dcis": [
+                                                  "spironolactone",
+                                                  "eplerenone",
+                                                  "amiloride",
+                                                  "triamterene",
+                                                  "potassium chloride"
+                                        ],
+                                        "commentaire": "Cumul ARM = hyperkaliémie SEVERE. CONTRE-INDICATION absolue de l'association finérénone + spironolactone/éplérénone (RCP Kerendia §4.3).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "IEC / ARA2 / ARNI (hyperkaliémie surveillance étroite)",
                                         "dcis": [
                                                   "enalapril",
-                                                  "lisinopril",
                                                   "ramipril",
                                                   "perindopril",
-                                                  "quinapril",
-                                                  "benazepril",
+                                                  "lisinopril",
                                                   "captopril",
+                                                  "benazepril",
+                                                  "quinapril",
                                                   "fosinopril",
-                                                  "trandolapril"
+                                                  "trandolapril",
+                                                  "losartan",
+                                                  "valsartan",
+                                                  "candesartan",
+                                                  "irbesartan",
+                                                  "telmisartan",
+                                                  "olmesartan",
+                                                  "sacubitril/valsartan"
                                         ],
-                                        "commentaire": "hyperkaliemie — surveiller K++",
+                                        "commentaire": "Association RECOMMANDÉE en MRC diabétique (FIDELIO-DKD, FIGARO-DKD : finérénone ajoutée à IEC/ARA2 dose maximale tolérée). Surveillance K+ à J7-M1-trimestriel. STOP si K+ > 5.5.",
                                         "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS — TRIPLE WHAMMY (IRA + hyperkaliémie)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "Triple whammy (IEC/ARA2 + diurétique + AINS) : IRA + hyperkaliémie. Éviter chez sujet âgé sous finérénone (FORTA-D AINS).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Lithium / Triméthoprime / Cotrimoxazole (hyperkaliémie additive)",
+                                        "dcis": [
+                                                  "lithium",
+                                                  "trimethoprime",
+                                                  "sulfamethoxazole-trimethoprime"
+                                        ],
+                                        "commentaire": "Triméthoprime/cotrimoxazole : hyperkaliémie additive (Antoniou BMJ 2014 : +12 hospi/1000 chez âgés sous SRA). Lithium : ↑ lithémie + hyperkaliémie. Surveillance K+/lithémie ou éviter.",
+                                        "severite": "danger"
                               }
                     ],
                     "suivi_initial": "Kaliemie (doit etre ≤ 4.8) | Creatinine/DFG | Bilan hepatique",
