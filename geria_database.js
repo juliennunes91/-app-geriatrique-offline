@@ -3891,20 +3891,114 @@ const MASTER_DB = {
           {
                     "dci": "Bisoprolol",
                     "princeps": "Detensiel, Cardensiel",
-                    "classe": "Betabloquant cardioselectif",
-                    "poso_hab": "1,25-10 mg/j",
-                    "poso_ger": "1,25 mg/j",
-                    "poso_ren": "ClCr < 20: 1,25 mg/j",
+                    "classe": "Betabloquant cardioselectif (B1)",
+                    "poso_hab": "1,25-10 mg/j en 1 prise (matin)",
+                    "poso_ger": "1,25 mg/j à initier, doublement toutes les 2 semaines si bien toléré (titration progressive HFrEF)",
+                    "poso_ren": "ClCr < 20 mL/min : max 10 mg/j (élimination rénale 50%). Insuf hépatique sévère : max 10 mg/j",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,3",
+                    "albumine": "30%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "ECG | Glycemie/HbA1c si diabte | Créatinine si IRC",
-                    "suivi_periodique": "FC (consultation) | Glycemie (annuelle si DT2)",
-                    "alerte_clinique": "Bradycardie/BAV → ECG",
+                    "ddi_interact": "BB non-DHP (vérapamil/diltiazem) BAV/bradycardie SÉVÈRE — éviter en HFrEF, Amiodarone/Sotalol/Dronedarone (bradycardie/QT), Digoxine (bradycardie additive), Clonidine (rebond HTA arrêt brutal), Ivabradine (bradycardie additive en HFrEF — surveillance), Insuline/Sulfonylurées (masquage hypoglycémie/contre-régulation), AINS (↓ effet antiHTA), Antidépresseurs (fluoxétine/paroxétine inhib CYP2D6 — légère ↑), Bétamimétiques/Cholinestérase inhib (antagonisme)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "CCB non-DHP — BRADYCARDIE / BAV SÉVÈRE / IC décompensée",
+                                        "dcis": [
+                                                  "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "Cumul bradycardisant + inotrope négatif : risque BAV complet, arrêt sinusal, choc cardiogénique. CI en HFrEF, prudence extrême par voie IV. Préférer DHP (amlodipine) si CCB nécessaire (ESC HTA 2023).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Anti-arythmiques bradycardisants / QT (cumul)",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "dronedarone",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "disopyramide",
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "Bradycardie sévère / BAV / allongement QT additif. Surveillance ECG, FC. En FA : association amiodarone-bisoprolol fréquente sous surveillance (ESC FA 2024).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ivabradine (HFrEF associé — surveillance bradycardie)",
+                                        "dcis": [
+                                                  "ivabradine"
+                                        ],
+                                        "commentaire": "Association recommandée en HFrEF FC ≥ 70 sous BB dose max tolérée (SHIFT trial, ESC IC 2023). Surveillance FC (cible ≥ 50).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Clonidine / Moxonidine / Rilménidine — REBOND HYPERTENSIF ARRÊT BRUTAL",
+                                        "dcis": [
+                                                  "clonidine",
+                                                  "moxonidine",
+                                                  "rilmenidine",
+                                                  "methyldopa"
+                                        ],
+                                        "commentaire": "À l'arrêt simultané : crise hypertensive de rebond + bradycardie réflexe paradoxalement aggravée par BB. Arrêter BB en 1er, puis clonidine progressivement.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Insuline / Sulfonylurées / Glinides — MASQUAGE HYPOGLYCÉMIE",
+                                        "dcis": [
+                                                  "insuline",
+                                                  "glimepiride",
+                                                  "gliclazide",
+                                                  "glibenclamide",
+                                                  "repaglinide"
+                                        ],
+                                        "commentaire": "BB masquent les signes adrénergiques d'hypoglycémie (tachycardie, sueurs, tremblements — sueurs profuses persistent). Risque ↑ chez diabétique âgé. Bisoprolol = β1-sélectif, moins de masquage que propranolol (UKPDS, FORTA-D).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA / IRA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA des BB. Éviter chez âgé HTA/IC (FORTA-D AINS).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP2D6 (↑ exposition légère)",
+                                        "dcis": [
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "bupropion",
+                                                  "quinidine",
+                                                  "terbinafine"
+                                        ],
+                                        "commentaire": "Bisoprolol = métabolisme mixte CYP3A4/CYP2D6 (50% rénal) : effet moindre que métoprolol (purement CYP2D6). Surveiller FC.",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "Bétamimétiques / Théophylline (antagonisme bronchodilatateur)",
+                                        "dcis": [
+                                                  "salbutamol",
+                                                  "terbutaline",
+                                                  "formoterol",
+                                                  "salmeterol",
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "Antagonisme β2 (bisoprolol = cardiosélectif β1, donc impact moindre vs propranolol). En BPCO/asthme sévère : surveillance VEMS. Préférer bisoprolol/nébivolol aux non-cardiosélectifs.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "ECG (FC, BAV, QT) | Glycémie/HbA1c si diabète | Créatinine/DFG | TA couché-debout | Bilan hépatique",
+                    "suivi_periodique": "FC à chaque consultation (cible 50-60 HFrEF) | TA assise + orthostatique | Glycémie annuelle si DT2 | Créatinine si IEC associé",
+                    "alerte_clinique": "Bradycardie < 50 bpm / BAV → ECG en urgence | Décompensation IC initiale possible (rétention hydro-sodée) → titration LENTE | Asthme sévère/BPCO Gold IV : prudence (préférer nébivolol si nécessaire) | NE JAMAIS arrêter brutalement (rebond ischémique/HTA) — décroissance sur ≥ 2 semaines",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_025",
@@ -3915,8 +4009,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Titration IC : 1,25→2,5→3,75→5→7,5→10 mg/j",
-                    "source": "RCP Cardensiel ; ESC HF 2021 ; ESC HTA 2023"
+                    "notes_cliniques": "BB de référence HFrEF (CIBIS-II trial, mortalité -34% NYHA III-IV). Titration HFrEF : 1,25 → 2,5 → 3,75 → 5 → 7,5 → 10 mg/j toutes les 2 semaines. Indications : HFrEF, post-IDM, HTA (4ème ligne ESC), FA contrôle FC. Cardiosélectif β1 (ratio 75:1) → mieux toléré que propranolol/carvédilol en BPCO/diabète. Préféré chez sujet âgé en HFrEF (CIBIS-ELD).",
+                    "source": "RCP Cardensiel ; ESC IC 2023 ; ESC HTA 2023 ; ESC FA 2024 ; CIBIS-II 1999 ; CIBIS-ELD 2011"
           },
           {
                     "dci": "Boceprevir",
@@ -4696,20 +4790,129 @@ const MASTER_DB = {
           {
                     "dci": "Carvedilol",
                     "princeps": "Kredex",
-                    "classe": "Betabloquant α+β non cardioselectif",
-                    "poso_hab": "6,25-25 mg/j en 2 prises",
-                    "poso_ger": "3,125-6,25 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Betabloquant α1+β non cardioselectif (3eme generation)",
+                    "poso_hab": "6,25-25 mg x2/j (HFrEF max 50 mg/j si poids > 85 kg)",
+                    "poso_ger": "3,125 mg x2/j à initier, titration toutes 2 semaines. HTA: 12,5-25 mg x2/j",
+                    "poso_ren": "Pas d'ajustement (élimination hépatique > 95%). Cirrhose Child-Pugh C : CI",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "> 98 %",
+                    "albumine": "> 98%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "ECG | Bilan hépatique (limination hépatique) | Glycemie/HbA1c | Bilan lipidique",
-                    "suivi_periodique": "FC/TA (consultations) | Bilan hépatique (si symptomes) | Glycemie (annuelle)",
-                    "alerte_clinique": "Bradycardie → ECG | Ictère → bilan hépatique",
+                    "ddi_interact": "Inhibiteurs CYP2D6 (paroxétine/fluoxétine/quinidine — ↑ exposition), CCB non-DHP (vérapamil/diltiazem : BAV/IC), Anti-arythmiques (amiodarone/sotalol/digoxine — bradycardie, Carvedilol ↑ digoxinémie +15%), Clonidine (rebond HTA), Ciclosporine (↑ ciclosporinémie +20% — surveillance), Insuline/Sulfonylurées (masquage hypoglycémie majoré), AINS (↓ effet antiHTA), Inducteurs CYP (rifampicine ↓ -70% exposition), Bétamimétiques (antagonisme β2 — éviter chez BPCO/asthme)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Asthme bronchique / BPCO sévère — CONTRE-INDICATION RELATIVE",
+                                        "dcis": [
+                                                  "salbutamol",
+                                                  "terbutaline",
+                                                  "formoterol",
+                                                  "salmeterol",
+                                                  "tiotropium",
+                                                  "ipratropium"
+                                        ],
+                                        "commentaire": "Carvédilol = NON cardiosélectif (β1+β2+α1). CI absolue en asthme bronchique, prudence majeure en BPCO. Préférer bisoprolol/nébivolol si BB nécessaire et BPCO (FORTA-D, GOLD 2024).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs CYP2D6 PUISSANTS — ↑ exposition x2-3",
+                                        "dcis": [
+                                                  "paroxetine",
+                                                  "fluoxetine",
+                                                  "bupropion",
+                                                  "quinidine",
+                                                  "terbinafine",
+                                                  "duloxetine"
+                                        ],
+                                        "commentaire": "Carvédilol = substrat CYP2D6 majeur (énantiomère S). Métaboliseurs lents ou inhibiteurs → ↑ exposition x2-3 → bradycardie/hypotension. Surveiller FC, TA.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "CCB non-DHP — BRADYCARDIE / BAV SÉVÈRE",
+                                        "dcis": [
+                                                  "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "Cumul bradycardisant + inotrope négatif. CI en HFrEF.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Anti-arythmiques bradycardisants / QT / Digoxine (↑ digoxinémie)",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "dronedarone",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "disopyramide",
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "Bradycardie / BAV / QT additif. Carvédilol ↑ digoxinémie +15% (P-gp) → doser digoxinémie, réduire dose digoxine 25%.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine — ↑ ciclosporinémie (inhibition P-gp)",
+                                        "dcis": [
+                                                  "ciclosporine",
+                                                  "tacrolimus"
+                                        ],
+                                        "commentaire": "Carvédilol = inhibiteur P-gp → ↑ ciclosporinémie/tacrolimémie +20%. Doser, réduire dose 10-20%.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Clonidine / Moxonidine — REBOND HYPERTENSIF",
+                                        "dcis": [
+                                                  "clonidine",
+                                                  "moxonidine",
+                                                  "rilmenidine",
+                                                  "methyldopa"
+                                        ],
+                                        "commentaire": "Crise hypertensive à l'arrêt simultané. Arrêter BB en 1er.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Insuline / Sulfonylurées — MASQUAGE HYPOGLYCÉMIE MAJORÉ",
+                                        "dcis": [
+                                                  "insuline",
+                                                  "glimepiride",
+                                                  "gliclazide",
+                                                  "glibenclamide",
+                                                  "repaglinide"
+                                        ],
+                                        "commentaire": "BB NON-cardiosélectif → masquage adrénergique majeur + altération contre-régulation glucagon/néoglucogenèse. Préférer bisoprolol/nébivolol chez diabétique âgé (FORTA-D).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP — ↓ exposition x3",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "Rifampicine : ↓ exposition -70%. Surveiller efficacité, augmenter dose ou changer de BB.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA. FORTA-D AINS.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "ECG (FC, BAV) | Bilan hépatique (CI si Child C) | Glycémie/HbA1c | Bilan lipidique | Créatinine | TA couché-debout",
+                    "suivi_periodique": "FC à chaque consultation (cible 50-60 HFrEF) | TA couché-debout (effet α1 +++) | Glycémie annuelle | Bilan hépatique si symptômes",
+                    "alerte_clinique": "Bradycardie / BAV → ECG urgence | Hypotension orthostatique (effet α1) → précautions chutes ÂGÉ | Asthme : CI ABSOLUE | BPCO : prudence majeure | Insuffisance hépatique sévère : CI | NE JAMAIS arrêter brutalement | Titration HFrEF 3,125 → 6,25 → 12,5 → 25 mg x2/j toutes 2 sem (COPERNICUS, US Carvedilol Trial)",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_013",
@@ -4721,8 +4924,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Titration IC : 3,125→6,25→12,5→25 mg x2/j toutes les 2 sem",
-                    "source": "RCP Kredex ; ESC HF 2021"
+                    "notes_cliniques": "BB de 3ème génération avec blocage α1 additionnel (vasodilatation). Validé HFrEF (US Carvedilol Trial, COPERNICUS, CAPRICORN post-IDM, COMET vs métoprolol-tartrate). NON cardiosélectif → CI asthme, prudence BPCO. Effet α1 → hypotension orthostatique +++ chez âgé fragile (risque chute). Préférer bisoprolol/nébivolol chez sujet âgé fragile en HFrEF (sauf si HTA réfractaire associée). Métabolisme CYP2D6/CYP2C9, élimination hépatique > 95%.",
+                    "source": "RCP Kredex ; ESC IC 2023 ; US Carvedilol Trial 1996 ; COPERNICUS 2001 ; CAPRICORN 2001 ; COMET 2003 ; FORTA-D"
           },
           {
                     "dci": "Casopitant",
@@ -13314,20 +13517,117 @@ const MASTER_DB = {
           {
                     "dci": "Metoprolol",
                     "princeps": "Seloken, Lopressor",
-                    "classe": "Betabloquant cardioselectif",
-                    "poso_hab": "100-250 mg/j en 2-3 prises",
-                    "poso_ger": "50-100 mg/j",
-                    "poso_ren": "Pas d'ajustement majeur",
+                    "classe": "Betabloquant cardioselectif (B1)",
+                    "poso_hab": "Tartrate: 100-250 mg/j en 2-3 prises | Succinate LP: 25-200 mg/j en 1 prise (forme HFrEF de référence)",
+                    "poso_ger": "Succinate LP 12,5-25 mg/j à initier en HFrEF, titration toutes 2 sem. HTA: 50-100 mg/j",
+                    "poso_ren": "Pas d'ajustement majeur (métabolisme hépatique CYP2D6). Cirrhose Child-Pugh C : réduire 50%",
                     "acb": 1,
                     "cia": 0,
                     "bhe": "1.0",
-                    "albumine": "10 - 12 %",
+                    "albumine": "10-12%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "ECG | Glycemie/HbA1c si diabte | Bilan lipidique",
-                    "suivi_periodique": "FC/TA (consultations) | Glycemie (annuelle si DT2)",
-                    "alerte_clinique": "Bradycardie → ECG",
+                    "ddi_interact": "Inhibiteurs CYP2D6 PUISSANTS (fluoxétine/paroxétine/bupropion/quinidine/terbinafine : ↑x2-5 exposition métoprolol — bradycardie), CCB non-DHP (vérapamil/diltiazem : BAV/bradycardie sévère — CI HFrEF), Anti-arythmiques (amiodarone/sotalol/digoxine : bradycardie/QT), Clonidine (rebond HTA arrêt brutal), Ivabradine (HFrEF surveillance), Insuline/Sulfonylurées (masquage hypoglycémie), AINS (↓ effet antiHTA), Bétamimétiques (antagonisme — préférer cardiosélectif)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP2D6 PUISSANTS — ↑ x2-5 exposition métoprolol",
+                                        "dcis": [
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "bupropion",
+                                                  "quinidine",
+                                                  "terbinafine",
+                                                  "duloxetine",
+                                                  "amiodarone",
+                                                  "ritonavir"
+                                        ],
+                                        "commentaire": "Métoprolol = substrat CYP2D6 quasi-exclusif (vs bisoprolol mixte). Inhibiteurs forts (fluoxétine/paroxétine/bupropion) ↑ exposition x2-5 → bradycardie, hypotension. Préférer bisoprolol/nébivolol si IRSS nécessaire en HFrEF (recommandation pratique).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "CCB non-DHP — BRADYCARDIE / BAV SÉVÈRE / IC décompensée",
+                                        "dcis": [
+                                                  "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "Cumul bradycardisant + inotrope négatif : BAV complet, arrêt sinusal, choc cardiogénique. CI en HFrEF. Prudence extrême IV.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Anti-arythmiques bradycardisants / QT (cumul)",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "dronedarone",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "disopyramide",
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "Bradycardie sévère / BAV / QT additif. Surveillance ECG, FC. Amiodarone = double interaction (CYP2D6 + pharmacodynamique).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ivabradine (HFrEF associé)",
+                                        "dcis": [
+                                                  "ivabradine"
+                                        ],
+                                        "commentaire": "Association recommandée HFrEF FC ≥ 70 sous BB dose max (SHIFT, ESC IC 2023). Surveillance FC.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Clonidine / Moxonidine — REBOND HYPERTENSIF ARRÊT BRUTAL",
+                                        "dcis": [
+                                                  "clonidine",
+                                                  "moxonidine",
+                                                  "rilmenidine",
+                                                  "methyldopa"
+                                        ],
+                                        "commentaire": "Crise hypertensive de rebond à l'arrêt. Arrêter BB en 1er, puis clonidine.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Insuline / Sulfonylurées — MASQUAGE HYPOGLYCÉMIE",
+                                        "dcis": [
+                                                  "insuline",
+                                                  "glimepiride",
+                                                  "gliclazide",
+                                                  "glibenclamide",
+                                                  "repaglinide"
+                                        ],
+                                        "commentaire": "Masquage signes adrénergiques (sueurs persistent). Cardiosélectivité moindre que bisoprolol (β1:β2 ratio 20:1 vs 75:1). FORTA-D.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA. FORTA-D AINS chez âgé.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Bétamimétiques / Théophylline (antagonisme — BPCO/asthme)",
+                                        "dcis": [
+                                                  "salbutamol",
+                                                  "terbutaline",
+                                                  "formoterol",
+                                                  "salmeterol",
+                                                  "theophylline"
+                                        ],
+                                        "commentaire": "Cardiosélectivité β1 (β1:β2 = 20:1), moins de blocage β2 que propranolol mais > bisoprolol/nébivolol. Préférer bisoprolol/nébivolol en BPCO sévère.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "ECG (FC, BAV, QT) | Glycémie/HbA1c si diabète | Créatinine | TA couché-debout | Bilan lipidique",
+                    "suivi_periodique": "FC à chaque consultation (cible 50-60 HFrEF) | TA assise + orthostatique | Glycémie annuelle si DT2",
+                    "alerte_clinique": "Bradycardie < 50 / BAV → ECG urgence | Décompensation IC initiale possible → titration LENTE | Asthme sévère/BPCO Gold IV : prudence | NE JAMAIS arrêter brutalement (rebond) — décroissance ≥ 2 semaines | Forme LP succinate OBLIGATOIRE en HFrEF (MERIT-HF, mortalité -34%)",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_025",
@@ -13337,8 +13637,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Forme LP préférable en IC (MERIT-HF). CYP2D6.",
-                    "source": "RCP Lopressor/Seloken ; ESC HF 2021"
+                    "notes_cliniques": "BB validé HFrEF (MERIT-HF avec succinate LP, mortalité -34%). Forme tartrate (Lopressor) = HTA/angor uniquement. Forme succinate LP (Selozok) = HFrEF référence. Cardiosélectif β1 (ratio 20:1, < bisoprolol). Métabolisme CYP2D6 exclusif → variabilité +++ (5-10% métaboliseurs lents → dose plus faible). Préférer bisoprolol/nébivolol chez âgé fragile (moins d'interactions CYP2D6).",
+                    "source": "RCP Lopressor/Seloken/Selozok ; ESC IC 2023 ; ESC HTA 2023 ; MERIT-HF 1999"
           },
           {
                     "dci": "Metronidazole",
@@ -13966,20 +14266,113 @@ const MASTER_DB = {
           {
                     "dci": "Nebivolol",
                     "princeps": "Temerit, Nebilox",
-                    "classe": "Betabloquant cardioselectif (NO)",
-                    "poso_hab": "5 mg/j",
-                    "poso_ger": "2,5 mg/j",
-                    "poso_ren": "Pas d'ajustement majeur",
+                    "classe": "Betabloquant cardioselectif (β1) + vasodilatateur NO",
+                    "poso_hab": "5 mg/j en 1 prise",
+                    "poso_ger": "1,25 mg/j à initier (1/4 cp 5 mg), titration toutes 1-2 semaines jusqu'à 10 mg/j max. Seul BB validé chez ≥70 ans en IC (SENIORS)",
+                    "poso_ren": "DFG < 30 mL/min : initier 2,5 mg/j (clairance ↓). Insuf hépatique sévère : CI",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,98",
+                    "albumine": "98%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "ECG | Bilan hépatique (CI si insuffisance hépatique) | Glycemie si diabte",
-                    "suivi_periodique": "FC/TA (consultations) | Glycemie (annuelle si DT2)",
-                    "alerte_clinique": "Bradycardie → ECG",
+                    "ddi_interact": "Inhibiteurs CYP2D6 (fluoxétine/paroxétine/quinidine : ↑ exposition — bradycardie), CCB non-DHP (vérapamil/diltiazem : BAV/bradycardie sévère — CI HFrEF), Anti-arythmiques (amiodarone/sotalol/digoxine bradycardie), Clonidine (rebond HTA arrêt brutal), Inhibiteurs PDE5 (sildénafil/tadalafil — hypotension via NO additif), Ivabradine (HFrEF surveillance), Insuline/Sulfonylurées (masquage hypoglycémie modéré — β1 sélectif), AINS (↓ effet antiHTA)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Inhibiteurs CYP2D6 — ↑ exposition nébivolol",
+                                        "dcis": [
+                                                  "fluoxetine",
+                                                  "paroxetine",
+                                                  "bupropion",
+                                                  "quinidine",
+                                                  "terbinafine",
+                                                  "duloxetine"
+                                        ],
+                                        "commentaire": "Nébivolol = substrat CYP2D6. Métaboliseurs lents (5-10% population) ont ↑ x10 d'exposition. Surveillance FC. Préférer bisoprolol si IRSS nécessaire en HFrEF âgé.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "CCB non-DHP — BRADYCARDIE / BAV SÉVÈRE",
+                                        "dcis": [
+                                                  "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "Cumul bradycardisant + inotrope négatif. CI en HFrEF.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Anti-arythmiques bradycardisants / QT",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "dronedarone",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "disopyramide",
+                                                  "digoxine"
+                                        ],
+                                        "commentaire": "Bradycardie / BAV / QT additif. Surveillance ECG, FC.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inhibiteurs PDE5 — HYPOTENSION (effet NO additif)",
+                                        "dcis": [
+                                                  "sildenafil",
+                                                  "tadalafil",
+                                                  "vardenafil"
+                                        ],
+                                        "commentaire": "Nébivolol = vasodilatation par voie NO (spécificité de la molécule). Hypotension additive avec PDE5. Respecter délai ≥ 6h (sildénafil/vardénafil) ou ≥ 24h (tadalafil).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ivabradine (HFrEF associé)",
+                                        "dcis": [
+                                                  "ivabradine"
+                                        ],
+                                        "commentaire": "Association HFrEF FC ≥ 70 (SHIFT, ESC IC 2023). Surveillance FC.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Clonidine / Moxonidine — REBOND HYPERTENSIF",
+                                        "dcis": [
+                                                  "clonidine",
+                                                  "moxonidine",
+                                                  "rilmenidine",
+                                                  "methyldopa"
+                                        ],
+                                        "commentaire": "Crise hypertensive à l'arrêt simultané. Arrêter BB en 1er.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Insuline / Sulfonylurées — masquage hypoglycémie (modéré — β1 sélectif)",
+                                        "dcis": [
+                                                  "insuline",
+                                                  "glimepiride",
+                                                  "gliclazide",
+                                                  "glibenclamide",
+                                                  "repaglinide"
+                                        ],
+                                        "commentaire": "Hautement β1-sélectif (ratio > 90:1, > bisoprolol). Masquage hypoglycémie minimal. Préférable chez diabétique âgé (FORTA-D).",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "AINS (↓ efficacité antiHTA)",
+                                        "dcis": [
+                                                  "ibuprofene",
+                                                  "naproxene",
+                                                  "diclofenac",
+                                                  "ketoprofene",
+                                                  "celecoxib",
+                                                  "etoricoxib",
+                                                  "indometacine",
+                                                  "piroxicam"
+                                        ],
+                                        "commentaire": "↓ effet antiHTA. FORTA-D chez âgé.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "ECG (FC, BAV) | Bilan hépatique (CI si Child C) | Glycémie/HbA1c si DT2 | Créatinine | TA couché-debout",
+                    "suivi_periodique": "FC à chaque consultation (cible 50-60 HFrEF) | TA assise + orthostatique | Glycémie annuelle si DT2",
+                    "alerte_clinique": "Bradycardie < 50 / BAV → ECG urgence | Décompensation IC initiale possible → titration LENTE | Insuffisance hépatique sévère : CI | NE JAMAIS arrêter brutalement | SEUL BB validé chez ≥70 ans en HFrEF (SENIORS trial, mortalité/hospi -14%)",
                     "bio_cible": [
                               "BIO_031",
                               "BIO_013",
@@ -13990,8 +14383,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Seul BB indiqué en IC chez ≥70 ans (SENIORS trial)",
-                    "source": "RCP Temerit ; ESC HF 2021 (SENIORS)"
+                    "notes_cliniques": "BB de 3ème génération avec activité vasodilatatrice par libération NO (spécificité unique). Hautement cardiosélectif β1 (ratio > 90:1, le plus élevé) → mieux toléré chez BPCO/asthme léger-modéré et diabétique. Seul BB ayant montré bénéfice en IC chez ≥ 70 ans (SENIORS trial, 2128 patients ≥ 70 ans HFrEF ET HFpEF). Métabolisme CYP2D6 (variabilité génétique). Prudence hépatique.",
+                    "source": "RCP Temerit/Nebilox ; ESC IC 2023 ; ESC HTA 2023 ; SENIORS 2005 (Flather, Eur Heart J)"
           },
           {
                     "dci": "Nefopam",

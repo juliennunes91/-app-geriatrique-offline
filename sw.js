@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.96 (Phase 44 — Cardio ARA2 (Losartan/Valsartan/Candesartan/Telmisartan/Irbesartan/Olmesartan) + ARM complet (Spironolactone RALES, Eplérénone EPHESUS/EMPHASIS-HF, Finérénone FIDELIO/FIGARO-DKD) avec CI cumul ARM, CYP3A4 puissants CI absolue Finérénone/Eplérénone, sources diversifiées : VALIANT, CHARM, IDNT, RENAAL, ATLAS, EUROPA, PROGRESS, ONTARGET, FIDELIO-DKD)
+// Service Worker - GeriaAssist v0.97 (Phase 45 — Cardio Bétabloquants (Bisoprolol CIBIS-II/ELD, Métoprolol-LP MERIT-HF, Nébivolol SENIORS ≥70 ans, Carvédilol COPERNICUS/CAPRICORN/COMET) avec CI vérapamil/diltiazem HFrEF, CYP2D6 inhibiteurs ↑ exposition, masquage hypoglycémie, rebond clonidine arrêt brutal, BPCO/asthme cardiosélectivité, PDE5 hypotension nébivolol-NO)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260513-phase44-cardio-ara2-arm';
-const CACHE_NAME = `geriaassist-v96-${BUILD_ID}`;
+const BUILD_ID = '20260513-phase45-cardio-bb';
+const CACHE_NAME = `geriaassist-v97-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
