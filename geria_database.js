@@ -7890,38 +7890,29 @@ const MASTER_DB = {
           {
                     "dci": "Darifenacin",
                     "princeps": "Emselex / Enablex",
-                    "classe": "Anticholinergique urinaire selectif M3 (ACB=2)",
-                    "poso_hab": "7.5-15mg/j PO (forme LP)",
-                    "poso_ger": "7.5mg/j",
-                    "poso_ren": "DFG<30: 7.5mg/j maximum | CI si insuffisance hépatique severe",
+                    "classe": "Anticholinergique urinaire HYPER-SÉLECTIF M3 (sélectivité M3 vs M1-M2-M4-M5 — moins d'effets cognitifs/cardiaques) — ACB=3 mais BHE faible",
+                    "poso_hab": "7,5-15 mg/j PO (forme LP)",
+                    "poso_ger": "7,5 mg/j ; max 15 mg si efficacité insuffisante. PIM Beers 2023/STOPP B7 mais sélectivité M3 + BHE faible = profil cognitif/cardiaque avantageux. Réévaluation 4-6 sem",
+                    "poso_ren": "DFG ≥ 30 : 7,5-15 mg/j | DFG < 30 : MAX 7,5 mg/j | Insuffisance hépatique sévère (Child-Pugh C) : CONTRE-INDICATION",
                     "acb": 3,
                     "cia": 0,
-                    "bhe": "",
-                    "albumine": "98",
+                    "bhe": "0.5 (BHE faible — passage cérébral limité, avantage théorique)",
+                    "albumine": "98%",
                     "qt_risque": "",
-                    "ddi_interact": "Inhibiteurs CYP3A4 (ketoconazole augmente x7 concentration), Anticholinergiques",
+                    "ddi_interact": "PIM Beers 2023 / STOPP B7 (ACB=3) MAIS sélectivité M3 + BHE faible (effets cognitifs/cardiaques limités vs oxybutynine), CUMUL ACB, IACHE/MÉMANTINE (antagonisme PD), INHIBITEURS CYP3A4 PUISSANTS — ↑ x7 (CI ABSOLUE kétoconazole/itraconazole/clarithromycine/ritonavir si dose > 7,5 mg, sinon MAX 7,5 mg), Inhibiteurs CYP2D6 (paroxétine ↑ exposition), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE/HBP non traitée (CI relative), Iléus/Myasthénie (CI), Cyclosporine (substrats P-gp affectés), Digoxine (↑ par P-gp), Substrats CYP3A4 à marge étroite (alfentanil, ciclosporine, tacrolimus, sirolimus — surveillance)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Inhibiteurs CYP3A4",
-                                        "dcis": [
-                                                  "ketoconazole",
-                                                  "itraconazole",
-                                                  "voriconazole",
-                                                  "posaconazole",
-                                                  "ritonavir",
-                                                  "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
-                                        ],
-                                        "commentaire": "ketoconazole augmente x7 concentration",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM (Beers 2023, STOPP B7) — sélectivité M3 + BHE faible = avantage théorique", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "ACB=3 mais sélectivité M3 (vs M1 cognitif, M2 cardiaque) + BHE faible = effets cognitifs/cardiaques limités. ALTERNATIVE théorique chez âgé si anticholinergique nécessaire. MAIS études comparatives directes vs oxybutynine montrent profil cognitif favorable mais pas absent. PRÉFÉRER MIRABÉGRON 1ère ligne. Réévaluation 4-6 sem.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 PUISSANTS — ↑ x7 (CI absolue si dose > 7,5 mg ou MAX 7,5 mg)", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "cobicistat", "clarithromycine", "telithromycine", "nefazodone"], "commentaire": "Kétoconazole ↑ darifenacin x7 (RCP). CI ABSOLUE association à dose 15 mg. À 7,5 mg : prudence ou switch.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — ANTAGONISME PD", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme cholinergique (atténué par sélectivité M3). Privilégier mirabégron.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / Rétention urinaire / Iléus / Myasthénie / Mégacôlon — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie", "megacolon toxique"], "commentaire": "CI absolue/relative.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP2D6 — ↑ exposition modeste", "dcis": ["paroxetine", "fluoxetine", "bupropion", "duloxetine", "terbinafine"], "commentaire": "↑ exposition modeste (CYP2D6 voie minoritaire). Surveillance.", "severite": "warning" },
+                              { "classe": "Substrats CYP3A4 marge étroite — darifenacin inhibe CYP3A4 modéré", "dcis": ["ciclosporine", "tacrolimus", "sirolimus", "everolimus", "alfentanil", "fentanyl", "simvastatine"], "commentaire": "Darifenacin inhibe CYP3A4 (modéré) → ↑ exposition substrats à marge étroite. Surveillance.", "severite": "warning" },
+                              { "classe": "Substrats P-gp — ↑ exposition modeste", "dcis": ["digoxine", "dabigatran", "edoxaban"], "commentaire": "↑ par inhibition P-gp modeste. Surveillance digoxinémie/saignement.", "severite": "warning" },
+                              { "classe": "Cumul anticholinergique (ACB ≥ 3)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "fesoterodine", "solifenacine", "trospium", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "cyproheptadine", "cyamemazine", "chlorpromazine", "levomepromazine", "clozapine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB périphérique.", "severite": "danger" }
                     ],
-                    "suivi_initial": "Bilan hépatique (elimination hépatique CYP3A4) | Créatinine | ECG si FR QTc",
-                    "suivi_periodique": "Bilan hépatique (annuel) | Créatinine (annuelle)",
-                    "alerte_clinique": "Syndrome anticholinergique (modere ACB=2) | Hépatotoxicité rare → bilan hépatique | EVITER sujet age",
+                    "suivi_initial": "Bilan hépatique (élimination CYP3A4) | Créatinine/DFG | MMSE | Examen ophtalmologique (glaucome) | Résidu post-mictionnel | ECG (QTc) | Score ACB",
+                    "suivi_periodique": "Réévaluation 4-6 sem : ARRÊT si pas de bénéfice | Bilan hépatique annuel | Créatinine annuelle | Tolérance",
+                    "alerte_clinique": "PIM (Beers 2023 / STOPP B7) mais sélectivité M3 + BHE faible = MOINS d'effets cognitifs/cardiaques que oxybutynine | HÉPATOTOXICITÉ rare → bilan hépatique | CI hépatique sévère | CONSTIPATION/SÉCHERESSE BUCCALE (effets périphériques M3 maintenus) | GLAUCOME (CI angle fermé) | RÉTENTION URINAIRE | HYPERTHERMIE estivale | RÉÉVALUATION 4-6 sem | Max 7,5 mg si DFG < 30 ou CYP3A4 inhibiteur",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014",
@@ -7932,8 +7923,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Anticholinergique urinaire sélectif M3 : ACB=2. Effets anticholinergiques moindres que oxybutynine mais persistance. Préférer mirabégron (Beers 2023, STOPPFrail).",
-                    "source": "RCP Enablex | Beers 2023"
+                    "notes_cliniques": "Anticholinergique urinaire HYPER-SÉLECTIF M3 (sélectivité M3 vs M1 cognitif x9, vs M2 cardiaque x59). ACB=3 mais profil pharmacologique avantageux : sélectivité M3 + BHE faible = effets cognitifs et cardiaques limités vs oxybutynine. Métabolisme CYP3A4 + CYP2D6. PIM Beers 2023 mais ACCEPTABLE chez âgé si anticholinergique nécessaire (alternative à oxybutynine/tolterodine). PRÉFÉRER MIRABÉGRON en 1ère ligne. Peu utilisée en France (coût, accessibilité — préférer solifénacine ou fesotérodine).",
+                    "source": "RCP Emselex/Enablex | EAU OAB 2023 ; AUA 2019 ; Beers 2023 ; STOPP/START v3 ; FORTA-C"
           },
           {
                     "dci": "Darunavir",
@@ -8147,38 +8138,29 @@ const MASTER_DB = {
           {
                     "dci": "Toltérodine",
                     "princeps": "Detrusitol",
-                    "classe": "Anticholinergique vesical",
+                    "classe": "Anticholinergique vésical non sélectif M1/M3 (antimuscarinique) — ACB=3, BHE modéré — PIM Beers 2023/STOPP B7/FORTA-D",
                     "poso_hab": "2 mg x2/j (LI) ou 4 mg/j (LP)",
-                    "poso_ger": "1 mg x2/j (LI) ou 2 mg/j (LP) — ACB 3, PIM en geriatrie (Beers 2023)",
-                    "poso_ren": "DFG < 30: max 1 mg x2/j (LI) ou 2 mg/j (LP)",
+                    "poso_ger": "1 mg x2/j (LI) ou 2 mg/j (LP) — PIM Beers 2023, préférer mirabégron ou solifénacine. Réévaluation 4-6 sem",
+                    "poso_ren": "DFG ≥ 30 : 2 mg x2/j (LI) ou 4 mg/j (LP) | DFG < 30 : max 1 mg x2/j (LI) ou 2 mg/j (LP)",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "1 (passage BHE modere)",
+                    "bhe": "1 (BHE modéré — passage cérébral réel)",
                     "albumine": "96%",
-                    "qt_risque": "(QT) - Allongement QTc dose-dependant (prudence si > 2 mg x2/j)",
-                    "ddi_interact": "Inhibiteurs CYP3A4 (ketoconazole, itraconazole → reduire dose) | Inhibiteurs CYP2D6 (fluoxetine, paroxetine) | Autres anticholinergiques (cumul ACB)",
+                    "qt_risque": "(KR) Connu — Allongement QTc dose-dépendant (prudence > 2 mg x2/j, surtout CYP2D6 lent)",
+                    "ddi_interact": "PIM Beers 2023 / STOPP B7 / FORTA-D, CUMUL ACB (autres anticholinergiques), IACHE/MÉMANTINE (antagonisme PD — Sink JAGS 2008), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir → ↑ x2-3 — ↓ dose 50%), INHIBITEURS CYP2D6 (paroxétine/fluoxétine/bupropion — ↑ exposition tolterodine), MÉTABOLISEURS CYP2D6 LENTS (7-10% Caucasiens — exposition ↑ x10 par défaut, prudence dose), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE/HBP non traitée (CI relative), QT-prolongateurs (additif — fluoroquinolones, citalopram, méthadone), ATCD SYNDROME LONG QT CONGÉNITAL (CI), Hyperthermie estivale",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Inhibiteurs CYP3A4",
-                                        "dcis": [
-                                                  "ketoconazole",
-                                                  "itraconazole",
-                                                  "voriconazole",
-                                                  "posaconazole",
-                                                  "ritonavir",
-                                                  "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
-                                        ],
-                                        "commentaire": "ketoconazole, itraconazole → reduire dose",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM (Beers 2023, STOPP B7, FORTA-D)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "Anticholinergique ACB=3. Préférer MIRABÉGRON (β3 non anticholinergique) en 1ère intention chez âgé fragile/MCI. Si anticholinergique nécessaire : solifénacine 5 mg (BHE moindre) ou trospium (BHE-) > tolterodine. Réévaluation 4-6 sem.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — ANTAGONISME PD (Sink JAGS 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme cholinergique. Privilégier mirabégron chez patient sous anti-Alzheimer.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ x2-3", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "cobicistat", "clarithromycine", "telithromycine", "nefazodone"], "commentaire": "↑ exposition tolterodine x2-3. ↓ dose 50% ou switch.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP2D6 (paroxétine/fluoxétine/bupropion/duloxétine/terbinafine)", "dcis": ["paroxetine", "fluoxetine", "bupropion", "duloxetine", "terbinafine"], "commentaire": "↑ exposition tolterodine (CYP2D6 voie majeure). Pour métaboliseurs CYP2D6 normaux, voie CYP3A4 compense ; chez CYP2D6 lents + inhibiteur CYP3A4 = exposition x10. Prudence.", "severite": "warning" },
+                              { "classe": "QT-prolongateurs — additif (allongement QTc dose-dépendant)", "dcis": ["amiodarone", "sotalol", "flecainide", "hydroxychloroquine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "azithromycine", "clarithromycine", "ondansetron", "domperidone", "haloperidol", "ziprasidone", "quetiapine", "risperidone", "citalopram", "escitalopram", "methadone"], "commentaire": "QTc additif. Surveillance ECG, ions (K+/Mg). ATCD syndrome long QT congénital : CI.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ — CONTRE-INDICATION ABSOLUE", "dcis": ["glaucome angle ferme"], "commentaire": "CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "Rétention urinaire / HBP non traitée / Iléus / Myasthénie — CI", "dcis": ["retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie", "megacolon toxique"], "commentaire": "CI absolue ou relative selon contexte.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique (ACB ≥ 3) — éviter", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "fesoterodine", "solifenacine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "cyproheptadine", "cyamemazine", "chlorpromazine", "levomepromazine", "clozapine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB.", "severite": "danger" }
                     ],
-                    "suivi_initial": "RPM (residu post-mictionnel) | ECG si FDR QT | Evaluation cognitive (MoCA/MMSE)",
-                    "suivi_periodique": "Reevaluation 3 mois (efficacite + cognition) | RPM | ACB cumule",
-                    "alerte_clinique": "PIM geriatrie (Beers 2023/STOPP) — ACB 3 | Confusion/deterioration cognitive → arret | Retention urinaire | Secheresse buccale/constipation | Glaucome angle ferme = CI",
+                    "suivi_initial": "MMSE / MoCA | Examen ophtalmologique (glaucome) | Résidu post-mictionnel | ECG (QTc baseline) | Score ACB total | Créatinine/DFG | Bilan hépatique",
+                    "suivi_periodique": "Réévaluation 4-6 sem : si pas de bénéfice → ARRÊT | ECG annuel si facteur QTc | RPM si dysurie | MMSE annuel | Tolérance (bouche sèche, constipation, vision floue, rétention, confusion)",
+                    "alerte_clinique": "PIM gériatrie (Beers 2023 / STOPP B7 / FORTA-D) — ACB=3, BHE modéré — préférer mirabégron | CONFUSION/DÉTÉRIORATION COGNITIVE (↑ démence — Coupland 2019) → arrêt | RÉTENTION URINAIRE | GLAUCOME AIGU (CI angle fermé) | QTc DOSE-DÉPENDANT (surtout CYP2D6 lent + inhibiteur CYP3A4) | CONSTIPATION/FÉCALOME | BOUCHE SÈCHE | HYPERTHERMIE estivale | RÉÉVALUATION 4-6 sem",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014",
@@ -8189,8 +8171,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Réduire de 50% si IH ou DFG<30",
-                    "source": "RCP Détrusitol | EAU OAB 2023 ; Beers 2023"
+                    "notes_cliniques": "Anticholinergique vésical non sélectif M1/M3. ACB=3, BHE modéré. Métabolisme CYP2D6 majeur (10% Caucasiens métaboliseurs lents → exposition x10) + CYP3A4 minoritaire — interactions doubles. PIM Beers 2023 / STOPP B7 / FORTA-D. PRÉFÉRER MIRABÉGRON en 1ère ligne chez âgé. Si anticholinergique : préférer solifénacine (M3-sélectif, BHE moindre), trospium (non BHE), darifenacine (M3-sélectif).",
+                    "source": "RCP Détrusitol | EAU OAB 2023 ; AUA 2019 ; Beers 2023 ; STOPP/START v3 ; FORTA-D ; Coupland JAMA Int Med 2019 ; Sink JAGS 2008"
           },
           {
                     "dci": "Dexamethasone",
@@ -10650,38 +10632,28 @@ const MASTER_DB = {
           {
                     "dci": "Fesoterodine",
                     "princeps": "Toviaz",
-                    "classe": "Anticholinergique urinaire M3",
-                    "poso_hab": "4 u 8 mg/jour",
-                    "poso_ger": "4 mg/jour (augmentation prudente)",
-                    "poso_ren": "Max 4 mg/jour si DFG < 30 mL/min",
+                    "classe": "Anticholinergique urinaire M3 (prodrogue → 5-hydroxyméthyl-tolterodine actif) — ACB=3, BHE faible — préférable à tolterodine/oxybutynine en gériatrie",
+                    "poso_hab": "4-8 mg/j en 1 prise (LP)",
+                    "poso_ger": "4 mg/j ; augmentation prudente à 8 mg si efficacité insuffisante + tolérance OK ; réévaluation 4-6 sem",
+                    "poso_ren": "DFG ≥ 30 : 4-8 mg/j | DFG < 30 ou IH modérée : MAX 4 mg/j",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "0.0",
-                    "albumine": "50 % (pour son metabolite actif)",
-                    "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "Inhibiteurs CYP3A4",
+                    "bhe": "0.0 (BHE- ; avantage chez âgé)",
+                    "albumine": "50% (métabolite actif 5-hydroxyméthyl-tolterodine)",
+                    "qt_risque": "(PR) Possible — QTc dose-dépendant",
+                    "ddi_interact": "PIM Beers 2023 / STOPP B7 / FORTA-D (préférable à oxybutynine — BHE faible), CUMUL ACB, IACHE/MÉMANTINE (antagonisme PD), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir → ↑ x2-3 — MAX 4 mg/j), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE (CI relative), QT-prolongateurs (additif), Iléus/Myasthénie (CI), Hyperthermie estivale",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Inhibiteurs CYP3A4",
-                                        "dcis": [
-                                                  "ketoconazole",
-                                                  "itraconazole",
-                                                  "voriconazole",
-                                                  "posaconazole",
-                                                  "ritonavir",
-                                                  "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM (Beers 2023, STOPP B7, FORTA-D) — BHE faible (avantage)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "ACB=3 mais BHE FAIBLE (avantage vs oxybutynine/solifénacine/tolterodine). Préférable chez âgé fragile si anticholinergique nécessaire. MAIS préférer MIRABÉGRON en 1ère ligne (β3 non anticholinergique). Réévaluation 4-6 sem.", "severite": "warning" },
+                              { "classe": "IACHE / Mémantine — ANTAGONISME PD", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme cholinergique. Privilégier mirabégron.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ x2-3 (MAX 4 mg/j)", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "cobicistat", "clarithromycine", "telithromycine", "nefazodone"], "commentaire": "MAX 4 mg/j si association inévitable.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ — CONTRE-INDICATION ABSOLUE", "dcis": ["glaucome angle ferme"], "commentaire": "CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "Rétention urinaire / HBP non traitée / Iléus / Myasthénie — CI", "dcis": ["retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie", "megacolon toxique"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — additif", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "levofloxacine", "azithromycine", "clarithromycine", "ondansetron", "domperidone", "haloperidol", "ziprasidone", "quetiapine", "citalopram", "escitalopram", "methadone"], "commentaire": "QTc additif. ECG si facteur QTc.", "severite": "warning" },
+                              { "classe": "Cumul anticholinergique (ACB ≥ 3)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "cyproheptadine", "cyamemazine", "chlorpromazine", "levomepromazine", "clozapine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB.", "severite": "danger" }
                     ],
-                    "suivi_initial": "Créatinine/DFG | Bilan hépatique",
-                    "suivi_periodique": "Pas de biologie systematique",
-                    "alerte_clinique": "Retention urinaire | Allongement QTc si facteur de a risque → ECG",
+                    "suivi_initial": "MMSE / MoCA | Examen ophtalmologique (glaucome) | Résidu post-mictionnel | Créatinine/DFG | Bilan hépatique | ECG (QTc) | Score ACB",
+                    "suivi_periodique": "Réévaluation 4-6 sem : ARRÊT si pas de bénéfice | ECG si facteur QTc | MMSE annuel | Tolérance",
+                    "alerte_clinique": "PIM gériatrie (Beers 2023 / STOPP B7 / FORTA-D) mais BHE faible = préférable à oxybutynine/tolterodine si anticholinergique nécessaire | RÉTENTION URINAIRE | GLAUCOME (CI angle fermé) | QTc | CONSTIPATION | BOUCHE SÈCHE | HYPERTHERMIE estivale | RÉÉVALUATION 4-6 sem | Max 4 mg/j si DFG < 30 ou IH modérée ou CYP3A4 inhibiteur",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_013",
@@ -10691,8 +10663,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Max 4 mg/j si DFG<30 ou IH modérée",
-                    "source": "RCP Toviaz ; EAU OAB 2023"
+                    "notes_cliniques": "Prodrogue de 5-hydroxyméthyl-tolterodine (5-HMT, métabolite actif identique à tolterodine mais formulation différente — biodisponibilité prévisible indépendante du polymorphisme CYP2D6, contrairement à tolterodine). ACB=3 mais BHE FAIBLE (avantage gériatrie). PRÉFÉRABLE à oxybutynine, tolterodine, solifénacine chez âgé si anticholinergique nécessaire. MAIS préférer MIRABÉGRON en 1ère ligne chez âgé fragile, MCI, démence. Métabolisme CYP3A4 + CYP2D6.",
+                    "source": "RCP Toviaz ; EAU OAB 2023 ; AUA 2019 ; Beers 2023 ; STOPP/START v3 ; FORTA-D"
           },
           {
                     "dci": "Fexofenadine",
@@ -16298,39 +16270,31 @@ const MASTER_DB = {
           },
           {
                     "dci": "Oxybutynine",
-                    "princeps": "Ditropan / Driptane",
-                    "classe": "Anticholinergique urinaire M1/M3",
-                    "poso_hab": "5 mg 2 u 3x/jour",
-                    "poso_ger": "2.5 mg 2x/jour (deconseille si troubles cognitifs)",
-                    "poso_ren": "Prudence (risque d'accumulation des metabolites)",
+                    "princeps": "Ditropan / Driptane / Kentera (patch)",
+                    "classe": "Anticholinergique urinaire non sélectif M1-M5 (antimuscarinique) — PIM MAJEUR Beers 2023 / STOPP / FORTA-D / PRISCUS (ACB=3, BHE++, troubles cognitifs +++)",
+                    "poso_hab": "PO LI : 5 mg x2-3/j | LP (Lyrinel OROS) : 5-30 mg/j | Patch transdermique : 3,9 mg/24h (2x/sem)",
+                    "poso_ger": "ÉVITER ABSOLUMENT chez âgé fragile (PIM ABSOLU Beers 2023, STOPP B7, FORTA-D, PRISCUS). Si indication impérative : 2,5 mg x2/j (PO LI) ou patch (moins BHE) — réévaluer à 4-6 sem, arrêter si pas de bénéfice. CI si troubles cognitifs/MMSE ≤ 24, glaucome angle fermé, rétention urinaire",
+                    "poso_ren": "DFG 30-60 : prudence (accumulation métabolite N-déséthyloxybutynine) | DFG < 30 : éviter ; préférer mirabégron",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "1.0",
-                    "albumine": "83 u 85 %",
+                    "bhe": "1.0 (BHE++ — pénétration cérébrale majeure, métabolite actif N-déséthyloxybutynine encore plus lipophile)",
+                    "albumine": "83-85%",
                     "qt_risque": "",
-                    "ddi_interact": "Autres anticholinergiques - Inhibiteurs CYP3A4",
+                    "ddi_interact": "PIM ABSOLU CHEZ ÂGÉ (Beers 2023 / STOPP B7 / FORTA-D / PRISCUS — troubles cognitifs/démence, chutes, rétention urinaire, glaucome aigu), CUMUL ACB (autres anticholinergiques — antidépresseurs TCA, antihistaminiques 1ère gén., antipsychotiques typiques, antiparkinsoniens, antispasmodiques, IACE déconseillés en association), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir ↑ x2-3 — ↓ dose), IACHE/MÉMANTINE (ANTAGONISME PHARMACODYNAMIQUE — Sink JAGS 2008 — perte effet anti-Alzheimer + chutes ↑), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE/HBP non traitée (CI relative), IAM PARALYTIQUE (CI), MYASTHÉNIE (CI), Médicaments allongeant QTc (additif), Sécrétagogues sueur ↓ (hyperthermie estivale)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Inhibiteurs CYP3A4",
-                                        "dcis": [
-                                                  "ketoconazole",
-                                                  "itraconazole",
-                                                  "voriconazole",
-                                                  "posaconazole",
-                                                  "ritonavir",
-                                                  "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers 2023, STOPP B7, FORTA-D, PRISCUS) — TROUBLES COGNITIFS / DÉMENCE / CHUTES", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "PIM majeur. BHE++ (vs trospium, fesotérodine, darifénacine ACB plus faibles). Études : ↑ x2-3 démence Alzheimer (Coupland JAMA Int Med 2019, étude cumul ACB sur 11 ans). Risque chutes, confusion aiguë, hospitalisation. SI INDICATION IMPÉRATIVE : préférer MIRABÉGRON (non anticholinergique) ou trospium/fesotérodine/darifénacine (BHE moindre) + réévaluation 4-6 sem.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — ANTAGONISME PHARMACODYNAMIQUE (Sink JAGS 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme : IACHE ↑ acétylcholine, oxybutynine ↓ effet ACh. Sink JAGS 2008 : perte d'effet anti-Alzheimer + ↑ chutes/syncopes. STOPP B7 : éviter cette association. Privilégier mirabégron (β3-agoniste non anticholinergique) chez patient sous IACHE.", "severite": "danger" },
+                              { "classe": "Glaucome à ANGLE FERMÉ — CONTRE-INDICATION ABSOLUE", "dcis": ["glaucome angle ferme"], "commentaire": "CI ABSOLUE. Mydriase aggrave fermeture angle → crise glaucome aigu. Glaucome angle ouvert traité : pas de CI mais surveillance ophtalmologique.", "severite": "danger" },
+                              { "classe": "Rétention urinaire / HBP non traitée / Sténose pylore — CI relative", "dcis": ["retention urinaire", "hbp non traitee", "stenose pylore"], "commentaire": "CI relative en HBP non traitée (risque rétention aiguë). En HBP traitée par alpha-bloquant : possible avec surveillance résidu post-mictionnel.", "severite": "danger" },
+                              { "classe": "Iléus paralytique / Myasthénie / Megacôlon toxique — CONTRE-INDICATION", "dcis": ["ileus paralytique", "myasthenie", "megacolon toxique"], "commentaire": "CI absolue.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique (ACB ≥ 3) — autres ACB", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "tolterodine", "fesoterodine", "solifenacine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "cyproheptadine", "cyamemazine", "chlorpromazine", "levomepromazine", "clozapine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB. Évaluer score ACB total (cible < 3). Préférer alternatives non anticholinergiques (sertraline pour dépression, antihistaminique H1 2e gén, mirabégron pour vessie).", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ exposition x2-3", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "cobicistat", "clarithromycine", "telithromycine", "nefazodone"], "commentaire": "↑ exposition oxybutynine. ↓ dose 50%.", "severite": "warning" },
+                              { "classe": "QT-prolongateurs — additif", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "levofloxacine", "azithromycine", "clarithromycine", "ondansetron", "domperidone", "haloperidol", "ziprasidone", "quetiapine", "citalopram", "escitalopram", "methadone"], "commentaire": "QTc additif modeste. Surveillance ECG.", "severite": "warning" },
+                              { "classe": "Hyperthermie estivale — ↓ sécrétion sudorale", "dcis": ["canicule"], "commentaire": "↓ sécrétion sudorale → risque hyperthermie/coup chaleur en canicule (anticholinergique fort). Surveillance hydratation, fraîcheur, conseil patient.", "severite": "warning" }
                     ],
-                    "suivi_initial": "Créatinine/DFG si IRC | ECG si QTc prolonge",
-                    "suivi_periodique": "Pas de biologie systematique | ECG si symptomes",
-                    "alerte_clinique": "Retention urinaire (examen clinique) | Glaucome aigu",
+                    "suivi_initial": "MMSE / MoCA (cognition baseline) | Examen ophtalmologique (glaucome) | Résidu post-mictionnel (rétention) | Évaluation chutes | Évaluation transit (constipation) | Score ACB total | ECG (QTc)",
+                    "suivi_periodique": "Réévaluation 4-6 sem : si pas de bénéfice clinique → ARRÊT (déprescription) | MMSE annuel | Tolérance (bouche sèche, constipation, vision floue, rétention, confusion) | Résidu post-mictionnel si dysurie",
+                    "alerte_clinique": "PIM ABSOLU CHEZ ÂGÉ (Beers 2023 / STOPP B7 / FORTA-D / PRISCUS) — préférer mirabégron | TROUBLES COGNITIFS / CONFUSION / DÉMENCE (↑ x2-3 — Coupland JAMA Int Med 2019) | CHUTES | RÉTENTION URINAIRE AIGUË (surtout HBP) | GLAUCOME AIGU (CI angle fermé) | CONSTIPATION/FÉCALOME (associer laxatifs) | BOUCHE SÈCHE (caries, candidose, troubles dénutrition) | HYPERTHERMIE estivale (↓ sudation) | TACHYCARDIE | RÉÉVALUATION 4-6 sem OBLIGATOIRE — arrêter si pas de bénéfice",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_031"
@@ -16339,8 +16303,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Beers 2023 : À ÉVITER (confusion cognitive, rétention). Préférer solifénacine ou mirabégron.",
-                    "source": "RCP Ditropan ; EAU OAB 2023 ; Beers 2023"
+                    "notes_cliniques": "Anticholinergique urinaire NON SÉLECTIF M1-M5 (ACB=3 — un des plus élevés). BHE++ (lipophile, métabolite N-déséthyloxybutynine actif + lipophile). PIM MAJEUR Beers 2023 / STOPP B7 / FORTA-D / PRISCUS : ↑ x2-3 démence Alzheimer (Coupland JAMA Int Med 2019), chutes, confusion. ÉVITER ABSOLUMENT chez âgé fragile, MCI, démence. Patch transdermique (Kentera) : pic plasmatique ↓ 50% et moins de métabolite N-désé → moins ACB (mais reste à éviter). PRÉFÉRER chez âgé : 1) MESURES NON PHARMACOLOGIQUES (rééducation périnéale, calendrier mictionnel), 2) MIRABÉGRON (β3-agoniste, non anticholinergique), 3) si anticholinergique indispensable : trospium (BHE-, non BHE), darifénacine (M3-sélectif), fesotérodine M3-sélectif). RÉÉVALUATION 4-6 sem +++.",
+                    "source": "RCP Ditropan/Driptane/Kentera ; EAU OAB 2023 ; AUA 2019 ; Beers 2023 ; STOPP/START v3 ; FORTA-D ; PRISCUS ; Coupland JAMA Int Med 2019 ; Sink JAGS 2008"
           },
           {
                     "dci": "Oxycodone",
@@ -19360,38 +19324,30 @@ const MASTER_DB = {
           {
                     "dci": "Solifenacine",
                     "princeps": "Vesicare",
-                    "classe": "Anticholinergique urinaire M3",
-                    "poso_hab": "5 u 10 mg/jour",
-                    "poso_ger": "5 mg/jour (dose max recommandee)",
-                    "poso_ren": "Max 5 mg/jour si DFG < 30 mL/min",
+                    "classe": "Anticholinergique urinaire M3-sélectif (antimuscarinique) — ACB=3 mais BHE moindre que oxybutynine (préférée chez âgé si anticholinergique nécessaire)",
+                    "poso_hab": "5-10 mg/j en 1 prise (PO)",
+                    "poso_ger": "5 mg/j (dose maximale recommandée chez âgé) ; réévaluation 4-6 sem ; ARRÊT si pas de bénéfice. STOPP B7 / FORTA-D : prudence, préférer mirabégron",
+                    "poso_ren": "DFG ≥ 30 : 5-10 mg/j | DFG < 30 : max 5 mg/j | Hémodialyse : max 5 mg/j",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "1.0",
-                    "albumine": "~ 98 %",
-                    "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "Inhibiteurs puissants du CYP3A4 (ketoconazole)",
+                    "bhe": "0.5 (BHE+/- — moins que oxybutynine, mais ACB=3 — risque cognitif documenté)",
+                    "albumine": "98%",
+                    "qt_risque": "(CR) Conditionnel — QTc dose-dépendant (surtout 10 mg)",
+                    "ddi_interact": "PIM Beers 2023 / STOPP B7 chez âgé (préférable à oxybutynine mais reste anticholinergique — réévaluer 4-6 sem), CUMUL ACB (autres anticholinergiques), IACHE/MÉMANTINE (antagonisme PD — Sink JAGS 2008), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir → ↑ x2-3 — max 5 mg/j), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE/HBP non traitée (CI relative), QT-prolongateurs (additif), Hyperthermie estivale (↓ sudation)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Inhibiteurs CYP3A4",
-                                        "dcis": [
-                                                  "ketoconazole",
-                                                  "itraconazole",
-                                                  "voriconazole",
-                                                  "posaconazole",
-                                                  "ritonavir",
-                                                  "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
-                                        ],
-                                        "commentaire": "ketoconazole",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM (Beers 2023, STOPP B7, FORTA-D) — TROUBLES COGNITIFS / CHUTES (moins marqué qu'oxybutynine)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "ACB=3 mais BHE moindre que oxybutynine. Coupland JAMA Int Med 2019 : cumul ACB ↑ démence. PRÉFÉRABLE à oxybutynine si anticholinergique nécessaire. Mais PRÉFÉRER MIRABÉGRON (β3-agoniste, ACB=0) en 1ère intention chez âgé. Réévaluation 4-6 sem.", "severite": "warning" },
+                              { "classe": "IACHE / Mémantine — ANTAGONISME PHARMACODYNAMIQUE", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme cholinergique (Sink JAGS 2008). Privilégier mirabégron si patient sous anti-Alzheimer.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ — CONTRE-INDICATION ABSOLUE", "dcis": ["glaucome angle ferme"], "commentaire": "CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "Rétention urinaire / HBP non traitée — CI relative", "dcis": ["retention urinaire", "hbp non traitee"], "commentaire": "HBP non traitée : CI relative. HBP sous alpha-bloquant : possible avec surveillance résidu post-mictionnel.", "severite": "danger" },
+                              { "classe": "Iléus paralytique / Myasthénie / Megacôlon toxique — CI", "dcis": ["ileus paralytique", "myasthenie", "megacolon toxique"], "commentaire": "CI absolue.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique (ACB ≥ 3) — éviter", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "cyproheptadine", "cyamemazine", "chlorpromazine", "levomepromazine", "clozapine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB → score total > 3 = chutes/confusion/démence. Réévaluation.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ exposition x2-3 (MAX 5 mg/j)", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "cobicistat", "clarithromycine", "telithromycine", "nefazodone"], "commentaire": "↑ exposition solifénacine x2-3. MAX 5 mg/j si association inévitable.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — additif (dose-dépendant)", "dcis": ["amiodarone", "sotalol", "flecainide", "hydroxychloroquine", "moxifloxacine", "levofloxacine", "azithromycine", "clarithromycine", "ondansetron", "domperidone", "haloperidol", "ziprasidone", "quetiapine", "risperidone", "citalopram", "escitalopram", "methadone"], "commentaire": "QTc additif. Surveillance ECG, ions. Plus marqué à 10 mg.", "severite": "warning" },
+                              { "classe": "Inhibiteurs PDE5 (sécheresse vaginale/ED — peut accentuer)", "dcis": ["sildenafil", "tadalafil"], "commentaire": "Pas d'interaction PK majeure mais effet additif sur sécheresse.", "severite": "info" }
                     ],
-                    "suivi_initial": "Créatinine/DFG (ajustement si DFG < 30) | Bilan hépatique si insuffisance hépatique | ECG (QTc)",
-                    "suivi_periodique": "ECG (QTc annuel si facteur de a risque) | Créatinine (annuelle)",
-                    "alerte_clinique": "Allongement QTc → ECG | Retention urinaire",
+                    "suivi_initial": "MMSE / MoCA | Examen ophtalmologique (glaucome) | Résidu post-mictionnel | Évaluation chutes | Score ACB total | ECG (QTc) | Créatinine/DFG | Bilan hépatique",
+                    "suivi_periodique": "Réévaluation 4-6 sem : si pas de bénéfice → ARRÊT | ECG annuel si facteur QTc | MMSE annuel | Créatinine annuelle | Tolérance (bouche sèche, constipation, vision floue, rétention, confusion)",
+                    "alerte_clinique": "PIM Beers 2023 / STOPP B7 — préférer mirabégron en 1ère ligne chez âgé | TROUBLES COGNITIFS / CHUTES (moins marqué qu'oxybutynine mais réel — ACB=3) | RÉTENTION URINAIRE (HBP +++) | GLAUCOME AIGU (CI angle fermé) | ALLONGEMENT QTc surtout 10 mg | CONSTIPATION/FÉCALOME | BOUCHE SÈCHE | HYPERTHERMIE estivale | RÉÉVALUATION 4-6 sem obligatoire",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_013",
@@ -19402,8 +19358,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "5 mg/j si DFG<30 ou inhibiteurs CYP3A4 forts",
-                    "source": "RCP Vesicare ; EAU OAB 2023"
+                    "notes_cliniques": "Anticholinergique urinaire M3-sélectif (vs M1-M5 oxybutynine). ACB=3 mais BHE moindre (lipophilie réduite) → moins de troubles cognitifs que oxybutynine. Métabolisme CYP3A4 → interactions. 1ère ligne anticholinergique chez âgé si anticholinergique nécessaire (vs oxybutynine déconseillée). Mais PRÉFÉRER MIRABÉGRON (β3-agoniste, ACB=0) en 1ère intention chez âgé fragile, MCI, démence. STOPP B7 : prudence cumul ACB. FORTA-D. RÉÉVALUATION 4-6 sem (arrêt si pas de bénéfice). Max 5 mg si DFG < 30 ou CYP3A4 inhibiteur.",
+                    "source": "RCP Vesicare ; EAU OAB 2023 ; AUA 2019 ; Beers 2023 ; STOPP/START v3 ; FORTA-D ; Coupland JAMA Int Med 2019 ; Sink JAGS 2008"
           },
           {
                     "dci": "Sotalol",
@@ -21558,20 +21514,27 @@ const MASTER_DB = {
           {
                     "dci": "Trospium",
                     "princeps": "Ceris",
-                    "classe": "Anticholinergique urinaire quaternaire",
-                    "poso_hab": "20 mg 2x/jour",
-                    "poso_ger": "20 mg/jour",
-                    "poso_ren": "20 mg/jour ou 1 prise un jour sur deux si DFG < 30",
+                    "classe": "Anticholinergique urinaire — AMMONIUM QUATERNAIRE (non BHE — avantage gériatrie) — ACB=3 mais effets cognitifs limités",
+                    "poso_hab": "20 mg x2/j PO (à jeun, 1h avant repas — biodisponibilité 10%)",
+                    "poso_ger": "20 mg/j (1 prise) ; PIM Beers 2023/STOPP B7 mais BHE- (avantage théorique). Réévaluation 4-6 sem",
+                    "poso_ren": "DFG ≥ 30 : 20 mg x2/j | DFG < 30 : 20 mg/j ou 20 mg un jour sur deux | Hémodialyse : éviter",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "0.0",
-                    "albumine": "50 u 80 %",
+                    "bhe": "0.0 (ammonium quaternaire — non BHE, avantage majeur chez âgé)",
+                    "albumine": "50-80%",
                     "qt_risque": "",
-                    "ddi_interact": "Anticholinergiques",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG (CI si DFG < 30)",
-                    "suivi_periodique": "Créatinine (annuelle)",
-                    "alerte_clinique": "Retention urinaire",
+                    "ddi_interact": "PIM Beers 2023 / STOPP B7 (ACB=3) mais BHE- (effets cognitifs limités, avantage), CUMUL ACB systémique, IACHE/MÉMANTINE (antagonisme PD), MÉTFORMINE/PROCAÏNAMIDE/PANCURONIUM (compétition transporteur tubulaire — ↑ trospium), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE/HBP non traitée (CI relative), Iléus/Myasthénie (CI), Hyperthermie estivale (↓ sudation périphérique mais BHE- préserve thermorégulation centrale)",
+                    "ddi_interact_v2": [
+                              { "classe": "ÂGÉ — PIM (Beers 2023, STOPP B7) — BHE- = AVANTAGE THÉORIQUE chez âgé/MCI", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "ACB=3 mais BHE- (ammonium quaternaire ne passe pas BHE). Effets cognitifs cliniquement limités vs oxybutynine. ALTERNATIVE chez patient âgé avec démence/MCI si anticholinergique nécessaire. MAIS effets périphériques persistent (bouche sèche, constipation, rétention, glaucome, hyperthermie). PRÉFÉRER MIRABÉGRON en 1ère ligne (β3, ACB=0). Réévaluation 4-6 sem.", "severite": "warning" },
+                              { "classe": "IACHE / Mémantine — ANTAGONISME PD (périphérique)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme cholinergique périphérique (moins central). Privilégier mirabégron chez patient sous anti-Alzheimer.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ — CONTRE-INDICATION ABSOLUE", "dcis": ["glaucome angle ferme"], "commentaire": "CI ABSOLUE (effet périphérique persiste malgré BHE-).", "severite": "danger" },
+                              { "classe": "Rétention urinaire / HBP non traitée / Iléus / Myasthénie / Mégacôlon — CI", "dcis": ["retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie", "megacolon toxique"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "Métformine / Procainamide / Pancuronium — compétition transporteur tubulaire", "dcis": ["metformine", "procainamide", "pancuronium", "morphine", "vancomycine", "digoxine"], "commentaire": "Compétition transporteur cation organique (OCT) tubulaire → ↑ trospium et ↑ partenaire. Surveillance.", "severite": "warning" },
+                              { "classe": "Cumul anticholinergique systémique (ACB ≥ 3)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "fesoterodine", "solifenacine", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "cyproheptadine", "cyamemazine", "chlorpromazine", "levomepromazine", "clozapine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB périphérique (constipation, sécheresse, rétention).", "severite": "danger" }
+                    ],
+                    "suivi_initial": "MMSE / MoCA (cognition baseline) | Examen ophtalmologique (glaucome) | Résidu post-mictionnel | Créatinine/DFG | Score ACB | Évaluation transit (constipation)",
+                    "suivi_periodique": "Réévaluation 4-6 sem : ARRÊT si pas de bénéfice | Créatinine annuelle (ajustement DFG) | Tolérance (bouche sèche, constipation, rétention)",
+                    "alerte_clinique": "PIM (Beers 2023 / STOPP B7) mais BHE- = MOINS DE TROUBLES COGNITIFS que oxybutynine | RÉTENTION URINAIRE | GLAUCOME (CI angle fermé) | CONSTIPATION/FÉCALOME ++ (associer laxatifs) | BOUCHE SÈCHE | HYPERTHERMIE estivale (↓ sudation périphérique) | Adapter dose si DFG < 30 (1 prise/2 j) | Biodisponibilité faible 10% — à jeun obligatoire",
                     "bio_cible": [
                               "BIO_003"
                     ],
@@ -21579,8 +21542,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Anticholinergique urinaire (vessie hyperactive) : peu de passage BHE (ACB faible, < confusion que oxybutynine). Adapter si DFG < 30 (1 prise/2 j). Mais reste à éviter — préférer mirabégron.",
-                    "source": "RCP Ceris ; EAU OAB 2023"
+                    "notes_cliniques": "Ammonium QUATERNAIRE — NE PASSE PAS LA BHE (avantage majeur en gériatrie : effets cognitifs centraux limités vs oxybutynine/solifénacine/tolterodine qui passent BHE). ACB=3 mais centrale faible — efficacité périphérique antimuscarinique maintenue (vessie). Biodisponibilité faible (10%) — prise à jeun 1h avant repas obligatoire. Élimination rénale → adapter DFG. ALTERNATIVE chez patient âgé avec démence/MCI si anticholinergique nécessaire (vs autres anticholinergiques BHE+). MAIS effets périphériques persistent (constipation +++, sécheresse, rétention, glaucome). PRÉFÉRER MIRABÉGRON en 1ère ligne (β3 non anticholinergique, ACB=0). EAU OAB 2023.",
+                    "source": "RCP Ceris ; EAU OAB 2023 ; AUA 2019 ; Beers 2023 ; STOPP/START v3 ; FORTA-C (BHE-)"
           },
           {
                     "dci": "Umeclidinium",
