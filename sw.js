@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v1.00 (Phase 48 — Cardio anti-arythmiques : Amiodarone (T½ 40-55j toxicité multiviscérale dysthyroïdie/PID/hépatite, CredibleMeds KR), Dronédarone (CI FA permanente PALLAS / IC NYHA III-IV ANDROMEDA / hépatotoxicité fatale FDA 2011), Flécaïnide & Propafénone (classe Ic — CAST trial CI cardiopathie structurelle), Disopyramide (PIM ABSOLU Beers — anticholinergique +++ + hypoglycémie insulino-sécrétagogue), Quinidine (le + pro-arythmique — CredibleMeds RE, thrombopénie immunoallergique, ↓ codéine/tramadol via CYP2D6))
+// Service Worker - GeriaAssist v1.01 (Phase 49 — Cardio statines (Rosuvastatine OATP1B1 + asiatique max 20 mg, Simvastatine CYP3A4 RCP-dose-limits +++ FDA 2011, Pravastatine sulfatation interactions minimes PROSPER ≥70 ans, Fluvastatine CYP2C9 ↑INR AVK) + Sacubitril/Valsartan ARNI (PARADIGM-HF McMurray 2014, PIONEER-HF, CI IEC wash-out 36h angio-œdème, CI ARA2 cumul, CI aliskiren ALTITUDE, OATP1B1 statines ↑x1,9, BNP↓/NT-proBNP↑ piège))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260513-phase48-cardio-antiar';
-const CACHE_NAME = `geriaassist-v100-${BUILD_ID}`;
+const BUILD_ID = '20260513-phase49-cardio-statines-arni';
+const CACHE_NAME = `geriaassist-v101-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

@@ -11045,20 +11045,86 @@ const MASTER_DB = {
           {
                     "dci": "Fluvastatine",
                     "princeps": "Lescol",
-                    "classe": "Statine (puissance moderee)",
-                    "poso_hab": "20-80 mg/j",
+                    "classe": "Statine de puissance moderee (substrat CYP2C9 — peu d'interactions CYP3A4)",
+                    "poso_hab": "20-80 mg/j le soir (Lescol XL 80 mg = 1 prise/j)",
                     "poso_ger": "20-40 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "poso_ren": "DFG ≥ 30 : pas d'ajustement | DFG < 30 : max 40 mg/j (élimination biliaire mais prudence)",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "> 98 %",
+                    "albumine": "> 98%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Bilan hépatique | CPK | Bilan lipidique complet",
-                    "suivi_periodique": "Bilan lipidique ( 6 a 8 semaines puis annuel) | ASAT/ALAT (si symptomes) | CPK si myalgies",
-                    "alerte_clinique": "Myalgies → CPK | Ictère → bilan hépatique urgent",
+                    "ddi_interact": "Substrat CYP2C9 (non CYP3A4 — profil favorable). Fluconazole (↑ exposition x2-3 — inhibiteur CYP2C9), AVK warfarine (↑ INR — surveillance, déplacement albumine + CYP2C9 partagé), Ciclosporine (↑ exposition x2-3), Gemfibrozil (myopathie additive), Cholestyramine (↓ absorption — espacer 4h), Inducteurs CYP (rifampicine ↓), Phénytoïne (↑ phénytoïnémie modeste via CYP2C9 — surveillance)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Fluconazole / Voriconazole — ↑ exposition x2-3 (CYP2C9)",
+                                        "dcis": [
+                                                  "fluconazole",
+                                                  "voriconazole"
+                                        ],
+                                        "commentaire": "Inhibition CYP2C9. ↑ fluvastatine x2-3. Surveillance CPK, limiter dose.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK — ↑ INR (CYP2C9 partagé + déplacement albumine)",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "fluindione",
+                                                  "acenocoumarol",
+                                                  "phenprocoumone"
+                                        ],
+                                        "commentaire": "↑ INR (mécanisme : compétition CYP2C9 + 98% liaison albumine). INR à J3-J7 après initiation/arrêt.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Ciclosporine — ↑ x2-3 (OATP1B1)",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "↑ fluvastatine x2-3. Limiter à 20 mg/j. Préférable à atorva/simva.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Phénytoïne — ↑ phénytoïnémie modeste",
+                                        "dcis": [
+                                                  "phenytoine"
+                                        ],
+                                        "commentaire": "Compétition CYP2C9 → ↑ phénytoïnémie modeste. Surveillance, doser.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Gemfibrozil — myopathie additive",
+                                        "dcis": [
+                                                  "gemfibrozil"
+                                        ],
+                                        "commentaire": "Préférer fénofibrate.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Cholestyramine — ↓ absorption",
+                                        "dcis": [
+                                                  "cholestyramine",
+                                                  "colestipol",
+                                                  "colesevelam"
+                                        ],
+                                        "commentaire": "Espacer ≥ 4h.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP — ↓ efficacité",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenobarbital",
+                                                  "carbamazepine",
+                                                  "millepertuis"
+                                        ],
+                                        "commentaire": "↓ efficacité. Surveiller LDL.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "Bilan hépatique (ASAT/ALAT) | CPK | Bilan lipidique complet | Créatinine",
+                    "suivi_periodique": "Bilan lipidique à 6-8 sem puis annuel | ASAT/ALAT si symptômes | CPK si myalgies | INR à J7 si AVK associé",
+                    "alerte_clinique": "Myalgies → CPK | Hépatite (élévation > 3N → arrêt) | Alternative à rosuvastatine/pravastatine chez polymédiqué (profil DDI modéré favorable) | FORTA-D : prévention primaire ≥ 75 ans à réévaluer",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014",
@@ -11069,8 +11135,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Métabolisme CYP2C9 → moins d'interactions",
-                    "source": "RCP Lescol ; ESC prévention 2021"
+                    "notes_cliniques": "Statine de puissance moyenne, substrat CYP2C9 (≠ CYP3A4 — donc moins d'interactions avec macrolides/antifongiques azolés/CCB non-DHP). Indications : prévention CV. Étude LIPS (Serruys 2002) — prévention secondaire post-stenting. Alternative à rosuvastatine/pravastatine chez âgé polymédiqué (interactions CYP3A4 problématiques).",
+                    "source": "RCP Lescol ; ESC prévention CV 2021 ; LIPS 2002 ; FORTA-D"
           },
           {
                     "dci": "Fluvoxamine",
@@ -17115,20 +17181,67 @@ const MASTER_DB = {
           {
                     "dci": "Pravastatine",
                     "princeps": "Elisor, Vasten",
-                    "classe": "Statine (puissance moderee)",
-                    "poso_hab": "10-40 mg/j",
-                    "poso_ger": "10-20 mg/j",
-                    "poso_ren": "Pas d'ajustement majeur",
+                    "classe": "Statine hydrophile (NON-CYP — sulfatation hépatique) — interactions MINIMES",
+                    "poso_hab": "10-40 mg/j le soir",
+                    "poso_ger": "20-40 mg/j (préférable chez âgé polymédiqué — interactions minimes, BHE faible)",
+                    "poso_ren": "DFG ≥ 60 : pas d'ajustement | DFG 30-60 : initier 10 mg/j | DFG < 30 : initier 10 mg/j, prudence",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,5",
+                    "albumine": "50%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Bilan hépatique | CPK | Bilan lipidique complet",
-                    "suivi_periodique": "Bilan lipidique ( 6 a 8 semaines puis annuel) | ASAT/ALAT (si symptomes) | CPK si myalgies",
-                    "alerte_clinique": "Myalgies → CPK | Ictère → bilan hépatique urgent",
+                    "ddi_interact": "Profil DDI le PLUS FAVORABLE des statines (pas de métabolisme CYP). Ciclosporine (↑ x4-5 — surveillance), Gemfibrozil (myopathie additive — limite dose), Antiacides (↓ exposition — espacer), Cholestyramine (↓ absorption — espacer 4h), Érythromycine/Clarithromycine (effet modeste vs simva), AVK (↑ INR léger), Daptomycine/Colchicine (myopathie cumulée)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Ciclosporine — ↑ x4-5 (transporteur OATP)",
+                                        "dcis": [
+                                                  "ciclosporine"
+                                        ],
+                                        "commentaire": "Inhibition OATP1B1. ↑ pravastatine x4-5. Limiter à 20 mg/j (RCP). Reste néanmoins préférable à simvastatine/atorvastatine (interaction CYP).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Gemfibrozil — myopathie additive (mais < simvastatine)",
+                                        "dcis": [
+                                                  "gemfibrozil"
+                                        ],
+                                        "commentaire": "Cumul toxicité musculaire. Préférer fénofibrate.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiacides / Cholestyramine — ↓ absorption",
+                                        "dcis": [
+                                                  "hydroxyde aluminium",
+                                                  "hydroxyde magnesium",
+                                                  "cholestyramine",
+                                                  "colestipol"
+                                        ],
+                                        "commentaire": "↓ absorption. Espacer ≥ 1h (antiacides) ou 4h (résines).",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Daptomycine / Colchicine — myopathie cumulée",
+                                        "dcis": [
+                                                  "daptomycine",
+                                                  "colchicine"
+                                        ],
+                                        "commentaire": "Surveiller CPK. Suspendre statine durant daptomycine si possible.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK — ↑ INR léger",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "fluindione",
+                                                  "acenocoumarol"
+                                        ],
+                                        "commentaire": "↑ INR léger (5-10%). Surveillance.",
+                                        "severite": "info"
+                              }
+                    ],
+                    "suivi_initial": "Bilan hépatique (ASAT/ALAT) | CPK | Bilan lipidique complet | Créatinine",
+                    "suivi_periodique": "Bilan lipidique à 6-8 sem puis annuel | ASAT/ALAT si symptômes | CPK si myalgies",
+                    "alerte_clinique": "Myalgies → CPK (rhabdomyolyse RARE — pravastatine = statine la moins myotoxique) | Hépatite (élévation > 3N → arrêt) | Préférée chez âgé polymédiqué (interactions minimes) ou si traitement CYP3A4 puissant en cours | FORTA-D : prudence prévention primaire ≥ 75 ans",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014",
@@ -17139,8 +17252,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Statine de choix si interactions CYP (ciclosporine, ARV)",
-                    "source": "RCP Elisor ; ESC prévention 2021"
+                    "notes_cliniques": "Statine HYDROPHILE non métabolisée par CYP → profil d'interactions le plus favorable. Élimination hépatique (sulfatation) + rénale. Indications : prévention CV primaire (WOSCOPS — Shepherd NEJM 1995 — bénéfice cardiovasculaire) et secondaire (CARE, LIPID, PROSPER — la SEULE statine étudiée spécifiquement ≥ 70 ans : PROSPER Shepherd Lancet 2002 montrant bénéfice CV chez âgés). Puissance moindre (≈ atorvastatine 10 mg) mais excellente tolérance. CHOIX privilégié chez sujet âgé polymédiqué, sous ciclosporine/CYP3A4 inhibiteurs, ou sous antirétroviraux.",
+                    "source": "RCP Elisor ; ESC prévention CV 2021 ; WOSCOPS 1995 ; CARE 1996 ; LIPID 1998 ; PROSPER 2002 (Shepherd Lancet) ; FORTA-D"
           },
           {
                     "dci": "Prazepam",
@@ -18462,37 +18575,98 @@ const MASTER_DB = {
           {
                     "dci": "Rosuvastatine",
                     "princeps": "Crestor",
-                    "classe": "Statine (forte puissance)",
-                    "poso_hab": "5-40 mg/j",
-                    "poso_ger": "5-20 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Statine de forte puissance (NON-CYP3A4 — OATP1B1/BCRP)",
+                    "poso_hab": "5-40 mg/j (max 40 mg/j — RCP limite 20 mg si Asiatique)",
+                    "poso_ger": "5 mg/j à initier (préférence chez âgé — moins d'interactions CYP3A4 vs atorvastatine/simvastatine)",
+                    "poso_ren": "ClCr ≥ 30 : pas d'ajustement | ClCr < 30 : max 10 mg/j (RCP). Cirrhose Child C : prudence",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,9",
+                    "albumine": "90%",
                     "qt_risque": "",
-                    "ddi_interact": "Cyclosporine, Atazanavir",
+                    "ddi_interact": "Ciclosporine (↑ x7 — RCP max 5 mg), Atazanavir/Lopinavir/Ritonavir (CI ou max 10 mg), Glécaprévir/Voxilaprévir/Eltrombopag (↑ exposition — réduire dose), Gemfibrozil (↑ x2 — préférer fénofibrate), Warfarine (↑ INR modeste — surveiller), Antiacides (↓ exposition — espacer 2h), Colchicine (↑ rhabdomyolyse), Daptomycine (↑ myopathie cumulée — pause statine), AVC HÉMORRAGIQUE : prudence haute dose post-AVC (SPARCL)",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Cyclosporine",
+                                        "classe": "Ciclosporine — CONTRE-INDICATION pratique (↑ x7)",
                                         "dcis": [
                                                   "ciclosporine"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "↑ rosuvastatine x7 (inhibition OATP1B1 + BCRP). RCP : max 5 mg/j si ciclosporine. Rhabdomyolyse +++. Préférer pravastatine ou fluvastatine.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Antirétroviraux (atazanavir/lopinavir/ritonavir/cobicistat — limite de dose)",
+                                        "dcis": [
+                                                  "atazanavir",
+                                                  "lopinavir",
+                                                  "ritonavir",
+                                                  "cobicistat",
+                                                  "darunavir",
+                                                  "tipranavir"
+                                        ],
+                                        "commentaire": "Inhibition OATP1B1 → ↑ exposition. Atazanavir + ritonavir : max 10 mg/j. Lopinavir/ritonavir : max 10 mg/j. Suivre RCP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Antiviraux VHC (glécaprévir/voxilaprévir/grazoprévir) — ↑ exposition",
+                                        "dcis": [
+                                                  "glecaprevir",
+                                                  "voxilaprevir",
+                                                  "grazoprevir",
+                                                  "elbasvir",
+                                                  "simeprevir"
+                                        ],
+                                        "commentaire": "Inhibition OATP1B1. ↑ rosuvastatine. Réduire dose ou suspendre pendant traitement VHC.",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Atazanavir",
+                                        "classe": "Gemfibrozil — RHABDOMYOLYSE (↑ x2)",
                                         "dcis": [
-                                                  "atazanavir"
+                                                  "gemfibrozil"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "↑ rosuvastatine x2 + risque myopathie additif (mécanisme indépendant). Préférer fénofibrate (interaction minime).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Colchicine / Daptomycine — myopathie/rhabdomyolyse",
+                                        "dcis": [
+                                                  "colchicine",
+                                                  "daptomycine"
+                                        ],
+                                        "commentaire": "Cumul toxicité musculaire. Colchicine : surveillance CPK. Daptomycine : suspendre statine pendant cure si possible.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AVK — ↑ INR modeste",
+                                        "dcis": [
+                                                  "warfarine",
+                                                  "fluindione",
+                                                  "acenocoumarol"
+                                        ],
+                                        "commentaire": "↑ INR modeste (10-15%). INR à J7-J14 après initiation.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiacides aluminium/magnésium — ↓ exposition",
+                                        "dcis": [
+                                                  "hydroxyde aluminium",
+                                                  "hydroxyde magnesium"
+                                        ],
+                                        "commentaire": "↓ absorption rosuvastatine ~50%. Espacer ≥ 2h.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Eltrombopag (TPO-RA) — ↑ rosuvastatine",
+                                        "dcis": [
+                                                  "eltrombopag"
+                                        ],
+                                        "commentaire": "Inhibition OATP1B1. ↓ dose rosuvastatine 50%.",
                                         "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "Bilan hépatique | CPK | Bilan lipidique complet | Créatinine (protinurie rare)",
-                    "suivi_periodique": "Bilan lipidique ( 6 a 8 semaines puis annuel) | ASAT/ALAT (si symptomes) | CPK si myalgies | Bandelette urinaire (protinurie) si a forte dose",
-                    "alerte_clinique": "Myalgies → CPK | Proteinurie → bandelette + créatinine",
+                    "suivi_initial": "Bilan hépatique (ASAT/ALAT) | CPK | Bilan lipidique complet (LDL, HDL, TG) | Créatinine/DFG | Bandelette urinaire (protéinurie haute dose)",
+                    "suivi_periodique": "Bilan lipidique à 6-8 sem puis annuel | ASAT/ALAT si symptômes (élévation > 3N → arrêt) | CPK si myalgies | Bandelette urinaire annuelle si ≥ 20 mg",
+                    "alerte_clinique": "Myalgies / faiblesse → CPK (rhabdomyolyse rare mais grave, < atorvastatine/simvastatine) | Protéinurie / hématurie microscopique (dose ≥ 20 mg, mécanisme tubulaire transitoire) | Hépatite (élévation > 3N → arrêt) | Diabète induit (FdR cumulés) | ASIATIQUE : max 20 mg (variabilité génétique SLCO1B1)",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014",
@@ -18865,49 +19039,135 @@ const MASTER_DB = {
           {
                     "dci": "Simvastatine",
                     "princeps": "Zocor, Lodales",
-                    "classe": "Statine (puissance moderee)",
-                    "poso_hab": "10-80 mg/j",
-                    "poso_ger": "10-40 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Statine de puissance moderee (substrat CYP3A4 — interactions +++)",
+                    "poso_hab": "10-40 mg/j le soir (80 mg/j NON RECOMMANDÉ depuis FDA 2011 — rhabdomyolyse)",
+                    "poso_ger": "10-20 mg/j (préférer rosuvastatine/pravastatine/atorvastatine — moins d'interactions)",
+                    "poso_ren": "DFG ≥ 30 : pas d'ajustement | DFG < 30 : initier 5 mg/j, max 10 mg/j. Cirrhose Child C : prudence",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,95",
+                    "albumine": "95%",
                     "qt_risque": "",
-                    "ddi_interact": "Macrolides, Fluconazole, Clarithromycine, Verapamil",
+                    "ddi_interact": "Substrat CYP3A4 → INTERACTIONS +++. Inhibiteurs CYP3A4 PUISSANTS CONTRE-INDICATION ABSOLUE (kétoconazole/itraconazole/voriconazole/posaconazole/clarithromycine/télithromycine/érythromycine/ritonavir/cobicistat/néfazodone/gemfibrozil/ciclosporine/danazol — RCP), Amlodipine (max 20 mg simva — RCP), Vérapamil/Diltiazem (max 20 mg simva — RCP), Amiodarone/Dronédarone/Ranolazine (max 20 mg simva — RCP), Jus de pamplemousse (CI), AVK (↑ INR), Fénofibrate (myopathie additive, mais préférable à gemfibrozil), Daptomycine (cumul myopathie), Colchicine (rhabdomyolyse), Niacine forte dose (rhabdomyolyse), Lédipasvir/Sofosbuvir VHC (↑ exposition)",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "Macrolides",
+                                        "classe": "Inhibiteurs CYP3A4 PUISSANTS — CONTRE-INDICATION ABSOLUE (RHABDOMYOLYSE)",
                                         "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "voriconazole",
+                                                  "posaconazole",
+                                                  "clarithromycine",
+                                                  "telithromycine",
                                                   "erythromycine",
-                                                  "clarithromycine",
-                                                  "azithromycine",
-                                                  "roxithromycine"
+                                                  "ritonavir",
+                                                  "lopinavir",
+                                                  "atazanavir",
+                                                  "darunavir",
+                                                  "cobicistat",
+                                                  "nelfinavir",
+                                                  "nefazodone",
+                                                  "ciclosporine",
+                                                  "danazol",
+                                                  "gemfibrozil"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Simvastatine = substrat CYP3A4 strict. Inhibiteurs puissants → ↑ exposition x10-20 → rhabdomyolyse FATALE possible. CI ABSOLUE (RCP Zocor §4.3, FDA 2011). Préférer rosuvastatine/pravastatine/fluvastatine (non CYP3A4).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Amlodipine / Ranolazine — LIMITE DOSE simvastatine 20 mg/j",
+                                        "dcis": [
+                                                  "amlodipine",
+                                                  "ranolazine"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4 modérée. Limite RCP simvastatine 20 mg/j si amlodipine ou ranolazine.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Vérapamil / Diltiazem — LIMITE DOSE simvastatine 20 mg/j (↑ x2,5-4,5)",
+                                        "dcis": [
+                                                  "verapamil",
+                                                  "diltiazem"
+                                        ],
+                                        "commentaire": "Inhibition CYP3A4 modérée-forte. Limite RCP simvastatine 20 mg/j. Préférer rosuvastatine/pravastatine.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Amiodarone / Dronédarone — LIMITE DOSE simvastatine 20 mg / 10 mg",
+                                        "dcis": [
+                                                  "amiodarone",
+                                                  "dronedarone"
+                                        ],
+                                        "commentaire": "Amiodarone : limite simva 20 mg/j. Dronédarone : limite simva 10 mg/j (inhibition CYP3A4 plus marquée). Préférer rosuvastatine.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Jus de pamplemousse — CONTRE-INDICATION",
+                                        "dcis": [
+                                                  "jus de pamplemousse"
+                                        ],
+                                        "commentaire": "↑ exposition x3-5 (CYP3A4 intestinal). CI RCP.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Daptomycine / Colchicine / Niacine forte dose — myopathie additive",
+                                        "dcis": [
+                                                  "daptomycine",
+                                                  "colchicine",
+                                                  "niacine"
+                                        ],
+                                        "commentaire": "Cumul toxicité musculaire. Surveiller CPK. Suspendre statine durant daptomycine si possible.",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Fluconazole",
+                                        "classe": "Fibrates (fénofibrate préférable — gemfibrozil CI)",
                                         "dcis": [
-                                                  "fluconazole"
+                                                  "fenofibrate",
+                                                  "bezafibrate",
+                                                  "ciprofibrate"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "Fénofibrate : myopathie additive faible — surveillance CPK. Gemfibrozil : CI ABSOLUE (RCP).",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Inhibiteurs CYP3A4",
+                                        "classe": "AVK — ↑ INR",
                                         "dcis": [
-                                                  "clarithromycine",
-                                                  "verapamil"
+                                                  "warfarine",
+                                                  "fluindione",
+                                                  "acenocoumarol"
                                         ],
-                                        "commentaire": "",
+                                        "commentaire": "↑ INR (10-30%). INR à J7-J14.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Antiviraux VHC (lédipasvir/sofosbuvir/elbasvir)",
+                                        "dcis": [
+                                                  "ledipasvir",
+                                                  "sofosbuvir",
+                                                  "elbasvir",
+                                                  "grazoprevir",
+                                                  "glecaprevir"
+                                        ],
+                                        "commentaire": "↑ exposition simvastatine. Suspendre ou réduire dose.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs CYP3A4 — ↓ efficacité",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "phenytoine",
+                                                  "carbamazepine",
+                                                  "phenobarbital",
+                                                  "millepertuis",
+                                                  "efavirenz"
+                                        ],
+                                        "commentaire": "↓ efficacité. Surveiller LDL ou changer.",
                                         "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "Bilan hépatique | CPK | Bilan lipidique complet",
-                    "suivi_periodique": "Bilan lipidique ( 6 a 8 semaines puis annuel) | ASAT/ALAT (si symptomes) | CPK si myalgies",
-                    "alerte_clinique": "Myalgies/crampes → CPK (rhabdomyolyse  a risque lev si > 80 mg/j ou associations CYP3A4) | Ictère → bilan hépatique urgent",
+                    "suivi_initial": "Bilan hépatique (ASAT/ALAT) | CPK | Bilan lipidique complet | TSH (hypothyroïdie augmente myopathie) | Créatinine",
+                    "suivi_periodique": "Bilan lipidique à 6-8 sem puis annuel | ASAT/ALAT si symptômes | CPK si myalgies (> 5N = arrêt ; > 10N = rhabdomyolyse) | Réévaluation indication chez âgé fragile (FORTA-D pour prévention primaire ≥ 75 ans)",
+                    "alerte_clinique": "RHABDOMYOLYSE +++ (FDA 2011 a retiré dose 80 mg) → arrêt si CPK > 10N + IRA | Myalgies/faiblesse → CPK | Hépatite (élévation > 3N → arrêt) | INTERACTIONS CYP3A4 +++ — Tableau RCP DOSE-LIMITES OBLIGATOIRES (amiodarone 20, dronédarone 10, amlodipine 20, vérapamil/diltiazem 20) | Préférer rosuvastatine/atorvastatine/pravastatine chez âgé polymédiqué | Diabète induit | Pas indication prévention primaire chez âgé fragile > 75 ans (FORTA-D)",
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014",
@@ -18918,8 +19178,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "80 mg/j CI si nouveau patient. Max recommandé 40 mg/j en pratique.",
-                    "source": "RCP Zocor ; ESC prévention 2021"
+                    "notes_cliniques": "Statine de 2ème génération (1988). Métabolisme STRICTEMENT CYP3A4 → interactions ++++ (le pire profil avec atorvastatine et lovastatine). FDA 2011 : retrait dose 80 mg/j (rhabdomyolyse). Limites de dose RCP obligatoires selon médicaments associés (cf DDI). Indication : prévention CV secondaire (4S Scandinavian Simvastatin Survival Study 1994 — bénéfice mortalité), HPS (Heart Protection Study). En 2024-2026, préférence pour rosuvastatine/atorvastatine/pravastatine chez polymédiqué (moins d'interactions, équivalente efficacité). FORTA-D / Beers 2023 : prudence prévention primaire ≥ 75 ans (rapport bénéfice/risque incertain).",
+                    "source": "RCP Zocor ; ESC prévention CV 2021 ; FDA 2011 ; 4S 1994 ; HPS 2002 ; FORTA-D ; SEARCH 2010"
           },
           {
                     "dci": "Sitagliptine",
@@ -26932,69 +27192,153 @@ const MASTER_DB = {
           {
                     "dci": "Sacubitril/Valsartan",
                     "princeps": "Entresto",
-                    "classe": "ARNI (Inhibiteur neprilysine + ARA2)",
-                    "poso_hab": "49/51 mg x2/j → cible 97/103 mg x2/j",
-                    "poso_ger": "Debuter 24/26 mg x2/j, titrer toutes les 2-4 semaines si tolere",
-                    "poso_ren": "DFG 15-30: debuter 24/26 mg x2/j, pas de titration rapide. CI si DFG < 15",
+                    "classe": "ARNI — Inhibiteur neprilysine (sacubitril) + ARA2 (valsartan) — référence HFrEF (PARADIGM-HF)",
+                    "poso_hab": "Initiation 49/51 mg x2/j → titrage 97/103 mg x2/j (cible). Dose initiale réduite 24/26 mg x2/j si naïf IEC/ARA2, IRC, hypotension, > 75 ans",
+                    "poso_ger": "Débuter 24/26 mg x2/j (≥ 75 ans, DFG < 60, ou hypotension), titrer toutes 2-4 sem selon tolérance. Cible souvent 49/51 mg x2/j chez âgé fragile",
+                    "poso_ren": "DFG ≥ 60 : doses normales | DFG 30-59 : initier 24/26 mg x2/j | DFG 15-29 : initier 24/26 mg x2/j, titration prudente | DFG < 15 ou dialyse : CI (pas de données) | Cirrhose Child C : CI",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
                     "albumine": "94%",
                     "qt_risque": "",
-                    "ddi_interact": "Enalapril | Lisinopril | Ramipril | Perindopril | Quinapril | Benazepril | Captopril | Fosinopril | Trandolapril (IEC - CI absolue, wash-out 36h) | AINS (risque IRA + hyperK) | Spironolactone | Eplerenone (diuretiques epargneurs K, hyperK) | Lithium (augmentation lithiemie) | Aliskiren (CI si diabete/IRC)",
+                    "ddi_interact": "IEC — CONTRE-INDICATION ABSOLUE (wash-out 36h obligatoire — angio-œdème grave), ARA2 simultané — CI ABSOLUE (cumul SRA), Aliskiren — CI si DT2/IRC (ALTITUDE), Spironolactone/Eplérénone/Finérénone (hyperkaliémie — surveillance K+/créat), AINS (TRIPLE WHAMMY — IRA + hyperK), Lithium (↑ lithémie via ↓ excrétion rénale), Triméthoprime/Cotrimoxazole (hyperkaliémie additive — Antoniou BMJ 2014), Diurétiques (hypotension 1ère dose), Statines (OATP1B1 — atorvastatine ↑ x1,9 — modeste, pas de limite de dose mais surveillance CPK), Inhibiteurs PDE5 (hypotension), Métformine ↑ exposition modeste",
                     "ddi_interact_v2": [
                               {
-                                        "classe": "IEC",
+                                        "classe": "IEC — CONTRE-INDICATION ABSOLUE (WASH-OUT 36H OBLIGATOIRE)",
                                         "dcis": [
                                                   "enalapril",
-                                                  "lisinopril",
                                                   "ramipril",
                                                   "perindopril",
-                                                  "quinapril",
-                                                  "benazepril",
+                                                  "lisinopril",
                                                   "captopril",
+                                                  "benazepril",
+                                                  "quinapril",
                                                   "fosinopril",
-                                                  "trandolapril"
+                                                  "trandolapril",
+                                                  "cilazapril",
+                                                  "moexipril",
+                                                  "zofenopril"
                                         ],
-                                        "commentaire": "IEC - CI absolue, wash-out 36h",
+                                        "commentaire": "ANGIO-ŒDÈME GRAVE (potentiellement fatal — accumulation bradykinine via inhibition néprilysine + ECA). CI ABSOLUE simultanée. WASH-OUT 36h MINIMUM entre arrêt IEC et initiation Entresto (et inversement). RCP Entresto §4.3.",
                                         "severite": "danger"
                               },
                               {
-                                        "classe": "AINS",
+                                        "classe": "ARA2 simultané — CONTRE-INDICATION ABSOLUE (cumul SRA + sacubitril contient déjà valsartan)",
+                                        "dcis": [
+                                                  "losartan",
+                                                  "valsartan",
+                                                  "candesartan",
+                                                  "irbesartan",
+                                                  "telmisartan",
+                                                  "olmesartan",
+                                                  "eprosartan",
+                                                  "azilsartan"
+                                        ],
+                                        "commentaire": "Entresto contient déjà valsartan (≈ 80-160 mg). Cumul ARA2 = surdosage SRA → hypotension, hyperK, IRA. CI ABSOLUE. Arrêter ARA2 avant d'initier Entresto (pas de wash-out nécessaire — pas de bradykinine).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Aliskiren — CONTRE-INDICATION (DT2 ou DFG < 60 — ALTITUDE)",
+                                        "dcis": [
+                                                  "aliskiren"
+                                        ],
+                                        "commentaire": "Double blocage SRA → hyperK, IRA, hypotension. CI ABSOLUE en DT2 ou DFG < 60 (étude ALTITUDE 2012).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "ARM / Diurétiques épargneurs K+ / KCl — hyperkaliémie cumulée",
+                                        "dcis": [
+                                                  "spironolactone",
+                                                  "eplerenone",
+                                                  "finerenone",
+                                                  "amiloride",
+                                                  "triamterene",
+                                                  "potassium chloride"
+                                        ],
+                                        "commentaire": "Association RECOMMANDÉE en HFrEF (PARADIGM-HF + EMPHASIS-HF) — surveillance K+/créat à J7-J14-M1 puis trimestrielle. STOP si K+ > 5.5.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "AINS — TRIPLE WHAMMY (IRA + hyperkaliémie)",
                                         "dcis": [
                                                   "ibuprofene",
                                                   "naproxene",
                                                   "diclofenac",
                                                   "ketoprofene",
-                                                  "piroxicam",
                                                   "celecoxib",
                                                   "etoricoxib",
-                                                  "meloxicam"
+                                                  "indometacine",
+                                                  "piroxicam"
                                         ],
-                                        "commentaire": "risque IRA + hyperK",
+                                        "commentaire": "Triple whammy (Entresto + diurétique + AINS) : IRA + hyperK. À éviter chez âgé sous Entresto (FORTA-D AINS).",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Lithium / Triméthoprime / Cotrimoxazole — toxicité additive",
+                                        "dcis": [
+                                                  "lithium",
+                                                  "trimethoprime",
+                                                  "sulfamethoxazole-trimethoprime"
+                                        ],
+                                        "commentaire": "Lithium : ↑ lithémie via ↓ excrétion rénale (cumul). Triméthoprime/cotrimoxazole : hyperkaliémie additive (Antoniou BMJ 2014 : +12 hospi/1000 chez âgés sous SRA). Surveillance K+/lithémie ou éviter.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Diurétiques (hypotension 1ère dose)",
+                                        "dcis": [
+                                                  "furosemide",
+                                                  "bumetanide",
+                                                  "torasemide",
+                                                  "hydrochlorothiazide",
+                                                  "indapamide",
+                                                  "chlortalidone"
+                                        ],
+                                        "commentaire": "Hypotension 1ère dose. Réduire dose diurétique 50% lors de l'initiation. Espacer prises (matin diurétique, soir Entresto).",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Diurétiques épargneurs K",
+                                        "classe": "Statines (OATP1B1) — surveillance CPK",
                                         "dcis": [
-                                                  "spironolactone",
-                                                  "eplerenone"
+                                                  "atorvastatine",
+                                                  "rosuvastatine",
+                                                  "simvastatine",
+                                                  "pravastatine",
+                                                  "fluvastatine"
                                         ],
-                                        "commentaire": "diuretiques epargneurs K, hyperK",
+                                        "commentaire": "Sacubitril inhibe OATP1B1 → atorvastatine ↑ x1,9 (modeste). Pas de limite de dose RCP mais surveillance CPK si myalgies.",
                                         "severite": "warning"
                               },
                               {
-                                        "classe": "Lithium",
+                                        "classe": "Inhibiteurs PDE5 (hypotension additive)",
                                         "dcis": [
-                                                  "lithium"
+                                                  "sildenafil",
+                                                  "tadalafil",
+                                                  "vardenafil"
                                         ],
-                                        "commentaire": "augmentation lithiemie",
+                                        "commentaire": "Hypotension additive. Prudence chez âgé.",
                                         "severite": "warning"
+                              },
+                              {
+                                        "classe": "Métformine — ↑ exposition modeste",
+                                        "dcis": [
+                                                  "metformine"
+                                        ],
+                                        "commentaire": "Sacubitril ↑ exposition métformine de 23% (mécanisme OCT2). Pas d'ajustement nécessaire en pratique.",
+                                        "severite": "info"
+                              },
+                              {
+                                        "classe": "ANGIO-ŒDÈME ATCD (IEC ou idiopathique) — CONTRE-INDICATION ABSOLUE",
+                                        "dcis": [
+                                                  "antecedent angio-oedeme",
+                                                  "angio-oedeme hereditaire"
+                                        ],
+                                        "commentaire": "Risque récidive angio-œdème majoré sous Entresto (accumulation bradykinine via inhibition néprilysine). CI ABSOLUE RCP §4.3.",
+                                        "severite": "danger"
                               }
                     ],
-                    "suivi_initial": "TA | Creatinine + DFG | Kalieme | Natremie | BNP/NT-proBNP",
-                    "suivi_periodique": "TA (chaque consultation) | Creatinine + K (J7, J14, M1, puis /3 mois) | NT-proBNP (/6 mois) | Symptomes IC (NYHA)",
-                    "alerte_clinique": "Hypotension symptomatique → reduire diuretique d'abord | Hyperkaliemie > 5.5 → arret temporaire | Angio-oedeme (rare) → arret definitif | Ne JAMAIS associer a un IEC (risque angio-oedeme grave)",
+                    "suivi_initial": "TA couché-debout | Créatinine + DFG | Kaliémie (K+ ≤ 5.4 obligatoire) | Natrémie | BNP/NT-proBNP | Bilan hépatique | Albuminurie | Échographie cardiaque (FEVG)",
+                    "suivi_periodique": "TA à chaque consultation | Créatinine + K+ à J7, J14, M1, M3, puis trimestriel | NT-proBNP tous 6 mois | Symptômes IC (NYHA) à chaque consultation | Bilan hépatique semestriel | Surveillance angio-œdème (œdème buccal/lingual)",
+                    "alerte_clinique": "ANGIO-ŒDÈME (rare 0.5%, surtout sujets noirs +++ 2-3x — population à risque, RCP) → ARRÊT DÉFINITIF | HYPOTENSION SYMPTOMATIQUE → réduire diurétique d'abord, puis Entresto | HYPERKALIÉMIE > 5.5 → arrêt temporaire + correction | IRA (créat ↑ > 30%) → réduire dose ou arrêt | NE JAMAIS associer à un IEC (wash-out 36h OBLIGATOIRE) | CI grossesse (terato — tératogène 2ème-3ème trimestre comme IEC/ARA2)",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_003",
@@ -27005,8 +27349,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "ARNI (HFrEF) : remplace IEC après wash-out 36 h obligatoire (angiœdème). Hyperkaliémie, hypotension, IRA. Adapter selon DFG. Surveillance K+/créat à J7-J14-M1 puis trimestrielle. ESC 2023 HF.",
-                    "source": "RCP Entresto | ESC IC 2023"
+                    "notes_cliniques": "ARNI = molécule cocristallisée sacubitril (pro-drogue → LBQ657 inhibiteur néprilysine) + valsartan (ARA2). Mécanisme dual : ↑ peptides natriurétiques (ANP/BNP/CNP par inhibition néprilysine) + blocage AT1 (valsartan). Indication HFrEF (FEVG ≤ 40%) — PARADIGM-HF (McMurray NEJM 2014, 8442 patients) : -20% mortalité CV/hospi IC vs énalapril chez HFrEF. ESC IC 2023 : 1ère ligne HFrEF (remplace IEC/ARA2). PIONEER-HF : initiation en post-IC aiguë décompensée possible. NT-proBNP faussement ↑ (mesure incluant proBNP intact), préférer BNP (dégradé sous sacubitril → ↓). Risque angio-œdème +++ chez sujets noirs (2-3x). WASH-OUT 36h IEC OBLIGATOIRE.",
+                    "source": "RCP Entresto ; ESC IC 2023 ; PARADIGM-HF McMurray NEJM 2014 ; PIONEER-HF 2019 ; ATMOSPHERE/ALTITUDE (aliskiren) ; Antoniou BMJ 2014"
           },
           {
                     "dci": "Millepertuis",
