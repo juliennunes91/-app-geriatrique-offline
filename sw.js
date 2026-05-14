@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v1.04 (Phase 52 — Cardio CCB secondaires + Digoxine enrichie : Digoxine (DIG 1997, Rathore JAMA 2003 cible 0,5-0,9 ng/mL ≥70 ans, RATE-AF 2020 non-inférioritéé bisoprolol FA âgé, PIM Beers > 0,125 mg/j), Nicardipine (IV urgence HTA, ↑x3-5 CYP3A4), Nimodipine (BHE+++ INDICATION UNIQUE vasospasme post-HSA 21j Allen 1983/BRANT, CI inducteurs CYP3A4 ↓x10), Isradipine (STEPS-PD 2020 négative Parkinson), Nitrendipine (Syst-Eur Staessen 1997 ↓AVC-42% + Syst-Eur Dementia Forette 1998 ↓démence-55%))
+// Service Worker - GeriaAssist v1.05 (Phase 53 — Cardio diurétiques : Furosémide (pierre HFrEF, biodispo variable 10-100%, DOSE Felker NEJM 2011, TRANSFORM-HF 2023, triple whammy NTA, IRSS/carbamazépine hyponatrémie sévère SIADH), Torasémide (biodispo stable 80-100%, TORIC 2002 ↓ mortalité suggestif, TRANSFORM-HF 2023), Bumétanide (alternative furosémide résistance, 1 mg ≈ 40 mg furo), Indapamide (référence HTA âgé HYVET Beckett NEJM 2008 ↓AVC-30% ↓mortalité-21% > 80 ans, PROGRESS, ADVANCE), HCTZ (CARCINOMES CUTANÉS Pedersen JAMA Intern Med 2018 ANSM/EMA 2018, hyponatrémie SIADH, hypercalcémie thiazidique), Chlortalidone (ALLHAT 2002 + SHEP 1991 ↓AVC-36% > 60 ans, T½ longue 40-60h, équivalence chlortalidone 12,5 mg ≈ HCTZ 25 mg))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260513-phase52-cardio-ccb2-digoxine';
-const CACHE_NAME = `geriaassist-v104-${BUILD_ID}`;
+const BUILD_ID = '20260513-phase53-cardio-diuretiques';
+const CACHE_NAME = `geriaassist-v105-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [

@@ -4579,20 +4579,30 @@ const MASTER_DB = {
           {
                     "dci": "Bumetanide",
                     "princeps": "Burinex",
-                    "classe": "Diuretique de l'anse",
-                    "poso_hab": "0,5-2 mg/j en 1-2 prises",
-                    "poso_ger": "0,5-1 mg/j",
-                    "poso_ren": "Adaptation selon ClCr",
+                    "classe": "Diuretique de l'anse (biodisponibilité STABLE 80-100% — alternative furosémide en résistance/malabsorption)",
+                    "poso_hab": "0,5-2 mg/j en 1-2 prises | Équivalence : 1 mg bumétanide ≈ 40 mg furosémide ≈ 20 mg torasémide",
+                    "poso_ger": "0,5 mg/j à initier — surveillance hyponatrémie/hypokaliémie/déshydratation",
+                    "poso_ren": "↑ dose si ClCr < 30 (max 10-20 mg/j en aigu IV). Cirrhose : prudence",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,95",
-                    "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Ionogramme complet | Créatinine/DFG | Uricemie",
-                    "suivi_periodique": "Ionogramme + créatinine (tous les 3 a 6 mois)",
-                    "alerte_clinique": "Hypokaliemie | Hyponatremie | Deshydratation",
+                    "albumine": "95%",
+                    "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "ddi_interact": "Bloc DDI commun diurétique anse (cf Furosémide) : AINS triple whammy, IEC/ARA2 (hypotension 1ère dose), Digoxine (hypoK), Lithium (↑ lithémie), Aminosides (ototoxicité), Sulfonylurées, Médicaments QT (torsades par hypoK), Corticoïdes (cumul hypoK), IRSS/Carbamazépine (hyponatrémie), Probénécide (↓ effet), Cholestyramine (↓ absorption)",
+                    "ddi_interact_v2": [
+                              { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "↓ effet + IRA. Triple whammy = NTA. FORTA-D.", "severite": "danger" },
+                              { "classe": "IEC / ARA2 (hypotension 1ère dose)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "losartan", "valsartan", "candesartan", "irbesartan", "telmisartan", "olmesartan"], "commentaire": "↓ dose diurétique 50% à l'initiation. Initier le soir.", "severite": "warning" },
+                              { "classe": "Lithium — ↑ lithémie / intoxication", "dcis": ["lithium"], "commentaire": "↓ clairance lithium. Surveillance ou éviter.", "severite": "danger" },
+                              { "classe": "Aminosides — ototoxicité synergique", "dcis": ["gentamicine", "amikacine", "tobramycine", "netilmicine"], "commentaire": "Risque rare avec bumétanide (vs furosémide).", "severite": "warning" },
+                              { "classe": "Digoxine (hypoK potentialise)", "dcis": ["digoxine"], "commentaire": "K+ ≥ 4.", "severite": "warning" },
+                              { "classe": "Médicaments allongeant QT — TORSADES par hypoK", "dcis": ["amiodarone", "sotalol", "dronedarone", "quinidine", "haloperidol", "ciprofloxacine", "moxifloxacine", "clarithromycine", "erythromycine", "ondansetron", "methadone"], "commentaire": "K+ ≥ 4, Mg ≥ 1.", "severite": "danger" },
+                              { "classe": "IRSS / Carbamazépine — HYPONATRÉMIE", "dcis": ["fluoxetine", "paroxetine", "sertraline", "citalopram", "escitalopram", "venlafaxine", "duloxetine", "carbamazepine", "oxcarbazepine"], "commentaire": "Cumul SIADH. Surveillance natrémie.", "severite": "danger" },
+                              { "classe": "Corticoïdes / Sulfonylurées", "dcis": ["prednisolone", "prednisone", "methylprednisolone", "dexamethasone", "insuline", "glimepiride", "gliclazide", "glibenclamide"], "commentaire": "Cumul hypoK + hyperglycémie.", "severite": "warning" },
+                              { "classe": "Cholestyramine — ↓ absorption", "dcis": ["cholestyramine", "colestipol"], "commentaire": "Espacer ≥ 4h.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Ionogramme (Na+/K+/Mg++) | Créatinine/DFG | Uricémie | TA couché-debout",
+                    "suivi_periodique": "Ionogramme + créatinine à J7-J14 puis tous 3-6 mois | Uricémie annuelle",
+                    "alerte_clinique": "DÉSHYDRATATION | HYPOKALIÉMIE/HYPONATRÉMIE | HYPERURICÉMIE | TRIPLE WHAMMY | Hypotension orthostatique → CHUTES âgé | Alternative à furosémide si résistance (biodisponibilité plus stable, T½ similaire courte)",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_002",
@@ -4603,8 +4613,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "1 mg bumétanide ≈ 40 mg furosémide",
-                    "source": "RCP Burinex ; ESC HF 2021"
+                    "notes_cliniques": "Diurétique de l'anse à biodisponibilité stable 80-100% (vs furosémide 10-100% variable). T½ courte 1-1,5h (similaire furosémide). Équivalence dose : 1 mg bumétanide ≈ 40 mg furosémide ≈ 20 mg torasémide. Alternative à furosémide en cas de résistance (malabsorption intestinale, syndrome néphrotique avec œdèmes muqueux). En 2026 : torasémide souvent préféré (T½ longue 1 prise/j, observance meilleure).",
+                    "source": "RCP Burinex ; ESC IC 2023"
           },
           {
                     "dci": "Buprenorphine",
@@ -6064,45 +6074,31 @@ const MASTER_DB = {
           {
                     "dci": "Chlortalidone",
                     "princeps": "Hygroton",
-                    "classe": "Diuretique thiazidique (longue duree d'action)",
-                    "poso_hab": "25-50mg/j PO (hypertension)",
-                    "poso_ger": "12.5-25mg/j",
-                    "poso_ren": "DFG<30: eviter",
+                    "classe": "Diuretique thiazidique LONGUE DUREE (T½ 40-60h) — référence ALLHAT/SHEP HTA âgé",
+                    "poso_hab": "12,5-25 mg/j en 1 prise matin (T½ 40-60h, 1 prise/j stable)",
+                    "poso_ger": "12,5 mg/j à initier — dose minimale, T½ longue (effet stable + nycturie moindre)",
+                    "poso_ren": "ClCr ≥ 30 : 12,5-25 mg/j | ClCr < 30 : inefficace diurétique (mais effet antiHTA partiel possible) | ClCr < 15 : éviter",
                     "acb": 0,
                     "cia": 1,
                     "bhe": "0.0",
-                    "albumine": "> 75",
-                    "qt_risque": "",
-                    "ddi_interact": "IEC/ARA2 (hypotension, hyperkaliemie), Lithium (augmente lithiemie), Digitaliques (risque hypokaliemie)",
+                    "albumine": "> 75%",
+                    "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "ddi_interact": "Bloc DDI thiazidiques commun : AINS triple whammy + ↓ effet, IEC/ARA2 (hypotension, hyponatrémie), Lithium ↑ lithémie/intoxication, Digoxine (hypoK potentialise toxicité), Médicaments QT (torsades), IRSS/Carbamazépine (HYPONATRÉMIE SÉVÈRE +++), Corticoïdes (cumul hypoK), Sulfonylurées/Insuline (hyperglycémie), Calcium/Vit D (hypercalcémie — risque + marqué que HCTZ par T½ longue), Allopurinol (goutte), Photosensibilisation (moindre que HCTZ)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "IEC",
-                                        "dcis": [
-                                                  "enalapril",
-                                                  "lisinopril",
-                                                  "ramipril",
-                                                  "perindopril",
-                                                  "quinapril",
-                                                  "benazepril",
-                                                  "captopril",
-                                                  "fosinopril",
-                                                  "trandolapril"
-                                        ],
-                                        "commentaire": "hypotension, hyperkaliemie",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Lithium",
-                                        "dcis": [
-                                                  "lithium"
-                                        ],
-                                        "commentaire": "augmente lithiemie",
-                                        "severite": "warning"
-                              }
+                              { "classe": "AINS — TRIPLE WHAMMY (↓ effet + IRA)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "↓ effet antiHTA + IRA. Triple whammy = NTA.", "severite": "danger" },
+                              { "classe": "IEC / ARA2 (hypotension 1ère dose, HYPONATRÉMIE)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "losartan", "valsartan", "candesartan", "irbesartan", "telmisartan", "olmesartan"], "commentaire": "Association recommandée HTA (ALLHAT — équivalent IEC). Surveillance Na+/créat J7.", "severite": "warning" },
+                              { "classe": "IRSS / Carbamazépine — HYPONATRÉMIE SÉVÈRE (SIADH)", "dcis": ["fluoxetine", "paroxetine", "sertraline", "citalopram", "escitalopram", "venlafaxine", "duloxetine", "carbamazepine", "oxcarbazepine"], "commentaire": "Cumul SIADH + thiazide → Na+ < 125 chez âgé. T½ longue chlortalidone aggrave (effet persistant).", "severite": "danger" },
+                              { "classe": "Lithium — ↑ lithémie / intoxication", "dcis": ["lithium"], "commentaire": "↓ clairance lithium. Éviter ou surveillance lithémie.", "severite": "danger" },
+                              { "classe": "Digoxine (hypoK potentialise toxicité)", "dcis": ["digoxine"], "commentaire": "K+ ≥ 4.", "severite": "warning" },
+                              { "classe": "Médicaments allongeant QT — TORSADES par hypoK", "dcis": ["amiodarone", "sotalol", "dronedarone", "quinidine", "disopyramide", "haloperidol", "ciprofloxacine", "moxifloxacine", "clarithromycine", "erythromycine", "ondansetron", "methadone", "citalopram", "escitalopram"], "commentaire": "K+ ≥ 4, Mg ≥ 1.", "severite": "danger" },
+                              { "classe": "Corticoïdes (cumul hypoK)", "dcis": ["prednisolone", "prednisone", "methylprednisolone", "dexamethasone"], "commentaire": "Cumul hypokaliémie.", "severite": "warning" },
+                              { "classe": "Sulfonylurées / Insuline (hyperglycémie thiazidique)", "dcis": ["insuline", "glimepiride", "gliclazide", "glibenclamide"], "commentaire": "Thiazides ↓ tolérance glucidique.", "severite": "warning" },
+                              { "classe": "Calcium / Vitamine D — HYPERCALCÉMIE (T½ longue aggrave)", "dcis": ["calcium", "vitamine d", "cholecalciferol", "calcitriol"], "commentaire": "Thiazide ↓ excrétion calcique. Chlortalidone T½ longue = effet calcique +++. Surveillance calcémie.", "severite": "warning" },
+                              { "classe": "Allopurinol / Fébuxostat — ↑ risque goutte", "dcis": ["allopurinol", "febuxostat"], "commentaire": "Thiazide ↑ uricémie.", "severite": "warning" }
                     ],
-                    "suivi_initial": "Ionogramme complet | Créatinine/DFG | Uricemie | Glycemie | Bilan lipidique",
-                    "suivi_periodique": "Ionogramme + créatinine (annuel) | Glycemie (annuelle) | Uricemie (annuelle)",
-                    "alerte_clinique": "Hypokaliemie | Hyponatremie | Hyperuricemie/goutte | Hyperglycemie",
+                    "suivi_initial": "Ionogramme COMPLET (Na+/K+/Mg++/Ca++) | Créatinine/DFG | Uricémie | Glycémie/HbA1c | Bilan lipidique | TA couché-debout",
+                    "suivi_periodique": "Ionogramme + créatinine à J7-J14 puis tous 3-6 mois (T½ longue → équilibre J7-J10) | Uricémie/glycémie annuelle | Calcémie si supplémentation",
+                    "alerte_clinique": "HYPONATRÉMIE SÉVÈRE chez âgé surtout IRSS (T½ longue aggrave) | HYPOKALIÉMIE (plus marquée que HCTZ) | HYPERURICÉMIE | HYPERCALCÉMIE | HYPERGLYCÉMIE | RÉFÉRENCE HTA âgé : ALLHAT 2002 (33357 patients, > 55 ans — équivalent IEC/CCB, supérieur doxazosine pour IC) + SHEP 1991 (4736 > 60 ans HTA systolique isolée — ↓ AVC -36%, ↓ IDM -27%) | Préférable à HCTZ (efficacité prolongée, plus de preuves cardiovasculaires)",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_002",
@@ -6115,8 +6111,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Diurétique : hypokaliémie, hyponatrémie (thiazidiques surtout), déshydratation, hyperuricémie. Surveillance ionogramme/créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
-                    "source": "RCP Hygroton | ESC HTA 2023"
+                    "notes_cliniques": "Thiazide de RÉFÉRENCE en HTA avec preuves cardiovasculaires majeures : ALLHAT 2002 (Furberg JAMA — 33357 patients HTA, équivalente lisinopril/amlodipine et supérieure doxazosine pour IC) et SHEP 1991 (HTA systolique isolée > 60 ans, ↓ AVC -36% / IDM -27% / IC -55%). T½ 40-60h (vs HCTZ 6-12h) → effet plus prolongé et stable, observance améliorée. Plus puissant à doses équivalentes (12,5 mg chlortalidone ≈ 25 mg HCTZ). Effet hypokaliémiant plus marqué que HCTZ (T½ longue). Moins de preuves de carcinome cutané (vs Pedersen 2018 sur HCTZ) mais photosensibilisation possible. Préférable à HCTZ chez âgé non-IRC sévère.",
+                    "source": "RCP Hygroton ; ESC HTA 2023 ; ALLHAT 2002 (Furberg JAMA) ; SHEP 1991 ; Roush meta-analyse 2012 (chlortalidone > HCTZ)"
           },
           {
                     "dci": "Chlorthalidone",
@@ -11401,10 +11397,10 @@ const MASTER_DB = {
           {
                     "dci": "Furosemide",
                     "princeps": "Lasilix",
-                    "classe": "Diuretique de l'anse",
-                    "poso_hab": "20-250 mg/j",
-                    "poso_ger": "20-40 mg/j",
-                    "poso_ren": "Augmenter si ClCr < 30",
+                    "classe": "Diuretique de l'anse (inhibiteur Na+/K+/2Cl- segment ascendant Henle) — pierre angulaire HFrEF",
+                    "poso_hab": "PO : 20-250 mg/j (T½ 1,5h, biodisponibilité variable 10-100%) | IV : 20-200 mg (biodisponibilité 100%)",
+                    "poso_ger": "20-40 mg/j à initier — surveillance hyponatrémie/hypokaliémie/déshydratation/IRA fonctionnelle (chutes ÂGÉ)",
+                    "poso_ren": "↑ dose si ClCr < 30 (jusqu'à 250-500 mg/j IV en aigu). Plafond résistance : changer pour torasémide ou bumétanide (biodisponibilité meilleure)",
                     "acb": 1,
                     "cia": 0,
                     "bhe": "",
@@ -11447,11 +11443,35 @@ const MASTER_DB = {
                                         "dcis": ["glimepiride", "gliclazide", "glibenclamide", "glipizide"],
                                         "commentaire": "Diuretique de l'anse aggrave hypokaliemie qui ↓ secretion insuline ; surveillance glycemie + K+",
                                         "severite": "warning"
+                              },
+                              {
+                                        "classe": "Médicaments allongeant QT (cumul hypoK → TORSADES)",
+                                        "dcis": ["amiodarone", "sotalol", "dronedarone", "quinidine", "disopyramide", "haloperidol", "ciprofloxacine", "moxifloxacine", "levofloxacine", "clarithromycine", "erythromycine", "ondansetron", "methadone", "domperidone", "hydroxyzine", "citalopram", "escitalopram", "thioridazine", "pimozide"],
+                                        "commentaire": "Hypokaliémie/hypomagnésémie sous furosémide → torsades sur médicaments QT. Maintenir K+ ≥ 4, Mg ≥ 1. Supplémenter si nécessaire.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Corticoïdes (cumul hypoK)",
+                                        "dcis": ["prednisolone", "prednisone", "methylprednisolone", "dexamethasone", "betamethasone", "hydrocortisone"],
+                                        "commentaire": "Cumul hypokaliémie. Surveillance K+ rapprochée.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Carbamazépine / IRSS — hyponatrémie (SIADH)",
+                                        "dcis": ["carbamazepine", "oxcarbazepine", "fluoxetine", "paroxetine", "sertraline", "citalopram", "escitalopram", "fluvoxamine", "venlafaxine", "duloxetine"],
+                                        "commentaire": "Cumul SIADH + déplétion sodique furosémide → hyponatrémie sévère (Na+ < 125) chez âgé +++. Surveillance natrémie à J7 puis trimestrielle.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Probénécide — ↓ effet furosémide",
+                                        "dcis": ["probenecide"],
+                                        "commentaire": "Compétition transporteur OAT → ↓ sécrétion tubulaire furosémide → ↓ effet. Espacer ou changer.",
+                                        "severite": "warning"
                               }
                     ],
-                    "suivi_initial": "Ionogramme complet | Créatinine/DFG | Uricemie | Bilan hépatique",
-                    "suivi_periodique": "Ionogramme + créatinine (tous les 3 a 6 mois si IRC) | Uricemie (annuelle)",
-                    "alerte_clinique": "Hypokaliemie | Hyponatremie | Hyperuricemie/goutte | Deshydratation | Triple whammy (AINS+IEC+diuretique) → NTA",
+                    "suivi_initial": "Ionogramme complet (Na+/K+/Mg++/Cl-/HCO3-) | Créatinine/DFG | Uricémie | Bilan hépatique | Poids initial",
+                    "suivi_periodique": "Ionogramme + créatinine à J7-J14 puis tous 3-6 mois (plus fréquent si âgé/IRC) | Uricémie annuelle | Poids quotidien en IC (auto-surveillance) | TA couché-debout",
+                    "alerte_clinique": "DÉSHYDRATATION (sécheresse muqueuses, ↑ urée/créat, ↑ hématocrite) → arrêt ou ↓ dose | HYPOKALIÉMIE (K+ < 3,5) → supplémenter, surveillance ECG | HYPONATRÉMIE (Na+ < 130) → ↓ dose ou changer (surtout sous IRSS/carbamazépine) | HYPERURICÉMIE/CRISE DE GOUTTE → allopurinol/fébuxostat | TRIPLE WHAMMY (AINS + IEC + diurétique) = NTA fonctionnelle | OTOTOXICITÉ (rare, fortes doses IV — surtout aminosides associés) | HYPOTENSION ORTHOSTATIQUE → CHUTES âgé",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_002",
@@ -11463,8 +11483,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Prendre le matin (nycturie)",
-                    "source": "RCP Lasilix ; ESC HF 2021"
+                    "notes_cliniques": "Pierre angulaire HFrEF symptomatique (rétention hydrosodée). Biodisponibilité PO variable (10-100%, moyenne 50%) → en cas de résistance : passage IV (rapport bioéquivalent 1:1) ou switch torasémide/bumétanide (biodisponibilité 80-100% stable, TORIC trial). Prendre LE MATIN (nycturie). Ne pas administrer après 16h (insomnie). Doses ≥ 80 mg : préférer 2 prises (saturation transporteur). PIM si déshydratation/hypotension orthostatique chez âgé (Beers — surveiller chutes). Études : RALES (en association spironolactone), DOSE (Felker NEJM 2011 — dose hôpital), TRANSFORM-HF (vs torasémide non-supériorité 2023).",
+                    "source": "RCP Lasilix ; ESC IC 2023 ; DOSE Felker NEJM 2011 ; TRANSFORM-HF 2023 ; Beers 2023"
           },
           {
                     "dci": "Gabapentine",
@@ -11726,57 +11746,32 @@ const MASTER_DB = {
           {
                     "dci": "Hydrochlorothiazide",
                     "princeps": "Esidrex",
-                    "classe": "Diuretique thiazidique",
-                    "poso_hab": "25-100 mg/j",
-                    "poso_ger": "12,5-25 mg/j",
-                    "poso_ren": "Eviter si ClCr < 30",
+                    "classe": "Diuretique thiazidique (inhibition Na/Cl tubule distal) — ↑ risque carcinome cutané (Pedersen 2018)",
+                    "poso_hab": "12,5-50 mg/j en 1 prise matin (rarement > 25 mg/j — peu d'effet additionnel + ↑ effets indésirables)",
+                    "poso_ger": "12,5 mg/j à initier (préférer indapamide LP — HYVET, ou chlortalidone — ALLHAT)",
+                    "poso_ren": "ClCr ≥ 30 : pas d'ajustement | ClCr < 30 : EFFICACITÉ DIURÉTIQUE LIMITÉE — préférer diurétique de l'anse | ClCr < 15 : arrêter",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "1.0",
-                    "albumine": "40 - 68 %",
-                    "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "Lithium, AINS, K+, Corticoides",
+                    "albumine": "40-68%",
+                    "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "ddi_interact": "Bloc DDI thiazidiques commun : AINS triple whammy + ↓ effet, IEC/ARA2 (hypotension, hyponatrémie), Lithium ↑ lithémie/intoxication, Digoxine (hypoK potentialise toxicité), Médicaments QT (torsades), IRSS/Carbamazépine (HYPONATRÉMIE SÉVÈRE +++), Corticoïdes (cumul hypoK), Sulfonylurées/Insuline (hyperglycémie), Allopurinol (goutte), Calcium/Vit D (hypercalcémie), PHOTOSENSIBILISATION/CARCINOMES CUTANÉS (méta-analyse Pedersen 2018, ANSM 2018) — protection solaire stricte",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Lithium",
-                                        "dcis": [
-                                                  "lithium"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "AINS — TRIPLE WHAMMY (↓ effet + IRA)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "↓ effet antiHTA + IRA fonctionnelle. Triple whammy = NTA.", "severite": "danger" },
+                              { "classe": "IEC / ARA2 (hypotension 1ère dose, HYPONATRÉMIE)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "losartan", "valsartan", "candesartan", "irbesartan", "telmisartan", "olmesartan"], "commentaire": "Association recommandée en HTA. Surveillance Na+/créat J7.", "severite": "warning" },
+                              { "classe": "IRSS / Carbamazépine — HYPONATRÉMIE SÉVÈRE (SIADH)", "dcis": ["fluoxetine", "paroxetine", "sertraline", "citalopram", "escitalopram", "venlafaxine", "duloxetine", "carbamazepine", "oxcarbazepine"], "commentaire": "Cumul SIADH + thiazide → Na+ < 125 chez âgé.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ lithémie / intoxication", "dcis": ["lithium"], "commentaire": "↓ clairance lithium. Éviter ou surveillance.", "severite": "danger" },
+                              { "classe": "Digoxine (hypoK potentialise toxicité)", "dcis": ["digoxine"], "commentaire": "K+ ≥ 4.", "severite": "warning" },
+                              { "classe": "Médicaments allongeant QT — TORSADES par hypoK", "dcis": ["amiodarone", "sotalol", "dronedarone", "quinidine", "disopyramide", "haloperidol", "ciprofloxacine", "moxifloxacine", "clarithromycine", "erythromycine", "ondansetron", "methadone", "citalopram", "escitalopram"], "commentaire": "K+ ≥ 4, Mg ≥ 1.", "severite": "danger" },
+                              { "classe": "Corticoïdes (cumul hypoK)", "dcis": ["prednisolone", "prednisone", "methylprednisolone", "dexamethasone"], "commentaire": "Cumul hypokaliémie.", "severite": "warning" },
+                              { "classe": "Sulfonylurées / Insuline (hyperglycémie)", "dcis": ["insuline", "glimepiride", "gliclazide", "glibenclamide"], "commentaire": "Thiazides ↓ tolérance glucidique. Adaptation traitement DT2.", "severite": "warning" },
+                              { "classe": "Calcium / Vitamine D — HYPERCALCÉMIE", "dcis": ["calcium", "vitamine d", "cholecalciferol", "calcitriol"], "commentaire": "Thiazide ↓ excrétion calcique → hypercalcémie chez patient supplémenté.", "severite": "warning" },
+                              { "classe": "Allopurinol / Fébuxostat — ↑ risque goutte", "dcis": ["allopurinol", "febuxostat"], "commentaire": "Thiazide ↑ uricémie.", "severite": "warning" },
+                              { "classe": "PHOTOSENSIBILISATION — protection solaire stricte (CARCINOMES CUTANÉS)", "dcis": ["exposition soleil"], "commentaire": "Méta-analyse Pedersen 2018 : ↑ risque carcinome basocellulaire/épidermoïde +29-540% selon dose cumulée. ANSM 2018 alerte. Protection solaire, surveillance dermato annuelle si exposition prolongée/peau claire.", "severite": "danger" }
                     ],
-                    "suivi_initial": "Ionogramme | Créatinine | Uricemie | Glycemie | Bilan lipidique",
-                    "suivi_periodique": "Ionogramme + créatinine (annuel) | Glycemie (annuelle) | Uricemie (annuelle)",
-                    "alerte_clinique": "Hypokaliemie | Hyponatremie | Hyperuricemie/goutte",
+                    "suivi_initial": "Ionogramme COMPLET (Na+/K+/Mg++/Ca++) | Créatinine/DFG | Uricémie | Glycémie/HbA1c | Bilan lipidique | Examen dermato (FdR carcinome)",
+                    "suivi_periodique": "Ionogramme + créatinine à J7-J14 puis tous 3-6 mois | Uricémie/glycémie annuelle | Calcémie si supplémentation | EXAMEN DERMATO ANNUEL (carcinome cutané)",
+                    "alerte_clinique": "HYPONATRÉMIE SÉVÈRE chez âgé (surtout IRSS) | HYPOKALIÉMIE | HYPERURICÉMIE/goutte | HYPERCALCÉMIE | HYPERGLYCÉMIE | CARCINOMES CUTANÉS (Pedersen 2018 — risque dose-cumulative) → protection solaire + surveillance dermato | Préférer indapamide LP (HYVET) ou chlortalidone (ALLHAT, étude SHEP)",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_002",
@@ -11789,8 +11784,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Photosensibilisation ; risque carcinome cutané prolongé",
-                    "source": "RCP HCTZ ; ESC HTA 2023"
+                    "notes_cliniques": "Thiazide de référence historique. Efficacité plafond à 25 mg/j (au-delà : peu d'effet antiHTA additionnel, ↑ effets secondaires). T½ courte 6-12h. ALERTE PHOTOSENSIBILISATION : méta-analyse danoise Pedersen JAMA Intern Med 2018 — ↑ risque carcinome basocellulaire +29% et épidermoïde +540% selon dose cumulée → ANSM 2018, EMA 2018 alertes — protection solaire stricte recommandée + surveillance dermato. Préférer indapamide LP (HYVET — bénéfice mortalité > 80 ans) ou chlortalidone (ALLHAT — équivalent IEC/CCB en HTA). HCTZ encore très utilisé en association fixe (Co-Diovan, Co-Aprovel...).",
+                    "source": "RCP Esidrex ; ESC HTA 2023 ; ALLHAT 2002 ; Pedersen JAMA Intern Med 2018 ; ANSM 2018"
           },
           {
                     "dci": "Hydrocortisone",
@@ -12120,21 +12115,32 @@ const MASTER_DB = {
           },
           {
                     "dci": "Indapamide",
-                    "princeps": "Fludex",
-                    "classe": "Diuretique thiazidique-like",
-                    "poso_hab": "2,5 mg/j",
-                    "poso_ger": "1,25-2,5 mg/j",
-                    "poso_ren": "ClCr < 30: surveillance",
+                    "princeps": "Fludex, Indapamide LP",
+                    "classe": "Diuretique thiazidique-like (apparenté indoline — effet vasodilatateur > diurétique) — référence HTA âgé HYVET",
+                    "poso_hab": "1,5 mg LP/j ou 2,5 mg IR/j en 1 prise matin",
+                    "poso_ger": "1,5 mg LP/j (HYVET — référence > 80 ans). Surveillance hyponatrémie/hypokaliémie/déshydratation/IRA",
+                    "poso_ren": "ClCr 30-60 : surveillance | ClCr < 30 : efficacité diurétique limitée mais effet antiHTA possible — préférer diurétique de l'anse | ClCr < 15 : arrêter",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,79",
-                    "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Ionogramme | Créatinine | Uricemie | Glycemie",
-                    "suivi_periodique": "Ionogramme + créatinine (annuel) | Uricemie (annuelle)",
-                    "alerte_clinique": "Hypokaliemie | Hyponatremie",
+                    "albumine": "79%",
+                    "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "ddi_interact": "Bloc DDI thiazidiques commun : AINS (↓ effet, triple whammy), IEC/ARA2 (hypotension 1ère dose, hyponatrémie sévère), Lithium (↑ lithémie/intoxication), Digoxine (hypoK potentialise toxicité), Médicaments QT (torsades par hypoK +++), IRSS/Carbamazépine (HYPONATRÉMIE SÉVÈRE +++ chez âgé), Corticoïdes (cumul hypoK), Sulfonylurées/Insuline (hyperglycémie thiazidique), Allopurinol (↑ goutte risque), Calcium/Vit D (hypercalcémie + thiazide ↓ excrétion Ca → hypercalcémie majeure)",
+                    "ddi_interact_v2": [
+                              { "classe": "AINS — TRIPLE WHAMMY (↓ effet + IRA)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "↓ effet antiHTA + IRA fonctionnelle. Triple whammy (AINS+IEC+thiazide) = NTA. FORTA-D.", "severite": "danger" },
+                              { "classe": "IEC / ARA2 (hypotension 1ère dose, HYPONATRÉMIE)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "irbesartan", "telmisartan", "olmesartan"], "commentaire": "Hypotension + hyponatrémie surveillance natrémie J7. Mais ASSOCIATION RECOMMANDÉE en HTA (HYVET, ACCOMPLISH, ASCOT — ↓ morbi-mortalité chez âgé).", "severite": "warning" },
+                              { "classe": "IRSS / Carbamazépine / Oxcarbazépine — HYPONATRÉMIE SÉVÈRE (SIADH)", "dcis": ["fluoxetine", "paroxetine", "sertraline", "citalopram", "escitalopram", "fluvoxamine", "venlafaxine", "duloxetine", "carbamazepine", "oxcarbazepine"], "commentaire": "Cumul SIADH + déplétion sodique thiazide → hyponatrémie GRAVE (Na+ < 125) chez âgé +++ (effet quotidien). Surveillance natrémie J7 puis trimestrielle. Cause fréquente d'hospitalisation gériatrique.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ lithémie / intoxication", "dcis": ["lithium"], "commentaire": "↓ clairance lithium par thiazide → intoxication grave. Éviter ou surveillance lithémie étroite.", "severite": "danger" },
+                              { "classe": "Digoxine (hypoK potentialise toxicité)", "dcis": ["digoxine"], "commentaire": "Maintenir K+ ≥ 4, Mg ≥ 1.", "severite": "warning" },
+                              { "classe": "Médicaments allongeant QT — TORSADES par hypoK", "dcis": ["amiodarone", "sotalol", "dronedarone", "quinidine", "disopyramide", "haloperidol", "ciprofloxacine", "moxifloxacine", "clarithromycine", "erythromycine", "ondansetron", "methadone", "citalopram", "escitalopram", "thioridazine", "pimozide"], "commentaire": "K+ ≥ 4, Mg ≥ 1.", "severite": "danger" },
+                              { "classe": "Corticoïdes (cumul hypoK)", "dcis": ["prednisolone", "prednisone", "methylprednisolone", "dexamethasone", "betamethasone"], "commentaire": "Cumul hypokaliémie.", "severite": "warning" },
+                              { "classe": "Sulfonylurées / Insuline (hyperglycémie thiazidique)", "dcis": ["insuline", "glimepiride", "gliclazide", "glibenclamide", "repaglinide"], "commentaire": "Thiazides diminuent tolérance glucidique (↓ sensibilité insuline). Adaptation traitement DT2 possible.", "severite": "warning" },
+                              { "classe": "Calcium / Vitamine D — HYPERCALCÉMIE (thiazide ↓ excrétion Ca)", "dcis": ["calcium", "vitamine d", "cholecalciferol", "ergocalciferol", "calcitriol", "alfacalcidol"], "commentaire": "Thiazide ↓ excrétion calcique → hypercalcémie chez patient supplémenté. Surveillance calcémie.", "severite": "warning" },
+                              { "classe": "Allopurinol / Fébuxostat — ↑ risque goutte aiguë", "dcis": ["allopurinol", "febuxostat"], "commentaire": "Thiazide ↑ uricémie → cristallisation. Initier ARM en attaque si goutte aiguë.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Ionogramme COMPLET (Na+/K+/Mg++/Ca++/Cl-/HCO3-) | Créatinine/DFG | Uricémie | Glycémie/HbA1c | Bilan lipidique | TA couché-debout",
+                    "suivi_periodique": "Ionogramme + créatinine à J7-J14 puis tous 3-6 mois | Uricémie annuelle | Glycémie annuelle | Calcémie annuelle si supplémentation",
+                    "alerte_clinique": "HYPONATRÉMIE SÉVÈRE (Na+ < 125) chez âgé surtout sous IRSS/carbamazépine — CAUSE FRÉQUENTE D'HOSPITALISATION | HYPOKALIÉMIE (K+ < 3,5) → supplémenter, surveillance ECG | HYPERURICÉMIE → goutte | HYPERCALCÉMIE si supplémentation Vit D/Ca | HYPERGLYCÉMIE (DT2 latent) | DÉSHYDRATATION/CHUTES ÂGÉ | Référence HTA âgé HYVET (Beckett NEJM 2008 — > 80 ans, ↓ AVC -30%, ↓ mortalité -21%)",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_002",
@@ -12145,8 +12151,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Préféré aux thiazidiques en IRC modérée",
-                    "source": "RCP Fludex ; ESC HTA 2023"
+                    "notes_cliniques": "Diurétique apparenté thiazidique (indoline). Mécanisme : inhibition Na/Cl tubule distal + EFFET VASODILATATEUR ARTÉRIEL (spécificité indapamide). ÉTUDE PHARE chez âgé : HYVET (Beckett NEJM 2008, 3845 patients > 80 ans, indapamide ± perindopril) — ↓ AVC -30%, ↓ mortalité totale -21%, ↓ IC -64%. Premier antiHTA validé chez > 80 ans avec bénéfice mortalité. PROGRESS (Lancet 2001) : perindopril+indapamide → ↓ AVC récidive -28%. ADVANCE (DT2) : perindopril+indapamide → ↓ mortalité CV. EFFET MOINS HYPOKALIÉMIANT que HCTZ/chlortalidone (avantage chez âgé). Préférable aux thiazidiques classiques en gériatrie.",
+                    "source": "RCP Fludex ; ESC HTA 2023 ; HYVET Beckett NEJM 2008 ; PROGRESS Lancet 2001 ; ADVANCE 2007"
           },
           {
                     "dci": "Insuline aspart",
@@ -20874,21 +20880,32 @@ const MASTER_DB = {
           },
           {
                     "dci": "Torasemide",
-                    "princeps": "Torental",
-                    "classe": "Diuretique de l'anse",
-                    "poso_hab": "2,5-10 mg/j",
-                    "poso_ger": "2,5-5 mg/j",
-                    "poso_ren": "Augmenter si ClCr < 20",
+                    "princeps": "Torem, Torasemide",
+                    "classe": "Diuretique de l'anse (biodisponibilité STABLE 80-100% — préférable furosémide en chronique HFrEF)",
+                    "poso_hab": "2,5-10 mg/j en 1 prise matin (max 200 mg/j en aigu HFrEF décompensée)",
+                    "poso_ger": "2,5-5 mg/j à initier — surveillance hyponatrémie/hypokaliémie/déshydratation",
+                    "poso_ren": "↑ dose si ClCr < 30 (jusqu'à 100-200 mg/j). Cirrhose : titration prudente",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "> 99 %",
+                    "albumine": "> 99%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Ionogramme | Créatinine | Uricemie",
-                    "suivi_periodique": "Ionogramme + créatinine (tous les 3 a a 6 mois)",
-                    "alerte_clinique": "Hypokaliemie | Hyponatremie",
+                    "ddi_interact": "Bloc DDI commun diurétique anse : AINS triple whammy (NTA fonctionnelle), IEC/ARA2 (hypotension 1ère dose), Digoxine (hypoK potentialise toxicité), Lithium (↑ lithémie/intoxication), Aminosides (ototoxicité synergique), Sulfonylurées/Insuline (hypoK + glycémie), Médicaments QT (torsades par hypoK), Corticoïdes (hypoK cumulée), IRSS/Carbamazépine (hyponatrémie sévère SIADH +++), Probénécide (↓ effet), Cholestyramine (↓ absorption)",
+                    "ddi_interact_v2": [
+                              { "classe": "AINS — TRIPLE WHAMMY (avec IEC/ARA2) → NTA fonctionnelle", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "↓ effet diurétique + risque IRA fonctionnelle. Triple whammy AINS+IEC+diurétique = NTA ischémique. FORTA-D.", "severite": "danger" },
+                              { "classe": "IEC / ARA2 (hypotension 1ère dose)", "dcis": ["enalapril", "ramipril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "irbesartan", "telmisartan", "olmesartan"], "commentaire": "↓ dose diurétique 50% à l'initiation IEC/ARA2. Initier le soir. Surveillance TA/créatinine J7.", "severite": "warning" },
+                              { "classe": "Digoxine (hypoK potentialise toxicité)", "dcis": ["digoxine"], "commentaire": "Maintenir K+ ≥ 4 et Mg++ ≥ 1.", "severite": "warning" },
+                              { "classe": "Lithium — ↑ lithémie / intoxication", "dcis": ["lithium"], "commentaire": "↓ clairance lithium → intoxication. Surveillance lithémie ou éviter.", "severite": "danger" },
+                              { "classe": "Aminosides — ototoxicité synergique (rare avec torasémide)", "dcis": ["gentamicine", "amikacine", "tobramycine", "netilmicine"], "commentaire": "Risque moindre que furosémide (T½ longue, peu de pic). Audio si association.", "severite": "warning" },
+                              { "classe": "Médicaments allongeant QT (cumul hypoK → TORSADES)", "dcis": ["amiodarone", "sotalol", "dronedarone", "quinidine", "disopyramide", "haloperidol", "ciprofloxacine", "moxifloxacine", "clarithromycine", "erythromycine", "ondansetron", "methadone", "citalopram", "escitalopram"], "commentaire": "K+ ≥ 4, Mg ≥ 1.", "severite": "danger" },
+                              { "classe": "IRSS / Carbamazépine — hyponatrémie SÉVÈRE (SIADH)", "dcis": ["fluoxetine", "paroxetine", "sertraline", "citalopram", "escitalopram", "venlafaxine", "duloxetine", "carbamazepine", "oxcarbazepine"], "commentaire": "Cumul SIADH + déplétion sodique → Na+ < 125 chez âgé. Surveillance natrémie J7 puis trimestrielle.", "severite": "danger" },
+                              { "classe": "Sulfonylurées / Insuline (hypoK + glycémie)", "dcis": ["insuline", "glimepiride", "gliclazide", "glibenclamide", "repaglinide"], "commentaire": "Surveillance glycémie + K+.", "severite": "warning" },
+                              { "classe": "Corticoïdes (cumul hypoK)", "dcis": ["prednisolone", "prednisone", "methylprednisolone", "dexamethasone", "betamethasone"], "commentaire": "Cumul hypokaliémie. Supplémenter si nécessaire.", "severite": "warning" },
+                              { "classe": "Cholestyramine — ↓ absorption", "dcis": ["cholestyramine", "colestipol"], "commentaire": "Espacer ≥ 4h.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Ionogramme (Na+/K+/Mg++) | Créatinine/DFG | Uricémie | Poids | TA couché-debout",
+                    "suivi_periodique": "Ionogramme + créatinine à J7-J14 puis tous 3-6 mois | Uricémie annuelle | Poids quotidien si IC",
+                    "alerte_clinique": "DÉSHYDRATATION → ↓ dose | HYPOKALIÉMIE/HYPONATRÉMIE (surtout IRSS/carbamazépine) | HYPERURICÉMIE/goutte | TRIPLE WHAMMY → NTA | Hypotension orthostatique chez âgé → CHUTES",
                     "bio_cible": [
                               "BIO_001",
                               "BIO_002",
@@ -20899,8 +20916,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Biodisponibilité orale supérieure au furosémide",
-                    "source": "RCP Torem ; ESC HF 2021"
+                    "notes_cliniques": "Diurétique de l'anse à BIODISPONIBILITÉ STABLE 80-100% (vs furosémide 10-100% variable) + T½ plus longue (3-4h vs 1,5h). Étude TORIC (Cosin 2002) : ↓ mortalité vs furosémide en HFrEF (suggestif). TRANSFORM-HF 2023 (Mentz JAMA) : pas de supériorité prouvée vs furosémide sur mortalité (étude pragmatique 2859 patients). Préférable en chronique HFrEF (équilibre stable, observance), surtout chez âgé fragile ou IRC. Équivalence dose : 10 mg torasémide ≈ 40 mg furosémide.",
+                    "source": "RCP Torem ; ESC IC 2023 ; TORIC 2002 ; TRANSFORM-HF 2023"
           },
           {
                     "dci": "Tramadol",
