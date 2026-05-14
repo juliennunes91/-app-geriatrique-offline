@@ -3521,62 +3521,32 @@ const MASTER_DB = {
           {
                     "dci": "Azathioprine",
                     "princeps": "Imurel",
-                    "classe": "Immunosuppresseur (pro-drogue 6-mercaptopurine - antimetabolite thiopurine)",
-                    "poso_hab": "1-3mg/kg/j PO ou IV | Titration selon NFS (cible leucocytes 3500-5000/mm3)",
-                    "poso_ger": "Meme dose (titration NFS stricte)",
-                    "poso_ren": "DFG 10-50: reduire dose 50% | DFG<10: eviter",
+                    "classe": "Immunosuppresseur (pro-drogue 6-mercaptopurine — antimétabolite thiopurine, inhibition synthèse purines)",
+                    "poso_hab": "1-3 mg/kg/j PO ou IV | Titration selon NFS (cible leucocytes 3500-5000/mm³) | Adapter selon TPMT/NUDT15",
+                    "poso_ger": "Initiation 50 mg/j (≤ 1 mg/kg/j) ; titration prudente NFS stricte (hebdomadaire 1er mois). PIM Beers prudence chez âgé fragile (myélosuppression accrue, infections)",
+                    "poso_ren": "DFG 10-50 : ↓ dose 50% (accumulation des métabolites) | DFG < 10 : éviter ou ↓ 75% | Hémodialyse : dose post-HD (dialysable)",
                     "acb": 0,
                     "cia": 1,
                     "bhe": "0.0",
-                    "albumine": "> 20",
+                    "albumine": "> 20%",
                     "qt_risque": "",
-                    "ddi_interact": "Allopurinol (CI absolue ou reduction dose 75% - accumulation 6-mercaptopurine fatale +++), AVK (reduction efficacite), AINS, Co-trimoxazole (myelosuppression additive), Methotrexate",
+                    "ddi_interact": "ALLOPURINOL — CONTRE-INDICATION ABSOLUE (aplasie médullaire mortelle ; sauf si ↓ AZA de 75% impératif + TPMT + NFS hebdo), FÉBUXOSTAT (CI ABSOLUE même mécanisme), COTRIMOXAZOLE/TRIMÉTHOPRIME (myélosuppression additive — déficit folate cumulé), AVK warfarine/fluindione (effet variable — surveillance INR), AINS (néphrotoxicité additive + ↑ exposition), MÉTHOTREXATE (redondance immunosuppressive — myélosuppression cumulée), RIBAVIRINE (CI ABSOLUE — anémie/aplasie mortelle), VACCINS VIVANTS (CI ABSOLUE — ROR/varicelle/fièvre jaune/BCG), MYCOPHÉNOLATE (cumul myélotoxicité), TPMT/NUDT15 DÉFICITAIRE (génotypage pré-thérapeutique +++ — risque aplasie majeure), ANTI-TNF/JAK INHIBITORS (redondance), FÉBRILE — surveillance lymphome/SCC peau, IEC/ARA2 (anémie additive — réticulocytopénie)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Allopurinol",
-                                        "dcis": [
-                                                  "allopurinol"
-                                        ],
-                                        "commentaire": "CI absolue ou reduction dose 75% - accumulation 6-mercaptopurine fatale +++",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "AVK",
-                                        "dcis": [
-                                                  "warfarine",
-                                                  "acenocoumarol",
-                                                  "fluindione"
-                                        ],
-                                        "commentaire": "reduction efficacite",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Methotrexate",
-                                        "dcis": [
-                                                  "methotrexate"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ALLOPURINOL — CONTRE-INDICATION ABSOLUE (APLASIE MORTELLE)", "dcis": ["allopurinol"], "commentaire": "Allopurinol inhibe XO qui métabolise 6-MP → ↑ exposition 6-MP/AZA x4-5 → APLASIE MÉDULLAIRE FATALE. CI ABSOLUE. Si association IMPÉRATIVE : ↓ AZA de 75% (1/4 dose) + TPMT/NUDT15 préalable + NFS hebdomadaire à vie. Préférer fébuxostat ? NON — même mécanisme. Préférer probénécide (uricosurique) ou changer indication AZA.", "severite": "danger" },
+                              { "classe": "FÉBUXOSTAT — CONTRE-INDICATION ABSOLUE (même mécanisme qu'allopurinol)", "dcis": ["febuxostat"], "commentaire": "Inhibition XO → ↑ 6-MP/AZA → aplasie. CI ABSOLUE. Pas de stratégie ↓ dose validée (vs allopurinol). Switch obligatoire.", "severite": "danger" },
+                              { "classe": "RIBAVIRINE — CONTRE-INDICATION ABSOLUE (anémie/aplasie sévère)", "dcis": ["ribavirine"], "commentaire": "Ribavirine inhibe inosine monophosphate déshydrogénase → accumulation 6-thio-IMP toxique. APLASIE MÉDULLAIRE SÉVÈRE. CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "TPMT / NUDT15 DÉFICITAIRE — risque aplasie majeure (génotypage pré-thérapeutique)", "dcis": ["deficit tpmt", "deficit nudt15"], "commentaire": "Déficit TPMT (1/300 Caucasiens, homozygote) ou NUDT15 (1/50 Asiatiques) → APLASIE MÉDULLAIRE PROFONDE. Génotypage recommandé HAS/EULAR avant initiation. Hétérozygote : ↓ dose 30-50% + NFS rapprochée. Homozygote déficitaire : CI absolue ou dose 1/10.", "severite": "danger" },
+                              { "classe": "VACCINS VIVANTS — CONTRE-INDICATION ABSOLUE", "dcis": ["vaccin ror", "vaccin varicelle", "vaccin fievre jaune", "vaccin bcg", "vaccin rotavirus", "vaccin grippe nasal"], "commentaire": "CI ABSOLUE pendant traitement + 3-6 mois après arrêt. Risque infection vaccinale disséminée. Vacciner AVANT initiation si possible (calendrier vaccinal complet, fièvre jaune, varicelle si non-immun).", "severite": "danger" },
+                              { "classe": "Cotrimoxazole / Triméthoprime — myélosuppression additive", "dcis": ["sulfamethoxazole", "trimethoprime", "cotrimoxazole"], "commentaire": "Déficit folate + antagonisme synthèse purines → cumul myélosuppression. NFS rapprochée. Dose prophylactique PCP (400/80 mg x3/sem) habituellement acceptable.", "severite": "warning" },
+                              { "classe": "Méthotrexate / Mycophénolate / Autres immunosuppresseurs — REDONDANCE", "dcis": ["methotrexate", "mycophenolate mofetil", "mycophenolate sodique", "leflunomide", "ciclosporine", "tacrolimus", "everolimus", "sirolimus"], "commentaire": "Cumul immunosuppression — myélosuppression, infections opportunistes. Surveillance accrue.", "severite": "warning" },
+                              { "classe": "Anti-TNF / JAK inhibitors / Anti-CD20 — cumul immunosuppression", "dcis": ["infliximab", "adalimumab", "etanercept", "certolizumab", "golimumab", "tocilizumab", "rituximab", "tofacitinib", "baricitinib", "upadacitinib", "filgotinib"], "commentaire": "Cumul immunosuppression — risque infections opportunistes (TB latente, hépatite B, PCP), lymphome. Surveillance infectieuse +++. Vacciner avant.", "severite": "warning" },
+                              { "classe": "AVK warfarine / fluindione / acénocoumarol — effet variable", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "Effet variable (le plus souvent ↓ efficacité AVK). Surveillance INR rapprochée à toute modification.", "severite": "warning" },
+                              { "classe": "AINS — néphrotoxicité additive + ↑ exposition", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam", "aspirine forte dose"], "commentaire": "Néphrotoxicité additive + ↑ exposition AZA (déplacement albumine). Préférer paracétamol.", "severite": "warning" },
+                              { "classe": "IEC / ARA2 — anémie additive (réticulocytopénie)", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan"], "commentaire": "Anémie additive — réticulocytopénie aggravée. Surveillance NFS.", "severite": "warning" }
                     ],
-                    "suivi_initial": "NFS-plaquettes (OBLIGATOIRE myelosuppression dose-dependante) | Bilan hépatique | Créatinine | Bilan infectieux | TPMT/NUDT15 genotypage (si possible) | Bilan thyroidien (maladie auto-immune)",
-                    "suivi_periodique": "NFS (hebdomadaire 1er mois, bimensuelle 3 mois, mensuelle ensuite) | Bilan hépatique (mensuel 1er trimestre puis trimestriel) | Créatinine (trimestrielle)",
-                    "alerte_clinique": "Myelosuppression (leucopenie, thrombopenie, anemie) → NFS urgente | Hépatotoxicité (VOD, veino-occlusive hépatique, peliose) → bilan hépatique urgent | Lymphome (risque cumule) | Pancreatite → lipase urgente | Cancers cutanes (surveillance clinique annuelle)",
+                    "suivi_initial": "NFS-plaquettes (OBLIGATOIRE — myélosuppression dose-dépendante) | Bilan hépatique | Créatinine/DFG | Bilan infectieux complet (HBV/HCV/VIH/TB latente/varicelle) | TPMT / NUDT15 GÉNOTYPAGE pré-thérapeutique (recommandé HAS/EULAR) | Bilan thyroïdien (maladie auto-immune) | Vaccinations à jour AVANT initiation (vaccins vivants CI ensuite) | Frottis col + dermatologique",
+                    "suivi_periodique": "NFS HEBDOMADAIRE 1er mois, BIMENSUELLE M2-M3, MENSUELLE ensuite ; à vie tous 3 mois | Bilan hépatique mensuel 1er trimestre puis trimestriel | Créatinine trimestrielle | Dermatologique annuel (SCC/CBC) | Lymphome (clinique) | Frottis col annuel",
+                    "alerte_clinique": "MYÉLOSUPPRESSION (leucopénie/thrombopénie/anémie) — NFS hebdo M1-M3 → arrêt si neutrophiles < 1500 ou plaquettes < 100k | HÉPATOTOXICITÉ (cytolyse, VOD veino-occlusive, péliose, hyperplasie nodulaire régénérative) → bilan urgent | LYMPHOME (NHL ↑ x3-5 — surveillance clinique, EBV+) | CARCINOMES CUTANÉS (SCC ↑ x5 — photoprotection, surveillance dermatologique annuelle obligatoire) | PANCRÉATITE → lipase | INFECTIONS OPPORTUNISTES (PCP, CMV, TB, zona — prophylaxie cotrimoxazole) | CI absolue allopurinol/fébuxostat/ribavirine/vaccins vivants",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_010",
@@ -3590,8 +3560,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Immunosuppresseur (pro-drogue 6-MP) : myélotoxicité (NFS hebdo M1-M3 puis mensuelle), hépatotoxicité, lymphome, infections. INTERACTION CRITIQUE avec allopurinol (Phase 8 — toxicité hématologique majeure, réduire dose 75 %). Test TPMT/NUDT15 recommandé pré-cure.",
-                    "source": "RCP Imurel | HAS 2022"
+                    "notes_cliniques": "Pro-drogue 6-mercaptopurine — antimétabolite thiopurine. Activé en 6-thioguanine nucléotides (6-TGN) par HGPRT, inactivé par TPMT et XO. Indications : transplantation, MICI (Crohn/RCH), maladies auto-immunes (LES, AHAI, hépatite auto-immune, dermatomyosite). GÉNOTYPAGE TPMT/NUDT15 PRÉ-THÉRAPEUTIQUE recommandé (HAS/EULAR/ACG) — éviter aplasie. INTERACTION FATALE allopurinol/fébuxostat (CI absolue) — toujours vérifier. PIM Beers 2023 chez âgé : prudence (immunosuppression accrue, infections, lymphome cumulé). Switch vers tioguanine ou mercaptopurine direct possible si intolérance AZA.",
+                    "source": "RCP Imurel | HAS 2022 ; EULAR 2020 ; ACG IBD 2018 ; CPIC TPMT/NUDT15 2019 ; Beers 2023"
           },
           {
                     "dci": "Azithromycine",
@@ -6360,20 +6330,36 @@ const MASTER_DB = {
           {
                     "dci": "Ciclosporine",
                     "princeps": "Neoral/Sandimmun",
-                    "classe": "Immunosuppresseur (inhibiteur calcineurine)",
-                    "poso_hab": "3-5 mg/kg/j",
-                    "poso_ger": "2-3 mg/kg/j",
-                    "poso_ren": "Monitoring taux",
+                    "classe": "Immunosuppresseur — inhibiteur calcineurine (anticalcineurine) — substrat CYP3A4/P-gp +++",
+                    "poso_hab": "Transplantation : 3-5 mg/kg/j en 2 prises (titration C0/C2) | MICI/auto-immun : 2-5 mg/kg/j",
+                    "poso_ger": "2-3 mg/kg/j ; cible C0 plus basse (50-100 ng/mL maintenance) ; surveillance accrue néphrotoxicité, HTA, hyperuricémie. PIM Beers prudence âgé fragile",
+                    "poso_ren": "Pas d'ajustement strict (élimination hépatique) MAIS NÉPHROTOXICITÉ DOSE-DÉPENDANTE → adaptation dose selon créatinine + dosage sérique C0 ou C2 (HPLC/immunoenzymatique) | Si créat ↑ > 30% baseline : ↓ dose 25-50% ou arrêt temporaire",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,9",
-                    "qt_risque": "(CR) - QTc rapporté en cas de magnésémie basse",
-                    "ddi_interact": "CYP3A4 substrat puissant",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG | Bilan hépatique | Ionogramme | TA | NFS | Bilan lipidique | Uricemie | Dosage serique C0 ou C2",
-                    "suivi_periodique": "Créatinine + dosage C0 (tous les 3 mois) | Bilan hépatique (tous les 3 mois) | Ionogramme (tous les 3 mois) | TA (chaque consultation) | Bilan lipidique (annuel)",
-                    "alerte_clinique": "Nephrotoxicite → créatinine + dosage urgents | Hyperkaliemie → ionogramme | Hépatotoxicité → bilan hépatique | Hyperuricemie/goutte → uricemie | HTA refractaire → TA + adaptation dose",
+                    "albumine": "90%",
+                    "qt_risque": "(CR) Conditionnel — QTc rapporté si hypoK/hypoMg",
+                    "ddi_interact": "ALLOPURINOL/FÉBUXOSTAT (↑ ciclosporine), COLCHICINE (CI absolue IRC — rhabdomyolyse/aplasie ; DFG normal ↓ 50-75% + surveillance), STATINES (rhabdomyolyse — simvastatine CI ; atorvastatine max 10 mg, rosuvastatine max 5 mg, pravastatine/fluvastatine préférées), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir → ↑ ciclosporine x3-4 — ↓ dose 25-50%), INDUCTEURS CYP3A4 (rifampicine/phénytoïne/carbamazepine/millepertuis → ↓ ciclosporine x2-4 — rejet), DIGOXINE (↑ digoxinémie x2 par P-gp), DABIGATRAN/EDOXABAN (CI ABSOLUE — substrat P-gp), DRONÉDARONE (CI — ↑ exposition), AINS (néphrotoxicité additive), IEC/ARA2 + DIURÉTIQUES (hyperK, IRA), TACROLIMUS/ÉVÉROLIMUS (CI absolue — cumul néphrotoxicité), VACCINS VIVANTS (CI), JUS DE PAMPLEMOUSSE (↑ exposition x2), Anti-TNF/biothérapies (cumul infections), MÉTHOTREXATE (cumul toxicité), MYCOPHÉNOLATE (cumul immunosuppression)",
+                    "ddi_interact_v2": [
+                              { "classe": "Colchicine — CONTRE-INDICATION ABSOLUE EN IRC (rhabdomyolyse/aplasie mortelle)", "dcis": ["colchicine"], "commentaire": "Inhibition P-gp + CYP3A4 → ↑ exposition colchicine → toxicité majeure (rhabdomyolyse, aplasie médullaire, neuropathie). CI ABSOLUE en IRC. DFG normal : ↓ colchicine 50-75% + NFS/CPK rapprochée. Préférer corticoïde court pour crise goutte.", "severite": "danger" },
+                              { "classe": "Statines — rhabdomyolyse (simvastatine CI, autres avec restrictions)", "dcis": ["simvastatine", "atorvastatine", "rosuvastatine", "pitavastatine", "fluvastatine", "pravastatine"], "commentaire": "↑ exposition statines (P-gp + OATP1B1 + CYP3A4). SIMVASTATINE CI ABSOLUE (↑ x8 — rhabdomyolyse). Atorvastatine MAX 10 mg/j. Rosuvastatine MAX 5 mg/j. Préférer PRAVASTATINE 20-40 mg/j ou FLUVASTATINE (interactions moindres). Surveillance CPK.", "severite": "danger" },
+                              { "classe": "Dabigatran / Edoxaban — CONTRE-INDICATION ABSOLUE (P-gp)", "dcis": ["dabigatran", "edoxaban"], "commentaire": "Substrats P-gp → ↑ exposition x2-3 → saignement majeur. CI ABSOLUE. Préférer apixaban (substrat P-gp mais ↑ modéré, possible avec prudence) ou AVK.", "severite": "danger" },
+                              { "classe": "Dronédarone — CONTRE-INDICATION", "dcis": ["dronedarone"], "commentaire": "Inhibiteur P-gp + CYP3A4. ↑ exposition ciclosporine. CI.", "severite": "danger" },
+                              { "classe": "Tacrolimus / Évérolimus / Sirolimus — CONTRE-INDICATION ABSOLUE (cumul néphrotoxicité)", "dcis": ["tacrolimus", "everolimus", "sirolimus"], "commentaire": "Cumul néphrotoxicité + immunosuppression. CI ABSOLUE (sauf protocoles spécifiques transplantation).", "severite": "danger" },
+                              { "classe": "VACCINS VIVANTS — CONTRE-INDICATION ABSOLUE", "dcis": ["vaccin ror", "vaccin varicelle", "vaccin fievre jaune", "vaccin bcg", "vaccin rotavirus", "vaccin grippe nasal"], "commentaire": "Risque infection vaccinale disséminée. Vacciner AVANT initiation.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ ciclosporine x3-4", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "fluconazole", "clarithromycine", "telithromycine", "erythromycine", "ritonavir", "cobicistat", "nefazodone"], "commentaire": "↑ exposition ciclosporine x3-4. ↓ dose 25-50% + dosage C0. Voriconazole/posaconazole effet majeur.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP3A4 — ↓ ciclosporine x2-4 (REJET)", "dcis": ["rifampicine", "rifabutine", "phenytoine", "carbamazepine", "phenobarbital", "millepertuis", "efavirenz", "modafinil"], "commentaire": "↓ exposition ciclosporine x2-4 → RISQUE REJET. Adapter dose +++ + dosage C0 rapproché. Millepertuis CI.", "severite": "danger" },
+                              { "classe": "Allopurinol / Fébuxostat — ↑ ciclosporine + cumul toxicité", "dcis": ["allopurinol", "febuxostat"], "commentaire": "↑ exposition ciclosporine. Dosage C0 + surveillance.", "severite": "warning" },
+                              { "classe": "Digoxine — ↑ digoxinémie x2 (P-gp)", "dcis": ["digoxine"], "commentaire": "↑ x2 par inhibition P-gp. ↓ digoxine 50% + dosage.", "severite": "warning" },
+                              { "classe": "AINS / Antibiotiques néphrotoxiques — NÉPHROTOXICITÉ ADDITIVE", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam", "gentamicine", "tobramycine", "amikacine", "vancomycine", "amphotericine b", "produits contraste iodes"], "commentaire": "Néphrotoxicité additive +++. Préférer paracétamol. Hydratation +++ si contraste iodé.", "severite": "danger" },
+                              { "classe": "IEC / ARA2 + Diurétiques — HYPERKALIÉMIE + IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "spironolactone", "eplerenone", "amiloride", "triamterene", "furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Hyperkaliémie + IRA additive. Surveillance K+/créatinine étroite.", "severite": "warning" },
+                              { "classe": "Méthotrexate / Mycophénolate / Anti-TNF / JAK inh — cumul immunosuppression", "dcis": ["methotrexate", "mycophenolate mofetil", "mycophenolate sodique", "azathioprine", "leflunomide", "infliximab", "adalimumab", "etanercept", "tocilizumab", "rituximab", "tofacitinib", "baricitinib", "upadacitinib"], "commentaire": "Cumul immunosuppression — infections opportunistes, lymphome. Surveillance.", "severite": "warning" },
+                              { "classe": "Jus de pamplemousse — ↑ exposition x2 (CYP3A4 intestinal)", "dcis": ["jus de pamplemousse"], "commentaire": "Éviter strictement.", "severite": "warning" },
+                              { "classe": "AVK warfarine — effet variable", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "Effet variable INR. Surveillance.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Créatinine/DFG | Bilan hépatique | Ionogramme + Mg + uricémie | TA | NFS | Bilan lipidique | Glycémie | Dosage sérique C0 ou C2 (cible selon indication) | Sérologies (HBV/HCV/VIH/EBV/CMV/TB latente/varicelle) | Vaccinations à jour AVANT (vivants CI ensuite) | ECG (QTc) | Frottis col + dermatologique",
+                    "suivi_periodique": "Dosage C0 hebdomadaire 1er mois, bimensuel M2-M3, mensuel ensuite — adapter cible selon indication | Créatinine/K+/Mg hebdo M1 puis mensuel | Bilan hépatique mensuel | TA chaque consultation | Bilan lipidique annuel | Uricémie/glycémie | Dermatologique annuel (SCC) | Frottis col annuel",
+                    "alerte_clinique": "NÉPHROTOXICITÉ dose-dépendante → créatinine + dosage urgents (↓ dose si créat ↑ > 30% baseline) | HTA INDUITE (60-80% — souvent réfractaire, préférer DHP nicardipine/amlodipine ; éviter diltiazem/vérapamil ↑ ciclosporine) | HYPERKALIÉMIE | HYPOMAGNÉSÉMIE (→ supplémentation) | HYPERURICÉMIE/GOUTTE | HÉPATOTOXICITÉ | HYPERPLASIE GINGIVALE | HIRSUTISME/TRICHOSE | TREMBLEMENTS/NEUROTOXICITÉ (PRES — leucoencéphalopathie postérieure) | INFECTIONS OPPORTUNISTES (CMV, PCP, BK virus, aspergillose) | LYMPHOME PTLD (post-transplant) | CARCINOMES CUTANÉS (SCC ↑ — photoprotection) | TROUBLES MÉTABOLIQUES (dyslipidémie, diabète post-transplantation)",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -6388,10 +6374,10 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Taux résiduel C0 guidé. Nombreuses interactions CYP3A4/P-gp.",
-                    "source": "RCP Néoral ; HAS 2022 transplantation",
+                    "notes_cliniques": "Anticalcineurine référence — peptide cyclique 11 aa. Inhibe activation lymphocytes T (cible calcineurine/NFAT). Indications : transplantation (rein, foie, cœur, poumon, moelle), psoriasis sévère, dermatite atopique, syndrome néphrotique cortico-résistant, MICI réfractaire, uvéite, AHAI. SUIVI THÉRAPEUTIQUE PHARMACOLOGIQUE OBLIGATOIRE (C0 ou C2 selon indication/centre). Substrat CYP3A4 + P-gp → ÉNORME nombre d'interactions (>200 documentées) — toujours vérifier toute prescription. Différent de tacrolimus : ↓ néphrotoxicité aiguë mais ↑ HTA/dyslipidémie/hirsutisme/hyperplasie gingivale. Préférer tacrolimus en transplantation rein/foie de nos jours. PIM Beers 2023 chez âgé fragile : prudence (néphro, infections).",
+                    "source": "RCP Néoral/Sandimmun ; HAS 2022 transplantation ; KDIGO 2009 ; Beers 2023",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "Neurotoxicité dose-dépendante"
+                    "epileptogene_desc": "Neurotoxicité dose-dépendante (PRES, tremblements, convulsions si surdosage/hypoMg/hypochol)"
           },
           {
                     "dci": "Cilazapril",
@@ -15123,21 +15109,33 @@ const MASTER_DB = {
           },
           {
                     "dci": "Mycophenolate mofetil",
-                    "princeps": "Cellcept",
-                    "classe": "Immunosuppresseur (inhibiteur IMPDH)",
-                    "poso_hab": "1-1.5 g x2/j",
-                    "poso_ger": "500 mg-1g x2/j",
-                    "poso_ren": "Pas d'ajustement majeur",
+                    "princeps": "Cellcept (MMF) / Myfortic (mycophénolate sodique LP)",
+                    "classe": "Immunosuppresseur — inhibiteur sélectif inosine monophosphate déshydrogénase (IMPDH) — antimétabolite purine",
+                    "poso_hab": "Transplantation rein : 1 g x2/j (Cellcept) ou 720 mg x2/j (Myfortic) | Auto-immun : 500-1500 mg x2/j",
+                    "poso_ger": "500 mg-1 g x2/j ; surveillance NFS + tolérance digestive (diarrhée fréquente, dose-dépendante)",
+                    "poso_ren": "Pas d'ajustement strict DFG ≥ 25 ; DFG < 25 hors transplantation : prudence (↑ exposition acide mycophénolique libre) ; Hémodialyse : pas de modification (non dialysable)",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "",
+                    "albumine": "97-99% (MPA, métabolite actif)",
                     "qt_risque": "",
-                    "ddi_interact": "Peu d'interactions",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "NFS-plaquettes (myelosuppression) | Bilan hépatique | Créatinine | Bilan infectieux",
-                    "suivi_periodique": "NFS (toutes les 2 semaines les 3 premiers mois, puis mensuel jusqu'a 1 an, puis tous les 3 mois)",
-                    "alerte_clinique": "Leucopenie/Neutropenie → NFS urgente | Aplasie → NFS urgente | Diarrhee profuse (effet dose-dependant) → ionogramme + créatinine",
+                    "ddi_interact": "ANTIACIDES Mg/Al + IPP (↓ absorption 20-40% — espacer 2h ou préférer ranitidine), CHOLESTYRAMINE/CHARBON (↓ exposition x2 — éviter), TACROLIMUS/CICLOSPORINE (↓ MPA AUC 50% par ciclosporine, vs +/- 20% par tacrolimus — adapter), AVK warfarine (effet modeste), VACCINS VIVANTS (CI ABSOLUE), GROSSESSE — TÉRATOGÈNE catégorie X (programme PRAC ANSM 2018 obligatoire — contraception efficace pendant + 6 sem après arrêt H et F), CONTRACEPTION ORALE (↓ efficacité estroprogestatifs — préférer DIU/barrière), AZATHIOPRINE/AUTRES IS (cumul myélotoxicité), RIBAVIRINE (cumul aplasie), GANCICLOVIR/VALGANCICLOVIR (cumul myélotoxicité — fréquente association post-transplantation), AINS (néphrotoxicité), ALLOPURINOL (pas d'interaction directe — différence avec AZA)",
+                    "ddi_interact_v2": [
+                              { "classe": "TÉRATOGÈNE catégorie X — GROSSESSE CONTRE-INDIQUÉE (programme PRAC ANSM 2018)", "dcis": ["grossesse", "femme age procreer", "homme age procreer"], "commentaire": "Risque malformations majeur (50% fausses couches, 23-27% malformations — oreille externe, faciales, cardiaques, rénales). PROGRAMME PRAC ANSM 2018 obligatoire : contraception efficace x 2 méthodes (préservatif + DIU/stérilet ou implant) pendant traitement + 6 SEMAINES après arrêt chez femme, 90 jours chez homme (sperme). Test grossesse pré-thérapeutique + mensuel chez femme en âge de procréer. Information écrite signée patient.", "severite": "danger" },
+                              { "classe": "VACCINS VIVANTS — CONTRE-INDICATION ABSOLUE", "dcis": ["vaccin ror", "vaccin varicelle", "vaccin fievre jaune", "vaccin bcg", "vaccin rotavirus", "vaccin grippe nasal"], "commentaire": "CI ABSOLUE. Risque infection vaccinale disséminée. Vacciner AVANT initiation.", "severite": "danger" },
+                              { "classe": "Ribavirine — cumul aplasie médullaire", "dcis": ["ribavirine"], "commentaire": "Cumul myélotoxicité — aplasie. CI relative. NFS rapprochée si association inévitable.", "severite": "danger" },
+                              { "classe": "Ganciclovir / Valganciclovir — cumul myélotoxicité (association fréquente prophylaxie CMV)", "dcis": ["ganciclovir", "valganciclovir"], "commentaire": "Cumul aplasie médullaire — association fréquente en prophylaxie CMV post-transplantation. NFS hebdomadaire pendant association.", "severite": "warning" },
+                              { "classe": "Antiacides Mg/Al / IPP — ↓ absorption 20-40%", "dcis": ["hydroxyde aluminium", "hydroxyde magnesium", "omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole"], "commentaire": "↓ absorption MPA 20-40% (Cellcept). Myfortic moins affecté (gastro-résistant). Espacer ≥ 2h ou préférer ranitidine/famotidine. Vérifier C0 si MMF + IPP au long cours.", "severite": "warning" },
+                              { "classe": "Cholestyramine / Charbon activé / Colestipol — ↓ exposition x2 (cycle entérohépatique)", "dcis": ["cholestyramine", "colestipol", "colesevelam", "charbon active"], "commentaire": "Interruption cycle entérohépatique → ↓ AUC MPA x2. ÉVITER ou switch.", "severite": "danger" },
+                              { "classe": "Ciclosporine — ↓ MPA AUC 50% (interaction PK majeure)", "dcis": ["ciclosporine"], "commentaire": "Ciclosporine ↓ recirculation entérohépatique MPA → ↓ AUC 50% (vs tacrolimus). Dose MMF + élevée avec ciclosporine qu'avec tacrolimus. Adapter si switch ciclosporine ↔ tacrolimus.", "severite": "warning" },
+                              { "classe": "Azathioprine / Autres immunosuppresseurs — cumul myélotoxicité", "dcis": ["azathioprine", "mercaptopurine", "methotrexate", "leflunomide"], "commentaire": "Cumul myélosuppression. NFS rapprochée.", "severite": "warning" },
+                              { "classe": "AINS — néphrotoxicité additive", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "Néphrotoxicité additive. Préférer paracétamol.", "severite": "warning" },
+                              { "classe": "Contraceptifs estroprogestatifs — ↓ efficacité (programme PRAC)", "dcis": ["ethinylestradiol", "levonorgestrel", "desogestrel", "norethisterone", "etonogestrel"], "commentaire": "↓ efficacité possible. PRAC 2018 : DIU/barrière OBLIGATOIRES en complément. Méthode unique de contraception ne suffit PAS.", "severite": "danger" },
+                              { "classe": "AVK warfarine — effet modeste", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "Effet variable INR. Surveillance.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "NFS-plaquettes (myélosuppression) | Bilan hépatique | Créatinine/DFG | Bilan infectieux complet (HBV/HCV/VIH/EBV/CMV/TB latente/varicelle) | Vaccinations à jour AVANT (vivants CI ensuite) | β-HCG si femme en âge de procréer + INFORMATION/CONSENTEMENT ÉCRIT programme PRAC | Contraception double obligatoire | Dermatologique + frottis col",
+                    "suivi_periodique": "NFS BIMENSUELLE 3 premiers mois, MENSUELLE jusqu'à M12, TRIMESTRIELLE ensuite | Bilan hépatique trimestriel | Créatinine trimestrielle | β-HCG MENSUEL chez femme en âge de procréer (programme PRAC) | Tolérance digestive (diarrhée) | Dermatologique annuel | Frottis col annuel",
+                    "alerte_clinique": "MYÉLOSUPPRESSION (neutropénie, aplasie pure érythroïde — surtout post-transplantation) → NFS urgente | DIARRHÉE PROFUSE (dose-dépendante, 30%) → ionogramme/créatinine, ↓ dose | INFECTIONS OPPORTUNISTES (CMV, BK virus, PCP, EBV) | LYMPHOME PTLD post-transplant | CARCINOMES CUTANÉS (photoprotection) | LEUCOENCÉPHALOPATHIE MULTIFOCALE PROGRESSIVE PML (rare — JC virus) → surveillance neuro | TÉRATOGÈNE CATÉGORIE X — programme PRAC obligatoire (contraception double F+6 sem, H+90 j) | NE PAS ÉCRASER comprimés (poussière tératogène) | Switch Cellcept → Myfortic possible si intolérance digestive (rapport 1 g MMF ≈ 720 mg myco-Na) | TBC réactivation",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_011",
@@ -15150,8 +15148,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Ne pas écraser (tératogène). Prise 1h avant ou 2h après repas.",
-                    "source": "RCP Cellcept ; HAS 2022 transplantation"
+                    "notes_cliniques": "Inhibiteur sélectif IMPDH (cible synthèse de novo des purines, cellules lymphocytes T/B dépendantes vs autres cellules qui ont voie de sauvetage). Métabolite actif : acide mycophénolique (MPA). Cycle entérohépatique majeur → interactions avec antiacides/cholestyramine. Cellcept (MMF, libération immédiate) vs Myfortic (mycophénolate sodique gastro-résistant) — rapport 1 g MMF ≈ 720 mg myco-Na. Indications : transplantation (rein, foie, cœur), LES néphrite (référence), vasculites ANCA en maintenance (alternative AZA), myasthénie, dermatomyosite. TÉRATOGÈNE CATÉGORIE X +++ — programme PRAC ANSM 2018 OBLIGATOIRE (information + contraception double + β-HCG mensuel + signature consentement). Vs azathioprine : ↓ rejet, mais ↑ infections, ↑ tératogénicité, coût supérieur. Pas d'interaction allopurinol (avantage majeur vs AZA chez goutteux). PIM Beers prudence chez âgé fragile.",
+                    "source": "RCP Cellcept/Myfortic ; HAS 2022 transplantation ; KDIGO 2009 ; ACR 2020 LES ; ANSM/EMA PRAC 2018 (tératogénicité) ; Beers 2023"
           },
           {
                     "dci": "Nadolol",
@@ -19830,21 +19828,36 @@ const MASTER_DB = {
           },
           {
                     "dci": "Tacrolimus",
-                    "princeps": "Prograf",
-                    "classe": "Immunosuppresseur (inhibiteur calcineurine - FK506)",
-                    "poso_hab": "0.1-0.3 mg/kg/j",
-                    "poso_ger": "0.05-0.1 mg/kg/j",
-                    "poso_ren": "Monitoring taux",
+                    "princeps": "Prograf (LI 2x/j) / Advagraf, Envarsus (LP 1x/j) / Modigraf (suspension)",
+                    "classe": "Immunosuppresseur — inhibiteur calcineurine FK506 (macrolactone) — référence transplantation",
+                    "poso_hab": "Transplantation : 0,1-0,3 mg/kg/j en 2 prises (Prograf) ou 1 prise (Advagraf) ; cible C0 5-15 ng/mL selon centre/phase | Dermatite atopique topique 0,03-0,1% (Protopic)",
+                    "poso_ger": "0,05-0,1 mg/kg/j ; cible C0 plus basse (3-8 ng/mL en maintenance) ; PIM Beers prudence âgé fragile (néphrotoxicité, NODAT, infections)",
+                    "poso_ren": "Pas d'ajustement strict (élimination hépatique) MAIS NÉPHROTOXICITÉ DOSE-DÉPENDANTE → adapter selon créatinine + dosage C0 | Si créat ↑ > 30% : ↓ dose ou arrêt temporaire",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,99",
-                    "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "CYP3A4 substrat, Inducteur leger",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG | Bilan hépatique | Glycemie/HbA1c | Ionogramme | NFS | Bilan lipidique | Dosage serique C0",
-                    "suivi_periodique": "Créatinine + dosage C0 (tous les 3 mois en phase stable) | Glycemie (tous les 3 a 6 mois - NODAT) | Bilan hépatique (tous les 3 mois) | Ionogramme (tous les 3 mois)",
-                    "alerte_clinique": "Nephrotoxicite → créatinine + dosage urgents | Diabete post-transplantation (NODAT) → glycemie | Neurotoxicite (tremblements, confusion) → dosage urgent | Hyperkaliemie → ionogramme urgent",
+                    "albumine": "99%",
+                    "qt_risque": "(PR) Risque Possible — QTc surveillé, surtout si hypoK/hypoMg",
+                    "ddi_interact": "INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/voriconazole/posaconazole/clarithromycine/ritonavir → ↑ tacrolimus x3-10 — ↓ dose 50-75%), INDUCTEURS CYP3A4 (rifampicine/phénytoïne/carbamazepine/millepertuis → ↓ tacrolimus x3-4 REJET), CICLOSPORINE/ÉVÉROLIMUS/SIROLIMUS (CI ABSOLUE — cumul néphrotoxicité), STATINES (rhabdomyolyse — simvastatine prudence), DABIGATRAN/EDOXABAN (CI — substrat P-gp), AINS (néphrotoxicité additive), IEC/ARA2 (hyperK), DIURÉTIQUES ÉPARGNEURS K+ (hyperK), VACCINS VIVANTS (CI ABSOLUE), JUS DE PAMPLEMOUSSE (↑ x2), Anti-TNF/biothérapies (cumul infections), Colchicine (toxicité), Methotrexate (cumul), Mycophénolate (cumul), Antifongiques azolés systémiques (↑ tacrolimus +++), Macrolides (clarithromycine/érythromycine = ↑ x3 ; azithromycine OK), DRONÉDARONE (CI), Antiarythmiques classe IA/III (↑ QTc)",
+                    "ddi_interact_v2": [
+                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ tacrolimus x3-10 (RÉDUIRE DOSE 50-75%)", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "fluconazole", "clarithromycine", "telithromycine", "erythromycine", "ritonavir", "cobicistat", "nefazodone", "boceprevir", "telaprevir"], "commentaire": "↑ exposition tacrolimus jusqu'à x10 (voriconazole/posaconazole). ↓ DOSE 50-75% pré-emptive + dosage C0 quotidien initial. Voriconazole peut nécessiter ↓ 90% dose tacrolimus. PRUDENCE +++.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP3A4 — ↓ tacrolimus x3-4 (RISQUE REJET)", "dcis": ["rifampicine", "rifabutine", "phenytoine", "carbamazepine", "phenobarbital", "millepertuis", "efavirenz", "etravirine", "modafinil", "enzalutamide"], "commentaire": "↓ exposition tacrolimus x3-4 → REJET. ↑ dose anticipée + dosage C0 rapproché. Millepertuis CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Évérolimus / Sirolimus — CONTRE-INDICATION ABSOLUE", "dcis": ["ciclosporine", "everolimus", "sirolimus"], "commentaire": "Cumul néphrotoxicité +++ (sauf protocoles transplantation spécifiques). CI ABSOLUE en pratique courante. Wash-out 24h ciclosporine avant tacrolimus.", "severite": "danger" },
+                              { "classe": "VACCINS VIVANTS — CONTRE-INDICATION ABSOLUE", "dcis": ["vaccin ror", "vaccin varicelle", "vaccin fievre jaune", "vaccin bcg", "vaccin rotavirus", "vaccin grippe nasal"], "commentaire": "CI ABSOLUE. Risque infection vaccinale disséminée. Vacciner AVANT initiation + 3-6 mois post-arrêt.", "severite": "danger" },
+                              { "classe": "Dabigatran / Edoxaban — CONTRE-INDICATION (P-gp)", "dcis": ["dabigatran", "edoxaban"], "commentaire": "Substrats P-gp → ↑ exposition x2-3. CI. Préférer apixaban (prudence) ou AVK.", "severite": "danger" },
+                              { "classe": "Dronédarone — CONTRE-INDICATION", "dcis": ["dronedarone"], "commentaire": "Inhibiteur P-gp + CYP3A4 + QTc. CI.", "severite": "danger" },
+                              { "classe": "Statines — rhabdomyolyse (atorvastatine/simvastatine prudence)", "dcis": ["simvastatine", "atorvastatine", "rosuvastatine", "pitavastatine"], "commentaire": "↑ exposition statines (P-gp). Simvastatine prudence (max 20 mg). Atorvastatine max 20-40 mg. Préférer pravastatine/fluvastatine. Surveillance CPK.", "severite": "warning" },
+                              { "classe": "AINS / Antibiotiques néphrotoxiques — NÉPHROTOXICITÉ ADDITIVE", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam", "gentamicine", "tobramycine", "amikacine", "vancomycine", "amphotericine b", "produits contraste iodes"], "commentaire": "Néphrotoxicité additive +++. Préférer paracétamol. Hydratation si contraste iodé.", "severite": "danger" },
+                              { "classe": "IEC / ARA2 + Diurétiques épargneurs K+ — HYPERKALIÉMIE", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "Hyperkaliémie additive +++. Surveillance K+ étroite. Tacrolimus est lui-même hyperkaliémiant.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — TORSADES DE POINTES", "dcis": ["amiodarone", "sotalol", "flecainide", "hydroxychloroquine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "azithromycine", "ondansetron", "domperidone", "haloperidol", "ziprasidone", "quetiapine", "risperidone", "citalopram", "escitalopram", "methadone"], "commentaire": "QTc additif. Surveillance ECG + ions (K+/Mg). Corriger hypoK/hypoMg.", "severite": "warning" },
+                              { "classe": "Colchicine — toxicité (P-gp)", "dcis": ["colchicine"], "commentaire": "↑ exposition colchicine. CI ABSOLUE en IRC. DFG normal : ↓ colchicine 50-75% + NFS/CPK.", "severite": "danger" },
+                              { "classe": "Méthotrexate / Mycophénolate / Azathioprine / Anti-TNF — cumul immunosuppression", "dcis": ["methotrexate", "mycophenolate mofetil", "mycophenolate sodique", "azathioprine", "leflunomide", "infliximab", "adalimumab", "etanercept", "tocilizumab", "rituximab", "tofacitinib", "baricitinib", "upadacitinib"], "commentaire": "Cumul immunosuppression — infections opportunistes, lymphome.", "severite": "warning" },
+                              { "classe": "Jus de pamplemousse — ↑ exposition x2 (CYP3A4 intestinal)", "dcis": ["jus de pamplemousse"], "commentaire": "Éviter strictement.", "severite": "warning" },
+                              { "classe": "AVK warfarine — effet variable", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "Effet variable. Surveillance INR.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Créatinine/DFG | Bilan hépatique | Glycémie/HbA1c (RISQUE NODAT ÉLEVÉ — diabète post-transplantation new-onset) | Ionogramme + Mg | NFS | Bilan lipidique | Dosage sérique C0 (cible selon indication/phase) | ECG (QTc) | Sérologies HBV/HCV/VIH/EBV/CMV/TB latente/varicelle | Vaccinations à jour AVANT (vivants CI ensuite) | Dermatologique + frottis col",
+                    "suivi_periodique": "C0 quotidien initial → hebdomadaire → mensuel → trimestriel (cible selon phase) | Créatinine/K+/Mg hebdo M1 puis mensuel | Glycémie/HbA1c trimestriel (NODAT) | Bilan hépatique trimestriel | Bilan lipidique annuel | Dermatologique annuel (SCC) | Frottis col annuel | ECG annuel",
+                    "alerte_clinique": "NÉPHROTOXICITÉ dose-dépendante (mécanisme principal d'arrêt) → créatinine + dosage urgents | NODAT (DIABÈTE POST-TRANSPLANTATION 20-30% — vs ciclosporine 10-15%) → glycémie/HbA1c surveillance | NEUROTOXICITÉ (tremblements 30-50%, céphalées, insomnie, PRES) → dosage urgent | HYPERKALIÉMIE +++ (acidose tubulaire) → ionogramme | HYPOMAGNÉSÉMIE | HTA (moins fréquente que ciclosporine) | INFECTIONS OPPORTUNISTES (CMV, PCP, BK virus, EBV-PTLD) | LYMPHOME PTLD post-transplant | CARCINOMES CUTANÉS (SCC ↑) | QTc (PR) | Pas d'hirsutisme ni hyperplasie gingivale (vs ciclosporine)",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -19859,10 +19872,10 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Taux résiduel C0 guidé selon indication et phase post-transplantation.",
-                    "source": "RCP Prograf/Advagraf ; HAS 2022 transplantation",
+                    "notes_cliniques": "Anticalcineurine référence transplantation (rein, foie, cœur, poumon, moelle) — supplante progressivement ciclosporine (↓ rejet, ↓ HTA/dyslipidémie/hirsutisme mais ↑ NODAT, ↑ neurotoxicité). 3 formes orales : Prograf (LI 2x/j, référence), Advagraf (LP 1x/j, amélioration adhésion), Envarsus (LP biodisponibilité différente — RATIO NON 1:1, conversion 0,7-0,8). NE PAS INTERCHANGER sans dosage C0 +++ — risque de surdosage/sous-dosage. Topique 0,03-0,1% (Protopic) pour dermatite atopique modérée-sévère. Suivi thérapeutique pharmacologique OBLIGATOIRE. Substrat CYP3A4 + P-gp → interactions multiples (>200). PIM Beers chez âgé fragile.",
+                    "source": "RCP Prograf/Advagraf/Envarsus ; HAS 2022 transplantation ; KDIGO 2009 ; ESOT 2020 ; Beers 2023",
                     "epileptogene": "modere",
-                    "epileptogene_desc": "Neurotoxicité — convulsions rapportées"
+                    "epileptogene_desc": "Neurotoxicité — convulsions, PRES (leucoencéphalopathie postérieure réversible), tremblements"
           },
           {
                     "dci": "Tafluprost",
@@ -24072,49 +24085,34 @@ const MASTER_DB = {
           },
           {
                     "dci": "Methotrexate",
-                    "princeps": "Novatrex / Imeth",
-                    "classe": "Antimétabolite / DMARD",
-                    "poso_hab": "7.5-25 mg/semaine (PO ou SC)",
-                    "poso_ger": "7.5-15 mg/semaine (débuter bas)",
-                    "poso_ren": "Réduction 50% si DFG 30-60. CI si DFG < 30.",
+                    "princeps": "Novatrex / Imeth / Metoject (SC) / Nordimet (SC stylo)",
+                    "classe": "Antimétabolite (antifolique — inhibiteur dihydrofolate réductase) / DMARD csDMARD ancre — référence rhumatologie, dermatologie",
+                    "poso_hab": "Rhumatologie/dermatologie : 7,5-25 mg/SEMAINE (PO ou SC — préférer SC > 15 mg/sem) | Oncologie : doses élevées avec sauvetage folinique",
+                    "poso_ger": "7,5-15 mg/SEMAINE (débuter 7,5 mg, titration 2,5 mg/4 sem) ; préférer voie SC (meilleure biodisponibilité et tolérance digestive). RISQUE D'ERREUR DE PRISE QUOTIDIENNE +++ chez âgé fragile/troubles cognitifs (décès rapportés ANSM 2008-2024) → information écrite + pilulier hebdomadaire + entourage formé OBLIGATOIRE",
+                    "poso_ren": "DFG 60-90 : dose habituelle | DFG 30-60 : ↓ 50% + surveillance ↑ | DFG < 30 : CONTRE-INDICATION (accumulation, aplasie/insuffisance rénale aiguë +++) | Hémodialyse : CI",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "0",
                     "qt_risque": "",
                     "albumine": "50%",
-                    "ddi_interact": "AINS (toxicité rénale), Triméthoprime (pancytopénie), IPP",
+                    "ddi_interact": "PRISE QUOTIDIENNE ERRONÉE — DÉCÈS rapportés (ANSM 2008-2024 — information écrite + pilulier hebdomadaire), TRIMÉTHOPRIME/COTRIMOXAZOLE — CI ABSOLUE (pancytopénie/aplasie mortelle — antagonisme folate cumulé), AINS — CI relative en MTX dose oncologique, prudence en dose rhumatologique (↑ exposition par compétition rénale + néphrotoxicité), IPP — ↑ MTX (compétition tubulaire, surtout doses élevées — espacer en oncologie), PÉNICILLINES (amoxicilline/oxacilline → ↑ MTX), PROBÉNÉCIDE/SALICYLÉS (↑ MTX), AZATHIOPRINE/MYCOPHÉNOLATE/LEFLUNOMIDE (cumul hépatotoxicité/myélotoxicité), VACCINS VIVANTS (CI ABSOLUE), GROSSESSE — TÉRATOGÈNE catégorie X (programme PRAC ANSM 2019 — contraception efficace pendant + 6 mois après arrêt H et F), CICLOSPORINE/TACROLIMUS (cumul néphro), Alcool (hépatotoxicité), Théophylline (↑ exposition)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "toxicité rénale",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "IPP",
-                                        "dcis": [
-                                                  "omeprazole",
-                                                  "esomeprazole",
-                                                  "lansoprazole",
-                                                  "pantoprazole",
-                                                  "rabeprazole"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "PRISE QUOTIDIENNE ERRONÉE — DÉCÈS rapportés (ANSM 2008-2024)", "dcis": ["erreur prise quotidienne"], "commentaire": "ERREUR FATALE : prise quotidienne au lieu d'hebdomadaire → aplasie/pancytopénie/insuffisance rénale/mucites/décès en quelques jours. ANSM rappels répétés. INFORMATION ÉCRITE PATIENT + PILULIER HEBDOMADAIRE + ENTOURAGE FORMÉ. Choisir jour fixe semaine (lundi recommandé). En cas de doute prise quotidienne : hospitalisation + sauvetage folinique + dosage MTX urgent.", "severite": "danger" },
+                              { "classe": "TRIMÉTHOPRIME / COTRIMOXAZOLE — CONTRE-INDICATION ABSOLUE (PANCYTOPÉNIE FATALE)", "dcis": ["sulfamethoxazole", "trimethoprime", "cotrimoxazole"], "commentaire": "Antagonisme folate additif → APLASIE MÉDULLAIRE FATALE rapportée. CI ABSOLUE. Préférer autre ATB pour PCP (atovaquone, pentamidine) ou autre IVU (nitrofurantoïne, fosfomycine). Si association indispensable < 24h : NFS quotidienne + folinique préventif.", "severite": "danger" },
+                              { "classe": "VACCINS VIVANTS — CONTRE-INDICATION ABSOLUE", "dcis": ["vaccin ror", "vaccin varicelle", "vaccin fievre jaune", "vaccin bcg", "vaccin rotavirus", "vaccin grippe nasal"], "commentaire": "CI ABSOLUE. Vacciner AVANT + 3 mois post-arrêt.", "severite": "danger" },
+                              { "classe": "TÉRATOGÈNE catégorie X — programme PRAC ANSM 2019 (contraception F+6 mois, H+6 mois)", "dcis": ["grossesse", "femme age procreer", "homme age procreer"], "commentaire": "Tératogène/abortif majeur (fœtopathie aux antifoliques). PRAC ANSM 2019 : contraception efficace pendant + 6 MOIS après arrêt (H et F), test grossesse pré-thérapeutique. Information écrite signée. PRÉFÉRER MMF/AZA si projet grossesse (AZA seul compatible — AZA = pro-drogue 6-MP, présentation grossesse possible sous surveillance).", "severite": "danger" },
+                              { "classe": "AINS — ↑ MTX (compétition tubulaire) + néphrotoxicité", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "celecoxib", "etoricoxib", "meloxicam", "indometacine", "aspirine forte dose"], "commentaire": "Doses oncologiques : CI absolue. Doses rhumatologiques : prudence (↑ exposition + néphrotoxicité). Aspirine ≤ 100 mg cardio-protection : acceptable. Préférer paracétamol ou tramadol pour antalgie.", "severite": "danger" },
+                              { "classe": "IPP — ↑ MTX (compétition tubulaire, surtout doses élevées)", "dcis": ["omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole"], "commentaire": "↑ exposition MTX (surtout dose oncologique). Espacer ou interrompre IPP les jours de MTX dose élevée. Doses rhumatologiques : prudence sans CI.", "severite": "warning" },
+                              { "classe": "Pénicillines / Probénécide / Salicylés — ↑ MTX (compétition tubulaire)", "dcis": ["amoxicilline", "ampicilline", "oxacilline", "piperacilline", "probenecide", "aspirine forte dose"], "commentaire": "↑ exposition MTX. Prudence — surveillance NFS.", "severite": "warning" },
+                              { "classe": "Autres immunosuppresseurs / DMARDs — cumul hépatotoxicité/myélotoxicité", "dcis": ["azathioprine", "mercaptopurine", "mycophenolate mofetil", "leflunomide", "ciclosporine", "tacrolimus", "everolimus", "sirolimus"], "commentaire": "Cumul hépato/myélotoxicité. Leflunomide + MTX = surveillance ALAT/NFS étroite. Switch leflunomide → MTX : wash-out cholestyramine.", "severite": "warning" },
+                              { "classe": "Ciclosporine / Tacrolimus — cumul néphrotoxicité", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Néphrotoxicité additive. Associations possibles en oncologie/transplantation mais surveillance.", "severite": "warning" },
+                              { "classe": "Alcool — hépatotoxicité (CI relative)", "dcis": ["alcool"], "commentaire": "↑ x2-3 risque cirrhose/fibrose hépatique. Consommation ≤ 14 unités/semaine maximum (recommandation BSR). Préférer abstinence.", "severite": "warning" },
+                              { "classe": "Théophylline — ↑ exposition", "dcis": ["theophylline"], "commentaire": "↑ exposition théophylline. Surveillance.", "severite": "warning" },
+                              { "classe": "Anti-TNF / JAK inh / Anti-CD20 — synergie efficace mais cumul infections", "dcis": ["infliximab", "adalimumab", "etanercept", "certolizumab", "golimumab", "tocilizumab", "rituximab", "tofacitinib", "baricitinib", "upadacitinib", "filgotinib"], "commentaire": "Association MTX + bDMARD/tsDMARD = standard rhumatologie PR (synergie). Surveillance infectieuse +++. TB latente avant.", "severite": "info" }
                     ],
-                    "suivi_initial": "NFS | BH | Créatinine/DFG | Radio thorax | Sérologies hépatites",
-                    "suivi_periodique": "NFS + BH mensuel pendant 3 mois puis trimestriel | Créatinine",
-                    "alerte_clinique": "PANCYTOPÉNIE (fièvre, angine, purpura, mucite, saignement) → NFS urgente, ARRÊT MTX, sauvetage par ACIDE FOLINIQUE (folinate de calcium) 15 mg/6h IV jusqu'à hématopoïèse + glucarpidase si insuffisance rénale + dosage MTX. Pneumopathie interstitielle (toux, dyspnée, fièvre) → arrêt + corticoïdes + scanner thoracique. Hépatotoxicité (cytolyse persistante > 3N) → arrêt + bilan hépatique. Stomatite/mucite → folinique + bain de bouche + arrêt. Toujours associer acide folique 5 mg/sem en prévention (sauf jour MTX).",
+                    "suivi_initial": "NFS-plaquettes | Bilan hépatique (ALAT/ASAT/PAL/GGT) | Créatinine/DFG | Albumine | Radio thorax (pneumopathie pré-existante) | Sérologies HBV/HCV/VIH/TB latente (QuantiFERON) | Vaccinations à jour AVANT | β-HCG si femme en âge de procréer + INFORMATION/CONSENTEMENT ÉCRIT programme PRAC | Acide folique 5 mg/sem prévention (jour différent du MTX, le surlendemain) | EFR baseline si BPCO/fibrose",
+                    "suivi_periodique": "NFS + BH MENSUEL pendant 3 mois puis TRIMESTRIEL | Créatinine trimestrielle | Albumine | β-HCG mensuel si femme en âge de procréer | Acide folique 5 mg/sem en continu | Information répétée \"prise hebdomadaire +++\" à chaque consultation",
+                    "alerte_clinique": "PANCYTOPÉNIE (fièvre, angine, purpura, mucite, saignement) → NFS URGENTE, ARRÊT MTX, sauvetage par ACIDE FOLINIQUE (folinate de calcium) 15 mg/6h IV jusqu'à hématopoïèse + GLUCARPIDASE si IRA + dosage MTX | ERREUR PRISE QUOTIDIENNE → décès — pilulier hebdomadaire + info écrite OBLIGATOIRE | PNEUMOPATHIE INTERSTITIELLE (toux, dyspnée, fièvre) → arrêt + corticoïdes + scanner | HÉPATOTOXICITÉ (cytolyse > 3N persistante, fibrose à long terme) → arrêt + écho/FibroScan/biopsie | STOMATITE/MUCITE → folinique + bain de bouche + arrêt | TÉRATOGÈNE X — programme PRAC 6 mois | LYMPHOME EBV+ (rare — régression à l'arrêt) | NÉPHROTOXICITÉ dose-dépendante | INFECTIONS opportunistes (PCP, zona, TB réactivation) | TJS associer acide folique 5 mg/sem prévention",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_010",
@@ -24129,8 +24127,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Immunosuppresseur PR/cancer : prise HEBDOMADAIRE (jamais quotidienne — surdosages mortels documentés ANSM). Acide folique 5 mg/sem prévention (jour différent). Adapter si DFG < 60, CI si DFG < 30. Surveillance NFS COMPLETE (Hb + plaquettes + leucocytes/PNN — pancytopénie possible) + BH + créat. Interaction triméthoprime/AINS = pancytopénie.",
-                    "source": "RCP Novatrex | HAS Rhumatologie 2019"
+                    "notes_cliniques": "Antifolique — inhibe dihydrofolate réductase (cellules en division rapide). csDMARD ancre rhumatologie (PR, rhumatisme psoriasique, SpA), dermatologie (psoriasis), MICI (Crohn cortico-dépendant), oncologie (LAL, lymphome NH, sein, vessie, choriocarcinome). PRISE HEBDOMADAIRE OBLIGATOIRE — décès rapportés par confusion quotidienne (ANSM 2008-2024 rappels répétés) : information écrite + pilulier hebdomadaire + entourage formé. Préférer voie SC > 15 mg/sem (meilleure biodisponibilité 80% vs 40-70% PO, ↓ effets digestifs). Acide folique 5 mg/sem (24-48h après MTX) DIVISE PAR 2 effets indésirables sans ↓ efficacité (Cochrane 2013). TÉRATOGÈNE X +++ — programme PRAC ANSM 2019. Élimination RÉNALE → CI si DFG < 30. Pas d'interaction allopurinol/fébuxostat. PIM Beers prudence chez âgé fragile.",
+                    "source": "RCP Novatrex/Imeth/Metoject ; HAS Rhumatologie 2019 ; EULAR 2022 PR ; BSR 2017 ; ANSM 2008-2024 (rappels prise hebdomadaire) ; PRAC ANSM 2019 ; Cochrane 2013 (folate) ; Beers 2023"
           },
           {
                     "dci": "Methyldopa",
