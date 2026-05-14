@@ -1951,20 +1951,31 @@ const MASTER_DB = {
           {
                     "dci": "Allopurinol",
                     "princeps": "Zyloric",
-                    "classe": "Inhibiteur xanthine oxydase (uricostatique)",
+                    "classe": "Inhibiteur xanthine oxydase (uricostatique) — référence hyperuricémie symptomatique",
                     "poso_hab": "100-800 mg/j",
                     "poso_ger": "Initiation 50-100 mg/j ; titration progressive +50-100 mg/2-4 sem selon uricémie cible (< 360 µmol/L, < 300 si tophi). Max 800 mg/j si uricémie reste > cible et tolérance OK (ACR 2020 — start low, go slow, mais ne pas plafonner systématiquement à 300 mg). Test HLA-B*5801 recommandé chez patient asiatique (DRESS).",
                     "poso_ren": "ACR 2020 : pas de plafond imposé par DFG si titration progressive. Initiation : DFG ≥ 60 : 100 mg/j ; DFG 30-59 : 50 mg/j ; DFG < 30 : 50 mg/2 j (Vidal/RCP). Titration prudente jusqu'à uricémie cible. Surveillance : créat, NFS, transaminases.",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "< 5 %",
+                    "albumine": "< 5%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Uricemie | Créatinine/DFG | NFS | Bilan hépatique | HLA-B*58:01 si origine asiatique",
-                    "suivi_periodique": "Uricemie (tous les 3 a 6 mois jusqu'a objectif < 360 µmol/L, puis annuel) | Créatinine (annuelle) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Eruption cutanee severe (SJS/TEN - risque HLA-B*58:01) → arret immediat | Syndrome d'hypersensibilite (DRESS) → arret immediat | Cytolyse → bilan hépatique urgent | Aplasie → NFS urgente",
+                    "ddi_interact": "AZATHIOPRINE / 6-MERCAPTOPURINE — CONTRE-INDICATION ABSOLUE (↑ x4-5 — aplasie médullaire mortelle, sauf si ↓ dose AZA 75%), AVK warfarine (↑ INR x1,5-2 — surveillance), Cyclophosphamide (↑ toxicité médullaire), Théophylline (↑ théophyllinémie), Captopril/Énalapril/IEC à groupe thiol (NEUTROPÉNIE/Stevens-Johnson — Pennell 1984, surtout si IRC), Diurétiques thiazidiques (↑ allopurinol + ↑ hyperuricémie paradoxale), Amoxicilline/Ampicilline (↑ exposition x3-5 risque RASH — Boston Collaborative 1972), Ciclosporine (↑ ciclosporinémie), Hydroxychloroquine (rare cumul toxicité), CARENCE B6 (rare)",
+                    "ddi_interact_v2": [
+                              { "classe": "Azathioprine / 6-Mercaptopurine — CONTRE-INDICATION ABSOLUE (APLASIE MORTELLE)", "dcis": ["azathioprine", "mercaptopurine", "tioguanine"], "commentaire": "Allopurinol inhibe XO qui métabolise 6-MP/AZA. ↑ exposition x4-5 → APLASIE MÉDULLAIRE GRAVE/MORTELLE. Si association indispensable : RÉDUIRE AZATHIOPRINE de 75% (1/4 dose) + dosage TPMT préalable + NFS hebdomadaire. PRÉFÉRER FÉBUXOSTAT (interaction CYP différente, moindre risque mais surveillance NFS).", "severite": "danger" },
+                              { "classe": "AVK warfarine / fluindione / acénocoumarol — ↑ INR x1,5-2", "dcis": ["warfarine", "fluindione", "acenocoumarol", "phenprocoumone"], "commentaire": "↑ INR par inhibition métabolisme hépatique AVK. INR à J3-J7 après initiation/changement dose. ↓ AVK 25% à anticiper.", "severite": "danger" },
+                              { "classe": "Captopril / Énalapril / IEC à groupe thiol — NEUTROPÉNIE / STEVENS-JOHNSON / SYNDROME LUPIQUE", "dcis": ["captopril", "zofenopril"], "commentaire": "Risque allopurinol + captopril (groupe thiol) : ↑ x2-3 neutropénie + Stevens-Johnson + syndrome lupique, surtout si IRC (Pennell Arch Intern Med 1984). NFS si association + IRC. Préférer IEC sans thiol (ramipril, périndopril, énalapril).", "severite": "danger" },
+                              { "classe": "Amoxicilline / Ampicilline — ↑ RASH x3-5", "dcis": ["amoxicilline", "ampicilline", "amoxicilline-acide clavulanique"], "commentaire": "↑ x3-5 risque rash maculo-papuleux non allergique (Boston Collaborative Drug Surveillance 1972 — 21,4% vs 7,5% sans). Préférer autre β-lactamine si possible chez patient sous allopurinol.", "severite": "warning" },
+                              { "classe": "Cyclophosphamide / Chimiothérapies — ↑ toxicité médullaire", "dcis": ["cyclophosphamide", "ifosfamide", "fluorouracil", "methotrexate"], "commentaire": "Cumul toxicité médullaire/digestive. Méthotrexate : ↑ exposition. NFS rapprochée.", "severite": "warning" },
+                              { "classe": "Théophylline — ↑ théophyllinémie", "dcis": ["theophylline"], "commentaire": "↑ exposition théophylline (inhibition CYP1A2). Doser, ↓ dose 25-50%.", "severite": "warning" },
+                              { "classe": "Ciclosporine — ↑ ciclosporinémie", "dcis": ["ciclosporine"], "commentaire": "↑ exposition. Doser ciclosporinémie.", "severite": "warning" },
+                              { "classe": "Diurétiques thiazidiques — ↑ allopurinol + ↑ hyperuricémie paradoxale", "dcis": ["hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Thiazide réduit efficacité hypouricémiante + ↑ exposition allopurinol → ↑ risque hypersensibilité. Préférer indapamide (effet uricosurique moindre).", "severite": "warning" },
+                              { "classe": "Furosémide / Diurétiques de l'anse — ↑ uricémie", "dcis": ["furosemide", "bumetanide", "torasemide"], "commentaire": "↑ uricémie, ↓ efficacité allopurinol. Surveillance uricémie.", "severite": "warning" },
+                              { "classe": "Vidarabine / Didanosine — ↑ toxicité", "dcis": ["didanosine"], "commentaire": "↑ exposition didanosine. Éviter.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Uricémie | Créatinine/DFG | NFS | Bilan hépatique | HLA-B*58:01 si origine asiatique/sud-est asiatique/africaine | TPMT si association azathioprine",
+                    "suivi_periodique": "Uricémie tous 3-6 mois jusqu'à objectif < 360 µmol/L (< 300 si tophi), puis annuelle | Créatinine annuelle | Bilan hépatique annuel | NFS hebdomadaire si association AZA/6-MP",
+                    "alerte_clinique": "ÉRUPTION CUTANÉE SÉVÈRE (SJS/TEN/DRESS — HLA-B*58:01 +++ chez Han/Coréens, ANSM 2009) → ARRÊT IMMÉDIAT + hospitalisation | SYNDROME D'HYPERSENSIBILITÉ (DRESS — fièvre, éosinophilie, atteintes multiorganiques) → arrêt | CYTOLYSE/HÉPATITE → bilan hépatique urgent | APLASIE (rare, surtout si AZA associée) → NFS urgente | NE JAMAIS DÉBUTER EN CRISE (attendre 2-4 sem) | Couvrir par colchicine prophylactique 0,5-1 mg/j pendant 3-6 mois lors de l'initiation (prévention crise paradoxale)",
                     "bio_cible": [
                               "BIO_008",
                               "BIO_003",
@@ -1977,8 +1988,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Ne jamais débuter en crise (attendre 2–4 sem). Test HLA-B*5801 si Asiatique.",
-                    "source": "RCP Zyloric ; SFR 2020 ; EULAR 2022"
+                    "notes_cliniques": "Hypouricémiant de référence en hyperuricémie symptomatique (crises de goutte récidivantes, tophi, lithiase urique, néphropathie uratique). NE JAMAIS débuter en crise aiguë (attendre 2-4 semaines de résolution sinon aggravation). Couvrir par colchicine 0,5-1 mg/j prophylactique 3-6 mois (prévention crises paradoxales par mobilisation des cristaux). Cible uricémie < 360 µmol/L (< 300 si tophi/atteinte rénale). ACR 2020 / EULAR 2022 : pas de plafond imposé par DFG si titration prudente. HLA-B*58:01 OBLIGATOIRE chez Han/Coréens/Thaïlandais (ANSM 2009 — SJS/TEN/DRESS x100). Coût-efficacité majeur vs fébuxostat. PIM si IRC sévère + association AZA (Beers prudence).",
+                    "source": "RCP Zyloric ; ACR 2020 ; EULAR 2022 ; SFR 2020 ; ANSM 2009 (HLA-B*58:01) ; Pennell Arch Intern Med 1984 ; Boston Collaborative 1972"
           },
           {
                     "dci": "Alogliptine",
@@ -7260,51 +7271,32 @@ const MASTER_DB = {
           {
                     "dci": "Colchicine",
                     "princeps": "Colchicine Opocalcium, Colchimax",
-                    "classe": "Antigoutteux (inhibiteur polymerisation tubuline)",
-                    "poso_hab": "0,5-1 mg/j",
-                    "poso_ger": "0,5 mg/j",
-                    "poso_ren": "ClCr < 30: 0,5 mg x2/sem",
+                    "classe": "Antigoutteux + anti-inflammatoire (inhibiteur polymérisation tubuline) — extension cardiovasculaire COLCOT/LoDoCo2",
+                    "poso_hab": "Crise de goutte : 1 mg J1 puis 0,5 mg 1h après puis 0,5 mg x2-3/j (max 3 mg J1, schéma RCP français AFSSAPS 2011 — abandon des doses > 6 mg). Prophylaxie initiation hypouricémiant : 0,5 mg/j x 3-6 mois. PréventionCV (post-IDM/coronaropathie) : 0,5 mg/j",
+                    "poso_ger": "0,5 mg/j (PIM si dose > 1 mg/j chez âgé — toxicité +++). Si > 75 ans + IRC : 0,5 mg x2/sem ou éviter",
+                    "poso_ren": "ClCr 30-60 : 0,5 mg/j max | ClCr 15-30 : 0,5 mg x2/sem | ClCr < 15 ou DIALYSE : CONTRE-INDICATION (RCP — accumulation, toxicité +++)",
                     "acb": 1,
                     "cia": 1,
                     "bhe": "0.0",
-                    "albumine": "0,39",
+                    "albumine": "39%",
                     "qt_risque": "",
-                    "ddi_interact": "Macrolides (clarithromycine, erythromycine) - Statines - Ciclosporine - Verapamil - Diltiazem - Pamplemousse - Antifongiques azoles",
+                    "ddi_interact": "CI ABSOLUE chez IRC sévère/dialyse + inhibiteur CYP3A4 puissant/P-gp (clarithromycine, macrolides, antifongiques azolés, ciclosporine, ritonavir — décès rapportés AFSSAPS 2011), Statines/Fibrates (rhabdomyolyse cumulée), Vérapamil/Diltiazem (↑ exposition par P-gp), Pamplemousse (↑ x2 CYP3A4 intestinal), Digoxine (↑ par P-gp partagé), AVK (effet INR modeste), Inducteurs CYP3A4 (rifampicine ↓ efficacité)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Macrolides (inhibiteurs CYP3A4 + P-gp)",
-                                        "dcis": ["clarithromycine", "erythromycine"],
-                                        "commentaire": "Toxicite colchicine majeure (rhabdomyolyse, aplasie medullaire, neuropathie, deces decrits) — CONTRE-INDICATION ABSOLUE chez IRC. Si DFG normal : reduire colchicine de 50-75 % et surveillance NFS/CPK rapprochee. Azithromycine possible (effet moindre)",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Antifongiques azoles",
-                                        "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "fluconazole"],
-                                        "commentaire": "Toxicite colchicine (CYP3A4) — eviter ou reduire dose drastiquement",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Ciclosporine / Tacrolimus",
-                                        "dcis": ["ciclosporine", "tacrolimus"],
-                                        "commentaire": "Inhibition P-gp + CYP3A4 — toxicite colchicine majeure (rhabdomyolyse), CONTRE-INDICATION RELATIVE",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Verapamil / Diltiazem",
-                                        "dcis": ["verapamil", "diltiazem"],
-                                        "commentaire": "Inhibition P-gp ↑ exposition colchicine — reduire dose, surveiller NFS/CPK",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Statines",
-                                        "dcis": ["simvastatine", "atorvastatine", "rosuvastatine", "pravastatine", "fluvastatine"],
-                                        "commentaire": "Risque additif de rhabdomyolyse (myotoxicite cumulative) — informer patient, surveiller CPK si myalgies",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IRC SÉVÈRE/DIALYSE + Inhibiteurs CYP3A4 puissants ou P-gp — CONTRE-INDICATION ABSOLUE (DÉCÈS rapportés AFSSAPS 2011)", "dcis": ["ckd severe", "dialyse", "clarithromycine", "telithromycine", "ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "cobicistat", "ciclosporine"], "commentaire": "Cumul IRC sévère/dialyse + inhibiteur CYP3A4 fort/P-gp = TOXICITÉ MORTELLE (aplasie médullaire, rhabdomyolyse, défaillance multiorganique). AFSSAPS 2011 rapport plusieurs décès en France. CI ABSOLUE. Voie de récupération : antitoxine Fab anti-colchicine (compassionnel, indisponible en France).", "severite": "danger" },
+                              { "classe": "Macrolides (CYP3A4 + P-gp) — toxicité majeure", "dcis": ["clarithromycine", "telithromycine", "erythromycine"], "commentaire": "Inhibition CYP3A4 + P-gp → ↑ exposition colchicine x2-3 → aplasie/rhabdomyolyse/neuropathie/décès. CI ABSOLUE en IRC. DFG normal : ↓ colchicine 50-75% + NFS/CPK rapprochée. Préférer AZITHROMYCINE (effet CYP3A4 minime).", "severite": "danger" },
+                              { "classe": "Antifongiques azolés (CYP3A4)", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "fluconazole"], "commentaire": "↑ exposition colchicine. Fluconazole effet modéré. CI ABSOLUE kétoconazole/itraconazole/voriconazole/posaconazole.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus (CYP3A4 + P-gp) — toxicité majeure", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "↑ exposition colchicine. CI ABSOLUE en IRC. DFG normal : ↓ dose 50-75% + surveillance NFS/CPK. Rhabdomyolyse +++.", "severite": "danger" },
+                              { "classe": "Vérapamil / Diltiazem (P-gp + CYP3A4 modéré)", "dcis": ["verapamil", "diltiazem"], "commentaire": "↑ exposition colchicine x2. ↓ dose colchicine 50% + surveillance.", "severite": "warning" },
+                              { "classe": "Statines — RHABDOMYOLYSE additive", "dcis": ["simvastatine", "atorvastatine", "rosuvastatine", "pravastatine", "fluvastatine", "pitavastatine"], "commentaire": "Cumul myotoxicité (mécanismes indépendants — déjà ↑ CPK avec colchicine seule). Informer patient des myalgies, surveiller CPK. Effet le plus marqué avec simvastatine.", "severite": "warning" },
+                              { "classe": "Fibrates — RHABDOMYOLYSE additive", "dcis": ["fenofibrate", "gemfibrozil", "bezafibrate", "ciprofibrate"], "commentaire": "Myotoxicité additive. Surveillance CPK.", "severite": "warning" },
+                              { "classe": "Digoxine (P-gp partagé)", "dcis": ["digoxine"], "commentaire": "↑ digoxinémie modeste. Surveillance.", "severite": "warning" },
+                              { "classe": "Jus de pamplemousse — ↑ x2 (CYP3A4 intestinal)", "dcis": ["jus de pamplemousse"], "commentaire": "Éviter.", "severite": "warning" },
+                              { "classe": "AVK warfarine (effet INR modeste)", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "Effet variable. Surveillance INR.", "severite": "warning" },
+                              { "classe": "Inducteurs CYP3A4 — ↓ efficacité", "dcis": ["rifampicine", "phenytoine", "carbamazepine", "phenobarbital", "millepertuis"], "commentaire": "↓ exposition colchicine. Surveillance efficacité.", "severite": "warning" }
                     ],
-                    "suivi_initial": "NFS | Bilan hépatique | Créatinine/DFG | CPK | Recherche d'inhibiteurs CYP3A4/P-gp en cours",
-                    "suivi_periodique": "NFS (annuelle, plus si association CYP3A4/P-gp) | Bilan hépatique (annuel) | Créatinine (annuelle) | CPK si myalgies",
-                    "alerte_clinique": "Aplasie → NFS urgente (surtout si IRC ou associations CYP3A4/P-gp comme clarithromycine, ciclosporine) | Rhabdomyolyse → CPK urgent (risque amplifie par statine ou macrolide) | Troubles digestifs severes (diarrhee profuse) → ionogramme",
+                    "suivi_initial": "NFS | Bilan hépatique | Créatinine/DFG | CPK | Recherche d'inhibiteurs CYP3A4/P-gp en cours | Évaluation tolérance digestive",
+                    "suivi_periodique": "NFS annuelle (plus rapprochée si IRC ou association CYP3A4/P-gp) | Bilan hépatique annuel | Créatinine annuelle | CPK si myalgies",
+                    "alerte_clinique": "APLASIE MÉDULLAIRE → NFS urgente (surtout IRC + macrolide/azolé/ciclosporine) | RHABDOMYOLYSE → CPK urgent (risque amplifié statine/macrolide) | NEUROPATHIE/MYOPATHIE (chronique) | DIARRHÉE PROFUSE (signe précoce surdosage) → arrêt + ionogramme | DÉCÈS rapportés AFSSAPS 2011 (cumul IRC + macrolides) | PIM Beers/STOPP si dose > 1 mg/j ou IRC + inhibiteur CYP3A4/P-gp",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_011",
@@ -7317,8 +7309,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "REMS FDA 2009 : abandon des anciens schémas à doses élevées. Interactions CYP3A4/P-gp.",
-                    "source": "RCP Colchicine Opocalcium ; SFR 2020 ; EULAR 2022"
+                    "notes_cliniques": "Alcaloïde extrait du colchique. Indications : crise de goutte aiguë (1ère ligne en France, schéma AFSSAPS 2011 — max 3 mg J1, fini les anciens schémas à 6 mg/j), prophylaxie initiation hypouricémiant 3-6 mois, péricardite aiguë/récurrente (COPE 2005, CORP 2011, CORE 2013, CORP-2 2014 — référence), maladie de Behçet, FMF. EXTENSION CARDIOVASCULAIRE : COLCOT 2019 (Tardif NEJM, post-IDM ≤ 30 j — ↓ événements CV -23%), LoDoCo2 2020 (Nidorf NEJM, coronaropathie chronique — ↓ événements CV -31%). FDA approbation 2023 pour réduction risque CV (low-dose 0,5 mg/j). AFSSAPS 2011 : décès rapportés par cumul IRC + macrolides/ciclosporine — CI ABSOLUE en IRC sévère/dialyse avec ces médicaments. Surveillance NFS si association CYP3A4/P-gp.",
+                    "source": "RCP Colchicine Opocalcium ; AFSSAPS 2011 ; ACR 2020 ; EULAR 2022 ; SFR 2020 ; COLCOT 2019 (Tardif NEJM) ; LoDoCo2 2020 (Nidorf NEJM) ; FDA 2023 ; CORP 2011/CORP-2 2014"
           },
           {
                     "dci": "Colistimethate",
@@ -10461,37 +10453,27 @@ const MASTER_DB = {
           {
                     "dci": "Febuxostat",
                     "princeps": "Adenuric",
-                    "classe": "Inhibiteur xanthine oxydase (hypo-uricemiant)",
-                    "poso_hab": "80-120 mg/j en 1 prise",
-                    "poso_ger": "40 mg/j pendant 2 semaines puis 80 mg/j — prophylaxie colchicine 6 mois",
-                    "poso_ren": "DFG 15-30: max 80 mg/j | DFG < 15: non recommande (peu de donnees)",
+                    "classe": "Inhibiteur sélectif xanthine oxydase non-purine (hypouricémiant) — alternative à allopurinol",
+                    "poso_hab": "80-120 mg/j en 1 prise (1ère ligne hors France : 40 mg/j ; max 80 mg/j en Europe / 120 mg en cas d'échec)",
+                    "poso_ger": "40 mg/j à initier pendant 2 semaines puis 80 mg/j si uricémie > 360 µmol/L — prophylaxie colchicine 0,5-1 mg/j pendant 6 mois",
+                    "poso_ren": "DFG ≥ 30 : pas d'ajustement | DFG 15-30 : max 80 mg/j (prudence) | DFG < 15 : non recommandé (peu de données)",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "0",
                     "albumine": "99%",
                     "qt_risque": "",
-                    "ddi_interact": "Azathioprine/6-mercaptopurine (CI — inhibition XO → accumulation toxique) | Theophylline (augmentation concentrations)",
+                    "ddi_interact": "AZATHIOPRINE / 6-MERCAPTOPURINE — CONTRE-INDICATION ABSOLUE (↑ x4-5 — aplasie médullaire mortelle, même mécanisme qu'allopurinol), Théophylline (↑ exposition modeste), Cyclophosphamide/Mercaptopurine (↑ toxicité), ATCD MALADIE CV — PRUDENCE (CARES 2018 : ↑ mortalité CV/all-cause vs allopurinol), RASH/Hypersensibilité (moins fréquente vs allopurinol — pas de HLA-B*58:01 mais possible)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Azathioprine/6-mercaptopurine",
-                                        "dcis": [
-                                                  "azathioprine"
-                                        ],
-                                        "commentaire": "CI — inhibition XO → accumulation toxique",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Theophylline",
-                                        "dcis": [
-                                                  "theophylline"
-                                        ],
-                                        "commentaire": "augmentation concentrations",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Azathioprine / 6-Mercaptopurine — CONTRE-INDICATION ABSOLUE (APLASIE MORTELLE)", "dcis": ["azathioprine", "mercaptopurine", "tioguanine"], "commentaire": "Même mécanisme qu'allopurinol : inhibition XO → ↑ exposition 6-MP/AZA x4-5 → aplasie médullaire grave/mortelle. CI ABSOLUE. Pas de stratégie de réduction validée (vs allopurinol où on peut ↓ 75% AZA).", "severite": "danger" },
+                              { "classe": "ATCD CARDIOVASCULAIRE — PRUDENCE (CARES 2018 — ↑ mortalité CV)", "dcis": ["antecedent coronaropathie", "antecedent avc", "insuffisance cardiaque", "ic systolique"], "commentaire": "CARES trial 2018 (White NEJM, 6190 patients goutte + ATCD CV) : ↑ mortalité all-cause (+22%) et mortalité CV (+34%) avec fébuxostat vs allopurinol — non-infériorité atteinte sur événements CV majeurs MAIS supériorité mortalité défavorable. EMA/ANSM 2019 : prudence chez ATCD CV, préférer allopurinol en 1ère intention (sauf intolérance/IRC sévère). FAST trial 2020 (UK, ≥ 60 ans) plus rassurant (pas d'↑ mortalité).", "severite": "danger" },
+                              { "classe": "AVK warfarine (effet variable)", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "Effet INR moins marqué qu'allopurinol mais surveillance INR à J7 lors d'initiation.", "severite": "warning" },
+                              { "classe": "Cyclophosphamide / Mercaptopurine — ↑ toxicité médullaire", "dcis": ["cyclophosphamide", "ifosfamide", "fluorouracil"], "commentaire": "Cumul toxicité médullaire. NFS rapprochée.", "severite": "warning" },
+                              { "classe": "Théophylline — ↑ exposition modeste", "dcis": ["theophylline"], "commentaire": "↑ exposition légère. Surveillance.", "severite": "warning" },
+                              { "classe": "Diurétiques thiazidiques / anse — ↑ uricémie (↓ efficacité)", "dcis": ["hydrochlorothiazide", "indapamide", "chlortalidone", "furosemide", "bumetanide", "torasemide"], "commentaire": "↑ uricémie endogène, ↓ efficacité fébuxostat. Surveillance uricémie.", "severite": "warning" }
                     ],
-                    "suivi_initial": "Uricemie | Créatinine | Bilan hépatique | NFS",
-                    "suivi_periodique": "Uricemie (cible < 360 umol/L, < 300 si tophus) | BH (trimestriel 1ere annee) | Créatinine",
-                    "alerte_clinique": "Crise de goutte paradoxale a l initiation (prophylaxie colchicine) | Hépatotoxicité → BH | Risque cardiovasculaire (FDA warning — preferer allopurinol si ATCD CV) | Rash cutane",
+                    "suivi_initial": "Uricémie | Créatinine/DFG | Bilan hépatique | NFS | TSH (parfois ↓ rapportée) | Évaluation CV (ATCD)",
+                    "suivi_periodique": "Uricémie (cible < 360 µmol/L, < 300 si tophi) à 3-6 sem puis 3-6 mois | Bilan hépatique trimestriel 1ère année | Créatinine annuelle | NFS si symptômes",
+                    "alerte_clinique": "ATCD CV (CARES 2018) → PRUDENCE — préférer allopurinol sauf intolérance/IRC sévère | CRISE DE GOUTTE PARADOXALE initiation → COLCHICINE 0,5-1 mg/j prophylactique 6 mois OBLIGATOIRE | HÉPATOTOXICITÉ → bilan hépatique trimestriel 1ère année | Rash/hypersensibilité (rare) | Hypothyroïdie subclinique rapportée",
                     "bio_cible": [
                               "BIO_006",
                               "BIO_003",
@@ -10502,8 +10484,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Risque CV discuté (CARES). Pas d'ajustement rénal.",
-                    "source": "RCP Adenuric ; SFR 2020 ; EULAR 2022"
+                    "notes_cliniques": "Inhibiteur sélectif non-purine de la xanthine oxydase. Métabolisme HÉPATIQUE (glucuronoconjugaison + CYP1A2/2C8/2C9) → pas d'ajustement IRC majeur (avantage vs allopurinol). PROBLÈME CARDIOVASCULAIRE : CARES trial 2018 (White NEJM, ATCD CV — ↑ mortalité all-cause +22%, CV +34% vs allopurinol) → EMA/ANSM 2019 black box, préférence allopurinol 1ère ligne. FAST 2020 (≥ 60 ans UK) plus rassurant (non-infériorité). EULAR 2022 / ACR 2020 : 2ème ligne ou si intolérance/IRC sévère.",
+                    "source": "RCP Adenuric ; ACR 2020 ; EULAR 2022 ; SFR 2020 ; CARES White NEJM 2018 ; FAST 2020 (Mackenzie Lancet) ; EMA/ANSM 2019"
           },
           {
                     "dci": "Febusostat",
@@ -11489,20 +11471,27 @@ const MASTER_DB = {
           {
                     "dci": "Gabapentine",
                     "princeps": "Neurontin",
-                    "classe": "Antiepileptique (analogue GABA)",
-                    "poso_hab": "900-3600 mg/j en 3 prises",
-                    "poso_ger": "Initiation 100 mg x 3/j ; titration lente +100 mg/3j selon tolérance ; max 1800 mg/j chez âgé. Surveillance somnolence, ataxie, œdèmes des MI, prise de poids. Adapter selon DFG (voir poso_ren).",
-                    "poso_ren": "DFG ≥ 80 : 900-3600 mg/j. DFG 50-79 : max 1800 mg/j. DFG 30-49 : max 900 mg/j (300 mg x 3). DFG 15-29 : max 600 mg/j (300 mg x 2). DFG < 15 : max 300 mg/j (RCP Neurontin).",
+                    "classe": "Antiépileptique/Antalgique (gabapentinoïde — analogue GABA, modulateur α2δ) — FDA Black Box 2019 dépression respiratoire",
+                    "poso_hab": "900-3600 mg/j en 3 prises (biodisponibilité saturable — fragmenter les doses)",
+                    "poso_ger": "Initiation 100 mg x3/j ; titration lente +100 mg/3j selon tolérance ; max 1800 mg/j chez âgé. PIM PRISCUS / FORTA-D si fragile (somnolence, chutes, ataxie, œdèmes, prise de poids)",
+                    "poso_ren": "DFG ≥ 80 : 900-3600 mg/j | DFG 50-79 : max 1800 mg/j | DFG 30-49 : max 900 mg/j (300 mg x3) | DFG 15-29 : max 600 mg/j (300 mg x2) | DFG < 15 : max 300 mg/j | Hémodialyse : 100-300 mg post-HD (RCP Neurontin)",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "",
-                    "albumine": "< 3 %",
+                    "bhe": "BHE+ — sédation, troubles cognitifs",
+                    "albumine": "< 3%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG (ajustement de dose selon DFG)",
-                    "suivi_periodique": "Créatinine (annuelle)",
-                    "alerte_clinique": "Insuffisance renale → créatinine urgente (risque surdosage) | Dpression respiratoire si associations opiodes",
+                    "ddi_interact": "OPIOÏDES — FDA BLACK BOX 2019 DÉPRESSION RESPIRATOIRE FATALE (méta-analyse Gomes BMJ 2017 — gabapentine + opioïde OR 1,99 décès), Sédatifs centraux (BZD/Z-drugs/alcool — dépression respi cumulée FDA 2019), ANTIACIDES Mg/Al (↓ absorption 24% — espacer 2h), Cimétidine (↑ exposition modeste), MILLEPERTUIS (théorique), Insuffisance rénale (accumulation +++), MÉSUSAGE/DÉPENDANCE potentiel (cf pregabaline), Inhibiteurs PDE5 + antihypertenseurs (œdèmes/hypotension)",
+                    "ddi_interact_v2": [
+                              { "classe": "OPIOÏDES — FDA BLACK BOX 2019 (DÉPRESSION RESPIRATOIRE FATALE)", "dcis": ["morphine", "oxycodone", "fentanyl", "hydromorphone", "buprenorphine", "tramadol", "codeine", "tapentadol", "methadone", "dihydrocodeine", "poudre d'opium", "pethidine"], "commentaire": "FDA Black Box décembre 2019 : gabapentine + opioïde = ↑ x1,5-3 risque dépression respiratoire FATALE (Gomes BMJ 2017 — OR 1,99 décès chez patients sous morphine + gabapentine vs morphine seule). Mécanisme : modulation α2δ + opioïde mu → dépression bulbaire. ÉVITER ou doses minimales + surveillance respiratoire. PIM PRISCUS/FORTA-D chez âgé. NB : gabapentine ↑ aussi biodisponibilité morphine (↑ 44%, Eckhardt 2000).", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/alcool) — dépression respi cumulée", "dcis": ["diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "nordazepam", "clobazam", "clonazepam", "nitrazepam", "lormetazepam", "midazolam", "zolpidem", "zopiclone", "alcool"], "commentaire": "Sédation + dépression respiratoire additives. FDA 2019 cumul gabapentinoïdes + BZD chez âgé/BPCO/SAOS. PIM Beers cumul.", "severite": "danger" },
+                              { "classe": "Antidépresseurs sédatifs / Antipsychotiques", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "clomipramine", "imipramine", "olanzapine", "quetiapine", "chlorpromazine", "levomepromazine"], "commentaire": "Sédation additive, troubles cognitifs, chutes chez âgé.", "severite": "warning" },
+                              { "classe": "Antiacides aluminium / magnésium — ↓ absorption 24%", "dcis": ["hydroxyde aluminium", "hydroxyde magnesium"], "commentaire": "↓ biodisponibilité gabapentine 24%. Espacer ≥ 2h.", "severite": "warning" },
+                              { "classe": "Cimétidine — ↑ exposition modeste", "dcis": ["cimetidine"], "commentaire": "↓ clairance rénale gabapentine 14%. Effet modeste. Préférer ranitidine/famotidine.", "severite": "warning" },
+                              { "classe": "MÉSUSAGE / DÉPENDANCE potentiel (FDA 2019, ANSM surveillance)", "dcis": ["antecedent addiction", "polytoxicomanie", "trouble usage substance"], "commentaire": "Potentiel d'abus reconnu FDA 2019 (moins documenté que pregabaline mais détournements observés). Sevrage progressif (≥ 1 sem), risque convulsions rebond. Pas d'ordonnance sécurisée en France actuellement (vs pregabaline depuis 2021).", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Créatinine/DFG (ajustement de dose +++ — élimination rénale exclusive 100%) | Évaluation respiratoire (BPCO/SAOS) | MMSE | Évaluation chutes",
+                    "suivi_periodique": "Créatinine annuelle (revoir dose si ↓ DFG) | Poids/œdèmes périphériques | Somnolence/ataxie | Évaluation efficacité douleur (sinon arrêt)",
+                    "alerte_clinique": "DÉPRESSION RESPIRATOIRE (FDA Black Box 2019 — opioïdes/BZD) | CHUTES chez âgé (BHE+, ataxie) — PIM PRISCUS/FORTA-D | ŒDÈMES MI (5-10%) | PRISE DE POIDS | SEVRAGE PROGRESSIF obligatoire | TROUBLES COGNITIFS chez âgé | EFFICACITÉ DOULEUR NEUROPATHIQUE LIMITÉE en gériatrie (NNT élevé) | Préférer duloxétine pour neuropathie diabétique (FORTA-A)",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004"
@@ -11511,8 +11500,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Ajustement DFG obligatoire. Potentiel d'abus.",
-                    "source": "RCP Neurontin ; HAS 2020"
+                    "notes_cliniques": "Analogue structural du GABA mais NE se lie pas aux récepteurs GABA (modulateur α2δ canaux Ca++, identique pregabaline). Élimination RÉNALE EXCLUSIVE 100% → ajustement DFG +++. Biodisponibilité SATURABLE (↓ avec ↑ dose : 60% à 900 mg/j, 35% à 3600 mg/j) → fragmenter les prises. Indications : douleur neuropathique post-zostérienne (référence FDA), neuropathie diabétique, épilepsie partielle (adjuvant). FDA BLACK BOX décembre 2019 (avec pregabaline) sur dépression respiratoire fatale en association opioïdes/BZD. PIM PRISCUS / FORTA-D chez âgé fragile. Pas d'ordonnance sécurisée en France (vs pregabaline depuis ANSM 2021). Alternative : duloxétine neuropathie diabétique (NNT meilleur, FORTA-A), capsaïcine 8% patch (FORTA-A).",
+                    "source": "RCP Neurontin ; HAS 2020 ; FDA Black Box décembre 2019 ; Gomes BMJ 2017 ; Eckhardt 2000 ; PRISCUS ; FORTA-D"
           },
           {
                     "dci": "Gentamicine",
@@ -17473,20 +17462,27 @@ const MASTER_DB = {
           {
                     "dci": "Pregabaline",
                     "princeps": "Lyrica",
-                    "classe": "Antiepileptique/Antalgique (α2δ)",
-                    "poso_hab": "150-600 mg/j en 2 prises",
-                    "poso_ger": "Initiation 25-50 mg x 2/j ; max 300 mg/j chez âgé. Surveillance somnolence, ataxie, œdèmes, prise de poids. Adapter selon DFG (voir poso_ren).",
-                    "poso_ren": "DFG ≥ 60 : 150-600 mg/j. DFG 30-59 : 75-300 mg/j en 2-3 prises. DFG 15-29 : 25-150 mg/j en 1-2 prises. DFG < 15 : 25-75 mg/j en 1 prise (RCP Lyrica).",
+                    "classe": "Antiépileptique/Antalgique (gabapentinoïde — modulateur α2δ canaux Ca++) — FDA Black Box 2019 dépression respiratoire",
+                    "poso_hab": "150-600 mg/j en 2-3 prises (épilepsie, douleur neuropathique, anxiété généralisée)",
+                    "poso_ger": "Initiation 25-50 mg x2/j ; titration prudente ; max 300 mg/j chez âgé. Surveillance somnolence/ataxie/CHUTES (PIM Beers/STOPP/FORTA-D si fragile)/œdèmes/prise de poids/dépression",
+                    "poso_ren": "DFG ≥ 60 : 150-600 mg/j | DFG 30-59 : 75-300 mg/j en 2-3 prises | DFG 15-29 : 25-150 mg/j en 1-2 prises | DFG < 15 : 25-75 mg/j en 1 prise. Hémodialyse : dose supplémentaire post-HD (RCP Lyrica)",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "",
-                    "albumine": "0",
-                    "qt_risque": "(CR) - QTc rapporté en surdosage / association",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Créatinine/DFG (ajustement de dose) | Glycemie si diabte",
-                    "suivi_periodique": "Créatinine (annuelle)",
-                    "alerte_clinique": "Insuffisance renale → créatinine urgente",
+                    "bhe": "BHE+ — sédation, troubles cognitifs",
+                    "albumine": "0%",
+                    "qt_risque": "(CR) Conditionnel — QTc rapporté en surdosage/association",
+                    "ddi_interact": "OPIOÏDES — FDA BLACK BOX 2019 DÉPRESSION RESPIRATOIRE FATALE (morphine, oxycodone, fentanyl, tramadol, codéine — méta-analyses Gomes BMJ 2017/CMAJ 2018), Sédatifs centraux (BZD/Z-drugs/alcool — dépression respi cumulée, FDA 2019), Inhibiteurs IPDE5/Antihypertenseurs (hypotension), Métformine (œdèmes additifs), MILLEPERTUIS/IMAO (interactions noradrénaline théoriques), Insuffisance rénale (accumulation), MÉSUSAGE/DÉPENDANCE (ANSM 2021 — ordonnance sécurisée maintenue catégorie I depuis mai 2021 en France)",
+                    "ddi_interact_v2": [
+                              { "classe": "OPIOÏDES — FDA BLACK BOX 2019 (DÉPRESSION RESPIRATOIRE FATALE)", "dcis": ["morphine", "oxycodone", "fentanyl", "hydromorphone", "buprenorphine", "tramadol", "codeine", "tapentadol", "methadone", "dihydrocodeine", "poudre d'opium", "pethidine"], "commentaire": "FDA Black Box décembre 2019 : pregabaline + opioïde = ↑ x1,5-3 risque dépression respiratoire FATALE (Gomes BMJ 2017 + CMAJ 2018 : OR 2,5 décès en cohorte Canada). Effet additif dépresseur SNC + dépression respi centrale. Mécanisme : modulation α2δ pré-synaptique + opioïde mu → dépression bulbaire. ÉVITER ou doses minimales + surveillance respiratoire renforcée. PIM FORTA-D chez âgé.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/alcool) — dépression respiratoire cumulée", "dcis": ["diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "nordazepam", "clobazam", "clonazepam", "nitrazepam", "lormetazepam", "midazolam", "zolpidem", "zopiclone", "alcool"], "commentaire": "Sédation + dépression respiratoire additives. FDA 2019 alerte cumul gabapentinoïdes + BZD chez âgé/BPCO/SAOS. Éviter ou doses minimales + surveillance.", "severite": "danger" },
+                              { "classe": "Antidépresseurs sédatifs / Antipsychotiques", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "clomipramine", "imipramine", "olanzapine", "quetiapine", "chlorpromazine", "levomepromazine", "cyamemazine"], "commentaire": "Sédation additive, troubles cognitifs, chutes chez âgé.", "severite": "warning" },
+                              { "classe": "Inhibiteurs PDE5 / Antihypertenseurs (hypotension/œdèmes additifs)", "dcis": ["sildenafil", "tadalafil", "vardenafil", "amlodipine", "felodipine", "lercanidipine", "manidipine", "nicardipine"], "commentaire": "Œdèmes périphériques cumulés (DHP + pregabaline). Hypotension. Surveillance.", "severite": "warning" },
+                              { "classe": "Métformine — œdèmes additifs", "dcis": ["metformine"], "commentaire": "Cumul œdèmes périphériques (rapport ANSM).", "severite": "warning" },
+                              { "classe": "MÉSUSAGE / DÉPENDANCE — Ordonnance SÉCURISÉE catégorie I (France ANSM 2021)", "dcis": ["antecedent addiction", "polytoxicomanie", "trouble usage substance"], "commentaire": "Pregabaline = potentiel d'abus reconnu (UE 2014, France ANSM 2021 → ordonnance sécurisée obligatoire depuis mai 2021, prescription max 6 mois renouvelable). Détournements en milieu carcéral, jeune adulte, polytoxicomanie. Sevrage progressif obligatoire (≥ 1 semaine), risque convulsions rebond.", "severite": "danger" }
+                    ],
+                    "suivi_initial": "Créatinine/DFG (ajustement de dose +++ — élimination rénale exclusive) | Glycémie si DT2 | Évaluation respiratoire (BPCO/SAOS) | Évaluation troubles cognitifs (MMSE) | Évaluation chutes",
+                    "suivi_periodique": "Créatinine annuelle (revoir dose si ↓ DFG) | Poids/œdèmes périphériques | Surveillance somnolence/ataxie | Évaluation efficacité douleur (sinon arrêt — efficacité limitée en gériatrie chez fragile)",
+                    "alerte_clinique": "DÉPRESSION RESPIRATOIRE FATALE (FDA Black Box 2019 — opioïdes/BZD cumulés) | CHUTES chez âgé (BHE+, ataxie) — PIM Beers/STOPP/FORTA-D | DÉPENDANCE/MÉSUSAGE — ordonnance sécurisée France ANSM 2021 | ŒDÈMES MI (10-15%) | PRISE DE POIDS | SEVRAGE PROGRESSIF obligatoire ≥ 1 semaine (risque convulsions rebond + symptômes anxiété/insomnie) | TROUBLES COGNITIFS chez âgé | EFFICACITÉ DOULEUR NEUROPATHIQUE LIMITÉE chez âgé (NNT élevé)",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
@@ -17496,8 +17492,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Prescription sécurisée (abus/dépendance). Ajustement DFG obligatoire.",
-                    "source": "RCP Lyrica ; HAS 2020"
+                    "notes_cliniques": "Modulateur α2δ canaux Ca++ voltage-dépendants. Élimination RÉNALE EXCLUSIVE (pas de métabolisme hépatique — donc peu d'interactions PK mais ajustement DFG +++). Indications : douleur neuropathique (NNT 6-7 chez âgé, modeste), épilepsie partielle (adjuvant), trouble anxieux généralisé. FDA BLACK BOX décembre 2019 sur dépression respiratoire fatale en association opioïdes/BZD. France ANSM mai 2021 : passage en ORDONNANCE SÉCURISÉE catégorie I (similaire stupéfiants) — détournements documentés. PIM Beers 2023/STOPP/FORTA-D chez sujet âgé fragile : chutes, troubles cognitifs, dépression respiratoire. Préférer alternatives en gériatrie : duloxétine (neuropathie diabétique — bonne tolérance), amitriptyline 10-25 mg (avec prudence ACB), capsaicine topique 8% patch (FORTA-A).",
+                    "source": "RCP Lyrica ; HAS 2020 ; ANSM 2021 (ordonnance sécurisée) ; FDA Black Box décembre 2019 ; Gomes BMJ 2017 ; Gomes CMAJ 2018 ; Beers 2023 ; FORTA-D"
           },
           {
                     "dci": "Pristinamycine",
