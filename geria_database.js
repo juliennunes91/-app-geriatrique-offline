@@ -9165,20 +9165,27 @@ const MASTER_DB = {
           {
                     "dci": "Doxazosine",
                     "princeps": "Zoxan",
-                    "classe": "Alpha-1 bloquant",
-                    "poso_hab": "1-16 mg/j",
-                    "poso_ger": "1-4 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "classe": "Alpha-1 bloquant (HBP + HTA — PIM Beers en HTA monothérapie)",
+                    "poso_hab": "1-16 mg/j (HBP : 4-8 mg/j | HTA : 4-16 mg/j, LP 4-8 mg/j matin)",
+                    "poso_ger": "1 mg/j à initier au COUCHER (effet 1ère dose +++ hypotension orthostatique/syncope chez âgé)",
+                    "poso_ren": "Pas d'ajustement (métabolisme hépatique CYP3A4)",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,98",
+                    "albumine": "98%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "TA (hypotension orthostatique) | Bilan lipidique",
-                    "suivi_periodique": "TA (consultations) | Bilan lipidique (annuel)",
-                    "alerte_clinique": "Hypotension orthostatique sévère",
+                    "ddi_interact": "PIM Beers 2023 en HTA monothérapie (ALLHAT — ↑ IC vs chlorthalidone, branche stoppée), Inhibiteurs PDE5 (hypotension additive +++ — délai 6h), Autres antiHTA (cumul hypotension, prudence à l'initiation), Diurétiques (hypotension 1ère dose), CHIRURGIE CATARACTE (Syndrome de l'IRIS HYPOTONIQUE PEROPÉRATOIRE — IFIS, informer ophtalmo OBLIGATOIRE), Inhibiteurs CYP3A4 puissants (kétoconazole/itraconazole/clarithromycine/ritonavir ↑ doxazosine), Bétabloquants (effet 1ère dose accentué — initier au coucher)",
+                    "ddi_interact_v2": [
+                              { "classe": "Inhibiteurs PDE5 — hypotension additive +++ (délai 6h)", "dcis": ["sildenafil", "tadalafil", "vardenafil", "avanafil"], "commentaire": "Cumul vasodilatation. Délai 6h après sildénafil/vardénafil/avanafil, 24h après tadalafil. Prudence chez âgé (chute).", "severite": "danger" },
+                              { "classe": "CHIRURGIE CATARACTE — Syndrome IRIS HYPOTONIQUE (IFIS — Intraoperative Floppy Iris Syndrome)", "dcis": ["chirurgie cataracte"], "commentaire": "Persiste après arrêt (modification permanente du dilatateur iridien). INFORMER OPHTALMO OBLIGATOIRE même si traitement ancien et stoppé. Alternative ophtalmologique (anneau iridien, mannitol). Particulièrement marqué avec tamsulosine (alpha-1A spécifique).", "severite": "warning" },
+                              { "classe": "Antihypertenseurs (cumul hypotension)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan", "amlodipine", "lercanidipine", "bisoprolol", "metoprolol", "carvedilol", "clonidine", "moxonidine", "rilmenidine"], "commentaire": "Cumul hypotension. Surveillance TA couché-debout. Particulièrement marqué bêtabloquants + alpha-bloquant (effet 1ère dose).", "severite": "warning" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Hypovolémie majore effet 1ère dose. Initier au coucher, dose minimale.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 PUISSANTS — ↑ exposition", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "ritonavir", "clarithromycine", "cobicistat"], "commentaire": "↑ doxazosine. Surveillance TA.", "severite": "warning" },
+                              { "classe": "Inducteurs CYP3A4 — ↓ efficacité", "dcis": ["rifampicine", "phenytoine", "carbamazepine", "phenobarbital", "millepertuis"], "commentaire": "↓ effet antiHTA.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "TA couché-debout (orthostatisme +++) | Bilan lipidique | Évaluation prostate (HBP)",
+                    "suivi_periodique": "TA assise + orthostatique à chaque consultation | Bilan lipidique annuel | Évaluation chutes chez âgé",
+                    "alerte_clinique": "HYPOTENSION ORTHOSTATIQUE SÉVÈRE +++ chez âgé fragile → CHUTES | EFFET 1ÈRE DOSE syncope (initiation au coucher OBLIGATOIRE) | PIM Beers 2023 en HTA monothérapie (ALLHAT 2000 : ↑ x2 IC vs chlortalidone, branche doxazosine stoppée prématurément) | INDICATION ACCEPTABLE : HBP (uropathie obstructive) ou HTA résistante en association | IFIS chirurgie cataracte → INFORMER OPHTALMO",
                     "bio_cible": [
                               "BIO_027"
                     ],
@@ -9186,8 +9193,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Effet favorable profil lipidique. Hypotension 1ère dose.",
-                    "source": "RCP Zoxan ; EAU 2022 ; ESC HTA 2023"
+                    "notes_cliniques": "Alpha-1 bloquant non sélectif (vs tamsulosine α-1A spécifique). Indications : HBP symptomatique (EAU 2022, ↓ IPSS), HTA résistante en 4-5ème ligne (PATHWAY-2 — Spironolactone > Doxazosine > Bisoprolol). ALLHAT 2000 : branche doxazosine arrêtée prématurément (↑ x2 IC vs chlortalidone, ↑ AVC). → PIM Beers 2023 en HTA monothérapie. Effet favorable profil lipidique (↑ HDL, ↓ LDL/TG). LP forme à privilégier chez âgé. IFIS chirurgie cataracte. T½ longue 22h.",
+                    "source": "RCP Zoxan ; EAU 2022 ; ESC HTA 2023 ; Beers 2023 ; ALLHAT 2000 ; PATHWAY-2 ; FDA 2005 (IFIS)"
           },
           {
                     "dci": "Doxepine",
@@ -12587,25 +12594,23 @@ const MASTER_DB = {
           {
                     "dci": "Isosorbide",
                     "princeps": "Risordan / Monicor / Isosorb",
-                    "classe": "Nitrate (dinitrate ou mononitrate d'isosorbide - anti-angineux)",
-                    "poso_hab": "Mononitrate: 20-120mg/j en 1-2 prises PO | Dinitrate: 5-30mg x3/j",
-                    "poso_ger": "Meme dose (tolerance)",
-                    "poso_ren": "Pas d'adaptation renale stricte",
+                    "classe": "Dérivé nitré (mono/dinitrate d'isosorbide — donneur NO, vasodilatateur veineux > artériel)",
+                    "poso_hab": "Mononitrate (Monicor) : 20-120 mg/j en 1-2 prises | Dinitrate (Risordan) : 5-30 mg x3/j + intervalle libre 8-12h obligatoire",
+                    "poso_ger": "Mononitrate 20 mg/j à initier — hypotension orthostatique +++ chez âgé fragile (FORTA-D)",
+                    "poso_ren": "Pas d'ajustement majeur (métabolisme hépatique). Insuffisance hépatique sévère : prudence",
                     "acb": 1,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "> 99",
+                    "albumine": "> 99%",
                     "qt_risque": "",
-                    "ddi_interact": "IPDE5 (sildenafil - CI absolue: hypotension severe), Alcool, Antihypertenseurs",
+                    "ddi_interact": "Inhibiteurs PDE5 (sildénafil/tadalafil/vardénafil — CONTRE-INDICATION ABSOLUE — hypotension SÉVÈRE/COLLAPSUS), Riociguat (CI ABSOLUE — stimulateur sGC, hypotension), Alcool (hypotension additive), Antihypertenseurs (cumul hypotension), Diurétiques (déshydratation → hypotension), Inhibiteurs PDE5 sublinguaux (avanafil — délai 12h), Acétaminophène (méthémoglobinémie potentialisée — rare), Sotalol/Antiarythmiques bradycardisants (hypotension/syncope)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Inhibiteurs PDE5 — CONTRE-INDICATION ABSOLUE (HYPOTENSION SÉVÈRE/COLLAPSUS)", "dcis": ["sildenafil", "tadalafil", "vardenafil", "avanafil"], "commentaire": "Synergie vasodilatatrice MAJEURE (NO + PDE5) → hypotension SÉVÈRE, IDM, choc, décès. CI ABSOLUE simultanée. Délai minimum : 24h après sildénafil/vardénafil, 48h après tadalafil. Dérivés nitrés CI sublingual en urgence chez patient sous PDE5 (RCP, ANSM).", "severite": "danger" },
+                              { "classe": "Riociguat (stimulateur sGC HTAP) — CONTRE-INDICATION ABSOLUE", "dcis": ["riociguat"], "commentaire": "Stimulateur de guanylate cyclase soluble. Cumul avec donneur NO → hypotension sévère. CI ABSOLUE (RCP).", "severite": "danger" },
+                              { "classe": "Antihypertenseurs (cumul hypotension)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan", "amlodipine", "lercanidipine", "bisoprolol", "metoprolol", "carvedilol", "doxazosine", "prazosine", "clonidine"], "commentaire": "Cumul hypotension. Surveillance TA couché-debout chez âgé.", "severite": "warning" },
+                              { "classe": "Diurétiques (déshydratation → hypotension)", "dcis": ["furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Hypovolémie potentialise hypotension. Surveillance hydratation.", "severite": "warning" },
+                              { "classe": "Alcool (hypotension additive)", "dcis": ["alcool"], "commentaire": "Vasodilatation cumulée → syncope chez âgé.", "severite": "warning" },
+                              { "classe": "Acétaminophène / dapsone / sulfamides (méthémoglobinémie rare)", "dcis": ["paracetamol", "dapsone", "sulfamethoxazole-trimethoprime"], "commentaire": "Méthémoglobinémie potentialisée (rare, fortes doses). Surveiller SpO2 trompeuse.", "severite": "info" }
                     ],
                     "suivi_initial": "TA (hypotension orthostatique) | ECG | Bilan hépatique si insuffisance hépatique",
                     "suivi_periodique": "TA (chaque consultation) | ECG (annuel)",
@@ -17333,21 +17338,26 @@ const MASTER_DB = {
           },
           {
                     "dci": "Prazosine",
-                    "princeps": "Minipress",
-                    "classe": "Alpha-1 bloquant",
-                    "poso_hab": "0,5-15 mg/j",
-                    "poso_ger": "0,5-2 mg/j",
-                    "poso_ren": "Pas d'ajustement",
+                    "princeps": "Minipress, Alpress",
+                    "classe": "Alpha-1 bloquant non selectif court-actif (T½ 2-3h) — PIM Beers HTA, indication PTSD-cauchemars",
+                    "poso_hab": "HTA : 0,5-15 mg/j en 2-3 prises | PTSD cauchemars : 1-15 mg au coucher",
+                    "poso_ger": "0,5 mg/j au COUCHER (phénomène 1ère dose +++, T½ courte aggrave hypotension)",
+                    "poso_ren": "Pas d'ajustement (métabolisme hépatique)",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "0,95",
+                    "albumine": "95%",
                     "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "TA | Bilan lipidique",
-                    "suivi_periodique": "TA (consultations)",
-                    "alerte_clinique": "Hypotension orthostatique (premire dose)",
+                    "ddi_interact": "PIM Beers 2023 en HTA monothérapie (T½ courte, hypotension orthostatique), Inhibiteurs PDE5 (hypotension additive — délai 6h), Autres antiHTA (cumul hypotension +++), Diurétiques (hypotension 1ère dose), CHIRURGIE CATARACTE (IFIS — informer ophtalmo), Bétabloquants (effet 1ère dose accentué)",
+                    "ddi_interact_v2": [
+                              { "classe": "Inhibiteurs PDE5 — hypotension additive (délai 6h)", "dcis": ["sildenafil", "tadalafil", "vardenafil", "avanafil"], "commentaire": "Cumul vasodilatation. Délai 6h après sildénafil/vardénafil, 24h après tadalafil.", "severite": "danger" },
+                              { "classe": "Antihypertenseurs (cumul hypotension)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "amlodipine", "bisoprolol", "metoprolol", "carvedilol", "clonidine"], "commentaire": "Cumul hypotension. Surveillance TA couché-debout.", "severite": "warning" },
+                              { "classe": "Diurétiques (hypotension 1ère dose)", "dcis": ["furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Hypovolémie majore effet 1ère dose. Initier au coucher.", "severite": "warning" },
+                              { "classe": "CHIRURGIE CATARACTE — Syndrome IRIS HYPOTONIQUE (IFIS)", "dcis": ["chirurgie cataracte"], "commentaire": "Informer ophtalmo.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "TA couché-debout | Bilan lipidique | Évaluation chutes",
+                    "suivi_periodique": "TA assise + orthostatique à chaque consultation | Évaluation chutes chez âgé",
+                    "alerte_clinique": "PHÉNOMÈNE 1ÈRE DOSE +++ (syncope) — débuter au COUCHER, 0,5 mg | PIM Beers 2023 en HTA (T½ courte aggrave hypotension, à éviter chez âgé) | INDICATION SPÉCIFIQUE : PTSD cauchemars (off-label, méta-analyses), HBP (alternative doxazosine)",
                     "bio_cible": [
                               "BIO_027"
                     ],
@@ -17355,8 +17365,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Phénomène 1ère dose : débuter au coucher",
-                    "source": "RCP Alpress ; ESC HTA 2023"
+                    "notes_cliniques": "Premier alpha-1 bloquant commercialisé (1976). T½ courte (2-3h) → 2-3 prises/j obligatoire → mauvaise observance + hypotension orthostatique +++. Préférer doxazosine LP (1 prise/j, plus stable). Indication off-label : PTSD-cauchemars (Raskind NEJM 2003, AJP 2007 — études vétérans, PACT-PTSD 2021 négative). PIM Beers chez âgé. HBP : alternative possible.",
+                    "source": "RCP Minipress/Alpress ; ESC HTA 2023 ; Beers 2023 ; Raskind 2003"
           },
           {
                     "dci": "Prednisolone",
@@ -23430,66 +23440,28 @@ const MASTER_DB = {
           {
                     "dci": "Clonidine",
                     "princeps": "Catapressan",
-                    "classe": "Antihypertenseur d'action centrale",
-                    "poso_hab": "0.15-0.6 mg/j en 2-3 prises",
-                    "poso_ger": "0.075-0.15 mg/j (débuter bas, titration lente)",
-                    "poso_ren": "Réduction si DFG < 30 (élimination rénale partielle).",
+                    "classe": "Antihypertenseur central (agoniste α2-adrénergique pré-synaptique) — PIM ABSOLU Beers/STOPP/FORTA-D",
+                    "poso_hab": "0,15-0,6 mg/j en 2-3 prises (formes IV : crise HTA, sevrage opioïde/alcool)",
+                    "poso_ger": "À ÉVITER (PIM ABSOLU Beers 2023 / STOPP / FORTA-D — sédation, hypotension orthostatique, bradycardie, dépression, REBOND HTA arrêt). Si exception (HTA résistante 5ème ligne, sevrage) : 0,075 mg/j",
+                    "poso_ren": "ClCr 30-60 : ↓ dose 25% | ClCr < 30 : ↓ dose 50% (élimination rénale 50%)",
                     "acb": 0,
                     "cia": 1,
-                    "bhe": "1",
+                    "bhe": "1.0 — BHE+++ (sédation/dépression)",
                     "qt_risque": "",
                     "albumine": "20-40%",
-                    "ddi_interact": "Bêtabloquants (rebond HTA à l'arrêt), Antidépresseurs tricycliques, BZD",
+                    "ddi_interact": "ARRÊT BRUTAL → CRISE HYPERTENSIVE DE REBOND (effet rebond α-adrénergique non masqué — décroissance progressive obligatoire sur ≥ 2 sem), Bétabloquants (PARADOXE — BB intensifie rebond HTA à l'arrêt simultané — arrêter BB en PREMIER), Antidépresseurs tricycliques (ANTAGONISME effet anti-HTA + cumul ACB/sédation), Antipsychotiques (cumul hypotension/sédation/anticholinergique), BZD/Z-drugs/opioïdes/alcool (sédation +++ — chutes), Diurétiques (hypotension), MAO-IB (sélégiline — antagonisme partiel), Méthylphénidate (antagonisme + rapports décès — Wilens), Insuline/Sulfonylurées (masquage hypoglycémie partiel)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Bêta-bloquants",
-                                        "dcis": [
-                                                  "bisoprolol",
-                                                  "metoprolol",
-                                                  "atenolol",
-                                                  "nebivolol",
-                                                  "carvedilol",
-                                                  "propranolol",
-                                                  "sotalol"
-                                        ],
-                                        "commentaire": "rebond HTA à l'arrêt",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Tricycliques",
-                                        "dcis": [
-                                                  "amitriptyline",
-                                                  "clomipramine",
-                                                  "imipramine",
-                                                  "desipramine",
-                                                  "nortriptyline"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "BZD",
-                                        "dcis": [
-                                                  "diazepam",
-                                                  "bromazepam",
-                                                  "lorazepam",
-                                                  "oxazepam",
-                                                  "alprazolam",
-                                                  "clorazepate",
-                                                  "nordazepam",
-                                                  "clobazam",
-                                                  "clonazepam",
-                                                  "nitrazepam",
-                                                  "lormetazepam",
-                                                  "midazolam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ARRÊT BRUTAL — CRISE HYPERTENSIVE DE REBOND", "dcis": ["arret brutal", "interruption traitement"], "commentaire": "Sympathomimétique de rebond → crise HTA sévère, IDM, AVC. Décroissance progressive sur ≥ 2 semaines OBLIGATOIRE (par paliers de 0,075 mg/sem).", "severite": "danger" },
+                              { "classe": "Bêta-bloquants — REBOND HTA PARADOXAL si arrêt simultané", "dcis": ["bisoprolol", "metoprolol", "atenolol", "nebivolol", "carvedilol", "propranolol", "sotalol", "acebutolol", "labetalol"], "commentaire": "PARADOXE : si arrêt simultané, le BB masque la vasodilatation α2 mais laisse l'effet α adrénergique non masqué → crise HTA grave. ARRÊTER BB EN PREMIER (≥ 2-4 sem avant clonidine), puis décroître clonidine.", "severite": "danger" },
+                              { "classe": "Antidépresseurs tricycliques — antagonisme effet anti-HTA + cumul ACB/sédation", "dcis": ["amitriptyline", "clomipramine", "imipramine", "desipramine", "nortriptyline", "doxepine", "dosulepine", "trimipramine", "maprotiline"], "commentaire": "TCA bloquent recapture NA → antagonisme effet α2-agoniste central de clonidine (perte d'efficacité antiHTA). Cumul ACB (BHE) + sédation. À ÉVITER.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool) — sédation/chutes +++", "dcis": ["diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "midazolam", "zolpidem", "zopiclone", "morphine", "oxycodone", "fentanyl", "tramadol", "codeine", "alcool"], "commentaire": "Sédation additive majeure (clonidine BHE+++). Chutes chez âgé.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (cumul hypotension/sédation/anticholinergique)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "olanzapine", "quetiapine", "risperidone", "clozapine"], "commentaire": "Cumul effets. À éviter chez âgé.", "severite": "warning" },
+                              { "classe": "Diurétiques (cumul hypotension)", "dcis": ["furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Cumul hypotension. Surveillance TA orthostatique.", "severite": "warning" },
+                              { "classe": "Méthylphénidate / Atomoxétine — antagonisme + rapports décès", "dcis": ["methylphenidate", "atomoxetine"], "commentaire": "Wilens rapport décès (combinaison TDAH + clonidine). À éviter.", "severite": "warning" }
                     ],
-                    "suivi_initial": "PA/FC | Créatinine | ECG",
-                    "suivi_periodique": "PA/FC régulière | Créatinine annuelle",
-                    "alerte_clinique": "Sécheresse buccale | Somnolence | Rebond hypertensif à l'arrêt brutal",
+                    "suivi_initial": "TA/FC | Créatinine | ECG | MMSE/MoCA (sédation, dépression) | Évaluation chutes",
+                    "suivi_periodique": "TA/FC régulière | Créatinine annuelle | Évaluation cognitive et dépressive | Évaluation chutes chez âgé",
+                    "alerte_clinique": "PIM ABSOLU Beers 2023 / STOPP / FORTA-D chez âgé | REBOND HTA À L'ARRÊT (décroissance ≥ 2 sem obligatoire) | Si BB associé : arrêter BB en 1er | Sédation/dépression (BHE+++) | Sécheresse buccale | Hypotension orthostatique → chutes | Bradycardie | Indication restreinte : HTA résistante 5ème ligne (PATHWAY-2 — alternative à doxazosine), sevrage opioïde/alcool, bouffées de chaleur ménopause",
                     "bio_cible": [
                               "BIO_003"
                     ],
@@ -23497,8 +23469,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Antihypertenseur central α2 : à ÉVITER chez âgé (Beers 2023, FORTA-D — sédation, hypotension orthostatique, bradycardie, REBOND HTA si arrêt brutal). Indication restreinte (HTA résistante, sevrage opioïde).",
-                    "source": "RCP Catapressan | ESC HTA 2023 ; Beers 2023"
+                    "notes_cliniques": "Agoniste α2 central → ↓ tonus sympathique → ↓ TA. PIM ABSOLU chez âgé (Beers 2023, STOPP, FORTA-D, PRISCUS) : sédation/dépression (BHE+++), hypotension orthostatique, bradycardie, REBOND HTA à l'arrêt. Indications restreintes : HTA résistante 5ème ligne (PATHWAY-2), sevrage opioïde/alcool, bouffées de chaleur post-ménopause, TDAH enfant (off-label), tics syndrome de Tourette. À ÉVITER en monothérapie HTA chez âgé.",
+                    "source": "RCP Catapressan ; ESC HTA 2023 ; Beers 2023 ; STOPP v3 2023 ; FORTA-D ; PRISCUS ; PATHWAY-2"
           },
           {
                     "dci": "Dalteparine",
@@ -24091,37 +24063,28 @@ const MASTER_DB = {
           {
                     "dci": "Methyldopa",
                     "princeps": "Aldomet",
-                    "classe": "Antihypertenseur d'action centrale",
-                    "poso_hab": "250-1500 mg/j en 2-3 prises",
-                    "poso_ger": "125-500 mg/j (PIM — sédation, dépression, hypotension)",
-                    "poso_ren": "Espacer prises si DFG < 30.",
+                    "classe": "Antihypertenseur central (faux neurotransmetteur — α-méthylnoradrénaline → agoniste α2) — INDICATION GROSSESSE EXCLUSIVE",
+                    "poso_hab": "250-1500 mg/j en 2-3 prises (HTA gravidique : 250 mg x3/j)",
+                    "poso_ger": "À ÉVITER ABSOLUMENT (PIM ABSOLU Beers 2023 / STOPP / FORTA-D — sédation, dépression, hypotension, hépatite, anémie hémolytique). Pas d'indication en gériatrie.",
+                    "poso_ren": "ClCr < 30 : espacer les prises (élimination rénale 70%)",
                     "acb": 0,
                     "cia": 1,
-                    "bhe": "1",
+                    "bhe": "1.0 — BHE+++ (sédation/dépression)",
                     "qt_risque": "",
                     "albumine": "< 15%",
-                    "ddi_interact": "Lithium, IMAO, Fer oral (réduction absorption)",
+                    "ddi_interact": "PIM ABSOLU Beers/STOPP/FORTA-D chez âgé, Lithium (↑ lithémie + neurotoxicité), IMAO (CRISE HYPERTENSIVE PARADOXALE — CI ABSOLUE), Fer oral (chélation → ↓ absorption ↓ efficacité méthyldopa), Halothane (hypotension peropératoire), Sympathomimétiques (antagonisme), Lévodopa (antagonisme — CI Parkinson), Bétabloquants (cumul bradycardie + risque rebond)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Lithium",
-                                        "dcis": [
-                                                  "lithium"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Fer oral",
-                                        "dcis": [
-                                                  "fer"
-                                        ],
-                                        "commentaire": "réduction absorption",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IMAO non-sélectifs — CONTRE-INDICATION ABSOLUE (crise hypertensive paradoxale)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "Accumulation tyramine + α-méthylnoradrénaline → crise HTA paradoxale grave. CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "Lévodopa — CONTRE-INDICATION (Parkinson)", "dcis": ["levodopa", "carbidopa", "benserazide"], "commentaire": "Méthyldopa = analogue dopa → antagonisme dopaminergique central. Aggravation Parkinson. CI.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ lithémie + neurotoxicité", "dcis": ["lithium"], "commentaire": "↑ lithémie via ↓ excrétion rénale + neurotoxicité additive (BHE +++).", "severite": "danger" },
+                              { "classe": "Fer oral / Sulfate de fer — chélation, perte d'efficacité", "dcis": ["fer", "sulfate ferreux", "fumarate ferreux", "gluconate ferreux", "fer maltol"], "commentaire": "Chélation fer-méthyldopa dans le tube digestif → ↓ absorption x2 méthyldopa + ↓ absorption fer. Espacer ≥ 2h ou éviter.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool/AD)", "dcis": ["diazepam", "bromazepam", "lorazepam", "alprazolam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "alcool"], "commentaire": "Sédation additive (BHE+++).", "severite": "warning" },
+                              { "classe": "Sympathomimétiques (antagonisme)", "dcis": ["ephedrine", "phenylephrine", "noradrenaline", "adrenaline"], "commentaire": "Antagonisme effet antiHTA. Surveillance.", "severite": "warning" },
+                              { "classe": "Bétabloquants (cumul bradycardie + risque rebond)", "dcis": ["bisoprolol", "metoprolol", "atenolol", "propranolol"], "commentaire": "Cumul bradycardie. Arrêt brutal méthyldopa → rebond.", "severite": "warning" }
                     ],
-                    "suivi_initial": "NFS | BH | Test de Coombs | PA",
-                    "suivi_periodique": "NFS | BH trimestriel | Test Coombs si anémie",
-                    "alerte_clinique": "Anémie hémolytique (Coombs+) | Hépatite | Dépression | Sédation",
+                    "suivi_initial": "NFS | Bilan hépatique | Test de Coombs direct (anémie hémolytique auto-immune) | TA | TSH (induction thyroïdienne rare)",
+                    "suivi_periodique": "NFS + bilan hépatique trimestriel (HÉPATITE auto-immune) | Test de Coombs si anémie (jusqu'à 20% Coombs+, < 1% hémolyse clinique) | TA",
+                    "alerte_clinique": "PIM ABSOLU Beers 2023 / STOPP / FORTA-D — JAMAIS en gériatrie | INDICATION UNIQUE EN 2026 : HTA GRAVIDIQUE (alternative labétalol, nifédipine) | Anémie hémolytique Coombs+ | Hépatite (fatalités rapportées) | Dépression majeure | Sédation/somnolence (BHE+++) | IMAO : CI ABSOLUE (crise HTA paradoxale)",
                     "bio_cible": [
                               "BIO_009",
                               "BIO_013",
@@ -24131,8 +24094,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Antihypertenseur central : à ÉVITER chez âgé (Beers 2023 — sédation, hypotension orthostatique, dépression, hépatotoxicité, anémie hémolytique auto-immune). Indication actuelle : HTA gravidique (jamais en gériatrie).",
-                    "source": "RCP Aldomet | ESC HTA 2023 ; Beers 2023"
+                    "notes_cliniques": "Faux neurotransmetteur : α-méthyldopa → α-méthylnoradrénaline → agoniste α2 central (mécanisme similaire clonidine). PIM ABSOLU chez âgé. INDICATION UNIQUE EN 2026 : HTA gravidique (référence depuis 50 ans — alternatives : labétalol, nifédipine LP). À NE PAS UTILISER en gériatrie. Effets secondaires limitants : anémie hémolytique Coombs+ (jusqu'à 20%), hépatite auto-immune, dépression, sédation majeure.",
+                    "source": "RCP Aldomet ; ESC HTA 2023 ; Beers 2023 ; STOPP v3 2023 ; FORTA-D"
           },
           {
                     "dci": "Metopimazine",
@@ -25600,62 +25563,28 @@ const MASTER_DB = {
           {
                     "dci": "Moxonidine",
                     "princeps": "Physiotens",
-                    "classe": "Antihypertenseur central agoniste I1 (PIM)",
-                    "poso_hab": "0.2-0.6 mg/j",
-                    "poso_ger": "EVITER (Beers, PRISCUS, FORTA-D). CI si HFrEF (MOXCON — surmortalite)",
-                    "poso_ren": "DFG 30-60: max 0.4 mg/j | DFG < 30: max 0.2 mg/j",
+                    "classe": "Antihypertenseur central agoniste I1 (imidazoline) — PIM Beers/PRISCUS/FORTA-D",
+                    "poso_hab": "0,2-0,6 mg/j en 1 prise (max 0,6 mg/j)",
+                    "poso_ger": "À ÉVITER (PIM Beers 2023, PRISCUS, FORTA-D). CI ABSOLUE en HFrEF (MOXCON — surmortalité)",
+                    "poso_ren": "DFG 30-60 : max 0,4 mg/j | DFG < 30 : max 0,2 mg/j (élimination rénale 90%)",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "1",
+                    "bhe": "1.0",
                     "albumine": "7% (faible liaison)",
                     "qt_risque": "",
-                    "ddi_interact": "Autres antihypertenseurs (hypotension additive) | BZD, Alcool (sedation) | Betabloquants (bradycardie)",
+                    "ddi_interact": "PIM Beers chez âgé, IC SYSTOLIQUE CI ABSOLUE (MOXCON 2003 — surmortalité), ARRÊT BRUTAL → REBOND HTA (décroissance ≥ 2 sem), Bétabloquants (cumul bradycardie + ARRÊT BB EN PREMIER si arrêt conjoint), Antidépresseurs tricycliques (antagonisme antiHTA), Sédatifs centraux (BZD/opioïdes/alcool — sédation), Diurétiques (cumul hypotension), Lithium (↑ lithémie)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "BZD",
-                                        "dcis": [
-                                                  "diazepam",
-                                                  "bromazepam",
-                                                  "lorazepam",
-                                                  "oxazepam",
-                                                  "alprazolam",
-                                                  "clorazepate",
-                                                  "nordazepam",
-                                                  "clobazam",
-                                                  "clonazepam",
-                                                  "nitrazepam",
-                                                  "lormetazepam",
-                                                  "midazolam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "sedation",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Bêta-bloquants",
-                                        "dcis": [
-                                                  "bisoprolol",
-                                                  "metoprolol",
-                                                  "atenolol",
-                                                  "nebivolol",
-                                                  "carvedilol",
-                                                  "propranolol",
-                                                  "sotalol"
-                                        ],
-                                        "commentaire": "bradycardie",
-                                        "severite": "warning"
-                              }
+                              { "classe": "INSUFFISANCE CARDIAQUE SYSTOLIQUE — CONTRE-INDICATION ABSOLUE (MOXCON 2003)", "dcis": ["fevg basse", "ic systolique", "hfref"], "commentaire": "MOXCON trial 2003 (Cohn) : arrêt prématuré, ↑ mortalité de 5,3% vs 3,2% placebo en HFrEF. CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "ARRÊT BRUTAL — REBOND HTA", "dcis": ["arret brutal"], "commentaire": "Décroissance progressive sur ≥ 2 semaines obligatoire (mécanisme α2 central similaire clonidine).", "severite": "danger" },
+                              { "classe": "Bêta-bloquants — REBOND HTA si arrêt simultané (paradoxe)", "dcis": ["bisoprolol", "metoprolol", "atenolol", "nebivolol", "carvedilol", "propranolol", "sotalol"], "commentaire": "ARRÊTER BB EN PREMIER. Cumul bradycardie + risque rebond similaire clonidine.", "severite": "danger" },
+                              { "classe": "Antidépresseurs tricycliques — antagonisme antiHTA", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline"], "commentaire": "TCA bloquent recapture NA → antagonisme. Cumul ACB/sédation.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD/opioïdes/alcool) — sédation", "dcis": ["diazepam", "bromazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "alcool"], "commentaire": "Sédation additive (BHE+++). Chutes chez âgé.", "severite": "warning" },
+                              { "classe": "Diurétiques (cumul hypotension)", "dcis": ["furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Surveillance TA orthostatique.", "severite": "warning" },
+                              { "classe": "Lithium — ↑ lithémie", "dcis": ["lithium"], "commentaire": "↓ excrétion rénale (cumul). Surveillance lithémie.", "severite": "warning" }
                     ],
-                    "suivi_initial": "TA couche/debout | FC | Creatinine/DFG",
-                    "suivi_periodique": "TA | FC | Creatinine semestriel",
-                    "alerte_clinique": "PIM absolu geriatrie — sedation, secheresse buccale, hypotension orthostatique | CI ABSOLUE si HFrEF (MOXCON: surmortalite) | Ne pas arreter brutalement (rebond HTA)",
+                    "suivi_initial": "TA couché-debout | FC | Créatinine/DFG | Échographie cardiaque (CI si HFrEF)",
+                    "suivi_periodique": "TA | FC | Créatinine semestriel | Surveillance symptômes IC (arrêt immédiat si décompensation)",
+                    "alerte_clinique": "PIM Beers 2023 / PRISCUS / FORTA-D | CI ABSOLUE HFrEF (MOXCON 2003) | REBOND HTA arrêt brutal — décroissance ≥ 2 sem | Sécheresse buccale | Hypotension orthostatique → chutes | Sédation (BHE)",
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004"
@@ -25664,35 +25593,32 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Antihypertenseur central agoniste I1 : SURMORTALITÉ démontrée en HFrEF (MOXCON trial 2003 — CI absolue HFrEF). PIM Beers 2023 / FORTA-D. À ÉVITER chez âgé.",
-                    "source": "RCP Physiotens | ESC HTA 2023 ; Beers 2023"
+                    "notes_cliniques": "Antihypertenseur central agoniste sélectif récepteurs I1 (imidazoline) > α2 (vs clonidine). Mieux toléré que clonidine (moins de sécheresse buccale/sédation) mais MOXCON 2003 (Cohn) : SURMORTALITÉ en HFrEF → CI ABSOLUE HFrEF. PIM Beers/PRISCUS/FORTA-D chez âgé. Indication restreinte HTA résistante 5ème ligne. Préférer doxazosine LP (PATHWAY-2).",
+                    "source": "RCP Physiotens ; ESC HTA 2023 ; Beers 2023 ; PRISCUS ; FORTA-D ; MOXCON Cohn 2003 ; PATHWAY-2"
           },
           {
                     "dci": "Rilmenidine",
                     "princeps": "Hyperium",
-                    "classe": "Antihypertenseur central agoniste I1 (PIM)",
-                    "poso_hab": "1-2 mg/j",
-                    "poso_ger": "EVITER (Beers, PRISCUS, EU7-PIM)",
-                    "poso_ren": "Prudence si IRC (elimination renale partielle)",
+                    "classe": "Antihypertenseur central agoniste I1 (imidazoline — profil similaire moxonidine) — PIM Beers/PRISCUS/EU(7)-PIM",
+                    "poso_hab": "1-2 mg/j en 1-2 prises",
+                    "poso_ger": "À ÉVITER (PIM Beers 2023, PRISCUS, EU(7)-PIM, FORTA-D)",
+                    "poso_ren": "DFG 30-60 : ↓ dose 50% | DFG < 30 : prudence (élimination rénale 65%)",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "1",
+                    "bhe": "1.0",
                     "albumine": "10%",
                     "qt_risque": "",
-                    "ddi_interact": "Autres antihypertenseurs | Sedatifs | Alcool",
+                    "ddi_interact": "PIM Beers chez âgé, ARRÊT BRUTAL → REBOND HTA (décroissance ≥ 2 sem), Bétabloquants (cumul bradycardie + rebond), Antidépresseurs tricycliques (antagonisme), Sédatifs centraux (BZD/opioïdes/alcool — sédation), Diurétiques (cumul hypotension)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ARRÊT BRUTAL — REBOND HTA", "dcis": ["arret brutal"], "commentaire": "Décroissance progressive sur ≥ 2 semaines.", "severite": "danger" },
+                              { "classe": "Bêta-bloquants — REBOND HTA si arrêt simultané", "dcis": ["bisoprolol", "metoprolol", "atenolol", "nebivolol", "carvedilol", "propranolol", "sotalol"], "commentaire": "ARRÊTER BB EN PREMIER.", "severite": "warning" },
+                              { "classe": "Antidépresseurs tricycliques — antagonisme antiHTA", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline"], "commentaire": "Antagonisme.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux (BZD/opioïdes/alcool)", "dcis": ["diazepam", "bromazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "alcool"], "commentaire": "Sédation additive. Chutes chez âgé.", "severite": "warning" },
+                              { "classe": "Diurétiques (cumul hypotension)", "dcis": ["furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Surveillance TA orthostatique.", "severite": "warning" }
                     ],
-                    "suivi_initial": "TA couche/debout | FC",
-                    "suivi_periodique": "TA | Recherche hypotension orthostatique",
-                    "alerte_clinique": "PIM geriatrie — hypotension orthostatique, somnolence | Ne pas arreter brutalement",
+                    "suivi_initial": "TA couché-debout | FC | Créatinine/DFG | Évaluation chutes",
+                    "suivi_periodique": "TA | Évaluation hypotension orthostatique | Évaluation cognitive chez âgé",
+                    "alerte_clinique": "PIM Beers 2023 / PRISCUS / EU(7)-PIM / FORTA-D chez âgé | REBOND HTA arrêt brutal — décroissance ≥ 2 sem | Hypotension orthostatique → chutes | Somnolence (BHE) | Indication restreinte HTA résistante (préférer doxazosine LP — PATHWAY-2)",
                     "bio_cible": [
                               "BIO_003"
                     ],
@@ -25700,8 +25626,8 @@ const MASTER_DB = {
                     "atb_moderee": "",
                     "atb_severe": "",
                     "atb_terminale": "",
-                    "notes_cliniques": "Antihypertenseur central agoniste I1 : profil similaire moxonidine. À ÉVITER chez âgé (PIM, sédation, hypotension orthostatique). Indication restreinte HTA résistante.",
-                    "source": "RCP Hyperium | ESC HTA 2023 ; Beers 2023"
+                    "notes_cliniques": "Antihypertenseur central agoniste I1 (imidazoline) similaire à moxonidine. PIM Beers 2023, PRISCUS, EU(7)-PIM chez âgé : sédation, hypotension orthostatique, REBOND HTA arrêt. Pas d'étude de surmortalité HFrEF spécifique (vs moxonidine MOXCON) mais prudence par classe. Indication restreinte HTA résistante. Préférence : doxazosine LP (PATHWAY-2).",
+                    "source": "RCP Hyperium ; ESC HTA 2023 ; Beers 2023 ; PRISCUS ; EU(7)-PIM ; FORTA-D ; PATHWAY-2"
           },
           {
                     "dci": "Mirabegron",

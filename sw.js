@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v1.02 (Phase 50 — Cardio IEC restants (8 entrées : Captopril SOLVD/SAVE/Lewis groupe thiol + allopurinol, Benazepril élimination biliaire AIPRI, Cilazapril, Fosinopril ATOUT IRC sévère double élimination, Moexipril prise à jeun obligatoire, Quinapril QUIET + tétracyclines chélation Mg, Trandolapril TRACE/PEACE T½ longue, Zofenopril SMILE thiol propriétés antioxydantes) — bloc DDI commun IEC : ARA2/ARNI CI cumul SRA wash-out 36h, Aliskiren ALTITUDE, ARM hyperK, AINS triple whammy, Lithium/Triméthoprime Antoniou BMJ 2014, diurétiques hypotension 1ère dose, hypoglycémie sulfonylurées)
+// Service Worker - GeriaAssist v1.03 (Phase 51 — Cardio vasodilatateurs/centraux/alpha-bloquants : Isosorbide (mono/dinitrate — CI ABSOLUE PDE5 sildénafil/tadalafil collapsus, riociguat), Doxazosine (alpha-1 PIM Beers HTA ALLHAT branche stoppée, HBP EAU, IFIS chirurgie cataracte, PATHWAY-2), Prazosine (PIM Beers, T½ courte, PTSD-cauchemars Raskind), Clonidine (PIM ABSOLU Beers/STOPP/FORTA-D sédation/rebond/BB en 1er à arrêter, BHE+++), Méthyldopa (HTA gravidique uniquement, anémie hémolytique Coombs+, hépatite, IMAO CI), Moxonidine (CI ABSOLUE HFrEF MOXCON 2003 Cohn surmortalité), Rilménidine (PIM EU(7)-PIM))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260513-phase50-cardio-iec-restants';
-const CACHE_NAME = `geriaassist-v102-${BUILD_ID}`;
+const BUILD_ID = '20260513-phase51-cardio-vaso-centraux';
+const CACHE_NAME = `geriaassist-v103-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
