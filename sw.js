@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v1.01 (Phase 49 — Cardio statines (Rosuvastatine OATP1B1 + asiatique max 20 mg, Simvastatine CYP3A4 RCP-dose-limits +++ FDA 2011, Pravastatine sulfatation interactions minimes PROSPER ≥70 ans, Fluvastatine CYP2C9 ↑INR AVK) + Sacubitril/Valsartan ARNI (PARADIGM-HF McMurray 2014, PIONEER-HF, CI IEC wash-out 36h angio-œdème, CI ARA2 cumul, CI aliskiren ALTITUDE, OATP1B1 statines ↑x1,9, BNP↓/NT-proBNP↑ piège))
+// Service Worker - GeriaAssist v1.02 (Phase 50 — Cardio IEC restants (8 entrées : Captopril SOLVD/SAVE/Lewis groupe thiol + allopurinol, Benazepril élimination biliaire AIPRI, Cilazapril, Fosinopril ATOUT IRC sévère double élimination, Moexipril prise à jeun obligatoire, Quinapril QUIET + tétracyclines chélation Mg, Trandolapril TRACE/PEACE T½ longue, Zofenopril SMILE thiol propriétés antioxydantes) — bloc DDI commun IEC : ARA2/ARNI CI cumul SRA wash-out 36h, Aliskiren ALTITUDE, ARM hyperK, AINS triple whammy, Lithium/Triméthoprime Antoniou BMJ 2014, diurétiques hypotension 1ère dose, hypoglycémie sulfonylurées)
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260513-phase49-cardio-statines-arni';
-const CACHE_NAME = `geriaassist-v101-${BUILD_ID}`;
+const BUILD_ID = '20260513-phase50-cardio-iec-restants';
+const CACHE_NAME = `geriaassist-v102-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
