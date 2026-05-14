@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v1.03 (Phase 51 — Cardio vasodilatateurs/centraux/alpha-bloquants : Isosorbide (mono/dinitrate — CI ABSOLUE PDE5 sildénafil/tadalafil collapsus, riociguat), Doxazosine (alpha-1 PIM Beers HTA ALLHAT branche stoppée, HBP EAU, IFIS chirurgie cataracte, PATHWAY-2), Prazosine (PIM Beers, T½ courte, PTSD-cauchemars Raskind), Clonidine (PIM ABSOLU Beers/STOPP/FORTA-D sédation/rebond/BB en 1er à arrêter, BHE+++), Méthyldopa (HTA gravidique uniquement, anémie hémolytique Coombs+, hépatite, IMAO CI), Moxonidine (CI ABSOLUE HFrEF MOXCON 2003 Cohn surmortalité), Rilménidine (PIM EU(7)-PIM))
+// Service Worker - GeriaAssist v1.04 (Phase 52 — Cardio CCB secondaires + Digoxine enrichie : Digoxine (DIG 1997, Rathore JAMA 2003 cible 0,5-0,9 ng/mL ≥70 ans, RATE-AF 2020 non-inférioritéé bisoprolol FA âgé, PIM Beers > 0,125 mg/j), Nicardipine (IV urgence HTA, ↑x3-5 CYP3A4), Nimodipine (BHE+++ INDICATION UNIQUE vasospasme post-HSA 21j Allen 1983/BRANT, CI inducteurs CYP3A4 ↓x10), Isradipine (STEPS-PD 2020 négative Parkinson), Nitrendipine (Syst-Eur Staessen 1997 ↓AVC-42% + Syst-Eur Dementia Forette 1998 ↓démence-55%))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260513-phase51-cardio-vaso-centraux';
-const CACHE_NAME = `geriaassist-v103-${BUILD_ID}`;
+const BUILD_ID = '20260513-phase52-cardio-ccb2-digoxine';
+const CACHE_NAME = `geriaassist-v104-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
