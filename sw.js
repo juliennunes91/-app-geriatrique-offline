@@ -1,7 +1,7 @@
-// Service Worker - GeriaAssist v0.99 (Phase 47 — Cardio CCB principaux : Amlodipine (HYVET/ASCOT-BPLA), Diltiazem (FA contrôle FC), Vérapamil (CCB le + bradycardisant — PIM HFrEF/CI BB IV/AOD/statines), Lercanidipine/Manidipine (DHP 3e gen, moins d'œdèmes), Nifédipine (formes IR PIM ABSOLU Beers — Furberg 1995), Félodipine (jus de pamplemousse Bailey Lancet 1991). DDI commun : CYP3A4 inhibiteurs/inducteurs, statines RCP-limit, BB cumul, AOD vérapamil, ivabradine CI ANSM 2014, ciclosporine, BZD)
+// Service Worker - GeriaAssist v1.00 (Phase 48 — Cardio anti-arythmiques : Amiodarone (T½ 40-55j toxicité multiviscérale dysthyroïdie/PID/hépatite, CredibleMeds KR), Dronédarone (CI FA permanente PALLAS / IC NYHA III-IV ANDROMEDA / hépatotoxicité fatale FDA 2011), Flécaïnide & Propafénone (classe Ic — CAST trial CI cardiopathie structurelle), Disopyramide (PIM ABSOLU Beers — anticholinergique +++ + hypoglycémie insulino-sécrétagogue), Quinidine (le + pro-arythmique — CredibleMeds RE, thrombopénie immunoallergique, ↓ codéine/tramadol via CYP2D6))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260513-phase47-cardio-ccb';
-const CACHE_NAME = `geriaassist-v99-${BUILD_ID}`;
+const BUILD_ID = '20260513-phase48-cardio-antiar';
+const CACHE_NAME = `geriaassist-v100-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
