@@ -11107,18 +11107,26 @@ const MASTER_DB = {
           },
           {
                     "dci": "Flupentixol",
-                    "princeps": "Fluanxol",
-                    "classe": "Antipsychotique FGA (thioxanthene)",
-                    "poso_hab": "1 u 3 mg/jour",
-                    "poso_ger": "0.5 u 1 mg/jour",
+                    "princeps": "Fluanxol (LI + LP IM Fluanxol Depot)",
+                    "classe": "Antipsychotique FGA (thioxanthène — schizophrénie + dépression basses doses) — QTc Risk_PR, PIM ABSOLU démence",
+                    "poso_hab": "PO : 1-3 mg/j (dépression) à 3-18 mg/j (schizophrénie) | LP IM : 20-100 mg /2-4 sem",
+                    "poso_ger": "0,5-1 mg/j ; PIM ABSOLU démence (FDA Black Box 2005)",
                     "poso_ren": "Prudence",
                     "acb": 1,
                     "cia": 2,
-                    "bhe": "",
-                    "albumine": "0,99",
-                    "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "LevoDOPA - Depresseurs SNC",
-                    "ddi_interact_v2": [],
+                    "bhe": "+",
+                    "albumine": "> 99%",
+                    "qt_risque": "(PR) Risque Possible",
+                    "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, SMN, Levodopa antagonisme, Sédatifs centraux, Lithium neurotoxicité, ↓ seuil épileptogène",
+                    "ddi_interact_v2": [
+                              { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "ECG + ions.", "severite": "danger" },
+                              { "classe": "Levodopa — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole"], "commentaire": "CI Parkinson.", "severite": "danger" },
+                              { "classe": "SMN — surveillance", "dcis": ["surveillance smn"], "commentaire": "Hyperthermie + rigidité + ↑ CPK.", "severite": "danger" },
+                              { "classe": "Lithium — neurotoxicité", "dcis": ["lithium"], "commentaire": "Encéphalopathie.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation.", "severite": "danger" },
+                              { "classe": "↓ seuil épileptogène", "dcis": ["antecedent epilepsie"], "commentaire": "Prudence.", "severite": "warning" }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Bilan lipidique | Poids/IMC",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie + bilan lipidique (annuel)",
                     "alerte_clinique": "Syndrome malin neuroleptique → CPK urgente | Allongement QTc",
@@ -11140,38 +11148,26 @@ const MASTER_DB = {
           },
           {
                     "dci": "Fluphenazine",
-                    "princeps": "Moditen",
-                    "classe": "Antipsychotique FGA (phenothiazine)",
-                    "poso_hab": "2-10 mg/jour",
-                    "poso_ger": "0.5-2 mg/jour",
+                    "princeps": "Moditen, Modecate (LP IM)",
+                    "classe": "Antipsychotique FGA (phénothiazine pipérazine — schizophrénie, formes LP IM /3-4 sem) — QTc Risk_KR, PIM ABSOLU démence",
+                    "poso_hab": "PO : 2-10 mg/j | LP IM : 12,5-100 mg /3-4 sem",
+                    "poso_ger": "PO 0,5-2 mg/j ; FDA Black Box 2005 démence — PIM ABSOLU âgé",
                     "poso_ren": "Pas d'ajustement majeur",
-                    "acb": 0,
+                    "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
-                    "albumine": "",
-                    "qt_risque": "?? Risque Connu (KR)",
-                    "ddi_interact": "Lithium, Tricycliques, Anticholinergiques",
+                    "albumine": "> 90%",
+                    "qt_risque": "(KR) Risque Connu",
+                    "ddi_interact": "FDA Black Box 2005 démence (mortalité), QT-prolongateurs (Risk_KR), Agranulocytose, SMN, Hypotension orthostatique, Cumul ACB, Levodopa antagonisme, Lithium (neurotoxicité), Sédatifs centraux",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Lithium",
-                                        "dcis": [
-                                                  "lithium"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Tricycliques",
-                                        "dcis": [
-                                                  "amitriptyline",
-                                                  "clomipramine",
-                                                  "imipramine",
-                                                  "desipramine",
-                                                  "nortriptyline"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "DÉMENCE — FDA Black Box 2005 / EMA 2008", "dcis": ["demence", "age sup 65 ans", "syndrome confusionnel"], "commentaire": "Mortalité +60-70%. PIM ABSOLU Beers/STOPP K1/FORTA-D. Dose minimale + durée minimale + réévaluation.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — TORSADES (Risk_KR)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "ECG + ions.", "severite": "danger" },
+                              { "classe": "AGRANULOCYTOSE / SMN — surveillance", "dcis": ["surveillance nfs"], "commentaire": "NFS si fièvre. SMN : urgence.", "severite": "danger" },
+                              { "classe": "Lithium — neurotoxicité (encéphalopathie irréversible documentée)", "dcis": ["lithium"], "commentaire": "Association lithium + phénothiazines = neurotoxicité (Cohen-Cohen 1974 syndrome décrit). Surveillance.", "severite": "danger" },
+                              { "classe": "Levodopa / Dopa-agonistes — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole", "bromocriptine"], "commentaire": "Antagonisme D2. CI Parkinson — préférer clozapine/quetiapine.", "severite": "danger" },
+                              { "classe": "Tricycliques / Cumul ACB", "dcis": ["amitriptyline", "clomipramine", "imipramine", "diphenhydramine", "promethazine"], "commentaire": "Cumul ACB.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation additive.", "severite": "danger" },
+                              { "classe": "Hypotension orthostatique", "dcis": ["doxazosine", "tamsulosine", "amlodipine"], "commentaire": "Surveillance TA debout/couché.", "severite": "warning" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Poids/IMC",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie (annuelle)",
@@ -13490,25 +13486,29 @@ const MASTER_DB = {
           {
                     "dci": "Levomepromazine",
                     "princeps": "Nozinan",
-                    "classe": "Antipsychotique FGA (phenothiazine)",
-                    "poso_hab": "25-75 mg/jour",
-                    "poso_ger": "10-25 mg/jour",
+                    "classe": "Antipsychotique FGA (phénothiazine sédative — antiémétique palliatif) — ACB élevé, QTc Risk_KR, PIM ABSOLU âgé",
+                    "poso_hab": "25-200 mg/j PO ou SC (antiémétique soins palliatifs)",
+                    "poso_ger": "10-25 mg/j ; PIM ABSOLU Beers/STOPP K1/FORTA-D ; FDA Black Box 2005 démence (mortalité +60-70%) ; usage soins palliatifs antiémétique acceptable",
                     "poso_ren": "Pas d'ajustement majeur",
-                    "acb": 0,
-                    "cia": 0,
-                    "bhe": "",
-                    "albumine": "",
-                    "qt_risque": "?? Risque Connu (KR)",
-                    "ddi_interact": "Alcool, Depresseurs SNC, Anticholinergiques, QT",
+                    "acb": 3,
+                    "cia": 3,
+                    "bhe": "+++",
+                    "albumine": "> 90%",
+                    "qt_risque": "(KR) Risque Connu — Torsades documentées",
+                    "ddi_interact": "FDA BLACK BOX 2005 — DÉMENCE (mortalité +60-70%), AGRANULOCYTOSE (phénothiazine), SYNDROME MALIN DES NEUROLEPTIQUES (SMN — CPK/T°/rigidité), QT-prolongateurs (Torsades), ACB cumul, Hypotension orthostatique +++ (effet α1), Sédation/chutes, IACHE antagonisme, Glaucome angle fermé CI, HBP non traitée CI relative, Hyperthermie estivale, Levodopa antagonisme",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "DÉMENCE — FDA Black Box 2005 / EMA 2008 (mortalité +60-70%)", "dcis": ["demence", "age sup 65 ans", "syndrome confusionnel", "trouble comportemental demence"], "commentaire": "FDA Black Box 2005 + EMA 2008 : ↑ x1,6-1,7 mortalité chez patients déments traités par antipsychotique (AVC, infections, troubles rythme). PIM ABSOLU Beers 2023 / STOPP K1 / FORTA-D / PRISCUS. SI USAGE INDISPENSABLE (agressivité sévère + échec non-pharmacologique) : dose minimale + durée minimale + réévaluation hebdomadaire + information famille.", "severite": "danger" },
+                              { "classe": "AGRANULOCYTOSE (phénothiazine) — NFS si fièvre/angine", "dcis": ["surveillance nfs", "fievre", "angine"], "commentaire": "Phénothiazines = risque agranulocytose 0,1-0,5%. NFS hebdomadaire 1er mois si haute dose, sinon NFS si fièvre/angine/aphtes.", "severite": "danger" },
+                              { "classe": "SYNDROME MALIN DES NEUROLEPTIQUES (SMN — urgence)", "dcis": ["surveillance smn"], "commentaire": "Hyperthermie + rigidité musculaire + altération conscience + dysautonomie + ↑ CPK x10. ARRÊT IMMÉDIAT + DANTROLÈNE/BROMOCRIPTINE + réa. Mortalité 10-20% sans traitement.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — TORSADES (Risk_KR)", "dcis": ["amiodarone", "sotalol", "flecainide", "dronedarone", "hydroxychloroquine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "azithromycine", "clarithromycine", "ondansetron", "domperidone", "haloperidol", "ziprasidone", "quetiapine", "risperidone", "citalopram", "escitalopram", "venlafaxine", "methadone"], "commentaire": "Levomepromazine = QTc Risk_KR (Torsades documentées). ECG baseline + monitoring + corriger K+/Mg.", "severite": "danger" },
+                              { "classe": "Hypotension orthostatique +++ (α1 marqué)", "dcis": ["doxazosine", "tamsulosine", "alfuzosine", "silodosine", "sildenafil", "tadalafil", "amlodipine"], "commentaire": "Effet α1 marqué levomepromazine. Cumul → orthostatisme/chutes. Surveillance TA debout/couché.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme cholinergique.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "Levodopa / Agonistes dopaminergiques — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole", "bromocriptine", "piribedil"], "commentaire": "Antagonisme D2 → aggrave Parkinson. Préférer clozapine/quetiapine si psychose en Parkinson.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "diphenhydramine", "promethazine", "alimemazine", "hydroxyzine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux — chutes", "dcis": ["alcool", "diazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline", "gabapentine"], "commentaire": "Sédation additive.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP1A2 (tabac) / Inhibiteurs CYP2D6", "dcis": ["paroxetine", "fluoxetine", "bupropion", "quinidine", "tabac"], "commentaire": "Variabilité PK.", "severite": "warning" },
+                              { "classe": "Hyperthermie estivale — coup chaleur", "dcis": ["canicule"], "commentaire": "↓ thermorégulation centrale + sédation. Surveillance.", "severite": "warning" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | TA (hypotension orthostatique)",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | TA (consultations)",
@@ -13532,25 +13532,24 @@ const MASTER_DB = {
           {
                     "dci": "Levomethopromazine",
                     "princeps": "Nozinan",
-                    "classe": "Antipsychotique FGA (phenothiazine)",
-                    "poso_hab": "25-75 mg/jour",
-                    "poso_ger": "10-25 mg/jour",
+                    "classe": "Antipsychotique FGA (phénothiazine — variant orthographique de Levomepromazine) — voir Levomepromazine pour profil complet",
+                    "poso_hab": "25-75 mg/j (voir Levomepromazine)",
+                    "poso_ger": "10-25 mg/j ; PIM ABSOLU démence",
                     "poso_ren": "Pas d'ajustement majeur",
-                    "acb": 0,
-                    "cia": 0,
-                    "bhe": "",
-                    "albumine": "",
-                    "qt_risque": "?? Risque Connu (KR)",
-                    "ddi_interact": "Alcool, Depresseurs SNC, Anticholinergiques, QT",
+                    "acb": 3,
+                    "cia": 3,
+                    "bhe": "+++",
+                    "albumine": "> 90%",
+                    "qt_risque": "(KR) Risque Connu",
+                    "ddi_interact": "Identique Levomepromazine : FDA Black Box 2005 démence, QT-prolongateurs (Risk_KR), SMN, Agranulocytose, Hypotension orthostatique, Cumul ACB, Levodopa antagonisme, Sédatifs centraux",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades (Risk_KR)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "Torsades documentées.", "severite": "danger" },
+                              { "classe": "Levodopa — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole"], "commentaire": "CI Parkinson.", "severite": "danger" },
+                              { "classe": "Hypotension orthostatique +++", "dcis": ["doxazosine", "tamsulosine", "amlodipine"], "commentaire": "Effet α1 marqué.", "severite": "danger" },
+                              { "classe": "Agranulocytose / SMN", "dcis": ["surveillance nfs"], "commentaire": "NFS si fièvre.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "diphenhydramine", "promethazine", "hydroxyzine"], "commentaire": "Cumul.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation.", "severite": "danger" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | TA (hypotension orthostatique)",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | TA (consultations)",
@@ -16889,42 +16888,26 @@ const MASTER_DB = {
           {
                     "dci": "Perphenazine",
                     "princeps": "Trilafon",
-                    "classe": "Antipsychotique FGA (phenothiazine)",
-                    "poso_hab": "4-12 mg/jour",
-                    "poso_ger": "1-4 mg/jour",
+                    "classe": "Antipsychotique FGA (phénothiazine pipérazine) — QTc Risk_PR, PIM ABSOLU démence",
+                    "poso_hab": "4-12 mg/j PO",
+                    "poso_ger": "1-4 mg/j ; PIM ABSOLU âgé démence (FDA Black Box 2005)",
                     "poso_ren": "Pas d'ajustement majeur",
                     "acb": 3,
                     "cia": 0,
-                    "bhe": "",
-                    "albumine": "",
-                    "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "Anticholinergiques, Tricycliques, ISRS",
+                    "bhe": "+",
+                    "albumine": "> 90%",
+                    "qt_risque": "(PR) Risque Possible",
+                    "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, Agranulocytose, SMN, Cumul ACB, Levodopa antagonisme, Lithium neurotoxicité, Hypotension orthostatique, Sédatifs centraux",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Tricycliques",
-                                        "dcis": [
-                                                  "amitriptyline",
-                                                  "clomipramine",
-                                                  "imipramine",
-                                                  "desipramine",
-                                                  "nortriptyline"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "DÉMENCE — FDA Black Box 2005 / EMA 2008", "dcis": ["demence", "age sup 65 ans", "syndrome confusionnel"], "commentaire": "Mortalité +60-70%. PIM ABSOLU Beers/STOPP K1/FORTA-D.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades (Risk_PR)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "ECG + ions.", "severite": "danger" },
+                              { "classe": "AGRANULOCYTOSE (phénothiazine) / SMN", "dcis": ["surveillance nfs"], "commentaire": "NFS si fièvre. SMN : urgence.", "severite": "danger" },
+                              { "classe": "Lithium — neurotoxicité (encéphalopathie)", "dcis": ["lithium"], "commentaire": "Cohen-Cohen 1974. Surveillance.", "severite": "danger" },
+                              { "classe": "Levodopa / Dopa-agonistes — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole", "bromocriptine"], "commentaire": "CI Parkinson.", "severite": "danger" },
+                              { "classe": "Tricycliques / Cumul ACB", "dcis": ["amitriptyline", "clomipramine", "imipramine", "diphenhydramine", "promethazine", "hydroxyzine"], "commentaire": "Cumul ACB.", "severite": "danger" },
+                              { "classe": "ISRS — Torsades + cumul sédation", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine"], "commentaire": "QTc + sédation.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation additive.", "severite": "danger" },
+                              { "classe": "Hypotension orthostatique", "dcis": ["doxazosine", "tamsulosine", "amlodipine"], "commentaire": "Surveillance TA debout/couché.", "severite": "warning" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
@@ -17202,25 +17185,23 @@ const MASTER_DB = {
           {
                     "dci": "Pipamperone",
                     "princeps": "Dipiperon",
-                    "classe": "Antipsychotique FGA (butyrophenone - sedatif geriatrique)",
-                    "poso_hab": "40-320mg/j en 2-3 prises PO",
-                    "poso_ger": "20-40mg/j (titration lente)",
-                    "poso_ren": "Prudence si IRC (reduire dose)",
-                    "acb": 0,
+                    "classe": "Antipsychotique FGA (butyrophénone — sédatif gériatrique alternatif à halopéridol) — QTc Risk_CR, PIM démence",
+                    "poso_hab": "40-320 mg/j en 2-3 prises PO",
+                    "poso_ger": "20-40 mg/j (titration lente) ; FDA Black Box 2005 démence — PIM ABSOLU",
+                    "poso_ren": "↓ dose si DFG < 30",
+                    "acb": 1,
                     "cia": 1,
                     "bhe": "1.0",
-                    "albumine": "> 90",
-                    "qt_risque": "Risque Conditionnel (CR)",
-                    "ddi_interact": "Alcool, QT-prolongateurs, Anticholinergiques",
+                    "albumine": "> 90%",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, SMN, EPS, Levodopa antagonisme, Sédatifs centraux, Lithium",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades (Risk_CR)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "ECG + ions.", "severite": "danger" },
+                              { "classe": "Levodopa — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole"], "commentaire": "CI Parkinson.", "severite": "danger" },
+                              { "classe": "SMN / EPS", "dcis": ["surveillance smn", "surveillance eps"], "commentaire": "Surveillance.", "severite": "danger" },
+                              { "classe": "Lithium — neurotoxicité", "dcis": ["lithium"], "commentaire": "Encéphalopathie.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation.", "severite": "danger" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | TA",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie (annuelle)",
@@ -17346,18 +17327,27 @@ const MASTER_DB = {
           },
           {
                     "dci": "Pipotiazine",
-                    "princeps": "Piportil",
-                    "classe": "Antipsychotique FGA (phenothiazine LP)",
-                    "poso_hab": "10 u 20 mg/jour",
-                    "poso_ger": "5 mg/jour",
+                    "princeps": "Piportil (LP IM)",
+                    "classe": "Antipsychotique FGA (phénothiazine pipéridine LP IM) — schizophrénie maintenance — QTc Risk_PR, PIM ABSOLU démence",
+                    "poso_hab": "LP IM : 25-200 mg /4 sem",
+                    "poso_ger": "5 mg/j PO ou LP IM dose minimale ; PIM ABSOLU démence (FDA Black Box 2005)",
                     "poso_ren": "Prudence",
-                    "acb": 0,
+                    "acb": 3,
                     "cia": 2,
                     "bhe": "1.0",
-                    "albumine": "Forte (> 90 %)",
-                    "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "Medicaments abaissant le seuil epileptogene",
-                    "ddi_interact_v2": [],
+                    "albumine": "> 90%",
+                    "qt_risque": "(PR) Risque Possible",
+                    "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, Agranulocytose/SMN, Levodopa antagonisme, Cumul ACB, Sédatifs centraux, Lithium neurotoxicité, ↓ seuil épileptogène",
+                    "ddi_interact_v2": [
+                              { "classe": "DÉMENCE — FDA Black Box 2005 / EMA 2008", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "ECG + ions.", "severite": "danger" },
+                              { "classe": "Agranulocytose / SMN", "dcis": ["surveillance nfs"], "commentaire": "NFS si fièvre. SMN : urgence.", "severite": "danger" },
+                              { "classe": "Levodopa — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole"], "commentaire": "CI Parkinson.", "severite": "danger" },
+                              { "classe": "Lithium — neurotoxicité", "dcis": ["lithium"], "commentaire": "Encéphalopathie.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "diphenhydramine", "oxybutynine", "promethazine", "hydroxyzine"], "commentaire": "Cumul.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation.", "severite": "danger" },
+                              { "classe": "↓ seuil épileptogène (épilepsie)", "dcis": ["antecedent epilepsie"], "commentaire": "Prudence.", "severite": "warning" }
+                    ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Agranulocytose → NFS urgente | Syndrome malin neuroleptique → CPK",
@@ -17917,16 +17907,15 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "90",
                     "qt_risque": "Risque Conditionnel (CR)",
-                    "ddi_interact": "Alcool, QT-prolongateurs, Anticholinergiques",
+                    "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs (Risk_CR), SMN, Agranulocytose, Levodopa antagonisme, EPS (dystonie aiguë), Cumul ACB, Sédatifs centraux, Lithium",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "ECG + ions.", "severite": "danger" },
+                              { "classe": "Levodopa — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole"], "commentaire": "CI Parkinson.", "severite": "danger" },
+                              { "classe": "EPS — dystonie aiguë (correction tropatépine IM ou bipéridène)", "dcis": ["surveillance eps"], "commentaire": "Dystonie aiguë oculogyrique/torticolis fréquent surtout aiguë IM. Correction tropatépine 10 mg IM.", "severite": "danger" },
+                              { "classe": "Agranulocytose / SMN", "dcis": ["surveillance nfs"], "commentaire": "NFS si fièvre. SMN urgence.", "severite": "danger" },
+                              { "classe": "Lithium — neurotoxicité", "dcis": ["lithium"], "commentaire": "Encéphalopathie.", "severite": "danger" },
+                              { "classe": "Cumul ACB / Sédatifs centraux", "dcis": ["amitriptyline", "diphenhydramine", "alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Cumul.", "severite": "danger" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
@@ -20755,16 +20744,15 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 95",
                     "qt_risque": "Risque Etabli (RE) - CI nombreuses",
-                    "ddi_interact": "Alcool, QT-prolongateurs (CI multiples), CYP2D6 inhibiteurs",
+                    "ddi_interact": "QT-PROLONGATEURS — CI MULTIPLES (Risk_RE — Torsades documentées — restrictions FDA/EMA, retrait dans plusieurs pays), CYP2D6 inhibiteurs (paroxétine/fluoxétine/quinidine — CI ABSOLUE), Démence (FDA Black Box 2005), Rétinopathie pigmentaire irréversible, Agranulocytose, Cumul ACB, Sédatifs centraux, Levodopa antagonisme",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "QT-PROLONGATEURS — CI MULTIPLES (Risk_RE — restrictions FDA/EMA, retrait nombreux pays)", "dcis": ["amiodarone", "sotalol", "flecainide", "dronedarone", "hydroxychloroquine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "azithromycine", "clarithromycine", "ondansetron", "domperidone", "haloperidol", "ziprasidone", "quetiapine", "citalopram", "escitalopram", "methadone"], "commentaire": "Risk_RE Torsades documentées. Restrictions FDA/EMA — retrait commercialisation nombreux pays. CI ABSOLUE association QT-prolongateurs.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP2D6 — CI ABSOLUE (↑ thioridazine x10 → torsades)", "dcis": ["paroxetine", "fluoxetine", "bupropion", "duloxetine", "terbinafine", "quinidine"], "commentaire": "CYP2D6 voie majeure. Métaboliseurs lents/inhibiteurs → ↑ exposition x10 → Torsades fatales. CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
+                              { "classe": "RÉTINOPATHIE PIGMENTAIRE irréversible (dose/durée-dépendante)", "dcis": ["surveillance ophtalmologique"], "commentaire": "Spécifique thioridazine. Bilan ophtalmo tous 6 mois.", "severite": "danger" },
+                              { "classe": "Agranulocytose / SMN", "dcis": ["surveillance nfs"], "commentaire": "NFS si fièvre.", "severite": "danger" },
+                              { "classe": "Levodopa — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole"], "commentaire": "CI Parkinson.", "severite": "danger" },
+                              { "classe": "Cumul ACB / Sédatifs centraux", "dcis": ["amitriptyline", "diphenhydramine", "alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Cumul ACB + sédation.", "severite": "danger" }
                     ],
                     "suivi_initial": "ECG (QTc - risque TdP majeur) | NFS | Bilan hépatique | Glycemie | Poids | Bilan ophtalmique",
                     "suivi_periodique": "ECG (QTc mensuel) | NFS (annuelle) | Bilan hépatique (annuel) | Bilan ophtalmique (tous les 6 mois - retinopathie pigmentaire)",
@@ -21755,24 +21743,16 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 90",
                     "qt_risque": "Risque Conditionnel (CR)",
-                    "ddi_interact": "Alcool, QT-prolongateurs, Lithium",
+                    "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs (Risk_CR), Agranulocytose/SMN, Levodopa antagonisme, Cumul ACB, Sédatifs centraux, Lithium neurotoxicité (Cohen 1974), EPS +++ (phénothiazine pipérazine)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Lithium",
-                                        "dcis": [
-                                                  "lithium"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "ECG + ions.", "severite": "danger" },
+                              { "classe": "Lithium — neurotoxicité (Cohen 1974)", "dcis": ["lithium"], "commentaire": "Encéphalopathie.", "severite": "danger" },
+                              { "classe": "Levodopa — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole"], "commentaire": "CI Parkinson.", "severite": "danger" },
+                              { "classe": "Agranulocytose / SMN", "dcis": ["surveillance nfs"], "commentaire": "NFS si fièvre. SMN urgence.", "severite": "danger" },
+                              { "classe": "EPS +++ (phénothiazine pipérazine)", "dcis": ["surveillance eps"], "commentaire": "Effets extrapyramidaux fréquents (dystonie aiguë, akathisie, parkinsonisme, dyskinésie tardive). Surveillance.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "diphenhydramine", "oxybutynine", "promethazine", "hydroxyzine"], "commentaire": "Cumul.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation.", "severite": "danger" }
                     ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Glycemie",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
@@ -22792,23 +22772,15 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,98",
                     "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "LevoDOPA - Autres neuroleptiques",
+                    "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, SMN, EPS, Levodopa antagonisme, REDONDANCE antipsychotique, Sédatifs centraux, Lithium",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Antipsychotiques",
-                                        "dcis": [
-                                                  "haloperidol",
-                                                  "olanzapine",
-                                                  "risperidone",
-                                                  "quetiapine",
-                                                  "aripiprazole",
-                                                  "clozapine",
-                                                  "chlorpromazine",
-                                                  "levomepromazine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "ECG + ions.", "severite": "danger" },
+                              { "classe": "Antipsychotiques — REDONDANCE (ne pas associer)", "dcis": ["haloperidol", "olanzapine", "risperidone", "quetiapine", "aripiprazole", "clozapine", "chlorpromazine", "levomepromazine"], "commentaire": "Redondance D2. Cumul EPS/SMN/QTc.", "severite": "danger" },
+                              { "classe": "Levodopa — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole"], "commentaire": "CI Parkinson.", "severite": "danger" },
+                              { "classe": "SMN / EPS", "dcis": ["surveillance smn"], "commentaire": "Surveillance.", "severite": "danger" },
+                              { "classe": "Lithium — neurotoxicité", "dcis": ["lithium"], "commentaire": "Encéphalopathie.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation.", "severite": "danger" }
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Bilan lipidique",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie + bilan lipidique (annuel)",
