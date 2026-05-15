@@ -616,7 +616,7 @@ const MASTER_DB = {
             "CATEGORIE": "Psychiatrie",
             "SYNONYMES": "Épisode dépressif majeur, Dépression caractérisée, Trouble dépressif",
             "BIO_SURVEILLANCE": "BIO_019, BIO_022, BIO_021, BIO_023",
-            "SYND_RISQUE": ""
+            "SYND_RISQUE": "SYND_043, SYND_009, SYND_044, SYND_046, SYND_017"
         },
         "PAT_033": {
             "ID_PATHO": "PAT_033",
@@ -624,8 +624,8 @@ const MASTER_DB = {
             "NOM_STANDARD": "Glaucome à angle fermé",
             "CATEGORIE": "Ophtalmologie",
             "SYNONYMES": "Glaucome, Glaucome aigu, Angle fermé, Hypertension oculaire",
-            "BIO_SURVEILLANCE": "",
-            "SYND_RISQUE": ""
+            "BIO_SURVEILLANCE": "BIO_031",
+            "SYND_RISQUE": "SYND_047, SYND_046, SYND_048, SYND_050"
         },
         "PAT_034": {
             "ID_PATHO": "PAT_034",
@@ -634,7 +634,7 @@ const MASTER_DB = {
             "CATEGORIE": "Hépato-gastro-entérologie",
             "SYNONYMES": "Cirrhose, Hépatopathie sévère, Insuffisance hépatique, Child-Pugh, MASLD, MASH, Stéatose",
             "BIO_SURVEILLANCE": "BIO_013, BIO_014, BIO_015, BIO_016, BIO_017, BIO_035, BIO_030",
-            "SYND_RISQUE": ""
+            "SYND_RISQUE": "SYND_001, SYND_031, SYND_032, SYND_033, SYND_027, SYND_007, SYND_004"
         },
         "PAT_035": {
             "ID_PATHO": "PAT_035",
@@ -643,7 +643,7 @@ const MASTER_DB = {
             "CATEGORIE": "Cardiologie",
             "SYNONYMES": "Bradycardie sévère, BAV, Bloc auriculo-ventriculaire, Dysfonction sinusale",
             "BIO_SURVEILLANCE": "BIO_001, BIO_002",
-            "SYND_RISQUE": ""
+            "SYND_RISQUE": "SYND_046, SYND_011, SYND_010"
         },
         "PAT_036": {
             "ID_PATHO": "PAT_036",
@@ -652,7 +652,7 @@ const MASTER_DB = {
             "CATEGORIE": "Cardiologie",
             "SYNONYMES": "TVP, EP, Embolie pulmonaire, Thrombose veineuse profonde, Phlébite",
             "BIO_SURVEILLANCE": "BIO_033, BIO_030",
-            "SYND_RISQUE": ""
+            "SYND_RISQUE": "SYND_035, SYND_027, SYND_004, SYND_005, SYND_007"
         },
         "PAT_037": {
             "ID_PATHO": "PAT_037",
@@ -679,7 +679,7 @@ const MASTER_DB = {
             "CATEGORIE": "Gériatrie",
             "SYNONYMES": "Incontinence, Fuites urinaires, Impériosité mictionnelle, Vessie hyperactive",
             "BIO_SURVEILLANCE": "BIO_003, BIO_004",
-            "SYND_RISQUE": ""
+            "SYND_RISQUE": "SYND_050, SYND_048, SYND_047, SYND_046"
         },
         "PAT_041": {
             "ID_PATHO": "PAT_041",
@@ -687,7 +687,7 @@ const MASTER_DB = {
             "NOM_STANDARD": "Démence vasculaire",
             "CATEGORIE": "Neurologie",
             "SYNONYMES": "DV, DEMENCE VASCULAIRE, Démence multi-infarctus, Vascular dementia, VaD",
-            "BIO_SURVEILLANCE": "",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_021, BIO_022, BIO_023, BIO_025, BIO_026, BIO_027, BIO_009, BIO_002, BIO_003",
             "SYND_RISQUE": "SYND_013, SYND_027, SYND_009"
         },
         "PAT_042": {
@@ -696,7 +696,7 @@ const MASTER_DB = {
             "NOM_STANDARD": "Démence mixte (Alzheimer + vasculaire)",
             "CATEGORIE": "Neurologie",
             "SYNONYMES": "DEMENCE MIXTE, Mixed dementia, Alzheimer vasculaire",
-            "BIO_SURVEILLANCE": "",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_021, BIO_022, BIO_023, BIO_025, BIO_026, BIO_027, BIO_009, BIO_002, BIO_003",
             "SYND_RISQUE": "SYND_013, SYND_009"
         },
         "PAT_043": {
@@ -705,7 +705,7 @@ const MASTER_DB = {
             "NOM_STANDARD": "Trouble neurocognitif léger (MCI) / MBI",
             "CATEGORIE": "Neurologie",
             "SYNONYMES": "MCI, MBI, Mild Cognitive Impairment, Mild Behavioral Impairment, Trouble cognitif léger",
-            "BIO_SURVEILLANCE": "",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_021, BIO_022, BIO_023, BIO_009, BIO_002, BIO_025, BIO_003",
             "SYND_RISQUE": "SYND_013"
         },
         "PAT_044": {
@@ -714,7 +714,7 @@ const MASTER_DB = {
             "NOM_STANDARD": "Trouble anxieux généralisé (TAG) du sujet âgé",
             "CATEGORIE": "Psychiatrie",
             "SYNONYMES": "TAG, ANXIETE, Trouble anxieux généralisé, Generalized Anxiety Disorder, GAD",
-            "BIO_SURVEILLANCE": "",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_002, BIO_001, BIO_025, BIO_029, BIO_031, BIO_003",
             "SYND_RISQUE": "SYND_004, SYND_013"
         },
         "PAT_045": {
@@ -723,7 +723,7 @@ const MASTER_DB = {
             "NOM_STANDARD": "Psychose tardive (VLOSLP) / schizophrénie tardive",
             "CATEGORIE": "Psychiatrie",
             "SYNONYMES": "VLOSLP, Very Late Onset Schizophrenia-Like Psychosis, Schizophrénie tardive, Psychose tardive",
-            "BIO_SURVEILLANCE": "",
+            "BIO_SURVEILLANCE": "BIO_025, BIO_026, BIO_027, BIO_031, BIO_018, BIO_011, BIO_012, BIO_009, BIO_002, BIO_003",
             "SYND_RISQUE": "SYND_013, SYND_004"
         },
         "PAT_046": {
@@ -759,7 +759,7 @@ const MASTER_DB = {
             "NOM_STANDARD": "Insomnie chronique du sujet âgé",
             "CATEGORIE": "Sommeil",
             "SYNONYMES": "INSOMNIE CHRONIQUE, Trouble du sommeil chronique, Chronic insomnia",
-            "BIO_SURVEILLANCE": "",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_023, BIO_009, BIO_020, BIO_003",
             "SYND_RISQUE": "SYND_013, SYND_009"
         },
         "PAT_050": {
@@ -768,7 +768,7 @@ const MASTER_DB = {
             "NOM_STANDARD": "Trouble comportemental en sommeil paradoxal (TCSP)",
             "CATEGORIE": "Sommeil",
             "SYNONYMES": "TCSP, RBD, REM sleep Behavior Disorder, Trouble comportemental sommeil paradoxal",
-            "BIO_SURVEILLANCE": "",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_002, BIO_003, BIO_009",
             "SYND_RISQUE": "SYND_009, SYND_013"
         },
         "PAT_051": {
@@ -786,7 +786,7 @@ const MASTER_DB = {
             "NOM_STANDARD": "Syndrome d'apnées obstructives du sommeil (SAOS)",
             "CATEGORIE": "Sommeil",
             "SYNONYMES": "SAOS, OSA, Apnée du sommeil, Obstructive Sleep Apnea, Apnées obstructives",
-            "BIO_SURVEILLANCE": "",
+            "BIO_SURVEILLANCE": "BIO_009, BIO_024, BIO_028, BIO_003, BIO_019, BIO_026",
             "SYND_RISQUE": "SYND_009, SYND_003"
         },
         "PAT_053": {
@@ -1354,7 +1354,7 @@ const MASTER_DB = {
             "GRAVITE": "Sévère à Critique (mortalité 2-12 % si forme sévère)",
             "IMPUTABILITE_FREQ": "Tramadol + ISRS (le plus fréquent en gériatrie), Linézolide + ISRS, IMAO-B (rasagiline/sélégiline) + Tramadol, Mirtazapine + Tramadol",
             "ID_PATHO_ASSOC": "PAT_010, PAT_011, PAT_012, PAT_013",
-            "BIO_SECONDAIRE": "BIO_018 (CPK si rhabdomyolyse), BIO_013, BIO_014",
+            "BIO_SECONDAIRE": "BIO_018, BIO_013, BIO_014",
             "CONDUITE_IMMEDIATE": "ARRÊT immédiat de TOUS les sérotoninergiques. Refroidissement actif si T° > 38.5°C. Hydratation. BZD (diazépam) pour agitation/myoclonies. Cyproheptadine 12 mg PO (antagoniste 5-HT2A) si forme modérée-sévère. Réanimation si T° > 39.5° ou trouble conscience.",
             "SEUIL_CRITIQUE": "Hunter Criteria : clonus spontané OU clonus inductible + agitation/diaphorèse OU clonus oculaire + agitation/diaphorèse OU hypertonie + T° > 38°C + clonus oculaire/inductible",
             "SOURCE": "Boyer & Shannon NEJM 2005 ; Beers 2023 ; STOPP/START v3 K2 ; ANSM Tramadol 2020"
@@ -1367,7 +1367,7 @@ const MASTER_DB = {
             "GRAVITE": "Critique (engage le pronostic vital)",
             "IMPUTABILITE_FREQ": "BZD longue ½ vie (diazépam, clonazépam) + opioïdes forts (morphine, oxycodone, fentanyl) ; ajout de gabapentinoïdes ou alcool aggrave",
             "ID_PATHO_ASSOC": "PAT_022, PAT_023, PAT_010",
-            "BIO_SECONDAIRE": "BIO_037 (Lactates si hypoxie), gaz du sang",
+            "BIO_SECONDAIRE": "BIO_037",
             "CONDUITE_IMMEDIATE": "Stimulation, oxygène, BAVU si hypoventilation. Naloxone IV/IM/IN 0.4 mg (titration toutes 2-3 min jusqu'à FR ≥ 12) si suspicion opioïde. Flumazénil 0.2 mg IV (max 1 mg) si BZD pure (PRUDENCE chez utilisateur chronique : risque convulsions). Surveillance scope, EVITER de réintroduire l'association.",
             "SEUIL_CRITIQUE": "FR < 8/min OU SpO2 < 88 % OU score de Glasgow < 12 → réa, intubation possible. FDA Black Box (2016) : BZD + opioïdes = mortalité ↑ 4x",
             "SOURCE": "FDA Black Box 2016 ; STOPP/START v3 K1+K2 ; Beers 2023 ; HAS Douleur 2022"
@@ -1393,7 +1393,7 @@ const MASTER_DB = {
             "GRAVITE": "Modérée à Sévère (chute = entrée dans la dépendance, fracture col fémur 30 % de mortalité à 1 an)",
             "IMPUTABILITE_FREQ": "BZD seules ou + opioïdes (OR chute = 1.5-2.5), polyantihypertenseurs avec hypotension orthostatique, anticholinergiques (oxybutynine, hydroxyzine, amitriptyline)",
             "ID_PATHO_ASSOC": "PAT_005, PAT_009, PAT_010, PAT_011, PAT_012, PAT_013, PAT_016b",
-            "BIO_SECONDAIRE": "BIO_002 (hyponatrémie aggrave), BIO_001 (hypokaliémie), BIO_021 (B12), BIO_022 (B9), 25-OH-vitamine D",
+            "BIO_SECONDAIRE": "BIO_002, BIO_001, BIO_021, BIO_022, BIO_023",
             "CONDUITE_IMMEDIATE": "Test up-and-go, mesure TA couché-debout (1 et 3 min), revue STOPP/START + ACB, déprescription priorisée (alpha-bloquant > BZD > opioïde > thiazidique > anticholinergique), kinésithérapie équilibre, vitamine D si carence",
             "SEUIL_CRITIQUE": "≥ 2 chutes dans les 12 derniers mois OU 1 chute avec traumatisme grave → bilan complet (cardio, ORL, neuro, médicamenteux), aménagement du domicile",
             "SOURCE": "Beers 2023 ; STOPP/START v3 K1-K2-K4 ; HAS 2009 (chutes répétées) ; FRID Score Seppala JAMDA 2018"
@@ -1406,7 +1406,7 @@ const MASTER_DB = {
             "GRAVITE": "Sévère (prolonge l'hospitalisation, ↑ mortalité, déclin cognitif persistant)",
             "IMPUTABILITE_FREQ": "Polypharmacie anticholinergique (oxybutynine + hydroxyzine + amitriptyline = ACB 9), BZD post-introduction, corticoïdes en bolus, fluoroquinolone chez le sujet âgé",
             "ID_PATHO_ASSOC": "PAT_010, PAT_011, PAT_012, PAT_013, PAT_022",
-            "BIO_SECONDAIRE": "BIO_002 (hyponatrémie), BIO_004 (IRC), BIO_032 (PCT/CRP — délirium = présentation atypique de sepsis chez l'âgé)",
+            "BIO_SECONDAIRE": "BIO_002, BIO_004, BIO_032",
             "CONDUITE_IMMEDIATE": "Score CAM (Confusion Assessment Method). Recherche cause réversible (PRISME : Pain, Retention urinaire, Infection, Stool/constipation, Médicaments, Environnement). Déprescription urgente des anticholinergiques/BZD/sédatifs. Réorientation, lumière, hydratation. ÉVITER les antipsychotiques (agitation seulement, halopéridol 0.25-0.5 mg/dose, courte durée).",
             "SEUIL_CRITIQUE": "ACB cumulatif ≥ 6 OU délirium hyperactif sévère → recherche urgente cause organique (TDM cérébral, ECBU, PL si sepsis suspect)",
             "SOURCE": "Boustani 2008 ACB Scale ; Beers 2023 ; AGS Delirium 2015 ; FORTA-D ; Inouye NEJM 2014"
@@ -1419,7 +1419,7 @@ const MASTER_DB = {
             "GRAVITE": "Modérée (impaction fécale, syndrome occlusif fonctionnel, agitation, délirium)",
             "IMPUTABILITE_FREQ": "Opioïdes ++ (constipation chez 40-90 % — pas de tolérance), oxybutynine, amitriptyline, vérapamil, fer oral",
             "ID_PATHO_ASSOC": "PAT_010, PAT_036",
-            "BIO_SECONDAIRE": "BIO_001 (hypokaliémie aggrave), TSH (hypothyroïdie associée)",
+            "BIO_SECONDAIRE": "BIO_001, BIO_019",
             "CONDUITE_IMMEDIATE": "Prescription PROPHYLACTIQUE de laxatif osmotique (macrogol 1 sachet/j) à toute initiation d'opioïde. Si constipation opioïde résistante : naloxégol 25 mg/j ou méthylnaltrexone SC. Hydratation, fibres, mobilisation. Si impaction : lavement, désimpaction manuelle.",
             "SEUIL_CRITIQUE": "Pas de selle > 5 jours + douleur abdominale + vomissements → ASP (rechercher syndrome occlusif), désimpaction urgente",
             "SOURCE": "ESMO 2018 (constipation opioïde) ; Beers 2023 ; STOPP/START v3 F2"
@@ -1432,7 +1432,7 @@ const MASTER_DB = {
             "GRAVITE": "Modérée à Sévère (perte autonomie, fractures vertébrales/col fémoral)",
             "IMPUTABILITE_FREQ": "Corticoïdes : risque fracturaire ↑ 2-10x dès 10 mg prednisolone/j. IPP : ↓ Ca/Mg/B12. Antiépileptiques inducteurs : ↑ catabolisme vitamine D.",
             "ID_PATHO_ASSOC": "PAT_025, PAT_020",
-            "BIO_SECONDAIRE": "BIO_005 (Ca), BIO_006 (Mg), 25-OH-vitamine D, BIO_021 (B12), BIO_035 (albumine), DMO (densitométrie)",
+            "BIO_SECONDAIRE": "BIO_005, BIO_006, BIO_023, BIO_021, BIO_035",
             "CONDUITE_IMMEDIATE": "Prévention dès J1 corticothérapie ≥ 3 mois : Ca 1000 mg + vitamine D 800-1200 UI/j ; bisphosphonate (alendronate 70 mg/sem) si T-score ≤ -1.5 OU dose corticoïde ≥ 7.5 mg/j prolongée OU femme ménopausée. DMO à M0, M12. Apport protéique 1.2-1.5 g/kg/j (sarcopénie). Activité physique adaptée.",
             "SEUIL_CRITIQUE": "Fracture vertébrale silencieuse (perte de taille > 3 cm) → DMO + radio rachis, bisphosphonate IV (acide zolédronique 5 mg/an) ou tériparatide si fractures multiples",
             "SOURCE": "ACR 2017 (GIOP) ; IOF 2024 ; HAS 2018 ostéoporose ; STOPP/START v3 F1"
@@ -1445,7 +1445,7 @@ const MASTER_DB = {
             "GRAVITE": "Modérée (entrée en EHPAD, escarres, infections urinaires à répétition, dépression)",
             "IMPUTABILITE_FREQ": "Diurétiques surtout vespéraux (nycturie + chutes), BZD au coucher, oxybutynine (rétention paradoxale), tamsulosine/alfuzosine chez femme",
             "ID_PATHO_ASSOC": "PAT_009, PAT_037, PAT_038, PAT_039",
-            "BIO_SECONDAIRE": "ECBU si suspicion infection, résidu post-mictionnel échographique",
+            "BIO_SECONDAIRE": "",
             "CONDUITE_IMMEDIATE": "Calendrier mictionnel sur 3 jours. Revue médicamenteuse : déplacer le diurétique le matin, déprescrire BZD, swap oxybutynine → mirabégron, retirer alpha-bloquant chez femme, switch IEC → ARA2 si toux. Rééducation périnéale.",
             "SEUIL_CRITIQUE": "Rétention urinaire aiguë (globe vésical) → sondage urgent ; incontinence + escarre → soins infirmiers renforcés",
             "SOURCE": "ICI 2017 (Incontinence) ; Beers 2023 ; HAS 2007 incontinence urinaire SF ; STOPP/START v3 K4"
@@ -1458,7 +1458,7 @@ const MASTER_DB = {
             "GRAVITE": "Sévère (torsades de pointes → mort subite)",
             "IMPUTABILITE_FREQ": "Citalopram > 20 mg + halopéridol (couple gériatrique fréquent), fluoroquinolone + amiodarone, macrolide + statine, ondansétron en chimio + antiémétique",
             "ID_PATHO_ASSOC": "PAT_006, PAT_010, PAT_022",
-            "BIO_SECONDAIRE": "BIO_001 (K+ < 4.0 = facteur précipitant), BIO_006 (Mg++ < 0.7), BIO_005 (Ca), bilan hépatique",
+            "BIO_SECONDAIRE": "BIO_001, BIO_006, BIO_005, BIO_013, BIO_014, BIO_015, BIO_016, BIO_017",
             "CONDUITE_IMMEDIATE": "ECG avant introduction tout médicament Risk_KR si âgé ou polymédication. Recontrôle ECG à J7. Corriger K+ > 4.0 et Mg++ > 0.85. Si QTc 470-499 : déprescrire le médicament le moins indispensable. Si QTc ≥ 500 : ARRÊT immédiat, télémétrie, sulfate de magnésium 2 g IV.",
             "SEUIL_CRITIQUE": "QTc ≥ 500 ms OU Δ QTc > 60 ms après introduction OU torsades documentées → urgence, scope, MgSO4 IV, isoprénaline si bradycardie",
             "SOURCE": "CredibleMeds.org (mise à jour annuelle) ; Beers 2023 ; ESC 2022 Ventricular Arrhythmias ; ANSM Citalopram 2011"
