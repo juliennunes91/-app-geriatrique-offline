@@ -2159,17 +2159,23 @@ const MASTER_DB = {
           {
                     "dci": "Ambrisentan",
                     "princeps": "Volibris",
-                    "classe": "Antagoniste recepteur endotheline (HTAP)",
-                    "poso_hab": "5-10 mg/j",
-                    "poso_ger": "5 mg/j",
+                    "classe": "Antagoniste récepteur endothéline-A sélectif (HTAP) — AVANTAGE vs bosentan : peu hépatotoxique (pas de surveillance BH mensuelle), 1 prise/j",
+                    "poso_hab": "5-10 mg/j en 1 prise",
+                    "poso_ger": "5-10 mg/j ; AVANTAGE vs bosentan : peu d'interactions PK + peu hépatotoxique (surveillance BH non requise REMS)",
                     "poso_ren": "Pas d'ajustement",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
-                    "albumine": "> 99 %",
+                    "albumine": "> 99%",
                     "qt_risque": "",
-                    "ddi_interact": "Peu d'interaction",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "AVANTAGE vs bosentan (peu d'interactions + peu hépatotoxique), TÉRATOGÈNE catégorie X (programme PRAC EMA — contraception double obligatoire), ANÉMIE dilutionnelle (surveillance Hb), Œdèmes périphériques (33%), FIBROSE PULMONAIRE IDIOPATHIQUE CI relative (étude négative IPF), Pas d'interaction majeure CYP",
+                    "ddi_interact_v2": [
+                              { "classe": "TÉRATOGÈNE catégorie X — programme PRAC EMA obligatoire", "dcis": ["grossesse", "femme age procreer"], "commentaire": "Tératogène (rongeur). Programme prévention grossesse obligatoire (β-HCG mensuel + contraception double).", "severite": "danger" },
+                              { "classe": "AVANTAGE vs bosentan — peu d'interactions + pas de surveillance BH", "dcis": ["age sup 65 ans"], "commentaire": "Préférable au bosentan en gériatrie (1 prise/j, pas surveillance BH mensuelle, peu d'interactions).", "severite": "info" },
+                              { "classe": "ANÉMIE / Œdèmes périphériques — surveillance", "dcis": ["surveillance nfs", "surveillance edemes"], "commentaire": "Anémie 17% (dilutionnelle). Œdèmes périphériques 33%.", "severite": "warning" },
+                              { "classe": "Fibrose pulmonaire idiopathique — CI relative (étude ARTEMIS-IPF négative)", "dcis": ["fibrose pulmonaire idiopathique"], "commentaire": "Étude ARTEMIS-IPF négative — pas d'indication FPI.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ modeste exposition", "dcis": ["ketoconazole", "ritonavir", "clarithromycine"], "commentaire": "↑ modeste. Surveillance.", "severite": "warning" }
+                    ],
                     "suivi_initial": "Bilan hépatique | NFS (anemie dilutionnelle) | Hb | Test de grossesse | Bilan lipidique | Créatinine",
                     "suivi_periodique": "Bilan hépatique (mensuel) | NFS + Hb (tous les 3 mois) | Test de grossesse (mensuel si femme en age de procreer)",
                     "alerte_clinique": "ALAT/ASAT > 3N → adaptation dose ou arret | Anemie severe → NFS urgente",
@@ -4403,20 +4409,19 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 98 %",
                     "qt_risque": "",
-                    "ddi_interact": "CYP3A4 inducteur puissant",
+                    "ddi_interact": "BOSENTAN = INDUCTEUR PUISSANT CYP3A4 + CYP2C9 (effet inducteur sur SES PROPRES substrats), CONTRACEPTIFS HORMONAUX (↓ efficacité — barrière OBLIGATOIRE), CICLOSPORINE — CI ABSOLUE (↑ bosentan + ↓ ciclosporine), GLIBENCLAMIDE — CI ABSOLUE (cumul hépatotoxicité), SIROLIMUS/TACROLIMUS (↓ exposition — surveillance taux), WARFARINE (↓ INR), STATINES (↓ exposition simvastatine/atorvastatine), AVANAFIL/SILDÉNAFIL (HTAP — ↓ exposition mais association possible HTAP), HÉPATOTOXICITÉ — surveillance BH OBLIGATOIRE mensuelle (REMS — transaminases > 3N : arrêt), TÉRATOGÈNE catégorie X (programme PRAC EMA — contraception double), Anémie (surveillance NFS)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Inducteurs enzymatiques",
-                                        "dcis": [
-                                                  "rifampicine",
-                                                  "phenytoine",
-                                                  "carbamazepine",
-                                                  "phenobarbital",
-                                                  "millepertuis"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TÉRATOGÈNE catégorie X — programme PRAC EMA obligatoire", "dcis": ["grossesse", "femme age procreer"], "commentaire": "Tératogène (rongeur). Programme prévention grossesse OBLIGATOIRE : test β-HCG mensuel + contraception efficace DOUBLE (estroprogestatifs SEULS insuffisants car ↓ par bosentan — DIU + barrière).", "severite": "danger" },
+                              { "classe": "CICLOSPORINE A — CONTRE-INDICATION ABSOLUE", "dcis": ["ciclosporine"], "commentaire": "↑ bosentan x30 + ↓ ciclosporine 50%. CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "GLIBENCLAMIDE — CONTRE-INDICATION ABSOLUE (hépatotoxicité cumulée)", "dcis": ["glibenclamide"], "commentaire": "Cumul hépatotoxicité. CI absolue.", "severite": "danger" },
+                              { "classe": "HÉPATOTOXICITÉ — BH MENSUELLE obligatoire (REMS — transaminases > 3N arrêt)", "dcis": ["surveillance hepatique"], "commentaire": "Programme surveillance hépatique mensuel obligatoire. Arrêt si ALAT/ASAT > 3N. Plus marqué que ambrisentan (peu hépatotoxique — préférer si possible).", "severite": "danger" },
+                              { "classe": "CONTRACEPTIFS hormonaux — ↓ efficacité (CI estroprogestatifs SEULS)", "dcis": ["ethinylestradiol", "levonorgestrel", "desogestrel"], "commentaire": "↓ exposition. CI estroprogestatifs SEULS. DIU + barrière obligatoires.", "severite": "danger" },
+                              { "classe": "Sirolimus / Tacrolimus — ↓ exposition (greffon)", "dcis": ["sirolimus", "tacrolimus", "everolimus"], "commentaire": "Surveillance taux résiduels +++.", "severite": "danger" },
+                              { "classe": "WARFARINE — ↓ INR", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "↓ exposition AVK. Surveillance INR rapprochée à introduction.", "severite": "warning" },
+                              { "classe": "Statines — ↓ exposition", "dcis": ["simvastatine", "atorvastatine"], "commentaire": "↓ exposition. Effet hypolipémiant ↓.", "severite": "warning" },
+                              { "classe": "Inhibiteurs CYP3A4 + CYP2C9 — ↑ bosentan", "dcis": ["ketoconazole", "fluconazole", "ritonavir", "amiodarone"], "commentaire": "↑ exposition bosentan.", "severite": "warning" },
+                              { "classe": "Inducteurs CYP3A4 — ↓ bosentan", "dcis": ["rifampicine", "phenytoine", "carbamazepine", "phenobarbital", "millepertuis"], "commentaire": "↓ exposition.", "severite": "warning" },
+                              { "classe": "Anémie / Œdèmes — surveillance NFS", "dcis": ["surveillance nfs"], "commentaire": "Anémie 11%, œdèmes 13%. Surveillance.", "severite": "warning" }
                     ],
                     "suivi_initial": "Bilan hépatique COMPLET (REMS  programme de surveillance obligatoire) | NFS (anemie) | Hemoglobine | Créatinine | Bilan lipidique | Test de grossesse (teratogene  CI absolue)",
                     "suivi_periodique": "Bilan hépatique MENSUEL OBLIGATOIRE (programme REMS EU) | NFS + Hb (tous les a 3 mois  anemie dilutionnelle) | Test de grossesse mensuel si femme en ge de procrer | Bilan lipidique (annuel) | Créatinine (annuelle)",
@@ -27193,19 +27198,15 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "99%",
                     "qt_risque": "(PR) - Allongement QTc modere",
-                    "ddi_interact": "Inhibiteurs CYP2D6 (paroxetine, fluoxetine — reduisent formation endoxifene actif, eviter ++) | AOD (inhibiteur P-gp — STOPP3-C14) | Anticoagulants (augmente INR AVK)",
+                    "ddi_interact": "INHIBITEURS CYP2D6 — ↓ ENDOXIFÈNE (métabolite actif) → ↓ EFFICACITÉ ANTI-TUMORALE (FDA 2010 + Goetz JCO 2018 — paroxétine/fluoxétine/bupropion/duloxetine CI ABSOLUE — préférer sertraline/citalopram/escitalopram/venlafaxine), INHIBITEUR P-gp (↑ apixaban/rivaroxaban/dabigatran — STOPP C14), AVK ↑ INR, MTEV (CI ATCD), CANCER ENDOMÈTRE (échographie pelvienne annuelle), RÉTINOPATHIE rare, IDM/AVC ↑ (CI ATCD)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Anticoagulants oraux directs (AOD)",
-                                        "dcis": [
-                                                  "apixaban",
-                                                  "rivaroxaban",
-                                                  "edoxaban",
-                                                  "dabigatran"
-                                        ],
-                                        "commentaire": "inhibiteur P-gp — STOPP3-C14",
-                                        "severite": "warning"
-                              }
+                              { "classe": "INHIBITEURS CYP2D6 — ↓ ENDOXIFÈNE (CI ABSOLUE — FDA 2010 + Goetz JCO 2018)", "dcis": ["paroxetine", "fluoxetine", "bupropion", "duloxetine", "terbinafine", "quinidine"], "commentaire": "Tamoxifène = prodrogue activée en endoxifène par CYP2D6. Inhibiteurs CYP2D6 puissants → ↓ endoxifène → ↓ efficacité anti-tumorale. PRÉFÉRER : sertraline, citalopram, escitalopram, venlafaxine (peu CYP2D6) en cas d'antidépresseur nécessaire. Métaboliseurs CYP2D6 lents (5-10% Caucasiens) : effet thérapeutique réduit.", "severite": "danger" },
+                              { "classe": "AOD inhibiteur P-gp — STOPP C14", "dcis": ["apixaban", "rivaroxaban", "edoxaban", "dabigatran"], "commentaire": "Tamoxifène = inhibiteur P-gp → ↑ exposition AOD. Surveillance saignement.", "severite": "warning" },
+                              { "classe": "AVK warfarine — ↑ INR (CI relative)", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "↑ INR significatif. Surveillance INR rapprochée.", "severite": "danger" },
+                              { "classe": "ATCD MTEV (EP/TVP) — CI ABSOLUE (STOPP C15)", "dcis": ["antecedent mtev", "antecedent ep", "antecedent tvp"], "commentaire": "Risque MTEV x2-3. CI absolue ATCD. Discuter anastrozole/létrozole post-ménopause.", "severite": "danger" },
+                              { "classe": "ATCD IDM / AVC — prudence", "dcis": ["antecedent idm", "antecedent avc"], "commentaire": "↑ risque cardiovasculaire. Surveillance.", "severite": "warning" },
+                              { "classe": "CANCER ENDOMÈTRE — surveillance échographie pelvienne", "dcis": ["antecedent cancer endometre", "surveillance gyneco"], "commentaire": "↑ x2-7 cancer endomètre (effet agoniste estrogène utérus). Échographie pelvienne annuelle + signalement saignements.", "severite": "danger" },
+                              { "classe": "Hydroxychloroquine — ↑ rétinopathie", "dcis": ["hydroxychloroquine"], "commentaire": "Cumul rétinopathie. Surveillance ophtalmo +++.", "severite": "warning" }
                     ],
                     "suivi_initial": "Examen gyneco | Bilan hepatique | NFS | Calcemie | Examen ophtalmologique",
                     "suivi_periodique": "Examen gyneco annuel (endometre) | Bilan hepatique semestriel | Examen ophtalmologique (retinopathie) | DMO (perte osseuse pre-menopause)",
@@ -27536,26 +27537,10 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "DIMINUE ABSORPTION de nombreux medicaments (fluoroquinolones, levothyroxine, phenytoine, ketoconazole, digoxine, warfarine) — espacer ≥ 2h | Antiacides aluminiques (surcharge aluminium si IRC)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Quinolones",
-                                        "dcis": [
-                                                  "ciprofloxacine",
-                                                  "levofloxacine",
-                                                  "moxifloxacine",
-                                                  "ofloxacine",
-                                                  "norfloxacine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Antiacides aluminiques",
-                                        "dcis": [
-                                                  "antiacides"
-                                        ],
-                                        "commentaire": "surcharge aluminium si IRC",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ABSORPTION ↓ multiples médicaments (ESPACER ≥ 2H — sucralfate fixe sur muqueuse)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine", "levothyroxine", "phenytoine", "ketoconazole", "itraconazole", "digoxine", "warfarine", "tetracycline", "doxycycline", "sulfate ferreux", "fumarate ferreux", "ranitidine", "famotidine"], "commentaire": "Sucralfate = pansement aluminé sur muqueuse → ↓ absorption massive de nombreux médicaments. ESPACER ≥ 2 HEURES (prendre sucralfate 2h après autres médicaments). Particulièrement marqué : lévothyroxine, quinolones, phénytoïne, digoxine, AVK.", "severite": "danger" },
+                              { "classe": "IRC SÉVÈRE — CI ABSOLUE (encéphalopathie aluminique)", "dcis": ["ckd severe", "dialyse"], "commentaire": "Surcharge aluminium → encéphalopathie/ostéomalacie aluminique. CI ABSOLUE DFG < 30. Préférer IPP en cas de prophylaxie stress ulcer.", "severite": "danger" },
+                              { "classe": "CONSTIPATION — effet de classe", "dcis": ["constipation"], "commentaire": "Constipation fréquente (aluminium).", "severite": "warning" },
+                              { "classe": "PIM EU7-PIM/PRISCUS — préférer IPP en pratique", "dcis": ["age sup 65 ans"], "commentaire": "Sucralfate quasi-abandonné en pratique. Préférer IPP demi-dose pour protection muqueuse. Sucralfate parfois utilisé en RGO sans œsophagite ou prophylaxie stress ulcer en USI.", "severite": "warning" }
                     ],
                     "suivi_initial": "Creatinine/DFG | Liste co-medications (espacement ≥ 2h)",
                     "suivi_periodique": "Creatinine si usage prolonge | Phosphoremie si IRC (hypophosphatemie)",
