@@ -2744,18 +2744,25 @@ const MASTER_DB = {
           },
           {
                     "dci": "Amoxicilline",
-                    "princeps": "Clamoxyl / Bristamox",
-                    "classe": "Antibiotique (penicilline A)",
-                    "poso_hab": "1g/8h PO ou 50-100mg/kg/j IV",
-                    "poso_ger": "Memes doses (ajustement si DFG<30)",
-                    "poso_ren": "DFG 10-30: 500mg/8h; DFG<10: 500mg/12h",
+                    "princeps": "Clamoxyl, Bristamox, Amodex",
+                    "classe": "Antibiotique pénicilline A — référence infections ORL/respiratoires/urinaires/endocardite — élimination rénale",
+                    "poso_hab": "PO : 1 g x3/j | IV : 50-100 mg/kg/j en 3-4 inj | Endocardite/méningite : 200 mg/kg/j IV",
+                    "poso_ger": "1 g x3/j ; PIM ANSM si IRC sévère non adaptée (convulsions, encéphalopathie)",
+                    "poso_ren": "DFG 10-30 : 500 mg /8h | DFG < 10 : 500 mg /12h | HD : 500 mg post-HD",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "",
-                    "albumine": "18-25",
+                    "bhe": "+ (faible en méninges saines, fort en méninges enflammées)",
+                    "albumine": "18-25%",
                     "qt_risque": "",
-                    "ddi_interact": "Probiotiques (absorption), contraceptifs oraux",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "ALLERGIE PÉNICILLINE — CI ABSOLUE (anaphylaxie, Stevens-Johnson), AVK warfarine (↑ INR par ↓ flore vit K), MÉTHOTREXATE (↑ exposition x3-5 — compétition tubulaire ; CI doses oncologiques), AMOXICILLINE + ALLOPURINOL (rash maculo-papuleux x3-5 — Boston Collaborative 1972 — préférer autre β-lactamine si patient sous allopurinol), Contraceptifs oraux (↓ efficacité hypothétique — pas démontré), C. DIFFICILE (FDA/EMA — pneumonies/colite), Diarrhée associée (probiotiques après cure)",
+                    "ddi_interact_v2": [
+                              { "classe": "ALLERGIE PÉNICILLINE — CI ABSOLUE (anaphylaxie/Stevens-Johnson)", "dcis": ["allergie penicilline"], "commentaire": "Vérifier ATCD allergie. Si allergie confirmée IgE-médiée : CI ABSOLUE β-lactamines (cross-réactivité céphalosporines 1-2%, monobactams nulle). Préférer macrolides/lincosamides/quinolones.", "severite": "danger" },
+                              { "classe": "AVK warfarine — ↑ INR (↓ flore vit K)", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "↓ flore intestinale productrice vit K → ↑ INR. Surveillance INR à J3-J7 d'antibiothérapie.", "severite": "warning" },
+                              { "classe": "MÉTHOTREXATE — ↑ exposition x3-5 (compétition tubulaire)", "dcis": ["methotrexate"], "commentaire": "↑ exposition MTX. Doses oncologiques HD : CI absolue. Doses rhumato (≤ 25 mg/sem) : surveillance NFS rapprochée.", "severite": "danger" },
+                              { "classe": "ALLOPURINOL — rash maculo-papuleux x3-5 (Boston 1972)", "dcis": ["allopurinol"], "commentaire": "Boston Collaborative 1972 : rash 21,4% vs 7,5% sans. Si patient sous allopurinol : préférer autre β-lactamine.", "severite": "warning" },
+                              { "classe": "C. DIFFICILE — colite pseudo-membraneuse (risque modéré)", "dcis": ["antecedent c difficile"], "commentaire": "Amoxicilline = risque modéré C. diff. Plus élevé avec amox/clav, clindamycine, fluoroquinolones, céphalosporines. Surveillance si diarrhée.", "severite": "warning" },
+                              { "classe": "ENCÉPHALOPATHIE en IRC non adaptée (CONVULSIONS hautes doses)", "dcis": ["ckd severe"], "commentaire": "Doses non adaptées en IRC sévère → accumulation → encéphalopathie/convulsions. Adapter selon DFG.", "severite": "danger" }
+                    ],
                     "suivi_initial": "Bilan renal si IRC | NFS si traitement prolonge | Bilan hépatique si allergie sulfamide",
                     "suivi_periodique": "Pas de biologie systematique (traitement court) | Créatinine si IRC",
                     "alerte_clinique": "Eruption cutanee (allergie) | Reaction anaphylactique | Hepatite cholestatique si ac.clav associe | Aplasie si traitement prolonge → NFS urgente",
@@ -5807,16 +5814,14 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "85-96",
                     "qt_risque": "",
-                    "ddi_interact": "Calcium IV (precipitation - CI administration simultanee)",
+                    "ddi_interact": "ALLERGIE PÉNICILLINE (cross-réactivité 1-2% — vérifier nature réaction), CALCIUM IV (précipitation létale chez nouveau-né — CI administration simultanée, intervalle ≥ 48h chez nouveau-né, possible chez adulte si rinçage entre), AVK warfarine (↑ INR), DIARRHÉE C. DIFFICILE (risque modéré-élevé), Ictère néonatal/Cholestase pseudo-lithiasique (long cours), HYPONATRÉMIE (forme sodique haute teneur — 3,6 mEq Na/g), Méthotrexate (modeste)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Calcium IV",
-                                        "dcis": [
-                                                  "calcium"
-                                        ],
-                                        "commentaire": "precipitation - CI administration simultanee",
-                                        "severite": "danger"
-                              }
+                              { "classe": "CALCIUM IV — PRÉCIPITATION LÉTALE NOUVEAU-NÉ (CI simultanée)", "dcis": ["calcium iv", "ringer lactate"], "commentaire": "Précipité ceftriaxone-Ca cristaux → embolisation pulmonaire/rénale fatale chez nouveau-né. Adulte : moins documenté, intervalle ≥ 48h recommandé nouveau-né. Adulte : possible si voies séparées + rinçage. Pas avec Ringer lactate dans même tubulure.", "severite": "danger" },
+                              { "classe": "ALLERGIE PÉNICILLINE — cross-réactivité 1-2%", "dcis": ["allergie penicilline"], "commentaire": "Si allergie IgE confirmée (anaphylaxie/Stevens-Johnson) : éviter céphalosporines. Si éruption tardive simple : céphalosporine acceptable avec surveillance.", "severite": "warning" },
+                              { "classe": "AVK warfarine — ↑ INR (↓ flore vit K)", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "Surveillance INR.", "severite": "warning" },
+                              { "classe": "C. DIFFICILE — risque modéré-élevé", "dcis": ["antecedent c difficile"], "commentaire": "C3G = risque élevé colite C. difficile. Surveillance diarrhée +++ chez âgé.", "severite": "warning" },
+                              { "classe": "Méthotrexate — ↑ exposition modeste", "dcis": ["methotrexate"], "commentaire": "Surveillance.", "severite": "warning" },
+                              { "classe": "HYPONATRÉMIE forme sodique (3,6 mEq Na/g)", "dcis": ["hyponatremie", "ic systolique severe"], "commentaire": "1 g ceftriaxone = 3,6 mEq Na. À 2 g/j IV = ↑ apport sodé. Prudence IC sévère/SIADH.", "severite": "warning" }
                     ],
                     "suivi_initial": "Bilan renal si IRC severe | Bilan hépatique si insuffisance hépatique | Calcemie (faux positif)",
                     "suivi_periodique": "Pas de biologie systematique (usage courant court)",
@@ -11473,18 +11478,24 @@ const MASTER_DB = {
           },
           {
                     "dci": "Fosfomycine",
-                    "princeps": "Monuril / Fosfocine",
-                    "classe": "Antibiotique (fosfomycine - infections urinaires ou multi-resistances)",
-                    "poso_hab": "PO: 3g dose unique (cystite) | IV: 8-16g/j en 3-4 perfusions",
-                    "poso_ger": "3g dose unique PO (infections urinaires simples)",
-                    "poso_ren": "DFG 10-40: adapter intervalle IV; DFG<10: reduire dose IV",
+                    "princeps": "Monuril (PO 3 g dose unique), Fosfocine (IV — usage hospitalier BMR)",
+                    "classe": "Antibiotique phosphonate — RÉFÉRENCE cystite âgée non compliquée (PO dose unique, peu d'interactions) + BMR multirésistantes IV",
+                    "poso_hab": "PO : 3 g dose unique le soir à jeun (cystite simple) | Récidive : 3 g x2 espacés 48h | IV BMR : 8-16 g/j en 3-4 perfusions",
+                    "poso_ger": "PO 3 g dose unique = RÉFÉRENCE cystite gériatrique non compliquée (vs nitrofurantoïne CI DFG < 45 — fosfomycine acceptable DFG 30-50)",
+                    "poso_ren": "DFG 30-60 : dose unique acceptable | DFG 10-30 : adapter ; IV adapter intervalle",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
                     "albumine": "0",
                     "qt_risque": "",
-                    "ddi_interact": "Pas d'interactions majeures PO; IV: surveillance ionique",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "AVANTAGE gériatrie (peu d'interactions PK, IRC acceptée jusqu'à DFG 30), Métoclopramide (↓ absorption Monuril — espacer ou éviter), Surcharge sodée IV (forme IV haute teneur Na — 14 mEq/g — prudence IC/HTA non contrôlée), Hypokaliémie IV (suivi K+), Pas d'effet QT, Pas de CI allergie pénicilline (structure différente)",
+                    "ddi_interact_v2": [
+                              { "classe": "AVANTAGE gériatrique — référence cystite âgée (Monuril dose unique)", "dcis": ["age sup 65 ans", "ckd modere"], "commentaire": "1ère ligne cystite non compliquée chez âgé (SPILF 2023). Acceptable DFG 30-60. PIM Beers : nitrofurantoïne (CI DFG < 45) → fosfomycine préférable.", "severite": "info" },
+                              { "classe": "Métoclopramide — ↓ absorption Monuril PO (éviter ou espacer)", "dcis": ["metoclopramide", "domperidone"], "commentaire": "↓ exposition fosfomycine PO. Éviter dans l'heure précédant la prise.", "severite": "warning" },
+                              { "classe": "FORME IV — surcharge sodée 14 mEq Na/g (prudence IC/HTA)", "dcis": ["ic systolique severe", "hta non controlee", "hyponatremie"], "commentaire": "IV 16 g/j = 224 mEq Na/j (équivalent 1,3 L NaCl 0,9%). Prudence IC. Surveillance ionogramme.", "severite": "warning" },
+                              { "classe": "HYPOKALIÉMIE IV — surveillance K+", "dcis": ["surveillance kaliemie"], "commentaire": "Effet déplétion K+ forme IV. Surveillance.", "severite": "warning" },
+                              { "classe": "ALLERGIE PÉNICILLINE — pas de CI (structure différente)", "dcis": ["allergie penicilline"], "commentaire": "Phosphonate ≠ β-lactamine. Pas de cross-réactivité.", "severite": "info" }
+                    ],
                     "suivi_initial": "Bilan renal | Ionogramme (surcharge sodee IV) | Glycemie (excipient glucose IV)",
                     "suivi_periodique": "Créatinine (quotidienne si IV en UCI)",
                     "alerte_clinique": "Surcharge sodee (8g Na/g fosfomycine IV - risque HTA, OAP) → ionogramme + surveillance cardiovasculaire | Hypokaliemie (IV) → ionogramme",
@@ -13700,29 +13711,17 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "31",
                     "qt_risque": "",
-                    "ddi_interact": "ISRS/IMAO (syndrome serotoninergique +++), Tyramine (crise hypertensive), Dextromethorphane",
+                    "ddi_interact": "LINEZOLIDE = IMAO PARTIEL → SYNDROME SÉROTONINERGIQUE / CRISE HTA — INTERACTIONS MULTIPLES MAJEURES : ISRS/IRSN/TCA (SS — CI relative), IMAO (CI absolue), TRAMADOL/MÉPÉRIDINE/TAPENTADOL/FENTANYL/MÉTHADONE (SS), TRIPTANS (SS), MIRTAZAPINE/AGOMÉLATINE (SS), Sympathomimétiques (HTA), TYRAMINE (vins/fromages affinés — crise HTA), MYÉLOTOXICITÉ DOSE-CUMULÉE > 14 j (thrombopénie/anémie/aplasie — NFS hebdo OBLIGATOIRE), NEUROPATHIE OPTIQUE IRRÉVERSIBLE > 28 j, NEUROPATHIE PÉRIPHÉRIQUE, ACIDOSE LACTIQUE",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "syndrome serotoninergique +++",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Dextromethorphane",
-                                        "dcis": [
-                                                  "dextromethorphane"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ISRS / IRSN / TCA / Mirtazapine — SYNDROME SÉROTONINERGIQUE", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran", "amitriptyline", "clomipramine", "imipramine", "mirtazapine", "agomelatine", "vortioxetine", "trazodone"], "commentaire": "Linezolide = IMAO partiel. SS sévère/fatal documenté. Si antibiothérapie indispensable : SUSPENDRE ISRS/IRSN si possible (idéalement 14j avant — pas toujours faisable) + surveillance Sternbach/Hunter. Alternative ATB : vancomycine/daptomycine/tédizolide.", "severite": "danger" },
+                              { "classe": "IMAO non sélectifs — CI ABSOLUE", "dcis": ["phenelzine", "tranylcypromine", "moclobemide", "selegiline", "rasagiline"], "commentaire": "Cumul IMAO. CI absolue.", "severite": "danger" },
+                              { "classe": "OPIOÏDES sérotoninergiques — SS", "dcis": ["tramadol", "tapentadol", "fentanyl", "methadone", "petidine", "meperidine"], "commentaire": "Effet sérotoninergique. SS rapporté.", "severite": "danger" },
+                              { "classe": "TRIPTANS — SS", "dcis": ["sumatriptan", "eletriptan", "frovatriptan", "naratriptan", "zolmitriptan"], "commentaire": "SS additif.", "severite": "danger" },
+                              { "classe": "TYRAMINE alimentaire — crise HTA (régime IMAO)", "dcis": ["aliments fermentes", "fromages affines", "vin rouge", "viande seche"], "commentaire": "Régime pauvre en tyramine pendant linézolide (fromages affinés, vin rouge, charcuterie, soja fermenté).", "severite": "danger" },
+                              { "classe": "Sympathomimétiques — crise HTA", "dcis": ["adrenaline", "ephedrine", "pseudoephedrine", "phenylephrine", "noradrenaline"], "commentaire": "CI association. Crise HTA.", "severite": "danger" },
+                              { "classe": "MYÉLOTOXICITÉ DOSE-CUMULÉE — NFS HEBDOMADAIRE OBLIGATOIRE (> 14 j)", "dcis": ["surveillance nfs"], "commentaire": "Thrombopénie/anémie/aplasie dose-cumulée. NFS BASELINE + HEBDOMADAIRE obligatoire. Préférer durée ≤ 14 j.", "severite": "danger" },
+                              { "classe": "NEUROPATHIE OPTIQUE irréversible (> 28 j)", "dcis": ["surveillance ophtalmologique"], "commentaire": "Bilan ophtalmo si traitement > 28 j. Arrêt si troubles visuels.", "severite": "danger" },
+                              { "classe": "ACIDOSE LACTIQUE (rare — interaction mitochondriale)", "dcis": ["surveillance lactate"], "commentaire": "Toxicité mitochondriale → acidose lactique. Lactatémie si symptômes (dyspnée/nausées).", "severite": "warning" }
                     ],
                     "suivi_initial": "NFS-plaquettes (myelotoxicite cumulee dose-dependante) | Bilan ophtalmique si traitement > 4 semaines | Bilan neurologique | Bilan hépatique | Dosage serologique si IRC",
                     "suivi_periodique": "NFS-plaquettes (HEBDOMADAIRE - myelotoxicite cumulee OBLIGATOIRE) | Bilan hépatique (hebdomadaire) | Bilan ophtalmique (si traitement > 28 jours) | Surveillance neuropathie peripherique",
@@ -16127,28 +16126,16 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "20-60",
                     "qt_risque": "",
-                    "ddi_interact": "Antiacides (absorption), Fluoroquinolones (antagonisme)",
+                    "ddi_interact": "DFG < 45 — CI ABSOLUE (concentration urinaire insuffisante + toxicité ↑), TOXICITÉ PULMONAIRE chronique (fibrose interstitielle — surveillance EFR si prophylaxie > 6 mois), HÉPATOTOXICITÉ (auto-immune — surveillance BH), NEUROPATHIE PÉRIPHÉRIQUE (long cours), HÉMOLYSE déficit G6PD (CI), Antiacides Mg/Al (↓ absorption — espacer 1h), Fluoroquinolones (antagonisme — éviter cumul IVU), AVK (↑ INR), Pénicillines (potentialisation rare), Probenecide/Sulfinpyrazone (↓ excrétion urinaire — ↓ efficacité)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Antiacides",
-                                        "dcis": [
-                                                  "antiacides"
-                                        ],
-                                        "commentaire": "absorption",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Quinolones",
-                                        "dcis": [
-                                                  "ciprofloxacine",
-                                                  "levofloxacine",
-                                                  "moxifloxacine",
-                                                  "ofloxacine",
-                                                  "norfloxacine"
-                                        ],
-                                        "commentaire": "antagonisme",
-                                        "severite": "warning"
-                              }
+                              { "classe": "DFG < 45 — CONTRE-INDICATION ABSOLUE (concentration urinaire insuffisante + toxicité)", "dcis": ["ckd severe"], "commentaire": "PIM Beers 2023 (CI DFG < 30 ; prudence 30-50). Préférer fosfomycine ou pivmécillinam en IVU si IRC modérée.", "severite": "danger" },
+                              { "classe": "TOXICITÉ PULMONAIRE CHRONIQUE — fibrose interstitielle (prophylaxie long cours)", "dcis": ["surveillance pulmonaire"], "commentaire": "Fibrose interstitielle dose-cumulée (prophylaxie IVU chronique > 6 mois). EFR + scanner thoracique si symptômes (toux/dyspnée). Préférer cure courte.", "severite": "danger" },
+                              { "classe": "HÉPATOTOXICITÉ auto-immune chronique", "dcis": ["surveillance hepatique"], "commentaire": "Hépatite auto-immune rapportée (long cours). BH si symptômes.", "severite": "warning" },
+                              { "classe": "NEUROPATHIE PÉRIPHÉRIQUE (long cours)", "dcis": ["surveillance neurologique"], "commentaire": "Paresthésies, polynévrite. Surveillance.", "severite": "warning" },
+                              { "classe": "DÉFICIT G6PD — HÉMOLYSE CI", "dcis": ["deficit g6pd"], "commentaire": "Hémolyse oxydative. CI absolue.", "severite": "danger" },
+                              { "classe": "AVK warfarine — ↑ INR", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "Surveillance.", "severite": "warning" },
+                              { "classe": "Antiacides Mg/Al — ↓ absorption (espacer 1h)", "dcis": ["hydroxyde aluminium", "hydroxyde magnesium"], "commentaire": "Chélation. Espacer.", "severite": "warning" },
+                              { "classe": "Fluoroquinolones — antagonisme (éviter cumul IVU)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "Antagonisme. Pas d'association IVU.", "severite": "warning" }
                     ],
                     "suivi_initial": "Bilan renal (CI si DFG<45) | Bilan hépatique si traitement > 3 mois | NFS (anemie hemolytique si deficit G6PD) | Bilan pulmonaire si traitement chronique",
                     "suivi_periodique": "Bilan hépatique (annuel si prophylaxie) | NFS (annuel si prophylaxie) | EFR si prophylaxie > 6 mois",
