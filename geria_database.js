@@ -1927,17 +1927,25 @@ const MASTER_DB = {
           {
                     "dci": "Alimemazine",
                     "princeps": "Theralene",
-                    "classe": "Antihistaminique H1 / phenothiazine",
-                    "poso_hab": "5 u 10 mg/jour",
-                    "poso_ger": "2.5 u 5 mg/jour (deconseille)",
-                    "poso_ren": "Prudence",
+                    "classe": "Antihistaminique H1 1ère gén (phénothiazine) — ACB=3, BHE++ — PIM ABSOLU âgé (sédation, chutes, troubles cognitifs)",
+                    "poso_hab": "5-40 mg/j (allergie/anxiolyse/sommeil)",
+                    "poso_ger": "ÉVITER (PIM Beers/STOPP K1/FORTA-D/PRISCUS). Si impératif : 2,5-5 mg/j max",
+                    "poso_ren": "Prudence (élimination hépatique)",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
-                    "albumine": "> 90 %",
-                    "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "Depresseurs SNC",
-                    "ddi_interact_v2": [],
+                    "albumine": "> 90%",
+                    "qt_risque": "(PR) Possible",
+                    "ddi_interact": "PIM ABSOLU âgé, CUMUL ACB, QT-prolongateurs, Sédatifs centraux, IACHE/Mémantine (antagonisme), Glaucome angle fermé (CI), HBP/Rétention (CI relative), Iléus/Myasthénie (CI), Agranulocytose rare (phénothiazine)",
+                    "ddi_interact_v2": [
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP/FORTA-D/PRISCUS)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB=3 + BHE+ + sédation. ÉVITER absolument pour insomnie chez âgé (préférer mesures non médicamenteuses + mélatonine si nécessaire — FORTA-A).", "severite": "danger" },
+                              { "classe": "QT-prolongateurs", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "tolterodine", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "chlorpheniramine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux — chutes", "dcis": ["diazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline", "gabapentine", "mirtazapine", "alcool"], "commentaire": "Sédation additive.", "severite": "danger" },
+                              { "classe": "Agranulocytose (phénothiazine rare)", "dcis": ["surveillance nfs"], "commentaire": "NFS si fièvre/angine.", "severite": "warning" }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Agranulocytose (fievre → NFS urgente) | Allongement QTc",
@@ -4531,14 +4539,12 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques, QT-prolongateurs",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB Beers + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD (Sink 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "tolterodine", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "chlorpheniramine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (alcool/BZD/Z/opioïdes)", "dcis": ["alcool", "diazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline", "gabapentine", "mirtazapine"], "commentaire": "Sédation additive — chutes.", "severite": "danger" }
                     ],
                     "suivi_initial": "ECG si FR QTc | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -5055,14 +5061,12 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB Beers + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD (Sink 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "tolterodine", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "chlorpheniramine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (alcool/BZD/Z/opioïdes)", "dcis": ["alcool", "diazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline", "gabapentine", "mirtazapine"], "commentaire": "Sédation additive — chutes.", "severite": "danger" }
                     ],
                     "suivi_initial": "ECG si FR QTc | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -6025,17 +6029,24 @@ const MASTER_DB = {
           {
                     "dci": "Chlorpheniramine",
                     "princeps": "Polaramine",
-                    "classe": "Antihistaminique H1 (1ere gen.)",
+                    "classe": "Antihistaminique H1 1ère gén — ACB=3, QTc Risk_KR — PIM ABSOLU âgé",
                     "poso_hab": "12-16 mg/j",
-                    "poso_ger": "4-8 mg/j",
+                    "poso_ger": "ÉVITER (PIM Beers/STOPP K1/FORTA-D)",
                     "poso_ren": "Pas d'ajustement",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "",
-                    "albumine": "0,72",
-                    "qt_risque": "?? Risque Connu (KR)",
-                    "ddi_interact": "Sedatif, Anticholinergique",
-                    "ddi_interact_v2": [],
+                    "albumine": "72%",
+                    "qt_risque": "(KR) Risque Connu — QTc + Torsades",
+                    "ddi_interact": "PIM ABSOLU âgé, CUMUL ACB, QT-prolongateurs (Risk_KR), Sédatifs centraux, IACHE/Mémantine antagonisme, Glaucome angle fermé CI, HBP/Iléus/Myasthénie CI",
+                    "ddi_interact_v2": [
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB=3 + BHE + QTc Risk_KR. ÉVITER. Préférer cétirizine/loratadine 2ème gén pour allergie chez âgé.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — TORSADES (Risk_KR)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "clarithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "escitalopram", "methadone"], "commentaire": "QTc additif majeur.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "diphenhydramine", "doxylamine", "promethazine", "alimemazine", "hydroxyzine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux — chutes", "dcis": ["diazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline", "gabapentine", "alcool"], "commentaire": "Sédation additive.", "severite": "danger" }
+                    ],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire (examen clinique)",
@@ -6769,14 +6780,12 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB Beers + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD (Sink 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "tolterodine", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "chlorpheniramine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (alcool/BZD/Z/opioïdes)", "dcis": ["alcool", "diazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline", "gabapentine", "mirtazapine"], "commentaire": "Sédation additive — chutes.", "severite": "danger" }
                     ],
                     "suivi_initial": "ECG si FR QTc | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -7703,19 +7712,13 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "ISRS (antagonisme), Anticholinergiques (cumul ACB), IMAO (CI)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "antagonisme",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D) — ACB + orexigène", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+ + orexigène + prise de poids. ÉVITER.", "severite": "danger" },
+                              { "classe": "ISRS — ANTAGONISME PD (effet orexigène thérapeutique)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine"], "commentaire": "Cyproheptadine antagoniste 5-HT2 → utilisé pour anorexie SSRI-induite. Mais antagonise effet thérapeutique ISRS.", "severite": "warning" },
+                              { "classe": "QT-prolongateurs", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "diphenhydramine", "promethazine", "hydroxyzine"], "commentaire": "Cumul.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "alprazolam", "zolpidem", "morphine", "tramadol"], "commentaire": "Sédation additive.", "severite": "danger" }
                     ],
                     "suivi_initial": "Bilan hépatique | Poids (stimulation appetit) | ECG si FR QTc",
                     "suivi_periodique": "Bilan hépatique si traitement prolonge | Poids (chaque consultation - prise de poids frequente)",
@@ -8310,14 +8313,12 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Depresseurs SNC - Alcool",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Depresseurs SNC - Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB élevé + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers fort + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén pour allergie.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD (Sink JAGS 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme → perte effet anti-Alzheimer.", "severite": "danger" },
+                              { "classe": "Cumul ACB — démence (Coupland JAMA Int Med 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "oxybutynine", "tolterodine", "solifenacine", "trospium", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "alimemazine", "chlorpheniramine", "hydroxyzine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (alcool/BZD/Z/opioïdes/gabapentinoïdes)", "dcis": ["alcool", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "pregabaline", "gabapentine", "mirtazapine"], "commentaire": "Sédation additive — CHUTES.", "severite": "danger" }
                     ],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -8744,14 +8745,12 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques, QT-prolongateurs",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D) — ACB Beers + BHE+", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers. ÉVITER. Préférer 2ème gén.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "diphenhydramine", "promethazine", "hydroxyzine", "chlorpheniramine"], "commentaire": "Cumul ACB.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation additive — chutes.", "severite": "danger" }
                     ],
                     "suivi_initial": "ECG si cardiopathie | Evaluation cognitive avant usage chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -8780,33 +8779,12 @@ const MASTER_DB = {
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Benzodiazepines, Autres anticholinergiques (cumul ACB +++), QT-prolongateurs",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "BZD",
-                                        "dcis": [
-                                                  "diazepam",
-                                                  "bromazepam",
-                                                  "lorazepam",
-                                                  "oxazepam",
-                                                  "alprazolam",
-                                                  "clorazepate",
-                                                  "nordazepam",
-                                                  "clobazam",
-                                                  "clonazepam",
-                                                  "nitrazepam",
-                                                  "lormetazepam",
-                                                  "midazolam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers 2023/STOPP K1/FORTA-D/PRISCUS) — ACB=3 FORT", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "ACB=3 (un des plus forts). BHE+. AUX USA = produit en vente libre (Tylenol PM, Benadryl) → utilisation auto-prescription chez âgé fréquente → confusion/chutes/démence. ÉVITER ABSOLUMENT. Pour insomnie : mesures non pharmacologiques + mélatonine si nécessaire.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — TORSADES (Risk_CR)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif (dose-dépendant). Surveillance.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme (Sink JAGS 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme → perte effet anti-Alzheimer.", "severite": "danger" },
+                              { "classe": "Cumul ACB — démence (Coupland JAMA 2019)", "dcis": ["amitriptyline", "oxybutynine", "tolterodine", "solifenacine", "trospium", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "doxylamine", "promethazine", "alimemazine", "hydroxyzine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Cumul ACB → démence. Score ACB total.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (alcool/BZD/Z/opioïdes) — chutes", "dcis": ["alcool", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "nordazepam", "clobazam", "clonazepam", "nitrazepam", "lormetazepam", "midazolam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "pregabaline", "gabapentine", "mirtazapine"], "commentaire": "Sédation additive. CHUTES (Diphenhydramine = 1ère cause US fractures iatrogènes âgés).", "severite": "danger" }
                     ],
                     "suivi_initial": "Bilan anticholinergique (etat cognitif avant initiation chez sujet age) | ECG (QTc) si cardiopathie",
                     "suivi_periodique": "Evaluation cognitive (MMS/MMSE) si usage prolonge | Pas de biologie systematique",
@@ -9378,14 +9356,12 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Depresseurs SNC - Alcool",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Depresseurs SNC - Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB élevé + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers fort + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén pour allergie.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD (Sink JAGS 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme → perte effet anti-Alzheimer.", "severite": "danger" },
+                              { "classe": "Cumul ACB — démence (Coupland JAMA Int Med 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "oxybutynine", "tolterodine", "solifenacine", "trospium", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "alimemazine", "chlorpheniramine", "hydroxyzine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (alcool/BZD/Z/opioïdes/gabapentinoïdes)", "dcis": ["alcool", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "pregabaline", "gabapentine", "mirtazapine"], "commentaire": "Sédation additive — CHUTES.", "severite": "danger" }
                     ],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -11946,17 +11922,28 @@ const MASTER_DB = {
           {
                     "dci": "Hydroxyzine",
                     "princeps": "Atarax",
-                    "classe": "Antihistaminique H1 anxiolytique",
-                    "poso_hab": "50 u 100 mg/jour",
-                    "poso_ger": "25 u 50 mg/jour max (deconseille)",
-                    "poso_ren": "Reduire la dose de 50 % si IR moderee/severe",
+                    "classe": "Antihistaminique H1 1ère gén anxiolytique — ACB=3, BHE++, QTc — PIM ABSOLU Beers 2023/STOPP K1/FORTA-D/PRISCUS chez âgé",
+                    "poso_hab": "25-100 mg/j en 1-3 prises (anxiolyse, prurit, prémédication)",
+                    "poso_ger": "ÉVITER ABSOLUMENT chez âgé (PIM Beers 2023, STOPP K1, FORTA-D, PRISCUS, EMA 2015 restriction QTc). Si indication impérative : max 25-50 mg/j, durée minimale. EMA 2015 : ÉVITER > 65 ans (mortalité QTc, ↓ efficacité ↑ effets indésirables)",
+                    "poso_ren": "DFG < 50 : ↓ dose 50%",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
-                    "albumine": "0,8",
-                    "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "Medicaments allongeant le QT - Depresseurs SNC",
-                    "ddi_interact_v2": [],
+                    "albumine": "80%",
+                    "qt_risque": "(CR) Risque Conditionnel — EMA 2015 ALERTE QTc (restriction > 65 ans, max 50 mg/j, ECG si FR QTc)",
+                    "ddi_interact": "PIM ABSOLU CHEZ ÂGÉ (Beers 2023/STOPP K1/FORTA-D/PRISCUS/EMA 2015 restriction QTc), CUMUL ACB (ACB=3 fort), QT-PROLONGATEURS (effet additif — torsades), Sédatifs centraux (BZD/opioïdes/alcool/antidépresseurs — chutes), IACHE/MÉMANTINE (antagonisme PD), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), HBP non traitée/Rétention urinaire (CI relative), Iléus/Myasthénie (CI), Hyperthermie estivale (↓ sudation)",
+                    "ddi_interact_v2": [
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers 2023/STOPP K1/FORTA-D/PRISCUS/EMA 2015)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "EMA 2015 : restriction prescription > 65 ans (mortalité QTc + bénéfice/risque défavorable). À ÉVITER ABSOLUMENT. Pour anxiété : préférer thérapies non médicamenteuses, oxazépam court terme si BZD nécessaire (Beers acceptable courte durée), buspirone, ou ISRS pour anxiété chronique.", "severite": "danger" },
+                              { "classe": "QT-PROLONGATEURS — TORSADES (EMA 2015 alerte)", "dcis": ["amiodarone", "sotalol", "flecainide", "dronedarone", "hydroxychloroquine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "azithromycine", "clarithromycine", "ondansetron", "domperidone", "haloperidol", "ziprasidone", "quetiapine", "risperidone", "olanzapine", "citalopram", "escitalopram", "venlafaxine", "methadone"], "commentaire": "QTc additif. Si cumul inévitable : ECG baseline + K+/Mg + monitoring. EMA 2015 : ECG avant prescription chez patient à risque QTc.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ — CI ABSOLUE", "dcis": ["glaucome angle ferme"], "commentaire": "Mydriase → crise glaucome aigu. CI ABSOLUE.", "severite": "danger" },
+                              { "classe": "HBP non traitée / Rétention urinaire — CI relative", "dcis": ["retention urinaire", "hbp non traitee"], "commentaire": "Risque rétention aiguë.", "severite": "warning" },
+                              { "classe": "Iléus paralytique / Myasthénie — CI", "dcis": ["ileus paralytique", "myasthenie", "megacolon toxique"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — ANTAGONISME (Sink JAGS 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme cholinergique → perte d'effet anti-Alzheimer.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique (ACB ≥ 3 cumulé)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "alimemazine", "chlorpheniramine", "cyproheptadine", "cyamemazine", "chlorpromazine", "levomepromazine", "clozapine", "olanzapine", "quetiapine", "tiotropium", "ipratropium"], "commentaire": "Cumul ACB → démence (Coupland 2019).", "severite": "danger" },
+                              { "classe": "Sédatifs centraux — CHUTES chez âgé", "dcis": ["diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "zolpidem", "zopiclone", "morphine", "oxycodone", "fentanyl", "tramadol", "codeine", "pregabaline", "gabapentine", "mirtazapine", "amitriptyline", "olanzapine", "quetiapine", "haloperidol", "alcool"], "commentaire": "Sédation additive + chutes/fractures.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP3A4 — ↑ exposition", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "cobicistat", "clarithromycine"], "commentaire": "↑ exposition hydroxyzine.", "severite": "warning" },
+                              { "classe": "Hyperthermie estivale — ↓ sudation", "dcis": ["canicule"], "commentaire": "↓ sudation → coup chaleur.", "severite": "warning" }
+                    ],
                     "suivi_initial": "ECG (QTc  allongement document) | Créatinine/DFG si IRC",
                     "suivi_periodique": "ECG (annuel si facteur de a risque QTc)",
                     "alerte_clinique": "Allongement QTc → ECG urgent",
@@ -14256,14 +14243,11 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "Alcool et depresseurs SNC (sedation additive) | Anticholinergiques (cumul ACB) | IMAO (potentialisation effets anticholinergiques)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool et depresseurs SNC",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "sedation additive",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D) — ACB=3 + BHE+", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB=3 + BHE+. ÉVITER. Pour vertige : préférer bétahistine (PIM moindre) ou physiothérapie/manœuvres positionnelles.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "diphenhydramine", "promethazine", "hydroxyzine"], "commentaire": "Cumul.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation additive.", "severite": "danger" }
                     ],
                     "suivi_initial": "Evaluation cognitive | Risque de chutes",
                     "suivi_periodique": "Reevaluation indication (< 8 semaines) | Score ACB cumule | Cognition",
@@ -14323,17 +14307,24 @@ const MASTER_DB = {
           {
                     "dci": "Mequitazine",
                     "princeps": "Primalan",
-                    "classe": "Antihistaminique H1 (phenothiazine - moins sedatif)",
-                    "poso_hab": "5mg/12h PO",
-                    "poso_ger": "2.5mg/12h",
-                    "poso_ren": "Prudence si DFG<30",
+                    "classe": "Antihistaminique H1 (phénothiazine 1ère gén — moins sédatif) — CIA=3, QTc Risk_CR — PIM âgé",
+                    "poso_hab": "5 mg/12h PO",
+                    "poso_ger": "2,5 mg/12h ; PIM Beers/STOPP/FORTA-D (préférer 2ème gén)",
+                    "poso_ren": "Prudence si DFG < 30",
                     "acb": 0,
                     "cia": 3,
                     "bhe": "1.0",
-                    "albumine": "50-70",
-                    "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "QT-prolongateurs, Anticholinergiques",
-                    "ddi_interact_v2": [],
+                    "albumine": "50-70%",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "ddi_interact": "QT-prolongateurs, CUMUL ACB, IACHE/Mémantine antagonisme, Glaucome/HBP CI, Sédatifs",
+                    "ddi_interact_v2": [
+                              { "classe": "ÂGÉ — PIM (Beers/STOPP/FORTA-D) — préférer 2ème gén", "dcis": ["age sup 65 ans", "demence"], "commentaire": "Phénothiazine 1ère gén. Préférer cétirizine/loratadine 2ème gén (moins ACB, pas BHE).", "severite": "warning" },
+                              { "classe": "QT-prolongateurs — TORSADES (Risk_CR)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "warning" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "diphenhydramine", "promethazine", "hydroxyzine"], "commentaire": "Cumul ACB.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "alprazolam", "zolpidem", "morphine", "tramadol"], "commentaire": "Sédation additive.", "severite": "warning" }
+                    ],
                     "suivi_initial": "Bilan hépatique si insuffisance hépatique | ECG si FR QTc",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Allongement QTc (risque modere) → ECG | Syndrome anticholinergique modere (confusion, retention)",
@@ -16813,14 +16804,12 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques, IMAO",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB Beers + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD (Sink 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "tolterodine", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "chlorpheniramine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux (alcool/BZD/Z/opioïdes)", "dcis": ["alcool", "diazepam", "lorazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline", "gabapentine", "mirtazapine"], "commentaire": "Sédation additive — chutes.", "severite": "danger" }
                     ],
                     "suivi_initial": "ECG si FR QTc | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -17794,17 +17783,25 @@ const MASTER_DB = {
           {
                     "dci": "Promethazine",
                     "princeps": "Phenergan",
-                    "classe": "Antihistaminique H1 / phenothiazine",
-                    "poso_hab": "25 u 50 mg/jour",
-                    "poso_ger": "10 u 25 mg/jour (deconseille)",
-                    "poso_ren": "Prudence",
+                    "classe": "Antihistaminique H1 1ère gén (phénothiazine) — ACB=3, BHE++, QTc — PIM ABSOLU Beers/STOPP/FORTA-D",
+                    "poso_hab": "25-50 mg/j (allergie, prémédication, antiémétique)",
+                    "poso_ger": "ÉVITER (PIM Beers 2023 / STOPP K1 / FORTA-D / PRISCUS). Si indication impérative : 10-25 mg/j max, durée minimale",
+                    "poso_ren": "Prudence (élimination hépatique)",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
-                    "albumine": "80 u 90 %",
-                    "qt_risque": "? Risque Possible (PR)",
-                    "ddi_interact": "Depresseurs SNC - Autres anticholinergiques",
-                    "ddi_interact_v2": [],
+                    "albumine": "80-90%",
+                    "qt_risque": "(PR) Possible — QTc + agranulocytose rare (phénothiazine)",
+                    "ddi_interact": "PIM ABSOLU âgé, CUMUL ACB (ACB=3), QT-prolongateurs, Sédatifs centraux, IACHE/MÉMANTINE (antagonisme), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), HBP/Rétention (CI relative), Iléus/Myasthénie (CI), AGRANULOCYTOSE rare (phénothiazine — NFS si fièvre)",
+                    "ddi_interact_v2": [
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP/FORTA-D/PRISCUS)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB=3 + BHE+ + QTc + agranulocytose. ÉVITER. Préférer cetirizine/loratadine (2ème gén) pour allergie ; ondansétron/métopimazine pour nausées (mais QTc) ; mirtazapine si sédation/dépression.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "escitalopram", "methadone"], "commentaire": "Surveillance ECG + ions.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI absolue/relative.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique (ACB cumulé)", "dcis": ["amitriptyline", "oxybutynine", "tolterodine", "solifenacine", "trospium", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux — chutes", "dcis": ["diazepam", "lorazepam", "alprazolam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "pregabaline", "gabapentine", "mirtazapine", "amitriptyline", "olanzapine", "quetiapine", "haloperidol", "alcool"], "commentaire": "Sédation additive.", "severite": "danger" },
+                              { "classe": "AGRANULOCYTOSE (phénothiazine — rare)", "dcis": ["surveillance nfs"], "commentaire": "Phénothiazines = risque agranulocytose. NFS si fièvre/angine.", "severite": "warning" }
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS (agranulocytose rare) | Bilan hépatique",
                     "suivi_periodique": "NFS (annuelle si traitement prolonge) | Bilan hépatique (annuel) | ECG (QTc annuel)",
                     "alerte_clinique": "Agranulocytose (fievre → NFS urgente) | Allongement QTc → ECG urgent | Ictère cholestatique → bilan hépatique",
@@ -21755,14 +21752,12 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "Alcool et depresseurs SNC (sedation additive) | Anticholinergiques (cumul ACB) | IMAO (potentialisation)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool et depresseurs SNC",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "sedation additive",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D) — ACB + BHE", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+. ÉVITER. Préférer 2ème gén.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "oxybutynine", "diphenhydramine", "promethazine", "hydroxyzine"], "commentaire": "Cumul.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "alprazolam", "zolpidem", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation additive.", "severite": "danger" }
                     ],
                     "suivi_initial": "Evaluation cognitive | Risque de chutes | Pression intraoculaire si ATCD glaucome",
                     "suivi_periodique": "Non indique au long cours — duree < 7 jours",
