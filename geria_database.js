@@ -2130,16 +2130,15 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "67",
                     "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "Anticholinergiques (confusion), Diuretiques (elimination renale), Bupropion (convulsions)",
+                    "ddi_interact": "PIM Beers/STOPP K2 chez âgé (ACB + BHE+ — hallucinations, confusion, livedo reticularis), Anticholinergiques (cumul confusion), Cotrimoxazole/Triamtérène (compétition tubulaire — ↑ amantadine), Bupropion (↓ seuil épileptogène), Inducteurs CYP minimes, QT-prolongateurs (Risk_CR), Levodopa (synergie thérapeutique), Antipsychotiques (antagonisme PD)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Bupropion",
-                                        "dcis": [
-                                                  "bupropion"
-                                        ],
-                                        "commentaire": "convulsions",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM (Beers/STOPP K2/PRISCUS) — hallucinations + livedo + ACB", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "Amantadine : confusion/hallucinations 5-30% chez âgé, livedo reticularis, œdèmes MI. Élimination rénale exclusive → ajustement DFG impératif. PIM si MCI/démence.", "severite": "danger" },
+                              { "classe": "Cotrimoxazole / Triamtérène / Quinine — ↑ amantadine (compétition tubulaire)", "dcis": ["sulfamethoxazole", "trimethoprime", "cotrimoxazole", "triamterene", "amiloride", "quinine", "quinidine", "cimetidine"], "commentaire": "Compétition transporteur cation organique tubulaire → ↑ exposition amantadine → toxicité (hallucinations, confusion, livedo). Surveillance.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — Torsades (Risk_CR)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif. ECG + ions.", "severite": "warning" },
+                              { "classe": "Bupropion — ↓ seuil épileptogène", "dcis": ["bupropion"], "commentaire": "Cumul abaissement seuil. Prudence ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Antipsychotiques — antagonisme PD (CI Parkinson)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "fluphenazine", "perphenazine", "risperidone", "olanzapine", "metoclopramide"], "commentaire": "Antagonisme D2. Préférer clozapine/quetiapine si psychose Parkinson.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique", "dcis": ["amitriptyline", "oxybutynine", "trihexyphenidyle", "biperidene", "diphenhydramine", "hydroxyzine"], "commentaire": "Cumul ACB chez Parkinson — chutes/confusion.", "severite": "warning" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation.", "severite": "warning" }
                     ],
                     "suivi_initial": "Créatinine/DFG (elimination renale exclusive) | Bilan cardiaque (ECG) | Bilan psychiatrique",
                     "suivi_periodique": "Créatinine (annuelle) | ECG (annuel) | Evaluation psychiatrique (annuelle)",
@@ -4017,16 +4016,13 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "95",
                     "qt_risque": "",
-                    "ddi_interact": "Alcool, Anticholinergiques (cumul ACB)",
+                    "ddi_interact": "PIM ABSOLU âgé (Beers/STOPP D1/FORTA-D — ACB=3 + BHE+), Cumul ACB, IACHE/Mémantine antagonisme, Glaucome/HBP CI, Sédatifs centraux, Hyperthermie estivale",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP D1/FORTA-D)", "dcis": ["age sup 65 ans", "demence"], "commentaire": "ACB=3 + BHE+. ÉVITER. Pour dystonie aiguë : tropatépine IM préférable (effet plus rapide, durée plus courte).", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique", "dcis": ["amitriptyline", "oxybutynine", "trihexyphenidyle", "biperidene", "tropatepine", "diphenhydramine", "promethazine", "hydroxyzine", "olanzapine"], "commentaire": "Cumul.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol"], "commentaire": "Sédation.", "severite": "warning" }
                     ],
                     "suivi_initial": "Evaluation cognitive | Bilan ophtalmique | Bilan urologique",
                     "suivi_periodique": "Evaluation cognitive (annuelle) | Pression intraoculaire (annuelle)",
@@ -4155,16 +4151,14 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,94",
                     "qt_risque": "",
-                    "ddi_interact": "Anticholinergiques - Quinidine",
+                    "ddi_interact": "PIM ABSOLU âgé (Beers/STOPP D1/FORTA-D — ACB=3 + BHE+++), Mêmes profil que trihexyphénidyle : Cumul ACB, IACHE/Mémantine antagonisme, Glaucome/HBP CI, Sédatifs centraux, Hyperthermie estivale",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Anticholinergiques - Quinidine",
-                                        "dcis": [
-                                                  "quinidine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP D1/FORTA-D) — ACB=3 + BHE+++", "dcis": ["age sup 65 ans", "demence"], "commentaire": "Anticholinergique majeur BHE+++. ÉVITER. Préférer dopa-agonistes pour Parkinson, tropatépine IM pour dystonie aiguë.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique majeur", "dcis": ["amitriptyline", "oxybutynine", "trihexyphenidyle", "tropatepine", "benztropine", "diphenhydramine", "promethazine", "hydroxyzine", "olanzapine", "quetiapine"], "commentaire": "Cumul ACB.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol"], "commentaire": "Sédation.", "severite": "danger" },
+                              { "classe": "Hyperthermie estivale", "dcis": ["canicule"], "commentaire": "↓ sudation.", "severite": "warning" }
                     ],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -4513,27 +4507,16 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "96",
                     "qt_risque": "? Risque Conditionnel (CR)",
-                    "ddi_interact": "Macrolides (augmente concentration), Antihypertenseurs (hypotension additive), Alcool (vomissements)",
+                    "ddi_interact": "FIBROSE valvulaire/pleurale/rétropéritonéale (FDA warning — ergoline) — PRÉFÉRER non-ergot (ropinirole/rotigotine/pramipexole), Inhibiteurs CYP3A4 (kétoconazole/ritonavir/clarithromycine — ↑ exposition), Macrolides érythromycine (↑ concentration), Antipsychotiques (antagonisme PD — CI), Antihypertenseurs (hypotension additive +++), TROUBLES IMPULSIVITÉ (jeu pathologique, hypersexualité — FDA 2007), HYPOTENSION orthostatique majeure, Alcool, Hyperprolactinémie",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Macrolides",
-                                        "dcis": [
-                                                  "erythromycine",
-                                                  "clarithromycine",
-                                                  "azithromycine",
-                                                  "roxithromycine"
-                                        ],
-                                        "commentaire": "augmente concentration",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "vomissements",
-                                        "severite": "warning"
-                              }
+                              { "classe": "FIBROSE (valvulaire/pleurale/rétropéritonéale) — FDA warning ergoline", "dcis": ["surveillance fibrose"], "commentaire": "Valvulopathie (régurgitations) + fibrose pleurale/rétropéritonéale documentées avec ergolines (pergolide retiré 2007, bromocriptine restriction). PRÉFÉRER NON-ERGOT (ropinirole/rotigotine/pramipexole) chez Parkinson nouveau. Surveillance écho cardiaque + EFR + créatinine si traitement > 6 mois.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ exposition", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "cobicistat", "clarithromycine", "telithromycine", "erythromycine"], "commentaire": "↑ exposition bromocriptine → toxicité.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (antagonisme PD) — CI Parkinson", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "fluphenazine", "risperidone", "olanzapine", "metoclopramide"], "commentaire": "Antagonisme D2. CI Parkinson — préférer clozapine/quetiapine si psychose.", "severite": "danger" },
+                              { "classe": "TROUBLES IMPULSIVITÉ — Jeu pathologique / hypersexualité / hyperphagie (FDA 2007)", "dcis": ["antecedent addiction", "trouble compulsif"], "commentaire": "Effet de classe dopa-agonistes — 5-15% des patients. INFORMATION patient/famille obligatoire. Réévaluation trimestrielle. Arrêt si troubles.", "severite": "danger" },
+                              { "classe": "Antihypertenseurs / α-bloquants — HYPOTENSION orthostatique +++", "dcis": ["doxazosine", "tamsulosine", "alfuzosine", "silodosine", "amlodipine", "ramipril", "enalapril", "perindopril", "losartan", "valsartan", "furosemide", "hydrochlorothiazide", "indapamide", "spironolactone"], "commentaire": "Hypotension orthostatique majeure (effet dopa-agoniste). TA debout/couché.", "severite": "danger" },
+                              { "classe": "Inducteurs CYP3A4 — ↓ efficacité", "dcis": ["rifampicine", "phenytoine", "carbamazepine", "phenobarbital", "millepertuis"], "commentaire": "↓ exposition.", "severite": "warning" },
+                              { "classe": "Alcool — vomissements", "dcis": ["alcool"], "commentaire": "Effet antabuse modeste + sédation.", "severite": "warning" },
+                              { "classe": "Hyperprolactinémie — indication 2ème ligne (préférer cabergoline en endocrino)", "dcis": ["hyperprolactinemie"], "commentaire": "Bromocriptine indication classique mais cabergoline préférable (½ vie longue, moins effets digestifs).", "severite": "info" }
                     ],
                     "suivi_initial": "Bilan hépatique | ECG (arythmies) | Bilan pulmonaire (fibrose pleurale si traitement prolonge) | TA | Bilan ophtalmique",
                     "suivi_periodique": "Bilan hépatique (annuel) | ECG (annuel) | TA (chaque consultation) | EFR (tous les 2 ans si dose > 30mg/j)",
@@ -5007,16 +4990,13 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "36",
                     "qt_risque": "",
-                    "ddi_interact": "IMAO (CI absolue), Fer (chelation)",
+                    "ddi_interact": "Toujours en association avec LÉVODOPA (Sinemet/Modopar) — voir interactions LÉVODOPA, IMAO non sélectifs CI ABSOLUE, Antipsychotiques antagonisme PD (CI), Sels de fer (chélation — espacer 2h), Vitamine B6 forte dose (déconseillé — antagonise carbidopa)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Fer",
-                                        "dcis": [
-                                                  "fer"
-                                        ],
-                                        "commentaire": "chelation",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IMAO non sélectifs — CI ABSOLUE (crise hypertensive)", "dcis": ["phenelzine", "tranylcypromine", "linezolide"], "commentaire": "CI ABSOLUE — crise HTA. Wash-out 14 j. IMAO-B sélectifs (sélégiline ≤ 10 mg/j, rasagiline 1 mg/j) acceptables.", "severite": "danger" },
+                              { "classe": "Antipsychotiques — antagonisme PD (CI Parkinson)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "risperidone", "olanzapine", "metoclopramide"], "commentaire": "Antagonisme D2. CI Parkinson — préférer clozapine/quetiapine si psychose.", "severite": "danger" },
+                              { "classe": "Sels de fer — CHÉLATION (espacer ≥ 2h)", "dcis": ["sulfate ferreux", "fumarate ferreux", "ascorbate ferreux"], "commentaire": "Chélation absorption. Espacer ≥ 2h.", "severite": "warning" },
+                              { "classe": "Vitamine B6 forte dose — antagonisme carbidopa (déconseillé)", "dcis": ["pyridoxine"], "commentaire": "Forte dose B6 (> 25 mg/j sans carbidopa) accélère décarboxylation lévodopa périphérique. Carbidopa l'empêche mais éviter B6 ≥ 100 mg/j.", "severite": "warning" },
+                              { "classe": "Aliments riches en protéines — ↓ absorption lévodopa", "dcis": ["alimentation riche proteines"], "commentaire": "Compétition transporteur AA. Prendre lévodopa 30-60 min avant repas riche en protéines (viande/poisson/œufs).", "severite": "info" }
                     ],
                     "suivi_initial": "Bilan hépatique | NFS",
                     "suivi_periodique": "Bilan hépatique (annuel) | NFS (annuelle)",
@@ -9983,23 +9963,14 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "98",
                     "qt_risque": "",
-                    "ddi_interact": "IMAO (CI), Adrenergiques, AINS (deplacent albumine)",
+                    "ddi_interact": "Toujours associé à LÉVODOPA — voir interactions lévodopa, IMAO non sélectifs CI ABSOLUE (entacapone inhibe COMT — cumul → crise HTA), Adrénergiques/Catécholamines (HTA, arythmie), AINS (déplacement albumine), HÉPATOTOXICITÉ rare (cf. tolcapone retiré), ↑ DYSKINÉSIES (effet dopaminergique potentialisé), Coloration urine orange (informer)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "deplacent albumine",
-                                        "severite": "warning"
-                              }
+                              { "classe": "IMAO non sélectifs — CI ABSOLUE (cumul inhibition catabolisme catécholamines)", "dcis": ["phenelzine", "tranylcypromine", "linezolide"], "commentaire": "Entacapone inhibe COMT + IMAO inhibe MAO = blocage TOTAL catabolisme catécholamines → crise HTA. CI ABSOLUE. IMAO-B sélectifs : prudence.", "severite": "danger" },
+                              { "classe": "Adrénergiques / Sympathomimétiques — HTA / arythmie", "dcis": ["adrenaline", "noradrenaline", "ephedrine", "pseudoephedrine", "isoprenaline", "dobutamine"], "commentaire": "Effet sympathomimétique potentialisé. Prudence.", "severite": "warning" },
+                              { "classe": "HÉPATOTOXICITÉ rare (effet de classe — surveillance)", "dcis": ["surveillance hepatique"], "commentaire": "Tolcapone retiré (hépatotoxicité fulminante). Entacapone profil acceptable. Surveillance LFT.", "severite": "warning" },
+                              { "classe": "↑ DYSKINÉSIES (potentialisation lévodopa)", "dcis": ["levodopa", "carbidopa"], "commentaire": "Entacapone ↑ exposition lévodopa → ↑ dyskinésies. Adapter dose lévodopa (↓ 25-30% si dyskinésies).", "severite": "info" },
+                              { "classe": "AINS — déplacement albumine", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib"], "commentaire": "Effet modeste.", "severite": "warning" },
+                              { "classe": "Coloration urine orange — informer patient (bénin)", "dcis": ["surveillance urinaire"], "commentaire": "Effet bénin sans signification clinique. Information patient.", "severite": "info" }
                     ],
                     "suivi_initial": "Bilan hépatique (hépatotoxicité rare mais documentee) | NFS | Bilan renal",
                     "suivi_periodique": "Bilan hépatique (tous les 6 mois) | NFS (annuelle)",
@@ -21772,44 +21743,27 @@ const MASTER_DB = {
                     "source": "RCP Terfluzine | Beers 2023"
           },
           {
-                    "dci": "Trihexyphenidyl",
-                    "princeps": "Artane / Parkinane",
-                    "classe": "Neurologie (Antiparkinsoniens Anticholin.)",
-                    "poso_hab": "2 u 10 mg/jour",
-                    "poso_ger": "1 u 2 mg/jour (tres deconseille confusion/chutes)",
-                    "poso_ren": "Prudence majeure (accumulation)",
-                    "acb": 3,
-                    "cia": 3,
-                    "bhe": "",
-                    "albumine": "~ 50 %",
-                    "qt_risque": "",
-                    "ddi_interact": "Anticholinergiques (majoration des effets)",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "",
-                    "suivi_periodique": "",
-                    "alerte_clinique": "",
-                    "bio_cible": [],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Antiparkinsonien : adapter selon stade Parkinson. Effets gériatriques : hypotension orthostatique, somnolence, hallucinations, troubles compulsifs. Démarrage dose minimale, titration lente.",
-                    "source": "RCP Artane | Beers 2023"
-          },
-          {
                     "dci": "Trihexyphenidyle",
-                    "princeps": "Artane / Parkinane",
-                    "classe": "Antiparkinsonien anticholinergique",
-                    "poso_hab": "2 u 10 mg/jour",
-                    "poso_ger": "1 u 2 mg/jour (tres deconseille confusion/chutes)",
+                    "princeps": "Artane / Parkinane LP",
+                    "classe": "Antiparkinsonien anticholinergique — ACB=3, BHE+++ — PIM ABSOLU âgé (Beers/STOPP D1/FORTA-D/PRISCUS)",
+                    "poso_hab": "2-10 mg/j (Parkinson, dystonie iatrogène) | TROUBLES COMPORTEMENTAUX / Détournement (potentiel d'abus reconnu)",
+                    "poso_ger": "À ÉVITER ABSOLUMENT (ACB=3 + BHE+++). Pour Parkinson : préférer dopa-agonistes/lévodopa. Pour dystonie iatrogène : tropatépine IM.",
                     "poso_ren": "Prudence majeure (accumulation)",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
-                    "albumine": "~ 50 %",
+                    "albumine": "~ 50%",
                     "qt_risque": "",
-                    "ddi_interact": "Anticholinergiques (majoration des effets)",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "PIM ABSOLU âgé, Cumul ACB +++, IACHE/Mémantine antagonisme PD, Glaucome angle fermé CI, HBP/Rétention urinaire CI relative, Iléus/Myasthénie CI, Sédatifs centraux, Hyperthermie estivale, DÉTOURNEMENT/ABUS (potentiel reconnu)",
+                    "ddi_interact_v2": [
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers 2023/STOPP D1/FORTA-D/PRISCUS) — ACB=3 + BHE+++", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "Anticholinergique MAJEUR BHE+++. Coupland JAMA Int Med 2019 démence x2-3. ÉVITER ABSOLUMENT. Switch dopa-agoniste/lévodopa pour Parkinson.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — ANTAGONISME PD complet", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme cholinergique. CI absolue association.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique majeur (ACB ≥ 6)", "dcis": ["amitriptyline", "clomipramine", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "atropine", "scopolamine", "biperidene", "tropatepine", "benztropine", "diphenhydramine", "doxylamine", "promethazine", "alimemazine", "hydroxyzine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Cumul ACB → délire anticholinergique (Mad as a hatter syndrome).", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation.", "severite": "danger" },
+                              { "classe": "DÉTOURNEMENT / ABUS — potentiel reconnu (euphorisant à dose élevée)", "dcis": ["antecedent addiction"], "commentaire": "Trihexyphénidyle = potentiel d'abus en milieu psychiatrique/carcéral (effets hallucinatoires/euphorisants à forte dose). Restriction prescription France.", "severite": "warning" },
+                              { "classe": "Hyperthermie estivale — ↓ sudation", "dcis": ["canicule"], "commentaire": "Coup chaleur.", "severite": "warning" }
+                    ],
                     "suivi_initial": "Pas de biologie specifique systematique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire | Glaucome aigu | Confusion (examen clinique  anticholinergique fort)",
@@ -21954,17 +21908,23 @@ const MASTER_DB = {
           {
                     "dci": "Tropatepine",
                     "princeps": "Lepticur",
-                    "classe": "Antiparkinsonien anticholinergique",
-                    "poso_hab": "10 mg/jour",
-                    "poso_ger": "5 mg/jour (deconseille)",
-                    "poso_ren": "Prudence majeure",
-                    "acb": 0,
+                    "classe": "Antiparkinsonien anticholinergique (alternative trihexyphénidyle, dystonie aiguë iatrogène IM) — ACB élevé, PIM âgé",
+                    "poso_hab": "10 mg/j PO | Dystonie aiguë : 5-10 mg IM (effet rapide, durée 3-6h)",
+                    "poso_ger": "À ÉVITER chronique (PIM Beers/STOPP D1/FORTA-D — ACB) ; usage IM ponctuel acceptable pour dystonie aiguë iatrogène (effet < benztropine, durée plus courte)",
+                    "poso_ren": "Prudence",
+                    "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
-                    "albumine": "Forte",
+                    "albumine": "> 90%",
                     "qt_risque": "",
-                    "ddi_interact": "Anticholinergiques",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "PIM âgé chronique, Cumul ACB, IACHE/Mémantine antagonisme, Glaucome/HBP CI, Sédatifs centraux, USAGE IM AIGU acceptable (dystonie iatrogène)",
+                    "ddi_interact_v2": [
+                              { "classe": "ÂGÉ — PIM chronique (Beers/STOPP D1/FORTA-D)", "dcis": ["age sup 65 ans", "demence"], "commentaire": "ACB. ÉVITER chronique. Indication IM dystonie aiguë acceptable.", "severite": "danger" },
+                              { "classe": "IACHE / Mémantine — antagonisme PD", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme.", "severite": "danger" },
+                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
+                              { "classe": "Cumul anticholinergique", "dcis": ["amitriptyline", "oxybutynine", "trihexyphenidyle", "biperidene", "benztropine", "diphenhydramine", "promethazine"], "commentaire": "Cumul.", "severite": "danger" },
+                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine"], "commentaire": "Sédation.", "severite": "warning" }
+                    ],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire | Glaucome aigu",
@@ -25317,31 +25277,16 @@ const MASTER_DB = {
                     "bhe": "1",
                     "albumine": "40%",
                     "qt_risque": "",
-                    "ddi_interact": "Ciprofloxacine (inhibiteur CYP1A2 — augmente exposition) | Antipsychotiques (antagonisme dopaminergique) | Hormones de substitution estrogenes (augmentation exposition)",
+                    "ddi_interact": "Inhibiteurs CYP1A2 (ciprofloxacine/fluvoxamine/énoxacine — ↑ exposition x2-3), Inducteurs CYP1A2 (tabac/oméprazole — ↓ exposition), Antipsychotiques (antagonisme PD — CI Parkinson), TROUBLES IMPULSIVITÉ (jeu pathologique/hypersexualité/achats compulsifs — FDA 2007 effet de classe dopa-agonistes), HYPOTENSION orthostatique +++, SOMNOLENCE SUBITE (conduite — sleep attacks Frucht 1999), ARRÊT BRUTAL = SYNDROME DE SEVRAGE DA (DAWS — dopamine agonist withdrawal syndrome — anxiété/sueurs/douleurs), Estrogènes (↑ exposition modeste), Métoclopramide CI absolue",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Ciprofloxacine",
-                                        "dcis": [
-                                                  "ciprofloxacine"
-                                        ],
-                                        "commentaire": "inhibiteur CYP1A2 — augmente exposition",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Antipsychotiques",
-                                        "dcis": [
-                                                  "haloperidol",
-                                                  "olanzapine",
-                                                  "risperidone",
-                                                  "quetiapine",
-                                                  "aripiprazole",
-                                                  "clozapine",
-                                                  "chlorpromazine",
-                                                  "levomepromazine"
-                                        ],
-                                        "commentaire": "antagonisme dopaminergique",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Antipsychotiques — antagonisme PD (CI Parkinson — préférer clozapine/quetiapine si psychose)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "fluphenazine", "perphenazine", "risperidone", "olanzapine", "metoclopramide"], "commentaire": "Antagonisme D2 → aggravation Parkinson. Clozapine/quetiapine = seuls antipsychotiques acceptables si psychose Parkinson.", "severite": "danger" },
+                              { "classe": "TROUBLES IMPULSIVITÉ — Jeu pathologique/Hypersexualité/Achats compulsifs (FDA 2007)", "dcis": ["antecedent addiction", "trouble compulsif"], "commentaire": "Effet de classe DA-agonistes 5-15%. INFORMATION patient/famille OBLIGATOIRE. Réévaluation trimestrielle. Arrêt si troubles compulsifs.", "severite": "danger" },
+                              { "classe": "SOMNOLENCE SUBITE — sleep attacks (CI conduite — Frucht 1999)", "dcis": ["conduite vehicule"], "commentaire": "Endormissements brusques sans signe annonciateur. CI conduite. Information patient.", "severite": "danger" },
+                              { "classe": "Inhibiteurs CYP1A2 — ↑ exposition x2-3", "dcis": ["ciprofloxacine", "fluvoxamine", "enoxacine", "cimetidine"], "commentaire": "Surveillance toxicité.", "severite": "warning" },
+                              { "classe": "Inducteurs CYP1A2 — ↓ exposition (tabac+++)", "dcis": ["tabac", "omeprazole"], "commentaire": "Sevrage tabagique → ↑ exposition ropinirole → toxicité. Adapter dose si arrêt tabac.", "severite": "warning" },
+                              { "classe": "ARRÊT BRUTAL = SYNDROME DAWS (sevrage dopa-agoniste)", "dcis": ["arret brutal"], "commentaire": "Sevrage progressif obligatoire (anxiété, douleurs, sueurs, dépression — peut persister mois).", "severite": "danger" },
+                              { "classe": "HYPOTENSION orthostatique +++", "dcis": ["doxazosine", "tamsulosine", "amlodipine", "ramipril", "furosemide"], "commentaire": "Surveillance TA debout/couché. Initiation au coucher.", "severite": "danger" },
+                              { "classe": "Estrogènes — ↑ exposition modeste", "dcis": ["estradiol", "ethinylestradiol"], "commentaire": "Surveillance.", "severite": "warning" }
                     ],
                     "suivi_initial": "TA orthostatique | Évaluation somnolence",
                     "suivi_periodique": "TA | Somnolence diurne (conduite) | Troubles du controle des impulsions (jeu, achats, hypersexualite) | Dyskiniesies",
@@ -25368,31 +25313,15 @@ const MASTER_DB = {
                     "bhe": "1",
                     "albumine": "92%",
                     "qt_risque": "",
-                    "ddi_interact": "Antipsychotiques (antagonisme) | Metoclopramide (antagonisme D2)",
+                    "ddi_interact": "Antipsychotiques (antagonisme PD — CI Parkinson), TROUBLES IMPULSIVITÉ (effet de classe), HYPOTENSION orthostatique, SOMNOLENCE SUBITE, ARRÊT BRUTAL = DAWS, Métoclopramide CI absolue, RÉACTIONS CUTANÉES site application (rotation obligatoire), PATCH = libération continue (avantage fluctuations)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Antipsychotiques",
-                                        "dcis": [
-                                                  "haloperidol",
-                                                  "olanzapine",
-                                                  "risperidone",
-                                                  "quetiapine",
-                                                  "aripiprazole",
-                                                  "clozapine",
-                                                  "chlorpromazine",
-                                                  "levomepromazine"
-                                        ],
-                                        "commentaire": "antagonisme",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Metoclopramide",
-                                        "dcis": [
-                                                  "metoclopramide"
-                                        ],
-                                        "commentaire": "antagonisme D2",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Antipsychotiques — antagonisme PD", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "fluphenazine", "risperidone", "olanzapine", "metoclopramide"], "commentaire": "CI Parkinson. Préférer clozapine/quetiapine si psychose.", "severite": "danger" },
+                              { "classe": "TROUBLES IMPULSIVITÉ (FDA 2007 effet de classe)", "dcis": ["antecedent addiction", "trouble compulsif"], "commentaire": "Jeu pathologique/hypersexualité. Information patient/famille.", "severite": "danger" },
+                              { "classe": "SOMNOLENCE SUBITE — CI conduite", "dcis": ["conduite vehicule"], "commentaire": "Sleep attacks.", "severite": "danger" },
+                              { "classe": "DAWS — sevrage progressif", "dcis": ["arret brutal"], "commentaire": "Sevrage progressif. Patch facilite décroissance.", "severite": "danger" },
+                              { "classe": "HYPOTENSION orthostatique", "dcis": ["doxazosine", "amlodipine", "furosemide"], "commentaire": "TA debout/couché.", "severite": "warning" },
+                              { "classe": "RÉACTIONS CUTANÉES site application — ROTATION OBLIGATOIRE", "dcis": ["reactions cutanees patch"], "commentaire": "Patch transdermique : changer site quotidiennement (rotation thorax/abdomen/épaule/bras). Évite réactions locales.", "severite": "info" },
+                              { "classe": "PATCH = avantage gériatrique (libération continue, moins fluctuations)", "dcis": ["fluctuations parkinson"], "commentaire": "Rotigotine patch = bonne option chez âgé (1 prise/j, observance, libération continue).", "severite": "info" }
                     ],
                     "suivi_initial": "TA couche/debout | Poids | Etat cutane",
                     "suivi_periodique": "TA | Somnolence | Troubles controle impulsions | Site d'application (rotation, reactions cutanees)",
@@ -26551,23 +26480,14 @@ const MASTER_DB = {
                     "bhe": "1",
                     "albumine": "Donnees limitees",
                     "qt_risque": "(CR) - QTc rapporté à forte dose",
-                    "ddi_interact": "Antipsychotiques (antagonisme) | Tetrabenazine (antagonisme)",
+                    "ddi_interact": "Antipsychotiques (antagonisme PD — CI Parkinson), TROUBLES IMPULSIVITÉ (effet de classe DA-agonistes — FDA 2007), HYPOTENSION orthostatique, SOMNOLENCE SUBITE, NAUSÉES (prendre milieu repas), QT-prolongateurs (Risk_CR à forte dose), Métoclopramide CI, Tetrabenazine antagonisme",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Antipsychotiques",
-                                        "dcis": [
-                                                  "haloperidol",
-                                                  "olanzapine",
-                                                  "risperidone",
-                                                  "quetiapine",
-                                                  "aripiprazole",
-                                                  "clozapine",
-                                                  "chlorpromazine",
-                                                  "levomepromazine"
-                                        ],
-                                        "commentaire": "antagonisme",
-                                        "severite": "warning"
-                              }
+                              { "classe": "Antipsychotiques — antagonisme PD (CI Parkinson)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "fluphenazine", "risperidone", "olanzapine", "metoclopramide", "tetrabenazine"], "commentaire": "Antagonisme D2. CI Parkinson — préférer clozapine/quetiapine.", "severite": "danger" },
+                              { "classe": "TROUBLES IMPULSIVITÉ (FDA 2007 effet de classe DA-agonistes)", "dcis": ["antecedent addiction", "trouble compulsif"], "commentaire": "Jeu pathologique/hypersexualité/achats compulsifs.", "severite": "danger" },
+                              { "classe": "SOMNOLENCE SUBITE — CI conduite", "dcis": ["conduite vehicule"], "commentaire": "Sleep attacks.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs (Risk_CR forte dose)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "QTc surveillance.", "severite": "warning" },
+                              { "classe": "HYPOTENSION orthostatique", "dcis": ["doxazosine", "tamsulosine", "amlodipine", "furosemide"], "commentaire": "TA debout/couché.", "severite": "warning" },
+                              { "classe": "Nausées (prendre milieu repas)", "dcis": ["nausees"], "commentaire": "Prise au milieu du repas réduit nausées.", "severite": "info" }
                     ],
                     "suivi_initial": "TA couche/debout",
                     "suivi_periodique": "TA | Somnolence | Troubles controle impulsions",
