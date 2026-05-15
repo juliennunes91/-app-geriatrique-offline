@@ -2099,7 +2099,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'adaptation",
                     "acb": 1,
                     "cia": 1,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "> 90%",
                     "qt_risque": "",
                     "ddi_interact": "Effet ACB léger : cumul ACB modeste (vs musculotropes purs), Glaucome/HBP prudence, Efficacité SII modeste (REMEDIES)",
@@ -2759,7 +2759,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG 10-30 : 500 mg /8h | DFG < 10 : 500 mg /12h | HD : 500 mg post-HD",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "+ (faible en méninges saines, fort en méninges enflammées)",
+                    "bhe": "1 (faible en méninges saines, fort en méninges enflammées)",
                     "albumine": "18-25%",
                     "qt_risque": "",
                     "ddi_interact": "ALLERGIE PÉNICILLINE — CI ABSOLUE (anaphylaxie, Stevens-Johnson), AVK warfarine (↑ INR par ↓ flore vit K), MÉTHOTREXATE (↑ exposition x3-5 — compétition tubulaire ; CI doses oncologiques), AMOXICILLINE + ALLOPURINOL (rash maculo-papuleux x3-5 — Boston Collaborative 1972 — préférer autre β-lactamine si patient sous allopurinol), Contraceptifs oraux (↓ efficacité hypothétique — pas démontré), C. DIFFICILE (FDA/EMA — pneumonies/colite), Diarrhée associée (probiotiques après cure)",
@@ -3558,7 +3558,7 @@ const MASTER_DB = {
                     "poso_ren": "Collyre : pas d'ajustement DFG. IV/IM systémique : pas d'ajustement DFG (élimination hépatique majoritaire).",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "50%",
                     "qt_risque": "",
                     "ddi_interact": "PIM ABSOLU âgé systémique (Beers/STOPP D1/FORTA-D — ACB=3 + BHE+), Cumul ACB, IACHE/Mémantine antagonisme, Glaucome angle fermé CI ABSOLUE, HBP/Iléus/Myasthénie CI, Sédatifs centraux, Hyperthermie estivale",
@@ -4129,7 +4129,7 @@ const MASTER_DB = {
                     "poso_ren": "PO : DFG < 30 : ↓ dose 50% | Collyre : pas d'ajustement",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "50%",
                     "qt_risque": "",
                     "ddi_interact": "ASTHME — CI ABSOLUE même en collyre (bronchospasme), BPCO sévère prudence, BRADYCARDIE/BAV (CCB non-DHP/digoxine), ARRÊT BRUTAL = REBOND, IC décompensée (collyre peut suffire), DT2 hypoglycémie masquée, ABSORPTION SYSTÉMIQUE collyre (occlusion canal lacrymal)",
@@ -4681,7 +4681,8 @@ const MASTER_DB = {
                               "BIO_001",
                               "BIO_002",
                               "BIO_003",
-                              "BIO_008"
+                              "BIO_008",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -4721,7 +4722,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_003",
                               "BIO_009",
-                              "BIO_011"
+                              "BIO_011",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -4760,7 +4762,8 @@ const MASTER_DB = {
                               "BIO_011",
                               "BIO_013",
                               "BIO_014",
-                              "BIO_025"
+                              "BIO_025",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -4796,7 +4799,8 @@ const MASTER_DB = {
                     "alerte_clinique": "Ictère → bilan hépatique",
                     "bio_cible": [
                               "BIO_013",
-                              "BIO_014"
+                              "BIO_014",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -5980,35 +5984,6 @@ const MASTER_DB = {
                     "source": "RCP Célectol ; ESC HTA 2023"
           },
           {
-                    "dci": "Celiprololol",
-                    "princeps": "Celectol",
-                    "classe": "Betabloquant (cardioselectif, vasodilatateur)",
-                    "poso_hab": "200-400 mg/j",
-                    "poso_ger": "200 mg/j",
-                    "poso_ren": "Adapter si ClCr < 30",
-                    "acb": 0,
-                    "cia": 0,
-                    "bhe": "",
-                    "albumine": "",
-                    "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "ECG | Glycemie si diabete | Créatinine",
-                    "suivi_periodique": "FC/TA (consultations)",
-                    "alerte_clinique": "Bradycardie → ECG",
-                    "bio_cible": [
-                              "BIO_031",
-                              "BIO_025",
-                              "BIO_003"
-                    ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Bêtabloquant : surveillance FC (cible > 50 bpm) et TA. Bradycardie additive avec digoxine, vérapamil/diltiazem, IACHE (Phase 8). Préférer cardiosélectifs en gériatrie (bisoprolol, métoprolol succinate, nébivolol — STOPP/START v3).",
-                    "source": "RCP Celectol | ESC HTA 2023"
-          },
-          {
                     "dci": "Cetirizine",
                     "princeps": "Zyrtec, Virlix, Reactine",
                     "classe": "Antihistaminique H1 2ème gén — peu sédatif, ACB faible, BHE limité — référence allergie chez âgé (vs H1 1ère gén PIM)",
@@ -6017,7 +5992,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG < 50 : 5 mg/j | DFG < 10 ou HD : 5 mg /2 j",
                     "acb": 1,
                     "cia": 1,
-                    "bhe": "+ (passage limité)",
+                    "bhe": "1 (passage limité)",
                     "albumine": "93%",
                     "qt_risque": "",
                     "ddi_interact": "Peu d'interactions PK (avantage gériatrie vs 1ère gén), Sédatifs centraux (effet sédatif modeste — moindre que 1ère gén), Théophylline (↑ exposition modeste), ALCOOL (sédation additive modérée — informer)",
@@ -6153,7 +6128,9 @@ const MASTER_DB = {
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire (examen clinique)",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -6261,7 +6238,8 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_008",
                               "BIO_025",
-                              "BIO_027"
+                              "BIO_027",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -6269,84 +6247,6 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "notes_cliniques": "Thiazide de RÉFÉRENCE en HTA avec preuves cardiovasculaires majeures : ALLHAT 2002 (Furberg JAMA — 33357 patients HTA, équivalente lisinopril/amlodipine et supérieure doxazosine pour IC) et SHEP 1991 (HTA systolique isolée > 60 ans, ↓ AVC -36% / IDM -27% / IC -55%). T½ 40-60h (vs HCTZ 6-12h) → effet plus prolongé et stable, observance améliorée. Plus puissant à doses équivalentes (12,5 mg chlortalidone ≈ 25 mg HCTZ). Effet hypokaliémiant plus marqué que HCTZ (T½ longue). Moins de preuves de carcinome cutané (vs Pedersen 2018 sur HCTZ) mais photosensibilisation possible. Préférable à HCTZ chez âgé non-IRC sévère.",
                     "source": "RCP Hygroton ; ESC HTA 2023 ; ALLHAT 2002 (Furberg JAMA) ; SHEP 1991 ; Roush meta-analyse 2012 (chlortalidone > HCTZ)"
-          },
-          {
-                    "dci": "Chlorthalidone",
-                    "princeps": "Hygroton",
-                    "classe": "Diuretique thiazidique-like",
-                    "poso_hab": "12.5-50 mg/j en 1 prise",
-                    "poso_ger": "12.5 mg/j — dose minimale, demi-vie longue (40-60h)",
-                    "poso_ren": "DFG < 30: inefficace comme diuretique (mais garde effet antihypertenseur partiel)",
-                    "acb": 1,
-                    "cia": 1,
-                    "bhe": "0",
-                    "albumine": "75%",
-                    "qt_risque": "(QT) - Hypokaliemie → allongement QTc indirect",
-                    "ddi_interact": "Lithium (augmentation lithemie) | AINS (diminution effet diuretique) | Digoxine (hypokaliemie → toxicite) | IEC/ARA2 (hypotension 1ere dose)",
-                    "ddi_interact_v2": [
-                              {
-                                        "classe": "Lithium",
-                                        "dcis": [
-                                                  "lithium"
-                                        ],
-                                        "commentaire": "augmentation lithemie",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "diminution effet diuretique",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Digoxine",
-                                        "dcis": [
-                                                  "digoxine"
-                                        ],
-                                        "commentaire": "hypokaliemie → toxicite",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "IEC",
-                                        "dcis": [
-                                                  "enalapril",
-                                                  "lisinopril",
-                                                  "ramipril",
-                                                  "perindopril",
-                                                  "quinapril",
-                                                  "benazepril",
-                                                  "captopril",
-                                                  "fosinopril",
-                                                  "trandolapril"
-                                        ],
-                                        "commentaire": "hypotension 1ere dose",
-                                        "severite": "warning"
-                              }
-                    ],
-                    "suivi_initial": "Ionogramme (K+, Na+) | Créatinine | Glycemie | Uricemie | TA couche/debout",
-                    "suivi_periodique": "Ionogramme (1 mois puis trimestriel) | Créatinine | Glycemie (annuelle) | Uricemie (si ATCD goutte)",
-                    "alerte_clinique": "Hyponatremie (surtout sujet age feminin) → ionogramme urgent | Hypokaliemie → ECG + supplementation | Hyperuricemie → crise de goutte | Hypotension orthostatique",
-                    "bio_cible": [
-                              "BIO_001",
-                              "BIO_002",
-                              "BIO_003",
-                              "BIO_006"
-                    ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Diurétique : hypokaliémie, hyponatrémie (thiazidiques surtout), déshydratation, hyperuricémie. Surveillance ionogramme/créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
-                    "source": "RCP Hygroton | ESC HTA 2023"
           },
           {
                     "dci": "Cholecalciferol",
@@ -6416,67 +6316,6 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "notes_cliniques": "Prodrogue activée localement → moins de candidose",
                     "source": "RCP Alvesco ; GINA 2023"
-          },
-          {
-                    "dci": "Cicletanide",
-                    "princeps": "Tenstaten",
-                    "classe": "Diuretique thiazidique",
-                    "poso_hab": "50-100 mg/j en 1 prise matinale",
-                    "poso_ger": "50 mg/j — surveillance ionogramme rapprochee",
-                    "poso_ren": "DFG < 30: inefficace | DFG 30-60: pas d ajustement",
-                    "acb": 0,
-                    "cia": 0,
-                    "bhe": "0",
-                    "albumine": "95%",
-                    "qt_risque": "",
-                    "ddi_interact": "Lithium (augmentation lithemie) | AINS (diminution efficacite) | Digoxine (hypokaliemie)",
-                    "ddi_interact_v2": [
-                              {
-                                        "classe": "Lithium",
-                                        "dcis": [
-                                                  "lithium"
-                                        ],
-                                        "commentaire": "augmentation lithemie",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "AINS",
-                                        "dcis": [
-                                                  "ibuprofene",
-                                                  "naproxene",
-                                                  "diclofenac",
-                                                  "ketoprofene",
-                                                  "piroxicam",
-                                                  "celecoxib",
-                                                  "etoricoxib",
-                                                  "meloxicam"
-                                        ],
-                                        "commentaire": "diminution efficacite",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Digoxine",
-                                        "dcis": [
-                                                  "digoxine"
-                                        ],
-                                        "commentaire": "hypokaliemie",
-                                        "severite": "warning"
-                              }
-                    ],
-                    "suivi_initial": "Ionogramme | Créatinine | TA couche/debout",
-                    "suivi_periodique": "Ionogramme (1 mois puis trimestriel) | Créatinine | TA",
-                    "alerte_clinique": "Hyponatremie → ionogramme | Hypokaliemie | Peu utilise en pratique courante",
-                    "bio_cible": [
-                              "BIO_001",
-                              "BIO_002",
-                              "BIO_003"
-                    ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Usage principalement HTA",
-                    "source": "RCP Tenstaten"
           },
           {
                     "dci": "Cicletanine",
@@ -6651,7 +6490,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_009",
-                              "BIO_011"
+                              "BIO_011",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -7029,7 +6869,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement DFG",
                     "acb": 0,
                     "cia": 1,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "85%",
                     "qt_risque": "",
                     "ddi_interact": "PIM ABSOLU âgé, OPIOÏDES (FDA 2016), GABAPENTINOÏDES (FDA 2019), Alcool, Inhibiteurs CYP3A4/CYP2C19 (↑ N-déméthyl-clobazam métabolite actif demi-vie 70h), Inducteurs (↓ clobazam), Sédatifs centraux, Sevrage progressif",
@@ -7428,7 +7268,8 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_013",
                               "BIO_014",
-                              "BIO_027"
+                              "BIO_027",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -7677,7 +7518,8 @@ const MASTER_DB = {
                               "BIO_010",
                               "BIO_011",
                               "BIO_013",
-                              "BIO_014"
+                              "BIO_014",
+                              "BIO_002"
                     ],
                     "atb_legere": "800 mg de sulfaméthoxazole + 160 mg de triméthoprime / 12h",
                     "atb_moderee": "800 mg/160 mg/24h",
@@ -8408,7 +8250,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement DFG",
                     "acb": 1,
                     "cia": 1,
-                    "bhe": "0.0 (BHE faible — utilité œdème cérébral via mécanisme indirect)",
+                    "bhe": "0 (BHE faible — utilité œdème cérébral via mécanisme indirect)",
                     "albumine": "77%",
                     "qt_risque": "",
                     "ddi_interact": "AINS (ulcère/hémorragie x4-12), AVK (↑ INR), INDUCTEURS CYP3A4 (↓ dexa x2-3 — dexa elle-même est INDUCTEUR léger CYP3A4 — peut ↓ ses substrats), INHIBITEURS CYP3A4 PUISSANTS (↑ dexa x2-4 — kétoconazole/itraconazole/ritonavir), VACCINS VIVANTS CI ABSOLUE si > 1,5 mg/j > 14 j, Insuline/Sulfamides (hyperglycémie +++), Diurétiques (hypoK), QUINOLONES (rupture tendineuse x4-46), Amphotéricine B (hypoK), Ciclosporine/Tacrolimus (cumul + ↑ exposition cortico), APRÉPITANT (↑ dexa x2 — ↓ dexa 50% en oncologie), CONTRACEPTIFS ORAUX (↓ efficacité — dexa induit CYP3A4), THALIDOMIDE/LÉNALIDOMIDE (cumul thrombose en myélome — prophylaxie HBPM/aspirine), Bisphosphonates (prévention GIOP)",
@@ -8468,7 +8310,9 @@ const MASTER_DB = {
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -9482,7 +9326,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_009",
-                              "BIO_012"
+                              "BIO_012",
+                              "BIO_031"
                     ],
                     "atb_legere": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
                     "atb_moderee": "Patient > 60 kg : 200 mg/24h en 1 prise Patient < 60 kg : 200 mg le 1er jour puis 100 mg/24h les jours suivants Autres posologies dans des cas particuliers : gonococcie aiguë, syphilis, urétrite non compliquée, endocervicite, …",
@@ -9515,7 +9360,9 @@ const MASTER_DB = {
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Retention urinaire (examen clinique)",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -9886,7 +9733,8 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_027",
                               "BIO_025",
-                              "BIO_003"
+                              "BIO_003",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -9904,7 +9752,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "85%",
                     "qt_risque": "",
                     "ddi_interact": "Mêmes CI que sumatriptan + Inhibiteurs CYP3A4 PUISSANTS — CI ABSOLUE 72h (kétoconazole/itraconazole/ritonavir/clarithromycine), ATCD CV (CI), IMAO (CI), Autres triptans/Ergot (CI), ISRS/IRSN (SS)",
@@ -10532,7 +10380,8 @@ const MASTER_DB = {
                     "alerte_clinique": "Hypomagnesiemie | NFS si anemie inexpliquee",
                     "bio_cible": [
                               "BIO_006",
-                              "BIO_021"
+                              "BIO_021",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -10668,7 +10517,8 @@ const MASTER_DB = {
                     "suivi_periodique": "Créatinine (annuelle si IRC)",
                     "alerte_clinique": "Ictère → bilan hépatique",
                     "bio_cible": [
-                              "BIO_003"
+                              "BIO_003",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -10713,37 +10563,6 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "notes_cliniques": "Inhibiteur sélectif non-purine de la xanthine oxydase. Métabolisme HÉPATIQUE (glucuronoconjugaison + CYP1A2/2C8/2C9) → pas d'ajustement IRC majeur (avantage vs allopurinol). PROBLÈME CARDIOVASCULAIRE : CARES trial 2018 (White NEJM, ATCD CV — ↑ mortalité all-cause +22%, CV +34% vs allopurinol) → EMA/ANSM 2019 black box, préférence allopurinol 1ère ligne. FAST 2020 (≥ 60 ans UK) plus rassurant (non-infériorité). EULAR 2022 / ACR 2020 : 2ème ligne ou si intolérance/IRC sévère.",
                     "source": "RCP Adenuric ; ACR 2020 ; EULAR 2022 ; SFR 2020 ; CARES White NEJM 2018 ; FAST 2020 (Mackenzie Lancet) ; EMA/ANSM 2019"
-          },
-          {
-                    "dci": "Febusostat",
-                    "princeps": "Adenuric",
-                    "classe": "Inhibiteur xanthine oxydase (uricostatique)",
-                    "poso_hab": "40-120 mg/j",
-                    "poso_ger": "40-80 mg/j",
-                    "poso_ren": "Pas d'ajustement",
-                    "acb": 0,
-                    "cia": 0,
-                    "bhe": "",
-                    "albumine": "> 99 %",
-                    "qt_risque": "",
-                    "ddi_interact": "Aucune majeure documentee",
-                    "ddi_interact_v2": [],
-                    "suivi_initial": "Uricemie | Créatinine/DFG | Bilan hépatique (ALAT/ASAT) | ECG (risque CV)",
-                    "suivi_periodique": "Uricemie (tous les 3 a 6 mois jusqu'a cible puis annuel) | Bilan hépatique (annuel) | Créatinine (annuelle)",
-                    "alerte_clinique": "Ictère → bilan hépatique urgent | Douleur thoracique → ECG (risque CV majore vs allopurinol selon etude CARES)",
-                    "bio_cible": [
-                              "BIO_008",
-                              "BIO_003",
-                              "BIO_013",
-                              "BIO_014",
-                              "BIO_031"
-                    ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Inhibiteur xanthine oxydase (Adénuric) : alternative allopurinol si intolérance. SURMORTALITÉ CARDIOVASCULAIRE décrite (CARES trial 2018) — prudence si MCV. Surveillance BH initiale.",
-                    "source": "RCP Adenuric | EULAR Goutte 2023"
           },
           {
                     "dci": "Felodipine",
@@ -10844,7 +10663,11 @@ const MASTER_DB = {
                     "suivi_initial": "TA couché-debout | Bilan hépatique | ECG (tachycardie réflexe)",
                     "suivi_periodique": "TA assise + orthostatique | FC | Examen œdèmes MI | Bilan hépatique si symptômes",
                     "alerte_clinique": "JUS DE PAMPLEMOUSSE : à PROSCRIRE (effet x3-5) | Tachycardie réflexe DHP courte action | Œdèmes MI (10-15%) | Cardiopathie ischémique : prudence | Préférer amlodipine/lercanidipine chez âgé (moins d'interactions)",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_003",
+                              "BIO_001",
+                              "BIO_027"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -10901,7 +10724,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG ≥ 30 : 4-8 mg/j | DFG < 30 ou IH modérée : MAX 4 mg/j",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "0.0 (BHE- ; avantage chez âgé)",
+                    "bhe": "0 (BHE- ; avantage chez âgé)",
                     "albumine": "50% (métabolite actif 5-hydroxyméthyl-tolterodine)",
                     "qt_risque": "(PR) Possible — QTc dose-dépendant",
                     "ddi_interact": "PIM Beers 2023 / STOPP B7 / FORTA-D (préférable à oxybutynine — BHE faible), CUMUL ACB, IACHE/MÉMANTINE (antagonisme PD), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir → ↑ x2-3 — MAX 4 mg/j), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE (CI relative), QT-prolongateurs (additif), Iléus/Myasthénie (CI), Hyperthermie estivale",
@@ -11185,7 +11008,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 1,
                     "cia": 2,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "> 99%",
                     "qt_risque": "(PR) Risque Possible",
                     "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, SMN, Levodopa antagonisme, Sédatifs centraux, Lithium neurotoxicité, ↓ seuil épileptogène",
@@ -11467,7 +11290,16 @@ const MASTER_DB = {
                     "suivi_initial": "EFR | ACT/CAT | ECG si cardiopathie | K+ | Combinaison ICS (asthme) | Technique inhalation",
                     "suivi_periodique": "EFR annuelle | Score contrôle | Technique | K+ si fortes doses",
                     "alerte_clinique": "ASTHME MONOTHÉRAPIE = CI ABSOLUE (SMART 2006) | ICS-formotérol PRN = NOUVEAU STANDARD asthme léger GINA 2024 | BRONCHOSPASME PARADOXAL rare | HYPOKALIÉMIE | TACHYCARDIE/TREMBLEMENTS | TECHNIQUE INHALATION",
-                    "source": "RCP Foradil ; GINA 2023"
+                    "bio_cible": [
+                              "BIO_001",
+                              "BIO_031"
+                    ],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "LABA β2-agoniste — début rapide (action 1-3 min) → utilisable en MART/SMART (Symbicort/DuoResp) — référence asthme léger PRN GINA 2024 (SYGMA 1-2 NEJM 2018). BPCO : bithérapie LAMA + LABA (Bevespi, Duaklir).",
+                    "source": "RCP Foradil ; GINA 2024 ; GOLD 2024 ; SYGMA 1-2 NEJM 2018 ; SMART Nelson Chest 2006"
           },
           {
                     "dci": "Fosaprepitant",
@@ -11494,7 +11326,9 @@ const MASTER_DB = {
                     "alerte_clinique": "Ictère → bilan hépatique",
                     "bio_cible": [
                               "BIO_013",
-                              "BIO_014"
+                              "BIO_014",
+                              "BIO_031",
+                              "BIO_001"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -11728,7 +11562,8 @@ const MASTER_DB = {
                               "BIO_002",
                               "BIO_003",
                               "BIO_006",
-                              "BIO_008"
+                              "BIO_008",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -11746,7 +11581,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG ≥ 80 : 900-3600 mg/j | DFG 50-79 : max 1800 mg/j | DFG 30-49 : max 900 mg/j (300 mg x3) | DFG 15-29 : max 600 mg/j (300 mg x2) | DFG < 15 : max 300 mg/j | Hémodialyse : 100-300 mg post-HD (RCP Neurontin)",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "BHE+ — sédation, troubles cognitifs",
+                    "bhe": "1 (sédation, troubles cognitifs)",
                     "albumine": "< 3%",
                     "qt_risque": "",
                     "ddi_interact": "OPIOÏDES — FDA BLACK BOX 2019 DÉPRESSION RESPIRATOIRE FATALE (méta-analyse Gomes BMJ 2017 — gabapentine + opioïde OR 1,99 décès), Sédatifs centraux (BZD/Z-drugs/alcool — dépression respi cumulée FDA 2019), ANTIACIDES Mg/Al (↓ absorption 24% — espacer 2h), Cimétidine (↑ exposition modeste), MILLEPERTUIS (théorique), Insuffisance rénale (accumulation +++), MÉSUSAGE/DÉPENDANCE potentiel (cf pregabaline), Inhibiteurs PDE5 + antihypertenseurs (œdèmes/hypotension)",
@@ -11891,7 +11726,9 @@ const MASTER_DB = {
                     "suivi_initial": "Pas de bilan systematique",
                     "suivi_periodique": "Pas de biologie systematique",
                     "alerte_clinique": "Nephrotoxicite urique si insuffisance renale (forte dose) | Nausees | Somnolence legere",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_003"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -12045,7 +11882,8 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_008",
                               "BIO_025",
-                              "BIO_027"
+                              "BIO_027",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -12461,7 +12299,8 @@ const MASTER_DB = {
                               "BIO_001",
                               "BIO_002",
                               "BIO_003",
-                              "BIO_008"
+                              "BIO_008",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -12979,7 +12818,9 @@ const MASTER_DB = {
                     "suivi_initial": "TA couché-debout | ECG | Bilan hépatique",
                     "suivi_periodique": "TA assise + orthostatique | FC | Examen œdèmes MI",
                     "alerte_clinique": "Œdèmes périphériques | Tachycardie réflexe (T½ courte) | Préférer amlodipine/lercanidipine LP en chronique",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -13256,7 +13097,8 @@ const MASTER_DB = {
                     "alerte_clinique": "Hypomagnsmie | NFS si anemie inexplique",
                     "bio_cible": [
                               "BIO_006",
-                              "BIO_021"
+                              "BIO_021",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -13441,7 +13283,8 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_011",
                               "BIO_013",
-                              "BIO_014"
+                              "BIO_014",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -13459,7 +13302,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG 30-50 : 5 mg/48h | DFG 10-30 : 5 mg/72h | DFG < 10 : éviter",
                     "acb": 0,
                     "cia": 1,
-                    "bhe": "+ (limité)",
+                    "bhe": "1 (limité)",
                     "albumine": "91-92%",
                     "qt_risque": "",
                     "ddi_interact": "AVANTAGE gériatrie (ACB=0, BHE limité) vs H1 1ère gén, Pas d'interactions PK majeures, Sédation minime, Ajustement rénal obligatoire",
@@ -13610,7 +13453,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement majeur",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "+++",
+                    "bhe": "1.0",
                     "albumine": "> 90%",
                     "qt_risque": "(KR) Risque Connu — Torsades documentées",
                     "ddi_interact": "FDA BLACK BOX 2005 — DÉMENCE (mortalité +60-70%), AGRANULOCYTOSE (phénothiazine), SYNDROME MALIN DES NEUROLEPTIQUES (SMN — CPK/T°/rigidité), QT-prolongateurs (Torsades), ACB cumul, Hypotension orthostatique +++ (effet α1), Sédation/chutes, IACHE antagonisme, Glaucome angle fermé CI, HBP non traitée CI relative, Hyperthermie estivale, Levodopa antagonisme",
@@ -13648,47 +13491,6 @@ const MASTER_DB = {
                     "epileptogene_desc": "Phénothiazine — risque convulsif",
                     "notes_cliniques": "Antipsychotique : mortalité ↑ chez déments (FDA/ANSM Black Box). Indications formelles uniquement. Préférer faibles doses (rispéridone 0.25-0.5 mg, halopéridol 0.25-0.5 mg). Surveillance EPS, QT, sédation, prise de poids. Beers 2023, STOPP D2.",
                     "source": "RCP Nozinan | HAS 2017"
-          },
-          {
-                    "dci": "Levomethopromazine",
-                    "princeps": "Nozinan",
-                    "classe": "Antipsychotique FGA (phénothiazine — variant orthographique de Levomepromazine) — voir Levomepromazine pour profil complet",
-                    "poso_hab": "25-75 mg/j (voir Levomepromazine)",
-                    "poso_ger": "10-25 mg/j ; PIM ABSOLU démence",
-                    "poso_ren": "Pas d'ajustement majeur",
-                    "acb": 3,
-                    "cia": 3,
-                    "bhe": "+++",
-                    "albumine": "> 90%",
-                    "qt_risque": "(KR) Risque Connu",
-                    "ddi_interact": "Identique Levomepromazine : FDA Black Box 2005 démence, QT-prolongateurs (Risk_KR), SMN, Agranulocytose, Hypotension orthostatique, Cumul ACB, Levodopa antagonisme, Sédatifs centraux",
-                    "ddi_interact_v2": [
-                              { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
-                              { "classe": "QT-prolongateurs — Torsades (Risk_KR)", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "citalopram", "methadone"], "commentaire": "Torsades documentées.", "severite": "danger" },
-                              { "classe": "Levodopa — antagonisme PD", "dcis": ["levodopa", "ropinirole", "rotigotine", "pramipexole"], "commentaire": "CI Parkinson.", "severite": "danger" },
-                              { "classe": "Hypotension orthostatique +++", "dcis": ["doxazosine", "tamsulosine", "amlodipine"], "commentaire": "Effet α1 marqué.", "severite": "danger" },
-                              { "classe": "Agranulocytose / SMN", "dcis": ["surveillance nfs"], "commentaire": "NFS si fièvre.", "severite": "danger" },
-                              { "classe": "Cumul ACB", "dcis": ["amitriptyline", "diphenhydramine", "promethazine", "hydroxyzine"], "commentaire": "Cumul.", "severite": "danger" },
-                              { "classe": "Sédatifs centraux", "dcis": ["alcool", "diazepam", "morphine", "tramadol", "pregabaline"], "commentaire": "Sédation.", "severite": "danger" }
-                    ],
-                    "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | TA (hypotension orthostatique)",
-                    "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | TA (consultations)",
-                    "alerte_clinique": "Agranulocytose → NFS urgente | Ictère → bilan hépatique | Syndrome malin neuroleptique → CPK",
-                    "bio_cible": [
-                              "BIO_009",
-                              "BIO_011",
-                              "BIO_013",
-                              "BIO_014",
-                              "BIO_031"
-                    ,
-                              "BIO_018"
-                    ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Forte sédation. Usage principalement soins palliatifs.",
-                    "source": "RCP Nozinan ; HAS 2017"
           },
           {
                     "dci": "Levothyroxine",
@@ -13963,7 +13765,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement",
                     "acb": 1,
                     "cia": 1,
-                    "bhe": "0.0 (à dose thérapeutique)",
+                    "bhe": "0 (à dose thérapeutique)",
                     "albumine": "97%",
                     "qt_risque": "(CR) Risque Conditionnel — TORSADES à hautes doses (FDA Black Box 2016)",
                     "ddi_interact": "DOSES ABUSIVES — FDA Black Box 2016 (Torsades fatales — mésusage addictif), C. DIFFICILE/colite pseudo-membraneuse CI ABSOLUE (mégacôlon), Inhibiteurs P-gp (kétoconazole/quinine/vérapamil — ↑ exposition cérébrale, perte protection BHE), Inhibiteurs CYP3A4/2C8 (↑ exposition), QT-prolongateurs (à hautes doses), Opioïdes oraux (cumul rare car loperamide périphérique)",
@@ -14030,7 +13832,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement DFG",
                     "acb": 0,
                     "cia": 1,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "80%",
                     "qt_risque": "",
                     "ddi_interact": "PIM âgé (Beers/STOPP K1/FORTA-D), OPIOÏDES (FDA 2016), GABAPENTINOÏDES (FDA 2019), Alcool, Sédatifs centraux, Sevrage progressif",
@@ -14135,7 +13937,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement DFG",
                     "acb": 0,
                     "cia": 1,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "85%",
                     "qt_risque": "",
                     "ddi_interact": "PIM relatif âgé, OPIOÏDES (FDA 2016), GABAPENTINOÏDES (FDA 2019), Alcool, Sédatifs centraux, Sevrage progressif",
@@ -14568,7 +14370,8 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_004",
                               "BIO_013",
-                              "BIO_014"
+                              "BIO_014",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -14936,7 +14739,8 @@ const MASTER_DB = {
                     "suivi_periodique": "ECG (annuel si facteur de a risque QTc) | évaluation clinique syndrome extrapyramidal (traitement court recommand)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Mouvements anormaux (dyskinesie tardive  arret immediat) | Syndrome malin neuroleptique (rare)",
                     "bio_cible": [
-                              "BIO_031"
+                              "BIO_031",
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -15209,42 +15013,6 @@ const MASTER_DB = {
                     "source": "RCP Hypnovel | HAS BZD 2022"
           },
           {
-                    "dci": "Miglitinide",
-                    "princeps": "Novonorm",
-                    "classe": "Glinide (secretagogue insuline)",
-                    "poso_hab": "360 mg/j (3x120)",
-                    "poso_ger": "60-120 mg/j",
-                    "poso_ren": "Pas d'ajustement",
-                    "acb": 0,
-                    "cia": 0,
-                    "bhe": "",
-                    "albumine": "> 98 %",
-                    "qt_risque": "",
-                    "ddi_interact": "Insuline / Sulfamides / Glinides (hypoglycémie additive), Miconazole/Antifongiques azolés (CI relative), AINS (déplacement albumine), β-bloquants (masquent hypo)",
-                    "ddi_interact_v2": [
-                              { "classe": "Miconazole (CI relative — classe sécrétagogue)", "dcis": ["miconazole", "fluconazole", "itraconazole"], "commentaire": "Effet de classe sécrétagogue = risque hypoglycémie.", "severite": "warning" },
-                              { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline glargine", "insuline detemir", "insuline aspart", "insuline lispro", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive.", "severite": "warning" },
-                              { "classe": "AINS (déplacement albumine)", "dcis": ["ibuprofene", "naproxene", "diclofenac"], "commentaire": "Déplacement albumine → ↑ miglitinide libre.", "severite": "warning" },
-                              { "classe": "β-bloquants (masquent hypo)", "dcis": ["bisoprolol", "metoprolol", "propranolol"], "commentaire": "Préférer β1-sélectifs.", "severite": "warning" }
-                    ],
-                    "suivi_initial": "HbA1c | Bilan hépatique | Créatinine/DFG",
-                    "suivi_periodique": "HbA1c (tous les 3-6 mois) | Bilan hépatique (annuel)",
-                    "alerte_clinique": "Hypoglycémie sévère → glycémie urgente. Prise préprandiale OBLIGATOIRE. Usage limité en France (peu de données chez âgé).",
-                    "bio_cible": [
-                              "BIO_025",
-                              "BIO_026",
-                              "BIO_013",
-                              "BIO_014",
-                              "BIO_003"
-                    ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Hypoglycémie si repas sauté. Usage limité en France.",
-                    "source": "RCP classe glinides ; HAS DT2 2023"
-          },
-          {
                     "dci": "Milnacipran",
                     "princeps": "Ixel",
                     "classe": "IRSNA",
@@ -15341,7 +15109,8 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014",
-                              "BIO_009"
+                              "BIO_009",
+                              "BIO_031"
                     ],
                     "atb_legere": "200 mg/j en 2 prises",
                     "atb_moderee": "200 mg/j en 2 prises",
@@ -15385,7 +15154,9 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_025",
                               "BIO_026",
-                              "BIO_027"
+                              "BIO_027",
+                              "BIO_031",
+                              "BIO_002"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -15923,7 +15694,8 @@ const MASTER_DB = {
                     "alerte_clinique": "Usage IV +++ en URGENCE hypertensive (AVC, dissection aortique, éclampsie) — titration prudente sous monitorage | Tachycardie réflexe (T½ courte vs amlodipine) | Œdèmes MI | Préférer amlodipine LP en HTA chronique chez âgé",
                     "bio_cible": [
                               "BIO_013",
-                              "BIO_014"
+                              "BIO_014",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -16058,7 +15830,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement majeur. Cirrhose Child C : ↓ dose 50%",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "BHE+++ — lipophilie élevée",
+                    "bhe": "1.0 (lipophilie élevée)",
                     "albumine": "> 95%",
                     "qt_risque": "",
                     "ddi_interact": "Inhibiteurs CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir — CI ABSOLUE ↑ x7-9), Jus de pamplemousse (↑ x2-3 — éviter), Inducteurs CYP3A4 (rifampicine ↓ x10 — CI), Antihypertenseurs (hypotension cumulée → privation perfusion cérébrale en post-HSA), Bétabloquants/CCB non-DHP (bradycardie additive), Anti-épileptiques (carbamazépine/phénytoïne ↓ x7 — CI relative en post-HSA)",
@@ -16092,7 +15864,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement DFG",
                     "acb": 0,
                     "cia": 1,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "87%",
                     "qt_risque": "",
                     "ddi_interact": "PIM ABSOLU âgé (Beers/STOPP K1/FORTA-D — DEMI-VIE LONGUE +++), OPIOÏDES (FDA 2016), GABAPENTINOÏDES (FDA 2019), Alcool, Sédatifs centraux, Sevrage progressif",
@@ -16143,7 +15915,11 @@ const MASTER_DB = {
                     "suivi_initial": "TA couché-debout | ECG | Bilan hépatique",
                     "suivi_periodique": "TA assise + orthostatique | FC | Examen œdèmes MI",
                     "alerte_clinique": "Tachycardie réflexe (T½ moyenne) | Œdèmes MI | Validée HTA systolique isolée sujet âgé (Syst-Eur — ↓ AVC -42%, démence Syst-Eur Dementia substudy)",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_003",
+                              "BIO_001",
+                              "BIO_027"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -16285,7 +16061,7 @@ const MASTER_DB = {
           },
           {
                     "dci": "Nortriptyline",
-                    "princeps": "Norset",
+                    "princeps": "Pamelor (USA), Aventyl (CAN), Allegron (UK) — NON COMMERCIALISÉ EN FRANCE",
                     "classe": "Antidepresseur tricyclique (amine secondaire - moins ACB que amines tertiaires)",
                     "poso_hab": "25-150mg/j en 1-3 prises PO",
                     "poso_ger": "25-75mg/j (titration lente)",
@@ -16533,7 +16309,8 @@ const MASTER_DB = {
                     "alerte_clinique": "Hypomagnesiemie | NFS si anemie inexpliquee",
                     "bio_cible": [
                               "BIO_006",
-                              "BIO_021"
+                              "BIO_021",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -16752,7 +16529,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG 30-60 : prudence (accumulation métabolite N-déséthyloxybutynine) | DFG < 30 : éviter ; préférer mirabégron",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "1.0 (BHE++ — pénétration cérébrale majeure, métabolite actif N-déséthyloxybutynine encore plus lipophile)",
+                    "bhe": "1 (BHE++ — pénétration cérébrale majeure, métabolite actif N-déséthyloxybutynine encore plus lipophile)",
                     "albumine": "83-85%",
                     "qt_risque": "",
                     "ddi_interact": "PIM ABSOLU CHEZ ÂGÉ (Beers 2023 / STOPP B7 / FORTA-D / PRISCUS — troubles cognitifs/démence, chutes, rétention urinaire, glaucome aigu), CUMUL ACB (autres anticholinergiques — antidépresseurs TCA, antihistaminiques 1ère gén., antipsychotiques typiques, antiparkinsoniens, antispasmodiques, IACE déconseillés en association), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir ↑ x2-3 — ↓ dose), IACHE/MÉMANTINE (ANTAGONISME PHARMACODYNAMIQUE — Sink JAGS 2008 — perte effet anti-Alzheimer + chutes ↑), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE/HBP non traitée (CI relative), IAM PARALYTIQUE (CI), MYASTHÉNIE (CI), Médicaments allongeant QTc (additif), Sécrétagogues sueur ↓ (hyperthermie estivale)",
@@ -16896,7 +16673,8 @@ const MASTER_DB = {
                     "alerte_clinique": "Hypomagnsmie",
                     "bio_cible": [
                               "BIO_006",
-                              "BIO_021"
+                              "BIO_021",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -17034,7 +16812,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement majeur",
                     "acb": 3,
                     "cia": 0,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "> 90%",
                     "qt_risque": "(PR) Risque Possible",
                     "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, Agranulocytose, SMN, Cumul ACB, Levodopa antagonisme, Lithium neurotoxicité, Hypotension orthostatique, Sédatifs centraux",
@@ -17306,7 +17084,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement DFG",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "40-57%",
                     "qt_risque": "",
                     "ddi_interact": "ASTHME — CI ABSOLUE (non cardiosélectif), BRADYCARDIE/BAV (CCB non-DHP, digoxine, amiodarone), ARRÊT BRUTAL = REBOND, Hypoglycémie masquée DT2, Sympathomimétiques (antagonisme), Lupus médicamenteux ASI",
@@ -17973,7 +17751,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG ≥ 60 : 150-600 mg/j | DFG 30-59 : 75-300 mg/j en 2-3 prises | DFG 15-29 : 25-150 mg/j en 1-2 prises | DFG < 15 : 25-75 mg/j en 1 prise. Hémodialyse : dose supplémentaire post-HD (RCP Lyrica)",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "BHE+ — sédation, troubles cognitifs",
+                    "bhe": "1 (sédation, troubles cognitifs)",
                     "albumine": "0%",
                     "qt_risque": "(CR) Conditionnel — QTc rapporté en surdosage/association",
                     "ddi_interact": "OPIOÏDES — FDA BLACK BOX 2019 DÉPRESSION RESPIRATOIRE FATALE (morphine, oxycodone, fentanyl, tramadol, codéine — méta-analyses Gomes BMJ 2017/CMAJ 2018), Sédatifs centraux (BZD/Z-drugs/alcool — dépression respi cumulée, FDA 2019), Inhibiteurs IPDE5/Antihypertenseurs (hypotension), Métformine (œdèmes additifs), MILLEPERTUIS/IMAO (interactions noradrénaline théoriques), Insuffisance rénale (accumulation), MÉSUSAGE/DÉPENDANCE (ANSM 2021 — ordonnance sécurisée maintenue catégorie I depuis mai 2021 en France)",
@@ -17991,7 +17769,8 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_003",
                               "BIO_004",
-                              "BIO_025"
+                              "BIO_025",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -18211,7 +17990,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement (métabolisme hépatique > 90%). Cirrhose : ↓ dose 50% (1er passage hépatique altéré)",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "+++",
+                    "bhe": "1.0",
                     "albumine": "90%",
                     "qt_risque": "",
                     "ddi_interact": "Asthme/BPCO (CI — non cardiosélectif), Inhibiteurs CYP2D6/CYP1A2 (fluoxétine/paroxétine/quinidine/cimétidine/ciprofloxacine ↑ exposition x2-5), CCB non-DHP (vérapamil/diltiazem CI HFrEF), Anti-arythmiques (amiodarone/sotalol bradycardie/QT), Clonidine (rebond HTA arrêt brutal), Lidocaïne (↑ lidocaïnémie via ↓ débit hépatique), Théophylline (↑ théophyllinémie x2), Insuline/Sulfonylurées (masquage hypoglycémie MAJEUR + retard contre-régulation), AINS (↓ effet antiHTA), Triptans (HTA — vasoconstriction additive), Rizatriptan (↑ rizatriptanémie x2 — CI relative)",
@@ -18402,7 +18181,9 @@ const MASTER_DB = {
                     "suivi_initial": "TA | ECG si cardiopathie | Bilan prostatique",
                     "suivi_periodique": "Pas de biologie systematique (usage court)",
                     "alerte_clinique": "HTA (deconseille si HTA) | Tachycardie → ECG | Retention urinaire (anticholinergique leger)",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -18745,7 +18526,8 @@ const MASTER_DB = {
                     "alerte_clinique": "Hypomagnsmie",
                     "bio_cible": [
                               "BIO_006",
-                              "BIO_021"
+                              "BIO_021",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -19848,7 +19630,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_018",
-                              "BIO_027"
+                              "BIO_027",
+                              "BIO_003"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -20780,7 +20563,8 @@ const MASTER_DB = {
                     "suivi_periodique": "Kaliemie (annuelle si a forte dose)",
                     "alerte_clinique": "Hypokaliemie | Tachycardie",
                     "bio_cible": [
-                              "BIO_001"
+                              "BIO_001",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -21512,7 +21296,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG < 60 : ↓ dose 50%",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "15-41%",
                     "qt_risque": "",
                     "ddi_interact": "TÉRATOGÈNE catégorie X (FENTES PALATINES — PRAC EMA 2018 + ANSM 2018 — contraception efficace + plan de prévention grossesse), HYPERAMMONIÉMIE/ENCÉPHALOPATHIE (+ valproate — Topamax+Dépakine — surveillance ammoniémie), CONTRACEPTIFS HORMONAUX (↓ éthinylestradiol 30% si > 200 mg/j topiramate — préférer DIU/barrière), Inducteurs enzymatiques (carbamazépine/phénytoïne — ↓ topiramate 40%), Acétazolamide/Zonisamide (cumul acidose métabolique + lithiase), Métformine (↓ exposition), Lithium (↑ lithémie modérée), HCO3 ↓ (acidose métabolique — surveillance), Sédatifs centraux, GLAUCOME ANGLE FERMÉ aigu (réaction idiosyncrasique — arrêt), HYPOSUDATION/HYPERTHERMIE (anhydrase IV/V — canicule)",
@@ -21649,7 +21433,8 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014",
-                              "BIO_003"
+                              "BIO_003",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -22179,7 +21964,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG ≥ 30 : 20 mg x2/j | DFG < 30 : 20 mg/j ou 20 mg un jour sur deux | Hémodialyse : éviter",
                     "acb": 3,
                     "cia": 3,
-                    "bhe": "0.0 (ammonium quaternaire — non BHE, avantage majeur chez âgé)",
+                    "bhe": "0 (ammonium quaternaire — non BHE, avantage majeur chez âgé)",
                     "albumine": "50-80%",
                     "qt_risque": "",
                     "ddi_interact": "PIM Beers 2023 / STOPP B7 (ACB=3) mais BHE- (effets cognitifs limités, avantage), CUMUL ACB systémique, IACHE/MÉMANTINE (antagonisme PD), MÉTFORMINE/PROCAÏNAMIDE/PANCURONIUM (compétition transporteur tubulaire — ↑ trospium), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE/HBP non traitée (CI relative), Iléus/Myasthénie (CI), Hyperthermie estivale (↓ sudation périphérique mais BHE- préserve thermorégulation centrale)",
@@ -22894,7 +22679,7 @@ const MASTER_DB = {
                     "poso_ren": "DFG < 50 : ↓ dose 50%",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "+",
+                    "bhe": "1",
                     "albumine": "40-50%",
                     "qt_risque": "",
                     "ddi_interact": "STRUCTURE SULFAMIDE — CI absolue si allergie sulfamides (Stevens-Johnson, syndrome hypersensibilité), HYPERTHERMIE/HYPOSUDATION (anhydrase carbonique — canicule, oligurie iatrogène), ACIDOSE MÉTABOLIQUE + LITHIASE rénale (additif avec topiramate/acétazolamide), Inducteurs enzymatiques (carbamazépine/phénytoïne — ↓ zonisamide 50%), TÉRATOGÈNE catégorie X (fentes palatines — préférer lamotrigine grossesse), Idéations suicidaires (effet de classe), Sédatifs centraux, Anorexie/perte de poids (modèle topiramate)",
@@ -23153,54 +22938,6 @@ const MASTER_DB = {
                     "source": "RCP Colimycine | SPILF 2023"
           },
           {
-                    "dci": "Domperidone2",
-                    "princeps": "Motilium",
-                    "classe": "Antiemetique / Prokinetique",
-                    "poso_hab": "10mg x3/j PO (max 30mg/j, max 7j)",
-                    "poso_ger": "Eviter sujet age",
-                    "poso_ren": "Pas d'adaptation stricte",
-                    "acb": 0,
-                    "cia": 1,
-                    "bhe": "0.0",
-                    "albumine": "91-93",
-                    "qt_risque": "Risque Etabli (RE)",
-                    "ddi_interact": "CYP3A4 inhibiteurs, QT-prolongateurs (CI)",
-                    "ddi_interact_v2": [
-                              {
-                                        "classe": "Inhibiteurs CYP3A4",
-                                        "dcis": [
-                                                  "ketoconazole",
-                                                  "itraconazole",
-                                                  "voriconazole",
-                                                  "posaconazole",
-                                                  "ritonavir",
-                                                  "clarithromycine",
-                                                  "erythromycine",
-                                                  "diltiazem",
-                                                  "verapamil",
-                                                  "jus de pamplemousse"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
-                    ],
-                    "suivi_initial": "ECG (QTc) | Bilan hépatique | Ionogramme",
-                    "suivi_periodique": "ECG (annuel ou si symptomes) | Bilan hépatique si traitement prolonge",
-                    "alerte_clinique": "Allongement QTc (risque majeur) → ECG urgent | Hépatotoxicité → bilan hépatique",
-                    "bio_cible": [
-                              "BIO_013",
-                              "BIO_014",
-                              "BIO_031",
-                              "BIO_001"
-                    ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Doublon administratif probable — voir Dompéridone. ALLONGEMENT QT MAJEUR (Risk_KR), restrictions ANSM 2014 (durée ≤ 7 j, ECG si > 60 ans).",
-                    "source": "RCP Motilium | ANSM 2014"
-          },
-          {
                     "dci": "Mitiglitinide",
                     "princeps": "Glufast (Japon)",
                     "classe": "Glinide (secretagogue insuline)",
@@ -23284,7 +23021,8 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_011",
                               "BIO_013",
-                              "BIO_031"
+                              "BIO_031",
+                              "BIO_002"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -24041,7 +23779,7 @@ const MASTER_DB = {
                     "poso_ren": "ClCr 30-60 : ↓ dose 25% | ClCr < 30 : ↓ dose 50% (élimination rénale 50%)",
                     "acb": 0,
                     "cia": 1,
-                    "bhe": "1.0 — BHE+++ (sédation/dépression)",
+                    "bhe": "1.0 (BHE+++ (sédation/dépression))",
                     "qt_risque": "",
                     "albumine": "20-40%",
                     "ddi_interact": "ARRÊT BRUTAL → CRISE HYPERTENSIVE DE REBOND (effet rebond α-adrénergique non masqué — décroissance progressive obligatoire sur ≥ 2 sem), Bétabloquants (PARADOXE — BB intensifie rebond HTA à l'arrêt simultané — arrêter BB en PREMIER), Antidépresseurs tricycliques (ANTAGONISME effet anti-HTA + cumul ACB/sédation), Antipsychotiques (cumul hypotension/sédation/anticholinergique), BZD/Z-drugs/opioïdes/alcool (sédation +++ — chutes), Diurétiques (hypotension), MAO-IB (sélégiline — antagonisme partiel), Méthylphénidate (antagonisme + rapports décès — Wilens), Insuline/Sulfonylurées (masquage hypoglycémie partiel)",
@@ -24180,63 +23918,6 @@ const MASTER_DB = {
                     "epileptogene_desc": "IRSNA — risque dose-dépendant (surtout surdosage)",
                     "notes_cliniques": "IRSN : indication dépression + douleur neuropathique. Mêmes risques que ISRS (SIADH, saignement, sérotonine). Surveillance TA (effet noradrénergique).",
                     "source": "RCP Pristiq | HAS Depression 2017"
-          },
-          {
-                    "dci": "Dosulpine",
-                    "princeps": "Prothiaden",
-                    "classe": "Antidépresseur tricyclique",
-                    "poso_hab": "75-150 mg/j",
-                    "poso_ger": "25-75 mg/j (PIM absolu en gériatrie — Beers, PRISCUS)",
-                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
-                    "acb": 3,
-                    "cia": 3,
-                    "bhe": "1",
-                    "qt_risque": "Modéré",
-                    "albumine": "> 90%",
-                    "ddi_interact": "IMAO (CI), Alcool, BZD, Anticholinergiques",
-                    "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "BZD",
-                                        "dcis": [
-                                                  "diazepam",
-                                                  "bromazepam",
-                                                  "lorazepam",
-                                                  "oxazepam",
-                                                  "alprazolam",
-                                                  "clorazepate",
-                                                  "nordazepam",
-                                                  "clobazam",
-                                                  "clonazepam",
-                                                  "nitrazepam",
-                                                  "lormetazepam",
-                                                  "midazolam"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
-                    ],
-                    "suivi_initial": "ECG (QTc) | Natrémie | Bilan hépatique",
-                    "suivi_periodique": "ECG | Natrémie | Glycémie",
-                    "alerte_clinique": "Allongement QT | Rétention urinaire | Confusion | Chutes",
-                    "bio_cible": [
-                              "BIO_031",
-                              "BIO_001",
-                              "BIO_013"
-                    ],
-                    "atb_legere": "",
-                    "atb_moderee": "",
-                    "atb_severe": "",
-                    "atb_terminale": "",
-                    "notes_cliniques": "Antidépresseur tricyclique : ACB élevé (anticholinergique fort), QT, hypotension orthostatique, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1, FORTA-D, PRISCUS).",
-                    "source": "RCP Prothiaden | HAS Depression 2017 ; Beers 2023"
           },
           {
                     "dci": "Enoxaparine",
@@ -24651,7 +24332,7 @@ const MASTER_DB = {
                     "poso_ren": "ClCr < 30 : espacer les prises (élimination rénale 70%)",
                     "acb": 0,
                     "cia": 1,
-                    "bhe": "1.0 — BHE+++ (sédation/dépression)",
+                    "bhe": "1.0 (BHE+++ (sédation/dépression))",
                     "qt_risque": "",
                     "albumine": "< 15%",
                     "ddi_interact": "PIM ABSOLU Beers/STOPP/FORTA-D chez âgé, Lithium (↑ lithémie + neurotoxicité), IMAO (CRISE HYPERTENSIVE PARADOXALE — CI ABSOLUE), Fer oral (chélation → ↓ absorption ↓ efficacité méthyldopa), Halothane (hypotension peropératoire), Sympathomimétiques (antagonisme), Lévodopa (antagonisme — CI Parkinson), Bétabloquants (cumul bradycardie + risque rebond)",
@@ -24907,7 +24588,8 @@ const MASTER_DB = {
                     "alerte_clinique": "Sédation | Dépendance | Ostéomalacie (long terme) | Anémie mégaloblastique",
                     "bio_cible": [
                               "BIO_009",
-                              "BIO_013"
+                              "BIO_013",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -25111,7 +24793,8 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_031",
                               "BIO_025",
-                              "BIO_019"
+                              "BIO_019",
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -26720,7 +26403,8 @@ const MASTER_DB = {
                     "suivi_periodique": "TA | Somnolence | Troubles controle impulsions",
                     "alerte_clinique": "START — Parkinson | Nausees frequentes (prendre au milieu du repas) | Somnolence | Troubles controle impulsions | Molecule specificiquement francaise",
                     "bio_cible": [
-                              "BIO_003"
+                              "BIO_003",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -26898,7 +26582,8 @@ const MASTER_DB = {
                     "alerte_clinique": "PIM ABSOLU — ne JAMAIS utiliser chez le sujet age | Metabolite norpethidine: neurotoxique (convulsions, agitation, hallucinations) | Demi-vie prolongee chez l'age | Remplacer par morphine, oxycodone ou fentanyl",
                     "bio_cible": [
                               "BIO_003",
-                              "BIO_004"
+                              "BIO_004",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -27019,7 +26704,9 @@ const MASTER_DB = {
                     "suivi_initial": "TA | ECG si FdR CV",
                     "suivi_periodique": "TA",
                     "alerte_clinique": "STOPP3-B14: CI si IC severe PAS < 90 ou derives nitres concomitants — risque de collapsus | Priapisme (rare) | Perte audition/vision (rare, urgence)",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -27052,7 +26739,9 @@ const MASTER_DB = {
                     "suivi_initial": "TA",
                     "suivi_periodique": "TA",
                     "alerte_clinique": "STOPP3-B14: memes CI que sildenafil | Demi-vie longue (36h): interactions prolongees | Douleurs dorsolombaires (frequentes debut)",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -27111,7 +26800,7 @@ const MASTER_DB = {
                     "poso_ren": "Gelules: eviter si DFG < 30 (excipient cyclodextrine)",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "Faible",
+                    "bhe": "0",
                     "albumine": "99.8%",
                     "qt_risque": "(CR) - Allongement QTc par inhibition CYP3A4 (accumulation substrats)",
                     "ddi_interact": "INHIBITEUR PUISSANT CYP3A4 + P-gp — interactions majeures avec AOD, statines, ICa, immunosuppresseurs, opiacees, BZD | AOD: STOPP3-C14 risque hemorragique | Simvastatine/Lovastatine CI | Domperidone CI (QTc)",
@@ -27201,7 +26890,7 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement renal",
                     "acb": 0,
                     "cia": 0,
-                    "bhe": "Faible",
+                    "bhe": "0",
                     "albumine": "99%",
                     "qt_risque": "(CR) - Allongement QTc",
                     "ddi_interact": "INHIBITEUR PUISSANT CYP3A4 — memes interactions que itraconazole | IPP, Anti-H2 (diminuent absorption — pH-dependante)",
@@ -27281,7 +26970,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_030",
-                              "BIO_005"
+                              "BIO_005",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -27307,7 +26997,9 @@ const MASTER_DB = {
                     "suivi_initial": "Recherche syndrome parkinsonien",
                     "suivi_periodique": "Syndrome parkinsonien (survenue progressive) | Prise de poids | Depression",
                     "alerte_clinique": "EU7-PIM — risque de parkinsonisme iatrogene (D2 blocker faible) | Depression | Prise de poids | Somnolence | Max 4-8 semaines",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -27332,7 +27024,9 @@ const MASTER_DB = {
                     "suivi_initial": "Recherche syndrome parkinsonien | Humeur",
                     "suivi_periodique": "Syndrome parkinsonien | Depression | Prise de poids",
                     "alerte_clinique": "EU7-PIM — risque parkinsonisme + depression (plus eleve que cinnarizine) | Prise de poids importante | CI si Parkinson ou depression | Max 2 mois",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -27443,7 +27137,8 @@ const MASTER_DB = {
                     "alerte_clinique": "FORTA-C — hepatotoxicite (surveillance transaminases obligatoire) | CI si transaminases > 3N | Peu de donnees > 75 ans | Pas d'effet anticholinergique ni serotoninergique | Pas de syndrome de sevrage | CI avec fluvoxamine/ciprofloxacine",
                     "bio_cible": [
                               "BIO_013",
-                              "BIO_014"
+                              "BIO_014",
+                              "BIO_002"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -27580,7 +27275,8 @@ const MASTER_DB = {
                               "BIO_018",
                               "BIO_013",
                               "BIO_014",
-                              "BIO_003"
+                              "BIO_003",
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -28039,7 +27735,8 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_004"
                     ,
-                              "BIO_031"
+                              "BIO_031",
+                              "BIO_002"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
