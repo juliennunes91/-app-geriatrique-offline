@@ -612,7 +612,7 @@ const MASTER_DB = {
         "PAT_032": {
             "ID_PATHO": "PAT_032",
             "CIM_10": "F32.1",
-            "NOM_STANDARD": "Dépression",
+            "NOM_STANDARD": "Dépression (sujet âgé / Late-Life Depression)",
             "CATEGORIE": "Psychiatrie",
             "SYNONYMES": "Épisode dépressif majeur, Dépression caractérisée, Trouble dépressif",
             "BIO_SURVEILLANCE": "BIO_019, BIO_022, BIO_021, BIO_023",
@@ -1940,7 +1940,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 1ère gén (phénothiazine) — ACB=3, BHE++ — PIM ABSOLU âgé (sédation, chutes, troubles cognitifs)",
                     "poso_hab": "5-40 mg/j (allergie/anxiolyse/sommeil)",
                     "poso_ger": "ÉVITER (PIM Beers/STOPP K1/FORTA-D/PRISCUS). Si impératif : 2,5-5 mg/j max",
-                    "poso_ren": "Prudence (élimination hépatique)",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence si IRC sévère (peu de données).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -2522,6 +2522,8 @@ const MASTER_DB = {
                               "BIO_026",
                               "BIO_027",
                               "BIO_031"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -3134,6 +3136,8 @@ const MASTER_DB = {
                               "BIO_026",
                               "BIO_027",
                               "BIO_031"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -3215,6 +3219,8 @@ const MASTER_DB = {
                               "BIO_025",
                               "BIO_026",
                               "BIO_027"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -3549,7 +3555,7 @@ const MASTER_DB = {
                     "classe": "Anticholinergique parasympatholytique alcaloïde belladone — ACB=3, BHE+ — collyre mydriatique + urgences (bradycardie, antidote organophosphorés)",
                     "poso_hab": "Collyre 0,5-1% : 1 gtt x1-2/j | IV bradycardie : 0,5-1 mg bolus | IM antidote : 1-2 mg",
                     "poso_ger": "Collyre : occlusion canal lacrymal (↓ absorption systémique). IV/IM : usage urgent uniquement. PIM Beers/STOPP D1/FORTA-D systémique chez âgé",
-                    "poso_ren": "N/A (collyre absorption systémique faible)",
+                    "poso_ren": "Collyre : pas d'ajustement DFG. IV/IM systémique : pas d'ajustement DFG (élimination hépatique majoritaire).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "+",
@@ -3848,7 +3854,7 @@ const MASTER_DB = {
                     "classe": "Antibiotique (diarylquinoleine - tuberculose MDR)",
                     "poso_hab": "400mg/j x2 sem puis 200mg 3x/sem x22 sem",
                     "poso_ger": "Meme dose (prudence)",
-                    "poso_ren": "Prudence si IRC severe",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique, peu de données IRC). Prudence DFG < 30.",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
@@ -3912,7 +3918,7 @@ const MASTER_DB = {
                     "classe": "Anticholinergique vegetal (alcaloide - atropine + scopolamine + hyoscine)",
                     "poso_hab": "Suppositoires 15mg | Extrait standardise",
                     "poso_ger": "EVITER chez sujet age (ACB=3)",
-                    "poso_ren": "Adapter si IRC severe",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Adapter si IRC sévère DFG < 30 : prudence.",
                     "acb": 2,
                     "cia": 0,
                     "bhe": "",
@@ -4183,7 +4189,7 @@ const MASTER_DB = {
                     "classe": "Antiparkinsonien anticholinergique",
                     "poso_hab": "2 u 4 mg/jour",
                     "poso_ger": "1 u 2 mg/jour (deconseille)",
-                    "poso_ren": "Prudence majeure",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique majoritaire). Prudence DFG < 30 (accumulation).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -4582,7 +4588,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 1ere generation (ACB=2)",
                     "poso_hab": "4mg/6h PO",
                     "poso_ger": "Eviter chez sujet age (ACB=2, Beers)",
-                    "poso_ren": "Prudence si IRC",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (effet ACB accru).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -5128,7 +5134,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 1ere generation (ACB=3)",
                     "poso_hab": "4mg/6h PO",
                     "poso_ger": "Eviter chez sujet age",
-                    "poso_ren": "Prudence si IRC",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (effet ACB accru).",
                     "acb": 3,
                     "cia": 0,
                     "bhe": "",
@@ -5370,7 +5376,7 @@ const MASTER_DB = {
                     "classe": "Antiémétique antagoniste NK1 — DÉVELOPPEMENT ABANDONNÉ (GSK 2009 — hépatotoxicité préoccupante), non disponible cliniquement",
                     "poso_hab": "Non commercialisé",
                     "poso_ger": "Non commercialisé — utiliser aprépitant ou fosaprépitant à la place",
-                    "poso_ren": "N/A",
+                    "poso_ren": "Pas d'ajustement DFG (molécule non commercialisée — développement arrêté GSK 2009).",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
@@ -6209,6 +6215,8 @@ const MASTER_DB = {
                               "BIO_025",
                               "BIO_027",
                               "BIO_031"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -6542,6 +6550,8 @@ const MASTER_DB = {
                               "BIO_009",
                               "BIO_027",
                               "BIO_008"
+                    ,
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -6595,7 +6605,7 @@ const MASTER_DB = {
                     "classe": "Inhibiteur phosphodiesterase III (anti-AOMI)",
                     "poso_hab": "100 mg x2/j",
                     "poso_ger": "50-100 mg x2/j",
-                    "poso_ren": "Reduction si IRC moderee",
+                    "poso_ren": "DFG > 25 : pas d'ajustement. DFG < 25 : CI (peu de données).",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
@@ -6625,7 +6635,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H2",
                     "poso_hab": "800 mg-1g/j",
                     "poso_ger": "400-600 mg/j",
-                    "poso_ren": "Reduction si IRC",
+                    "poso_ren": "DFG 30-50 : 400 mg /12h | DFG < 30 : 200 mg /12h | Hémodialyse : 200 mg /12h post-HD.",
                     "acb": 1,
                     "cia": 1,
                     "bhe": "0.0",
@@ -6876,7 +6886,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 1ere generation",
                     "poso_hab": "1mg/12h PO",
                     "poso_ger": "Eviter chez sujet age (ACB=2)",
-                    "poso_ren": "Prudence si IRC",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (effet ACB accru).",
                     "acb": 3,
                     "cia": 0,
                     "bhe": "",
@@ -7054,7 +7064,7 @@ const MASTER_DB = {
                     "classe": "Antidepresseur tricyclique (amine tertiaire, TOC++)",
                     "poso_hab": "75 u 150 mg/jour",
                     "poso_ger": "10 u 50 mg/jour (u eviter si possible)",
-                    "poso_ren": "Prudence (augmentation demi-vie)",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique CYP2D6/CYP3A4). Prudence DFG < 30 (↑ demi-vie).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -7682,7 +7692,7 @@ const MASTER_DB = {
                     "classe": "Antipsychotique FGA (phenothiazine)",
                     "poso_hab": "25 u 300 mg/jour (selon indication)",
                     "poso_ger": "12.5 u 25 mg/jour (u manier avec precaution)",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -7711,6 +7721,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031",
                               "BIO_025"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -7854,6 +7866,8 @@ const MASTER_DB = {
                     "bio_cible": [
                               "BIO_013",
                               "BIO_014"
+                    ,
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -8436,7 +8450,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 (1ere gen.)",
                     "poso_hab": "2 mg 3 u 4x/jour",
                     "poso_ger": "2 mg 1 u 2x/jour (deconseille)",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (effet ACB accru).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -8868,7 +8882,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 1ere generation (diphenhydramine + chlothoephylline - antiemetique)",
                     "poso_hab": "50mg/6-8h PO ou IV",
                     "poso_ger": "A eviter chez sujet age fragile",
-                    "poso_ren": "Prudence si IRC",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (effet ACB accru).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -8902,7 +8916,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 1ere generation (forte ACB)",
                     "poso_hab": "25-50mg/4-6h PO ou IM",
                     "poso_ger": "A eviter (ACB=3 - INAPPROPRIE sujet age)",
-                    "poso_ren": "Prudence si IRC",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (effet ACB accru, ½-vie ↑).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -9376,7 +9390,7 @@ const MASTER_DB = {
                     "classe": "Antidepresseur tricyclique",
                     "poso_hab": "50 u 150 mg/jour",
                     "poso_ger": "10 u 50 mg/jour (u eviter si possible)",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30 (↑ demi-vie).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -9483,7 +9497,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 hypnotique",
                     "poso_hab": "15 mg/jour (le soir)",
                     "poso_ger": "7.5 mg/jour (le soir - deconseille)",
-                    "poso_ren": "Prudence (risque de retention et sedation accrue)",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (rétention urinaire/sédation accrues).",
                     "acb": 3,
                     "cia": 2,
                     "bhe": "1.0",
@@ -9962,7 +9976,7 @@ const MASTER_DB = {
                     "classe": "ARV INTI",
                     "poso_hab": "200 mg/j",
                     "poso_ger": "200 mg/j",
-                    "poso_ren": "Reduction si eGFR <30",
+                    "poso_ren": "DFG ≥ 50 : 200 mg/j | DFG 30-49 : 200 mg /48h | DFG 15-29 : 200 mg /72h | DFG < 15 ou HD : 200 mg /96h.",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
@@ -10347,6 +10361,8 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_013",
                               "BIO_014"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "1 g/8 à 12h",
                     "atb_moderee": "500 à 750 mg/8 à 12h",
@@ -10640,7 +10656,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H2",
                     "poso_hab": "20-40 mg/j",
                     "poso_ger": "20 mg/j",
-                    "poso_ren": "Si eGFR <30: 20mg/j",
+                    "poso_ren": "DFG ≥ 50 : 20-40 mg/j | DFG < 30 : 20 mg/j ou 40 mg /48h | Ajuster dose selon DFG.",
                     "acb": 0,
                     "cia": 1,
                     "bhe": "1.0",
@@ -10905,6 +10921,8 @@ const MASTER_DB = {
                               "BIO_003",
                               "BIO_013",
                               "BIO_014"
+                    ,
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -11164,7 +11182,7 @@ const MASTER_DB = {
                     "classe": "Antipsychotique FGA (thioxanthène — schizophrénie + dépression basses doses) — QTc Risk_PR, PIM ABSOLU démence",
                     "poso_hab": "PO : 1-3 mg/j (dépression) à 3-18 mg/j (schizophrénie) | LP IM : 20-100 mg /2-4 sem",
                     "poso_ger": "0,5-1 mg/j ; PIM ABSOLU démence (FDA Black Box 2005)",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 1,
                     "cia": 2,
                     "bhe": "+",
@@ -11191,6 +11209,8 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_025",
                               "BIO_027"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -11205,7 +11225,7 @@ const MASTER_DB = {
                     "classe": "Antipsychotique FGA (phénothiazine pipérazine — schizophrénie, formes LP IM /3-4 sem) — QTc Risk_KR, PIM ABSOLU démence",
                     "poso_hab": "PO : 2-10 mg/j | LP IM : 12,5-100 mg /3-4 sem",
                     "poso_ger": "PO 0,5-2 mg/j ; FDA Black Box 2005 démence — PIM ABSOLU âgé",
-                    "poso_ren": "Pas d'ajustement majeur",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -11232,6 +11252,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031",
                               "BIO_025"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -11915,6 +11937,8 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_002",
                               "BIO_025"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -12323,7 +12347,7 @@ const MASTER_DB = {
                     "classe": "Antidepresseur tricyclique (amine tertiaire)",
                     "poso_hab": "75 u 150 mg/jour",
                     "poso_ger": "10 u 50 mg/jour (u eviter si possible)",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique CYP2D6/CYP3A4). Prudence DFG < 30.",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -13613,6 +13637,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_031"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -13654,6 +13680,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_031"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -13914,6 +13942,8 @@ const MASTER_DB = {
                               "BIO_005",
                               "BIO_009",
                               "BIO_029"
+                    ,
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -14204,6 +14234,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031",
                               "BIO_025"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -14803,7 +14835,7 @@ const MASTER_DB = {
                     "classe": "Myorelaxant (derive guaifenesine)",
                     "poso_hab": "1.5 g 3x/jour",
                     "poso_ger": "E eviter ou reduire de moitie",
-                    "poso_ren": "Prudence si insuffisance renale severe",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (peu de données, ↑ sédation).",
                     "acb": 1,
                     "cia": 1,
                     "bhe": "1.0",
@@ -15260,7 +15292,7 @@ const MASTER_DB = {
                     "classe": "Antibiotique (tetracycline semi-synthetique)",
                     "poso_hab": "100mg/12h PO",
                     "poso_ger": "100mg/24h",
-                    "poso_ren": "Prudence si IRC severe",
+                    "poso_ren": "Pas d'ajustement DFG (élimination biliaire prédominante). Prudence DFG < 30.",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "",
@@ -16408,6 +16440,8 @@ const MASTER_DB = {
                               "BIO_026",
                               "BIO_027",
                               "BIO_031"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -16823,6 +16857,8 @@ const MASTER_DB = {
                               "BIO_027",
                               "BIO_031",
                               "BIO_003"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -17022,6 +17058,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_031"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -17249,6 +17287,8 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_025",
                               "BIO_001"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -17323,6 +17363,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031",
                               "BIO_025"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -17441,7 +17483,7 @@ const MASTER_DB = {
                     "classe": "Antipsychotique FGA (phénothiazine pipéridine LP IM) — schizophrénie maintenance — QTc Risk_PR, PIM ABSOLU démence",
                     "poso_hab": "LP IM : 25-200 mg /4 sem",
                     "poso_ger": "5 mg/j PO ou LP IM dose minimale ; PIM ABSOLU démence (FDA Black Box 2005)",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 3,
                     "cia": 2,
                     "bhe": "1.0",
@@ -17468,6 +17510,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031",
                               "BIO_025"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -17997,6 +18041,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_009",
                               "BIO_012"
+                    ,
+                              "BIO_031"
                     ],
                     "atb_legere": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
                     "atb_moderee": "1 g/8 à 12h (posologie maximale = 4 g/24h)",
@@ -18036,6 +18082,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_031"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -18050,7 +18098,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 1ère gén (phénothiazine) — ACB=3, BHE++, QTc — PIM ABSOLU Beers/STOPP/FORTA-D",
                     "poso_hab": "25-50 mg/j (allergie, prémédication, antiémétique)",
                     "poso_ger": "ÉVITER (PIM Beers 2023 / STOPP K1 / FORTA-D / PRISCUS). Si indication impérative : 10-25 mg/j max, durée minimale",
-                    "poso_ren": "Prudence (élimination hépatique)",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30 (effet ACB accru).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -18440,6 +18488,8 @@ const MASTER_DB = {
                               "BIO_027",
                               "BIO_031",
                               "BIO_019"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -18750,7 +18800,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H2 (RETIRE DU MARCHE EN 2020 - contamination NDMA)",
                     "poso_hab": "150mg/12h PO ou 300mg/j HS | RETIRE DU MARCHE - non disponible en France depuis 2020",
                     "poso_ger": "RETIRE DU MARCHE en France et dans UE (2020)",
-                    "poso_ren": "RETIRE DU MARCHE - ne pas prescrire",
+                    "poso_ren": "Sans objet — médicament retiré du marché ANSM 2020 (contamination NDMA). Aucun ajustement applicable.",
                     "acb": 1,
                     "cia": 1,
                     "bhe": "0.0",
@@ -19051,6 +19101,8 @@ const MASTER_DB = {
                               "BIO_027",
                               "BIO_031",
                               "BIO_003"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -19451,7 +19503,7 @@ const MASTER_DB = {
                     "classe": "Anticholinergique alcaloïde belladone — ACB=3, BHE+++ — antiémétique + antisécrétoire soins palliatifs",
                     "poso_hab": "Patch : 1 patch /72h | SC soins palliatifs : 0,4-0,6 mg /6h (râles agoniques)",
                     "poso_ger": "ÉVITER ABSOLUMENT chez âgé (PIM Beers/STOPP D1/FORTA-D — BHE+++ confusion). Patch acceptable soins palliatifs",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Patch : pas d'ajustement DFG. Prudence DFG < 30 (effet ACB accru).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -19613,6 +19665,8 @@ const MASTER_DB = {
                               "BIO_002",
                               "BIO_013",
                               "BIO_014"
+                    ,
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -20307,6 +20361,8 @@ const MASTER_DB = {
                               "BIO_004",
                               "BIO_031",
                               "BIO_025"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -20388,6 +20444,8 @@ const MASTER_DB = {
                               "BIO_025",
                               "BIO_026",
                               "BIO_009"
+                    ,
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -20831,7 +20889,7 @@ const MASTER_DB = {
                     "classe": "Myorelaxant (chlorhydrate)",
                     "poso_hab": "8 mg 2x/jour (max 7 jours)",
                     "poso_ger": "E eviter si possible",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "DFG > 30 : pas d'ajustement. DFG < 30 : ↓ dose 50%.",
                     "acb": 0,
                     "cia": 1,
                     "bhe": "",
@@ -20937,6 +20995,8 @@ const MASTER_DB = {
                               "BIO_011",
                               "BIO_031",
                               "BIO_003"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -21093,7 +21153,7 @@ const MASTER_DB = {
                     "classe": "Anticholinergique antispasmodique AMMONIUM QUATERNAIRE (digestif/biliaire/urinaire) — non BHE (avantage cognitif vs autres ACB)",
                     "poso_hab": "100-300 mg/j PO ou IV/IM en aigu (colique néphrétique/biliaire)",
                     "poso_ger": "50-100 mg/j ; ammonium quaternaire = pas de passage BHE (effet cognitif moindre) MAIS effets périphériques ACB persistent (constipation, rétention, glaucome)",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG (ammonium quaternaire). Prudence DFG < 30.",
                     "acb": 2,
                     "cia": 3,
                     "bhe": "0 (quaternaire — non BHE)",
@@ -21906,6 +21966,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_031"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -21920,7 +21982,7 @@ const MASTER_DB = {
                     "classe": "Antiparkinsonien anticholinergique — ACB=3, BHE+++ — PIM ABSOLU âgé (Beers/STOPP D1/FORTA-D/PRISCUS)",
                     "poso_hab": "2-10 mg/j (Parkinson, dystonie iatrogène) | TROUBLES COMPORTEMENTAUX / Détournement (potentiel d'abus reconnu)",
                     "poso_ger": "À ÉVITER ABSOLUMENT (ACB=3 + BHE+++). Pour Parkinson : préférer dopa-agonistes/lévodopa. Pour dystonie iatrogène : tropatépine IM.",
-                    "poso_ren": "Prudence majeure (accumulation)",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30 (accumulation, effet ACB accru).",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -22017,7 +22079,7 @@ const MASTER_DB = {
                     "classe": "Antidepresseur tricyclique",
                     "poso_hab": "50 u 150 mg/jour",
                     "poso_ger": "10 u 50 mg/jour (u eviter si possible)",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique CYP2D6). Prudence DFG < 30.",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -22051,7 +22113,7 @@ const MASTER_DB = {
                     "classe": "Antihistaminique H1 sedatif",
                     "poso_hab": "2.5 mg x3/j",
                     "poso_ger": "A EVITER en geriatrie — PIM (Beers 2023) sedation + ACB",
-                    "poso_ren": "Prudence si IRC severe (peu de donnees)",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (peu de données).",
                     "acb": 2,
                     "cia": 1,
                     "bhe": "1 (passage BHE — sedation)",
@@ -22083,7 +22145,7 @@ const MASTER_DB = {
                     "classe": "Antiparkinsonien anticholinergique (alternative trihexyphénidyle, dystonie aiguë iatrogène IM) — ACB élevé, PIM âgé",
                     "poso_hab": "10 mg/j PO | Dystonie aiguë : 5-10 mg IM (effet rapide, durée 3-6h)",
                     "poso_ger": "À ÉVITER chronique (PIM Beers/STOPP D1/FORTA-D — ACB) ; usage IM ponctuel acceptable pour dystonie aiguë iatrogène (effet < benztropine, durée plus courte)",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1.0",
@@ -22225,7 +22287,7 @@ const MASTER_DB = {
                     "classe": "Antiepileptique / Stabilisateur humeur (prodrogue du valproate)",
                     "poso_hab": "600-1200mg/j en 2-3 prises PO",
                     "poso_ger": "Titration prudente (memes precautions valproate)",
-                    "poso_ren": "Adapter si IRC severe (valproate libre augmente si IRC)",
+                    "poso_ren": "Pas d'ajustement DFG (prodrogue valproate — élimination hépatique). Adapter si IRC sévère DFG < 30 (↑ valproate libre par ↓ albumine).",
                     "acb": 0,
                     "cia": 1,
                     "bhe": "1.0",
@@ -22904,7 +22966,7 @@ const MASTER_DB = {
                     "classe": "Antipsychotique FGA (thioxanthene)",
                     "poso_hab": "20 u 40 mg/jour",
                     "poso_ger": "2 u 6 mg/jour",
-                    "poso_ren": "Prudence",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 1,
                     "cia": 1,
                     "bhe": "1.0",
@@ -22931,6 +22993,8 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_025",
                               "BIO_027"
+                    ,
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -24105,6 +24169,8 @@ const MASTER_DB = {
                               "BIO_013",
                               "BIO_014",
                               "BIO_003"
+                    ,
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -24121,7 +24187,7 @@ const MASTER_DB = {
                     "classe": "Antidépresseur tricyclique",
                     "poso_hab": "75-150 mg/j",
                     "poso_ger": "25-75 mg/j (PIM absolu en gériatrie — Beers, PRISCUS)",
-                    "poso_ren": "Prudence si IRC sévère.",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 3,
                     "cia": 3,
                     "bhe": "1",
@@ -26589,7 +26655,7 @@ const MASTER_DB = {
                     "classe": "Antiepileptique (bloqueur NaV - PIM ABSOLU)",
                     "poso_hab": "200-400 mg/j (cinetique non lineaire !)",
                     "poso_ger": "EVITER (Beers, PRISCUS, FORTA-D). Si inevitable: 100 mg, doser phenytoinemie",
-                    "poso_ren": "Ajuster selon phenytoinemie libre si IRC (liaison albumine diminuee)",
+                    "poso_ren": "Pas d'ajustement DFG strict (élimination hépatique CYP2C9/2C19). MAIS DFG < 30 : ↑ phénytoïne LIBRE (↓ albumine + déplacement) — DOSER PHÉNYTOÏNÉMIE LIBRE.",
                     "acb": 1,
                     "cia": 0,
                     "bhe": "1",
@@ -26635,7 +26701,7 @@ const MASTER_DB = {
                     "classe": "Agoniste dopaminergique non-ergot (D2/D3)",
                     "poso_hab": "150-250 mg/j en 3 prises (apres repas)",
                     "poso_ger": "Debuter 50 mg/j, titrer par 50 mg/semaine",
-                    "poso_ren": "Prudence si IRC severe",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "1",
@@ -26797,7 +26863,7 @@ const MASTER_DB = {
                     "classe": "Analgesique opioide phenylpiperidine (PIM ABSOLU)",
                     "poso_hab": "50-100 mg IM/SC toutes les 3-4h",
                     "poso_ger": "CONTRE-INDIQUE en geriatrie (Beers, PRISCUS, FORTA-D)",
-                    "poso_ren": "CI si IRC (accumulation norpethidine neurotoxique)",
+                    "poso_ren": "CI ABSOLUE DFG < 30 (accumulation norpéthidine neurotoxique — convulsions). DFG 30-60 : ↓ dose 50% + éviter usage prolongé.",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "1",
@@ -26849,7 +26915,7 @@ const MASTER_DB = {
                     "classe": "Anxiolytique carbamate (PIM ABSOLU - retire)",
                     "poso_hab": "400-1600 mg/j (usage historique)",
                     "poso_ger": "CONTRE-INDIQUE — retire du marche francais",
-                    "poso_ren": "Sans objet (retire)",
+                    "poso_ren": "Sans objet — médicament retiré du marché ANSM 2012 (pas de prescription). Aucun ajustement applicable.",
                     "acb": 1,
                     "cia": 1,
                     "bhe": "1",
@@ -27280,7 +27346,7 @@ const MASTER_DB = {
                     "classe": "Analogue histamine H1 agoniste / H3 antagoniste (antivertigineux)",
                     "poso_hab": "24-48 mg/j en 2-3 prises",
                     "poso_ger": "24 mg/j. REMEDIES: efficacite limitee au long cours",
-                    "poso_ren": "Prudence si IRC",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (peu de données).",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "1",
@@ -27305,7 +27371,7 @@ const MASTER_DB = {
                     "classe": "Vasodilatateur peripherique (antagoniste 5-HT2)",
                     "poso_hab": "300-600 mg/j en 3 prises",
                     "poso_ger": "EVITER (REMEDIES, EU7-PIM). Efficacite non prouvee en AOMI",
-                    "poso_ren": "Prudence si IRC",
+                    "poso_ren": "Pas d'ajustement DFG. Prudence DFG < 30 (peu de données).",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "0",
@@ -27333,7 +27399,7 @@ const MASTER_DB = {
                     "classe": "Vasodilatateur cerebral (ergot de seigle derive)",
                     "poso_hab": "30 mg/j en 3 prises ou 30 mg LP /j",
                     "poso_ger": "EVITER (REMEDIES). Efficacite non prouvee",
-                    "poso_ren": "Prudence si IRC",
+                    "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "1",
@@ -27434,7 +27500,7 @@ const MASTER_DB = {
                     "classe": "Alpha-1 agoniste (vasopresseur oral)",
                     "poso_hab": "2.5-10 mg x2-3/j (pas apres 18h — HTA decubitus nocturne)",
                     "poso_ger": "Debuter 2.5 mg x2/j. Derniere prise 4h avant le coucher",
-                    "poso_ren": "Prudence si IRC (accumulation metabolite actif)",
+                    "poso_ren": "DFG 30-60 : initiation 2,5 mg, titration prudente. DFG < 30 : prudence (accumulation métabolite actif). Surveillance HTA.",
                     "acb": 0,
                     "cia": 0,
                     "bhe": "0",
@@ -27914,7 +27980,9 @@ const MASTER_DB = {
                     "suivi_initial": "ECG (QTc) | Bilan hépatique | DFG",
                     "suivi_periodique": "QTc si ajout de médicament QT-prolongateur | Surveillance chutes, œdèmes, confusion",
                     "alerte_clinique": "Indication : psychose liée à la maladie de Parkinson — réservée à la psychose non contrôlée par ajustement du traitement antiparkinsonien | Pas d'AMM démence à corps de Lewy (hors AMM) | Mortalité ↑ chez patients déments : FDA black box partagée avec autres antipsychotiques",
-                    "bio_cible": [],
+                    "bio_cible": [
+                              "BIO_031"
+                    ],
                     "atb_legere": "",
                     "atb_moderee": "",
                     "atb_severe": "",
@@ -27970,6 +28038,8 @@ const MASTER_DB = {
                     "alerte_clinique": "Bénéfice cognitif démontré chez sujet âgé (FOCUS, Katona 2012) — intéressant en dépression avec plainte cognitive | Nausées fréquentes en début de traitement (20-30%) | SIADH/hyponatrémie possible | Pas d'effet anticholinergique",
                     "bio_cible": [
                               "BIO_004"
+                    ,
+                              "BIO_031"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
