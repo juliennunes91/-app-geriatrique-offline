@@ -22969,34 +22969,24 @@ const MASTER_DB = {
                     "bhe": "0",
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
-                    "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact": "PIM Beers 2023 / STOPP H2 / FORTA-D — À ÉVITER chez âgé. TRIPLE WHAMMY rénal (IEC/ARA2 + diurétique + AINS = IRA), Anticoagulants (AVK/AOD — saignement digestif x2-3), Antiagrégants plaquettaires (aspirine/clopidogrel/prasugrel/ticagrélor — saignement digestif x3-5), Corticoïdes (ulcère/hémorragie x4-12 — Piper 1991), ISRS/IRSN (saignement digestif x2-3 — Dalton 2003), IEC/ARA2 (↓ effet antiHTA + IRA), Diurétiques (↓ efficacité + IRA), Lithium (↑ x60% lithémie — toxicité), Méthotrexate (↑ exposition + néphrotoxicité), Ciclosporine/Tacrolimus (néphrotoxicité), Bisphosphonates (ulcère cumulé), Sulfamides hypoglycémiants (déplacement albumine — hypoglycémie), Quinolones (convulsions — théorique), Pemetrexed (toxicité hématologique), DIGOXINE (toxicité), Cardiopathie/IC (CI relative ESC 2021)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY : IEC/ARA2 + diurétique + AINS = ↑ x3-5 IRA hospitalisée (Lapi BMJ 2013, Dreischulte KI 2015). PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE +/- IEC le temps de l'AINS (sick day rules).", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers — éviter. Si association indispensable : IPP systématique + INR rapproché + durée minimale. AINS topique (kétoprofène gel) acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans les 2-4h avant aspirine (compétition COX-1 plaquettaire — surtout ibuprofène). Espacer ou préférer paracétamol.", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper Ann Intern Med 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène (cortico seul x2, AINS seul x4, association x4-12). PIM STOPP D9. IPP systématique + dose minimale + durée minimale. Préférer paracétamol pour antalgie.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton Arch Intern Med 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ recaptage sérotonine plaquettaire → ↑ saignement digestif x2-3 cumulé AINS (Dalton 2003). Préférer mirtazapine ou agomélatine si dépression + douleur. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie (toxicité)", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium → ↑ lithémie 60% → toxicité (tremblements, confusion, convulsions, arythmies). Surveillance lithémie + créat. Éviter ou doser à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "↑ exposition MTX (compétition tubulaire). Doses oncologiques : CI absolue. Doses rhumatologiques (≤ 25 mg/sem) : prudence + surveillance NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ additive", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. ↓ DFG. Préférer paracétamol. Surveillance créatinine si association inévitable.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA (hors triple whammy)", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ effet antiHTA. ↑ IRA. ↑ K+. Surveillance TA + K+ + créat.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA + ↑ K+ si épargneurs", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA (anse). ↑ K+ (épargneurs).", "severite": "warning" },
+                              { "classe": "Bisphosphonates (alendronate/risédronate) — ULCÈRE œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage/gastro. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie (déplacement albumine)", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition sulfamide → hypoglycémie. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique, signal faible)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène théorique (cumul GABA inhibition). Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "↑ toxicité pemetrexed (compétition rénale). Suspendre AINS courts ≥ 2 j avant, ≥ 2 j après pemetrexed. AINS demi-vie longue (piroxicam) : suspendre ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie (toxicité)", "dcis": ["digoxine"], "commentaire": "AINS ↓ clairance digoxine. Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "AINS aggravent IC (rétention hydrosodée, ↑ HTA, IRA) — RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). CI relative. PIM STOPP H1. Préférer paracétamol.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23026,34 +23016,24 @@ const MASTER_DB = {
                     "bhe": "0",
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
-                    "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact": "PIM Beers 2023 / STOPP H2 / FORTA-D — À ÉVITER chez âgé. TRIPLE WHAMMY rénal (IEC/ARA2 + diurétique + AINS = IRA), Anticoagulants (AVK/AOD — saignement digestif x2-3), Antiagrégants plaquettaires (aspirine/clopidogrel/prasugrel/ticagrélor — saignement digestif x3-5), Corticoïdes (ulcère/hémorragie x4-12 — Piper 1991), ISRS/IRSN (saignement digestif x2-3 — Dalton 2003), IEC/ARA2 (↓ effet antiHTA + IRA), Diurétiques (↓ efficacité + IRA), Lithium (↑ x60% lithémie — toxicité), Méthotrexate (↑ exposition + néphrotoxicité), Ciclosporine/Tacrolimus (néphrotoxicité), Bisphosphonates (ulcère cumulé), Sulfamides hypoglycémiants (déplacement albumine — hypoglycémie), Quinolones (convulsions — théorique), Pemetrexed (toxicité hématologique), DIGOXINE (toxicité), Cardiopathie/IC (CI relative ESC 2021)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY : IEC/ARA2 + diurétique + AINS = ↑ x3-5 IRA hospitalisée (Lapi BMJ 2013, Dreischulte KI 2015). PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE +/- IEC le temps de l'AINS (sick day rules).", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers — éviter. Si association indispensable : IPP systématique + INR rapproché + durée minimale. AINS topique (kétoprofène gel) acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans les 2-4h avant aspirine (compétition COX-1 plaquettaire — surtout ibuprofène). Espacer ou préférer paracétamol.", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper Ann Intern Med 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène (cortico seul x2, AINS seul x4, association x4-12). PIM STOPP D9. IPP systématique + dose minimale + durée minimale. Préférer paracétamol pour antalgie.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton Arch Intern Med 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ recaptage sérotonine plaquettaire → ↑ saignement digestif x2-3 cumulé AINS (Dalton 2003). Préférer mirtazapine ou agomélatine si dépression + douleur. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie (toxicité)", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium → ↑ lithémie 60% → toxicité (tremblements, confusion, convulsions, arythmies). Surveillance lithémie + créat. Éviter ou doser à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "↑ exposition MTX (compétition tubulaire). Doses oncologiques : CI absolue. Doses rhumatologiques (≤ 25 mg/sem) : prudence + surveillance NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ additive", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. ↓ DFG. Préférer paracétamol. Surveillance créatinine si association inévitable.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA (hors triple whammy)", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ effet antiHTA. ↑ IRA. ↑ K+. Surveillance TA + K+ + créat.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA + ↑ K+ si épargneurs", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA (anse). ↑ K+ (épargneurs).", "severite": "warning" },
+                              { "classe": "Bisphosphonates (alendronate/risédronate) — ULCÈRE œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage/gastro. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie (déplacement albumine)", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition sulfamide → hypoglycémie. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique, signal faible)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène théorique (cumul GABA inhibition). Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "↑ toxicité pemetrexed (compétition rénale). Suspendre AINS courts ≥ 2 j avant, ≥ 2 j après pemetrexed. AINS demi-vie longue (piroxicam) : suspendre ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie (toxicité)", "dcis": ["digoxine"], "commentaire": "AINS ↓ clairance digoxine. Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "AINS aggravent IC (rétention hydrosodée, ↑ HTA, IRA) — RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). CI relative. PIM STOPP H1. Préférer paracétamol.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23085,32 +23065,22 @@ const MASTER_DB = {
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Demi-vie longue. Corticoïdes, ISRS (Saignement).",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY (Lapi BMJ 2013, Dreischulte KI 2015) ↑ x3-5 IRA. PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE/IEC le temps de l'AINS.", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers. AINS topique acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans 2-4h avant (compétition COX-1 — surtout ibuprofène).", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène x4-12. PIM STOPP D9. IPP systématique + durée minimale.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ sérotonine plaquettaire → ↑ saignement digestif x2-3. Préférer mirtazapine/agomélatine. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium. Toxicité. Surveillance lithémie + créat à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "Doses oncologiques : CI. Doses rhumato (≤ 25 mg/sem) : prudence + NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. Préférer paracétamol.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ antiHTA, ↑ IRA, ↑ K+. Surveillance.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA.", "severite": "warning" },
+                              { "classe": "Bisphosphonates oraux — ulcère œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène. Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "Suspendre AINS courts ≥ 2 j avant/après ; piroxicam ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie", "dcis": ["digoxine"], "commentaire": "Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). PIM STOPP H1.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23142,32 +23112,22 @@ const MASTER_DB = {
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Risque Cardiovasculaire majoré par rapport aux autres AINS. Corticoïdes, ISRS.",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY (Lapi BMJ 2013, Dreischulte KI 2015) ↑ x3-5 IRA. PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE/IEC le temps de l'AINS.", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers. AINS topique acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans 2-4h avant (compétition COX-1 — surtout ibuprofène).", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène x4-12. PIM STOPP D9. IPP systématique + durée minimale.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ sérotonine plaquettaire → ↑ saignement digestif x2-3. Préférer mirtazapine/agomélatine. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium. Toxicité. Surveillance lithémie + créat à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "Doses oncologiques : CI. Doses rhumato (≤ 25 mg/sem) : prudence + NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. Préférer paracétamol.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ antiHTA, ↑ IRA, ↑ K+. Surveillance.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA.", "severite": "warning" },
+                              { "classe": "Bisphosphonates oraux — ulcère œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène. Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "Suspendre AINS courts ≥ 2 j avant/après ; piroxicam ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie", "dcis": ["digoxine"], "commentaire": "Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). PIM STOPP H1.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23197,34 +23157,17 @@ const MASTER_DB = {
                     "bhe": "0",
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
-                    "ddi_interact": "Corticoïdes, ISRS. CI si HTA non contrôlée.",
+                    "ddi_interact": "COXIB (sélectif COX-2) — RISQUE CV majoré (HTA, IDM, AVC — APPROVe 2004 rofécoxib retrait). Mêmes interactions AINS classiques. CI absolue HTA non contrôlée, ATCD coronaropathie/AVC/AOMI sévère.",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "danger"
-                              }
+                              { "classe": "ATCD CARDIOVASCULAIRE — CI ABSOLUE coronaropathie/AVC/AOMI sévère/HTA non contrôlée", "dcis": ["antecedent coronaropathie", "antecedent avc", "aomi severe", "ic systolique", "hta non controlee"], "commentaire": "Coxib (COX-2 sélectif) ↑ risque CV — APPROVe 2004 retrait rofécoxib. CI ABSOLUE coronaropathie/AVC. Étoricoxib particulièrement à éviter en HTA (effet TA marqué). PIM STOPP H1/Beers.", "severite": "danger" },
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS)", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone"], "commentaire": "↑ x3-5 IRA (Lapi BMJ 2013).", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement (effet GI réduit vs AINS non sélectifs mais possible)", "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "heparine"], "commentaire": "Saignement digestif réduit vs AINS classiques (sélectif COX-2 préserve COX-1 plaquettaire). MAIS saignement possible. INR si AVK.", "severite": "danger" },
+                              { "classe": "Corticoïdes — ULCÈRE (cumul AINS+cortico)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone", "hydrocortisone", "betamethasone"], "commentaire": "Cumul ulcérogène (effet partiellement préservé par sélectivité COX-2). PIM STOPP D9.", "severite": "warning" },
+                              { "classe": "ISRS/IRSN — saignement", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine"], "commentaire": "Risque saignement digestif (effet COX-2 limite mais ISRS effet plaquettaire propre).", "severite": "warning" },
+                              { "classe": "Lithium — ↑ lithémie", "dcis": ["lithium"], "commentaire": "↑ lithémie. Surveillance.", "severite": "warning" },
+                              { "classe": "Méthotrexate — ↑ exposition", "dcis": ["methotrexate"], "commentaire": "↑ exposition MTX.", "severite": "warning" },
+                              { "classe": "Ciclosporine/Tacrolimus — néphrotoxicité", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité.", "severite": "danger" },
+                              { "classe": "Aspirine — perte cardio-protection? (moins documenté que ibuprofène)", "dcis": ["aspirine"], "commentaire": "Signal moindre que ibuprofène (sélectivité COX-2). Néanmoins prudence chez patient sous aspirine cardio.", "severite": "warning" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23254,34 +23197,24 @@ const MASTER_DB = {
                     "bhe": "0",
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
-                    "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact": "PIM Beers 2023 / STOPP H2 / FORTA-D — À ÉVITER chez âgé. TRIPLE WHAMMY rénal (IEC/ARA2 + diurétique + AINS = IRA), Anticoagulants (AVK/AOD — saignement digestif x2-3), Antiagrégants plaquettaires (aspirine/clopidogrel/prasugrel/ticagrélor — saignement digestif x3-5), Corticoïdes (ulcère/hémorragie x4-12 — Piper 1991), ISRS/IRSN (saignement digestif x2-3 — Dalton 2003), IEC/ARA2 (↓ effet antiHTA + IRA), Diurétiques (↓ efficacité + IRA), Lithium (↑ x60% lithémie — toxicité), Méthotrexate (↑ exposition + néphrotoxicité), Ciclosporine/Tacrolimus (néphrotoxicité), Bisphosphonates (ulcère cumulé), Sulfamides hypoglycémiants (déplacement albumine — hypoglycémie), Quinolones (convulsions — théorique), Pemetrexed (toxicité hématologique), DIGOXINE (toxicité), Cardiopathie/IC (CI relative ESC 2021)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY : IEC/ARA2 + diurétique + AINS = ↑ x3-5 IRA hospitalisée (Lapi BMJ 2013, Dreischulte KI 2015). PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE +/- IEC le temps de l'AINS (sick day rules).", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers — éviter. Si association indispensable : IPP systématique + INR rapproché + durée minimale. AINS topique (kétoprofène gel) acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans les 2-4h avant aspirine (compétition COX-1 plaquettaire — surtout ibuprofène). Espacer ou préférer paracétamol.", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper Ann Intern Med 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène (cortico seul x2, AINS seul x4, association x4-12). PIM STOPP D9. IPP systématique + dose minimale + durée minimale. Préférer paracétamol pour antalgie.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton Arch Intern Med 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ recaptage sérotonine plaquettaire → ↑ saignement digestif x2-3 cumulé AINS (Dalton 2003). Préférer mirtazapine ou agomélatine si dépression + douleur. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie (toxicité)", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium → ↑ lithémie 60% → toxicité (tremblements, confusion, convulsions, arythmies). Surveillance lithémie + créat. Éviter ou doser à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "↑ exposition MTX (compétition tubulaire). Doses oncologiques : CI absolue. Doses rhumatologiques (≤ 25 mg/sem) : prudence + surveillance NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ additive", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. ↓ DFG. Préférer paracétamol. Surveillance créatinine si association inévitable.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA (hors triple whammy)", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ effet antiHTA. ↑ IRA. ↑ K+. Surveillance TA + K+ + créat.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA + ↑ K+ si épargneurs", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA (anse). ↑ K+ (épargneurs).", "severite": "warning" },
+                              { "classe": "Bisphosphonates (alendronate/risédronate) — ULCÈRE œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage/gastro. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie (déplacement albumine)", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition sulfamide → hypoglycémie. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique, signal faible)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène théorique (cumul GABA inhibition). Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "↑ toxicité pemetrexed (compétition rénale). Suspendre AINS courts ≥ 2 j avant, ≥ 2 j après pemetrexed. AINS demi-vie longue (piroxicam) : suspendre ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie (toxicité)", "dcis": ["digoxine"], "commentaire": "AINS ↓ clairance digoxine. Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "AINS aggravent IC (rétention hydrosodée, ↑ HTA, IRA) — RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). CI relative. PIM STOPP H1. Préférer paracétamol.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23311,8 +23244,22 @@ const MASTER_DB = {
                     "bhe": "0",
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
-                    "ddi_interact": "Demi-vie très longue (>50h) : DÉCONSEILLÉ CHEZ LE SUJET AGÉ. Haut risque d'ulcère.",
-                    "ddi_interact_v2": [],
+                    "ddi_interact": "PIM ABSOLU Beers 2023/STOPP H2/FORTA-D/PRISCUS — DEMI-VIE TRÈS LONGUE (>50h) : DÉCONSEILLÉ CHEZ ÂGÉ (accumulation). HAUT RISQUE ULCÈRE (gastropathie maximale parmi AINS). ANSM/EMA 2007 restrictions (réservé osteoarthrose, max 20 mg/j, 1ère intention proscrite). TRIPLE WHAMMY rénal, Anticoagulants, Antiagrégants, Corticoïdes (x4-12 ulcère), ISRS (x2-3 saignement), Lithium, Méthotrexate, Ciclosporine, Pemetrexed (suspendre ≥ 5 j avant — demi-vie longue), IC (CI relative)",
+                    "ddi_interact_v2": [
+                              { "classe": "ÂGÉ — PIM ABSOLU (Beers 2023, STOPP H2, FORTA-D, PRISCUS) — DEMI-VIE > 50h", "dcis": ["age sup 65 ans"], "commentaire": "Demi-vie 50-100h → accumulation chez âgé. Gastropathie maximale parmi AINS. ANSM/EMA 2007 : réservé osteoarthrose, max 20 mg/j, jamais 1ère intention. À ÉVITER ABSOLUMENT chez âgé. Préférer paracétamol ou AINS demi-vie courte si indispensable.", "severite": "danger" },
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS)", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone"], "commentaire": "↑ x3-5 IRA (Lapi BMJ 2013).", "severite": "danger" },
+                              { "classe": "Anticoagulants — saignement majeur", "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "heparine"], "commentaire": "Cumul saignement. Demi-vie longue piroxicam = effet prolongé.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires", "dcis": ["aspirine", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5.", "severite": "danger" },
+                              { "classe": "Corticoïdes — ULCÈRE x4-12 (gastropathie piroxicam +++)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone", "hydrocortisone", "betamethasone"], "commentaire": "PIM STOPP D9. Gastropathie maximale avec piroxicam.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine"], "commentaire": "↑ saignement x2-3.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ lithémie x60%", "dcis": ["lithium"], "commentaire": "Toxicité. Surveillance.", "severite": "danger" },
+                              { "classe": "Méthotrexate", "dcis": ["methotrexate"], "commentaire": "↑ exposition.", "severite": "danger" },
+                              { "classe": "Ciclosporine/Tacrolimus", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Néphrotoxicité additive.", "severite": "danger" },
+                              { "classe": "Pemetrexed — SUSPENDRE ≥ 5 j avant (demi-vie longue)", "dcis": ["pemetrexed"], "commentaire": "Demi-vie longue piroxicam → suspendre ≥ 5 j avant pemetrexed (vs 2 j AINS courts).", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA", "dcis": ["ramipril", "enalapril", "perindopril", "losartan", "valsartan", "candesartan", "olmesartan", "irbesartan"], "commentaire": "Surveillance.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité", "dcis": ["furosemide", "torasemide", "hydrochlorothiazide", "indapamide", "spironolactone"], "commentaire": "Surveillance.", "severite": "warning" },
+                              { "classe": "Insuffisance cardiaque — CI relative", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque"], "commentaire": "Décompensation x10. PIM STOPP H1.", "severite": "danger" }
+                    ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
                     "alerte_clinique": "Saignement digestif (Méléna) | Prise de poids, Œdèmes, Dyspnée (Rétention hydrosodée) | HTA non contrôlée",
@@ -23341,34 +23288,24 @@ const MASTER_DB = {
                     "bhe": "0",
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
-                    "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact": "PIM Beers 2023 / STOPP H2 / FORTA-D — À ÉVITER chez âgé. TRIPLE WHAMMY rénal (IEC/ARA2 + diurétique + AINS = IRA), Anticoagulants (AVK/AOD — saignement digestif x2-3), Antiagrégants plaquettaires (aspirine/clopidogrel/prasugrel/ticagrélor — saignement digestif x3-5), Corticoïdes (ulcère/hémorragie x4-12 — Piper 1991), ISRS/IRSN (saignement digestif x2-3 — Dalton 2003), IEC/ARA2 (↓ effet antiHTA + IRA), Diurétiques (↓ efficacité + IRA), Lithium (↑ x60% lithémie — toxicité), Méthotrexate (↑ exposition + néphrotoxicité), Ciclosporine/Tacrolimus (néphrotoxicité), Bisphosphonates (ulcère cumulé), Sulfamides hypoglycémiants (déplacement albumine — hypoglycémie), Quinolones (convulsions — théorique), Pemetrexed (toxicité hématologique), DIGOXINE (toxicité), Cardiopathie/IC (CI relative ESC 2021)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY : IEC/ARA2 + diurétique + AINS = ↑ x3-5 IRA hospitalisée (Lapi BMJ 2013, Dreischulte KI 2015). PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE +/- IEC le temps de l'AINS (sick day rules).", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers — éviter. Si association indispensable : IPP systématique + INR rapproché + durée minimale. AINS topique (kétoprofène gel) acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans les 2-4h avant aspirine (compétition COX-1 plaquettaire — surtout ibuprofène). Espacer ou préférer paracétamol.", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper Ann Intern Med 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène (cortico seul x2, AINS seul x4, association x4-12). PIM STOPP D9. IPP systématique + dose minimale + durée minimale. Préférer paracétamol pour antalgie.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton Arch Intern Med 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ recaptage sérotonine plaquettaire → ↑ saignement digestif x2-3 cumulé AINS (Dalton 2003). Préférer mirtazapine ou agomélatine si dépression + douleur. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie (toxicité)", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium → ↑ lithémie 60% → toxicité (tremblements, confusion, convulsions, arythmies). Surveillance lithémie + créat. Éviter ou doser à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "↑ exposition MTX (compétition tubulaire). Doses oncologiques : CI absolue. Doses rhumatologiques (≤ 25 mg/sem) : prudence + surveillance NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ additive", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. ↓ DFG. Préférer paracétamol. Surveillance créatinine si association inévitable.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA (hors triple whammy)", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ effet antiHTA. ↑ IRA. ↑ K+. Surveillance TA + K+ + créat.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA + ↑ K+ si épargneurs", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA (anse). ↑ K+ (épargneurs).", "severite": "warning" },
+                              { "classe": "Bisphosphonates (alendronate/risédronate) — ULCÈRE œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage/gastro. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie (déplacement albumine)", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition sulfamide → hypoglycémie. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique, signal faible)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène théorique (cumul GABA inhibition). Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "↑ toxicité pemetrexed (compétition rénale). Suspendre AINS courts ≥ 2 j avant, ≥ 2 j après pemetrexed. AINS demi-vie longue (piroxicam) : suspendre ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie (toxicité)", "dcis": ["digoxine"], "commentaire": "AINS ↓ clairance digoxine. Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "AINS aggravent IC (rétention hydrosodée, ↑ HTA, IRA) — RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). CI relative. PIM STOPP H1. Préférer paracétamol.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23400,32 +23337,22 @@ const MASTER_DB = {
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Hépatotoxique (Usage restreint max 15j). Corticoïdes, ISRS.",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY (Lapi BMJ 2013, Dreischulte KI 2015) ↑ x3-5 IRA. PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE/IEC le temps de l'AINS.", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers. AINS topique acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans 2-4h avant (compétition COX-1 — surtout ibuprofène).", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène x4-12. PIM STOPP D9. IPP systématique + durée minimale.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ sérotonine plaquettaire → ↑ saignement digestif x2-3. Préférer mirtazapine/agomélatine. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium. Toxicité. Surveillance lithémie + créat à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "Doses oncologiques : CI. Doses rhumato (≤ 25 mg/sem) : prudence + NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. Préférer paracétamol.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ antiHTA, ↑ IRA, ↑ K+. Surveillance.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA.", "severite": "warning" },
+                              { "classe": "Bisphosphonates oraux — ulcère œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène. Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "Suspendre AINS courts ≥ 2 j avant/après ; piroxicam ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie", "dcis": ["digoxine"], "commentaire": "Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). PIM STOPP H1.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23457,32 +23384,22 @@ const MASTER_DB = {
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
                     "ddi_interact": "Effets indésirables centraux fréquents en gériatrie. Corticoïdes, ISRS.",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY (Lapi BMJ 2013, Dreischulte KI 2015) ↑ x3-5 IRA. PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE/IEC le temps de l'AINS.", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers. AINS topique acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans 2-4h avant (compétition COX-1 — surtout ibuprofène).", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène x4-12. PIM STOPP D9. IPP systématique + durée minimale.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ sérotonine plaquettaire → ↑ saignement digestif x2-3. Préférer mirtazapine/agomélatine. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium. Toxicité. Surveillance lithémie + créat à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "Doses oncologiques : CI. Doses rhumato (≤ 25 mg/sem) : prudence + NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. Préférer paracétamol.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ antiHTA, ↑ IRA, ↑ K+. Surveillance.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA.", "severite": "warning" },
+                              { "classe": "Bisphosphonates oraux — ulcère œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène. Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "Suspendre AINS courts ≥ 2 j avant/après ; piroxicam ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie", "dcis": ["digoxine"], "commentaire": "Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). PIM STOPP H1.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23512,34 +23429,24 @@ const MASTER_DB = {
                     "bhe": "0",
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
-                    "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact": "PIM Beers 2023 / STOPP H2 / FORTA-D — À ÉVITER chez âgé. TRIPLE WHAMMY rénal (IEC/ARA2 + diurétique + AINS = IRA), Anticoagulants (AVK/AOD — saignement digestif x2-3), Antiagrégants plaquettaires (aspirine/clopidogrel/prasugrel/ticagrélor — saignement digestif x3-5), Corticoïdes (ulcère/hémorragie x4-12 — Piper 1991), ISRS/IRSN (saignement digestif x2-3 — Dalton 2003), IEC/ARA2 (↓ effet antiHTA + IRA), Diurétiques (↓ efficacité + IRA), Lithium (↑ x60% lithémie — toxicité), Méthotrexate (↑ exposition + néphrotoxicité), Ciclosporine/Tacrolimus (néphrotoxicité), Bisphosphonates (ulcère cumulé), Sulfamides hypoglycémiants (déplacement albumine — hypoglycémie), Quinolones (convulsions — théorique), Pemetrexed (toxicité hématologique), DIGOXINE (toxicité), Cardiopathie/IC (CI relative ESC 2021)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY : IEC/ARA2 + diurétique + AINS = ↑ x3-5 IRA hospitalisée (Lapi BMJ 2013, Dreischulte KI 2015). PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE +/- IEC le temps de l'AINS (sick day rules).", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers — éviter. Si association indispensable : IPP systématique + INR rapproché + durée minimale. AINS topique (kétoprofène gel) acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans les 2-4h avant aspirine (compétition COX-1 plaquettaire — surtout ibuprofène). Espacer ou préférer paracétamol.", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper Ann Intern Med 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène (cortico seul x2, AINS seul x4, association x4-12). PIM STOPP D9. IPP systématique + dose minimale + durée minimale. Préférer paracétamol pour antalgie.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton Arch Intern Med 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ recaptage sérotonine plaquettaire → ↑ saignement digestif x2-3 cumulé AINS (Dalton 2003). Préférer mirtazapine ou agomélatine si dépression + douleur. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie (toxicité)", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium → ↑ lithémie 60% → toxicité (tremblements, confusion, convulsions, arythmies). Surveillance lithémie + créat. Éviter ou doser à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "↑ exposition MTX (compétition tubulaire). Doses oncologiques : CI absolue. Doses rhumatologiques (≤ 25 mg/sem) : prudence + surveillance NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ additive", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. ↓ DFG. Préférer paracétamol. Surveillance créatinine si association inévitable.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA (hors triple whammy)", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ effet antiHTA. ↑ IRA. ↑ K+. Surveillance TA + K+ + créat.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA + ↑ K+ si épargneurs", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA (anse). ↑ K+ (épargneurs).", "severite": "warning" },
+                              { "classe": "Bisphosphonates (alendronate/risédronate) — ULCÈRE œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage/gastro. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie (déplacement albumine)", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition sulfamide → hypoglycémie. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique, signal faible)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène théorique (cumul GABA inhibition). Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "↑ toxicité pemetrexed (compétition rénale). Suspendre AINS courts ≥ 2 j avant, ≥ 2 j après pemetrexed. AINS demi-vie longue (piroxicam) : suspendre ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie (toxicité)", "dcis": ["digoxine"], "commentaire": "AINS ↓ clairance digoxine. Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "AINS aggravent IC (rétention hydrosodée, ↑ HTA, IRA) — RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). CI relative. PIM STOPP H1. Préférer paracétamol.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
@@ -23569,34 +23476,24 @@ const MASTER_DB = {
                     "bhe": "0",
                     "qt_risque": "",
                     "albumine": "> 95-99% (Risque surdosage si dénutrition)",
-                    "ddi_interact": "Corticoïdes, Antidépresseurs ISRS (Risque d'ulcère et saignement digestif majoré).",
+                    "ddi_interact": "PIM Beers 2023 / STOPP H2 / FORTA-D — À ÉVITER chez âgé. TRIPLE WHAMMY rénal (IEC/ARA2 + diurétique + AINS = IRA), Anticoagulants (AVK/AOD — saignement digestif x2-3), Antiagrégants plaquettaires (aspirine/clopidogrel/prasugrel/ticagrélor — saignement digestif x3-5), Corticoïdes (ulcère/hémorragie x4-12 — Piper 1991), ISRS/IRSN (saignement digestif x2-3 — Dalton 2003), IEC/ARA2 (↓ effet antiHTA + IRA), Diurétiques (↓ efficacité + IRA), Lithium (↑ x60% lithémie — toxicité), Méthotrexate (↑ exposition + néphrotoxicité), Ciclosporine/Tacrolimus (néphrotoxicité), Bisphosphonates (ulcère cumulé), Sulfamides hypoglycémiants (déplacement albumine — hypoglycémie), Quinolones (convulsions — théorique), Pemetrexed (toxicité hématologique), DIGOXINE (toxicité), Cardiopathie/IC (CI relative ESC 2021)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Corticoïdes systémiques",
-                                        "dcis": [
-                                                  "prednisone",
-                                                  "prednisolone",
-                                                  "methylprednisolone",
-                                                  "hydrocortisone",
-                                                  "dexamethasone",
-                                                  "betamethasone"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY : IEC/ARA2 + diurétique + AINS = ↑ x3-5 IRA hospitalisée (Lapi BMJ 2013, Dreischulte KI 2015). PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE +/- IEC le temps de l'AINS (sick day rules).", "severite": "danger" },
+                              { "classe": "ANTICOAGULANTS — saignement majeur x2-3", "dcis": ["warfarine", "acenocoumarol", "fluindione", "phenprocoumone", "apixaban", "rivaroxaban", "edoxaban", "dabigatran", "enoxaparine", "tinzaparine", "nadroparine", "dalteparine", "heparine", "fondaparinux"], "commentaire": "Cumul saignement digestif/cérébral. PIM STOPP/Beers — éviter. Si association indispensable : IPP systématique + INR rapproché + durée minimale. AINS topique (kétoprofène gel) acceptable si surface limitée.", "severite": "danger" },
+                              { "classe": "Antiagrégants plaquettaires — saignement digestif x3-5", "dcis": ["aspirine", "aspirine forte dose", "clopidogrel", "prasugrel", "ticagrelor", "dipyridamole"], "commentaire": "↑ saignement digestif x3-5. Aspirine ↓ cardio-protection si AINS pris dans les 2-4h avant aspirine (compétition COX-1 plaquettaire — surtout ibuprofène). Espacer ou préférer paracétamol.", "severite": "danger" },
+                              { "classe": "Corticoïdes systémiques — ULCÈRE/HÉMORRAGIE x4-12 (Piper Ann Intern Med 1991)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "hydrocortisone", "dexamethasone", "betamethasone", "cortisone", "triamcinolone"], "commentaire": "Cumul ulcérogène (cortico seul x2, AINS seul x4, association x4-12). PIM STOPP D9. IPP systématique + dose minimale + durée minimale. Préférer paracétamol pour antalgie.", "severite": "danger" },
+                              { "classe": "ISRS/IRSN — saignement digestif x2-3 (Dalton Arch Intern Med 2003)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "milnacipran"], "commentaire": "ISRS/IRSN ↓ recaptage sérotonine plaquettaire → ↑ saignement digestif x2-3 cumulé AINS (Dalton 2003). Préférer mirtazapine ou agomélatine si dépression + douleur. IPP si association.", "severite": "danger" },
+                              { "classe": "Lithium — ↑ x60% lithémie (toxicité)", "dcis": ["lithium"], "commentaire": "AINS ↓ clairance rénale lithium → ↑ lithémie 60% → toxicité (tremblements, confusion, convulsions, arythmies). Surveillance lithémie + créat. Éviter ou doser à J3-J7.", "severite": "danger" },
+                              { "classe": "Méthotrexate — ↑ exposition + néphrotoxicité", "dcis": ["methotrexate"], "commentaire": "↑ exposition MTX (compétition tubulaire). Doses oncologiques : CI absolue. Doses rhumatologiques (≤ 25 mg/sem) : prudence + surveillance NFS/créat.", "severite": "danger" },
+                              { "classe": "Ciclosporine / Tacrolimus — NÉPHROTOXICITÉ additive", "dcis": ["ciclosporine", "tacrolimus"], "commentaire": "Cumul néphrotoxicité. ↓ DFG. Préférer paracétamol. Surveillance créatinine si association inévitable.", "severite": "danger" },
+                              { "classe": "IEC/ARA2 — ↓ effet antiHTA + IRA (hors triple whammy)", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "sacubitril-valsartan"], "commentaire": "↓ effet antiHTA. ↑ IRA. ↑ K+. Surveillance TA + K+ + créat.", "severite": "warning" },
+                              { "classe": "Diurétiques — ↓ efficacité + IRA + ↑ K+ si épargneurs", "dcis": ["furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "↓ effet diurétique. ↑ IRA (anse). ↑ K+ (épargneurs).", "severite": "warning" },
+                              { "classe": "Bisphosphonates (alendronate/risédronate) — ULCÈRE œsophage cumulé", "dcis": ["alendronate", "risedronate", "ibandronate"], "commentaire": "Cumul ulcère œsophage/gastro. Surveillance.", "severite": "warning" },
+                              { "classe": "Sulfamides hypoglycémiants — hypoglycémie (déplacement albumine)", "dcis": ["glibenclamide", "glimepiride", "gliclazide", "tolbutamide"], "commentaire": "Déplacement albumine → ↑ exposition sulfamide → hypoglycémie. Surveillance glycémie.", "severite": "warning" },
+                              { "classe": "Quinolones — convulsions (théorique, signal faible)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine", "norfloxacine"], "commentaire": "↓ seuil épileptogène théorique (cumul GABA inhibition). Prudence si ATCD épilepsie.", "severite": "warning" },
+                              { "classe": "Pemetrexed — toxicité hématologique/rénale", "dcis": ["pemetrexed"], "commentaire": "↑ toxicité pemetrexed (compétition rénale). Suspendre AINS courts ≥ 2 j avant, ≥ 2 j après pemetrexed. AINS demi-vie longue (piroxicam) : suspendre ≥ 5 j.", "severite": "danger" },
+                              { "classe": "Digoxine — ↑ digoxinémie (toxicité)", "dcis": ["digoxine"], "commentaire": "AINS ↓ clairance digoxine. Surveillance digoxinémie.", "severite": "warning" },
+                              { "classe": "INSUFFISANCE CARDIAQUE — CI relative (ESC 2021)", "dcis": ["ic systolique", "ic diastolique", "insuffisance cardiaque", "fevg basse"], "commentaire": "AINS aggravent IC (rétention hydrosodée, ↑ HTA, IRA) — RR décompensation x10 (Heerdink 1998, Mamdani BMJ 2004). CI relative. PIM STOPP H1. Préférer paracétamol.", "severite": "danger" }
                     ],
                     "suivi_initial": "Créatinine/DFG | Ionogramme (Kaliémie) | Pression Artérielle",
                     "suivi_periodique": "Créatinine (si usage prolongé) | Tension artérielle | Hb (si suspicion saignement)",
