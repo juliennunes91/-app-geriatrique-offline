@@ -1435,7 +1435,7 @@ const MASTER_DB = {
             "BIO_SECONDAIRE": "BIO_005, BIO_006, BIO_023, BIO_021, BIO_035",
             "CONDUITE_IMMEDIATE": "Prévention dès J1 corticothérapie ≥ 3 mois : Ca 1000 mg + vitamine D 800-1200 UI/j ; bisphosphonate (alendronate 70 mg/sem) si T-score ≤ -1.5 OU dose corticoïde ≥ 7.5 mg/j prolongée OU femme ménopausée. DMO à M0, M12. Apport protéique 1.2-1.5 g/kg/j (sarcopénie). Activité physique adaptée.",
             "SEUIL_CRITIQUE": "Fracture vertébrale silencieuse (perte de taille > 3 cm) → DMO + radio rachis, bisphosphonate IV (acide zolédronique 5 mg/an) ou tériparatide si fractures multiples",
-            "SOURCE": "ACR 2017 (GIOP) ; IOF 2024 ; HAS 2018 ostéoporose ; STOPP/START v3 F1"
+            "SOURCE": "ACR 2017 (GIOP) ; IOF 2024 ; HAS 2023 ostéoporose ; STOPP/START v3 F1"
         },
         "SYND_050": {
             "ID_SYNDROME": "SYND_050",
@@ -1783,7 +1783,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Perfusion ≥15 min. Supplémentation Ca/Vit D obligatoire",
-                    "source": "RCP Aclasta ; HAS 2018"
+                    "source": "RCP Aclasta ; HAS 2023"
           },
           {
                     "dci": "Albendazole",
@@ -1870,7 +1870,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "À jeun + grand verre d'eau, rester debout 30 min",
-                    "source": "RCP Fosamax ; HAS 2018"
+                    "source": "RCP Fosamax ; HAS 2023"
           },
           {
                     "dci": "Alfacalcidol",
@@ -3061,7 +3061,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Réduction FA : 2 critères sur 3 (âge ≥ 80 ans / poids ≤ 60 kg / créatinine ≥ 133 µmol/L) → 2.5 mg x2/j. AOD préférentiel chez âgé fragile (ELDERCARE-AF, ARISTOTLE). HAS-BLED ≥ 3 → réévaluer indication, ne pas réduire la dose pour saigner moins (sous-dosage = perte d'efficacité sans bénéfice hémorragique).",
-                    "source": "RCP Eliquis ; HAS 2023 ; ESC FA 2020"
+                    "source": "RCP Eliquis ; HAS 2023 ; ESC FA 2024"
           },
           {
                     "dci": "Apraclonidine",
@@ -7923,7 +7923,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Élimination rénale exclusive (80 %). Ajustement DFG obligatoire. Surveillance hépatique annuelle (RCP Pradaxa : ALT/AST — hépatotoxicité rare). HAS-BLED ≥ 3 → préférer 110 mg x2/j (RE-LY sous-groupe). Vérapamil concomitant → 110 mg x2/j. ANTIDOTE : idarucizumab (Praxbind, seul AOD avec antidote spécifique). Hémodialyse possible.",
-                    "source": "RCP Pradaxa ; HAS 2023 ; ESC FA 2020"
+                    "source": "RCP Pradaxa ; HAS 2023 ; ESC FA 2024"
           },
           {
                     "dci": "Daclatasvir",
@@ -9890,7 +9890,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Réduction à 30 mg/j si DFG 15-50 ou poids ≤ 60 kg ou inhibiteur P-gp puissant (ciclosporine, dronédarone, érythromycine, kétoconazole). Surveillance hépatique annuelle (RCP Lixiana : ALT/AST). HAS-BLED ≥ 3 → réévaluer indication, ne pas sous-doser (perte d'efficacité sans bénéfice hémorragique).",
-                    "source": "RCP Savaysa ; HAS 2023 ; ESC FA 2020"
+                    "source": "RCP Savaysa ; HAS 2023 ; ESC FA 2024"
           },
           {
                     "dci": "Efavirenz",
@@ -12317,7 +12317,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "PO : à jeun, rester debout 60 min",
-                    "source": "RCP Bonviva ; HAS 2018"
+                    "source": "RCP Bonviva ; HAS 2023"
           },
           {
                     "dci": "Imipenem + cilastatine",
@@ -19229,7 +19229,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "À jeun, rester debout 30 min",
-                    "source": "RCP Actonel ; HAS 2018"
+                    "source": "RCP Actonel ; HAS 2023"
           },
           {
                     "dci": "Risperidone",
@@ -19382,7 +19382,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "À prendre au cours du repas (biodisponibilité ++ pour 15-20 mg). Réduction FA : 15 mg/j si DFG 15-49. ATTENTION : dose vasculaire 2.5 mg x2/j (COMPASS/VOYAGER-PAD) ≠ dose anticoagulante 20 mg/j en FA (ne pas confondre). HAS-BLED ≥ 3 → réévaluer, ne pas sous-doser (perte d'efficacité sans gain hémorragique).",
-                    "source": "RCP Xarelto ; HAS 2023 ; ESC FA 2020"
+                    "source": "RCP Xarelto ; HAS 2023 ; ESC FA 2024"
           },
           {
                     "dci": "Rosuvastatine",
@@ -23028,7 +23028,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "AVK demi-vie longue (Coumadine 36-42 h) — référence internationale. INR cible selon indication (2.0-3.0 FA, 2.5-3.5 valve mécanique). ANTIDOTE : vitamine K1 (Konakion) ± PPSB. Risque ostéoporotique au long cours (↓ DMO via inhibition carboxylation ostéocalcine — Veronese 2015) → calcémie + DMO périodique chez âgé. HAS-BLED ≥ 3 → réévaluer rapport bénéfice/risque, AOD à privilégier sauf valve méca/sténose mitrale/FRAIL-AF.",
-                    "source": "RCP Coumadine ; HAS 2008 AVK ; ESC FA 2020"
+                    "source": "RCP Coumadine ; HAS 2008 AVK ; ESC FA 2024"
           },
           {
                     "dci": "Zofenopril",

@@ -16,24 +16,62 @@ Total : 0 / 546
 **Référence** : McDonagh TA et al, *2023 Focused Update of the 2021 ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure*, Eur Heart J 2023.
 → Eplerenone, Piretanide, Spironolactone : "ESC HF 2021" remplacé par "ESC IC 2023".
 
-### HAS < 2022 — NON ACTUALISÉ
-  66 med(s) — non modifiés volontairement.
-  **Justification** : chaque ligne HAS renvoie à un avis ou une recommandation distincte ;
-  remplacer collectivement par une date plus récente créerait des références
-  inexistantes. À reprendre individuellement avec vérification de la publication HAS
-  cible pour chaque indication.
+### HAS 2018 ostéoporose → HAS 2023 (5 entrées) — ACTUALISÉ
+**Référence vérifiée web** : *Bon usage des médicaments de l'ostéoporose — Fiche BUM*,
+HAS, décision 5 janvier 2023, mise à jour publiée 24 janvier 2023.
+**Nouveautés majeures** :
+- Romosozumab (nouvelle classe, anti-sclérostine) intégré à l'arsenal
+- Séquencement clarifié : bisphosphonate 1ʳᵉ intention → dénosumab en relais si risque élevé
+- T-score < -2,5 seul **insuffisant** pour traiter : nécessite FRAX/facteurs de risque
+→ Mises à jour : Acide zoledronique, Alendronate, Ibandronate, Risedronate +
+  référence syndrome SYND_GIOP/ostéoporose dans `geria_pathology_rules_v3.js`.
 
-### KDIGO 2009 — NON ACTUALISÉ
-  3 med(s) (Ciclosporine, Mycophenolate mofetil, Tacrolimus).
-  **Justification** : KDIGO 2009 *Care of the Kidney Transplant Recipient* reste la
-  référence en vigueur pour la prise en charge immunosuppressive post-greffe.
-  Aucune actualisation comprehensive publiée à date.
+### HAS antidépresseurs/antipsychotiques 2017 — VÉRIFIÉ, conservé
+**Référence vérifiée web** : *Épisode dépressif caractérisé de l'adulte : prise en charge
+en soins de premier recours*, HAS, novembre 2017 — **toujours en vigueur en 2025**
+(aucune actualisation comprehensive publiée).
+→ Les 39 entrées HAS 2017 (ISRS/IRSNa/tricycliques/antipsychotiques) restent valides.
 
-### ESC AF < 2024 — DÉJÀ ACTUALISÉ
-  Digoxine : référence déjà actualisée vers "ESC FA 2024".
+### HAS 2008 AVK — VÉRIFIÉ, conservé
+**Référence vérifiée web** : *Prise en charge des surdosages, situations à risque
+hémorragique et accidents hémorragiques chez les patients traités par AVK*, HAS 2008 —
+**toujours référence en vigueur** (complétée par ANSM 2018 sur fluindione).
+→ 3 entrées (Acenocoumarol, Fluindione, Warfarine) maintenues.
 
-### ESC HF < 2022 — TRAITÉ (cf. ci-dessus)
-  Sacubitril/Valsartan : déjà à jour ("ESC IC 2023").
+### Autres HAS pré-2022 (61 entrées) — NON ACTUALISÉ
+**Justification** : sans certitude d'une publication HAS plus récente pour
+*chaque* indication spécifique, conservation des références originelles
+pour éviter d'inventer une version inexistante.
+
+### KDIGO 2009 transplant — VÉRIFIÉ, conservé
+**Référence vérifiée web** : *KDIGO Clinical Practice Guideline for the Care of the
+Kidney Transplant Recipient*, 2009. La KDIGO 2025 publiée concerne **ADPKD**
+(polykystose) — **pas le post-transplant**. Aucune actualisation comprehensive
+de la guideline transplant publiée à date.
+→ 3 entrées (Ciclosporine, Tacrolimus, Mycophenolate mofetil) maintenues.
+
+### ESC FA 2020 → ESC FA 2024 (5 entrées) — ACTUALISÉ
+**Référence vérifiée web** : Van Gelder IC et al, *2024 ESC Guidelines for the management
+of atrial fibrillation developed in collaboration with EACTS*, Eur Heart J 2024;45(36):3314.
+**Nouveautés majeures impactant l'âgé** :
+- AF-CARE framework (Comorbidities, Avoid stroke, Reduce symptoms, Evaluation)
+- CHA₂DS₂-VA (gender-neutral) remplace CHA₂DS₂-VASc
+- **Doses réduites de DOAC NON systématiques** : à appliquer uniquement si critères
+  spécifiques remplis — sous-dosage = thromboses évitables (point géronto majeur)
+- AVK 1ʳᵉ intention uniquement pour valves mécaniques / RM modérée à sévère
+→ Mises à jour : Apixaban (Eliquis), Dabigatran (Pradaxa), Edoxaban (Savaysa),
+  Rivaroxaban (Xarelto), Warfarine (Coumadine).
+
+### Beers 2023 / STOPP-START v3 — VÉRIFIÉ, à jour
+**Vérifications web** :
+- AGS Beers 2023 (JAGS 2023) reste la version courante. Une publication
+  *Alternative Treatments* (juillet 2025) **complète** mais ne remplace pas
+  les critères centraux. Une éventuelle Beers v3-2026 n'est pas publiée à date.
+- STOPP/START v3 (O'Mahony, Eur Geriatr Med 2023) : version courante.
+→ 111 entrées Beers 2023 + 8 entrées STOPP/START v3 maintenues.
+
+### ESC ACS 2023 / ESC HTAP 2022 / ACR gout 2020 / ESC arythmie 2022 — VÉRIFIÉ
+Toutes confirmées comme dernières versions disponibles à date (recherche web 2026-05-16).
 
 
 ## E.3 — Sources minimales / RCP seul
@@ -86,9 +124,13 @@ Total : 324 médicaments avec source courte type RCP seul
 
 ## E.5 — Synthèse actions
 
-| Action | Volume | Justification |
+| Action | Volume | Source vérifiée |
 |---|---|---|
-| ESC HTA 2023 → 2024 | 50 remplacements | Publication 2024 confirmée (Mancia, Eur Heart J 2024) |
-| ESC HF 2021 → ESC IC 2023 | 3 remplacements | Focused update 2023 confirmé (McDonagh, Eur Heart J 2023) |
-| **Total actualisé** | **53 entrées** | + 11 GINA/GOLD précédentes = **64 sources rafraîchies au total** |
-| Non actualisé (HAS, KDIGO, Beers ≥ 2023) | 175 entrées | Conservé pour éviter des références inventées ; à reprendre individuellement avec vérification publication-par-publication |
+| GINA/GOLD 2023 → 2024 | 11 | (commit antérieur) |
+| ESC HTA 2023 → 2024 | 50 | Mancia, Eur Heart J 2024 |
+| ESC HF 2021 → ESC IC 2023 | 3 | McDonagh, Eur Heart J 2023 |
+| ESC FA 2020 → ESC FA 2024 | 5 | Van Gelder, Eur Heart J 2024 |
+| HAS 2018 ostéoporose → HAS 2023 | 5 | Décision HAS 5 jan 2023 |
+| **TOTAL actualisé** | **74 entrées** | **Toutes sources vérifiées web 2026-05-16** |
+| Beers 2023, STOPP/START v3, KDIGO 2009 transplant, HAS 2017 dépression, HAS 2008 AVK, ESC HTAP 2022, ACR 2020 gout, ESC arythmie 2022, ESC SCA 2023 | ~150 | **Confirmées en vigueur — aucune mise à jour disponible** |
+| Autres HAS pré-2022 (61) | 61 | Non actualisé volontairement (vérification individuelle requise) |

@@ -14,7 +14,7 @@
 | **B** | Cartographie syndromes iatrogènes | 5 orphelins / 51 | Mapping conservé `B_synd_to_meds.json` | 46/51 syndromes couverts |
 | **C** | Scores cliniques composites | 0 (nouveau module) | Tagging 546 médicaments + nouvel onglet UI | 8 scores actifs (ACB/CIA/QT/Sero/Saign/Chute/Sedat/HypoG) |
 | **D** | Cohérence par classe | 5 trous réels | 6 corrections BIO_cible | 0 trou réel résiduel |
-| **E** | Sources EBM | 134 sources potentiellement obsolètes | 64 sources actualisées (11 GINA/GOLD + 50 ESC HTA + 3 ESC HF) | 70 sources HAS/KDIGO conservées (actualisation individuelle requise pour ne pas inventer de référence) |
+| **E** | Sources EBM | 134 sources potentiellement obsolètes | **74 sources actualisées** (11 GINA/GOLD + 50 ESC HTA + 3 ESC IC + 5 ESC FA + 5 HAS ostéo) — toutes vérifiées web | 60 sources conservées (HAS spécifiques, Beers/STOPP/KDIGO confirmées en vigueur) |
 | **F** | Seuils biologiques | 1 composite descriptif (SYND_050) | Acceptable (syndrome composite clinique) | 50/51 syndromes avec seuils numériques |
 
 ---
@@ -126,18 +126,22 @@ Voir `D_classes_consistency.md` pour le tableau complet.
 
 ## E — Sources EBM (traçabilité)
 
-Voir `E_sources_ebm.md`.
+Voir `E_sources_ebm.md` et `E_impact_clinique.md`.
 
 - **0 médicament sans source** (excellent)
 - **324 sources minimales** (juste "RCP X | Société YYYY") — acceptable pour la majorité
-- **134 sources potentiellement obsolètes** identifiées :
-  - GINA 2023 → **GINA 2024 (11 actualisées)** ✓
-  - GOLD 2023 → **GOLD 2024 (inclus dans les 11)** ✓
-  - ESC HTA 2023 → **ESC HTA 2024 (50 actualisées, Mancia Eur Heart J 2024)** ✓
-  - ESC HF 2021 → **ESC IC 2023 (3 actualisées, McDonagh focused update)** ✓
-  - **Total actualisé : 64 sources**
-  - Sources HAS pré-2022 (66) : non touchées — chaque référence HAS pointe vers une publication distincte, actualisation à reprendre individuellement
-  - KDIGO 2009 (3) : transplant care non actualisé par KDIGO depuis 2009
+- **74 sources actualisées** après vérification web (2026-05-16) :
+  - GINA 2023 → **GINA 2024** (11) ✓
+  - GOLD 2023 → **GOLD 2024** (inclus dans les 11) ✓
+  - ESC HTA 2023 → **ESC HTA 2024** (50) — *Mancia, Eur Heart J 2024* ✓
+  - ESC HF 2021 → **ESC IC 2023** (3) — *McDonagh focused update* ✓
+  - ESC FA 2020 → **ESC FA 2024** (5) — *Van Gelder, Eur Heart J 2024* ✓
+  - HAS 2018 ostéoporose → **HAS 2023** (5) — *Fiche BUM 24 jan 2023* ✓
+- **Sources confirmées en vigueur** (vérification web — pas de mise à jour disponible) :
+  - Beers 2023, STOPP/START v3, KDIGO 2009 transplant, HAS 2017 dépression,
+    HAS 2008 AVK, ESC HTAP 2022, ACR gout 2020, ESC arythmie 2022, ESC SCA 2023
+- **Sources non touchées** (61) : HAS spécifiques par indication — vérification
+  individuelle à mener (pas d'actualisation sans certitude documentaire)
 
 ### Sociétés savantes les plus citées (top 10)
 | Citations | Source |
@@ -173,7 +177,7 @@ Voir `E_sources_ebm.md`.
 | BIOLOGIE | 45 | Toutes référencées + seuils définis |
 | PATHOLOGIES | 53 | Master = rules, tous champs remplis |
 | SYNDROMES | 51 | 50 avec seuils numériques + 5 orphelins documentés |
-| SOURCES EBM | — | 100% présentes, 64 actualisées 2024 (GINA/GOLD/ESC HTA/ESC HF) |
+| SOURCES EBM | — | 100% présentes, **74 actualisées 2024** (toutes vérifiées web) |
 | `audit_db.js` | — | **0 erreur / 0 warning / 0 info** |
 | Audits A-F | — | 6 axes complétés, rapports archivés |
 
@@ -183,6 +187,11 @@ Voir `E_sources_ebm.md`.
 
 1. **A.1/A.2** : Compléter les mentions explicites des pathologies/biologies dans les textes alerte/notes pour les médicaments où c'est cliniquement pertinent (475 cas restants).
 2. **B** : Enrichir les 5 syndromes orphelins (006, 026, 040, 041, 050) avec leurs médicaments inducteurs documentés.
-3. **E** : Actualiser individuellement les 70 références HAS/KDIGO restantes en vérifiant la dernière publication HAS par indication (anti-dépresseurs, antipsychotiques, bisphosphonates, etc.) — pas d'actualisation collective pour éviter les références inventées.
+3. **E (sources)** : Évolutions code/logique identifiées dans `E_impact_clinique.md` :
+   - Check sous-dosage DOAC (ESC FA 2024 : point géronto critique)
+   - Score CHA₂DS₂-VA (suppression "sexe féminin" — ESC FA 2024)
+   - Alerte rebond fracturaire Dénosumab (HAS 2023 : relais bisphosphonate obligatoire)
+   - Info "quadruple thérapie HFrEF" (ESC IC 2023)
+4. **E (HAS résiduelles)** : 61 références HAS spécifiques à reprendre individuellement (vérification publication-par-publication requise).
 4. **DDI v2** : Compléter les 132 médicaments restants (antibiotiques niches, ARV, anti-cancéreux niches) selon priorités cliniques gériatriques.
 
