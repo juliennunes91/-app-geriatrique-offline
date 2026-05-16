@@ -10587,7 +10587,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "IPP isomère S de l'oméprazole : INHIBITEUR CYP2C19 fort (interaction clopidogrel — Phase 8 B8 = DANGER). Mêmes risques que oméprazole (carence B12, ostéoporose, néphrite, C. diff, pneumopathie). REMEDIES : déprescrire si pas d'indication active. STOPPFrail SF05.",
-                    "source": "RCP Inexium ; HAS 2020 IPP"
+                    "source": "RCP Inexium ; HAS 2022 IPP"
           },
           {
                     "dci": "Estazolam",
@@ -13367,7 +13367,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Prendre 30 min avant repas. Capsules peuvent être ouvertes.",
-                    "source": "RCP Ogastoro ; HAS 2020 IPP"
+                    "source": "RCP Ogastoro ; HAS 2022 IPP"
           },
           {
                     "dci": "Latanoprost",
@@ -16647,7 +16647,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Inhibiteur CYP2C19 → interaction clopidogrel. Prendre 30 min avant repas.",
-                    "source": "RCP Mopral ; HAS 2020 IPP"
+                    "source": "RCP Mopral ; HAS 2022 IPP"
           },
           {
                     "dci": "Oritavancine",
@@ -17022,7 +17022,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Moins d'interactions CYP2C19. Préféré avec clopidogrel.",
-                    "source": "RCP Eupantol ; HAS 2020 IPP"
+                    "source": "RCP Eupantol ; HAS 2022 IPP"
           },
           {
                     "dci": "Paracetamol",
@@ -18917,7 +18917,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Moins sensible au polymorphisme CYP2C19",
-                    "source": "RCP Pariet ; HAS 2020 IPP"
+                    "source": "RCP Pariet ; HAS 2022 IPP"
           },
           {
                     "dci": "Ramipril",

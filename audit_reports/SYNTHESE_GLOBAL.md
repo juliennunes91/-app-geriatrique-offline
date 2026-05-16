@@ -14,7 +14,7 @@
 | **B** | Cartographie syndromes iatrogènes | 5 orphelins / 51 | Mapping conservé `B_synd_to_meds.json` | 46/51 syndromes couverts |
 | **C** | Scores cliniques composites | 0 (nouveau module) | Tagging 546 médicaments + nouvel onglet UI | 8 scores actifs (ACB/CIA/QT/Sero/Saign/Chute/Sedat/HypoG) |
 | **D** | Cohérence par classe | 5 trous réels | 6 corrections BIO_cible | 0 trou réel résiduel |
-| **E** | Sources EBM | 134 sources potentiellement obsolètes | **74 sources actualisées** (11 GINA/GOLD + 50 ESC HTA + 3 ESC IC + 5 ESC FA + 5 HAS ostéo) — toutes vérifiées web | 60 sources conservées (HAS spécifiques, Beers/STOPP/KDIGO confirmées en vigueur) |
+| **E** | Sources EBM | 134 sources potentiellement obsolètes | **79 sources actualisées** (8 GINA/GOLD + 50 ESC HTA + 3 ESC IC + 5 ESC FA + 5 HAS ostéo + 5 HAS IPP + 3 GOLD) — méthodologie deep-research/lit-review appliquée | 188 sources vérifiées en vigueur ; 25 conservées par défaut |
 | **F** | Seuils biologiques | 1 composite descriptif (SYND_050) | Acceptable (syndrome composite clinique) | 50/51 syndromes avec seuils numériques |
 
 ---
@@ -126,22 +126,23 @@ Voir `D_classes_consistency.md` pour le tableau complet.
 
 ## E — Sources EBM (traçabilité)
 
-Voir `E_sources_ebm.md` et `E_impact_clinique.md`.
+Voir `E_sources_ebm.md`, `E_impact_clinique.md`, `E_audit_methodologique.md`.
 
 - **0 médicament sans source** (excellent)
 - **324 sources minimales** (juste "RCP X | Société YYYY") — acceptable pour la majorité
-- **74 sources actualisées** après vérification web (2026-05-16) :
-  - GINA 2023 → **GINA 2024** (11) ✓
-  - GOLD 2023 → **GOLD 2024** (inclus dans les 11) ✓
+- **79 sources actualisées** après vérification systématique (skill deep-research mode lit-review + fact-check) :
+  - GINA 2023 → **GINA 2024** (8) ✓
+  - GOLD 2023 → **GOLD 2024** (3) ✓
   - ESC HTA 2023 → **ESC HTA 2024** (50) — *Mancia, Eur Heart J 2024* ✓
   - ESC HF 2021 → **ESC IC 2023** (3) — *McDonagh focused update* ✓
   - ESC FA 2020 → **ESC FA 2024** (5) — *Van Gelder, Eur Heart J 2024* ✓
   - HAS 2018 ostéoporose → **HAS 2023** (5) — *Fiche BUM 24 jan 2023* ✓
-- **Sources confirmées en vigueur** (vérification web — pas de mise à jour disponible) :
+  - HAS 2020 IPP → **HAS 2022 IPP** (5) — *Fiche BUM HAS 14 oct 2022* ✓
+- **188 sources confirmées en vigueur** (vérification systématique) :
   - Beers 2023, STOPP/START v3, KDIGO 2009 transplant, HAS 2017 dépression,
-    HAS 2008 AVK, ESC HTAP 2022, ACR gout 2020, ESC arythmie 2022, ESC SCA 2023
-- **Sources non touchées** (61) : HAS spécifiques par indication — vérification
-  individuelle à mener (pas d'actualisation sans certitude documentaire)
+    HAS 2008 AVK, HAS 2020 antiépileptiques, HAS 2022 vit D/BZD/transplantation,
+    ESC HTAP 2022, ACR gout 2020, ESC arythmie 2022, ESC SCA 2023
+- **25 sources conservées par défaut** : HAS spécifiques (fer 2021, corticoïdes/antiémétiques/antithyroïdiens/Spravato 2022) + ANSM datées par incident pharmaco-vigilance (non actualisables par principe)
 
 ### Sociétés savantes les plus citées (top 10)
 | Citations | Source |
@@ -177,7 +178,7 @@ Voir `E_sources_ebm.md` et `E_impact_clinique.md`.
 | BIOLOGIE | 45 | Toutes référencées + seuils définis |
 | PATHOLOGIES | 53 | Master = rules, tous champs remplis |
 | SYNDROMES | 51 | 50 avec seuils numériques + 5 orphelins documentés |
-| SOURCES EBM | — | 100% présentes, **74 actualisées 2024** (toutes vérifiées web) |
+| SOURCES EBM | — | 100% présentes, **79 actualisées** (deep-research lit-review) + 188 vérifiées en vigueur |
 | `audit_db.js` | — | **0 erreur / 0 warning / 0 info** |
 | Audits A-F | — | 6 axes complétés, rapports archivés |
 
