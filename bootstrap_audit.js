@@ -519,6 +519,113 @@ const SENTINELS = [
     }
 ];
 
+// V4: cohérence biologie/suivi/PKPD/sources
+
+// Médicaments à suivi obligatoire en gériatrie (Beers/STOPP/RCP)
+const MEDS_SUIVI_OBLIGATOIRE = /^(warfarine|fluindione|acenocoumarol|lithium|digoxine|methotrexate|ciclosporine|tacrolimus|amiodarone|valproate|phenytoine|carbamazepine|theophylline|sirolimus|everolimus)$/i;
+
+// Pattern référence EBM dans commentaires : sources scientifiques attendues
+const EBM_REF_PATTERN = /(beers|stopp|start|forta|has|ansm|esc|ema|fda|nice|kdigo|gold|ada|esmo|nejm|jama|lancet|bmj|cochrane|rcp|micromedex|cps|sfgg|sfgrgg|sfar|smq|deyer|cmaj|psyc|rev m[eé]d|aafp|sga|pim|spc|cpic|pgx|hartford|cyp\d|aua|spilf|gef|sfh|fdc|sff|sfd|enrich-her|trial|cohort|étude|meta-?analyse|systematic review|guideline|recommandation|consensus)\b/i;
+
+function detectMissingSuivi(prescription) {
+    const findings = [];
+    prescription.forEach(med => {
+        if (!MEDS_SUIVI_OBLIGATOIRE.test(med.dci || '')) return;
+        const initial = (med.suivi_initial || '').trim();
+        const periodique = (med.suivi_periodique || '').trim();
+        if (!initial || initial.length < 10) {
+            findings.push({ type: 'missing_suivi_initial', dci: med.dci });
+        }
+        if (!periodique || periodique.length < 10) {
+            findings.push({ type: 'missing_suivi_periodique', dci: med.dci });
+        }
+    });
+    return findings;
+}
+
+function detectMissingSource(prescription) {
+    const findings = [];
+    prescription.forEach(med => {
+        const src = (med.source || '').trim();
+        if (!src || src.length < 5) {
+            findings.push({ type: 'missing_source', dci: med.dci });
+        }
+    });
+    return findings;
+}
+
+// Cohérence DFG : si patient a DFG < 30 et méd a règle néphrotox connue → atb_severe doit être documenté
+function detectMissingRenalAdaptation(prescription, patient) {
+    const findings = [];
+    if (!patient || !patient.bio || patient.bio.dfg >= 30) return findings;
+    prescription.forEach(med => {
+        const hasNephroRule = (med.ddi_interact_v2 || []).some(r =>
+            /n[eé]phrotox|IRA|insuf.*r[eé]nal|triple.whammy|tubulopathie|adapter.*DFG|CI.*DFG/i.test((r.classe || '') + ' ' + (r.commentaire || ''))
+        );
+        const hasPosoRen = (med.poso_ren || '').trim().length > 5;
+        const hasAtbSevere = (med.atb_severe || '').trim().length > 5;
+        if (hasNephroRule && !hasPosoRen && !hasAtbSevere) {
+            findings.push({ type: 'missing_renal_adaptation', dci: med.dci, dfg: patient.bio.dfg });
+        }
+    });
+    return findings;
+}
+
+// Cohérence QT : patient QTc > 480 + méd à risque QT élevé → règle QT attendue
+function detectMissingQTAlert(prescription, patient) {
+    const findings = [];
+    if (!patient || !patient.bio || patient.bio.qtc <= 480) return findings;
+    prescription.forEach(med => {
+        if ((med.scores?.qt || 0) < 2) return;
+        // Doit avoir au moins une règle DDI ou alerte_clinique mentionnant QT
+        const hasQtMention = /QT|torsade/i.test((med.alerte_clinique || '') +
+            (med.ddi_interact_v2 || []).map(r => (r.classe || '') + (r.commentaire || '')).join(' '));
+        if (!hasQtMention) {
+            findings.push({ type: 'missing_qt_alert', dci: med.dci, qtc: patient.bio.qtc });
+        }
+    });
+    return findings;
+}
+
+// Cohérence hyperK : patient K+ > 5.5 + RAASi/MRA → alerte attendue
+function detectMissingHyperKAlert(prescription, patient) {
+    const findings = [];
+    if (!patient || !patient.bio || patient.bio.k <= 5.5) return findings;
+    const RAASi_MRA = /^(ramipril|enalapril|perindopril|lisinopril|captopril|losartan|valsartan|candesartan|telmisartan|irbesartan|olmesartan|spironolactone|eplerenone|amiloride|triamterene)$/i;
+    const concerned = prescription.filter(m => RAASi_MRA.test(m.dci));
+    if (concerned.length === 0) return findings;
+    concerned.forEach(med => {
+        const hasKMention = /hyperkali|K\+|kali[eé]mie|potassium/i.test((med.alerte_clinique || '') +
+            (med.ddi_interact_v2 || []).map(r => (r.classe || '') + (r.commentaire || '')).join(' '));
+        if (!hasKMention) {
+            findings.push({ type: 'missing_hyperK_alert', dci: med.dci, k: patient.bio.k });
+        }
+    });
+    return findings;
+}
+
+// Cohérence sources EBM : règle danger SANS citation locale ET médicament SANS source globale
+// (les sources sont normalement dans med.source ; on flag uniquement si AUCUN niveau ne cite)
+function detectMissingEbmCitation(prescription) {
+    const findings = [];
+    prescription.forEach(med => {
+        const medSrc = (med.source || '').trim();
+        const medHasSrc = medSrc.length >= 5 && EBM_REF_PATTERN.test(medSrc);
+        if (medHasSrc) return; // source globale présente → OK
+        (med.ddi_interact_v2 || []).forEach(rule => {
+            if (rule.severite !== 'danger') return;
+            const txt = (rule.commentaire || '') + ' ' + (rule.classe || '');
+            if (!EBM_REF_PATTERN.test(txt)) {
+                findings.push({
+                    type: 'missing_ebm_citation_danger',
+                    src: med.dci, classe: (rule.classe || '').slice(0, 50)
+                });
+            }
+        });
+    });
+    return findings;
+}
+
 function detectFalseNegatives(prescription, scores) {
     const findings = [];
     SENTINELS.forEach(s => {
@@ -535,16 +642,19 @@ function detectFalseNegatives(prescription, scores) {
     return findings;
 }
 
-// ─── BOUCLE BOOTSTRAP N=30 000 avec CHECKPOINTS ───────────────────────────────
-const N_ITERATIONS = 30000;
-const CHECKPOINT_EVERY = 100;
+// ─── BOUCLE BOOTSTRAP N=300 000 avec CHECKPOINTS ──────────────────────────────
+const N_ITERATIONS = 300000;
+const CHECKPOINT_EVERY = 1000;
 const SEED_INFO = { date: new Date().toISOString(), N: N_ITERATIONS, checkpoint: CHECKPOINT_EVERY };
 const allFindings = {
     ddi_dup_intra_med: [], ddi_dup_cross: [], intra_rule_dup: [],
     severite_contradiction: [], severity_disparity: [],
     score_total_no_contrib: [], score_contrib_no_total: [], score_sum_mismatch: [],
     duplicate_dci_in_prescription: [], sentinel_false_negative: [],
-    visual_alert_dup: [], identical_comment_cross: [], severity_cascade: []
+    visual_alert_dup: [], identical_comment_cross: [], severity_cascade: [],
+    missing_suivi_initial: [], missing_suivi_periodique: [], missing_source: [],
+    missing_renal_adaptation: [], missing_qt_alert: [], missing_hyperK_alert: [],
+    missing_ebm_citation_danger: []
 };
 
 // Tracking unique findings (clé canonique → premier iter d'apparition)
@@ -566,6 +676,13 @@ function canonicalKey(f) {
         case 'visual_alert_dup': return `${f.type}::${f.key}`;
         case 'identical_comment_cross': return `${f.type}::${(f.commentaire || '').slice(0, COMMENT_KEY_SLICE)}`;
         case 'severity_cascade': return `${f.type}::${f.target}`;
+        case 'missing_suivi_initial': return `${f.type}::${(f.dci || '').toLowerCase()}`;
+        case 'missing_suivi_periodique': return `${f.type}::${(f.dci || '').toLowerCase()}`;
+        case 'missing_source': return `${f.type}::${(f.dci || '').toLowerCase()}`;
+        case 'missing_renal_adaptation': return `${f.type}::${(f.dci || '').toLowerCase()}`;
+        case 'missing_qt_alert': return `${f.type}::${(f.dci || '').toLowerCase()}`;
+        case 'missing_hyperK_alert': return `${f.type}::${(f.dci || '').toLowerCase()}`;
+        case 'missing_ebm_citation_danger': return `${f.type}::${(f.src || '').toLowerCase()}::${f.classe}`;
         default: return JSON.stringify(f).slice(0, 200);
     }
 }
@@ -587,8 +704,15 @@ for (let i = 0; i < N_ITERATIONS; i++) {
     const f8 = detectIntraRuleDupes(prescription);
     const f9 = detectVisualAlertDupAndCascade(prescription);
     const f10 = detectIdenticalComments(prescription);
+    const f11 = detectMissingSuivi(prescription);
+    const f12 = detectMissingSource(prescription);
+    const f13 = detectMissingRenalAdaptation(prescription, patient);
+    const f14 = detectMissingQTAlert(prescription, patient);
+    const f15 = detectMissingHyperKAlert(prescription, patient);
+    const f16 = detectMissingEbmCitation(prescription);
 
-    [...f1, ...f2, ...f3, ...f4, ...f5, ...f6, ...f7, ...f8, ...f9, ...f10].forEach(f => {
+    [...f1, ...f2, ...f3, ...f4, ...f5, ...f6, ...f7, ...f8, ...f9, ...f10,
+     ...f11, ...f12, ...f13, ...f14, ...f15, ...f16].forEach(f => {
         if (allFindings[f.type]) allFindings[f.type].push({ iter: i + 1, ...f });
         const ck = canonicalKey(f);
         if (!uniqueFindings.has(ck)) {
@@ -628,13 +752,15 @@ const summary = {
     checkpoints: checkpointLog.length
 };
 
-console.log('\n=== Synthèse N=30 000 ===');
+console.log(`\n=== Synthèse N=${N_ITERATIONS} ===`);
 console.log(JSON.stringify(summary, null, 2));
 
+// Limiter findings exposés : top 500 par type pour éviter JSON > 512MB
+const cappedFindings = Object.fromEntries(Object.entries(allFindings).map(([k, v]) => [k, v.slice(0, 500)]));
 const out = {
     summary,
-    unique_findings: Array.from(uniqueFindings.values()).sort((a, b) => b.count - a.count),
-    findings: allFindings,
+    unique_findings: Array.from(uniqueFindings.values()).sort((a, b) => b.count - a.count).slice(0, 2000),
+    findings_sample: cappedFindings,
     checkpoints: checkpointLog,
     sentinels: SENTINELS.map(s => s.name),
     phenotypes: Object.keys(PHENOTYPES)
