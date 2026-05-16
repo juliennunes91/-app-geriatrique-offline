@@ -8,7 +8,7 @@
 
 ## 1. Méthodologie
 
-### 1.1 Bootstrap (N=500 itérations)
+### 1.1 Bootstrap (N=10 000 itérations)
 
 - **Tirage** : 500 prescriptions aléatoires, taille 3-20 méds (uniforme)
 - **Profil patient** : âge 60-100, DFG 15-120, sexe H/F, 0-6 comorbidités random
@@ -108,20 +108,43 @@ Design pattern (conditions/états/substances exogènes). Pas un bug, pas d'actio
 
 ### 3.5 Score composites — Aucune aberration ✅
 
-500 itérations bootstrap : 0 incohérence total/contributeurs, 0 erreur de somme.
+10 000 itérations bootstrap : 0 incohérence total/contributeurs, 0 erreur de somme.
 
 ### 3.6 Sentinelles faux négatifs — Aucune détection ✅
 
-### 3.7 Limitation détecteur : Sertraline ↔ Tramadol (cas légitime)
+### 3.7 Limitation détecteur : 2 paires "PD + PK" (faux positifs légitimes)
 
-2 itérations bootstrap ont flagué Sertraline/Tramadol comme "contradiction" :
+**Sertraline ↔ Tramadol** :
 - Sertraline → Tramadol : **danger** (syndrome sérotoninergique — mécanisme PD)
 - Sertraline → Tramadol : **info** (CYP2D6 inhibition modeste — mécanisme PK)
 - Tramadol → Sertraline : **danger** (syndrome sérotoninergique — mécanisme PD)
 
-**Verdict** : pas une aberration. Les deux mécanismes (PD danger + PK info) sont
+**Bisoprolol ↔ Quinidine** :
+- Bisoprolol → Quinidine : **info** (CYP2D6 inhibition légère — mécanisme PK)
+- Bisoprolol → Quinidine : **danger** (Antiarythmiques classe IA — mécanisme PD, ajouté Pattern D)
+- Quinidine → Bisoprolol : **danger** (β-bloquant + classe IA — mécanisme PD)
+
+**Verdict** : pas des aberrations. Les deux mécanismes (PD danger + PK info) sont
 **légitimement distincts** et déclenchent des alertes indépendantes — comportement
 attendu. Limitation connue du détecteur de contradictions.
+
+### 3.8 Bug N=10 000 — Sildenafil dcis doublon (auto-fix ✅)
+
+Détection apparue uniquement avec N=10 000 (7 itérations sur 10 000) :
+- Sildenafil rule "Antihypertenseurs / Diurétiques — hypotension additive"
+- `dcis = ["amlodipine","lercanidipine","amlodipine",...]` (amlodipine x2)
+
+**Fix appliqué** : suppression du doublon position 2.
+
+### 3.9 Régression Pattern D corrigée (auto-fix ✅)
+
+Détection apparue uniquement avec N=10 000 (10 itérations) :
+- Mon fix Pattern D initial ajoutait la règle Bisoprolol/Antiarythmiques IA en **warning**
+- Côté Quinidine, la règle existante β-bloquants/IA était en **danger**
+- Disparité gap=1 introduite par mon propre fix.
+
+**Fix appliqué** : upgrade Bisoprolol rule en **danger** + commentaire enrichi
+(Beers 2023, ESC HF 2023, BLOC AV + allongement QT). Aligné côté Quinidine.
 
 ---
 
@@ -139,8 +162,13 @@ attendu. Limitation connue du détecteur de contradictions.
 | Faux positifs scores | 0 | 0 | Cohérent |
 | Faux négatifs sentinelles | 0 | 0 | Cohérent |
 
-**Bugs critiques** : **29 détectés / 29 corrigés** (18 structurels + 11 cliniques = 100% couverture).
+**Bugs critiques** : **31 détectés / 31 corrigés** (18 structurels + 11 cliniques V1 + 2 cliniques V2 N=10k = 100% couverture).
 **Index DDI** : 15 121 → 15 483 relations directionnelles (+ 362 nouvelles règles activées).
+
+**Bootstrap N=10 000 final** :
+- 9 993 itérations propres (99.93%)
+- 7 itérations avec finding "severite_contradiction" → 2 paires uniques, faux positifs PD/PK
+- 0 bug structurel, 0 score incohérent, 0 sentinelle ratée.
 
 ---
 
@@ -174,7 +202,7 @@ Les deux scripts `bootstrap_audit.js` et `exhaustive_audit.js` sont versionnés.
 
 Ré-exécution :
 ```bash
-node bootstrap_audit.js     # 500 itérations Monte-Carlo
+node bootstrap_audit.js     # 10 000 itérations Monte-Carlo
 node exhaustive_audit.js    # Sweep complet de toutes les paires
 ```
 

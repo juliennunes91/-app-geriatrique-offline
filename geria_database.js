@@ -4388,7 +4388,7 @@ const MASTER_DB = {
                                         "commentaire": "Bisoprolol = métabolisme mixte CYP3A4/CYP2D6 (50% rénal) : effet moindre que métoprolol (purement CYP2D6). Surveiller FC.",
                                         "severite": "info"
                               },
-                              { "classe": "Antiarythmiques classe IA — BRADYCARDIE / inotrope cumulé", "dcis": ["quinidine", "disopyramide", "procainamide"], "commentaire": "β-bloquant + classe IA = effets bradycardisants + inotrope (-) cumulés → bloc AV / hypotension. Éviter ou monitoring cardiaque rapproché.", "severite": "warning" },
+                              { "classe": "Antiarythmiques classe IA — BRADYCARDIE / BLOC AV / inotrope (-) cumulé", "dcis": ["quinidine", "disopyramide", "procainamide"], "commentaire": "β-bloquant + classe IA chez âgé : risque bradycardie sévère + bloc AV + allongement QT + inotrope (-) cumulé. Éviter (Beers 2023, ESC HF 2023). Si association inévitable : monitoring ECG/FC rapproché + réduire doses.", "severite": "danger" },
                               {
                                         "classe": "Bétamimétiques / Théophylline (antagonisme bronchodilatateur)",
                                         "dcis": [
@@ -27081,7 +27081,7 @@ const MASTER_DB = {
                               { "classe": "IC sévère / HTA non contrôlée / IDM ou AVC récent (3-6 mois) — STOPP B14", "dcis": ["ic systolique severe", "hta non controlee", "antecedent idm recent", "antecedent avc recent"], "commentaire": "STOPP B14 — CI relative.", "severite": "danger" },
                               { "classe": "Alpha-bloquants (HBP/HTA) — hypotension additive", "dcis": ["doxazosine", "tamsulosine", "alfuzosine", "silodosine", "terazosine"], "commentaire": "Espacer 6h ou dose minimale. Surveillance TA.", "severite": "danger" },
                               { "classe": "Inhibiteurs CYP3A4 PUISSANTS — ↑ exposition x3-7 (↓ DOSE)", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "cobicistat", "clarithromycine", "telithromycine"], "commentaire": "↑ exposition x3-7. Sildénafil : 25 mg /48h max. Préférer tadalafil 2,5 mg LP.", "severite": "danger" },
-                              { "classe": "Antihypertenseurs / Diurétiques — hypotension additive", "dcis": ["amlodipine", "lercanidipine", "amlodipine", "ramipril", "enalapril", "losartan", "valsartan", "furosemide", "hydrochlorothiazide"], "commentaire": "Hypotension modérée. Surveillance.", "severite": "warning" },
+                              { "classe": "Antihypertenseurs / Diurétiques — hypotension additive", "dcis": ["amlodipine", "lercanidipine", "ramipril", "enalapril", "losartan", "valsartan", "furosemide", "hydrochlorothiazide"], "commentaire": "Hypotension modérée. Surveillance.", "severite": "warning" },
                               { "classe": "Diltiazem/Vérapamil/Pamplemousse — ↑ exposition modérée", "dcis": ["diltiazem", "verapamil", "erythromycine", "jus de pamplemousse"], "commentaire": "↑ exposition modérée. Surveillance.", "severite": "warning" },
                               { "classe": "Priapisme / Perte audition-vision — URGENCES", "dcis": ["surveillance urgence"], "commentaire": "Priapisme > 4h → urgence urologique. Perte audition/vision (NAION) → arrêt + ophtalmo/ORL.", "severite": "danger" }
                     ],

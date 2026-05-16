@@ -291,7 +291,7 @@ function detectFalseNegatives(prescription, scores) {
 }
 
 // ─── Boucle bootstrap ─────────────────────────────────────────────────────────
-const N_ITERATIONS = 500;
+const N_ITERATIONS = 10000;
 const SEED_INFO = { date: new Date().toISOString(), N: N_ITERATIONS };
 const allFindings = {
     ddi_dup_intra_med: [],

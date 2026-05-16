@@ -1,11 +1,11 @@
 {
   "summary": {
-    "date": "2026-05-16T19:11:21.025Z",
-    "N": 500,
+    "date": "2026-05-16T20:00:21.008Z",
+    "N": 10000,
     "counts": {
       "ddi_dup_intra_med": 0,
       "ddi_dup_cross": 0,
-      "severite_contradiction": 2,
+      "severite_contradiction": 7,
       "severity_disparity": 0,
       "score_total_no_contrib": 0,
       "score_contrib_no_total": 0,
@@ -13,41 +13,41 @@
       "duplicate_dci_in_prescription": 0,
       "sentinel_false_negative": 0
     },
-    "iterations_with_findings": 2,
-    "iterations_clean": 498,
-    "avg_findings_per_iter": 0.004
+    "iterations_with_findings": 7,
+    "iterations_clean": 9993,
+    "avg_findings_per_iter": 0.0007
   },
   "findings": {
     "ddi_dup_intra_med": [],
     "ddi_dup_cross": [],
     "severite_contradiction": [
       {
-        "iter": 33,
+        "iter": 1582,
         "type": "severite_contradiction",
-        "pair": "sertraline<->tramadol",
+        "pair": "bisoprolol<->quinidine",
         "entries": [
           {
-            "src": "Tramadol",
+            "src": "Quinidine",
             "severite": "danger",
-            "classe": "ISRS / IRSN (syndrome serotoninergique)",
-            "commentaire": "Syndrome serotoninergique : confusion, agitation, mydriase, hyperreflexie, clonus, hyperthermie, tremblements. Eviter chez l'age (Beers 2023, STOPP/START v3) ; si indispensable : doses minimales, surveillance clinique J1-J7"
+            "classe": "Bêta-bloquants / CCB non-DHP — bradycardie / inotrope (-) cumulé",
+            "commentaire": "Cumul bradycardie + inotrope (-). Métoprolol/nébivolol/propafénone = substrats CYP2D6 → ↑ exposition. CI HFrEF."
           },
           {
-            "src": "Sertraline",
-            "severite": "danger",
-            "classe": "Tramadol, Pethidine, Oxycodone",
-            "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène. Tramadol à ÉVITER."
-          },
-          {
-            "src": "Sertraline",
+            "src": "Bisoprolol",
             "severite": "info",
-            "classe": "Substrats CYP2D6 (inhibition modérée — moindre que fluoxétine/paroxétine)",
-            "commentaire": "Sertraline = inhibiteur CYP2D6 modéré (à fortes doses). Effet clinique généralement modeste."
+            "classe": "Inhibiteurs CYP2D6 (↑ exposition légère)",
+            "commentaire": "Bisoprolol = métabolisme mixte CYP3A4/CYP2D6 (50% rénal) : effet moindre que métoprolol (purement CYP2D6). Surveiller FC."
+          },
+          {
+            "src": "Bisoprolol",
+            "severite": "danger",
+            "classe": "Antiarythmiques classe IA — BRADYCARDIE / BLOC AV / inotrope (-) cumulé",
+            "commentaire": "β-bloquant + classe IA chez âgé : risque bradycardie sévère + bloc AV + allongement QT + inotrope (-) cumulé. Éviter (Beers 2023, ESC HF 2023). Si association inévitable : monitoring ECG/FC rapproché + réduire doses."
           }
         ]
       },
       {
-        "iter": 53,
+        "iter": 4144,
         "type": "severite_contradiction",
         "pair": "sertraline<->tramadol",
         "entries": [
@@ -68,6 +68,131 @@
             "severite": "danger",
             "classe": "ISRS / IRSN (syndrome serotoninergique)",
             "commentaire": "Syndrome serotoninergique : confusion, agitation, mydriase, hyperreflexie, clonus, hyperthermie, tremblements. Eviter chez l'age (Beers 2023, STOPP/START v3) ; si indispensable : doses minimales, surveillance clinique J1-J7"
+          }
+        ]
+      },
+      {
+        "iter": 6668,
+        "type": "severite_contradiction",
+        "pair": "sertraline<->tramadol",
+        "entries": [
+          {
+            "src": "Sertraline",
+            "severite": "danger",
+            "classe": "Tramadol, Pethidine, Oxycodone",
+            "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène. Tramadol à ÉVITER."
+          },
+          {
+            "src": "Sertraline",
+            "severite": "info",
+            "classe": "Substrats CYP2D6 (inhibition modérée — moindre que fluoxétine/paroxétine)",
+            "commentaire": "Sertraline = inhibiteur CYP2D6 modéré (à fortes doses). Effet clinique généralement modeste."
+          },
+          {
+            "src": "Tramadol",
+            "severite": "danger",
+            "classe": "ISRS / IRSN (syndrome serotoninergique)",
+            "commentaire": "Syndrome serotoninergique : confusion, agitation, mydriase, hyperreflexie, clonus, hyperthermie, tremblements. Eviter chez l'age (Beers 2023, STOPP/START v3) ; si indispensable : doses minimales, surveillance clinique J1-J7"
+          }
+        ]
+      },
+      {
+        "iter": 6857,
+        "type": "severite_contradiction",
+        "pair": "bisoprolol<->quinidine",
+        "entries": [
+          {
+            "src": "Quinidine",
+            "severite": "danger",
+            "classe": "Bêta-bloquants / CCB non-DHP — bradycardie / inotrope (-) cumulé",
+            "commentaire": "Cumul bradycardie + inotrope (-). Métoprolol/nébivolol/propafénone = substrats CYP2D6 → ↑ exposition. CI HFrEF."
+          },
+          {
+            "src": "Bisoprolol",
+            "severite": "info",
+            "classe": "Inhibiteurs CYP2D6 (↑ exposition légère)",
+            "commentaire": "Bisoprolol = métabolisme mixte CYP3A4/CYP2D6 (50% rénal) : effet moindre que métoprolol (purement CYP2D6). Surveiller FC."
+          },
+          {
+            "src": "Bisoprolol",
+            "severite": "danger",
+            "classe": "Antiarythmiques classe IA — BRADYCARDIE / BLOC AV / inotrope (-) cumulé",
+            "commentaire": "β-bloquant + classe IA chez âgé : risque bradycardie sévère + bloc AV + allongement QT + inotrope (-) cumulé. Éviter (Beers 2023, ESC HF 2023). Si association inévitable : monitoring ECG/FC rapproché + réduire doses."
+          }
+        ]
+      },
+      {
+        "iter": 7323,
+        "type": "severite_contradiction",
+        "pair": "sertraline<->tramadol",
+        "entries": [
+          {
+            "src": "Sertraline",
+            "severite": "danger",
+            "classe": "Tramadol, Pethidine, Oxycodone",
+            "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène. Tramadol à ÉVITER."
+          },
+          {
+            "src": "Sertraline",
+            "severite": "info",
+            "classe": "Substrats CYP2D6 (inhibition modérée — moindre que fluoxétine/paroxétine)",
+            "commentaire": "Sertraline = inhibiteur CYP2D6 modéré (à fortes doses). Effet clinique généralement modeste."
+          },
+          {
+            "src": "Tramadol",
+            "severite": "danger",
+            "classe": "ISRS / IRSN (syndrome serotoninergique)",
+            "commentaire": "Syndrome serotoninergique : confusion, agitation, mydriase, hyperreflexie, clonus, hyperthermie, tremblements. Eviter chez l'age (Beers 2023, STOPP/START v3) ; si indispensable : doses minimales, surveillance clinique J1-J7"
+          }
+        ]
+      },
+      {
+        "iter": 7512,
+        "type": "severite_contradiction",
+        "pair": "bisoprolol<->quinidine",
+        "entries": [
+          {
+            "src": "Quinidine",
+            "severite": "danger",
+            "classe": "Bêta-bloquants / CCB non-DHP — bradycardie / inotrope (-) cumulé",
+            "commentaire": "Cumul bradycardie + inotrope (-). Métoprolol/nébivolol/propafénone = substrats CYP2D6 → ↑ exposition. CI HFrEF."
+          },
+          {
+            "src": "Bisoprolol",
+            "severite": "info",
+            "classe": "Inhibiteurs CYP2D6 (↑ exposition légère)",
+            "commentaire": "Bisoprolol = métabolisme mixte CYP3A4/CYP2D6 (50% rénal) : effet moindre que métoprolol (purement CYP2D6). Surveiller FC."
+          },
+          {
+            "src": "Bisoprolol",
+            "severite": "danger",
+            "classe": "Antiarythmiques classe IA — BRADYCARDIE / BLOC AV / inotrope (-) cumulé",
+            "commentaire": "β-bloquant + classe IA chez âgé : risque bradycardie sévère + bloc AV + allongement QT + inotrope (-) cumulé. Éviter (Beers 2023, ESC HF 2023). Si association inévitable : monitoring ECG/FC rapproché + réduire doses."
+          }
+        ]
+      },
+      {
+        "iter": 9506,
+        "type": "severite_contradiction",
+        "pair": "sertraline<->tramadol",
+        "entries": [
+          {
+            "src": "Tramadol",
+            "severite": "danger",
+            "classe": "ISRS / IRSN (syndrome serotoninergique)",
+            "commentaire": "Syndrome serotoninergique : confusion, agitation, mydriase, hyperreflexie, clonus, hyperthermie, tremblements. Eviter chez l'age (Beers 2023, STOPP/START v3) ; si indispensable : doses minimales, surveillance clinique J1-J7"
+          },
+          {
+            "src": "Sertraline",
+            "severite": "danger",
+            "classe": "Tramadol, Pethidine, Oxycodone",
+            "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène. Tramadol à ÉVITER."
+          },
+          {
+            "src": "Sertraline",
+            "severite": "info",
+            "classe": "Substrats CYP2D6 (inhibition modérée — moindre que fluoxétine/paroxétine)",
+            "commentaire": "Sertraline = inhibiteur CYP2D6 modéré (à fortes doses). Effet clinique généralement modeste."
           }
         ]
       }
@@ -83,290 +208,312 @@
     {
       "id": 1,
       "patient": {
-        "age": 76,
+        "age": 73,
         "sexe": "F",
-        "dfg": 90,
-        "poids": 63,
+        "dfg": 110,
+        "poids": 81,
         "comorbidites": [
-          "HBP",
+          "glaucome",
+          "HTA",
+          "depression",
           "goutte",
-          "IRC",
-          "FA",
-          "IC"
+          "Parkinson"
         ],
         "fragile": false
       },
-      "n_meds": 4,
+      "n_meds": 20,
       "dcis": [
-        "Nitrendipine",
-        "Fluconazole",
-        "Zolmitriptan",
-        "Indacaterol"
+        "Zopiclone",
+        "Aztreonam",
+        "Nateglinide",
+        "Cyamemazine",
+        "Norfloxacine",
+        "Hydralazine",
+        "Ertapenem",
+        "Hydroxyzine",
+        "Roxithromycine",
+        "Atorvastatine",
+        "Propafenone",
+        "Atenolol + chlortalidone",
+        "Salmeterol",
+        "Candesartan",
+        "Fondaparinux",
+        "Cotrimoxazole",
+        "Fexofenadine",
+        "Ertugliflozin",
+        "Topiramate",
+        "Dipyridamole"
       ],
       "findings": []
     },
     {
       "id": 2,
       "patient": {
-        "age": 72,
-        "sexe": "F",
-        "dfg": 46,
-        "poids": 59,
-        "comorbidites": [],
+        "age": 82,
+        "sexe": "H",
+        "dfg": 50,
+        "poids": 65,
+        "comorbidites": [
+          "FA",
+          "glaucome",
+          "BPCO"
+        ],
         "fragile": false
       },
-      "n_meds": 16,
+      "n_meds": 6,
       "dcis": [
-        "Memantine",
-        "Rifabutine",
-        "Cefotaxime",
-        "Daptomycine",
-        "Propantheline",
-        "Imipenem/Cilastatine/Relebactam",
-        "Desipramine",
-        "Lymecycline",
-        "Esomeprazole",
-        "Amiodarone",
-        "Fluconazole",
-        "Disopyramide",
-        "Cicletanine",
-        "Tramadol",
-        "Atorvastatine",
-        "Fentanyl"
+        "Rilmenidine",
+        "Ephedrine",
+        "Lercanidipine",
+        "Imipenem + cilastatine",
+        "Oritavancine",
+        "Alfuzosine"
       ],
       "findings": []
     },
     {
       "id": 3,
       "patient": {
-        "age": 78,
+        "age": 71,
         "sexe": "F",
-        "dfg": 86,
-        "poids": 72,
+        "dfg": 119,
+        "poids": 78,
         "comorbidites": [
-          "epilepsie",
           "depression",
-          "IRC"
+          "BPCO",
+          "glaucome",
+          "HTA"
         ],
         "fragile": false
       },
-      "n_meds": 8,
+      "n_meds": 6,
       "dcis": [
-        "Mirabegron",
-        "Memantine",
-        "Rilmenidine",
-        "Tigecycline",
-        "Felodipine",
-        "Macrogol",
-        "Enalapril",
-        "Alfacalcidol"
+        "Clindamycine",
+        "Acide fusidique",
+        "Primidone",
+        "Posaconazole",
+        "Scopolamine",
+        "Enalapril"
       ],
       "findings": []
     },
     {
       "id": 4,
       "patient": {
-        "age": 99,
-        "sexe": "F",
-        "dfg": 116,
-        "poids": 72,
+        "age": 98,
+        "sexe": "H",
+        "dfg": 107,
+        "poids": 86,
         "comorbidites": [
-          "glaucome",
-          "incontinence"
+          "FA",
+          "depression",
+          "BPCO",
+          "DT2",
+          "Parkinson"
         ],
         "fragile": false
       },
-      "n_meds": 16,
+      "n_meds": 11,
       "dcis": [
-        "Methotrexate",
-        "Piperacilline + tazobactam",
-        "Cycloserine",
-        "Moxonidine",
-        "Darifenacin",
-        "Clozapine",
-        "Nimesulide",
-        "Colchicine",
-        "Ketoprofene",
-        "Phenobarbital",
-        "Simvastatine",
-        "Cobicistat",
-        "Ibuprofene",
-        "Poudre d'opium",
-        "Haloperidol",
-        "Lamotrigine"
+        "Pentoxifylline",
+        "Sulindac",
+        "Aldactazine",
+        "Levocetirizine",
+        "Clotiazepam",
+        "Ketoconazole",
+        "Zopiclone",
+        "Fluoxetine",
+        "Isradipine",
+        "Acenocoumarol",
+        "Insuline lispro"
       ],
       "findings": []
     },
     {
       "id": 5,
       "patient": {
-        "age": 97,
+        "age": 92,
         "sexe": "F",
-        "dfg": 104,
-        "poids": 56,
+        "dfg": 21,
+        "poids": 69,
         "comorbidites": [
-          "epilepsie",
-          "denutrition",
-          "FA"
+          "BPCO"
         ],
-        "fragile": false
+        "fragile": true
       },
-      "n_meds": 15,
+      "n_meds": 18,
       "dcis": [
-        "Sofosbuvir",
-        "Nortriptyline",
-        "Toltérodine",
-        "Nalbuphine",
-        "Salbutamol",
-        "Metronidazole",
-        "Primidone",
-        "Fluoxetine",
-        "Desvenlafaxine",
-        "Azithromycine",
-        "Risedronate",
-        "Allopurinol",
-        "Acide fusidique",
-        "Insuline glulisine",
-        "Fluvastatine"
+        "Diclofenac",
+        "Nicergoline",
+        "Naratriptan",
+        "Carbamazepine",
+        "Doxycycline",
+        "Linezolide",
+        "Acide acetylsalicylique",
+        "Clemastine",
+        "Imipenem + cilastatine",
+        "Pregabaline",
+        "Morphine",
+        "Meropenem",
+        "Meprobamate",
+        "Celecoxib",
+        "Cefazoline",
+        "Torasemide",
+        "Sulfadiazine",
+        "Finerenone"
       ],
       "findings": []
     },
     {
       "id": 6,
       "patient": {
-        "age": 80,
-        "sexe": "F",
-        "dfg": 66,
-        "poids": 85,
+        "age": 77,
+        "sexe": "H",
+        "dfg": 52,
+        "poids": 73,
         "comorbidites": [],
         "fragile": false
       },
-      "n_meds": 11,
+      "n_meds": 3,
       "dcis": [
-        "Isosorbide",
-        "Sacubitril/Valsartan",
-        "Flunarizine",
-        "Amiodarone",
-        "Tadalafil",
-        "Desloratadine",
-        "Ceftobiprole",
-        "Insuline glulisine",
-        "Linezolide",
-        "Nicergoline",
-        "Zofenopril"
+        "Atorvastatine",
+        "Dalteparine",
+        "Fesoterodine"
       ],
       "findings": []
     },
     {
       "id": 7,
       "patient": {
-        "age": 63,
+        "age": 81,
         "sexe": "F",
-        "dfg": 79,
-        "poids": 71,
+        "dfg": 109,
+        "poids": 86,
         "comorbidites": [
-          "DT2",
-          "IC",
-          "goutte",
-          "glaucome",
-          "FA",
-          "denutrition"
+          "BPCO",
+          "incontinence",
+          "osteoporose",
+          "PR"
         ],
         "fragile": false
       },
-      "n_meds": 6,
+      "n_meds": 14,
       "dcis": [
-        "Enoxaparine",
-        "Chlorpromazine",
-        "Hydrochlorothiazide",
-        "Prasugrel",
-        "Nitrazepam",
-        "Leflunomide"
+        "Bedaquiline",
+        "Triamterene",
+        "Bumetanide",
+        "Trospium",
+        "Brompheniramine",
+        "Fexofenadine",
+        "Colchicine",
+        "Eletriptan",
+        "Amitriptyline",
+        "Cefpodoxime",
+        "Desipramine",
+        "Atropine",
+        "Propylthiouracile",
+        "Risedronate"
       ],
       "findings": []
     },
     {
       "id": 8,
       "patient": {
-        "age": 61,
-        "sexe": "F",
-        "dfg": 93,
-        "poids": 88,
+        "age": 100,
+        "sexe": "H",
+        "dfg": 85,
+        "poids": 81,
         "comorbidites": [
-          "epilepsie",
-          "AVC",
+          "osteoporose",
           "glaucome",
-          "asthme",
-          "Parkinson"
+          "FA",
+          "goutte",
+          "BPCO",
+          "PR"
         ],
         "fragile": false
       },
-      "n_meds": 5,
+      "n_meds": 20,
       "dcis": [
-        "Zaleplon",
-        "Lormetazepam",
-        "Aceclofenac",
-        "Cyamemazine",
-        "Nicardipine"
+        "Cyproheptadine",
+        "Alfacalcidol",
+        "Olmesartan",
+        "Ceftolozane + tazobactam",
+        "Theophylline",
+        "Etoricoxib",
+        "Alogliptine",
+        "Desipramine",
+        "Clevidipine",
+        "Ketoconazole",
+        "Cycloserine",
+        "Pregabaline",
+        "Saxagliptine",
+        "Benazepril",
+        "Bimatoprost",
+        "Solifenacine",
+        "Propiverine",
+        "Ascorbate ferreux",
+        "Omeprazole",
+        "Ipratropium"
       ],
       "findings": []
     },
     {
       "id": 9,
       "patient": {
-        "age": 65,
+        "age": 70,
         "sexe": "H",
-        "dfg": 45,
-        "poids": 53,
+        "dfg": 36,
+        "poids": 47,
         "comorbidites": [
-          "incontinence",
-          "depression",
-          "AVC",
-          "IC"
+          "epilepsie",
+          "IRC"
         ],
         "fragile": false
       },
-      "n_meds": 4,
+      "n_meds": 17,
       "dcis": [
-        "Tamoxifene",
-        "Terbutaline",
-        "Betamethasone",
-        "Felodipine"
+        "Rivaroxaban",
+        "Mirabegron",
+        "Asunaprevir",
+        "Ranitidine",
+        "Cefazoline",
+        "Vancomycine",
+        "Rasagiline",
+        "Bromocriptine",
+        "Carbonate de calcium",
+        "Colistine",
+        "Trandolapril",
+        "Valsartan",
+        "Gliclazide",
+        "Nicergoline",
+        "Formoterol",
+        "Umeclidinium",
+        "Cefaclor"
       ],
       "findings": []
     },
     {
       "id": 10,
       "patient": {
-        "age": 88,
-        "sexe": "H",
-        "dfg": 106,
-        "poids": 69,
+        "age": 77,
+        "sexe": "F",
+        "dfg": 90,
+        "poids": 91,
         "comorbidites": [
-          "IRC",
-          "depression",
+          "PR",
           "incontinence",
-          "denutrition"
+          "IC"
         ],
         "fragile": false
       },
-      "n_meds": 15,
+      "n_meds": 5,
       "dcis": [
-        "Spironolactone",
-        "Ceftazidime",
-        "Pheniramine",
-        "Cyproheptadine",
-        "Mélatonine",
-        "Indacaterol",
-        "Cefadroxil",
-        "Benazepril",
-        "Hydroxychloroquine",
-        "Daptomycine",
-        "Ampicilline + sulbactam",
-        "Pramipexole",
-        "Bisoprolol",
-        "Finerenone",
-        "Diphenhydramine"
+        "Pimozide",
+        "Opicapone",
+        "Albendazole",
+        "Irbesartan",
+        "Gabapentine"
       ],
       "findings": []
     }
