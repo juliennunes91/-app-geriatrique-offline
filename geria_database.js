@@ -1500,7 +1500,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Activité sympathomimétique intrinsèque",
-                    "source": "RCP Sectral ; ESC HTA 2023"
+                    "source": "RCP Sectral ; ESC HTA 2024"
           },
           {
                     "dci": "Acenocoumarol",
@@ -2731,7 +2731,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB DHP vasosélectif (canaux L) — pas d'effet inotrope/chronotrope/dromotrope significatif. Demi-vie 35-50h → 1 prise/j, effet stable. HTA 1ère ligne sujet âgé (ESC 2023, HYVET trial > 80 ans, ASCOT-BPLA, ACCOMPLISH). Angor stable, vasospastique (Prinzmetal). Effets secondaires : œdèmes MI (10-20%, dose-dép, NE répond PAS aux diurétiques — diminution de dose ou substitution lercanidipine/manidipine), céphalées, flush, gingivite hypertrophique (rare).",
-                    "source": "RCP Amlor ; ESC HTA 2023 ; HYVET 2008 ; ASCOT-BPLA 2005 ; ACCOMPLISH 2008 ; PRAISE-2 ; Gandhi JAMA Intern Med 2013"
+                    "source": "RCP Amlor ; ESC HTA 2024 ; HYVET 2008 ; ASCOT-BPLA 2005 ; ACCOMPLISH 2008 ; PRAISE-2 ; Gandhi JAMA Intern Med 2013"
           },
           {
                     "dci": "Amoxapine",
@@ -3429,7 +3429,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "BB hydrophile cardiosélectif β1 (35:1). Élimination rénale > 90% → accumulation IRC. PIM Beers 2023 / STOPP-PIM chez sujet âgé : ↑ AVC vs autres antihypertenseurs (LIFE, ASCOT-BPLA), mortalité non démontrée (méta-analyse Lindholm Lancet 2005). NON validé en HFrEF (absent des essais CIBIS/MERIT/COPERNICUS/SENIORS). Avantage : pas de BHE (peu d'effets centraux : moins de cauchemars/dépression que propranolol). Indications : angor stable, HTA jeune sans comorbidité, FA contrôle FC en alternative. À EVITER en 1ère intention HTA sujet âgé.",
-                    "source": "RCP Ténormine ; ESC HTA 2023 ; Beers 2023 ; STOPP v3 2023 ; LIFE 2002 ; ASCOT-BPLA 2005 ; Lindholm Lancet 2005"
+                    "source": "RCP Ténormine ; ESC HTA 2024 ; Beers 2023 ; STOPP v3 2023 ; LIFE 2002 ; ASCOT-BPLA 2005 ; Lindholm Lancet 2005"
           },
           {
                     "dci": "Atenolol + chlortalidone",
@@ -3480,7 +3480,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Ajustement IRC (aténolol élimination rénale). Risque hypokaliémie (chlortalidone).",
-                    "source": "RCP Tenoretic ; ESC HTA 2023"
+                    "source": "RCP Tenoretic ; ESC HTA 2024"
           },
           {
                     "dci": "Atorvastatine",
@@ -4033,7 +4033,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "IEC pro-drogue (similaire énalapril) — bénazéprilate métabolite actif. T½ 10-11h → 1-2 prises/j. Élimination double rénale/biliaire → moins d'accumulation en IRC sévère que captopril/lisinopril (élimination rénale exclusive). Indications : HTA, HFrEF, néphropathie diabétique (AIPRI trial — Maschio NEJM 1996). Moins utilisé en France que ramipril/périndopril/énalapril.",
-                    "source": "RCP Cibacène ; ESC HTA 2023 ; AIPRI Maschio NEJM 1996"
+                    "source": "RCP Cibacène ; ESC HTA 2024 ; AIPRI Maschio NEJM 1996"
           },
           {
                     "dci": "Benzathine benzylpenicilline",
@@ -4207,7 +4207,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Usage systémique et ophtalmologique",
-                    "source": "RCP Kerlone/Betoptic ; ESC HTA 2023"
+                    "source": "RCP Kerlone/Betoptic ; ESC HTA 2024"
           },
           {
                     "dci": "Bimatoprost",
@@ -4327,7 +4327,7 @@ const MASTER_DB = {
                                                   "verapamil",
                                                   "diltiazem"
                                         ],
-                                        "commentaire": "Cumul bradycardisant + inotrope négatif : risque BAV complet, arrêt sinusal, choc cardiogénique. CI en HFrEF, prudence extrême par voie IV. Préférer DHP (amlodipine) si CCB nécessaire (ESC HTA 2023).",
+                                        "commentaire": "Cumul bradycardisant + inotrope négatif : risque BAV complet, arrêt sinusal, choc cardiogénique. CI en HFrEF, prudence extrême par voie IV. Préférer DHP (amlodipine) si CCB nécessaire (ESC HTA 2024).",
                                         "severite": "danger"
                               },
                               {
@@ -4429,7 +4429,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "BB de référence HFrEF (CIBIS-II trial, mortalité -34% NYHA III-IV). Titration HFrEF : 1,25 → 2,5 → 3,75 → 5 → 7,5 → 10 mg/j toutes les 2 semaines. Indications : HFrEF, post-IDM, HTA (4ème ligne ESC), FA contrôle FC. Cardiosélectif β1 (ratio 75:1) → mieux toléré que propranolol/carvédilol en BPCO/diabète. Préféré chez sujet âgé en HFrEF (CIBIS-ELD).",
-                    "source": "RCP Cardensiel ; ESC IC 2023 ; ESC HTA 2023 ; ESC FA 2024 ; CIBIS-II 1999 ; CIBIS-ELD 2011"
+                    "source": "RCP Cardensiel ; ESC IC 2023 ; ESC HTA 2024 ; ESC FA 2024 ; CIBIS-II 1999 ; CIBIS-ELD 2011"
           },
           {
                     "dci": "Boceprevir",
@@ -5070,7 +5070,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Première molécule IEC (1981 — Cushman/Ondetti). T½ courte (2h) → 2-3 prises/j → mauvaise observance chez âgé. Indications : HTA, HFrEF (SOLVD trial 1991), post-IDM (SAVE), néphropathie diabétique (Lewis 1993). UNIQUE IEC avec groupe THIOL (-SH) → ↑ neutropénie + Stevens-Johnson + syndrome lupique surtout avec allopurinol. Préférer IEC à T½ longue (ramipril, périndopril, énalapril) chez âgé pour observance et hypotension 1ère dose. Reste utile comme test diagnostique HTA rénovasculaire et en urgence hypertensive (effet rapide).",
-                    "source": "RCP Lopril ; ESC HTA 2023 ; ESC IC 2023 ; SOLVD 1991 ; SAVE 1992 ; Lewis 1993"
+                    "source": "RCP Lopril ; ESC HTA 2024 ; ESC IC 2023 ; SOLVD 1991 ; SAVE 1992 ; Lewis 1993"
           },
           {
                     "dci": "Carbamazepine",
@@ -5315,7 +5315,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Usage systémique et ophtalmologique",
-                    "source": "RCP Mikelan/Carteol ; ESC HTA 2023"
+                    "source": "RCP Mikelan/Carteol ; ESC HTA 2024"
           },
           {
                     "dci": "Carvedilol",
@@ -6083,7 +6083,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "À prendre à jeun (chélation par calcium alimentaire)",
-                    "source": "RCP Célectol ; ESC HTA 2023"
+                    "source": "RCP Célectol ; ESC HTA 2024"
           },
           {
                     "dci": "Cetirizine",
@@ -6355,7 +6355,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Thiazide de RÉFÉRENCE en HTA avec preuves cardiovasculaires majeures : ALLHAT 2002 (Furberg JAMA — 33357 patients HTA, équivalente lisinopril/amlodipine et supérieure doxazosine pour IC) et SHEP 1991 (HTA systolique isolée > 60 ans, ↓ AVC -36% / IDM -27% / IC -55%). T½ 40-60h (vs HCTZ 6-12h) → effet plus prolongé et stable, observance améliorée. Plus puissant à doses équivalentes (12,5 mg chlortalidone ≈ 25 mg HCTZ). Effet hypokaliémiant plus marqué que HCTZ (T½ longue). Moins de preuves de carcinome cutané (vs Pedersen 2018 sur HCTZ) mais photosensibilisation possible. Préférable à HCTZ chez âgé non-IRC sévère.",
-                    "source": "RCP Hygroton ; ESC HTA 2023 ; ALLHAT 2002 (Furberg JAMA) ; SHEP 1991 ; Roush meta-analyse 2012 (chlortalidone > HCTZ)"
+                    "source": "RCP Hygroton ; ESC HTA 2024 ; ALLHAT 2002 (Furberg JAMA) ; SHEP 1991 ; Roush meta-analyse 2012 (chlortalidone > HCTZ)"
           },
           {
                     "dci": "Cholecalciferol",
@@ -6457,7 +6457,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Diurétique : hypokaliémie, hyponatrémie (thiazidiques surtout), déshydratation, hyperuricémie. Surveillance ionogramme/créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
-                    "source": "RCP Tenstaten | ESC HTA 2023"
+                    "source": "RCP Tenstaten | ESC HTA 2024"
           },
           {
                     "dci": "Ciclosporine",
@@ -6550,7 +6550,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "IEC pro-drogue. Élimination rénale. Indication HTA. Peu utilisé en France (préférer ramipril/périndopril). Caractéristiques similaires aux autres IEC à T½ moyenne.",
-                    "source": "RCP Justor ; ESC HTA 2023"
+                    "source": "RCP Justor ; ESC HTA 2024"
           },
           {
                     "dci": "Cilostazol",
@@ -8883,7 +8883,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB non-DHP : action ciblée nœuds AV (bradycardisant, BAV) + inotrope négatif modéré (< vérapamil) + vasodilatation. Indications : HTA, angor (vasospastique, stable), FA contrôle FC (alternative aux BB chez asthme/HFpEF — FEVG préservée). CI ABSOLUE : HFrEF (FEVG ≤ 40%), BAV 2-3, dysfonction sinusale, IDM aigu avec IC. PIM Beers/STOPP en HFrEF. Inhibiteur CYP3A4 modéré → nombreuses interactions (statines, ciclosporine, BZD, ivabradine).",
-                    "source": "RCP Tildiem ; ESC HTA 2023 ; ESC FA 2024 ; Beers 2023 ; STOPP v3 2023 ; ANSM 2014 (ivabradine) ; FDA 2011 (statines)"
+                    "source": "RCP Tildiem ; ESC HTA 2024 ; ESC FA 2024 ; Beers 2023 ; STOPP v3 2023 ; ANSM 2014 (ivabradine) ; FDA 2011 (statines)"
           },
           {
                     "dci": "Dimenhydrinate",
@@ -9400,7 +9400,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Alpha-1 bloquant non sélectif (vs tamsulosine α-1A spécifique). Indications : HBP symptomatique (EAU 2022, ↓ IPSS), HTA résistante en 4-5ème ligne (PATHWAY-2 — Spironolactone > Doxazosine > Bisoprolol). ALLHAT 2000 : branche doxazosine arrêtée prématurément (↑ x2 IC vs chlortalidone, ↑ AVC). → PIM Beers 2023 en HTA monothérapie. Effet favorable profil lipidique (↑ HDL, ↓ LDL/TG). LP forme à privilégier chez âgé. IFIS chirurgie cataracte. T½ longue 22h.",
-                    "source": "RCP Zoxan ; EAU 2022 ; ESC HTA 2023 ; Beers 2023 ; ALLHAT 2000 ; PATHWAY-2 ; FDA 2005 (IFIS)"
+                    "source": "RCP Zoxan ; EAU 2022 ; ESC HTA 2024 ; Beers 2023 ; ALLHAT 2000 ; PATHWAY-2 ; FDA 2005 (IFIS)"
           },
           {
                     "dci": "Doxepine",
@@ -10186,7 +10186,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Ne pas associer IEC+ARA2+anti-aldostérone (triple blocage SRA). Hyponatrémie possible (moins fréquente que sous diurétiques de l'anse/thiazidiques) — surveillance Na+ recommandée chez sujet âgé.",
-                    "source": "RCP Inspra ; ESC HF 2021"
+                    "source": "RCP Inspra ; ESC IC 2023"
           },
           {
                     "dci": "Eprosartan",
@@ -10218,7 +10218,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Faible volume de distribution",
-                    "source": "RCP Teveten ; ESC HTA 2023"
+                    "source": "RCP Teveten ; ESC HTA 2024"
           },
           {
                     "dci": "Ergocalciferol",
@@ -10878,7 +10878,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB DHP 2ème génération. T½ courte mais formulation LP (Flodil LP). Hautement sensible au CYP3A4 (intestinal +++) → interaction emblématique avec jus de pamplemousse (étude Bailey Lancet 1991, 1ère description). Préférer amlodipine chez âgé : moins d'interactions, T½ longue (35-50h vs 15-25h pour félodipine), moins de tachycardie réflexe.",
-                    "source": "RCP Flodil ; ESC HTA 2023 ; Bailey Lancet 1991 (pamplemousse)"
+                    "source": "RCP Flodil ; ESC HTA 2024 ; Bailey Lancet 1991 (pamplemousse)"
           },
           {
                     "dci": "Fentanyl",
@@ -11631,7 +11631,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "IEC pro-drogue. Particularité : élimination DOUBLE rénale + biliaire ≈ 50:50 → compensation hépatique en IRC, compensation rénale en cirrhose. Atout en IRC sévère (DFG < 30) chez âgé fragile (pas d'accumulation). Sels phosphoniques → interaction avec antiacides (espacer). Indications : HTA, HFrEF (FEST trial). Peu utilisé en France.",
-                    "source": "RCP Fozitec ; ESC HTA 2023 ; FEST 1995"
+                    "source": "RCP Fozitec ; ESC HTA 2024 ; FEST 1995"
           },
           {
                     "dci": "Frovatriptan",
@@ -12075,7 +12075,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Vasodilatateur artériolaire direct : indication HFrEF + intolérance IEC/ARA2 (avec ISDN — V-HeFT). Tachycardie réflexe, lupus iatrogène. Rare en 1ère intention.",
-                    "source": "RCP Nepresol | ESC HTA 2023"
+                    "source": "RCP Nepresol | ESC HTA 2024"
           },
           {
                     "dci": "Hydrochlorothiazide",
@@ -12121,7 +12121,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Thiazide de référence historique. Efficacité plafond à 25 mg/j (au-delà : peu d'effet antiHTA additionnel, ↑ effets secondaires). T½ courte 6-12h. ALERTE PHOTOSENSIBILISATION : méta-analyse danoise Pedersen JAMA Intern Med 2018 — ↑ risque carcinome basocellulaire +29% et épidermoïde +540% selon dose cumulée → ANSM 2018, EMA 2018 alertes — protection solaire stricte recommandée + surveillance dermato. Préférer indapamide LP (HYVET — bénéfice mortalité > 80 ans) ou chlortalidone (ALLHAT — équivalent IEC/CCB en HTA). HCTZ encore très utilisé en association fixe (Co-Diovan, Co-Aprovel...).",
-                    "source": "RCP Esidrex ; ESC HTA 2023 ; ALLHAT 2002 ; Pedersen JAMA Intern Med 2018 ; ANSM 2018"
+                    "source": "RCP Esidrex ; ESC HTA 2024 ; ALLHAT 2002 ; Pedersen JAMA Intern Med 2018 ; ANSM 2018"
           },
           {
                     "dci": "Hydrocortisone",
@@ -12549,7 +12549,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Diurétique apparenté thiazidique (indoline). Mécanisme : inhibition Na/Cl tubule distal + EFFET VASODILATATEUR ARTÉRIEL (spécificité indapamide). ÉTUDE PHARE chez âgé : HYVET (Beckett NEJM 2008, 3845 patients > 80 ans, indapamide ± perindopril) — ↓ AVC -30%, ↓ mortalité totale -21%, ↓ IC -64%. Premier antiHTA validé chez > 80 ans avec bénéfice mortalité. PROGRESS (Lancet 2001) : perindopril+indapamide → ↓ AVC récidive -28%. ADVANCE (DT2) : perindopril+indapamide → ↓ mortalité CV. EFFET MOINS HYPOKALIÉMIANT que HCTZ/chlortalidone (avantage chez âgé). Préférable aux thiazidiques classiques en gériatrie.",
-                    "source": "RCP Fludex ; ESC HTA 2023 ; HYVET Beckett NEJM 2008 ; PROGRESS Lancet 2001 ; ADVANCE 2007"
+                    "source": "RCP Fludex ; ESC HTA 2024 ; HYVET Beckett NEJM 2008 ; PROGRESS Lancet 2001 ; ADVANCE 2007"
           },
           {
                     "dci": "Insuline aspart",
@@ -12958,7 +12958,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CI grossesse",
-                    "source": "RCP Aprovel ; ESC HTA 2023"
+                    "source": "RCP Aprovel ; ESC HTA 2024"
           },
           {
                     "dci": "Isoniazide",
@@ -13081,7 +13081,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB DHP T½ courte (8h). Peu utilisée en France. Étude STEPS-PD (Simuni Lancet Neurol 2020) : pas d'effet neuroprotecteur dans la maladie de Parkinson (essai négatif). Pas de bénéfice neuro malgré BHE.",
-                    "source": "RCP Icaz ; ESC HTA 2023 ; STEPS-PD 2020"
+                    "source": "RCP Icaz ; ESC HTA 2024 ; STEPS-PD 2020"
           },
           {
                     "dci": "Ketamine",
@@ -13186,7 +13186,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Usage HTA gravidique. Risque hépatotoxicité.",
-                    "source": "RCP Trandate ; ESC HTA 2023"
+                    "source": "RCP Trandate ; ESC HTA 2024"
           },
           {
                     "dci": "Lacosamide",
@@ -13516,7 +13516,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB DHP de 3ème génération à action prolongée (T½ courte mais effet prolongé par liaison aux canaux membranaires). Très vasosélective. Avantage clinique chez âgé : ↓ œdèmes MI vs amlodipine (LERCAN trial, étude ELYPSE). Substrat CYP3A4 avec 1er passage hépatique +++ (biodisponibilité 10%) → grande variabilité, sensible aux inhibiteurs/inducteurs/jus de pamplemousse. PRENDRE 15 MIN AVANT REPAS (sinon biodisponibilité x4). Alternative à amlodipine si œdèmes mal tolérés.",
-                    "source": "RCP Zanidip ; ESC HTA 2023 ; LERCAN ; ELYPSE"
+                    "source": "RCP Zanidip ; ESC HTA 2024 ; LERCAN ; ELYPSE"
           },
           {
                     "dci": "Levetiracetam",
@@ -14283,7 +14283,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Seul ARA2 avec effet uricosurique",
-                    "source": "RCP Cozaar ; ESC HTA 2023"
+                    "source": "RCP Cozaar ; ESC HTA 2024"
           },
           {
                     "dci": "Loxapine",
@@ -14526,7 +14526,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB DHP de 3ème génération. Vasosélectivité élevée + action prolongée. Avantages chez âgé : ↓ œdèmes MI vs amlodipine (~5% vs 15-20%), néphroprotection (↓ albuminurie chez diabétique — étude AMANDA, JATOS subanalysis). Indication HTA, particulièrement diabétique/IRC modérée. Pas validé HFrEF (comme tous DHP). Alternative à amlodipine si œdèmes mal tolérés.",
-                    "source": "RCP Iperten ; ESC HTA 2023 ; AMANDA ; JATOS"
+                    "source": "RCP Iperten ; ESC HTA 2024 ; AMANDA ; JATOS"
           },
           {
                     "dci": "Maprotiline",
@@ -15174,7 +15174,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "BB validé HFrEF (MERIT-HF avec succinate LP, mortalité -34%). Forme tartrate (Lopressor) = HTA/angor uniquement. Forme succinate LP (Selozok) = HFrEF référence. Cardiosélectif β1 (ratio 20:1, < bisoprolol). Métabolisme CYP2D6 exclusif → variabilité +++ (5-10% métaboliseurs lents → dose plus faible). Préférer bisoprolol/nébivolol chez âgé fragile (moins d'interactions CYP2D6).",
-                    "source": "RCP Lopressor/Seloken/Selozok ; ESC IC 2023 ; ESC HTA 2023 ; MERIT-HF 1999"
+                    "source": "RCP Lopressor/Seloken/Selozok ; ESC IC 2023 ; ESC HTA 2024 ; MERIT-HF 1999"
           },
           {
                     "dci": "Metronidazole",
@@ -15509,7 +15509,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "IEC pro-drogue. Particularité : biodisponibilité ÉLEVÉE-DÉPENDANTE DE L'ESTOMAC VIDE — prise 1h avant repas obligatoire (sinon ↓ 70%). Très peu utilisé en France (préférer ramipril/périndopril sans contrainte alimentaire). Indications HTA.",
-                    "source": "RCP Moex/Fempress ; ESC HTA 2023"
+                    "source": "RCP Moex/Fempress ; ESC HTA 2024"
           },
           {
                     "dci": "Morphine",
@@ -15697,7 +15697,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Longue demi-vie (20h) ; élimination rénale exclusive",
-                    "source": "RCP Corgard ; ESC HTA 2023"
+                    "source": "RCP Corgard ; ESC HTA 2024"
           },
           {
                     "dci": "Nalbuphine",
@@ -15943,7 +15943,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "BB de 3ème génération avec activité vasodilatatrice par libération NO (spécificité unique). Hautement cardiosélectif β1 (ratio > 90:1, le plus élevé) → mieux toléré chez BPCO/asthme léger-modéré et diabétique. Seul BB ayant montré bénéfice en IC chez ≥ 70 ans (SENIORS trial, 2128 patients ≥ 70 ans HFrEF ET HFpEF). Métabolisme CYP2D6 (variabilité génétique). Prudence hépatique.",
-                    "source": "RCP Temerit/Nebilox ; ESC IC 2023 ; ESC HTA 2023 ; SENIORS 2005 (Flather, Eur Heart J)"
+                    "source": "RCP Temerit/Nebilox ; ESC IC 2023 ; ESC HTA 2024 ; SENIORS 2005 (Flather, Eur Heart J)"
           },
           {
                     "dci": "Nefopam",
@@ -16019,7 +16019,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB DHP T½ courte (2-4h) → formulation LP nécessaire en chronique (sinon tachycardie réflexe). USAGE PRINCIPAL : voie IV en URGENCE HYPERTENSIVE (titrabilité +++, alternative à urapidil/labétalol IV). En PO : moins utilisé que amlodipine/lercanidipine (mauvaise observance, plus d'effets secondaires).",
-                    "source": "RCP Loxen ; ESC HTA 2023"
+                    "source": "RCP Loxen ; ESC HTA 2024"
           },
           {
                     "dci": "Nifedipine",
@@ -16137,7 +16137,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB DHP 1ère génération. Formes IR (capsule sublinguale Adalate 10) historiquement utilisées pour 'crise hypertensive' → ABANDONNÉES depuis 1995 (Furberg Circulation 1995, JAMA 1995 : ↑ mortalité, IDM, AVC). Formes LP (Adalate LP 20/30, Chronadalate 30/60) restent valides en HTA, angor (vasospastique +++). Beers 2023 / STOPP : ÉVITER formes IR. Préférer amlodipine (T½ longue) ou lercanidipine/manidipine (DHP 3ème gen, moins d'œdèmes) chez âgé.",
-                    "source": "RCP Adalate/Chronadalate ; ESC HTA 2023 ; Beers 2023 ; STOPP v3 2023 ; Furberg Circulation 1995"
+                    "source": "RCP Adalate/Chronadalate ; ESC HTA 2024 ; Beers 2023 ; STOPP v3 2023 ; Furberg Circulation 1995"
           },
           {
                     "dci": "Nimodipine",
@@ -16246,7 +16246,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB DHP de 2ème génération. ÉTUDE PHARE Syst-Eur (Staessen Lancet 1997, 4695 patients > 60 ans avec HTA systolique isolée) : ↓ AVC -42%, ↓ démence -55% (sous-étude Syst-Eur Dementia, Forette Lancet 1998). Bonne tolérance chez sujet âgé. Alternative à amlodipine. T½ moyenne (8-12h) → 1-2 prises/j.",
-                    "source": "RCP Baypress ; ESC HTA 2023 ; Syst-Eur 1997 (Staessen Lancet) ; Syst-Eur Dementia 1998 (Forette Lancet)"
+                    "source": "RCP Baypress ; ESC HTA 2024 ; Syst-Eur 1997 (Staessen Lancet) ; Syst-Eur Dementia 1998 (Forette Lancet)"
           },
           {
                     "dci": "Nitrofurantoine",
@@ -16592,7 +16592,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Risque entéropathie sprue-like",
-                    "source": "RCP Olmetec ; ESC HTA 2023"
+                    "source": "RCP Olmetec ; ESC HTA 2024"
           },
           {
                     "dci": "Omeprazole",
@@ -17460,7 +17460,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Forte ASI → moins de bradycardie",
-                    "source": "RCP Visken ; ESC HTA 2023"
+                    "source": "RCP Visken ; ESC HTA 2024"
           },
           {
                     "dci": "Pipamperone",
@@ -17684,7 +17684,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Diurétique de l'anse — usage HTA et IC. Surveillance ionogramme COMPLET (Na+/K+/Mg++) + créat + uricémie. Triple whammy AINS+IEC/ARA2+diurétique = SYND_045 IRA fonctionnelle. Préférer prise matinale (nycturie). Risque hyponatrémie élevé chez sujet âgé.",
-                    "source": "RCP Eurelix ; ESC HF 2021"
+                    "source": "RCP Eurelix ; ESC IC 2023"
           },
           {
                     "dci": "Pivmecillinam",
@@ -18014,7 +18014,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Premier alpha-1 bloquant commercialisé (1976). T½ courte (2-3h) → 2-3 prises/j obligatoire → mauvaise observance + hypotension orthostatique +++. Préférer doxazosine LP (1 prise/j, plus stable). Indication off-label : PTSD-cauchemars (Raskind NEJM 2003, AJP 2007 — études vétérans, PACT-PTSD 2021 négative). PIM Beers chez âgé. HBP : alternative possible.",
-                    "source": "RCP Minipress/Alpress ; ESC HTA 2023 ; Beers 2023 ; Raskind 2003"
+                    "source": "RCP Minipress/Alpress ; ESC HTA 2024 ; Beers 2023 ; Raskind 2003"
           },
           {
                     "dci": "Prednisolone",
@@ -18489,7 +18489,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "BB de référence historique (1ère molécule, 1964 - James Black, Nobel 1988). NON cardiosélectif (β1+β2). Lipophile → effets centraux +++ (BHE) : somnolence, dépression, cauchemars, hallucinations chez âgé → PIM Beers 2023, STOPP-PIM. NON validé HFrEF (absent essais BB modernes). Indications spécifiques : tremblement essentiel, migraine prophylaxie, hyperthyroïdie (avant β-bloc), phéochromocytome (toujours après α-bloc), hémorragie variqueuse cirrhotique. À ÉVITER chez sujet âgé fragile sauf indication spécifique.",
-                    "source": "RCP Avlocardyl ; Beers 2023 ; STOPP v3 2023 ; ESC HTA 2023"
+                    "source": "RCP Avlocardyl ; Beers 2023 ; STOPP v3 2023 ; ESC HTA 2024"
           },
           {
                     "dci": "Propylthiouracile",
@@ -18698,7 +18698,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "IEC pro-drogue. Effet 24h malgré T½ courte de quinaprilate (liaison forte à ECA tissulaire). Particularité : excipient carbonate de magnésium (formulation) → chélation tétracyclines. Études : QUIET (Pitt 2001 — pas d'effet sur progression athérome). Peu utilisé en France.",
-                    "source": "RCP Korec/Acuitel ; ESC HTA 2023 ; QUIET 2001"
+                    "source": "RCP Korec/Acuitel ; ESC HTA 2024 ; QUIET 2001"
           },
           {
                     "dci": "Quinidine",
@@ -20404,7 +20404,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Gynécomastie dose-dépendante",
-                    "source": "RCP Aldactone ; ESC HF 2021"
+                    "source": "RCP Aldactone ; ESC IC 2023"
           },
           {
                     "dci": "Sulfadiazine",
@@ -20887,7 +20887,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Longue demi-vie (24h). Élimination biliaire exclusive.",
-                    "source": "RCP Micardis ; ESC HTA 2023"
+                    "source": "RCP Micardis ; ESC HTA 2024"
           },
           {
                     "dci": "Temocilline",
@@ -21927,7 +21927,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "IEC pro-drogue à T½ longue (16-24h) → 1 prise/j → bonne observance. Élimination mixte rénale 33% + biliaire 66%. Études : TRACE post-IDM (Køber NEJM 1995, mortalité), PEACE en coronaropathie stable (Braunwald NEJM 2004 — pas d'effet sur risque CV chez patients déjà bien traités). Effet anti-HTA prolongé (24h). Peu utilisé en France (préférer ramipril/périndopril).",
-                    "source": "RCP Odrik/Gopten ; ESC HTA 2023 ; TRACE 1995 ; PEACE 2004"
+                    "source": "RCP Odrik/Gopten ; ESC HTA 2024 ; TRACE 1995 ; PEACE 2004"
           },
           {
                     "dci": "Travoprost",
@@ -22045,7 +22045,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Alpha-1 bloquant non sélectif : indication HTA résistante, hypertrophie prostate. Hypotension orthostatique majeure (1ère dose au coucher). Prudence chez âgé chuteur.",
-                    "source": "RCP Minipress | ESC HTA 2023"
+                    "source": "RCP Minipress | ESC HTA 2024"
           },
           {
                     "dci": "Triamcinolone",
@@ -22167,7 +22167,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Diurétique épargneur de potassium (canal sodium distal). Risques : hyperkaliémie (++ si DFG < 60 ou association IEC/ARA2/ARM), hyponatrémie (sujet âgé), déshydratation, lithiase rénale (cristaux de triamtérène). Surveillance ionogramme COMPLET (Na+/K+) + créat. Préférer prise matinale (nycturie). Triple whammy AINS+IEC+diurétique = SYND_045.",
-                    "source": "RCP Teriam | ESC HTA 2023"
+                    "source": "RCP Teriam | ESC HTA 2024"
           },
           {
                     "dci": "Trifluoperazine",
@@ -22890,7 +22890,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "CCB non-DHP le plus bradycardisant et inotrope (-) PUISSANT (> diltiazem). Indications : FA contrôle FC (alternative BB si HFpEF/asthme), angor stable/vasospastique, HTA, TSV (IV — Adénosine 1er choix). CI ABSOLUE : HFrEF (FEVG ≤ 40%), BAV 2-3, dysfonction sinusale, IC décompensée, FA WPW (CI ABSOLUE — risque FV). Inhibiteur CYP3A4 modéré-fort + P-gp → interactions ++++ (statines, AOD, ciclosporine, digoxine, BZD). Constipation +++ chez âgé (50%, dose-dépendante) → PIM en contexte gériatrique fragile. Préférer diltiazem si non-DHP nécessaire chez âgé (moins de constipation, moins d'inotrope-).",
-                    "source": "RCP Isoptine ; ESC HTA 2023 ; ESC FA 2024 ; Beers 2023 ; STOPP v3 2023 ; ANSM 2014 (ivabradine) ; FDA 2011 (statines)"
+                    "source": "RCP Isoptine ; ESC HTA 2024 ; ESC FA 2024 ; Beers 2023 ; STOPP v3 2023 ; ANSM 2014 (ivabradine) ; FDA 2011 (statines)"
           },
           {
                     "dci": "Vildagliptine",
@@ -23067,7 +23067,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "IEC pro-drogue lipophile avec GROUPE THIOL (-SH) comme captopril → propriétés ANTIOXYDANTES (piégeage radicaux libres) et anti-ischémiques. SMILE trial (Ambrosioni NEJM 1995) : zofénopril en post-IDM → ↓ mortalité 6 sem chez patients sans thrombolyse. Étude SMILE-4 : non-infériorité vs ramipril en post-IDM. Risque neutropénie/Stevens-Johnson partagé avec captopril (groupe thiol). Peu utilisé en France.",
-                    "source": "RCP Zofenil ; ESC HTA 2023 ; SMILE Ambrosioni NEJM 1995 ; SMILE-4"
+                    "source": "RCP Zofenil ; ESC HTA 2024 ; SMILE Ambrosioni NEJM 1995 ; SMILE-4"
           },
           {
                     "dci": "Zolmitriptan",
@@ -24299,7 +24299,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Agoniste α2 central → ↓ tonus sympathique → ↓ TA. PIM ABSOLU chez âgé (Beers 2023, STOPP, FORTA-D, PRISCUS) : sédation/dépression (BHE+++), hypotension orthostatique, bradycardie, REBOND HTA à l'arrêt. Indications restreintes : HTA résistante 5ème ligne (PATHWAY-2), sevrage opioïde/alcool, bouffées de chaleur post-ménopause, TDAH enfant (off-label), tics syndrome de Tourette. À ÉVITER en monothérapie HTA chez âgé.",
-                    "source": "RCP Catapressan ; ESC HTA 2023 ; Beers 2023 ; STOPP v3 2023 ; FORTA-D ; PRISCUS ; PATHWAY-2"
+                    "source": "RCP Catapressan ; ESC HTA 2024 ; Beers 2023 ; STOPP v3 2023 ; FORTA-D ; PRISCUS ; PATHWAY-2"
           },
           {
                     "dci": "Dalteparine",
@@ -24864,7 +24864,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Faux neurotransmetteur : α-méthyldopa → α-méthylnoradrénaline → agoniste α2 central (mécanisme similaire clonidine). PIM ABSOLU chez âgé. INDICATION UNIQUE EN 2026 : HTA gravidique (référence depuis 50 ans — alternatives : labétalol, nifédipine LP). À NE PAS UTILISER en gériatrie. Effets secondaires limitants : anémie hémolytique Coombs+ (jusqu'à 20%), hépatite auto-immune, dépression, sédation majeure.",
-                    "source": "RCP Aldomet ; ESC HTA 2023 ; Beers 2023 ; STOPP v3 2023 ; FORTA-D"
+                    "source": "RCP Aldomet ; ESC HTA 2024 ; Beers 2023 ; STOPP v3 2023 ; FORTA-D"
           },
           {
                     "dci": "Metopimazine",
@@ -26342,7 +26342,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Antihypertenseur central agoniste sélectif récepteurs I1 (imidazoline) > α2 (vs clonidine). Mieux toléré que clonidine (moins de sécheresse buccale/sédation) mais MOXCON 2003 (Cohn) : SURMORTALITÉ en HFrEF → CI ABSOLUE HFrEF. PIM Beers/PRISCUS/FORTA-D chez âgé. Indication restreinte HTA résistante 5ème ligne. Préférer doxazosine LP (PATHWAY-2).",
-                    "source": "RCP Physiotens ; ESC HTA 2023 ; Beers 2023 ; PRISCUS ; FORTA-D ; MOXCON Cohn 2003 ; PATHWAY-2"
+                    "source": "RCP Physiotens ; ESC HTA 2024 ; Beers 2023 ; PRISCUS ; FORTA-D ; MOXCON Cohn 2003 ; PATHWAY-2"
           },
           {
                     "dci": "Rilmenidine",
@@ -26376,7 +26376,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Antihypertenseur central agoniste I1 (imidazoline) similaire à moxonidine. PIM Beers 2023, PRISCUS, EU(7)-PIM chez âgé : sédation, hypotension orthostatique, REBOND HTA arrêt. Pas d'étude de surmortalité HFrEF spécifique (vs moxonidine MOXCON) mais prudence par classe. Indication restreinte HTA résistante. Préférence : doxazosine LP (PATHWAY-2).",
-                    "source": "RCP Hyperium ; ESC HTA 2023 ; Beers 2023 ; PRISCUS ; EU(7)-PIM ; FORTA-D ; PATHWAY-2"
+                    "source": "RCP Hyperium ; ESC HTA 2024 ; Beers 2023 ; PRISCUS ; EU(7)-PIM ; FORTA-D ; PATHWAY-2"
           },
           {
                     "dci": "Mirabegron",

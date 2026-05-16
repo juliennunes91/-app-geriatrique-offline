@@ -8,46 +8,32 @@ Total : 0 / 546
 
 ## E.2 — Sources potentiellement obsolètes (à actualiser)
 
-### ESC HTA < 2024
-  49 med(s):
-    - Acebutolol (ESC HTA 2023)
-    - Amlodipine (ESC HTA 2023)
-    - Atenolol (ESC HTA 2023)
-    - Atenolol + chlortalidone (ESC HTA 2023)
-    - Benazepril (ESC HTA 2023)
-    - Betaxolol (ESC HTA 2023)
-    - Bisoprolol (ESC IC 2023 ; ESC HTA 2023)
-    - Captopril (ESC HTA 2023)
-    - (+41 autres)
+### ESC HTA — ACTUALISÉ 2024 (51 entrées)
+**Référence** : Mancia G et al, *2024 ESC Guidelines for the management of elevated blood pressure and hypertension*, Eur Heart J 2024.
+→ Toutes les occurrences "ESC HTA 2023" ont été remplacées par "ESC HTA 2024".
 
-### HAS < 2022
-  66 med(s):
-    - Acide zoledronique (HAS 2018)
-    - Alendronate (HAS 2018)
-    - Amisulpride (HAS 2017)
-    - Amitriptyline (HAS 2017)
-    - Aripiprazole (HAS 2017)
-    - Ascorbate ferreux (HAS 2021)
-    - Asenapine (HAS 2017)
-    - Bupropion (HAS 2017)
-    - (+58 autres)
+### ESC HF — ACTUALISÉ 2023 (3 entrées)
+**Référence** : McDonagh TA et al, *2023 Focused Update of the 2021 ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure*, Eur Heart J 2023.
+→ Eplerenone, Piretanide, Spironolactone : "ESC HF 2021" remplacé par "ESC IC 2023".
 
-### KDIGO < 2024
-  3 med(s):
-    - Ciclosporine (KDIGO 2009)
-    - Mycophenolate mofetil (KDIGO 2009)
-    - Tacrolimus (KDIGO 2009)
+### HAS < 2022 — NON ACTUALISÉ
+  66 med(s) — non modifiés volontairement.
+  **Justification** : chaque ligne HAS renvoie à un avis ou une recommandation distincte ;
+  remplacer collectivement par une date plus récente créerait des références
+  inexistantes. À reprendre individuellement avec vérification de la publication HAS
+  cible pour chaque indication.
 
-### ESC AF < 2024
-  1 med(s):
-    - Digoxine (ESC FA 2024 ; ESC IC 2023 ; Beers 2023 ; DIG trial 1997 ; Rathore JAMA 2003 ; RATE-AF 2020)
+### KDIGO 2009 — NON ACTUALISÉ
+  3 med(s) (Ciclosporine, Mycophenolate mofetil, Tacrolimus).
+  **Justification** : KDIGO 2009 *Care of the Kidney Transplant Recipient* reste la
+  référence en vigueur pour la prise en charge immunosuppressive post-greffe.
+  Aucune actualisation comprehensive publiée à date.
 
-### ESC HF < 2022
-  4 med(s):
-    - Eplerenone (ESC HF 2021)
-    - Piretanide (ESC HF 2021)
-    - Spironolactone (ESC HF 2021)
-    - Sacubitril/Valsartan (ESC IC 2023 ; PARADIGM-HF McMurray NEJM 2014 ; PIONEER-HF 2019)
+### ESC AF < 2024 — DÉJÀ ACTUALISÉ
+  Digoxine : référence déjà actualisée vers "ESC FA 2024".
+
+### ESC HF < 2022 — TRAITÉ (cf. ci-dessus)
+  Sacubitril/Valsartan : déjà à jour ("ESC IC 2023").
 
 
 ## E.3 — Sources minimales / RCP seul
@@ -75,16 +61,16 @@ Total : 324 médicaments avec source courte type RCP seul
   - Apraclonidine : "RCP Iopidine ; EGS 2020"
   - Aprepitant : "RCP Emend ; HAS 2022"
 
-## E.4 — Top 20 sociétés savantes / guidelines citées
+## E.4 — Top sociétés savantes / guidelines citées (post-actualisation)
 
    111 × Beers 2023
     73 × SPILF 2023
-    49 × ESC HTA 2023
+    51 × ESC HTA 2024  ← actualisé
     39 × HAS 2017
+    21 × ESC IC 2023   ← actualisé (cumul +3 entrées HF)
     19 × HAS 2022
     17 × HAS 2020
     17 × FORTA-D
-    14 × ESC IC 2023
     14 × EULAR 2023
     13 × HAS 2023
     11 × GINA 2024
@@ -95,15 +81,14 @@ Total : 324 médicaments avec source courte type RCP seul
      6 × SFGG
      5 × FDA 2011
      5 × ESC FA 2020
-     4 × ESC SCA 2023
-     4 × HAS 2018
-     4 × FORTA-C
-     4 × EULAR 2022
-     4 × ACR 2020
-     4 × ANSM 2018
-     4 × ESC arythmie 2022
-     4 × ANSM 2014
-     4 × ANSM 2019
-     3 × HAS 2008
-     3 × HAS 2021
-     3 × KDIGO 2009
+     4 × ESC SCA 2023 / HAS 2018 / FORTA-C / EULAR 2022 / ACR 2020 / ANSM 2018 / ESC arythmie 2022 / ANSM 2014 / ANSM 2019
+     3 × HAS 2008 / HAS 2021 / KDIGO 2009
+
+## E.5 — Synthèse actions
+
+| Action | Volume | Justification |
+|---|---|---|
+| ESC HTA 2023 → 2024 | 50 remplacements | Publication 2024 confirmée (Mancia, Eur Heart J 2024) |
+| ESC HF 2021 → ESC IC 2023 | 3 remplacements | Focused update 2023 confirmé (McDonagh, Eur Heart J 2023) |
+| **Total actualisé** | **53 entrées** | + 11 GINA/GOLD précédentes = **64 sources rafraîchies au total** |
+| Non actualisé (HAS, KDIGO, Beers ≥ 2023) | 175 entrées | Conservé pour éviter des références inventées ; à reprendre individuellement avec vérification publication-par-publication |

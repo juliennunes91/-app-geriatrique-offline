@@ -14,7 +14,7 @@
 | **B** | Cartographie syndromes iatrogènes | 5 orphelins / 51 | Mapping conservé `B_synd_to_meds.json` | 46/51 syndromes couverts |
 | **C** | Scores cliniques composites | 0 (nouveau module) | Tagging 546 médicaments + nouvel onglet UI | 8 scores actifs (ACB/CIA/QT/Sero/Saign/Chute/Sedat/HypoG) |
 | **D** | Cohérence par classe | 5 trous réels | 6 corrections BIO_cible | 0 trou réel résiduel |
-| **E** | Sources EBM | 134 sources potentiellement obsolètes | 11 GINA/GOLD actualisées 2023→2024 | 123 sources à actualiser progressivement (Beers v3 publié 2025 attendu) |
+| **E** | Sources EBM | 134 sources potentiellement obsolètes | 64 sources actualisées (11 GINA/GOLD + 50 ESC HTA + 3 ESC HF) | 70 sources HAS/KDIGO conservées (actualisation individuelle requise pour ne pas inventer de référence) |
 | **F** | Seuils biologiques | 1 composite descriptif (SYND_050) | Acceptable (syndrome composite clinique) | 50/51 syndromes avec seuils numériques |
 
 ---
@@ -131,10 +131,13 @@ Voir `E_sources_ebm.md`.
 - **0 médicament sans source** (excellent)
 - **324 sources minimales** (juste "RCP X | Société YYYY") — acceptable pour la majorité
 - **134 sources potentiellement obsolètes** identifiées :
-  - Beers 2020-2022 (Beers 2023 disponible)
-  - STOPP/START v1-v2 (v3 publié 2023)
-  - GINA/GOLD 2023 (2024 disponibles — **11 actualisées**)
-  - KDIGO < 2024
+  - GINA 2023 → **GINA 2024 (11 actualisées)** ✓
+  - GOLD 2023 → **GOLD 2024 (inclus dans les 11)** ✓
+  - ESC HTA 2023 → **ESC HTA 2024 (50 actualisées, Mancia Eur Heart J 2024)** ✓
+  - ESC HF 2021 → **ESC IC 2023 (3 actualisées, McDonagh focused update)** ✓
+  - **Total actualisé : 64 sources**
+  - Sources HAS pré-2022 (66) : non touchées — chaque référence HAS pointe vers une publication distincte, actualisation à reprendre individuellement
+  - KDIGO 2009 (3) : transplant care non actualisé par KDIGO depuis 2009
 
 ### Sociétés savantes les plus citées (top 10)
 | Citations | Source |
@@ -170,7 +173,7 @@ Voir `E_sources_ebm.md`.
 | BIOLOGIE | 45 | Toutes référencées + seuils définis |
 | PATHOLOGIES | 53 | Master = rules, tous champs remplis |
 | SYNDROMES | 51 | 50 avec seuils numériques + 5 orphelins documentés |
-| SOURCES EBM | — | 100% présentes, 11 actualisées 2024 |
+| SOURCES EBM | — | 100% présentes, 64 actualisées 2024 (GINA/GOLD/ESC HTA/ESC HF) |
 | `audit_db.js` | — | **0 erreur / 0 warning / 0 info** |
 | Audits A-F | — | 6 axes complétés, rapports archivés |
 
@@ -180,6 +183,6 @@ Voir `E_sources_ebm.md`.
 
 1. **A.1/A.2** : Compléter les mentions explicites des pathologies/biologies dans les textes alerte/notes pour les médicaments où c'est cliniquement pertinent (475 cas restants).
 2. **B** : Enrichir les 5 syndromes orphelins (006, 026, 040, 041, 050) avec leurs médicaments inducteurs documentés.
-3. **E** : Actualiser progressivement les 123 sources obsolètes restantes lors des revues annuelles.
+3. **E** : Actualiser individuellement les 70 références HAS/KDIGO restantes en vérifiant la dernière publication HAS par indication (anti-dépresseurs, antipsychotiques, bisphosphonates, etc.) — pas d'actualisation collective pour éviter les références inventées.
 4. **DDI v2** : Compléter les 132 médicaments restants (antibiotiques niches, ARV, anti-cancéreux niches) selon priorités cliniques gériatriques.
 
