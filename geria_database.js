@@ -2335,7 +2335,7 @@ const MASTER_DB = {
                     "epileptogene": "eleve",
                     "epileptogene_desc": "Pro-convulsivant (métabolite = théophylline)",
                     "notes_cliniques": "Bronchodilatateur xanthine (théophylline + éthylènediamine) IV : marge thérapeutique étroite (10-20 mg/L). Tachycardie, troubles SNC (convulsions), interactions CYP1A2 (ciprofloxacine, fluvoxamine ↑ taux). À ÉVITER chez âgé sauf indication précise (Beers 2023).",
-                    "source": "RCP Aminophylline | GINA 2023"
+                    "source": "RCP Aminophylline | GINA 2024"
           },
           {
                     "dci": "Amiodarone",
@@ -3892,7 +3892,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Rinçage bouche obligatoire",
-                    "source": "RCP Becotide ; GINA 2023"
+                    "source": "RCP Becotide ; GINA 2024"
           },
           {
                     "dci": "Bedaquiline",
@@ -4715,7 +4715,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Disponible en nébulisation",
-                    "source": "RCP Pulmicort ; GINA 2023"
+                    "source": "RCP Pulmicort ; GINA 2024"
           },
           {
                     "dci": "Bumetanide",
@@ -6426,7 +6426,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Prodrogue activée localement → moins de candidose",
-                    "source": "RCP Alvesco ; GINA 2023"
+                    "source": "RCP Alvesco ; GINA 2024"
           },
           {
                     "dci": "Cicletanine",
@@ -7349,7 +7349,8 @@ const MASTER_DB = {
                               "BIO_026",
                               "BIO_027",
                               "BIO_031",
-                              "BIO_034"
+                              "BIO_034",
+                              "BIO_018"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -11332,7 +11333,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Furoate : 1x/j. Propionate : 2x/j.",
-                    "source": "RCP Flixotide/Arnuity ; GINA 2023"
+                    "source": "RCP Flixotide/Arnuity ; GINA 2024"
           },
           {
                     "dci": "Fluvastatine",
@@ -11933,7 +11934,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "1 prise quotidienne",
-                    "source": "RCP Seebri ; GOLD 2023"
+                    "source": "RCP Seebri ; GOLD 2024"
           },
           {
                     "dci": "Guaifenesine",
@@ -12505,7 +12506,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "1 prise/j. Toussotement bénin post-inhalation.",
-                    "source": "RCP Onbrez ; GOLD 2023"
+                    "source": "RCP Onbrez ; GOLD 2024"
           },
           {
                     "dci": "Indapamide",
@@ -12836,7 +12837,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Durée d'action 4–6h",
-                    "source": "RCP Atrovent ; GOLD 2023"
+                    "source": "RCP Atrovent ; GOLD 2024"
           },
           {
                     "dci": "Iproniazide",
@@ -13749,7 +13750,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031"
                     ,
-                              "BIO_018"
+                              "BIO_018",
+                              "BIO_025"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -17180,7 +17182,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031"
                     ,
-                              "BIO_018"
+                              "BIO_018",
+                              "BIO_025"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -18228,7 +18231,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031"
                     ,
-                              "BIO_018"
+                              "BIO_018",
+                              "BIO_025"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -20990,7 +20994,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "Disponible en voie SC (crise sévère)",
-                    "source": "RCP Bricanyl ; GINA 2023"
+                    "source": "RCP Bricanyl ; GINA 2024"
           },
           {
                     "dci": "Theophylline",
@@ -21085,7 +21089,7 @@ const MASTER_DB = {
                     "epileptogene": "eleve",
                     "epileptogene_desc": "Xanthine pro-convulsivante — surtout si taux > 25 mg/L",
                     "notes_cliniques": "Bronchodilatateur xanthine PO : marge étroite (10-20 mg/L). Mêmes risques aminophylline (tachycardie, convulsions, interactions CYP1A2). À ÉVITER chez âgé (Beers 2023, FORTA-D).",
-                    "source": "RCP Euphylline | GINA 2023"
+                    "source": "RCP Euphylline | GINA 2024"
           },
           {
                     "dci": "Thiocolchicoside",
@@ -21203,7 +21207,10 @@ const MASTER_DB = {
                               "BIO_031",
                               "BIO_003"
                     ,
-                              "BIO_018"
+                              "BIO_018",
+                              "BIO_025",
+                              "BIO_026",
+                              "BIO_027"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -22196,7 +22203,8 @@ const MASTER_DB = {
                               "BIO_014",
                               "BIO_031"
                     ,
-                              "BIO_018"
+                              "BIO_018",
+                              "BIO_025"
                     ],
                     "atb_legere": "",
                     "atb_moderee": "",
@@ -22471,7 +22479,7 @@ const MASTER_DB = {
                     "atb_severe": "",
                     "atb_terminale": "",
                     "notes_cliniques": "1 prise quotidienne",
-                    "source": "RCP Incruse ; GOLD 2023"
+                    "source": "RCP Incruse ; GOLD 2024"
           },
           {
                     "dci": "Valproate",

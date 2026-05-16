@@ -1,0 +1,341 @@
+{
+  "β-bloquants": [
+    "Acebutolol",
+    "Atenolol",
+    "Atenolol + chlortalidone",
+    "Betaxolol",
+    "Bisoprolol",
+    "Brinzolamide",
+    "Carteolol",
+    "Carvedilol",
+    "Celiprolol",
+    "Esmolol",
+    "Labetalol",
+    "Metoprolol",
+    "Nadolol",
+    "Nebivolol",
+    "Pindolol",
+    "Propranolol",
+    "Sotalol",
+    "Timolol",
+    "Propafenone"
+  ],
+  "AVK": [
+    "Acenocoumarol",
+    "Fluindione",
+    "Warfarine"
+  ],
+  "Bisphosphonates": [
+    "Acide zoledronique",
+    "Alendronate",
+    "Ibandronate",
+    "Risedronate",
+    "Denosumab"
+  ],
+  "Antihistaminiques H1 1ère gén": [
+    "Alimemazine",
+    "Brompheniramine",
+    "Carbinoxamine",
+    "Chlorpheniramine",
+    "Clemastine",
+    "Dexchlorpheniramine",
+    "Dimenhydrinate",
+    "Diphenhydramine",
+    "Hydroxyzine",
+    "Pheniramine",
+    "Promethazine"
+  ],
+  "IDPP-4": [
+    "Alogliptine",
+    "Saxagliptine",
+    "Sitagliptine",
+    "Vildagliptine",
+    "Linagliptine"
+  ],
+  "BZD": [
+    "Alprazolam",
+    "Bromazepam",
+    "Chlordiazepoxide",
+    "Clobazam",
+    "Clonazepam",
+    "Clorazepate",
+    "Clotiazepam",
+    "Diazepam",
+    "Estazolam",
+    "Loprazolam",
+    "Lorazepam",
+    "Lormetazepam",
+    "Midazolam",
+    "Nitrazepam",
+    "Nordazepam",
+    "Olanzapine",
+    "Oxazepam",
+    "Prazepam",
+    "Zolpidem",
+    "Zopiclone"
+  ],
+  "Antipsychotiques SGA": [
+    "Amisulpride",
+    "Aripiprazole",
+    "Asenapine",
+    "Clozapine",
+    "Paliperidone",
+    "Quetiapine",
+    "Risperidone",
+    "Tiapride"
+  ],
+  "Antidépresseurs tricycliques": [
+    "Amitriptyline",
+    "Amoxapine",
+    "Clomipramine",
+    "Cyclobenzaprine",
+    "Desipramine",
+    "Dosulepine",
+    "Doxepine",
+    "Imipramine",
+    "Nortriptyline",
+    "Trimipramine"
+  ],
+  "CCB DHP": [
+    "Amlodipine",
+    "Clevidipine",
+    "Diltiazem",
+    "Felodipine",
+    "Isradipine",
+    "Lercanidipine",
+    "Manidipine",
+    "Nicardipine",
+    "Nifedipine",
+    "Nimodipine",
+    "Nitrendipine",
+    "Verapamil"
+  ],
+  "AOD": [
+    "Apixaban",
+    "Dabigatran",
+    "Edoxaban",
+    "Rivaroxaban"
+  ],
+  "Statines": [
+    "Atorvastatine",
+    "Fluvastatine",
+    "Pravastatine",
+    "Rosuvastatine",
+    "Simvastatine"
+  ],
+  "ICS": [
+    "Beclometasone",
+    "Budesonide",
+    "Ciclesonide",
+    "Fluticasone"
+  ],
+  "IEC": [
+    "Benazepril",
+    "Captopril",
+    "Cilazapril",
+    "Enalapril",
+    "Fosinopril",
+    "Lisinopril",
+    "Moexipril",
+    "Perindopril",
+    "Quinapril",
+    "Ramipril",
+    "Trandolapril",
+    "Zofenopril"
+  ],
+  "Diurétiques anse": [
+    "Bumetanide",
+    "Furosemide",
+    "Piretanide",
+    "Torasemide"
+  ],
+  "iSGLT2": [
+    "Canagliflozin",
+    "Dapagliflozin",
+    "Empagliflozin",
+    "Ertugliflozin"
+  ],
+  "ARA2": [
+    "Candesartan",
+    "Eprosartan",
+    "Irbesartan",
+    "Losartan",
+    "Olmesartan",
+    "Telmisartan",
+    "Valsartan",
+    "Sacubitril/Valsartan"
+  ],
+  "Antiépileptiques": [
+    "Carbamazepine",
+    "Gabapentine",
+    "Lacosamide",
+    "Lamotrigine",
+    "Levetiracetam",
+    "Oxcarbazepine",
+    "Phenobarbital",
+    "Pregabaline",
+    "Topiramate",
+    "Valproate",
+    "Valpromide",
+    "Zonisamide",
+    "Primidone",
+    "Phenytoine"
+  ],
+  "Antithyroïdiens": [
+    "Carbimazole",
+    "Propylthiouracile",
+    "Thiamazole"
+  ],
+  "AINS": [
+    "Celecoxib",
+    "Paracetamol",
+    "Ibuprofene",
+    "Ketoprofene",
+    "Naproxene",
+    "Diclofenac",
+    "Etoricoxib",
+    "Meloxicam",
+    "Piroxicam",
+    "Acide tiaprofenique",
+    "Nimesulide",
+    "Indometacine",
+    "Sulindac",
+    "Nabumetone",
+    "Aceclofenac"
+  ],
+  "Antihistaminiques H1 2ème gén": [
+    "Cetirizine",
+    "Desloratadine",
+    "Fexofenadine",
+    "Levocetirizine",
+    "Loratadine"
+  ],
+  "Antipsychotiques FGA": [
+    "Chlorpromazine",
+    "Cyamemazine",
+    "Flupentixol",
+    "Fluphenazine",
+    "Haloperidol",
+    "Levomepromazine",
+    "Loxapine",
+    "Perphenazine",
+    "Pimozide",
+    "Pipamperone",
+    "Pipotiazine",
+    "Prochlorperazine",
+    "Sulpiride",
+    "Thioridazine",
+    "Trifluoperazine",
+    "Zuclopenthixol"
+  ],
+  "Diurétiques thiazidique": [
+    "Chlortalidone",
+    "Cicletanine",
+    "Hydrochlorothiazide",
+    "Indapamide",
+    "Aldactazine"
+  ],
+  "ISRS": [
+    "Citalopram",
+    "Escitalopram",
+    "Febuxostat",
+    "Fluoxetine",
+    "Fluvoxamine",
+    "Mycophenolate mofetil",
+    "Paroxetine",
+    "Sertraline",
+    "Fondaparinux",
+    "Finastéride",
+    "Vortioxétine"
+  ],
+  "Opioïdes faibles": [
+    "Codeine",
+    "Dihydrocodeine",
+    "Poudre d'opium",
+    "Tramadol"
+  ],
+  "Anticholinergiques urinaires": [
+    "Darifenacin",
+    "Toltérodine",
+    "Fesoterodine",
+    "Ipratropium",
+    "Oxybutynine",
+    "Propiverine",
+    "Solifenacine",
+    "Tiotropium",
+    "Trospium"
+  ],
+  "GLP-1 RA": [
+    "Dulaglutide",
+    "Exenatide",
+    "Liraglutide",
+    "Semaglutide",
+    "Tirzepatide"
+  ],
+  "Triptans": [
+    "Eletriptan",
+    "Frovatriptan",
+    "Naratriptan",
+    "Sumatriptan",
+    "Zolmitriptan"
+  ],
+  "IPP": [
+    "Esomeprazole",
+    "Lansoprazole",
+    "Omeprazole",
+    "Pantoprazole",
+    "Pidolate de calcium",
+    "Rabeprazole"
+  ],
+  "Opioïdes forts": [
+    "Fentanyl",
+    "Hydromorphone",
+    "Morphine",
+    "Oxycodone",
+    "Tapentadol"
+  ],
+  "LABA": [
+    "Formoterol",
+    "Indacaterol",
+    "Salmeterol"
+  ],
+  "LAMA": [
+    "Glycopyrronium",
+    "Umeclidinium"
+  ],
+  "Insulines": [
+    "Insuline aspart",
+    "Insuline degludec",
+    "Insuline detemir",
+    "Insuline glargine",
+    "Insuline glulisine",
+    "Insuline humaine",
+    "Insuline lispro"
+  ],
+  "Corticoïdes systémiques": [
+    "Methylprednisolone",
+    "Prednisolone",
+    "Prednisone",
+    "Triamcinolone"
+  ],
+  "Glinides": [
+    "Nateglinide",
+    "Mitiglitinide",
+    "Repaglinide"
+  ],
+  "SABA": [
+    "Salbutamol",
+    "Terbutaline"
+  ],
+  "IRSN": [
+    "Desvenlafaxine"
+  ],
+  "Sulfamides hypogly": [
+    "Gliclazide",
+    "Glibenclamide",
+    "Glimepiride"
+  ],
+  "Z-drugs": [
+    "Zaleplon"
+  ]
+}
