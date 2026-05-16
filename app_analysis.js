@@ -565,8 +565,23 @@ function analyserPrescription() {
 
     const { bioValues, ctxClinique } = _buildPatientContext(patientAge, sexe, isFragile);
 
-    const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines', 'alertes-synthese'];
+    const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines', 'alertes-synthese', 'alertes-scores-exp'];
     divs.forEach(id => { let el = document.getElementById(id); if(el) el.innerHTML = ''; });
+
+    // ── Scores composites expérimentaux (nouveau panneau) ──
+    try {
+        const expEl = document.getElementById('alertes-scores-exp');
+        if (expEl && typeof renderCompositeScoresPanel === 'function') {
+            // Construire la liste enrichie depuis activeMeds + MASTER_DB
+            const dbMeds = (typeof MASTER_DB !== 'undefined' && MASTER_DB.MEDICAMENTS) ? MASTER_DB.MEDICAMENTS : [];
+            const ordoFull = (typeof activeMeds !== 'undefined' ? activeMeds : []).map(am => {
+                if (am.db_ref) return am.db_ref;
+                const found = dbMeds.find(d => (d.dci || '').toLowerCase() === (am.dci || '').toLowerCase());
+                return found || am;
+            }).filter(Boolean);
+            expEl.innerHTML = renderCompositeScoresPanel(ordoFull);
+        }
+    } catch(e) { console.warn('Scores composites:', e); }
     let counts = { eviter: 0, initier: 0, interact: 0, ansm: 0, auc: 0, bio: 0, usage: 0, suivi: 0 };
 
     // ── Registre structuré d'alertes (pour synthèse transversale) ──

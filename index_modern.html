@@ -852,6 +852,7 @@
                             <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="ansm" role="tab" aria-selected="false">ANSM</button>
                             <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="bio" role="tab" aria-selected="false">Bio</button>
                             <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="usage" role="tab" aria-selected="false">Doses</button>
+                            <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="scores-exp" role="tab" aria-selected="false">🧪 Scores exp.</button>
                         </div>
                     </div>
                     <div class="tab-content p-4" id="myTabContent">
@@ -865,6 +866,7 @@
                         <div class="tab-pane" id="tab-ansm" role="tabpanel" data-print-title="Interactions ANSM"><div id="alertes-ansm" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
                         <div class="tab-pane" id="tab-bio" role="tabpanel" data-print-title="Syndromes biologiques"><div id="alertes-bio" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
                         <div class="tab-pane" id="tab-usage" role="tabpanel" data-print-title="Adaptations posologiques"><div id="alertes-usage" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane" id="tab-scores-exp" role="tabpanel" data-print-title="Scores cliniques expérimentaux"><div id="alertes-scores-exp" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser pour calculer les scores composites...</div></div>
                     </div>
                 </div>
 
@@ -1016,6 +1018,7 @@
 <script src="app_ui.js"></script>
 <script src="ocr_module.js"></script>
 <script src="child_pugh_adaptations.js"></script>
+<script src="composite_scores.js"></script>
 <script src="app_analysis.js"></script>
 
 <script>

@@ -451,6 +451,7 @@
                         <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-usage" role="tab" aria-label="Adaptations posologiques">Doses</button></li>
                         <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-suivi" role="tab" aria-label="Suivi biologique">Suivi</button></li>
                         <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-guidelines" role="tab" aria-label="Guidelines par pathologie">Recos</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-scores-exp" role="tab" aria-label="Scores expérimentaux composites">🧪 Scores exp.</button></li>
                     </ul>
                     <div class="tab-content mt-3" id="myTabContent">
                         <div class="tab-pane fade show active" id="tab-synthese" role="tabpanel"><div id="alertes-synthese" class="text-muted" aria-live="polite">Cliquez sur Analyser pour voir la synthèse intelligente...</div></div>
@@ -474,6 +475,7 @@
                             <div id="alertes-suivi" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div>
                         </div>
                         <div class="tab-pane fade" id="tab-guidelines" role="tabpanel"><div id="alertes-guidelines" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
+                        <div class="tab-pane fade" id="tab-scores-exp" role="tabpanel"><div id="alertes-scores-exp" class="text-muted" aria-live="polite">Cliquez sur Analyser pour calculer les scores composites...</div></div>
                     </div>
                 </div>
             </div>
@@ -534,6 +536,7 @@
     <script src="app_ui.js"></script>
     <script src="ocr_module.js"></script>
     <script src="child_pugh_adaptations.js"></script>
+    <script src="composite_scores.js"></script>
     <script src="app_analysis.js"></script>
     <div id="session-restore-banner" style="display:none; z-index:10000; max-width:350px;" class="alert alert-warning alert-dismissible position-fixed bottom-0 end-0 m-3 shadow py-2 px-3">
         Session précédente détectée. <a href="#" onclick="_restoreSession();document.getElementById('session-restore-banner').style.display='none';return false;" class="fw-bold">Restaurer</a>
