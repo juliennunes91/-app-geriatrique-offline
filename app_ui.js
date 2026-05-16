@@ -58,13 +58,18 @@ function calculerDFG(autoSwitch = true) {
 
     if (methodSelect.value === 'cg') {
         if (cgValue > 0) { dfgInput.value = Math.round(cgValue); dfgInput.placeholder = ""; } else dfgInput.value = "";
-        dfgInput.className = "form-control fw-bold bg-warning bg-opacity-25 text-dark";
+        dfgInput.style.backgroundColor = 'rgba(255, 193, 7, 0.25)';
+        dfgInput.style.color = '#212529';
     }
     else if (methodSelect.value === 'ckdepi') {
         if (ckdEpiValue > 0) { dfgInput.value = Math.round(ckdEpiValue); dfgInput.placeholder = ""; } else dfgInput.value = "";
-        dfgInput.className = "form-control fw-bold bg-info bg-opacity-25 text-dark";
+        dfgInput.style.backgroundColor = 'rgba(13, 202, 240, 0.25)';
+        dfgInput.style.color = '#212529';
     }
-    else dfgInput.className = "form-control fw-bold";
+    else {
+        dfgInput.style.backgroundColor = '';
+        dfgInput.style.color = '';
+    }
 
     // Avertissement sarcopénie : DFGe surestime la fonction rénale réelle quand la masse musculaire
     // s'effondre (sujet âgé, dénutri, IMC < 21, poids < 50 kg, créat < 50 µmol/L). KDIGO 2024

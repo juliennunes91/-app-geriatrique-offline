@@ -6121,7 +6121,7 @@ const MASTER_DB = {
                     "ddi_interact_v2": [
                               { "classe": "Opioïdes forts (CI relative — FDA Black Box 2016)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine", "buprenorphine"], "commentaire": "Mortalité x4. Antidote flumazénil.", "severite": "danger" },
                               { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "clorazepate", "prazepam", "nordazepam", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit.", "severite": "danger" },
-                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + chutes.", "severite": "warning" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée — chutes.", "severite": "warning" },
                               { "classe": "Sédatifs centraux (Antidépresseurs sédatifs, Antihistaminiques, Gabapentinoïdes, Alcool)", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "hydroxyzine", "doxylamine", "diphenhydramine", "promethazine", "gabapentine", "pregabaline", "alcool"], "commentaire": "Sédation cumulée.", "severite": "warning" },
                               { "classe": "Inhibiteurs CYP3A4 puissants (↑ exposition chlordiazépoxide)", "dcis": ["ketoconazole", "itraconazole", "voriconazole", "posaconazole", "ritonavir", "clarithromycine", "erythromycine", "diltiazem", "verapamil", "fluvoxamine", "jus de pamplemousse"], "commentaire": "Chlordiazépoxide = substrat CYP3A4, demi-vie > 100 h. ↑ exposition majeure. PIM ABSOLU Beers 2023 — éviter chez âgé.", "severite": "danger" }
                     ],
@@ -6678,7 +6678,7 @@ const MASTER_DB = {
                               { "classe": "IMAO non-sélectifs / IMAO-B (CONTRE-INDICATION)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j arrêt IMAO → ISRS, et 5 demi-vies post-ISRS → IMAO.", "severite": "danger" },
                               { "classe": "Linézolide / Bleu de méthylène (effet IMAO)", "dcis": ["linezolide", "bleu de methylene"], "commentaire": "Effet IMAO → syndrome sérotoninergique. CI relative.", "severite": "danger" },
                               { "classe": "Triptans", "dcis": ["sumatriptan", "zolmitriptan", "rizatriptan", "almotriptan", "naratriptan", "frovatriptan", "eletriptan"], "commentaire": "Risque syndrome sérotoninergique. Durée courte, surveillance.", "severite": "warning" },
-                              { "classe": "Tramadol, Pethidine, Oxycodone", "dcis": ["tramadol", "pethidine", "oxycodone"], "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène", "severite": "warning" },
+                              { "classe": "Tramadol, Pethidine, Oxycodone", "dcis": ["tramadol", "pethidine", "oxycodone"], "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène.", "severite": "warning" },
                               { "classe": "Autres ISRS/IRSN/Mirtazapine/ATC/Vortioxétine", "dcis": ["escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "mirtazapine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine", "nortriptyline", "doxepine"], "commentaire": "Cumul effet sérotoninergique → syndrome sérotoninergique", "severite": "warning" },
                               { "classe": "AVK", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "↑ INR + risque hémorragique plaquettaire. Surveillance INR rapprochée.", "severite": "warning" },
                               { "classe": "AOD / HBPM / HNF / Fondaparinux", "dcis": ["apixaban", "rivaroxaban", "dabigatran", "edoxaban", "enoxaparine", "dalteparine", "tinzaparine", "heparine sodique", "fondaparinux"], "commentaire": "Risque hémorragique digestif (effet plaquettaire ISRS)", "severite": "warning" },
@@ -7173,7 +7173,7 @@ const MASTER_DB = {
                     "ddi_interact_v2": [
                               { "classe": "Opioïdes forts (CI relative — FDA Black Box 2016)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine", "buprenorphine"], "commentaire": "Mortalité x4. Antidote flumazénil.", "severite": "danger" },
                               { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "prazepam", "nordazepam", "chlordiazepoxide", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit.", "severite": "danger" },
-                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + chutes.", "severite": "warning" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée — chutes.", "severite": "warning" },
                               { "classe": "Sédatifs centraux (Antidépresseurs sédatifs, Antihistaminiques sédatifs, Gabapentinoïdes, Alcool)", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "hydroxyzine", "doxylamine", "diphenhydramine", "promethazine", "gabapentine", "pregabaline", "alcool"], "commentaire": "Sédation cumulée.", "severite": "warning" },
                               { "classe": "Inhibiteurs CYP3A4 puissants (↑ exposition nordazépam)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "fluvoxamine"], "commentaire": "Clorazepate = prodrogue de nordazépam (substrat CYP3A4). ↑ exposition métabolite actif. Préférer oxazépam/lorazépam chez âgé.", "severite": "warning" }
                     ],
@@ -7691,7 +7691,7 @@ const MASTER_DB = {
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI +++), ISRS (syndrome serotoninergique), Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique","severite":"danger"},
+                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique.","severite":"danger"},
                               {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
                               {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
@@ -8230,7 +8230,7 @@ const MASTER_DB = {
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), Alcool, QT-prolongateurs",
                     "ddi_interact_v2": [
-                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique","severite":"danger"},
+                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique.","severite":"danger"},
                               {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
                               {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
@@ -8427,7 +8427,7 @@ const MASTER_DB = {
                                                   "sertraline",
                                                   "fluvoxamine"
                                         ],
-                                        "commentaire": "syndrome serotoninergique",
+                                        "commentaire": "syndrome serotoninergique.",
                                         "severite": "danger"
                               },
                               {
@@ -9262,7 +9262,7 @@ const MASTER_DB = {
                                                   "sertraline",
                                                   "fluvoxamine"
                                         ],
-                                        "commentaire": "syndrome serotoninergique",
+                                        "commentaire": "syndrome serotoninergique.",
                                         "severite": "danger"
                               }
                     ],
@@ -14465,7 +14465,7 @@ const MASTER_DB = {
                                                   "sertraline",
                                                   "fluvoxamine"
                                         ],
-                                        "commentaire": "syndrome serotoninergique",
+                                        "commentaire": "syndrome serotoninergique.",
                                         "severite": "danger"
                               },
                               {
@@ -14552,7 +14552,7 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI absolue - deces), ISRS (syndrome serotoninergique), MAO-B inhibiteurs",
                     "ddi_interact_v2": [
-                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique","severite":"danger"},
+                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique.","severite":"danger"},
                               {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "Bilan renal (CI si DFG<60 - accumulation metabolite neurotoxique normemeperidine) | Bilan neurologique | Bilan hépatique",
@@ -16206,7 +16206,7 @@ const MASTER_DB = {
                     "ddi_interact_v2": [
                               { "classe": "Opioïdes forts (CI relative — FDA Black Box 2016)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine"], "commentaire": "Mortalité x4. Antidote flumazénil.", "severite": "danger" },
                               { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "clorazepate", "prazepam", "chlordiazepoxide", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit.", "severite": "danger" },
-                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + chutes.", "severite": "warning" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée — chutes.", "severite": "warning" },
                               { "classe": "Sédatifs centraux", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "hydroxyzine", "doxylamine", "diphenhydramine", "promethazine", "gabapentine", "pregabaline", "alcool"], "commentaire": "Sédation cumulée.", "severite": "warning" },
                               { "classe": "Inhibiteurs CYP3A4 puissants (↑ exposition nordazépam)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "fluvoxamine"], "commentaire": "Nordazépam = substrat CYP3A4. Préférer oxazépam/lorazépam (sans CYP).", "severite": "warning" }
                     ],
@@ -16298,7 +16298,7 @@ const MASTER_DB = {
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), QT-prolongateurs, Alcool",
                     "ddi_interact_v2": [
-                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique","severite":"danger"},
+                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique.","severite":"danger"},
                               {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
                               {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
@@ -17839,7 +17839,7 @@ const MASTER_DB = {
                     "ddi_interact_v2": [
                               { "classe": "Opioïdes forts (CI relative — FDA Black Box 2016)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine", "buprenorphine"], "commentaire": "Mortalité x4. Antidote flumazénil.", "severite": "danger" },
                               { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "clorazepate", "nordazepam", "chlordiazepoxide", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit.", "severite": "danger" },
-                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + chutes.", "severite": "warning" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée — chutes.", "severite": "warning" },
                               { "classe": "Sédatifs centraux (Antidépresseurs sédatifs, Antihistaminiques, Gabapentinoïdes, Alcool)", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "doxepine", "hydroxyzine", "doxylamine", "diphenhydramine", "promethazine", "gabapentine", "pregabaline", "alcool"], "commentaire": "Sédation cumulée.", "severite": "warning" },
                               { "classe": "Inhibiteurs CYP3A4 puissants (↑ exposition nordazépam)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "voriconazole", "fluvoxamine"], "commentaire": "Prazepam = prodrogue de nordazépam (substrat CYP3A4). ↑ exposition métabolite actif.", "severite": "warning" }
                     ],
@@ -20641,7 +20641,7 @@ const MASTER_DB = {
                                                   "sertraline",
                                                   "fluvoxamine"
                                         ],
-                                        "commentaire": "syndrome serotoninergique",
+                                        "commentaire": "syndrome serotoninergique.",
                                         "severite": "danger"
                               }
                     ],
@@ -26946,7 +26946,7 @@ const MASTER_DB = {
                                                   "sertraline",
                                                   "fluvoxamine"
                                         ],
-                                        "commentaire": "syndrome serotoninergique",
+                                        "commentaire": "syndrome serotoninergique.",
                                         "severite": "danger"
                               },
                               {

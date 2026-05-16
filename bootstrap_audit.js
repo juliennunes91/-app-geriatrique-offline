@@ -204,6 +204,84 @@ function detectIntraRuleDupes(prescription) {
     return findings;
 }
 
+const MIN_COMMENT_LEN = 60;
+const MIN_SOURCES_IDENTICAL = 3;
+const COMMENT_KEY_SLICE = 80;
+
+// Utilitaire : pré-indexe la prescription DCI→med (lowercase) une fois, puis
+// itère sur tous les triplets (source, règle, cible) avec la cible déjà
+// résolue. Élimine le prescription.find linéaire en triple boucle (O(n³)→O(n²)).
+function iterateMatchedDDI(prescription, callback) {
+    const dciIndex = new Map();
+    prescription.forEach(m => dciIndex.set((m.dci || '').toLowerCase(), m));
+    for (const med of prescription) {
+        const rules = med.ddi_interact_v2 || [];
+        for (const rule of rules) {
+            const dcis = rule.dcis || [];
+            for (const t of dcis) {
+                if (typeof t !== 'string') continue;
+                const targetLc = t.toLowerCase();
+                const targetMed = dciIndex.get(targetLc);
+                if (!targetMed) continue;
+                callback(med, rule, t, targetLc, targetMed);
+            }
+        }
+    }
+}
+
+// V3 fusionné : alerte UI dupliquée + cascade de sévérités sur même cible
+// (info+warning+danger venant de sources différentes). Une seule passe.
+function detectVisualAlertDupAndCascade(prescription) {
+    const findings = [];
+    const emitted = new Map();    // "target::classe::severite" → [sources]
+    const targetSev = new Map();  // target → Set(severites)
+    iterateMatchedDDI(prescription, (med, rule, target, targetLc) => {
+        const key = `${targetLc}::${(rule.classe || '').trim()}::${rule.severite || 'unknown'}`;
+        if (!emitted.has(key)) emitted.set(key, []);
+        emitted.get(key).push(med.dci);
+        if (!targetSev.has(targetLc)) targetSev.set(targetLc, new Set());
+        targetSev.get(targetLc).add(rule.severite);
+    });
+    emitted.forEach((sources, key) => {
+        const uniqSources = Array.from(new Set(sources.map(s => s.toLowerCase())));
+        if (uniqSources.length >= 2) {
+            findings.push({ type: 'visual_alert_dup', key, sources: uniqSources });
+        }
+    });
+    targetSev.forEach((sevs, target) => {
+        if (sevs.has('info') && sevs.has('warning') && sevs.has('danger')) {
+            findings.push({ type: 'severity_cascade', target, severites: Array.from(sevs) });
+        }
+    });
+    return findings;
+}
+
+// V3 : commentaires strictement identiques entre 3+ médicaments différents
+// (copier-coller cross-méd). Filtre strict via MIN_COMMENT_LEN + MIN_SOURCES_IDENTICAL
+// pour éviter les phrases génériques légitimes ("Syndrome sérotoninergique").
+function detectIdenticalComments(prescription) {
+    const findings = [];
+    const sigMap = new Map();
+    for (const med of prescription) {
+        for (const rule of (med.ddi_interact_v2 || [])) {
+            const com = (rule.commentaire || '').trim();
+            if (com.length < MIN_COMMENT_LEN) continue;
+            if (!sigMap.has(com)) sigMap.set(com, []);
+            sigMap.get(com).push({ src: med.dci, classe: rule.classe, severite: rule.severite });
+        }
+    }
+    sigMap.forEach((entries, com) => {
+        const uniqSrc = new Set(entries.map(e => e.src.toLowerCase()));
+        if (uniqSrc.size >= MIN_SOURCES_IDENTICAL) {
+            findings.push({
+                type: 'identical_comment_cross', commentaire: com.slice(0, COMMENT_KEY_SLICE),
+                sources: Array.from(uniqSrc), n: entries.length
+            });
+        }
+    });
+    return findings;
+}
+
 function detectContradictions(prescription) {
     const findings = [];
     const pairs = new Map();
@@ -465,7 +543,8 @@ const allFindings = {
     ddi_dup_intra_med: [], ddi_dup_cross: [], intra_rule_dup: [],
     severite_contradiction: [], severity_disparity: [],
     score_total_no_contrib: [], score_contrib_no_total: [], score_sum_mismatch: [],
-    duplicate_dci_in_prescription: [], sentinel_false_negative: []
+    duplicate_dci_in_prescription: [], sentinel_false_negative: [],
+    visual_alert_dup: [], identical_comment_cross: [], severity_cascade: []
 };
 
 // Tracking unique findings (clé canonique → premier iter d'apparition)
@@ -484,6 +563,9 @@ function canonicalKey(f) {
         case 'score_sum_mismatch': return `${f.type}::${f.score}`;
         case 'duplicate_dci_in_prescription': return `${f.type}::${(f.dci || '').toLowerCase()}`;
         case 'sentinel_false_negative': return `${f.type}::${f.sentinel}`;
+        case 'visual_alert_dup': return `${f.type}::${f.key}`;
+        case 'identical_comment_cross': return `${f.type}::${(f.commentaire || '').slice(0, COMMENT_KEY_SLICE)}`;
+        case 'severity_cascade': return `${f.type}::${f.target}`;
         default: return JSON.stringify(f).slice(0, 200);
     }
 }
@@ -503,8 +585,10 @@ for (let i = 0; i < N_ITERATIONS; i++) {
     const f6 = detectDoubleDCI(prescription);
     const f7 = detectSeverityDisparity(prescription);
     const f8 = detectIntraRuleDupes(prescription);
+    const f9 = detectVisualAlertDupAndCascade(prescription);
+    const f10 = detectIdenticalComments(prescription);
 
-    [...f1, ...f2, ...f3, ...f4, ...f5, ...f6, ...f7, ...f8].forEach(f => {
+    [...f1, ...f2, ...f3, ...f4, ...f5, ...f6, ...f7, ...f8, ...f9, ...f10].forEach(f => {
         if (allFindings[f.type]) allFindings[f.type].push({ iter: i + 1, ...f });
         const ck = canonicalKey(f);
         if (!uniqueFindings.has(ck)) {

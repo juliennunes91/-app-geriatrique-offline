@@ -497,9 +497,9 @@ window.resetPatient = function() {
     // 6. Masquer les boutons d'export
     ['btnPdf','btnCopier','btnPrint','btnCompare'].forEach(id => { const b = document.getElementById(id); if(b) b.style.display = 'none'; });
 
-    // 7. Réinitialiser le style DFG
+    // 7. Réinitialiser le style DFG (préserve les classes Bootstrap/Tailwind existantes)
     const dfgInput = document.getElementById('patientDFG');
-    if (dfgInput) dfgInput.className = 'form-control fw-bold';
+    if (dfgInput) { dfgInput.style.backgroundColor = ''; dfgInput.style.color = ''; }
 
     // 8. Remettre le premier onglet actif
     const firstTab = document.querySelector('#myTab .nav-link');

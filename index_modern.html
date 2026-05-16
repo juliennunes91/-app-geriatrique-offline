@@ -441,7 +441,7 @@
                 <div class="col-span-2">
                     <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5">DFGe estimé <span class="font-normal opacity-60">(ml/min)</span></label>
                     <div class="flex gap-1">
-                        <input type="number" id="patientDFG" value="45" oninput="document.getElementById('dfgMethodSelect').value='manuel'" class="flex-1 px-2.5 py-1.5 text-xs font-bold border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                        <input type="number" id="patientDFG" value="45" oninput="document.getElementById('dfgMethodSelect').value='manuel'; this.style.backgroundColor=''; this.style.color='';" class="flex-1 px-2.5 py-1.5 text-xs font-bold border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
                         <select id="dfgMethodSelect" onchange="calculerDFG(false)" style="max-width:118px;font-size:0.72em" class="px-2 py-1 border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none">
                             <option value="manuel">Manuel</option>
                             <option value="cg">Cockcroft</option>

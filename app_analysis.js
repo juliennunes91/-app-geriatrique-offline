@@ -1507,6 +1507,10 @@ function analyserPrescription() {
             }
         }
 
+        // Dédoublonnage UI cross-source (alert fatigue, CDS 2024) :
+        // une alerte (cible, classe, severite) émise par 2 sources n'est affichée qu'une fois.
+        const ddiSeenInteractions = new Set();
+
         activeMeds.forEach(m => {
             let ref = m.db_ref; if(!ref) return;
 
@@ -1540,12 +1544,22 @@ function analyserPrescription() {
                         if (hit) matched.push({ dci: dciCanon, interactor: hit.dci });
                     });
                     if (matched.length > 0) {
-                        foundGroups.push({
-                            classe: entry.classe || '',
-                            matched,
-                            commentaire: entry.commentaire || '',
-                            severite: entry.severite || 'warning',
+                        const classeKey = sanitizeText(entry.classe || '');
+                        const sevKey = entry.severite || 'warning';
+                        const newMatched = matched.filter(x => {
+                            const sig = `${sanitizeText(x.interactor)}::${classeKey}::${sevKey}`;
+                            if (ddiSeenInteractions.has(sig)) return false;
+                            ddiSeenInteractions.add(sig);
+                            return true;
                         });
+                        if (newMatched.length > 0) {
+                            foundGroups.push({
+                                classe: entry.classe || '',
+                                matched: newMatched,
+                                commentaire: entry.commentaire || '',
+                                severite: entry.severite || 'warning',
+                            });
+                        }
                     }
                 });
 

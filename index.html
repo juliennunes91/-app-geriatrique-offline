@@ -142,7 +142,7 @@
                         <div class="col-8">
                             <label class="fw-bold small">DFGe estimé <span class="fw-normal text-muted">(ml/min)</span></label>
                             <div class="input-group">
-                                <input type="number" id="patientDFG" class="form-control fw-bold" value="45" oninput="document.getElementById('dfgMethodSelect').value='manuel'; this.className='form-control fw-bold';">
+                                <input type="number" id="patientDFG" class="form-control fw-bold" value="45" oninput="document.getElementById('dfgMethodSelect').value='manuel'; this.style.backgroundColor=''; this.style.color='';">
                                 <select class="form-select" id="dfgMethodSelect" onchange="calculerDFG(false)" style="max-width: 130px; font-size: 0.8em; padding: 0.25rem;">
                                     <option value="manuel">Manuel</option>
                                     <option value="cg">Cockcroft</option>
