@@ -8,7 +8,31 @@
 
 ## 1. Méthodologie
 
-### 1.1 Bootstrap (N=10 000 itérations)
+### 1.1 Bootstrap (N=30 000 itérations + checkpoints + validation littérature)
+
+**N=30 000 itérations Monte-Carlo** avec checkpoints tous les 100 iter et
+validation littérature via WebSearch sur findings uniques émergents.
+
+**Profils patient enrichis** (10 biomarqueurs biologiques + fonctionnel) :
+- Biologie : DFG, créat, K+, Na+, Ca²⁺ corr., INR, plaquettes, Hb, HbA1c,
+  ALAT/ASAT, TSH, QTc (distributions gaussiennes gériatriques tronquées 5e-95e)
+- Fonctionnel : IMC, GIR (1-6), MMSE, chutes/an, espérance vie estimée
+- 28 comorbidités possibles tirées en sous-ensemble (0-8 par patient)
+
+**Prescriptions** :
+- 30 % phénotype-driven : 12 clusters thérapeutiques réalistes (cardio_complet,
+  hta_diur, fa_avk, diab_type2, IRC, dépression/démence, douleur chronique,
+  BPCO, Parkinson, triple_whammy, palliatif, chute_iatrogène)
+- 70 % aléatoire uniforme (1-15 médicaments parmi 546 DCI)
+
+**15 sentinelles cliniques** :
+- Triple sérotoninergique, Triple whammy IRA, AVK+AINS, Beers Glibenclamide,
+  ACB cumul, QT double prolongation, Hyperkaliémiants triple, Triple AC/AP,
+  BZD + opioïde chute, Néphrotoxiques triple, Beers BZD longue ½-vie,
+  Antimuscariniques uro + AChE, CYP3A4 inh + statine, Digoxine + hypoK,
+  Macrolides + QT polypharma.
+
+### 1.1.bis Bootstrap (N=10 000 itérations) — itération précédente
 
 - **Tirage** : 500 prescriptions aléatoires, taille 3-20 méds (uniforme)
 - **Profil patient** : âge 60-100, DFG 15-120, sexe H/F, 0-6 comorbidités random
@@ -108,7 +132,7 @@ Design pattern (conditions/états/substances exogènes). Pas un bug, pas d'actio
 
 ### 3.5 Score composites — Aucune aberration ✅
 
-10 000 itérations bootstrap : 0 incohérence total/contributeurs, 0 erreur de somme.
+30 000 itérations bootstrap : 0 incohérence total/contributeurs, 0 erreur de somme.
 
 ### 3.6 Sentinelles faux négatifs — Aucune détection ✅
 
@@ -136,7 +160,37 @@ Détection apparue uniquement avec N=10 000 (7 itérations sur 10 000) :
 
 **Fix appliqué** : suppression du doublon position 2.
 
-### 3.9 Régression Pattern D corrigée (auto-fix ✅)
+### 3.10 Bootstrap N=30 000 — 3 bugs scoring détectés (validés WebSearch ✅)
+
+Détectés via sentinelle `BZD_opioide_chute` activée 3 fois, confirmés par
+WebSearch sur Beers 2023 et littérature opioïdes gériatrique.
+
+**Bug 1 — Clonazepam** : `sedat: 0, chute: 0` (vs toutes autres BZD à 3/3)
+- Beers 2023 : TOUTES BZD (court, intermédiaire, long) à éviter chez âgé
+  pour risque chute/sédation/délire/fracture.
+- Fix : `sedat: 0→3, chute: 0→3`.
+
+**Bug 2 — Buprenorphine** : `sedat: 0, chute: 0` (vs Morphine/Oxy/Fentanyl 3/3)
+- Cohorte 3.2M patients : opioïdes associés ↑ chutes sévères, max si ≥85 ans.
+- Plus sûre que morphine mais reste opioïde fort partiel.
+- Fix conservatif : `sedat: 0→2, chute: 0→2`.
+
+**Bug 3 — Pethidine (mépéridine)** : `sedat: 0, chute: 0`
+- Beers 2023 : PIM ABSOLU (métabolite normépéridine neurotoxique, accumule en IRC).
+- Fix : `sedat: 0→3, chute: 0→3`.
+
+### 3.11 Sentinelles ajustées (faux positifs détecteur)
+
+2 sentinelles testaient des scores composites inexistants en base :
+- **Nephrotoxiques_triple** : aucun score `nephro` défini (DBI ne couvre
+  pas la néphrotoxicité ; pas de score composite validé en littérature).
+- **Hyperkaliemiants_triple** : aucun score `hyperK` défini (KDIGO 2024 ne
+  recommande pas de score composite ; risque multifactoriel).
+
+**Fix** : redéfinies pour vérifier la présence d'au moins UNE alerte DDI
+explicite mentionnant néphrotoxicité / hyperkaliémie, plutôt qu'un score absent.
+
+### 3.12 Régression Pattern D corrigée (auto-fix ✅)
 
 Détection apparue uniquement avec N=10 000 (10 itérations) :
 - Mon fix Pattern D initial ajoutait la règle Bisoprolol/Antiarythmiques IA en **warning**
@@ -162,13 +216,16 @@ Détection apparue uniquement avec N=10 000 (10 itérations) :
 | Faux positifs scores | 0 | 0 | Cohérent |
 | Faux négatifs sentinelles | 0 | 0 | Cohérent |
 
-**Bugs critiques** : **31 détectés / 31 corrigés** (18 structurels + 11 cliniques V1 + 2 cliniques V2 N=10k = 100% couverture).
+**Bugs critiques** : **34 détectés / 34 corrigés** (18 structurels + 11 cliniques V1 + 2 cliniques V2 N=10k + 3 scores scoring V3 N=30k = 100% couverture).
 **Index DDI** : 15 121 → 15 483 relations directionnelles (+ 362 nouvelles règles activées).
 
-**Bootstrap N=10 000 final** :
-- 9 993 itérations propres (99.93%)
-- 7 itérations avec finding "severite_contradiction" → 2 paires uniques, faux positifs PD/PK
-- 0 bug structurel, 0 score incohérent, 0 sentinelle ratée.
+**Bootstrap N=30 000 final (post-fix)** :
+- 29 957 itérations propres (99.86%)
+- 43 itérations avec finding "severite_contradiction" → 2 paires uniques,
+  faux positifs PD/PK documentés.
+- 0 bug structurel, 0 score incohérent, 0 sentinelle ratée sur 15 testées.
+- Validation littérature WebSearch sur 4 patterns émergents : Beers 2023, ESC HF,
+  KDIGO 2024, AHRQ Falls Toolkit.
 
 ---
 
@@ -202,7 +259,7 @@ Les deux scripts `bootstrap_audit.js` et `exhaustive_audit.js` sont versionnés.
 
 Ré-exécution :
 ```bash
-node bootstrap_audit.js     # 10 000 itérations Monte-Carlo
+node bootstrap_audit.js     # 30 000 itérations Monte-Carlo + 15 sentinelles
 node exhaustive_audit.js    # Sweep complet de toutes les paires
 ```
 
