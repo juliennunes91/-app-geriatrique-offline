@@ -2045,7 +2045,7 @@ const MASTER_DB = {
                               { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive — réduire dose sulfamide/insuline.", "severite": "warning" },
                               { "classe": "GLP-1 RA — REDONDANCE", "dcis": ["liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Redondance déconseillée.", "severite": "warning" },
                               { "classe": "Metformine / iSGLT2 (synergie favorable)", "dcis": ["metformine", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin"], "commentaire": "Associations recommandées.", "severite": "info" },
-                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme.", "severite": "info" }
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Corticoïde induit hyperglycémie significative — surveillance glycémie capillaire renforcée + adaptation dose antidiabétique (Newcomer JCO 2007, ADA 2025).", "severite": "warning" }
                     ],
                     "suivi_initial": "HbA1c | Créatinine/DFG (ajustement DFG 30-60 : 12.5 mg/j ; DFG<30 : 6.25 mg/j) | Bilan hépatique | Lipase si symptômes abdo",
                     "suivi_periodique": "HbA1c (tous les 3-6 mois — cibles assouplies chez âgé) | Créatinine (semestriel — adaptation dose) | Bilan hépatique (annuel)",
@@ -2748,15 +2748,8 @@ const MASTER_DB = {
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), Alcool, QT-prolongateurs, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Glycemie",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
@@ -3974,15 +3967,8 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques (cumul ACB +++)",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "Evaluation cognitive chez sujet age | ECG si cardiopathie | Bilan ophtalmique",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -4402,6 +4388,7 @@ const MASTER_DB = {
                                         "commentaire": "Bisoprolol = métabolisme mixte CYP3A4/CYP2D6 (50% rénal) : effet moindre que métoprolol (purement CYP2D6). Surveiller FC.",
                                         "severite": "info"
                               },
+                              { "classe": "Antiarythmiques classe IA — BRADYCARDIE / inotrope cumulé", "dcis": ["quinidine", "disopyramide", "procainamide"], "commentaire": "β-bloquant + classe IA = effets bradycardisants + inotrope (-) cumulés → bloc AV / hypotension. Éviter ou monitoring cardiaque rapproché.", "severite": "warning" },
                               {
                                         "classe": "Bétamimétiques / Théophylline (antagonisme bronchodilatateur)",
                                         "dcis": [
@@ -5087,22 +5074,22 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "INDUCTEUR ENZYMATIQUE MAJEUR (CYP3A4/2C9/2C19/2B6/UGT) — ↓ efficacité de NOMBREUX médicaments : AVK/AOD, Statines, Contraceptifs, Antirétroviraux, Antifongiques azolés, Ciclosporine/Tacrolimus, Macrolides, IS, etc. + Inhibiteurs CYP3A4 → ↑ carbamazépine (CI relative) + Lithium (neurotoxicité) + Clozapine (CI agranulocytose)",
                     "ddi_interact_v2": [
-                              { "classe": "Inducteur CYP — ↓ AVK / AOD (perte efficacité anticoagulante)", "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "dabigatran", "edoxaban",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }], "commentaire": "Carbamazépine = inducteur puissant → ↓ INR/anticoagulation x2-3 → risque thrombotique. Surveillance INR rapprochée. Pour AOD : EVITER (perte efficacité majeure).", "severite": "danger" },
-                              { "classe": "Inducteur CYP — ↓ Statines CYP3A4 (perte efficacité)", "dcis": ["atorvastatine", "simvastatine", "lovastatine"], "commentaire": "↓ exposition statines → perte efficacité hypocholestérolémiante. Préférer rosuvastatine/pravastatine (peu de CYP).", "severite": "warning" },
-                              { "classe": "Inducteur CYP — ↓ Contraceptifs oraux (échec contraceptif)", "dcis": ["ethinylestradiol", "levonorgestrel", "desogestrel", "drospirenone"], "commentaire": "↓ exposition → ÉCHEC CONTRACEPTIF. Méthode alternative obligatoire (DIU cuivre, préservatif).", "severite": "danger" },
-                              { "classe": "Inducteur CYP — ↓ Antifongiques azolés", "dcis": ["itraconazole", "voriconazole", "posaconazole", "ketoconazole"], "commentaire": "↓ efficacité antifongique. Surveillance.", "severite": "warning" },
-                              { "classe": "Inducteur CYP — ↓ Immunosuppresseurs", "dcis": ["ciclosporine", "tacrolimus", "sirolimus", "everolimus"], "commentaire": "↓ exposition IS → risque rejet. EVITER ou monitoring taux + adaptation dose.", "severite": "danger" },
-                              { "classe": "Inducteur CYP — ↓ Macrolides / Antiviraux / Anticancéreux", "dcis": ["clarithromycine", "ritonavir", "atazanavir", "darunavir", "imatinib", "sunitinib", "erlotinib"], "commentaire": "↓ exposition. Surveillance ou alternative.", "severite": "warning" },
-                              { "classe": "Inducteur CYP — ↓ Antipsychotiques / Antidépresseurs / BZD", "dcis": ["haloperidol", "quetiapine", "olanzapine", "risperidone", "aripiprazole", "alprazolam", "midazolam", "diazepam", "amitriptyline", "clomipramine"], "commentaire": "↓ efficacité psychotrope.", "severite": "warning" },
-                              { "classe": "Inhibiteurs CYP3A4 puissants — ↑ carbamazépine (toxicité)", "dcis": ["clarithromycine", "erythromycine", "ketoconazole", "itraconazole", "voriconazole", "ritonavir", "fluconazole", "diltiazem", "verapamil", "fluoxetine", "fluvoxamine"], "commentaire": "↑ exposition carbamazépine → toxicité (vertiges, ataxie, diplopie, somnolence). Réduction dose ou éviter. Pamplemousse aussi (CYP3A4 intestinal).", "severite": "danger" },
-                              { "classe": "Lithium — neurotoxicité MAJEURE", "dcis": ["lithium"], "commentaire": "Neurotoxicité (tremblements, confusion, ataxie) même à lithiémie thérapeutique. EVITER.", "severite": "danger" },
-                              { "classe": "Clozapine — CI ABSOLUE (cumul agranulocytose)", "dcis": ["clozapine"], "commentaire": "CONTRE-INDICATION ABSOLUE — risque agranulocytose cumulé majeur.", "severite": "danger" },
-                              { "classe": "Lamotrigine — ↓ lamotrigine x2 (perte efficacité)", "dcis": ["lamotrigine"], "commentaire": "Carbamazépine ↓ lamotrigine x2. Adaptation dose.", "severite": "warning" },
-                              { "classe": "Valproate — ↑ carbamazépine et son métabolite actif (epoxide) → toxicité", "dcis": ["valproate", "valpromide"], "commentaire": "Valproate inhibe l'epoxide-hydrolase → ↑ métabolite actif carbamazépine-epoxide → toxicité (vertiges, ataxie). Surveillance.", "severite": "warning" },
-                              { "classe": "ISRS / IRSN (potentialisation hyponatrémie SIADH + sérotoninergique)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine"], "commentaire": "Cumul hyponatrémie/SIADH. Surveillance Na+ rapprochée.", "severite": "warning" },
-                              { "classe": "Diurétiques (potentialisation hyponatrémie)", "dcis": ["hydrochlorothiazide", "indapamide", "furosemide"], "commentaire": "Cumul hyponatrémie/SIADH.", "severite": "warning" },
-                              { "classe": "IMAO non-sélectifs — CI ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "CONTRE-INDICATION ABSOLUE. Délai 14 j entre arrêt IMAO et carbamazépine.", "severite": "danger" }
+                              {"classe":"Inducteur CYP — ↓ AVK / AOD (perte efficacité anticoagulante)","dcis":["warfarine","acenocoumarol","fluindione","apixaban","rivaroxaban","dabigatran","edoxaban"],"commentaire":"Carbamazépine = inducteur puissant → ↓ INR/anticoagulation x2-3 → risque thrombotique. Surveillance INR rapprochée. Pour AOD : EVITER (perte efficacité majeure).","severite":"danger"},
+                              {"classe":"Inducteur CYP — ↓ Statines CYP3A4 (perte efficacité)","dcis":["atorvastatine","simvastatine","lovastatine"],"commentaire":"↓ exposition statines → perte efficacité hypocholestérolémiante. Préférer rosuvastatine/pravastatine (peu de CYP).","severite":"warning"},
+                              {"classe":"Inducteur CYP — ↓ Contraceptifs oraux (échec contraceptif)","dcis":["ethinylestradiol","levonorgestrel","desogestrel","drospirenone"],"commentaire":"↓ exposition → ÉCHEC CONTRACEPTIF. Méthode alternative obligatoire (DIU cuivre, préservatif).","severite":"danger"},
+                              {"classe":"Inducteur CYP — ↓ Antifongiques azolés","dcis":["itraconazole","voriconazole","posaconazole","ketoconazole"],"commentaire":"↓ efficacité antifongique. Surveillance.","severite":"warning"},
+                              {"classe":"Inducteur CYP — ↓ Immunosuppresseurs","dcis":["ciclosporine","tacrolimus","sirolimus","everolimus"],"commentaire":"↓ exposition IS → risque rejet. EVITER ou monitoring taux + adaptation dose.","severite":"danger"},
+                              {"classe":"Inducteur CYP — ↓ Macrolides / Antiviraux / Anticancéreux","dcis":["clarithromycine","ritonavir","atazanavir","darunavir","imatinib","sunitinib","erlotinib"],"commentaire":"↓ exposition. Surveillance ou alternative.","severite":"warning"},
+                              {"classe":"Inducteur CYP — ↓ Antipsychotiques / Antidépresseurs / BZD","dcis":["haloperidol","quetiapine","olanzapine","risperidone","aripiprazole","alprazolam","midazolam","diazepam","amitriptyline","clomipramine"],"commentaire":"↓ efficacité psychotrope.","severite":"warning"},
+                              {"classe":"Inhibiteurs CYP3A4 puissants — ↑ carbamazépine (toxicité)","dcis":["clarithromycine","erythromycine","ketoconazole","itraconazole","voriconazole","ritonavir","fluconazole","diltiazem","verapamil","fluoxetine","fluvoxamine"],"commentaire":"↑ exposition carbamazépine → toxicité (vertiges, ataxie, diplopie, somnolence). Réduction dose ou éviter. Pamplemousse aussi (CYP3A4 intestinal).","severite":"danger"},
+                              {"classe":"Lithium — neurotoxicité MAJEURE","dcis":["lithium"],"commentaire":"Neurotoxicité (tremblements, confusion, ataxie) même à lithiémie thérapeutique. EVITER.","severite":"danger"},
+                              {"classe":"Clozapine — CI ABSOLUE (cumul agranulocytose)","dcis":["clozapine"],"commentaire":"CONTRE-INDICATION ABSOLUE — risque agranulocytose cumulé majeur.","severite":"danger"},
+                              {"classe":"Lamotrigine — ↓ lamotrigine x2 (perte efficacité)","dcis":["lamotrigine"],"commentaire":"Carbamazépine ↓ lamotrigine x2. Adaptation dose.","severite":"warning"},
+                              {"classe":"Valproate — ↑ carbamazépine et son métabolite actif (epoxide) → toxicité","dcis":["valproate","valpromide"],"commentaire":"Valproate inhibe l'epoxide-hydrolase → ↑ métabolite actif carbamazépine-epoxide → toxicité (vertiges, ataxie). Surveillance.","severite":"warning"},
+                              {"classe":"ISRS / IRSN (potentialisation hyponatrémie SIADH + sérotoninergique)","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine","venlafaxine","duloxetine"],"commentaire":"Cumul hyponatrémie/SIADH. Surveillance Na+ rapprochée.","severite":"warning"},
+                              {"classe":"Diurétiques (potentialisation hyponatrémie)","dcis":["hydrochlorothiazide","indapamide","furosemide"],"commentaire":"Cumul hyponatrémie/SIADH.","severite":"warning"},
+                              {"classe":"IMAO non-sélectifs — CI ABSOLUE","dcis":["iproniazide","phenelzine","tranylcypromine","moclobemide"],"commentaire":"CONTRE-INDICATION ABSOLUE. Délai 14 j entre arrêt IMAO et carbamazépine.","severite":"danger"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | Ionogramme (SIADH) | ECG | Créatinine | Bilan thyroidien | Dosage serologique (fenetre 4-12 mg/L)",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | Ionogramme (annuel - risque SIADH) | ECG (annuel) | Dosage serique (a M1 puis annuel)",
@@ -6259,35 +6246,10 @@ const MASTER_DB = {
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "Haloperidol, Metoclopramide, Tricycliques, QT long",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Haloperidol",
-                                        "dcis": [
-                                                  "haloperidol",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Metoclopramide",
-                                        "dcis": [
-                                                  "metoclopramide"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Tricycliques",
-                                        "dcis": [
-                                                  "amitriptyline",
-                                                  "clomipramine",
-                                                  "imipramine",
-                                                  "desipramine",
-                                                  "nortriptyline"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"Haloperidol","dcis":["haloperidol"],"commentaire":"","severite":"warning"},
+                              {"classe":"Metoclopramide","dcis":["metoclopramide"],"commentaire":"","severite":"warning"},
+                              {"classe":"Tricycliques","dcis":["amitriptyline","clomipramine","imipramine","desipramine","nortriptyline"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "NFS | Bilan hépatique | ECG (QTc) | Glycemie | Bilan lipidique | Poids/IMC | TA",
                     "suivi_periodique": "NFS (annuelle) | Bilan hépatique (annuel) | ECG (QTc annuel) | Glycemie (annuelle) | Poids (a chaque consultation)",
@@ -7729,28 +7691,9 @@ const MASTER_DB = {
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI +++), ISRS (syndrome serotoninergique), Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "syndrome serotoninergique",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique","severite":"danger"},
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "ECG (QTc - analogue tricyclique) | Bilan hépatique | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "ECG (annuel) | Bilan hépatique si traitement prolonge",
@@ -8287,28 +8230,9 @@ const MASTER_DB = {
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), Alcool, QT-prolongateurs",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "syndrome serotoninergique",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique","severite":"danger"},
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Glycemie",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
@@ -8585,15 +8509,8 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "Evaluation cognitive chez sujet age | Bilan urologique",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -9417,7 +9334,8 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO - Depresseurs SNC",
                     "ddi_interact_v2": [
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }],
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
+                    ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
                     "alerte_clinique": "Allongement QTc → ECG urgent | Ictère | SIADH",
@@ -9528,12 +9446,12 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Depresseurs SNC - Alcool",
                     "ddi_interact_v2": [
-                              { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB élevé + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers fort + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén pour allergie.", "severite": "danger" },
-                              { "classe": "QT-prolongateurs — Torsades", "dcis": ["amiodarone", "sotalol", "hydroxychloroquine", "moxifloxacine", "azithromycine", "ondansetron", "haloperidol", "quetiapine", "citalopram", "methadone"], "commentaire": "QTc additif.", "severite": "warning" },
-                              { "classe": "Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI", "dcis": ["glaucome angle ferme", "retention urinaire", "hbp non traitee", "ileus paralytique", "myasthenie"], "commentaire": "CI.", "severite": "danger" },
-                              { "classe": "IACHE / Mémantine — antagonisme PD (Sink JAGS 2008)", "dcis": ["donepezil", "rivastigmine", "galantamine", "memantine"], "commentaire": "Antagonisme → perte effet anti-Alzheimer.", "severite": "danger" },
-                              { "classe": "Cumul ACB — démence (Coupland JAMA Int Med 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "oxybutynine", "tolterodine", "solifenacine", "trospium", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "alimemazine", "chlorpheniramine", "hydroxyzine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Cumul ACB → démence.", "severite": "danger" },
-                              { "classe": "Sédatifs centraux (alcool/BZD/Z/opioïdes/gabapentinoïdes)", "dcis": ["alcool", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "pregabaline", "gabapentine", "mirtazapine"], "commentaire": "Sédation additive — CHUTES.", "severite": "danger" }
+                              {"classe":"ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB élevé + BHE+ + chutes/démence","dcis":["age sup 65 ans","demence","trouble cognitif"],"commentaire":"ACB Beers fort + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén pour allergie.","severite":"danger"},
+                              {"classe":"QT-prolongateurs — Torsades","dcis":["amiodarone","sotalol","hydroxychloroquine","moxifloxacine","azithromycine","ondansetron","haloperidol","quetiapine","citalopram","methadone"],"commentaire":"QTc additif.","severite":"warning"},
+                              {"classe":"Glaucome ANGLE FERMÉ / HBP / Iléus / Myasthénie — CI","dcis":["glaucome angle ferme","retention urinaire","hbp non traitee","ileus paralytique","myasthenie"],"commentaire":"CI.","severite":"danger"},
+                              {"classe":"IACHE / Mémantine — antagonisme PD (Sink JAGS 2008)","dcis":["donepezil","rivastigmine","galantamine","memantine"],"commentaire":"Antagonisme → perte effet anti-Alzheimer.","severite":"danger"},
+                              {"classe":"Cumul ACB — démence (Coupland JAMA Int Med 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","oxybutynine","tolterodine","solifenacine","trospium","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","promethazine","alimemazine","chlorpheniramine","hydroxyzine","olanzapine","quetiapine","clozapine"],"commentaire":"Cumul ACB → démence.","severite":"danger"},
+                              {"classe":"Sédatifs centraux (alcool/BZD/Z/opioïdes/gabapentinoïdes)","dcis":["alcool","diazepam","bromazepam","lorazepam","oxazepam","alprazolam","clonazepam","zolpidem","zopiclone","morphine","oxycodone","tramadol","pregabaline","gabapentine","mirtazapine"],"commentaire":"Sédation additive — CHUTES.","severite":"danger"}
                     ],
                     "suivi_initial": "Pas de biologie specifique",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -9813,7 +9731,8 @@ const MASTER_DB = {
                               { "classe": "Méthotrexate", "dcis": ["methotrexate"], "commentaire": "↑ tox MTX.", "severite": "warning" },
                               { "classe": "Diurétiques thiazidiques", "dcis": ["hydrochlorothiazide", "indapamide"], "commentaire": "Synergie hyponatrémie/SIADH.", "severite": "warning" },
                               { "classe": "Inhibiteurs CYP1A2 puissants — CONTRE-INDICATION (↑ duloxetine x2-6)", "dcis": ["fluvoxamine", "ciprofloxacine", "enoxacine"], "commentaire": "Fluvoxamine, ciprofloxacine, énoxacine = inhibiteurs CYP1A2 puissants → ↑ duloxetine x2-6. CI relative — éviter ou réduire dose duloxétine 50%.", "severite": "danger" },
-                              { "classe": "Substrats CYP2D6 (inhibition modérée par duloxetine)", "dcis": ["tamoxifene", "metoprolol", "codeine", "tramadol", "amitriptyline", "risperidone", "atomoxetine"], "commentaire": "Duloxetine = inhibiteur CYP2D6 modéré. Effet clinique généralement modeste.", "severite": "info" }
+                              { "classe": "CYP2D6 puissants — TAMOXIFENE (CI ABSOLUE)", "dcis": ["tamoxifene"], "commentaire": "Duloxetine = inhibiteur CYP2D6 modéré-fort → ↓ formation endoxifène (métabolite actif) → ↓ efficacité anti-cancéreuse. CONTRE-INDIQUÉ (FDA 2010 + Goetz JCO 2018). Switch venlafaxine/escitalopram acceptable.", "severite": "danger" },
+                              { "classe": "Substrats CYP2D6 — β-bloquants / antiarythmiques (↑ x2-5 exposition)", "dcis": ["metoprolol", "carvedilol", "propranolol", "flecainide", "propafenone"], "commentaire": "Duloxetine ↑ x2-5 exposition substrats CYP2D6 → bradycardie/bloc/hypotension. Surveillance clinique + ECG. Réduire dose β-bloquant si introduction Duloxetine.", "severite": "warning" }
                     ],
                     "suivi_initial": "Bilan hépatique (CI si insuffisance hépatique) | Glycémie/HbA1c | TA (HTA dose-dépendante) | Ionogramme (Na+)",
                     "suivi_periodique": "Bilan hépatique (si symptômes) | TA à chaque consultation | Glycémie annuelle si diabète | Natrémie à M1 puis annuelle",
@@ -9983,7 +9902,7 @@ const MASTER_DB = {
                               { "classe": "AINS (↓ DFG — IRA fonctionnelle additive)", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "meloxicam", "piroxicam"], "commentaire": "AINS ↓ perfusion rénale + iSGLT2 effet diurétique → risque IRA fonctionnelle (triple whammy si IEC/ARA2 associé — SYND_045). Éviter ou surveillance créat rapprochée.", "severite": "danger" },
                               { "classe": "Lithium (↓ lithiémie via natriurèse — surveillance)", "dcis": ["lithium"], "commentaire": "iSGLT2 ↑ excrétion sodée → ↓ réabsorption lithium → ↓ lithiémie. Surveillance lithiémie à 1-2 sem.", "severite": "info" },
                               { "classe": "Inducteurs UGT (↓ empagliflozin)", "dcis": ["rifampicine", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition empagliflozin via induction UGT2B7. Adapter dose ou switch.", "severite": "info" },
-                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme. Adapter dose si association.", "severite": "info" }
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Corticoïde induit hyperglycémie significative — surveillance glycémie capillaire renforcée + adaptation dose antidiabétique (Newcomer JCO 2007, ADA 2025).", "severite": "warning" }
                     ],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Kaliémie | Natrémie | TA debout/couché | ECBU si symptômes urinaires | Cétones (sang ou urine) si symptômes acidose",
                     "suivi_periodique": "HbA1c (tous les 3-6 mois — cibles assouplies chez âgé) | Créatinine/DFG (1-2 sem après introduction puis trimestriel — chute initiale 10-20% attendue, transitoire) | Cétonémie si symptômes (vomissements, douleurs abdo, dyspnée) | Examen périnéal annuel",
@@ -12258,15 +12177,8 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "Evaluation cognitive chez sujet age | ECG | Bilan ophtalmique",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -13925,7 +13837,7 @@ const MASTER_DB = {
                               { "classe": "iDPP4 — REDONDANCE pharmacologique (déconseillé)", "dcis": ["sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "alogliptine"], "commentaire": "GLP-1 RA + iDPP4 = redondance. Pas de bénéfice prouvé. Choisir l'un ou l'autre.", "severite": "warning" },
                               { "classe": "Autres GLP-1 RA / Tirzepatide — REDONDANCE", "dcis": ["semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Cumul GLP-1 RA = redondance pharmacologique + risque effets indésirables additifs (nausées, hypoglycémie). NE PAS ASSOCIER.", "severite": "danger" },
                               { "classe": "iSGLT2 / Metformine (synergie favorable)", "dcis": ["empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin", "metformine"], "commentaire": "Associations RECOMMANDÉES (ESC 2023, ADA 2025 §10) — synergie cardiorénale + perte poids.", "severite": "info" },
-                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme. Adapter dose ou switch insuline.", "severite": "info" }
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Corticoïde induit hyperglycémie significative — surveillance glycémie capillaire renforcée + adaptation dose antidiabétique (Newcomer JCO 2007, ADA 2025).", "severite": "warning" }
                     ],
                     "suivi_initial": "HbA1c | Créatinine/DFG | Lipase | Bilan thyroïdien (TSH, échographie cervicale si ATCD personnel ou familial — CI relative ATCD MEN-2 ou cancer médullaire thyroïde) | Poids/IMC | TA",
                     "suivi_periodique": "HbA1c (tous les 3-6 mois) | Créatinine (annuelle) | FC (tachycardie modeste +2-3 bpm possible) | Poids à chaque consultation (perte 3-7% attendue) | Lipase si douleurs abdo",
@@ -14640,20 +14552,8 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI absolue - deces), ISRS (syndrome serotoninergique), MAO-B inhibiteurs",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "syndrome serotoninergique",
-                                        "severite": "danger"
-                              }
+                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique","severite":"danger"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "Bilan renal (CI si DFG<60 - accumulation metabolite neurotoxique normemeperidine) | Bilan neurologique | Bilan hépatique",
                     "suivi_periodique": "Créatinine (regulier) | Evaluation neurologique",
@@ -14822,7 +14722,7 @@ const MASTER_DB = {
                               { "classe": "GLP-1 RA (synergie favorable, peu d'hypoglycémie)", "dcis": ["liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Association RECOMMANDÉE en DT2 + maladie CV/obésité (LEADER, SUSTAIN-6). Peu d'hypoglycémie additive.", "severite": "info" },
                               { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive — modeste)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Hypoglycémie additive (peu marquée — metformine seule = pas d'hypo). Adapter dose insuline/sulfamide.", "severite": "info" },
                               { "classe": "Médicaments à élimination rénale tubulaire (↑ metformine via OCT2)", "dcis": ["cimetidine", "trimethoprime", "ranolazine", "dolutegravir", "vandetanib", "isavuconazole"], "commentaire": "Inhibent OCT2 (transporteur tubulaire metformine) → ↑ exposition metformine. Cimétidine = effet le plus marqué — préférer famotidine/IPP. Triméthoprime (Cotrimoxazole) : surveillance.", "severite": "warning" },
-                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme hyperglycémiant. Adapter dose ou switch insuline.", "severite": "info" }
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Corticoïde induit hyperglycémie significative — surveillance glycémie capillaire renforcée + adaptation dose antidiabétique (Newcomer JCO 2007, ADA 2025).", "severite": "warning" }
                     ],
                     "suivi_initial": "Créatinine/DFG (CI si DFG < 30) | Bilan hépatique | Vitamine B12 (baseline) | NFS | Glycémie/HbA1c | Lactates si suspicion clinique",
                     "suivi_periodique": "HbA1c (tous les 3-6 mois jusqu'à objectif puis annuel — cibles assouplies chez âgé : 7-7.5% robuste, 7-8% complexe, 7.5-8.5% très fragile per ADA 2025 §13) | Créatinine/DFG (annuelle, semestrielle si DFG 30-45 ; SUSPENSION si DFG < 30) | Vitamine B12 (tous les 1-2 ans — carence par malabsorption fréquente, surtout long cours/IPP associé)",
@@ -15444,7 +15344,7 @@ const MASTER_DB = {
                               { "classe": "ISRS / IRSN / Trazodone / ATC — sérotoninergique", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "trazodone", "vortioxetine", "amitriptyline", "clomipramine", "imipramine", "nortriptyline", "doxepine"], "commentaire": "Cumul sérotoninergique. NB : association mirtazapine + venlafaxine (« California Rocket Fuel ») validée en dépression résistante — pas un doublon mais surveillance sérotoninergique.", "severite": "warning" },
                               { "classe": "Tramadol / Triptans / Pethidine — sérotoninergique", "dcis": ["tramadol", "pethidine", "sumatriptan", "zolmitriptan", "rizatriptan"], "commentaire": "Risque syndrome sérotoninergique.", "severite": "warning" },
                               { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool) — sédation MAJORÉE à faible dose", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "clonazepam", "zolpidem", "zopiclone", "morphine", "oxycodone", "tramadol", "alcool"], "commentaire": "Mirtazapine = sédation paradoxalement MAJORÉE à faible dose (15 mg) vs forte dose (45 mg). Sédation cumulée importante — chutes chez âgé.", "severite": "warning" },
-                              { "classe": "Anticholinergiques (Mirtazapine ACB=1 — cumul léger)", "dcis": ["amitriptyline", "clomipramine", "oxybutynine", "tolterodine", "atropine", "biperidene", "diphenhydramine", "promethazine", "hydroxyzine", "paroxetine"], "commentaire": "Mirtazapine ACB=1. Cumul léger.", "severite": "info" },
+                              { "classe": "Anticholinergiques + sédatifs — CHUTES (Mirtazapine ACB=1 + sédation propre = cumul réel)", "dcis": ["amitriptyline", "clomipramine", "oxybutynine", "tolterodine", "atropine", "biperidene", "diphenhydramine", "promethazine", "hydroxyzine", "paroxetine"], "commentaire": "Mirtazapine = sédative + ACB=1 → cumul réel sédatif/antichol → risque chute additif (Hartikainen 2007). Surveillance équilibre + déprescription si possible.", "severite": "warning" },
                               { "classe": "QT-allongeurs (Mirtazapine = PR)", "dcis": ["amiodarone", "sotalol", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "haloperidol", "ondansetron", "methadone"], "commentaire": "Cumul QT — surveillance ECG.", "severite": "warning" },
                               { "classe": "Inducteurs CYP3A4 (↓ mirtazapine)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition mirtazapine.", "severite": "warning" },
                               { "classe": "Inhibiteurs CYP3A4/2D6/1A2 puissants (↑ mirtazapine)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "fluvoxamine", "fluoxetine", "paroxetine"], "commentaire": "↑ exposition mirtazapine — surveillance sédation.", "severite": "warning" },
@@ -16398,28 +16298,9 @@ const MASTER_DB = {
                     "qt_risque": "Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), QT-prolongateurs, Alcool",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "ISRS",
-                                        "dcis": [
-                                                  "citalopram",
-                                                  "escitalopram",
-                                                  "fluoxetine",
-                                                  "paroxetine",
-                                                  "sertraline",
-                                                  "fluvoxamine",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "syndrome serotoninergique",
-                                        "severite": "danger"
-                              },
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique","severite":"danger"},
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "ECG (QTc) | NFS | Bilan hépatique | Ionogramme | Dosage serique (fenetre 50-150 ng/mL)",
                     "suivi_periodique": "ECG (tous les 6 a 12 mois) | NFS (annuelle) | Bilan hépatique (annuel)",
@@ -16706,15 +16587,8 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "QT-prolongateurs, Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "ECG (QTc) | Evaluation cognitive chez sujet age | Bilan hépatique",
                     "suivi_periodique": "ECG (annuel si traitement prolonge) | Bilan hépatique (annuel)",
@@ -16831,14 +16705,14 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "Inducteur enzymatique modéré (CYP3A4/5) — ↓ Contraceptifs/Statines/Ciclosporine, Lithium (neurotoxicité), Diurétiques (hyponatrémie), ISRS (SIADH cumul), IMAO (CI)",
                     "ddi_interact_v2": [
-                              { "classe": "Inducteur CYP3A4 modéré — ↓ Contraceptifs oraux", "dcis": ["ethinylestradiol", "levonorgestrel", "desogestrel", "drospirenone",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }], "commentaire": "↓ contraceptifs → risque échec contraceptif (effet moins marqué que carbamazépine). Méthode alternative recommandée.", "severite": "warning" },
-                              { "classe": "Inducteur CYP3A4 modéré — ↓ AVK / AOD / Statines / Ciclosporine", "dcis": ["warfarine", "acenocoumarol", "fluindione", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "atorvastatine", "simvastatine", "ciclosporine", "tacrolimus"], "commentaire": "↓ exposition. Surveillance INR/anti-Xa/taux IS.", "severite": "warning" },
-                              { "classe": "Lithium — neurotoxicité (cumul même à lithiémie normale)", "dcis": ["lithium"], "commentaire": "Neurotoxicité (similaire carbamazépine). EVITER.", "severite": "warning" },
-                              { "classe": "Diurétiques (potentialisation hyponatrémie ++)", "dcis": ["hydrochlorothiazide", "indapamide", "furosemide"], "commentaire": "Cumul hyponatrémie/SIADH (oxcarbazépine = SIADH plus fréquent que carbamazépine). Surveillance Na+ rapprochée.", "severite": "danger" },
-                              { "classe": "ISRS / IRSN (cumul hyponatrémie SIADH)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine"], "commentaire": "Cumul SIADH ++. Surveillance Na+ à 2 semaines puis trimestrielle.", "severite": "warning" },
-                              { "classe": "IMAO non-sélectifs — CI ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "moclobemide"], "commentaire": "CI absolue. Délai 14 j.", "severite": "danger" },
-                              { "classe": "Sédatifs centraux (BZD, opioïdes — sédation)", "dcis": ["alprazolam", "lorazepam", "diazepam", "morphine", "tramadol"], "commentaire": "Sédation additive.", "severite": "warning" }
+                              {"classe":"Inducteur CYP3A4 modéré — ↓ Contraceptifs oraux","dcis":["ethinylestradiol","levonorgestrel","desogestrel","drospirenone"],"commentaire":"↓ contraceptifs → risque échec contraceptif (effet moins marqué que carbamazépine). Méthode alternative recommandée.","severite":"warning"},
+                              {"classe":"Inducteur CYP3A4 modéré — ↓ AVK / AOD / Statines / Ciclosporine","dcis":["warfarine","acenocoumarol","fluindione","apixaban","rivaroxaban","dabigatran","edoxaban","atorvastatine","simvastatine","ciclosporine","tacrolimus"],"commentaire":"↓ exposition. Surveillance INR/anti-Xa/taux IS.","severite":"warning"},
+                              {"classe":"Lithium — neurotoxicité (cumul même à lithiémie normale)","dcis":["lithium"],"commentaire":"Neurotoxicité (similaire carbamazépine). EVITER.","severite":"warning"},
+                              {"classe":"Diurétiques (potentialisation hyponatrémie ++)","dcis":["hydrochlorothiazide","indapamide","furosemide"],"commentaire":"Cumul hyponatrémie/SIADH (oxcarbazépine = SIADH plus fréquent que carbamazépine). Surveillance Na+ rapprochée.","severite":"danger"},
+                              {"classe":"ISRS / IRSN (cumul hyponatrémie SIADH)","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine","venlafaxine","duloxetine"],"commentaire":"Cumul SIADH ++. Surveillance Na+ à 2 semaines puis trimestrielle.","severite":"warning"},
+                              {"classe":"IMAO non-sélectifs — CI ABSOLUE","dcis":["iproniazide","phenelzine","tranylcypromine","moclobemide"],"commentaire":"CI absolue. Délai 14 j.","severite":"danger"},
+                              {"classe":"Sédatifs centraux (BZD, opioïdes — sédation)","dcis":["alprazolam","lorazepam","diazepam","morphine","tramadol"],"commentaire":"Sédation additive.","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "Ionogramme (SIADH frequent ++) | NFS | Bilan hépatique | Créatinine",
                     "suivi_periodique": "Ionogramme (a 2 semaines puis annuel - risque SIADH ++++) | NFS (annuelle) | Bilan hépatique (annuel)",
@@ -18296,15 +18170,8 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "Evaluation cognitive chez sujet age | Bilan ophtalmique | Bilan urologique",
                     "suivi_periodique": "Pas de biologie systematique",
@@ -18332,15 +18199,8 @@ const MASTER_DB = {
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "QT-prolongateurs, Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "Créatinine/DFG | ECG (QTc) | Evaluation cognitive chez sujet age",
                     "suivi_periodique": "Créatinine (annuelle) | ECG (annuel si FR QTc)",
@@ -20062,7 +19922,7 @@ const MASTER_DB = {
                               { "classe": "Metformine / iSGLT2 (synergie favorable)", "dcis": ["metformine", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin"], "commentaire": "Associations RECOMMANDÉES — synergie sans hypoglycémie majeure.", "severite": "info" },
                               { "classe": "Digoxine (↑ légère exposition)", "dcis": ["digoxine"], "commentaire": "Sitagliptine = inhibiteur léger P-gp. Surveillance digoxinémie modeste.", "severite": "info" },
                               { "classe": "Inducteurs P-gp (Rifampicine ↓ sitagliptine modeste)", "dcis": ["rifampicine"], "commentaire": "↓ légère exposition.", "severite": "info" },
-                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme.", "severite": "info" }
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Corticoïde induit hyperglycémie significative — surveillance glycémie capillaire renforcée + adaptation dose antidiabétique (Newcomer JCO 2007, ADA 2025).", "severite": "warning" }
                     ],
                     "suivi_initial": "HbA1c | Créatinine/DFG (ajustement si DFG<45 : 50 mg/j ; DFG<30 : 25 mg/j) | NFS | Bilan hépatique | Lipase si symptômes abdominaux",
                     "suivi_periodique": "HbA1c (tous les 3-6 mois — cibles assouplies chez âgé) | Créatinine (semestriel — adaptation dose) | Lipase si douleurs abdo",
@@ -25271,34 +25131,9 @@ const MASTER_DB = {
                     "albumine": "> 90%",
                     "ddi_interact": "L-Dopa (antagonisme), Allongeurs du QT, BZD, Alcool",
                     "ddi_interact_v2": [
-                              {
-                                        "classe": "BZD",
-                                        "dcis": [
-                                                  "diazepam",
-                                                  "bromazepam",
-                                                  "lorazepam",
-                                                  "oxazepam",
-                                                  "alprazolam",
-                                                  "clorazepate",
-                                                  "nordazepam",
-                                                  "clobazam",
-                                                  "clonazepam",
-                                                  "nitrazepam",
-                                                  "lormetazepam",
-                                                  "midazolam",
-                              { "classe": "Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "darifenacine", "atropine", "scopolamine", "biperidene", "trihexyphenidyle", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "alimemazine", "chlorpheniramine", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.", "severite": "danger" }
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              },
-                              {
-                                        "classe": "Alcool",
-                                        "dcis": [
-                                                  "alcool"
-                                        ],
-                                        "commentaire": "",
-                                        "severite": "warning"
-                              }
+                              {"classe":"BZD","dcis":["diazepam","bromazepam","lorazepam","oxazepam","alprazolam","clorazepate","nordazepam","clobazam","clonazepam","nitrazepam","lormetazepam","midazolam"],"commentaire":"","severite":"warning"},
+                              {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
+                              {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","doxepine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
                     ],
                     "suivi_initial": "ECG | Glycémie | Bilan lipidique | NFS",
                     "suivi_periodique": "Glycémie/HbA1c trimestrielle | ECG annuel | Poids",
@@ -26054,7 +25889,7 @@ const MASTER_DB = {
                               { "classe": "Insuline / autres antidiabétiques (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "metformine", "pioglitazone", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin", "sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Hypoglycémie additive.", "severite": "warning" },
                               { "classe": "IEC / ARA2 (effet additif modeste hypoglycémiant)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan"], "commentaire": "Effet hypoglycémiant additif modeste. Surveillance.", "severite": "info" },
                               { "classe": "Inducteurs CYP2C9 (↓ efficacité)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition gliclazide.", "severite": "warning" },
-                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme. Adapter dose.", "severite": "info" },
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Corticoïde induit hyperglycémie significative — surveillance glycémie capillaire renforcée + adaptation dose antidiabétique (Newcomer JCO 2007, ADA 2025).", "severite": "warning" },
                               { "classe": "Alcool (potentialise hypoglycémie)", "dcis": ["alcool"], "commentaire": "Éviter à jeun.", "severite": "warning" }
                     ],
                     "suivi_initial": "Glycémie à jeun | HbA1c | Créatinine/DFG | Bilan hépatique",
@@ -26138,7 +25973,7 @@ const MASTER_DB = {
                               { "classe": "Insuline / autres antidiabétiques (hypoglycémie additive)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "metformine", "pioglitazone", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin", "sitagliptine", "vildagliptine", "saxagliptine", "linagliptine", "liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "Hypoglycémie additive. Préférer iDPP4/iSGLT2/GLP-1 chez âgé (moins d'hypoglycémies que sulfamides).", "severite": "warning" },
                               { "classe": "IEC / ARA2 (effet additif modeste hypoglycémiant)", "dcis": ["enalapril", "ramipril", "perindopril", "losartan", "valsartan", "candesartan"], "commentaire": "Effet hypoglycémiant additif modeste. Surveillance.", "severite": "info" },
                               { "classe": "Inducteurs CYP2C9 (↓ efficacité)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition glimépiride.", "severite": "warning" },
-                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme. Adapter dose.", "severite": "info" },
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Corticoïde induit hyperglycémie significative — surveillance glycémie capillaire renforcée + adaptation dose antidiabétique (Newcomer JCO 2007, ADA 2025).", "severite": "warning" },
                               { "classe": "Alcool (potentialise hypoglycémie + effet antabuse possible)", "dcis": ["alcool"], "commentaire": "Alcool potentialise hypoglycémie. Éviter à jeun.", "severite": "warning" }
                     ],
                     "suivi_initial": "Glycémie | HbA1c | Créatinine/DFG | Bilan hépatique",
@@ -26216,7 +26051,7 @@ const MASTER_DB = {
                               { "classe": "Insuline / Sulfamides / Glinides (hypoglycémie additive — surtout sulfamides)", "dcis": ["insuline aspart", "insuline lispro", "insuline glulisine", "insuline humaine", "insuline glargine", "insuline detemir", "insuline degludec", "glibenclamide", "glimepiride", "gliclazide", "repaglinide", "nateglinide"], "commentaire": "Linagliptine seule = peu d'hypoglycémie. Association à sulfamide ou insuline = risque hypoglycémie (surtout glibenclamide). Réduire dose sulfamide/insuline 25-50% à l'introduction.", "severite": "warning" },
                               { "classe": "GLP-1 RA — REDONDANCE pharmacologique (déconseillé)", "dcis": ["liraglutide", "semaglutide", "dulaglutide", "exenatide", "tirzepatide"], "commentaire": "iDPP4 + GLP-1 RA = redondance (les iDPP4 augmentent les GLP-1 endogènes, les GLP-1 RA agissent directement). Pas de bénéfice prouvé, redondance pharmacologique. Choisir l'un ou l'autre.", "severite": "warning" },
                               { "classe": "Metformine / iSGLT2 (synergie favorable)", "dcis": ["metformine", "empagliflozin", "dapagliflozin", "canagliflozin", "ertugliflozin"], "commentaire": "Associations RECOMMANDÉES — synergie sans hypoglycémie majeure.", "severite": "info" },
-                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Antagonisme. Adapter dose.", "severite": "info" }
+                              { "classe": "Corticoïdes (effet hyperglycémiant — antagonisme)", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], "commentaire": "Corticoïde induit hyperglycémie significative — surveillance glycémie capillaire renforcée + adaptation dose antidiabétique (Newcomer JCO 2007, ADA 2025).", "severite": "warning" }
                     ],
                     "suivi_initial": "HbA1c | Glycémie | Lipase si symptômes abdo (pancréatite rare)",
                     "suivi_periodique": "HbA1c trimestriel à semestriel | Pas de surveillance rénale spécifique (élimination biliaire)",
@@ -27686,12 +27521,12 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "ÂGÉ ≥ 75 ANS — ÉVITER (RCP Valdoxan 2025 — manque données + hépatotoxicité grave), Inhibiteurs CYP1A2 PUISSANTS — CI ABSOLUE (fluvoxamine/ciprofloxacine — ↑ exposition x60-70 = HÉPATOTOXICITÉ FULMINANTE), Tabac (inducteur CYP1A2 — ↓ efficacité), HÉPATOTOXICITÉ — BH baseline + à S3-S6-S12-S24 obligatoires (RCP — EMA 2014/2025), AVANTAGE vs autres AD : pas de sécheresse/SIADH/sexuel/sevrage",
                     "ddi_interact_v2": [
-                              { "classe": "ÂGÉ ≥ 75 ANS — ÉVITER (RCP Valdoxan 2025)", "dcis": ["age sup 75 ans",
-                              { "classe": "Syndrome sérotoninergique — ISRS/IRSN/Tramadol/Triptans/IMAO (cumul possible mélatoninergique avec sérotoninergique)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "paroxetine", "sertraline", "fluvoxamine", "venlafaxine", "duloxetine", "tramadol", "sumatriptan", "eletriptan", "selegiline", "rasagiline", "moclobemide", "linezolide"], "commentaire": "Cumul théorique sérotoninergique possible avec agomélatine (MT1/MT2 + antagoniste 5-HT2C). Surveillance Sternbach/Hunter.", "severite": "warning" }], "commentaire": "RCP 2025 : manque de données + hépatotoxicité grave chez âgé. Préférer sertraline (item 11 SFGG/SF3PA/SFPC 2026).", "severite": "danger" },
-                              { "classe": "Inhibiteurs CYP1A2 PUISSANTS — CI ABSOLUE (↑ x60-70)", "dcis": ["fluvoxamine", "ciprofloxacine", "enoxacine"], "commentaire": "Hépatotoxicité fulminante. CI ABSOLUE.", "severite": "danger" },
-                              { "classe": "HÉPATOTOXICITÉ — BH OBLIGATOIRE (baseline + S3, S6, S12, S24)", "dcis": ["surveillance hepatique"], "commentaire": "EMA 2014/2025 alerte hépatotoxicité fulminante (transaminases > 3N : arrêt). BH baseline obligatoire + suivi.", "severite": "danger" },
-                              { "classe": "AVANTAGE vs autres AD : pas effets indésirables classiques", "dcis": ["depression"], "commentaire": "Pas de sécheresse buccale, pas SIADH/hyponatrémie, pas effet sexuel, pas sevrage. MAIS hépatotoxicité limite usage gériatrie.", "severite": "info" },
-                              { "classe": "Tabac (CYP1A2 inducteur) — ↓ efficacité", "dcis": ["tabac"], "commentaire": "↓ exposition. Sevrage tabagique → ↑ exposition.", "severite": "warning" }
+                              {"classe":"ÂGÉ ≥ 75 ANS — ÉVITER (RCP Valdoxan 2025)","dcis":["age sup 75 ans"],"commentaire":"RCP 2025 : manque de données + hépatotoxicité grave chez âgé. Préférer sertraline (item 11 SFGG/SF3PA/SFPC 2026).","severite":"danger"},
+                              {"classe":"Inhibiteurs CYP1A2 PUISSANTS — CI ABSOLUE (↑ x60-70)","dcis":["fluvoxamine","ciprofloxacine","enoxacine"],"commentaire":"Hépatotoxicité fulminante. CI ABSOLUE.","severite":"danger"},
+                              {"classe":"HÉPATOTOXICITÉ — BH OBLIGATOIRE (baseline + S3, S6, S12, S24)","dcis":["surveillance hepatique"],"commentaire":"EMA 2014/2025 alerte hépatotoxicité fulminante (transaminases > 3N : arrêt). BH baseline obligatoire + suivi.","severite":"danger"},
+                              {"classe":"AVANTAGE vs autres AD : pas effets indésirables classiques","dcis":["depression"],"commentaire":"Pas de sécheresse buccale, pas SIADH/hyponatrémie, pas effet sexuel, pas sevrage. MAIS hépatotoxicité limite usage gériatrie.","severite":"info"},
+                              {"classe":"Tabac (CYP1A2 inducteur) — ↓ efficacité","dcis":["tabac"],"commentaire":"↓ exposition. Sevrage tabagique → ↑ exposition.","severite":"warning"},
+                              {"classe":"Syndrome sérotoninergique — ISRS/IRSN/Tramadol/Triptans/IMAO (cumul possible mélatoninergique avec sérotoninergique)","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine","venlafaxine","duloxetine","tramadol","sumatriptan","eletriptan","selegiline","rasagiline","moclobemide","linezolide"],"commentaire":"Cumul théorique sérotoninergique possible avec agomélatine (MT1/MT2 + antagoniste 5-HT2C). Surveillance Sternbach/Hunter.","severite":"warning"}
                     ],
                     "suivi_initial": "Bilan hepatique OBLIGATOIRE (transaminases avant traitement)",
                     "suivi_periodique": "Transaminases a S3, S6, S12, S24 puis si augmentation dose | Arret si > 3N",

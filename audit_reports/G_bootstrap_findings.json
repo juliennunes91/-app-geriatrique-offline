@@ -1,0 +1,374 @@
+{
+  "summary": {
+    "date": "2026-05-16T19:11:21.025Z",
+    "N": 500,
+    "counts": {
+      "ddi_dup_intra_med": 0,
+      "ddi_dup_cross": 0,
+      "severite_contradiction": 2,
+      "severity_disparity": 0,
+      "score_total_no_contrib": 0,
+      "score_contrib_no_total": 0,
+      "score_sum_mismatch": 0,
+      "duplicate_dci_in_prescription": 0,
+      "sentinel_false_negative": 0
+    },
+    "iterations_with_findings": 2,
+    "iterations_clean": 498,
+    "avg_findings_per_iter": 0.004
+  },
+  "findings": {
+    "ddi_dup_intra_med": [],
+    "ddi_dup_cross": [],
+    "severite_contradiction": [
+      {
+        "iter": 33,
+        "type": "severite_contradiction",
+        "pair": "sertraline<->tramadol",
+        "entries": [
+          {
+            "src": "Tramadol",
+            "severite": "danger",
+            "classe": "ISRS / IRSN (syndrome serotoninergique)",
+            "commentaire": "Syndrome serotoninergique : confusion, agitation, mydriase, hyperreflexie, clonus, hyperthermie, tremblements. Eviter chez l'age (Beers 2023, STOPP/START v3) ; si indispensable : doses minimales, surveillance clinique J1-J7"
+          },
+          {
+            "src": "Sertraline",
+            "severite": "danger",
+            "classe": "Tramadol, Pethidine, Oxycodone",
+            "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène. Tramadol à ÉVITER."
+          },
+          {
+            "src": "Sertraline",
+            "severite": "info",
+            "classe": "Substrats CYP2D6 (inhibition modérée — moindre que fluoxétine/paroxétine)",
+            "commentaire": "Sertraline = inhibiteur CYP2D6 modéré (à fortes doses). Effet clinique généralement modeste."
+          }
+        ]
+      },
+      {
+        "iter": 53,
+        "type": "severite_contradiction",
+        "pair": "sertraline<->tramadol",
+        "entries": [
+          {
+            "src": "Sertraline",
+            "severite": "danger",
+            "classe": "Tramadol, Pethidine, Oxycodone",
+            "commentaire": "Syndrome sérotoninergique + ↓ seuil épileptogène. Tramadol à ÉVITER."
+          },
+          {
+            "src": "Sertraline",
+            "severite": "info",
+            "classe": "Substrats CYP2D6 (inhibition modérée — moindre que fluoxétine/paroxétine)",
+            "commentaire": "Sertraline = inhibiteur CYP2D6 modéré (à fortes doses). Effet clinique généralement modeste."
+          },
+          {
+            "src": "Tramadol",
+            "severite": "danger",
+            "classe": "ISRS / IRSN (syndrome serotoninergique)",
+            "commentaire": "Syndrome serotoninergique : confusion, agitation, mydriase, hyperreflexie, clonus, hyperthermie, tremblements. Eviter chez l'age (Beers 2023, STOPP/START v3) ; si indispensable : doses minimales, surveillance clinique J1-J7"
+          }
+        ]
+      }
+    ],
+    "severity_disparity": [],
+    "score_total_no_contrib": [],
+    "score_contrib_no_total": [],
+    "score_sum_mismatch": [],
+    "duplicate_dci_in_prescription": [],
+    "sentinel_false_negative": []
+  },
+  "sample_iterations": [
+    {
+      "id": 1,
+      "patient": {
+        "age": 76,
+        "sexe": "F",
+        "dfg": 90,
+        "poids": 63,
+        "comorbidites": [
+          "HBP",
+          "goutte",
+          "IRC",
+          "FA",
+          "IC"
+        ],
+        "fragile": false
+      },
+      "n_meds": 4,
+      "dcis": [
+        "Nitrendipine",
+        "Fluconazole",
+        "Zolmitriptan",
+        "Indacaterol"
+      ],
+      "findings": []
+    },
+    {
+      "id": 2,
+      "patient": {
+        "age": 72,
+        "sexe": "F",
+        "dfg": 46,
+        "poids": 59,
+        "comorbidites": [],
+        "fragile": false
+      },
+      "n_meds": 16,
+      "dcis": [
+        "Memantine",
+        "Rifabutine",
+        "Cefotaxime",
+        "Daptomycine",
+        "Propantheline",
+        "Imipenem/Cilastatine/Relebactam",
+        "Desipramine",
+        "Lymecycline",
+        "Esomeprazole",
+        "Amiodarone",
+        "Fluconazole",
+        "Disopyramide",
+        "Cicletanine",
+        "Tramadol",
+        "Atorvastatine",
+        "Fentanyl"
+      ],
+      "findings": []
+    },
+    {
+      "id": 3,
+      "patient": {
+        "age": 78,
+        "sexe": "F",
+        "dfg": 86,
+        "poids": 72,
+        "comorbidites": [
+          "epilepsie",
+          "depression",
+          "IRC"
+        ],
+        "fragile": false
+      },
+      "n_meds": 8,
+      "dcis": [
+        "Mirabegron",
+        "Memantine",
+        "Rilmenidine",
+        "Tigecycline",
+        "Felodipine",
+        "Macrogol",
+        "Enalapril",
+        "Alfacalcidol"
+      ],
+      "findings": []
+    },
+    {
+      "id": 4,
+      "patient": {
+        "age": 99,
+        "sexe": "F",
+        "dfg": 116,
+        "poids": 72,
+        "comorbidites": [
+          "glaucome",
+          "incontinence"
+        ],
+        "fragile": false
+      },
+      "n_meds": 16,
+      "dcis": [
+        "Methotrexate",
+        "Piperacilline + tazobactam",
+        "Cycloserine",
+        "Moxonidine",
+        "Darifenacin",
+        "Clozapine",
+        "Nimesulide",
+        "Colchicine",
+        "Ketoprofene",
+        "Phenobarbital",
+        "Simvastatine",
+        "Cobicistat",
+        "Ibuprofene",
+        "Poudre d'opium",
+        "Haloperidol",
+        "Lamotrigine"
+      ],
+      "findings": []
+    },
+    {
+      "id": 5,
+      "patient": {
+        "age": 97,
+        "sexe": "F",
+        "dfg": 104,
+        "poids": 56,
+        "comorbidites": [
+          "epilepsie",
+          "denutrition",
+          "FA"
+        ],
+        "fragile": false
+      },
+      "n_meds": 15,
+      "dcis": [
+        "Sofosbuvir",
+        "Nortriptyline",
+        "Toltérodine",
+        "Nalbuphine",
+        "Salbutamol",
+        "Metronidazole",
+        "Primidone",
+        "Fluoxetine",
+        "Desvenlafaxine",
+        "Azithromycine",
+        "Risedronate",
+        "Allopurinol",
+        "Acide fusidique",
+        "Insuline glulisine",
+        "Fluvastatine"
+      ],
+      "findings": []
+    },
+    {
+      "id": 6,
+      "patient": {
+        "age": 80,
+        "sexe": "F",
+        "dfg": 66,
+        "poids": 85,
+        "comorbidites": [],
+        "fragile": false
+      },
+      "n_meds": 11,
+      "dcis": [
+        "Isosorbide",
+        "Sacubitril/Valsartan",
+        "Flunarizine",
+        "Amiodarone",
+        "Tadalafil",
+        "Desloratadine",
+        "Ceftobiprole",
+        "Insuline glulisine",
+        "Linezolide",
+        "Nicergoline",
+        "Zofenopril"
+      ],
+      "findings": []
+    },
+    {
+      "id": 7,
+      "patient": {
+        "age": 63,
+        "sexe": "F",
+        "dfg": 79,
+        "poids": 71,
+        "comorbidites": [
+          "DT2",
+          "IC",
+          "goutte",
+          "glaucome",
+          "FA",
+          "denutrition"
+        ],
+        "fragile": false
+      },
+      "n_meds": 6,
+      "dcis": [
+        "Enoxaparine",
+        "Chlorpromazine",
+        "Hydrochlorothiazide",
+        "Prasugrel",
+        "Nitrazepam",
+        "Leflunomide"
+      ],
+      "findings": []
+    },
+    {
+      "id": 8,
+      "patient": {
+        "age": 61,
+        "sexe": "F",
+        "dfg": 93,
+        "poids": 88,
+        "comorbidites": [
+          "epilepsie",
+          "AVC",
+          "glaucome",
+          "asthme",
+          "Parkinson"
+        ],
+        "fragile": false
+      },
+      "n_meds": 5,
+      "dcis": [
+        "Zaleplon",
+        "Lormetazepam",
+        "Aceclofenac",
+        "Cyamemazine",
+        "Nicardipine"
+      ],
+      "findings": []
+    },
+    {
+      "id": 9,
+      "patient": {
+        "age": 65,
+        "sexe": "H",
+        "dfg": 45,
+        "poids": 53,
+        "comorbidites": [
+          "incontinence",
+          "depression",
+          "AVC",
+          "IC"
+        ],
+        "fragile": false
+      },
+      "n_meds": 4,
+      "dcis": [
+        "Tamoxifene",
+        "Terbutaline",
+        "Betamethasone",
+        "Felodipine"
+      ],
+      "findings": []
+    },
+    {
+      "id": 10,
+      "patient": {
+        "age": 88,
+        "sexe": "H",
+        "dfg": 106,
+        "poids": 69,
+        "comorbidites": [
+          "IRC",
+          "depression",
+          "incontinence",
+          "denutrition"
+        ],
+        "fragile": false
+      },
+      "n_meds": 15,
+      "dcis": [
+        "Spironolactone",
+        "Ceftazidime",
+        "Pheniramine",
+        "Cyproheptadine",
+        "Mélatonine",
+        "Indacaterol",
+        "Cefadroxil",
+        "Benazepril",
+        "Hydroxychloroquine",
+        "Daptomycine",
+        "Ampicilline + sulbactam",
+        "Pramipexole",
+        "Bisoprolol",
+        "Finerenone",
+        "Diphenhydramine"
+      ],
+      "findings": []
+    }
+  ]
+}
