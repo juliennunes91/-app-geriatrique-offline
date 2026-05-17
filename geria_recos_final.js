@@ -661,7 +661,8 @@ const GERIA_RECOS_DB = {
             message: "Benzodiazépine ≥ 4 semaines sans indication de prolongation : sédation prolongée, confusion, altération de l'équilibre, chutes, accidents de la route. PIM selon toutes les listes (Beers, PRISCUS, EU(7)-PIM, FORTA-D, PIM-Check, STOPPFrail). Sevrage progressif obligatoire.",
             severite: "danger",
             condition: {
-                med_keys: ["benzodiazepine", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "prazepam", "nordazepam", "clobazam", "clonazepam", "nitrazepam", "lormetazepam", "temazepam", "midazolam"]
+                med_keys: ["benzodiazepine", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "prazepam", "nordazepam", "clobazam", "clonazepam", "nitrazepam", "lormetazepam", "temazepam", "midazolam"],
+                comorbs_absent: ["PAT_030"]
             },
             alternatives: "Sevrage progressif (réduction 25% toutes les 2-4 semaines), TCC insomnie, mélatonine LP si insomnie"
         },
@@ -702,7 +703,8 @@ const GERIA_RECOS_DB = {
             message: "Z-drug (zolpidem, zopiclone, zaleplon) ≥ 2 semaines pour insomnie : chutes, fractures. PIM selon Beers, PRISCUS.",
             severite: "danger",
             condition: {
-                med_keys: ["zolpidem", "zopiclone", "zaleplon"]
+                med_keys: ["zolpidem", "zopiclone", "zaleplon"],
+                comorbs_absent: ["PAT_030"]
             },
             alternatives: "Hygiène du sommeil, TCC-I, mélatonine LP"
         },
@@ -1043,7 +1045,8 @@ const GERIA_RECOS_DB = {
             message: "IPP > 8 semaines à pleine dose pour ulcère gastroduodénal non compliqué : réduction de dose ou arrêt habituellement indiqué. Maintien à demi-dose ou anti-H2 si besoin. Risque au long cours : fractures, C. difficile, hypomagnésémie, néphrite interstitielle.",
             severite: "warning",
             condition: {
-                med_keys: ["omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole", "ipp"]
+                med_keys: ["omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole", "ipp"],
+                comorbs_absent: ["PAT_030"]
             },
             alternatives: "Réduction de dose, passage à anti-H2, arrêt avec règles hygiéno-diététiques"
         },
@@ -1554,7 +1557,8 @@ const GERIA_RECOS_DB = {
             message: "Opioïde fort (morphine, oxycodone, fentanyl, buprénorphine, méthadone, péthidine) en première intention pour douleur légère : non-respect de l'échelle OMS. Note : le tramadol est un opioïde de palier 2 (faible) selon l'OMS, traité séparément.",
             severite: "danger",
             condition: {
-                med_keys: ["morphine", "oxycodone", "fentanyl", "buprenorphine", "methadone", "pethidine"]
+                med_keys: ["morphine", "oxycodone", "fentanyl", "buprenorphine", "methadone", "pethidine"],
+                comorbs_absent: ["PAT_020", "PAT_030"]
             },
             alternatives: "Paracétamol en premier, AINS si non CI, palier 2 avant palier 3"
         },

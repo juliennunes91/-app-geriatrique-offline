@@ -76,6 +76,8 @@ function generateCase(seen) {
             BIO_040: +(gaussian(2.5, 1.5, 0.5, 12)).toFixed(1)
         };
         const comorbs = sampleN(ALL_PAT, randInt(0, 10));
+        const CTX_POOL = ['chutes','alcool','bradycardie','constipation_chronique','denutrition','depression','dysphagie','hbp','hepatopathie','incontinence','risque_hemorragique','atcd_hemorragie'];
+        const contexte_clinique = sampleN(CTX_POOL, randInt(0, 3));
         const prescription = sampleN(MEDS, randInt(1, 20));
         const sig = crypto.createHash('sha1').update(JSON.stringify({
             a: age, s: sexe,
@@ -85,7 +87,7 @@ function generateCase(seen) {
         })).digest('hex').slice(0, 16);
         if (seen.has(sig)) continue;
         seen.add(sig);
-        return { age, sexe, poids, taille, bio, comorbs, prescription, _sig: sig };
+        return { age, sexe, poids, taille, bio, comorbs, contexte_clinique, prescription, _sig: sig };
     }
     return null;
 }
@@ -127,6 +129,7 @@ function runPipeline(cas) {
         });
         const ctx = {
             activeMeds, activeComorbs: cas.comorbs,
+            contexte_clinique: cas.contexte_clinique || [],
             ageNum: cas.age, dfgNum: cas.bio.BIO_004,
             sexe: cas.sexe, poidsNum: cas.poids,
             bioK: cas.bio.BIO_001, bioInr: cas.bio.BIO_030, bioQtc: cas.bio.BIO_031,
