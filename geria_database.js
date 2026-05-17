@@ -16901,7 +16901,7 @@ const MASTER_DB = {
           {
                     "dci": "Paracetamol",
                     "princeps": "Doliprane, Dafalgan, Efferalgan",
-                    "classe": "Antalgique-antipyrétique palier 1 OMS — référence chez âgé (PRÉFÉRER À AINS — pas d'effet rénal/CV/GI)",
+                    "classe": "Antalgique-antipyrétique palier 1 OMS — référence chez âgé (pas d'effet rénal/CV/GI)",
                     "poso_hab": "500-1000 mg x3-4/j (max 4 g/j adulte sain)",
                     "poso_ger": "MAX 3 g/j chez âgé/IH/dénutrition/alcoolisme/IRC (FDA 2014 recommandation — risque hépatotoxicité accru). Référence antalgie palier 1 chez âgé (vs AINS PIM)",
                     "poso_ren": "DFG < 30 : espacer prises (8h) ; pas de réduction dose totale",

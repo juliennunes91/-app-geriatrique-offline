@@ -1220,7 +1220,9 @@ const GERIA_RECOS_DB = {
             message: "Opioïde au long cours pour l'arthrose : manque de preuve d'efficacité, effets indésirables graves (chutes, constipation, confusion, dépendance).",
             severite: "warning",
             condition: {
-                med_keys: ["opioid", "tramadol", "codeine", "morphine", "oxycodone", "fentanyl", "buprenorphine"]
+                med_keys: ["opioid", "tramadol", "codeine", "morphine", "oxycodone", "fentanyl", "buprenorphine"],
+                comorbs_any: ["PAT_053", "PAT_054", "PAT_055"],
+                comorbs_absent: ["PAT_020", "PAT_030"]
             },
             alternatives: "Paracétamol, AINS topiques, duloxétine, kinésithérapie, infiltrations"
         },

@@ -340,7 +340,13 @@ const _DCI_AMBIGUOUS = new Map();
 function _classMatchesMed(classId, dci, classe) {
     const def = DRUG_CLASSES[classId];
     if (!def) return false;
-    if (def.classeMatch.some(cm => classe.includes(cm))) return true;
+    // Match sur classeMatch : exiger début de chaîne (préfixe) pour les acronymes ≤ 5 chars
+    // afin d'éviter qu'un descriptif comme "préférer aux AINS" matche un Paracétamol.
+    // Pour les chaînes longues (≥ 6 chars, ex: 'antiinflammatoire'), substring reste OK.
+    if (def.classeMatch.some(cm => {
+        if (cm.length <= 5) return classe.startsWith(cm);
+        return classe.includes(cm);
+    })) return true;
     if (_DCI_SET.get(classId).has(dci)) return true;
     // Fallback inclusion pour DCIs composées (ex: "acideacetylsalicylique").
     // Protection anti-collision : si la DCI testée est elle-même une DCI connue,

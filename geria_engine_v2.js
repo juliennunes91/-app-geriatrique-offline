@@ -280,7 +280,18 @@ const GeriaEngineV2 = (() => {
         }
         if (c.acb_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && parseFloat(m.db_ref.acb) >= 2))) return false;
         if (c.qt_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && String(m.db_ref.qt_risque || '').includes('(KR)')))) return false;
-        if (c.polypharmacie && c.seuil && (!ctx.activeMeds || ctx.activeMeds.length < c.seuil)) return false;
+        if (c.polypharmacie && c.seuil) {
+            // Si med_keys est défini : on exige seuil méds DIFFÉRENTS de la liste
+            // (ex: ≥ 3 antidépresseurs distincts). Sinon, seuil sur le total.
+            if (c.med_keys && c.med_keys.length > 0) {
+                const matchCount = (ctx._medsNormalized || []).filter(m =>
+                    c.med_keys.some(k => matchesDrugClass(m.dci, m.classe, k))
+                ).length;
+                if (matchCount < c.seuil) return false;
+            } else if (!ctx.activeMeds || ctx.activeMeds.length < c.seuil) {
+                return false;
+            }
+        }
 
         return true;
     }

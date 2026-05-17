@@ -80,9 +80,11 @@ const SCORE_DEFINITIONS = {
 /**
  * Calcule les scores cumulés à partir d'une ordonnance.
  * @param {Array<Object>} prescription - tableau de médicaments (objets DB)
+ * @param {Object} [bio] - valeurs biologiques optionnelles (INR, Hb, plaq, DFG)
+ *                         utilisées pour potentialiser certains scores composites.
  * @returns {Object} - scores par catégorie + médicaments contributeurs
  */
-function calculateCompositeScores(prescription) {
+function calculateCompositeScores(prescription, bio) {
     const results = {};
 
     Object.keys(SCORE_DEFINITIONS).forEach(scoreKey => {
@@ -119,6 +121,25 @@ function calculateCompositeScores(prescription) {
             }
         });
     });
+
+    // Bio booster : INR sur-thérapeutique + Hb basse + plaq basse → score saignement
+    // Ceci capture le risque hémorragique LIÉ À LA SITUATION BIOLOGIQUE actuelle,
+    // pas seulement à la combinaison médicamenteuse (cf P04 : Warfarine+Amio+Aspirine
+    // avec INR 4.2 → score saign 3 avant fix, 8-10 après fix).
+    if (bio) {
+        const inr = Number(bio.inr || bio.BIO_030) || 0;
+        const hb  = Number(bio.hb  || bio.BIO_009) || 0;
+        const plq = Number(bio.plaq || bio.BIO_010) || 0;
+        const sx = results.saign;
+        if (inr >= 5) { sx.total += 4; sx.contributors.push({ dci: `INR ${inr}`, points: 4 }); }
+        else if (inr >= 4) { sx.total += 3; sx.contributors.push({ dci: `INR ${inr}`, points: 3 }); }
+        else if (inr >= 3) { sx.total += 1; sx.contributors.push({ dci: `INR ${inr}`, points: 1 }); }
+        if (hb > 0 && hb < 10) { sx.total += 2; sx.contributors.push({ dci: `Hb ${hb}`, points: 2 }); }
+        else if (hb > 0 && hb < 11) { sx.total += 1; sx.contributors.push({ dci: `Hb ${hb}`, points: 1 }); }
+        if (plq > 0 && plq < 50) { sx.total += 3; sx.contributors.push({ dci: `Plaq ${plq}`, points: 3 }); }
+        else if (plq > 0 && plq < 100) { sx.total += 2; sx.contributors.push({ dci: `Plaq ${plq}`, points: 2 }); }
+        else if (plq > 0 && plq < 150) { sx.total += 1; sx.contributors.push({ dci: `Plaq ${plq}`, points: 1 }); }
+    }
 
     // Déterminer le niveau pour chaque score
     Object.keys(results).forEach(k => {
@@ -190,11 +211,11 @@ function renderScoreCard(scoreKey, result) {
  * @param {Array<Object>} prescription
  * @returns {string} HTML
  */
-function renderCompositeScoresPanel(prescription) {
+function renderCompositeScoresPanel(prescription, bio) {
     if (!prescription || prescription.length === 0) {
         return '<div style="padding:32px; text-align:center; color:#64748b;"><em>Ajoutez des médicaments à l\'ordonnance pour calculer les scores composites.</em></div>';
     }
-    const results = calculateCompositeScores(prescription);
+    const results = calculateCompositeScores(prescription, bio);
     const cards = Object.entries(results).map(([key, r]) => renderScoreCard(key, r)).join('');
 
     // Synthèse rapide en haut

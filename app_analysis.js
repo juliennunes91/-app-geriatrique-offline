@@ -579,7 +579,14 @@ function analyserPrescription() {
                 const found = dbMeds.find(d => (d.dci || '').toLowerCase() === (am.dci || '').toLowerCase());
                 return found || am;
             }).filter(Boolean);
-            expEl.innerHTML = renderCompositeScoresPanel(ordoFull);
+            // Passer les valeurs bio pour potentialiser le score saignement (INR, Hb, Plaq)
+            const bioContext = {
+                inr: parseFloat(document.getElementById('bioInr')?.value || '0') || 0,
+                hb: parseFloat(document.getElementById('bioHb')?.value || '0') || 0,
+                plaq: parseFloat(document.getElementById('bioPlaq')?.value || '0') || 0,
+                dfg: parseFloat(document.getElementById('patientDFG')?.value || '0') || 0
+            };
+            expEl.innerHTML = renderCompositeScoresPanel(ordoFull, bioContext);
         }
     } catch(e) { console.warn('Scores composites:', e); }
     let counts = { eviter: 0, initier: 0, interact: 0, ansm: 0, auc: 0, bio: 0, usage: 0, suivi: 0 };

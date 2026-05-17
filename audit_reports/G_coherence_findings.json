@@ -1,9 +1,9 @@
 {
-  "cases_processed": 100000,
-  "unique_sigs": 100000,
+  "cases_processed": 20000,
+  "unique_sigs": 20000,
   "pipeline_errors": 0,
-  "elapsed_s": 740.27,
-  "cases_per_sec": 135.1,
+  "elapsed_s": 178.73,
+  "cases_per_sec": 111.9,
   "integrity": {
     "missing_titre": 0,
     "invalid_severity": 0,
@@ -15,7 +15,7 @@
   },
   "contradictions": {
     "eviter_AND_initier_same_med": 0,
-    "cross_module_QT_missing_DDI": 3750
+    "cross_module_QT_missing_DDI": 716
   },
   "duplicates": {
     "alerts_engine": 0,
@@ -26,27 +26,27 @@
   },
   "distribution": {
     "alerts_eviter": {
-      "mean": 5.88,
+      "mean": 5.28,
       "p50": 5,
-      "p95": 13
+      "p95": 12
     },
     "alerts_initier": {
-      "mean": 3.93,
+      "mean": 3.97,
       "p50": 3,
       "p95": 9
     },
     "alerts_ddi": {
-      "mean": 6.04,
+      "mean": 5.99,
       "p50": 3,
       "p95": 21
     },
     "alerts_bio": {
-      "mean": 2.52,
+      "mean": 2.54,
       "p50": 2,
       "p95": 5
     },
-    "pct_with_danger_engine": 81.5,
-    "pct_with_danger_ddi": 60.5,
+    "pct_with_danger_engine": 78.6,
+    "pct_with_danger_ddi": 60.2,
     "pct_with_danger_bio": 27.1
   },
   "coverage": {
