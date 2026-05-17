@@ -1,210 +1,226 @@
 {
   "summary": {
-    "N": 2000,
-    "elapsed_s": "16.95",
-    "casesProcessed": 2000,
-    "uniqueSigs": 2000,
+    "N": 300000,
+    "elapsed_s": "2451.61",
+    "casesProcessed": 300000,
+    "uniqueSigs": 300000,
     "pipelineErrors": 0,
     "invariants": 18
   },
   "rows": [
     {
       "name": "Triple_whammy_detected",
-      "applies": 137,
+      "applies": 19716,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "Metformine_IRC_CI",
-      "applies": 19,
+      "applies": 3142,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "Spironolactone_IRC_CI",
-      "applies": 24,
+      "applies": 4582,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "Glibenclamide_Beers_PIM",
-      "applies": 132,
+      "applies": 19972,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "Sero_syndrome_ISRS_tramadol",
-      "applies": 120,
+      "applies": 18916,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "Sero_syndrome_Linezolide_ISRS",
-      "applies": 120,
+      "applies": 18227,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "AVK_AINS_bleeding",
-      "applies": 123,
+      "applies": 18899,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "BZD_doublon",
-      "applies": 129,
+      "applies": 19715,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "ACB_high_cumul",
-      "applies": 745,
+      "applies": 116968,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "QT_double_alerte",
-      "applies": 538,
+      "applies": 80532,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "Saignement_double_AC",
-      "applies": 3,
+      "applies": 204,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "Hypoglyc_sulfamide_cotrimoxazole",
-      "applies": 111,
+      "applies": 17672,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "Digoxine_clarithromycine",
-      "applies": 0,
+      "applies": 192,
       "violations": 0,
-      "pct": "—"
+      "pct": "0.0"
     },
     {
       "name": "Lithium_AINS_toxicity",
-      "applies": 0,
+      "applies": 543,
       "violations": 0,
-      "pct": "—"
+      "pct": "0.0"
     },
     {
       "name": "INR_high_AVK",
-      "applies": 0,
-      "violations": 0,
-      "pct": "—"
+      "applies": 42,
+      "violations": 1,
+      "pct": "2.4"
     },
     {
       "name": "CYP3A4_strong_inh_statin",
-      "applies": 11,
+      "applies": 1573,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "AntiPS_Demence_blackbox",
-      "applies": 139,
+      "applies": 20230,
       "violations": 0,
       "pct": "0.0"
     },
     {
       "name": "BB_FA_bradycardie",
-      "applies": 4,
+      "applies": 674,
       "violations": 0,
       "pct": "0.0"
     }
   ],
   "samples": {
     "Triple_whammy_detected": {
-      "applies": 137,
+      "applies": 19716,
       "violations": 0,
       "samples": []
     },
     "Metformine_IRC_CI": {
-      "applies": 19,
+      "applies": 3142,
       "violations": 0,
       "samples": []
     },
     "Spironolactone_IRC_CI": {
-      "applies": 24,
+      "applies": 4582,
       "violations": 0,
       "samples": []
     },
     "Glibenclamide_Beers_PIM": {
-      "applies": 132,
+      "applies": 19972,
       "violations": 0,
       "samples": []
     },
     "Sero_syndrome_ISRS_tramadol": {
-      "applies": 120,
+      "applies": 18916,
       "violations": 0,
       "samples": []
     },
     "Sero_syndrome_Linezolide_ISRS": {
-      "applies": 120,
+      "applies": 18227,
       "violations": 0,
       "samples": []
     },
     "AVK_AINS_bleeding": {
-      "applies": 123,
+      "applies": 18899,
       "violations": 0,
       "samples": []
     },
     "BZD_doublon": {
-      "applies": 129,
+      "applies": 19715,
       "violations": 0,
       "samples": []
     },
     "ACB_high_cumul": {
-      "applies": 745,
+      "applies": 116968,
       "violations": 0,
       "samples": []
     },
     "QT_double_alerte": {
-      "applies": 538,
+      "applies": 80532,
       "violations": 0,
       "samples": []
     },
     "Saignement_double_AC": {
-      "applies": 3,
+      "applies": 204,
       "violations": 0,
       "samples": []
     },
     "Hypoglyc_sulfamide_cotrimoxazole": {
-      "applies": 111,
+      "applies": 17672,
       "violations": 0,
       "samples": []
     },
     "Digoxine_clarithromycine": {
-      "applies": 0,
+      "applies": 192,
       "violations": 0,
       "samples": []
     },
     "Lithium_AINS_toxicity": {
-      "applies": 0,
+      "applies": 543,
       "violations": 0,
       "samples": []
     },
     "INR_high_AVK": {
-      "applies": 0,
-      "violations": 0,
-      "samples": []
+      "applies": 42,
+      "violations": 1,
+      "samples": [
+        {
+          "sig": "c65ed6036b9bb70b",
+          "phenotype": "Hypoglyc",
+          "age": 69,
+          "dfg": 40,
+          "k": 5.7,
+          "inr": 4.36,
+          "prescription": [
+            "Glibenclamide",
+            "Cotrimoxazole",
+            "Ramipril",
+            "Oxcarbazepine",
+            "Warfarine"
+          ]
+        }
+      ]
     },
     "CYP3A4_strong_inh_statin": {
-      "applies": 11,
+      "applies": 1573,
       "violations": 0,
       "samples": []
     },
     "AntiPS_Demence_blackbox": {
-      "applies": 139,
+      "applies": 20230,
       "violations": 0,
       "samples": []
     },
     "BB_FA_bradycardie": {
-      "applies": 4,
+      "applies": 674,
       "violations": 0,
       "samples": []
     }
