@@ -1,0 +1,212 @@
+{
+  "summary": {
+    "N": 2000,
+    "elapsed_s": "16.95",
+    "casesProcessed": 2000,
+    "uniqueSigs": 2000,
+    "pipelineErrors": 0,
+    "invariants": 18
+  },
+  "rows": [
+    {
+      "name": "Triple_whammy_detected",
+      "applies": 137,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "Metformine_IRC_CI",
+      "applies": 19,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "Spironolactone_IRC_CI",
+      "applies": 24,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "Glibenclamide_Beers_PIM",
+      "applies": 132,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "Sero_syndrome_ISRS_tramadol",
+      "applies": 120,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "Sero_syndrome_Linezolide_ISRS",
+      "applies": 120,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "AVK_AINS_bleeding",
+      "applies": 123,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "BZD_doublon",
+      "applies": 129,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "ACB_high_cumul",
+      "applies": 745,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "QT_double_alerte",
+      "applies": 538,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "Saignement_double_AC",
+      "applies": 3,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "Hypoglyc_sulfamide_cotrimoxazole",
+      "applies": 111,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "Digoxine_clarithromycine",
+      "applies": 0,
+      "violations": 0,
+      "pct": "—"
+    },
+    {
+      "name": "Lithium_AINS_toxicity",
+      "applies": 0,
+      "violations": 0,
+      "pct": "—"
+    },
+    {
+      "name": "INR_high_AVK",
+      "applies": 0,
+      "violations": 0,
+      "pct": "—"
+    },
+    {
+      "name": "CYP3A4_strong_inh_statin",
+      "applies": 11,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "AntiPS_Demence_blackbox",
+      "applies": 139,
+      "violations": 0,
+      "pct": "0.0"
+    },
+    {
+      "name": "BB_FA_bradycardie",
+      "applies": 4,
+      "violations": 0,
+      "pct": "0.0"
+    }
+  ],
+  "samples": {
+    "Triple_whammy_detected": {
+      "applies": 137,
+      "violations": 0,
+      "samples": []
+    },
+    "Metformine_IRC_CI": {
+      "applies": 19,
+      "violations": 0,
+      "samples": []
+    },
+    "Spironolactone_IRC_CI": {
+      "applies": 24,
+      "violations": 0,
+      "samples": []
+    },
+    "Glibenclamide_Beers_PIM": {
+      "applies": 132,
+      "violations": 0,
+      "samples": []
+    },
+    "Sero_syndrome_ISRS_tramadol": {
+      "applies": 120,
+      "violations": 0,
+      "samples": []
+    },
+    "Sero_syndrome_Linezolide_ISRS": {
+      "applies": 120,
+      "violations": 0,
+      "samples": []
+    },
+    "AVK_AINS_bleeding": {
+      "applies": 123,
+      "violations": 0,
+      "samples": []
+    },
+    "BZD_doublon": {
+      "applies": 129,
+      "violations": 0,
+      "samples": []
+    },
+    "ACB_high_cumul": {
+      "applies": 745,
+      "violations": 0,
+      "samples": []
+    },
+    "QT_double_alerte": {
+      "applies": 538,
+      "violations": 0,
+      "samples": []
+    },
+    "Saignement_double_AC": {
+      "applies": 3,
+      "violations": 0,
+      "samples": []
+    },
+    "Hypoglyc_sulfamide_cotrimoxazole": {
+      "applies": 111,
+      "violations": 0,
+      "samples": []
+    },
+    "Digoxine_clarithromycine": {
+      "applies": 0,
+      "violations": 0,
+      "samples": []
+    },
+    "Lithium_AINS_toxicity": {
+      "applies": 0,
+      "violations": 0,
+      "samples": []
+    },
+    "INR_high_AVK": {
+      "applies": 0,
+      "violations": 0,
+      "samples": []
+    },
+    "CYP3A4_strong_inh_statin": {
+      "applies": 11,
+      "violations": 0,
+      "samples": []
+    },
+    "AntiPS_Demence_blackbox": {
+      "applies": 139,
+      "violations": 0,
+      "samples": []
+    },
+    "BB_FA_bradycardie": {
+      "applies": 4,
+      "violations": 0,
+      "samples": []
+    }
+  }
+}
