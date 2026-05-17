@@ -1,0 +1,46 @@
+[
+  {
+    "cas": "C04",
+    "ui": "classic",
+    "findings": [
+      {
+        "type": "small_targets",
+        "count": 31
+      },
+      {
+        "type": "color_only_alerts",
+        "count": 4
+      },
+      {
+        "type": "heading_skip",
+        "count": 2
+      },
+      {
+        "type": "buttons_no_label",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "cas": "C09",
+    "ui": "classic",
+    "findings": [
+      {
+        "type": "small_targets",
+        "count": 31
+      },
+      {
+        "type": "color_only_alerts",
+        "count": 3
+      },
+      {
+        "type": "heading_skip",
+        "count": 2
+      },
+      {
+        "type": "buttons_no_label",
+        "count": 2
+      }
+    ]
+  }
+]

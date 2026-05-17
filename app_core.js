@@ -124,6 +124,38 @@ function _restorePatientData(data) {
 }
 
 // ============================================================================
+// A11Y — Auto-injection d'aria-label sur inputs sans label associé
+// ============================================================================
+// Bio inputs ont un texte adjacent mais pas de <label for>. Au chargement
+// on infère le label depuis le texte précédent (label, span, small) pour
+// satisfaire WCAG 1.3.1 et 4.1.2 (screen readers).
+function _autoLabelInputs() {
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+        if (el.type === 'hidden' || !el.id) return;
+        if (document.querySelector(`label[for="${el.id}"]`)) return;
+        if (el.getAttribute('aria-label') || el.getAttribute('aria-labelledby')) return;
+        // Stratégie : remonter dans le parent jusqu'à trouver un texte significatif
+        let candidate = '';
+        let node = el.previousElementSibling;
+        while (node && !candidate) {
+            const t = (node.textContent || '').trim();
+            if (t.length >= 2 && t.length <= 80) candidate = t;
+            node = node.previousElementSibling;
+        }
+        if (!candidate && el.parentElement) {
+            const txt = (el.parentElement.textContent || '').replace(el.value || '', '').trim();
+            if (txt.length >= 2 && txt.length <= 80) candidate = txt;
+        }
+        if (!candidate) candidate = el.placeholder || el.id;
+        el.setAttribute('aria-label', candidate.replace(/\s+/g, ' ').slice(0, 80));
+    });
+}
+if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _autoLabelInputs);
+    else _autoLabelInputs();
+}
+
+// ============================================================================
 // SESSION STORAGE — Sauvegarde automatique du dernier patient
 // ============================================================================
 window._saveSession = function() {

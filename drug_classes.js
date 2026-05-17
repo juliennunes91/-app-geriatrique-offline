@@ -39,7 +39,7 @@ const DRUG_CLASSES = {
         dcis: ['furosemide', 'bumetanide', 'hydrochlorothiazide', 'indapamide', 'spironolactone', 'altizide', 'chlortalidone', 'amiloride', 'triamterene', 'eplerenone', 'piretanide', 'torasemide', 'cicletanide']
     },
     diuretique_anse: {
-        aliases: ['diuretiquedelanse', 'diuretiquesdelanse'],
+        aliases: ['diuretiquedelanse', 'diuretiquesdelanse', 'diuretiqueanse', 'diuretiquesanse'],
         classeMatch: ['diuretiquedelanse'],
         dcis: ['furosemide', 'bumetanide', 'piretanide', 'torasemide']
     },
@@ -363,6 +363,11 @@ function _classMatchesMed(classId, dci, classe) {
  * @returns {boolean}
  */
 function matchesDrugClass(dci, classe, key) {
+    // Normalisation : retirer underscores/tirets/espaces pour matcher les alias exacts
+    // (ex: key='diuretique_thiazidique' → 'diuretiquethiazidique'). Sans ça, la Passe 2
+    // substring matche l'alias générique 'diuretique' et retourne true pour TOUT
+    // diurétique, faussant les détections de doublons par sous-classe.
+    if (typeof key === 'string' && /[_\s-]/.test(key)) key = key.replace(/[_\s-]+/g, '');
     // Cas spécial : antihypertenseur (composite) — testé en premier
     if (key === 'antihypertenseur') {
         return classe.includes('hypertens') ||

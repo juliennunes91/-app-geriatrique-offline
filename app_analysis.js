@@ -1575,6 +1575,16 @@ function analyserPrescription() {
                     addAlert('alertes-interact', `<div class="alert ${alertClass} shadow-sm"><strong>${icon} Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}</strong><ul class="mb-0 mt-1">${groupHtml}</ul></div>`, 'interact');
                     const flatList = foundGroups.map(g => `${g.classe}:${g.matched.map(x=>x.interactor).join('/')}`).join(' | ');
                     _regAddMed(m.dci, 'interact', { text: `Interaction ${flatList}`, severity: isDanger ? 'danger' : 'warning' });
+                    // Émettre aussi UNE ligne par groupe danger dans byDomain pour
+                    // que la Synthèse puisse résumer les interactions critiques.
+                    foundGroups.forEach(g => {
+                        if (g.severite !== 'danger') return;
+                        const targets = g.matched.map(x => x.interactor.toUpperCase()).join(', ');
+                        _regAddDomain('interact', {
+                            text: `${ref.dci.toUpperCase()} ↔ ${targets} — ${g.classe}`,
+                            severity: 'danger'
+                        });
+                    });
                 }
                 return; // v2 traité : on ne retombe pas sur le chemin texte libre pour cette entrée
             }
@@ -1602,6 +1612,10 @@ function analyserPrescription() {
                 if(found.length > 0) {
                     addAlert('alertes-interact', `<div class="alert alert-danger shadow-sm"><strong>🚨 Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}</strong><br>Interaction détectée avec : <b>${found.map(f => escapeHtml(f)).join(', ')}</b></div>`, 'interact');
                     _regAddMed(m.dci, 'interact', { text: `Interaction avec ${found.join(', ')}`, severity: 'danger' });
+                    _regAddDomain('interact', {
+                        text: `${ref.dci.toUpperCase()} ↔ ${found.join(', ').toUpperCase()}`,
+                        severity: 'danger'
+                    });
                 }
             }
         });
@@ -2333,6 +2347,20 @@ function analyserPrescription() {
             });
         }
         toRemove.sort((a, b) => a.priority - b.priority);
+        // Dédupliquer par (dci + raison) — évite Spironolactone × 2 quand 2 règles génèrent
+        // une alerte identique (ex: doublon thiazidique + doublon anse sur même méd).
+        {
+            const seen = new Set();
+            const filtered = [];
+            for (const r of toRemove) {
+                const k = `${(r.dci || '').toLowerCase()}::${(r.reason || '').slice(0, 80).toLowerCase()}`;
+                if (seen.has(k)) continue;
+                seen.add(k);
+                filtered.push(r);
+            }
+            toRemove.length = 0;
+            toRemove.push(...filtered);
+        }
 
         // ── 3. PROBLÈMES BIOLOGIQUES ──
         //    On récupère les alertes de l'onglet Bio (SYND_xxx déclenchés)
@@ -2342,8 +2370,24 @@ function analyserPrescription() {
             severity: a.severity || 'warning'
         }));
 
+        // ── 4. INTERACTIONS CRITIQUES (danger seulement, dédupliquées) ──
+        //    L'utilisateur consulte d'abord la Synthèse → doit voir les interactions
+        //    danger sans aller sur l'onglet dédié. Limite : top 8 par texte unique.
+        const interactCritical = [];
+        {
+            const seenSig = new Set();
+            (_registry.byDomain.interact || []).forEach(a => {
+                if (a.severity !== 'danger') return;
+                const sig = (a.text || '').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 200);
+                if (seenSig.has(sig)) return;
+                seenSig.add(sig);
+                interactCritical.push({ text: a.text || '', severity: a.severity });
+                if (interactCritical.length >= 8) return;
+            });
+        }
+
         // ── Rendu ──
-        if (toAdd.length === 0 && toRemove.length === 0 && bioIssues.length === 0) {
+        if (toAdd.length === 0 && toRemove.length === 0 && bioIssues.length === 0 && interactCritical.length === 0) {
             synthHtml = '<div class="alert alert-success shadow-sm"><strong>✅ Aucune action majeure identifiée</strong><br><small>Aucune omission, aucune prescription inappropriée, aucune anomalie biologique significative.</small></div>';
         } else {
 
@@ -2381,7 +2425,22 @@ function analyserPrescription() {
                 synthHtml += `</div></div>`;
             }
 
-            // Section 3 : PROBLÈMES BIOLOGIQUES
+            // Section 3 : INTERACTIONS CRITIQUES (danger) — placée AVANT bio pour priorité visuelle
+            if (interactCritical.length > 0) {
+                synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#f8d7da,#f1aeb5);color:#58151c;">
+                    <strong>🚨 Interactions critiques (${interactCritical.length})</strong>
+                    <span class="small ms-2" style="opacity:0.85;">Co-prescriptions à risque danger — voir onglet Interactions</span>
+                </div><div class="card-body p-2">`;
+                interactCritical.forEach(it => {
+                    synthHtml += `<div class="border-start border-danger border-3 ps-2 py-1 mb-2">
+                        <span class="badge bg-danger me-1" style="font-size:0.65em;">DANGER</span>
+                        <span class="small">${escapeHtml(it.text)}</span>
+                    </div>`;
+                });
+                synthHtml += `</div></div>`;
+            }
+
+            // Section 4 : PROBLÈMES BIOLOGIQUES
             if (bioIssues.length > 0) {
                 synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#fff3cd,#ffe69c);color:#664d03;">
                     <strong>🧪 Problèmes biologiques (${bioIssues.length})</strong>

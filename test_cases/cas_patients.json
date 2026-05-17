@@ -1,0 +1,122 @@
+[
+  {
+    "id": "C01",
+    "nom": "Mme D., polypharmacie ACB classique",
+    "source": "BMC Geriatrics 2024 — 24 meds anxiolytiques+ACB+falls+delirium",
+    "age": 84, "sexe": "F", "poids": 56, "taille": 158,
+    "bio": {"creat": 110, "dfg": 38, "k": 4.0, "na": 132, "hb": 10.8, "hba1c": 6.4, "inr": 1.1, "qtc": 445, "plaq": 220, "alat": 22, "tsh": 3.2, "albumine_sg": 28, "ca_corr": 2.20, "vit_d": 15, "b12": 180, "fer": 8},
+    "comorbs": ["HTA", "depression", "demence", "incontinence", "denutrition"],
+    "meds": ["Mirtazapine", "Oxazepam", "Zopiclone", "Tramadol", "Oxybutynine", "Diphenhydramine", "Furosemide", "Bisoprolol", "Atorvastatine", "Amlodipine"],
+    "test_expected": "Score ACB élevé ≥4, score chute élevé, sédatif cumulé, Beers PIM BZD+anticholinergique"
+  },
+  {
+    "id": "C02",
+    "nom": "M. K., Triple Whammy rénal",
+    "source": "ESC HF 2023 — IEC + diurétique + AINS",
+    "age": 78, "sexe": "M", "poids": 82, "taille": 174,
+    "bio": {"creat": 140, "dfg": 45, "k": 4.6, "na": 138, "hb": 13.2, "hba1c": 7.1, "inr": 1.0, "qtc": 432, "plaq": 245, "alat": 28, "tsh": 2.1, "albumine_sg": 35, "vit_d": 22},
+    "comorbs": ["HTA", "DT2", "cardiopathie_ischemique"],
+    "meds": ["Ramipril", "Hydrochlorothiazide", "Ibuprofene", "Metformine", "Bisoprolol", "Atorvastatine"],
+    "test_expected": "Alerte TRIPLE WHAMMY danger, IRA à risque"
+  },
+  {
+    "id": "C03",
+    "nom": "Mme L., Warfarine + Amiodarone bleeding",
+    "source": "PMC8663945 — 44% bleeding events amiodarone+AVK âgé",
+    "age": 76, "sexe": "F", "poids": 65, "taille": 162,
+    "bio": {"creat": 90, "dfg": 55, "k": 4.2, "na": 140, "hb": 9.5, "hba1c": 5.8, "inr": 4.2, "qtc": 478, "plaq": 180, "alat": 35, "tsh": 4.5, "albumine_sg": 32, "ddim": 1200, "tropo": 8},
+    "comorbs": ["FA", "HTA", "IC", "AVC", "chute_recente"],
+    "meds": ["Warfarine", "Amiodarone", "Aspirine", "Bisoprolol", "Furosemide", "Spironolactone"],
+    "test_expected": "Score saignement élevé, INR sur-thérapeutique, QT prolongé, alerte AVK+antiplaquettaire"
+  },
+  {
+    "id": "C04",
+    "nom": "M. R., Digoxine + Clarithromycine toxicity",
+    "source": "PubMed 12672733 — 12x risk digoxin toxicity",
+    "age": 82, "sexe": "M", "poids": 70, "taille": 170,
+    "bio": {"creat": 145, "dfg": 35, "k": 3.6, "na": 136, "hb": 12.1, "hba1c": 6.0, "inr": 1.0, "qtc": 458, "plaq": 195, "albumine_sg": 30, "mg": 0.7},
+    "comorbs": ["FA", "IC", "IRC", "HTA"],
+    "meds": ["Digoxine", "Clarithromycine", "Furosemide", "Bisoprolol", "Apixaban"],
+    "test_expected": "Alerte digoxine toxicité, hypoK, hypoMg, adaptation rénale digoxine"
+  },
+  {
+    "id": "C05",
+    "nom": "Mme S., Lithium + Amiodarone thyroïde",
+    "source": "Trouble bipolaire âgé classique",
+    "age": 75, "sexe": "F", "poids": 60, "taille": 160,
+    "bio": {"creat": 95, "dfg": 52, "k": 4.0, "na": 134, "hb": 12.5, "hba1c": 5.9, "inr": 1.0, "qtc": 482, "plaq": 220, "tsh": 8.5, "t4": 9, "alat": 25, "lithium": 0.95, "albumine_sg": 36},
+    "comorbs": ["depression", "FA", "hypothyroidie"],
+    "meds": ["Lithium", "Amiodarone", "Bisoprolol", "Apixaban", "Atorvastatine"],
+    "test_expected": "Alerte QT+thyroïde+lithiémie, surveillance TSH/T4, ECG"
+  },
+  {
+    "id": "C06",
+    "nom": "M. P., Hypoglycémie sulfamide + cotrimoxazole",
+    "source": "Juurlink CMAJ 2014 — hypoG additive âgé",
+    "age": 89, "sexe": "M", "poids": 62, "taille": 168,
+    "bio": {"creat": 130, "dfg": 38, "k": 4.4, "na": 138, "hb": 11.8, "hba1c": 6.2, "inr": 1.1, "qtc": 440, "plaq": 235, "gly": 0.6, "albumine_sg": 31},
+    "comorbs": ["DT2", "HTA", "demence", "denutrition"],
+    "meds": ["Glibenclamide", "Cotrimoxazole", "Ramipril", "Atorvastatine", "Donepezil"],
+    "test_expected": "Beers PIM Glibenclamide, hypoG additive, adapter dose DFG 38"
+  },
+  {
+    "id": "C07",
+    "nom": "Mme V., Hyperkaliémie RAASi+MRA+AINS",
+    "source": "KDIGO 2024 — hyperK multifactorielle âgé",
+    "age": 80, "sexe": "F", "poids": 70, "taille": 162,
+    "bio": {"creat": 165, "dfg": 32, "k": 5.8, "na": 139, "hb": 10.5, "hba1c": 7.5, "inr": 1.0, "qtc": 470, "plaq": 210, "alat": 30, "tsh": 2.8, "albumine_sg": 33, "uree": 12},
+    "comorbs": ["IC", "DT2", "HTA", "osteoporose"],
+    "meds": ["Ramipril", "Spironolactone", "Ibuprofene", "Furosemide", "Atorvastatine", "Empagliflozin"],
+    "test_expected": "HyperK danger, IRA risque, K+ surveillance urgente, STOPP AINS+IC"
+  },
+  {
+    "id": "C08",
+    "nom": "M. T., Syndrome sérotoninergique multi-méd",
+    "source": "JAMA Psy 2023 — sero sd polymed",
+    "age": 71, "sexe": "M", "poids": 78, "taille": 175,
+    "bio": {"creat": 88, "dfg": 72, "k": 4.1, "na": 137, "hb": 14.0, "hba1c": 5.7, "inr": 1.0, "qtc": 472, "plaq": 250, "tsh": 3.0, "albumine_sg": 38, "cpk": 350, "temp": 38.2},
+    "comorbs": ["depression", "douleur_chronique", "syndrome_anxieux"],
+    "meds": ["Sertraline", "Tramadol", "Linezolide", "Mirtazapine", "Trazodone"],
+    "test_expected": "Syndrome sérotoninergique danger, CI Linezolide+ISRS, score sero ≥4"
+  },
+  {
+    "id": "C09",
+    "nom": "Mme A., IRC terminale + adaptations",
+    "source": "KDIGO 2024 + Beers — métformine CI DFG<30",
+    "age": 91, "sexe": "F", "poids": 48, "taille": 154,
+    "bio": {"creat": 320, "dfg": 12, "k": 5.2, "na": 132, "hb": 9.2, "hba1c": 7.8, "inr": 1.0, "qtc": 465, "plaq": 168, "uree": 22, "phos": 1.85, "ca_corr": 2.05, "albumine_sg": 27, "ddim": 2400},
+    "comorbs": ["IRC", "DT2", "HTA", "denutrition", "osteoporose"],
+    "meds": ["Metformine", "Spironolactone", "Gabapentine", "Furosemide", "Bisoprolol", "Atorvastatine"],
+    "test_expected": "Metformine CI absolue (DFG<30 acidose lactique), Spironolactone CI DFG<30, Gabapentine adapter dose, atb_terminale"
+  },
+  {
+    "id": "C10",
+    "nom": "Mme B., Chute iatrogène complexe",
+    "source": "Hartikainen 2007 — falls polymed sédatif",
+    "age": 88, "sexe": "F", "poids": 52, "taille": 156,
+    "bio": {"creat": 105, "dfg": 42, "k": 4.0, "na": 135, "hb": 11.0, "hba1c": 6.5, "inr": 1.1, "qtc": 455, "plaq": 215, "vit_d": 8, "ca_corr": 2.15, "albumine_sg": 28, "tsh": 3.5},
+    "comorbs": ["HTA", "depression", "osteoporose", "chute_recente", "incontinence"],
+    "meds": ["Zopiclone", "Oxazepam", "Mirtazapine", "Furosemide", "Bisoprolol", "Tramadol", "Oxybutynine"],
+    "test_expected": "Score chute MAX, BZD Beers PIM, ACB élevé, hypotension orthostatique, sédatifs cumulés"
+  },
+  {
+    "id": "C11",
+    "nom": "M. C., QT prolongé multi-QT-prolongateurs",
+    "source": "CredibleMeds 2024 — combinatoire dangereuse",
+    "age": 79, "sexe": "M", "poids": 72, "taille": 172,
+    "bio": {"creat": 90, "dfg": 65, "k": 3.4, "na": 138, "hb": 12.8, "hba1c": 6.0, "inr": 1.0, "qtc": 510, "plaq": 240, "mg": 0.65, "albumine_sg": 36},
+    "comorbs": ["FA", "depression", "nausea"],
+    "meds": ["Clarithromycine", "Citalopram", "Ondansetron", "Domperidone", "Bisoprolol"],
+    "test_expected": "Score QT MAX, danger torsade, hypoK+hypoMg, association à éviter"
+  },
+  {
+    "id": "C12",
+    "nom": "Mme E., Anticoagulation fragile HEMORR2HAGES",
+    "source": "ESC FA 2024 — bleeding risk score âgé",
+    "age": 87, "sexe": "F", "poids": 50, "taille": 152,
+    "bio": {"creat": 120, "dfg": 36, "k": 4.3, "na": 137, "hb": 9.0, "hba1c": 6.0, "inr": 1.2, "qtc": 460, "plaq": 95, "alat": 45, "albumine_sg": 29, "fer": 5, "cst": 8},
+    "comorbs": ["FA", "AVC", "HTA", "osteoporose", "chute_recente", "denutrition"],
+    "meds": ["Apixaban", "Clopidogrel", "Aspirine", "Pantoprazole", "Bisoprolol", "Furosemide"],
+    "test_expected": "Triple thérapie antithrombotique danger, anémie + thrombopénie, HEMORR2HAGES élevé, recommandation simplification"
+  }
+]
