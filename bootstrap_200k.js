@@ -260,6 +260,7 @@ console.log(`\n\nDone ${processed}/${N} cases in ${elapsed}s (${(processed/elaps
 
 function quant(arr, q) { if (!arr.length) return 0; const s = [...arr].sort((a, b) => a - b); return s[Math.floor(s.length * q)]; }
 function mean(a) { return a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0; }
+function arrMax(a) { let m = -Infinity; for (let i = 0; i < a.length; i++) if (a[i] > m) m = a[i]; return m; }
 
 const summary = {
     N, processed, unique: seen.size, errors,
@@ -268,7 +269,7 @@ const summary = {
     distribution: Object.fromEntries(Object.entries(distN).map(([k, v]) => [k, {
         mean: +mean(v).toFixed(2), p25: quant(v, 0.25), p50: quant(v, 0.5),
         p75: quant(v, 0.75), p90: quant(v, 0.9), p95: quant(v, 0.95),
-        p99: quant(v, 0.99), max: Math.max(...v)
+        p99: quant(v, 0.99), max: arrMax(v)
     }])),
     pct: {
         with_danger_eng: +(100 * casWithDangerEng / processed).toFixed(2),
