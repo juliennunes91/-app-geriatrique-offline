@@ -1,0 +1,71 @@
+{
+  "cases_processed": 2000,
+  "unique_sigs": 2000,
+  "pipeline_errors": 0,
+  "elapsed_s": 15.07,
+  "cases_per_sec": 132.7,
+  "integrity": {
+    "missing_titre": 0,
+    "invalid_severity": 0,
+    "missing_classe_ddi": 0,
+    "score_NaN": 0,
+    "score_negative": 0,
+    "score_too_high": 0,
+    "score_sum_mismatch": 0
+  },
+  "contradictions": {
+    "eviter_AND_initier_same_med": 0,
+    "cross_module_QT_missing_DDI": 63
+  },
+  "duplicates": {
+    "alerts_engine": 0,
+    "ddi_pairs": 0
+  },
+  "sources": {
+    "danger_no_ebm_source": 0
+  },
+  "distribution": {
+    "alerts_eviter": {
+      "mean": 5.92,
+      "p50": 5,
+      "p95": 14
+    },
+    "alerts_initier": {
+      "mean": 3.95,
+      "p50": 4,
+      "p95": 9
+    },
+    "alerts_ddi": {
+      "mean": 5.98,
+      "p50": 4,
+      "p95": 20
+    },
+    "alerts_bio": {
+      "mean": 2.5,
+      "p50": 2,
+      "p95": 5
+    },
+    "pct_with_danger_engine": 81,
+    "pct_with_danger_ddi": 60,
+    "pct_with_danger_bio": 25.1
+  },
+  "coverage": {
+    "eviter_rules_activated": 110,
+    "eviter_rules_total": 162,
+    "eviter_pct": 67.9,
+    "initier_rules_activated": 34,
+    "initier_rules_total": 43,
+    "initier_pct": 79.1,
+    "bio_syndromes_activated": 19,
+    "bio_syndromes_total": 51,
+    "bio_pct": 37.3
+  },
+  "determinism": {
+    "tested": 18,
+    "mismatches": 0
+  },
+  "monotonicity_ACB": {
+    "tested": 18,
+    "violations": 0
+  }
+}
