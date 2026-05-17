@@ -1178,7 +1178,8 @@ const GERIA_RECOS_DB = {
             message: "AINS au long cours (> 3 mois) pour douleur d'arthrose quand le paracétamol n'a pas été essayé : les antalgiques simples sont préférables et habituellement aussi efficaces.",
             severite: "warning",
             condition: {
-                med_keys: ["ains"]
+                med_keys: ["ains"],
+                comorbs_any: ["PAT_053", "PAT_054", "PAT_055"]
             },
             alternatives: "Paracétamol, topiques AINS, kinésithérapie, infiltrations"
         },
@@ -1563,8 +1564,8 @@ const GERIA_RECOS_DB = {
             ref_code: "STOPP3-L2",
             section: "Antalgiques",
             titre: "Opioïde quotidien régulier sans laxatif co-prescrit",
-            message: "Opioïde en usage quotidien régulier (hors PRN) sans laxatif co-prescrit : constipation sévère prévisible.",
-            severite: "warning",
+            message: "Opioïde en usage quotidien régulier (hors PRN) sans laxatif co-prescrit : constipation sévère prévisible. (Voir aussi SYND_048 ESMO 2018.)",
+            severite: "info",
             condition: {
                 med_keys: ["morphine", "oxycodone", "fentanyl", "buprenorphine", "tramadol", "codeine"],
                 med_absent: ["macrogol", "lactulose", "bisacodyl", "naloxone"]
@@ -2239,7 +2240,7 @@ const GERIA_RECOS_DB = {
             section: "Prévention",
             titre: "Polypharmacie sans réévaluation (REMEDIES)",
             message: "REMEDIES : ≥ 5 médicaments — réévaluation systématique de chaque traitement chronique au moins 1 fois/an. Rechercher les prescriptions en cascade et les médicaments sans bénéfice attendu.",
-            severite: "warning",
+            severite: "info",
             condition: {
                 polypharmacie: true,
                 seuil: 5
