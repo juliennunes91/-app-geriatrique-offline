@@ -145,7 +145,7 @@ function searchMedList(val) {
     unifiedMedsMap.forEach((data, key) => { 
         if(key.includes(cleanVal) || sanitizeText(data.princeps).includes(cleanVal)) { 
             let signature = sanitizeText(data.dci_pure);
-            if(!seenSignatures.has(signature)) { seenSignatures.add(signature); matches.push({display: `${data.dci_pure}${data.princeps ? ` (${data.princeps})` : ''} - ${data.classe}`, data: data}); }
+            if(!seenSignatures.has(signature)) { seenSignatures.add(signature); matches.push({display: data.dci_pure, data: data}); }
         } 
     }); return matches;
 }
