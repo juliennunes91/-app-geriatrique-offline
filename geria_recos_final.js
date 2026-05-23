@@ -1822,7 +1822,7 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["donepezil", "rivastigmine", "galantamine", "memantine"],
                 fragile: true,
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"]
             },
             alternatives: "Arrêt progressif avec surveillance, soins de support"
         },

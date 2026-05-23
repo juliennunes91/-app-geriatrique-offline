@@ -718,6 +718,74 @@ console.log('\n🧪 Intégrité base MEDICAMENTS');
 }
 
 // ============================================================================
+// COHÉRENCE UMBRELLA ↔ SOUS-TYPES (héritage de la logique « générique »)
+// ----------------------------------------------------------------------------
+// Détecte les pathologies « umbrella » (générique non précisé) dont un sous-type
+// plus spécifique existe — déclaré dans COMORB_GENERIC_OVERRIDES (geria_engine_v2.js,
+// source de vérité). Comme le moteur retire le générique quand un sous-type est
+// coché, TOUTE logique déclenchée par le générique DOIT aussi couvrir les sous-types,
+// sinon un patient codé en sous-type (ex. DT2) « perd » des règles/scores/surveillances.
+// Couvre : règles RECOS (comorbs/comorbs_any), surveillance bio, PATHO_SYNDROME_MAP,
+// PATHO_MED_INTERDITS. (Les scores procéduraux CHA₂DS₂-VA/DOAC d'app_analysis.js sont
+// vérifiés par grep ci-dessous.)
+// ============================================================================
+console.log('\n🧪 Cohérence umbrella ↔ sous-types');
+{
+    const recos = new Function(fs.readFileSync(__dirname + '/geria_recos_final.js', 'utf8') + '\nreturn { GERIA_RECOS_DB };')().GERIA_RECOS_DB;
+    const bioMon = new Function(fs.readFileSync(__dirname + '/geria_integration_module.js', 'utf8') + '\nreturn { PATHO_BIO_MONITOR: typeof PATHO_BIO_MONITOR!=="undefined"?PATHO_BIO_MONITOR:[] };')().PATHO_BIO_MONITOR;
+    const rf = new Function(fs.readFileSync(__dirname + '/geria_pathology_rules_v3.js', 'utf8') + '\nreturn { PATHO_SYNDROME_MAP, PATHO_MED_INTERDITS };')();
+    const synMap = rf.PATHO_SYNDROME_MAP, medInt = rf.PATHO_MED_INTERDITS;
+    const engCode = fs.readFileSync(__dirname + '/geria_engine_v2.js', 'utf8');
+    const famMatch = engCode.match(/COMORB_GENERIC_OVERRIDES\s*=\s*(\{[\s\S]*?\});/);
+    const FAMILIES = famMatch ? eval('(' + famMatch[1] + ')') : {};
+    const appCode = fs.readFileSync(__dirname + '/app_analysis.js', 'utf8');
+    const allRules = [...(recos.EVITER || []), ...(recos.INITIER || [])];
+
+    test('COMORB_GENERIC_OVERRIDES extrait depuis le moteur', () => assert.ok(Object.keys(FAMILIES).length > 0, 'familles introuvables — regex à mettre à jour'));
+
+    for (const [generic, subs] of Object.entries(FAMILIES)) {
+        test(`[${generic}] règles RECOS héritées par les sous-types`, () => {
+            const gaps = [];
+            allRules.forEach(r => {
+                const c = r.condition || {};
+                const pos = [...(c.comorbs || []), ...(c.comorbs_any || [])];
+                if (pos.includes(generic)) {
+                    const missing = subs.filter(s => !pos.includes(s));
+                    if (missing.length) gaps.push(`${r.id} manque ${missing.join('/')}`);
+                }
+            });
+            assert.strictEqual(gaps.length, 0, gaps.join(' | '));
+        });
+        test(`[${generic}] surveillance bio héritée par les sous-types`, () => {
+            const gaps = [];
+            (bioMon || []).forEach(m => {
+                if ((m.pathos || []).includes(generic)) {
+                    const missing = subs.filter(s => !m.pathos.includes(s));
+                    if (missing.length) gaps.push(`${m.id} manque ${missing.join('/')}`);
+                }
+            });
+            assert.strictEqual(gaps.length, 0, gaps.join(' | '));
+        });
+        test(`[${generic}] PATHO_SYNDROME_MAP couvre les sous-types`, () => {
+            if (!synMap[generic]) return;
+            const missing = subs.filter(s => !synMap[s]);
+            assert.strictEqual(missing.length, 0, `manque ${missing.join('/')}`);
+        });
+        test(`[${generic}] PATHO_MED_INTERDITS couvre les sous-types`, () => {
+            if (!medInt[generic] || !medInt[generic].length) return;
+            const missing = subs.filter(s => !medInt[s] || !medInt[s].length);
+            assert.strictEqual(missing.length, 0, `manque ${missing.join('/')}`);
+        });
+        test(`[${generic}] scores procéduraux app_analysis.js incluent les sous-types`, () => {
+            // Tout test littéral includes('PAT_xxx') sur le générique doit utiliser la famille.
+            const re = new RegExp(`includes\\(\\s*['"]${generic}['"]\\s*\\)`, 'g');
+            const bad = (appCode.match(re) || []);
+            assert.strictEqual(bad.length, 0, `${bad.length} test(s) littéral(aux) includes('${generic}') sans la famille — utiliser .some(c=>[...].includes(c))`);
+        });
+    }
+}
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log(`\n${'='.repeat(50)}`);

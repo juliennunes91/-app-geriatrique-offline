@@ -17,8 +17,14 @@ function initUI() {
 
     allComorbs.length = 0; unifiedMedsMap.clear();
 
+    // Pathologies umbrella masquées du sélecteur : un sous-type plus précis existe
+    // et hérite de toute la logique (scores, règles, surveillance). PAT_016 (diabète
+    // non précisé) reste défini en base comme clé canonique interne mais n'est plus
+    // proposé — préférer DT1 (PAT_016a) ou DT2 (PAT_016b).
+    const PATHO_HIDDEN_FROM_PICKER = new Set(['PAT_016']);
     for (const key in MASTER_DB.PATHOLOGIES) {
         let p = MASTER_DB.PATHOLOGIES[key];
+        if (PATHO_HIDDEN_FROM_PICKER.has(p.ID_PATHO)) continue;
         allComorbs.push({ id: p.ID_PATHO, label: p.NOM_STANDARD, search: sanitizeText(p.NOM_STANDARD + " " + p.SYNONYMES) });
     }
     MASTER_DB.MEDICAMENTS.forEach(m => {
