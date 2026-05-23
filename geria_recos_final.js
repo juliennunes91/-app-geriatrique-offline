@@ -2670,6 +2670,7 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 comorbs: ["PAT_029"],
+                bio: { "BIO_046": { op: ">", val: 300 } },
                 med_absent: ["iec", "ara2"]
             },
             alternatives: "Ramipril, énalapril, ou valsartan, candésartan"
@@ -2873,7 +2874,7 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 comorbs_any: ["PAT_016", "PAT_016a", "PAT_016b"],
-                bio: { "BIO_004": { op: ">", val: 30 } },
+                bio: { "BIO_046": { op: ">", val: 30 }, "BIO_004": { op: ">", val: 30 } },
                 med_absent: ["iec", "ara2"]
             },
             alternatives: "Ramipril, périndopril, ou valsartan, candésartan"

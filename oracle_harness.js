@@ -62,7 +62,7 @@ function buildSandbox() {
         getElementsByClassName() { return []; }, getElementsByTagName() { return []; },
         body: makeFakeEl('body'), head: makeFakeEl('head'), documentElement: makeFakeEl('html'),
         _elCache: elCache,
-        resetOutputs() { elCache.forEach(el => { el._html = ''; }); }
+        resetOutputs() { elCache.forEach(el => { el._html = ''; el.value = ''; el.checked = false; }); }
     };
 
     const localStorageShim = (() => {
@@ -118,7 +118,8 @@ const BIO_INPUT_IDS = {
     cpk: 'bioCpk', tsh: 'bioTsh', fer: 'bioFer', b12: 'bioB12', b9: 'bioB9',
     vitd: 'bioVitD', crp: 'bioCrp', gly: 'bioGly', hba1c: 'bioHba1c',
     ldl: 'bioLdl', tg: 'bioTg', bnp: 'bioBnp', inr: 'bioInr', qtc: 'bioQtc',
-    lithium: 'bioLithium', lipase: 'bioLipase', alb: 'bioAlb', albumSg: 'bioAlbumSg'
+    lithium: 'bioLithium', lipase: 'bioLipase', alb: 'bioAlb', albumSg: 'bioAlbumSg',
+    albuminurie: 'bioAlbuminurie', rac: 'bioAlbuminurie'
 };
 
 function parseAlerts(html) {

@@ -393,7 +393,8 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'BIO_TEMP': getVal('bioTemp'),
         'BIO_T4': getVal('bioT4'), 'BIO_T3': getVal('bioT3'),
         'BIO_TP': getVal('bioTp'), 'BIO_CL': getVal('bioChlore'),
-        'BIO_OSM': getVal('bioOsm'), 'BIO_PREALB': getVal('bioPrealb')
+        'BIO_OSM': getVal('bioOsm'), 'BIO_PREALB': getVal('bioPrealb'),
+        'BIO_046': getVal('bioAlbuminurie')
     };
 
     // Auto-injection des PAT codes depuis les checkboxes cliniques
@@ -531,7 +532,7 @@ function _computeAnalysisHash() {
      'chkDelirium','delHyper','delHypo','delMixte',
      'chkSommeil','chkInsomnie','chkTcsp','chkSjsr','chkSaos'
     ].forEach(id => parts.push(isChecked(id)));
-    ['bioTp','bioChlore','bioOsm','bioPrealb'].forEach(id => parts.push(getVal(id)));
+    ['bioTp','bioChlore','bioOsm','bioPrealb','bioAlbuminurie'].forEach(id => parts.push(getVal(id)));
     return parts.join('|');
 }
 

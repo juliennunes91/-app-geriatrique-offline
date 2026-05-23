@@ -314,6 +314,13 @@ const MASTER_DB = {
             "NOM_STANDARD": "TCA (Temps de Céphaline Activée)",
             "UNITE": "ratio (vs témoin)",
             "SYNONYMES": "TCA, aPTT, APTT, Heparine non fractionnee, HNF, Cephaline, Hemostase"
+        },
+        "BIO_046": {
+            "ID_BIO": "BIO_046",
+            "LOINC": "14959-1",
+            "NOM_STANDARD": "Albuminurie / Protéinurie (RAC ou mg/24h)",
+            "UNITE": "mg/24h (ou mg/g RAC)",
+            "SYNONYMES": "Albuminurie, Microalbuminurie, Proteinurie, Protéinurie, RAC, Rapport albumine creatinine urinaire, ACR, Albumine urinaire"
         }
     },
     "PATHOLOGIES": {
