@@ -1835,7 +1835,7 @@ const GERIA_RECOS_DB = {
             message: "STOPPFrail : Suppléments de fer oral chez patient fragile sans anémie ferriprive documentée. Effets indésirables GI fréquents (constipation, nausées).",
             severite: "warning",
             condition: {
-                med_keys: ["fer", "fumarate ferreux", "sulfate ferreux", "ascorbate ferreux"],
+                med_keys: ["fumarate ferreux", "sulfate ferreux", "ascorbate ferreux"],
                 fragile: true
             },
             alternatives: "Vérifier ferritine/CST avant de supplémenter"

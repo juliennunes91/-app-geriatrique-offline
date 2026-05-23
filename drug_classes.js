@@ -417,7 +417,10 @@ function matchesDrugClass(dci, classe, key) {
     if (_ALL_DCIS_SET.has(key) || _ALL_DCIS_SET.has(dci)) {
         return dci === key || classe === key;
     }
-    return dci.includes(key) || classe.includes(key) || key.includes(dci);
+    // Garde anti-collision : un key trop court (< 4 car.) ne doit PAS matcher par
+    // sous-chaîne du libellé de classe (ex. "fer" ⊂ "ré-fér-ence", "calci-fér-ol").
+    // Les acronymes courts légitimes (iec, ara2…) sont des alias exacts gérés en Passe 1.
+    return dci.includes(key) || (key.length >= 4 && classe.includes(key)) || key.includes(dci);
 }
 
 /**

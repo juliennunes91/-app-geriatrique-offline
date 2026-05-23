@@ -245,6 +245,10 @@ test('ramipril → iec (suffix pril): true', () => assert.ok(matchesDrugClass('r
 test('losartan → ara2 (suffix sartan): true', () => assert.ok(matchesDrugClass('losartan', '', 'ara2')));
 test('amlodipine → inhibiteurcalcique: true', () => assert.ok(matchesDrugClass('amlodipine', '', 'inhibiteurcalcique')));
 test('paracetamol → ains: false', () => assert.ok(!matchesDrugClass('paracetamol', '', 'ains')));
+// Garde anti-collision clé courte ⊂ libellé de classe (oracle batch 1 : "fer" ⊂ "référence")
+test('clé courte "fer" ne matche PAS via classe "...référence..." (paracétamol)', () => assert.ok(!matchesDrugClass('paracetamol', sanitizeText('Antalgique-antipyrétique palier 1 OMS — référence chez âgé'), 'fer')));
+test('clé courte "fer" ne matche PAS via classe "...calciférol..." ', () => assert.ok(!matchesDrugClass('xyz', sanitizeText('Vitamine D3 cholécalciférol'), 'fer')));
+test('clé "fumarate ferreux" matche bien le fer oral', () => assert.ok(matchesDrugClass('fumarateferreux', sanitizeText('Fer oral ferreux Fe2+'), 'fumarateferreux')));
 test('bisoprolol → antihypertenseur: true (composite)', () => assert.ok(matchesDrugClass('bisoprolol', '', 'antihypertenseur')));
 test('amlodipine → antihypertenseur: true (composite)', () => assert.ok(matchesDrugClass('amlodipine', '', 'antihypertenseur')));
 test('omeprazole → ipp: true', () => assert.ok(matchesDrugClass('omeprazole', '', 'ipp')));
