@@ -1,0 +1,10 @@
+# Logs et sorties volumineuses des bootstraps d'audit (régénérables via les scripts bootstrap_*.js)
+audit_reports/*_findings.json
+test_cases/expert_outputs.json
+test_cases/expert_report.txt
+test_cases/screenshots/
+*.tmp.js
+.tmp_*.js
+
+# Temp / logs
+*.log
