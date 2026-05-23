@@ -144,6 +144,15 @@ const DRUG_CLASSES = {
         classeMatch: ['antiepileptique'],
         dcis: ['valproate', 'carbamazepine', 'phenytoine', 'lamotrigine', 'levetiracetam', 'pregabaline', 'gabapentine', 'topiramate', 'lacosamide']
     },
+    // Sels de valproate (Dépakine = valproate, Dépakote = divalproate, Dépamide = valpromide).
+    // Même principe actif (acide valproïque) → l'association de 2 sels = surdosage.
+    // classeMatch vide : matching uniquement sur les DCIs nominatives (évite de capter
+    // carbamazépine/lamotrigine qui partagent la classe "antiepileptique").
+    valproate_salts: {
+        aliases: ['valproatesalts'],
+        classeMatch: [],
+        dcis: ['valproate', 'valpromide', 'divalproate']
+    },
     macrolide: {
         aliases: ['macrolide'],
         classeMatch: ['macrolide'],

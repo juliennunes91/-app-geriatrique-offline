@@ -1548,6 +1548,28 @@ const PATHOLOGY_RULES_DB = {
                   }
         },
         TRAITEMENTS: {
+            INITIER: [
+                {
+                    classe: "Préciser le type de diabète (DT1 vs DT2) — prises en charge distinctes",
+                    indication: "DT1 : insulinothérapie basale-bolus OBLIGATOIRE (déficit absolu d'insuline). DT2 : metformine en 1ʳᵉ intention, puis iSGLT2 / GLP-1 RA selon le profil cardio-rénal.",
+                    note: "Sélectionner « Diabète de type 1 » (DT1) ou « Diabète de type 2 » (DT2) pour des recommandations ciblées : cibles HbA1c, schémas thérapeutiques et surveillance biologique détaillés.",
+                    ref: "ADA 2025 §13.14"
+                },
+                {
+                    classe: "iSGLT2 (Dapagliflozine, Empagliflozine) — si DT2 + maladie CV / rénale / insuffisance cardiaque",
+                    indication: "Bénéfice cardio-rénal indépendant de l'équilibre glycémique (DAPA-HF, DAPA-CKD, EMPA-REG OUTCOME).",
+                    note: "Réservé au DT2. En DT1 : uniquement en cadre spécialisé (risque d'acidocétose euglycémique — FDA warning 2015).",
+                    niveau_preuve: "IA",
+                    ref: "ESC 2023 | KDIGO 2024"
+                },
+                {
+                    classe: "GLP-1 RA (Sémaglutide, Dulaglutide, Liraglutide) — si DT2 + surpoids ou maladie CV",
+                    indication: "Réduction des MACE chez le DT2 à haut risque CV (REWIND, LEADER, SUSTAIN-6) ; perte de poids.",
+                    note: "Réservé au DT2. Surveiller la perte de poids chez le sujet âgé fragile/sarcopénique. Inefficace en DT1 (ne remplace pas l'insuline).",
+                    niveau_preuve: "IA",
+                    ref: "ESC 2024 | ADA 2025 §10.3"
+                }
+            ],
             CIBLES_HBA1C: {
                 general: { max: 7.0, note: "Adulte non âgé, sans risque d'hypoglycémie" },
                 sujet_age_robuste: { min: 7.0, max: 7.5, note: "Sujet âgé robuste" },

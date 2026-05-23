@@ -1414,7 +1414,8 @@ function analyserPrescription() {
             { key: 'anticoagulant',                label: 'Anticoagulants curatifs',      note: "Association AOD/AVK/HBPM curative = risque hémorragique majeur.", exception: "Exception : bridge AVK/HBPM transitoire péri-opératoire." },
             { key: 'antiagregant',                 label: 'Antiagrégants',                note: "Association d\'antiagrégants = risque hémorragique accru.", exception: "Exception : DAPT post-SCA/stent (aspirine + inhibiteur P2Y12) pendant durée limitée (ESC)." },
             { key: 'macrolide',                    label: 'Macrolides',                   note: "Association macrolides non justifiée." },
-            { key: 'fluoroquinolone',              label: 'Fluoroquinolones',             note: "Association FQ non justifiée." }
+            { key: 'fluoroquinolone',              label: 'Fluoroquinolones',             note: "Association FQ non justifiée." },
+            { key: 'valproate_salts',              label: 'Sels de valproate (Dépakine / Dépakote / Dépamide)', note: "Association de 2 sels de valproate = surdosage en acide valproïque (hépatotoxicité, hyperammoniémie, thrombopénie). Un seul sel de valproate à la fois." }
         ];
 
         const dupFound = [];
