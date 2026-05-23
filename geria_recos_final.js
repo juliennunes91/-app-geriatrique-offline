@@ -1342,7 +1342,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["propranolol", "nadolol", "sotalol", "pindolol", "timolol", "tertatolol", "labetalol"],
-                comorbs: ["PAT_016"]
+                comorbs_any: ["PAT_016", "PAT_016a", "PAT_016b"]
             },
             alternatives: "Bêtabloquant cardiosélectif (bisoprolol, nébivolol, métoprolol)"
         },
@@ -2872,7 +2872,7 @@ const GERIA_RECOS_DB = {
             message: "IEC (ou ARA2 si intolérance) pour diabète avec protéinurie (> 30 mg/24h), sauf si IRC sévère (DFG < 30).",
             severite: "warning",
             condition: {
-                comorbs: ["PAT_016"],
+                comorbs_any: ["PAT_016", "PAT_016a", "PAT_016b"],
                 bio: { "BIO_004": { op: ">", val: 30 } },
                 med_absent: ["iec", "ara2"]
             },

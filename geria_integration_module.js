@@ -2023,7 +2023,9 @@ const PATHO_BIO_MONITOR = [
     {
         "id": "BIO_MON_DT2",
         "pathos": [
-            "PAT_016"
+            "PAT_016",
+            "PAT_016a",
+            "PAT_016b"
         ],
         "bio": [
             "BIO_026",

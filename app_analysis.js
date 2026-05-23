@@ -713,7 +713,7 @@ function analyserPrescription() {
         if(patientAge >= SA.cha_75) { scoreCha += 2; ttCha.push("Âge ≥75 (+2)"); } else if(patientAge >= SA.cha_65) { scoreCha += 1; ttCha.push("Âge ≥65 (+1)"); }
         if(activeComorbs.some(c=>['PAT_002','PAT_003'].includes(c))) { scoreCha += 1; ttCha.push("IC (+1)"); }
         if(activeComorbs.includes('PAT_005')) { scoreCha += 1; ttCha.push("HTA (+1)"); }
-        if(activeComorbs.includes('PAT_016')) { scoreCha += 1; ttCha.push("Diabète (+1)"); }
+        if(activeComorbs.some(c=>['PAT_016','PAT_016a','PAT_016b'].includes(c))) { scoreCha += 1; ttCha.push("Diabète (+1)"); }
         if(activeComorbs.includes('PAT_008')) { scoreCha += 2; ttCha.push("ATCD AVC (+2)"); }
         if(activeComorbs.some(c=>['PAT_004','PAT_007'].includes(c))) { scoreCha += 1; ttCha.push("Vasc (+1)"); }
         let chaConc = scoreCha === 0 ? SC.CHA2DS2.conclusions[0] : (scoreCha === 1 ? SC.CHA2DS2.conclusions[1] : SC.CHA2DS2.conclusions.haut);
@@ -747,7 +747,7 @@ function analyserPrescription() {
         if(isChecked('chkSaignement')) { scoreDoac += 1; ttDoac.push("ATCD saignement (+1)"); }
         if(patientHasMedClass('antiagregant')) { scoreDoac += 1; ttDoac.push("Antiagrégant (+1)"); }
         if(patientHasMedClass('ains')) { scoreDoac += 1; ttDoac.push("AINS (+1)"); }
-        if(activeComorbs.includes('PAT_016')) { scoreDoac += 1; ttDoac.push("Diabète (+1)"); }
+        if(activeComorbs.some(c=>['PAT_016','PAT_016a','PAT_016b'].includes(c))) { scoreDoac += 1; ttDoac.push("Diabète (+1)"); }
         if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < SB.anemia_M) || (sexe === 'F' && bioValues['BIO_009'] < SB.anemia_F))) { scoreDoac += 1; ttDoac.push("Anémie (+1)"); }
         if(activeComorbs.some(c=>['PAT_002','PAT_003'].includes(c))) { scoreDoac += 1; ttDoac.push("IC (+1)"); }
         renderScore(SC.DOAC, scoreDoac, ttDoac);
