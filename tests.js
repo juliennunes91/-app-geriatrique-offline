@@ -790,6 +790,48 @@ console.log('\n🧪 Cohérence umbrella ↔ sous-types');
 }
 
 // ============================================================================
+// 11. INDÉPENDANCE D'ORDRE DU HARNAIS ORACLE (anti-fuite d'état entre cas)
+// ============================================================================
+// Garde-fou : analyzeCase() doit produire une sortie identique quel que soit le
+// cas exécuté juste avant. Régression du bug resetOutputs() qui ne réinitialisait
+// pas value/checked des inputs cachés → fuite des valeurs d'un cas sur le suivant.
+console.log('\n🧪 Oracle — indépendance d\'ordre (anti-fuite d\'état)');
+{
+    const { analyzeCase } = require('./oracle_harness');
+    const TABS = ['alertes-scores','alertes-eviter','alertes-initier','alertes-interact','alertes-bio','alertes-usage','alertes-suivi','alertes-guidelines','alertes-synthese'];
+    const sig = (out) => {
+        const lines = [];
+        for (const t of TABS) {
+            const arr = out[t];
+            if (!Array.isArray(arr)) continue;
+            for (const a of arr) if (a && a.titre) lines.push(t + '::' + a.titre.replace(/^[^0-9A-Za-zÀ-ÿ]+/, '').trim());
+        }
+        return lines.sort().join('\n');
+    };
+    const clone = (o) => JSON.parse(JSON.stringify(o));
+    // Cas « pollueur » : inputs riches qui contamineraient le cas suivant si le reset était cassé.
+    const POLLUTER = { age: 91, sexe: 'F', dfg: 22, cfs: 8, fragile: true,
+        comorbs: ['PAT_006','PAT_016','PAT_029','PAT_002'],
+        meds: ['Warfarine','Ramipril','Furosemide','Metformine','Amiodarone'],
+        bio: { inr: 4.5, k: 5.8, albuminurie: 100, hb: 9, qtc: 480, na: 122 },
+        flags: ['chkChute','chkAnorexie'] };
+    // Archétypes sensibles : A1 et A4 ne saisissent AUCUNE bio → exposés à la fuite.
+    const ARCH = {
+        'A1 fragile+paracétamol':  { age: 88, sexe: 'F', cfs: 7, fragile: true, meds: ['Paracetamol'] },
+        'A2 diabète+protéinurie':  { age: 78, sexe: 'M', dfg: 70, comorbs: ['PAT_016'], meds: [], bio: { albuminurie: 50 } },
+        'A4 HFrEF (aucune bio)':   { age: 80, sexe: 'F', dfg: 55, comorbs: ['PAT_002'], meds: [] },
+    };
+    for (const [name, c] of Object.entries(ARCH)) {
+        test(`oracle stable malgré pollueur — ${name}`, () => {
+            const cold = sig(analyzeCase(clone(c)));
+            analyzeCase(clone(POLLUTER));
+            const after = sig(analyzeCase(clone(c)));
+            assert.strictEqual(after, cold, 'sortie différente après un cas pollueur (fuite d\'état)');
+        });
+    }
+}
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log(`\n${'='.repeat(50)}`);
