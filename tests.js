@@ -704,7 +704,7 @@ console.log('\n🧪 Intégrité base MEDICAMENTS');
             amitriptyline: 3, oxybutynine: 3, hydroxyzine: 3, diphenhydramine: 3,
             paroxetine: 3, quetiapine: 3, olanzapine: 3, solifenacine: 3,
             cyproheptadine: 3, cyamemazine: 3, dexchlorpheniramine: 3,
-            chlorthalidone: 1, digoxine: 1, ranitidine: 1, paliperidone: 1,
+            chlortalidone: 1, digoxine: 1, ranitidine: 1, paliperidone: 1,
         };
         const issues = [];
         for (const [k, expected] of Object.entries(required)) {

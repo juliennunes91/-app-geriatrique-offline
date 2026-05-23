@@ -6281,7 +6281,7 @@ const MASTER_DB = {
                     "poso_hab": "12,5-25 mg/j en 1 prise matin (T½ 40-60h, 1 prise/j stable)",
                     "poso_ger": "12,5 mg/j à initier — dose minimale, T½ longue (effet stable + nycturie moindre)",
                     "poso_ren": "ClCr ≥ 30 : 12,5-25 mg/j | ClCr < 30 : inefficace diurétique (mais effet antiHTA partiel possible) | ClCr < 15 : éviter",
-                    "acb": 0,
+                    "acb": 1,
                     "cia": 1,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "0.0",

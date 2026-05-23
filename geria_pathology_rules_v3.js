@@ -3330,7 +3330,12 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "Chlorpromazine", raison: "Anticholinergique, hypotension orthostatique, QT", gravite: "EVITER" }
             ]
         },
-        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "Glycémie / HbA1c / bilan lipidique", cible: "Baseline + 3 mois", note: "Syndrome métabolique sous AP atypiques"}], REGLES: [] }
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_025", "BIO_026", "BIO_027", "BIO_031"], REGLES: [
+                  { bio: "BIO_025", nom: "Glycémie", frequence: "Baseline puis 3 mois puis annuel", note: "Syndrome métabolique sous antipsychotiques atypiques" },
+                  { bio: "BIO_026", nom: "HbA1c", frequence: "Baseline puis annuel", note: "Syndrome métabolique sous antipsychotiques atypiques" },
+                  { bio: "BIO_027", nom: "Bilan lipidique", frequence: "Baseline puis 3 mois puis annuel", note: "Syndrome métabolique sous antipsychotiques atypiques" },
+                  { bio: "BIO_031", nom: "QTc (ECG)", frequence: "Baseline puis selon dose/associations", note: "Antipsychotiques allongeant le QT" }
+        ] }
     },
     "PAT_046": {
         ID: "PAT_046",
@@ -3393,7 +3398,12 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "Antipsychotiques typiques", raison: "Syndrome malin des neuroleptiques, aggravation catatonie", gravite: "CONTRE-INDICATION" }
             ]
         },
-        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "CPK, Na, K, créatinine, température", cible: "Quotidien en phase aiguë", note: "Dépister catatonie maligne (CPK↑, hyperthermie, rhabdomyolyse)"}], REGLES: [] }
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_018", "BIO_002", "BIO_001", "BIO_003"], REGLES: [
+                  { bio: "BIO_018", nom: "CPK", frequence: "Quotidien en phase aiguë", note: "Catatonie maligne : CPK↑, hyperthermie (surveiller température), rhabdomyolyse" },
+                  { bio: "BIO_003", nom: "Créatininémie", frequence: "Quotidien en phase aiguë", note: "Rhabdomyolyse → insuffisance rénale aiguë" },
+                  { bio: "BIO_002", nom: "Natrémie", frequence: "Quotidien en phase aiguë", note: "Désordres hydroélectrolytiques (refus alimentaire, déshydratation)" },
+                  { bio: "BIO_001", nom: "Kaliémie", frequence: "Quotidien en phase aiguë", note: "Désordres hydroélectrolytiques ; hyperkaliémie si rhabdomyolyse" }
+        ] }
     },
     "PAT_048": {
         ID: "PAT_048",
@@ -3559,7 +3569,10 @@ const PATHOLOGY_RULES_DB = {
                 { classe: "Alcool vespéral", raison: "Aggrave obstruction et désaturations", gravite: "EVITER" }
             ]
         },
-        BIOLOGIE: { SURVEILLANCE_CIBLE: [{param: "TA, glycémie, FA/rythme", cible: "Comorbidités CV associées", note: ""}], REGLES: [] }
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_025", "BIO_031"], REGLES: [
+                  { bio: "BIO_025", nom: "Glycémie", frequence: "Annuel (dépistage comorbidités)", note: "SAOS = facteur de risque diabète / syndrome métabolique" },
+                  { bio: "BIO_031", nom: "QTc / ECG", frequence: "Selon comorbidités CV", note: "Dépister FA / troubles du rythme et HTA associés au SAOS (surveiller TA)" }
+        ] }
     },
     "PAT_053": {
         ID: "PAT_053",
