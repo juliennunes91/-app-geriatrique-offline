@@ -223,7 +223,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "severite": "warning",
         "condition": {
             "med_keys": [
-                "aspirine  clopidogrel"
+                "aspirine"
+            ],
+            "med_keys_2": [
+                "clopidogrel"
             ]
         },
         "alternatives": "Bitherapie antiagregante justifiee uniquement dans les indications specifiees et pour duree limitee",
@@ -270,7 +273,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
             "med_keys": [
                 "aod",
                 "avk"
-            ]
+            ],
+            "contexte_clinique": "mtev"
         },
         "alternatives": "Reevaluer a 6 mois le rapport benefice/risque de la poursuite de l'anticoagulation",
         "nb_sources": 8
@@ -291,7 +295,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
             "med_keys": [
                 "aod",
                 "avk"
-            ]
+            ],
+            "contexte_clinique": "mtev"
         },
         "alternatives": "Reevaluer a 12 mois. Baisser dose AOD (rivaroxaban 10mg, apixaban 2.5mg) si poursuite justifiee",
         "nb_sources": 8

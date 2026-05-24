@@ -951,6 +951,16 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(has(analyzeCase({ age: 82, sexe: 'F', meds: ['Atorvastatine'], flags: ['chkPalliatif'] }), reStat), 'palliatif → oui');
         assert.ok(!has(analyzeCase({ age: 82, sexe: 'F', meds: ['Ramipril'] }), /Antihypertenseurs \(STOPP\/FRAIL\)/i), 'antiHTA robuste → non');
     });
+    test('Anticoag prolongé TVP/EP : seulement en contexte MTEV (pas pour la FA)', () => {
+        const reTvp = /Anticoagulant prolonge premier episode TVP/i;
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'] }), reTvp), 'AOD seul (FA) → non');
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'], flags: ['chkTvp'] }), reTvp), 'AOD + MTEV → oui');
+    });
+    test('Bithérapie aspirine+clopidogrel : clé réparée (med_keys_2)', () => {
+        const re = /Aspirine \+ clopidogrel au long cours/i;
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Aspirine'] }), re), 'aspirine seule → non');
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Aspirine', 'Clopidogrel'] }), re), 'aspirine + clopidogrel → oui');
+    });
 }
 
 // ============================================================================
