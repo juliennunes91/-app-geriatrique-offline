@@ -183,6 +183,8 @@ const GeriaEngineV2 = (() => {
                     (Array.isArray(critRaw) ? critRaw : [critRaw]).forEach(crit => {
                         if (crit.op === '<' && val < crit.val) bioConfirmed = true;
                         if (crit.op === '>' && val > crit.val) bioConfirmed = true;
+                        if (crit.op === '<=' && val <= crit.val) bioConfirmed = true;
+                        if (crit.op === '>=' && val >= crit.val) bioConfirmed = true;
                     });
                 }
             }

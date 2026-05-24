@@ -181,18 +181,15 @@ function toggleSuspend(dci) {
 // Le médicament est ajouté immédiatement ; le modal propose d'affiner et peut
 // être « passé ». Les précisions alimentent contexte_clinique côté moteur.
 // =========================================================================
-const MED_PRECISION_FAMILIES = [
-    { key: 'cortico', fields: ['duree', 'dose'],
-      test: m => /corticoïde|corticoide|glucocorticoïde/i.test(m.classe || '') && !/inhalé|\bICS\b/i.test(m.classe || '') },
-    { key: 'opioide', fields: ['indication', 'dose'],
-      test: m => /opio[iï]de|opiac/i.test(m.classe || '') && !/antidiarrh|antidépresseur/i.test(m.classe || '') },
-    { key: 'ipp', fields: ['duree'],
-      test: m => /pompe à protons|pompe a protons|\(IPP\)/i.test(m.classe || '') },
-    { key: 'bzd', fields: ['duree'],
-      test: m => /benzodiazepine|benzodiazépine|hypnotique z/i.test(m.classe || '') },
-    { key: 'ains', fields: ['duree'],
-      test: m => /\bAINS\b|anti-inflammatoire non st/i.test(m.classe || '') }
-];
+// Champs du modal par famille. La détection de famille est centralisée dans
+// drug_classes.js (medPrecisionFamily) — partagée avec app_analysis.js.
+const MED_PRECISION_FIELDS = {
+    cortico: ['duree', 'dose'],
+    opioide: ['indication', 'dose'],
+    ipp: ['duree'],
+    bzd: ['duree'],
+    ains: ['duree']
+};
 const PRECISION_FIELD_DEFS = {
     duree: { label: 'Durée de traitement', type: 'select',
         options: [['', 'Non précisé'], ['courte', '< 1 mois'], ['moyenne', '1 à 3 mois'], ['longue', '> 3 mois / chronique']] },
@@ -202,8 +199,9 @@ const PRECISION_FIELD_DEFS = {
 };
 function _medPrecisionSpec(med) {
     if (!med) return null;
-    for (const f of MED_PRECISION_FAMILIES) { if (f.test(med)) return f; }
-    return null;
+    const key = (typeof medPrecisionFamily === 'function') ? medPrecisionFamily(med.classe) : null;
+    if (!key) return null;
+    return { key: key, fields: MED_PRECISION_FIELDS[key] || [] };
 }
 function _medPrecisionEsc(e) { if (e.key === 'Escape') closeMedPrecisionModal(); }
 function closeMedPrecisionModal() {
@@ -252,7 +250,7 @@ function openMedPrecisionModal(dci) {
     save.style.cssText = 'padding:8px 14px;border:0;background:#0d9488;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;';
     save.addEventListener('click', () => {
         const p = {};
-        spec.fields.forEach(fk => { const v = controls[fk].value; if (v !== '' && v != null) p[fk] = (PRECISION_FIELD_DEFS[fk].type === 'number') ? parseFloat(v) : v; });
+        spec.fields.forEach(fk => { const v = controls[fk].value; if (v !== '' && v != null) p[fk] = (PRECISION_FIELD_DEFS[fk].type === 'number') ? parseFloat(String(v).replace(',', '.')) : v; });
         med.precisions = Object.keys(p).length ? p : undefined;
         closeMedPrecisionModal(); renderTags();
         if (typeof analyserPrescription === 'function') analyserPrescription();

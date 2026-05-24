@@ -447,3 +447,17 @@ function matchesDrugClassAnsm(dci, classe, rawTerm) {
     if (tSing !== t && matchesDrugClass(dci, classe, tSing)) return true;
     return false;
 }
+
+// Famille « à précision » d'un médicament (durée/posologie/indication).
+// Centralisé ici car utilisé par app_ui.js (champs du modal) ET app_analysis.js
+// (contextes cliniques transmis au moteur) — les deux usages DOIVENT rester
+// synchronisés. Retourne 'cortico'|'opioide'|'ipp'|'bzd'|'ains' ou null.
+function medPrecisionFamily(classe) {
+    const cl = classe || '';
+    if (/corticoïde|corticoide|glucocorticoïde/i.test(cl) && !/inhalé|\bICS\b/i.test(cl)) return 'cortico';
+    if (/opio[iï]de|opiac/i.test(cl) && !/antidiarrh|antidépresseur/i.test(cl)) return 'opioide';
+    if (/pompe à protons|pompe a protons|\(IPP\)/i.test(cl)) return 'ipp';
+    if (/benzodiazepine|benzodiazépine|hypnotique z/i.test(cl)) return 'bzd';
+    if (/\bAINS\b|anti-inflammatoire non st/i.test(cl)) return 'ains';
+    return null;
+}

@@ -504,14 +504,12 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if (typeof activeMeds !== 'undefined' && Array.isArray(activeMeds)) {
         activeMeds.forEach(m => {
             const p = m && m.precisions; if (!p) return;
-            const cl = m.classe || '';
-            const isCortico = /corticoïde|corticoide|glucocorticoïde/i.test(cl) && !/inhalé|\bICS\b/i.test(cl);
-            const isOpioide = /opio[iï]de|opiac/i.test(cl) && !/antidiarrh|antidépresseur/i.test(cl);
-            const isIpp = /pompe à protons|pompe a protons|\(IPP\)/i.test(cl);
-            if (isCortico && p.duree === 'courte') ctxClinique.push('cortico_duree_breve');
-            if (isOpioide && p.indication === 'severe') ctxClinique.push('douleur_severe');
-            if (isOpioide && p.indication === 'legere') ctxClinique.push('douleur_legere');
-            if (isIpp && p.duree === 'courte') ctxClinique.push('ipp_duree_breve');
+            // Détection de famille centralisée (drug_classes.js) — partagée avec app_ui.js.
+            const fam = (typeof medPrecisionFamily === 'function') ? medPrecisionFamily(m.classe) : null;
+            if (fam === 'cortico' && p.duree === 'courte') ctxClinique.push('cortico_duree_breve');
+            if (fam === 'opioide' && p.indication === 'severe') ctxClinique.push('douleur_severe');
+            if (fam === 'opioide' && p.indication === 'legere') ctxClinique.push('douleur_legere');
+            if (fam === 'ipp' && p.duree === 'courte') ctxClinique.push('ipp_duree_breve');
         });
     }
 

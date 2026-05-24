@@ -274,7 +274,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
                 "aod",
                 "avk"
             ],
-            "contexte_clinique": "mtev"
+            "contexte_clinique": ["mtev"]
         },
         "alternatives": "Reevaluer a 6 mois le rapport benefice/risque de la poursuite de l'anticoagulation",
         "nb_sources": 8
@@ -296,7 +296,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
                 "aod",
                 "avk"
             ],
-            "contexte_clinique": "mtev"
+            "contexte_clinique": ["mtev"]
         },
         "alternatives": "Reevaluer a 12 mois. Baisser dose AOD (rivaroxaban 10mg, apixaban 2.5mg) si poursuite justifiee",
         "nb_sources": 8
