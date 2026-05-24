@@ -1366,10 +1366,11 @@ const GERIA_RECOS_DB = {
             ref_code: "STOPP3-J9",
             section: "Endocrine",
             titre: "Lévothyroxine pour hypothyroïdie infraclinique (TSH < 10)",
-            message: "Lévothyroxine pour hypothyroïdie infraclinique (T4L normale, TSH élevée mais < 10 mUI/L) : aucune preuve de bénéfice, risque de thyrotoxicose iatrogène.",
+            message: "Lévothyroxine pour hypothyroïdie infraclinique (T4L normale, TSH élevée mais < 10 mUI/L) : aucune preuve de bénéfice, risque de thyrotoxicose iatrogène. Ne concerne PAS l'hypothyroïdie patente (TSH > 10) où la substitution est justifiée.",
             severite: "warning",
             condition: {
-                med_keys: ["levothyroxine"]
+                med_keys: ["levothyroxine"],
+                bio: { "BIO_019": [{ op: ">=", val: 4 }, { op: "<", val: 10 }] }
             },
             alternatives: "Surveillance TSH semestrielle, traiter uniquement si TSH > 10 ou symptômes"
         },

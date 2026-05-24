@@ -177,11 +177,13 @@ const GeriaEngineV2 = (() => {
         // (D) Confirmation biologique (si bio anormale renforce l'alerte)
         if (alert.condition && alert.condition.bio && ctx.bioValues) {
             let bioConfirmed = false;
-            for (const [bioId, crit] of Object.entries(alert.condition.bio)) {
+            for (const [bioId, critRaw] of Object.entries(alert.condition.bio)) {
                 const val = ctx.bioValues[bioId];
                 if (val > 0) {
-                    if (crit.op === '<' && val < crit.val) bioConfirmed = true;
-                    if (crit.op === '>' && val > crit.val) bioConfirmed = true;
+                    (Array.isArray(critRaw) ? critRaw : [critRaw]).forEach(crit => {
+                        if (crit.op === '<' && val < crit.val) bioConfirmed = true;
+                        if (crit.op === '>' && val > crit.val) bioConfirmed = true;
+                    });
                 }
             }
             if (bioConfirmed) score += 12; // Bio confirme le risque
@@ -247,7 +249,7 @@ const GeriaEngineV2 = (() => {
         }
 
         if (c.bio) {
-            for (const [bioId, crit] of Object.entries(c.bio)) {
+            for (const [bioId, critRaw] of Object.entries(c.bio)) {
                 const val = ctx.bioValues && ctx.bioValues[bioId];
                 if (!val || val <= 0) {
                     // Bio requise mais non renseignée.
@@ -261,10 +263,15 @@ const GeriaEngineV2 = (() => {
                     }
                     return false;
                 }
-                if (crit.op === '<' && !(val < crit.val)) return false;
-                if (crit.op === '>' && !(val > crit.val)) return false;
-                if (crit.op === '<=' && !(val <= crit.val)) return false;
-                if (crit.op === '>=' && !(val >= crit.val)) return false;
+                // Un critère {op,val} OU un tableau de critères (tous requis) pour une
+                // fourchette, ex. TSH ∈ [4,10[ : [{op:'>=',val:4},{op:'<',val:10}].
+                const crits = Array.isArray(critRaw) ? critRaw : [critRaw];
+                for (const crit of crits) {
+                    if (crit.op === '<' && !(val < crit.val)) return false;
+                    if (crit.op === '>' && !(val > crit.val)) return false;
+                    if (crit.op === '<=' && !(val <= crit.val)) return false;
+                    if (crit.op === '>=' && !(val >= crit.val)) return false;
+                }
             }
         }
 

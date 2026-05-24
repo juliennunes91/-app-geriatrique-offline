@@ -878,6 +878,16 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(re.test(initHtml(analyzeCase({ ...hf, dfg: 50 }))), 'présent si DFG 50');
         assert.ok(!re.test(initHtml(analyzeCase({ ...hf }))), 'absent si DFG inconnu');
     });
+    // EV_J09 : lévothyroxine « déconseillée » réservée à l'infraclinique TSH ∈ [4,10[
+    // (fourchette bio = tableau de critères). Ne doit pas frapper l'hypothyroïdie patente.
+    test('EV_J09 : lévothyroxine + TSH infraclinique (6) → alerte', () => {
+        const lt = { age: 72, sexe: 'F', comorbs: ['PAT_017'], meds: ['Levothyroxine'] };
+        const re = /Lévothyroxine pour hypothyroïdie infraclinique/i;
+        assert.ok(has(analyzeCase({ ...lt, bio: { tsh: 6 } }), re), 'TSH 6 doit déclencher');
+        assert.ok(!has(analyzeCase({ ...lt, bio: { tsh: 12 } }), re), 'TSH 12 (patent) ne doit PAS');
+        assert.ok(!has(analyzeCase({ ...lt, bio: { tsh: 1.5 } }), re), 'TSH 1.5 (équilibré) ne doit PAS');
+        assert.ok(!has(analyzeCase({ ...lt }), re), 'TSH inconnue ne doit PAS');
+    });
 }
 
 // ============================================================================
