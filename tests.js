@@ -888,6 +888,15 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ ...lt, bio: { tsh: 1.5 } }), re), 'TSH 1.5 (équilibré) ne doit PAS');
         assert.ok(!has(analyzeCase({ ...lt }), re), 'TSH inconnue ne doit PAS');
     });
+    // EV_B22 : digoxine + hypokaliémie OU hypomagnésémie (bio_any = OU entre analytes).
+    test('EV_B22 : digoxine + hypoK ou hypoMg → alerte (OU), sinon non', () => {
+        const dig = { age: 85, sexe: 'F', meds: ['Digoxine'] };
+        const re = /Digoxine avec hypokaliémie/i;
+        assert.ok(has(analyzeCase({ ...dig, bio: { k: 3.0 } }), re), 'hypoK doit déclencher');
+        assert.ok(has(analyzeCase({ ...dig, bio: { k: 4.0, mg: 0.6 } }), re), 'hypoMg seul doit déclencher (OU)');
+        assert.ok(!has(analyzeCase({ ...dig, bio: { k: 4.2, mg: 0.9 } }), re), 'électrolytes normaux → non');
+        assert.ok(!has(analyzeCase({ ...dig }), re), 'aucun électrolyte renseigné → non (prudence)');
+    });
 }
 
 // ============================================================================

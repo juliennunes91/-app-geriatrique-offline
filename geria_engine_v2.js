@@ -275,6 +275,26 @@ const GeriaEngineV2 = (() => {
             }
         }
 
+        // bio_any : au moins UN analyte renseigné et conforme (OU logique). Un analyte
+        // non renseigné est ignoré ; si aucun n'est conforme, la règle ne se déclenche pas.
+        if (c.bio_any) {
+            const matchCrit = (val, crit) => {
+                if (crit.op === '<') return val < crit.val;
+                if (crit.op === '>') return val > crit.val;
+                if (crit.op === '<=') return val <= crit.val;
+                if (crit.op === '>=') return val >= crit.val;
+                return false;
+            };
+            let anyOk = false;
+            for (const [bioId, critRaw] of Object.entries(c.bio_any)) {
+                const val = ctx.bioValues && ctx.bioValues[bioId];
+                if (!val || val <= 0) continue;
+                const crits = Array.isArray(critRaw) ? critRaw : [critRaw];
+                if (crits.every(cr => matchCrit(val, cr))) { anyOk = true; break; }
+            }
+            if (!anyOk) return false;
+        }
+
         if (c.age_min && (!ctx.patientAge || ctx.patientAge < c.age_min)) return false;
         if (c.age_max && ctx.patientAge && ctx.patientAge > c.age_max) return false;
         if (c.fragile === true && !ctx.isFragile) return false;

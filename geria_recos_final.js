@@ -406,6 +406,20 @@ const GERIA_RECOS_DB = {
             },
             alternatives: "Bisoprolol, métoprolol, nébivolol"
         },
+        {
+            id: "EV_B22",
+            sources: ["STOPP3"],
+            ref_code: "STOPP3-B22",
+            section: "Cardiovasculaire",
+            titre: "Digoxine avec hypokaliémie / hypomagnésémie non corrigée",
+            message: "Digoxine en présence d'une hypokaliémie (K⁺ < 3.5 mmol/L) ou d'une hypomagnésémie (Mg²⁺ < 0.7 mmol/L) : le déficit potentialise la fixation de la digoxine sur la Na⁺/K⁺-ATPase et majore le risque de troubles du rythme (ESV, tachycardie atriale avec bloc, fibrillation ventriculaire), même à digoxinémie thérapeutique. Corriger le déficit électrolytique en priorité, contrôler l'ECG et réévaluer l'indication/la dose.",
+            severite: "danger",
+            condition: {
+                med_keys: ["digoxine"],
+                bio_any: { "BIO_001": { op: "<", val: 3.5 }, "BIO_006": { op: "<", val: 0.7 } }
+            },
+            alternatives: "Supplémentation potassique et magnésique jusqu'à normalisation, surveillance kaliémie/magnésémie et ECG ; réduction de dose ou suspension de la digoxine selon le contexte."
+        },
 
         // ====================================================================
         // SECTION C : COAGULATION
