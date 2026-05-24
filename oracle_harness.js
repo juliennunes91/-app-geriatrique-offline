@@ -193,9 +193,11 @@ function analyzeCase(caseObj) {
 
     const containers = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines', 'alertes-synthese'];
     const result = {};
+    result._html = {};
     containers.forEach(id => {
         const el = documentShim.getElementById(id);
         result[id] = parseAlerts(el._html);
+        result._html[id] = el._html || '';
     });
     result._notFoundMeds = notFound;
     result._rawScores = (documentShim.getElementById('alertes-scores')._html || '');

@@ -2499,6 +2499,7 @@ const GERIA_RECOS_DB = {
             message: "Anti-aldostérone (spironolactone, éplérénone) pour HFrEF — pilier pronostique (EMPHASIS-HF). ⚠ Vérifier DFG > 30 ml/min et K+ < 5.0 avant introduction.",
             severite: "warning",
             condition: {
+                bio_strict: true,
                 comorbs: ["PAT_002"],
                 bio: { "BIO_004": { op: ">", val: 30 } },
                 med_absent: ["spironolactone", "eplerenone", "aldactazine"]
@@ -2545,6 +2546,7 @@ const GERIA_RECOS_DB = {
             message: "Fer intraveineux pour HFrEF symptomatique avec carence martiale documentée (ferritine < 100 µg/L ou 100-299 avec CST < 20%) — AFFIRM-AHF, IRONMAN.",
             severite: "warning",
             condition: {
+                bio_strict: true,
                 comorbs: ["PAT_002"],
                 bio: { "BIO_020": { op: "<", val: 100 } }
             },
@@ -2655,6 +2657,7 @@ const GERIA_RECOS_DB = {
             message: "Supplémentation en 1α-OH-cholécalciférol ou calcitriol pour IRC sévère (DFG < 30) avec hypocalcémie (Ca < 2.10) et hyperparathyroïdie secondaire associée.",
             severite: "warning",
             condition: {
+                bio_strict: true,
                 bio: { "BIO_004": { op: "<", val: 30 }, "BIO_005": { op: "<", val: 2.10 } },
                 med_absent: ["alfacalcidol", "calcitriol"]
             },
@@ -2669,6 +2672,7 @@ const GERIA_RECOS_DB = {
             message: "IEC ou ARA2 pour protéinurie (albuminurie > 300 mg/24h) dans la maladie rénale chronique — néphroprotection.",
             severite: "warning",
             condition: {
+                bio_strict: true,
                 comorbs: ["PAT_029"],
                 bio: { "BIO_046": { op: ">", val: 300 } },
                 med_absent: ["iec", "ara2"]
@@ -2805,14 +2809,14 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3"],
             ref_code: "START3-H5",
             section: "Musculo",
-            titre: "Vitamine D pour carence confirmée (< 20 ng/mL) chez confiné / chuteur / ostéopénie",
-            message: "Supplément de vitamine D pour carence confirmée (25-OH-D < 20 ng/mL, < 50 nmol/L) chez patient confiné, chuteur ou avec ostéopénie (T-score entre -1.0 et -2.5).",
+            titre: "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné",
+            message: "Supplémentation en vitamine D recommandée de façon quasi systématique chez le sujet âgé fragile, institutionnalisé (EHPAD) ou confiné : prévalence élevée de la carence et réduction du risque de chute/fracture (HAS, recommandations gériatriques). Le dosage de la 25-OH-D n'est pas un préalable ; doser au besoin pour adapter la posologie (carence confirmée si < 20 ng/mL).",
             severite: "warning",
             condition: {
-                bio: { "BIO_023": { op: "<", val: 20 } },
+                fragile: true,
                 med_absent: ["cholecalciferol", "calcifediol", "vitamine d", "colecalciferol"]
             },
-            alternatives: "Cholécalciférol 800-4000 UI/j jusqu'à normalisation, puis 800-2000 UI/j"
+            alternatives: "Cholécalciférol 800-4000 UI/j (carence) ou 800-2000 UI/j (entretien systématique chez le fragile/institutionnalisé)"
         },
         {
             id: "IN_H08",
@@ -2873,6 +2877,7 @@ const GERIA_RECOS_DB = {
             message: "IEC (ou ARA2 si intolérance) pour diabète avec protéinurie (> 30 mg/24h), sauf si IRC sévère (DFG < 30).",
             severite: "warning",
             condition: {
+                bio_strict: true,
                 comorbs_any: ["PAT_016", "PAT_016a", "PAT_016b"],
                 bio: { "BIO_046": { op: ">", val: 30 }, "BIO_004": { op: ">", val: 30 } },
                 med_absent: ["iec", "ara2"]

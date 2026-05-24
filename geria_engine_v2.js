@@ -245,11 +245,13 @@ const GeriaEngineV2 = (() => {
             for (const [bioId, crit] of Object.entries(c.bio)) {
                 const val = ctx.bioValues && ctx.bioValues[bioId];
                 if (!val || val <= 0) {
-                    // Bio requise mais non renseignée
-                    // Pour les règles INITIER (omissions), on NE bloque PAS : la bio conditionnelle
-                    // est remontée en caveat dans le message. Pour les règles EVITER, on reste prudent
-                    // et on ne déclenche pas (évite les faux positifs danger sans donnée).
-                    if (rule._type === 'initier') {
+                    // Bio requise mais non renseignée.
+                    // INITIER (omissions) : par défaut on NE bloque PAS (la bio est remontée en
+                    // caveat dans le message). SAUF si la règle déclare bio_strict : la bio est
+                    // alors la justification clinique, son absence empêche le déclenchement
+                    // (évite les faux positifs « carence/protéinurie » affirmés sans donnée).
+                    // EVITER : on reste prudent et on ne déclenche pas (faux positif danger).
+                    if (rule._type === 'initier' && !c.bio_strict) {
                         continue;
                     }
                     return false;

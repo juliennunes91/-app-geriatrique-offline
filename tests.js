@@ -832,6 +832,49 @@ console.log('\n🧪 Oracle — indépendance d\'ordre (anti-fuite d\'état)');
 }
 
 // ============================================================================
+// 12. bio_strict — règles START à condition bio (anti-faux-positif batch 2)
+// ============================================================================
+// Une règle INITIER marquée bio_strict ne se déclenche QUE si sa bio justificative
+// est renseignée et conforme (pas de caveat). Cas spécial vitamine D : rattachée à
+// la fragilité (proxy institution/EHPAD), recommandée sans dosage préalable.
+console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
+{
+    const { analyzeCase } = require('./oracle_harness');
+    const TABS = ['alertes-scores','alertes-eviter','alertes-initier','alertes-interact','alertes-bio','alertes-usage','alertes-suivi','alertes-guidelines','alertes-synthese'];
+    const all = out => TABS.flatMap(t => Array.isArray(out[t]) ? out[t].filter(a=>a&&a.titre).map(a=>a.titre) : []);
+    const has = (out, re) => all(out).some(t => re.test(t));
+    const initHtml = out => (out._html && out._html['alertes-initier']) || '';
+    const RE_E01 = /1α-OH|calcitriol|IRC sévère \+ hypocalc/i;
+    const RE_VITD = /Vitamine D chez le sujet âgé fragile/i;
+
+    test('patient âgé « vide » : pas de reco calcitriol (IN_E01)', () => {
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F' }), RE_E01));
+    });
+    test('patient âgé « vide » non fragile : pas de vitamine D systématique (IN_H05)', () => {
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F' }), RE_VITD));
+    });
+    test('sujet fragile (CFS≥7) : reco vitamine D (IN_H05) sans dosage requis', () => {
+        assert.ok(has(analyzeCase({ age: 84, sexe: 'F', cfs: 7 }), RE_VITD));
+    });
+    test('IN_E01 : déclenché seulement si DFG<30 ET Ca<2.10', () => {
+        assert.ok(has(analyzeCase({ age: 80, dfg: 25, bio: { ca: 2.0 } }), RE_E01), 'doit déclencher si DFG+Ca bas');
+        assert.ok(!has(analyzeCase({ age: 80, dfg: 25 }), RE_E01), 'pas si Ca inconnu');
+    });
+    test('IN_J01 : albuminurie inconnue ne déclenche plus (bio_strict)', () => {
+        const dia = { age: 78, sexe: 'M', comorbs: ['PAT_016'] };
+        const re = t => /diab/i.test(t) && /IEC/.test(t);
+        assert.ok(all(analyzeCase({ ...dia, dfg: 70, bio: { albuminurie: 50 } })).some(re), 'fire si alb>30 & DFG>30');
+        assert.ok(!all(analyzeCase({ ...dia, dfg: 70 })).some(re), 'pas si albuminurie inconnue');
+    });
+    test('IN_B07 (anti-aldo) dans piliers HFrEF seulement si DFG>30 connu', () => {
+        const hf = { age: 80, sexe: 'F', comorbs: ['PAT_002'] };
+        const re = /aldost[ée]rone|\bARM\b|spironolactone/i;
+        assert.ok(re.test(initHtml(analyzeCase({ ...hf, dfg: 50 }))), 'présent si DFG 50');
+        assert.ok(!re.test(initHtml(analyzeCase({ ...hf }))), 'absent si DFG inconnu');
+    });
+}
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log(`\n${'='.repeat(50)}`);
