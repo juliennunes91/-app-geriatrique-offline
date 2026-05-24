@@ -6,7 +6,12 @@
 //    AINS oral → reco d'AINS topique injustifiée).
 //  - SUP_PIMC_08 / SUP_STOP_078 : doublons du « Triple whammy » natif (SYND_045),
 //    qui reste affiché car plus complet — évite 3 alertes pour le même mécanisme.
-const SUPPLEMENT_QUARANTINE = new Set(['SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078']);
+//  - SUP_STOP_043 : doublon de SUP_STOP_042 (« Antimuscarinique systemique », sous-
+//    ensemble sans trospium) — on garde 042 (couverture complète).
+//  - SUP_STOP_050 : doublon de SUP_STOP_049 (« Oestrogene systemique », clé « patch »
+//    générique) — on garde 049 (clés plus précises).
+// Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
+const SUPPLEMENT_QUARANTINE = new Set(['SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050']);
 
 // =========================================================
 // SCORES_CONFIG — Seuils externalisés (modifiable sans toucher la logique)
