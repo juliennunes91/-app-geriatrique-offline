@@ -922,6 +922,26 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const ci = (out['alertes-eviter'] || []).filter(a => a && a.titre && /OXYBUTYNINE — CI Glaucome/i.test(a.titre));
         assert.strictEqual(ci.length, 1, 'une seule alerte CI glaucome attendue, vu ' + ci.length);
     });
+    // RECOS_SUPPLEMENT (Beers/PRISCUS/EU7-PIM/REMEDIES) : évaluées par le moteur mais
+    // jamais rendues → désormais fusionnées dans l'onglet « éviter ».
+    test('Règles supplement rendues : lithium + IEC (SUP_INT_001)', () => {
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Lithium', 'Ramipril'] }), /Lithium \+ IEC\/ARA2/i));
+    });
+    test('Nouveau : lithium + AINS/thiazidique → toxicité lithique (SUP_INT_012)', () => {
+        const re = /Lithium \+ AINS ou diurétique thiazidique/i;
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Lithium', 'Ibuprofene'] }), re), 'lithium + ibuprofène');
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Lithium', 'Hydrochlorothiazide'] }), re), 'lithium + HCTZ');
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Lithium'] }), re), 'lithium seul → non');
+    });
+    test('Nouveau : théophylline PIM chez le sujet âgé (EV_G02)', () => {
+        const re = /Théophylline chez le sujet âgé/i;
+        assert.ok(has(analyzeCase({ age: 85, sexe: 'M', meds: ['Theophylline'] }), re), '85 ans → PIM');
+        assert.ok(!has(analyzeCase({ age: 60, sexe: 'M', meds: ['Theophylline'] }), re), '60 ans → non (age_min 75)');
+    });
+    test('Activer supplement ne crée pas d\'avalanche (patient robuste)', () => {
+        const e = (analyzeCase({ age: 68, sexe: 'M', dfg: 90, meds: ['Amlodipine'] })['alertes-eviter'] || []).filter(a => a && a.titre);
+        assert.ok(e.length <= 1, 'patient robuste : ≤ 1 alerte éviter, vu ' + e.length);
+    });
 }
 
 // ============================================================================

@@ -1127,6 +1127,20 @@ const GERIA_RECOS_DB = {
             alternatives: "LAMA, LABA, ou association LAMA+LABA"
         },
         {
+            id: "EV_G02",
+            sources: ["BEERS", "STOPP3"],
+            ref_code: "BEERS-2023-Theophylline",
+            section: "Respiratoire",
+            titre: "Théophylline chez le sujet âgé (PIM, marge thérapeutique étroite)",
+            message: "Théophylline/aminophylline chez le sujet âgé : médicament potentiellement inapproprié (Beers 2023). Clairance réduite avec l'âge, marge thérapeutique étroite, toxicité (tachycardie, troubles du rythme, convulsions) et interactions multiples (CYP1A2 : macrolides, fluoroquinolones, tabac).",
+            severite: "warning",
+            condition: {
+                med_keys: ["theophylline", "aminophylline"],
+                age_min: 75
+            },
+            alternatives: "Privilégier LAMA/LABA (BPCO/asthme). Si maintien indispensable : dose minimale efficace, théophyllinémie, surveillance des interactions."
+        },
+        {
             id: "EV_G03",
             sources: ["STOPP3"],
             ref_code: "STOPP3-G3",
@@ -4084,6 +4098,13 @@ const RECOS_SUPPLEMENT = [
         message: "Beers 2023 : Les IEC/ARA2 modifient la volémie et réduisent la clairance rénale du lithium → risque de toxicité (marge thérapeutique étroite). Surveiller la lithémie de façon rapprochée.",
         severite: "warning",
         condition: { med_keys: ["lithium"], med_keys_2: ["iec", "ara2"] }
+    },
+    {
+        id: "SUP_INT_012", sources: ["BEERS", "STOPP3"],
+        titre: "Lithium + AINS ou diurétique thiazidique : toxicité lithique",
+        message: "Beers 2023 / STOPP : les AINS et les diurétiques thiazidiques réduisent la clairance rénale du lithium → ↑ lithémie et risque de toxicité (tremblements, confusion, troubles digestifs, atteinte rénale), marge thérapeutique étroite. Éviter l'association ou surveiller étroitement lithémie et fonction rénale.",
+        severite: "danger",
+        condition: { med_keys: ["lithium"], med_keys_2: ["ains", "ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "hydrochlorothiazide", "indapamide", "thiazidique"] }
     },
     {
         id: "SUP_INT_002", sources: ["BEERS", "EU7PIM"],

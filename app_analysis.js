@@ -676,15 +676,26 @@ function analyserPrescription() {
             if (divScores && recos.dashboard) addAlert('alertes-scores', GeriaEngineV2.renderDashboard(recos.dashboard));
 
             // Affichage des Recommandations (Triées et Sourcées)
-            const eviterHtml = recos.eviter ? GeriaEngineV2.renderAlertesTriees(recos.eviter, 'eviter') : '';
+            // Les règles « supplement » (PIM/interactions Beers, PRISCUS, EU(7)-PIM,
+            // REMEDIES) sont évaluées par le moteur mais relèvent de l'onglet « éviter » :
+            // on les fusionne ici (dédup par titre) — elles n'étaient pas rendues.
+            const eviterAll = (recos.eviter || []).slice();
+            const seenEviterTitres = new Set(eviterAll.map(a => (a.titre || '').trim()));
+            (recos.supplement || []).forEach(a => {
+                const t = (a.titre || '').trim();
+                if (!seenEviterTitres.has(t)) { seenEviterTitres.add(t); eviterAll.push(a); }
+            });
+            eviterAll.sort((a, b) => (b.score || 0) - (a.score || 0));
+
+            const eviterHtml = eviterAll.length ? GeriaEngineV2.renderAlertesTriees(eviterAll, 'eviter') : '';
             const initierHtml = recos.initier ? GeriaEngineV2.renderAlertesTriees(recos.initier, 'initier') : '';
             document.getElementById('alertes-eviter').innerHTML = eviterHtml;
             document.getElementById('alertes-initier').innerHTML = initierHtml;
 
-            counts.eviter = recos.eviter ? recos.eviter.length : 0;
+            counts.eviter = eviterAll.length;
             counts.initier = recos.initier ? recos.initier.length : 0;
             // Registre: éviter/initier depuis le moteur V2
-            if (recos.eviter) recos.eviter.forEach(a => {
+            eviterAll.forEach(a => {
                 (a.med_keys || []).forEach(k => _regAddMed(k, 'eviter', { text: a.titre || a.message || '', severity: a.severite || 'warning', source: a.sources_label || '' }));
                 _regAddDomain('eviter', { titre: a.titre || '', meds: a.med_keys || [], severity: a.severite || 'warning' });
             });
