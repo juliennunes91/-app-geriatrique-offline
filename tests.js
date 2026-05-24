@@ -911,6 +911,12 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'severe' } } }), re), 'douleur sévère → désarmé');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'legere' } } }), re), 'douleur légère → alerte');
     });
+    test('Précisions : IPP durée brève désarme EV_F02 (> 8 semaines)', () => {
+        const re = /IPP &gt; 8 semaines|IPP > 8 semaines/i;
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Omeprazole'] }), re), 'sans précision → alerte (défaut)');
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Omeprazole'], precisions: { omeprazole: { duree: 'courte' } } }), re), 'durée courte → désarmé');
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Omeprazole'], precisions: { omeprazole: { duree: 'longue' } } }), re), 'durée longue → alerte');
+    });
 }
 
 // ============================================================================

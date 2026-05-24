@@ -1060,7 +1060,8 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole", "ipp"],
-                comorbs_absent: ["PAT_030"]
+                comorbs_absent: ["PAT_030"],
+                contexte_clinique_absent: ["ipp_duree_breve"]
             },
             alternatives: "Réduction de dose, passage à anti-H2, arrêt avec règles hygiéno-diététiques"
         },
