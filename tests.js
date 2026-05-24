@@ -917,6 +917,11 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Omeprazole'], precisions: { omeprazole: { duree: 'courte' } } }), re), 'durée courte → désarmé');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Omeprazole'], precisions: { omeprazole: { duree: 'longue' } } }), re), 'durée longue → alerte');
     });
+    test('CI médicament/pathologie : pas de doublon (oxybutynine + glaucome)', () => {
+        const out = analyzeCase({ age: 81, sexe: 'F', meds: ['Oxybutynine'], flags: ['chkGlaucome'] });
+        const ci = (out['alertes-eviter'] || []).filter(a => a && a.titre && /OXYBUTYNINE — CI Glaucome/i.test(a.titre));
+        assert.strictEqual(ci.length, 1, 'une seule alerte CI glaucome attendue, vu ' + ci.length);
+    });
 }
 
 // ============================================================================

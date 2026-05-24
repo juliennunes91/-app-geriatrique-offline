@@ -1496,9 +1496,13 @@ function analyserPrescription() {
     if (typeof checkMedContraPathologies === 'function' && activeComorbs.length > 0) {
         activeMeds.forEach(m => {
             const alerts = checkMedContraPathologies(m.dci, m.classe, activeComorbs);
+            const seenCI = new Set(); // un même médicament peut matcher la CI via sa classe ET son DCI
             alerts.forEach(a => {
                 let isSevere = String(a.gravite).includes('CONTRE-INDICATION') || String(a.gravite).includes('ABSOLUE');
                 let alertPrefix = isSevere ? 'CI' : (String(a.gravite).includes('PRUDENCE') ? 'Prudence' : 'Déconseillé');
+                const ciSig = alertPrefix + '|' + a.patho_nom; // = titre affiché ; évite le doublon
+                if (seenCI.has(ciSig)) return;
+                seenCI.add(ciSig);
                 // Enrichir avec source ESC si disponible
                 let sourceLabel = 'Pathology Rules';
                 if (typeof PATHOLOGY_RULES_DB !== 'undefined' && PATHOLOGY_RULES_DB[a.patho]) {
