@@ -856,6 +856,12 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
     test('sujet fragile (CFS≥7) : reco vitamine D (IN_H05) sans dosage requis', () => {
         assert.ok(has(analyzeCase({ age: 84, sexe: 'F', cfs: 7 }), RE_VITD));
     });
+    test('institutionnalisé non fragile : reco vitamine D (IN_H05)', () => {
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', flags: ['chkInstitution'] }), RE_VITD));
+    });
+    test('confiné non fragile : reco vitamine D (IN_H05)', () => {
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', flags: ['chkConfine'] }), RE_VITD));
+    });
     test('IN_E01 : déclenché seulement si DFG<30 ET Ca<2.10', () => {
         assert.ok(has(analyzeCase({ age: 80, dfg: 25, bio: { ca: 2.0 } }), RE_E01), 'doit déclencher si DFG+Ca bas');
         assert.ok(!has(analyzeCase({ age: 80, dfg: 25 }), RE_E01), 'pas si Ca inconnu');

@@ -2813,7 +2813,7 @@ const GERIA_RECOS_DB = {
             message: "Supplémentation en vitamine D recommandée de façon quasi systématique chez le sujet âgé fragile, institutionnalisé (EHPAD) ou confiné : prévalence élevée de la carence et réduction du risque de chute/fracture (HAS, recommandations gériatriques). Le dosage de la 25-OH-D n'est pas un préalable ; doser au besoin pour adapter la posologie (carence confirmée si < 20 ng/mL).",
             severite: "warning",
             condition: {
-                fragile: true,
+                contexte_clinique_any: ["fragilite", "institution", "confinement"],
                 med_absent: ["cholecalciferol", "calcifediol", "vitamine d", "colecalciferol"]
             },
             alternatives: "Cholécalciférol 800-4000 UI/j (carence) ou 800-2000 UI/j (entretien systématique chez le fragile/institutionnalisé)"

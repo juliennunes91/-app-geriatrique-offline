@@ -442,6 +442,9 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(isChecked('chkConstipation')) ctxClinique.push("constipation_chronique");
     if(isChecked('chkDysphagie')) ctxClinique.push("dysphagie");
     if(isChecked('chkChutes')) ctxClinique.push("chutes");
+    if(isChecked('chkInstitution')) ctxClinique.push("institution");
+    if(isChecked('chkConfine')) ctxClinique.push("confinement");
+    if(isFragile) ctxClinique.push("fragilite");
     if(isChecked('chkAnorexie') || (getVal('patientBmi') > 0 && getVal('patientBmi') < 18.5)) ctxClinique.push("denutrition");
     if(isChecked('chkGlaucome')) ctxClinique.push("glaucome");
     if(isChecked('chkPalliatif')) ctxClinique.push("palliatif", "esperance_vie_reduite", "stoppfrail");
@@ -521,6 +524,7 @@ function _computeAnalysisHash() {
     ['chkStent','chkAlcool','chkAnorexie','chkTabac','chkAvc','chkTvp','chkSaignement',
      'chkBrady','chkHtaNonControlee','chkArret','chkScaAigu','chkLqts','chkDialyse',
      'chkFoie','chkSepsis','chkPalliatif','chkAtcdUlcere','chkChutes','chkDepression',
+     'chkInstitution','chkConfine',
      'chkIncontinence','chkHbp','chkConstipation','chkDysphagie','chkGlaucome',
      'chkStenoseAortique','chkAspirineForte','chkLewy',
      // Troubles cognitifs & neuropsychocomportementaux

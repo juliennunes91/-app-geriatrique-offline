@@ -240,6 +240,11 @@ const GeriaEngineV2 = (() => {
                 if (!c.contexte_clinique.every(cc => ctxClin.includes(cc))) return false;
             }
         }
+        // contexte_clinique_any : au moins un des contextes listés (OU logique)
+        if (c.contexte_clinique_any) {
+            const ctxClin = ctx.contexte_clinique || [];
+            if (!c.contexte_clinique_any.some(cc => ctxClin.includes(cc))) return false;
+        }
 
         if (c.bio) {
             for (const [bioId, crit] of Object.entries(c.bio)) {
