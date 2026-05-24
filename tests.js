@@ -942,6 +942,15 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const e = (analyzeCase({ age: 68, sexe: 'M', dfg: 90, meds: ['Amlodipine'] })['alertes-eviter'] || []).filter(a => a && a.titre);
         assert.ok(e.length <= 1, 'patient robuste : ≤ 1 alerte éviter, vu ' + e.length);
     });
+    // Déprescription STOPPFrail (condition.fragilite:"severe") : le moteur ignorait
+    // cette clé → faux positif chez le sujet robuste. Garde = CFS≥6 ou palliatif.
+    test('STOPPFrail (statine/antiHTA/anticoag) réservé à la fragilité sévère', () => {
+        const reStat = /Statines \(STOPP\/FRAIL\)/i;
+        assert.ok(!has(analyzeCase({ age: 82, sexe: 'F', meds: ['Atorvastatine'] }), reStat), 'robuste → non');
+        assert.ok(has(analyzeCase({ age: 82, sexe: 'F', cfs: 7, meds: ['Atorvastatine'] }), reStat), 'CFS 7 → oui');
+        assert.ok(has(analyzeCase({ age: 82, sexe: 'F', meds: ['Atorvastatine'], flags: ['chkPalliatif'] }), reStat), 'palliatif → oui');
+        assert.ok(!has(analyzeCase({ age: 82, sexe: 'F', meds: ['Ramipril'] }), /Antihypertenseurs \(STOPP\/FRAIL\)/i), 'antiHTA robuste → non');
+    });
 }
 
 // ============================================================================

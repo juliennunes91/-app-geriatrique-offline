@@ -305,6 +305,10 @@ const GeriaEngineV2 = (() => {
         if (c.age_min && (!ctx.patientAge || ctx.patientAge < c.age_min)) return false;
         if (c.age_max && ctx.patientAge && ctx.patientAge > c.age_max) return false;
         if (c.fragile === true && !ctx.isFragile) return false;
+        // Déprescription STOPPFrail : ne s'applique qu'en fragilité sévère (CFS ≥ 6
+        // ou fin de vie). Sans ce garde, les règles « (STOPP/FRAIL) » se déclenchaient
+        // dès la présence du médicament (faux positif chez le sujet robuste).
+        if (c.fragilite === 'severe' && !ctx.fragiliteSevere) return false;
         // Symétrique : exclut la règle si le patient est fragile (utile pour les START
         // dont le bénéfice s'effondre en fin de vie ou fragilité sévère — STOPPFrail v2,
         // ex. statine prévention 2° si EV < 1-2 ans).
