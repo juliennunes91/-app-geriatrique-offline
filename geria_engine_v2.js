@@ -247,6 +247,13 @@ const GeriaEngineV2 = (() => {
             const ctxClin = ctx.contexte_clinique || [];
             if (!c.contexte_clinique_any.some(cc => ctxClin.includes(cc))) return false;
         }
+        // contexte_clinique_absent : aucun des contextes listés ne doit être présent.
+        // Sert aux précisions par médicament (durée/intensité) qui désarment un faux
+        // positif, ex. corticothérapie brève explicite, douleur sévère explicite.
+        if (c.contexte_clinique_absent) {
+            const ctxClin = ctx.contexte_clinique || [];
+            if (c.contexte_clinique_absent.some(cc => ctxClin.includes(cc))) return false;
+        }
 
         if (c.bio) {
             for (const [bioId, critRaw] of Object.entries(c.bio)) {

@@ -897,6 +897,20 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ ...dig, bio: { k: 4.2, mg: 0.9 } }), re), 'électrolytes normaux → non');
         assert.ok(!has(analyzeCase({ ...dig }), re), 'aucun électrolyte renseigné → non (prudence)');
     });
+    // Précisions par médicament (durée/intensité) → contexte_clinique_absent désarme
+    // un faux positif sans changer le comportement par défaut (rien précisé).
+    test('Précisions : corticothérapie brève désarme EV_SYND_049', () => {
+        const re = /Corticoïde systémique ≥ 3 mois/i;
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Prednisone'] }), re), 'sans précision → alerte (défaut)');
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Prednisone'], precisions: { prednisone: { duree: 'courte' } } }), re), 'durée courte → désarmé');
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Prednisone'], precisions: { prednisone: { duree: 'longue' } } }), re), 'durée longue → alerte');
+    });
+    test('Précisions : douleur sévère désarme EV_L01 (opioïde fort)', () => {
+        const re = /Opioïde fort en 1ère intention pour douleur légère/i;
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'] }), re), 'sans précision → alerte (défaut)');
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'severe' } } }), re), 'douleur sévère → désarmé');
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'legere' } } }), re), 'douleur légère → alerte');
+    });
 }
 
 // ============================================================================

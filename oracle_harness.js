@@ -179,6 +179,12 @@ function analyzeCase(caseObj) {
                 if (m) activeMeds.push({ dci: m.dci, classe: m.classe, label: m.dci, core_id: sanitizeText(m.dci), albumine: parseFloat(m.albumine)||0, db_ref: m });
                 else activeMeds.push({ dci: name, classe: '', label: name, core_id: sanitizeText(name), albumine: 0, db_ref: null, _notFound: true });
             });
+            const _prec = ${JSON.stringify(caseObj.precisions || {})};
+            Object.keys(_prec).forEach(key => {
+                const k = sanitizeText(key);
+                const med = activeMeds.find(m => sanitizeText(m.dci).includes(k) || k.includes(sanitizeText(m.dci)));
+                if (med) med.precisions = _prec[key];
+            });
             activeComorbs.length = 0;
             (${JSON.stringify(caseObj.comorbs || [])}).forEach(c => activeComorbs.push(c));
             window.suspendedMeds = [];

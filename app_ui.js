@@ -157,7 +157,14 @@ function searchMedList(val) {
 }
 
 function selectComorb(id) { if(!activeComorbs.includes(id)) { activeComorbs.push(id); renderTags(); } }
-function selectMed(data) { if(!activeMeds.some(m => sanitizeText(m.dci) === sanitizeText(data.dci_pure))) { activeMeds.push({ label: data.dci_pure + (data.princeps ? ` (${data.princeps})` : ''), core_id: data.core_id, dci: data.dci_pure, classe: data.classe, albumine: data.albumine || 0, db_ref: data.db_ref }); renderTags(); } }
+function selectMed(data) {
+    if(!activeMeds.some(m => sanitizeText(m.dci) === sanitizeText(data.dci_pure))) {
+        const med = { label: data.dci_pure + (data.princeps ? ` (${data.princeps})` : ''), core_id: data.core_id, dci: data.dci_pure, classe: data.classe, albumine: data.albumine || 0, db_ref: data.db_ref };
+        activeMeds.push(med);
+        renderTags();
+        if(_medPrecisionSpec(med)) openMedPrecisionModal(med.dci);
+    }
+}
 function addComorbManual() { let input = document.getElementById('inputComorb'); if(!input) return; const val = input.value.trim(); if(val) { let match = searchComorbList(val); if(match.length > 0) selectComorb(match[0].data); } input.value = ''; document.getElementById('listComorb').style.display = 'none'; }
 function addMedManual() { let input = document.getElementById('inputMed'); if(!input) return; const val = input.value.trim(); if(val) { let match = searchMedList(val); if(match.length > 0) selectMed(match[0].data); } input.value = ''; document.getElementById('listMed').style.display = 'none'; }
 function removeComorb(val) { activeComorbs = activeComorbs.filter(c => c !== val); renderTags(); }
@@ -167,6 +174,95 @@ function toggleSuspend(dci) {
     if(idx > -1) { window.suspendedMeds.push(activeMeds[idx]); activeMeds.splice(idx, 1); }
     else { let sIdx = window.suspendedMeds.findIndex(m => m.dci === dci); if(sIdx > -1) { activeMeds.push(window.suspendedMeds[sIdx]); window.suspendedMeds.splice(sIdx, 1); } }
     renderTags(); if(typeof analyserPrescription === 'function') analyserPrescription();
+}
+
+// =========================================================================
+// Précisions par médicament (durée / posologie / indication) — modal optionnel
+// Le médicament est ajouté immédiatement ; le modal propose d'affiner et peut
+// être « passé ». Les précisions alimentent contexte_clinique côté moteur.
+// =========================================================================
+const MED_PRECISION_FAMILIES = [
+    { key: 'cortico', fields: ['duree', 'dose'],
+      test: m => /corticoïde|corticoide|glucocorticoïde/i.test(m.classe || '') && !/inhalé|\bICS\b/i.test(m.classe || '') },
+    { key: 'opioide', fields: ['indication', 'dose'],
+      test: m => /opio[iï]de|opiac/i.test(m.classe || '') && !/antidiarrh|antidépresseur/i.test(m.classe || '') },
+    { key: 'ipp', fields: ['duree'],
+      test: m => /pompe à protons|pompe a protons|\(IPP\)/i.test(m.classe || '') },
+    { key: 'bzd', fields: ['duree'],
+      test: m => /benzodiazepine|benzodiazépine|hypnotique z/i.test(m.classe || '') },
+    { key: 'ains', fields: ['duree'],
+      test: m => /\bAINS\b|anti-inflammatoire non st/i.test(m.classe || '') }
+];
+const PRECISION_FIELD_DEFS = {
+    duree: { label: 'Durée de traitement', type: 'select',
+        options: [['', 'Non précisé'], ['courte', '< 1 mois'], ['moyenne', '1 à 3 mois'], ['longue', '> 3 mois / chronique']] },
+    indication: { label: 'Indication / intensité de la douleur', type: 'select',
+        options: [['', 'Non précisé'], ['legere', 'Douleur légère'], ['moderee', 'Douleur modérée'], ['severe', 'Douleur sévère']] },
+    dose: { label: 'Posologie (mg/jour)', type: 'number', placeholder: 'ex. 10' }
+};
+function _medPrecisionSpec(med) {
+    if (!med) return null;
+    for (const f of MED_PRECISION_FAMILIES) { if (f.test(med)) return f; }
+    return null;
+}
+function _medPrecisionEsc(e) { if (e.key === 'Escape') closeMedPrecisionModal(); }
+function closeMedPrecisionModal() {
+    const o = document.getElementById('medPrecisionOverlay');
+    if (o && o.remove) o.remove();
+    if (document.removeEventListener) document.removeEventListener('keydown', _medPrecisionEsc);
+}
+function openMedPrecisionModal(dci) {
+    const med = activeMeds.find(m => m.dci === dci);
+    if (!med) return;
+    const spec = _medPrecisionSpec(med);
+    if (!spec) return;
+    closeMedPrecisionModal();
+    const prec = med.precisions || {};
+    const overlay = document.createElement('div');
+    overlay.id = 'medPrecisionOverlay';
+    overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:20000;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,.55);padding:16px;';
+    const card = document.createElement('div');
+    card.style.cssText = 'background:#fff;color:#1e293b;max-width:420px;width:100%;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.3);padding:20px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;';
+    const h = document.createElement('div'); h.style.cssText = 'font-weight:700;font-size:15px;margin-bottom:4px;'; h.textContent = 'Préciser la prescription';
+    const sub = document.createElement('div'); sub.style.cssText = 'font-size:13px;color:#64748b;margin-bottom:14px;'; sub.textContent = med.label || med.dci;
+    card.appendChild(h); card.appendChild(sub);
+    const controls = {};
+    spec.fields.forEach(fk => {
+        const def = PRECISION_FIELD_DEFS[fk]; if (!def) return;
+        const wrap = document.createElement('div'); wrap.style.cssText = 'margin-bottom:12px;';
+        const lab = document.createElement('label'); lab.textContent = def.label; lab.style.cssText = 'display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:#334155;';
+        wrap.appendChild(lab);
+        let ctrl;
+        if (def.type === 'select') {
+            ctrl = document.createElement('select');
+            def.options.forEach(([v, t]) => { const o = document.createElement('option'); o.value = v; o.textContent = t; if ((prec[fk] || '') === v) o.selected = true; ctrl.appendChild(o); });
+        } else {
+            ctrl = document.createElement('input'); ctrl.type = 'number'; ctrl.min = '0'; if (def.placeholder) ctrl.placeholder = def.placeholder;
+            if (prec[fk] != null && prec[fk] !== '') ctrl.value = prec[fk];
+        }
+        ctrl.style.cssText = 'width:100%;padding:8px 10px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;box-sizing:border-box;';
+        wrap.appendChild(ctrl); controls[fk] = ctrl; card.appendChild(wrap);
+    });
+    const btns = document.createElement('div'); btns.style.cssText = 'display:flex;gap:8px;justify-content:flex-end;margin-top:8px;';
+    const skip = document.createElement('button'); skip.type = 'button'; skip.textContent = 'Passer';
+    skip.style.cssText = 'padding:8px 14px;border:1px solid #cbd5e1;background:#fff;color:#475569;border-radius:8px;cursor:pointer;font-size:14px;';
+    skip.addEventListener('click', closeMedPrecisionModal);
+    const save = document.createElement('button'); save.type = 'button'; save.textContent = 'Enregistrer';
+    save.style.cssText = 'padding:8px 14px;border:0;background:#0d9488;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;';
+    save.addEventListener('click', () => {
+        const p = {};
+        spec.fields.forEach(fk => { const v = controls[fk].value; if (v !== '' && v != null) p[fk] = (PRECISION_FIELD_DEFS[fk].type === 'number') ? parseFloat(v) : v; });
+        med.precisions = Object.keys(p).length ? p : undefined;
+        closeMedPrecisionModal(); renderTags();
+        if (typeof analyserPrescription === 'function') analyserPrescription();
+    });
+    btns.appendChild(skip); btns.appendChild(save); card.appendChild(btns);
+    overlay.appendChild(card);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeMedPrecisionModal(); });
+    if (document.addEventListener) document.addEventListener('keydown', _medPrecisionEsc);
+    document.body.appendChild(overlay);
+    const first = card.querySelector('select,input'); if (first && first.focus) first.focus();
 }
 
 function renderTags() {
@@ -197,7 +293,20 @@ function renderTags() {
             btnRemove.setAttribute('role', 'button'); btnRemove.setAttribute('tabindex', '0');
             btnRemove.addEventListener('click', () => removeMed(m.dci));
             btnRemove.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); removeMed(m.dci); } });
-            span.appendChild(labelNode); span.appendChild(btnSuspend); span.appendChild(btnRemove);
+            span.appendChild(labelNode); span.appendChild(btnSuspend);
+            if (_medPrecisionSpec(m)) {
+                const hasP = m.precisions && Object.keys(m.precisions).length;
+                let btnEdit = document.createElement('span');
+                btnEdit.textContent = hasP ? '📝' : '✎';
+                btnEdit.title = hasP ? 'Modifier les précisions (durée/dose/indication)' : 'Préciser durée/dose/indication';
+                btnEdit.style.cssText = 'cursor:pointer;margin-left:4px;';
+                btnEdit.setAttribute('aria-label', 'Préciser ' + m.dci);
+                btnEdit.setAttribute('role', 'button'); btnEdit.setAttribute('tabindex', '0');
+                btnEdit.addEventListener('click', () => openMedPrecisionModal(m.dci));
+                btnEdit.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMedPrecisionModal(m.dci); } });
+                span.appendChild(btnEdit);
+            }
+            span.appendChild(btnRemove);
             frag.appendChild(span);
         });
         window.suspendedMeds.forEach(m => {

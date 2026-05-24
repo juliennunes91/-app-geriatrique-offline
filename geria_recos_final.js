@@ -1573,7 +1573,8 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["morphine", "oxycodone", "fentanyl", "buprenorphine", "methadone", "pethidine"],
-                comorbs_absent: ["PAT_020", "PAT_030"]
+                comorbs_absent: ["PAT_020", "PAT_030"],
+                contexte_clinique_absent: ["douleur_severe"]
             },
             alternatives: "Paracétamol en premier, AINS si non CI, palier 2 avant palier 3"
         },
@@ -2095,7 +2096,8 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone", "betamethasone"],
-                med_absent: ["alendronate", "risedronate", "ibandronate", "acide zoledronique", "denosumab", "teriparatide"]
+                med_absent: ["alendronate", "risedronate", "ibandronate", "acide zoledronique", "denosumab", "teriparatide"],
+                contexte_clinique_absent: ["cortico_duree_breve"]
             },
             syndrome_declenche: "SYND_049",
             alternatives: "Ca 1000 mg/j + vit D 800-1200 UI/j dès J1. DMO à M0, M12. Bisphosphonate (alendronate 70 mg/sem) si T-score ≤ -1.5 OU corticothérapie ≥ 7.5 mg/j prolongée OU femme ménopausée. Apport protéique 1.2-1.5 g/kg/j. Activité physique adaptée (résistance + équilibre)."

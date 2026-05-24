@@ -497,6 +497,22 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(isChecked('chkSjsr')) ctxClinique.push("sjsr");
     if(isChecked('chkSaos')) ctxClinique.push("saos");
 
+    // Précisions par médicament saisies via le modal (durée/intensité) → contextes
+    // cliniques. Elles désarment des faux positifs (ex. corticothérapie brève explicite,
+    // douleur sévère justifiant un opioïde fort) sans modifier le comportement par défaut
+    // quand rien n'est précisé.
+    if (typeof activeMeds !== 'undefined' && Array.isArray(activeMeds)) {
+        activeMeds.forEach(m => {
+            const p = m && m.precisions; if (!p) return;
+            const cl = m.classe || '';
+            const isCortico = /corticoïde|corticoide|glucocorticoïde/i.test(cl) && !/inhalé|\bICS\b/i.test(cl);
+            const isOpioide = /opio[iï]de|opiac/i.test(cl) && !/antidiarrh|antidépresseur/i.test(cl);
+            if (isCortico && p.duree === 'courte') ctxClinique.push('cortico_duree_breve');
+            if (isOpioide && p.indication === 'severe') ctxClinique.push('douleur_severe');
+            if (isOpioide && p.indication === 'legere') ctxClinique.push('douleur_legere');
+        });
+    }
+
     return { bioValues, ctxClinique };
 }
 
@@ -517,7 +533,7 @@ function _computeAnalysisHash() {
         getVal('scoreCFS'), getStr('cpManual'),
         isChecked('patientFragile'),
         activeComorbs.slice().sort().join(','),
-        activeMeds.map(m => m.dci).sort().join(','),
+        activeMeds.map(m => m.dci + (m.precisions ? ':' + JSON.stringify(m.precisions) : '')).sort().join(','),
         window.suspendedMeds.map(m => m.dci).sort().join(',')
     ];
     // Inclure toutes les checkboxes cliniques
