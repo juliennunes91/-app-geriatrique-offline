@@ -951,6 +951,13 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(has(analyzeCase({ age: 82, sexe: 'F', meds: ['Atorvastatine'], flags: ['chkPalliatif'] }), reStat), 'palliatif → oui');
         assert.ok(!has(analyzeCase({ age: 82, sexe: 'F', meds: ['Ramipril'] }), /Antihypertenseurs \(STOPP\/FRAIL\)/i), 'antiHTA robuste → non');
     });
+    test('Quarantaine supplément : FP AINS topiques et doublons triple whammy retirés', () => {
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Ibuprofene'] }), /AINS topiques/i), 'SUP_CAUT_073 (FP) retiré');
+        const tw = analyzeCase({ age: 78, sexe: 'M', dfg: 35, comorbs: ['PAT_002', 'PAT_029', 'PAT_024'], meds: ['Furosemide', 'Ramipril', 'Bisoprolol', 'Ibuprofene', 'Allopurinol'] });
+        assert.ok(has(tw, /Triple whammy : AINS/i), 'triple whammy natif conservé');
+        assert.ok(!has(tw, /Triple association IEC/i), 'SUP_PIMC_08 (doublon) retiré');
+        assert.ok(!has(tw, /Medicaments nefrotoxiques/i), 'SUP_STOP_078 (doublon) retiré');
+    });
     test('Anticoag prolongé TVP/EP : seulement en contexte MTEV (pas pour la FA)', () => {
         const reTvp = /Anticoagulant prolonge premier episode TVP/i;
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'] }), reTvp), 'AOD seul (FA) → non');

@@ -1,5 +1,13 @@
 // app_analysis.js - V10.0 (v0.48 — synthèse intelligente, bio unifiée, registre structuré)
 
+// Curation des règles « supplément » : IDs en quarantaine (non affichés) en attendant
+// une revue clinique du corpus. Critères d'exclusion (vérifiés sur cas concrets) :
+//  - SUP_CAUT_073 : faux positif (clé composée « ibuprofene topique » matchée par un
+//    AINS oral → reco d'AINS topique injustifiée).
+//  - SUP_PIMC_08 / SUP_STOP_078 : doublons du « Triple whammy » natif (SYND_045),
+//    qui reste affiché car plus complet — évite 3 alertes pour le même mécanisme.
+const SUPPLEMENT_QUARANTINE = new Set(['SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078']);
+
 // =========================================================
 // SCORES_CONFIG — Seuils externalisés (modifiable sans toucher la logique)
 // =========================================================
@@ -686,6 +694,7 @@ function analyserPrescription() {
             const eviterKey = a => (a.titre || '').trim() + '|' + (a.severite || '');
             const seenEviter = new Set(eviterAll.map(eviterKey));
             (recos.supplement || []).forEach(a => {
+                if (a.id && SUPPLEMENT_QUARANTINE.has(a.id)) return;
                 const k = eviterKey(a);
                 if (!seenEviter.has(k)) { seenEviter.add(k); eviterAll.push(a); }
             });
