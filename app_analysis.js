@@ -680,10 +680,14 @@ function analyserPrescription() {
             // REMEDIES) sont évaluées par le moteur mais relèvent de l'onglet « éviter » :
             // on les fusionne ici (dédup par titre) — elles n'étaient pas rendues.
             const eviterAll = (recos.eviter || []).slice();
-            const seenEviterTitres = new Set(eviterAll.map(a => (a.titre || '').trim()));
+            // Clé de dédup = titre + sévérité (et non titre seul) : ne fusionne que de
+            // vrais doublons, sans masquer deux règles distinctes au libellé identique
+            // mais de gravité différente.
+            const eviterKey = a => (a.titre || '').trim() + '|' + (a.severite || '');
+            const seenEviter = new Set(eviterAll.map(eviterKey));
             (recos.supplement || []).forEach(a => {
-                const t = (a.titre || '').trim();
-                if (!seenEviterTitres.has(t)) { seenEviterTitres.add(t); eviterAll.push(a); }
+                const k = eviterKey(a);
+                if (!seenEviter.has(k)) { seenEviter.add(k); eviterAll.push(a); }
             });
             eviterAll.sort((a, b) => (b.score || 0) - (a.score || 0));
 

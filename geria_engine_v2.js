@@ -175,19 +175,24 @@ const GeriaEngineV2 = (() => {
         }
         
         // (D) Confirmation biologique (si bio anormale renforce l'alerte)
-        if (alert.condition && alert.condition.bio && ctx.bioValues) {
+        if (alert.condition && ctx.bioValues && (alert.condition.bio || alert.condition.bio_any)) {
             let bioConfirmed = false;
-            for (const [bioId, critRaw] of Object.entries(alert.condition.bio)) {
-                const val = ctx.bioValues[bioId];
-                if (val > 0) {
-                    (Array.isArray(critRaw) ? critRaw : [critRaw]).forEach(crit => {
-                        if (crit.op === '<' && val < crit.val) bioConfirmed = true;
-                        if (crit.op === '>' && val > crit.val) bioConfirmed = true;
-                        if (crit.op === '<=' && val <= crit.val) bioConfirmed = true;
-                        if (crit.op === '>=' && val >= crit.val) bioConfirmed = true;
-                    });
+            const matchCrit = (crit, val) =>
+                (crit.op === '<' && val < crit.val) ||
+                (crit.op === '>' && val > crit.val) ||
+                (crit.op === '<=' && val <= crit.val) ||
+                (crit.op === '>=' && val >= crit.val);
+            const scanBio = (bioObj) => {
+                if (!bioObj) return;
+                for (const [bioId, critRaw] of Object.entries(bioObj)) {
+                    const val = ctx.bioValues[bioId];
+                    if (val > 0 && (Array.isArray(critRaw) ? critRaw : [critRaw]).some(c => matchCrit(c, val))) {
+                        bioConfirmed = true;
+                    }
                 }
-            }
+            };
+            scanBio(alert.condition.bio);
+            scanBio(alert.condition.bio_any);
             if (bioConfirmed) score += 12; // Bio confirme le risque
         }
         
