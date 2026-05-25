@@ -12,6 +12,29 @@
 //   5. DASHBOARD PIM GLOBAL : vision synthétique de l'ordonnance
 // ============================================================================
 
+// ============================================================================
+// #5 — SEUILS CLINIQUES CENTRALISÉS (référence unique)
+// Source de vérité pour les seuils utilisés par le CODE (le moteur, app_analysis).
+// Les seuils portés par les données de règles (condition.bio.val) restent dans
+// les règles ; ce tableau documente et unifie les seuils appliqués hors règles.
+// ============================================================================
+const CLINICAL_THRESHOLDS = {
+    DFG_SEVERE: 30,            // IRC sévère (ml/min/1,73m²)
+    DFG_MODERE: 45,            // IRC modérée
+    K_HYPER: 5.5,             // hyperkaliémie (mmol/L)
+    K_HYPO: 3.5,              // hypokaliémie
+    MG_HYPO: 0.7,             // hypomagnésémie (mmol/L)
+    NA_HYPO: 130,             // hyponatrémie
+    CA_HYPER: 2.60,           // hypercalcémie (mmol/L)
+    TSH_SUBCLIN_MIN: 4,       // borne basse hypothyroïdie infraclinique (mUI/L)
+    TSH_SUBCLIN_MAX: 10,      // borne haute infraclinique
+    CFS_FRAGILITE_SEVERE: 6,  // Clinical Frailty Scale — fragilité sévère (STOPPFrail)
+    AGE_GERIATRIQUE: 75,      // seuil PIM gériatrique
+    AGE_TRES_AGE: 85,
+    QTC_LONG: 470             // QTc allongé (ms)
+};
+if (typeof window !== 'undefined') window.CLINICAL_THRESHOLDS = CLINICAL_THRESHOLDS;
+
 const GeriaEngineV2 = (() => {
 
     // ========================================================================
@@ -65,6 +88,24 @@ const GeriaEngineV2 = (() => {
             }
         });
         
+        // #6 — Validation qualité des med_keys : signale les clés COMPOSÉES (avec espace)
+        // non reconnues comme alias de classe. Ces clés sont une source de faux matchs
+        // partiels via le `includes` du matcher (ex. « ibuprofene topique » matché par
+        // l'ibuprofène oral). Diagnostic uniquement — n'affecte pas le comportement.
+        const _classAliases = new Set(typeof DRUG_CLASSES !== 'undefined'
+            ? Object.values(DRUG_CLASSES).flatMap(d => (d.aliases || []).map(a => String(a).toLowerCase()))
+            : []);
+        const _suspectKeys = [];
+        allRules.forEach(rule => {
+            const c = rule.condition; if (!c) return;
+            [...(c.med_keys || []), ...(c.med_keys_2 || []), ...(c.med_keys_3 || [])].forEach(k => {
+                if (/\s/.test(k) && !_classAliases.has(String(k).toLowerCase())) _suspectKeys.push(`${rule.id}:"${k}"`);
+            });
+        });
+        if (_suspectKeys.length) {
+            console.warn(`[GeriaEngineV2] ⚠ ${_suspectKeys.length} med_keys composées à vérifier (faux match partiel possible) : ${_suspectKeys.slice(0, 8).join(', ')}${_suspectKeys.length > 8 ? '…' : ''}`);
+        }
+
         console.log(`[GeriaEngineV2] Index inversé construit : ${Object.keys(_invertedIndex).length} clés, ${allRules.length} règles indexées.`);
     }
     

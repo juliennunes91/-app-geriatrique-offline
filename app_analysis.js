@@ -675,8 +675,8 @@ function analyserPrescription() {
         bioValues: bioValues,
         patientAge: patientAge,
         isFragile: isFragile,
-        // Fragilité sévère STOPPFrail : CFS ≥ 6 ou contexte palliatif/fin de vie.
-        fragiliteSevere: (getVal('scoreCFS') >= 6) || isChecked('chkPalliatif'),
+        // Fragilité sévère STOPPFrail : CFS ≥ seuil (réf. CLINICAL_THRESHOLDS) ou palliatif.
+        fragiliteSevere: (getVal('scoreCFS') >= ((typeof CLINICAL_THRESHOLDS !== 'undefined' && CLINICAL_THRESHOLDS.CFS_FRAGILITE_SEVERE) || 6)) || isChecked('chkPalliatif'),
         scoreACB_global: scoreACB_global,
         contexte_clinique: ctxClinique
     };
