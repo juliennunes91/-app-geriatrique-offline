@@ -13,6 +13,28 @@
 // Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
 const SUPPLEMENT_QUARANTINE = new Set(['SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050']);
 
+// #1 — Réconciliation par « cluster de mécanisme » : quand plusieurs alertes décrivent
+// le MÊME mécanisme sous des libellés différents, ne garder que la plus prioritaire
+// (score max) afin de réduire la redondance d'affichage. PRUDENCE : ne déclarer que des
+// clusters où les variantes sont sémantiquement équivalentes (pas des angles cliniques
+// distincts — DFG vs IC vs surveillance, qui doivent rester séparés). Liste à étendre
+// après revue clinique (cf. curation_supplement_review.csv).
+const ALERT_CLUSTERS = [
+    { nom: 'triple_whammy', re: /triple whammy|triple association[^|]*(IEC|ARA2)[^|]*diur|m[ée]dicaments? n[ée]phrotoxiques en association/i }
+];
+function reconcileAlertClusters(alertes) {
+    if (!Array.isArray(alertes) || alertes.length < 2) return alertes;
+    const drop = new Set();
+    ALERT_CLUSTERS.forEach(cl => {
+        const membres = alertes.map((a, i) => ({ a, i })).filter(({ a }) => cl.re.test(a.titre || ''));
+        if (membres.length > 1) {
+            membres.sort((x, y) => (y.a.score || 0) - (x.a.score || 0)); // prioritaire en tête
+            membres.slice(1).forEach(({ i }) => drop.add(i));
+        }
+    });
+    return drop.size ? alertes.filter((a, i) => !drop.has(i)) : alertes;
+}
+
 // =========================================================
 // SCORES_CONFIG — Seuils externalisés (modifiable sans toucher la logique)
 // =========================================================
@@ -704,16 +726,17 @@ function analyserPrescription() {
                 if (!seenEviter.has(k)) { seenEviter.add(k); eviterAll.push(a); }
             });
             eviterAll.sort((a, b) => (b.score || 0) - (a.score || 0));
+            const eviterFinal = reconcileAlertClusters(eviterAll);
 
-            const eviterHtml = eviterAll.length ? GeriaEngineV2.renderAlertesTriees(eviterAll, 'eviter') : '';
+            const eviterHtml = eviterFinal.length ? GeriaEngineV2.renderAlertesTriees(eviterFinal, 'eviter') : '';
             const initierHtml = recos.initier ? GeriaEngineV2.renderAlertesTriees(recos.initier, 'initier') : '';
             document.getElementById('alertes-eviter').innerHTML = eviterHtml;
             document.getElementById('alertes-initier').innerHTML = initierHtml;
 
-            counts.eviter = eviterAll.length;
+            counts.eviter = eviterFinal.length;
             counts.initier = recos.initier ? recos.initier.length : 0;
             // Registre: éviter/initier depuis le moteur V2
-            eviterAll.forEach(a => {
+            eviterFinal.forEach(a => {
                 (a.med_keys || []).forEach(k => _regAddMed(k, 'eviter', { text: a.titre || a.message || '', severity: a.severite || 'warning', source: a.sources_label || '' }));
                 _regAddDomain('eviter', { titre: a.titre || '', meds: a.med_keys || [], severity: a.severite || 'warning' });
             });
