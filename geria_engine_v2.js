@@ -154,6 +154,12 @@ const GeriaEngineV2 = (() => {
         
         // (A) Gravité de base
         score += SEVERITY_WEIGHTS[alert.severite] || 15;
+
+        // (A bis) Contre-indication absolue → priorité critique garantie.
+        // Une CI absolue (danger 40 + 35) atteint le seuil CRITIQUE (≥ 60) et remonte
+        // en tête, quelle que soit la richesse des autres facteurs.
+        const _ciText = ((alert.titre || '') + ' ' + (alert.message || '')).toUpperCase();
+        if (/CONTRE-?INDICATION ABSOLUE|\bCI ABSOLUE\b/.test(_ciText)) score += 35;
         
         // (B) Consensus multi-sources
         const effectiveSources = alert.all_sources || alert.sources || [];

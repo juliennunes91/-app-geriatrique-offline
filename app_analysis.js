@@ -1634,9 +1634,16 @@ function analyserPrescription() {
                         const com = g.commentaire ? ` <em class="text-muted">(${escapeHtml(g.commentaire)})</em>` : '';
                         return `<li><b>${escapeHtml(g.classe)}</b> → ${drugs}${com}</li>`;
                     }).join('');
-                    const alertClass = isDanger ? 'alert-danger' : 'alert-warning';
-                    const icon = isDanger ? '🚨' : '⚠️';
-                    addAlert('alertes-interact', `<div class="alert ${alertClass} shadow-sm"><strong>${icon} Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}</strong><ul class="mb-0 mt-1">${groupHtml}</ul></div>`, 'interact');
+                    // Refléter la gravité maximale dans le TITRE (et pas seulement dans le
+                    // détail déplié) : une contre-indication absolue doit être visible au
+                    // premier coup d'œil.
+                    const ciAbsolue = foundGroups.some(g => /CONTRE-?INDICATION ABSOLUE|CI ABSOLUE/i.test((g.classe || '') + ' ' + (g.commentaire || '')));
+                    const alertClass = (isDanger || ciAbsolue) ? 'alert-danger' : 'alert-warning';
+                    const icon = ciAbsolue ? '🚫' : (isDanger ? '🚨' : '⚠️');
+                    const titreInteract = ciAbsolue
+                        ? `CI ABSOLUE — ${escapeHtml(ref.dci.toUpperCase())}`
+                        : `Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}`;
+                    addAlert('alertes-interact', `<div class="alert ${alertClass} shadow-sm"><strong>${icon} ${titreInteract}</strong><ul class="mb-0 mt-1">${groupHtml}</ul></div>`, 'interact');
                     const flatList = foundGroups.map(g => `${g.classe}:${g.matched.map(x=>x.interactor).join('/')}`).join(' | ');
                     _regAddMed(m.dci, 'interact', { text: `Interaction ${flatList}`, severity: isDanger ? 'danger' : 'warning' });
                     // Émettre aussi UNE ligne par groupe danger dans byDomain pour
