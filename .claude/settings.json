@@ -19,7 +19,27 @@
       "Bash(git ls-files:*)",
       "Bash(git fetch origin:*)",
       "Bash(grep -c:*)",
-      "Bash(mkdir -p:*)"
+      "Bash(mkdir -p:*)",
+      "WebFetch(domain:eutils.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:www.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:pubmed.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:api.openalex.org)",
+      "WebFetch(domain:api.crossref.org)",
+      "WebFetch(domain:api.semanticscholar.org)"
     ]
+  },
+  "sandbox": {
+    "network": {
+      "allowedDomains": [
+        "eutils.ncbi.nlm.nih.gov",
+        "www.ncbi.nlm.nih.gov",
+        "pubmed.ncbi.nlm.nih.gov",
+        "api.openalex.org",
+        "api.crossref.org",
+        "api.semanticscholar.org",
+        "core.ac.uk",
+        "api.unpaywall.org"
+      ]
+    }
   }
 }
