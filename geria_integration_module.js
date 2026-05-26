@@ -923,8 +923,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "severite": "warning",
         "condition": {
             "med_keys": [
-                "indocid",
-                "toradol"
+                "indometacine",
+                "ketorolac"
             ]
         },
         "alternatives": "Alternatives: paracetamol, AINS selectifs COX-2 si necessary",
@@ -1949,7 +1949,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "severite": "danger",
         "condition": {
             "med_keys": [
-                "motilium"
+                "domperidone"
             ]
         },
         "alternatives": "Dose maximale: 10 mg x3/j, duree maximale 7 jours. CI si QTc allonge, medicaments QT, hepatopathie severe. Metoclopramide: duree <5j",

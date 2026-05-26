@@ -37,14 +37,24 @@
 //        détectable à partir d'un DCI.
 //      • SUP_STOP_058 (patch lidocaïne pour arthrose) → indication non détectable
 //        et en conflit avec IN_K03 (qui recommande le patch en douleur neuropathique).
-// (NB : la famille œstrogènes systémiques SUP_STOP_012/049/051/052 a des clés qui
-//  NE RÉSOLVENT PAS — « oestradiol » vs orthographe base, méds possiblement absents
-//  de MASTER_DB.MEDICAMENTS. Problème distinct, non traité ici : à investiguer.)
+//  - Règles mortes par médicament (audit « presenceDead ») couvertes par une règle
+//    fonctionnelle, ou dont l'indication n'est pas détectable :
+//      • SUP_STOP_076 (oxybutynine) → doublon de EV_PRISC_03 / SUP_STOP_042.
+//      • SUP_STOP_077 (tianeptine)  → doublon de EV_SFGG_AD_06.
+//      • SUP_STOP_080 (clonazepam)  → couvert par EV_D08 (BZD ≥ 4 sem).
+//      • SUP_STOP_057 (opioïdes LP)  → couvert par EV_K07 / EV_L01 / EV_L02 ; la
+//        spécificité « libération prolongée » n'est pas détectable par DCI.
+//      • SUP_STOP_044 (duloxétine, STOPP3-I7 « pour incontinence ») → indication non
+//        détectable ; raviver sur le DCI nu sur-déclencherait sur toute duloxétine.
+//    Ravivés à l'inverse (vraie lacune, DCI en base, pas de doublon) : SUP_STOP_037
+//    (→ indométacine, PIM AINS) et SUP_STOP_079 (→ dompéridone, risque QT établi).
 // Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
 const SUPPLEMENT_QUARANTINE = new Set([
     'SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050',
     // Clés malformées : règles mortes/cassées dont l'équivalent natif fonctionne.
     'SUP_STOP_003', 'SUP_STOP_009', 'SUP_STOP_053', 'SUP_STOP_058',
+    // Mortes par médicament : doublons de règles fonctionnelles, ou indication non détectable.
+    'SUP_STOP_044', 'SUP_STOP_057', 'SUP_STOP_076', 'SUP_STOP_077', 'SUP_STOP_080',
     // Famille SUP_START_* (START3) — déclenchées sur présence, jamais sur absence.
     'SUP_START_007', 'SUP_START_013', 'SUP_START_020', 'SUP_START_021', 'SUP_START_022',
     'SUP_START_023', 'SUP_START_024', 'SUP_START_028', 'SUP_START_029', 'SUP_START_030',
