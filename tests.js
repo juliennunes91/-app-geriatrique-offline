@@ -971,6 +971,11 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
 }
 
 // ============================================================================
+// LINTER D'INVARIANTS DU CORPUS DE RÈGLES (cross-check moteur/dictionnaires/rendu)
+// ============================================================================
+require('./tests_rules_invariants').runRuleInvariantTests(test, assert);
+
+// ============================================================================
 // RESULTS
 // ============================================================================
 console.log(`\n${'='.repeat(50)}`);
