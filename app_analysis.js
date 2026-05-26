@@ -10,8 +10,13 @@
 //    ensemble sans trospium) — on garde 042 (couverture complète).
 //  - SUP_STOP_050 : doublon de SUP_STOP_049 (« Oestrogene systemique », clé « patch »
 //    générique) — on garde 049 (clés plus précises).
+//  - SUP_START_007 : indication START3-B4 (bêtabloquant dans la maladie coronarienne
+//    symptomatique) mal modélisée — déclenchée par la PRÉSENCE d'un BB cardiosélectif
+//    (med_keys), elle s'affiche en « Réévaluation planifiée » avec un motif coronarien/
+//    angor hors sujet chez un patient en insuffisance cardiaque. Les omissions de BB
+//    sont déjà couvertes correctement par IN_B06 (HFrEF) et IN_B10 (FA chronique).
 // Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
-const SUPPLEMENT_QUARANTINE = new Set(['SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050']);
+const SUPPLEMENT_QUARANTINE = new Set(['SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050', 'SUP_START_007']);
 
 // #1 — Réconciliation par « cluster de mécanisme » : quand plusieurs alertes décrivent
 // le MÊME mécanisme sous des libellés différents, ne garder que la plus prioritaire
@@ -2344,18 +2349,50 @@ function analyserPrescription() {
             }
 
             // INTERACTIONS CRITIQUES
+            // Une interaction n'est un danger ACTIF que si toute la combinaison est
+            // réellement prescrite. Sinon c'est une information de principe : on la
+            // bascule en « Contre-indiqué en cas de prescription future » (gris, repliée)
+            // au lieu du rouge alarmant, qui était trop fort pour une simple mise en garde.
             const interCrit = rule.INTERACTIONS_CRITIQUES;
             if (interCrit && interCrit.length > 0) {
-                guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-danger small">INTERACTIONS CRITIQUES SPECIFIQUES</strong></div>`;
-                interCrit.forEach(ic => {
-                    guidelinesHtml += `<div class="alert alert-danger py-1 px-2 mb-1 bg-danger bg-opacity-10" style="border-left:3px solid #dc3545;">
-                        <strong class="small">${ic.combinaison ? ic.combinaison.join(' + ') : ''}</strong>
-                        ${ic.gravite ? ` <span class="badge bg-danger" style="font-size:0.6em;">${ic.gravite}</span>` : ''}
-                        ${ic.risque ? `<br><small class="text-danger">${ic.risque}</small>` : ''}
-                        ${ic.conduite ? `<br><small>${ic.conduite}</small>` : ''}
-                        ${ic.surveillance ? `<br><small class="text-info">${ic.surveillance}</small>` : ''}
-                    </div>`;
-                });
+                // Un élément (ex. « IEC ou ARA2 ou ARNI ») est présent si au moins une de
+                // ses alternatives correspond à un médicament actif ; la combinaison est
+                // prescrite si TOUS ses éléments sont présents.
+                const _comboElementPresent = (elem) => String(elem || '')
+                    .split(/\bou\b/i)
+                    .some(alt => _activeMedsHasClass(alt.trim()));
+                const _comboPrescribed = (combo) => Array.isArray(combo) && combo.length > 0
+                    && combo.every(_comboElementPresent);
+
+                const interActive = interCrit.filter(ic => _comboPrescribed(ic.combinaison));
+                const interFuture = interCrit.filter(ic => !_comboPrescribed(ic.combinaison));
+
+                if (interActive.length > 0) {
+                    guidelinesHtml += `<div class="mb-2 mt-2"><strong class="text-danger small">INTERACTIONS CRITIQUES SPECIFIQUES</strong></div>`;
+                    interActive.forEach(ic => {
+                        guidelinesHtml += `<div class="alert alert-danger py-1 px-2 mb-1 bg-danger bg-opacity-10" style="border-left:3px solid #dc3545;">
+                            <strong class="small">${ic.combinaison ? ic.combinaison.join(' + ') : ''}</strong>
+                            ${ic.gravite ? ` <span class="badge bg-danger" style="font-size:0.6em;">${ic.gravite}</span>` : ''}
+                            ${ic.risque ? `<br><small class="text-danger">${ic.risque}</small>` : ''}
+                            ${ic.conduite ? `<br><small>${ic.conduite}</small>` : ''}
+                            ${ic.surveillance ? `<br><small class="text-info">${ic.surveillance}</small>` : ''}
+                        </div>`;
+                    });
+                }
+
+                if (interFuture.length > 0) {
+                    let futItems = '';
+                    interFuture.forEach(ic => {
+                        futItems += `<div class="alert alert-light py-1 px-2 mb-1" style="border-left:3px solid #adb5bd;">
+                            <strong class="small text-muted">${ic.combinaison ? ic.combinaison.join(' + ') : ''}</strong>
+                            ${ic.gravite ? ` <span class="badge bg-light text-muted border" style="font-size:0.6em;">${ic.gravite}</span>` : ''}
+                            ${ic.risque ? `<br><small class="text-muted">${ic.risque}</small>` : ''}
+                            ${ic.conduite ? `<br><small class="text-muted">${ic.conduite}</small>` : ''}
+                            ${ic.surveillance ? `<br><small class="text-muted">${ic.surveillance}</small>` : ''}
+                        </div>`;
+                    });
+                    guidelinesHtml += `<details class="mb-2 mt-2"><summary class="text-muted small fw-bold" style="cursor:pointer;">Contre-indiqué en cas de prescription future (${interFuture.length}) — information de principe</summary><div class="mt-1">${futItems}</div></details>`;
+                }
             }
 
             // PRINCIPES (notes générales, ex: KC)
