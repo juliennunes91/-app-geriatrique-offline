@@ -72,7 +72,11 @@ const GUIDELINE_INDEX = {
     "DIAMOND":          { ref: "Butler J et al. N Engl J Med 2024;390:1455. DIAMOND (Patiromer in HFrEF)" },
     "CLEAR_OUTCOMES":   { ref: "Nissen SE et al. N Engl J Med 2023;388:1353. CLEAR Outcomes (Bempedoic Acid)" },
     "IMPACT":           { ref: "Lipson DA et al. N Engl J Med 2018;378:1671. IMPACT (Triple therapy COPD)" },
-    "ETHOS":            { ref: "Rabe KF et al. N Engl J Med 2020;383:35. ETHOS (Triple therapy COPD)" }
+    "ETHOS":            { ref: "Rabe KF et al. N Engl J Med 2020;383:35. ETHOS (Triple therapy COPD)" },
+    "BOREAS":           { ref: "Bhatt DL et al. N Engl J Med 2023;389:205. BOREAS (Dupilumab in COPD with type 2 inflammation)" },
+    "NOTUS":            { ref: "Bhatt DL et al. N Engl J Med 2024;390:2274. NOTUS (Dupilumab in COPD with type 2 inflammation)" },
+    "SUMMIT":           { ref: "Packer M et al. N Engl J Med 2025;392:427. SUMMIT (Tirzepatide in HFpEF with obesity)" },
+    "CONFIDENCE":       { ref: "Agarwal R et al. 2025. CONFIDENCE (Finerenone + empagliflozin combination in CKD/T2D, UACR endpoint)" }
 };
 
 
@@ -310,13 +314,14 @@ const PATHOLOGY_RULES_DB = {
     "PAT_003": {
         ID: "PAT_003",
         NOM: "Insuffisance Cardiaque FE Préservée (HFpEF)",
-        REFERENCE: "ESC 2023 Update | EMPEROR-Preserved | DELIVER | TOPCAT",
+        REFERENCE: "ESC 2023 Update | EMPEROR-Preserved | DELIVER | TOPCAT | STEP-HFpEF | SUMMIT",
         SOURCES_EBM: {
                   "INITIER": {
                             "iSGLT2": "ESC_HF_2023 Rec Table 2, IA + EMPEROR-Preserved + DELIVER",
                             "Diurétique": "ESC_HF_2021 §5.3, IC",
                             "ARM": "ESC_HF_2021 §6.2, IIbB + TOPCAT",
-                            "GLP-1": "STEP_HFpEF, IIaB"
+                            "GLP-1": "STEP_HFpEF, IIaB",
+                            "Tirzépatide": "SUMMIT, IIaB"
                   },
                   "EVITER": {
                             "AINS": "ESC_HF_2021 §5.12 + STOPP_START_V3 H2"
@@ -347,6 +352,13 @@ const PATHOLOGY_RULES_DB = {
                     classe: "GLP-1 RA (Sémaglutide)",
                     indication: "En cas d'obésité + HFpEF (STEP-HFpEF : amélioration symptômes et capacité fonctionnelle)",
                     condition: "IMC ≥ 30 + HFpEF",
+                    niveau_preuve: "IIaB"
+                },
+                {
+                    classe: "Tirzépatide (agoniste GIP/GLP-1)",
+                    indication: "HFpEF + obésité : SUMMIT (NEJM 2024) — réduction du critère composite décès CV / aggravation de l'IC et amélioration de la qualité de vie (KCCQ)",
+                    condition: "IMC ≥ 30 + HFpEF",
+                    note: "Surveiller la tolérance digestive et la dénutrition/sarcopénie chez le sujet âgé fragile (perte de poids marquée). Réduire la dose des sulfamides/insuline associés (risque d'hypoglycémie).",
                     niveau_preuve: "IIaB"
                 }
             ],
@@ -2164,16 +2176,17 @@ const PATHOLOGY_RULES_DB = {
     "PAT_023": {
         ID: "PAT_023",
         NOM: "BPCO",
-        REFERENCE: "GOLD 2024 | SPLF 2023 (BPCO) | HAS 2014 BPCO | ERS/ATS 2017 | IMPACT trial | ETHOS trial | Beers 2023 | STOPP/START v3",
+        REFERENCE: "GOLD 2025 | SPLF 2023 (BPCO) | HAS 2014 BPCO | ERS/ATS 2017 | IMPACT trial | ETHOS trial | BOREAS | NOTUS | Beers 2023 | STOPP/START v3",
         SOURCES_EBM: {
                   "INITIER": {
-                            "LAMA": "GOLD_2024 §3.4, A",
-                            "Trithérapie": "GOLD_2024 + IMPACT + ETHOS, A",
-                            "Azithromycine": "GOLD_2024 §3.6, B"
+                            "LAMA": "GOLD_2025 §3.4, A",
+                            "Trithérapie": "GOLD_2025 + IMPACT + ETHOS, A",
+                            "Azithromycine": "GOLD_2025 §3.6, B",
+                            "Dupilumab": "GOLD_2025 + BOREAS + NOTUS, A"
                   },
                   "EVITER": {
-                            "CSI seul": "GOLD_2024 §3.4",
-                            "BZD/Opioïdes": "GOLD_2024 §3.7 + Beers 2023"
+                            "CSI seul": "GOLD_2025 §3.4",
+                            "BZD/Opioïdes": "GOLD_2025 §3.7 + Beers 2023"
                   }
         },
         TRAITEMENTS: {
@@ -2188,7 +2201,8 @@ const PATHOLOGY_RULES_DB = {
                 },
                 { classe: "Trithérapie (LAMA + LABA + CSI)", indication: "Eo ≥ 300/µL et/ou ≥ 2 exacerbations modérées ou 1 hospitalisation/an", note: "IMPACT/ETHOS : réduction des exacerbations. Le signal de baisse de mortalité toutes causes est limité aux comparaisons vs bras sans CSI (ETHOS BGF vs GFF ; IMPACT vs UMEC/VI) — bénéfice porté par le CSI, non généralisable à la trithérapie en soi. Surveiller le surrisque de pneumonie sous CSI.", niveau_preuve: "IA" },
                 { classe: "Azithromycine 250 mg/j ou 500 mg x3/sem", indication: "Prévention exacerbations chez ex-fumeur, après optimisation inhalateurs", ci: ["QTc allongé", "Insuffisance hépatique"], bio_suivi: ["BIO_031", "BIO_013"], note: "ECG avant, audiogramme annuel (ototoxicité)" },
-                { classe: "Roflumilast 500 µg/j", indication: "BPCO sévère + phénotype exacerbateur + bronchite chronique malgré trithérapie", ci: ["Dépression sévère", "Poids < 60 kg"], note: "Effets indésirables : diarrhée, perte de poids, dépression" }
+                { classe: "Roflumilast 500 µg/j", indication: "BPCO sévère + phénotype exacerbateur + bronchite chronique malgré trithérapie", ci: ["Dépression sévère", "Poids < 60 kg"], note: "Effets indésirables : diarrhée, perte de poids, dépression" },
+                { classe: "Dupilumab (anti-IL-4Rα, biologique injectable SC)", indication: "BPCO avec inflammation de type 2 (éosinophiles ≥ 300/µL) et exacerbations persistantes malgré trithérapie optimale (GOLD 2025)", note: "BOREAS (NEJM 2023) + NOTUS (NEJM 2024) : réduction ~30 % des exacerbations modérées/sévères + amélioration VEMS. Prescription spécialisée (pneumologue). Réservé au phénotype éosinophilique exacerbateur ; non indiqué dans la BPCO non-type-2.", niveau_preuve: "IA" }
             ],
             EVITER: [
                 { classe: "CSI seul (sans LABA)", raison: "Pas d'indication en monothérapie dans la BPCO", gravite: "ERREUR THERAPEUTIQUE" },
@@ -2428,12 +2442,12 @@ const PATHOLOGY_RULES_DB = {
     "PAT_029": {
         ID: "PAT_029",
         NOM: "Maladie Rénale Chronique (MRC)",
-        REFERENCE: "KDIGO 2024 | ESC 2023 | ADA 2025",
+        REFERENCE: "KDIGO 2024 | ESC 2023 | ADA 2025 | CONFIDENCE",
         SOURCES_EBM: {
                   "INITIER": {
                             "IEC/ARA2": "KDIGO_2024 §3.1, IA",
                             "iSGLT2": "KDIGO_2024 §3.3, IA",
-                            "Finerenone": "KDIGO_2024 §3.8 + FIDELIO + FIGARO, IA",
+                            "Finerenone": "KDIGO_2024 §3.8 + FIDELIO + FIGARO + CONFIDENCE, IA",
                             "GLP-1 RA": "KDIGO_2024 §3.9, IB + FLOW",
                             "Statine": "KDIGO_2024 §3.10, IA"
                   },
@@ -2461,7 +2475,7 @@ const PATHOLOGY_RULES_DB = {
                 {
                     classe: "Finerenone (ARM non stéroïdien)",
                     indication: "DT2 + MRC avec albuminurie résiduelle sous IEC/ARA2 max + iSGLT2",
-                    note: "Surveillance K+ rapprochée (J7, M1, trimestriel). K+ < 5.0 pour initier.",
+                    note: "Surveillance K+ rapprochée (J7, M1, trimestriel). K+ < 5.0 pour initier. CONFIDENCE (2025, phase 2) : l'association finérénone + iSGLT2 (empagliflozine) réduit l'albuminurie (UACR) ~29-32 % de plus que chaque agent seul — critère de substitution, pas encore de données sur critères durs ; surveillance kaliémie d'autant plus importante en bithérapie.",
                     bio_suivi: ["BIO_001", "BIO_003"],
                     niveau_preuve: "IA (KDIGO 2024)"
                 },
