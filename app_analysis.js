@@ -10,13 +10,24 @@
 //    ensemble sans trospium) — on garde 042 (couverture complète).
 //  - SUP_STOP_050 : doublon de SUP_STOP_049 (« Oestrogene systemique », clé « patch »
 //    générique) — on garde 049 (clés plus précises).
-//  - SUP_START_007 : indication START3-B4 (bêtabloquant dans la maladie coronarienne
-//    symptomatique) mal modélisée — déclenchée par la PRÉSENCE d'un BB cardiosélectif
-//    (med_keys), elle s'affiche en « Réévaluation planifiée » avec un motif coronarien/
-//    angor hors sujet chez un patient en insuffisance cardiaque. Les omissions de BB
-//    sont déjà couvertes correctement par IN_B06 (HFrEF) et IN_B10 (FA chronique).
+//  - SUP_START_* (21 règles, START3) : famille entière mal modélisée — chaque règle se
+//    déclenche sur la PRÉSENCE du médicament (med_keys) au lieu de son absence, sans
+//    condition clinique. Elle ne peut donc jamais détecter une omission ; elle ne produit
+//    du bruit (« Réévaluation planifiée » avec l'indication de prescription affichée hors
+//    sujet) que lorsque le patient prend déjà le médicament. Les vraies omissions sont
+//    couvertes par les règles natives IN_* (geria_recos_final.js), correctement
+//    modélisées (med_absent + comorbidité). Conversion en vraies omissions possible plus
+//    tard, rule par rule (nettoyage des clés malformées + mapping comorbidité requis).
 // Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
-const SUPPLEMENT_QUARANTINE = new Set(['SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050', 'SUP_START_007']);
+const SUPPLEMENT_QUARANTINE = new Set([
+    'SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050',
+    // Famille SUP_START_* (START3) — déclenchées sur présence, jamais sur absence.
+    'SUP_START_007', 'SUP_START_013', 'SUP_START_020', 'SUP_START_021', 'SUP_START_022',
+    'SUP_START_023', 'SUP_START_024', 'SUP_START_028', 'SUP_START_029', 'SUP_START_030',
+    'SUP_START_032', 'SUP_START_033', 'SUP_START_038', 'SUP_START_039', 'SUP_START_040',
+    'SUP_START_041', 'SUP_START_045', 'SUP_START_046', 'SUP_START_047', 'SUP_START_048',
+    'SUP_START_059'
+]);
 
 // #1 — Réconciliation par « cluster de mécanisme » : quand plusieurs alertes décrivent
 // le MÊME mécanisme sous des libellés différents, ne garder que la plus prioritaire
