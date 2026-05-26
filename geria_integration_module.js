@@ -687,7 +687,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "severite": "danger",
         "condition": {
             "med_keys": [
-                "megace"
+                "megestrol"
             ]
         },
         "alternatives": "Complement nutritionnel oral, evaluation nutritionnelle dietetique. Mirtazapine si depression+anorexie associees",
@@ -1211,9 +1211,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "severite": "warning",
         "condition": {
             "med_keys": [
-                "oestradiol oral",
-                "oestradiol patch",
-                "oestrogenes conjugues"
+                "estradiol",
+                "estrogenes conjugues"
             ]
         },
         "alternatives": "Exception: oestrogene local (vaginal) = risque systemique minimal, peut etre discute avec oncologue",
@@ -1326,9 +1325,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "severite": "warning",
         "condition": {
             "med_keys": [
-                "testosterone gel",
-                "patch",
-                "injectable"
+                "testosterone"
             ]
         },
         "alternatives": "Indiquer uniquement si hypogonadisme confirme (testosterone totale <8 nmol/L) + symptomes. Surveillance PSA, NFS, hematocrite",

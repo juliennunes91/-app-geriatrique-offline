@@ -48,6 +48,15 @@
 //        détectable ; raviver sur le DCI nu sur-déclencherait sur toute duloxétine.
 //    Ravivés à l'inverse (vraie lacune, DCI en base, pas de doublon) : SUP_STOP_037
 //    (→ indométacine, PIM AINS) et SUP_STOP_079 (→ dompéridone, risque QT établi).
+//  - Médicaments ajoutés en base (estradiol, œstrogènes conjugués, testostérone,
+//    somatropine, mégestrol, paraffine) → règles ravivées par correction de clé :
+//    SUP_STOP_049 (œstrogène systémique), _054 (testostérone), _055 (somatropine),
+//    _027 (mégestrol), SUP_EU7_07 (paraffine). Pour éviter d'empiler plusieurs alertes
+//    sur le même médicament, les variantes œstrogènes redondantes ou à indication non
+//    détectable restent en quarantaine : SUP_STOP_012 (ATCD MTEV — non détectable, +
+//    doublon testostérone/œstrogène), _051 (œstro+progestatif — pas de médicament
+//    combiné modélisé), _052 (sans progestatif / statut utérin — non détectable,
+//    doublon de _049).
 // Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
 const SUPPLEMENT_QUARANTINE = new Set([
     'SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050',
@@ -55,6 +64,8 @@ const SUPPLEMENT_QUARANTINE = new Set([
     'SUP_STOP_003', 'SUP_STOP_009', 'SUP_STOP_053', 'SUP_STOP_058',
     // Mortes par médicament : doublons de règles fonctionnelles, ou indication non détectable.
     'SUP_STOP_044', 'SUP_STOP_057', 'SUP_STOP_076', 'SUP_STOP_077', 'SUP_STOP_080',
+    // Variantes œstrogènes redondantes / indication non détectable (cf. SUP_STOP_049 actif).
+    'SUP_STOP_012', 'SUP_STOP_051', 'SUP_STOP_052',
     // Famille SUP_START_* (START3) — déclenchées sur présence, jamais sur absence.
     'SUP_START_007', 'SUP_START_013', 'SUP_START_020', 'SUP_START_021', 'SUP_START_022',
     'SUP_START_023', 'SUP_START_024', 'SUP_START_028', 'SUP_START_029', 'SUP_START_030',
