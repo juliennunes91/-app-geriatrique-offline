@@ -501,6 +501,7 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(isChecked('chkDepression')) ctxClinique.push("depression");
     if(isChecked('chkConstipation')) ctxClinique.push("constipation_chronique");
     if(isChecked('chkDysphagie')) ctxClinique.push("dysphagie");
+    if(isChecked('chkArthrose')) ctxClinique.push("arthrose");
     if(isChecked('chkChutes')) ctxClinique.push("chutes");
     if(isChecked('chkInstitution')) ctxClinique.push("institution");
     if(isChecked('chkConfine')) ctxClinique.push("confinement");

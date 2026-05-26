@@ -968,6 +968,19 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Aspirine'] }), re), 'aspirine seule → non');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Aspirine', 'Clopidogrel'] }), re), 'aspirine + clopidogrel → oui');
     });
+    // EV_H03/EV_H09 : indication arthrose portée par le contexte clinique (chkArthrose)
+    // après remplacement des comorbidités pendantes PAT_054/PAT_055 (inexistantes).
+    test('EV_H03 : AINS pour arthrose seulement si contexte arthrose coché', () => {
+        const re = /AINS .*mois pour arthrose/i;
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Ibuprofene'], flags: ['chkArthrose'] }), re), 'AINS + arthrose → oui');
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Ibuprofene'] }), re), 'AINS sans contexte → non');
+    });
+    test('EV_H09 : opioïde pour arthrose, sauf cancer/palliatif', () => {
+        const re = /Opio[ïi]de au long cours pour arthrose/i;
+        assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Tramadol'], flags: ['chkArthrose'] }), re), 'opioïde + arthrose → oui');
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Tramadol'] }), re), 'opioïde sans contexte → non');
+        assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Tramadol'], comorbs: ['PAT_030'], flags: ['chkArthrose'] }), re), 'palliatif → non');
+    });
 }
 
 // ============================================================================

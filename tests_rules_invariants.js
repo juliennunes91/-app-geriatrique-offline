@@ -25,17 +25,11 @@ const { loadApp } = require('./oracle_harness');
 // PAT_016 (diabète non précisé) reste clé canonique interne mais non proposée.
 const HIDDEN_PATHOS = new Set(['PAT_016']);
 
-// Baseline des références pendantes PRÉEXISTANTES (bug connu, à corriger hors de
-// ce périmètre) : PAT_054 (douleur chronique) et PAT_055 (polyarthrite) sont
-// référencés par EV_H03/EV_H09 (et bootstrap_robustness COMORB_TO_PAT) mais ne
-// sont définis dans aucun MASTER_DB.PATHOLOGIES. Conséquence : ces 2 règles
-// d'arthrose ne peuvent se déclencher que via PAT_053 (RGO), ce qui est erroné.
-// Le test échoue sur toute NOUVELLE référence pendante ; ces 4-là sont tolérées
-// jusqu'à décision (définir les pathologies ou remapper sur contexte_clinique).
-const BASELINE_DANGLING_COMORBS = new Set([
-    'EV_H03:PAT_054', 'EV_H03:PAT_055',
-    'EV_H09:PAT_054', 'EV_H09:PAT_055'
-]);
+// Baseline des références pendantes PRÉEXISTANTES tolérées (vide actuellement).
+// Historique : EV_H03/EV_H09 référençaient PAT_054/PAT_055 (inexistants) ; ils
+// ont été regatés sur contexte_clinique "arthrose" (case chkArthrose). Toute
+// nouvelle référence pendante fait désormais échouer INV-H.
+const BASELINE_DANGLING_COMORBS = new Set([]);
 
 function extractCorpus() {
     const { sandbox } = loadApp();
