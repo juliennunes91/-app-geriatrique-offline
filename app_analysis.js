@@ -60,8 +60,10 @@
 // Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
 const SUPPLEMENT_QUARANTINE = new Set([
     'SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050',
-    // Clés malformées : règles mortes/cassées dont l'équivalent natif fonctionne.
-    'SUP_STOP_003', 'SUP_STOP_009', 'SUP_STOP_053', 'SUP_STOP_058',
+    // Clés malformées et/ou dose/forme non détectable (le seuil STOPP porte sur la
+    // posologie, que l'app ne capture pas) : SUP_STOP_025 = fer oral à FORTES doses
+    // (STOPP3-F4, > 600 mg/j) — flaguer tout fer oral sur-déclencherait.
+    'SUP_STOP_003', 'SUP_STOP_009', 'SUP_STOP_025', 'SUP_STOP_053', 'SUP_STOP_058',
     // Mortes par médicament : doublons de règles fonctionnelles, ou indication non détectable.
     'SUP_STOP_044', 'SUP_STOP_057', 'SUP_STOP_076', 'SUP_STOP_077', 'SUP_STOP_080',
     // Variantes œstrogènes redondantes / indication non détectable (cf. SUP_STOP_049 actif).
