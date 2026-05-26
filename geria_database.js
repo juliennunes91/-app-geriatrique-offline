@@ -1611,7 +1611,7 @@ const MASTER_DB = {
           },
           {
                     "dci": "Acide acetylsalicylique",
-                    "princeps": "Kardegic, Aspegic",
+                    "princeps": "Aspirine, Aspirine faible dose, Kardegic, Aspegic",
                     "classe": "Antiagregant (anti-COX1)",
                     "poso_hab": "Antiagrégant (effet antiplaquettaire) : 75-160 mg/j (dose usuelle 75-100 mg/j). Antalgique/antipyrétique : 500-1000 mg x 3-4/j (max 4 g/j).",
                     "poso_ger": "Antiagrégant : 75-100 mg/j. ÉVITER comme antalgique chez ≥ 65 ans (Beers 2023, STOPP D — UGD, saignement) — préférer paracétamol. Gastroprotection IPP recommandée si > 65 ans + ATCD UGD ou si association à anticoagulant/AINS/corticoïde.",

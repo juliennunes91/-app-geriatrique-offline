@@ -3,9 +3,9 @@
 // Version 1.0 - Mars 2026
 // ============================================================================
 // Sources intégrées :
-//   1. STOPP/START v3 (Dalleur et al. 2025 - STOPP-STRAT modifié)
+//   1. STOPP/START v3 (O'Mahony et al. 2023, Eur Geriatr Med)
 //   2. Beers Criteria 2023 (AGS)
-//   3. FORTA Classification 2021 (Fit fOR The Aged)
+//   3. FORTA Classification (EURO-FORTA v2, 2023)
 //   4. PIM-Check (Tommelein et al.)
 //   5. PRISCUS 2.0 (Holt et al. 2022)
 //   6. EU(7)-PIM List (Renom-Guiteras et al.)
@@ -22,9 +22,9 @@ const GERIA_RECOS_DB = {
 
     // Métadonnées des sources
     SOURCES: {
-        "STOPP3":    { nom: "STOPP/START v3",       annee: 2025, ref: "Dalleur O. et al., Eur Geriatr Med 2025" },
+        "STOPP3":    { nom: "STOPP/START v3",       annee: 2023, ref: "O'Mahony D. et al., Eur Geriatr Med 2023" },
         "BEERS":     { nom: "Beers Criteria",        annee: 2023, ref: "AGS Beers Criteria 2023 Update" },
-        "FORTA":     { nom: "FORTA Classification",  annee: 2021, ref: "Pazan F. et Wehling M., Drugs Aging 2021" },
+        "FORTA":     { nom: "FORTA Classification",  annee: 2023, ref: "Pazan F. et Wehling M., EURO-FORTA v2, Drugs Aging 2023" },
         "PIM_CHECK": { nom: "PIM-Check",             annee: 2016, ref: "Tommelein E. et al., Br J Clin Pharmacol 2016" },
         "PRISCUS":   { nom: "PRISCUS 2.0",           annee: 2022, ref: "Holt S. et al., Dtsch Arztebl Int 2022" },
         "EU7PIM":    { nom: "EU(7)-PIM List",        annee: 2015, ref: "Renom-Guiteras A. et al., Eur J Clin Pharmacol 2015" },

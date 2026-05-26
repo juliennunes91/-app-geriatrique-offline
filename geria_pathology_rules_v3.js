@@ -71,7 +71,7 @@ const GUIDELINE_INDEX = {
     "PATHWAY_2":        { ref: "Williams B et al. Lancet 2015;386:2059. PATHWAY-2" },
     "DIAMOND":          { ref: "Butler J et al. N Engl J Med 2024;390:1455. DIAMOND (Patiromer in HFrEF)" },
     "CLEAR_OUTCOMES":   { ref: "Nissen SE et al. N Engl J Med 2023;388:1353. CLEAR Outcomes (Bempedoic Acid)" },
-    "IMPACT":           { ref: "Rabe KF et al. N Engl J Med 2020;383:35. IMPACT (Triple therapy COPD)" },
+    "IMPACT":           { ref: "Lipson DA et al. N Engl J Med 2018;378:1671. IMPACT (Triple therapy COPD)" },
     "ETHOS":            { ref: "Rabe KF et al. N Engl J Med 2020;383:35. ETHOS (Triple therapy COPD)" }
 };
 
@@ -199,7 +199,7 @@ const PATHOLOGY_RULES_DB = {
                 {
                     classe: "Quadrithérapie fondamentale (4 piliers)",
                     composants: [
-                        { rang: 1, classe: "IEC/ARA2 ou ARNI (Sacubitril-Valsartan)", niveau: "IA", note: "ARNI préféré si toléré (PARADIGM-HF). Switch IEC→ARNI après 36h de washout." },
+                        { rang: 1, classe: "IEC/ARA2 ou ARNI (Sacubitril-Valsartan)", niveau: "IA (IEC/ARA2) / IB (ARNI)", note: "IEC/ARA2 = classe IA ; ARNI = classe IB (remplacement de l'IEC). ARNI préféré si toléré (PARADIGM-HF). Switch IEC→ARNI après 36h de washout." },
                         { rang: 2, classe: "Bêtabloquant (Bisoprolol, Carvédilol, Nébivolol, Métoprolol succinate)", niveau: "IA", note: "Initier à faible dose, titrer toutes les 2 semaines. CI si FC < 50 ou BAV 2-3." },
                         { rang: 3, classe: "ARM (Spironolactone ou Éplérénone)", niveau: "IA", note: "Si K+ < 5.0 et DFG > 30. Éplérénone si gynécomastie sous spironolactone." },
                         { rang: 4, classe: "iSGLT2 (Dapagliflozine ou Empagliflozine)", niveau: "IA", note: "Bénéfice indépendant du diabète. Peut être initié en premier. Initier si DFG ≥ 20 mL/min et poursuivre même si DFG descend < 20 en cours de traitement (KDIGO 2024 + DAPA-HF/EMPEROR-Reduced ; bénéfice cardio-rénal maintenu). Ne pas initier si DFG < 20." }
@@ -769,7 +769,7 @@ const PATHOLOGY_RULES_DB = {
     "PAT_007": {
         ID: "PAT_007",
         NOM: "Artériopathie Oblitérante (AOMI)",
-        REFERENCE: "ESC 2024 PAAD | COMPASS | VOYAGER-PAD | EUCLID",
+        REFERENCE: "ESC 2024 PAAD | COMPASS | VOYAGER-PAD | EUCLID (essai négatif : ticagrelor non supérieur au clopidogrel)",
         SOURCES_EBM: {
                   "INITIER": {
                             "Monothérapie antiagrégante": "ESC_PAD_2024 §8.2, IA",
@@ -2186,7 +2186,7 @@ const PATHOLOGY_RULES_DB = {
                         { groupe: "E", critere: "≥ 2 exacerbations modérées ou ≥ 1 hospitalisation", traitement: "LAMA + LABA ± CSI si Eo ≥ 300/µL" }
                     ]
                 },
-                { classe: "Trithérapie (LAMA + LABA + CSI)", indication: "Eo ≥ 300/µL et/ou ≥ 2 exacerbations modérées ou 1 hospitalisation/an", note: "IMPACT/ETHOS : réduction mortalité toutes causes sous trithérapie (NNT ~100 sur 1 an)", niveau_preuve: "IA" },
+                { classe: "Trithérapie (LAMA + LABA + CSI)", indication: "Eo ≥ 300/µL et/ou ≥ 2 exacerbations modérées ou 1 hospitalisation/an", note: "IMPACT/ETHOS : réduction des exacerbations. Le signal de baisse de mortalité toutes causes est limité aux comparaisons vs bras sans CSI (ETHOS BGF vs GFF ; IMPACT vs UMEC/VI) — bénéfice porté par le CSI, non généralisable à la trithérapie en soi. Surveiller le surrisque de pneumonie sous CSI.", niveau_preuve: "IA" },
                 { classe: "Azithromycine 250 mg/j ou 500 mg x3/sem", indication: "Prévention exacerbations chez ex-fumeur, après optimisation inhalateurs", ci: ["QTc allongé", "Insuffisance hépatique"], bio_suivi: ["BIO_031", "BIO_013"], note: "ECG avant, audiogramme annuel (ototoxicité)" },
                 { classe: "Roflumilast 500 µg/j", indication: "BPCO sévère + phénotype exacerbateur + bronchite chronique malgré trithérapie", ci: ["Dépression sévère", "Poids < 60 kg"], note: "Effets indésirables : diarrhée, perte de poids, dépression" }
             ],
@@ -2309,7 +2309,7 @@ const PATHOLOGY_RULES_DB = {
     "PAT_026": {
         ID: "PAT_026",
         NOM: "Infection Urinaire",
-        REFERENCE: "SPILF 2024 | IDSA 2024 | HAS",
+        REFERENCE: "SPILF 2024 | IDSA 2019 (bactériurie asymptomatique) | IDSA 2010 (cystite) | HAS",
         SOURCES_EBM: {
                   "INITIER": {
                             "Fosfomycine": "SPILF_2024 §2.1, A"
