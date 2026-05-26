@@ -2495,6 +2495,20 @@ const GERIA_RECOS_DB = {
             alternatives: "Ramipril 5-10 mg, périndopril 5-10 mg"
         },
         {
+            id: "IN_B04",
+            sources: ["STOPP3", "FORTA", "BEERS"],
+            ref_code: "START3-B4",
+            section: "Cardiovasculaire",
+            titre: "Bêtabloquant pour coronaropathie symptomatique (angor)",
+            message: "Bêtabloquant cardiosélectif pour coronaropathie symptomatique (ischémique) — réduction de l'angor et prévention des récidives. À maintenir longtemps après un IDM.",
+            severite: "warning",
+            condition: {
+                comorbs: ["PAT_004"],
+                med_absent: ["betabloquant", "bisoprolol", "metoprolol", "carvedilol", "nebivolol", "atenolol", "diltiazem", "verapamil"]
+            },
+            alternatives: "Bisoprolol, métoprolol, nébivolol ou carvédilol (cardiosélectifs préférés). Inhibiteur calcique bradycardisant (diltiazem, vérapamil) en alternative anti-angineuse si CI bêtabloquant."
+        },
+        {
             id: "IN_B05",
             sources: ["ESC_HF", "STOPP3", "FORTA"],
             ref_code: "START3-B5",
@@ -2676,6 +2690,34 @@ const GERIA_RECOS_DB = {
             },
             alternatives: "Rivastigmine patch 4.6→9.5→13.3 mg/24h"
         },
+        {
+            id: "IN_D05",
+            sources: ["STOPP3", "FORTA"],
+            ref_code: "START3-D5",
+            section: "SNC",
+            titre: "ISRS (ou IRSNA / prégabaline) pour trouble anxieux généralisé persistant et sévère",
+            message: "ISRS (ou IRSNA si ISRS contre-indiqué, ou prégabaline) pour trouble anxieux généralisé persistant et sévère avec retentissement sur les activités et la qualité de vie. Évaluer d'abord les causes organiques et iatrogènes ; approche non pharmacologique en complément.",
+            severite: "warning",
+            condition: {
+                comorbs: ["PAT_044"],
+                med_absent: ["isrs", "irsna", "sertraline", "escitalopram", "citalopram", "paroxetine", "fluoxetine", "fluvoxamine", "venlafaxine", "duloxetine", "pregabaline", "buspirone"]
+            },
+            alternatives: "Sertraline, escitalopram (ISRS 1re ligne). Venlafaxine ou duloxétine (IRSNA), ou prégabaline en alternative."
+        },
+        {
+            id: "IN_D06",
+            sources: ["STOPP3", "FORTA"],
+            ref_code: "START3-D6",
+            section: "SNC",
+            titre: "Agoniste dopaminergique pour syndrome des jambes sans repos",
+            message: "Agoniste dopaminergique pour syndrome des jambes sans repos avec retentissement sur la qualité de vie — après exclusion d'une carence martiale (ferritine < 50 µg/L → supplémenter d'abord) et d'une IRC sévère (DFG < 30, contre-indication pramipexole).",
+            severite: "warning",
+            condition: {
+                comorbs: ["PAT_051"],
+                med_absent: ["ropinirole", "pramipexole", "rotigotine", "gabapentine", "pregabaline"]
+            },
+            alternatives: "Ropinirole, pramipexole ou rotigotine (patch). Alpha-2-delta ligands (gabapentine, prégabaline) en alternative."
+        },
 
         // ====================================================================
         // SECTION E : RÉNAL
@@ -2694,6 +2736,22 @@ const GERIA_RECOS_DB = {
                 med_absent: ["alfacalcidol", "calcitriol"]
             },
             alternatives: "Alfacalcidol 0.25-1 µg/j ou calcitriol 0.25 µg/j"
+        },
+        {
+            id: "IN_E03",
+            sources: ["STOPP3"],
+            ref_code: "START3-E3",
+            section: "Rénal",
+            titre: "Agent stimulant l'érythropoïèse pour anémie de l'IRC sévère",
+            message: "Agent stimulant l'érythropoïèse (époétine, darbépoétine) pour IRC sévère (DFG < 30) avec anémie symptomatique (Hb < 10 g/dL) non attribuable à une carence martiale ou hématinique. Corriger d'abord les carences (fer, B12, folates) — cible Hb 10-12 g/dL.",
+            severite: "warning",
+            condition: {
+                bio_strict: true,
+                comorbs: ["PAT_029"],
+                bio: { "BIO_004": { op: "<", val: 30 }, "BIO_009": { op: "<", val: 10 } },
+                med_absent: ["epoetine", "darbepoetine", "erythropoietine"]
+            },
+            alternatives: "Darbépoétine ou époétine, après correction des carences. Cible Hb : 10-12 g/dL (ne pas dépasser)."
         },
         {
             id: "IN_E04",

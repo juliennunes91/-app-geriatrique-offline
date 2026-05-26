@@ -12,12 +12,21 @@
 //    générique) — on garde 049 (clés plus précises).
 //  - SUP_START_* (21 règles, START3) : famille entière mal modélisée — chaque règle se
 //    déclenche sur la PRÉSENCE du médicament (med_keys) au lieu de son absence, sans
-//    condition clinique. Elle ne peut donc jamais détecter une omission ; elle ne produit
-//    du bruit (« Réévaluation planifiée » avec l'indication de prescription affichée hors
-//    sujet) que lorsque le patient prend déjà le médicament. Les vraies omissions sont
-//    couvertes par les règles natives IN_* (geria_recos_final.js), correctement
-//    modélisées (med_absent + comorbidité). Conversion en vraies omissions possible plus
-//    tard, rule par rule (nettoyage des clés malformées + mapping comorbidité requis).
+//    condition clinique ; et toutes les règles « supplement » sont de toute façon
+//    fusionnées dans le bucket « À ÉVITER » (cf. plus bas), à l'opposé d'une omission.
+//    Elles restent donc toutes en quarantaine. Les 4 critères réellement convertibles
+//    (comorbidité existante, pas de doublon) ont été RÉIMPLÉMENTÉS nativement dans
+//    geria_recos_final.js (INITIER), correctement modélisés (med_absent + comorbs/bio) :
+//      • SUP_START_007 → IN_B04 (bêtabloquant / coronaropathie symptomatique, PAT_004)
+//      • SUP_START_020 → IN_D05 (ISRS-IRSNA / trouble anxieux généralisé, PAT_044)
+//      • SUP_START_021 → IN_D06 (agoniste dopaminergique / SJSR, PAT_051)
+//      • SUP_START_024 → IN_E03 (érythropoïèse / anémie MRC sévère, PAT_029 + DFG<30 + Hb<10)
+//    Non convertibles : SUP_START_013 (doublon IN_C01) et _032 (doublon IN_G01) ;
+//    _023 (pas de code bio phosphatémie) ; _038/_045 (comorbidités PAT_055/PAT_040
+//    inexistantes) ; _022/_028/_046/_048 (aucune comorbidité modélisée) ; _029/_030/_033/
+//    _039 (déclencheurs non structurés : antibiothérapie/H.pylori/hypoxémie/corticothérapie) ;
+//    _040/_041 (états historiques post-arrêt) ; _047 (PAT_026 trop générique) ; _059
+//    (vaccin universel). Réévaluables si l'app modélise ces états cliniques.
 // Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
 const SUPPLEMENT_QUARANTINE = new Set([
     'SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050',
