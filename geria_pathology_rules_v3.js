@@ -3687,6 +3687,52 @@ const PATHOLOGY_RULES_DB = {
                 { bio: "BIO_021", condition: "B12 < 150 pg/mL sous IPP > 12 mois", action: "Supplémentation B12 PO (1 mg/j) ou IM (1 mg/sem x 4 puis mensuel)", syndrome: "SYND_007" }
             ]
         }
+    },
+    "PAT_054": {
+        ID: "PAT_054",
+        NOM: "Douleur chronique",
+        REFERENCE: "HAS 2023 (douleur chronique) | SFETD 2024 | OMS (paliers antalgiques) | STOPP/START v3 | Beers 2023",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Évaluation multidimensionnelle (EN/EVA ; Algoplus ou ECPA si troubles cognitifs)": "SFETD — préalable indispensable à toute prescription",
+                "Paracétamol (palier 1, 1ère intention)": "HAS — antalgique de 1ère intention chez le sujet âgé",
+                "Approches non médicamenteuses (activité physique adaptée, kinésithérapie, TCC, éducation)": "HAS/SFETD — composante systématique de la prise en charge",
+                "Adjuvants de la douleur neuropathique (duloxétine, gabapentine, prégabaline, amitriptyline faible dose)": "SFETD — douleur neuropathique confirmée (DN4)",
+                "Opioïdes faibles puis forts (palier 2-3) si douleur non soulagée": "OMS/SFETD — titration prudente, laxatif systématique"
+            },
+            "EVITER": {
+                "AINS au long cours": "STOPP H3/H6 — risque digestif, rénal et cardiovasculaire chez le sujet âgé",
+                "Opioïdes forts en 1ère intention pour douleur non cancéreuse chronique": "SFETD/STOPP — bénéfice incertain, risque de chutes/confusion/dépendance",
+                "Coprescription opioïde + benzodiazépine/gabapentinoïde": "FDA/SFETD — dépression respiratoire"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "ÉVALUATION D'ABORD : douleur chronique = douleur > 3 mois. Évaluation multidimensionnelle (intensité EN/EVA ; Algoplus ou ECPA si troubles de communication/cognitifs), retentissement fonctionnel et thymique, mécanisme (nociceptive / neuropathique DN4 / nociplastique). Rechercher une cause curable avant toute escalade antalgique." },
+                { note: "STRATÉGIE PALIÈRE (OMS) ADAPTÉE AU SUJET ÂGÉ : (1) paracétamol systématique en 1ère intention + approche non médicamenteuse ; (2) opioïde faible si insuffisant ; (3) opioïde fort à dose initiale réduite avec laxatif systématique. Réévaluation régulière du rapport bénéfice/risque (EVA, fonction, EI)." },
+                { note: "DOULEUR NEUROPATHIQUE : adjuvants spécifiques (duloxétine, gabapentine/prégabaline avec adaptation rénale, amitriptyline à faible dose mais ACB — prudence) ; patch de lidocaïne 5 % si douleur localisée." },
+                { note: "DÉPRESCRIPTION/PRUDENCE : éviter AINS au long cours (STOPP H3/H6) ; éviter opioïdes forts en 1ère intention dans la douleur non cancéreuse ; surveiller la constipation opioïde-induite et la coprescription sédative (BZD, gabapentinoïdes)." }
+            ],
+            INITIER: [
+                { classe: "Évaluation de la douleur (EN/EVA ; Algoplus/ECPA si troubles cognitifs)", indication: "Préalable systématique", niveau_preuve: "A" },
+                { classe: "Paracétamol (jusqu'à 3 g/j chez l'âgé)", indication: "Palier 1, 1ère intention", note: "Réduire à 2-3 g/j si faible poids, dénutrition ou hépatopathie", niveau_preuve: "A" },
+                { classe: "Approches non médicamenteuses (activité physique adaptée, kinésithérapie, TCC)", indication: "Systématique, en association", niveau_preuve: "A" },
+                { classe: "Opioïdes faibles (palier 2) puis forts (palier 3) en titration", indication: "Douleur insuffisamment soulagée", note: "Dose initiale réduite, LI en titration, laxatif systématique, réévaluation rapprochée", niveau_preuve: "B" },
+                { classe: "Adjuvants neuropathiques (duloxétine, gabapentine, prégabaline, lidocaïne patch)", indication: "Douleur neuropathique (DN4 +)", note: "Adaptation rénale gabapentine/prégabaline ; surveillance sédation/chutes", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "AINS au long cours", raison: "Risque digestif, rénal, cardiovasculaire (STOPP H3/H6)", gravite: "À éviter" },
+                { classe: "Opioïdes forts en 1ère intention (douleur non cancéreuse chronique)", raison: "Bénéfice incertain, chutes, confusion, dépendance", gravite: "À éviter" },
+                { classe: "Coprescription opioïde + benzodiazépine ou gabapentinoïde", raison: "Dépression respiratoire (FDA Black Box)", gravite: "Danger" }
+            ]
+        },
+        BIOLOGIE: {
+            SURVEILLANCE_CIBLE: ["BIO_004", "BIO_003"],
+            REGLES: [
+                { bio: "BIO_004", frequence: "Avant et sous AINS / gabapentinoïde", note: "Éviter ou adapter les AINS si DFG < 50 ; adapter gabapentine/prégabaline selon le DFG" },
+                { bio: "BIO_003", frequence: "Sous AINS au long cours", note: "Surveiller la fonction rénale (néphrotoxicité des AINS chez le sujet âgé)" }
+            ]
+        }
     }
 };
 
@@ -3743,7 +3789,8 @@ const PATHO_SYNDROME_MAP = {
     "PAT_050": ["SYND_009", "SYND_013"],
     "PAT_051": ["SYND_009"],
     "PAT_052": ["SYND_009", "SYND_003"],
-    "PAT_053": ["SYND_005", "SYND_006", "SYND_022", "SYND_007"]
+    "PAT_053": ["SYND_005", "SYND_006", "SYND_022", "SYND_007"],
+    "PAT_054": ["SYND_046", "SYND_048"]
 };
 
 const PATHO_MED_INTERDITS = {

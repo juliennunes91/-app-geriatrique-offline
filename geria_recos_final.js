@@ -4077,9 +4077,9 @@ const RECOS_SUPPLEMENT = [
     {
         id: "SUP_REM_08", sources: ["REMEDIES", "EU7PIM"],
         titre: "Vasodilatateurs cérébraux/périphériques (efficacité non prouvée)",
-        message: "REMEDIES / EU(7)-PIM : Vasodilatateurs cérébraux/périphériques (pentoxifylline, ginkgo biloba, piracétam, vinpocétine, naftidrofuryl) — efficacité non prouvée, effets indésirables.",
+        message: "REMEDIES / EU(7)-PIM : Vasodilatateurs cérébraux/périphériques (pentoxifylline, naftidrofuryl, nicergoline, vinpocétine) — efficacité non prouvée, effets indésirables. (Nootropiques ginkgo/piracétam : voir EV_D20.)",
         severite: "warning",
-        condition: { med_keys: ["pentoxifylline", "ginkgo", "piracetam", "naftidrofuryl", "nicergoline"] }
+        condition: { med_keys: ["pentoxifylline", "naftidrofuryl", "nicergoline"] }
     },
     {
         id: "SUP_REM_09", sources: ["REMEDIES"],
@@ -4481,8 +4481,8 @@ const CROSS_REF_GROUPS = [
         merged_sources: ["STOPP3", "STOPPFRAIL", "REMEDIES", "EU7PIM"],
         rule_ids: ["EV_D20", "SUP_REM_08"],
         pim_dict_keys: ["pentoxifylline", "piracetam", "nicergoline"],
-        fusion_strategy: "merge_display",
-        note: "D20 et REM_08 couvrent le même sujet. Fusionner en une alerte unique."
+        fusion_strategy: "distinct_context",
+        note: "Chevauchement retiré : EV_D20 = nootropiques (ginkgo, piracétam) pour la démence ; SUP_REM_08 = vasodilatateurs cérébraux (pentoxifylline, naftidrofuryl, nicergoline). Jeux de médicaments désormais disjoints."
     },
 
     // ========================================================================

@@ -804,6 +804,15 @@ const MASTER_DB = {
             "SYNONYMES": "RGO, REFLUX, Pyrosis, Régurgitations, Œsophagite peptique, Endobrachyœsophage, EBO, GERD",
             "BIO_SURVEILLANCE": "BIO_006, BIO_021, BIO_005, BIO_009, BIO_020",
             "SYND_RISQUE": "SYND_005, SYND_006, SYND_022, SYND_007"
+        },
+        "PAT_054": {
+            "ID_PATHO": "PAT_054",
+            "CIM_10": "R52.2",
+            "NOM_STANDARD": "Douleur chronique",
+            "CATEGORIE": "Douleur",
+            "SYNONYMES": "Douleur chronique, douleur persistante, douleur chronique rebelle, douleur chronique non cancéreuse, chronic pain",
+            "BIO_SURVEILLANCE": "BIO_004, BIO_003",
+            "SYND_RISQUE": ""
         }
     },
     "SYNDROMES": {
@@ -1609,6 +1618,52 @@ const MASTER_DB = {
                     "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
                     "notes_cliniques": "Huile de paraffine (laxatif lubrifiant). Éviter au long cours chez le sujet âgé fragile ou dysphagique.",
                     "source": "RCP Lansoyl/Lubentyl ; EU(7)-PIM ; recommandations laxatifs sujet âgé"
+          },
+          {
+                    "dci": "Ginkgo biloba",
+                    "princeps": "Tanakan, Ginkogink, Tramisal",
+                    "classe": "Nootropique / vasoactif (extrait de Ginkgo biloba) — efficacité non démontrée (démence, déclin cognitif) ; risque hémorragique — PIM EU(7)-PIM/REMEDIES",
+                    "poso_hab": "120-240 mg/j",
+                    "poso_ger": "À ÉVITER : bénéfice non démontré dans la démence / le déclin cognitif ; risque hémorragique (potentialise antiagrégants, anticoagulants, AINS)",
+                    "poso_ren": "Pas d'adaptation rénale spécifique",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": { "qt": 0, "sero": 0, "saign": 1, "chute": 0, "sedat": 0, "hypoG": 0 },
+                    "bhe": "",
+                    "albumine": "",
+                    "qt_risque": "",
+                    "ddi_interact": "Majoration du risque hémorragique avec antiagrégants (aspirine, clopidogrel), anticoagulants (AVK, AOD) et AINS.",
+                    "ddi_interact_v2": [],
+                    "suivi_initial": "Médications antithrombotiques associées | Évaluation du risque hémorragique | Réévaluation du bénéfice",
+                    "suivi_periodique": "Signes hémorragiques | Réévaluation du bénéfice (absent → déprescription)",
+                    "alerte_clinique": "Efficacité non prouvée (démence, déclin cognitif, AOMI) ; risque hémorragique surtout si antithrombotique associé. Déprescription recommandée (EU(7)-PIM, REMEDIES).",
+                    "bio_cible": [],
+                    "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+                    "notes_cliniques": "Extrait végétal nootropique/vasoactif. Bénéfice non démontré ; à déprescrire chez le sujet âgé.",
+                    "source": "EU(7)-PIM ; liste REMEDIES ; RCP Tanakan"
+          },
+          {
+                    "dci": "Piracetam",
+                    "princeps": "Nootropyl, Gabacet",
+                    "classe": "Nootropique (piracétam, dérivé du GABA) — efficacité non démontrée (démence, déclin cognitif) ; PIM EU(7)-PIM/REMEDIES ; accumulation en insuffisance rénale",
+                    "poso_hab": "2,4-4,8 g/j",
+                    "poso_ger": "À ÉVITER : bénéfice non démontré ; accumulation en IRC (adapter ou arrêter)",
+                    "poso_ren": "DFG < 60 : réduire la dose ; DFG < 20 : contre-indiqué",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": { "qt": 0, "sero": 0, "saign": 0, "chute": 0, "sedat": 0, "hypoG": 0 },
+                    "bhe": "",
+                    "albumine": "",
+                    "qt_risque": "",
+                    "ddi_interact": "Prudence avec les antithrombotiques (effet antiagrégant possible à forte dose).",
+                    "ddi_interact_v2": [],
+                    "suivi_initial": "DFG (adaptation / CI rénale) | Réévaluation du bénéfice",
+                    "suivi_periodique": "DFG | Réévaluation du bénéfice (absent → déprescription)",
+                    "alerte_clinique": "Efficacité non prouvée ; accumulation en insuffisance rénale (CI si DFG < 20). Déprescription recommandée (EU(7)-PIM, REMEDIES).",
+                    "bio_cible": [],
+                    "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+                    "notes_cliniques": "Nootropique. Bénéfice non démontré ; adapter ou arrêter selon la fonction rénale.",
+                    "source": "EU(7)-PIM ; liste REMEDIES ; RCP Nootropyl"
           },
           {
                     "dci": "Acebutolol",
