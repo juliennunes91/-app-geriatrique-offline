@@ -42,8 +42,11 @@ function extractCorpus() {
         const __special = new Set(['antihypertenseur']);
         const __resolves = key => { const k = String(key).toLowerCase().replace(/[^a-z0-9]/g,''); return __special.has(k) || __meds.some(m => matchesDrugClass(m.dci, m.classe, k)); };
         const __presenceDead = c => { const g = [c.med_keys, c.med_keys_2, c.med_keys_3].filter(x => Array.isArray(x) && x.length); return g.length > 0 && g.some(grp => !grp.some(__resolves)); };
+        const __princepsToks = new Set();
+        MASTER_DB.MEDICAMENTS.forEach(m => String(m.princeps||'').split(/[^A-Za-zÀ-ÿ0-9]+/).forEach(t => { const n = __norm(t); if (n.length > 3) __princepsToks.add(n); }));
+        const __brandKeys = c => [].concat(c.med_keys||[], c.med_keys_2||[], c.med_keys_3||[]).filter(k => { const n = __norm(k); return n.length > 3 && !__resolves(k) && __princepsToks.has(n); });
     `;
-    const pick = `(r=>({id:r.id,ref_code:r.ref_code,severite:r.severite,titre:r.titre,message:r.message,condition:r.condition,presenceDead:__presenceDead(r.condition||{})}))`;
+    const pick = `(r=>({id:r.id,ref_code:r.ref_code,sources:r.sources||[],severite:r.severite,titre:r.titre,message:r.message,condition:r.condition,presenceDead:__presenceDead(r.condition||{}),brandKeys:__brandKeys(r.condition||{})}))`;
     const json = vm.runInContext(`(function(){${helpers} return JSON.stringify({
         pathoIds: Object.keys(MASTER_DB.PATHOLOGIES),
         bioIds: Object.keys(MASTER_DB.BIOLOGIE),
@@ -80,7 +83,11 @@ function extractCorpus() {
                 bioStrict: !!c.bio_strict,
                 condKeyCount: Object.keys(c).length,
                 condType: c.type || null,
-                presenceDead: !!r.presenceDead
+                presenceDead: !!r.presenceDead,
+                sources: r.sources || [],
+                brandKeys: r.brandKeys || [],
+                ctxPositive: [].concat(typeof c.contexte_clinique === 'string' ? [c.contexte_clinique] : (c.contexte_clinique || []), c.contexte_clinique_any || []),
+                ctxAbsent: (c.contexte_clinique_absent || []).slice()
             });
         });
     }
@@ -175,6 +182,39 @@ function runRuleInvariantTests(test, assert) {
     // (clé malformée OU médicament cible absent de MASTER_DB.MEDICAMENTS).
     const presenceDead = active.filter(r => r.presenceDead).map(r => `${r.id} (${r.set}) — ${r.medKeys.slice(0, 3).join(', ')}`);
     audit('Règles actives mortes par médicament (aucune med_keys résolvable)', presenceDead);
+
+    // Contextes cliniques réellement alimentables (ctxClinique.push dans app_analysis.js,
+    // y compris ceux dérivés des précisions médicament). Un contexte référencé hors de
+    // cet ensemble ne peut jamais être positionné.
+    const POPULATABLE_CTX = new Set();
+    try {
+        const aaSrc = require('fs').readFileSync(require('path').join(__dirname, 'app_analysis.js'), 'utf8');
+        (aaSrc.match(/ctxClinique\.push\(([^)]*)\)/g) || []).forEach(m => {
+            (m.match(/["']([a-zA-Z_]+)["']/g) || []).forEach(q => POPULATABLE_CTX.add(q.replace(/["']/g, '')));
+        });
+    } catch (e) { /* lecture best-effort */ }
+
+    // Contexte clinique REQUIS jamais alimentable → règle morte par contexte.
+    const deadCtxPos = [];
+    active.forEach(r => r.ctxPositive.forEach(cx => { if (POPULATABLE_CTX.size && !POPULATABLE_CTX.has(cx)) deadCtxPos.push(`${r.id}:${cx}`); }));
+    audit('Contexte requis jamais alimentable (règle morte par contexte)', deadCtxPos);
+
+    // Contexte d'EXCLUSION jamais alimentable → l'exception ne peut jamais s'activer (sur-déclenchement).
+    const deadCtxAbs = [];
+    active.forEach(r => r.ctxAbsent.forEach(cx => { if (POPULATABLE_CTX.size && !POPULATABLE_CTX.has(cx)) deadCtxAbs.push(`${r.id}:${cx}`); }));
+    audit('Contexte d\'exclusion jamais alimentable (exception inopérante)', deadCtxAbs);
+
+    // Clés médicament en NOM COMMERCIAL (matchent un princeps, pas un DCI) → ne résolvent pas.
+    const brandKeys = [];
+    rules.forEach(r => r.brandKeys.forEach(k => brandKeys.push(`${r.id}${r.quarantined ? ' [Q]' : ''} :: ${k}`)));
+    audit('Clés médicament en nom commercial (princeps au lieu du DCI)', brandKeys);
+
+    // PROVENANCE : source STOPP/START revendiquée sans ref_code STOPP/START correspondant
+    // → attribution probablement générique (à corroborer ou retirer).
+    const provenance = active.filter(r =>
+        (r.sources || []).some(s => /STOPP|START/i.test(s)) && !/^(STOPP|START)/i.test(r.refCode)
+    ).map(r => `${r.id} (ref=${r.refCode || '-'}) sources=${JSON.stringify(r.sources)}`);
+    audit('Source STOPP/START non corroborée par le ref_code', provenance);
 
     // Omissions (med_absent) rendues dans « éviter » — légitime si co-prescription protectrice
     const omissionInEviter = active.filter(r => r.hasMedAbsent && r.bucket === 'eviter').map(r => `${r.id} (${r.set})`);
