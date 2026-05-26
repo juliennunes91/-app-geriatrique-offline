@@ -33,8 +33,18 @@ const BASELINE_DANGLING_COMORBS = new Set([]);
 
 function extractCorpus() {
     const { sandbox } = loadApp();
-    const pick = `(r=>({id:r.id,ref_code:r.ref_code,severite:r.severite,titre:r.titre,message:r.message,condition:r.condition}))`;
-    const json = vm.runInContext(`JSON.stringify({
+    // « presenceDead » : une règle déclenchée sur PRÉSENCE est morte si un de ses
+    // groupes med_keys/_2/_3 (AND) n'a AUCUNE clé résolvable (aucun médicament de la
+    // base ne peut le satisfaire) — calculé en sandbox via matchesDrugClass.
+    const helpers = `
+        const __norm = s => (s||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+        const __meds = MASTER_DB.MEDICAMENTS.map(m => ({ dci: __norm(m.dci), classe: __norm(m.classe) }));
+        const __special = new Set(['antihypertenseur']);
+        const __resolves = key => { const k = String(key).toLowerCase().replace(/[^a-z0-9]/g,''); return __special.has(k) || __meds.some(m => matchesDrugClass(m.dci, m.classe, k)); };
+        const __presenceDead = c => { const g = [c.med_keys, c.med_keys_2, c.med_keys_3].filter(x => Array.isArray(x) && x.length); return g.length > 0 && g.some(grp => !grp.some(__resolves)); };
+    `;
+    const pick = `(r=>({id:r.id,ref_code:r.ref_code,severite:r.severite,titre:r.titre,message:r.message,condition:r.condition,presenceDead:__presenceDead(r.condition||{})}))`;
+    const json = vm.runInContext(`(function(){${helpers} return JSON.stringify({
         pathoIds: Object.keys(MASTER_DB.PATHOLOGIES),
         bioIds: Object.keys(MASTER_DB.BIOLOGIE),
         eviter: GERIA_RECOS_DB.EVITER.map(${pick}),
@@ -46,7 +56,7 @@ function extractCorpus() {
                 .map(${pick});
         })(),
         quarantine: [...SUPPLEMENT_QUARANTINE]
-    })`, sandbox);
+    }); })()`, sandbox);
     const raw = JSON.parse(json);
 
     const bucketOf = { eviter: 'eviter', initier: 'initier', supplement: 'eviter' };
@@ -69,7 +79,8 @@ function extractCorpus() {
                 hasGate: !!(c.comorbs || c.comorbs_any || c.bio || c.bio_any || c.contexte_clinique || c.contexte_clinique_any || c.fragile || c.fragilite),
                 bioStrict: !!c.bio_strict,
                 condKeyCount: Object.keys(c).length,
-                condType: c.type || null
+                condType: c.type || null,
+                presenceDead: !!r.presenceDead
             });
         });
     }
@@ -158,6 +169,12 @@ function runRuleInvariantTests(test, assert) {
         if (looksMalformedKey(k)) malformed.push(`${r.id}${r.quarantined ? ' [Q]' : ''} :: "${k}"`);
     }));
     audit('Clés médicament suspectes (à revoir)', malformed);
+
+    // Règles ACTIVES mortes par médicament : un groupe med_keys/_2/_3 (AND) dont
+    // aucune clé ne correspond à un médicament de la base → ne peut jamais déclencher
+    // (clé malformée OU médicament cible absent de MASTER_DB.MEDICAMENTS).
+    const presenceDead = active.filter(r => r.presenceDead).map(r => `${r.id} (${r.set}) — ${r.medKeys.slice(0, 3).join(', ')}`);
+    audit('Règles actives mortes par médicament (aucune med_keys résolvable)', presenceDead);
 
     // Omissions (med_absent) rendues dans « éviter » — légitime si co-prescription protectrice
     const omissionInEviter = active.filter(r => r.hasMedAbsent && r.bucket === 'eviter').map(r => `${r.id} (${r.set})`);
