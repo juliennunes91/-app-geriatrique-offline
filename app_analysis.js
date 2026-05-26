@@ -784,10 +784,47 @@ function analyserPrescription() {
             // mais de gravité différente.
             const eviterKey = a => (a.titre || '').trim() + '|' + (a.severite || '');
             const seenEviter = new Set(eviterAll.map(eviterKey));
+
+            // Dédup PAR MÉDICAMENT (réduction du bruit de l'import SUP_*) : une règle
+            // « supplement » purement générique (flag PIM sur la seule présence d'un
+            // médicament, sans autre condition) est masquée si CHAQUE médicament qu'elle
+            // vise est déjà couvert par une autre alerte « éviter » de sévérité ≥.
+            // Garde-fous : on ne supprime jamais une règle native, ni la SEULE couverture
+            // d'un médicament, ni un signal de sévérité supérieure. En cas de doute sur le
+            // matching (matchesDrugClass indisponible), on conserve l'alerte.
+            const _normTxt = s => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            const _sevRank = s => ({ danger: 3, warning: 2, info: 1 }[s] || 0);
+            const _canMatch = typeof matchesDrugClass === 'function';
+            const _medsConcerned = a => {
+                const keys = (a.condition && a.condition.med_keys) || a.med_keys || [];
+                if (!keys.length || !_canMatch) return [];
+                return activeMeds.filter(m => {
+                    const dci = _normTxt(m.dci), classe = _normTxt(m.classe);
+                    return keys.some(k => matchesDrugClass(dci, classe, _normTxt(k)));
+                }).map(m => m.core_id || _normTxt(m.dci));
+            };
+            // Générique STRICT : la condition ne contient QUE med_keys (aucun autre gate —
+            // ni comorbidité, bio, contexte, fragilité, âge, ACB, QT, polypharmacie…).
+            // Toute règle portant une sémantique clinique distincte (ex. STOPPFrail gaté
+            // sur la fragilité) est ainsi exclue du masquage.
+            const _isGenericPim = a => {
+                const c = a.condition || {};
+                return Object.keys(c).every(k => k === 'med_keys' || k === 'type') && !!c.med_keys;
+            };
+            const _medCoverSev = {};
+            eviterAll.forEach(a => _medsConcerned(a).forEach(mid => { _medCoverSev[mid] = Math.max(_medCoverSev[mid] || 0, _sevRank(a.severite)); }));
+
             (recos.supplement || []).forEach(a => {
                 if (a.id && SUPPLEMENT_QUARANTINE.has(a.id)) return;
                 const k = eviterKey(a);
-                if (!seenEviter.has(k)) { seenEviter.add(k); eviterAll.push(a); }
+                if (seenEviter.has(k)) return;
+                const meds = _medsConcerned(a);
+                if (_isGenericPim(a) && meds.length && meds.every(mid => (_medCoverSev[mid] || 0) >= _sevRank(a.severite))) {
+                    return; // flag PIM générique déjà couvert ailleurs (sévérité ≥) → masqué
+                }
+                seenEviter.add(k);
+                eviterAll.push(a);
+                meds.forEach(mid => { _medCoverSev[mid] = Math.max(_medCoverSev[mid] || 0, _sevRank(a.severite)); });
             });
             eviterAll.sort((a, b) => (b.score || 0) - (a.score || 0));
             const eviterFinal = reconcileAlertClusters(eviterAll);
