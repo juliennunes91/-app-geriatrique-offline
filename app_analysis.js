@@ -27,9 +27,24 @@
 //    _039 (déclencheurs non structurés : antibiothérapie/H.pylori/hypoxémie/corticothérapie) ;
 //    _040/_041 (états historiques post-arrêt) ; _047 (PAT_026 trop générique) ; _059
 //    (vaccin universel). Réévaluables si l'app modélise ces états cliniques.
+//  - Clés médicament malformées (mots collés / posologie embarquée / schéma non
+//    détectable par DCI) rendant la règle morte OU sémantiquement cassée, ET dont
+//    le concept est couvert par une règle native fonctionnelle, ou indétectable :
+//      • SUP_STOP_003 (nifédipine forme immédiate) → doublon mort de EV_PRISC_01.
+//      • SUP_STOP_009 (antiagrégant + anticoagulant) → clé collée exprimant une
+//        combinaison ; concept couvert par EV_C02 / EV_C04 / SUP_PIMC_09.
+//      • SUP_STOP_053 (insuline « sliding scale ») → schéma posologique non
+//        détectable à partir d'un DCI.
+//      • SUP_STOP_058 (patch lidocaïne pour arthrose) → indication non détectable
+//        et en conflit avec IN_K03 (qui recommande le patch en douleur neuropathique).
+// (NB : la famille œstrogènes systémiques SUP_STOP_012/049/051/052 a des clés qui
+//  NE RÉSOLVENT PAS — « oestradiol » vs orthographe base, méds possiblement absents
+//  de MASTER_DB.MEDICAMENTS. Problème distinct, non traité ici : à investiguer.)
 // Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
 const SUPPLEMENT_QUARANTINE = new Set([
     'SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050',
+    // Clés malformées : règles mortes/cassées dont l'équivalent natif fonctionne.
+    'SUP_STOP_003', 'SUP_STOP_009', 'SUP_STOP_053', 'SUP_STOP_058',
     // Famille SUP_START_* (START3) — déclenchées sur présence, jamais sur absence.
     'SUP_START_007', 'SUP_START_013', 'SUP_START_020', 'SUP_START_021', 'SUP_START_022',
     'SUP_START_023', 'SUP_START_024', 'SUP_START_028', 'SUP_START_029', 'SUP_START_030',
