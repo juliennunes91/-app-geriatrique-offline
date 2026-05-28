@@ -4336,7 +4336,7 @@ const CROSS_REF_GROUPS = [
         group_id: "GRP_AP_DEMENCE",
         theme: "Antipsychotiques dans la démence / SCPD",
         merged_sources: ["STOPP3", "BEERS", "FORTA", "PRISCUS", "EU7PIM"],
-        rule_ids: ["EV_D05", "EV_D12", "EV_D15", "EV_D16", "EV_D21", "EV_B18", "EV_K02", "EV_PRISC_02"],
+        rule_ids: ["EV_D05", "EV_D12", "EV_D16", "EV_D21", "EV_B18", "EV_K02", "EV_PRISC_02"],
         pim_dict_keys: ["haloperidol", "risperidone", "olanzapine", "chlorpromazine", "levomepromazine", "cyamemazine", "flupentixol", "fluphenazine", "pipotiazine", "amisulpride", "aripiprazole", "pimozide"],
         fusion_strategy: "distinct_context",
         note: "Contextes distincts : D5=SCPD>3m, D12=Parkinson/DCL, D15=SCPD>12sem, D16=hypnotique, D21=phénothiazine 1ère ligne, B18=maladie vasculaire, K2=chutes. Garder séparés mais enrichir les sources."
