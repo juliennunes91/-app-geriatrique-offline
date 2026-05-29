@@ -1485,12 +1485,11 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "id": "SUP_DEP_061",
         "csv_ref": "RECO_0203",
         "sources": [
-            "STOPP3",
             "STOPPFRAIL",
             "REMEDIES",
             "PIM_CHECK"
         ],
-        "ref_code": "STOPP3-severe",
+        "ref_code": "RECO_0203",
         "section": "Cardiovasculaire",
         "titre": "Antihypertenseurs (STOPP/FRAIL)",
         "message": "Patient fragile severe avec PA bien controlee, hypotension orthostatique ou asthenie severe — \"Risque de chutes, d'hypotension, d'insuffisance renale aigue",
