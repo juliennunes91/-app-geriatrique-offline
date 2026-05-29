@@ -211,10 +211,14 @@ function runRuleInvariantTests(test, assert) {
 
     // PROVENANCE : source STOPP/START revendiquée sans ref_code STOPP/START correspondant
     // → attribution probablement générique (à corroborer ou retirer).
+    // STOPPFrail est un outil DISTINCT (déprescription en fragilité, Lavan 2021) dont les
+    // critères n'ont pas de code STOPP3-/START3- → on l'exclut du flag pour ne signaler
+    // que les revendications STOPP/START v3 réellement non corroborées par un ref_code codé.
+    const claimsStopp = s => (/\bSTOPP/i.test(s) && !/FRAIL/i.test(s)) || /\bSTART/i.test(s);
     const provenance = active.filter(r =>
-        (r.sources || []).some(s => /STOPP|START/i.test(s)) && !/^(STOPP|START)/i.test(r.refCode)
+        (r.sources || []).some(claimsStopp) && !/^(STOPP|START)/i.test(r.refCode)
     ).map(r => `${r.id} (ref=${r.refCode || '-'}) sources=${JSON.stringify(r.sources)}`);
-    audit('Source STOPP/START non corroborée par le ref_code', provenance);
+    audit('Source STOPP/START non corroborée par le ref_code (hors STOPPFrail)', provenance);
 
     // Omissions (med_absent) rendues dans « éviter » — légitime si co-prescription protectrice
     const omissionInEviter = active.filter(r => r.hasMedAbsent && r.bucket === 'eviter').map(r => `${r.id} (${r.set})`);

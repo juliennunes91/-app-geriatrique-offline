@@ -1878,7 +1878,7 @@ const GERIA_RECOS_DB = {
         // ====================================================================
         {
             id: "EV_SYND_043",
-            sources: ["BEERS", "STOPP3", "ANSM"],
+            sources: ["BEERS", "ANSM"],
             ref_code: "SYND-043-SEROTONIN",
             section: "Interaction critique",
             titre: "Risque de syndrome sérotoninergique — association sérotoninergique + tramadol/IMAO/linézolide",
@@ -1893,7 +1893,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_SYND_043b",
-            sources: ["BEERS", "STOPP3", "ANSM"],
+            sources: ["BEERS", "ANSM"],
             ref_code: "SYND-043-LINEZO-ISRS",
             section: "Interaction critique",
             titre: "CI ABSOLUE : Linézolide + ISRS/IRSN/Tramadol/IMAO",
@@ -2042,7 +2042,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_SYND_045",
-            sources: ["KDIGO", "STOPP3", "ANSM"],
+            sources: ["KDIGO", "ANSM"],
             ref_code: "SYND-045-TRIPLE-WHAMMY",
             section: "Interaction critique",
             titre: "Triple whammy : AINS + IEC/ARA2 + diurétique — risque IRA",
@@ -2103,7 +2103,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_SYND_049",
-            sources: ["ACR", "IOF", "STOPP3"],
+            sources: ["ACR", "IOF"],
             ref_code: "SYND-049-GIOP",
             section: "Risque métabolique/osseux",
             titre: "Corticoïde systémique ≥ 3 mois — prévention sarcopénie/ostéoporose GIOP",
@@ -2328,7 +2328,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_N03",
-            sources: ["STOPP3"],
+            sources: ["ANSM"],
             ref_code: "ALCOOL-1",
             section: "Addiction",
             titre: "Médicament sédatif + alcool excessif",
@@ -2342,7 +2342,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_N04",
-            sources: ["STOPP3"],
+            sources: ["ANSM"],
             ref_code: "ALCOOL-2",
             section: "Addiction",
             titre: "Méthotrexate / paracétamol haute dose + alcool excessif",
@@ -2370,7 +2370,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_N06",
-            sources: ["STOPP3"],
+            sources: ["Pharmacovigilance"],
             ref_code: "SEPSIS-1",
             section: "Infectiologie",
             titre: "Immunosuppresseur / corticoïde au long cours + sepsis aigu",
@@ -2384,7 +2384,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_N07",
-            sources: ["STOPP3"],
+            sources: ["KDIGO"],
             ref_code: "SEPSIS-2",
             section: "Infectiologie",
             titre: "Médicament néphrotoxique + sepsis aigu",
@@ -2413,7 +2413,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_N09",
-            sources: ["STOPP3"],
+            sources: ["ERC"],
             ref_code: "ARRET-1",
             section: "Cardiovasculaire",
             titre: "Médicament inotrope négatif + post-arrêt cardiaque",
