@@ -203,7 +203,7 @@ const PATHOLOGY_RULES_DB = {
                 {
                     classe: "Quadrithérapie fondamentale (4 piliers)",
                     composants: [
-                        { rang: 1, classe: "IEC/ARA2 ou ARNI (Sacubitril-Valsartan)", niveau: "IA (IEC/ARA2) / IB (ARNI)", note: "IEC/ARA2 = classe IA ; ARNI = classe IB (remplacement de l'IEC). ARNI préféré si toléré (PARADIGM-HF). Switch IEC→ARNI après 36h de washout." },
+                        { rang: 1, classe: "IEC/ARA2 ou ARNI (Sacubitril-Valsartan)", niveau: "IA (IEC/ARA2) / IB (ARNI)", note: "IEC/ARA2 = classe IA ; ARNI = classe IB (remplacement de l'IEC). ARNI préféré si toléré (PARADIGM-HF). SWITCH IEC/ARA2 → sacubitril/valsartan recommandé si le HFrEF reste symptomatique malgré un IEC/ARA2 à dose maximale tolérée (START3-B9) ; washout de 36h après l'IEC avant d'introduire l'ARNI." },
                         { rang: 2, classe: "Bêtabloquant (Bisoprolol, Carvédilol, Nébivolol, Métoprolol succinate)", niveau: "IA", note: "Initier à faible dose, titrer toutes les 2 semaines. CI si FC < 50 ou BAV 2-3." },
                         { rang: 3, classe: "ARM (Spironolactone ou Éplérénone)", niveau: "IA", note: "Si K+ < 5.0 et DFG > 30. Éplérénone si gynécomastie sous spironolactone." },
                         { rang: 4, classe: "iSGLT2 (Dapagliflozine ou Empagliflozine)", niveau: "IA", note: "Bénéfice indépendant du diabète. Peut être initié en premier. Initier si DFG ≥ 20 mL/min et poursuivre même si DFG descend < 20 en cours de traitement (KDIGO 2024 + DAPA-HF/EMPEROR-Reduced ; bénéfice cardio-rénal maintenu). Ne pas initier si DFG < 20." }
