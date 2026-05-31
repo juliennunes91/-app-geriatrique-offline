@@ -164,6 +164,50 @@ function runRuleInvariantTests(test, assert) {
         assert.strictEqual(bad.length, 0, `comorbidités inexistantes (nouvelles):${fmt(bad)}`);
     });
 
+    // ---- INV-I (dual-UI) : tout id référencé par le JS via getElementById doit
+    // exister à la fois dans index.html ET index_modern.html. Évite la désync
+    // silencieuse d'une feature entre les deux UI (cf. CLAUDE.md règle dual-UI).
+    test('INV-I — parité dual-UI : ids getElementById présents dans les 2 HTML', () => {
+        const fsm = require('fs'); const path = require('path');
+        const root = __dirname;
+        const jsFiles = fsm.readdirSync(root).filter(f => /\.js$/.test(f) && !/^_|tests|oracle|bootstrap|audit_db|exhaustive_audit/.test(f));
+        const ids = new Set();
+        jsFiles.forEach(f => {
+            try {
+                const src = fsm.readFileSync(path.join(root, f), 'utf8');
+                (src.match(/getElementById\(\s*['"`]([^'"`]+)['"`]\s*\)/g) || []).forEach(m => {
+                    const id = m.match(/getElementById\(\s*['"`]([^'"`]+)['"`]\s*\)/)[1];
+                    if (id && !/\$\{|\+|`/.test(id)) ids.add(id);
+                });
+            } catch (e) { /* lecture best-effort */ }
+        });
+        const html = which => {
+            try {
+                const h = fsm.readFileSync(path.join(root, which), 'utf8');
+                return new Set([...h.matchAll(/\bid="([^"]+)"/g)].map(mm => mm[1]));
+            } catch (e) { return new Set(); }
+        };
+        const aIds = html('index.html'), bIds = html('index_modern.html');
+        // Ids JS qui existent dans AU MOINS une UI mais pas dans l'autre = désync vraie
+        const onlyClassic = [...ids].filter(id => aIds.has(id) && !bIds.has(id));
+        const onlyModern = [...ids].filter(id => bIds.has(id) && !aIds.has(id));
+        // Allowlist d'éléments UI spécifiques par design (présents dans une seule UI,
+        // accédés par le JS via getElementById de manière TOUJOURS null-guardée — vérifié) :
+        //  - btnPrint : bouton classique (modern utilise un menu d'impression alternatif).
+        //  - hdr*, hero*, analyseUpdatedAt : header chips + hero section spécifiques au
+        //    design « Precision Curator » de index_modern.html.
+        const allowlist = new Set([
+            'btnPrint',
+            'hdrPatientName', 'hdrChipMeds', 'hdrChipComorbs',
+            'heroTitle', 'heroSub', 'heroChips', 'heroIcon', 'heroLabel',
+            'analyseUpdatedAt'
+        ]);
+        const realA = onlyClassic.filter(id => !allowlist.has(id));
+        const realB = onlyModern.filter(id => !allowlist.has(id));
+        assert.strictEqual(realA.length + realB.length, 0,
+            `dual-UI désync :\n      - classic-only: ${realA.join(', ') || '(aucun)'}\n      - modern-only: ${realB.join(', ') || '(aucun)'}`);
+    });
+
     // ---- SECTION AUDIT (informative — ne fait jamais échouer la suite) ----
     const auditLines = [];
     const audit = (label, items) => {
@@ -208,6 +252,37 @@ function runRuleInvariantTests(test, assert) {
     const brandKeys = [];
     rules.forEach(r => r.brandKeys.forEach(k => brandKeys.push(`${r.id}${r.quarantined ? ' [Q]' : ''} :: ${k}`)));
     audit('Clés médicament en nom commercial (princeps au lieu du DCI)', brandKeys);
+
+    // C5 — CONTRADICTIONS éviter ⇄ initier : un même DCI/clé apparaît dans EVITER.med_keys
+    // pour une comorbidité ET dans INITIER.med_absent pour la même comorbidité, sans
+    // discriminateur supplémentaire. Signal d'avis-conflit potentiel à arbitrer.
+    const contradictions = [];
+    {
+        const eviterMeds = new Map();  // clé "medKey|PAT" → [ids EVITER]
+        const initierMeds = new Map(); // clé "medAbsent|PAT" → [ids INITIER]
+        active.forEach(r => {
+            if (r.set === 'eviter' && r.comorbsPositive.length && r.medKeys.length) {
+                r.medKeys.forEach(k => r.comorbsPositive.forEach(p => {
+                    const sig = k + '|' + p;
+                    if (!eviterMeds.has(sig)) eviterMeds.set(sig, []);
+                    eviterMeds.get(sig).push(r.id);
+                }));
+            }
+            if (r.set === 'initier' && r.comorbsPositive.length && r.medAbsent.length) {
+                r.medAbsent.forEach(k => r.comorbsPositive.forEach(p => {
+                    const sig = k + '|' + p;
+                    if (!initierMeds.has(sig)) initierMeds.set(sig, []);
+                    initierMeds.get(sig).push(r.id);
+                }));
+            }
+        });
+        eviterMeds.forEach((evIds, sig) => {
+            if (initierMeds.has(sig)) {
+                contradictions.push(`${sig} : éviter=${evIds.join('/')} ⇄ initier=${initierMeds.get(sig).join('/')}`);
+            }
+        });
+    }
+    audit('Contradictions éviter ⇄ initier (même DCI + comorb)', contradictions);
 
     // PROVENANCE : source STOPP/START revendiquée sans ref_code STOPP/START correspondant
     // → attribution probablement générique (à corroborer ou retirer).
