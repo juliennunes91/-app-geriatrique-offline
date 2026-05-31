@@ -639,6 +639,13 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "severite": "warning",
         "condition": {
             "med_keys": [
+                "fer",
+                "fumarate ferreux",
+                "sulfate ferreux",
+                "gluconate ferreux"
+            ],
+            "contexte_clinique": "dose_fer_elevee",
+            "_med_keys_legacy_dropped": [
                 "fumarate ferreux 600 mgj",
                 "sulfate ferreux 600 mgj",
                 "gluconate ferreux 1800 mgj"

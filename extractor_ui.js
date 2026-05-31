@@ -50,18 +50,23 @@
             const id = `extr_${kind}_${i}`;
             const negated = !!h.negated;
             const inPatient = (kind === 'patho' && present.comorbs.has(h.target.id))
-                || (kind === 'med' && present.meds.has(String(h.target.dci || '').toLowerCase()));
+                || (kind === 'med' && present.meds.has(String(h.target.dci || '').toLowerCase()))
+                || (kind === 'allergy');  // allergies non auto-appliquées (signalement seulement)
             // Construction du libellé principal
             let label;
             if (kind === 'patho') {
                 label = `${esc(h.target.label)} <small style="color:#6c757d">[${h.target.id}]</small>`;
             } else if (kind === 'med') {
-                const poso = h.posology
-                    ? ` <span style="color:#0d6efd;font-weight:600;">${h.posology.dose}${esc(h.posology.unite)}${h.posology.frequence ? ' ×' + h.posology.frequence : ''}${h.posology.periode ? '/' + esc(h.posology.periode) : ''}</span>`
-                    : '';
-                label = `${esc(h.target.dci)}${poso}`;
+                const p = h.posology;
+                const poso = p ? ` <span style="color:#0d6efd;font-weight:600;">${p.dose}${esc(p.unite)}${p.frequence ? ' ×' + p.frequence : ''}${p.periode ? '/' + esc(p.periode) : ''}</span>` : '';
+                const duree = p && p.duree ? ` <span style="color:#6f42c1;font-size:11px;">⏱ ${p.duree.jours}j (${esc(p.duree.classe)})</span>` : '';
+                label = `${esc(h.target.dci)}${poso}${duree}`;
+            } else if (kind === 'allergy') {
+                const dci = h.target && h.target.dci;
+                label = `<b>${esc(h.substance)}</b>${dci ? ` <small style="color:#0d6efd;">→ ${esc(dci)}</small>` : ' <small style="color:#6c757d;">(générique)</small>'}`;
             } else {
-                label = `${esc(h.target.label)} = <b>${h.value}</b> ${esc(h.unit || '')} <small style="color:#6c757d">[${h.target.code}]</small>`;
+                const conv = h.converted ? ` <small style="color:#fd7e14;" title="converti depuis ${esc(h.originalValue)} ${esc(h.originalUnit)}">⇄ converti</small>` : '';
+                label = `${esc(h.target.label)} = <b>${h.value}</b> ${esc(h.unit || '')} <small style="color:#6c757d">[${h.target.code}]</small>${conv}`;
             }
             // Badges
             const tags = [];
@@ -111,17 +116,20 @@
         _lastResults = GeriaTextExtractor.extract(text, MASTER_DB);
         const present = alreadyIn();
         const r = _lastResults;
-        const total = (r.pathologies || []).length + (r.meds || []).length + (r.biology || []).length;
+        const total = (r.pathologies || []).length + (r.meds || []).length + (r.biology || []).length + (r.allergies || []).length;
         if (total === 0) {
             container.innerHTML = '<div style="color:#6c757d;font-size:13px;padding:6px;">Aucune entité détectée.</div>';
             return;
         }
+        const allergiesCount = (r.allergies || []).length;
+        const total2 = total + allergiesCount;
         const html = [
             renderConflicts(r.conflicts),
-            `<div style="font-size:12px;color:#6c757d;padding:4px 0 8px;">${total} entité(s) détectée(s) — décochez les indésirables, puis « Appliquer la sélection ».</div>`,
+            `<div style="font-size:12px;color:#6c757d;padding:4px 0 8px;">${total2} entité(s) détectée(s) — décochez les indésirables, puis « Appliquer la sélection ».</div>`,
             renderGroup('🩺 Pathologies', r.pathologies, 'patho', text, present),
             renderGroup('💊 Médicaments', r.meds, 'med', text, present),
-            renderGroup('🧪 Biologie', r.biology, 'bio', text, present)
+            renderGroup('🧪 Biologie', r.biology, 'bio', text, present),
+            renderGroup('⚠️ Allergies (signalement)', r.allergies, 'allergy', text, present)
         ].join('');
         container.innerHTML = html;
     }

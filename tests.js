@@ -1114,6 +1114,72 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(b && b.posology);
         assert.strictEqual(b.posology.dose, 2.5);
     });
+
+    // --- Tier 3 ---
+    test('Tier 3 — Extraction de durée : « depuis 6 mois » → classe longue (180j)', () => {
+        const r = extract('Ramipril 5 mg/j depuis 6 mois.');
+        const m = findM(r, 'Ramipril');
+        assert.ok(m && m.posology && m.posology.duree, 'durée manquante');
+        assert.strictEqual(m.posology.duree.classe, 'longue');
+        assert.strictEqual(m.posology.duree.jours, 180);
+    });
+
+    test('Tier 3 — Extraction de durée courte : « depuis 3 jours » → classe courte', () => {
+        const r = extract('Pantoprazole 20 mg/j depuis 3 jours.');
+        const m = findM(r, 'Pantoprazole');
+        assert.ok(m && m.posology && m.posology.duree);
+        assert.strictEqual(m.posology.duree.classe, 'courte');
+    });
+
+    test('Tier 3 — Allergies : « Allergie à Pénicilline » → entrée allergies', () => {
+        const r = extract('Allergie à Pénicilline. Intolérance à Amoxicilline.');
+        assert.ok(Array.isArray(r.allergies) && r.allergies.length >= 2, 'allergies non détectées');
+        const subs = r.allergies.map(a => a.substance.toLowerCase());
+        assert.ok(subs.some(s => s.indexOf('penicilline') !== -1 || s.indexOf('pénicilline') !== -1));
+        assert.ok(subs.some(s => s.indexOf('amoxicilline') !== -1));
+    });
+
+    test('Tier 3 — Allergie négative : « Allergies : aucune connue » → ignorée', () => {
+        const r = extract('Allergies : aucune connue. Sans intolérance médicamenteuse.');
+        assert.strictEqual((r.allergies || []).length, 0);
+    });
+
+    test('Tier 3 — Allergie filtre le médicament : « Intolérance à Amoxicilline » → pas dans meds', () => {
+        const r = extract('Intolérance à Amoxicilline.');
+        const am = findM(r, 'Amoxicilline');
+        assert.ok(!am, 'Amoxicilline ne doit pas figurer en prescription');
+    });
+
+    test('Tier 3 — Conversion bio : créatinine 1.2 mg/dL → 106.1 µmol/L', () => {
+        const r = extract('Créatinine 1.2 mg/dL.');
+        const c = findB(r, 'BIO_003');
+        assert.ok(c, 'créatinine non détectée');
+        assert.strictEqual(c.converted, true);
+        assert.strictEqual(c.unit, 'µmol/L');
+        assert.ok(Math.abs(c.value - 106.1) < 0.1);
+    });
+
+    test('Tier 3 — Conversion bio : glycémie 1,1 g/L → 6.11 mmol/L', () => {
+        const r = extract('Glycémie 1,1 g/L.');
+        const g = findB(r, 'BIO_025');
+        assert.ok(g && g.converted);
+        assert.strictEqual(g.unit, 'mmol/L');
+        assert.ok(Math.abs(g.value - 6.11) < 0.05);
+    });
+
+    test('Tier 3 — Règle dose-dépendante ravivée : fer >600 mg/j → SUP_STOP_025', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r = analyzeCase({ age: 80, sexe: 'F', meds: ['Fumarate ferreux'], precisions: { 'fumarate ferreux': { dose: 800, unite: 'mg', periode: 'j' } } });
+        const titres = (r['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        assert.ok(/Fer oral a doses elev/i.test(titres) || /SUP_STOP_025/.test(titres), 'SUP_STOP_025 (fer >600) ne s\'est pas déclenchée');
+    });
+
+    test('Tier 3 — Pas de fer-élevé si dose ≤ 600', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r = analyzeCase({ age: 80, sexe: 'F', meds: ['Fumarate ferreux'], precisions: { 'fumarate ferreux': { dose: 200, unite: 'mg', periode: 'j' } } });
+        const titres = (r['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        assert.ok(!/Fer oral a doses elev/i.test(titres), 'fer 200 mg ne doit pas déclencher fer élevé');
+    });
 }
 
 // ============================================================================

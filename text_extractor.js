@@ -353,6 +353,76 @@
         'QTc': 'BIO_031', 'CRP': 'BIO_027' // CRP peut ne pas exister; ignoré si absent
     };
 
+    // === Extraction de durée (« depuis 6 mois », « il y a 2 ans », « pendant 3 sem ») ===
+    // Cherche dans la fenêtre 100 chars APRÈS la fin du hit (typiquement même phrase).
+    const DUREE_RE = /\b(?:depuis|il y a|pendant|pour)\s+(\d+(?:[,.]\d+)?)\s*(jours?|j\b|sem(?:aines?)?|mois|ans?|annees?)/i;
+    function extractDuree(text, hit) {
+        const tail = text.slice(hit.end, hit.end + 100);
+        const m = DUREE_RE.exec(tail);
+        if (!m) return null;
+        const n = parseFloat(m[1].replace(',', '.'));
+        const u = m[2].toLowerCase();
+        const jours = /^j(?:our)?s?$/.test(u) ? n :
+            /^sem/.test(u) ? n * 7 :
+                /^mois$/.test(u) ? n * 30 :
+                    /^(an|annee)/.test(u) ? n * 365 : null;
+        if (jours === null) return null;
+        const classe = jours < 14 ? 'courte' : (jours >= 90 ? 'longue' : 'intermediaire');
+        return { value: n, unite: u, jours: Math.round(jours), classe, raw: m[0] };
+    }
+
+    // === Allergies (« allergie à X », « allergique à X », « intolérance à X ») ===
+    // Note : on accepte « é » dans intol(é)rance — sinon "Intolérance" est manqué.
+    const ALLERGY_RE = /\b(allergies?|allergiques?|intol[eé]ranc[eé]s?)\s*(?:[àa]u?x?\s+|[:à]\s*)([a-zà-ÿ' \-]{3,40})/gi;
+    function findAllergyHits(text, idx) {
+        const hits = [];
+        const re = new RegExp(ALLERGY_RE.source, 'gi');
+        let m;
+        while ((m = re.exec(text)) !== null) {
+            const start = m.index;
+            const phrase = (m[2] || '').trim().replace(/[.,;:].*$/, '');
+            if (!phrase) continue;
+            // Filtrer les non-substances (aucune connue, connue, non précisée…)
+            if (/^(aucun|connue?s?|non\s|nkda|nil\b)/i.test(phrase)) continue;
+            // Ignorer si négation explicite avant
+            const before = text.slice(Math.max(0, start - 25), start).toLowerCase();
+            if (/(aucun|sans\s|pas d|nie\b|non\s)/i.test(before)) continue;
+            // Tenter de matcher contre un med ; sinon allergie générique
+            const firstWord = norm(phrase.split(/\s/)[0]);
+            let target = null;
+            for (const it of idx.meds) {
+                if (it.normTerm.length >= 4 && (firstWord.indexOf(it.normTerm) !== -1 || it.normTerm.indexOf(firstWord) !== -1)) {
+                    target = it.target; break;
+                }
+            }
+            hits.push({
+                start, end: start + m[0].length,
+                match: m[0].trim(),
+                substance: phrase,
+                target: target || { dci: null },
+                source: 'allergy'
+            });
+        }
+        return hits;
+    }
+
+    // === Conversion d'unités biologiques courantes vers l'unité standard de l'app ===
+    function convertBioUnit(code, value, rawUnit) {
+        if (!rawUnit) return null;
+        const u = String(rawUnit).toLowerCase().replace(/\s/g, '');
+        if (code === 'BIO_003') { // Créatinine : standard µmol/L, alt mg/dL
+            if (u === 'mg/dl' || u === 'mgdl' || u === 'mg%') return { value: +(value * 88.4).toFixed(1), unit: 'µmol/L', from: rawUnit };
+        }
+        if (code === 'BIO_025') { // Glycémie : standard mmol/L
+            if (u === 'g/l' || u === 'gl') return { value: +(value * 5.55).toFixed(2), unit: 'mmol/L', from: rawUnit };
+            if (u === 'mg/dl' || u === 'mgdl') return { value: +(value * 0.0555).toFixed(2), unit: 'mmol/L', from: rawUnit };
+        }
+        if (code === 'BIO_007') { // Urée : standard mmol/L
+            if (u === 'g/l' || u === 'gl') return { value: +(value * 16.65).toFixed(2), unit: 'mmol/L', from: rawUnit };
+        }
+        return null;
+    }
+
     // === Match d'une abréviation → entité ===
     function matchAbbreviationToEntities(abbrHit, idx, MASTER_DB) {
         // 1) Mapping direct (le plus robuste)
@@ -386,7 +456,7 @@
 
     // === API principale ===
     function extract(text, MASTER_DB) {
-        const empty = { meds: [], pathologies: [], biology: [], abbreviations: [], conflicts: [] };
+        const empty = { meds: [], pathologies: [], biology: [], allergies: [], abbreviations: [], conflicts: [] };
         if (!text || !MASTER_DB) return empty;
         const idx = buildIndex(MASTER_DB);
 
@@ -419,10 +489,9 @@
         pathoHits.push(...fuzzyPathoHits);
         medHits.push(...fuzzyMedHits);
 
-        // Annotation : négation + historique + source + posologie (pour les meds)
+        // Annotation : négation + historique + source + posologie/durée + conversion bio
         const annotate = (h, kind) => {
             h.negated = isNegated(text, h.start);
-            // Historique seulement si pertinent et non négé
             if (!h.negated && (kind === 'patho' || kind === 'med')) {
                 h.historical = isHistorical(text, h.start);
             }
@@ -430,12 +499,30 @@
             if (kind === 'med') {
                 const poso = extractPosology(text, h);
                 if (poso) h.posology = poso;
+                const duree = extractDuree(text, h);
+                if (duree) {
+                    h.posology = h.posology || {};
+                    h.posology.duree = duree;
+                }
+            }
+            if (kind === 'bio' && h.unit && h.target && h.target.code) {
+                const conv = convertBioUnit(h.target.code, h.value, h.unit);
+                if (conv) {
+                    h.originalValue = h.value;
+                    h.originalUnit = h.unit;
+                    h.value = conv.value;
+                    h.unit = conv.unit;
+                    h.converted = true;
+                }
             }
             return h;
         };
         const allPatho = pathoHits.map(h => annotate(h, 'patho'));
         const allMed = medHits.map(h => annotate(h, 'med'));
         const allBio = bioHits.map(h => annotate(h, 'bio'));
+
+        // Allergies (entité distincte)
+        const allergyHits = findAllergyHits(text, idx);
 
         // Dédup par cible (garder la première occurrence ou la plus longue)
         const dedupByTarget = (arr, keyFn) => {
@@ -458,13 +545,20 @@
         };
 
         const finalPatho = dedupByTarget(allPatho, h => h.target.id);
-        const finalMed = dedupByTarget(allMed, h => h.target.dci);
+        let finalMed = dedupByTarget(allMed, h => h.target.dci);
         const finalBio = dedupByTarget(allBio, h => h.target.code);
+
+        // Si le token médicament chevauche un hit d'allergie (« intolérance à X »),
+        // il ne s'agit pas d'une prescription active : on le retire de la liste meds.
+        if (allergyHits.length) {
+            finalMed = finalMed.filter(m => !allergyHits.some(a => m.start >= a.start && m.end <= a.end));
+        }
 
         return {
             pathologies: finalPatho,
             meds: finalMed,
             biology: finalBio,
+            allergies: allergyHits,
             abbreviations: abbrHits,
             conflicts: detectConflicts(finalPatho)
         };

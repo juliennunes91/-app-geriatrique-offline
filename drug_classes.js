@@ -459,5 +459,6 @@ function medPrecisionFamily(classe) {
     if (/pompe à protons|pompe a protons|\(IPP\)/i.test(cl)) return 'ipp';
     if (/benzodiazepine|benzodiazépine|hypnotique z/i.test(cl)) return 'bzd';
     if (/\bAINS\b|anti-inflammatoire non st/i.test(cl)) return 'ains';
+    if (/fer\b|iron\b|sulfate ferreux|fumarate ferreux|gluconate ferreux|martia/i.test(cl)) return 'fer';
     return null;
 }
