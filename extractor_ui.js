@@ -51,13 +51,25 @@
             const negated = !!h.negated;
             const inPatient = (kind === 'patho' && present.comorbs.has(h.target.id))
                 || (kind === 'med' && present.meds.has(String(h.target.dci || '').toLowerCase()));
-            const label = kind === 'patho' ? `${h.target.label} <small style="color:#6c757d">[${h.target.id}]</small>`
-                : kind === 'med' ? esc(h.target.dci)
-                    : `${esc(h.target.label)} = <b>${h.value}</b> ${esc(h.unit || '')} <small style="color:#6c757d">[${h.target.code}]</small>`;
+            // Construction du libellé principal
+            let label;
+            if (kind === 'patho') {
+                label = `${esc(h.target.label)} <small style="color:#6c757d">[${h.target.id}]</small>`;
+            } else if (kind === 'med') {
+                const poso = h.posology
+                    ? ` <span style="color:#0d6efd;font-weight:600;">${h.posology.dose}${esc(h.posology.unite)}${h.posology.frequence ? ' ×' + h.posology.frequence : ''}${h.posology.periode ? '/' + esc(h.posology.periode) : ''}</span>`
+                    : '';
+                label = `${esc(h.target.dci)}${poso}`;
+            } else {
+                label = `${esc(h.target.label)} = <b>${h.value}</b> ${esc(h.unit || '')} <small style="color:#6c757d">[${h.target.code}]</small>`;
+            }
+            // Badges
             const tags = [];
             if (negated) tags.push('<span style="color:#c0392b;font-weight:bold;font-size:11px;">NIÉ</span>');
             if (inPatient) tags.push('<span style="color:#198754;font-weight:bold;font-size:11px;">DÉJÀ PRÉSENT</span>');
+            if (h.historical && !negated) tags.push('<span style="color:#6f42c1;font-weight:bold;font-size:11px;">ATCD</span>');
             if (h.source === 'abbreviation') tags.push('<span style="color:#0d6efd;font-size:11px;">abrév.</span>');
+            if (h.source === 'fuzzy') tags.push(`<span style="color:#fd7e14;font-size:11px;" title="distance ${h.fuzzyDistance}">fuzzy</span>`);
             const checked = (!negated && !inPatient) ? 'checked' : '';
             const disabled = inPatient ? 'disabled' : '';
             return `<div style="display:flex;align-items:flex-start;gap:8px;padding:4px 0;border-bottom:1px solid #f0f0f0;">
@@ -69,6 +81,18 @@
             </div>`;
         }).join('');
         return `<details open style="margin-bottom:8px;"><summary style="font-weight:bold;font-size:13px;cursor:pointer;padding:4px 0;">${title} <span style="color:#6c757d;font-weight:normal;">(${items.length})</span></summary><div style="padding-left:8px;">${rows}</div></details>`;
+    }
+
+    function renderConflicts(conflicts) {
+        if (!conflicts || !conflicts.length) return '';
+        const rows = conflicts.map(c =>
+            `<div style="padding:4px 0;"><strong>${esc(c.labels.join(' vs '))}</strong> — ${esc(c.reason)}</div>`
+        ).join('');
+        return `<div style="background:#f8d7da;color:#842029;border:1px solid #f5c2c7;padding:8px 12px;border-radius:6px;margin-bottom:10px;font-size:12px;">
+            <div style="font-weight:bold;margin-bottom:4px;">⚠️ ${conflicts.length} conflit${conflicts.length > 1 ? 's' : ''} à arbitrer (cliniquement exclusifs) :</div>
+            ${rows}
+            <div style="margin-top:4px;font-style:italic;">Décochez l'une des deux propositions avant d'appliquer.</div>
+        </div>`;
     }
 
     function runExtraction() {
@@ -93,6 +117,7 @@
             return;
         }
         const html = [
+            renderConflicts(r.conflicts),
             `<div style="font-size:12px;color:#6c757d;padding:4px 0 8px;">${total} entité(s) détectée(s) — décochez les indésirables, puis « Appliquer la sélection ».</div>`,
             renderGroup('🩺 Pathologies', r.pathologies, 'patho', text, present),
             renderGroup('💊 Médicaments', r.meds, 'med', text, present),
@@ -127,15 +152,28 @@
         const ctx = {
             already: present,
             selectComorb: (typeof selectComorb === 'function') ? selectComorb : null,
-            selectMed: function (dci) {
-                // selectMed prend un id de l'autocomplete ; on utilise la map unifiedMedsMap
+            selectMed: function (dci, posology) {
                 if (typeof selectMed !== 'function') return;
                 try {
                     if (typeof unifiedMedsMap !== 'undefined' && typeof sanitizeText === 'function') {
                         const key = sanitizeText(dci);
-                        if (unifiedMedsMap.has(key)) { selectMed(key); return; }
+                        if (unifiedMedsMap.has(key)) selectMed(key);
+                        else selectMed(dci);
+                    } else {
+                        selectMed(dci);
                     }
-                    selectMed(dci);
+                    // Attacher la posologie au médicament fraîchement ajouté
+                    if (posology && typeof activeMeds !== 'undefined' && typeof sanitizeText === 'function') {
+                        const key = sanitizeText(dci);
+                        const found = activeMeds.find(m => sanitizeText(m.dci) === key);
+                        if (found) {
+                            found.precisions = Object.assign({}, found.precisions || {}, {
+                                dose: posology.dose, unite: posology.unite,
+                                frequence: posology.frequence, periode: posology.periode,
+                                raw: posology.raw, source: 'extracteur'
+                            });
+                        }
+                    }
                 } catch (e) { console.warn('selectMed failed for', dci, e); }
             },
             setBioValue: function (code, value) {

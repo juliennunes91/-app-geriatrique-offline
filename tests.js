@@ -1065,6 +1065,55 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         const apx = r.meds.filter(h => (h.target.dci || '').toLowerCase() === 'apixaban');
         assert.strictEqual(apx.length, 1, 'Apixaban dupliqué');
     });
+
+    // --- Tier 2 ---
+    test('Tier 2 — Fuzzy matching : « Atorvastatin » (faute) → Atorvastatine', () => {
+        const r = extract('Patient sous Atorvastatin 40 mg le soir.');
+        const m = findM(r, 'Atorvastatine');
+        assert.ok(m, 'fuzzy match Atorvastatine manquant');
+        assert.strictEqual(m.source, 'fuzzy');
+        assert.ok(m.fuzzyDistance <= 2);
+    });
+
+    test('Tier 2 — Mapping direct abréviation : HFrEF → PAT_002, HFpEF → PAT_003', () => {
+        const r = extract('HFrEF documentée. HFpEF non.');
+        assert.ok(findP(r, 'PAT_002'), 'HFrEF → PAT_002 manquant');
+        assert.ok(findP(r, 'PAT_003'), 'HFpEF → PAT_003 manquant');
+    });
+
+    test('Tier 2 — Conflit HFrEF/HFpEF remonté', () => {
+        const r = extract('Femme 80 ans. HFrEF puis HFpEF associée.');
+        assert.ok(Array.isArray(r.conflicts) && r.conflicts.length >= 1, 'conflit non détecté');
+        const ids = (r.conflicts[0].ids || []).sort();
+        assert.deepStrictEqual(ids, ['PAT_002', 'PAT_003']);
+    });
+
+    test('Tier 2 — Extraction de posologie : Ramipril 5 mg/j, Furosemide 40 mg x2/j', () => {
+        const r = extract('Traitement : Ramipril 5 mg/j, Furosemide 40 mg x2/j, Apixaban 5 mg x 2/jour.');
+        const ram = findM(r, 'Ramipril');
+        assert.ok(ram && ram.posology, 'posologie Ramipril manquante');
+        assert.strictEqual(ram.posology.dose, 5);
+        assert.strictEqual(ram.posology.unite, 'mg');
+        assert.strictEqual(ram.posology.periode, 'j');
+        const furo = findM(r, 'Furosemide');
+        assert.ok(furo && furo.posology);
+        assert.strictEqual(furo.posology.dose, 40);
+        assert.strictEqual(furo.posology.frequence, 2);
+    });
+
+    test('Tier 2 — Historique : « ATCD de HTA » → historical=true', () => {
+        const r = extract('ATCD de HTA et de cardiopathie ischémique.');
+        const h = findP(r, 'PAT_005');
+        assert.ok(h, 'HTA non détectée');
+        assert.strictEqual(h.historical, true, 'HTA aurait dû être tag ATCD');
+    });
+
+    test('Tier 2 — Posologie utilise virgule décimale FR : « 2,5 mg »', () => {
+        const r = extract('Bisoprolol 2,5 mg le matin.');
+        const b = findM(r, 'Bisoprolol');
+        assert.ok(b && b.posology);
+        assert.strictEqual(b.posology.dose, 2.5);
+    });
 }
 
 // ============================================================================

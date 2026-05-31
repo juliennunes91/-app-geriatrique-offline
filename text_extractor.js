@@ -225,14 +225,151 @@
         return NEGATION_RE.test(norm(window));
     }
 
+    // === Distance de Levenshtein (fuzzy matching pour fautes de frappe) ===
+    function levenshtein(a, b) {
+        if (a === b) return 0;
+        const m = a.length, n = b.length;
+        if (m === 0) return n;
+        if (n === 0) return m;
+        if (Math.abs(m - n) > 3) return 99; // short-circuit (on ne tolère pas > 3)
+        let prev = new Array(n + 1);
+        for (let j = 0; j <= n; j++) prev[j] = j;
+        let curr = new Array(n + 1);
+        for (let i = 1; i <= m; i++) {
+            curr[0] = i;
+            for (let j = 1; j <= n; j++) {
+                const cost = a.charCodeAt(i - 1) === b.charCodeAt(j - 1) ? 0 : 1;
+                curr[j] = Math.min(curr[j - 1] + 1, prev[j] + 1, prev[j - 1] + cost);
+            }
+            [prev, curr] = [curr, prev];
+        }
+        return prev[n];
+    }
+
+    // === Fuzzy hits — pour les mots ≥6 chars non déjà capturés exactement ===
+    // Conservateur : seuil 1 pour 6-8 chars, 2 pour ≥9 chars. Uniquement contre les
+    // termes ≥6 chars (les synonymes courts type "FA" ou brand resteraient ambigus).
+    function findFuzzyHits(text, items, alreadyTaken) {
+        const normText = norm(text);
+        // Extraire les tokens-mots avec leurs positions
+        const tokenRe = /[a-z][a-z']{4,}/g;
+        const hits = [];
+        const longItems = items.filter(it => it.normTerm.length >= 6 && !/\s/.test(it.normTerm));
+        let m;
+        while ((m = tokenRe.exec(normText))) {
+            const tok = m[0], start = m.index, end = start + tok.length;
+            if (tok.length < 6) continue;
+            // Skip si chevauche un hit déjà capturé
+            let overlap = false;
+            for (let k = start; k < end; k++) if (alreadyTaken[k]) { overlap = true; break; }
+            if (overlap) continue;
+            const maxDist = tok.length >= 9 ? 2 : 1;
+            // Filtre rapide par première lettre
+            const c0 = tok[0];
+            let best = null;
+            for (const it of longItems) {
+                if (it.normTerm[0] !== c0) continue;
+                if (Math.abs(it.normTerm.length - tok.length) > maxDist) continue;
+                const d = levenshtein(tok, it.normTerm);
+                if (d <= maxDist && (!best || d < best.dist)) {
+                    best = { it, dist: d };
+                    if (d === 0) break;
+                }
+            }
+            if (best && best.dist > 0) {
+                hits.push({
+                    start, end,
+                    match: text.slice(start, end),
+                    target: best.it.target,
+                    source: 'fuzzy',
+                    fuzzyDistance: best.dist
+                });
+                for (let k = start; k < end; k++) alreadyTaken[k] = 1;
+            }
+        }
+        return hits;
+    }
+
+    // === Extraction de posologie (juste après un médicament) ===
+    // Patterns supportés : « 5 mg », « 1 g x 3 », « 40 mg/j », « 25 µg x 2/j »,
+    //                      « 1 cp matin », « 100 UI/sem ».
+    const POSO_RE = /^\s*[:=]?\s*(\d+(?:[,.]\d+)?)\s*(mg|µg|mcg|g|ml|ui|u|gouttes?|cp|comprim[ée]s?)\s*(?:x\s*(\d+))?\s*(?:\/\s*(j|jour|sem|semaine|mois|h))?/i;
+    function extractPosology(text, hit) {
+        const tail = text.slice(hit.end, hit.end + 60);
+        const m = POSO_RE.exec(tail);
+        if (!m) return null;
+        const dose = parseFloat(m[1].replace(',', '.'));
+        if (!isFinite(dose)) return null;
+        return {
+            dose,
+            unite: (m[2] || '').toLowerCase(),
+            frequence: m[3] ? parseInt(m[3], 10) : null,
+            periode: m[4] ? m[4].toLowerCase().replace(/^jour$/, 'j').replace(/^semaine$/, 'sem') : null,
+            raw: m[0].trim()
+        };
+    }
+
+    // === Historique (ATCD / antécédent / connu / depuis…) ===
+    const HISTORICAL_RE = /\b(atcd|antecedents?|antecedent\s+de|histoire d[e'’]|connu[e]?|en\s+remission|sequelle[s]?|status post)\b/i;
+    function isHistorical(text, start) {
+        let window = text.slice(Math.max(0, start - 35), start);
+        const seps = ['.', '?', '!', ';', '\n'];
+        let cut = -1;
+        seps.forEach(s => { const i = window.lastIndexOf(s); if (i > cut) cut = i; });
+        if (cut >= 0) window = window.slice(cut + 1);
+        return HISTORICAL_RE.test(norm(window));
+    }
+
+    // === Paires mutuellement exclusives (cliniquement) ===
+    const MUTEX_PAIRS = [
+        { ids: ['PAT_002', 'PAT_003'], reason: 'HFrEF et HFpEF s’excluent (un patient a l’une OU l’autre)' },
+        { ids: ['PAT_016a', 'PAT_016b'], reason: 'Diabète type 1 et type 2 sont distincts' }
+    ];
+    function detectConflicts(pathos) {
+        const ids = new Set(pathos.filter(p => !p.negated).map(p => p.target.id));
+        return MUTEX_PAIRS
+            .filter(p => p.ids.every(id => ids.has(id)))
+            .map(p => ({ ids: p.ids, reason: p.reason, labels: p.ids.map(id => (pathos.find(h => h.target.id === id) || {}).target?.label || id) }));
+    }
+
+    // === Mapping direct abréviation → PAT_id (robuste, sans dépendre des libellés) ===
+    // Évite les échecs quand l'expansion textuelle diffère du NOM_STANDARD
+    // (ex. HFrEF expansion "à fraction d'éjection réduite" vs NOM "FE Réduite").
+    const ABBR_TO_PAT_ID = {
+        'HFrEF': 'PAT_002', 'HFpEF': 'PAT_003',
+        'FA': 'PAT_006', 'HTA': 'PAT_005', 'AVC': 'PAT_008', 'AIT': 'PAT_008',
+        'AOMI': 'PAT_007', 'IDM': 'PAT_004', 'SCA': 'PAT_004', 'SCC': 'PAT_004',
+        'BPCO': 'PAT_023', 'SAOS': 'PAT_052',
+        'DT1': 'PAT_016a', 'DT2': 'PAT_016b',
+        'IRC': 'PAT_029', 'MRC': 'PAT_029',
+        'RGO': 'PAT_053', 'UGD': 'PAT_021',
+        'TAG': 'PAT_044', 'SJSR': 'PAT_051', 'TCSP': 'PAT_050',
+        'HBP': 'PAT_040', 'PR': 'PAT_055',
+        'MTEV': 'PAT_036', 'TVP': 'PAT_036', 'EP': 'PAT_036'
+    };
+    const ABBR_TO_BIO_CODE = {
+        'Hb': 'BIO_009', 'DFG': 'BIO_004', 'GFR': 'BIO_004',
+        'TSH': 'BIO_019', 'INR': 'BIO_030', 'HbA1c': 'BIO_026',
+        'QTc': 'BIO_031', 'CRP': 'BIO_027' // CRP peut ne pas exister; ignoré si absent
+    };
+
     // === Match d'une abréviation → entité ===
-    // L'expansion doit ÉGALER ou être CONTENUE dans le normTerm (mots entiers),
-    // pour tolérer les variations type "Fibrillation Atriale (FA)" vs "fibrillation atriale".
-    function matchAbbreviationToEntities(abbrHit, idx) {
+    function matchAbbreviationToEntities(abbrHit, idx, MASTER_DB) {
+        // 1) Mapping direct (le plus robuste)
+        const patId = ABBR_TO_PAT_ID[abbrHit.abbr];
+        if (patId && MASTER_DB.PATHOLOGIES && MASTER_DB.PATHOLOGIES[patId]) {
+            const p = MASTER_DB.PATHOLOGIES[patId];
+            return { kind: 'patho', target: { id: patId, label: p.NOM_STANDARD } };
+        }
+        const bioCode = ABBR_TO_BIO_CODE[abbrHit.abbr];
+        if (bioCode && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioCode]) {
+            const b = MASTER_DB.BIOLOGIE[bioCode];
+            return { kind: 'bio', target: { code: bioCode, label: b.NOM_STANDARD, unit: b.UNITE || '' } };
+        }
+        // 2) Fallback : recherche de l'expansion par inclusion
         const expN = norm(abbrHit.expansion).trim();
         if (expN.length < 4) return null;
         const matches = (h, n) => h === n || (h.length >= n.length && h.indexOf(n) !== -1);
-        // Pathologie : essaie d'abord équivalence exacte, sinon le normTerm le plus long contenant expN
         let best = null;
         for (const it of idx.pathologies) {
             if (matches(it.normTerm, expN)) {
@@ -241,7 +378,6 @@
             }
         }
         if (best) return { kind: best.kind, target: best.it.target };
-        // Bio (analyte): équivalence exacte uniquement
         for (const it of idx.biology) {
             if (it.normTerm === expN) return { kind: 'bio', target: it.target };
         }
@@ -250,7 +386,7 @@
 
     // === API principale ===
     function extract(text, MASTER_DB) {
-        const empty = { meds: [], pathologies: [], biology: [], abbreviations: [] };
+        const empty = { meds: [], pathologies: [], biology: [], abbreviations: [], conflicts: [] };
         if (!text || !MASTER_DB) return empty;
         const idx = buildIndex(MASTER_DB);
 
@@ -261,10 +397,9 @@
 
         // Augmenter les pathologies via les abréviations
         abbrHits.forEach(ah => {
-            const match = matchAbbreviationToEntities(ah, idx);
+            const match = matchAbbreviationToEntities(ah, idx, MASTER_DB);
             if (match && match.kind === 'patho') {
-                // éviter doublon si déjà détecté au même endroit
-                if (!pathoHits.some(h => h.start === ah.start)) {
+                if (!pathoHits.some(h => h.start === ah.start && h.target.id === match.target.id)) {
                     pathoHits.push({
                         start: ah.start, end: ah.end,
                         match: ah.abbr,
@@ -275,27 +410,63 @@
             }
         });
 
-        // Marquage négation
-        const annotate = h => { h.negated = isNegated(text, h.start); h.source = h.viaAbbreviation ? 'abbreviation' : 'exact'; return h; };
-        const allPatho = pathoHits.map(annotate);
-        const allMed = medHits.map(annotate);
-        const allBio = bioHits.map(annotate);
+        // === Fuzzy fallback : pour les tokens non capturés exactement ===
+        // Marquer les positions déjà occupées par les hits exacts.
+        const taken = new Uint8Array(text.length);
+        [...pathoHits, ...medHits].forEach(h => { for (let k = h.start; k < h.end; k++) taken[k] = 1; });
+        const fuzzyPathoHits = findFuzzyHits(text, idx.pathologies, taken);
+        const fuzzyMedHits = findFuzzyHits(text, idx.meds, taken);
+        pathoHits.push(...fuzzyPathoHits);
+        medHits.push(...fuzzyMedHits);
+
+        // Annotation : négation + historique + source + posologie (pour les meds)
+        const annotate = (h, kind) => {
+            h.negated = isNegated(text, h.start);
+            // Historique seulement si pertinent et non négé
+            if (!h.negated && (kind === 'patho' || kind === 'med')) {
+                h.historical = isHistorical(text, h.start);
+            }
+            h.source = h.source || (h.viaAbbreviation ? 'abbreviation' : 'exact');
+            if (kind === 'med') {
+                const poso = extractPosology(text, h);
+                if (poso) h.posology = poso;
+            }
+            return h;
+        };
+        const allPatho = pathoHits.map(h => annotate(h, 'patho'));
+        const allMed = medHits.map(h => annotate(h, 'med'));
+        const allBio = bioHits.map(h => annotate(h, 'bio'));
 
         // Dédup par cible (garder la première occurrence ou la plus longue)
         const dedupByTarget = (arr, keyFn) => {
             const map = new Map();
             arr.forEach(h => {
                 const k = keyFn(h);
-                if (!map.has(k) || (h.end - h.start) > (map.get(k).end - map.get(k).start)) map.set(k, h);
+                if (!k) return;
+                // Préférer un hit exact à un fuzzy
+                const existing = map.get(k);
+                if (!existing) { map.set(k, h); return; }
+                const isExisting_exact = existing.source !== 'fuzzy';
+                const isH_exact = h.source !== 'fuzzy';
+                if (isH_exact && !isExisting_exact) { map.set(k, h); return; }
+                if (!isH_exact && isExisting_exact) return;
+                // Préférer le hit avec posology si égalité
+                if (h.posology && !existing.posology) { map.set(k, h); return; }
+                if ((h.end - h.start) > (existing.end - existing.start)) map.set(k, h);
             });
             return [...map.values()].sort((a, b) => a.start - b.start);
         };
 
+        const finalPatho = dedupByTarget(allPatho, h => h.target.id);
+        const finalMed = dedupByTarget(allMed, h => h.target.dci);
+        const finalBio = dedupByTarget(allBio, h => h.target.code);
+
         return {
-            pathologies: dedupByTarget(allPatho, h => h.target.id),
-            meds: dedupByTarget(allMed, h => h.target.dci),
-            biology: dedupByTarget(allBio, h => h.target.code),
-            abbreviations: abbrHits
+            pathologies: finalPatho,
+            meds: finalMed,
+            biology: finalBio,
+            abbreviations: abbrHits,
+            conflicts: detectConflicts(finalPatho)
         };
     }
 
@@ -310,7 +481,7 @@
         (accepted.meds || []).forEach(m => {
             const k = (m.target.dci || '').toLowerCase();
             if (ctx.already && ctx.already.meds && ctx.already.meds.has(k)) { summary.skipped++; return; }
-            if (ctx.selectMed) { ctx.selectMed(m.target.dci); summary.meds++; }
+            if (ctx.selectMed) { ctx.selectMed(m.target.dci, m.posology || null); summary.meds++; }
         });
         (accepted.biology || []).forEach(b => {
             if (ctx.setBioValue) { ctx.setBioValue(b.target.code, b.value); summary.bio++; }
