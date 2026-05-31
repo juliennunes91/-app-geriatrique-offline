@@ -96,7 +96,8 @@ const APP_FILES = [
     'geria_database.js', 'geria_pathology_rules_v3.js', 'geria_recos_final.js',
     'geria_integration_module.js', 'utils.js', 'patient_state.js', 'drug_classes.js',
     'geria_engine_v2.js', 'app_core.js', 'app_ui.js',
-    'child_pugh_adaptations.js', 'composite_scores.js', 'app_analysis.js'
+    'child_pugh_adaptations.js', 'composite_scores.js', 'app_analysis.js',
+    'text_extractor.js'
 ];
 
 function loadApp() {

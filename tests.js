@@ -984,6 +984,90 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
 }
 
 // ============================================================================
+// EXTRACTEUR DE TEXTE LIBRE (POC Tier 1)
+// ============================================================================
+console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
+{
+    const vm = require('vm');
+    const { loadApp } = require('./oracle_harness');
+    const { sandbox } = loadApp();
+    const extract = txt => JSON.parse(vm.runInContext(
+        `JSON.stringify(GeriaTextExtractor.extract(${JSON.stringify(txt)}, MASTER_DB))`, sandbox));
+    const findP = (r, id) => r.pathologies.find(h => h.target.id === id);
+    const findM = (r, dci) => r.meds.find(h => (h.target.dci || '').toLowerCase() === dci.toLowerCase());
+    const findB = (r, code) => r.biology.find(h => h.target.code === code);
+
+    test('Abréviations : HTA → PAT_005, FA → PAT_006, AVC → PAT_008, RGO → PAT_053', () => {
+        const r = extract('Patient avec HTA, FA paroxystique, antécédent d\'AVC en 2019. RGO traité.');
+        assert.ok(findP(r, 'PAT_005'), 'HTA → PAT_005 manquant');
+        assert.ok(findP(r, 'PAT_006'), 'FA → PAT_006 manquant');
+        assert.ok(findP(r, 'PAT_008'), 'AVC → PAT_008 manquant');
+        assert.ok(findP(r, 'PAT_053'), 'RGO → PAT_053 manquant');
+    });
+
+    test('Brand → DCI : Doliprane → Paracetamol', () => {
+        const r = extract('Traitement : Doliprane 1 g si douleur.');
+        assert.ok(findM(r, 'Paracetamol'), 'Doliprane non résolu en Paracetamol');
+    });
+
+    test('Négation : « Pas de diabète » → diabète marqué négé', () => {
+        const r = extract('HTA stable. Pas de diabète. Bisoprolol 5 mg.');
+        const d = findP(r, 'PAT_016');
+        assert.ok(d, 'diabète non détecté');
+        assert.strictEqual(d.negated, true, 'diabète aurait dû être marqué négé');
+    });
+
+    test('Négation : « Pas d\'ATCD de cancer » → cancer négé', () => {
+        const r = extract('Pas d\'ATCD de cancer ni de pathologie thromboembolique.');
+        const c = findP(r, 'PAT_020');
+        assert.ok(c && c.negated, 'cancer négé non détecté');
+    });
+
+    test('Frontière de phrase : la négation NE TRAVERSE PAS une phrase', () => {
+        const r = extract('Pas de diabète. Antécédent d\'AVC en 2019.');
+        const avc = findP(r, 'PAT_008');
+        assert.ok(avc, 'AVC non détecté');
+        assert.strictEqual(avc.negated, false, 'AVC ne doit pas être négé (la négation appartient à la phrase précédente)');
+    });
+
+    test('Frontière de phrase (bio) : « aucune connue. Biologie : Hb 11 » → Hb non négé', () => {
+        const r = extract('Allergie : aucune connue.\nBiologie : Hb 11.2 g/dL.');
+        const h = findB(r, 'BIO_009');
+        assert.ok(h, 'Hb non détectée');
+        assert.strictEqual(h.negated, false, 'Hb ne doit pas être négée');
+    });
+
+    test('Biologie : valeurs + virgule décimale FR', () => {
+        const r = extract('Bio : K 4,1 mmol/L, Na 138, DFG 45 mL/min, TSH 2,5');
+        const k = findB(r, 'BIO_001'); assert.ok(k && k.value === 4.1, 'K 4,1 mal extrait');
+        const na = findB(r, 'BIO_002'); assert.ok(na && na.value === 138, 'Na 138 mal extrait');
+        const dfg = findB(r, 'BIO_004'); assert.ok(dfg && dfg.value === 45, 'DFG 45 mal extrait');
+        const tsh = findB(r, 'BIO_019'); assert.ok(tsh && tsh.value === 2.5, 'TSH 2,5 mal extrait');
+    });
+
+    test('Pas de faux positif sur mots communs : « fait » ne matche pas FA', () => {
+        const r = extract('Patient autonome. Il fait ses courses seul.');
+        assert.ok(!findP(r, 'PAT_006'), 'FA ne doit pas être détectée dans "fait"');
+    });
+
+    test('Pas de faux positif : « voici » ne matche pas IC', () => {
+        const r = extract('Voici la liste : paracétamol au besoin.');
+        // IC = PAT_002 (HFrEF) — l'abréviation IC n'est pas dans le dico individuel mais reste sécurisée
+        // par la case-sensitivity ; « voici » contient « ic » en minuscule donc OK.
+        const ic = (r.pathologies || []).find(h => h.target.id === 'PAT_002');
+        assert.ok(!ic, 'IC ne doit pas être détectée dans "voici"');
+    });
+
+    test('Dédup : un même médicament/pathologie n\'est listé qu\'une fois', () => {
+        const r = extract('HTA. HTA contrôlée. Apixaban 5 mg matin et soir. Apixaban poursuivi.');
+        const htas = r.pathologies.filter(h => h.target.id === 'PAT_005');
+        assert.strictEqual(htas.length, 1, 'HTA dupliquée');
+        const apx = r.meds.filter(h => (h.target.dci || '').toLowerCase() === 'apixaban');
+        assert.strictEqual(apx.length, 1, 'Apixaban dupliqué');
+    });
+}
+
+// ============================================================================
 // LINTER D'INVARIANTS DU CORPUS DE RÈGLES (cross-check moteur/dictionnaires/rendu)
 // ============================================================================
 require('./tests_rules_invariants').runRuleInvariantTests(test, assert);

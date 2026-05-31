@@ -346,6 +346,21 @@
                         <label class="form-check-label fw-bold text-danger">Patient Très Fragile (STOPPFrail)</label>
                     </div>
 
+                    <details class="border p-2 bg-light rounded mb-3">
+                        <summary class="fw-bold text-primary" style="cursor:pointer;">📋 Import depuis texte libre (POC)</summary>
+                        <div class="mt-2">
+                            <textarea id="extractorText" class="form-control" rows="5" placeholder="Collez ici un compte-rendu, une ordonnance, une lettre de sortie… Le moteur détecte automatiquement comorbidités, médicaments et valeurs biologiques."></textarea>
+                            <div class="d-flex flex-wrap gap-1 mt-2">
+                                <button type="button" id="btnExtractText" class="btn btn-sm btn-primary">Analyser le texte</button>
+                                <button type="button" id="btnExtractCheckAll" class="btn btn-sm btn-outline-secondary">Tout cocher</button>
+                                <button type="button" id="btnExtractCheckExact" class="btn btn-sm btn-outline-secondary">Exacts seulement</button>
+                                <button type="button" id="btnExtractApply" class="btn btn-sm btn-success">Appliquer la sélection</button>
+                                <button type="button" id="btnExtractClear" class="btn btn-sm btn-outline-danger">Effacer</button>
+                            </div>
+                            <div id="extractorResults" class="mt-2"></div>
+                        </div>
+                    </details>
+
                     <h4>2. Comorbidités</h4>
                     <div class="autocomplete-container mb-2">
                         <input class="form-control" type="text" id="inputComorb" placeholder="Taper une pathologie..." autocomplete="off">
@@ -541,6 +556,8 @@
     <script src="child_pugh_adaptations.js"></script>
     <script src="composite_scores.js"></script>
     <script src="app_analysis.js"></script>
+    <script src="text_extractor.js"></script>
+    <script src="extractor_ui.js"></script>
     <div id="session-restore-banner" style="display:none; z-index:10000; max-width:350px;" class="alert alert-warning alert-dismissible position-fixed bottom-0 end-0 m-3 shadow py-2 px-3">
         Session précédente détectée. <a href="#" onclick="_restoreSession();document.getElementById('session-restore-banner').style.display='none';return false;" class="fw-bold">Restaurer</a>
         <button type="button" class="btn-close btn-sm" onclick="this.parentElement.style.display='none';sessionStorage.removeItem('geriaassist_session');"></button>
