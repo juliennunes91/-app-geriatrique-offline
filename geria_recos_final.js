@@ -579,6 +579,20 @@ const GERIA_RECOS_DB = {
             },
             alternatives: "Arrêt de l'aspirine si prévention primaire pure"
         },
+        {
+            id: "EV_C17",
+            sources: ["FDA", "ANSM"],
+            ref_code: "REM-GINKGO-AC",
+            section: "Coagulation",
+            titre: "Ginkgo biloba + anticoagulant ou antiagrégant : risque hémorragique",
+            message: "Ginkgo biloba a un effet antiplaquettaire (inhibition du PAF, ↓ agrégation) ; en association avec un anticoagulant (AVK, AOD) ou un antiagrégant, le risque hémorragique est majoré (cas documentés d'hématomes spontanés et saignements digestifs). À noter : efficacité non démontrée du ginkgo dans la démence et le déclin cognitif (EU(7)-PIM/REMEDIES) → déprescrire de préférence.",
+            severite: "warning",
+            condition: {
+                med_keys: ["ginkgo"],
+                med_keys_2: ["anticoag", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "acenocoumarol", "warfarine", "fluindione", "antiagreg", "acide acetylsalicylique", "aspirine", "clopidogrel", "prasugrel", "ticagrelor"]
+            },
+            alternatives: "Arrêt du ginkgo (bénéfice cognitif non démontré). Si maintenu : surveillance clinique des saignements et de l'INR (sous AVK)."
+        },
 
         // ====================================================================
         // SECTION D : SYSTÈME NERVEUX CENTRAL
