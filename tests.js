@@ -1235,6 +1235,31 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         const f = findB(r, 'BIO_020');
         assert.ok(f && f.converted && f.unit === 'µg/L' && f.value === 150);
     });
+
+    // --- Tier 5 (IC disambiguation + dose-dependant + bio + nouveaux DCI) ---
+    test('Tier 5 — IC seul → ambigu (HFrEF | HFpEF)', () => {
+        const r = extract('Patient avec IC compensée.');
+        assert.ok(Array.isArray(r.ambiguous) && r.ambiguous.length === 1, 'ambiguïté IC manquante');
+        const ids = r.ambiguous[0].alternatives.map(a => a.id).sort();
+        assert.deepStrictEqual(ids, ['PAT_002', 'PAT_003']);
+    });
+
+    test('Tier 5 — IC ambigu DISAMBIGUÉ par HFrEF explicite (0 ambiguïté)', () => {
+        const r = extract('HFrEF documentée, IC compensée.');
+        assert.strictEqual((r.ambiguous || []).length, 0);
+    });
+
+    test('Tier 5 — Altizide DCI ajouté reconnu', () => {
+        const r = extract('Altizide 15 mg/j.');
+        assert.ok(findM(r, 'Altizide'), 'Altizide non reconnu');
+    });
+
+    test('Tier 5 — Nouvelles abréviations : FEVG, STEMI, SCPD, GIR détectées', () => {
+        const r = extract('FEVG 35%. STEMI inférieur 2022. SCPD modérés. GIR 3.');
+        // ces abréviations doivent au moins apparaître dans la liste abbreviations
+        const abbrs = r.abbreviations.map(a => a.abbr);
+        ['FEVG', 'STEMI', 'SCPD', 'GIR'].forEach(a => assert.ok(abbrs.includes(a), `${a} non détectée`));
+    });
 }
 
 // ============================================================================

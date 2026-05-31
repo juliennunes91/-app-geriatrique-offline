@@ -2027,7 +2027,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_SYND_044",
-            sources: ["FDA", "STOPP3", "BEERS"],
+            sources: ["FDA", "BEERS"],
             ref_code: "SYND-044-RESPIR",
             section: "Interaction critique",
             titre: "Risque de dépression respiratoire — BZD/Z-drug + opioïde (FDA Black Box 2016)",
@@ -2314,7 +2314,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_N02",
-            sources: ["STOPP3", "BEERS"],
+            sources: ["BEERS"],
             ref_code: "HEPATO-2",
             section: "Hépatologie",
             titre: "Benzodiazépine / opioïde + cirrhose sévère",
@@ -4172,9 +4172,9 @@ const RECOS_SUPPLEMENT = [
         condition: { med_keys: ["lithium"], med_keys_2: ["iec", "ara2"] }
     },
     {
-        id: "SUP_INT_012", sources: ["BEERS", "STOPP3"],
+        id: "SUP_INT_012", sources: ["BEERS"],
         titre: "Lithium + AINS ou diurétique thiazidique : toxicité lithique",
-        message: "Beers 2023 / STOPP : les AINS et les diurétiques thiazidiques réduisent la clairance rénale du lithium → ↑ lithémie et risque de toxicité (tremblements, confusion, troubles digestifs, atteinte rénale), marge thérapeutique étroite. Éviter l'association ou surveiller étroitement lithémie et fonction rénale.",
+        message: "Beers 2023 : les AINS et les diurétiques thiazidiques réduisent la clairance rénale du lithium → ↑ lithémie et risque de toxicité (tremblements, confusion, troubles digestifs, atteinte rénale), marge thérapeutique étroite. Éviter l'association ou surveiller étroitement lithémie et fonction rénale.",
         severite: "danger",
         condition: { med_keys: ["lithium"], med_keys_2: ["ains", "ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "hydrochlorothiazide", "indapamide", "thiazidique"] }
     },

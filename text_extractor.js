@@ -23,31 +23,45 @@
     //     sur des mots courants : « fa » dans « fait », « ic » dans « voici », etc.) ===
     const MEDICAL_ABBREVIATIONS = {
         // Cardiovasculaire
-        'FA': 'fibrillation atriale', 'HTA': 'hypertension arterielle',
+        'FA': 'fibrillation atriale', 'ACFA': 'arythmie complete par fibrillation atriale',
+        'HTA': 'hypertension arterielle', 'HTO': 'hypotension orthostatique',
         'IC': 'insuffisance cardiaque', 'HFrEF': 'insuffisance cardiaque a fraction d ejection reduite',
         'HFpEF': 'insuffisance cardiaque a fraction d ejection preservee',
-        'IDM': 'infarctus du myocarde', 'SCA': 'syndrome coronarien aigu',
+        'HFmrEF': 'insuffisance cardiaque a fraction d ejection moderement alteree',
+        'IDM': 'infarctus du myocarde', 'SCA': 'syndrome coronarien aigu', 'STEMI': 'st elevation myocardial infarction',
+        'NSTEMI': 'non st elevation myocardial infarction',
         'AVC': 'accident vasculaire cerebral', 'AIT': 'accident ischemique transitoire',
         'AOMI': 'arteriopathie obliterante des membres inferieurs',
         'TVP': 'thrombose veineuse profonde', 'EP': 'embolie pulmonaire',
         'MTEV': 'maladie thromboembolique veineuse', 'SCC': 'syndrome coronarien chronique',
+        'BAV': 'bloc auriculo ventriculaire', 'FEVG': 'fraction d ejection ventriculaire gauche',
+        'TA': 'tension arterielle', 'TAS': 'tension arterielle systolique', 'TAD': 'tension arterielle diastolique',
         // Respiratoire
         'BPCO': 'bronchopneumopathie chronique obstructive',
         'SAOS': 'syndrome d apnees obstructives du sommeil', 'EFR': 'epreuves fonctionnelles respiratoires',
+        'PID': 'pneumopathie interstitielle diffuse', 'IRC respi': 'insuffisance respiratoire chronique',
+        'OLD': 'oxygenotherapie de longue duree',
         // Endocrinien
-        'DT1': 'diabete de type 1', 'DT2': 'diabete de type 2',
+        'DT1': 'diabete de type 1', 'DT2': 'diabete de type 2', 'DG': 'diabete gestationnel',
+        'HypoT4': 'hypothyroidie', 'HyperT4': 'hyperthyroidie',
         // Rénal / digestif
         'IRC': 'insuffisance renale chronique', 'MRC': 'maladie renale chronique', 'IRA': 'insuffisance renale aigue',
-        'RGO': 'reflux gastro oesophagien', 'UGD': 'ulcere gastro duodenal',
-        // SNC
+        'NTA': 'necrose tubulaire aigue', 'SHU': 'syndrome hemolytique et uremique',
+        'RGO': 'reflux gastro oesophagien', 'UGD': 'ulcere gastro duodenal', 'MICI': 'maladie inflammatoire chronique intestinale',
+        // SNC / psychiatrie
         'TAG': 'trouble anxieux generalise', 'SJSR': 'syndrome des jambes sans repos',
         'TCSP': 'trouble du comportement en sommeil paradoxal',
-        // Urologie / Rhumato
-        'HBP': 'hypertrophie benigne de la prostate', 'HBP': 'hypertrophie benigne de la prostate',
-        'PR': 'polyarthrite rhumatoide',
+        'TNCM': 'trouble neurocognitif majeur', 'MCI': 'mild cognitive impairment',
+        'EDM': 'episode depressif majeur', 'TUC': 'trouble usage cannabis', 'TUS': 'trouble usage substance',
+        'SCPD': 'symptomes comportementaux et psychologiques de la demence', 'SED': 'sevrage alcoolique',
+        // Urologie / Rhumato / Onco
+        'HBP': 'hypertrophie benigne de la prostate',
+        'PR': 'polyarthrite rhumatoide', 'PPR': 'pseudopolyarthrite rhizomelique', 'SPA': 'spondyloarthrite',
+        'LED': 'lupus erythemateux dissemine',
+        'KS': 'cancer du sein', 'KP': 'cancer de la prostate', 'KCR': 'cancer colorectal', 'KBP': 'cancer broncho pulmonaire',
         // Classes médicamenteuses
         'AINS': 'anti inflammatoire non steroidien', 'IPP': 'inhibiteur de la pompe a protons',
-        'AOD': 'anticoagulant oral direct', 'AVK': 'antivitamine k',
+        'AOD': 'anticoagulant oral direct', 'AVK': 'antivitamine k', 'HBPM': 'heparine de bas poids moleculaire',
         'IEC': 'inhibiteur de l enzyme de conversion', 'ARA2': 'antagoniste des recepteurs de l angiotensine ii',
         'ARNI': 'inhibiteur du recepteur de l angiotensine et de la neprilysine',
         'ISRS': 'inhibiteur selectif de recapture de la serotonine',
@@ -55,16 +69,33 @@
         'IMAO': 'inhibiteur de la monoamine oxydase', 'TCA': 'antidepresseur tricyclique',
         'BZD': 'benzodiazepine', 'IAChE': 'inhibiteur de l acetylcholinesterase',
         'iSGLT2': 'inhibiteur du sglt2', 'ARM': 'antagoniste des recepteurs des mineralocorticoides',
+        'GLP1': 'agoniste du recepteur glp 1', 'DPP4': 'inhibiteur dpp 4',
+        'ICS': 'corticoide inhale', 'LABA': 'beta 2 agoniste de longue duree d action',
+        'LAMA': 'antimuscarinique de longue duree d action', 'SABA': 'beta 2 agoniste de courte duree d action',
+        'IACS': 'inhibiteur acetylcholinesterase central', 'NMDA': 'antagoniste recepteur nmda',
+        'CMI': 'corticoide inhale', 'AP': 'antipsychotique', 'AD': 'antidepresseur',
         // Examens / biologie (servent à matcher analyte BIO_*)
-        'Hb': 'hemoglobine', 'NFS': 'numeration formule sanguine',
-        'TSH': 'thyreostimuline', 'INR': 'international normalized ratio',
+        'Hb': 'hemoglobine', 'Ht': 'hematocrite', 'NFS': 'numeration formule sanguine',
+        'TSH': 'thyreostimuline', 'T4L': 'thyroxine libre', 'T3L': 'triiodothyronine libre',
+        'INR': 'international normalized ratio', 'TP': 'taux de prothrombine', 'TCA labo': 'temps de cephaline activee',
         'DFG': 'debit de filtration glomerulaire', 'GFR': 'debit de filtration glomerulaire',
-        'CRP': 'proteine c reactive', 'HbA1c': 'hemoglobine glyquee',
-        'PSA': 'antigene specifique de la prostate', 'NTproBNP': 'nt probnp',
-        'QTc': 'qtc',
-        // Contexte clinique
+        'CRP': 'proteine c reactive', 'VS': 'vitesse de sedimentation',
+        'HbA1c': 'hemoglobine glyquee', 'GAJ': 'glycemie a jeun',
+        'PSA': 'antigene specifique de la prostate', 'NTproBNP': 'nt probnp', 'BNP': 'brain natriuretic peptide',
+        'QTc': 'qtc', 'ECG': 'electrocardiogramme', 'ETT': 'echocardiographie transthoracique',
+        'PAL': 'phosphatases alcalines', 'GGT': 'gamma glutamyl transferase',
+        'CK': 'creatine kinase', 'CPK': 'creatine phosphokinase', 'LDH': 'lactate deshydrogenase',
+        'VitD': 'vitamine d', 'Vit B12': 'vitamine b12', 'B9': 'folates',
+        'PTH': 'parathormone', 'Tn': 'troponine',
+        // Contexte clinique / autonomie
         'ATCD': 'antecedent', 'CFS': 'clinical frailty scale', 'NYHA': 'classe nyha',
-        'MMSE': 'mini mental state examination', 'MoCA': 'montreal cognitive assessment'
+        'MMSE': 'mini mental state examination', 'MoCA': 'montreal cognitive assessment',
+        'GIR': 'groupe iso ressources', 'ADL': 'activities of daily living', 'IADL': 'instrumental activities of daily living',
+        'IMC': 'indice de masse corporelle', 'BMI': 'body mass index',
+        'AEG': 'alteration de l etat general', 'AVQ': 'activites de la vie quotidienne',
+        'SU': 'sonde urinaire', 'CV': 'cardio vasculaire', 'EHPAD': 'etablissement hebergement personnes agees dependantes',
+        'SSR': 'soins de suite et readaptation', 'USLD': 'unite de soins de longue duree',
+        'NKDA': 'no known drug allergies'
     };
 
     // === Normalisation 1-pour-1 (préserve les positions char par char) ===
@@ -353,6 +384,14 @@
         'QTc': 'BIO_031', 'CRP': 'BIO_027' // CRP peut ne pas exister; ignoré si absent
     };
 
+    // === Abréviations AMBIGUËS (plusieurs entités cliniques candidates) ===
+    // L'UI doit proposer un choix entre les alternatives plutôt que d'auto-sélectionner.
+    // Si une alternative précise est DÉJÀ détectée explicitement dans le texte (ex. "HFrEF"
+    // mentionné par ailleurs), l'ambiguïté est levée et l'entrée ambiguë est supprimée.
+    const ABBR_AMBIGUOUS = {
+        'IC': ['PAT_002', 'PAT_003']   // HFrEF vs HFpEF
+    };
+
     // === Extraction de durée (« depuis 6 mois », « il y a 2 ans », « pendant 3 sem ») ===
     // Cherche dans la fenêtre 100 chars APRÈS la fin du hit (typiquement même phrase).
     const DUREE_RE = /\b(?:depuis|il y a|pendant|pour)\s+(\d+(?:[,.]\d+)?)\s*(jours?|j\b|sem(?:aines?)?|mois|ans?|annees?)/i;
@@ -466,7 +505,7 @@
 
     // === API principale ===
     function extract(text, MASTER_DB) {
-        const empty = { meds: [], pathologies: [], biology: [], allergies: [], abbreviations: [], conflicts: [] };
+        const empty = { meds: [], pathologies: [], biology: [], allergies: [], ambiguous: [], abbreviations: [], conflicts: [] };
         if (!text || !MASTER_DB) return empty;
         const idx = buildIndex(MASTER_DB);
 
@@ -475,8 +514,9 @@
         const medHits = findEntityHits(text, idx.meds);
         const bioHits = findBioHits(text, idx.biology);
 
-        // Augmenter les pathologies via les abréviations
+        // Augmenter les pathologies via les abréviations (cas non ambigus)
         abbrHits.forEach(ah => {
+            if (ABBR_AMBIGUOUS[ah.abbr]) return; // traité plus bas
             const match = matchAbbreviationToEntities(ah, idx, MASTER_DB);
             if (match && match.kind === 'patho') {
                 if (!pathoHits.some(h => h.start === ah.start && h.target.id === match.target.id)) {
@@ -488,6 +528,28 @@
                     });
                 }
             }
+        });
+
+        // Abréviations AMBIGUËS — proposer plusieurs alternatives si AUCUNE n'est
+        // déjà détectée explicitement par ailleurs dans le texte.
+        const ambiguousHits = [];
+        abbrHits.forEach(ah => {
+            const altIds = ABBR_AMBIGUOUS[ah.abbr]; if (!altIds) return;
+            // Si une alternative est déjà ciblée explicitement → désambiguïsé
+            const alreadyResolved = altIds.some(id => pathoHits.some(h => h.target && h.target.id === id));
+            if (alreadyResolved) return;
+            const alternatives = altIds
+                .map(id => MASTER_DB.PATHOLOGIES && MASTER_DB.PATHOLOGIES[id] ? { id, label: MASTER_DB.PATHOLOGIES[id].NOM_STANDARD } : null)
+                .filter(Boolean);
+            if (alternatives.length < 2) return;
+            ambiguousHits.push({
+                start: ah.start, end: ah.end,
+                match: ah.abbr,
+                ambiguous: true,
+                alternatives,
+                viaAbbreviation: ah.abbr,
+                source: 'abbreviation'
+            });
         });
 
         // === Fuzzy fallback : pour les tokens non capturés exactement ===
@@ -575,6 +637,7 @@
             meds: finalMed,
             biology: finalBio,
             allergies: allergyHits,
+            ambiguous: ambiguousHits,
             abbreviations: abbrHits,
             conflicts: detectConflicts(finalPatho)
         };

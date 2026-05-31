@@ -253,13 +253,20 @@ function runRuleInvariantTests(test, assert) {
     rules.forEach(r => r.brandKeys.forEach(k => brandKeys.push(`${r.id}${r.quarantined ? ' [Q]' : ''} :: ${k}`)));
     audit('Clés médicament en nom commercial (princeps au lieu du DCI)', brandKeys);
 
-    // C5 — CONTRADICTIONS éviter ⇄ initier : un même DCI/clé apparaît dans EVITER.med_keys
-    // pour une comorbidité ET dans INITIER.med_absent pour la même comorbidité, sans
-    // discriminateur supplémentaire. Signal d'avis-conflit potentiel à arbitrer.
+    // C5 — VRAIES CONTRADICTIONS éviter ⇄ initier : un même DCI apparaît dans
+    // EVITER.med_keys ET dans INITIER.med_keys (NON med_absent) pour la même
+    // comorbidité, sans discriminateur. Le signal exclut désormais les paires
+    // structurellement complémentaires :
+    //   - INITIER.med_absent liste habituellement les alternatives acceptables, pas
+    //     les meds recommandés → le chevauchement avec EVITER.med_keys n'est PAS un
+    //     vrai conflit (cf. les 11 paires complémentaires documentées : EV_C11/IN_C01
+    //     AVK, EV_SFGG_AD_08/IN_SFGG_AD_01 TCA, etc.).
+    //   - Les BB pour HTA monothérapie (EV_B05) vs antihypertenseur (IN_B01)
+    //     décrivent des angles distincts (monothérapie/1ère ligne vs initiation).
     const contradictions = [];
     {
-        const eviterMeds = new Map();  // clé "medKey|PAT" → [ids EVITER]
-        const initierMeds = new Map(); // clé "medAbsent|PAT" → [ids INITIER]
+        const eviterMeds = new Map();
+        const initierMeds = new Map();
         active.forEach(r => {
             if (r.set === 'eviter' && r.comorbsPositive.length && r.medKeys.length) {
                 r.medKeys.forEach(k => r.comorbsPositive.forEach(p => {
@@ -268,8 +275,10 @@ function runRuleInvariantTests(test, assert) {
                     eviterMeds.get(sig).push(r.id);
                 }));
             }
-            if (r.set === 'initier' && r.comorbsPositive.length && r.medAbsent.length) {
-                r.medAbsent.forEach(k => r.comorbsPositive.forEach(p => {
+            // STRICT : on ne regarde QUE INITIER.med_keys (recommandation explicite),
+            // PAS med_absent (qui liste les alternatives = source de faux positifs).
+            if (r.set === 'initier' && r.comorbsPositive.length && r.medKeys.length) {
+                r.medKeys.forEach(k => r.comorbsPositive.forEach(p => {
                     const sig = k + '|' + p;
                     if (!initierMeds.has(sig)) initierMeds.set(sig, []);
                     initierMeds.get(sig).push(r.id);
@@ -282,7 +291,7 @@ function runRuleInvariantTests(test, assert) {
             }
         });
     }
-    audit('Contradictions éviter ⇄ initier (même DCI + comorb)', contradictions);
+    audit('VRAIES contradictions éviter ⇄ initier (même DCI recommandé ET interdit)', contradictions);
 
     // PROVENANCE : source STOPP/START revendiquée sans ref_code STOPP/START correspondant
     // → attribution probablement générique (à corroborer ou retirer).

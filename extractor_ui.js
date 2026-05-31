@@ -105,6 +105,28 @@
         </div>`;
     }
 
+    function renderAmbiguous(items, fullText) {
+        if (!items || !items.length) return '';
+        const rows = items.map((h, i) => {
+            const radios = h.alternatives.map((alt, j) => {
+                const rid = `extr_amb_${i}_${j}`;
+                return `<label style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:13px;cursor:pointer;">
+                    <input type="radio" name="extr_amb_${i}" id="${rid}" data-amb-idx="${i}" data-alt-id="${esc(alt.id)}" ${j === 0 ? 'checked' : ''}>
+                    ${esc(alt.label)} <small style="color:#6c757d;">[${esc(alt.id)}]</small>
+                </label>`;
+            }).join('');
+            return `<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;">
+                <div style="font-size:13px;"><b>« ${esc(h.match)} »</b> <small style="color:#6c757d;">→ choisir :</small></div>
+                <div style="margin:4px 0 2px 8px;">${radios}</div>
+                <div style="font-size:11px;color:#6c757d;margin-left:8px;">${snippet(fullText, h)}</div>
+            </div>`;
+        }).join('');
+        return `<details open style="margin-bottom:8px;background:#fff3cd;border:1px solid #ffe69c;border-radius:6px;padding:6px 10px;">
+            <summary style="font-weight:bold;font-size:13px;cursor:pointer;color:#664d03;">🤔 Ambiguïtés (${items.length}) — choisissez avant d'appliquer</summary>
+            <div style="padding-left:8px;margin-top:4px;">${rows}</div>
+        </details>`;
+    }
+
     function runExtraction() {
         const ta = $('extractorText'); if (!ta) return;
         const text = ta.value || '';
@@ -127,9 +149,11 @@
             return;
         }
         const allergiesCount = (r.allergies || []).length;
-        const total2 = total + allergiesCount;
+        const ambiguousCount = (r.ambiguous || []).length;
+        const total2 = total + allergiesCount + ambiguousCount;
         const html = [
             renderConflicts(r.conflicts),
+            renderAmbiguous(r.ambiguous, text),
             `<div style="font-size:12px;color:#6c757d;padding:4px 0 8px;">${total2} entité(s) détectée(s) — décochez les indésirables, puis « Appliquer la sélection ».</div>`,
             renderGroup('🩺 Pathologies', r.pathologies, 'patho', text, present),
             renderGroup('💊 Médicaments', r.meds, 'med', text, present),
@@ -159,6 +183,18 @@
             if (kind === 'patho' && r.pathologies[idx]) accepted.pathologies.push(r.pathologies[idx]);
             else if (kind === 'med' && r.meds[idx]) accepted.meds.push(r.meds[idx]);
             else if (kind === 'bio' && r.biology[idx]) accepted.biology.push(r.biology[idx]);
+        });
+        // Ambiguïtés résolues par radio
+        const ambByGroup = {};
+        document.querySelectorAll('#extractorResults input[type="radio"][data-amb-idx]').forEach(rd => {
+            if (!rd.checked) return;
+            ambByGroup[rd.dataset.ambIdx] = rd.dataset.altId;
+        });
+        Object.entries(ambByGroup).forEach(([idx, altId]) => {
+            const amb = (r.ambiguous || [])[+idx];
+            if (!amb) return;
+            const alt = amb.alternatives.find(a => a.id === altId);
+            if (alt) accepted.pathologies.push({ target: { id: alt.id, label: alt.label }, source: 'abbreviation', match: amb.match });
         });
 
         const present = alreadyIn();
