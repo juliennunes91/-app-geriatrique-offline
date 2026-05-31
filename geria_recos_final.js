@@ -2012,20 +2012,6 @@ const GERIA_RECOS_DB = {
             alternatives: "Sertraline 1ère intention (item 11), citalopram/escitalopram (item 11), mirtazapine si insomnie/dénutrition (item 12). IRSN en 2e ligne (item 13)."
         },
         {
-            id: "IN_SFGG_AD_01",
-            sources: ["SFGG_SF3PA_SFPC_2026"],
-            ref_code: "SFGG-AD-11",
-            section: "SNC — Antidépresseurs",
-            titre: "Sertraline en 1ère intention pour dépression du sujet âgé",
-            message: "Consensus SFGG/SF3PA/SFPC 2026 (item 11) : prescrire un ISRS — préférentiellement SERTRALINE — comme antidépresseur de 1ère intention chez le sujet âgé déprimé. Meilleur rapport bénéfice/risque (Kok & Reynolds JAMA 2017).",
-            severite: "info",
-            condition: {
-                comorbs: ["PAT_032"],
-                med_absent: ["sertraline", "citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "mirtazapine", "venlafaxine", "duloxetine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine"]
-            },
-            alternatives: "Sertraline 25 mg/j × 1 sem puis 50 mg/j ; titration 25-50 mg/1-2 sem. Cible thérapeutique en 4-12 sem. Mirtazapine 15-45 mg/j si insomnie/dénutrition (item 12)."
-        },
-        {
             id: "EV_SYND_044",
             sources: ["FDA", "STOPP3", "BEERS"],
             ref_code: "SYND-044-RESPIR",
@@ -2661,6 +2647,20 @@ const GERIA_RECOS_DB = {
                 med_absent: ["isrs", "sertraline", "citalopram", "escitalopram", "fluoxetine", "paroxetine", "venlafaxine", "duloxetine", "mirtazapine", "mianserine"]
             },
             alternatives: "Sertraline 25-50 mg, escitalopram 5-10 mg, mirtazapine 15-30 mg"
+        },
+        {
+            id: "IN_SFGG_AD_01",
+            sources: ["SFGG_SF3PA_SFPC_2026"],
+            ref_code: "SFGG-AD-11",
+            section: "SNC — Antidépresseurs",
+            titre: "Sertraline en 1ère intention pour dépression du sujet âgé",
+            message: "Consensus SFGG/SF3PA/SFPC 2026 (item 11) : prescrire un ISRS — préférentiellement SERTRALINE — comme antidépresseur de 1ère intention chez le sujet âgé déprimé. Meilleur rapport bénéfice/risque (Kok & Reynolds JAMA 2017).",
+            severite: "info",
+            condition: {
+                comorbs: ["PAT_032"],
+                med_absent: ["sertraline", "citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "mirtazapine", "venlafaxine", "duloxetine", "vortioxetine", "amitriptyline", "clomipramine", "imipramine"]
+            },
+            alternatives: "Sertraline 25 mg/j × 1 sem puis 50 mg/j ; titration 25-50 mg/1-2 sem. Cible thérapeutique en 4-12 sem. Mirtazapine 15-45 mg/j si insomnie/dénutrition (item 12)."
         },
         {
             id: "IN_D03",

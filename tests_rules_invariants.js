@@ -230,14 +230,22 @@ function runRuleInvariantTests(test, assert) {
     ).map(r => `${r.id} → ${r.bucket}`);
     audit('Mismatch préfixe id / bucket de rendu', nameBucketMismatch);
 
-    // Doublons de signature (comorbs + med_absent identiques) parmi les règles actives d'omission
+    // Doublons de signature : on inclut désormais med_keys (présence) en plus de
+    // comorbs+med_absent — sinon des règles aux ANGLES distincts (omission générique
+    // vs danger contextuel sur un médicament précis) sont signalées à tort comme
+    // doublons (ex. IN_F01/F02 + EV_F05/H01 partagent comorbs+med_absent mais
+    // diffèrent par leur med_keys : aspirine vs corticoïde vs AINS).
     const bySig = {};
     active.filter(r => r.hasMedAbsent).forEach(r => {
-        const sig = JSON.stringify([r.comorbsPositive.slice().sort(), r.medAbsent.slice().sort()]);
+        const sig = JSON.stringify([
+            r.comorbsPositive.slice().sort(),
+            r.medKeys.slice().sort(),
+            r.medAbsent.slice().sort()
+        ]);
         (bySig[sig] = bySig[sig] || []).push(r.id);
     });
     const dups = Object.values(bySig).filter(ids => ids.length > 1).map(ids => ids.join(' == '));
-    audit('Doublons de signature (comorbs+med_absent)', dups);
+    audit('Doublons de signature (comorbs+med_keys+med_absent)', dups);
 
     // Violations sur règles EN QUARANTAINE (rappel : non rendues, donc non bloquantes)
     const quarPathoMiss = [];
