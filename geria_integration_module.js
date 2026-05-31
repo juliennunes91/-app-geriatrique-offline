@@ -1682,11 +1682,12 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "section": "SNC",
         "titre": "Amitriptyline a fortes doses (>75 mg/j)",
         "message": "Tout patient age (PRISCUS 2.0: dose seuil) — Effets anticholinergiques, cardiotoxicite, risque de chutes proportionnels a la dose",
-        "severite": "warning",
+        "severite": "danger",
         "condition": {
             "med_keys": [
                 "amitriptyline"
-            ]
+            ],
+            "contexte_clinique": "dose_amitriptyline_elevee"
         },
         "alternatives": "Amitriptyline a eviter chez le sujet age. Si utilise: dose minimale (<25-50 mg/j), duree courte",
         "forta": "D (FORTA D)",

@@ -75,6 +75,11 @@
             if (h.historical && !negated) tags.push('<span style="color:#6f42c1;font-weight:bold;font-size:11px;">ATCD</span>');
             if (h.source === 'abbreviation') tags.push('<span style="color:#0d6efd;font-size:11px;">abrév.</span>');
             if (h.source === 'fuzzy') tags.push(`<span style="color:#fd7e14;font-size:11px;" title="distance ${h.fuzzyDistance}">fuzzy</span>`);
+            if (typeof h.confidence === 'number' && h.confidence < 100) {
+                const c = h.confidence;
+                const col = c >= 90 ? '#198754' : (c >= 70 ? '#fd7e14' : '#c0392b');
+                tags.push(`<span style="color:${col};font-size:10px;font-weight:600;" title="Confiance">${c}%</span>`);
+            }
             const checked = (!negated && !inPatient) ? 'checked' : '';
             const disabled = inPatient ? 'disabled' : '';
             return `<div style="display:flex;align-items:flex-start;gap:8px;padding:4px 0;border-bottom:1px solid #f0f0f0;">
@@ -208,6 +213,24 @@
         _lastResults = null;
     }
 
+    function exportJson() {
+        if (!_lastResults) return;
+        const blob = JSON.stringify({
+            extractedAt: new Date().toISOString(),
+            sourceText: ($('extractorText') || {}).value || '',
+            results: _lastResults
+        }, null, 2);
+        try {
+            const a = document.createElement('a');
+            a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(blob);
+            a.download = `extraction-${Date.now()}.json`;
+            document.body.appendChild(a); a.click(); a.remove();
+        } catch (e) {
+            // Fallback : copier dans le presse-papier
+            try { navigator.clipboard.writeText(blob); alert('JSON copié dans le presse-papier'); } catch (e2) { console.log(blob); }
+        }
+    }
+
     function bindEvents() {
         const wire = (id, fn) => { const el = $(id); if (el && !el.dataset.gxBound) { el.addEventListener('click', fn); el.dataset.gxBound = '1'; } };
         wire('btnExtractText', runExtraction);
@@ -215,9 +238,10 @@
         wire('btnExtractCheckAll', () => checkAll('all'));
         wire('btnExtractCheckExact', () => checkAll('exact'));
         wire('btnExtractClear', clearAll);
+        wire('btnExtractExport', exportJson);
     }
 
-    global.GeriaExtractorUI = { run: runExtraction, apply: applySelected, checkAll, clear: clearAll, _bind: bindEvents };
+    global.GeriaExtractorUI = { run: runExtraction, apply: applySelected, checkAll, clear: clearAll, exportJson, _bind: bindEvents };
 
     if (typeof document !== 'undefined') {
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindEvents);

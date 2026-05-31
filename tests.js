@@ -1180,6 +1180,61 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         const titres = (r['alertes-eviter'] || []).map(a => a.titre).join(' | ');
         assert.ok(!/Fer oral a doses elev/i.test(titres), 'fer 200 mg ne doit pas déclencher fer élevé');
     });
+
+    // --- Tier 4 ---
+    test('Tier 4 — Score de confiance : exact > fuzzy, négation pénalise', () => {
+        const r = extract('Atorvastatin 40 mg. Doliprane. Pas de diabète.');
+        const ator = findM(r, 'Atorvastatine');
+        const para = findM(r, 'Paracetamol');
+        const dia = findP(r, 'PAT_016');
+        assert.strictEqual(para.confidence, 100, 'exact attendu 100');
+        assert.ok(ator.confidence < para.confidence, 'fuzzy doit être < exact');
+        assert.ok(ator.confidence === 75 || ator.confidence === 60, 'fuzzy attendu 75 ou 60');
+        assert.ok(dia.negated && dia.confidence < 100, 'négation doit pénaliser la confiance');
+    });
+
+    test('Tier 4 — SUP_STOP_068 gating dose : amitriptyline 100 mg/j → fortes doses', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r = analyzeCase({ age: 80, sexe: 'F', meds: ['Amitriptyline'], precisions: { amitriptyline: { dose: 100, unite: 'mg', periode: 'j' } } });
+        const titres = (r['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        assert.ok(/fortes doses/i.test(titres));
+    });
+
+    test('Tier 4 — SUP_STOP_068 silencieux si dose ≤ 75 ou non documentée', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r1 = analyzeCase({ age: 80, sexe: 'F', meds: ['Amitriptyline'], precisions: { amitriptyline: { dose: 25, unite: 'mg', periode: 'j' } } });
+        const r2 = analyzeCase({ age: 80, sexe: 'F', meds: ['Amitriptyline'] });
+        const t1 = (r1['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        const t2 = (r2['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        assert.ok(!/fortes doses/i.test(t1));
+        assert.ok(!/fortes doses/i.test(t2));
+    });
+
+    test('Tier 4 — Aspirine >100 mg/j via posologie extraite → EV_C01', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r = analyzeCase({ age: 80, sexe: 'F', meds: ['Acide acetylsalicylique'], precisions: { 'acide acetylsalicylique': { dose: 300, unite: 'mg', periode: 'j' } } });
+        const titres = (r['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        assert.ok(/aspirine.*100|long cours/i.test(titres));
+    });
+
+    test('Tier 4 — Conversion K mEq/L → mmol/L (1:1)', () => {
+        const r = extract('K 4.2 mEq/L');
+        const k = findB(r, 'BIO_001');
+        assert.ok(k && k.converted && k.unit === 'mmol/L' && k.value === 4.2);
+    });
+
+    test('Tier 4 — Conversion bilirubine mg/dL → µmol/L (× 17.1)', () => {
+        const r = extract('Bilirubine 1.5 mg/dL');
+        const b = findB(r, 'BIO_017');
+        assert.ok(b && b.converted && b.unit === 'µmol/L');
+        assert.ok(Math.abs(b.value - 25.7) < 0.1);
+    });
+
+    test('Tier 4 — Conversion ferritine ng/mL → µg/L (1:1)', () => {
+        const r = extract('Ferritine 150 ng/mL');
+        const f = findB(r, 'BIO_020');
+        assert.ok(f && f.converted && f.unit === 'µg/L' && f.value === 150);
+    });
 }
 
 // ============================================================================

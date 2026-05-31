@@ -410,8 +410,18 @@
     function convertBioUnit(code, value, rawUnit) {
         if (!rawUnit) return null;
         const u = String(rawUnit).toLowerCase().replace(/\s/g, '');
+        // Ions monovalents : mEq/L ≡ mmol/L (notation seulement)
+        if ((code === 'BIO_001' || code === 'BIO_002') && (u === 'meq/l' || u === 'meql')) {
+            return { value, unit: 'mmol/L', from: rawUnit };
+        }
         if (code === 'BIO_003') { // Créatinine : standard µmol/L, alt mg/dL
             if (u === 'mg/dl' || u === 'mgdl' || u === 'mg%') return { value: +(value * 88.4).toFixed(1), unit: 'µmol/L', from: rawUnit };
+        }
+        if (code === 'BIO_017') { // Bilirubine totale : standard µmol/L, alt mg/dL
+            if (u === 'mg/dl' || u === 'mgdl' || u === 'mg%') return { value: +(value * 17.1).toFixed(1), unit: 'µmol/L', from: rawUnit };
+        }
+        if (code === 'BIO_020') { // Ferritine : standard µg/L, alt ng/mL (identique, 1:1)
+            if (u === 'ng/ml' || u === 'ngml') return { value, unit: 'µg/L', from: rawUnit };
         }
         if (code === 'BIO_025') { // Glycémie : standard mmol/L
             if (u === 'g/l' || u === 'gl') return { value: +(value * 5.55).toFixed(2), unit: 'mmol/L', from: rawUnit };
@@ -489,13 +499,19 @@
         pathoHits.push(...fuzzyPathoHits);
         medHits.push(...fuzzyMedHits);
 
-        // Annotation : négation + historique + source + posologie/durée + conversion bio
+        // Annotation : négation + historique + source + posologie/durée + conversion bio + confiance
         const annotate = (h, kind) => {
             h.negated = isNegated(text, h.start);
             if (!h.negated && (kind === 'patho' || kind === 'med')) {
                 h.historical = isHistorical(text, h.start);
             }
             h.source = h.source || (h.viaAbbreviation ? 'abbreviation' : 'exact');
+            // Score de confiance (0-100) basé sur la source et l'incertitude
+            if (h.source === 'exact') h.confidence = 100;
+            else if (h.source === 'abbreviation') h.confidence = 95;
+            else if (h.source === 'fuzzy') h.confidence = h.fuzzyDistance === 1 ? 75 : 60;
+            else h.confidence = 70;
+            if (h.negated) h.confidence = Math.max(0, h.confidence - 20);
             if (kind === 'med') {
                 const poso = extractPosology(text, h);
                 if (poso) h.posology = poso;
