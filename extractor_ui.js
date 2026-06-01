@@ -251,10 +251,22 @@
             }
         };
         const summary = GeriaTextExtractor.applyResults(accepted, ctx);
+        // Persister les médicaments détectés comme arrêtés/sevrés pour la synthèse
+        // (informationnel uniquement — pas appliqués au state patient).
+        if (r.stoppedMeds && r.stoppedMeds.length) {
+            global.GeriaExtractorLastStopped = r.stoppedMeds.map(m => ({
+                dci: m.target.dci, raw: m.match
+            }));
+        } else {
+            global.GeriaExtractorLastStopped = [];
+        }
         const note = $('extractorResults');
         if (note) {
             const total = summary.comorbs + summary.meds + summary.bio;
-            const banner = `<div style="background:#d1e7dd;color:#0f5132;padding:6px 10px;border-radius:6px;margin-bottom:8px;font-size:13px;">✅ Appliqué : ${summary.comorbs} pathologie(s), ${summary.meds} médicament(s), ${summary.bio} bio${summary.skipped ? ` (${summary.skipped} ignoré(s) car déjà présents)` : ''}.</div>`;
+            const stoppedLine = (r.stoppedMeds && r.stoppedMeds.length)
+                ? ` 🛑 ${r.stoppedMeds.length} arrêt(s) détecté(s) (signalés en synthèse, non appliqués).`
+                : '';
+            const banner = `<div style="background:#d1e7dd;color:#0f5132;padding:6px 10px;border-radius:6px;margin-bottom:8px;font-size:13px;">✅ Appliqué : ${summary.comorbs} pathologie(s), ${summary.meds} médicament(s), ${summary.bio} bio${summary.skipped ? ` (${summary.skipped} ignoré(s) car déjà présents)` : ''}.${stoppedLine}</div>`;
             note.innerHTML = banner + note.innerHTML;
         }
         // Rafraîchir les tags patient si la fonction est dispo
@@ -264,6 +276,7 @@
     function clearAll() {
         const ta = $('extractorText'); if (ta) ta.value = '';
         const c = $('extractorResults'); if (c) c.innerHTML = '';
+        global.GeriaExtractorLastStopped = [];
         _lastResults = null;
     }
 

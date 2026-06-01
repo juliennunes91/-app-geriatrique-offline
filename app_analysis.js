@@ -2934,7 +2934,37 @@ function analyserPrescription() {
             </details>`;
         };
 
-        const headerHtml = synthBuildBanner() + synthBuildHeader() + synthBuildRiskProfile() + synthBuildBioSummary() + synthBuildActiveRx() + synthBuildTopActions();
+        // [G] SECTION ARRÊTS / SEVRAGES — lus depuis la dernière extraction de texte libre
+        // (window.GeriaExtractorLastStopped populé par extractor_ui.js après applySelected).
+        // Informationnel uniquement (non appliqué au state patient) — sert à alerter
+        // qu'un médicament dans le compte-rendu N'EST PAS une prescription active.
+        const synthBuildStoppedMeds = () => {
+            const stopped = (typeof window !== 'undefined' && Array.isArray(window.GeriaExtractorLastStopped))
+                ? window.GeriaExtractorLastStopped : [];
+            if (!stopped.length) return '';
+            const chips = stopped.slice(0, 8).map(s => {
+                return `<span class="badge bg-light text-dark border me-1 mb-1" style="text-decoration:line-through;">
+                    ${escapeHtml(s.dci || s.raw || '?')}
+                </span>`;
+            }).join('');
+            const overflow = stopped.length > 8 ? `<span class="small text-muted">+${stopped.length - 8} autres</span>` : '';
+            return `<div class="card mb-2 shadow-sm" style="border-left:4px solid #ffc107;">
+                <div class="card-body py-2 px-3">
+                    <strong class="small">🛑 Médicaments arrêtés/sevrés détectés dans le texte (${stopped.length})</strong>
+                    <span class="small text-muted ms-2">— informationnel, non appliqué au state patient</span>
+                    <div class="mt-1">${chips} ${overflow}</div>
+                </div>
+            </div>`;
+        };
+
+        // [J] HELPER : lien vers un onglet détaillé (compatible classic + modern)
+        const tabLink = (tabId, label) => {
+            return `<a href="#${tabId}" class="ms-2 small text-decoration-none"
+                onclick="try{var t=document.getElementById('${tabId}');if(t){var bt=document.querySelector('[data-bs-target=\\'#'+'${tabId}'+'\\']');if(bt){bt.click();}else if(typeof showView==='function'){showView('${tabId}');}t.scrollIntoView({behavior:'smooth',block:'start'});}}catch(e){};return false;"
+                title="Voir l'onglet détaillé">→ ${label}</a>`;
+        };
+
+        const headerHtml = synthBuildBanner() + synthBuildHeader() + synthBuildRiskProfile() + synthBuildBioSummary() + synthBuildStoppedMeds() + synthBuildActiveRx() + synthBuildTopActions();
 
         // Bloc Mécanismes (entre TOP et sections détaillées)
         let mechanismHtml = '';
@@ -2967,7 +2997,7 @@ function analyserPrescription() {
             if (toAdd.length > 0) {
                 synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#d1e7dd,#a3cfbb);color:#0f5132;">
                     <strong>➕ Médicaments à ajouter (${toAdd.length})</strong>
-                    <span class="small ms-2" style="opacity:0.85;">Omissions thérapeutiques identifiées</span>
+                    <span class="small ms-2" style="opacity:0.85;">Omissions thérapeutiques identifiées</span>${tabLink('alertes-initier', 'À INITIER')}
                 </div><div class="card-body p-2">`;
                 synthHtml += renderLimited(toAdd, 6, a => `<div class="border-start border-success border-3 ps-2 py-1 mb-2">
                     <strong class="small">${escapeHtml(a.titre)}</strong>
@@ -2983,7 +3013,7 @@ function analyserPrescription() {
                 const headerSuffix = (toRemove.length !== toRemoveFiltered.length) ? ` <span class="small text-muted">— ${toRemove.length - toRemoveFiltered.length} agrégé(s) ci-dessus</span>` : '';
                 synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#f8d7da,#f1aeb5);color:#58151c;">
                     <strong>➖ Médicaments à retirer ou substituer (${toRemoveFiltered.length})</strong>
-                    <span class="small ms-2" style="opacity:0.85;">Prescriptions inappropriées${headerSuffix}</span>
+                    <span class="small ms-2" style="opacity:0.85;">Prescriptions inappropriées${headerSuffix}</span>${tabLink('alertes-eviter', 'À ÉVITER')}
                 </div><div class="card-body p-2">`;
                 synthHtml += renderLimited(toRemoveFiltered, 8, a => `<div class="border-start border-${a.severity} border-3 ps-2 py-1 mb-2">
                     <span class="badge bg-${a.severity} me-1" style="font-size:0.65em;">${a.action}</span>
@@ -2998,14 +3028,12 @@ function analyserPrescription() {
             if (interactCritical.length > 0) {
                 synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#f8d7da,#f1aeb5);color:#58151c;">
                     <strong>🚨 Interactions critiques (${interactCritical.length})</strong>
-                    <span class="small ms-2" style="opacity:0.85;">Co-prescriptions à risque danger — voir onglet Interactions</span>
+                    <span class="small ms-2" style="opacity:0.85;">Co-prescriptions à risque danger</span>${tabLink('alertes-interact', 'INTERACTIONS')}
                 </div><div class="card-body p-2">`;
-                interactCritical.forEach(it => {
-                    synthHtml += `<div class="border-start border-danger border-3 ps-2 py-1 mb-2">
-                        <span class="badge bg-danger me-1" style="font-size:0.65em;">DANGER</span>
-                        <span class="small">${escapeHtml(it.text)}</span>
-                    </div>`;
-                });
+                synthHtml += renderLimited(interactCritical, 6, it => `<div class="border-start border-danger border-3 ps-2 py-1 mb-2">
+                    <span class="badge bg-danger me-1" style="font-size:0.65em;">DANGER</span>
+                    <span class="small">${escapeHtml(it.text)}</span>
+                </div>`);
                 synthHtml += `</div></div>`;
             }
 
@@ -3013,7 +3041,7 @@ function analyserPrescription() {
             if (bioIssues.length > 0) {
                 synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#fff3cd,#ffe69c);color:#664d03;">
                     <strong>🧪 Problèmes biologiques (${bioIssues.length})</strong>
-                    <span class="small ms-2" style="opacity:0.85;">Anomalies à prendre en compte</span>
+                    <span class="small ms-2" style="opacity:0.85;">Anomalies à prendre en compte</span>${tabLink('alertes-bio', 'BIO')}
                 </div><div class="card-body p-2">`;
                 bioIssues.forEach(b => {
                     synthHtml += `<div class="border-start border-${b.severity} border-3 ps-2 py-1 mb-2">
