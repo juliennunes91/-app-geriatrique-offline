@@ -2628,10 +2628,207 @@ function analyserPrescription() {
             });
         }
 
+        // =====================================================
+        // ── NOUVEAUTÉS Commit 1 : EN-TÊTE + PROFIL + BIO + TOP ACTIONS + BANDEAU
+        // =====================================================
+
+        // [A] EN-TÊTE NARRATIF PATIENT
+        const synthBuildHeader = () => {
+            const sexeLabel = sexe === 'F' ? 'Mme' : (sexe === 'M' ? 'M.' : 'Patient(e)');
+            const ageStr = patientAge > 0 ? `${patientAge} ans` : 'âge non renseigné';
+            const fragLabel = (typeof getVal === 'function' && getVal('scoreCFS') >= 7) ? ' fragile sévère (CFS ' + getVal('scoreCFS') + ')'
+                : (isFragile ? ' fragile (CFS ' + (getVal('scoreCFS') || '≥6') + ')' : '');
+            const nbComorbs = (activeComorbs || []).length;
+            const nbMeds = (activeMeds || []).length;
+            const polyLabel = nbMeds >= 10 ? ' — <span class="text-danger fw-bold">polypharmacie majeure</span>'
+                : nbMeds >= 5 ? ' — polypharmacie' : '';
+            // Top 3 comorbs (pour synthèse en 1 ligne)
+            const comorbLabels = (activeComorbs || []).slice(0, 5).map(c => {
+                const p = (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES) ? MASTER_DB.PATHOLOGIES[c] : null;
+                return p ? (p.NOM_STANDARD || c) : c;
+            });
+            const moreComorbs = nbComorbs > 5 ? ` +${nbComorbs - 5}` : '';
+            const comorbStr = comorbLabels.length ? comorbLabels.join(', ') + moreComorbs : 'aucune comorbidité saisie';
+            return `<div class="card mb-2 shadow-sm" style="border-left:4px solid #0d6efd;">
+                <div class="card-body py-2 px-3">
+                    <strong>${sexeLabel} ${ageStr}${fragLabel}</strong>
+                    <span class="text-muted"> — ${nbComorbs} comorbidité${nbComorbs > 1 ? 's' : ''} · ${nbMeds} médicament${nbMeds > 1 ? 's' : ''}${polyLabel}</span>
+                    <br><span class="small text-muted">${escapeHtml(comorbStr)}</span>
+                </div>
+            </div>`;
+        };
+
+        // [B] PROFIL DE RISQUE (chips de scores composites)
+        const synthBuildRiskProfile = () => {
+            const chips = [];
+            // CHA₂DS₂-VA (recalcul léger, ESC 2024 sans sexe)
+            let cha = 0;
+            if (patientAge >= 75) cha += 2; else if (patientAge >= 65) cha += 1;
+            if (activeComorbs.some(c => ['PAT_002', 'PAT_003'].includes(c))) cha += 1;
+            if (activeComorbs.includes('PAT_005')) cha += 1;
+            if (activeComorbs.some(c => ['PAT_016', 'PAT_016a', 'PAT_016b'].includes(c))) cha += 1;
+            if (activeComorbs.includes('PAT_008')) cha += 2;
+            if (activeComorbs.some(c => ['PAT_004', 'PAT_007'].includes(c))) cha += 1;
+            // Afficher seulement si FA
+            if (activeComorbs.includes('PAT_006')) {
+                const col = cha >= 2 ? 'danger' : (cha >= 1 ? 'warning' : 'success');
+                chips.push(`<span class="badge bg-${col} me-1" title="ESC 2024 — anticoag si ≥2">CHA₂DS₂-VA ${cha}</span>`);
+            }
+            // HAS-BLED (si anticoag présent ou à discuter)
+            let hb = 0;
+            if (bioValues && bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 50) hb += 1;
+            if (activeComorbs.includes('PAT_008')) hb += 1;
+            if (patientAge > 65) hb += 1;
+            const hasAINS = (activeMeds || []).some(m => /ains|ibuprof|naprox|diclof|ketoprof/i.test(m.dci + ' ' + (m.classe || '')));
+            const hasAAS = (activeMeds || []).some(m => /aspirine|acetylsali|clopidogrel|prasug|ticagre/i.test(m.dci));
+            if (hasAINS || hasAAS) hb += 1;
+            if (activeComorbs.includes('PAT_006')) {
+                const col = hb >= 3 ? 'danger' : (hb >= 1 ? 'warning' : 'success');
+                chips.push(`<span class="badge bg-${col} me-1" title="Pisters 2010 — risque hémorragique sous anticoag">HAS-BLED ${hb}</span>`);
+            }
+            // ACB (charge anticholinergique)
+            if (scoreACB_global > 0) {
+                const col = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
+                const lbl = scoreACB_global >= 3 ? 'élevée' : 'modérée';
+                chips.push(`<span class="badge bg-${col} me-1" title="Boustani 2008 — risque cognitif/chutes">ACB ${scoreACB_global} (${lbl})</span>`);
+            }
+            // QT (Risk Etabli)
+            if (typeof maxQTLevel_global !== 'undefined' && maxQTLevel_global > 0) {
+                const lvl = maxQTLevel_global >= 3 ? 'Établi (KR)' : maxQTLevel_global >= 2 ? 'Possible' : 'Conditionnel';
+                const col = maxQTLevel_global >= 3 ? 'danger' : 'warning';
+                chips.push(`<span class="badge bg-${col} me-1" title="CredibleMeds">QT ${lvl}</span>`);
+            }
+            // Polypharmacie chiffrée
+            const nbMeds = (activeMeds || []).length;
+            if (nbMeds >= 10) {
+                chips.push(`<span class="badge bg-danger me-1" title="≥10 médicaments">Polypharmacie majeure ${nbMeds}</span>`);
+            } else if (nbMeds >= 5) {
+                chips.push(`<span class="badge bg-warning text-dark me-1">Polypharmacie ${nbMeds}</span>`);
+            }
+            if (!chips.length) return '';
+            return `<div class="card mb-2 shadow-sm">
+                <div class="card-body py-2 px-3">
+                    <strong class="small">🎯 Profil de risque : </strong>
+                    ${chips.join(' ')}
+                </div>
+            </div>`;
+        };
+
+        // [I] BIO EN 1 LIGNE — anomalies les plus saillantes
+        const synthBuildBioSummary = () => {
+            const bv = bioValues || {};
+            const issues = [];
+            if (bv['BIO_004'] > 0 && bv['BIO_004'] < 60) {
+                const grade = bv['BIO_004'] < 30 ? 'sévère' : bv['BIO_004'] < 45 ? 'modérée' : 'légère';
+                issues.push(`<span class="badge bg-warning text-dark">DFG ${bv['BIO_004']} (IRC ${grade})</span>`);
+            }
+            if (bv['BIO_001'] > 0 && (bv['BIO_001'] < 3.5 || bv['BIO_001'] > 5.0)) {
+                const dir = bv['BIO_001'] < 3.5 ? 'hypoK' : 'hyperK';
+                const col = (bv['BIO_001'] < 3.0 || bv['BIO_001'] > 5.5) ? 'danger' : 'warning text-dark';
+                issues.push(`<span class="badge bg-${col}">K+ ${bv['BIO_001']} (${dir})</span>`);
+            }
+            if (bv['BIO_002'] > 0 && (bv['BIO_002'] < 135 || bv['BIO_002'] > 145)) {
+                const dir = bv['BIO_002'] < 135 ? 'hypoNa' : 'hyperNa';
+                issues.push(`<span class="badge bg-warning text-dark">Na ${bv['BIO_002']} (${dir})</span>`);
+            }
+            if (bv['BIO_009'] > 0 && bv['BIO_009'] < 12) {
+                const grade = bv['BIO_009'] < 8 ? 'sévère' : bv['BIO_009'] < 10 ? 'modérée' : 'légère';
+                const col = bv['BIO_009'] < 10 ? 'danger' : 'warning text-dark';
+                issues.push(`<span class="badge bg-${col}">Hb ${bv['BIO_009']} (anémie ${grade})</span>`);
+            }
+            if (bv['BIO_026'] > 0 && bv['BIO_026'] > 7) {
+                const col = bv['BIO_026'] > 9 ? 'danger' : 'warning text-dark';
+                issues.push(`<span class="badge bg-${col}">HbA1c ${bv['BIO_026']}% (mal équilibré)</span>`);
+            }
+            if (bv['BIO_031'] > 0 && bv['BIO_031'] >= 450) {
+                const col = bv['BIO_031'] >= 500 ? 'danger' : 'warning text-dark';
+                issues.push(`<span class="badge bg-${col}">QTc ${bv['BIO_031']} ms</span>`);
+            }
+            if (bv['BIO_030'] > 0 && (bv['BIO_030'] < 2 || bv['BIO_030'] > 3.5)) {
+                const dir = bv['BIO_030'] < 2 ? 'sous-dosé' : 'surdosé';
+                issues.push(`<span class="badge bg-warning text-dark">INR ${bv['BIO_030']} (${dir})</span>`);
+            }
+            if (bv['BIO_019'] > 0 && (bv['BIO_019'] < 0.4 || bv['BIO_019'] > 4)) {
+                issues.push(`<span class="badge bg-warning text-dark">TSH ${bv['BIO_019']}</span>`);
+            }
+            if (!issues.length) return '';
+            return `<div class="card mb-2 shadow-sm">
+                <div class="card-body py-2 px-3">
+                    <strong class="small">🧪 Biologie clé : </strong>
+                    ${issues.join(' ')}
+                </div>
+            </div>`;
+        };
+
+        // [C] TOP ACTIONS PRIORITAIRES (mix danger éviter + initier + interact)
+        const synthBuildTopActions = () => {
+            const actions = [];
+            // Interactions critiques en premier
+            interactCritical.slice(0, 3).forEach(it => actions.push({
+                icon: '🚨', txt: (it.text || '').slice(0, 130), level: 'danger', kind: 'INTERACTION'
+            }));
+            // Puis méd à retirer danger
+            toRemove.filter(r => r.severity === 'danger').slice(0, 5).forEach(r => {
+                actions.push({
+                    icon: '➖', txt: `${r.dci.toUpperCase()} : ${(r.reason || 'à retirer').slice(0, 110)}`,
+                    level: 'danger', kind: r.action
+                });
+            });
+            // Puis bio danger
+            bioIssues.filter(b => b.severity === 'danger').slice(0, 3).forEach(b => actions.push({
+                icon: '🧪', txt: (b.titre || '').slice(0, 130), level: 'danger', kind: 'BIO'
+            }));
+            // Puis omissions piliers/anticoag critiques (par mots-clés)
+            (toAdd || []).filter(a => /pilier|anticoag.*FA|piliers? HFrEF|sgl[mt]2|aldost/i.test(a.titre + ' ' + a.message))
+                .slice(0, 3).forEach(a => actions.push({
+                    icon: '➕', txt: (a.titre || '').slice(0, 130), level: 'warning', kind: 'OMISSION'
+                }));
+            const top = actions.slice(0, 5);
+            if (!top.length) return '';
+            const items = top.map((a, i) => `<li class="mb-1">
+                ${a.icon} <span class="badge bg-${a.level} text-white" style="font-size:0.6em;">${a.kind}</span>
+                <span class="small">${escapeHtml(a.txt)}</span>
+            </li>`).join('');
+            return `<div class="card mb-3 shadow-sm" style="border-left:4px solid #dc3545;">
+                <div class="card-header py-2" style="background:linear-gradient(135deg,#fff3cd,#ffe69c);color:#664d03;">
+                    <strong>⚡ Top ${top.length} actions prioritaires</strong>
+                </div>
+                <div class="card-body py-2 px-3">
+                    <ol class="mb-0 ps-3">${items}</ol>
+                </div>
+            </div>`;
+        };
+
+        // [E] BANDEAU GLOBAL — gravité du dossier
+        const synthBuildBanner = () => {
+            const nbDanger = toRemove.filter(r => r.severity === 'danger').length
+                + interactCritical.length
+                + bioIssues.filter(b => b.severity === 'danger').length;
+            const nbWarning = toRemove.filter(r => r.severity === 'warning').length
+                + bioIssues.filter(b => b.severity === 'warning').length;
+            const nbOmissions = (toAdd || []).length;
+            let level = 'success', icon = '✅', msg = 'Dossier sans alerte critique';
+            if (nbDanger >= 3) { level = 'danger'; icon = '🔴'; msg = 'Dossier à HAUT risque'; }
+            else if (nbDanger >= 1) { level = 'danger'; icon = '🟠'; msg = 'Dossier avec alertes critiques'; }
+            else if (nbWarning >= 3 || nbOmissions >= 3) { level = 'warning'; icon = '🟡'; msg = 'Dossier nécessitant vigilance'; }
+            else if (nbWarning >= 1 || nbOmissions >= 1) { level = 'info'; icon = '🔵'; msg = 'Actions de réévaluation suggérées'; }
+            const counts = [];
+            if (nbDanger > 0) counts.push(`<strong>${nbDanger} danger</strong>`);
+            if (nbWarning > 0) counts.push(`${nbWarning} vigilance`);
+            if (nbOmissions > 0) counts.push(`${nbOmissions} omission${nbOmissions > 1 ? 's' : ''}`);
+            return `<div class="alert alert-${level === 'success' ? 'success' : level === 'info' ? 'info' : (level === 'warning' ? 'warning' : 'danger')} mb-2 py-2 px-3 shadow-sm" style="font-size:1.05em;">
+                <span style="font-size:1.3em;">${icon}</span> <strong>${msg}</strong>
+                ${counts.length ? '<span class="small ms-2">— ' + counts.join(' · ') + '</span>' : ''}
+            </div>`;
+        };
+
+        const headerHtml = synthBuildBanner() + synthBuildHeader() + synthBuildRiskProfile() + synthBuildBioSummary() + synthBuildTopActions();
+
         // ── Rendu ──
         if (toAdd.length === 0 && toRemove.length === 0 && bioIssues.length === 0 && interactCritical.length === 0) {
-            synthHtml = '<div class="alert alert-success shadow-sm"><strong>✅ Aucune action majeure identifiée</strong><br><small>Aucune omission, aucune prescription inappropriée, aucune anomalie biologique significative.</small></div>';
+            synthHtml = headerHtml + '<div class="alert alert-success shadow-sm"><strong>✅ Aucune action majeure identifiée</strong><br><small>Aucune omission, aucune prescription inappropriée, aucune anomalie biologique significative.</small></div>';
         } else {
+            synthHtml = headerHtml;
 
             // Section 1 : à AJOUTER
             if (toAdd.length > 0) {
