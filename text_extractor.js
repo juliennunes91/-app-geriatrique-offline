@@ -395,19 +395,52 @@
     // === Extraction de durée (« depuis 6 mois », « il y a 2 ans », « pendant 3 sem ») ===
     // Cherche dans la fenêtre 100 chars APRÈS la fin du hit (typiquement même phrase).
     const DUREE_RE = /\b(?:depuis|il y a|pendant|pour)\s+(\d+(?:[,.]\d+)?)\s*(jours?|j\b|sem(?:aines?)?|mois|ans?|annees?)/i;
+    // Date absolue : « depuis 2019 », « en 2018 », « début 2020 », « 09/2021 »
+    const DATE_ABS_RE = /\b(?:depuis|en|fin|debut|d[ée]but)\s+(?:\d{1,2}\/)?(20\d{2}|19\d{2})\b/i;
     function extractDuree(text, hit) {
         const tail = text.slice(hit.end, hit.end + 100);
-        const m = DUREE_RE.exec(tail);
-        if (!m) return null;
-        const n = parseFloat(m[1].replace(',', '.'));
-        const u = m[2].toLowerCase();
-        const jours = /^j(?:our)?s?$/.test(u) ? n :
-            /^sem/.test(u) ? n * 7 :
-                /^mois$/.test(u) ? n * 30 :
-                    /^(an|annee)/.test(u) ? n * 365 : null;
-        if (jours === null) return null;
-        const classe = jours < 14 ? 'courte' : (jours >= 90 ? 'longue' : 'intermediaire');
-        return { value: n, unite: u, jours: Math.round(jours), classe, raw: m[0] };
+        // 1) Format relatif (depuis X mois/jours…)
+        let m = DUREE_RE.exec(tail);
+        if (m) {
+            const n = parseFloat(m[1].replace(',', '.'));
+            const u = m[2].toLowerCase();
+            const jours = /^j(?:our)?s?$/.test(u) ? n :
+                /^sem/.test(u) ? n * 7 :
+                    /^mois$/.test(u) ? n * 30 :
+                        /^(an|annee)/.test(u) ? n * 365 : null;
+            if (jours !== null) {
+                const classe = jours < 14 ? 'courte' : (jours >= 90 ? 'longue' : 'intermediaire');
+                return { value: n, unite: u, jours: Math.round(jours), classe, raw: m[0] };
+            }
+        }
+        // 2) Date absolue (depuis 2019)
+        m = DATE_ABS_RE.exec(tail);
+        if (m) {
+            const year = parseInt(m[1], 10);
+            const now = new Date().getFullYear();
+            const ans = now - year;
+            if (ans >= 0 && ans <= 60) {
+                const jours = ans * 365;
+                const classe = jours < 14 ? 'courte' : (jours >= 90 ? 'longue' : 'intermediaire');
+                return { value: ans, unite: 'ans', jours, classe, raw: m[0], dateAbsolue: year };
+            }
+        }
+        return null;
+    }
+
+    // === Détection d'arrêt / sevrage / suspension de médicament ===
+    // Cherche dans la fenêtre 25 chars AVANT le hit : « arrêt de X », « stop X »,
+    // « sevrage de X », « suspendu X », « interruption de X », « arrêté X »,
+    // « stoppé X ». Si détecté → le médicament n'est PAS considéré comme prescription
+    // active et sera FILTRÉ de la liste meds (comme pour les allergies).
+    const STOP_RE = /\b(arret(?:s|e|ee)?\s+(?:de\s+|d[e'’]?)?|stop(?:p(?:e|ee|er))?\s+|suspend(?:u|ue|us|ues)?\s+|sevrage\s+(?:de\s+|d[e'’]?)?|interrompu(?:e|s|es)?\s+|interruption\s+(?:de\s+|d[e'’]?)?|stopp[ée]e?s?\s+)/i;
+    function isStopped(text, start) {
+        let window = text.slice(Math.max(0, start - 35), start);
+        const seps = ['.', '?', '!', ';', '\n'];
+        let cut = -1;
+        seps.forEach(s => { const i = window.lastIndexOf(s); if (i > cut) cut = i; });
+        if (cut >= 0) window = window.slice(cut + 1);
+        return STOP_RE.test(norm(window));
     }
 
     // === Allergies (« allergie à X », « allergique à X », « intolérance à X ») ===
@@ -505,7 +538,7 @@
 
     // === API principale ===
     function extract(text, MASTER_DB) {
-        const empty = { meds: [], pathologies: [], biology: [], allergies: [], ambiguous: [], abbreviations: [], conflicts: [] };
+        const empty = { meds: [], pathologies: [], biology: [], allergies: [], ambiguous: [], abbreviations: [], conflicts: [], stoppedMeds: [] };
         if (!text || !MASTER_DB) return empty;
         const idx = buildIndex(MASTER_DB);
 
@@ -568,12 +601,17 @@
                 h.historical = isHistorical(text, h.start);
             }
             h.source = h.source || (h.viaAbbreviation ? 'abbreviation' : 'exact');
+            // Détection d'arrêt/sevrage (uniquement pour les médicaments)
+            if (kind === 'med' && !h.negated) {
+                h.stopped = isStopped(text, h.start);
+            }
             // Score de confiance (0-100) basé sur la source et l'incertitude
             if (h.source === 'exact') h.confidence = 100;
             else if (h.source === 'abbreviation') h.confidence = 95;
             else if (h.source === 'fuzzy') h.confidence = h.fuzzyDistance === 1 ? 75 : 60;
             else h.confidence = 70;
             if (h.negated) h.confidence = Math.max(0, h.confidence - 20);
+            if (h.stopped) h.confidence = Math.max(0, h.confidence - 15);
             if (kind === 'med') {
                 const poso = extractPosology(text, h);
                 if (poso) h.posology = poso;
@@ -631,10 +669,15 @@
         if (allergyHits.length) {
             finalMed = finalMed.filter(m => !allergyHits.some(a => m.start >= a.start && m.end <= a.end));
         }
+        // Médicaments ARRÊTÉS/SEVRÉS → retirés de la liste des prescriptions actives,
+        // conservés à part comme information clinique pour le rendu.
+        const stoppedMeds = finalMed.filter(m => m.stopped);
+        finalMed = finalMed.filter(m => !m.stopped);
 
         return {
             pathologies: finalPatho,
             meds: finalMed,
+            stoppedMeds: stoppedMeds,
             biology: finalBio,
             allergies: allergyHits,
             ambiguous: ambiguousHits,

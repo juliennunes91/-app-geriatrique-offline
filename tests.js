@@ -1260,6 +1260,53 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         const abbrs = r.abbreviations.map(a => a.abbr);
         ['FEVG', 'STEMI', 'SCPD', 'GIR'].forEach(a => assert.ok(abbrs.includes(a), `${a} non détectée`));
     });
+
+    test('Tier 5 — Arrêts/sevrage : « arrêt de bisoprolol » → filtre des actifs', () => {
+        const r = extract('Traitement : Ramipril 5 mg. Arrêt de Bisoprolol en 2022 (bradycardie).');
+        assert.ok(findM(r, 'Ramipril'), 'Ramipril doit rester actif');
+        assert.ok(!findM(r, 'Bisoprolol'), 'Bisoprolol arrêté doit être filtré des actifs');
+        const stopped = (r.stoppedMeds || []).find(m => m.target.dci === 'Bisoprolol');
+        assert.ok(stopped, 'Bisoprolol doit apparaître dans stoppedMeds');
+    });
+
+    test('Tier 5 — Arrêts : « sevrage de » et « suspendu » détectés', () => {
+        const r = extract('Sevrage de Pregabaline. Suspendu Apixaban.');
+        assert.ok(!findM(r, 'Pregabaline'), 'Pregabaline sevré');
+        assert.ok(!findM(r, 'Apixaban'), 'Apixaban suspendu');
+        assert.strictEqual((r.stoppedMeds || []).length, 2);
+    });
+
+    test('Tier 5 — Date absolue : « depuis 2019 » → calcul ans + dateAbsolue', () => {
+        const r = extract('Ramipril 5 mg depuis 2019.');
+        const m = findM(r, 'Ramipril');
+        assert.ok(m && m.posology && m.posology.duree, 'durée manquante');
+        const d = m.posology.duree;
+        assert.strictEqual(d.dateAbsolue, 2019);
+        assert.ok(d.value >= 5 && d.value <= 10, 'années calculées');
+        assert.strictEqual(d.classe, 'longue');
+    });
+
+    test('Tier 5 — E2E intégration : texte → extraction → état patient → moteur génère les alertes attendues', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        // Texte clinique réaliste
+        const txt = 'Patient HFrEF documentée. Pas de diabète. Traitement : Bisoprolol 5 mg/j, Furosemide 40 mg/j depuis 2018.';
+        const r = extract(txt);
+        // Construire un cas patient à partir de l'extraction (simulation de l'« Apply »)
+        const comorbs = (r.pathologies || []).filter(p => !p.negated).map(p => p.target.id);
+        const meds = (r.meds || []).map(m => m.target.dci);
+        // Vérifier l'extraction : HFrEF présent, diabète négé
+        assert.ok(comorbs.includes('PAT_002'), 'HFrEF extrait');
+        assert.ok(!comorbs.includes('PAT_016'), 'diabète négé exclu');
+        assert.ok(meds.includes('Bisoprolol'), 'Bisoprolol extrait');
+        assert.ok(meds.includes('Furosemide'), 'Furosemide extrait');
+        // Lancer le moteur sur l'état dérivé
+        const res = analyzeCase({ age: 80, sexe: 'F', comorbs, meds });
+        // Le patient HFrEF + IEC absent + BB + diurétique devrait déclencher des alertes
+        // d'initiation des piliers HFrEF manquants (IEC/ARA2/ARNI, iSGLT2, ARM…).
+        const initierTitres = (res['alertes-initier'] || []).map(a => a.titre).join(' | ');
+        assert.ok(/IEC|ARA2|ARNI|pilier|iSGLT2|aldost/i.test(initierTitres),
+            'Le moteur devrait recommander pilier HFrEF manquant : ' + initierTitres.slice(0, 200));
+    });
 }
 
 // ============================================================================

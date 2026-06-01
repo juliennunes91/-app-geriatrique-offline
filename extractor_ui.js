@@ -150,17 +150,35 @@
         }
         const allergiesCount = (r.allergies || []).length;
         const ambiguousCount = (r.ambiguous || []).length;
-        const total2 = total + allergiesCount + ambiguousCount;
+        const stoppedCount = (r.stoppedMeds || []).length;
+        const total2 = total + allergiesCount + ambiguousCount + stoppedCount;
+        const stoppedHtml = stoppedCount ? renderStopped(r.stoppedMeds, text) : '';
         const html = [
             renderConflicts(r.conflicts),
             renderAmbiguous(r.ambiguous, text),
             `<div style="font-size:12px;color:#6c757d;padding:4px 0 8px;">${total2} entité(s) détectée(s) — décochez les indésirables, puis « Appliquer la sélection ».</div>`,
             renderGroup('🩺 Pathologies', r.pathologies, 'patho', text, present),
             renderGroup('💊 Médicaments', r.meds, 'med', text, present),
+            stoppedHtml,
             renderGroup('🧪 Biologie', r.biology, 'bio', text, present),
             renderGroup('⚠️ Allergies (signalement)', r.allergies, 'allergy', text, present)
         ].join('');
         container.innerHTML = html;
+    }
+
+    function renderStopped(items, fullText) {
+        if (!items || !items.length) return '';
+        const rows = items.map(h => {
+            return `<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;font-size:13px;">
+                <span style="text-decoration:line-through;color:#6c757d;">${esc(h.target.dci)}</span>
+                <span style="color:#c0392b;font-weight:bold;font-size:11px;margin-left:6px;">STOP</span>
+                <div style="font-size:11px;color:#6c757d;margin-top:2px;">${snippet(fullText, h)}</div>
+            </div>`;
+        }).join('');
+        return `<details style="margin-bottom:8px;background:#fff3cd;border:1px solid #ffe69c;border-radius:6px;padding:6px 10px;">
+            <summary style="font-weight:bold;font-size:13px;cursor:pointer;color:#664d03;">🛑 Médicaments arrêtés/sevrés (${items.length}) — informationnel, non appliqués</summary>
+            <div style="padding-left:8px;margin-top:4px;">${rows}</div>
+        </details>`;
     }
 
     function checkAll(mode) {
