@@ -2822,45 +2822,175 @@ function analyserPrescription() {
             </div>`;
         };
 
-        const headerHtml = synthBuildBanner() + synthBuildHeader() + synthBuildRiskProfile() + synthBuildBioSummary() + synthBuildTopActions();
+        // =====================================================
+        // ── NOUVEAUTÉS Commit 2 : REGROUPEMENT MÉCANISMES + LIMITE + RX ACTIVE
+        // =====================================================
+
+        // [D] DÉTECTION DE MÉCANISMES RÉCURRENTS — fusionne N alertes du même
+        // mécanisme en une seule entrée synthétique.
+        const mechanismClusters = [];
+        const seenMedsInClusters = new Set();
+        const classifyMed = (dci) => {
+            const m = (activeMeds || []).find(x => (x.dci || '').toLowerCase() === dci.toLowerCase());
+            return m ? (m.classe || '') : '';
+        };
+        // Cluster anticholinergique : utilise scoreACB_global déjà calculé
+        if (scoreACB_global >= 3) {
+            const acbMeds = (activeMeds || [])
+                .filter(m => m.db_ref && parseFloat(m.db_ref.acb) >= 2)
+                .map(m => m.dci.toLowerCase());
+            if (acbMeds.length >= 2) {
+                mechanismClusters.push({
+                    label: `🧠 Charge anticholinergique (ACB ${scoreACB_global})`,
+                    severity: 'danger',
+                    summary: `${acbMeds.length} médicaments cumulent ACB élevé → risque de confusion, chutes, déclin cognitif`,
+                    meds: acbMeds.slice(0, 6),
+                    advice: 'Cibler une réduction ACB <3 : prioriser remplacement par alternatives non anticholinergiques (mirabégron, sertraline, antiH2 si IPP suffit, hydroxyzine→trazodone, etc.).',
+                    source: 'Boustani 2008 / Beers 2023'
+                });
+                acbMeds.forEach(d => seenMedsInClusters.add(d));
+            }
+        }
+        // Cluster QT : utilise maxQTLevel_global déjà calculé
+        if (typeof maxQTLevel_global !== 'undefined' && maxQTLevel_global >= 2) {
+            const qtMeds = (activeMeds || [])
+                .filter(m => m.db_ref && String(m.db_ref.qt_risque || '').match(/\(KR\)|\(KP\)/i))
+                .map(m => m.dci.toLowerCase());
+            if (qtMeds.length >= 1) {
+                mechanismClusters.push({
+                    label: `❤️ Charge QT-allongeante`,
+                    severity: maxQTLevel_global >= 3 ? 'danger' : 'warning',
+                    summary: `${qtMeds.length} médicament(s) prolongeant le QTc — risque additif de torsades de pointes`,
+                    meds: qtMeds.slice(0, 6),
+                    advice: 'ECG + ionogramme (K+, Mg2+) ; ne pas associer 2 QT-prolongateurs ; vérifier QTc <500 ms et corriger hypokaliémie/hypomagnésémie.',
+                    source: 'CredibleMeds'
+                });
+                qtMeds.forEach(d => seenMedsInClusters.add(d));
+            }
+        }
+        // Cluster FRID (chutes) : ≥3 médicaments à risque de chute
+        const fridMeds = (activeMeds || [])
+            .filter(m => m.db_ref && m.db_ref.scores && parseFloat(m.db_ref.scores.chute) >= 2)
+            .map(m => m.dci.toLowerCase());
+        if (fridMeds.length >= 3) {
+            mechanismClusters.push({
+                label: `🚶 Risque de chute (FRID ${fridMeds.length})`,
+                severity: 'warning',
+                summary: `${fridMeds.length} médicaments à risque de chute concomitants (FRID = Fall-Risk-Increasing Drugs)`,
+                meds: fridMeds.slice(0, 6),
+                advice: 'Évaluer indication de chaque sédatif/antihypertenseur central/BZD/opioïde ; mesurer TA couché-debout ; envisager déprescription.',
+                source: 'STOPP K1-K12'
+            });
+            fridMeds.forEach(d => seenMedsInClusters.add(d));
+        }
+        // Filtrer toRemove pour retirer les méds déjà englobés dans un cluster
+        // (évite l'effet "Amitriptyline listée 4 fois")
+        const toRemoveFiltered = toRemove.filter(r => !seenMedsInClusters.has((r.dci || '').toLowerCase()));
+
+        // [F] TABLEAU RX ACTIVE — médicaments groupés par grande classe
+        const synthBuildActiveRx = () => {
+            const meds = (activeMeds || []);
+            if (meds.length === 0) return '';
+            const buckets = { 'Cardiovasculaire': [], 'SNC / Psychotrope': [], 'Antidiabétique': [], 'Antalgique / AINS': [], 'Endocrine / Hormone': [], 'Gastro / IPP / Lax.': [], 'Anticoagulant / Antiagrégant': [], 'Autre': [] };
+            const classify = (m) => {
+                const cl = (m.classe || '').toLowerCase();
+                const dci = (m.dci || '').toLowerCase();
+                if (/anticoag|antiagreg|aod|avk|warfar|fluindion|acenocouma|aspirine|clopidogrel|apixaban|rivaroxaban|dabigatran|edoxaban/i.test(cl + dci)) return 'Anticoagulant / Antiagrégant';
+                if (/cardio|hypertens|β-bloq|beta.?bloq|inhibiteur de l.?enzyme|iec|ara2|antagoniste.*angiotensine|diuretique|inhibiteur calcique|antiarythm|nitre|sgl?t2|arni|aldost|spironolactone/i.test(cl)) return 'Cardiovasculaire';
+                if (/antidépresseur|antidepresseur|antipsychot|hypnotique|benzodiazépine|benzodiazepine|opio|antiépile|antiepile|nootro|antiparkin|iache|anticholin/i.test(cl)) return 'SNC / Psychotrope';
+                if (/antidia|insuline|metformin|sulfonyl|gliptin|sglt|glp.?1/i.test(cl)) return 'Antidiabétique';
+                if (/ains|paracetamol|opio|antalg|colchicine|fentanyl|morphine|tramadol|codeine|gabapent|prégaba|pregaba/i.test(cl)) return 'Antalgique / AINS';
+                if (/œstro|oestro|thyro|androgène|androgene|testost|somatropi|gh\b|hormono/i.test(cl)) return 'Endocrine / Hormone';
+                if (/ipp|pompe à protons|laxatif|antémét|antiemet|antiémét|antispasm|antiacid|sucralfat|alginat/i.test(cl)) return 'Gastro / IPP / Lax.';
+                return 'Autre';
+            };
+            meds.forEach(m => buckets[classify(m)].push(m));
+            const groups = Object.entries(buckets).filter(([k, v]) => v.length > 0);
+            if (!groups.length) return '';
+            const items = groups.map(([groupName, list]) => {
+                const dcis = list.map(m => {
+                    const dose = m.precisions && typeof m.precisions.dose === 'number' ? ` <span class="text-muted small">${m.precisions.dose}${m.precisions.unite || 'mg'}${m.precisions.periode ? '/' + m.precisions.periode : ''}</span>` : '';
+                    return `<span class="badge bg-light text-dark border me-1 mb-1">${escapeHtml(m.dci)}${dose}</span>`;
+                }).join('');
+                return `<div class="mb-2"><strong class="small text-muted">${escapeHtml(groupName)} (${list.length})</strong><br>${dcis}</div>`;
+            }).join('');
+            return `<details class="card mb-2 shadow-sm">
+                <summary class="card-header py-2 small" style="cursor:pointer;">
+                    💊 <strong>Prescription active (${meds.length})</strong>
+                    <span class="text-muted ms-2">— cliquer pour déplier</span>
+                </summary>
+                <div class="card-body py-2 px-3">${items}</div>
+            </details>`;
+        };
+
+        // [H] HELPER : rendu d'une liste avec limite + bouton "voir plus"
+        const renderLimited = (items, max, renderItem) => {
+            if (items.length <= max) return items.map(renderItem).join('');
+            const visible = items.slice(0, max).map(renderItem).join('');
+            const hidden = items.slice(max).map(renderItem).join('');
+            return visible + `<details class="mt-1">
+                <summary class="small text-muted" style="cursor:pointer;">▾ Voir ${items.length - max} de plus…</summary>
+                <div class="mt-2">${hidden}</div>
+            </details>`;
+        };
+
+        const headerHtml = synthBuildBanner() + synthBuildHeader() + synthBuildRiskProfile() + synthBuildBioSummary() + synthBuildActiveRx() + synthBuildTopActions();
+
+        // Bloc Mécanismes (entre TOP et sections détaillées)
+        let mechanismHtml = '';
+        if (mechanismClusters.length > 0) {
+            mechanismHtml = `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#cff4fc,#9eeaf9);color:#055160;">
+                <strong>🔍 Mécanismes récurrents (${mechanismClusters.length})</strong>
+                <span class="small ms-2" style="opacity:0.85;">Agrégation des alertes par mécanisme partagé</span>
+            </div><div class="card-body p-2">`;
+            mechanismClusters.forEach(cl => {
+                const medChips = cl.meds.map(d => `<span class="badge bg-light text-dark border me-1">${escapeHtml(d)}</span>`).join('');
+                mechanismHtml += `<div class="border-start border-${cl.severity} border-3 ps-2 py-1 mb-2">
+                    <span class="badge bg-${cl.severity} me-1" style="font-size:0.65em;">${cl.severity === 'danger' ? 'DANGER' : 'VIGILANCE'}</span>
+                    <strong class="small">${cl.label}</strong>
+                    ${cl.source ? ` <span class="badge bg-light text-muted border float-end" style="font-size:0.6em;">${escapeHtml(cl.source)}</span>` : ''}
+                    <br><span class="small">${escapeHtml(cl.summary)}</span>
+                    <div class="mt-1">${medChips}</div>
+                    <em class="text-muted small d-block mt-1">${escapeHtml(cl.advice)}</em>
+                </div>`;
+            });
+            mechanismHtml += `</div></div>`;
+        }
 
         // ── Rendu ──
         if (toAdd.length === 0 && toRemove.length === 0 && bioIssues.length === 0 && interactCritical.length === 0) {
             synthHtml = headerHtml + '<div class="alert alert-success shadow-sm"><strong>✅ Aucune action majeure identifiée</strong><br><small>Aucune omission, aucune prescription inappropriée, aucune anomalie biologique significative.</small></div>';
         } else {
-            synthHtml = headerHtml;
+            synthHtml = headerHtml + mechanismHtml;
 
-            // Section 1 : à AJOUTER
+            // Section 1 : à AJOUTER (limite 6)
             if (toAdd.length > 0) {
                 synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#d1e7dd,#a3cfbb);color:#0f5132;">
                     <strong>➕ Médicaments à ajouter (${toAdd.length})</strong>
                     <span class="small ms-2" style="opacity:0.85;">Omissions thérapeutiques identifiées</span>
                 </div><div class="card-body p-2">`;
-                toAdd.forEach(a => {
-                    synthHtml += `<div class="border-start border-success border-3 ps-2 py-1 mb-2">
-                        <strong class="small">${escapeHtml(a.titre)}</strong>
-                        ${a.source ? ` <span class="badge bg-light text-muted border float-end" style="font-size:0.6em;">${escapeHtml(a.source)}</span>` : ''}
-                        ${a.message ? `<br><span class="small">${escapeHtml(a.message)}</span>` : ''}
-                        ${a.alternatives ? `<br><em class="text-success small">Exemples : ${escapeHtml(a.alternatives)}</em>` : ''}
-                    </div>`;
-                });
+                synthHtml += renderLimited(toAdd, 6, a => `<div class="border-start border-success border-3 ps-2 py-1 mb-2">
+                    <strong class="small">${escapeHtml(a.titre)}</strong>
+                    ${a.source ? ` <span class="badge bg-light text-muted border float-end" style="font-size:0.6em;">${escapeHtml(a.source)}</span>` : ''}
+                    ${a.message ? `<br><span class="small">${escapeHtml(a.message)}</span>` : ''}
+                    ${a.alternatives ? `<br><em class="text-success small">Exemples : ${escapeHtml(a.alternatives)}</em>` : ''}
+                </div>`);
                 synthHtml += `</div></div>`;
             }
 
-            // Section 2 : à RETIRER / SUBSTITUER
-            if (toRemove.length > 0) {
+            // Section 2 : à RETIRER / SUBSTITUER (limite 8, mécanismes déjà retirés)
+            if (toRemoveFiltered.length > 0) {
+                const headerSuffix = (toRemove.length !== toRemoveFiltered.length) ? ` <span class="small text-muted">— ${toRemove.length - toRemoveFiltered.length} agrégé(s) ci-dessus</span>` : '';
                 synthHtml += `<div class="card mb-3 shadow-sm"><div class="card-header py-2" style="background:linear-gradient(135deg,#f8d7da,#f1aeb5);color:#58151c;">
-                    <strong>➖ Médicaments à retirer ou substituer (${toRemove.length})</strong>
-                    <span class="small ms-2" style="opacity:0.85;">Prescriptions inappropriées identifiées</span>
+                    <strong>➖ Médicaments à retirer ou substituer (${toRemoveFiltered.length})</strong>
+                    <span class="small ms-2" style="opacity:0.85;">Prescriptions inappropriées${headerSuffix}</span>
                 </div><div class="card-body p-2">`;
-                toRemove.forEach(a => {
-                    synthHtml += `<div class="border-start border-${a.severity} border-3 ps-2 py-1 mb-2">
-                        <span class="badge bg-${a.severity} me-1" style="font-size:0.65em;">${a.action}</span>
-                        <strong class="small">${escapeHtml(a.dci.toUpperCase())}</strong>
-                        ${a.source ? ` <span class="badge bg-light text-muted border float-end" style="font-size:0.6em;">${escapeHtml(a.source)}</span>` : ''}
-                        ${a.reason ? `<br><span class="small text-muted">${escapeHtml(a.reason)}</span>` : ''}
-                    </div>`;
-                });
+                synthHtml += renderLimited(toRemoveFiltered, 8, a => `<div class="border-start border-${a.severity} border-3 ps-2 py-1 mb-2">
+                    <span class="badge bg-${a.severity} me-1" style="font-size:0.65em;">${a.action}</span>
+                    <strong class="small">${escapeHtml(a.dci.toUpperCase())}</strong>
+                    ${a.source ? ` <span class="badge bg-light text-muted border float-end" style="font-size:0.6em;">${escapeHtml(a.source)}</span>` : ''}
+                    ${a.reason ? `<br><span class="small text-muted">${escapeHtml(a.reason)}</span>` : ''}
+                </div>`);
                 synthHtml += `</div></div>`;
             }
 
