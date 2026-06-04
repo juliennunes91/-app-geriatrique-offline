@@ -33,8 +33,6 @@
 //      • SUP_STOP_003 (nifédipine forme immédiate) → doublon mort de EV_PRISC_01.
 //      • SUP_STOP_009 (antiagrégant + anticoagulant) → clé collée exprimant une
 //        combinaison ; concept couvert par EV_C02 / EV_C04 / SUP_PIMC_09.
-//      • SUP_STOP_053 (insuline « sliding scale ») → schéma posologique non
-//        détectable à partir d'un DCI.
 //      • SUP_STOP_058 (patch lidocaïne pour arthrose) → indication non détectable
 //        et en conflit avec IN_K03 (qui recommande le patch en douleur neuropathique).
 //  - Règles mortes par médicament (audit « presenceDead ») couvertes par une règle
@@ -64,7 +62,9 @@ const SUPPLEMENT_QUARANTINE = new Set([
     // (SUP_STOP_025 « fer oral fortes doses » a été RAVIVÉ après que l'extracteur
     // de texte libre injecte dose_fer_elevee dans le contexte clinique quand la
     // posologie extraite dépasse 600 mg/j — cf. text_extractor.js Tier 3.)
-    'SUP_STOP_003', 'SUP_STOP_009', 'SUP_STOP_053', 'SUP_STOP_058',
+    // SUP_STOP_053 (insuline « sliding scale ») RAVIVÉ : insulines DCI ajoutées en base +
+    // checkbox chkInsulineSlidingScale alimente le contexte_clinique "sliding_scale".
+    'SUP_STOP_003', 'SUP_STOP_009', 'SUP_STOP_058',
     // Mortes par médicament : doublons de règles fonctionnelles, ou indication non détectable.
     'SUP_STOP_044', 'SUP_STOP_057', 'SUP_STOP_076', 'SUP_STOP_077', 'SUP_STOP_080',
     // Variantes œstrogènes redondantes / indication non détectable (cf. SUP_STOP_049 actif).
@@ -550,6 +550,7 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(isChecked('chkPalliatif')) ctxClinique.push("palliatif", "esperance_vie_reduite", "stoppfrail");
     if(isChecked('chkAtcdUlcere')) ctxClinique.push("atcd_ulcere", "atcd_hemorragie_digestive");
     if(isChecked('chkAspirineForte')) ctxClinique.push("dose_aspirine_elevee");
+    if(isChecked('chkInsulineSlidingScale')) ctxClinique.push("sliding_scale");
     if(getVal('bioAlb') > 0 && getVal('bioAlb') < 30) ctxClinique.push("denutrition_severe");
     if(isChecked('chkFoie')) ctxClinique.push("hepatopathie");
     if(isChecked('chkTvp')) ctxClinique.push("mtev");
@@ -661,7 +662,7 @@ function _computeAnalysisHash() {
      'chkFoie','chkSepsis','chkPalliatif','chkAtcdUlcere','chkChutes','chkDepression',
      'chkInstitution','chkConfine',
      'chkIncontinence','chkHbp','chkConstipation','chkDysphagie','chkGlaucome',
-     'chkStenoseAortique','chkAspirineForte','chkLewy',
+     'chkStenoseAortique','chkAspirineForte','chkInsulineSlidingScale','chkLewy',
      // Troubles cognitifs & neuropsychocomportementaux
      'chkDemence','demTypeMA','demTypeDP','demTypeDLFT','demTypeVasc','demTypeMixte',
      'chkSpcAgitation','chkSpcPsychose','chkSpcApathie','chkSpcDepressionSpc',

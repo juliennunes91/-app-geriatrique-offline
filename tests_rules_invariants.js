@@ -170,7 +170,7 @@ function runRuleInvariantTests(test, assert) {
     test('INV-I — parité dual-UI : ids getElementById présents dans les 2 HTML', () => {
         const fsm = require('fs'); const path = require('path');
         const root = __dirname;
-        const jsFiles = fsm.readdirSync(root).filter(f => /\.js$/.test(f) && !/^_|tests|oracle|bootstrap|audit_db|exhaustive_audit/.test(f));
+        const jsFiles = fsm.readdirSync(root).filter(f => /\.js$/.test(f) && !/^_|tests|oracle|bootstrap/.test(f));
         const ids = new Set();
         jsFiles.forEach(f => {
             try {

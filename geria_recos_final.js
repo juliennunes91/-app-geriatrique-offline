@@ -1692,7 +1692,13 @@ const GERIA_RECOS_DB = {
             message: "Insuline « sliding scale » seule (sans insuline basale) en gériatrie : risque de déséquilibre glycémique et d'hypoglycémie.",
             severite: "warning",
             condition: {
-                med_keys: ["insuline"],
+                // « insuline » seul est un token de classe (anti-collision) et ne résout pas
+                // les DCIs spécifiques. Lister les insulines réellement en base.
+                med_keys: [
+                    "insuline aspart", "insuline lispro", "insuline glulisine",
+                    "insuline humaine",
+                    "insuline glargine", "insuline detemir", "insuline degludec"
+                ],
                 contexte_clinique: "sliding_scale"
             },
             alternatives: "Schéma basal-bolus adapté, cibles HbA1c individualisées (< 7.5% robuste, < 8% complexe, < 8.5% très fragile — ADA 2025)"

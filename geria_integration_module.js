@@ -1303,15 +1303,18 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         ],
         "ref_code": "RECO_0172",
         "section": "Endocrine",
-        "titre": "Insuline en glissant ou sliding scale",
-        "message": "Diabetique sous insuline sliding scale seule (sans insuline basale) — Hypoglycemies et hyperglycemies alternatives, controle glycemique mediocre",
+        "titre": "Insuline en schéma « sliding scale » seule (sans basale)",
+        "message": "Diabétique sous insuline sliding scale SEULE (sans insuline basale) — alternance hypoglycémies / hyperglycémies, contrôle glycémique médiocre. PIM Beers 2023 / FORTA chez le sujet âgé.",
         "severite": "warning",
         "condition": {
             "med_keys": [
-                "insuline rapide reactive seule"
-            ]
+                "insuline aspart", "insuline lispro", "insuline glulisine",
+                "insuline humaine",
+                "insuline glargine", "insuline detemir", "insuline degludec"
+            ],
+            "contexte_clinique": "sliding_scale"
         },
-        "alternatives": "Schema basale-bolus prefere. Si injection unique: insuline basale 1x/j plus predictible",
+        "alternatives": "Schéma basal-bolus préféré. Si injection unique : insuline basale (glargine, degludec) 1×/j plus prédictible. Cible HbA1c individualisée (ADA 2025).",
         "forta": "C/D (FORTA)",
         "nb_sources": 8
     },

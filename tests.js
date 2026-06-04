@@ -1369,6 +1369,31 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
             'Risque syndrome sérotoninergique attendu : ' + allTitres.slice(0, 200));
     });
 
+    test('Tier 5 — E2E insuline sliding scale seule → EV_BEERS_02 + SUP_STOP_053 actifs', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const res = analyzeCase({
+            age: 85, sexe: 'F',
+            meds: ['Insuline aspart'],
+            flags: ['chkInsulineSlidingScale']
+        });
+        const allTitres = []
+            .concat(res['alertes-eviter'] || [])
+            .concat(res['alertes-supplement'] || [])
+            .map(a => a.titre).join(' | ').toLowerCase();
+        assert.ok(/sliding scale|basale/i.test(allTitres),
+            'EV_BEERS_02 / SUP_STOP_053 attendues : ' + allTitres.slice(0, 200));
+    });
+
+    test('Tier 5 — E2E insuline sans contexte sliding_scale → règle silencieuse', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const res = analyzeCase({
+            age: 85, sexe: 'F',
+            meds: ['Insuline glargine']
+        });
+        const titres = (res['alertes-eviter'] || []).map(a => a.titre).join(' | ').toLowerCase();
+        assert.ok(!/sliding scale/i.test(titres), 'pas de FP sans contexte');
+    });
+
     test('Tier 5 — E2E AINS + IEC + diurétique de l\'anse → triple whammy (NTA)', () => {
         const { analyzeCase } = require('./oracle_harness');
         const res = analyzeCase({
