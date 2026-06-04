@@ -208,6 +208,88 @@ function runRuleInvariantTests(test, assert) {
             `dual-UI désync :\n      - classic-only: ${realA.join(', ') || '(aucun)'}\n      - modern-only: ${realB.join(', ') || '(aucun)'}`);
     });
 
+    // ---- DONNÉES PARTAGÉES HARD-TESTS + AUDIT (calculées une fois) ----
+
+    // VRAIES contradictions éviter ⇄ initier : un même DCI apparaît dans
+    // EVITER.med_keys ET dans INITIER.med_keys (NON med_absent) pour la même
+    // comorbidité. Exclut les paires complémentaires (INITIER.med_absent liste
+    // les alternatives, pas les meds recommandés).
+    const contradictions = [];
+    {
+        const eviterMeds = new Map();
+        const initierMeds = new Map();
+        active.forEach(r => {
+            if (r.set === 'eviter' && r.comorbsPositive.length && r.medKeys.length) {
+                r.medKeys.forEach(k => r.comorbsPositive.forEach(p => {
+                    const sig = k + '|' + p;
+                    if (!eviterMeds.has(sig)) eviterMeds.set(sig, []);
+                    eviterMeds.get(sig).push(r.id);
+                }));
+            }
+            // STRICT : on ne regarde QUE INITIER.med_keys, PAS med_absent.
+            if (r.set === 'initier' && r.comorbsPositive.length && r.medKeys.length) {
+                r.medKeys.forEach(k => r.comorbsPositive.forEach(p => {
+                    const sig = k + '|' + p;
+                    if (!initierMeds.has(sig)) initierMeds.set(sig, []);
+                    initierMeds.get(sig).push(r.id);
+                }));
+            }
+        });
+        eviterMeds.forEach((evIds, sig) => {
+            if (initierMeds.has(sig)) {
+                contradictions.push(`${sig} : éviter=${evIds.join('/')} ⇄ initier=${initierMeds.get(sig).join('/')}`);
+            }
+        });
+    }
+
+    // Mismatch convention de nommage vs bucket de rendu
+    const nameBucketMismatch = active.filter(r =>
+        (/^IN_/.test(r.id) && r.bucket === 'eviter') || (/^EV_/.test(r.id) && r.bucket === 'initier')
+    ).map(r => `${r.id} → ${r.bucket}`);
+
+    // Doublons de signature comorbs+med_keys+med_absent
+    const bySig = {};
+    active.filter(r => r.hasMedAbsent).forEach(r => {
+        const sig = JSON.stringify([
+            r.comorbsPositive.slice().sort(),
+            r.medKeys.slice().sort(),
+            r.medAbsent.slice().sort()
+        ]);
+        (bySig[sig] = bySig[sig] || []).push(r.id);
+    });
+    const dups = Object.values(bySig).filter(ids => ids.length > 1).map(ids => ids.join(' == '));
+
+    // Contextes alimentables (référencés par ctxClinique.push dans app_analysis.js)
+    const POPULATABLE_CTX = new Set();
+    try {
+        const aaSrc = require('fs').readFileSync(require('path').join(__dirname, 'app_analysis.js'), 'utf8');
+        (aaSrc.match(/ctxClinique\.push\(([^)]*)\)/g) || []).forEach(m => {
+            (m.match(/["']([a-zA-Z_]+)["']/g) || []).forEach(q => POPULATABLE_CTX.add(q.replace(/["']/g, '')));
+        });
+    } catch (e) { /* lecture best-effort */ }
+
+    // Contexte d'EXCLUSION jamais alimentable → exception inopérante (sur-déclenchement).
+    const deadCtxAbs = [];
+    active.forEach(r => r.ctxAbsent.forEach(cx => { if (POPULATABLE_CTX.size && !POPULATABLE_CTX.has(cx)) deadCtxAbs.push(`${r.id}:${cx}`); }));
+
+    // ---- INVARIANTS DURS PROMUS DE L'AUDIT (régressions = échec du build) ----
+
+    test('INV-J — 0 vraie contradiction éviter ⇄ initier (même DCI + même comorb)', () => {
+        assert.strictEqual(contradictions.length, 0, `contradictions:${fmt(contradictions)}`);
+    });
+
+    test('INV-K — 0 mismatch préfixe id (EV_/IN_) vs bucket de rendu', () => {
+        assert.strictEqual(nameBucketMismatch.length, 0, `mismatches:${fmt(nameBucketMismatch)}`);
+    });
+
+    test('INV-L — 0 doublon de signature (comorbs+med_keys+med_absent)', () => {
+        assert.strictEqual(dups.length, 0, `doublons:${fmt(dups)}`);
+    });
+
+    test('INV-M — 0 contexte d\'exclusion jamais alimentable (exception inopérante)', () => {
+        assert.strictEqual(deadCtxAbs.length, 0, `contextes morts:${fmt(deadCtxAbs)}`);
+    });
+
     // ---- SECTION AUDIT (informative — ne fait jamais échouer la suite) ----
     const auditLines = [];
     const audit = (label, items) => {
@@ -227,25 +309,11 @@ function runRuleInvariantTests(test, assert) {
     const presenceDead = active.filter(r => r.presenceDead).map(r => `${r.id} (${r.set}) — ${r.medKeys.slice(0, 3).join(', ')}`);
     audit('Règles actives mortes par médicament (aucune med_keys résolvable)', presenceDead);
 
-    // Contextes cliniques réellement alimentables (ctxClinique.push dans app_analysis.js,
-    // y compris ceux dérivés des précisions médicament). Un contexte référencé hors de
-    // cet ensemble ne peut jamais être positionné.
-    const POPULATABLE_CTX = new Set();
-    try {
-        const aaSrc = require('fs').readFileSync(require('path').join(__dirname, 'app_analysis.js'), 'utf8');
-        (aaSrc.match(/ctxClinique\.push\(([^)]*)\)/g) || []).forEach(m => {
-            (m.match(/["']([a-zA-Z_]+)["']/g) || []).forEach(q => POPULATABLE_CTX.add(q.replace(/["']/g, '')));
-        });
-    } catch (e) { /* lecture best-effort */ }
-
     // Contexte clinique REQUIS jamais alimentable → règle morte par contexte.
     const deadCtxPos = [];
     active.forEach(r => r.ctxPositive.forEach(cx => { if (POPULATABLE_CTX.size && !POPULATABLE_CTX.has(cx)) deadCtxPos.push(`${r.id}:${cx}`); }));
     audit('Contexte requis jamais alimentable (règle morte par contexte)', deadCtxPos);
 
-    // Contexte d'EXCLUSION jamais alimentable → l'exception ne peut jamais s'activer (sur-déclenchement).
-    const deadCtxAbs = [];
-    active.forEach(r => r.ctxAbsent.forEach(cx => { if (POPULATABLE_CTX.size && !POPULATABLE_CTX.has(cx)) deadCtxAbs.push(`${r.id}:${cx}`); }));
     audit('Contexte d\'exclusion jamais alimentable (exception inopérante)', deadCtxAbs);
 
     // Clés médicament en NOM COMMERCIAL (matchent un princeps, pas un DCI) → ne résolvent pas.
@@ -253,44 +321,6 @@ function runRuleInvariantTests(test, assert) {
     rules.forEach(r => r.brandKeys.forEach(k => brandKeys.push(`${r.id}${r.quarantined ? ' [Q]' : ''} :: ${k}`)));
     audit('Clés médicament en nom commercial (princeps au lieu du DCI)', brandKeys);
 
-    // C5 — VRAIES CONTRADICTIONS éviter ⇄ initier : un même DCI apparaît dans
-    // EVITER.med_keys ET dans INITIER.med_keys (NON med_absent) pour la même
-    // comorbidité, sans discriminateur. Le signal exclut désormais les paires
-    // structurellement complémentaires :
-    //   - INITIER.med_absent liste habituellement les alternatives acceptables, pas
-    //     les meds recommandés → le chevauchement avec EVITER.med_keys n'est PAS un
-    //     vrai conflit (cf. les 11 paires complémentaires documentées : EV_C11/IN_C01
-    //     AVK, EV_SFGG_AD_08/IN_SFGG_AD_01 TCA, etc.).
-    //   - Les BB pour HTA monothérapie (EV_B05) vs antihypertenseur (IN_B01)
-    //     décrivent des angles distincts (monothérapie/1ère ligne vs initiation).
-    const contradictions = [];
-    {
-        const eviterMeds = new Map();
-        const initierMeds = new Map();
-        active.forEach(r => {
-            if (r.set === 'eviter' && r.comorbsPositive.length && r.medKeys.length) {
-                r.medKeys.forEach(k => r.comorbsPositive.forEach(p => {
-                    const sig = k + '|' + p;
-                    if (!eviterMeds.has(sig)) eviterMeds.set(sig, []);
-                    eviterMeds.get(sig).push(r.id);
-                }));
-            }
-            // STRICT : on ne regarde QUE INITIER.med_keys (recommandation explicite),
-            // PAS med_absent (qui liste les alternatives = source de faux positifs).
-            if (r.set === 'initier' && r.comorbsPositive.length && r.medKeys.length) {
-                r.medKeys.forEach(k => r.comorbsPositive.forEach(p => {
-                    const sig = k + '|' + p;
-                    if (!initierMeds.has(sig)) initierMeds.set(sig, []);
-                    initierMeds.get(sig).push(r.id);
-                }));
-            }
-        });
-        eviterMeds.forEach((evIds, sig) => {
-            if (initierMeds.has(sig)) {
-                contradictions.push(`${sig} : éviter=${evIds.join('/')} ⇄ initier=${initierMeds.get(sig).join('/')}`);
-            }
-        });
-    }
     audit('VRAIES contradictions éviter ⇄ initier (même DCI recommandé ET interdit)', contradictions);
 
     // PROVENANCE : source STOPP/START revendiquée sans ref_code STOPP/START correspondant
@@ -308,27 +338,7 @@ function runRuleInvariantTests(test, assert) {
     const omissionInEviter = active.filter(r => r.hasMedAbsent && r.bucket === 'eviter').map(r => `${r.id} (${r.set})`);
     audit('med_absent rendu en « éviter » (vérifier intention)', omissionInEviter);
 
-    // Mismatch convention de nommage vs bucket
-    const nameBucketMismatch = active.filter(r =>
-        (/^IN_/.test(r.id) && r.bucket === 'eviter') || (/^EV_/.test(r.id) && r.bucket === 'initier')
-    ).map(r => `${r.id} → ${r.bucket}`);
     audit('Mismatch préfixe id / bucket de rendu', nameBucketMismatch);
-
-    // Doublons de signature : on inclut désormais med_keys (présence) en plus de
-    // comorbs+med_absent — sinon des règles aux ANGLES distincts (omission générique
-    // vs danger contextuel sur un médicament précis) sont signalées à tort comme
-    // doublons (ex. IN_F01/F02 + EV_F05/H01 partagent comorbs+med_absent mais
-    // diffèrent par leur med_keys : aspirine vs corticoïde vs AINS).
-    const bySig = {};
-    active.filter(r => r.hasMedAbsent).forEach(r => {
-        const sig = JSON.stringify([
-            r.comorbsPositive.slice().sort(),
-            r.medKeys.slice().sort(),
-            r.medAbsent.slice().sort()
-        ]);
-        (bySig[sig] = bySig[sig] || []).push(r.id);
-    });
-    const dups = Object.values(bySig).filter(ids => ids.length > 1).map(ids => ids.join(' == '));
     audit('Doublons de signature (comorbs+med_keys+med_absent)', dups);
 
     // Violations sur règles EN QUARANTAINE (rappel : non rendues, donc non bloquantes)

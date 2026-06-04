@@ -1335,6 +1335,55 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(/IEC|ARA2|ARNI|pilier|iSGLT2|aldost/i.test(initierTitres),
             'Le moteur devrait recommander pilier HFrEF manquant : ' + initierTitres.slice(0, 200));
     });
+
+    test('Tier 5 — E2E polypharmacie cascade anticholinergique (oxybutynine + amitriptyline + diphenhydramine)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const res = analyzeCase({
+            age: 82, sexe: 'F',
+            meds: ['Oxybutynine', 'Amitriptyline', 'Diphenhydramine'],
+            precisions: { amitriptyline: { dose: 50, unite: 'mg', periode: 'j' } }
+        });
+        const allTitres = []
+            .concat(res['alertes-eviter'] || [])
+            .concat(res['alertes-supplement'] || [])
+            .map(a => a.titre).join(' | ').toLowerCase();
+        // ≥ 3 anticho doit déclencher la charge ACB et au moins une alerte par molécule
+        assert.ok(/anticholinergique|acb|charge/i.test(allTitres),
+            'Charge anticholinergique attendue (3 molécules ACB simultanées) : ' + allTitres.slice(0, 200));
+        assert.ok(/oxybutynine|amitriptyline|diphenhydramine/i.test(allTitres),
+            'Au moins une molécule ACB nominalement alertée : ' + allTitres.slice(0, 200));
+    });
+
+    test('Tier 5 — E2E syndrome sérotoninergique : ISRS + tramadol → alerte interaction', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const res = analyzeCase({
+            age: 78, sexe: 'M',
+            meds: ['Sertraline', 'Tramadol']
+        });
+        const allTitres = []
+            .concat(res['alertes-eviter'] || [])
+            .concat(res['alertes-supplement'] || [])
+            .concat(res['alertes-interactions'] || [])
+            .map(a => a.titre || a.message || '').join(' | ').toLowerCase();
+        assert.ok(/serotonin|sérotonin|tramadol.*isrs|isrs.*tramadol/i.test(allTitres),
+            'Risque syndrome sérotoninergique attendu : ' + allTitres.slice(0, 200));
+    });
+
+    test('Tier 5 — E2E AINS + IEC + diurétique de l\'anse → triple whammy (NTA)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const res = analyzeCase({
+            age: 84, sexe: 'F',
+            meds: ['Ibuprofene', 'Ramipril', 'Furosemide']
+        });
+        const allTitres = []
+            .concat(res['alertes-eviter'] || [])
+            .concat(res['alertes-supplement'] || [])
+            .concat(res['alertes-interactions'] || [])
+            .map(a => (a.titre || '') + ' ' + (a.message || '')).join(' | ').toLowerCase();
+        // Triple whammy ou alerte rénale équivalente
+        assert.ok(/triple whammy|nta|néphro|nephro|insuffisance rénale|insuffisance renale|ains.*rénal|ains.*renal|tubulaire/i.test(allTitres),
+            'Triple whammy / risque rénal attendu : ' + allTitres.slice(0, 300));
+    });
 }
 
 // ============================================================================
