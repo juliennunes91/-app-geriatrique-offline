@@ -1985,6 +1985,78 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "forta": "D (FORTA D: hors epilepsie)",
         "priscus": "Oui",
         "nb_sources": 8
+    },
+    {
+        "id": "SUP_STOP_081",
+        "csv_ref": "RECO_0223",
+        "sources": [
+            "ANSM",
+            "FDA",
+            "SFGG"
+        ],
+        "ref_code": "QTL-CITALOPRAM",
+        "section": "SNC",
+        "titre": "Citalopram > 20 mg/j chez le sujet age",
+        "message": "Risque d'allongement du QT dose-dependant (FDA Drug Safety 2011, ANSM 2011). Dose max recommandee 20 mg/j chez >= 65 ans (RCP). Surveillance ECG si maintenu, CI absolue si arythmie / hypokaliemie / QT prolonge.",
+        "severite": "danger",
+        "condition": {
+            "med_keys": [
+                "citalopram"
+            ],
+            "contexte_clinique": "dose_citalopram_elevee"
+        },
+        "alternatives": "Reduire a <= 20 mg/j. Si reponse insuffisante, switch vers sertraline ou escitalopram <= 10 mg/j (item 30 SFGG/SF3PA/SFPC 2026).",
+        "forta": "C si dose RCP, D si > 20 mg/j",
+        "priscus": "Non (dose-dependant)",
+        "nb_sources": 3
+    },
+    {
+        "id": "SUP_STOP_082",
+        "csv_ref": "RECO_0224",
+        "sources": [
+            "ANSM",
+            "FDA",
+            "SFGG"
+        ],
+        "ref_code": "QTL-ESCITALOPRAM",
+        "section": "SNC",
+        "titre": "Escitalopram > 10 mg/j chez le sujet age",
+        "message": "Risque d'allongement du QT dose-dependant. Dose max recommandee 10 mg/j chez >= 65 ans (RCP, SFGG/SF3PA/SFPC 2026 item 18). CI relative si arythmie / hypokaliemie / QT prolonge.",
+        "severite": "danger",
+        "condition": {
+            "med_keys": [
+                "escitalopram"
+            ],
+            "contexte_clinique": "dose_escitalopram_elevee"
+        },
+        "alternatives": "Reduire a <= 10 mg/j. Si reponse insuffisante, switch vers sertraline (profil QT favorable, item 11 SFGG/SF3PA/SFPC 2026).",
+        "forta": "B si dose RCP, D si > 10 mg/j",
+        "priscus": "Non (dose-dependant)",
+        "nb_sources": 3
+    },
+    {
+        "id": "SUP_STOP_083",
+        "csv_ref": "RECO_0225",
+        "sources": [
+            "BEERS",
+            "STOPP",
+            "FORTA"
+        ],
+        "ref_code": "DIGOXINE-DOSE",
+        "section": "Cardio",
+        "titre": "Digoxine > 125 microg/j chez le sujet age",
+        "message": "Risque de toxicite digitalique majore (Beers 2023, STOPP B12). Dose recommandee chez >= 65 ans : 62,5-125 microg/j, adaptee a la fonction renale. Au-dela : nausees, troubles de la conduction, troubles visuels.",
+        "severite": "danger",
+        "condition": {
+            "med_keys": [
+                "digoxine"
+            ],
+            "contexte_clinique": "dose_digoxine_elevee"
+        },
+        "alternatives": "Reduire la dose. Doser la digoxinemie (cible 0,5-0,9 ng/mL). Adapter au DFG. Surveillance kaliemie (hypoK potentialise la toxicite).",
+        "forta": "C si dose et DFG adaptes, D si > 125 microg/j",
+        "priscus": "Oui (forte dose)",
+        "nb_sources": 3
     }
 ];
 

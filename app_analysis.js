@@ -623,6 +623,11 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
                 if (fam === 'fer' && p.dose > 600) ctxClinique.push('dose_fer_elevee');
                 if (/amitriptyline/i.test(dci) && p.dose > 75) ctxClinique.push('dose_amitriptyline_elevee');
                 if (/acide\s*acetylsalicylique|aspirine/i.test(dci) && p.dose > 100) ctxClinique.push('dose_aspirine_elevee');
+                // QT dose-dépendants : seuils RCP gériatriques (SFGG/SF3PA/SFPC 2026 item 18, ANSM/FDA 2011)
+                if (/citalopram/i.test(dci) && !/escitalopram/i.test(dci) && p.dose > 20) ctxClinique.push('dose_citalopram_elevee');
+                if (/escitalopram/i.test(dci) && p.dose > 10) ctxClinique.push('dose_escitalopram_elevee');
+                // Digoxine : dose toxique chez ≥ 65 ans (Beers 2023, STOPP B12)
+                if (/digoxine/i.test(dci) && p.dose > 125) ctxClinique.push('dose_digoxine_elevee');
             }
         });
     }

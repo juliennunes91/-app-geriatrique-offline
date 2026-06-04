@@ -1217,6 +1217,34 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(/aspirine.*100|long cours/i.test(titres));
     });
 
+    test('Tier 4 — Citalopram > 20 mg/j → SUP_STOP_081 (QT)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r = analyzeCase({ age: 80, sexe: 'F', meds: ['Citalopram'], precisions: { citalopram: { dose: 30, unite: 'mg', periode: 'j' } } });
+        const titres = (r['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        assert.ok(/citalopram\s*(?:>|&gt;)\s*20/i.test(titres), 'SUP_STOP_081 attendue pour citalopram 30 mg/j');
+    });
+
+    test('Tier 4 — Citalopram ≤ 20 mg/j silencieux pour SUP_STOP_081', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r = analyzeCase({ age: 80, sexe: 'F', meds: ['Citalopram'], precisions: { citalopram: { dose: 20, unite: 'mg', periode: 'j' } } });
+        const titres = (r['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        assert.ok(!/SUP_STOP_081|citalopram\s+(?:>|&gt;)\s*20\s*mg.*sujet age\b/i.test(titres));
+    });
+
+    test('Tier 4 — Escitalopram > 10 mg/j → SUP_STOP_082 (QT)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r = analyzeCase({ age: 80, sexe: 'F', meds: ['Escitalopram'], precisions: { escitalopram: { dose: 15, unite: 'mg', periode: 'j' } } });
+        const titres = (r['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        assert.ok(/escitalopram\s*(?:>|&gt;)\s*10/i.test(titres), 'SUP_STOP_082 attendue pour escitalopram 15 mg/j');
+    });
+
+    test('Tier 4 — Digoxine > 125 µg/j → SUP_STOP_083', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r = analyzeCase({ age: 80, sexe: 'F', meds: ['Digoxine'], precisions: { digoxine: { dose: 250, unite: 'microg', periode: 'j' } } });
+        const titres = (r['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+        assert.ok(/digoxine.*125/i.test(titres), 'SUP_STOP_083 attendue pour digoxine 250 µg/j');
+    });
+
     test('Tier 4 — Conversion K mEq/L → mmol/L (1:1)', () => {
         const r = extract('K 4.2 mEq/L');
         const k = findB(r, 'BIO_001');

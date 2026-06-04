@@ -2247,7 +2247,8 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["citalopram"],
-                age_min: 65
+                age_min: 65,
+                contexte_clinique: "dose_citalopram_elevee"
             },
             alternatives: "Citalopram ≤ 20 mg/j, sertraline, escitalopram ≤ 10 mg"
         },
@@ -2261,7 +2262,8 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["escitalopram"],
-                age_min: 65
+                age_min: 65,
+                contexte_clinique: "dose_escitalopram_elevee"
             },
             alternatives: "Escitalopram ≤ 10 mg/j, sertraline"
         },
