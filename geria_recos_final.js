@@ -606,7 +606,7 @@ const GERIA_RECOS_DB = {
             message: "Antidépresseur tricyclique avec démence, glaucome à angle fermé, troubles conductifs cardiaques, HBP avec symptômes urinaires, rétention urinaire, constipation chronique, chutes récentes ou hypotension orthostatique : risque d'aggravation. PIM selon Beers, PRISCUS et FORTA-D.",
             severite: "danger",
             condition: {
-                med_keys: ["antidepresseur tricyclique", "amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "maprotiline", "amoxapine", "dosulpine"],
+                med_keys: ["antidepresseur tricyclique", "amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "maprotiline", "amoxapine", "dosulepine"],
                 comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_009", "PAT_033"]
             },
             alternatives: "ISRS (sertraline, escitalopram) ou mirtazapine"
@@ -2026,7 +2026,7 @@ const GERIA_RECOS_DB = {
             message: "Consensus SFGG/SF3PA/SFPC 2026 (item 9) : ne pas prescrire de tricyclique (amitriptyline, clomipramine, imipramine, doxépine, dosulépine, nortriptyline, trimipramine) en 1ère ligne d'un EDM chez le sujet âgé — ACB élevé, QT, hypotension orthostatique, chutes, confusion. Clomipramine = uniquement 4e ligne hospitalière (item 55).",
             severite: "danger",
             condition: {
-                med_keys: ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "dosulpine"],
+                med_keys: ["amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "dosulepine"],
                 comorbs: ["PAT_032"]
             },
             alternatives: "Sertraline 1ère intention (item 11), citalopram/escitalopram (item 11), mirtazapine si insomnie/dénutrition (item 12). IRSN en 2e ligne (item 13)."
@@ -3405,7 +3405,7 @@ const PIM_DICT = {
         forta: "D", eu7pim: true, beers: true,
         risque_principal: "Convulsions, anticholinergique, cardiotoxicité"
     },
-    "dosulpine": {
+    "dosulepine": {
         priscus: "PIM", eu7pim: true, beers: true,
         risque_principal: "Le plus toxique en surdosage des tricycliques"
     },
@@ -4346,7 +4346,7 @@ const CROSS_REF_GROUPS = [
         theme: "Antidépresseurs tricycliques chez le sujet âgé",
         merged_sources: ["STOPP3", "BEERS", "PRISCUS", "FORTA", "EU7PIM"],
         rule_ids: ["EV_D01", "EV_D02", "EV_FORTA_03", "EV_FORTA_04"],
-        pim_dict_keys: ["amitriptyline", "clomipramine", "imipramine", "doxepine", "trimipramine", "nortriptyline", "maprotiline", "dosulpine"],
+        pim_dict_keys: ["amitriptyline", "clomipramine", "imipramine", "doxepine", "trimipramine", "nortriptyline", "maprotiline", "dosulepine"],
         fusion_strategy: "merge_display",  // fusionner en une alerte unique si mêmes meds détectés
         note: "EV_D01 (TCA + comorbidités) et EV_D02 (TCA en 1ère intention) couvrent des contextes différents. EV_FORTA_03/04 sont des cas particuliers (amitriptyline, doxépine) — à absorber dans l'alerte TCA générale avec mention spécifique."
     },

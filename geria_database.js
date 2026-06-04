@@ -1712,6 +1712,37 @@ const MASTER_DB = {
                     "source": "RCP Cellcept / Myfortic ; KDIGO Transplantation 2009"
           },
           {
+                    "dci": "Moclobemide",
+                    "princeps": "Moclamine",
+                    "classe": "Antidépresseur IMAO-A réversible (RIMA) — PIM sujet âgé (risque sérotoninergique, interactions multiples)",
+                    "poso_hab": "300-600 mg/j en 2-3 prises PO",
+                    "poso_ger": "Démarrer 150 mg/j, max 300 mg/j. ÉVITER en gériatrie : SFGG/SF3PA/SFPC 2026 (item 55), risque syndrome sérotoninergique avec ISRS/IRSN/tramadol, interactions sympathomimétiques.",
+                    "poso_ren": "DFG < 30 ml/min : réduire 50% (élimination rénale partielle après métabolisation hépatique). DFG sévère : prudence",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": { "qt": 1, "sero": 3, "saign": 0, "chute": 1, "sedat": 1, "hypoG": 0 },
+                    "bhe": "1.0",
+                    "albumine": "~50%",
+                    "qt_risque": "",
+                    "ddi_interact": "CI ABSOLUE : ISRS / IRSN / tramadol / triptans / linézolide / péthidine / dextrométhorphane / millepertuis (syndrome sérotoninergique). Sympathomimétiques (éphédrine, pseudoéphédrine — crise HTA). Délai wash-out 14 j avant introduction d'un sérotoninergique.",
+                    "ddi_interact_v2": [
+                              { "classe": "ISRS / IRSN — CI ABSOLUE (syndrome sérotoninergique)", "dcis": ["citalopram", "escitalopram", "fluoxetine", "fluvoxamine", "paroxetine", "sertraline", "venlafaxine", "duloxetine", "milnacipran", "vortioxetine"], "commentaire": "Risque sérotoninergique fatal. Wash-out 14 j (5 sem si fluoxétine).", "severite": "danger" },
+                              { "classe": "Tramadol / Péthidine / Tapentadol — CI", "dcis": ["tramadol", "pethidine", "tapentadol"], "commentaire": "Syndrome sérotoninergique. ÉVITER ABSOLUMENT.", "severite": "danger" },
+                              { "classe": "Linézolide — CI", "dcis": ["linezolide"], "commentaire": "Activité IMAO additive — syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "Triptans — CI", "dcis": ["sumatriptan", "zolmitriptan", "rizatriptan", "naratriptan", "almotriptan", "eletriptan", "frovatriptan"], "commentaire": "Risque sérotoninergique.", "severite": "danger" },
+                              { "classe": "Sympathomimétiques (crise HTA)", "dcis": ["ephedrine", "pseudoephedrine", "phenylephrine", "noradrenaline", "adrenaline"], "commentaire": "Crise hypertensive — éviter formes nasales/orales libres.", "severite": "danger" },
+                              { "classe": "Dextrométhorphane (antitussif)", "dcis": ["dextromethorphane"], "commentaire": "Syndrome sérotoninergique.", "severite": "danger" },
+                              { "classe": "Antidépresseurs tricycliques (sérotoninergique additif)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "dosulepine", "nortriptyline", "trimipramine"], "commentaire": "ÉVITER l'association.", "severite": "danger" }
+                    ],
+                    "suivi_initial": "TA | Bilan hépatique | NFS | Éducation interactions (sympathomimétiques OTC, antitussifs, tyramine alimentaire en hautes doses)",
+                    "suivi_periodique": "TA | Bilan hépatique annuel | Réévaluation indication et tolérance à 3-6 mois",
+                    "alerte_clinique": "PIM gériatrique (SFGG/SF3PA/SFPC 2026 item 55). RISQUE SÉROTONINERGIQUE +++ : CI absolue avec ISRS/IRSN/tramadol/triptans/linézolide. Crise HTA avec sympathomimétiques. Préférer sertraline, escitalopram ou mirtazapine en 1ère intention chez le sujet âgé.",
+                    "bio_cible": [],
+                    "atb_legere": "", "atb_moderee": "", "atb_severe": "", "atb_terminale": "",
+                    "notes_cliniques": "RIMA (IMAO-A réversible) — moins de restrictions alimentaires que les IMAO non-sélectifs, mais interactions médicamenteuses identiques. Indication antidépressive de niche, rarement prescrit en 1ère intention en France. À déprescrire chez le sujet âgé si alternative disponible.",
+                    "source": "RCP Moclamine ; SFGG/SF3PA/SFPC 2026 item 55 ; Beers 2023"
+          },
+          {
                     "dci": "Acebutolol",
                     "princeps": "Sectral",
                     "classe": "β-bloquant cardiosélectif β1 + ACTIVITÉ SYMPATHOMIMÉTIQUE INTRINSÈQUE (ASI) — bradycardie moindre — élimination rénale",

@@ -4001,7 +4001,7 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
         { terme: "amitriptyline", raison: "Tricyclique : ACB élevé, QT, chutes — non recommandé en 1ère intention", gravite: "DECONSEILLE" },
         { terme: "clomipramine", raison: "Tricyclique : ACB élevé, QT, sédation", gravite: "DECONSEILLE" },
         { terme: "imipramine", raison: "Tricyclique : ACB élevé, QT, sédation", gravite: "DECONSEILLE" },
-        { terme: "dosulpine", raison: "Tricyclique : ACB 3, QT, PIM absolu en gériatrie", gravite: "CONTRE-INDICATION" },
+        { terme: "dosulepine", raison: "Tricyclique : ACB 3, QT, PIM absolu en gériatrie", gravite: "CONTRE-INDICATION" },
         { terme: "benzodiazepine", raison: "Pas d'indication dans la dépression, risque de dépendance", gravite: "DECONSEILLE" }
     ],
     "PAT_033": [
