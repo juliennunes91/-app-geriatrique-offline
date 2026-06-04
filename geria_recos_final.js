@@ -647,7 +647,7 @@ const GERIA_RECOS_DB = {
             message: "Antipsychotique à effets anticholinergiques modérés à marqués (chlorpromazine, clozapine, flupenthixol, fluphénazine, lévomépromazine, olanzapine, pipotiazine, promazine, thioridazine) avec HBP symptomatique ou rétention urinaire : risque de rétention urinaire.",
             severite: "danger",
             condition: {
-                med_keys: ["chlorpromazine", "clozapine", "flupenthixol", "olanzapine", "levomepromazine", "pipotiazine", "promazine", "thioridazine"],
+                med_keys: ["chlorpromazine", "clozapine", "flupentixol", "olanzapine", "levomepromazine", "pipotiazine", "promazine", "thioridazine"],
                 contexte_clinique: "hbp"
             },
             alternatives: "Antipsychotique à faible charge anticholinergique (aripiprazole, quétiapine faible dose)"
@@ -2898,7 +2898,7 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 comorbs: ["PAT_025"],
-                med_absent: ["cholecalciferol", "calcifediol", "vitamine d", "colecalciferol"]
+                med_absent: ["cholecalciferol", "calcifediol", "vitamine d"]
             },
             alternatives: "Cholécalciférol 800-2000 UI/j ou calcifédiol"
         },
@@ -2926,7 +2926,7 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 contexte_clinique_any: ["fragilite", "institution", "confinement"],
-                med_absent: ["cholecalciferol", "calcifediol", "vitamine d", "colecalciferol"]
+                med_absent: ["cholecalciferol", "calcifediol", "vitamine d"]
             },
             alternatives: "Cholécalciférol 800-4000 UI/j (carence) ou 800-2000 UI/j (entretien systématique chez le fragile/institutionnalisé)"
         },
@@ -4094,7 +4094,7 @@ const RECOS_SUPPLEMENT = [
         titre: "Anti-vertigineux au long cours (bétahistine, méclizine)",
         message: "REMEDIES : Anti-vertigineux (bétahistine, méclizine, flunarizine, cinnarizine) au long cours — efficacité limitée au-delà de la crise, effets sédatifs.",
         severite: "warning",
-        condition: { med_keys: ["betahistine", "meclizine", "flunarizine", "cinnarizine"] }
+        condition: { med_keys: ["betahistine", "meclozine", "flunarizine", "cinnarizine"] }
     },
     {
         id: "SUP_REM_08", sources: ["REMEDIES", "EU7PIM"],

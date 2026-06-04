@@ -1862,7 +1862,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "condition": {
             "med_keys": [
                 "trihexyphenidyle",
-                "biperiden",
+                "biperidene",
                 "tropatepine"
             ]
         },
