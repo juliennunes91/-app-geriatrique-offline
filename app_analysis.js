@@ -645,17 +645,21 @@ let _lastAnalysisResult = null;
 function _computeAnalysisHash() {
     const parts = [
         getVal('patientAge'), getStr('patientSexe'), getVal('patientPoids'),
-        getVal('patientDFG'), getVal('patientK'), getVal('patientNa'),
-        getVal('bioAlbumSg'), getVal('bioCreat'), getVal('bioHb'),
-        getVal('bioPlaq'), getVal('bioGly'), getVal('bioHba1c'),
-        getVal('bioTsh'), getVal('bioBnp'), getVal('bioLdl'),
-        getVal('bioCrp'), getVal('bioInr'), getVal('bioQtc'),
-        getVal('scoreCFS'), getStr('cpManual'),
+        getVal('patientBmi'),
+        getStr('cpManual'),
         isChecked('patientFragile'),
         activeComorbs.slice().sort().join(','),
         activeMeds.map(m => m.dci + (m.precisions ? ':' + JSON.stringify(m.precisions) : '')).sort().join(','),
         window.suspendedMeds.map(m => m.dci).sort().join(',')
     ];
+    // TOUS les champs numériques lus par _buildPatientContext / les scores.
+    // ⚠️ Cette liste DOIT couvrir tout getVal() consommé par l'analyse, sinon une
+    // modification de ce seul champ renverrait un résultat MÉMOÏSÉ périmé (bug de
+    // sécurité clinique). Un test anti-dérive (tests.js) vérifie la couverture.
+    _HASH_NUMERIC_FIELDS.forEach(id => parts.push(getVal(id)));
+    // Sélecteurs d'unité (changent la valeur convertie B12/B9) + scoreCFS.
+    parts.push(getVal('scoreCFS'));
+    _HASH_SELECT_FIELDS.forEach(id => { const el = document.getElementById(id); parts.push(el ? el.value : ''); });
     // Inclure toutes les checkboxes cliniques
     ['chkStent','chkAlcool','chkAnorexie','chkTabac','chkAvc','chkTvp','chkSaignement',
      'chkBrady','chkHtaNonControlee','chkArret','chkScaAigu','chkLqts','chkDialyse',
@@ -672,9 +676,26 @@ function _computeAnalysisHash() {
      'chkDelirium','delHyper','delHypo','delMixte',
      'chkSommeil','chkInsomnie','chkTcsp','chkSjsr','chkSaos'
     ].forEach(id => parts.push(isChecked(id)));
-    ['bioTp','bioChlore','bioOsm','bioPrealb','bioAlbuminurie'].forEach(id => parts.push(getVal(id)));
     return parts.join('|');
 }
+
+// Liste canonique des champs numériques lus par l'analyse — partagée par la
+// mémoïsation (_computeAnalysisHash) ET _buildPatientContext (bioValues + scores +
+// contextes). Exposée sur window pour le test anti-dérive (tests.js).
+const _HASH_NUMERIC_FIELDS = [
+    'patientDFG', 'patientK', 'patientNa',
+    'bioCreat', 'bioCa', 'bioMg', 'bioUree', 'bioUric', 'bioHb', 'bioPlaq',
+    'bioGb', 'bioPnn', 'bioAsat', 'bioAlat', 'bioGgt', 'bioPal', 'bioBili',
+    'bioCpk', 'bioTsh', 'bioFer', 'bioB12', 'bioB9', 'bioVitD', 'bioCrp',
+    'bioGly', 'bioHba1c', 'bioLdl', 'bioTg', 'bioBnp', 'bioInr', 'bioQtc',
+    'bioPct', 'bioLithium', 'bioDdim', 'bioTropo', 'bioLipase', 'bioAlbumSg',
+    'bioLact', 'bioCst', 'bioPhos', 'bioTemp', 'bioT4', 'bioT3', 'bioTp',
+    'bioChlore', 'bioOsm', 'bioPrealb', 'bioAlbuminurie', 'bioAlb',
+    // Child-Pugh manuel (utilisé si cpManual=1)
+    'cpBili', 'cpAlb', 'cpTp', 'cpAscite', 'cpEnceph'
+];
+const _HASH_SELECT_FIELDS = ['bioB12Unit', 'bioB9Unit'];
+if (typeof window !== 'undefined') { window._HASH_NUMERIC_FIELDS = _HASH_NUMERIC_FIELDS; window._HASH_SELECT_FIELDS = _HASH_SELECT_FIELDS; }
 
 function analyserPrescription() {
     if (typeof MASTER_DB === 'undefined') return;

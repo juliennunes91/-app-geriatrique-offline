@@ -1430,6 +1430,45 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(hasAcbCluster, 'cluster ACB attendu sur 3 anticholinergiques : ' + JSON.stringify(sd.mechanismClusters.map(c=>c.label)));
     });
 
+    test('Tier 5 — anti-dérive mémoïsation : tout champ lu par l\'analyse est dans le hash', () => {
+        const fs = require('fs');
+        const s = fs.readFileSync(__dirname + '/app_analysis.js', 'utf8');
+        // Champs lus par _buildPatientContext (bioValues + contextes cliniques)
+        const ctxMatch = s.match(/function _buildPatientContext[\s\S]*?\n    return \{ bioValues, ctxClinique \}/);
+        assert.ok(ctxMatch, '_buildPatientContext doit exister');
+        const readFields = new Set([...ctxMatch[0].matchAll(/getVal\(['"](bio[A-Za-z0-9]+|patient[A-Za-z0-9]+|cp[A-Za-z]+)['"]\)/g)].map(m => m[1]));
+        // Champs couverts par le hash : référencés directement OU dans _HASH_NUMERIC_FIELDS
+        const hashMatch = s.match(/function _computeAnalysisHash[\s\S]*?\n\}/);
+        const numFieldsMatch = s.match(/const _HASH_NUMERIC_FIELDS = \[([\s\S]*?)\];/);
+        assert.ok(numFieldsMatch, '_HASH_NUMERIC_FIELDS doit exister');
+        const hashFields = new Set();
+        [...hashMatch[0].matchAll(/getVal\(['"]([A-Za-z0-9]+)['"]\)/g)].forEach(m => hashFields.add(m[1]));
+        [...numFieldsMatch[1].matchAll(/['"]([A-Za-z0-9]+)['"]/g)].forEach(m => hashFields.add(m[1]));
+        const missing = [...readFields].filter(f => !hashFields.has(f)).sort();
+        assert.strictEqual(missing.length, 0,
+            'Champs lus par l\'analyse mais ABSENTS du hash (résultat mémoïsé périmé possible) : ' + missing.join(', '));
+    });
+
+    test('Tier 5 — mémoïsation : changer un seul champ bio invalide le cache (hash sensible)', () => {
+        const { loadApp } = require('./oracle_harness');
+        const vm = require('vm');
+        const { sandbox, documentShim } = loadApp();
+        const setInputs = (obj) => {
+            for (const k in documentShim._inputs) delete documentShim._inputs[k];
+            documentShim._elCache.forEach(el => { el.value = ''; });
+            for (const [k, v] of Object.entries(obj)) documentShim._inputs[k] = { value: v };
+        };
+        const base = { patientAge: 80, patientSexe: 'F' };
+        setInputs(base);
+        const h0 = vm.runInContext('_computeAnalysisHash()', sandbox);
+        // Chaque champ bio "discret" (jadis absent du hash) doit changer le hash
+        ['bioMg', 'bioCa', 'bioLithium', 'bioBili', 'bioAsat', 'bioCpk', 'bioUric', 'bioFer'].forEach(field => {
+            setInputs(Object.assign({}, base, { [field]: '1.234' }));
+            const h = vm.runInContext('_computeAnalysisHash()', sandbox);
+            assert.notStrictEqual(h, h0, `Changer ${field} doit invalider le cache (sinon résultat périmé)`);
+        });
+    });
+
     test('Tier 5 — resetPatient purge la session persistée (confidentialité)', () => {
         const { analyzeCase, loadApp } = require('./oracle_harness');
         const vm = require('vm');
