@@ -36,7 +36,7 @@ const DRUG_CLASSES = {
     diuretique: {
         aliases: ['diuretique', 'diuretiques', 'diuretiqueshypokaliemiant', 'autreshypokaliemiant', 'hypokaliemiant'],
         classeMatch: ['diuretique'],
-        dcis: ['furosemide', 'bumetanide', 'hydrochlorothiazide', 'indapamide', 'spironolactone', 'altizide', 'chlortalidone', 'amiloride', 'triamterene', 'eplerenone', 'piretanide', 'torasemide', 'cicletanide']
+        dcis: ['furosemide', 'bumetanide', 'hydrochlorothiazide', 'indapamide', 'spironolactone', 'altizide', 'chlortalidone', 'amiloride', 'triamterene', 'eplerenone', 'piretanide', 'torasemide', 'cicletanine']
     },
     diuretique_anse: {
         aliases: ['diuretiquedelanse', 'diuretiquesdelanse', 'diuretiqueanse', 'diuretiquesanse'],
@@ -46,7 +46,7 @@ const DRUG_CLASSES = {
     diuretique_thiazidique: {
         aliases: ['diuretiquethiazidique', 'diuretiquesthiazidiquesetapparente'],
         classeMatch: ['thiazid'],
-        dcis: ['hydrochlorothiazide', 'indapamide', 'chlortalidone', 'cicletanide']
+        dcis: ['hydrochlorothiazide', 'indapamide', 'chlortalidone', 'cicletanine']
     },
     anticoagulant: {
         aliases: ['anticoag', 'anticoagulant', 'aod', 'avk', 'antivitaminesk', 'anticoagulantsoraux', 'autresanticoagulantsoraux', 'antiinfectieuxethemostase'],
@@ -91,7 +91,7 @@ const DRUG_CLASSES = {
     antidepresseur_tricyclique: {
         aliases: ['antidepresseurtricyclique', 'antidepresseursimipraminique', 'imipraminique'],
         classeMatch: ['tricyclique', 'imipraminique'],
-        dcis: ['amitriptyline', 'clomipramine', 'imipramine', 'doxepine', 'nortriptyline', 'trimipramine', 'dosulpine']
+        dcis: ['amitriptyline', 'clomipramine', 'imipramine', 'doxepine', 'nortriptyline', 'trimipramine', 'dosulepine']
     },
     opioid: {
         aliases: ['opioid', 'opioide', 'opiace', 'morphinique'],
@@ -151,7 +151,7 @@ const DRUG_CLASSES = {
     valproate_salts: {
         aliases: ['valproatesalts'],
         classeMatch: [],
-        dcis: ['valproate', 'valpromide', 'divalproate']
+        dcis: ['valproate', 'valpromide']
     },
     macrolide: {
         aliases: ['macrolide'],
@@ -261,7 +261,7 @@ const DRUG_CLASSES = {
     atropinique: {
         aliases: ['atropinique', 'medicamentsatropiniques', 'medicamentaeffetantimuscarinic'],
         classeMatch: ['anticholinergique', 'atropinique'],
-        dcis: ['trihexyphenidyle', 'biperidene', 'tropatepine', 'oxybutynine', 'solifenacine', 'fesoterodine', 'tolterodin', 'amitriptyline', 'clomipramine', 'imipramine', 'hydroxyzine', 'doxylamine', 'alimemazine', 'promethazine', 'chlorpromazine', 'cyamemazine', 'clozapine', 'quetiapine', 'scopolamine', 'atropine', 'ipratropium', 'tiotropium']
+        dcis: ['trihexyphenidyle', 'biperidene', 'tropatepine', 'oxybutynine', 'solifenacine', 'fesoterodine', 'amitriptyline', 'clomipramine', 'imipramine', 'hydroxyzine', 'doxylamine', 'alimemazine', 'promethazine', 'chlorpromazine', 'cyamemazine', 'clozapine', 'quetiapine', 'scopolamine', 'atropine', 'ipratropium', 'tiotropium']
     },
     imao: {
         aliases: ['imao', 'imaoreversible', 'imaoreversibleycomprisoxazolidinonesetbleudemethylene', 'imaoreversiblesinhibiteursdelamonoamineoxydas', 'imaobnonselecif'],
