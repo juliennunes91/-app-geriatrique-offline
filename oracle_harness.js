@@ -29,6 +29,19 @@ function makeFakeEl(id) {
         set innerHTML(v) { this._html = v; },
         get textContent() { return String(this._html).replace(/<[^>]+>/g, ''); },
         set textContent(v) { this._html = v; },
+        // innerText : sémantiquement plus proche du visible (avec retours à la ligne sur
+        // <br>/<p>/<div>/<li>). Suffisant pour les tests headless qui consomment du texte.
+        get innerText() {
+            return String(this._html)
+                .replace(/<br\s*\/?>/gi, '\n')
+                .replace(/<\/(p|div|li|h[1-6]|tr|td|section|article)>/gi, '\n')
+                .replace(/<[^>]+>/g, '')
+                .replace(/&nbsp;/g, ' ')
+                .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim();
+        },
+        set innerText(v) { this._html = String(v).replace(/\n/g, '<br>'); },
         insertAdjacentHTML(pos, html) { this._html += html; }
     };
     return el;

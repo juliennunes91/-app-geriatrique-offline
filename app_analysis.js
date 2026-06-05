@@ -2648,8 +2648,46 @@ function analyserPrescription() {
             interactCritical: null,
             bioIssues: null,
             toAdd: null,
-            toRemoveFiltered: null
+            toRemoveFiltered: null,
+            aberrantInputs: []     // [{ field, value, range }] — saisies hors plages plausibles
         };
+
+        // [Z] Détection de saisies aberrantes (typo unité, inversion décimale, ordre
+        // de grandeur). Bornes physiologiquement plausibles incluant les extrêmes
+        // cliniques (pas les bornes "normales"). Non bloquant — flag visuel.
+        {
+            const ranges = [
+                { field: 'Âge',      val: patientAge,            min: 18,   max: 115, unit: 'ans' },
+                { field: 'Poids',    val: parseFloat(getVal && getVal('patientPoids')) || 0, min: 25, max: 300, unit: 'kg', skipZero: true },
+                { code: 'BIO_004',   field: 'DFG',       min: 1,    max: 200,  unit: 'ml/min' },
+                { code: 'BIO_001',   field: 'K+',        min: 1.5,  max: 8.5,  unit: 'mmol/L' },
+                { code: 'BIO_002',   field: 'Na+',       min: 105,  max: 180,  unit: 'mmol/L' },
+                { code: 'BIO_003',   field: 'Créat',     min: 10,   max: 3000, unit: 'µmol/L' },
+                { code: 'BIO_009',   field: 'Hb',        min: 3,    max: 22,   unit: 'g/dL' },
+                { code: 'BIO_010',   field: 'Plaquettes',min: 1,    max: 2000, unit: 'G/L' },
+                { code: 'BIO_026',   field: 'HbA1c',     min: 3,    max: 20,   unit: '%' },
+                { code: 'BIO_030',   field: 'INR',       min: 0.5,  max: 15,   unit: '' },
+                { code: 'BIO_031',   field: 'QTc',       min: 250,  max: 700,  unit: 'ms' },
+                { code: 'BIO_019',   field: 'TSH',       min: 0.001,max: 200,  unit: 'mUI/L' },
+                { code: 'BIO_025',   field: 'Glycémie',  min: 0.5,  max: 50,   unit: 'mmol/L' },
+                { code: 'BIO_017',   field: 'Bili',      min: 1,    max: 1000, unit: 'µmol/L' }
+            ];
+            ranges.forEach(r => {
+                let v = r.code ? bioValues[r.code] : r.val;
+                if (v == null || v === '' || isNaN(v)) return;
+                const num = parseFloat(v);
+                if (!isFinite(num)) return;
+                if (r.skipZero && num === 0) return;
+                if (num === 0 && r.code) return;  // 0 = non saisi pour les bio
+                if (num < r.min || num > r.max) {
+                    synthData.aberrantInputs.push({
+                        field: r.field,
+                        value: num + (r.unit ? ' ' + r.unit : ''),
+                        range: r.min + '-' + r.max + (r.unit ? ' ' + r.unit : '')
+                    });
+                }
+            });
+        }
 
         // [A] EN-TÊTE NARRATIF PATIENT
         const synthBuildHeader = () => {
@@ -2983,7 +3021,20 @@ function analyserPrescription() {
                 title="Voir l'onglet détaillé">→ ${label}</a>`;
         };
 
-        const headerHtml = synthBuildBanner() + synthBuildHeader() + synthBuildRiskProfile() + synthBuildBioSummary() + synthBuildStoppedMeds() + synthBuildActiveRx() + synthBuildTopActions();
+        // [Y] Banner saisies aberrantes (rendu au-dessus du bandeau de gravité)
+        const synthBuildAberrantBanner = () => {
+            if (!synthData.aberrantInputs.length) return '';
+            const items = synthData.aberrantInputs.map(a =>
+                `<span class="badge bg-warning text-dark me-1" title="Plage plausible : ${escapeHtml(a.range)}">${escapeHtml(a.field)} = ${escapeHtml(a.value)}</span>`
+            ).join('');
+            return `<div class="alert alert-warning py-2 px-3 mb-2 shadow-sm" style="border-left:4px solid #fd7e14;">
+                <strong>⚠️ Saisies hors plages plausibles (${synthData.aberrantInputs.length})</strong>
+                <span class="small ms-2 text-muted">— vérifier l'unité / la valeur saisie</span>
+                <div class="mt-1">${items}</div>
+            </div>`;
+        };
+
+        const headerHtml = synthBuildAberrantBanner() + synthBuildBanner() + synthBuildHeader() + synthBuildRiskProfile() + synthBuildBioSummary() + synthBuildStoppedMeds() + synthBuildActiveRx() + synthBuildTopActions();
 
         // Bloc Mécanismes (entre TOP et sections détaillées)
         let mechanismHtml = '';

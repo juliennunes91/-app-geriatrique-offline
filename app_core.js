@@ -196,6 +196,13 @@ function buildSyntheseText() {
     lines.push(`Patient : ${nom ? nom + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}`);
     lines.push('');
 
+    // Bandeau saisies aberrantes (synthData.aberrantInputs)
+    if (sd && sd.aberrantInputs && sd.aberrantInputs.length > 0) {
+        lines.push(`⚠️ SAISIES HORS PLAGES PLAUSIBLES (${sd.aberrantInputs.length}) — vérifier`);
+        sd.aberrantInputs.forEach(a => lines.push(`  • ${a.field} = ${a.value}   (plausible : ${a.range})`));
+        lines.push('');
+    }
+
     // Bandeau de gravité (synthData.banner)
     if (sd && sd.banner && (sd.banner.nbDanger + sd.banner.nbWarning + sd.banner.nbOmissions) > 0) {
         const b = sd.banner;
@@ -341,6 +348,17 @@ function buildPdfContent() {
         <span style="float:right;font-size:9px;color:#888;">${new Date().toLocaleDateString('fr-FR')}</span>
         <br><span style="font-size:10px;"><strong>${nom ? escapeHtml(nom) + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}</strong>${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}</span>
     </div>`;
+
+    // Bandeau saisies aberrantes (synthData.aberrantInputs) — en TÊTE pour visibilité
+    if (sd && sd.aberrantInputs && sd.aberrantInputs.length > 0) {
+        const items = sd.aberrantInputs.map(a =>
+            `<span style="display:inline-block;background:#ffc107;color:#000;border-radius:2px;padding:1px 5px;margin:1px;font-size:8px;font-weight:bold;">${escapeHtml(a.field)} = ${escapeHtml(a.value)}</span>`
+        ).join('');
+        html += `<div class="pdf-block" style="${blockStyle}background:#fff3cd;border-left:3px solid #fd7e14;color:#664d03;border-radius:3px;padding:5px 8px;font-size:9px;">
+            <strong>⚠️ Saisies hors plages plausibles (${sd.aberrantInputs.length})</strong> <span style="font-size:8px;">— vérifier l'unité / la valeur</span>
+            <div style="margin-top:2px;">${items}</div>
+        </div>`;
+    }
 
     // Bandeau gravité (synthData.banner)
     if (sd && sd.banner && (sd.banner.nbDanger + sd.banner.nbWarning + sd.banner.nbOmissions) > 0) {
