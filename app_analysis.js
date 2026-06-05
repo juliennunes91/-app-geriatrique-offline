@@ -2638,6 +2638,19 @@ function analyserPrescription() {
         // ── NOUVEAUTÉS Commit 1 : EN-TÊTE + PROFIL + BIO + TOP ACTIONS + BANDEAU
         // =====================================================
 
+        // Données structurées partagées écran ↔ PDF (single source of truth).
+        // Alimentées par les synthBuild* avant retour HTML, exposées via _registry.synthData.
+        const synthData = {
+            riskChips: [],         // [{ label, level, title }]
+            topActions: [],        // [{ icon, txt, level, kind }]
+            banner: null,          // { level, icon, msg, nbDanger, nbWarning, nbOmissions }
+            mechanismClusters: null,  // lien vers var existante (rempli plus bas)
+            interactCritical: null,
+            bioIssues: null,
+            toAdd: null,
+            toRemoveFiltered: null
+        };
+
         // [A] EN-TÊTE NARRATIF PATIENT
         const synthBuildHeader = () => {
             const sexeLabel = sexe === 'F' ? 'Mme' : (sexe === 'M' ? 'M.' : 'Patient(e)');
@@ -2666,7 +2679,8 @@ function analyserPrescription() {
 
         // [B] PROFIL DE RISQUE (chips de scores composites)
         const synthBuildRiskProfile = () => {
-            const chips = [];
+            const chipsData = [];   // [{label, level, title}]
+            const pushChip = (label, level, title) => chipsData.push({ label, level, title: title || '' });
             // CHA₂DS₂-VA (recalcul léger, ESC 2024 sans sexe)
             let cha = 0;
             if (patientAge >= 75) cha += 2; else if (patientAge >= 65) cha += 1;
@@ -2675,12 +2689,10 @@ function analyserPrescription() {
             if (activeComorbs.some(c => ['PAT_016', 'PAT_016a', 'PAT_016b'].includes(c))) cha += 1;
             if (activeComorbs.includes('PAT_008')) cha += 2;
             if (activeComorbs.some(c => ['PAT_004', 'PAT_007'].includes(c))) cha += 1;
-            // Afficher seulement si FA
             if (activeComorbs.includes('PAT_006')) {
-                const col = cha >= 2 ? 'danger' : (cha >= 1 ? 'warning' : 'success');
-                chips.push(`<span class="badge bg-${col} me-1" title="ESC 2024 — anticoag si ≥2">CHA₂DS₂-VA ${cha}</span>`);
+                pushChip(`CHA₂DS₂-VA ${cha}`, cha >= 2 ? 'danger' : (cha >= 1 ? 'warning' : 'success'), 'ESC 2024 — anticoag si ≥2');
             }
-            // HAS-BLED (si anticoag présent ou à discuter)
+            // HAS-BLED
             let hb = 0;
             if (bioValues && bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 50) hb += 1;
             if (activeComorbs.includes('PAT_008')) hb += 1;
@@ -2689,29 +2701,26 @@ function analyserPrescription() {
             const hasAAS = (activeMeds || []).some(m => /aspirine|acetylsali|clopidogrel|prasug|ticagre/i.test(m.dci));
             if (hasAINS || hasAAS) hb += 1;
             if (activeComorbs.includes('PAT_006')) {
-                const col = hb >= 3 ? 'danger' : (hb >= 1 ? 'warning' : 'success');
-                chips.push(`<span class="badge bg-${col} me-1" title="Pisters 2010 — risque hémorragique sous anticoag">HAS-BLED ${hb}</span>`);
+                pushChip(`HAS-BLED ${hb}`, hb >= 3 ? 'danger' : (hb >= 1 ? 'warning' : 'success'), 'Pisters 2010 — risque hémorragique sous anticoag');
             }
-            // ACB (charge anticholinergique)
+            // ACB
             if (scoreACB_global > 0) {
-                const col = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
                 const lbl = scoreACB_global >= 3 ? 'élevée' : 'modérée';
-                chips.push(`<span class="badge bg-${col} me-1" title="Boustani 2008 — risque cognitif/chutes">ACB ${scoreACB_global} (${lbl})</span>`);
+                pushChip(`ACB ${scoreACB_global} (${lbl})`, scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success'), 'Boustani 2008 — risque cognitif/chutes');
             }
-            // QT (Risk Etabli)
+            // QT
             if (typeof maxQTLevel_global !== 'undefined' && maxQTLevel_global > 0) {
                 const lvl = maxQTLevel_global >= 3 ? 'Établi (KR)' : maxQTLevel_global >= 2 ? 'Possible' : 'Conditionnel';
-                const col = maxQTLevel_global >= 3 ? 'danger' : 'warning';
-                chips.push(`<span class="badge bg-${col} me-1" title="CredibleMeds">QT ${lvl}</span>`);
+                pushChip(`QT ${lvl}`, maxQTLevel_global >= 3 ? 'danger' : 'warning', 'CredibleMeds');
             }
-            // Polypharmacie chiffrée
+            // Polypharmacie
             const nbMeds = (activeMeds || []).length;
-            if (nbMeds >= 10) {
-                chips.push(`<span class="badge bg-danger me-1" title="≥10 médicaments">Polypharmacie majeure ${nbMeds}</span>`);
-            } else if (nbMeds >= 5) {
-                chips.push(`<span class="badge bg-warning text-dark me-1">Polypharmacie ${nbMeds}</span>`);
-            }
-            if (!chips.length) return '';
+            if (nbMeds >= 10) pushChip(`Polypharmacie majeure ${nbMeds}`, 'danger', '≥10 médicaments');
+            else if (nbMeds >= 5) pushChip(`Polypharmacie ${nbMeds}`, 'warning', '');
+            // Expose pour le PDF
+            synthData.riskChips = chipsData;
+            if (!chipsData.length) return '';
+            const chips = chipsData.map(c => `<span class="badge bg-${c.level === 'warning' ? 'warning text-dark' : c.level} me-1"${c.title ? ` title="${escapeHtml(c.title)}"` : ''}>${c.label}</span>`);
             return `<div class="card mb-2 shadow-sm">
                 <div class="card-body py-2 px-3">
                     <strong class="small">🎯 Profil de risque : </strong>
@@ -2790,6 +2799,8 @@ function analyserPrescription() {
                     icon: '➕', txt: (a.titre || '').slice(0, 130), level: 'warning', kind: 'OMISSION'
                 }));
             const top = actions.slice(0, 5);
+            // Expose pour le PDF
+            synthData.topActions = top;
             if (!top.length) return '';
             const items = top.map((a, i) => `<li class="mb-1">
                 ${a.icon} <span class="badge bg-${a.level} text-white" style="font-size:0.6em;">${a.kind}</span>
@@ -2818,6 +2829,8 @@ function analyserPrescription() {
             else if (nbDanger >= 1) { level = 'danger'; icon = '🟠'; msg = 'Dossier avec alertes critiques'; }
             else if (nbWarning >= 3 || nbOmissions >= 3) { level = 'warning'; icon = '🟡'; msg = 'Dossier nécessitant vigilance'; }
             else if (nbWarning >= 1 || nbOmissions >= 1) { level = 'info'; icon = '🔵'; msg = 'Actions de réévaluation suggérées'; }
+            // Expose pour le PDF
+            synthData.banner = { level, icon, msg, nbDanger, nbWarning, nbOmissions };
             const counts = [];
             if (nbDanger > 0) counts.push(`<strong>${nbDanger} danger</strong>`);
             if (nbWarning > 0) counts.push(`${nbWarning} vigilance`);
@@ -3069,6 +3082,15 @@ function analyserPrescription() {
 
         if (!synthHtml) synthHtml = '<div class="alert alert-light">Lancez l\'analyse pour voir la synthèse.</div>';
         addAlert('alertes-synthese', synthHtml);
+
+        // Lier les structures partagées écran ↔ PDF (banner / topActions / riskChips
+        // déjà alimentés par les synthBuild*).
+        synthData.mechanismClusters = mechanismClusters;
+        synthData.interactCritical = interactCritical;
+        synthData.bioIssues = bioIssues;
+        synthData.toAdd = toAdd;
+        synthData.toRemoveFiltered = toRemoveFiltered;
+        _registry.synthData = synthData;
     }
 
     // Exposer le registre pour PDF et synthèse texte

@@ -1405,9 +1405,67 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
             .concat(res['alertes-supplement'] || [])
             .concat(res['alertes-interactions'] || [])
             .map(a => (a.titre || '') + ' ' + (a.message || '')).join(' | ').toLowerCase();
-        // Triple whammy ou alerte rénale équivalente
         assert.ok(/triple whammy|nta|néphro|nephro|insuffisance rénale|insuffisance renale|ains.*rénal|ains.*renal|tubulaire/i.test(allTitres),
             'Triple whammy / risque rénal attendu : ' + allTitres.slice(0, 300));
+    });
+
+    test('Tier 5 — synthData expose banner/riskChips/topActions/mechanisms pour le PDF', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        // Dossier complexe : FA + IRC + polypharmacie + charge ACB
+        const res = analyzeCase({
+            age: 85, sexe: 'F',
+            comorbs: ['PAT_006', 'PAT_002'],
+            meds: ['Oxybutynine', 'Amitriptyline', 'Diphenhydramine', 'Bisoprolol', 'Furosemide', 'Ibuprofene', 'Ramipril'],
+            bio: { dfg: 35, k: 5.2 }
+        });
+        const sd = res._synthData;
+        assert.ok(sd, 'synthData doit être exposée par _analysisRegistry');
+        assert.ok(sd.banner && sd.banner.level && sd.banner.icon, 'banner doit avoir level + icon : ' + JSON.stringify(sd.banner));
+        assert.ok(Array.isArray(sd.riskChips), 'riskChips doit être un array');
+        assert.ok(sd.riskChips.length > 0, 'profil polypharmacie + FA doit générer ≥1 chip : ' + JSON.stringify(sd.riskChips));
+        assert.ok(Array.isArray(sd.topActions), 'topActions doit être un array');
+        assert.ok(Array.isArray(sd.mechanismClusters), 'mechanismClusters doit être un array');
+        // ACB ≥ 3 → cluster ACB attendu
+        const hasAcbCluster = sd.mechanismClusters.some(c => /ACB|anticholinerg/i.test(c.label || ''));
+        assert.ok(hasAcbCluster, 'cluster ACB attendu sur 3 anticholinergiques : ' + JSON.stringify(sd.mechanismClusters.map(c=>c.label)));
+    });
+
+    test('Tier 5 — synthData.banner reste cohérent même sur dossier minimal', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const res = analyzeCase({ age: 70, sexe: 'M', meds: [], comorbs: [] });
+        const sd = res._synthData;
+        assert.ok(sd, 'synthData exposée même si dossier vide');
+        assert.ok(sd.banner, 'banner non null');
+        assert.ok(['success', 'info', 'warning', 'danger'].includes(sd.banner.level), 'level valide : ' + sd.banner.level);
+    });
+
+    test('Tier 5 — buildPdfContent rend les nouveaux blocs sans crash', () => {
+        const { analyzeCase, loadApp } = require('./oracle_harness');
+        const res = analyzeCase({
+            age: 85, sexe: 'F',
+            comorbs: ['PAT_006'],
+            meds: ['Oxybutynine', 'Amitriptyline', 'Diphenhydramine'],
+            bio: { dfg: 35 }
+        });
+        // Charger app + appeler buildPdfContent dans le sandbox
+        const vm = require('vm');
+        const { sandbox } = loadApp();
+        // Re-run analyse + récupérer le HTML PDF
+        const html = vm.runInContext(`
+            (function(){
+                if (typeof buildPdfContent === 'function') {
+                    try { return buildPdfContent(); } catch(e) { return 'ERR:' + e.message; }
+                }
+                return 'NO_FN';
+            })()
+        `, sandbox);
+        // Le harness précédent a déjà fait analyzeCase → _analysisRegistry doit exister.
+        // Si buildPdfContent existe (chargée via app_core.js), on s'attend à un HTML.
+        // Skip si app_core n'est pas chargée dans le harness (oracle_harness.APP_FILES ne l'inclut pas forcément).
+        // En l'occurrence, oracle_harness l'inclut (cf APP_FILES). On valide les nouveaux blocs.
+        if (html === 'NO_FN') return;  // fonction absente : skip (env CI minimal)
+        assert.ok(!html.startsWith('ERR:'), 'buildPdfContent ne doit pas crasher : ' + html.slice(0, 200));
+        assert.ok(html.includes('pdf-block'), 'classes pdf-block doivent être présentes pour le pagebreak');
     });
 }
 

@@ -270,23 +270,98 @@ function buildSyntheseText() {
  */
 function buildPdfContent() {
     const reg = window._analysisRegistry;
+    const sd = (reg && reg.synthData) ? reg.synthData : null;
     const nom = document.getElementById('patientNom')?.value || '';
     const age = document.getElementById('patientAge')?.value || '—';
     const sexe = document.getElementById('patientSexe')?.value || '';
     const poids = document.getElementById('patientPoids')?.value || '';
     const dfg = document.getElementById('patientDFG')?.value || '';
 
+    // Pagebreak : autoriser le découpage multi-page, mais refuser la coupure À
+    // L'INTÉRIEUR d'un bloc (.pdf-block). html2pdf v0.10+ respecte
+    // page-break-inside:avoid. Évite les troncatures sur dossiers lourds.
+    const blockStyle = 'page-break-inside:avoid;break-inside:avoid;margin-bottom:6px;';
+
     let html = `<div style="font-family:Arial,sans-serif;font-size:10px;color:#222;line-height:1.4;padding:10px;">`;
 
     // En-tête
-    html += `<div style="border-bottom:2px solid #0d6efd;padding-bottom:4px;margin-bottom:8px;">
+    html += `<div class="pdf-block" style="${blockStyle}border-bottom:2px solid #0d6efd;padding-bottom:4px;">
         <strong style="font-size:14px;color:#0d6efd;">GeriaAssist — Synthèse Pharmaco-Clinique</strong>
         <span style="float:right;font-size:9px;color:#888;">${new Date().toLocaleDateString('fr-FR')}</span>
         <br><span style="font-size:10px;"><strong>${nom ? escapeHtml(nom) + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}</strong>${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}</span>
     </div>`;
 
+    // Bandeau gravité (synthData.banner)
+    if (sd && sd.banner && (sd.banner.nbDanger + sd.banner.nbWarning + sd.banner.nbOmissions) > 0) {
+        const b = sd.banner;
+        const bg = b.level === 'danger' ? '#f8d7da' : b.level === 'warning' ? '#fff3cd' : b.level === 'info' ? '#cff4fc' : '#d1e7dd';
+        const fg = b.level === 'danger' ? '#58151c' : b.level === 'warning' ? '#664d03' : b.level === 'info' ? '#055160' : '#0f5132';
+        const counts = [];
+        if (b.nbDanger > 0) counts.push(`<strong>${b.nbDanger} danger</strong>`);
+        if (b.nbWarning > 0) counts.push(`${b.nbWarning} vigilance`);
+        if (b.nbOmissions > 0) counts.push(`${b.nbOmissions} omission${b.nbOmissions > 1 ? 's' : ''}`);
+        html += `<div class="pdf-block" style="${blockStyle}background:${bg};color:${fg};border-radius:4px;padding:5px 8px;font-size:10px;">
+            ${b.icon} <strong>${escapeHtml(b.msg)}</strong>${counts.length ? ' — <span style="font-size:9px;">' + counts.join(' · ') + '</span>' : ''}
+        </div>`;
+    }
+
+    // Profil de risque (synthData.riskChips)
+    if (sd && sd.riskChips && sd.riskChips.length > 0) {
+        const chips = sd.riskChips.map(c => {
+            const cbg = c.level === 'danger' ? '#dc3545' : c.level === 'warning' ? '#ffc107' : '#198754';
+            const cfg = c.level === 'warning' ? '#000' : '#fff';
+            return `<span style="display:inline-block;background:${cbg};color:${cfg};border-radius:3px;padding:1px 5px;margin:1px;font-size:8px;font-weight:bold;">${escapeHtml(c.label)}</span>`;
+        }).join('');
+        html += `<div class="pdf-block" style="${blockStyle}border:1px solid #ccc;border-radius:4px;padding:4px;">
+            <strong style="font-size:9px;color:#0d6efd;">Profil de risque</strong><br>${chips}
+        </div>`;
+    }
+
+    // Top actions prioritaires (synthData.topActions)
+    if (sd && sd.topActions && sd.topActions.length > 0) {
+        const items = sd.topActions.map(a => {
+            const lbg = a.level === 'danger' ? '#dc3545' : a.level === 'warning' ? '#ffc107' : '#0dcaf0';
+            const lfg = a.level === 'warning' ? '#000' : '#fff';
+            return `<li style="margin:2px 0;font-size:9px;">${a.icon} <span style="background:${lbg};color:${lfg};border-radius:2px;padding:0 4px;font-size:7px;font-weight:bold;">${escapeHtml(a.kind)}</span> ${escapeHtml(a.txt)}</li>`;
+        }).join('');
+        html += `<div class="pdf-block" style="${blockStyle}border-left:3px solid #dc3545;background:#fff8e1;padding:4px 6px;">
+            <strong style="font-size:10px;color:#664d03;">⚡ Top ${sd.topActions.length} actions prioritaires</strong>
+            <ol style="margin:2px 0 0 16px;padding:0;">${items}</ol>
+        </div>`;
+    }
+
+    // Mécanismes récurrents (synthData.mechanismClusters) — compact
+    if (sd && sd.mechanismClusters && sd.mechanismClusters.length > 0) {
+        const cls = sd.mechanismClusters.map(cl => {
+            const c = cl.severity === 'danger' ? '#dc3545' : '#ffc107';
+            const meds = (cl.meds || []).slice(0, 6).map(d => `<span style="display:inline-block;background:#f4f4f4;border:1px solid #ddd;border-radius:2px;padding:0 3px;margin:1px;font-size:7px;">${escapeHtml(d)}</span>`).join('');
+            return `<div style="border-left:3px solid ${c};padding:2px 5px;margin:2px 0;">
+                <strong style="font-size:9px;">${escapeHtml(cl.label)}</strong>
+                <div style="font-size:8px;color:#555;">${escapeHtml(cl.summary || '')}</div>
+                ${meds ? '<div style="margin-top:1px;">' + meds + '</div>' : ''}
+                ${cl.advice ? `<em style="font-size:7.5px;color:#666;">${escapeHtml(cl.advice)}</em>` : ''}
+            </div>`;
+        }).join('');
+        html += `<div class="pdf-block" style="${blockStyle}border:1px solid #9eeaf9;border-radius:4px;padding:4px;background:#f0fcff;">
+            <strong style="font-size:10px;color:#055160;">🔍 Mécanismes récurrents (${sd.mechanismClusters.length})</strong>
+            ${cls}
+        </div>`;
+    }
+
+    // Interactions DANGER (synthData.interactCritical) — top 5
+    if (sd && sd.interactCritical && sd.interactCritical.length > 0) {
+        const its = sd.interactCritical.slice(0, 5).map(it => {
+            const txt = (it.text || '').replace(/<[^>]+>/g, '').slice(0, 200);
+            return `<li style="font-size:9px;margin:1px 0;">${escapeHtml(txt)}</li>`;
+        }).join('');
+        html += `<div class="pdf-block" style="${blockStyle}border-left:3px solid #dc3545;padding:3px 6px;background:#fff;">
+            <strong style="font-size:10px;color:#dc3545;">⚠️ Interactions critiques (${Math.min(5, sd.interactCritical.length)}${sd.interactCritical.length > 5 ? ' / ' + sd.interactCritical.length : ''})</strong>
+            <ul style="margin:2px 0 0 14px;padding:0;">${its}</ul>
+        </div>`;
+    }
+
     // 2 colonnes : Comorbidités + Médicaments
-    html += `<div style="display:flex;gap:8px;margin-bottom:6px;">`;
+    html += `<div class="pdf-block" style="${blockStyle}display:flex;gap:8px;">`;
 
     // Comorbidités
     html += `<div style="flex:1;border:1px solid #ccc;border-radius:4px;padding:4px;">
@@ -316,7 +391,7 @@ function buildPdfContent() {
     // Scores — version compacte
     const divScores = document.getElementById('alertes-scores');
     if (divScores && divScores.querySelectorAll('.alert').length > 0) {
-        html += `<div style="border:1px solid #0dcaf0;border-radius:4px;padding:4px;margin-bottom:6px;">
+        html += `<div class="pdf-block" style="${blockStyle}border:1px solid #0dcaf0;border-radius:4px;padding:4px;">
             <strong style="font-size:9px;color:#0dcaf0;">Scores cliniques</strong><br>`;
         divScores.querySelectorAll('.alert').forEach(a => {
             const strong = a.querySelector('strong');
@@ -346,7 +421,7 @@ function buildPdfContent() {
         const alerts = el.querySelectorAll('.alert:not(.alert-light)');
         if (alerts.length === 0) return;
 
-        html += `<div style="border-left:3px solid ${s.color};padding-left:6px;margin-bottom:6px;">
+        html += `<div class="pdf-block" style="${blockStyle}border-left:3px solid ${s.color};padding-left:6px;">
             <strong style="font-size:10px;color:${s.color};">${s.titre} (${alerts.length})</strong>`;
         alerts.forEach(a => {
             const strong = a.querySelector('strong');
@@ -373,7 +448,7 @@ function buildPdfContent() {
             byFreq[freqScore].push(bioName);
         }
         const keys = Object.keys(byFreq).map(Number).sort((a, b) => a - b);
-        html += `<div style="border-left:3px solid #6c757d;padding-left:6px;margin-bottom:6px;">
+        html += `<div class="pdf-block" style="${blockStyle}border-left:3px solid #6c757d;padding-left:6px;">
             <strong style="font-size:10px;color:#6c757d;">Bilans à prévoir sur l'année</strong>`;
         keys.forEach(score => {
             const lbl = freqLabels[score] || 'Variable';
@@ -401,12 +476,14 @@ window.exporterPDF = function() {
         content.innerHTML = buildPdfContent();
 
         const opt = {
-            margin: [5, 5, 5, 5],
+            margin: [8, 6, 10, 6],
             filename: 'GeriaAssist_' + (document.getElementById('patientNom')?.value || 'Patient').replace(/[^a-zA-Z0-9àâäéèêëïîôùûüÿçÀÂÄÉÈÊËÏÎÔÙÛÜŸÇ_ -]/g, '') + '_' + new Date().toISOString().slice(0, 10) + '.pdf',
             image: { type: 'jpeg', quality: 0.95 },
             html2canvas: { scale: 2, useCORS: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: ['avoid-all'] }
+            // Autorise le multi-page (mode 'css' respecte page-break-inside:avoid
+            // sur .pdf-block) + fallback legacy. Plus de troncature silencieuse.
+            pagebreak: { mode: ['css', 'legacy'], avoid: '.pdf-block' }
         };
 
         html2pdf().set(opt).from(content).save().catch(err => {

@@ -208,6 +208,11 @@ function analyzeCase(caseObj) {
     });
     result._notFoundMeds = notFound;
     result._rawScores = (documentShim.getElementById('alertes-scores')._html || '');
+    // Expose synthData (structures partagées écran ↔ PDF) pour les tests
+    try {
+        const synthJson = vm.runInContext('JSON.stringify((window._analysisRegistry && window._analysisRegistry.synthData) || null, (k,v)=> (typeof v === "function" ? undefined : v))', sandbox);
+        result._synthData = JSON.parse(synthJson);
+    } catch (e) { result._synthData = null; }
     return result;
 }
 
