@@ -3987,7 +3987,8 @@ const RECOS_SUPPLEMENT = [
         titre: "Méthotrexate sans supplémentation en acide folique",
         message: "PIM-Check : Méthotrexate sans acide folique co-prescrit — risque de toxicité hématologique et mucite.",
         severite: "danger",
-        condition: { med_keys: ["methotrexate"], med_absent: ["acide folique", "folinate"] }
+        condition: { med_keys: ["methotrexate"], med_absent: ["acide folique", "folinate"] },
+        alternatives: "Acide folique 5 mg/sem (24-48 h après le MTX) ou acide folinique 5-10 mg/sem si MTX ≥ 15 mg/sem (BSR/NICE 2017)."
     },
     {
         id: "SUP_PIMC_05", sources: ["PIM_CHECK"],
@@ -4022,7 +4023,8 @@ const RECOS_SUPPLEMENT = [
         titre: "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
         message: "PIM-Check : Association anticoagulant + antiagrégant — risque hémorragique majeur. Justification de la double thérapie nécessaire (stent récent ?).",
         severite: "danger",
-        condition: { med_keys: ["anticoag", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "acenocoumarol", "warfarine", "fluindione"], med_keys_2: ["antiagreg", "acide acetylsalicylique", "clopidogrel"] }
+        condition: { med_keys: ["anticoag", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "acenocoumarol", "warfarine", "fluindione"], med_keys_2: ["antiagreg", "acide acetylsalicylique", "clopidogrel"] },
+        alternatives: "Réévaluer l'indication : si SCA < 12 mois ou stent récent < 6-12 mois → maintenir (ESC 2024). Sinon, arrêter l'antiagrégant (priorité anticoag en FA) ou l'anticoag selon le bilan bénéfice/risque hémorragique."
     },
     {
         id: "SUP_PIMC_10", sources: ["PIM_CHECK"],
@@ -4036,7 +4038,8 @@ const RECOS_SUPPLEMENT = [
         titre: "Clozapine sans NFS hebdomadaire",
         message: "PIM-Check : Clozapine — NFS obligatoire (hebdomadaire pendant 18 semaines, puis mensuelle) pour dépistage agranulocytose.",
         severite: "danger",
-        condition: { med_keys: ["clozapine"] }
+        condition: { med_keys: ["clozapine"] },
+        alternatives: "Mettre en place NFS hebdomadaire pendant 18 semaines puis mensuelle (ANSM, RCP Leponex). Suspendre la clozapine si PNN < 1,5 G/L ou leucocytes < 3 G/L."
     },
     {
         id: "SUP_PIMC_12", sources: ["PIM_CHECK"],
@@ -4108,7 +4111,8 @@ const RECOS_SUPPLEMENT = [
         titre: "Double anticoagulation non justifiée",
         message: "REMEDIES : Deux anticoagulants simultanés (ex: AOD + HBPM) sans justification claire (relais, ponctuel post-opératoire).",
         severite: "danger",
-        condition: { type: "manual_review" }
+        condition: { type: "manual_review" },
+        alternatives: "Choisir un seul anticoagulant. Si relais nécessaire (ex. AVK → AOD), pas de chevauchement au-delà de 24-48 h selon le profil pharmacocinétique."
     },
     {
         id: "SUP_REM_10", sources: ["REMEDIES"],
@@ -4138,7 +4142,8 @@ const RECOS_SUPPLEMENT = [
         titre: "Scopolamine (antiémétique)",
         message: "EU(7)-PIM : Scopolamine — anticholinergique puissant (ACB=3). Risque de confusion, rétention urinaire, glaucome.",
         severite: "danger",
-        condition: { med_keys: ["scopolamine", "hyoscine"] }
+        condition: { med_keys: ["scopolamine", "hyoscine"] },
+        alternatives: "Métoclopramide faible dose (5-10 mg, courte durée, surveiller signes extrapyramidaux) ou ondansétron 4-8 mg (surveiller QTc)."
     },
     {
         id: "SUP_EU7_04", sources: ["EU7PIM", "PRISCUS"],
@@ -4184,28 +4189,32 @@ const RECOS_SUPPLEMENT = [
         titre: "Lithium + AINS ou diurétique thiazidique : toxicité lithique",
         message: "Beers 2023 : les AINS et les diurétiques thiazidiques réduisent la clairance rénale du lithium → ↑ lithémie et risque de toxicité (tremblements, confusion, troubles digestifs, atteinte rénale), marge thérapeutique étroite. Éviter l'association ou surveiller étroitement lithémie et fonction rénale.",
         severite: "danger",
-        condition: { med_keys: ["lithium"], med_keys_2: ["ains", "ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "hydrochlorothiazide", "indapamide", "thiazidique"] }
+        condition: { med_keys: ["lithium"], med_keys_2: ["ains", "ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "hydrochlorothiazide", "indapamide", "thiazidique"] },
+        alternatives: "Remplacer l'AINS par paracétamol ou opioïde faible. Remplacer le thiazide par IEC/ARA2 ou inhibiteur calcique. Si association inévitable : doser la lithémie à J7-J14 et adapter."
     },
     {
         id: "SUP_INT_002", sources: ["BEERS", "EU7PIM"],
         titre: "Phénytoïne + Cotrimoxazole : risque de toxicité",
         message: "Beers/EU(7)-PIM : Le TMP-SMX inhibe le métabolisme de la phénytoïne → surdosage (nystagmus, ataxie, convulsions). Éviter l'association ou doser la phénytoïnémie.",
         severite: "danger",
-        condition: { med_keys: ["phenytoine"], med_keys_2: ["cotrimoxazole", "trimethoprime", "sulfamethoxazole"] }
+        condition: { med_keys: ["phenytoine"], med_keys_2: ["cotrimoxazole", "trimethoprime", "sulfamethoxazole"] },
+        alternatives: "Préférer un autre antibiotique selon antibiogramme (amoxicilline, fosfomycine pour cystite, nitrofurantoïne selon DFG). Si cotrimoxazole indispensable : doser la phénytoïnémie à J3-J5."
     },
     {
         id: "SUP_INT_003", sources: ["BEERS"],
         titre: "Théophylline + Fluoroquinolones : toxicité théophylline",
         message: "Beers 2023 : Les fluoroquinolones (ciprofloxacine, norfloxacine) inhibent le métabolisme hépatique de la théophylline → risque de surdosage (tachycardie, convulsions). Éviter l'association.",
         severite: "danger",
-        condition: { med_keys: ["theophylline"], med_keys_2: ["ciprofloxacine", "norfloxacine", "levofloxacine", "ofloxacine", "moxifloxacine"] }
+        condition: { med_keys: ["theophylline"], med_keys_2: ["ciprofloxacine", "norfloxacine", "levofloxacine", "ofloxacine", "moxifloxacine"] },
+        alternatives: "Préférer amoxicilline-acide clavulanique ou azithromycine selon indication. Si fluoroquinolone indispensable : réduire théophylline de 50% et doser la théophyllinémie à J3."
     },
     {
         id: "SUP_INT_004", sources: ["BEERS"],
         titre: "AVK + Amiodarone : surveiller INR étroitement",
         message: "Beers 2023 : L'amiodarone inhibe le métabolisme des AVK (CYP2C9) → risque hémorragique majeur. Réduire la dose d'AVK de 30-50% et contrôler l'INR 2×/semaine pendant 4-6 semaines.",
         severite: "danger",
-        condition: { med_keys: ["warfarine", "fluindione", "acenocoumarol", "avk"], med_keys_2: ["amiodarone"] }
+        condition: { med_keys: ["warfarine", "fluindione", "acenocoumarol", "avk"], med_keys_2: ["amiodarone"] },
+        alternatives: "Réduire la dose d'AVK de 30-50% à l'introduction de l'amiodarone, contrôler INR à J3, J7, J14 puis selon stabilité. Effet inhibiteur persistant plusieurs semaines après arrêt de l'amiodarone (T½ longue)."
     },
     {
         id: "SUP_INT_005", sources: ["BEERS"],
@@ -4219,14 +4228,16 @@ const RECOS_SUPPLEMENT = [
         titre: "Colchicine + Macrolide : CONTRE-INDICATION ABSOLUE",
         message: "REMEDIES I-19 : Colchicine + macrolide (sauf spiramycine) = surdosage potentiellement fatal : pancytopénie, défaillance multiviscérale. URGENCE : changer l'antibiotique.",
         severite: "danger",
-        condition: { med_keys: ["colchicine"], med_keys_2: ["clarithromycine", "erythromycine", "azithromycine", "roxithromycine", "josamycine"] }
+        condition: { med_keys: ["colchicine"], med_keys_2: ["clarithromycine", "erythromycine", "azithromycine", "roxithromycine", "josamycine"] },
+        alternatives: "ARRÊTER la colchicine pendant la durée du macrolide OU remplacer le macrolide par amoxicilline / doxycycline / spiramycine (épargnée) selon l'indication."
     },
     {
         id: "SUP_INT_007", sources: ["REMEDIES"],
         titre: "IEC/ARA2 + Cotrimoxazole : hyperkaliémie sévère",
         message: "REMEDIES I-9/I-10 : L'association IEC/ARA2 + cotrimoxazole (ou sels de potassium) expose à une hyperkaliémie sévère, potentiellement létale. Surveillance kaliémie impérative.",
         severite: "danger",
-        condition: { med_keys: ["iec", "ara2"], med_keys_2: ["cotrimoxazole", "trimethoprime", "sulfamethoxazole"] }
+        condition: { med_keys: ["iec", "ara2"], med_keys_2: ["cotrimoxazole", "trimethoprime", "sulfamethoxazole"] },
+        alternatives: "Préférer un autre antibiotique (amoxicilline, fosfomycine, nitrofurantoïne si DFG > 45). Si cotrimoxazole indispensable : K+ et créatinine à J3 et J5."
     },
     {
         id: "SUP_INT_008", sources: ["REMEDIES"],
@@ -4247,14 +4258,16 @@ const RECOS_SUPPLEMENT = [
         titre: "Digoxine + Amiodarone : surveiller digoxinémie",
         message: "Beers 2023 : L'amiodarone inhibe le transport rénal (P-gp) de la digoxine → accumulation et toxicité digitalique. Réduire la dose de digoxine de 50% et doser la digoxinémie.",
         severite: "danger",
-        condition: { med_keys: ["digoxine"], med_keys_2: ["amiodarone"] }
+        condition: { med_keys: ["digoxine"], med_keys_2: ["amiodarone"] },
+        alternatives: "Réduire la digoxine de 50% à l'introduction de l'amiodarone. Doser la digoxinémie à J7 (cible 0,5-0,9 ng/mL chez l'âgé). Surveiller signes de toxicité (nausées, troubles visuels, bradycardie)."
     },
     {
         id: "SUP_INT_011", sources: ["BEERS"],
         titre: "Inhibiteur calcique non-DHP + Bêtabloquant : trouble conductif",
         message: "Beers 2023 : L'association vérapamil ou diltiazem + bêtabloquant expose au risque de BAV, bradycardie sévère, insuffisance cardiaque aiguë. À éviter sauf indication spécifique.",
         severite: "danger",
-        condition: { med_keys: ["verapamil", "diltiazem"], med_keys_2: ["betabloquant"] }
+        condition: { med_keys: ["verapamil", "diltiazem"], med_keys_2: ["betabloquant"] },
+        alternatives: "Choisir UN SEUL : maintenir le bêtabloquant (priorité HFrEF/post-SCA) et remplacer le non-DHP par un DHP (amlodipine) ou un autre antihypertenseur. Si vérapamil/diltiazem indispensable (FA réfractaire au BB), arrêt progressif du BB sous ECG."
     }
 ];
 

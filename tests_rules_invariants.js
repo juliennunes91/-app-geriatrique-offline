@@ -46,7 +46,7 @@ function extractCorpus() {
         MASTER_DB.MEDICAMENTS.forEach(m => String(m.princeps||'').split(/[^A-Za-zÀ-ÿ0-9]+/).forEach(t => { const n = __norm(t); if (n.length > 3) __princepsToks.add(n); }));
         const __brandKeys = c => [].concat(c.med_keys||[], c.med_keys_2||[], c.med_keys_3||[]).filter(k => { const n = __norm(k); return n.length > 3 && !__resolves(k) && __princepsToks.has(n); });
     `;
-    const pick = `(r=>({id:r.id,ref_code:r.ref_code,sources:r.sources||[],severite:r.severite,titre:r.titre,message:r.message,condition:r.condition,presenceDead:__presenceDead(r.condition||{}),brandKeys:__brandKeys(r.condition||{})}))`;
+    const pick = `(r=>({id:r.id,ref_code:r.ref_code,sources:r.sources||[],severite:r.severite,titre:r.titre,message:r.message,alternatives:r.alternatives||'',condition:r.condition,presenceDead:__presenceDead(r.condition||{}),brandKeys:__brandKeys(r.condition||{})}))`;
     const json = vm.runInContext(`(function(){${helpers} return JSON.stringify({
         pathoIds: Object.keys(MASTER_DB.PATHOLOGIES),
         bioIds: Object.keys(MASTER_DB.BIOLOGIE),
@@ -71,7 +71,7 @@ function extractCorpus() {
             rules.push({
                 id: r.id, set, bucket: bucketOf[set], quarantined: quar.has(r.id),
                 refCode: r.ref_code || '', severite: r.severite,
-                hasTitre: !!r.titre, hasMessage: !!r.message,
+                hasTitre: !!r.titre, hasMessage: !!r.message, hasAlternatives: !!(r.alternatives && r.alternatives.trim()),
                 comorbs: [].concat(c.comorbs || [], c.comorbs_any || [], c.comorbs_absent || []),
                 comorbsPositive: [].concat(c.comorbs || [], c.comorbs_any || []),
                 bioCodes: Object.keys(c.bio || {}).concat(Object.keys(c.bio_any || {})),
@@ -288,6 +288,15 @@ function runRuleInvariantTests(test, assert) {
 
     test('INV-M — 0 contexte d\'exclusion jamais alimentable (exception inopérante)', () => {
         assert.strictEqual(deadCtxAbs.length, 0, `contextes morts:${fmt(deadCtxAbs)}`);
+    });
+
+    // INV-N : toute règle de sévérité DANGER doit proposer une alternative
+    // (substitution / conduite à tenir). Sinon, le clinicien reçoit "arrêter X"
+    // sans savoir QUOI faire à la place — incomplet et risqué.
+    test('INV-N — toute règle DANGER active expose une alternative cliniquement actionnable', () => {
+        const bad = active.filter(r => r.severite === 'danger' && !r.hasAlternatives)
+            .map(r => `${r.id} (${r.set})`);
+        assert.strictEqual(bad.length, 0, `règles danger sans alternatives:${fmt(bad)}`);
     });
 
     // ---- SECTION AUDIT (informative — ne fait jamais échouer la suite) ----
