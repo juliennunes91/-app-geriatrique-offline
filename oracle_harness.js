@@ -78,16 +78,19 @@ function buildSandbox() {
         resetOutputs() { elCache.forEach(el => { el._html = ''; el.value = ''; el.checked = false; }); }
     };
 
-    const localStorageShim = (() => {
+    const makeStorageShim = () => {
         const store = {};
         return { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: k => { delete store[k]; }, clear: () => { for (const k in store) delete store[k]; } };
-    })();
+    };
+    const localStorageShim = makeStorageShim();
+    const sessionStorageShim = makeStorageShim();
 
     const sandbox = {
         console: { log() {}, info() {}, warn() {}, error() {}, debug() {} },
         performance,
         document: documentShim,
         localStorage: localStorageShim,
+        sessionStorage: sessionStorageShim,
         navigator: { language: 'fr-FR', userAgent: 'node', onLine: true },
         location: { href: 'http://localhost/', protocol: 'http:' },
         matchMedia: () => ({ matches: false, addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {} }),

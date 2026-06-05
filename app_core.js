@@ -715,6 +715,13 @@ window.resetPatient = function() {
     // 12. Reset cache analysis hash dans window (au cas où une autre référence existe)
     window._lastAnalysisHash = null;
     window._lastAnalysisResult = null;
+
+    // 13. Purger la session persistée (sessionStorage) — sinon l'ancien patient
+    // serait restauré au prochain rechargement, ce qui contredit « Nouveau patient »
+    // (correction + confidentialité : pas de fuite du patient précédent).
+    try { sessionStorage.removeItem('geriaassist_session'); } catch (e) { /* quota / mode privé */ }
+    // Réinitialiser aussi le registre d'analyse exposé.
+    window._analysisRegistry = null;
 };
 
 // ============================================================================

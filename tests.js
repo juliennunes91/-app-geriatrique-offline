@@ -1430,6 +1430,31 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(hasAcbCluster, 'cluster ACB attendu sur 3 anticholinergiques : ' + JSON.stringify(sd.mechanismClusters.map(c=>c.label)));
     });
 
+    test('Tier 5 — resetPatient purge la session persistée (confidentialité)', () => {
+        const { analyzeCase, loadApp } = require('./oracle_harness');
+        const vm = require('vm');
+        const { sandbox } = loadApp();
+        // Simule une session sauvegardée puis un reset
+        const result = vm.runInContext(`
+            (function(){
+                try {
+                    sessionStorage.setItem('geriaassist_session', JSON.stringify({age:85, meds:['secret']}));
+                    const before = sessionStorage.getItem('geriaassist_session');
+                    if (typeof resetPatient === 'function') { resetPatient(); }
+                    const after = sessionStorage.getItem('geriaassist_session');
+                    return JSON.stringify({ before: !!before, after: after, hasFn: typeof resetPatient === 'function' });
+                } catch(e) { return 'ERR:' + e.message; }
+            })()
+        `, sandbox);
+        if (typeof result === 'string' && result.startsWith('ERR:')) {
+            assert.fail('resetPatient a crashé : ' + result);
+        }
+        const r = JSON.parse(result);
+        if (!r.hasFn) return;  // fonction absente du sandbox : skip
+        assert.ok(r.before, 'la session devait être présente avant reset');
+        assert.strictEqual(r.after, null, 'la session doit être purgée après resetPatient (pas de fuite patient précédent)');
+    });
+
     test('Tier 5 — détection saisies aberrantes (typo unité créat, K inversé, DFG > 200)', () => {
         const { analyzeCase } = require('./oracle_harness');
         // K = 40 (au lieu de 4.0), DFG = 350 (impossible), Hb = 25 (impossible)
