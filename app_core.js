@@ -187,12 +187,32 @@ function buildSyntheseText() {
     const sexe = document.getElementById('patientSexe')?.value || '';
     const poids = document.getElementById('patientPoids')?.value || '';
     const dfg = document.getElementById('patientDFG')?.value || '';
+    const reg = window._analysisRegistry;
+    const sd = (reg && reg.synthData) ? reg.synthData : null;
 
     let lines = [];
     lines.push('=== SYNTHÈSE GERIAASSIST ===');
     lines.push(`Date : ${new Date().toLocaleDateString('fr-FR')}`);
     lines.push(`Patient : ${nom ? nom + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}`);
     lines.push('');
+
+    // Bandeau de gravité (synthData.banner)
+    if (sd && sd.banner && (sd.banner.nbDanger + sd.banner.nbWarning + sd.banner.nbOmissions) > 0) {
+        const b = sd.banner;
+        const counts = [];
+        if (b.nbDanger > 0) counts.push(`${b.nbDanger} danger`);
+        if (b.nbWarning > 0) counts.push(`${b.nbWarning} vigilance`);
+        if (b.nbOmissions > 0) counts.push(`${b.nbOmissions} omission${b.nbOmissions > 1 ? 's' : ''}`);
+        lines.push(`>> ${b.icon} ${b.msg}${counts.length ? ' — ' + counts.join(' · ') : ''}`);
+        lines.push('');
+    }
+
+    // Profil de risque (synthData.riskChips)
+    if (sd && sd.riskChips && sd.riskChips.length > 0) {
+        lines.push('--- PROFIL DE RISQUE ---');
+        lines.push(sd.riskChips.map(c => c.label).join(' · '));
+        lines.push('');
+    }
 
     // Comorbidités
     lines.push('--- COMORBIDITÉS ---');
@@ -215,6 +235,38 @@ function buildSyntheseText() {
     }
     lines.push('');
 
+    // Top actions prioritaires (synthData.topActions)
+    if (sd && sd.topActions && sd.topActions.length > 0) {
+        lines.push(`--- TOP ${sd.topActions.length} ACTIONS PRIORITAIRES ---`);
+        sd.topActions.forEach((a, i) => {
+            lines.push(`${i + 1}. [${a.kind}] ${a.txt}`);
+        });
+        lines.push('');
+    }
+
+    // Mécanismes récurrents (synthData.mechanismClusters)
+    if (sd && sd.mechanismClusters && sd.mechanismClusters.length > 0) {
+        lines.push('--- MÉCANISMES RÉCURRENTS ---');
+        sd.mechanismClusters.forEach(cl => {
+            lines.push(`• ${cl.label}`);
+            if (cl.summary) lines.push(`  ${cl.summary}`);
+            if (cl.meds && cl.meds.length) lines.push(`  Médicaments : ${cl.meds.join(', ')}`);
+            if (cl.advice) lines.push(`  → ${cl.advice}`);
+        });
+        lines.push('');
+    }
+
+    // Interactions DANGER (synthData.interactCritical)
+    if (sd && sd.interactCritical && sd.interactCritical.length > 0) {
+        const top = sd.interactCritical.slice(0, 5);
+        lines.push(`--- INTERACTIONS CRITIQUES (${top.length}${sd.interactCritical.length > 5 ? '/' + sd.interactCritical.length : ''}) ---`);
+        top.forEach(it => {
+            const txt = (it.text || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+            if (txt) lines.push('• ' + txt);
+        });
+        lines.push('');
+    }
+
     // Scores — extraire le texte du div
     const divScores = document.getElementById('alertes-scores');
     if (divScores && divScores.innerText.trim()) {
@@ -226,7 +278,6 @@ function buildSyntheseText() {
     }
 
     // Section synthèse intelligente (depuis le registre si disponible)
-    const reg = window._analysisRegistry;
     if (reg && reg.byMed && Object.keys(reg.byMed).length > 0) {
         lines.push('--- SYNTHÈSE PAR MÉDICAMENT ---');
         for (const [dci, domains] of Object.entries(reg.byMed)) {

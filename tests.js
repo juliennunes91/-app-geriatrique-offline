@@ -1439,6 +1439,22 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(['success', 'info', 'warning', 'danger'].includes(sd.banner.level), 'level valide : ' + sd.banner.level);
     });
 
+    test('Tier 5 — buildSyntheseText source contient les nouveaux blocs (parité PDF)', () => {
+        // Le harness DOM minimal ne supporte pas innerText (pre-existant). On valide
+        // la PRÉSENCE des nouveaux blocs au niveau source pour assurer la parité PDF.
+        const src = require('fs').readFileSync(__dirname + '/app_core.js', 'utf8');
+        // Localise la fonction buildSyntheseText
+        const fnMatch = src.match(/function buildSyntheseText\(\)[\s\S]*?\n\}/);
+        assert.ok(fnMatch, 'buildSyntheseText doit exister');
+        const fn = fnMatch[0];
+        assert.ok(/synthData/.test(fn), 'buildSyntheseText doit lire _analysisRegistry.synthData');
+        assert.ok(/BANDEAU|banner\.icon|banner\.msg|>> /.test(fn) || /banner/.test(fn), 'doit rendre le bandeau de gravité');
+        assert.ok(/PROFIL DE RISQUE|riskChips/.test(fn), 'doit rendre le profil de risque');
+        assert.ok(/TOP.+ACTIONS|topActions/.test(fn), 'doit rendre les top actions');
+        assert.ok(/MÉCANISMES RÉCURRENTS|mechanismClusters/.test(fn), 'doit rendre les mécanismes');
+        assert.ok(/INTERACTIONS CRITIQUES|interactCritical/.test(fn), 'doit rendre les interactions critiques');
+    });
+
     test('Tier 5 — buildPdfContent rend les nouveaux blocs sans crash', () => {
         const { analyzeCase, loadApp } = require('./oracle_harness');
         const res = analyzeCase({
