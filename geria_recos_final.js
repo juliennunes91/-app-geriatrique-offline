@@ -2399,10 +2399,14 @@ const GERIA_RECOS_DB = {
             message: "Médicament néphrotoxique (AINS, aminoside, IEC/ARA2) pendant un sepsis aigu : risque d'insuffisance rénale aiguë. Suspendre temporairement.",
             severite: "danger",
             condition: {
-                med_keys: ["ains", "ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "meloxicam", "celecoxib", "gentamicine", "amikacine", "tobramycine"],
+                // Le message cite AINS, aminosides ET IEC/ARA2 comme néphrotoxiques en
+                // sepsis : les classes iec/ara2 (alias reconnus par matchesDrugClass) sont
+                // ajoutées pour que la règle couvre ce que son message annonce (les
+                // bloqueurs du SRAA aggravent l'IRA hémodynamique du sepsis — KDIGO).
+                med_keys: ["ains", "ibuprofene", "naproxene", "diclofenac", "ketoprofene", "piroxicam", "meloxicam", "celecoxib", "gentamicine", "amikacine", "tobramycine", "iec", "ara2"],
                 contexte_clinique: "sepsis"
             },
-            alternatives: "Suspendre AINS/aminosides, surveiller fonction rénale, hydratation IV"
+            alternatives: "Suspendre AINS/aminosides/IEC/ARA2, surveiller fonction rénale, hydratation IV"
         },
         {
             id: "EV_N08",

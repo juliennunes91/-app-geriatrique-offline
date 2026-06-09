@@ -1663,6 +1663,22 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
             'Plus aucun accès bioValues["BIO_TP/CL/OSM/PREALB"] (utiliser BIO_040/041/042/043)');
     });
 
+    test('Tier 5 — EV_N07 : néphrotoxique + sepsis couvre AINS, aminosides ET IEC/ARA2', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const alerte = (med) => {
+            const r = analyzeCase({ age: 80, sexe: 'F', meds: [med], flags: ['chkSepsis'] });
+            return Object.values(r).flat().filter(a => a && a.titre).some(a => /n[ée]phrotox/i.test(a.titre));
+        };
+        assert.ok(alerte('Ibuprofene'), 'AINS + sepsis doit alerter');
+        assert.ok(alerte('Gentamicine'), 'Aminoside + sepsis doit alerter');
+        assert.ok(alerte('Ramipril'), 'IEC + sepsis doit alerter (cohérence message/condition)');
+        assert.ok(alerte('Losartan'), 'ARA2 + sepsis doit alerter');
+        // Pas de faux positif hors contexte sepsis
+        const sansSepsis = analyzeCase({ age: 80, sexe: 'F', meds: ['Ramipril'] });
+        const fp = Object.values(sansSepsis).flat().filter(a => a && a.titre).some(a => /n[ée]phrotox.*sepsis/i.test(a.titre));
+        assert.ok(!fp, 'IEC sans sepsis ne doit PAS déclencher la règle néphrotoxique+sepsis');
+    });
+
     test('Tier 5 — bioValues = NaN si absent (anti-faux-positif structurel)', () => {
         const { analyzeCase } = require('./oracle_harness');
         // Patient ZÉRO bio saisi (juste un médicament pour forcer l'analyse).
