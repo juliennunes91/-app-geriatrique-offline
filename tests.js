@@ -1556,6 +1556,35 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(/alert-danger|alert-stopp/.test(html22), 'K=2.2 (critique) doit être en danger');
     });
 
+    test('Tier 5 — NaN-safe : anémie sans ferritine/B12 → bilan martial + doser B12 recommandés', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        // Régression à éviter : la migration NaN avait cassé les branches `fer <= 0`.
+        const al = (analyzeCase({ age: 80, sexe: 'F', bio: { hb: 9 }, meds: [] })['alertes-bio'] || []).map(a => a.titre);
+        assert.ok(al.some(t => /[Bb]ilan martial/.test(t)), 'Anémie sans ferritine → bilan martial recommandé');
+        assert.ok(al.some(t => /doser B12/.test(t)), 'Anémie sans B12/B9 → doser B12 et folates');
+    });
+
+    test('Tier 5 — thyroïde : une seule alerte (pas de doublon checkBioSyndrome + custom)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const hypo = (analyzeCase({ age: 80, sexe: 'F', bio: { tsh: 12 } })['alertes-bio'] || []).filter(a => /thyro/i.test(a.titre));
+        const hyper = (analyzeCase({ age: 80, sexe: 'F', bio: { tsh: 0.05, t4: 40 } })['alertes-bio'] || []).filter(a => /thyro/i.test(a.titre));
+        assert.strictEqual(hypo.length, 1, 'Hypothyroïdie : 1 seule alerte (TSH=12). Trouvé: ' + JSON.stringify(hypo.map(a => a.titre)));
+        assert.strictEqual(hyper.length, 1, 'Hyperthyroïdie : 1 seule alerte. Trouvé: ' + JSON.stringify(hyper.map(a => a.titre)));
+    });
+
+    test('Tier 5 — calcémie corrigée par albumine (Payne) : évite fausse hypoCa, démasque hyperCa', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        // Ca=2.10 + alb=25 → corrigé 2.40 → PAS d'hypocalcémie
+        const r1 = (analyzeCase({ age: 80, sexe: 'F', bio: { ca: 2.10, albumSg: 25 } })['alertes-bio'] || []).map(a => a.titre);
+        assert.ok(!r1.some(t => /Hypocalc/i.test(t)), 'Ca=2.10 + alb=25 (corrigé 2.40) ne doit PAS être une hypocalcémie');
+        // Ca=2.10 sans albumine → brut → hypocalcémie légère
+        const r2 = (analyzeCase({ age: 80, sexe: 'F', bio: { ca: 2.10 } })['alertes-bio'] || []).map(a => a.titre);
+        assert.ok(r2.some(t => /Hypocalc.*l[ée]g[èe]re/i.test(t)), 'Ca=2.10 sans albumine → hypocalcémie légère (brut)');
+        // Ca=2.60 + alb=28 → corrigé 2.84 → hypercalcémie démasquée
+        const r3 = (analyzeCase({ age: 80, sexe: 'F', bio: { ca: 2.60, albumSg: 28 } })['alertes-bio'] || []).map(a => a.titre);
+        assert.ok(r3.some(t => /Hypercalc/i.test(t)), 'Ca=2.60 + alb=28 (corrigé 2.84) → hypercalcémie démasquée');
+    });
+
     test('Tier 5 — hypercalcémie graduée (légère 2.65-3.0 / sévère 3.0-3.5 / crise > 3.5)', () => {
         const { analyzeCase } = require('./oracle_harness');
         const titres = ca => (analyzeCase({ age: 80, sexe: 'F', meds: [], bio: { ca } })['alertes-bio'] || []).map(a => a.titre).join(' | ');

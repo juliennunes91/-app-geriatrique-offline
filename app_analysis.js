@@ -1246,7 +1246,7 @@ function analyserPrescription() {
             const ferFonctionnel = (fer > 0 && fer < 300 && cst > 0 && cst < 20 && crp > 5);
             if (ferBas || ferFonctionnel) {
                 checkBioSyndrome('SYND_006', true);
-            } else if (fer <= 0 && cst <= 0 && hb < seuilAnemia) {
+            } else if (!(fer > 0) && !(cst > 0) && hb < seuilAnemia) {
                 // Ferritine et CST non dosés → recommander le bilan martial
                 let inflNote = (crp > 0 && crp > 5) ? ' <em class="text-warning">(CRP élevée : interpréter ferritine avec prudence, seuil carentiel < 100 µg/L en contexte inflammatoire)</em>' : '';
                 addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Anémie détectée — Bilan martial recommandé</strong>
@@ -1257,7 +1257,7 @@ function analyserPrescription() {
             // SYND_007 : Anémie Macrocytaire / Carence B12-B9
             if ((b12 > 0 && b12 < 150) || (b9 > 0 && b9 < 7)) {
                 checkBioSyndrome('SYND_007', true);
-            } else if (b12 <= 0 && b9 <= 0) {
+            } else if (!(b12 > 0) && !(b9 > 0)) {
                 addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Anémie — doser B12 et folates</strong>
                     <br><span class="small">Hb ${hb} g/dL. Dosage vitamine B12 et folates recommandé pour exclure une carence (fréquente sous metformine, IPP, antiépileptiques).</span></div>`, 'bio');
             }
@@ -1312,8 +1312,9 @@ function analyserPrescription() {
     let tsh = bioValues['BIO_019']; let t4 = bioValues['BIO_T4']; let t3 = bioValues['BIO_T3'];
     if (tsh > 0) {
         if (tsh > 4.0) {
+            // Hypothyroïdie (SYND_013) : alerte détaillée custom ci-dessous (pas de
+            // checkBioSyndrome générique, qui ferait un doublon d'affichage ET de comptage).
             let isOvert = (t4 > 0 && t4 < 60) || tsh > 10;
-            checkBioSyndrome(isOvert ? 'SYND_013' : 'SYND_013', true);
             let thyroSev = isOvert ? 'danger' : 'warning';
             let thyroCauses = [];
             let hypoTerms = MASTER_DB.SYNDROMES['SYND_013'] && MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
@@ -1323,10 +1324,9 @@ function analyserPrescription() {
             let thyroConc = isOvert ? 'Traitement substitutif par lévothyroxine recommandé. Débuter 12.5-25 µg/j chez le sujet âgé, titrer par paliers de 12.5 µg toutes les 6-8 semaines.' : (tsh > 10 ? 'TSH > 10 — substitution recommandée même si subclinique.' : 'TSH 4-10 — à contrôler à 6-8 semaines, substituer si symptômes ou progression.');
             addAlert('alertes-bio', `<div class="alert alert-${thyroSev} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4 ' + t4 + ' nmol/L' : ''})${thyroImput}<br><em>Conduite :</em> ${thyroConc}</div>`, 'bio');
         } else if (tsh < 0.4 && tsh > 0) {
+            // Hyperthyroïdie (SYND_012, ou SYND_019 si thyrotoxicose sévère) : alerte
+            // détaillée custom ci-dessous (pas de checkBioSyndrome générique = doublon).
             let isOvert = (t4 > 0 && t4 > 120) || (t3 > 0 && t3 > 2.7);
-            // SYND_019 si thyrotoxicose sévère, sinon SYND_012
-            if (tsh < 0.1 && t4 > 30) { checkBioSyndrome('SYND_019', true); }
-            else { checkBioSyndrome('SYND_012', true); }
             let thyroLabel = isOvert ? 'Hyperthyroïdie avérée' : 'Hyperthyroïdie subclinique';
             let thyroCauses = [];
             let hyperTerms = MASTER_DB.SYNDROMES['SYND_012'] && MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
@@ -1359,24 +1359,36 @@ function analyserPrescription() {
     // --- SYND_018 : Hyperglycémie Sévère (Glycémie > 20 ou HbA1c > 10%) ---
     if ((bioValues['BIO_025'] > 20) || (bioValues['BIO_026'] > 10)) checkBioSyndrome('SYND_018', true);
 
-    // --- SYND_020 : Hypocalcémie — graduée (légère 2.0-2.19 / sévère < 2.0 / symptomatique < 1.9) ---
+    // --- Calcémie corrigée par l'albumine (formule de Payne) ---
+    // Ca corrigé = Ca mesuré + 0.02 × (40 − albumine g/L). Indispensable chez le
+    // sujet âgé hypoalbuminémique : la calcémie totale sous-estime le Ca ionisé,
+    // d'où fausse hypocalcémie et vraie hypercalcémie manquée. On corrige seulement
+    // si l'albumine est dosée ; sinon on retient la valeur brute.
+    let caEval, caLabel;
     {
-        const ca = bioValues['BIO_005'];
-        if (ca > 0 && ca < 2.20) {
-            const severe = ca < 1.9;
-            const grade = ca < 1.9 ? 'symptomatique (< 1.9)' : ca < 2.0 ? 'modérée (< 2.0)' : 'légère (2.0-2.19)';
-            checkBioSyndrome('SYND_020', true, { severe, labelOverride: `Hypocalcémie ${grade} — Ca ${ca} mmol/L` });
+        const caRaw = bioValues['BIO_005'];
+        const alb = bioValues['BIO_035'];
+        if (caRaw > 0 && alb > 0 && alb < 40) {
+            caEval = Math.round((caRaw + 0.02 * (40 - alb)) * 100) / 100;
+            caLabel = `Ca corrigé ${caEval} mmol/L (brut ${caRaw}, albumine ${alb} g/L)`;
+        } else {
+            caEval = caRaw;
+            caLabel = `Ca ${caRaw} mmol/L`;
         }
     }
 
+    // --- SYND_020 : Hypocalcémie — graduée (légère 2.0-2.19 / sévère < 2.0 / symptomatique < 1.9) ---
+    if (caEval > 0 && caEval < 2.20) {
+        const severe = caEval < 1.9;
+        const grade = caEval < 1.9 ? 'symptomatique (< 1.9)' : caEval < 2.0 ? 'modérée (< 2.0)' : 'légère (2.0-2.19)';
+        checkBioSyndrome('SYND_020', true, { severe, labelOverride: `Hypocalcémie ${grade} — ${caLabel}` });
+    }
+
     // --- SYND_021 : Hypercalcémie — graduée (légère 2.65-3.0 / sévère 3.0-3.5 / crise > 3.5) ---
-    {
-        const ca = bioValues['BIO_005'];
-        if (ca > 2.65) {
-            const severe = ca > 3.0;
-            const grade = ca > 3.5 ? 'crise hypercalcémique (> 3.5 — urgence)' : ca > 3.0 ? 'sévère (3.0-3.5)' : 'légère (2.65-3.0)';
-            checkBioSyndrome('SYND_021', true, { severe, labelOverride: `Hypercalcémie ${grade} — Ca ${ca} mmol/L` });
-        }
+    if (caEval > 2.65) {
+        const severe = caEval > 3.0;
+        const grade = caEval > 3.5 ? 'crise hypercalcémique (> 3.5 — urgence)' : caEval > 3.0 ? 'sévère (3.0-3.5)' : 'légère (2.65-3.0)';
+        checkBioSyndrome('SYND_021', true, { severe, labelOverride: `Hypercalcémie ${grade} — ${caLabel}` });
     }
 
     // --- SYND_022 : Hypomagnésémie — graduée (légère 0.70-0.75 / sévère 0.50-0.70 / critique < 0.50) ---
@@ -2188,7 +2200,7 @@ function analyserPrescription() {
                 html += `<span class="${color}"><em>🧪 Fonction Rénale :</em> ${ref.poso_ren}</span><br>`;
             }
             if (ref.atb_legere || ref.atb_moderee || ref.atb_severe) {
-                let isLegere = (dfg > 60 && dfg <= 90); let isModeree = (dfg > 30 && dfg <= 60); let isSevere = (dfg > 15 && dfg <= 30); let isTerminale = (dfg > 0 && dfg <= 15); let isUnk = (dfg <= 0);
+                let isLegere = (dfg > 60 && dfg <= 90); let isModeree = (dfg > 30 && dfg <= 60); let isSevere = (dfg > 15 && dfg <= 30); let isTerminale = (dfg > 0 && dfg <= 15); let isUnk = !(dfg > 0);
                 html += `<div class="mt-2 p-2 bg-white rounded border border-success border-opacity-50"><b>Adaptations ATB selon DFG :</b><br>`;
                 if(ref.atb_legere) html += `<span class="${isLegere ? 'bg-warning bg-opacity-25 fw-bold px-1 rounded' : 'text-muted'}">- Légère (60-90) : ${ref.atb_legere}</span><br>`;
                 if(ref.atb_moderee) html += `<span class="${isModeree ? 'bg-warning bg-opacity-50 fw-bold px-1 rounded' : 'text-muted'}">- Modérée (30-60) : ${ref.atb_moderee}</span><br>`;
