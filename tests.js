@@ -1515,6 +1515,39 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(/alert-danger|alert-stopp/.test(html120), 'Na=120 (sévère) doit être en danger');
     });
 
+    test('Tier 5 — QTc gradué + distinction sexe (H>450 / F>470 / sévère ≥500)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const titres = (sexe, qtc) => (analyzeCase({ age: 80, sexe, meds: [], bio: { qtc } })['alertes-bio'] || []).map(a => a.titre).join(' | ');
+        // F < 470 silencieux, H ≥ 450 déclenche
+        assert.ok(!/QTc/i.test(titres('F', 460)), 'F QTc=460 ne doit PAS déclencher (seuil F = 470)');
+        assert.ok(/QTc prolong/i.test(titres('H', 455)), 'H QTc=455 doit déclencher');
+        assert.ok(/QTc prolong/i.test(titres('F', 475)), 'F QTc=475 doit déclencher');
+        // ≥ 500 → palier sévère
+        const html510 = (analyzeCase({ age: 80, sexe: 'F', bio: { qtc: 510 } })._html || {})['alertes-bio'] || '';
+        assert.ok(/alert-danger|alert-stopp/.test(html510), 'QTc=510 doit être en danger (torsades)');
+        assert.ok(/s[ée]v[èe]re|torsades/i.test(titres('F', 510)), 'QTc=510 doit mentionner sévère/torsades');
+    });
+
+    test('Tier 5 — thrombopénie graduée (modérée 100-149 / sévère 50-99 / très sévère <50)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const titres = plaq => (analyzeCase({ age: 80, sexe: 'F', meds: [], bio: { plaq } })['alertes-bio'] || []).map(a => a.titre).join(' | ');
+        assert.ok(!/Thrombop/i.test(titres(160)), 'Plaq=160 ne doit PAS déclencher');
+        assert.ok(/Thrombop.*mod[ée]r[ée]e|100-149/i.test(titres(140)), 'Plaq=140 doit déclencher modérée');
+        assert.ok(/Thrombop.*s[ée]v[èe]re/i.test(titres(80)), 'Plaq=80 doit déclencher sévère');
+        const html40 = (analyzeCase({ age: 80, sexe: 'F', bio: { plaq: 40 } })._html || {})['alertes-bio'] || '';
+        assert.ok(/alert-danger|alert-stopp/.test(html40), 'Plaq=40 (très sévère) doit être en danger');
+    });
+
+    test('Tier 5 — hypocalcémie graduée (légère 2.0-2.19 / modérée <2.0 / symptomatique <1.9)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const titres = ca => (analyzeCase({ age: 80, sexe: 'F', meds: [], bio: { ca } })['alertes-bio'] || []).map(a => a.titre).join(' | ');
+        assert.ok(!/Hypocalc/i.test(titres(2.25)), 'Ca=2.25 ne doit PAS déclencher');
+        assert.ok(/Hypocalc.*l[ée]g[èe]re/i.test(titres(2.15)), 'Ca=2.15 doit déclencher légère');
+        assert.ok(/Hypocalc.*mod[ée]r[ée]e/i.test(titres(1.95)), 'Ca=1.95 doit déclencher modérée');
+        const html185 = (analyzeCase({ age: 80, sexe: 'F', bio: { ca: 1.85 } })._html || {})['alertes-bio'] || '';
+        assert.ok(/alert-danger|alert-stopp/.test(html185), 'Ca=1.85 (symptomatique) doit être en danger');
+    });
+
     test('Tier 5 — détection saisies aberrantes (typo unité créat, K inversé, DFG > 200)', () => {
         const { analyzeCase } = require('./oracle_harness');
         // K = 40 (au lieu de 4.0), DFG = 350 (impossible), Hb = 25 (impossible)

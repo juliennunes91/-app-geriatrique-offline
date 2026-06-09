@@ -1166,11 +1166,29 @@ function analyserPrescription() {
     // --- SYND_002 : Rhabdomyolyse (CPK > 5N) ---
     if(bioValues['BIO_018'] > 850) checkBioSyndrome('SYND_002', true);
 
-    // --- SYND_003 : Allongement du QTc ---
-    if(bioValues['BIO_031'] >= 450) checkBioSyndrome('SYND_003', true);
+    // --- SYND_003 : QTc allongé — gradué + distinction sexe ---
+    // H : limite normale > 450 ; F : > 470. Palier DANGER ≥ 500 (risque torsades).
+    {
+        const qtc = bioValues['BIO_031'];
+        if (qtc > 0) {
+            const seuilSexe = (sexe === 'F') ? 470 : 450;
+            if (qtc >= seuilSexe) {
+                const severe = qtc >= 500;
+                const grade = qtc >= 500 ? `sévère (≥ 500 ms — risque torsades)` : `prolongé (≥ ${seuilSexe} ms)`;
+                checkBioSyndrome('SYND_003', true, { severe, labelOverride: `QTc ${grade} — ${qtc} ms` });
+            }
+        }
+    }
 
-    // --- SYND_004 : Thrombopénie Sévère (Plaquettes < 100 G/L) ---
-    if(bioValues['BIO_010'] > 0 && bioValues['BIO_010'] < 100) checkBioSyndrome('SYND_004', true);
+    // --- SYND_004 : Thrombopénie — graduée (modérée 100-149 / sévère < 100 / très sévère < 50) ---
+    {
+        const plaq = bioValues['BIO_010'];
+        if (plaq > 0 && plaq < 150) {
+            const severe = plaq < 50;
+            const grade = plaq < 50 ? 'très sévère (< 50)' : plaq < 100 ? 'sévère (50-99)' : 'modérée (100-149)';
+            checkBioSyndrome('SYND_004', true, { severe, labelOverride: `Thrombopénie ${grade} — ${plaq} G/L` });
+        }
+    }
 
     // --- SYND_005 : Anémie (Hb < 13 H / < 12 F) ---
     {
@@ -1290,8 +1308,15 @@ function analyserPrescription() {
     // --- SYND_018 : Hyperglycémie Sévère (Glycémie > 20 ou HbA1c > 10%) ---
     if ((bioValues['BIO_025'] > 20) || (bioValues['BIO_026'] > 10)) checkBioSyndrome('SYND_018', true);
 
-    // --- SYND_020 : Hypocalcémie (Ca < 2.0 mmol/L) ---
-    if (bioValues['BIO_005'] > 0 && bioValues['BIO_005'] < 2.0) checkBioSyndrome('SYND_020', true);
+    // --- SYND_020 : Hypocalcémie — graduée (légère 2.0-2.19 / sévère < 2.0 / symptomatique < 1.9) ---
+    {
+        const ca = bioValues['BIO_005'];
+        if (ca > 0 && ca < 2.20) {
+            const severe = ca < 1.9;
+            const grade = ca < 1.9 ? 'symptomatique (< 1.9)' : ca < 2.0 ? 'modérée (< 2.0)' : 'légère (2.0-2.19)';
+            checkBioSyndrome('SYND_020', true, { severe, labelOverride: `Hypocalcémie ${grade} — Ca ${ca} mmol/L` });
+        }
+    }
 
     // --- SYND_021 : Hypercalcémie (Ca > 2.65 mmol/L) ---
     if (bioValues['BIO_005'] > 2.65) checkBioSyndrome('SYND_021', true);
