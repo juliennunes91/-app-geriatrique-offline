@@ -1494,6 +1494,27 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.strictEqual(r.after, null, 'la session doit être purgée après resetPatient (pas de fuite patient précédent)');
     });
 
+    test('Tier 5 — hyponatrémie graduée : Na 130/128/122 déclenche, 135 silencieux', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const titres = na => (analyzeCase({ age: 80, sexe: 'F', meds: [], bio: { na } })['alertes-bio'] || []).map(a => a.titre).join(' | ');
+        // Na = 130 (le cas signalé) : légère, doit apparaître
+        assert.ok(/hyponatr.*l[ée]g[èe]re|130-134/i.test(titres(130)), 'Na=130 doit déclencher hyponatrémie légère');
+        assert.ok(/hyponatr.*l[ée]g[èe]re/i.test(titres(134)), 'Na=134 doit déclencher hyponatrémie légère');
+        assert.ok(/hyponatr.*mod[ée]r[ée]e|125-129/i.test(titres(128)), 'Na=128 doit déclencher hyponatrémie modérée');
+        assert.ok(/hyponatr.*s[ée]v[èe]re/i.test(titres(122)), 'Na=122 doit déclencher hyponatrémie sévère');
+        // Na ≥ 135 : pas d'alerte hyponatrémie
+        assert.ok(!/hyponatr/i.test(titres(135)), 'Na=135 ne doit PAS déclencher');
+        assert.ok(!/hyponatr/i.test(titres(140)), 'Na=140 ne doit PAS déclencher');
+    });
+
+    test('Tier 5 — hyponatrémie : sévérité graduée (légère=vigilance, sévère=danger)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const html132 = (analyzeCase({ age: 80, sexe: 'F', bio: { na: 132 } })._html || {})['alertes-bio'] || '';
+        const html120 = (analyzeCase({ age: 80, sexe: 'F', bio: { na: 120 } })._html || {})['alertes-bio'] || '';
+        assert.ok(/border-warning|alert-warning/.test(html132), 'Na=132 (légère) doit être en vigilance (warning)');
+        assert.ok(/alert-danger|alert-stopp/.test(html120), 'Na=120 (sévère) doit être en danger');
+    });
+
     test('Tier 5 — détection saisies aberrantes (typo unité créat, K inversé, DFG > 200)', () => {
         const { analyzeCase } = require('./oracle_harness');
         // K = 40 (au lieu de 4.0), DFG = 350 (impossible), Hb = 25 (impossible)

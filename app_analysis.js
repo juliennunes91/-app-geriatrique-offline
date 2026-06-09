@@ -1143,15 +1143,20 @@ function analyserPrescription() {
     // =========================================================
     // 3. MOTEUR BIOLOGIQUE (Syndromes d'Iatrogénie)
     // =========================================================
-    const checkBioSyndrome = (syndId, conditionRemplie) => {
+    const checkBioSyndrome = (syndId, conditionRemplie, opts) => {
         if(!conditionRemplie) return;
+        opts = opts || {};
         try {
             let s = MASTER_DB.SYNDROMES[syndId]; if(!s) return;
             let causes = [];
             if(s.IMPUTABILITE_FREQ) s.IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(x=>x).forEach(c => { if(patientHasMedClass(c)) causes.push(c); });
             let imputStr = causes.length > 0 ? `<br><em>Imputabilité iatrogène détectée :</em> <b>${causes.join(', ').toUpperCase()}</b>` : '';
-            let isSevere = String(s.GRAVITE).includes('Sévère') || String(s.GRAVITE).includes('Severe');
-            addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${s.NOM_SYNDROME}</strong>${imputStr}<br><small>${s.CONDUITE_IMMEDIATE || 'Surveillance'}</small></div>`, 'bio');
+            // Sévérité : par défaut depuis la base (GRAVITE), surchargeable par valeur (opts.severe).
+            let isSevere = (typeof opts.severe === 'boolean') ? opts.severe
+                : (String(s.GRAVITE).includes('Sévère') || String(s.GRAVITE).includes('Severe'));
+            // Libellé : surchargeable pour les syndromes gradués (ex. hyponatrémie légère/modérée/sévère).
+            let nom = opts.labelOverride || s.NOM_SYNDROME;
+            addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${nom}</strong>${imputStr}<br><small>${s.CONDUITE_IMMEDIATE || 'Surveillance'}</small></div>`, 'bio');
         } catch(e) { GeriaLog.warn('Erreur syndrome bio:', e.message); }
     };
 
@@ -1215,8 +1220,18 @@ function analyserPrescription() {
         if (ratioUreCreat > 100) checkBioSyndrome('SYND_008', true);
     }
 
-    // --- SYND_009 : Hyponatrémie Sévère (Na < 130) ---
-    if (bioValues['BIO_002'] > 0 && bioValues['BIO_002'] < 130) checkBioSyndrome('SYND_009', true);
+    // --- SYND_009 : Hyponatrémie — graduée (légère 130-134 / modérée 125-129 / sévère < 125) ---
+    // Seuil clinique = < 135 (et non < 130) : l'hyponatrémie légère 130-134 est fréquente
+    // chez l'âgé (SIADH iatrogène ISRS/thiazidiques) et justifie une alerte. Cohérent avec
+    // le badge bio de la synthèse (< 135). DANGER si < 125, sinon VIGILANCE.
+    {
+        const na = bioValues['BIO_002'];
+        if (na > 0 && na < 135) {
+            const severe = na < 125;
+            const grade = na < 125 ? 'sévère (< 125)' : na < 130 ? 'modérée (125-129)' : 'légère (130-134)';
+            checkBioSyndrome('SYND_009', true, { severe, labelOverride: `Hyponatrémie ${grade} — Na ${na} mmol/L` });
+        }
+    }
 
     // --- SYND_010 : Hyperkaliémie (K > 5.0) ---
     if(bioValues['BIO_001'] > 5.0) checkBioSyndrome('SYND_010', true);
