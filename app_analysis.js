@@ -2157,7 +2157,11 @@ function analyserPrescription() {
                 let ratio = parseFloat(m.auc_ratio); let txtRatio = ratio < 1 ? `x${ratio} (Baisse)` : `x${ratio} (Hausse)`;
                 let src = m.source || m.note || m.ref || '';
                 let srcBadge = src ? ` <span class="badge bg-info" style="font-size:0.6em;">${escapeHtml(String(src))}</span>` : '';
-                return `<li style="margin-bottom:6px;"><span class="fw-bold">${(ratio >= 3 || ratio <= 0.3) ? '🔴' : '🟠'} Ratio ${txtRatio}</span>${srcBadge}<br><em class="text-muted small">${m.mechanism}</em></li>`;
+                // mechanism est null dans ~65% de DDI_MERGED_DB → fallback sur effet
+                // (toujours renseigné) pour ne pas afficher "null" dans l'onglet AUC.
+                let mecanisme = m.mechanism || m.effet || '';
+                let mecHtml = mecanisme ? `<br><em class="text-muted small">${escapeHtml(String(mecanisme))}</em>` : '';
+                return `<li style="margin-bottom:6px;"><span class="fw-bold">${(ratio >= 3 || ratio <= 0.3) ? '🔴' : '🟠'} Ratio ${txtRatio}</span>${srcBadge}${mecHtml}</li>`;
             }).join('');
             addAlert('alertes-auc', `<div class="alert alert-warning border-warning shadow-sm"><strong style="font-size:1.05em;">📈 Pharmacocinétique (AUC) : ${pair}</strong><ul class="mb-0 ps-3">${detailsHtml}</ul></div>`, 'auc');
         }
