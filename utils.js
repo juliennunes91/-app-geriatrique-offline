@@ -28,11 +28,24 @@ const sanitizeText = (() => {
 })();
 
 // Accès DOM : lecture de valeur numérique, texte, checkbox
+// getVal : convention héritée — retourne 0 si champ vide/absent. Utilisée pour
+// les calculs (DFG, scores) où 0 est un absent acceptable et où la prop. NaN
+// casserait la chaîne arithmétique (DFG affiché "NaN", etc.).
 const getVal = id => {
     let el = document.getElementById(id);
     if (!el || !el.value) return 0;
     let v = parseFloat(el.value.replace(',', '.'));
     return isNaN(v) ? 0 : v;
+};
+// getBioVal : version safe pour les valeurs biologiques — retourne NaN si vide.
+// Toute comparaison avec NaN renvoyant false, on garantit STRUCTURELLEMENT
+// l'absence de faux positif si un futur seuil bas est écrit sans le pattern
+// défensif "val > 0 &&" (ex. `if (bioValues['BIO_xxx'] < 30)`).
+const getBioVal = id => {
+    const el = document.getElementById(id);
+    if (!el || el.value == null || String(el.value).trim() === '') return NaN;
+    const v = parseFloat(String(el.value).replace(',', '.'));
+    return Number.isFinite(v) ? v : NaN;
 };
 const getStr = id => { let el = document.getElementById(id); return el ? el.value : ""; };
 const isChecked = id => { let el = document.getElementById(id); return el ? el.checked : false; };

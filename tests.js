@@ -1634,6 +1634,41 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
             'Plus aucun accès bioValues["BIO_TP/CL/OSM/PREALB"] (utiliser BIO_040/041/042/043)');
     });
 
+    test('Tier 5 — bioValues = NaN si absent (anti-faux-positif structurel)', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        // Patient ZÉRO bio saisi (juste un médicament pour forcer l'analyse).
+        // Aucun seuil bio ne doit déclencher d'alerte sur "alertes-bio".
+        const r = analyzeCase({ age: 80, sexe: 'F', meds: ['Paracetamol'] });
+        const bioAlerts = r['alertes-bio'] || [];
+        // L'onglet bio peut contenir des alertes de contexte non-numériques mais
+        // AUCUNE alerte fondée sur un seuil bas (Na<135, K<3.5, Ca<2.0, Mg<0.75, etc.)
+        const seuilBasTitres = bioAlerts.filter(a =>
+            /Hyponatr[ée]m|Hypokali[ée]m|Hypocalc[ée]m|Hypomagn[ée]s[ée]m|Carence|Hypoalbu|Pr[ée]albumine|Insuffisance.*Vitamine D/i.test(a.titre)
+        );
+        assert.strictEqual(seuilBasTitres.length, 0,
+            'Aucun seuil bas ne doit déclencher quand 0 bio saisie. Trouvé: ' + JSON.stringify(seuilBasTitres));
+    });
+
+    test('Tier 5 — garde-fou : bioValues utilise getBioVal (NaN si absent)', () => {
+        const fs = require('fs');
+        const utils = fs.readFileSync('utils.js', 'utf8');
+        const app = fs.readFileSync('app_analysis.js', 'utf8');
+        assert.ok(/const getBioVal\s*=/.test(utils), 'getBioVal doit être défini dans utils.js');
+        assert.ok(/return NaN/.test(utils), 'getBioVal doit retourner NaN pour les valeurs absentes');
+        // _buildPatientContext doit utiliser getBioVal pour tous les BIO_xxx
+        const ctxMatch = app.match(/function _buildPatientContext[\s\S]*?\n\s*const bioValues = \{[\s\S]*?\n\s*\};/);
+        assert.ok(ctxMatch, '_buildPatientContext / bioValues introuvable');
+        const bioBlock = ctxMatch[0];
+        // Le bloc bioValues NE doit PAS contenir de getVal('bioXxx') ; uniquement getBioVal
+        const getValBio = bioBlock.match(/getVal\(['"]bio[A-Za-z0-9]+['"]\)/g) || [];
+        const getValPatient = bioBlock.match(/getVal\(['"]patient[KN][a-z]*['"]\)/g) || [];
+        assert.strictEqual(getValBio.length, 0,
+            'bioValues ne doit utiliser getVal pour aucun champ bio (faux positif possible). Trouvé : ' + JSON.stringify(getValBio));
+        assert.strictEqual(getValPatient.length, 0,
+            'patientK/patientNa doivent aussi passer par getBioVal. Trouvé : ' + JSON.stringify(getValPatient));
+        assert.ok(/getBioVal\(['"]patientK['"]\)/.test(bioBlock), 'K+ doit utiliser getBioVal');
+    });
+
     test('Tier 5 — hyperbilirubinémie graduée (ictère 35-50 / cholestase 50-100 / sévère > 100)', () => {
         const { analyzeCase } = require('./oracle_harness');
         const titres = bili => (analyzeCase({ age: 80, sexe: 'F', bio: { bili } })['alertes-bio'] || []).map(a => a.titre).join(' | ');

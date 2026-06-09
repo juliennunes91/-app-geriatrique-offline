@@ -490,38 +490,46 @@ function _convertVitDToNgMl(val, unit) {
     return val; // ng/mL par défaut
 }
 
-/** Construit le contexte patient (bioValues, comorbidités, checkboxes) */
+/** Construit le contexte patient (bioValues, comorbidités, checkboxes)
+ *
+ * IMPORTANT — convention bioValues = NaN si absent (pas 0).
+ * Toute comparaison `bioValues['BIO_xxx'] OP seuil` avec NaN renvoie false.
+ * Garantit STRUCTURELLEMENT qu'un seuil bas écrit sans le pattern défensif
+ * historique `val > 0 &&` ne déclenche pas de faux positif silencieux.
+ * Les calculs (DFG, scores ailleurs dans le code) continuent d'utiliser
+ * getVal() qui retourne 0 — la propagation NaN ne traverse que bioValues.
+ */
 function _buildPatientContext(patientAge, sexe, isFragile) {
     const bioValues = {
-        'BIO_001': getVal('patientK'), 'BIO_002': getVal('patientNa'), 'BIO_003': getVal('bioCreat'), 'BIO_004': getVal('patientDFG'),
-        'BIO_005': getVal('bioCa'), 'BIO_006': getVal('bioMg'), 'BIO_007': getVal('bioUree'), 'BIO_008': getVal('bioUric'),
-        'BIO_009': getVal('bioHb'), 'BIO_010': getVal('bioPlaq'), 'BIO_011': getVal('bioGb'), 'BIO_012': getVal('bioPnn'),
-        'BIO_013': getVal('bioAsat'), 'BIO_014': getVal('bioAlat'), 'BIO_015': getVal('bioGgt'), 'BIO_016': getVal('bioPal'),
-        'BIO_017': getVal('bioBili'), 'BIO_018': getVal('bioCpk'), 'BIO_019': getVal('bioTsh'),
-        'BIO_020': getVal('bioFer'),
-        'BIO_021': _convertB12ToPmol(getVal('bioB12'), _getUnit('bioB12Unit', 'pmol/L')),
-        'BIO_022': _convertB9ToNmol(getVal('bioB9'), _getUnit('bioB9Unit', 'nmol/L')),
-        'BIO_023': _convertVitDToNgMl(getVal('bioVitD'), _getUnit('bioVitDUnit', 'ng/mL')),
-        'BIO_024': getVal('bioCrp'), 'BIO_025': getVal('bioGly'), 'BIO_026': getVal('bioHba1c'),
-        'BIO_027_LDL': getVal('bioLdl'), 'BIO_027_TG': getVal('bioTg'),
-        'BIO_028': getVal('bioBnp'), 'BIO_030': getVal('bioInr'), 'BIO_031': getVal('bioQtc'),
-        'BIO_032': getVal('bioPct'), 'BIO_029': getVal('bioLithium'),
-        'BIO_033': getVal('bioDdim'), 'BIO_034': getVal('bioTropo'), 'BIO_036': getVal('bioLipase'),
-        'BIO_035': getVal('bioAlbumSg'), 'BIO_037': getVal('bioLact'),
-        'BIO_027_HDL': getVal('bioHdl'),
-        'BIO_038': getVal('bioRetic'),
-        'BIO_039': getVal('bioVgm'),
-        'BIO_040': getVal('bioTp'),
-        'BIO_041': getVal('bioChlore'),
-        'BIO_042': getVal('bioOsm'),
-        'BIO_043': getVal('bioPrealb'),
-        'BIO_044': _convertDigoxToNgMl(getVal('bioDigox'), _getUnit('bioDigoxUnit', 'ng/mL')),
-        'BIO_045': getVal('bioTca'),
-        'BIO_046': getVal('bioAlbuminurie'),
+        'BIO_001': getBioVal('patientK'), 'BIO_002': getBioVal('patientNa'), 'BIO_003': getBioVal('bioCreat'), 'BIO_004': getBioVal('patientDFG'),
+        'BIO_005': getBioVal('bioCa'), 'BIO_006': getBioVal('bioMg'), 'BIO_007': getBioVal('bioUree'), 'BIO_008': getBioVal('bioUric'),
+        'BIO_009': getBioVal('bioHb'), 'BIO_010': getBioVal('bioPlaq'), 'BIO_011': getBioVal('bioGb'), 'BIO_012': getBioVal('bioPnn'),
+        'BIO_013': getBioVal('bioAsat'), 'BIO_014': getBioVal('bioAlat'), 'BIO_015': getBioVal('bioGgt'), 'BIO_016': getBioVal('bioPal'),
+        'BIO_017': getBioVal('bioBili'), 'BIO_018': getBioVal('bioCpk'), 'BIO_019': getBioVal('bioTsh'),
+        'BIO_020': getBioVal('bioFer'),
+        'BIO_021': _convertB12ToPmol(getBioVal('bioB12'), _getUnit('bioB12Unit', 'pmol/L')),
+        'BIO_022': _convertB9ToNmol(getBioVal('bioB9'), _getUnit('bioB9Unit', 'nmol/L')),
+        'BIO_023': _convertVitDToNgMl(getBioVal('bioVitD'), _getUnit('bioVitDUnit', 'ng/mL')),
+        'BIO_024': getBioVal('bioCrp'), 'BIO_025': getBioVal('bioGly'), 'BIO_026': getBioVal('bioHba1c'),
+        'BIO_027_LDL': getBioVal('bioLdl'), 'BIO_027_TG': getBioVal('bioTg'),
+        'BIO_028': getBioVal('bioBnp'), 'BIO_030': getBioVal('bioInr'), 'BIO_031': getBioVal('bioQtc'),
+        'BIO_032': getBioVal('bioPct'), 'BIO_029': getBioVal('bioLithium'),
+        'BIO_033': getBioVal('bioDdim'), 'BIO_034': getBioVal('bioTropo'), 'BIO_036': getBioVal('bioLipase'),
+        'BIO_035': getBioVal('bioAlbumSg'), 'BIO_037': getBioVal('bioLact'),
+        'BIO_027_HDL': getBioVal('bioHdl'),
+        'BIO_038': getBioVal('bioRetic'),
+        'BIO_039': getBioVal('bioVgm'),
+        'BIO_040': getBioVal('bioTp'),
+        'BIO_041': getBioVal('bioChlore'),
+        'BIO_042': getBioVal('bioOsm'),
+        'BIO_043': getBioVal('bioPrealb'),
+        'BIO_044': _convertDigoxToNgMl(getBioVal('bioDigox'), _getUnit('bioDigoxUnit', 'ng/mL')),
+        'BIO_045': getBioVal('bioTca'),
+        'BIO_046': getBioVal('bioAlbuminurie'),
         // Alias non-canoniques (pas d'ID dans la base) : conservés sous préfixe BIO_
-        'BIO_CST': getVal('bioCst'), 'BIO_PHOS': getVal('bioPhos'),
-        'BIO_TEMP': getVal('bioTemp'),
-        'BIO_T4': getVal('bioT4'), 'BIO_T3': getVal('bioT3')
+        'BIO_CST': getBioVal('bioCst'), 'BIO_PHOS': getBioVal('bioPhos'),
+        'BIO_TEMP': getBioVal('bioTemp'),
+        'BIO_T4': getBioVal('bioT4'), 'BIO_T3': getBioVal('bioT3')
     };
 
     // Auto-injection des PAT codes depuis les checkboxes cliniques
