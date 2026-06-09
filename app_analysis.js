@@ -470,6 +470,26 @@ function _convertB9ToNmol(val, unit) {
     return val; // nmol/L par défaut
 }
 
+/**
+ * Convertit une digoxinémie en ng/mL (unité canonique interne, ESC).
+ * 1 ng/mL = 1.28 nmol/L. Cible thérapeutique sujet âgé : 0.5-0.9 ng/mL (ESC 2021 IC).
+ */
+function _convertDigoxToNgMl(val, unit) {
+    if (!val || val <= 0) return val;
+    if (unit === 'nmol/L') return Math.round((val / 1.28) * 100) / 100;
+    return val; // ng/mL par défaut (= µg/L)
+}
+
+/**
+ * Convertit une vitamine D en ng/mL (unité canonique interne).
+ * 1 ng/mL = 2.5 nmol/L. Seuil carence < 10, insuffisance < 30.
+ */
+function _convertVitDToNgMl(val, unit) {
+    if (!val || val <= 0) return val;
+    if (unit === 'nmol/L') return Math.round((val / 2.5) * 10) / 10;
+    return val; // ng/mL par défaut
+}
+
 /** Construit le contexte patient (bioValues, comorbidités, checkboxes) */
 function _buildPatientContext(patientAge, sexe, isFragile) {
     const bioValues = {
@@ -481,19 +501,27 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'BIO_020': getVal('bioFer'),
         'BIO_021': _convertB12ToPmol(getVal('bioB12'), _getUnit('bioB12Unit', 'pmol/L')),
         'BIO_022': _convertB9ToNmol(getVal('bioB9'), _getUnit('bioB9Unit', 'nmol/L')),
-        'BIO_023': getVal('bioVitD'),
+        'BIO_023': _convertVitDToNgMl(getVal('bioVitD'), _getUnit('bioVitDUnit', 'ng/mL')),
         'BIO_024': getVal('bioCrp'), 'BIO_025': getVal('bioGly'), 'BIO_026': getVal('bioHba1c'),
         'BIO_027_LDL': getVal('bioLdl'), 'BIO_027_TG': getVal('bioTg'),
         'BIO_028': getVal('bioBnp'), 'BIO_030': getVal('bioInr'), 'BIO_031': getVal('bioQtc'),
         'BIO_032': getVal('bioPct'), 'BIO_029': getVal('bioLithium'),
         'BIO_033': getVal('bioDdim'), 'BIO_034': getVal('bioTropo'), 'BIO_036': getVal('bioLipase'),
         'BIO_035': getVal('bioAlbumSg'), 'BIO_037': getVal('bioLact'),
+        'BIO_027_HDL': getVal('bioHdl'),
+        'BIO_038': getVal('bioRetic'),
+        'BIO_039': getVal('bioVgm'),
+        'BIO_040': getVal('bioTp'),
+        'BIO_041': getVal('bioChlore'),
+        'BIO_042': getVal('bioOsm'),
+        'BIO_043': getVal('bioPrealb'),
+        'BIO_044': _convertDigoxToNgMl(getVal('bioDigox'), _getUnit('bioDigoxUnit', 'ng/mL')),
+        'BIO_045': getVal('bioTca'),
+        'BIO_046': getVal('bioAlbuminurie'),
+        // Alias non-canoniques (pas d'ID dans la base) : conservés sous préfixe BIO_
         'BIO_CST': getVal('bioCst'), 'BIO_PHOS': getVal('bioPhos'),
         'BIO_TEMP': getVal('bioTemp'),
-        'BIO_T4': getVal('bioT4'), 'BIO_T3': getVal('bioT3'),
-        'BIO_TP': getVal('bioTp'), 'BIO_CL': getVal('bioChlore'),
-        'BIO_OSM': getVal('bioOsm'), 'BIO_PREALB': getVal('bioPrealb'),
-        'BIO_046': getVal('bioAlbuminurie')
+        'BIO_T4': getVal('bioT4'), 'BIO_T3': getVal('bioT3')
     };
 
     // Auto-injection des PAT codes depuis les checkboxes cliniques
@@ -551,7 +579,7 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(isChecked('chkAtcdUlcere')) ctxClinique.push("atcd_ulcere", "atcd_hemorragie_digestive");
     if(isChecked('chkAspirineForte')) ctxClinique.push("dose_aspirine_elevee");
     if(isChecked('chkInsulineSlidingScale')) ctxClinique.push("sliding_scale");
-    if(getVal('bioAlb') > 0 && getVal('bioAlb') < 30) ctxClinique.push("denutrition_severe");
+    if(getVal('bioAlbumSg') > 0 && getVal('bioAlbumSg') < 30) ctxClinique.push("denutrition_severe");
     if(isChecked('chkFoie')) ctxClinique.push("hepatopathie");
     if(isChecked('chkTvp')) ctxClinique.push("mtev");
     if(isChecked('chkAvc')) ctxClinique.push("avc");
@@ -687,14 +715,15 @@ const _HASH_NUMERIC_FIELDS = [
     'bioCreat', 'bioCa', 'bioMg', 'bioUree', 'bioUric', 'bioHb', 'bioPlaq',
     'bioGb', 'bioPnn', 'bioAsat', 'bioAlat', 'bioGgt', 'bioPal', 'bioBili',
     'bioCpk', 'bioTsh', 'bioFer', 'bioB12', 'bioB9', 'bioVitD', 'bioCrp',
-    'bioGly', 'bioHba1c', 'bioLdl', 'bioTg', 'bioBnp', 'bioInr', 'bioQtc',
+    'bioGly', 'bioHba1c', 'bioLdl', 'bioHdl', 'bioTg', 'bioBnp', 'bioInr', 'bioQtc',
     'bioPct', 'bioLithium', 'bioDdim', 'bioTropo', 'bioLipase', 'bioAlbumSg',
-    'bioLact', 'bioCst', 'bioPhos', 'bioTemp', 'bioT4', 'bioT3', 'bioTp',
-    'bioChlore', 'bioOsm', 'bioPrealb', 'bioAlbuminurie', 'bioAlb',
+    'bioLact', 'bioCst', 'bioPhos', 'bioTemp', 'bioT4', 'bioT3', 'bioTp', 'bioTca',
+    'bioChlore', 'bioOsm', 'bioPrealb', 'bioAlbuminurie',
+    'bioDigox', 'bioVgm', 'bioRetic',
     // Child-Pugh manuel (utilisé si cpManual=1)
     'cpBili', 'cpAlb', 'cpTp', 'cpAscite', 'cpEnceph'
 ];
-const _HASH_SELECT_FIELDS = ['bioB12Unit', 'bioB9Unit'];
+const _HASH_SELECT_FIELDS = ['bioB12Unit', 'bioB9Unit', 'bioVitDUnit', 'bioDigoxUnit'];
 if (typeof window !== 'undefined') { window._HASH_NUMERIC_FIELDS = _HASH_NUMERIC_FIELDS; window._HASH_SELECT_FIELDS = _HASH_SELECT_FIELDS; }
 
 function analyserPrescription() {
@@ -1251,11 +1280,25 @@ function analyserPrescription() {
         }
     }
 
-    // --- SYND_010 : Hyperkaliémie (K > 5.0) ---
-    if(bioValues['BIO_001'] > 5.0) checkBioSyndrome('SYND_010', true);
+    // --- SYND_010 : Hyperkaliémie — graduée (modérée 5.0-5.5 / sévère 5.5-6.5 / critique ≥ 6.5) ---
+    {
+        const k = bioValues['BIO_001'];
+        if (k > 5.0) {
+            const severe = k >= 5.5;
+            const grade = k >= 6.5 ? 'critique (≥ 6.5 — risque FV/arrêt)' : k >= 5.5 ? 'sévère (5.5-6.4)' : 'modérée (5.0-5.4)';
+            checkBioSyndrome('SYND_010', true, { severe, labelOverride: `Hyperkaliémie ${grade} — K ${k} mmol/L` });
+        }
+    }
 
-    // --- SYND_011 : Hypokaliémie (K < 3.5) ---
-    if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] < 3.5) checkBioSyndrome('SYND_011', true);
+    // --- SYND_011 : Hypokaliémie — graduée (légère 3.0-3.4 / sévère < 3.0 / critique < 2.5) ---
+    {
+        const k = bioValues['BIO_001'];
+        if (k > 0 && k < 3.5) {
+            const severe = k < 3.0;
+            const grade = k < 2.5 ? 'critique (< 2.5 — risque arythmie/torsades)' : k < 3.0 ? 'sévère (2.5-2.9)' : 'légère (3.0-3.4)';
+            checkBioSyndrome('SYND_011', true, { severe, labelOverride: `Hypokaliémie ${grade} — K ${k} mmol/L` });
+        }
+    }
 
     // --- SYND_012/013 : Dysthyroïdie (TSH + T4/T3) ---
     let tsh = bioValues['BIO_019']; let t4 = bioValues['BIO_T4']; let t3 = bioValues['BIO_T3'];
@@ -1318,11 +1361,25 @@ function analyserPrescription() {
         }
     }
 
-    // --- SYND_021 : Hypercalcémie (Ca > 2.65 mmol/L) ---
-    if (bioValues['BIO_005'] > 2.65) checkBioSyndrome('SYND_021', true);
+    // --- SYND_021 : Hypercalcémie — graduée (légère 2.65-3.0 / sévère 3.0-3.5 / crise > 3.5) ---
+    {
+        const ca = bioValues['BIO_005'];
+        if (ca > 2.65) {
+            const severe = ca > 3.0;
+            const grade = ca > 3.5 ? 'crise hypercalcémique (> 3.5 — urgence)' : ca > 3.0 ? 'sévère (3.0-3.5)' : 'légère (2.65-3.0)';
+            checkBioSyndrome('SYND_021', true, { severe, labelOverride: `Hypercalcémie ${grade} — Ca ${ca} mmol/L` });
+        }
+    }
 
-    // --- SYND_022 : Hypomagnésémie (Mg < 0.75 mmol/L) ---
-    if (bioValues['BIO_006'] > 0 && bioValues['BIO_006'] < 0.75) checkBioSyndrome('SYND_022', true);
+    // --- SYND_022 : Hypomagnésémie — graduée (légère 0.70-0.75 / sévère 0.50-0.70 / critique < 0.50) ---
+    {
+        const mg = bioValues['BIO_006'];
+        if (mg > 0 && mg < 0.75) {
+            const severe = mg < 0.50;
+            const grade = mg < 0.50 ? 'critique (< 0.50 — risque torsades)' : mg < 0.70 ? 'sévère (0.50-0.69)' : 'légère (0.70-0.74)';
+            checkBioSyndrome('SYND_022', true, { severe, labelOverride: `Hypomagnésémie ${grade} — Mg ${mg} mmol/L` });
+        }
+    }
 
     // --- SYND_023 : Syndrome Inflammatoire Marqué (CRP > 100) ---
     if (bioValues['BIO_024'] > 100) checkBioSyndrome('SYND_023', true);
@@ -1344,8 +1401,15 @@ function analyserPrescription() {
     // --- SYND_027 : Surdosage AVK / INR Suprathérapeutique (INR > 4) ---
     if (bioValues['BIO_030'] > 4.0) checkBioSyndrome('SYND_027', true);
 
-    // --- SYND_028 : Lithiémie Toxique / Surdosage Lithium (> 1.5 mEq/L) ---
-    if (bioValues['BIO_029'] > 1.5) checkBioSyndrome('SYND_028', true);
+    // --- SYND_028 : Lithiémie — graduée sujet âgé (cible 0.4-0.8 / vigilance > 0.8 / toxique > 1.2 / sévère > 1.5) ---
+    {
+        const li = bioValues['BIO_029'];
+        if (li > 0.8) {
+            const severe = li > 1.2;
+            const grade = li > 2.0 ? 'sévère (> 2.0 — toxicité, néphrotoxicité)' : li > 1.5 ? 'surdosage (1.5-2.0)' : li > 1.2 ? 'toxique sujet âgé (> 1.2)' : 'vigilance (> 0.8 — limite haute sujet âgé)';
+            checkBioSyndrome('SYND_028', true, { severe, labelOverride: `Lithiémie ${grade} — ${li} mEq/L` });
+        }
+    }
 
     // --- SYND_029 : IC Décompensation Biologique (NT-proBNP élevé selon âge) ---
     {
@@ -1362,8 +1426,15 @@ function analyserPrescription() {
     // --- SYND_031 : Cholestase Biologique (GGT > 3N ou PAL > 2N) ---
     if ((bioValues['BIO_015'] > 150 || bioValues['BIO_016'] > 135)) checkBioSyndrome('SYND_031', true);
 
-    // --- SYND_032 : Ictère / Hyperbilirubinémie (Bili > 35 µmol/L) ---
-    if (bioValues['BIO_017'] > 35) checkBioSyndrome('SYND_032', true);
+    // --- SYND_032 : Ictère / Hyperbilirubinémie — gradué (ictère 35-50 / cholestase 50-100 / sévère > 100) ---
+    {
+        const bili = bioValues['BIO_017'];
+        if (bili > 35) {
+            const severe = bili > 100;
+            const grade = bili > 200 ? 'sévère (> 200 — risque encéphalopathie si cirrhose)' : bili > 100 ? 'marquée (100-200)' : bili > 50 ? 'cholestase clinique (50-100)' : 'ictère débutant (35-50)';
+            checkBioSyndrome('SYND_032', true, { severe, labelOverride: `Hyperbilirubinémie ${grade} — ${bili} µmol/L` });
+        }
+    }
 
     // --- SYND_033 : Dénutrition / Hypoalbuminémie Sévère (Albumine < 30 g/L) ---
     if (bioValues['BIO_035'] > 0 && bioValues['BIO_035'] < 30) checkBioSyndrome('SYND_033', true);
@@ -1387,8 +1458,17 @@ function analyserPrescription() {
         if (ddim > seuilDdim) checkBioSyndrome('SYND_035', true);
     }
 
-    // --- SYND_036 : Syndrome Coronarien Aigu (Troponine hs > 52 ng/L) ---
-    if (bioValues['BIO_034'] > 52) checkBioSyndrome('SYND_036', true);
+    // --- SYND_036 : Syndrome Coronarien Aigu — Troponine hs sexe-spécifique (ESC 2023) ---
+    // 99e percentile : F > 16 ng/L, H > 34 ng/L. Seuil "rule-in SCA" : > 52 ng/L (cohorte mixte).
+    {
+        const tn = bioValues['BIO_034'];
+        const seuilSexe = (sexe === 'F') ? 16 : 34;
+        if (tn > seuilSexe) {
+            const severe = tn > 52;
+            const grade = tn > 52 ? `rule-in SCA (> 52 ng/L)` : `élévation > 99e percentile ${sexe} (> ${seuilSexe} ng/L)`;
+            checkBioSyndrome('SYND_036', true, { severe, labelOverride: `Troponine hs ${grade} — ${tn} ng/L` });
+        }
+    }
 
     // --- SYND_037 : Pancytopénie (Hb < 10 + Plaq < 100 + GB < 2) ---
     if (bioValues['BIO_009'] > 0 && bioValues['BIO_009'] < 10 && bioValues['BIO_010'] > 0 && bioValues['BIO_010'] < 100 && bioValues['BIO_011'] > 0 && bioValues['BIO_011'] < 2) {
@@ -1404,56 +1484,131 @@ function analyserPrescription() {
     // --- SYND_041 : Neutropénie Fébrile sous Chimiothérapie (PNN < 1.0 + T > 38.3°C) ---
     if (bioValues['BIO_012'] > 0 && bioValues['BIO_012'] < 1.0 && bioValues['BIO_TEMP'] > 38.3) checkBioSyndrome('SYND_041', true);
 
-    // --- SYND_042 : Hypernatrémie / Déshydratation Intracellulaire (Na > 145) ---
-    if (bioValues['BIO_002'] > 145) checkBioSyndrome('SYND_042', true);
+    // --- SYND_042 : Hypernatrémie — graduée (modérée 145-150 / sévère 150-160 / critique > 160) ---
+    {
+        const na = bioValues['BIO_002'];
+        if (na > 145) {
+            const severe = na > 155;
+            const grade = na > 160 ? 'critique (> 160 — encéphalopathie/coma)' : na > 155 ? 'sévère (155-160)' : na > 150 ? 'modérée (150-155)' : 'légère (145-150)';
+            checkBioSyndrome('SYND_042', true, { severe, labelOverride: `Hypernatrémie ${grade} — Na ${na} mmol/L` });
+        }
+    }
+
+    // --- Digoxinémie (BIO_044) — fenêtre thérapeutique étroite (ESC 2021 IC, sujet âgé) ---
+    // Cible 0.5-0.9 ng/mL chez l'âgé ; > 1.2 = surdosage probable ; > 2.0 = toxicité.
+    {
+        const dig = bioValues['BIO_044'];
+        if (dig > 0.9) {
+            const severe = dig > 1.2;
+            const grade = dig > 2.0 ? 'toxique (> 2.0)' : dig > 1.2 ? 'surdosage (1.2-2.0)' : 'limite haute sujet âgé (> 0.9)';
+            const cls = dig > 1.2 ? 'danger' : 'warning border-warning';
+            const icon = dig > 1.2 ? '🚨' : '⚠️';
+            const digCauses = [];
+            ['amiodarone', 'verapamil', 'spironolactone', 'macrolide', 'itraconazole', 'quinidine', 'propafenone'].forEach(d => { if (patientHasMedClass(d)) digCauses.push(d); });
+            const digImput = digCauses.length > 0 ? `<br><em>Interactions augmentant la digoxinémie :</em> <b>${digCauses.join(', ').toUpperCase()}</b>` : '';
+            const irc = bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 50 ? `<br><em>Facteur de risque :</em> IRC (DFG ${bioValues['BIO_004']} ml/min) — accumulation rénale.` : '';
+            addAlert('alertes-bio', `<div class="alert alert-${cls} shadow-sm"><strong>${icon} Digoxinémie ${grade} — ${dig} ng/mL</strong>${digImput}${irc}
+                <br><em>Cible ESC 2021 sujet âgé :</em> 0.5-0.9 ng/mL.
+                <br><em>Conduite :</em> ${dig > 1.2 ? 'Arrêt transitoire digoxine, ECG (BAV, arythmie), contrôler K+/Mg, doser à 24-48h. Fab anti-digoxine si toxicité menaçante.' : 'Réduire dose de 25 %, contrôler digoxinémie à 1 semaine, surveiller fonction rénale et K+.'}</div>`, 'bio');
+        }
+    }
+
+    // --- TCA (BIO_045) — surveillance HNF (cible 1.5-2.5 vs témoin) ---
+    {
+        const tca = bioValues['BIO_045'];
+        if (tca > 0 && patientHasMedClass('heparine')) {
+            if (tca > 2.5) {
+                addAlert('alertes-bio', `<div class="alert alert-${tca > 3.0 ? 'danger' : 'warning border-warning'} shadow-sm"><strong>${tca > 3.0 ? '🚨' : '⚠️'} TCA supra-thérapeutique sous HNF (ratio ${tca})</strong>
+                    <br><em>Cible :</em> 1.5-2.5 vs témoin.
+                    <br><em>Conduite :</em> ${tca > 3.0 ? 'Arrêt transitoire HNF, contrôle à 4-6h, surveiller hémorragie. Protamine si saignement actif.' : 'Réduire débit HNF de 25 %, contrôle à 6h.'}</div>`, 'bio');
+            } else if (tca < 1.5) {
+                addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 TCA infra-thérapeutique sous HNF (ratio ${tca})</strong>
+                    <br><em>Cible :</em> 1.5-2.5. Augmenter débit HNF de 10-15 %, contrôle à 6h.</div>`, 'bio');
+            }
+        }
+    }
+
+    // --- Albuminurie / RAC (BIO_046) — stadification KDIGO ---
+    // A1 < 30, A2 30-300, A3 ≥ 300 (mg/g RAC ou mg/24h). Impact pronostique CV + indication iSGLT2/ARMi.
+    {
+        const acr = bioValues['BIO_046'];
+        if (acr >= 30) {
+            const a3 = acr >= 300;
+            const stade = a3 ? 'A3 — protéinurie sévère (≥ 300)' : 'A2 — microalbuminurie (30-299)';
+            const cls = a3 ? 'danger' : 'warning border-warning';
+            const icon = a3 ? '🚨' : '⚠️';
+            const diabete = activeComorbs.some(c => ['PAT_016', 'PAT_016a', 'PAT_016b'].includes(c)) || (bioValues['BIO_026'] > 6.5);
+            const indication = diabete
+                ? 'Diabète + albuminurie → indication forte IEC/ARA2 + iSGLT2 (dapagliflozine, empagliflozine) — réduction progression IRC et CV (KDIGO 2022).'
+                : 'Atteinte rénale précoce → IEC/ARA2 à doses néphroprotectrices, contrôle TA cible < 130/80.';
+            addAlert('alertes-bio', `<div class="alert alert-${cls} shadow-sm"><strong>${icon} Albuminurie KDIGO ${stade} — ${acr} mg/g (ou mg/24h)</strong>
+                <br><em>Conduite :</em> ${indication}</div>`, 'bio');
+        }
+    }
+
+    // --- Anémie subtypée par VGM (BIO_039) — si Hb basse + VGM disponible ---
+    {
+        const hb = bioValues['BIO_009'];
+        const vgm = bioValues['BIO_039'];
+        const seuilHbF = 12, seuilHbM = 13;
+        const anemique = hb > 0 && ((sexe === 'F' && hb < seuilHbF) || (sexe === 'M' && hb < seuilHbM));
+        if (anemique && vgm > 0) {
+            let subtype = '', etiologies = '';
+            if (vgm < 80) { subtype = 'microcytaire (VGM < 80)'; etiologies = 'Carence martiale (ferritine bas + CST < 20 %), thalassémie, saturnisme, anémie inflammatoire chronique.'; }
+            else if (vgm > 100) { subtype = 'macrocytaire (VGM > 100)'; etiologies = 'Carence B12/B9, hypothyroïdie, alcool, médicaments (méthotrexate, hydroxyurée), syndrome myélodysplasique.'; }
+            else { subtype = 'normocytaire (VGM 80-100)'; etiologies = 'Anémie inflammatoire, hémolyse, IRC (EPO), médullaire (réticulocytes utiles).'; }
+            addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Anémie ${subtype} — Hb ${hb} g/dL</strong>
+                <br><em>Étiologies à explorer :</em> ${etiologies}${bioValues['BIO_038'] > 0 ? `<br><em>Réticulocytes ${bioValues['BIO_038']} G/L :</em> ${bioValues['BIO_038'] < 50 ? 'arégénérative (origine centrale / carentielle)' : 'régénérative (hémolyse, hémorragie récente)'}.` : ''}</div>`, 'bio');
+        }
+    }
 
     // --- TP bas (< 50%) — Risque hémorragique ---
-    if (bioValues['BIO_TP'] > 0 && bioValues['BIO_TP'] < 50) {
+    if (bioValues['BIO_040'] > 0 && bioValues['BIO_040'] < 50) {
         let tpCauses = [];
         ['avk', 'anticoag', 'rivaroxaban', 'apixaban', 'dabigatran'].forEach(d => { if (patientHasMedClass(d)) tpCauses.push(d); });
         let tpImput = tpCauses.length > 0 ? `<br><em>Imputabilité :</em> <b>${tpCauses.join(', ').toUpperCase()}</b>` : '';
-        addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 TP bas (${bioValues['BIO_TP']}%) — Risque hémorragique</strong>${tpImput}
-            <br><em>Conduite :</em> ${bioValues['BIO_TP'] < 30 ? 'TP < 30% — urgence hémostatique, vitamine K IV si AVK, PFC si IHC sévère.' : 'Rechercher cause : insuffisance hépatique, AVK, CIVD. Adapter anticoagulation.'}</div>`, 'bio');
+        addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 TP bas (${bioValues['BIO_040']}%) — Risque hémorragique</strong>${tpImput}
+            <br><em>Conduite :</em> ${bioValues['BIO_040'] < 30 ? 'TP < 30% — urgence hémostatique, vitamine K IV si AVK, PFC si IHC sévère.' : 'Rechercher cause : insuffisance hépatique, AVK, CIVD. Adapter anticoagulation.'}</div>`, 'bio');
     }
 
     // --- Hypochlorémie (< 95 mmol/L) ou Hyperchlorémie (> 110 mmol/L) ---
-    if (bioValues['BIO_CL'] > 0) {
-        if (bioValues['BIO_CL'] < 95) {
-            addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hypochlorémie (${bioValues['BIO_CL']} mmol/L)</strong>
+    if (bioValues['BIO_041'] > 0) {
+        if (bioValues['BIO_041'] < 95) {
+            addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hypochlorémie (${bioValues['BIO_041']} mmol/L)</strong>
                 <br><em>Causes fréquentes :</em> Vomissements, aspirations gastriques, diurétiques (furosémide). Alcalose métabolique associée probable.
                 <br><em>Conduite :</em> Corriger la cause, NaCl IV si sévère.</div>`, 'bio');
-        } else if (bioValues['BIO_CL'] > 110) {
-            addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hyperchlorémie (${bioValues['BIO_CL']} mmol/L)</strong>
+        } else if (bioValues['BIO_041'] > 110) {
+            addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hyperchlorémie (${bioValues['BIO_041']} mmol/L)</strong>
                 <br><em>Causes fréquentes :</em> Perfusion NaCl excessive, acidose tubulaire, IRC. Acidose hyperchlorémique possible.
                 <br><em>Conduite :</em> Trou anionique, gaz du sang, adapter les perfusions.</div>`, 'bio');
         }
     }
 
     // --- Hyperosmolalité (> 300 mOsm/kg) — Déshydratation ---
-    if (bioValues['BIO_OSM'] > 300) {
+    if (bioValues['BIO_042'] > 300) {
         let osmCauses = [];
         ['diuretique', 'lithium', 'mannitol'].forEach(d => { if (patientHasMedClass(d)) osmCauses.push(d); });
         let osmImput = osmCauses.length > 0 ? `<br><em>Imputabilité :</em> <b>${osmCauses.join(', ').toUpperCase()}</b>` : '';
-        addAlert('alertes-bio', `<div class="alert alert-${bioValues['BIO_OSM'] > 320 ? 'danger' : 'warning'} shadow-sm">
-            <strong>${bioValues['BIO_OSM'] > 320 ? '🚨' : '⚠️'} Hyperosmolalité (${bioValues['BIO_OSM']} mOsm/kg)</strong>${osmImput}
-            <br><em>Conduite :</em> ${bioValues['BIO_OSM'] > 320 ? 'Déshydratation sévère — réhydratation IV par soluté hypotonique. Rechercher coma hyperosmolaire si diabétique.' : 'Déshydratation modérée — réhydratation PO/IV, adapter diurétiques.'}</div>`, 'bio');
+        addAlert('alertes-bio', `<div class="alert alert-${bioValues['BIO_042'] > 320 ? 'danger' : 'warning'} shadow-sm">
+            <strong>${bioValues['BIO_042'] > 320 ? '🚨' : '⚠️'} Hyperosmolalité (${bioValues['BIO_042']} mOsm/kg)</strong>${osmImput}
+            <br><em>Conduite :</em> ${bioValues['BIO_042'] > 320 ? 'Déshydratation sévère — réhydratation IV par soluté hypotonique. Rechercher coma hyperosmolaire si diabétique.' : 'Déshydratation modérée — réhydratation PO/IV, adapter diurétiques.'}</div>`, 'bio');
     }
 
     // --- Préalbumine (transthyrétine) — Marqueur de suivi nutritionnel ---
     // Normes : 0.20-0.40 g/L | Seuils révisés (Bouillanne 2017) : sévère < 0.12, modéré < 0.17
     // NB : HAS 2021 ne retient plus la préalbumine comme critère diagnostique de dénutrition,
     //       mais reste utile en suivi d'efficacité de la renutrition (demi-vie 2-4 jours).
-    if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.12) {
-        addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 Préalbumine très basse (${bioValues['BIO_PREALB']} g/L) — dénutrition sévère</strong>
+    if (bioValues['BIO_043'] > 0 && bioValues['BIO_043'] < 0.12) {
+        addAlert('alertes-bio', `<div class="alert alert-danger shadow-sm"><strong>🚨 Préalbumine très basse (${bioValues['BIO_043']} g/L) — dénutrition sévère</strong>
             <br><em>Normes :</em> 0.20 – 0.40 g/L | Seuil sévère < 0.12 g/L (Bouillanne 2017)
             <br><em>Interprétation :</em> Dénutrition protéino-énergétique sévère (marqueur précoce, demi-vie 2-4 jours). Attention : abaissée aussi en syndrome inflammatoire (CRP élevée) et insuffisance hépatique.
             <br><em>Conduite :</em> Support nutritionnel urgent : CNO hypercaloriques/hyperprotidiques, envisager nutrition entérale. Adapter posologies des médicaments à forte liaison protéique. Contrôle à J15.</div>`, 'bio');
-    } else if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.17) {
-        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Préalbumine basse (${bioValues['BIO_PREALB']} g/L) — dénutrition modérée</strong>
+    } else if (bioValues['BIO_043'] > 0 && bioValues['BIO_043'] < 0.17) {
+        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Préalbumine basse (${bioValues['BIO_043']} g/L) — dénutrition modérée</strong>
             <br><em>Normes :</em> 0.20 – 0.40 g/L | Seuil modéré < 0.17 g/L (Bouillanne 2017)
             <br><em>Conduite :</em> Enrichissement des repas, CNO, réévaluation à J15. Éliminer un syndrome inflammatoire surajouté (CRP).</div>`, 'bio');
-    } else if (bioValues['BIO_PREALB'] > 0 && bioValues['BIO_PREALB'] < 0.20) {
-        addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Préalbumine limite basse (${bioValues['BIO_PREALB']} g/L)</strong>
+    } else if (bioValues['BIO_043'] > 0 && bioValues['BIO_043'] < 0.20) {
+        addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Préalbumine limite basse (${bioValues['BIO_043']} g/L)</strong>
             <br><em>Normes :</em> 0.20 – 0.40 g/L
             <br><em>Conduite :</em> Surveillance nutritionnelle rapprochée. Enrichir les repas, peser régulièrement. Contrôle à 1 mois.</div>`, 'bio');
     }
@@ -2188,15 +2343,13 @@ function analyserPrescription() {
             'BIO_041': 'Semestriel (ionogramme)',
             'BIO_042': 'À la demande (dysnatrémie)',
             'BIO_043': 'À la demande (bilan nutritionnel)',
+            'BIO_044': 'Trimestriel sous digoxine (ESC 2021)',
+            'BIO_045': 'Toutes les 6h en initiation HNF, quotidien à l\'équilibre',
+            'BIO_046': 'Annuel si HTA/diabète/IRC (KDIGO 2022)',
             'BIO_CST': 'Annuel',
             'BIO_PHOS': 'Annuel',
-            'BIO_TEMP': 'À la demande',
             'BIO_T4': 'Selon TSH',
-            'BIO_T3': 'Selon TSH',
-            'BIO_TP': 'Annuel (mensuel si AVK)',
-            'BIO_CL': 'Semestriel (ionogramme)',
-            'BIO_OSM': 'À la demande',
-            'BIO_PREALB': 'À la demande (nutrition)'
+            'BIO_T3': 'Selon TSH'
         };
         for (const [bioId, entry] of Object.entries(bioPlan)) {
             if (entry.freqs.length === 0 && _DEFAULT_BIO_FREQ[bioId]) {
@@ -2731,7 +2884,16 @@ function analyserPrescription() {
                 { code: 'BIO_031',   field: 'QTc',       min: 250,  max: 700,  unit: 'ms' },
                 { code: 'BIO_019',   field: 'TSH',       min: 0.001,max: 200,  unit: 'mUI/L' },
                 { code: 'BIO_025',   field: 'Glycémie',  min: 0.5,  max: 50,   unit: 'mmol/L' },
-                { code: 'BIO_017',   field: 'Bili',      min: 1,    max: 1000, unit: 'µmol/L' }
+                { code: 'BIO_017',   field: 'Bili',      min: 1,    max: 1000, unit: 'µmol/L' },
+                { code: 'BIO_005',   field: 'Calcémie',  min: 1.0,  max: 4.0,  unit: 'mmol/L' },
+                { code: 'BIO_006',   field: 'Magnésium', min: 0.3,  max: 2.0,  unit: 'mmol/L' },
+                { code: 'BIO_029',   field: 'Lithium',   min: 0,    max: 5,    unit: 'mEq/L' },
+                { code: 'BIO_034',   field: 'Troponine', min: 0,    max: 100000, unit: 'ng/L' },
+                { code: 'BIO_044',   field: 'Digoxinémie', min: 0,  max: 10,   unit: 'ng/mL' },
+                { code: 'BIO_045',   field: 'TCA',       min: 0.5,  max: 10,   unit: 'ratio' },
+                { code: 'BIO_046',   field: 'Albuminurie', min: 0,  max: 10000, unit: 'mg/g' },
+                { code: 'BIO_039',   field: 'VGM',       min: 40,   max: 140,  unit: 'fL' },
+                { code: 'BIO_023',   field: 'Vit D',     min: 0,    max: 200,  unit: 'ng/mL' }
             ];
             ranges.forEach(r => {
                 let v = r.code ? bioValues[r.code] : r.val;

@@ -52,7 +52,7 @@ window.importerPatientJSON = function() {
 
 function _collectPatientData() {
     const fields = {};
-    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB9, #bioVitD, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
+    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
         if (el) fields[el.id] = el.value;
     });
     const checkboxes = {};
@@ -611,8 +611,11 @@ window.resetPatient = function() {
         'bioGb': '', 'bioPnn': '', 'bioInr': '', 'bioGly': '',
         'bioHba1c': '', 'bioBili': '', 'bioPhos': '', 'bioLact': '',
         'bioPct': '', 'bioLithium': '', 'bioLipase': '', 'bioDdim': '', 'bioTropo': '', 'bioTemp': '',
+        'bioDigox': '', 'bioDigoxUnit': 'ng/mL', 'bioTca': '',
+        'bioVitDUnit': 'ng/mL',
         'scoreCFS': '0', 'bioQtc': '',
-        'bioTp': '', 'bioChlore': '', 'bioOsm': '', 'bioPrealb': '',
+        'bioTp': '', 'bioChlore': '', 'bioOsm': '', 'bioPrealb': '', 'bioAlbuminurie': '',
+        'bioVgm': '', 'bioRetic': '',
         'cpManual': '0', 'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1'
     };
     for (const [id, val] of Object.entries(defaults)) {

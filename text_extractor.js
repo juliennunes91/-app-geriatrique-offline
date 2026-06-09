@@ -381,7 +381,26 @@
     const ABBR_TO_BIO_CODE = {
         'Hb': 'BIO_009', 'DFG': 'BIO_004', 'GFR': 'BIO_004',
         'TSH': 'BIO_019', 'INR': 'BIO_030', 'HbA1c': 'BIO_026',
-        'QTc': 'BIO_031', 'CRP': 'BIO_027' // CRP peut ne pas exister; ignoré si absent
+        'QTc': 'BIO_031',
+        'CRP': 'BIO_024',  // FIX: était BIO_027 (= bilan lipidique). CRP = BIO_024.
+        'K+': 'BIO_001', 'Kaliemie': 'BIO_001',
+        'Na+': 'BIO_002', 'Natremie': 'BIO_002',
+        'Creat': 'BIO_003', 'Creatinine': 'BIO_003',
+        'Ca': 'BIO_005', 'Calcium': 'BIO_005', 'Calcemie': 'BIO_005',
+        'Mg': 'BIO_006', 'Magnesium': 'BIO_006',
+        'Albumine': 'BIO_035', 'Alb': 'BIO_035',
+        'Troponine': 'BIO_034', 'cTn': 'BIO_034',
+        'Plaq': 'BIO_010', 'Plaquettes': 'BIO_010',
+        'PNN': 'BIO_012',
+        'TP': 'BIO_040', 'Prothrombine': 'BIO_040',
+        'Chlore': 'BIO_041',
+        'Osmolalite': 'BIO_042',
+        'Prealbumine': 'BIO_043', 'TTR': 'BIO_043',
+        'Digoxinemie': 'BIO_044',
+        'TCA': 'BIO_045', 'aPTT': 'BIO_045',
+        'Albuminurie': 'BIO_046', 'RAC': 'BIO_046',
+        'VGM': 'BIO_039', 'MCV': 'BIO_039',
+        'Reticulocytes': 'BIO_038'
     };
 
     // === Abréviations AMBIGUËS (plusieurs entités cliniques candidates) ===

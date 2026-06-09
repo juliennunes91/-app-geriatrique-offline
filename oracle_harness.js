@@ -134,9 +134,11 @@ const BIO_INPUT_IDS = {
     asat: 'bioAsat', alat: 'bioAlat', ggt: 'bioGgt', pal: 'bioPal', bili: 'bioBili',
     cpk: 'bioCpk', tsh: 'bioTsh', fer: 'bioFer', b12: 'bioB12', b9: 'bioB9',
     vitd: 'bioVitD', crp: 'bioCrp', gly: 'bioGly', hba1c: 'bioHba1c',
-    ldl: 'bioLdl', tg: 'bioTg', bnp: 'bioBnp', inr: 'bioInr', qtc: 'bioQtc',
-    lithium: 'bioLithium', lipase: 'bioLipase', alb: 'bioAlb', albumSg: 'bioAlbumSg',
-    albuminurie: 'bioAlbuminurie', rac: 'bioAlbuminurie'
+    ldl: 'bioLdl', hdl: 'bioHdl', tg: 'bioTg', bnp: 'bioBnp', inr: 'bioInr', qtc: 'bioQtc',
+    lithium: 'bioLithium', lipase: 'bioLipase', albumSg: 'bioAlbumSg',
+    albuminurie: 'bioAlbuminurie', rac: 'bioAlbuminurie',
+    digox: 'bioDigox', tca: 'bioTca', vgm: 'bioVgm', retic: 'bioRetic',
+    tropo: 'bioTropo'
 };
 
 function parseAlerts(html) {
