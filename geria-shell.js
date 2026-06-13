@@ -41,6 +41,10 @@ function initDarkMode() {
   if (localStorage.getItem('geria-dark') === '1') document.body.classList.add('dark');
 }
 
+/* Note : geriaPrefs/masquage d'alertes/init sont déclarés dans app_ui.js
+   (chargé par les deux UIs index.html et index_modern.html). geria-shell.js
+   n'étant pas inclus comme <script> au runtime, on n'y duplique rien. */
+
 /* ── DROPDOWNS ───────────────────────────────────────────── */
 function toggleDropdown(id, e) {
   if (e) e.stopPropagation();

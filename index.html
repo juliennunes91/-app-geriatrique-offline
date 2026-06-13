@@ -113,7 +113,12 @@
                     <button class="btn btn-outline-secondary btn-sm" onclick="toggleDarkMode()" id="btnDarkMode" title="Mode sombre">Mode sombre</button>
                     <div class="position-relative d-inline-block">
                         <button class="btn btn-outline-secondary btn-sm" onclick="toggleUiPrefsPopover(event)" id="btnUiPrefs" title="Préférences d'affichage" aria-expanded="false">⚙️</button>
-                        <div id="uiPrefsPopover" class="position-absolute end-0 mt-1 p-3 bg-white border rounded shadow-sm" style="display:none; z-index:1030; min-width:240px;">
+                        <div id="uiPrefsPopover" class="position-absolute end-0 mt-1 p-3 bg-white border rounded shadow-sm" style="display:none; z-index:1030; min-width:260px;">
+                            <div class="small fw-bold mb-2">Boîtes de dialogue</div>
+                            <div class="form-check"><input type="checkbox" data-geria-pref="skipPrecisionsModal" id="prefSkipPrecisions" class="form-check-input" onchange="setGeriaPref('skipPrecisionsModal', this.checked)"><label class="form-check-label small" for="prefSkipPrecisions">Ne pas demander les précisions médicament</label></div>
+                            <div class="form-check"><input type="checkbox" data-geria-pref="skipMaskConfirm" id="prefSkipMaskConfirm" class="form-check-input" onchange="setGeriaPref('skipMaskConfirm', this.checked)"><label class="form-check-label small" for="prefSkipMaskConfirm">Masquer une alerte sans confirmation</label></div>
+                            <button type="button" class="btn btn-sm btn-link p-0 mt-1 text-decoration-none" onclick="resetMaskedAlerts()">↻ Réafficher toutes les alertes masquées</button>
+                            <hr class="my-2">
                             <div class="small fw-bold mb-2">Troubles cognitifs &amp; neuropsycho</div>
                             <div class="form-check"><input type="radio" name="spcDisplayMode" id="spcDisplayAccordion" value="accordion" class="form-check-input" onchange="setSpcDisplayMode('accordion')"><label class="form-check-label small" for="spcDisplayAccordion">Accordéon (inline)</label></div>
                             <div class="form-check"><input type="radio" name="spcDisplayMode" id="spcDisplayModal" value="modal" class="form-check-input" onchange="setSpcDisplayMode('modal')"><label class="form-check-label small" for="spcDisplayModal">Fenêtre modale</label></div>

@@ -188,18 +188,37 @@ const MED_PRECISION_FIELDS = {
     opioide: ['indication', 'dose'],
     ipp: ['duree'],
     bzd: ['duree'],
-    ains: ['duree']
+    ains: ['duree'],
+    // Phase 1 — précisions de surveillance bio/durée pour 7 règles contexte-dépendantes
+    iec_ara2: ['k_recent'],
+    epargnant_k: ['k_recent'],
+    lithium: ['lithium_recent'],
+    avk: ['inr_recent'],
+    antiarythmique: ['ecg_recent'],
+    clozapine: ['nfs_recent'],
+    statine: ['dose'],
+    antipsychotique: ['duree']
 };
 const PRECISION_FIELD_DEFS = {
     duree: { label: 'Durée de traitement', type: 'select',
         options: [['', 'Non précisé'], ['courte', '< 1 mois'], ['moyenne', '1 à 3 mois'], ['longue', '> 3 mois / chronique']] },
     indication: { label: 'Indication / intensité de la douleur', type: 'select',
         options: [['', 'Non précisé'], ['legere', 'Douleur légère'], ['moderee', 'Douleur modérée'], ['severe', 'Douleur sévère']] },
-    dose: { label: 'Posologie (mg/jour)', type: 'number', placeholder: 'ex. 10' }
+    dose: { label: 'Posologie (mg/jour)', type: 'number', placeholder: 'ex. 10' },
+    k_recent: { label: 'Kaliémie contrôlée < 1 mois et normale ?', type: 'select',
+        options: [['', 'Non précisé'], ['oui', 'Oui — récente et normale'], ['non', 'Non / anormale']] },
+    lithium_recent: { label: 'Lithémie contrôlée < 3 mois (cible thérapeutique) ?', type: 'select',
+        options: [['', 'Non précisé'], ['oui', 'Oui — dans la cible'], ['non', 'Non / hors cible']] },
+    inr_recent: { label: 'INR sous contrôle (cible atteinte) ?', type: 'select',
+        options: [['', 'Non précisé'], ['oui', 'Oui — stable dans la cible'], ['non', 'Non / instable']] },
+    ecg_recent: { label: 'ECG / QTc < 6 mois ?', type: 'select',
+        options: [['', 'Non précisé'], ['oui', 'Oui — fait et QTc normal'], ['non', 'Non / QTc allongé']] },
+    nfs_recent: { label: 'NFS hebdomadaire en place (clozapine) ?', type: 'select',
+        options: [['', 'Non précisé'], ['oui', 'Oui — surveillance active'], ['non', 'Non / interrompue']] }
 };
 function _medPrecisionSpec(med) {
     if (!med) return null;
-    const key = (typeof medPrecisionFamily === 'function') ? medPrecisionFamily(med.classe) : null;
+    const key = (typeof medPrecisionFamily === 'function') ? medPrecisionFamily(med.classe, med.dci) : null;
     if (!key) return null;
     return { key: key, fields: MED_PRECISION_FIELDS[key] || [] };
 }
@@ -209,11 +228,16 @@ function closeMedPrecisionModal() {
     if (o && o.remove) o.remove();
     if (document.removeEventListener) document.removeEventListener('keydown', _medPrecisionEsc);
 }
-function openMedPrecisionModal(dci) {
+function openMedPrecisionModal(dci, opts) {
     const med = activeMeds.find(m => m.dci === dci);
     if (!med) return;
     const spec = _medPrecisionSpec(med);
     if (!spec) return;
+    // Préférence : si l'utilisateur a désactivé la modale, on ne l'affiche pas
+    // pour les ouvertures auto (ajout d'un médicament). Le clic explicite sur ✎
+    // force l'ouverture (opts.force = true).
+    const forced = opts && opts.force;
+    if (!forced && typeof geriaPrefs === 'object' && geriaPrefs && geriaPrefs.skipPrecisionsModal) return;
     closeMedPrecisionModal();
     const prec = med.precisions || {};
     const overlay = document.createElement('div');
@@ -300,8 +324,8 @@ function renderTags() {
                 btnEdit.style.cssText = 'cursor:pointer;margin-left:4px;';
                 btnEdit.setAttribute('aria-label', 'Préciser ' + m.dci);
                 btnEdit.setAttribute('role', 'button'); btnEdit.setAttribute('tabindex', '0');
-                btnEdit.addEventListener('click', () => openMedPrecisionModal(m.dci));
-                btnEdit.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMedPrecisionModal(m.dci); } });
+                btnEdit.addEventListener('click', () => openMedPrecisionModal(m.dci, { force: true }));
+                btnEdit.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMedPrecisionModal(m.dci, { force: true }); } });
                 span.appendChild(btnEdit);
             }
             span.appendChild(btnRemove);
@@ -517,3 +541,63 @@ document.addEventListener('paste', function(e) {
 });
 
 window.onload = initUI;
+
+// =========================================================================
+// Préférences UI persistantes (menu Réglages) + masquage d'alertes (session)
+// Chargé ici plutôt que dans geria-shell.js car ce dernier n'est pas inclus
+// au runtime des deux UIs (index.html / index_modern.html).
+// =========================================================================
+window.geriaPrefs = window.geriaPrefs || {
+    skipPrecisionsModal: false,  // ne plus ouvrir la modale précisions à l'ajout
+    skipMaskConfirm: false        // masquer une alerte sans demander confirmation
+};
+function loadGeriaPrefs() {
+    try {
+        const raw = localStorage.getItem('geria-prefs');
+        if (raw) Object.assign(window.geriaPrefs, JSON.parse(raw));
+    } catch (e) { /* localStorage indisponible ou JSON corrompu : on garde les defaults */ }
+}
+function saveGeriaPrefs() {
+    try { localStorage.setItem('geria-prefs', JSON.stringify(window.geriaPrefs)); } catch (e) { /* idem */ }
+}
+function setGeriaPref(key, value) {
+    if (!(key in window.geriaPrefs)) return;
+    window.geriaPrefs[key] = !!value;
+    saveGeriaPrefs();
+    // Refléter sur tous les checkboxes correspondants (les 2 UI peuvent cohabiter en mémoire)
+    document.querySelectorAll('input[data-geria-pref="' + key + '"]').forEach(cb => { cb.checked = !!value; });
+}
+function initGeriaPrefs() {
+    loadGeriaPrefs();
+    Object.keys(window.geriaPrefs).forEach(k => {
+        document.querySelectorAll('input[data-geria-pref="' + k + '"]').forEach(cb => { cb.checked = !!window.geriaPrefs[k]; });
+    });
+}
+
+// Set d'IDs d'alertes masquées par l'utilisateur pendant la session. Filtré par
+// filterMaskedAlerts() dans app_analysis.js avant rendu/synthèse/PDF — la
+// cohérence écran/synthèse/PDF est ainsi garantie en une seule passe.
+window._maskedAlerts = window._maskedAlerts || new Set();
+function geriaAlertKey(a) {
+    if (!a) return '';
+    if (a.id) return 'id:' + a.id;
+    if (a.ref_code) return 'rc:' + a.ref_code;
+    return 'tt:' + ((a.titre || '') + '|' + (a.severite || ''));
+}
+function maskGeriaAlert(key) {
+    if (!key) return;
+    if (!window.geriaPrefs.skipMaskConfirm) {
+        if (!window.confirm('Masquer cette alerte pour la session ?')) return;
+    }
+    window._maskedAlerts.add(key);
+    if (typeof analyserPrescription === 'function') analyserPrescription();
+}
+function resetMaskedAlerts() {
+    window._maskedAlerts.clear();
+    if (typeof analyserPrescription === 'function') analyserPrescription();
+}
+function filterMaskedAlerts(alertes) {
+    if (!alertes || !alertes.length || !window._maskedAlerts.size) return alertes || [];
+    return alertes.filter(a => !window._maskedAlerts.has(geriaAlertKey(a)));
+}
+document.addEventListener('DOMContentLoaded', initGeriaPrefs);

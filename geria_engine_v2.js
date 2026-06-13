@@ -995,7 +995,13 @@ const GeriaEngineV2 = (() => {
             : (a.ref_code
                 ? `<em>Critère ${esc(a.ref_code)} — détail non documenté dans la base.</em>`
                 : '<em>Détail clinique non documenté.</em>');
+        // Bouton ✖ « masquer pour la session » — clé stable (id > ref_code > titre+sévérité).
+        // Le handler est délégué via window.maskGeriaAlert dans geria-shell.js (filtre amont
+        // dans analyserPrescription : la synthèse et le PDF sont cohérents avec l'écran).
+        const maskKey = a.id ? 'id:' + a.id : (a.ref_code ? 'rc:' + a.ref_code : 'tt:' + ((a.titre || '') + '|' + (a.severite || '')));
+        const maskBtn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.7em;" aria-label="Masquer cette alerte" title="Masquer pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${esc(maskKey).replace(/'/g, '&#39;')}');return false;"></button>`;
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass}); padding-left: 0.9rem;">
+            ${maskBtn}
             ${scoreBadge}<strong>${displayTitle}</strong>${mergedBadge}
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(displaySourceLabel)}</span>
             <div class="small mt-1" style="padding-left: 0.25rem;">${safeMessage}</div>

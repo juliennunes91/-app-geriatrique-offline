@@ -451,14 +451,34 @@ function matchesDrugClassAnsm(dci, classe, rawTerm) {
 // Famille « à précision » d'un médicament (durée/posologie/indication).
 // Centralisé ici car utilisé par app_ui.js (champs du modal) ET app_analysis.js
 // (contextes cliniques transmis au moteur) — les deux usages DOIVENT rester
-// synchronisés. Retourne 'cortico'|'opioide'|'ipp'|'bzd'|'ains' ou null.
-function medPrecisionFamily(classe) {
+// synchronisés. Retourne 'cortico'|'opioide'|'ipp'|'bzd'|'ains'|'fer'|
+// 'iec_ara2'|'epargnant_k'|'lithium'|'avk'|'antiarythmique'|'clozapine'|
+// 'statine'|'antipsychotique' ou null. La détection ordonne les classes
+// spécifiques avant les classes génériques (clozapine avant antipsychotique).
+function medPrecisionFamily(classe, dci) {
     const cl = classe || '';
+    const d = (dci || '').toLowerCase();
     if (/corticoïde|corticoide|glucocorticoïde/i.test(cl) && !/inhalé|\bICS\b/i.test(cl)) return 'cortico';
     if (/opio[iï]de|opiac/i.test(cl) && !/antidiarrh|antidépresseur/i.test(cl)) return 'opioide';
     if (/pompe à protons|pompe a protons|\(IPP\)/i.test(cl)) return 'ipp';
     if (/benzodiazepine|benzodiazépine|hypnotique z/i.test(cl)) return 'bzd';
     if (/\bAINS\b|anti-inflammatoire non st/i.test(cl)) return 'ains';
     if (/fer\b|iron\b|sulfate ferreux|fumarate ferreux|gluconate ferreux|martia/i.test(cl)) return 'fer';
+    // Familles dose/bilan-dépendantes (Phase 1)
+    if (/clozapine/i.test(d) || /clozapine/i.test(cl)) return 'clozapine';
+    if (/spironolactone|eplerenone|éplérénone|finerenone|finérénone|amiloride|triamterene|triamtérène/i.test(d)
+        || /épargnant.*potassium|antialdosterone|antialdostérone|\bARM\b/i.test(cl)) return 'epargnant_k';
+    if (/\blithium\b/i.test(d)) return 'lithium';
+    if (/warfarine|fluindione|acenocoumarol|acénocoumarol|phenprocoumone/i.test(d)
+        || /\bAVK\b|antivitamine\s*K/i.test(cl)) return 'avk';
+    if (/amiodarone|dronedarone|dronédarone|flecainide|flécaïnide|propafenone|propafénone|sotalol/i.test(d)
+        || /antiarythmique/i.test(cl)) return 'antiarythmique';
+    if (/enalapril|ramipril|perindopril|périndopril|lisinopril|captopril|quinapril|benazepril|trandolapril|fosinopril|zofenopril/i.test(d)
+        || /losartan|valsartan|irbesartan|candesartan|telmisartan|olmesartan/i.test(d)
+        || /\bIEC\b|\bARA2\b|sartan/i.test(cl)) return 'iec_ara2';
+    if (/atorvastatine|rosuvastatine|simvastatine|pravastatine|fluvastatine|pitavastatine/i.test(d)
+        || /statine/i.test(cl)) return 'statine';
+    if (/haloperidol|halopéridol|risperidone|rispéridone|olanzapine|quetiapine|quétiapine|aripiprazole|paliperidone|palipéridone|chlorpromazine|cyamemazine|cyamémazine|loxapine|levomepromazine|lévomépromazine|fluphenazine|fluphénazine|tiapride|sulpiride|pimozide/i.test(d)
+        || /antipsychotique|neuroleptique/i.test(cl)) return 'antipsychotique';
     return null;
 }

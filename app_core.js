@@ -591,6 +591,8 @@ window.resetPatient = function() {
     activeComorbs.length = 0;
     activeMeds.length = 0;
     window.suspendedMeds.length = 0;
+    // Purger les alertes masquées (Phase 2) : le dossier précédent n'engage pas le suivant.
+    if (window._maskedAlerts && typeof window._maskedAlerts.clear === 'function') window._maskedAlerts.clear();
 
     // 2. Réinitialiser les scores globaux
     globalQT_CountKR = 0; globalQT_CountCR_PR = 0;

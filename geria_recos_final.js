@@ -288,7 +288,10 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["spironolactone", "eplerenone", "aldactazine"],
-                med_keys_2: ["iec", "ara2", "amiloride", "triamterene"]
+                med_keys_2: ["iec", "ara2", "amiloride", "triamterene"],
+                // Désarmée si l'utilisateur atteste d'une kaliémie récente normale
+                // (précision « K+ contrôlée < 1 mois » sur l'une des deux classes).
+                contexte_clinique_absent: ["k_recent_ok"]
             },
             alternatives: "Monitorage K+ régulier (< 1 semaine post-initiation puis mensuel)"
         },
@@ -662,7 +665,9 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["antipsychotique"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"],
+                // Désarmée si la durée précisée est < 1 mois (usage ponctuel documenté).
+                contexte_clinique_absent: ["antipsychotique_duree_breve"]
             },
             alternatives: "Si SCPD confirmé ≥ 3 mois : décroissance progressive 25 %/2-4 sem. Approches non pharmacologiques (musicothérapie, Montessori, DICE). Si usage hors SCPD : reconsidérer l'indication."
         },
@@ -4013,7 +4018,11 @@ const RECOS_SUPPLEMENT = [
         titre: "Antiarythmique classe I/III sans ECG régulier",
         message: "PIM-Check : Antiarythmiques classe I (flécaïnide, propafénone) et III (amiodarone, dronédarone, sotalol) : ECG avec mesure QTc au minimum tous les 6 mois.",
         severite: "warning",
-        condition: { med_keys: ["flecainide", "propafenone", "amiodarone", "dronedarone", "sotalol"] }
+        condition: {
+            med_keys: ["flecainide", "propafenone", "amiodarone", "dronedarone", "sotalol"],
+            // Désarmée si ECG/QTc < 6 mois documenté (précision médicament).
+            contexte_clinique_absent: ["ecg_recent_ok"]
+        }
     },
     {
         id: "SUP_PIMC_08", sources: ["PIM_CHECK"],
@@ -4042,7 +4051,11 @@ const RECOS_SUPPLEMENT = [
         titre: "Clozapine sans NFS hebdomadaire",
         message: "PIM-Check : Clozapine — NFS obligatoire (hebdomadaire pendant 18 semaines, puis mensuelle) pour dépistage agranulocytose.",
         severite: "danger",
-        condition: { med_keys: ["clozapine"] },
+        condition: {
+            med_keys: ["clozapine"],
+            // Désarmée si la surveillance NFS est attestée active.
+            contexte_clinique_absent: ["nfs_recent_ok"]
+        },
         alternatives: "Mettre en place NFS hebdomadaire pendant 18 semaines puis mensuelle (ANSM, RCP Leponex). Suspendre la clozapine si PNN < 1,5 G/L ou leucocytes < 3 G/L."
     },
     {
@@ -4050,7 +4063,12 @@ const RECOS_SUPPLEMENT = [
         titre: "Statine haute dose chez > 75 ans sans réévaluation",
         message: "PIM-Check : Statine haute intensité (atorvastatine > 40 mg, rosuvastatine > 20 mg) chez > 75 ans — réévaluer le rapport bénéfice/risque. Risque musculaire accru.",
         severite: "warning",
-        condition: { med_keys: ["atorvastatine", "rosuvastatine"], age_min: 75 }
+        condition: {
+            med_keys: ["atorvastatine", "rosuvastatine"],
+            age_min: 75,
+            // Désarmée si la dose précisée est ≤ seuil ESC/EAS « haute intensité ».
+            contexte_clinique_absent: ["statine_dose_basse"]
+        }
     },
 
     // REMEDIES — Déprescription et rationalisation
@@ -4186,7 +4204,11 @@ const RECOS_SUPPLEMENT = [
         titre: "Lithium + IEC/ARA2 : surveiller lithémie",
         message: "Beers 2023 : Les IEC/ARA2 modifient la volémie et réduisent la clairance rénale du lithium → risque de toxicité (marge thérapeutique étroite). Surveiller la lithémie de façon rapprochée.",
         severite: "warning",
-        condition: { med_keys: ["lithium"], med_keys_2: ["iec", "ara2"] }
+        condition: {
+            med_keys: ["lithium"], med_keys_2: ["iec", "ara2"],
+            // Désarmée si lithémie récente attestée dans la cible.
+            contexte_clinique_absent: ["lithium_recent_ok"]
+        }
     },
     {
         id: "SUP_INT_012", sources: ["BEERS"],
@@ -4217,7 +4239,12 @@ const RECOS_SUPPLEMENT = [
         titre: "AVK + Amiodarone : surveiller INR étroitement",
         message: "Beers 2023 : L'amiodarone inhibe le métabolisme des AVK (CYP2C9) → risque hémorragique majeur. Réduire la dose d'AVK de 30-50% et contrôler l'INR 2×/semaine pendant 4-6 semaines.",
         severite: "danger",
-        condition: { med_keys: ["warfarine", "fluindione", "acenocoumarol", "avk"], med_keys_2: ["amiodarone"] },
+        condition: {
+            med_keys: ["warfarine", "fluindione", "acenocoumarol", "avk"],
+            med_keys_2: ["amiodarone"],
+            // Désarmée si INR récent attesté stable dans la cible (précision AVK).
+            contexte_clinique_absent: ["inr_recent_ok"]
+        },
         alternatives: "Réduire la dose d'AVK de 30-50% à l'introduction de l'amiodarone, contrôler INR à J3, J7, J14 puis selon stabilité. Effet inhibiteur persistant plusieurs semaines après arrêt de l'amiodarone (T½ longue)."
     },
     {
