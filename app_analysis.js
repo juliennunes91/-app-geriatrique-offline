@@ -843,17 +843,28 @@ function analyserPrescription() {
     divs.forEach(id => _htmlBuffers[id] = []);
     const addAlert = (targetId, htmlStr, countKey) => {
         if(!htmlStr) return;
-        if(_htmlBuffers[targetId]) _htmlBuffers[targetId].push(htmlStr);
-        else { let el = document.getElementById(targetId); if(el) el.innerHTML += htmlStr; }
-        if(countKey) counts[countKey]++;
-        // Registre transverse : enregistrer les alertes bio pour la Synthèse
+        // Alertes bio (HTML brut) : extraction du titre + masquage session via ✖
+        // — la clé est stable (titre + sévérité), donc les filtres écran/synthèse/PDF
+        // restent cohérents tant que la valeur biologique source n'a pas changé.
         if (targetId === 'alertes-bio') {
-            // Extraction best-effort du titre (<strong>…</strong>) et de la sévérité
             const titleMatch = String(htmlStr).match(/<strong[^>]*>([\s\S]*?)<\/strong>/i);
             const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '').trim() : '';
             const severity = /alert-danger|alert-stopp/.test(htmlStr) ? 'danger' : 'warning';
-            if (title) _regAddDomain('bio', { titre: title, message: '', severity });
+            if (title) {
+                const maskKey = 'tt:' + title + '|' + severity;
+                // Filtre amont : si l'alerte a été masquée, on n'ajoute rien (écran +
+                // synthèse + PDF en cohérence + compteur badge bio cohérent).
+                if (window._maskedAlerts && window._maskedAlerts.has(maskKey)) return;
+                // Injection du bouton ✖ juste après le <div class="alert …">.
+                const safeKey = maskKey.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+                const btn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.7em;" aria-label="Masquer cette alerte" title="Masquer pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${safeKey}');return false;"></button>`;
+                htmlStr = String(htmlStr).replace(/(<div\s+class="alert[^"]*"[^>]*>)/i, '$1' + btn);
+                _regAddDomain('bio', { titre: title, message: '', severity });
+            }
         }
+        if(_htmlBuffers[targetId]) _htmlBuffers[targetId].push(htmlStr);
+        else { let el = document.getElementById(targetId); if(el) el.innerHTML += htmlStr; }
+        if(countKey) counts[countKey]++;
     };
     const flushAlerts = () => {
         for(const [id, parts] of Object.entries(_htmlBuffers)) {
