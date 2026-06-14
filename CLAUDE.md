@@ -40,3 +40,15 @@ Le cross-référencement (affichage d'une source ESC sur une alerte STOPP/START)
 À chaque ajout/renommage d'un fichier applicatif, mettre à jour :
 - `sw.js` → `APP_ASSETS` ou `DATA_ASSETS`
 - `sw.js` → `BUILD_ID` (incrémenter la date)
+
+## Numéro de version (IMPORTANT)
+
+**À chaque modification fonctionnelle livrée, incrémenter le numéro de version
+en pied de page dans `index.html` ET `index_modern.html`** (ligne « version X.YY
+— créé par Dr Julien Nunes à l'aide de l'IA »).
+
+- Patch (bug fix mineur, ajustement texte) → +0.01
+- Mineur (nouvelle fonctionnalité, nouvelles règles, refonte d'un onglet) → +0.10
+
+Le numéro de version du pied de page et le `BUILD_ID` du `sw.js` doivent être
+bumpés dans le même commit que les changements qu'ils décrivent.
