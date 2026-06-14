@@ -349,7 +349,9 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["ains"],
-                comorbs_any: ["PAT_004", "PAT_007", "PAT_008"]
+                comorbs_any: ["PAT_004", "PAT_007", "PAT_008"],
+                // Désarmée si la cure est explicitement de courte durée (< 1 mois).
+                contexte_clinique_absent: ["ains_duree_breve"]
             },
             alternatives: "Paracétamol, opioïdes faibles, topiques, réévaluation douleur"
         },
@@ -363,7 +365,9 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["antipsychotique"],
-                comorbs_any: ["PAT_004", "PAT_007", "PAT_008"]
+                comorbs_any: ["PAT_004", "PAT_007", "PAT_008"],
+                // Désarmée si la cure est explicitement de courte durée (< 1 mois).
+                contexte_clinique_absent: ["antipsychotique_duree_breve"]
             },
             alternatives: "Réévaluer l'indication, réduire la dose, alternatives non pharmacologiques"
         },
@@ -405,7 +409,9 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["digoxine"],
-                comorbs: ["PAT_006"]
+                comorbs: ["PAT_006"],
+                // Désarmée si la prescription est explicitement transitoire (< 1 mois).
+                contexte_clinique_absent: ["digoxine_duree_breve"]
             },
             alternatives: "Bisoprolol, métoprolol, nébivolol"
         },
@@ -921,7 +927,10 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["digoxine"],
-                bio: { "BIO_004": { op: "<", val: 30 } }
+                bio: { "BIO_004": { op: "<", val: 30 } },
+                // Désarmée si la dose précisée est ≤ 125 µg/j (sous le seuil de toxicité)
+                // ou si une digoxinémie récente atteste de la sécurité de la prescription.
+                contexte_clinique_absent: ["dose_digoxine_basse", "digox_recent_ok", "digoxine_duree_breve"]
             },
             alternatives: "Réduire à 62.5 µg/j ou arrêt, dosage digoxinémie"
         },
@@ -1230,7 +1239,9 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["ains"],
-                contexte_clinique: "arthrose"
+                contexte_clinique: "arthrose",
+                // Désarmée si la cure d'AINS est courte (poussée arthrosique).
+                contexte_clinique_absent: ["ains_duree_breve"]
             },
             alternatives: "Paracétamol, topiques AINS, kinésithérapie, infiltrations"
         },
@@ -1274,7 +1285,9 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["opioid", "tramadol", "codeine", "morphine", "oxycodone", "fentanyl", "buprenorphine"],
                 contexte_clinique: "arthrose",
-                comorbs_absent: ["PAT_020", "PAT_030"]
+                comorbs_absent: ["PAT_020", "PAT_030"],
+                // Désarmée si la cure d'opioïde est explicitement courte.
+                contexte_clinique_absent: ["opioide_duree_breve"]
             },
             alternatives: "Paracétamol, AINS topiques, duloxétine, kinésithérapie, infiltrations"
         },
@@ -1730,7 +1743,9 @@ const GERIA_RECOS_DB = {
             message: "Métoclopramide au long cours (> 12 semaines) : risque de dyskinésie tardive irréversible. PIM selon Beers/PRISCUS.",
             severite: "danger",
             condition: {
-                med_keys: ["metoclopramide"]
+                med_keys: ["metoclopramide"],
+                // Désarmée si la cure est explicitement de courte durée (< 1 mois).
+                contexte_clinique_absent: ["metoclopramide_duree_breve"]
             },
             alternatives: "Dompéridone (si QTc normal), ondansétron, mesures hygiéno-diététiques"
         },
@@ -1863,7 +1878,9 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole", "ipp"],
-                fragile: true
+                fragile: true,
+                // Désarmée si la cure d'IPP est explicitement courte (test thérapeutique).
+                contexte_clinique_absent: ["ipp_duree_breve"]
             },
             alternatives: "Arrêt progressif (demi-dose 2-4 semaines puis arrêt), anti-H2 si besoin"
         },
@@ -2391,7 +2408,9 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["methotrexate", "azathioprine", "ciclosporine", "tacrolimus", "mycophenolate", "prednisone", "prednisolone", "methylprednisolone", "dexamethasone"],
-                contexte_clinique: "sepsis"
+                contexte_clinique: "sepsis",
+                // Désarmée si la corticothérapie est explicitement de courte durée (cure brève).
+                contexte_clinique_absent: ["cortico_duree_breve"]
             },
             alternatives: "Suspendre temporairement l'immunosuppression si possible, avis infectiologue"
         },
@@ -3975,21 +3994,34 @@ const RECOS_SUPPLEMENT = [
         titre: "Corticoïde systémique > 3 mois sans bilan ostéoporose",
         message: "PIM-Check : Corticothérapie systémique > 3 mois sans évaluation du risque fracturaire ni traitement préventif (vitamine D + calcium + bisphosphonate si T-score ≤ -1.5).",
         severite: "warning",
-        condition: { med_keys: ["corticoide", "prednisone", "prednisolone", "methylprednisolone", "dexamethasone"], med_absent: ["alendronate", "risedronate", "acide zoledronique", "denosumab", "cholecalciferol", "vitamine d"] }
+        condition: {
+            med_keys: ["corticoide", "prednisone", "prednisolone", "methylprednisolone", "dexamethasone"],
+            med_absent: ["alendronate", "risedronate", "acide zoledronique", "denosumab", "cholecalciferol", "vitamine d"],
+            // Désarmée si la corticothérapie est explicitement de durée courte (< 1 mois).
+            contexte_clinique_absent: ["cortico_duree_breve"]
+        }
     },
     {
         id: "SUP_PIMC_02", sources: ["PIM_CHECK"],
         titre: "Diurétique sans ionogramme de surveillance",
         message: "PIM-Check : Tout diurétique au long cours nécessite un ionogramme de surveillance (K+, Na+, créatinine) au minimum tous les 6 mois.",
         severite: "warning",
-        condition: { med_keys: ["diuretique", "furosemide", "bumetanide", "hydrochlorothiazide", "indapamide", "spironolactone"] }
+        condition: {
+            med_keys: ["diuretique", "furosemide", "bumetanide", "hydrochlorothiazide", "indapamide", "spironolactone"],
+            // Désarmée si un ionogramme récent (ou la K+) est attesté normal.
+            contexte_clinique_absent: ["iono_recent_ok", "k_recent_ok"]
+        }
     },
     {
         id: "SUP_PIMC_03", sources: ["PIM_CHECK"],
         titre: "Lithium sans monitorage régulier",
         message: "PIM-Check : Lithium nécessite monitorage régulier : lithiémie, créatinine/DFG, TSH, calcémie tous les 3-6 mois.",
         severite: "warning",
-        condition: { med_keys: ["lithium"] }
+        condition: {
+            med_keys: ["lithium"],
+            // Désarmée si lithémie récente attestée dans la cible.
+            contexte_clinique_absent: ["lithium_recent_ok"]
+        }
     },
     {
         id: "SUP_PIMC_04", sources: ["PIM_CHECK"],
@@ -4004,14 +4036,22 @@ const RECOS_SUPPLEMENT = [
         titre: "AVK sans surveillance INR régulière documentée",
         message: "PIM-Check : AVK nécessite un INR régulier (tous les 8-28 jours selon stabilité).",
         severite: "warning",
-        condition: { med_keys: ["acenocoumarol", "warfarine", "fluindione"] }
+        condition: {
+            med_keys: ["acenocoumarol", "warfarine", "fluindione"],
+            // Désarmée si INR récent attesté stable dans la cible.
+            contexte_clinique_absent: ["inr_recent_ok"]
+        }
     },
     {
         id: "SUP_PIMC_06", sources: ["PIM_CHECK"],
         titre: "Inhibiteur acétylcholinestérase sans ECG de référence",
         message: "PIM-Check : IAChE (donépézil, rivastigmine, galantamine) — ECG de référence recommandé avant initiation (risque de bradycardie, BAV).",
         severite: "warning",
-        condition: { med_keys: ["donepezil", "rivastigmine", "galantamine"] }
+        condition: {
+            med_keys: ["donepezil", "rivastigmine", "galantamine"],
+            // Désarmée si ECG récent attesté normal (précision médicament IAChE).
+            contexte_clinique_absent: ["ecg_recent_ok"]
+        }
     },
     {
         id: "SUP_PIMC_07", sources: ["PIM_CHECK"],
@@ -4044,7 +4084,11 @@ const RECOS_SUPPLEMENT = [
         titre: "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
         message: "PIM-Check : IEC ou ARA2 — contrôle créatinine et K+ recommandé dans les 7-14 jours après initiation ou changement de dose.",
         severite: "warning",
-        condition: { med_keys: ["iec", "ara2"] }
+        condition: {
+            med_keys: ["iec", "ara2"],
+            // Désarmée si K+ récent attesté normal (précision IEC/ARA2).
+            contexte_clinique_absent: ["k_recent_ok"]
+        }
     },
     {
         id: "SUP_PIMC_11", sources: ["PIM_CHECK"],
@@ -4077,14 +4121,22 @@ const RECOS_SUPPLEMENT = [
         titre: "Fer oral au long cours sans vérification de la réponse",
         message: "REMEDIES : Fer oral au long cours (> 3 mois) — vérifier NFS et ferritine pour confirmer la réponse. Arrêter si ferritine normalisée.",
         severite: "warning",
-        condition: { med_keys: ["fer", "fumarate ferreux", "sulfate ferreux", "ascorbate ferreux"] }
+        condition: {
+            med_keys: ["fer", "fumarate ferreux", "sulfate ferreux", "ascorbate ferreux"],
+            // Désarmée si la cure est de courte durée (< 1 mois — phase d'induction).
+            contexte_clinique_absent: ["fer_duree_breve"]
+        }
     },
     {
         id: "SUP_REM_02", sources: ["REMEDIES"],
         titre: "Supplémentation calcique > 1000 mg/j",
         message: "REMEDIES : Supplémentation calcique > 1000 mg/j — risque cardiovasculaire discuté. Favoriser l'apport alimentaire. Max 500-600 mg/j en supplément.",
         severite: "warning",
-        condition: { med_keys: ["carbonate de calcium", "calcium"] }
+        condition: {
+            med_keys: ["carbonate de calcium", "calcium"],
+            // Désarmée si la dose précisée est ≤ 1000 mg/j (sous le seuil REMEDIES).
+            contexte_clinique_absent: ["calcium_dose_acceptable"]
+        }
     },
     {
         id: "SUP_REM_03", sources: ["REMEDIES", "STOPPFRAIL"],
@@ -4098,14 +4150,22 @@ const RECOS_SUPPLEMENT = [
         titre: "Laxatif stimulant au long cours",
         message: "REMEDIES : Laxatif stimulant (bisacodyl, séné, picosulfate) au long cours — préférer laxatif osmotique (macrogol, lactulose). Stimulants réservés au court terme.",
         severite: "warning",
-        condition: { med_keys: ["bisacodyl", "sene"] }
+        condition: {
+            med_keys: ["bisacodyl", "sene"],
+            // Désarmée si l'utilisation est ponctuelle/courte (indication appropriée du stimulant).
+            contexte_clinique_absent: ["laxatif_stim_duree_breve"]
+        }
     },
     {
         id: "SUP_REM_05", sources: ["REMEDIES"],
         titre: "Antispasmodique GI au long cours",
         message: "REMEDIES : Antispasmodique GI (mébévérine, alvérine, phloroglucinol, trimébutine) au long cours — efficacité non démontrée en continu. Réévaluer périodiquement.",
         severite: "info",
-        condition: { med_keys: ["mebeverine", "alverine", "phloroglucinol", "trimebutine"] }
+        condition: {
+            med_keys: ["mebeverine", "alverine", "phloroglucinol", "trimebutine"],
+            // Désarmée si l'utilisation est courte (cure brève, post-crise).
+            contexte_clinique_absent: ["antispasmodique_duree_breve"]
+        }
     },
     {
         id: "SUP_REM_06", sources: ["REMEDIES", "STOPPFRAIL"],
@@ -4119,7 +4179,11 @@ const RECOS_SUPPLEMENT = [
         titre: "Anti-vertigineux au long cours (bétahistine, méclizine)",
         message: "REMEDIES : Anti-vertigineux (bétahistine, méclizine, flunarizine, cinnarizine) au long cours — efficacité limitée au-delà de la crise, effets sédatifs.",
         severite: "warning",
-        condition: { med_keys: ["betahistine", "meclozine", "flunarizine", "cinnarizine"] }
+        condition: {
+            med_keys: ["betahistine", "meclozine", "flunarizine", "cinnarizine"],
+            // Désarmée si l'utilisation est ponctuelle (crise de vertige).
+            contexte_clinique_absent: ["antivertigineux_duree_breve"]
+        }
     },
     {
         id: "SUP_REM_08", sources: ["REMEDIES", "EU7PIM"],
@@ -4172,14 +4236,22 @@ const RECOS_SUPPLEMENT = [
         titre: "Mébévérine au long cours",
         message: "EU(7)-PIM / PRISCUS : Mébévérine au long cours — efficacité non prouvée en continu. Alternatives : mesures hygiéno-diététiques, psyllium.",
         severite: "info",
-        condition: { med_keys: ["mebeverine"] }
+        condition: {
+            med_keys: ["mebeverine"],
+            // Désarmée si l'utilisation est courte (cure post-crise).
+            contexte_clinique_absent: ["antispasmodique_duree_breve"]
+        }
     },
     {
         id: "SUP_EU7_05", sources: ["EU7PIM", "PRISCUS"],
         titre: "Loperamide > 3 jours ou > 12 mg/j",
         message: "EU(7)-PIM / PRISCUS : Lopéramide > 3 jours ou > 12 mg/j — risque de mégacôlon toxique, rétention fécale. Réserver à l'usage ponctuel.",
         severite: "warning",
-        condition: { med_keys: ["loperamide"] }
+        condition: {
+            med_keys: ["loperamide"],
+            // Désarmée si l'utilisation est ponctuelle (cure brève < 3 jours).
+            contexte_clinique_absent: ["loperamide_duree_breve"]
+        }
     },
     {
         id: "SUP_EU7_06", sources: ["EU7PIM"],
@@ -4282,14 +4354,23 @@ const RECOS_SUPPLEMENT = [
         titre: "AVK + ISRS : surveillance INR",
         message: "Beers 2023 : Les ISRS inhibent la recapture plaquettaire et interfèrent avec le métabolisme des AVK → risque hémorragique accru. Surveillance INR recommandée.",
         severite: "warning",
-        condition: { med_keys: ["warfarine", "fluindione", "acenocoumarol", "avk"], med_keys_2: ["isrs", "citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine"] }
+        condition: {
+            med_keys: ["warfarine", "fluindione", "acenocoumarol", "avk"],
+            med_keys_2: ["isrs", "citalopram", "escitalopram", "sertraline", "paroxetine", "fluoxetine"],
+            // Désarmée si INR récent attesté stable dans la cible.
+            contexte_clinique_absent: ["inr_recent_ok"]
+        }
     },
     {
         id: "SUP_INT_010", sources: ["BEERS"],
         titre: "Digoxine + Amiodarone : surveiller digoxinémie",
         message: "Beers 2023 : L'amiodarone inhibe le transport rénal (P-gp) de la digoxine → accumulation et toxicité digitalique. Réduire la dose de digoxine de 50% et doser la digoxinémie.",
         severite: "danger",
-        condition: { med_keys: ["digoxine"], med_keys_2: ["amiodarone"] },
+        condition: {
+            med_keys: ["digoxine"], med_keys_2: ["amiodarone"],
+            // Désarmée si digoxinémie récente attestée dans la cible (0,5-0,9 ng/mL).
+            contexte_clinique_absent: ["digox_recent_ok"]
+        },
         alternatives: "Réduire la digoxine de 50% à l'introduction de l'amiodarone. Doser la digoxinémie à J7 (cible 0,5-0,9 ng/mL chez l'âgé). Surveiller signes de toxicité (nausées, troubles visuels, bradycardie)."
     },
     {

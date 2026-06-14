@@ -452,9 +452,10 @@ function matchesDrugClassAnsm(dci, classe, rawTerm) {
 // Centralisé ici car utilisé par app_ui.js (champs du modal) ET app_analysis.js
 // (contextes cliniques transmis au moteur) — les deux usages DOIVENT rester
 // synchronisés. Retourne 'cortico'|'opioide'|'ipp'|'bzd'|'ains'|'fer'|
-// 'iec_ara2'|'epargnant_k'|'lithium'|'avk'|'antiarythmique'|'clozapine'|
-// 'statine'|'antipsychotique' ou null. La détection ordonne les classes
-// spécifiques avant les classes génériques (clozapine avant antipsychotique).
+// 'iec_ara2'|'epargnant_k'|'diuretique'|'lithium'|'avk'|'antiarythmique'|
+// 'digoxine'|'clozapine'|'anticholinesterase'|'statine'|'antipsychotique'
+// ou null. La détection ordonne les classes spécifiques avant les classes
+// génériques (clozapine avant antipsychotique, épargnant_k avant diurétique).
 function medPrecisionFamily(classe, dci) {
     const cl = classe || '';
     const d = (dci || '').toLowerCase();
@@ -464,10 +465,23 @@ function medPrecisionFamily(classe, dci) {
     if (/benzodiazepine|benzodiazépine|hypnotique z/i.test(cl)) return 'bzd';
     if (/\bAINS\b|anti-inflammatoire non st/i.test(cl)) return 'ains';
     if (/fer\b|iron\b|sulfate ferreux|fumarate ferreux|gluconate ferreux|martia/i.test(cl)) return 'fer';
+    // Familles REMEDIES « long cours / dose-dépendant » (Phase 1 — extension)
+    if (/carbonate de calcium|citrate de calcium|\bcalcium\b/i.test(d) || /^calcium/i.test(cl)) return 'calcium';
+    if (/bisacodyl|s[eé]n[eé]|picosulfate/i.test(d) || /laxatif stimulant/i.test(cl)) return 'laxatif_stim';
+    if (/m[eé]b[eé]v[eé]rine|alv[eé]rine|phloroglucinol|trim[eé]butine/i.test(d) || /antispasmodique/i.test(cl)) return 'antispasmodique';
+    if (/b[eé]tahistine|m[eé]clozine|m[eé]clizine|flunarizine|cinnarizine/i.test(d) || /anti-?vertigineux/i.test(cl)) return 'antivertigineux';
     // Familles dose/bilan-dépendantes (Phase 1)
     if (/clozapine/i.test(d) || /clozapine/i.test(cl)) return 'clozapine';
+    if (/donepezil|donépézil|rivastigmine|galantamine/i.test(d)
+        || /ac[eé]tylcholinest[eé]rase|anticholinest[eé]ras/i.test(cl)) return 'anticholinesterase';
+    if (/\bdigoxine\b|digoxin\b/i.test(d) || /digitalique/i.test(cl)) return 'digoxine';
+    if (/m[eé]toclopramide/i.test(d) || /m[eé]toclopramide/i.test(cl)) return 'metoclopramide';
+    if (/lop[eé]ramide/i.test(d) || /lop[eé]ramide|antidiarrh/i.test(cl)) return 'loperamide';
     if (/spironolactone|eplerenone|éplérénone|finerenone|finérénone|amiloride|triamterene|triamtérène/i.test(d)
         || /épargnant.*potassium|antialdosterone|antialdostérone|\bARM\b/i.test(cl)) return 'epargnant_k';
+    // Diurétiques (anse / thiazidiques) — APRÈS épargnant_k pour ne pas capter spironolactone.
+    if (/furosemide|furosémide|bumetanide|bumétanide|torasemide|torasémide|hydrochlorothiazide|indapamide|chlortalidone|chlortalidone|pirétanide|piretanide/i.test(d)
+        || /diur[eé]tique/i.test(cl)) return 'diuretique';
     if (/\blithium\b/i.test(d)) return 'lithium';
     if (/warfarine|fluindione|acenocoumarol|acénocoumarol|phenprocoumone/i.test(d)
         || /\bAVK\b|antivitamine\s*K/i.test(cl)) return 'avk';

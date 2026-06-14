@@ -650,6 +650,17 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
             if (fam === 'ipp' && p.duree === 'courte') ctxClinique.push('ipp_duree_breve');
             // Antipsychotique durée brève → désarme EV_D05 (durée > 3 mois / 12 sem)
             if (fam === 'antipsychotique' && p.duree === 'courte') ctxClinique.push('antipsychotique_duree_breve');
+            // REMEDIES « long cours » — durée brève désarme la suggestion de déprescription
+            if (fam === 'fer' && p.duree === 'courte') ctxClinique.push('fer_duree_breve');
+            if (fam === 'laxatif_stim' && p.duree === 'courte') ctxClinique.push('laxatif_stim_duree_breve');
+            if (fam === 'antispasmodique' && p.duree === 'courte') ctxClinique.push('antispasmodique_duree_breve');
+            if (fam === 'antivertigineux' && p.duree === 'courte') ctxClinique.push('antivertigineux_duree_breve');
+            // Durée brève « usage ponctuel » désarme les règles « long cours » correspondantes
+            if (fam === 'ains' && p.duree === 'courte') ctxClinique.push('ains_duree_breve');
+            if (fam === 'opioide' && p.duree === 'courte') ctxClinique.push('opioide_duree_breve');
+            if (fam === 'digoxine' && p.duree === 'courte') ctxClinique.push('digoxine_duree_breve');
+            if (fam === 'metoclopramide' && p.duree === 'courte') ctxClinique.push('metoclopramide_duree_breve');
+            if (fam === 'loperamide' && p.duree === 'courte') ctxClinique.push('loperamide_duree_breve');
             // Durée extraite (objet {jours, classe}) — source extracteur de texte libre
             const dureeObj = p.duree && typeof p.duree === 'object' ? p.duree : null;
             if (dureeObj) {
@@ -658,17 +669,21 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
                 if (fam === 'antipsychotique' && dureeObj.classe === 'courte') ctxClinique.push('antipsychotique_duree_breve');
             }
             // Précisions « surveillance récente OK » (Phase 1)
-            // Désarment 6 règles contexte-dépendantes (EV_B13, SUP_INT_001/004, SUP_PIMC_07/11, etc.)
-            // quand le clinicien atteste que le bilan/ECG/observance est en place.
+            // Désarment les règles « sans surveillance » quand le clinicien atteste que
+            // le bilan/ECG/observance est en place.
             if ((fam === 'iec_ara2' || fam === 'epargnant_k') && p.k_recent === 'oui') ctxClinique.push('k_recent_ok');
+            if (fam === 'diuretique' && p.iono_recent === 'oui') ctxClinique.push('iono_recent_ok');
             if (fam === 'lithium' && p.lithium_recent === 'oui') ctxClinique.push('lithium_recent_ok');
             if (fam === 'avk' && p.inr_recent === 'oui') ctxClinique.push('inr_recent_ok');
-            if (fam === 'antiarythmique' && p.ecg_recent === 'oui') ctxClinique.push('ecg_recent_ok');
+            if ((fam === 'antiarythmique' || fam === 'anticholinesterase') && p.ecg_recent === 'oui') ctxClinique.push('ecg_recent_ok');
+            if (fam === 'digoxine' && p.digox_recent === 'oui') ctxClinique.push('digox_recent_ok');
             if (fam === 'clozapine' && p.nfs_recent === 'oui') ctxClinique.push('nfs_recent_ok');
             // Posologie extraite → contextes dose-dépendants
             if (typeof p.dose === 'number') {
                 const dci = (m.dci || '').toLowerCase();
                 if (fam === 'fer' && p.dose > 600) ctxClinique.push('dose_fer_elevee');
+                // Calcium ≤ 1000 mg/j : sous le seuil REMEDIES (CV) → SUP_REM_02 désarmé.
+                if (fam === 'calcium' && p.dose <= 1000) ctxClinique.push('calcium_dose_acceptable');
                 if (/amitriptyline/i.test(dci) && p.dose > 75) ctxClinique.push('dose_amitriptyline_elevee');
                 if (/acide\s*acetylsalicylique|aspirine/i.test(dci) && p.dose > 100) ctxClinique.push('dose_aspirine_elevee');
                 // QT dose-dépendants : seuils RCP gériatriques (SFGG/SF3PA/SFPC 2026 item 18, ANSM/FDA 2011)
@@ -676,6 +691,8 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
                 if (/escitalopram/i.test(dci) && p.dose > 10) ctxClinique.push('dose_escitalopram_elevee');
                 // Digoxine : dose toxique chez ≥ 65 ans (Beers 2023, STOPP B12)
                 if (/digoxine/i.test(dci) && p.dose > 125) ctxClinique.push('dose_digoxine_elevee');
+                // Digoxine ≤ 125 µg/j : sous le seuil de toxicité → désarme EV_E01 (digoxine + DFG < 30).
+                if (/digoxine/i.test(dci) && p.dose <= 125) ctxClinique.push('dose_digoxine_basse');
                 // Statine dose basse (sous le seuil « haute intensité ») → désarme SUP_PIMC_12.
                 // Seuils ESC/EAS : atorvastatine ≤ 40, rosuvastatine ≤ 20 ne sont PAS « haute intensité ».
                 if (fam === 'statine') {

@@ -189,12 +189,22 @@ const MED_PRECISION_FIELDS = {
     ipp: ['duree'],
     bzd: ['duree'],
     ains: ['duree'],
-    // Phase 1 — précisions de surveillance bio/durée pour 7 règles contexte-dépendantes
+    fer: ['duree', 'dose'],
+    calcium: ['dose'],
+    laxatif_stim: ['duree'],
+    antispasmodique: ['duree'],
+    antivertigineux: ['duree'],
+    // Phase 1 — précisions de surveillance bio/durée pour les règles contexte-dépendantes
     iec_ara2: ['k_recent'],
     epargnant_k: ['k_recent'],
+    diuretique: ['iono_recent'],
     lithium: ['lithium_recent'],
     avk: ['inr_recent'],
     antiarythmique: ['ecg_recent'],
+    anticholinesterase: ['ecg_recent'],
+    digoxine: ['digox_recent', 'dose', 'duree'],
+    metoclopramide: ['duree'],
+    loperamide: ['duree', 'dose'],
     clozapine: ['nfs_recent'],
     statine: ['dose'],
     antipsychotique: ['duree']
@@ -214,7 +224,11 @@ const PRECISION_FIELD_DEFS = {
     ecg_recent: { label: 'ECG / QTc < 6 mois ?', type: 'select',
         options: [['', 'Non précisé'], ['oui', 'Oui — fait et QTc normal'], ['non', 'Non / QTc allongé']] },
     nfs_recent: { label: 'NFS hebdomadaire en place (clozapine) ?', type: 'select',
-        options: [['', 'Non précisé'], ['oui', 'Oui — surveillance active'], ['non', 'Non / interrompue']] }
+        options: [['', 'Non précisé'], ['oui', 'Oui — surveillance active'], ['non', 'Non / interrompue']] },
+    iono_recent: { label: 'Ionogramme (K+/Na+/créat) < 6 mois ?', type: 'select',
+        options: [['', 'Non précisé'], ['oui', 'Oui — récent et normal'], ['non', 'Non / anormal']] },
+    digox_recent: { label: 'Digoxinémie contrôlée (cible 0,5-0,9 ng/mL) ?', type: 'select',
+        options: [['', 'Non précisé'], ['oui', 'Oui — dans la cible'], ['non', 'Non / hors cible']] }
 };
 function _medPrecisionSpec(med) {
     if (!med) return null;
