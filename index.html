@@ -470,6 +470,7 @@
                     </div>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-synthese" role="tab" aria-selected="true" aria-label="Synthese intelligente">Synthese</button></li>
+                        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-paam" role="tab" aria-label="Procedure PAAM - Auto-administration des medicaments">PAAM</button></li>
                         <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-scores" role="tab" aria-label="Calculs et Scores">Scores</button></li>
                         <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-eviter" role="tab" aria-label="Prescriptions inappropriees">Eviter</button></li>
                         <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-initier" role="tab" aria-label="Omissions therapeutiques">Omissions</button></li>
@@ -484,6 +485,7 @@
                     </ul>
                     <div class="tab-content mt-3" id="myTabContent">
                         <div class="tab-pane fade show active" id="tab-synthese" role="tabpanel"><div id="alertes-synthese" class="text-muted" aria-live="polite">Cliquez sur Analyser pour voir la synthèse intelligente...</div></div>
+                        <div class="tab-pane fade" id="tab-paam" role="tabpanel"><div id="paam-container">Chargement de la grille PAAM…</div></div>
                         <div class="tab-pane fade" id="tab-scores" role="tabpanel"><div id="alertes-scores" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
                         <div class="tab-pane fade" id="tab-eviter" role="tabpanel"><div id="alertes-eviter" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
                         <div class="tab-pane fade" id="tab-initier" role="tabpanel"><div id="alertes-initier" class="text-muted" aria-live="polite">Cliquez sur Analyser...</div></div>
@@ -510,7 +512,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version 0.72 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version 0.80 — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>
@@ -563,6 +565,7 @@
     <script src="lib/tesseract.min.js"></script>
     <script src="app_core.js"></script>
     <script src="app_ui.js"></script>
+    <script src="app_paam.js"></script>
     <script src="ocr_module.js"></script>
     <script src="child_pugh_adaptations.js"></script>
     <script src="composite_scores.js"></script>

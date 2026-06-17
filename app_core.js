@@ -65,7 +65,8 @@ function _collectPatientData() {
         fields, checkboxes,
         comorbs: [...activeComorbs],
         meds: activeMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id })),
-        suspended: window.suspendedMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id }))
+        suspended: window.suspendedMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id })),
+        paam: (typeof window.paamSerialize === 'function') ? window.paamSerialize() : undefined
     };
 }
 
@@ -119,6 +120,8 @@ function _restorePatientData(data) {
             }
         });
     }
+    // Restaurer la PAAM si présente dans l'import (sinon laisse la grille vide).
+    if (data.paam && typeof window.paamRestore === 'function') window.paamRestore(data.paam);
     if (typeof renderTags === 'function') renderTags();
     if (typeof calculerDFG === 'function') calculerDFG(false);
 }
@@ -528,6 +531,13 @@ function buildPdfContent() {
 
     html += `<div style="text-align:center;margin-top:6px;font-size:7px;color:#aaa;">Document généré par GeriaAssist — Usage professionnel uniquement</div>`;
     html += `</div>`;
+
+    // Annexe PAAM — incluse si l'utilisateur a coché « Inclure la PAAM dans
+    // l'export PDF » dans l'onglet PAAM. Le rendu démarre sur une nouvelle page
+    // (page-break-before:always) pour ne pas tronquer la synthèse.
+    if (window.paamData && window.paamData.includeInPdf && typeof window.buildPaamPdfHtml === 'function') {
+        html += window.buildPaamPdfHtml({ standalone: false });
+    }
     return html;
 }
 
@@ -593,6 +603,8 @@ window.resetPatient = function() {
     window.suspendedMeds.length = 0;
     // Purger les alertes masquées (Phase 2) : le dossier précédent n'engage pas le suivant.
     if (window._maskedAlerts && typeof window._maskedAlerts.clear === 'function') window._maskedAlerts.clear();
+    // Purger la grille PAAM (procédure auto-administration) — données spécifiques au résident.
+    if (typeof window.paamReset === 'function') window.paamReset();
 
     // 2. Réinitialiser les scores globaux
     globalQT_CountKR = 0; globalQT_CountCR_PR = 0;

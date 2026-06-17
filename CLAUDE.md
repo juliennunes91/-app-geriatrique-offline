@@ -27,6 +27,20 @@ Types de modifications à synchroniser :
 - Nouveau bouton, nouveau modal, nouvelle section
 - Changement de texte de label visible
 
+## Onglet PAAM (Auto-administration)
+
+L'onglet **PAAM** (Prise en charge de l'Auto-Administration des Médicaments)
+implémente la procédure EHPAD du CH Cosne-Cours-sur-Loire (Annexe 1) :
+
+- Module dédié : `app_paam.js` (chargé après `app_ui.js`)
+- Conteneur DOM : `#paam-container` dans `tab-paam` (présent dans les deux UIs)
+- Modèle : `window.paamData` (purgé par `resetPatient()`, sérialisé via export JSON)
+- Pré-remplissage best-effort depuis MMSE, ADL, dysphagie, délirium, médicaments actifs
+
+L'export PDF GeriaAssist intègre l'annexe PAAM si l'utilisateur a coché « Inclure
+la PAAM dans l'export PDF » (toggle dans l'onglet). Un bouton **Export PDF PAAM
+seul** génère un PDF dédié (annexe 1 du document du CH).
+
 ## Architecture des données cliniques
 
 **Attribution des sources (important)** :
