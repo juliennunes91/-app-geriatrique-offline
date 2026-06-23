@@ -28130,6 +28130,42 @@ const MASTER_DB = {
                     "source": "RCP Lipanthyl/Lipidil | ESC/EAS Dyslipidémies 2019 | FIELD 2005 ; ACCORD-Lipid 2010"
           },
           {
+                    "dci": "Ezetimibe",
+                    "princeps": "Ezetrol",
+                    "classe": "Hypocholestérolémiant (inhibiteur sélectif absorption NPC1L1)",
+                    "poso_hab": "10 mg/j (dose fixe, en 1 prise, à tout moment de la journée)",
+                    "poso_ger": "10 mg/j — pas d'adaptation à l'âge. Bénéfice CV démontré en add-on à statine (IMPROVE-IT 2015).",
+                    "poso_ren": "Pas d'adaptation. Prudence si IRC sévère (DFG < 30) — données limitées.",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "bhe": "0",
+                    "albumine": "> 90%",
+                    "qt_risque": "",
+                    "ddi_interact": "Ciclosporine (↑ ézétimibe x2-12 — prudence, surveillance) | Cholestyramine/colestipol (↓ ézétimibe ~55% — espacer ≥ 2h avant ou 4h après la résine) | Gemfibrozil (↑ ézétimibe x2-3 + risque lithiase biliaire — éviter ; préférer fénofibrate) | AVK warfarine/fluindione (↑ INR léger possible — surveillance INR à l'introduction)",
+                    "ddi_interact_v2": [
+                              { "classe": "Ciclosporine — ↑ exposition ézétimibe x2-12", "dcis": ["ciclosporine"], "commentaire": "Inhibition OATP1B1. Surveillance bilan hépatique et CPK. Bénéfice/risque à réévaluer.", "severite": "warning" },
+                              { "classe": "Résines (cholestyramine, colestipol) — ↓ absorption ézétimibe ~55%", "dcis": ["cholestyramine", "colestipol", "colestyramine"], "commentaire": "Espacer ≥ 2 h avant ou 4 h après la prise de résine.", "severite": "warning" },
+                              { "classe": "Gemfibrozil — ↑ ézétimibe + risque lithiase biliaire", "dcis": ["gemfibrozil"], "commentaire": "Association à éviter. Préférer fénofibrate si fibrate indispensable.", "severite": "warning" },
+                              { "classe": "AVK (warfarine, acénocoumarol, fluindione) — ↑ INR léger", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "Effet modeste mais possible — contrôler INR à J7 et J14 post-introduction.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Bilan lipidique (LDL, HDL, TG, cholestérol total) | ASAT/ALAT (transaminases) | CPK si association à une statine",
+                    "suivi_periodique": "Bilan lipidique 6-8 semaines puis annuel | ASAT/ALAT semestriel (rare élévation transitoire) | CPK si myalgies",
+                    "alerte_clinique": "Très bien toléré chez l'âgé (pas d'effet anticholinergique, pas de QT, pas de sédation). Indication phare en gériatrie : ajout à une statine quand le LDL n'atteint pas la cible (ESC/EAS 2019) ou en monothérapie si statine non tolérée. Bénéfice CV démontré en post-SCA chez les ≥ 75 ans (IMPROVE-IT, sous-groupe âgé). Rares cas de myopathie isolée signalés. CI : insuffisance hépatique modérée à sévère.",
+                    "bio_cible": [
+                              "BIO_027",
+                              "BIO_013",
+                              "BIO_014",
+                              "BIO_018"
+                    ],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur sélectif de l'absorption intestinale du cholestérol (NPC1L1). ↓ LDL ~18% en monothérapie, ~25% en add-on à statine. Bénéfice CV : IMPROVE-IT (Cannon NEJM 2015) — ↓ MACE 6,4% à 7 ans en add-on simvastatine post-SCA, bénéfice maintenu chez les ≥ 75 ans (Bach JAMA 2019). Place en gériatrie : 2e ligne après statine, ou monothérapie si statine non tolérée (myalgies, intolérance hépatique). Très bonne tolérance, pas d'interaction PK majeure (sauf ciclosporine, résines, gemfibrozil).",
+                    "source": "RCP Ezetrol (MSD) | ESC/EAS Dyslipidémies 2019 | IMPROVE-IT (Cannon NEJM 2015) | Bach JAMA Cardiol 2019"
+          },
+          {
                     "dci": "Bezafibrate",
                     "princeps": "Befizal",
                     "classe": "Fibrate (agoniste PPAR pan-alpha/gamma/delta)",
