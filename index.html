@@ -512,7 +512,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version 0.81 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version 0.82 — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>
@@ -666,22 +666,27 @@
         // de score) NE SONT PAS comptées pour ne pas gonfler les badges.
         // ================================================================
         function updateTabCounters() {
-            const tabMap = {
-                'alertes-synthese': 0, 'alertes-scores': 1, 'alertes-eviter': 2, 'alertes-initier': 3,
-                'alertes-interact': 4, 'alertes-auc': 5, 'alertes-ansm': 6,
-                'alertes-bio': 7, 'alertes-usage': 8, 'alertes-suivi': 9, 'alertes-guidelines': 10
-            };
-            const tabs = document.querySelectorAll('#myTab .nav-link');
-            for (const [divId, tabIdx] of Object.entries(tabMap)) {
+            // Mapping ROBUSTE par relation DOM (et non par index de position) :
+            // chaque div d'alertes retrouve son onglet propriétaire via le panneau
+            // .tab-pane ancêtre. Insensible à l'ajout/suppression/réordonnancement
+            // d'onglets (ex. ajout de l'onglet PAAM) — évite le décalage des badges.
+            const divIds = ['alertes-synthese', 'alertes-scores', 'alertes-eviter', 'alertes-initier',
+                'alertes-interact', 'alertes-auc', 'alertes-ansm', 'alertes-bio', 'alertes-usage',
+                'alertes-suivi', 'alertes-guidelines'];
+            divIds.forEach(divId => {
                 const el = document.getElementById(divId);
-                if (!el || !tabs[tabIdx]) continue;
-                // Sélection stricte : on ne compte ni alert-light ni alert-info ni alert-secondary
-                const alerts = el.querySelectorAll('.alert.alert-danger, .alert.alert-warning, .alert.alert-success');
-                const count = alerts.length;
-                const btn = tabs[tabIdx];
+                if (!el) return;
+                const pane = el.closest('.tab-pane');
+                if (!pane || !pane.id) return;
+                const suffix = pane.id.replace(/^tab-/, '');
+                const btn = document.querySelector('#myTab .nav-link[data-bs-target="#' + pane.id + '"], #myTab .nav-link[data-tab="' + suffix + '"]');
+                if (!btn) return;
                 // Remove existing counter badge
                 const existing = btn.querySelector('.tab-counter');
                 if (existing) existing.remove();
+                // Sélection stricte : on ne compte ni alert-light ni alert-info ni alert-secondary
+                const alerts = el.querySelectorAll('.alert.alert-danger, .alert.alert-warning, .alert.alert-success');
+                const count = alerts.length;
                 if (count > 0) {
                     const badge = document.createElement('span');
                     // Couleur du badge selon le pire niveau présent
@@ -693,7 +698,7 @@
                     badge.textContent = count;
                     btn.appendChild(badge);
                 }
-            }
+            });
         }
 
         // ================================================================

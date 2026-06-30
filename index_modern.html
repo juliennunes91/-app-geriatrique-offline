@@ -974,7 +974,7 @@
 
 <!-- Footer -->
 <footer class="fixed bottom-0 text-[0.68rem] text-on-surface-variant bg-surface-container-lowest/92 px-3 py-1 border-t border-r border-outline-variant rounded-tr-md z-40 leading-tight max-w-[420px] pointer-events-none no-print" style="backdrop-filter:blur(4px); left:16rem;">
-    version 0.81 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+    version 0.82 — créé par Dr Julien Nunes à l'aide de l'IA<br>
     Merci aux testeurs (Dr Juliette Muffet)<br>
     <em>Outil d'aide à la décision pharmaco-clinique. Résultats à valider par l'utilisateur.</em>
 </footer>
@@ -1262,19 +1262,24 @@
     // éviter le badge gonflé qui ne reflète pas la réalité.
     // ================================================================
     function updateTabCounters() {
-        const tabMap = {
-            'alertes-synthese':0,'alertes-scores':1,'alertes-eviter':2,'alertes-initier':3,
-            'alertes-interact':4,'alertes-auc':5,'alertes-ansm':6,
-            'alertes-bio':7,'alertes-usage':8,'alertes-suivi':9,'alertes-guidelines':10
-        };
-        const tabs = document.querySelectorAll('#myTab .nav-link');
-        for (const [divId, idx] of Object.entries(tabMap)) {
+        // Mapping ROBUSTE par relation DOM (et non par index de position) :
+        // chaque div d'alertes retrouve son onglet propriétaire via le panneau
+        // .tab-pane ancêtre. Insensible à l'ajout/suppression/réordonnancement
+        // d'onglets (ex. ajout de l'onglet PAAM) — évite le décalage des badges.
+        const divIds = ['alertes-synthese','alertes-scores','alertes-eviter','alertes-initier',
+            'alertes-interact','alertes-auc','alertes-ansm','alertes-bio','alertes-usage',
+            'alertes-suivi','alertes-guidelines','alertes-scores-exp'];
+        divIds.forEach(divId => {
             const el = document.getElementById(divId);
-            if (!el || !tabs[idx]) continue;
-            const count = el.querySelectorAll('.alert.alert-danger, .alert.alert-warning, .alert.alert-success').length;
-            const btn = tabs[idx];
+            if (!el) return;
+            const pane = el.closest('.tab-pane');
+            if (!pane || !pane.id) return;
+            const suffix = pane.id.replace(/^tab-/, '');
+            const btn = document.querySelector('#myTab .nav-link[data-tab="' + suffix + '"], #myTab .nav-link[data-bs-target="#' + pane.id + '"]');
+            if (!btn) return;
             const existing = btn.querySelector('.tab-counter');
             if (existing) existing.remove();
+            const count = el.querySelectorAll('.alert.alert-danger, .alert.alert-warning, .alert.alert-success').length;
             if (count > 0) {
                 const badge = document.createElement('span');
                 const hasDanger = el.querySelector('.alert.alert-danger');
@@ -1285,7 +1290,7 @@
                 badge.textContent = count;
                 btn.appendChild(badge);
             }
-        }
+        });
     }
 
     // ================================================================
