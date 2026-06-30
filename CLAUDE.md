@@ -63,6 +63,14 @@ dans `app_analysis.js` (allowlist stricte d'IDs : `EV_B18`, `EV_D05`, `EV_D16`,
 alerte de sécurité dure (QT, Parkinson/DCL, dysphagie). Le rendu du bandeau est
 dans `renderSingleAlert()` (geria_engine_v2.js) via `a._recontextualise`.
 
+**Surveillance dédiée (Bloc 3)** : 5 règles `SUP_PSYC_01`→`SUP_PSYC_05`
+(`RECOS_SUPPLEMENT`), gatées sur `psychiatrie_primaire_chronique` /
+`trouble_thymique_chronique` (sauf clozapine, gatée `age_min: 65`) :
+dyskinésie tardive (AIMS), surveillance métabolique, ECG/QTc + prolactine,
+lithium au long cours (rein/thyroïde/parathyroïde), clozapine du sujet âgé
+(iléus, myocardite, CYP1A2-tabac). Complètent la recontextualisation
+(« ne pas arrêter → surveiller CECI ») sans dupliquer SUP_PIMC_03/11.
+
 ## Architecture des données cliniques
 
 **Attribution des sources (important)** :

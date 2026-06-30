@@ -4380,6 +4380,72 @@ const RECOS_SUPPLEMENT = [
         severite: "danger",
         condition: { med_keys: ["verapamil", "diltiazem"], med_keys_2: ["betabloquant"] },
         alternatives: "Choisir UN SEUL : maintenir le bêtabloquant (priorité HFrEF/post-SCA) et remplacer le non-DHP par un DHP (amlodipine) ou un autre antihypertenseur. Si vérapamil/diltiazem indispensable (FA réfractaire au BB), arrêt progressif du BB sous ECG."
+    },
+
+    // ========================================================================
+    // SURVEILLANCE — PSYCHIATRIE PRIMAIRE CHRONIQUE DU SUJET ÂGÉ (Bloc 3)
+    // Surveillances cliniques spécifiques des traitements de fond psychotropes
+    // au long cours. Gatées sur le contexte « psychiatrie_primaire_chronique »
+    // (ne se déclenchent QUE si une maladie psychiatrique chronique est déclarée
+    // — Bloc 1) afin de ne pas bruiter les usages gériatriques ponctuels (SCPD).
+    // Complètent la recontextualisation (Bloc 2) : « ne pas arrêter → surveiller
+    // CECI ». Volontairement distinctes des SUP_PIMC_03/11 (lithémie, NFS) qu'elles
+    // ne dupliquent pas (atteintes d'organe, dépistage clinique, schéma).
+    // ========================================================================
+    {
+        id: "SUP_PSYC_01", sources: ["HAS", "Maudsley"],
+        titre: "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
+        message: "Maladie psychiatrique chronique sous antipsychotique : dépister la dyskinésie tardive par l'échelle AIMS (Abnormal Involuntary Movement Scale) au moins 1 fois/an — tous les 3-6 mois si facteurs de risque (âge avancé, dose cumulée élevée, durée prolongée, sexe féminin, antipsychotique typique). Atteinte potentiellement irréversible si non détectée précocement.",
+        severite: "warning",
+        condition: {
+            med_keys: ["antipsychotique"],
+            contexte_clinique_any: ["psychiatrie_primaire_chronique", "psychose_chronique"]
+        },
+        alternatives: "Si dyskinésie tardive : réduire la dose si possible, envisager un switch vers la clozapine (moins dyskinétique), discuter valbénazine/déutétrabénazine. Ne pas augmenter l'antipsychotique pour masquer les mouvements."
+    },
+    {
+        id: "SUP_PSYC_02", sources: ["HAS", "Maudsley"],
+        titre: "Antipsychotique au long cours : surveillance métabolique",
+        message: "Antipsychotique de fond (psychose chronique) : surveillance métabolique régulière — poids/IMC/tour de taille, glycémie à jeun ou HbA1c, bilan lipidique, pression artérielle. Schéma : baseline, à 3 mois, puis au moins annuel (surveillance rapprochée pour olanzapine et clozapine, les plus à risque). Le syndrome métabolique cumulé est une cause majeure de surmortalité cardiovasculaire de ces patients.",
+        severite: "warning",
+        condition: {
+            med_keys: ["antipsychotique"],
+            contexte_clinique_any: ["psychiatrie_primaire_chronique", "psychose_chronique"]
+        },
+        alternatives: "Mesures hygiéno-diététiques, activité physique adaptée. Si prise de poids/dérèglement glycémique majeur : envisager un antipsychotique métaboliquement plus neutre (aripiprazole) après avis psychiatrique. Traiter les facteurs de risque CV (statine, antidiabétique)."
+    },
+    {
+        id: "SUP_PSYC_03", sources: ["HAS", "Maudsley"],
+        titre: "Antipsychotique au long cours : ECG/QTc et prolactine",
+        message: "Antipsychotique de fond : ECG avec mesure du QTc à l'instauration puis annuel (et à chaque changement de dose/molécule) — risque de torsades de pointes, majoré par l'âge, l'hypokaliémie et les associations QT-allongeantes. Doser la prolactine en cas de signes d'hyperprolactinémie (galactorrhée, troubles sexuels, aménorrhée, ostéoporose), surtout sous rispéridone, amisulpride, halopéridol.",
+        severite: "warning",
+        condition: {
+            med_keys: ["antipsychotique"],
+            contexte_clinique_any: ["psychiatrie_primaire_chronique", "psychose_chronique"]
+        },
+        alternatives: "Si QTc allongé (> 470 ms H / > 480 ms F ou Δ > 60 ms) : corriger la kaliémie/magnésémie, réduire la dose, éviter les associations QT, préférer un antipsychotique à faible risque QT (aripiprazole). Si hyperprolactinémie symptomatique : aripiprazole (effet réducteur)."
+    },
+    {
+        id: "SUP_PSYC_04", sources: ["HAS", "CANMAT"],
+        titre: "Lithium au long cours : surveillance d'organe (rein, thyroïde, parathyroïde)",
+        message: "Lithium de fond dans un trouble thymique chronique : au-delà de la lithémie, surveiller les atteintes d'organe du traitement prolongé — DFG (insuffisance rénale chronique progressive, stadifier), TSH (hypothyroïdie 10-30 %), calcémie/PTH (hyperparathyroïdie/hypercalcémie 10-15 %), et rechercher un diabète insipide néphrogénique (polyurie, polydipsie, natrémie). Réévaluer la balance bénéfice/risque si DFG < 45.",
+        severite: "warning",
+        condition: {
+            med_keys: ["lithium"],
+            contexte_clinique_any: ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]
+        },
+        alternatives: "Maintenir le lithium si efficace et toléré (effet anti-suicide). Si néphrotoxicité progressive : avis néphro + psychiatre, envisager un relais (valproate, lamotrigine) sans arrêt brutal. Supplémenter LT4 si hypothyroïdie (ne pas arrêter le lithium pour autant)."
+    },
+    {
+        id: "SUP_PSYC_05", sources: ["ANSM", "Maudsley"],
+        titre: "Clozapine chez le sujet âgé : risques spécifiques (au-delà de la NFS)",
+        message: "Clozapine chez le sujet âgé : seuil de toxicité abaissé (clairance réduite). Au-delà de la NFS (agranulocytose), surveiller : constipation sévère / iléus / occlusion (1ère cause de décès — laxatif prophylactique systématique, jamais d'anticholinergique associé), pneumopathie d'inhalation, myocardite à l'instauration (CRP + troponine hebdomadaires les 4 premières semaines), sédation et hypotension. Le sevrage tabagique majore la clozapinémie (CYP1A2) — réduire la dose à l'arrêt du tabac.",
+        severite: "danger",
+        condition: {
+            med_keys: ["clozapine"],
+            age_min: 65
+        },
+        alternatives: "Laxatif osmotique prophylactique systématique. Titration plus lente chez l'âgé. Surveillance cardiaque rapprochée à l'instauration. Réévaluer la clozapinémie lors de tout changement de statut tabagique ou d'ajout d'inhibiteur/inducteur du CYP1A2."
     }
 ];
 
