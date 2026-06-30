@@ -721,6 +721,26 @@
                                 <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkBipolaire" class="accent-secondary"><span>Trouble bipolaire</span></label>
                                 <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkCatatonie" class="accent-secondary"><span>Catatonie</span></label>
                             </div>
+                            <!-- 3 bis. Maladie psychiatrique primaire CHRONIQUE (antérieure à 65 ans) -->
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer font-semibold"><input type="checkbox" id="chkPsyChronique" class="accent-secondary" onchange="toggleCascade('chkPsyChronique','cascadePsyChronique')"><span>Maladie psychiatrique primaire chronique <span class="text-on-surface-variant font-normal">(antérieure à 65 ans)</span></span></label>
+                            <div id="cascadePsyChronique" class="ml-4 border-l-2 border-amber-400/50 pl-2 mt-1 mb-1 space-y-1" style="display:none;">
+                                <div class="text-[10px] text-on-surface-variant mb-1">Traitements psychotropes de fond — <em>non déprescriptibles systématiquement</em></div>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSchizoChronique" class="accent-secondary"><span>Schizophrénie chronique (F20)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSchizoAffectif" class="accent-secondary"><span>Trouble schizo-affectif (F25)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTroubleDelirant" class="accent-secondary"><span>Trouble délirant persistant / paranoïa (F22.0)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkBipolaireI" class="accent-secondary"><span>Trouble bipolaire type I (F31)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkBipolaireII" class="accent-secondary"><span>Trouble bipolaire type II (F31.81)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkDepressionRecurrente" class="accent-secondary"><span>Trouble dépressif récurrent (F33)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkDysthymie" class="accent-secondary"><span>Trouble dépressif persistant / dysthymie (F34.1)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTOC" class="accent-secondary"><span>Trouble obsessionnel-compulsif / TOC (F42)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTroublePanique" class="accent-secondary"><span>Trouble panique (F41.0)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTAGChronique" class="accent-secondary"><span>Trouble anxieux généralisé chronique (F41.1)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkESPT" class="accent-secondary"><span>État de stress post-traumatique / ESPT (F43.1)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTroublePersonnalite" class="accent-secondary"><span>Trouble de la personnalité (F60)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkUsageAlcool" class="accent-secondary"><span>Trouble de l'usage de l'alcool (F10.2)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkUsageSubstances" class="accent-secondary"><span>Trouble de l'usage de substances (F19)</span></label>
+                                <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTSADI" class="accent-secondary"><span>TSA / déficience intellectuelle (F84/F70)</span></label>
+                            </div>
                             <!-- 4. Delirium -->
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer font-semibold"><input type="checkbox" id="chkDelirium" class="accent-secondary" onchange="toggleCascade('chkDelirium','cascadeDelirium')"><span>Syndrome confusionnel (delirium)</span></label>
                             <div id="cascadeDelirium" class="ml-4 border-l-2 border-info/40 pl-2 mt-1 mb-1 space-y-1" style="display:none;">
@@ -974,7 +994,7 @@
 
 <!-- Footer -->
 <footer class="fixed bottom-0 text-[0.68rem] text-on-surface-variant bg-surface-container-lowest/92 px-3 py-1 border-t border-r border-outline-variant rounded-tr-md z-40 leading-tight max-w-[420px] pointer-events-none no-print" style="backdrop-filter:blur(4px); left:16rem;">
-    version 0.82 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+    version 0.90 — créé par Dr Julien Nunes à l'aide de l'IA<br>
     Merci aux testeurs (Dr Juliette Muffet)<br>
     <em>Outil d'aide à la décision pharmaco-clinique. Résultats à valider par l'utilisateur.</em>
 </footer>

@@ -813,6 +813,141 @@ const MASTER_DB = {
             "SYNONYMES": "Douleur chronique, douleur persistante, douleur chronique rebelle, douleur chronique non cancéreuse, chronic pain",
             "BIO_SURVEILLANCE": "BIO_004, BIO_003",
             "SYND_RISQUE": ""
+        },
+        "PAT_055": {
+            "ID_PATHO": "PAT_055",
+            "CIM_10": "F20",
+            "NOM_STANDARD": "Schizophrénie chronique (début à l'âge adulte)",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Schizophrénie, schizophrénie chronique, schizophrénie ancienne, trouble schizophrénique, chronic schizophrenia",
+            "BIO_SURVEILLANCE": "BIO_025, BIO_026, BIO_027, BIO_031, BIO_018, BIO_011, BIO_012, BIO_009, BIO_002, BIO_003",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_056": {
+            "ID_PATHO": "PAT_056",
+            "CIM_10": "F25",
+            "NOM_STANDARD": "Trouble schizo-affectif",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Schizo-affectif, trouble schizoaffectif, schizoaffective disorder",
+            "BIO_SURVEILLANCE": "BIO_025, BIO_026, BIO_027, BIO_031, BIO_029, BIO_019, BIO_009, BIO_002, BIO_003",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_057": {
+            "ID_PATHO": "PAT_057",
+            "CIM_10": "F22.0",
+            "NOM_STANDARD": "Trouble délirant persistant (paranoïa)",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Trouble délirant, paranoïa, délire chronique, persistent delusional disorder",
+            "BIO_SURVEILLANCE": "BIO_025, BIO_027, BIO_031, BIO_002, BIO_003",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_058": {
+            "ID_PATHO": "PAT_058",
+            "CIM_10": "F31",
+            "NOM_STANDARD": "Trouble bipolaire type I (chronique)",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Bipolaire I, trouble bipolaire de type 1, maniaco-dépressif, bipolar I disorder",
+            "BIO_SURVEILLANCE": "BIO_029, BIO_019, BIO_004, BIO_009, BIO_025, BIO_031, BIO_003",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_059": {
+            "ID_PATHO": "PAT_059",
+            "CIM_10": "F31.81",
+            "NOM_STANDARD": "Trouble bipolaire type II (chronique)",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Bipolaire II, trouble bipolaire de type 2, bipolar II disorder, hypomanie récurrente",
+            "BIO_SURVEILLANCE": "BIO_029, BIO_019, BIO_004, BIO_009, BIO_025, BIO_031, BIO_003",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_060": {
+            "ID_PATHO": "PAT_060",
+            "CIM_10": "F33",
+            "NOM_STANDARD": "Trouble dépressif récurrent",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Dépression récurrente, EDM récurrent, trouble dépressif majeur récurrent, recurrent depressive disorder",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_022, BIO_021, BIO_023, BIO_002",
+            "SYND_RISQUE": "SYND_043, SYND_009, SYND_004"
+        },
+        "PAT_061": {
+            "ID_PATHO": "PAT_061",
+            "CIM_10": "F34.1",
+            "NOM_STANDARD": "Trouble dépressif persistant (dysthymie)",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Dysthymie, trouble dépressif persistant, dépression chronique, persistent depressive disorder",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_022, BIO_021, BIO_002",
+            "SYND_RISQUE": "SYND_043, SYND_009"
+        },
+        "PAT_062": {
+            "ID_PATHO": "PAT_062",
+            "CIM_10": "F42",
+            "NOM_STANDARD": "Trouble obsessionnel-compulsif (TOC)",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "TOC, trouble obsessionnel compulsif, obsessions compulsions, OCD",
+            "BIO_SURVEILLANCE": "BIO_002, BIO_001, BIO_031",
+            "SYND_RISQUE": "SYND_004"
+        },
+        "PAT_063": {
+            "ID_PATHO": "PAT_063",
+            "CIM_10": "F41.0",
+            "NOM_STANDARD": "Trouble panique",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Trouble panique, attaques de panique, panic disorder, crise d'angoisse récurrente",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_002, BIO_001, BIO_031",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_064": {
+            "ID_PATHO": "PAT_064",
+            "CIM_10": "F41.1",
+            "NOM_STANDARD": "Trouble anxieux généralisé chronique",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "TAG chronique, anxiété généralisée chronique, trouble anxieux généralisé ancien, chronic GAD",
+            "BIO_SURVEILLANCE": "BIO_019, BIO_002, BIO_001, BIO_025, BIO_031",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_065": {
+            "ID_PATHO": "PAT_065",
+            "CIM_10": "F43.1",
+            "NOM_STANDARD": "État de stress post-traumatique (ESPT)",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "ESPT, PTSD, stress post-traumatique, psychotraumatisme, état de stress post traumatique",
+            "BIO_SURVEILLANCE": "BIO_002, BIO_001, BIO_031",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_066": {
+            "ID_PATHO": "PAT_066",
+            "CIM_10": "F60",
+            "NOM_STANDARD": "Trouble de la personnalité",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Trouble de la personnalité, personnalité borderline, état-limite, trouble de la personnalité émotionnellement labile, personality disorder",
+            "BIO_SURVEILLANCE": "BIO_002, BIO_031",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_067": {
+            "ID_PATHO": "PAT_067",
+            "CIM_10": "F10.2",
+            "NOM_STANDARD": "Trouble de l'usage de l'alcool",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Alcoolisme, trouble de l'usage de l'alcool, dépendance alcoolique, alcoolo-dépendance, alcohol use disorder",
+            "BIO_SURVEILLANCE": "BIO_013, BIO_014, BIO_015, BIO_011, BIO_017, BIO_021, BIO_022, BIO_009, BIO_002",
+            "SYND_RISQUE": "SYND_001, SYND_004"
+        },
+        "PAT_068": {
+            "ID_PATHO": "PAT_068",
+            "CIM_10": "F19.2",
+            "NOM_STANDARD": "Trouble de l'usage de substances",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "Toxicomanie, trouble de l'usage de substances, addiction, pharmacodépendance, substance use disorder, usage d'opioïdes",
+            "BIO_SURVEILLANCE": "BIO_013, BIO_014, BIO_031, BIO_002, BIO_011",
+            "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_069": {
+            "ID_PATHO": "PAT_069",
+            "CIM_10": "F84/F70",
+            "NOM_STANDARD": "Trouble du spectre de l'autisme / déficience intellectuelle",
+            "CATEGORIE": "Psychiatrie chronique",
+            "SYNONYMES": "TSA, autisme, trouble envahissant du développement, déficience intellectuelle, handicap intellectuel, autism spectrum disorder",
+            "BIO_SURVEILLANCE": "BIO_025, BIO_027, BIO_031, BIO_002, BIO_003",
+            "SYND_RISQUE": "SYND_004, SYND_013"
         }
     },
     "SYNDROMES": {

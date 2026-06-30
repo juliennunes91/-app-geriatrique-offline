@@ -328,6 +328,27 @@
                                     <div class="form-check"><input type="checkbox" class="form-check-input" id="chkCatatonie"><label class="form-check-label small">Catatonie</label></div>
                                 </div>
 
+                                <!-- 3 bis. Maladie psychiatrique primaire CHRONIQUE (antérieure à 65 ans) -->
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkPsyChronique" onchange="toggleCascade('chkPsyChronique','cascadePsyChronique')"><label class="form-check-label small fw-semibold">Maladie psychiatrique primaire chronique <span class="text-muted fw-normal">(antérieure à 65 ans)</span></label></div>
+                                <div id="cascadePsyChronique" class="ms-3 border-start border-2 border-warning ps-2 mt-1 mb-2" style="display:none;">
+                                    <div class="small text-muted mb-1">Traitements psychotropes de fond — <em>non déprescriptibles systématiquement</em></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSchizoChronique"><label class="form-check-label small">Schizophrénie chronique (F20)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSchizoAffectif"><label class="form-check-label small">Trouble schizo-affectif (F25)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTroubleDelirant"><label class="form-check-label small">Trouble délirant persistant / paranoïa (F22.0)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkBipolaireI"><label class="form-check-label small">Trouble bipolaire type I (F31)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkBipolaireII"><label class="form-check-label small">Trouble bipolaire type II (F31.81)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDepressionRecurrente"><label class="form-check-label small">Trouble dépressif récurrent (F33)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDysthymie"><label class="form-check-label small">Trouble dépressif persistant / dysthymie (F34.1)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTOC"><label class="form-check-label small">Trouble obsessionnel-compulsif / TOC (F42)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTroublePanique"><label class="form-check-label small">Trouble panique (F41.0)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTAGChronique"><label class="form-check-label small">Trouble anxieux généralisé chronique (F41.1)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkESPT"><label class="form-check-label small">État de stress post-traumatique / ESPT (F43.1)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTroublePersonnalite"><label class="form-check-label small">Trouble de la personnalité (F60)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkUsageAlcool"><label class="form-check-label small">Trouble de l'usage de l'alcool (F10.2)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkUsageSubstances"><label class="form-check-label small">Trouble de l'usage de substances (F19)</label></div>
+                                    <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTSADI"><label class="form-check-label small">TSA / déficience intellectuelle (F84/F70)</label></div>
+                                </div>
+
                                 <!-- 4. Delirium -->
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDelirium" onchange="toggleCascade('chkDelirium','cascadeDelirium')"><label class="form-check-label small fw-semibold">Syndrome confusionnel (delirium)</label></div>
                                 <div id="cascadeDelirium" class="ms-3 border-start border-2 border-info ps-2 mt-1 mb-2" style="display:none;">
@@ -512,7 +533,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version 0.82 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version 0.90 — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>

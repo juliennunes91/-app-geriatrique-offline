@@ -553,7 +553,23 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'chkInsomnie': 'PAT_049',
         'chkTcsp': 'PAT_050',
         'chkSjsr': 'PAT_051',
-        'chkSaos': 'PAT_052'
+        'chkSaos': 'PAT_052',
+        // Maladie psychiatrique primaire CHRONIQUE (antérieure à 65 ans) — Bloc 1
+        'chkSchizoChronique': 'PAT_055',
+        'chkSchizoAffectif': 'PAT_056',
+        'chkTroubleDelirant': 'PAT_057',
+        'chkBipolaireI': 'PAT_058',
+        'chkBipolaireII': 'PAT_059',
+        'chkDepressionRecurrente': 'PAT_060',
+        'chkDysthymie': 'PAT_061',
+        'chkTOC': 'PAT_062',
+        'chkTroublePanique': 'PAT_063',
+        'chkTAGChronique': 'PAT_064',
+        'chkESPT': 'PAT_065',
+        'chkTroublePersonnalite': 'PAT_066',
+        'chkUsageAlcool': 'PAT_067',
+        'chkUsageSubstances': 'PAT_068',
+        'chkTSADI': 'PAT_069'
     };
     for (const [chkId, patCode] of Object.entries(checkboxPatMap)) {
         if (isChecked(chkId) && !activeComorbs.includes(patCode)) {
@@ -622,6 +638,27 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(isChecked('chkPsychoseTardive')) ctxClinique.push("psychose_tardive");
     if(isChecked('chkBipolaire')) ctxClinique.push("trouble_bipolaire");
     if(isChecked('chkCatatonie')) ctxClinique.push("catatonie");
+
+    // ── Maladie psychiatrique primaire CHRONIQUE (antérieure à 65 ans) — Bloc 1 ──
+    // Ces contextes pilotent la recontextualisation des PIM psychotropes (Bloc 2) :
+    //   psychose_chronique        → antipsychotiques = traitement de fond (≠ PIM à arrêter)
+    //   trouble_thymique_chronique → lithium / thymorégulateurs = traitement de fond
+    // psychiatrie_primaire_chronique = drapeau-parapluie (bandeau de synthèse).
+    if(isChecked('chkSchizoChronique'))     ctxClinique.push("schizophrenie", "psychose_chronique", "psychiatrie_primaire_chronique");
+    if(isChecked('chkSchizoAffectif'))      ctxClinique.push("trouble_schizoaffectif", "psychose_chronique", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
+    if(isChecked('chkTroubleDelirant'))     ctxClinique.push("trouble_delirant", "psychose_chronique", "psychiatrie_primaire_chronique");
+    if(isChecked('chkBipolaireI'))          ctxClinique.push("trouble_bipolaire", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
+    if(isChecked('chkBipolaireII'))         ctxClinique.push("trouble_bipolaire", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
+    if(isChecked('chkDepressionRecurrente'))ctxClinique.push("depression_recurrente", "depression", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
+    if(isChecked('chkDysthymie'))           ctxClinique.push("dysthymie", "depression", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
+    if(isChecked('chkTOC'))                 ctxClinique.push("toc", "psychiatrie_primaire_chronique");
+    if(isChecked('chkTroublePanique'))      ctxClinique.push("trouble_panique", "anxiete_chronique", "psychiatrie_primaire_chronique");
+    if(isChecked('chkTAGChronique'))        ctxClinique.push("tag", "anxiete_generalisee", "anxiete_chronique", "psychiatrie_primaire_chronique");
+    if(isChecked('chkESPT'))                ctxClinique.push("espt", "psychiatrie_primaire_chronique");
+    if(isChecked('chkTroublePersonnalite')) ctxClinique.push("trouble_personnalite", "psychiatrie_primaire_chronique");
+    if(isChecked('chkUsageAlcool'))         ctxClinique.push("trouble_usage_alcool", "addiction", "alcool", "psychiatrie_primaire_chronique");
+    if(isChecked('chkUsageSubstances'))     ctxClinique.push("trouble_usage_substances", "addiction", "psychiatrie_primaire_chronique");
+    if(isChecked('chkTSADI'))               ctxClinique.push("tsa_di", "psychiatrie_primaire_chronique");
     if(isChecked('chkDelirium')) {
         ctxClinique.push("delirium", "confusion");
         if(isChecked('delHyper')) ctxClinique.push("delirium_hyperactif");
@@ -707,6 +744,52 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
 }
 
 // =========================================================
+// Bloc 2 — RECONTEXTUALISATION DES PIM PSYCHOTROPES
+// (maladie psychiatrique primaire chronique chez le sujet âgé)
+// =========================================================
+// Allowlist STRICTE d'IDs de règles : on ne requalifie QUE des alertes dont la
+// recommandation gériatrique par défaut (« arrêter/éviter ») devient inadaptée
+// lorsque le médicament est le TRAITEMENT DE FOND d'une maladie psychiatrique
+// primaire chronique. On ne touche JAMAIS une alerte de sécurité dure
+// (QT — EV_N05, Parkinson/DCL, dysphagie, syndrome malin) : ces risques
+// persistent quelle que soit l'indication.
+const RECONTEXTE_PSY_RULES = {
+    // Antipsychotiques = traitement de fond d'une psychose primaire chronique
+    'EV_B18':      { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }, // long cours + maladie vasculaire
+    'EV_D05':      { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }, // durée chez le dément (≠ SCPD ici)
+    'EV_D16':      { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }, // « comme hypnotique » (en fait psychose)
+    'EV_K02':      { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }, // chez le chuteur
+    'EV_PRISC_02': { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }  // dose PRISCUS > 2 mg/j
+};
+const RECONTEXTE_PSY_NOTE = {
+    antipsychotique: "⚕️ Traitement de fond d'une psychose primaire chronique — NE PAS déprescrire systématiquement. Viser la dose minimale efficace et renforcer la surveillance (QTc, syndrome métabolique, dyskinésie tardive) plutôt qu'arrêter.",
+    thymoregulateur: "⚕️ Traitement de fond d'un trouble thymique chronique — NE PAS déprescrire systématiquement. Maintenir, optimiser la dose et renforcer la surveillance (lithémie, fonction rénale, thyroïde) plutôt qu'arrêter."
+};
+// Renvoie la note de recontextualisation si le contexte chronique l'exige, sinon ''.
+function _recontexteNotePsy(cible, ctxClinique) {
+    const set = ctxClinique instanceof Set ? ctxClinique : new Set(ctxClinique || []);
+    if (cible === 'antipsychotique' && set.has('psychose_chronique')) return RECONTEXTE_PSY_NOTE.antipsychotique;
+    if (cible === 'thymoregulateur' && set.has('trouble_thymique_chronique')) return RECONTEXTE_PSY_NOTE.thymoregulateur;
+    return '';
+}
+// Marque les alertes du moteur (eviterFinal) à requalifier. N'enlève rien :
+// ajoute _recontextualise + _recontexteNote, consommés par renderSingleAlert.
+function recontextualiserPsychiatrieChronique(alertes, ctxClinique) {
+    if (!Array.isArray(alertes) || !alertes.length) return;
+    const set = new Set(ctxClinique || []);
+    if (!set.has('psychose_chronique') && !set.has('trouble_thymique_chronique')) return;
+    alertes.forEach(a => {
+        const cfg = a && a.id && RECONTEXTE_PSY_RULES[a.id];
+        if (!cfg) return;
+        if (!cfg.contexte_any.some(c => set.has(c))) return;
+        const note = _recontexteNotePsy(cfg.cible, set);
+        if (!note) return;
+        a._recontextualise = true;
+        a._recontexteNote = note;
+    });
+}
+
+// =========================================================
 // MEMOIZATION — évite les re-analyses identiques
 // =========================================================
 let _lastAnalysisHash = null;
@@ -744,7 +827,11 @@ function _computeAnalysisHash() {
      'chkMci','chkMbiMotiv','chkMbiAffect','chkMbiImpuls','chkMbiSocial','chkMbiIdeat',
      'chkPsyPrim','chkAnxieteTAG','chkPsychoseTardive','chkBipolaire','chkCatatonie',
      'chkDelirium','delHyper','delHypo','delMixte',
-     'chkSommeil','chkInsomnie','chkTcsp','chkSjsr','chkSaos'
+     'chkSommeil','chkInsomnie','chkTcsp','chkSjsr','chkSaos',
+     // Maladie psychiatrique primaire chronique (Bloc 1)
+     'chkSchizoChronique','chkSchizoAffectif','chkTroubleDelirant','chkBipolaireI','chkBipolaireII',
+     'chkDepressionRecurrente','chkDysthymie','chkTOC','chkTroublePanique','chkTAGChronique',
+     'chkESPT','chkTroublePersonnalite','chkUsageAlcool','chkUsageSubstances','chkTSADI'
     ].forEach(id => parts.push(isChecked(id)));
     return parts.join('|');
 }
@@ -959,6 +1046,16 @@ function analyserPrescription() {
             const _filterMasked = (typeof filterMaskedAlerts === 'function') ? filterMaskedAlerts : (x => x);
             eviterFinal = _filterMasked(eviterFinal);
             const initierFiltered = recos.initier ? _filterMasked(recos.initier) : null;
+
+            // ── Bloc 2 — Recontextualisation des PIM psychotropes pour maladie ──
+            // psychiatrique primaire CHRONIQUE. Quand le patient gériatrique porte
+            // une psychose/bipolarité ancienne, certains « à éviter » gériatriques
+            // ne sont PAS des prescriptions inappropriées mais le TRAITEMENT DE FOND
+            // de sa maladie : on ne les masque pas (le risque dose/QT/métabolique
+            // reste réel) — on REQUALIFIE la recommandation en « maintien à
+            // surveiller, ne pas déprescrire ». Allowlist d'IDs (jamais une alerte
+            // de sécurité dure : QT, Parkinson, dysphagie ne sont pas touchées).
+            recontextualiserPsychiatrieChronique(eviterFinal, ctx.contexte_clinique || []);
 
             const eviterHtml = eviterFinal.length ? GeriaEngineV2.renderAlertesTriees(eviterFinal, 'eviter') : '';
             const initierHtml = initierFiltered ? GeriaEngineV2.renderAlertesTriees(initierFiltered, 'initier') : '';
@@ -1932,15 +2029,25 @@ function analyserPrescription() {
         });
 
         if (dupFound.length > 0) {
+            // Bloc 2 — recontextualisation : la bithérapie antipsychotique peut être
+            // un choix délibéré (résistance, augmentation clozapine) dans une psychose
+            // primaire chronique. On garde l'alerte (risque cumulé QT/métabolique réel)
+            // mais on requalifie « à éviter » → « parfois justifié, surveiller ».
+            const _ctxDup = (typeof ctx !== 'undefined' && ctx && ctx.contexte_clinique) ? ctx.contexte_clinique : [];
+            const _notePsyApsy = _recontexteNotePsy('antipsychotique', _ctxDup);
             dupFound.forEach(d => {
                 const dciList = d.dcis.map(x => `<strong>${escapeHtml(x.toUpperCase())}</strong>`).join(' + ');
+                const _recontextDup = (d.label === 'Antipsychotiques' && _notePsyApsy)
+                    ? `<br><div class="mt-1 p-2 rounded" style="background:#e7f1ff;border-left:3px solid #0d6efd;"><small><strong>${escapeHtml(_notePsyApsy)}</strong></small></div>`
+                    : '';
                 addAlert('alertes-eviter', `<div class="alert alert-warning border-warning shadow-sm">
                     <strong>⚠️ Doublon thérapeutique — ${escapeHtml(d.label)}</strong>
                     <span class="badge bg-dark float-end" style="font-size:0.65em;">Doublon classe</span>
                     <br><span class="small">${dciList}</span>
                     <br><small>${escapeHtml(d.note)}</small>
                     ${d.exception ? `<br><small class="text-info fst-italic">${escapeHtml(d.exception)}</small>` : ''}
-                    <br><span class="badge bg-warning text-dark" style="font-size:0.7em;">A ÉVITER sauf justification EBM</span>
+                    ${_recontextDup}
+                    <br><span class="badge bg-warning text-dark" style="font-size:0.7em;">${_recontextDup ? 'Parfois justifié — surveiller' : 'A ÉVITER sauf justification EBM'}</span>
                 </div>`, 'eviter');
                 d.dcis.forEach(dci => _regAddMed(dci, 'eviter', {
                     severity: 'warning',

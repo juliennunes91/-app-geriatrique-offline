@@ -3775,6 +3775,354 @@ const PATHOLOGY_RULES_DB = {
                 { bio: "BIO_003", frequence: "Sous AINS au long cours", note: "Surveiller la fonction rénale (néphrotoxicité des AINS chez le sujet âgé)" }
             ]
         }
+    },
+
+    // ============================================================
+    // MALADIES PSYCHIATRIQUES PRIMAIRES CHRONIQUES (Bloc 1)
+    // Patients gériatriques porteurs d'une pathologie psychiatrique ancienne
+    // (antérieure à 65 ans). PRINCIPE TRANSVERSAL : les psychotropes de fond
+    // sont un TRAITEMENT DE MAINTIEN — ne pas déprescrire systématiquement
+    // (risque de rechute) ; viser la dose minimale efficace et RENFORCER la
+    // surveillance (métabolique, QTc, dyskinésie tardive, lithémie/rénale).
+    // ============================================================
+    "PAT_055": {
+        ID: "PAT_055", NOM: "Schizophrénie chronique (début à l'âge adulte)",
+        REFERENCE: "HAS schizophrénie 2007/2024 | Maudsley 14e éd. (sujet âgé) | RANZCP 2016",
+        SOURCES_EBM: {
+            "INITIER": { "Antipsychotique atypique de maintien (dose minimale efficace)": "Maudsley — monothérapie privilégiée", "Clozapine si résistance (≥ 2 échecs)": "HAS — schizophrénie résistante", "Antipsychotique d'action prolongée (LAI) si observance partielle": "RANZCP 2016" },
+            "EVITER": { "Arrêt brutal de l'antipsychotique de fond": "Risque de rechute psychotique grave", "Polypharmacie antipsychotique non justifiée": "Sauf augmentation clozapine documentée" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Traitement antipsychotique de MAINTIEN à vie dans la majorité des cas — NE PAS déprescrire au seul motif de l'âge. Viser la dose minimale efficace, privilégier la monothérapie atypique, surveiller le syndrome métabolique, le QTc et la dyskinésie tardive (échelle AIMS)." }
+            ],
+            INITIER: [
+                { classe: "Antipsychotique atypique de maintien (aripiprazole, rispéridone, olanzapine, quétiapine)", indication: "Traitement de fond — dose minimale efficace", bio_suivi: "Glycémie/HbA1c, lipides, poids/IMC, QTc, prolactine", niveau_preuve: "A" },
+                { classe: "Clozapine", indication: "Schizophrénie résistante (≥ 2 antipsychotiques en échec)", bio_suivi: "NFS (PNN) hebdomadaire 18 sem puis mensuelle, troponine/CRP à l'instauration (myocardite), transit (occlusion)", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Arrêt ou réduction brutale de l'antipsychotique de fond", raison: "Rechute psychotique, désorganisation, risque suicidaire", gravite: "DANGER" },
+                { classe: "Antipsychotiques typiques fortes doses / anticholinergiques cumulés", raison: "Dyskinésie tardive, charge anticholinergique, chutes", gravite: "À éviter" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_025", "BIO_027", "BIO_031", "BIO_011", "BIO_012"], REGLES: [
+            { bio: "BIO_025", nom: "Glycémie", frequence: "Baseline, 3 mois, puis annuelle", note: "Syndrome métabolique sous antipsychotique au long cours" },
+            { bio: "BIO_031", nom: "QTc (ECG)", frequence: "Baseline puis annuel / à chaque changement", note: "Antipsychotiques QT-allongeants — cumul à surveiller" }
+        ] }
+    },
+    "PAT_056": {
+        ID: "PAT_056", NOM: "Trouble schizo-affectif",
+        REFERENCE: "Maudsley 14e éd. | CANMAT 2018 | HAS",
+        SOURCES_EBM: {
+            "INITIER": { "Antipsychotique atypique + thymorégulateur": "Maudsley — double cible psychotique et thymique" },
+            "EVITER": { "Antidépresseur en monothérapie": "Risque de virage maniaque (composante thymique)" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Association antipsychotique de fond + thymorégulateur (lithium/valproate/lamotrigine). Traitement de maintien — ne pas déprescrire. Surveillance cumulée métabolique + lithémie/hépatique." }
+            ],
+            INITIER: [
+                { classe: "Antipsychotique atypique de maintien", indication: "Composante psychotique", bio_suivi: "Métabolique, QTc, prolactine", niveau_preuve: "A" },
+                { classe: "Thymorégulateur (lithium, valproate ou lamotrigine)", indication: "Composante thymique", bio_suivi: "Lithémie/TSH/créat ou NFS/transaminases", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Antidépresseur en monothérapie", raison: "Virage maniaque", gravite: "DECONSEILLE" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_025", "BIO_027", "BIO_031", "BIO_029", "BIO_019"], REGLES: [
+            { bio: "BIO_029", nom: "Lithémie", frequence: "Si lithium : J5 puis trimestrielle", note: "Cible 0,4-0,8 mmol/L chez l'âgé" }
+        ] }
+    },
+    "PAT_057": {
+        ID: "PAT_057", NOM: "Trouble délirant persistant (paranoïa)",
+        REFERENCE: "Maudsley 14e éd. | HAS",
+        SOURCES_EBM: {
+            "INITIER": { "Antipsychotique atypique à faible dose": "Maudsley — réponse souvent partielle, alliance thérapeutique clé" },
+            "EVITER": { "Fortes doses / changements répétés": "Tolérance médiocre, peu de gain" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Antipsychotique de fond à faible dose, maintien prolongé. Ne pas déprescrire si stabilisation. Surveillance métabolique et QTc." }
+            ],
+            INITIER: [
+                { classe: "Antipsychotique atypique faible dose", indication: "Traitement de fond", bio_suivi: "Métabolique, QTc", niveau_preuve: "B" }
+            ],
+            EVITER: [
+                { classe: "Escalade de dose injustifiée", raison: "Effets indésirables sans bénéfice", gravite: "À éviter" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_025", "BIO_027", "BIO_031"], REGLES: [
+            { bio: "BIO_031", nom: "QTc (ECG)", frequence: "Baseline puis annuel", note: "Surveillance antipsychotique" }
+        ] }
+    },
+    "PAT_058": {
+        ID: "PAT_058", NOM: "Trouble bipolaire type I (chronique)",
+        REFERENCE: "CANMAT 2018 | Maudsley 14e éd. | HAS",
+        SOURCES_EBM: {
+            "INITIER": { "Lithium (thymorégulateur de référence, effet anti-suicide)": "CANMAT 2018 — 1ère ligne maintien", "Valproate / Lamotrigine / Quétiapine": "CANMAT — alternatives selon polarité" },
+            "EVITER": { "Antidépresseur en monothérapie": "Virage maniaque", "Arrêt du thymorégulateur de fond": "Rechute thymique, risque suicidaire" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Thymorégulateur de maintien au long cours — NE PAS déprescrire (rechute, suicide). Lithium reste 1ère ligne même chez l'âgé (cible 0,4-0,8 mmol/L), sous surveillance rénale/thyroïdienne/calcique rapprochée." }
+            ],
+            INITIER: [
+                { classe: "Lithium", indication: "Maintien, effet anti-suicide", titration: "Dose adaptée, lithémie à J5", bio_suivi: "Lithémie, créatinine/DFG, TSH, calcémie", niveau_preuve: "A" },
+                { classe: "Valproate / Lamotrigine / Quétiapine", indication: "Alternative ou CI au lithium", bio_suivi: "NFS, transaminases (valproate) ; titration lente (lamotrigine)", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Arrêt brutal du lithium/thymorégulateur", raison: "Rechute, risque suicidaire", gravite: "DANGER" },
+                { classe: "Antidépresseur en monothérapie", raison: "Virage maniaque", gravite: "DECONSEILLE" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_029", "BIO_019", "BIO_004", "BIO_009"], REGLES: [
+            { bio: "BIO_029", nom: "Lithémie", frequence: "J5 de toute modification, puis trimestrielle", note: "Cible âgé 0,4-0,8 mmol/L ; toxicité ≥ 1,5" },
+            { bio: "BIO_004", nom: "DFG", frequence: "Trimestrielle sous lithium", note: "Néphrotoxicité lithium long cours" }
+        ] }
+    },
+    "PAT_059": {
+        ID: "PAT_059", NOM: "Trouble bipolaire type II (chronique)",
+        REFERENCE: "CANMAT 2018 | Maudsley 14e éd.",
+        SOURCES_EBM: {
+            "INITIER": { "Quétiapine / Lamotrigine / Lithium": "CANMAT 2018 — maintien, polarité dépressive prédominante" },
+            "EVITER": { "Antidépresseur en monothérapie": "Virage hypomaniaque, cycles rapides" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Thymorégulateur de maintien — ne pas déprescrire. Polarité dépressive souvent prédominante (lamotrigine, quétiapine). Surveillance idem bipolaire I si lithium." }
+            ],
+            INITIER: [
+                { classe: "Lamotrigine / Quétiapine / Lithium", indication: "Maintien", bio_suivi: "Selon molécule (lithémie ou NFS/transaminases)", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Antidépresseur en monothérapie", raison: "Virage, cycles rapides", gravite: "DECONSEILLE" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_029", "BIO_019", "BIO_004"], REGLES: [
+            { bio: "BIO_029", nom: "Lithémie", frequence: "Si lithium : trimestrielle", note: "Cible âgé 0,4-0,8 mmol/L" }
+        ] }
+    },
+    "PAT_060": {
+        ID: "PAT_060", NOM: "Trouble dépressif récurrent",
+        REFERENCE: "HAS dépression 2017 | Maudsley 14e éd. | NICE",
+        SOURCES_EBM: {
+            "INITIER": { "Antidépresseur de maintien (ISRS/IRSN) ≥ 2 ans si récidives": "HAS/NICE — prévention de la récidive" },
+            "EVITER": { "Arrêt prématuré après rémission": "Récidive ; tricycliques chez l'âgé (anticholinergiques)" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Après ≥ 2-3 épisodes, traitement antidépresseur de MAINTIEN prolongé (≥ 2 ans, souvent à vie) — ne pas arrêter au seul motif de l'âge. Réévaluer efficacité/tolérance/hyponatrémie." }
+            ],
+            INITIER: [
+                { classe: "ISRS (sertraline, escitalopram) ou IRSN", indication: "Maintien anti-récidive", bio_suivi: "Natrémie (SIADH), QTc (citalopram)", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Tricycliques", raison: "Charge anticholinergique, cardiotoxicité, chutes", gravite: "À éviter" },
+                { classe: "Arrêt prématuré après rémission unique d'une forme récurrente", raison: "Récidive", gravite: "DECONSEILLE" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_002", "BIO_031", "BIO_019"], REGLES: [
+            { bio: "BIO_002", nom: "Natrémie", frequence: "À 2-4 semaines puis si signe d'appel", note: "Hyponatrémie/SIADH sous ISRS chez l'âgé" }
+        ] }
+    },
+    "PAT_061": {
+        ID: "PAT_061", NOM: "Trouble dépressif persistant (dysthymie)",
+        REFERENCE: "HAS dépression 2017 | Maudsley 14e éd.",
+        SOURCES_EBM: {
+            "INITIER": { "ISRS + psychothérapie": "Maudsley — association la plus efficace" },
+            "EVITER": { "Benzodiazépine au long cours": "Dépendance, chutes, troubles cognitifs" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Antidépresseur de fond + psychothérapie. Surveillance natrémie. Éviter les BZD au long cours." }
+            ],
+            INITIER: [
+                { classe: "ISRS / IRSN", indication: "Traitement de fond", bio_suivi: "Natrémie", niveau_preuve: "B" }
+            ],
+            EVITER: [
+                { classe: "Benzodiazépine au long cours", raison: "Dépendance, chutes", gravite: "À éviter" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_002", "BIO_019"], REGLES: [
+            { bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction puis si signe d'appel", note: "Hyponatrémie sous ISRS" }
+        ] }
+    },
+    "PAT_062": {
+        ID: "PAT_062", NOM: "Trouble obsessionnel-compulsif (TOC)",
+        REFERENCE: "Maudsley 14e éd. | NICE CG31 | HAS",
+        SOURCES_EBM: {
+            "INITIER": { "ISRS à dose élevée, durée prolongée (≥ 12 sem)": "Maudsley — doses supra-dépressives souvent nécessaires", "TCC avec exposition / prévention de la réponse": "NICE — 1ère ligne" },
+            "EVITER": { "Arrêt précoce (réponse lente)": "Rechute" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "ISRS à dose élevée (souvent au-delà des doses antidépressives), réponse lente (8-12 sem). Maintien prolongé. Surveiller QTc si fortes doses." }
+            ],
+            INITIER: [
+                { classe: "ISRS dose élevée (sertraline, fluoxétine, fluvoxamine)", indication: "Traitement de fond", bio_suivi: "QTc, natrémie", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Arrêt prématuré", raison: "Réponse lente, rechute", gravite: "DECONSEILLE" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_031", "BIO_002"], REGLES: [
+            { bio: "BIO_031", nom: "QTc (ECG)", frequence: "Si ISRS à forte dose (citalopram/escitalopram)", note: "Allongement QT dose-dépendant" }
+        ] }
+    },
+    "PAT_063": {
+        ID: "PAT_063", NOM: "Trouble panique",
+        REFERENCE: "Maudsley 14e éd. | NICE | HAS",
+        SOURCES_EBM: {
+            "INITIER": { "ISRS/IRSN + TCC": "Maudsley — 1ère ligne, débuter à faible dose (majoration initiale possible de l'anxiété)" },
+            "EVITER": { "Benzodiazépine au long cours": "Dépendance, chutes, troubles cognitifs" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "ISRS/IRSN de fond, débuter à faible dose. Éviter le recours chronique aux BZD. Maintien ≥ 6-12 mois." }
+            ],
+            INITIER: [
+                { classe: "ISRS / IRSN", indication: "Traitement de fond", bio_suivi: "Natrémie, QTc", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Benzodiazépine au long cours", raison: "Dépendance, chutes", gravite: "À éviter" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_002", "BIO_031"], REGLES: [
+            { bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction d'un ISRS", note: "Hyponatrémie" }
+        ] }
+    },
+    "PAT_064": {
+        ID: "PAT_064", NOM: "Trouble anxieux généralisé chronique",
+        REFERENCE: "Maudsley 14e éd. | NICE CG113 | HAS",
+        SOURCES_EBM: {
+            "INITIER": { "ISRS/IRSN + TCC": "NICE — 1ère ligne au long cours" },
+            "EVITER": { "Benzodiazépine au long cours": "Dépendance, chutes, déclin cognitif (STOPP)" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Anxiété chronique ancienne : ISRS/IRSN de fond. Limiter strictement les BZD (relais et arrêt progressif). Surveillance natrémie." }
+            ],
+            INITIER: [
+                { classe: "ISRS / IRSN", indication: "Traitement de fond", bio_suivi: "Natrémie", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Benzodiazépine au long cours", raison: "Dépendance, chutes, troubles cognitifs", gravite: "À éviter" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_002", "BIO_031"], REGLES: [
+            { bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction d'un ISRS", note: "Hyponatrémie" }
+        ] }
+    },
+    "PAT_065": {
+        ID: "PAT_065", NOM: "État de stress post-traumatique (ESPT)",
+        REFERENCE: "Maudsley 14e éd. | NICE NG116 | HAS",
+        SOURCES_EBM: {
+            "INITIER": { "ISRS (paroxétine, sertraline) + psychothérapie centrée trauma (EMDR/TCC)": "NICE — 1ère ligne", "Prazosine pour les cauchemars": "Maudsley — symptôme spécifique" },
+            "EVITER": { "Benzodiazépines": "Inefficaces sur l'ESPT, dépendance" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Psychothérapie centrée sur le trauma en 1ère intention + ISRS. Prazosine possible pour cauchemars (attention hypotension orthostatique chez l'âgé). Éviter les BZD." }
+            ],
+            INITIER: [
+                { classe: "ISRS (paroxétine, sertraline)", indication: "Traitement de fond", bio_suivi: "Natrémie", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Benzodiazépines", raison: "Inefficacité, dépendance", gravite: "À éviter" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_002"], REGLES: [
+            { bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction d'un ISRS", note: "Hyponatrémie" }
+        ] }
+    },
+    "PAT_066": {
+        ID: "PAT_066", NOM: "Trouble de la personnalité",
+        REFERENCE: "Maudsley 14e éd. | NICE CG78 (borderline)",
+        SOURCES_EBM: {
+            "INITIER": { "Psychothérapie structurée (pas de pharmacothérapie spécifique)": "NICE — pas d'AMM pour le trouble lui-même" },
+            "EVITER": { "Polypharmacie psychotrope": "Pas d'efficacité démontrée, iatrogénie cumulée" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Pas de traitement médicamenteux spécifique du trouble. Traiter les comorbidités (dépression, anxiété). ÉVITER la polypharmacie psychotrope (réflexe fréquent et délétère)." }
+            ],
+            INITIER: [
+                { classe: "Traitement des comorbidités uniquement (ISRS si dépression associée)", indication: "Comorbidité documentée", bio_suivi: "Selon molécule", niveau_preuve: "C" }
+            ],
+            EVITER: [
+                { classe: "Polypharmacie psychotrope (antipsychotique + thymorégulateur + BZD cumulés)", raison: "Pas de bénéfice, iatrogénie", gravite: "À éviter" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_031"], REGLES: [
+            { bio: "BIO_031", nom: "QTc (ECG)", frequence: "Si antipsychotique prescrit", note: "Limiter la polypharmacie QT-allongeante" }
+        ] }
+    },
+    "PAT_067": {
+        ID: "PAT_067", NOM: "Trouble de l'usage de l'alcool",
+        REFERENCE: "HAS mésusage alcool 2015 | Maudsley 14e éd.",
+        SOURCES_EBM: {
+            "INITIER": { "Vitamine B1 (thiamine) systématique": "Prévention Gayet-Wernicke", "Maintien de l'abstinence (acamprosate, naltrexone, nalméfène, baclofène)": "HAS 2015" },
+            "EVITER": { "Benzodiazépine au long cours hors sevrage": "Dépendance croisée" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Sevrage : BZD à demi-vie adaptée, COURTE durée + thiamine IV/PO (prévention Gayet-Wernicke). Maintien abstinence : acamprosate/naltrexone/nalméfène/baclofène. Surveiller fonction hépatique et carences." }
+            ],
+            INITIER: [
+                { classe: "Thiamine (vitamine B1)", indication: "Systématique — prévention encéphalopathie", bio_suivi: "Clinique", niveau_preuve: "A" },
+                { classe: "Acamprosate / Naltrexone / Baclofène", indication: "Maintien de l'abstinence", bio_suivi: "Transaminases, fonction rénale (acamprosate)", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "Benzodiazépine au long cours (hors sevrage encadré)", raison: "Dépendance croisée", gravite: "À éviter" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_013", "BIO_014", "BIO_015", "BIO_011"], REGLES: [
+            { bio: "BIO_015", nom: "GGT", frequence: "Suivi de l'abstinence", note: "Marqueur de consommation ; carences B1/B9 fréquentes" }
+        ] }
+    },
+    "PAT_068": {
+        ID: "PAT_068", NOM: "Trouble de l'usage de substances",
+        REFERENCE: "HAS TSO 2018 | Maudsley 14e éd.",
+        SOURCES_EBM: {
+            "INITIER": { "Traitement de substitution opioïde (méthadone ou buprénorphine)": "HAS — maintien, ne pas interrompre", "Naloxone d'urgence (prévention overdose)": "HAS" },
+            "EVITER": { "Association TSO + benzodiazépine non encadrée": "Dépression respiratoire", "Arrêt brutal du TSO": "Rechute, overdose" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Le TSO (méthadone/buprénorphine) est un traitement de MAINTIEN — ne pas interrompre. Méthadone = surveillance QTc (allongement dose-dépendant). Prudence majeure sur l'association aux BZD et autres dépresseurs respiratoires." }
+            ],
+            INITIER: [
+                { classe: "TSO méthadone ou buprénorphine", indication: "Maintien", bio_suivi: "QTc (méthadone), transaminases", niveau_preuve: "A" }
+            ],
+            EVITER: [
+                { classe: "TSO + benzodiazépine/dépresseur respiratoire non encadré", raison: "Dépression respiratoire, overdose", gravite: "DANGER" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_031", "BIO_013", "BIO_014"], REGLES: [
+            { bio: "BIO_031", nom: "QTc (ECG)", frequence: "Baseline puis annuel sous méthadone", note: "Allongement QT dose-dépendant — risque de torsades" }
+        ] }
+    },
+    "PAT_069": {
+        ID: "PAT_069", NOM: "Trouble du spectre de l'autisme / déficience intellectuelle",
+        REFERENCE: "HAS TSA 2018 | NICE | Maudsley 14e éd.",
+        SOURCES_EBM: {
+            "INITIER": { "Interventions non médicamenteuses en 1ère intention": "HAS/NICE", "Antipsychotique atypique faible dose si troubles du comportement sévères": "AMM rispéridone/aripiprazole (irritabilité)" },
+            "EVITER": { "Polypharmacie psychotrope, fortes doses": "Sensibilité accrue aux effets indésirables" }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Approches non médicamenteuses prioritaires. Si pharmacothérapie nécessaire (troubles du comportement sévères) : antipsychotique atypique à faible dose, réévaluation régulière. Sensibilité accrue aux effets indésirables — éviter la polypharmacie." }
+            ],
+            INITIER: [
+                { classe: "Antipsychotique atypique faible dose (rispéridone, aripiprazole)", indication: "Troubles du comportement sévères réfractaires", bio_suivi: "Métabolique, QTc, prolactine", niveau_preuve: "B" }
+            ],
+            EVITER: [
+                { classe: "Polypharmacie psychotrope / fortes doses", raison: "Iatrogénie, sensibilité accrue", gravite: "À éviter" }
+            ]
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_025", "BIO_027", "BIO_031"], REGLES: [
+            { bio: "BIO_025", nom: "Glycémie", frequence: "Baseline, 3 mois, annuelle si antipsychotique", note: "Syndrome métabolique" }
+        ] }
     }
 };
 
@@ -3832,7 +4180,22 @@ const PATHO_SYNDROME_MAP = {
     "PAT_051": ["SYND_009"],
     "PAT_052": ["SYND_009", "SYND_003"],
     "PAT_053": ["SYND_005", "SYND_006", "SYND_022", "SYND_007"],
-    "PAT_054": ["SYND_046", "SYND_048"]
+    "PAT_054": ["SYND_046", "SYND_048"],
+    "PAT_055": ["SYND_004", "SYND_013"],
+    "PAT_056": ["SYND_004", "SYND_013"],
+    "PAT_057": ["SYND_013"],
+    "PAT_058": ["SYND_004", "SYND_013"],
+    "PAT_059": ["SYND_004", "SYND_013"],
+    "PAT_060": ["SYND_043", "SYND_009"],
+    "PAT_061": ["SYND_043", "SYND_009"],
+    "PAT_062": ["SYND_004"],
+    "PAT_063": ["SYND_004", "SYND_013"],
+    "PAT_064": ["SYND_004", "SYND_013"],
+    "PAT_065": ["SYND_004"],
+    "PAT_066": ["SYND_004"],
+    "PAT_067": ["SYND_001", "SYND_004"],
+    "PAT_068": ["SYND_013", "SYND_004"],
+    "PAT_069": ["SYND_004", "SYND_013"]
 };
 
 const PATHO_MED_INTERDITS = {

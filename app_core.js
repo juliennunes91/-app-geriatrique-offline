@@ -90,11 +90,12 @@ function _restorePatientData(data) {
     // les recos alors que la cascade est masquée (bug d'affichage fantôme).
     if (typeof window.toggleCascade === 'function') {
         [
-            ['chkDemence',   'cascadeDemence'],
-            ['chkMci',       'cascadeMci'],
-            ['chkPsyPrim',   'cascadePsyPrim'],
-            ['chkDelirium',  'cascadeDelirium'],
-            ['chkSommeil',   'cascadeSommeil']
+            ['chkDemence',      'cascadeDemence'],
+            ['chkMci',          'cascadeMci'],
+            ['chkPsyPrim',      'cascadePsyPrim'],
+            ['chkPsyChronique', 'cascadePsyChronique'],
+            ['chkDelirium',     'cascadeDelirium'],
+            ['chkSommeil',      'cascadeSommeil']
         ].forEach(([p, c]) => window.toggleCascade(p, c));
     }
     // Restore comorbs
@@ -653,7 +654,12 @@ window.resetPatient = function() {
         'chkSpcInsomnie', 'chkSpcDesinhibition', 'chkSpcTca',
         'chkMbiMotiv', 'chkMbiAffect', 'chkMbiImpuls', 'chkMbiSocial', 'chkMbiIdeat',
         'chkAnxieteTAG', 'chkPsychoseTardive', 'chkBipolaire', 'chkCatatonie',
-        'chkInsomnie', 'chkTcsp', 'chkSjsr', 'chkSaos'
+        'chkInsomnie', 'chkTcsp', 'chkSjsr', 'chkSaos',
+        // Maladie psychiatrique primaire chronique (Bloc 1)
+        'chkPsyChronique',
+        'chkSchizoChronique', 'chkSchizoAffectif', 'chkTroubleDelirant', 'chkBipolaireI', 'chkBipolaireII',
+        'chkDepressionRecurrente', 'chkDysthymie', 'chkTOC', 'chkTroublePanique', 'chkTAGChronique',
+        'chkESPT', 'chkTroublePersonnalite', 'chkUsageAlcool', 'chkUsageSubstances', 'chkTSADI'
     ];
     checkboxes.forEach(id => {
         const el = document.getElementById(id);

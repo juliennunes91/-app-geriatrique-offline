@@ -1000,11 +1000,21 @@ const GeriaEngineV2 = (() => {
         // dans analyserPrescription : la synthèse et le PDF sont cohérents avec l'écran).
         const maskKey = a.id ? 'id:' + a.id : (a.ref_code ? 'rc:' + a.ref_code : 'tt:' + ((a.titre || '') + '|' + (a.severite || '')));
         const maskBtn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.7em;" aria-label="Masquer cette alerte" title="Masquer pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${esc(maskKey).replace(/'/g, '&#39;')}');return false;"></button>`;
+        // Bloc 2 — bandeau de recontextualisation « traitement de fond psychiatrique
+        // chronique » : l'alerte reste visible (le risque persiste) mais la
+        // recommandation est requalifiée (maintien à surveiller, ≠ déprescription).
+        const recontexteBanner = a._recontextualise && a._recontexteNote
+            ? `<div class="mt-1 p-2 rounded" style="background:#e7f1ff;border-left:3px solid #0d6efd;"><small><strong>${esc(a._recontexteNote)}</strong></small></div>`
+            : '';
+        const recontexteBadge = a._recontextualise
+            ? `<span class="badge" style="font-size:0.6em;background:#0d6efd;">Traitement de fond — surveiller</span> `
+            : '';
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass}); padding-left: 0.9rem;">
             ${maskBtn}
             ${scoreBadge}<strong>${displayTitle}</strong>${mergedBadge}
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(displaySourceLabel)}</span>
-            <div class="small mt-1" style="padding-left: 0.25rem;">${safeMessage}</div>
+            <div class="small mt-1" style="padding-left: 0.25rem;">${recontexteBadge}${safeMessage}</div>
+            ${recontexteBanner}
             ${compHtml}
             ${pimBadges}
             ${ebmBadge}

@@ -41,6 +41,28 @@ L'export PDF GeriaAssist intègre l'annexe PAAM si l'utilisateur a coché « Inc
 la PAAM dans l'export PDF » (toggle dans l'onglet). Un bouton **Export PDF PAAM
 seul** génère un PDF dédié (annexe 1 du document du CH).
 
+## Maladie psychiatrique primaire chronique (psychogériatrie)
+
+Patients gériatriques porteurs d'une pathologie psychiatrique **chronique
+ancienne** (antérieure à 65 ans), indépendante du vieillissement (ex.
+schizophrène de 75 ans malade depuis ses 20 ans).
+
+- 15 pathologies `PAT_055`→`PAT_069` (catégorie `Psychiatrie chronique`),
+  avec entrées `PATHOLOGY_RULES_DB` + `PATHO_SYNDROME_MAP` (axées maintenance).
+- Cascade UI « Maladie psychiatrique primaire chronique » (`chkPsyChronique`)
+  dans les deux UIs — 15 checkboxes `chkSchizoChronique`, `chkBipolaireI`, etc.
+- Contextes-clés générés : `psychose_chronique`, `trouble_thymique_chronique`,
+  `psychiatrie_primaire_chronique`.
+
+**Recontextualisation des PIM (Bloc 2)** : quand `psychose_chronique` /
+`trouble_thymique_chronique` est présent, certaines alertes « à éviter »
+gériatriques sont **requalifiées** (et non masquées) en « traitement de fond
+à surveiller, ne pas déprescrire » via `recontextualiserPsychiatrieChronique()`
+dans `app_analysis.js` (allowlist stricte d'IDs : `EV_B18`, `EV_D05`, `EV_D16`,
+`EV_K02`, `EV_PRISC_02` + doublon antipsychotique). **Ne jamais** y inclure une
+alerte de sécurité dure (QT, Parkinson/DCL, dysphagie). Le rendu du bandeau est
+dans `renderSingleAlert()` (geria_engine_v2.js) via `a._recontextualise`.
+
 ## Architecture des données cliniques
 
 **Attribution des sources (important)** :
