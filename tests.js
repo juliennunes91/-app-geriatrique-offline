@@ -1846,6 +1846,96 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
 }
 
 // ============================================================================
+// PSYCHIATRIE PRIMAIRE CHRONIQUE (Blocs 1-3 + améliorations items 1,2,5,6)
+// ============================================================================
+console.log('\n🧠 Psychiatrie primaire chronique du sujet âgé');
+{
+    const { analyzeCase } = require('./oracle_harness');
+    const evHtml = c => analyzeCase(c)._html['alertes-eviter'] || '';
+    const evTitres = c => (analyzeCase(c)['alertes-eviter'] || []).map(a => a.titre).join(' | ');
+
+    // Bloc 1 — les 15 pathologies chroniques existent
+    test('Bloc1 — 15 pathologies Psychiatrie chronique dans MASTER_DB', () => {
+        const fsx = require('fs');
+        const os = require('os');
+        const tmp = os.tmpdir() + '/_db_psy_tests.js';
+        fsx.writeFileSync(tmp, fsx.readFileSync(__dirname + '/geria_database.js', 'utf8').replace(/^const MASTER_DB/m, 'module.exports.MASTER_DB'));
+        delete require.cache[tmp];
+        const { MASTER_DB } = require(tmp);
+        const n = Object.keys(MASTER_DB.PATHOLOGIES).filter(k => MASTER_DB.PATHOLOGIES[k].CATEGORIE === 'Psychiatrie chronique').length;
+        assert.strictEqual(n, 15, '15 pathologies chroniques attendues, trouvé ' + n);
+        fsx.unlinkSync(tmp);
+    });
+
+    // Bloc 2 — recontextualisation antipsychotique (psychose chronique)
+    test('Bloc2 — psychose chronique requalifie les PIM antipsychotiques', () => {
+        const h = evHtml({ age: 75, sexe: 'M', dfg: 70, meds: ['Haloperidol', 'Risperidone'], comorbs: ['PAT_004'], flags: ['chkSchizoChronique'] });
+        assert.ok(/Traitement de fond/.test(h), 'bandeau de recontextualisation attendu');
+        assert.ok(/NE PAS déprescrire/.test(h), 'note « ne pas déprescrire » attendue');
+    });
+    test('Bloc2 — sans diagnostic chronique, PAS de recontextualisation', () => {
+        const h = evHtml({ age: 75, sexe: 'M', dfg: 70, meds: ['Haloperidol', 'Risperidone'], comorbs: ['PAT_004'] });
+        assert.ok(!/Traitement de fond/.test(h), 'aucune recontextualisation sans diagnostic');
+    });
+    test('Bloc2 — sécurité dure (QT) NON recontextualisée', () => {
+        const h = evHtml({ age: 75, sexe: 'M', dfg: 70, meds: ['Haloperidol', 'Citalopram', 'Amiodarone'], flags: ['chkSchizoChronique'], bio: { qtc: 490 } });
+        // la charge QT ne doit pas porter le bandeau « traitement de fond »
+        assert.ok(!/Charge QT[\s\S]{0,220}Traitement de fond/.test(h), 'alerte QT ne doit pas être requalifiée');
+    });
+
+    // Item 1 — symétrie thymique + garde requiert_med_keys
+    test('Item1 — valproate (thymorég.) + chuteur requalifié', () => {
+        const h = evHtml({ age: 75, sexe: 'F', dfg: 70, meds: ['Valproate'], flags: ['chkBipolaireI', 'chkChutes'] });
+        assert.ok(/Antiépileptique chez patient chuteur[\s\S]{0,300}Traitement de fond/.test(h), 'EV_K05 doit être requalifié');
+    });
+    test('Item1 — garde : gabapentine (antalgique) NON requalifiée', () => {
+        const h = evHtml({ age: 75, sexe: 'F', dfg: 70, meds: ['Gabapentine'], flags: ['chkBipolaireI', 'chkChutes'] });
+        assert.ok(!/Antiépileptique chez patient chuteur[\s\S]{0,300}Traitement de fond/.test(h), 'gabapentine ne doit pas être requalifiée');
+    });
+
+    // Bloc 3 — surveillances
+    test('Bloc3 — antipsychotique chronique déclenche AIMS + métabolique', () => {
+        const t = evTitres({ age: 75, sexe: 'M', dfg: 70, meds: ['Risperidone'], flags: ['chkSchizoChronique'] });
+        assert.ok(/dyskinésie tardive \(AIMS\)/i.test(t), 'SUP_PSYC_01 (AIMS) attendu');
+        assert.ok(/surveillance métabolique/i.test(t), 'SUP_PSYC_02 attendu');
+    });
+    test('Bloc3 — clozapine du sujet âgé déclenchée (sans dx chronique)', () => {
+        const t = evTitres({ age: 78, sexe: 'M', dfg: 70, meds: ['Clozapine'] });
+        assert.ok(/Clozapine chez le sujet âgé/i.test(t), 'SUP_PSYC_05 attendu');
+    });
+    test('Bloc3 — pas de bruit : rispéridone pour SCPD démentiel', () => {
+        const t = evTitres({ age: 78, sexe: 'M', dfg: 70, meds: ['Risperidone'], comorbs: ['PAT_010'] });
+        assert.ok(!/dyskinésie tardive \(AIMS\)/i.test(t), 'surveillance chronique ne doit pas se déclencher pour SCPD');
+    });
+
+    // Item 2 — tabac ↔ clozapine/olanzapine (CYP1A2)
+    test('Item2 — fumeur + clozapine déclenche la règle CYP1A2', () => {
+        const t = evTitres({ age: 70, sexe: 'M', dfg: 80, meds: ['Clozapine'], flags: ['chkTabac'] });
+        assert.ok(/tabac \(CYP1A2\)/i.test(t), 'SUP_PSYC_06 attendu chez le fumeur');
+    });
+    test('Item2 — non-fumeur + clozapine : règle CYP1A2 absente', () => {
+        const t = evTitres({ age: 70, sexe: 'M', dfg: 80, meds: ['Clozapine'] });
+        assert.ok(!/tabac \(CYP1A2\)/i.test(t), 'pas de règle tabac si non-fumeur');
+    });
+
+    // Item 5 — âge de début gate la chronicité
+    test('Item5 — âge de début ≥ 65 (tardif) désactive la recontextualisation', () => {
+        const h = evHtml({ age: 80, sexe: 'M', dfg: 70, meds: ['Haloperidol', 'Risperidone'], comorbs: ['PAT_004'], flags: ['chkSchizoChronique'], bio: { psyOnsetAge: '70' } });
+        assert.ok(!/Traitement de fond/.test(h), 'forme tardive ne doit pas être requalifiée');
+    });
+    test('Item5 — âge de début < 65 (chronique) active la recontextualisation', () => {
+        const h = evHtml({ age: 80, sexe: 'M', dfg: 70, meds: ['Haloperidol', 'Risperidone'], comorbs: ['PAT_004'], flags: ['chkSchizoChronique'], bio: { psyOnsetAge: '22' } });
+        assert.ok(/Traitement de fond/.test(h), 'forme chronique doit être requalifiée');
+    });
+
+    // Item 6 — LAI
+    test('Item6 — antipsychotique LAI coché déclenche SUP_PSYC_07', () => {
+        const t = evTitres({ age: 75, sexe: 'M', dfg: 70, meds: ['Risperidone'], flags: ['chkSchizoChronique', 'chkAntipsyLAI'] });
+        assert.ok(/action prolongée \(LAI/i.test(t), 'SUP_PSYC_07 attendu si LAI coché');
+    });
+}
+
+// ============================================================================
 // LINTER D'INVARIANTS DU CORPUS DE RÈGLES (cross-check moteur/dictionnaires/rendu)
 // ============================================================================
 require('./tests_rules_invariants').runRuleInvariantTests(test, assert);

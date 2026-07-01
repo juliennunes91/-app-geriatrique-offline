@@ -66,7 +66,8 @@ function _collectPatientData() {
         comorbs: [...activeComorbs],
         meds: activeMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id })),
         suspended: window.suspendedMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id })),
-        paam: (typeof window.paamSerialize === 'function') ? window.paamSerialize() : undefined
+        paam: (typeof window.paamSerialize === 'function') ? window.paamSerialize() : undefined,
+        psyScores: (typeof window.psyScoresSerialize === 'function') ? window.psyScoresSerialize() : undefined
     };
 }
 
@@ -123,6 +124,8 @@ function _restorePatientData(data) {
     }
     // Restaurer la PAAM si présente dans l'import (sinon laisse la grille vide).
     if (data.paam && typeof window.paamRestore === 'function') window.paamRestore(data.paam);
+    // Restaurer les scores psychiatriques (AIMS, métabolique) — Item 3.
+    if (data.psyScores && typeof window.psyScoresRestore === 'function') window.psyScoresRestore(data.psyScores);
     if (typeof renderTags === 'function') renderTags();
     if (typeof calculerDFG === 'function') calculerDFG(false);
 }
@@ -606,6 +609,8 @@ window.resetPatient = function() {
     if (window._maskedAlerts && typeof window._maskedAlerts.clear === 'function') window._maskedAlerts.clear();
     // Purger la grille PAAM (procédure auto-administration) — données spécifiques au résident.
     if (typeof window.paamReset === 'function') window.paamReset();
+    // Purger les scores psychiatriques (AIMS, syndrome métabolique) — Item 3.
+    if (typeof window.psyScoresReset === 'function') window.psyScoresReset();
 
     // 2. Réinitialiser les scores globaux
     globalQT_CountKR = 0; globalQT_CountCR_PR = 0;
@@ -631,7 +636,8 @@ window.resetPatient = function() {
         'scoreCFS': '0', 'bioQtc': '',
         'bioTp': '', 'bioChlore': '', 'bioOsm': '', 'bioPrealb': '', 'bioAlbuminurie': '',
         'bioVgm': '', 'bioRetic': '',
-        'cpManual': '0', 'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1'
+        'cpManual': '0', 'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1',
+        'psyOnsetAge': ''
     };
     for (const [id, val] of Object.entries(defaults)) {
         const el = document.getElementById(id);
@@ -659,7 +665,8 @@ window.resetPatient = function() {
         'chkPsyChronique',
         'chkSchizoChronique', 'chkSchizoAffectif', 'chkTroubleDelirant', 'chkBipolaireI', 'chkBipolaireII',
         'chkDepressionRecurrente', 'chkDysthymie', 'chkTOC', 'chkTroublePanique', 'chkTAGChronique',
-        'chkESPT', 'chkTroublePersonnalite', 'chkUsageAlcool', 'chkUsageSubstances', 'chkTSADI'
+        'chkESPT', 'chkTroublePersonnalite', 'chkUsageAlcool', 'chkUsageSubstances', 'chkTSADI',
+        'chkAntipsyLAI'
     ];
     checkboxes.forEach(id => {
         const el = document.getElementById(id);

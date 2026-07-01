@@ -644,21 +644,40 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     //   psychose_chronique        → antipsychotiques = traitement de fond (≠ PIM à arrêter)
     //   trouble_thymique_chronique → lithium / thymorégulateurs = traitement de fond
     // psychiatrie_primaire_chronique = drapeau-parapluie (bandeau de synthèse).
-    if(isChecked('chkSchizoChronique'))     ctxClinique.push("schizophrenie", "psychose_chronique", "psychiatrie_primaire_chronique");
-    if(isChecked('chkSchizoAffectif'))      ctxClinique.push("trouble_schizoaffectif", "psychose_chronique", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
-    if(isChecked('chkTroubleDelirant'))     ctxClinique.push("trouble_delirant", "psychose_chronique", "psychiatrie_primaire_chronique");
-    if(isChecked('chkBipolaireI'))          ctxClinique.push("trouble_bipolaire", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
-    if(isChecked('chkBipolaireII'))         ctxClinique.push("trouble_bipolaire", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
-    if(isChecked('chkDepressionRecurrente'))ctxClinique.push("depression_recurrente", "depression", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
-    if(isChecked('chkDysthymie'))           ctxClinique.push("dysthymie", "depression", "trouble_thymique_chronique", "psychiatrie_primaire_chronique");
-    if(isChecked('chkTOC'))                 ctxClinique.push("toc", "psychiatrie_primaire_chronique");
-    if(isChecked('chkTroublePanique'))      ctxClinique.push("trouble_panique", "anxiete_chronique", "psychiatrie_primaire_chronique");
-    if(isChecked('chkTAGChronique'))        ctxClinique.push("tag", "anxiete_generalisee", "anxiete_chronique", "psychiatrie_primaire_chronique");
-    if(isChecked('chkESPT'))                ctxClinique.push("espt", "psychiatrie_primaire_chronique");
-    if(isChecked('chkTroublePersonnalite')) ctxClinique.push("trouble_personnalite", "psychiatrie_primaire_chronique");
-    if(isChecked('chkUsageAlcool'))         ctxClinique.push("trouble_usage_alcool", "addiction", "alcool", "psychiatrie_primaire_chronique");
-    if(isChecked('chkUsageSubstances'))     ctxClinique.push("trouble_usage_substances", "addiction", "psychiatrie_primaire_chronique");
-    if(isChecked('chkTSADI'))               ctxClinique.push("tsa_di", "psychiatrie_primaire_chronique");
+    //
+    // Item 5 — RIGUEUR SUR LA CHRONICITÉ : les contextes « _chronique » (qui
+    // désarment les réflexes de déprescription) ne sont générés que si la maladie
+    // a réellement débuté avant 65 ans. Si l'utilisateur renseigne un « âge de
+    // début » ≥ 65, il s'agit d'une forme TARDIVE (secondaire/organique possible),
+    // pour laquelle la déprescription reste envisageable → on ne pousse PAS les
+    // contextes chroniques (mais on garde le diagnostic de base + un drapeau
+    // `psychiatrie_debut_tardif`). Âge de début non renseigné = chronicité
+    // présumée (la case l'affirme).
+    const _psyOnset = getVal('psyOnsetAge');
+    const _onsetChronique = (!_psyOnset || _psyOnset <= 0 || _psyOnset < 65);
+    // Pousse les contextes « chroniques » uniquement si le début est < 65 ans ;
+    // sinon marque une forme tardive. `base` = contextes toujours poussés.
+    const _pushPsy = (base, chroniques) => {
+        (base || []).forEach(c => ctxClinique.push(c));
+        if (_onsetChronique) (chroniques || []).forEach(c => ctxClinique.push(c));
+        else ctxClinique.push('psychiatrie_debut_tardif');
+    };
+    if(isChecked('chkSchizoChronique'))     _pushPsy(["schizophrenie"], ["psychose_chronique", "psychiatrie_primaire_chronique"]);
+    if(isChecked('chkSchizoAffectif'))      _pushPsy(["trouble_schizoaffectif"], ["psychose_chronique", "trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(isChecked('chkTroubleDelirant'))     _pushPsy(["trouble_delirant"], ["psychose_chronique", "psychiatrie_primaire_chronique"]);
+    if(isChecked('chkBipolaireI'))          _pushPsy(["trouble_bipolaire"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(isChecked('chkBipolaireII'))         _pushPsy(["trouble_bipolaire"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(isChecked('chkDepressionRecurrente'))_pushPsy(["depression_recurrente", "depression"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(isChecked('chkDysthymie'))           _pushPsy(["dysthymie", "depression"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(isChecked('chkTOC'))                 _pushPsy(["toc"], ["psychiatrie_primaire_chronique"]);
+    if(isChecked('chkTroublePanique'))      _pushPsy(["trouble_panique", "anxiete_chronique"], ["psychiatrie_primaire_chronique"]);
+    if(isChecked('chkTAGChronique'))        _pushPsy(["tag", "anxiete_generalisee", "anxiete_chronique"], ["psychiatrie_primaire_chronique"]);
+    if(isChecked('chkESPT'))                _pushPsy(["espt"], ["psychiatrie_primaire_chronique"]);
+    if(isChecked('chkTroublePersonnalite')) _pushPsy(["trouble_personnalite"], ["psychiatrie_primaire_chronique"]);
+    if(isChecked('chkUsageAlcool'))         _pushPsy(["trouble_usage_alcool", "addiction", "alcool"], ["psychiatrie_primaire_chronique"]);
+    if(isChecked('chkUsageSubstances'))     _pushPsy(["trouble_usage_substances", "addiction"], ["psychiatrie_primaire_chronique"]);
+    if(isChecked('chkTSADI'))               _pushPsy(["tsa_di"], ["psychiatrie_primaire_chronique"]);
+    if(isChecked('chkAntipsyLAI'))          ctxClinique.push("antipsychotique_lai");
     if(isChecked('chkDelirium')) {
         ctxClinique.push("delirium", "confusion");
         if(isChecked('delHyper')) ctxClinique.push("delirium_hyperactif");
@@ -759,7 +778,16 @@ const RECONTEXTE_PSY_RULES = {
     'EV_D05':      { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }, // durée chez le dément (≠ SCPD ici)
     'EV_D16':      { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }, // « comme hypnotique » (en fait psychose)
     'EV_K02':      { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }, // chez le chuteur
-    'EV_PRISC_02': { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }  // dose PRISCUS > 2 mg/j
+    'EV_PRISC_02': { contexte_any: ['psychose_chronique'], cible: 'antipsychotique' }, // dose PRISCUS > 2 mg/j
+    // Thymorégulateurs / antidépresseurs = traitement de fond d'un trouble
+    // thymique chronique (bipolaire, dépression récurrente). EV_K05 est
+    // class-large (tout antiépileptique) → garde `requiert_med_keys` pour ne
+    // requalifier QUE si un vrai thymorégulateur est présent (et non p. ex. une
+    // gabapentine antalgique). EV_K08 (antidépresseur) ne nécessite pas de garde
+    // (dans un trouble dépressif récurrent, l'antidépresseur EST le traitement).
+    'EV_K05':      { contexte_any: ['trouble_thymique_chronique'], cible: 'thymoregulateur',
+                     requiert_med_keys: ['valproate', 'divalproate', 'valpromide', 'acide valproique', 'carbamazepine', 'lamotrigine', 'lithium'] }, // antiépileptique/thymorég. chez le chuteur
+    'EV_K08':      { contexte_any: ['trouble_thymique_chronique'], cible: 'thymoregulateur' }  // antidépresseur chez le chuteur
 };
 const RECONTEXTE_PSY_NOTE = {
     antipsychotique: "⚕️ Traitement de fond d'une psychose primaire chronique — NE PAS déprescrire systématiquement. Viser la dose minimale efficace et renforcer la surveillance (QTc, syndrome métabolique, dyskinésie tardive) plutôt qu'arrêter.",
@@ -778,10 +806,28 @@ function recontextualiserPsychiatrieChronique(alertes, ctxClinique) {
     if (!Array.isArray(alertes) || !alertes.length) return;
     const set = new Set(ctxClinique || []);
     if (!set.has('psychose_chronique') && !set.has('trouble_thymique_chronique')) return;
+    // Test de présence d'un médicament requis (garde de précision pour les règles
+    // « class-large » comme EV_K05). Utilise matchesDrugClass si dispo, sinon un
+    // matching texte tolérant sur dci/classe.
+    const _medPresent = (keys) => {
+        if (typeof activeMeds === 'undefined' || !Array.isArray(activeMeds)) return false;
+        const norm = s => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+        return activeMeds.some(m => {
+            const dci = norm(m.dci), classe = norm(m.classe);
+            return keys.some(k => {
+                const nk = norm(k);
+                if (typeof matchesDrugClass === 'function' && matchesDrugClass(dci, classe, nk)) return true;
+                return dci.includes(nk) || classe.includes(nk);
+            });
+        });
+    };
     alertes.forEach(a => {
         const cfg = a && a.id && RECONTEXTE_PSY_RULES[a.id];
         if (!cfg) return;
         if (!cfg.contexte_any.some(c => set.has(c))) return;
+        // Garde de précision : la règle n'est requalifiée que si un médicament
+        // de fond réellement concerné est présent (évite de « ramollir » à tort).
+        if (cfg.requiert_med_keys && !_medPresent(cfg.requiert_med_keys)) return;
         const note = _recontexteNotePsy(cfg.cible, set);
         if (!note) return;
         a._recontextualise = true;
@@ -812,6 +858,8 @@ function _computeAnalysisHash() {
     _HASH_NUMERIC_FIELDS.forEach(id => parts.push(getVal(id)));
     // Sélecteurs d'unité (changent la valeur convertie B12/B9) + scoreCFS.
     parts.push(getVal('scoreCFS'));
+    // Âge de début psychiatrique (Item 5) — gate la chronicité, donc l'analyse.
+    parts.push(getVal('psyOnsetAge'));
     _HASH_SELECT_FIELDS.forEach(id => { const el = document.getElementById(id); parts.push(el ? el.value : ''); });
     // Inclure toutes les checkboxes cliniques
     ['chkStent','chkAlcool','chkAnorexie','chkTabac','chkAvc','chkTvp','chkSaignement',
@@ -831,7 +879,8 @@ function _computeAnalysisHash() {
      // Maladie psychiatrique primaire chronique (Bloc 1)
      'chkSchizoChronique','chkSchizoAffectif','chkTroubleDelirant','chkBipolaireI','chkBipolaireII',
      'chkDepressionRecurrente','chkDysthymie','chkTOC','chkTroublePanique','chkTAGChronique',
-     'chkESPT','chkTroublePersonnalite','chkUsageAlcool','chkUsageSubstances','chkTSADI'
+     'chkESPT','chkTroublePersonnalite','chkUsageAlcool','chkUsageSubstances','chkTSADI',
+     'chkAntipsyLAI'
     ].forEach(id => parts.push(isChecked(id)));
     return parts.join('|');
 }

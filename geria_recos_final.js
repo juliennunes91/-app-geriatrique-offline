@@ -4446,6 +4446,27 @@ const RECOS_SUPPLEMENT = [
             age_min: 65
         },
         alternatives: "Laxatif osmotique prophylactique systématique. Titration plus lente chez l'âgé. Surveillance cardiaque rapprochée à l'instauration. Réévaluer la clozapinémie lors de tout changement de statut tabagique ou d'ajout d'inhibiteur/inducteur du CYP1A2."
+    },
+    {
+        id: "SUP_PSYC_06", sources: ["Maudsley", "ANSM"],
+        titre: "Clozapine / Olanzapine chez le fumeur : interaction tabac (CYP1A2)",
+        message: "Patient fumeur sous clozapine ou olanzapine : la fumée de tabac (hydrocarbures aromatiques polycycliques, ≠ nicotine) INDUIT le CYP1A2 et abaisse les concentrations plasmatiques. Piège majeur : lors d'un SEVRAGE tabagique (hospitalisation, arrêt), la levée de l'induction fait GRIMPER la clozapinémie/olanzapinémie de 50-70 % en 1-2 semaines → risque de surdosage (sédation, convulsions, myocardite, iléus). Anticiper une réduction de dose et un dosage plasmatique.",
+        severite: "warning",
+        condition: {
+            med_keys: ["clozapine", "olanzapine"],
+            contexte_clinique: "tabac"
+        },
+        alternatives: "À l'arrêt du tabac : réduire progressivement la clozapine/olanzapine (≈ -10 %/jour sur ~1 semaine, cible ~ -30 % à -50 %) sous contrôle de la clozapinémie. À la reprise du tabac : réajuster à la hausse. Les substituts nicotiniques n'ont PAS d'effet inducteur (c'est la combustion, pas la nicotine) — ne pas s'y fier pour maintenir l'induction."
+    },
+    {
+        id: "SUP_PSYC_07", sources: ["Maudsley", "HAS"],
+        titre: "Antipsychotique d'action prolongée (LAI/dépôt) : réversibilité lente",
+        message: "Antipsychotique retard (LAI / dépôt : rispéridone, palipéridone, aripiprazole, halopéridol décanoate, zuclopenthixol, flupentixol…) : la molécule est libérée pendant des SEMAINES à des MOIS après la dernière injection. En cas d'effet indésirable (syndrome extrapyramidal, dyskinésie, sédation, hypotension, syndrome malin, allongement du QT), la réversibilité est LENTE — ne pas attendre d'amélioration rapide à l'arrêt. Toute décision de réduction/arrêt/switch doit anticiper ce relargage prolongé. La surveillance (métabolique, QTc, dyskinésie tardive) est identique aux formes orales.",
+        severite: "info",
+        condition: {
+            contexte_clinique: "antipsychotique_lai"
+        },
+        alternatives: "Avantage : observance garantie (utile dans la psychose chronique). Contrepartie : réversibilité réduite → titration prudente, ne jamais surdoser un LAI pour un effet rapide (préférer une couverture orale transitoire). En cas d'effet indésirable grave : traitement symptomatique + attendre l'élimination ; ne pas ré-injecter. Documenter la date de la dernière injection dans le dossier."
     }
 ];
 

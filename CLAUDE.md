@@ -63,13 +63,34 @@ dans `app_analysis.js` (allowlist stricte d'IDs : `EV_B18`, `EV_D05`, `EV_D16`,
 alerte de sécurité dure (QT, Parkinson/DCL, dysphagie). Le rendu du bandeau est
 dans `renderSingleAlert()` (geria_engine_v2.js) via `a._recontextualise`.
 
-**Surveillance dédiée (Bloc 3)** : 5 règles `SUP_PSYC_01`→`SUP_PSYC_05`
+**Surveillance dédiée (Bloc 3)** : 7 règles `SUP_PSYC_01`→`SUP_PSYC_07`
 (`RECOS_SUPPLEMENT`), gatées sur `psychiatrie_primaire_chronique` /
-`trouble_thymique_chronique` (sauf clozapine, gatée `age_min: 65`) :
-dyskinésie tardive (AIMS), surveillance métabolique, ECG/QTc + prolactine,
-lithium au long cours (rein/thyroïde/parathyroïde), clozapine du sujet âgé
-(iléus, myocardite, CYP1A2-tabac). Complètent la recontextualisation
-(« ne pas arrêter → surveiller CECI ») sans dupliquer SUP_PIMC_03/11.
+`trouble_thymique_chronique` (sauf clozapine `age_min: 65`, LAI sur contexte,
+tabac sur contexte) : dyskinésie tardive (AIMS), surveillance métabolique,
+ECG/QTc + prolactine, lithium au long cours (rein/thyroïde/parathyroïde),
+clozapine du sujet âgé, tabac↔clozapine/olanzapine (CYP1A2, `SUP_PSYC_06`),
+antipsychotique retard LAI/dépôt (`SUP_PSYC_07`, contexte `antipsychotique_lai`
+via `chkAntipsyLAI`). Complètent la recontextualisation sans dupliquer
+SUP_PIMC_03/11.
+
+**Symétrie thymique (Bloc 2)** : `trouble_thymique_chronique` requalifie
+`EV_K08` (antidépresseur chuteur) et `EV_K05` (antiépileptique chuteur, garde
+`requiert_med_keys` = vrai thymorégulateur présent, sinon ne touche pas p. ex.
+une gabapentine antalgique).
+
+**Rigueur chronicité (`psyOnsetAge`)** : champ « âge de début » dans la cascade.
+Si ≥ 65 → forme tardive → les contextes `_chronique` ne sont PAS générés
+(pas de recontextualisation), contexte `psychiatrie_debut_tardif` à la place.
+Câblé dans `_pushPsy()` (app_analysis.js) + hash mémoïsation + reset.
+
+**Scores psychiatriques** : `app_psy_scores.js` (chargé après `app_paam.js`) —
+AIMS (dyskinésie tardive, critère Schooler-Kane) + syndrome métabolique
+(NCEP ATP III, TG/HDL depuis la bio + tour de taille/TA saisis). Conteneur
+`#psy-scores-container` (onglet Scores exp., non écrasé par
+`analyserPrescription`). `window.psyScoresData` purgé par `resetPatient()`,
+sérialisé en JSON. Export **« Plan de surveillance psychiatrique »**
+(`exporterPsySurveillancePDF()`) : diagnostics + traitements de fond +
+calendrier de surveillance daté (modèle PAAM).
 
 ## Architecture des données cliniques
 
