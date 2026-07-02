@@ -1936,6 +1936,48 @@ console.log('\n🧠 Psychiatrie primaire chronique du sujet âgé');
 }
 
 // ============================================================================
+// CONFORMITÉ LITTÉRATURE — cas patient polymédiqué de référence
+// Critères attendus : STOPP/START v2 (O'Mahony, Age Ageing 2015) + Beers 2023.
+// Femme 84 ans, DFG 28 (MRC st.4), FA + DT2 + HTA + dépression + ostéoporose
+// + chutes ; Rx : digoxine, glibenclamide, diazépam, amitriptyline, ibuprofène,
+// aspirine. Verrouille la NON-RÉGRESSION de la détection PIM/START de référence.
+// ============================================================================
+console.log('\n📚 Conformité littérature — cas polymédiqué (STOPP/START/Beers)');
+{
+    const { analyzeCase } = require('./oracle_harness');
+    const CAS = {
+        age: 84, sexe: 'F', dfg: 28, poids: 55,
+        comorbs: ['PAT_006', 'PAT_016b', 'PAT_005', 'PAT_032', 'PAT_025'],
+        flags: ['chkChutes'],
+        meds: ['Digoxine', 'Glibenclamide', 'Diazepam', 'Amitriptyline', 'Ibuprofene', 'Acide acetylsalicylique']
+    };
+    const r = analyzeCase(CAS);
+    const ev = (r['alertes-eviter'] || []).map(a => a.titre).join(' ~ ');
+    const ini = (r['alertes-initier'] || []).map(a => a.titre).join(' ~ ');
+    const sc = (r['alertes-scores'] || []).map(a => a.titre).join(' ');
+    const attendus = [
+        ['STOPP B12 — Digoxine >125µg + IR', ev, /Digoxine ≥ 125|Digoxine.*DFG/i],
+        ['STOPP B21 — Digoxine 1ère ligne FA', ev, /Digoxine en 1ère ligne/i],
+        ['Beers — Sulfamide longue durée (glibenclamide)', ev, /Sulfamide à longue|GLIBENCLAMIDE/i],
+        ['STOPP K — BZD longue demi-vie (diazépam)', ev, /Benzodiazépine ≥ 4|Benzodiazépine chez patient chuteur/i],
+        ['STOPP/Beers — Tricyclique (amitriptyline)', ev, /tricycliques chez le sujet âgé|TCA.*1ère ligne/i],
+        ['STOPP — AINS + DFG<50', ev, /AINS \+ DFG/i],
+        ['STOPP — Antiagrégant seul au lieu d\'AC (FA)', ev, /Antiagrégant seul en remplacement/i],
+        ['STOPP/Beers — Aspirine prévention primaire', ev, /Aspirine en prévention primaire/i],
+        ['FRID ≥ 3 → chutes', ev, /FRID ≥ 3/i],
+        ['START A1 — Anticoagulation FA', ini, /Anticoagulant pour FA/i],
+        ['START — Bisphosphonate/anabolique ostéoporose', ini, /Anti-résorptif ou anabolique/i],
+        ['START — Vitamine D ostéoporose', ini, /Vitamine D pour ostéoporose/i],
+        ['START — Bêtabloquant contrôle fréquence FA', ini, /Bêtabloquant pour FA/i],
+        ['START — IPP avec AINS', ini, /IPP avec AINS/i],
+    ];
+    attendus.forEach(([label, hay, re]) => {
+        test('Conformité — ' + label, () => assert.ok(re.test(hay), 'critère non détecté : ' + label));
+    });
+    test('Conformité — CHA₂DS₂-VA = 4 (âge≥75 + HTA + DT2)', () => assert.ok(/CHA.{0,12}: 4/.test(sc), 'score CHA₂DS₂-VA attendu = 4'));
+}
+
+// ============================================================================
 // LINTER D'INVARIANTS DU CORPUS DE RÈGLES (cross-check moteur/dictionnaires/rendu)
 // ============================================================================
 require('./tests_rules_invariants').runRuleInvariantTests(test, assert);
