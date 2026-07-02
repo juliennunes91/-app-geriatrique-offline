@@ -1978,6 +1978,56 @@ console.log('\n📚 Conformité littérature — cas polymédiqué (STOPP/START/
 }
 
 // ============================================================================
+// CONFORMITÉ LITTÉRATURE — 5 cas psychogériatriques chroniques
+// Sajatovic (GERI-BD 2015), Jeste, Maudsley (14e éd.), Kok & Reynolds (JAMA
+// 2017), Howard (VLOSLP, Am J Psychiatry 2000). Verrouillent le module
+// psychiatrie chronique (recontextualisation, surveillances, gating chronicité).
+// ============================================================================
+console.log('\n📚 Conformité littérature — 5 cas psychogériatriques chroniques');
+{
+    const { analyzeCase } = require('./oracle_harness');
+    const ev = r => (r['alertes-eviter'] || []).map(a => a.titre).join(' ~ ');
+    const evHtml = r => r._html['alertes-eviter'] || '';
+    const bio = r => (r['alertes-bio'] || []).map(a => a.titre).join(' ~ ');
+
+    // CAS 1 — Schizophrénie chronique vieillie (halopéridol + correcteur, coronarien, chuteur)
+    {
+        const r = analyzeCase({ age: 72, sexe: 'M', dfg: 65, meds: ['Haloperidol', 'Tropatepine'], comorbs: ['PAT_004'], flags: ['chkSchizoChronique', 'chkChutes'], bio: { psyOnsetAge: '24' } });
+        test('Litt.psy CAS1 — recontextualisation « traitement de fond »', () => assert.ok(/Traitement de fond/.test(evHtml(r))));
+        test('Litt.psy CAS1 — note « NE PAS déprescrire »', () => assert.ok(/NE PAS déprescrire/.test(evHtml(r))));
+        test('Litt.psy CAS1 — SUP_PSYC_01/02/03 surveillances', () => assert.ok(/dyskinésie tardive \(AIMS\)/i.test(ev(r)) && /surveillance métabolique/i.test(ev(r)) && /ECG\/QTc et prolactine/i.test(ev(r))));
+        test('Litt.psy CAS1 — anticholinergique correcteur (STOPP D13)', () => assert.ok(/Anticholinergique correcteur/i.test(ev(r))));
+    }
+    // CAS 2 — Bipolaire I sous lithium 40 ans + HCTZ + AINS, DFG 48
+    {
+        const r = analyzeCase({ age: 78, sexe: 'F', dfg: 48, meds: ['Lithium', 'Hydrochlorothiazide', 'Ibuprofene'], flags: ['chkBipolaireI'], bio: { psyOnsetAge: '30' } });
+        test('Litt.psy CAS2 — SUP_PSYC_04 lithium atteintes d\'organe', () => assert.ok(/Lithium au long cours\s*:\s*surveillance d.{0,8}organe/i.test(ev(r))));
+        test('Litt.psy CAS2 — Beers lithium + thiazide/AINS', () => assert.ok(/Lithium \+ AINS ou diurétique thiazidique/i.test(ev(r))));
+        test('Litt.psy CAS2 — AINS + DFG < 50', () => assert.ok(/AINS \+ DFG/i.test(ev(r))));
+    }
+    // CAS 3 — Schizophrénie résistante, clozapine, fumeur, constipation
+    {
+        const r = analyzeCase({ age: 68, sexe: 'M', dfg: 75, meds: ['Clozapine'], flags: ['chkSchizoChronique', 'chkTabac', 'chkConstipation'], bio: { psyOnsetAge: '25' } });
+        test('Litt.psy CAS3 — SUP_PSYC_05 clozapine sujet âgé', () => assert.ok(/Clozapine chez le sujet âgé/i.test(ev(r))));
+        test('Litt.psy CAS3 — SUP_PSYC_06 tabac↔clozapine (CYP1A2)', () => assert.ok(/tabac \(CYP1A2\)/i.test(ev(r))));
+        test('Litt.psy CAS3 — SUP_PIMC_11 NFS clozapine', () => assert.ok(/Clozapine sans NFS/i.test(ev(r))));
+        test('Litt.psy CAS3 — encadrement surveillance (AIMS + métabolique)', () => assert.ok(/AIMS/i.test(ev(r)) && /surveillance métabolique/i.test(ev(r))));
+    }
+    // CAS 4 — Dépression récurrente, sertraline maintien, chuteuse, Na 132
+    {
+        const r = analyzeCase({ age: 81, sexe: 'F', dfg: 60, meds: ['Sertraline'], flags: ['chkDepressionRecurrente', 'chkChutes'], bio: { psyOnsetAge: '50', na: 132 } });
+        test('Litt.psy CAS4 — EV_K08 antidépresseur chuteur requalifié', () => assert.ok(/Antidépresseur chez patient chuteur[\s\S]{0,300}Traitement de fond/.test(evHtml(r))));
+        test('Litt.psy CAS4 — hyponatrémie (SIADH ISRS) détectée', () => assert.ok(/hyponatr/i.test(bio(r) + ev(r))));
+    }
+    // CAS 5 — CONTRE-CAS : psychose très tardive (VLOSLP, début 74 ans)
+    {
+        const r = analyzeCase({ age: 79, sexe: 'F', dfg: 70, meds: ['Risperidone'], comorbs: ['PAT_004'], flags: ['chkSchizoChronique', 'chkChutes'], bio: { psyOnsetAge: '74' } });
+        test('Litt.psy CAS5 — forme tardive : PAS de recontextualisation', () => assert.ok(!/Traitement de fond/.test(evHtml(r))));
+        test('Litt.psy CAS5 — PIM antipsychotique chuteur reste actif', () => assert.ok(/Antipsychotique chez patient chuteur/i.test(ev(r))));
+    }
+}
+
+// ============================================================================
 // LINTER D'INVARIANTS DU CORPUS DE RÈGLES (cross-check moteur/dictionnaires/rendu)
 // ============================================================================
 require('./tests_rules_invariants').runRuleInvariantTests(test, assert);
