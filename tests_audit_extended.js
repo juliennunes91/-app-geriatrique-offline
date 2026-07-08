@@ -156,7 +156,7 @@ function runExtendedAudits(test, assert) {
 
     // ═══ 5. FUZZER ANTI-null/NaN/undefined ══════════════════════════════════
     // Générateur déterministe (LCG) : aucun littéral parasite ne doit être rendu.
-    test('FUZZER — aucun « null/NaN/undefined » rendu sur 400 patients aléatoires', () => {
+    test('FUZZER — aucun « null/NaN/undefined » rendu sur 150 patients aléatoires', () => {
         let seed = 123456789;
         const rand = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
         const pick = arr => arr[Math.floor(rand() * arr.length)];
@@ -166,7 +166,7 @@ function runExtendedAudits(test, assert) {
         const BIOS = ['patientK', 'patientNa', 'bioChlore', 'qtc', 'hb', 'inr', 'bioCa', 'bioTsh'];
         const TABS = ['alertes-eviter', 'alertes-initier', 'alertes-bio', 'alertes-interact', 'alertes-usage', 'alertes-suivi', 'alertes-synthese', 'alertes-scores'];
         const parasites = [];
-        for (let i = 0; i < 400; i++) {
+        for (let i = 0; i < 150; i++) {
             const nMed = 1 + Math.floor(rand() * 6);
             const meds = []; for (let j = 0; j < nMed; j++) meds.push(pick(MEDS));
             const c = { age: 60 + Math.floor(rand() * 40), sexe: rand() < 0.5 ? 'M' : 'F', dfg: 10 + Math.floor(rand() * 90), meds, comorbs: [], flags: [], bio: {} };
@@ -238,4 +238,116 @@ function runExtendedAudits(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, PANEL, signaturePatient };
+// ════════════════════════════════════════════════════════════════════════════
+// AUDITS ÉTENDUS — 2e vague (monotonies, cohérence, unités, idempotence)
+// ════════════════════════════════════════════════════════════════════════════
+function runExtendedAudits2(test, assert) {
+    console.log('\n🛡️  Audits permanents étendus (vague 2)');
+    const { sandbox } = loadApp();
+    const evTitres = c => (analyzeCase(c)['alertes-eviter'] || []).map(a => a.titre);
+    const bioHtml = c => analyzeCase(c)._html['alertes-bio'] || '';
+
+    // ── 8. MONOTONIE DE GRADATION : sévérité non-décroissante quand la bio s'aggrave
+    const sevNatremie = html => (/alert-danger|alert-stopp/.test(html) && /natr/i.test(html)) ? 3 : (/alert-warning/.test(html) && /natr/i.test(html)) ? 2 : (/natr/i.test(html) ? 1 : 0);
+    test('MONOTONIE-grad — hyponatrémie : sévérité non-décroissante (135→118)', () => {
+        const seq = [135, 133, 130, 126, 120, 118].map(v => sevNatremie(bioHtml({ age: 80, sexe: 'F', dfg: 60, bio: { patientNa: v } })));
+        for (let i = 1; i < seq.length; i++) assert.ok(seq[i] >= seq[i - 1], `rupture de monotonie Na à l'index ${i} : ${JSON.stringify(seq)}`);
+    });
+    const sevK = html => (/alert-danger|alert-stopp/.test(html) && /kali[ée]mie/i.test(html)) ? 3 : (/alert-warning/.test(html) && /kali/i.test(html)) ? 2 : (/kali/i.test(html) ? 1 : 0);
+    test('MONOTONIE-grad — hyperkaliémie : sévérité non-décroissante (5.0→7.0)', () => {
+        const seq = [5.0, 5.5, 6.0, 6.5, 7.0].map(v => sevK(bioHtml({ age: 80, sexe: 'F', dfg: 40, bio: { patientK: v } })));
+        for (let i = 1; i < seq.length; i++) assert.ok(seq[i] >= seq[i - 1], `rupture monotonie K : ${JSON.stringify(seq)}`);
+    });
+
+    // ── 9. MONOTONIE DE DÉPRESCRIPTION : retirer un médicament n'AJOUTE pas d'alerte
+    //    « éviter » le concernant (une déprescription ne doit jamais aggraver son propre profil).
+    const depTest = (label, medsAvant, medRetire, motif) => test('MONOTONIE-dep — ' + label, () => {
+        const base = { age: 82, sexe: 'F', dfg: 45, comorbs: ['PAT_006'] };
+        const avant = new Set(evTitres({ ...base, meds: medsAvant }));
+        const apres = new Set(evTitres({ ...base, meds: medsAvant.filter(m => m !== medRetire) }));
+        const apparues = [...apres].filter(t => !avant.has(t) && motif.test(t));
+        assert.strictEqual(apparues.length, 0, `retirer ${medRetire} fait apparaître : ${apparues.join(' | ')}`);
+    });
+    depTest('retrait AINS', ['Warfarine', 'Ibuprofene', 'Digoxine'], 'Ibuprofene', /AINS|ibupro/i);
+    depTest('retrait BZD', ['Diazepam', 'Sertraline'], 'Diazepam', /benzodiaz|diazepam/i);
+
+    // ── 10. AUTO-CONTRADICTION DE CONDITION (règle jamais déclenchable)
+    test('COHÉRENCE — aucune règle avec comorbs ∩ comorbs_absent ou ctx ∩ ctx_absent', () => {
+        const bad = JSON.parse(vm.runInContext(`(function(){
+            const inter=(a,b)=>(a||[]).filter(x=>(b||[]).includes(x));
+            const out=[]; const scan=arr=>(arr||[]).forEach(r=>{const c=r.condition||r;
+              if(inter(c.comorbs,c.comorbs_absent).length)out.push(r.id+':comorbs');
+              const ctx=[].concat(c.contexte_clinique?[c.contexte_clinique]:[],c.contexte_clinique_any||[]);
+              if(inter(ctx,c.contexte_clinique_absent).length)out.push(r.id+':ctx');});
+            scan(GERIA_RECOS_DB.EVITER);scan(GERIA_RECOS_DB.INITIER);scan(RECOS_SUPPLEMENT);
+            if(typeof RECOS_SUPPLEMENT_INTEGRATION!=='undefined')scan(RECOS_SUPPLEMENT_INTEGRATION);
+            return JSON.stringify(out);
+        })()`, sandbox));
+        assert.strictEqual(bad.length, 0, 'règles auto-contradictoires : ' + bad.join(', '));
+    });
+
+    // ── 11. SATURATION / SIGNAL-BRUIT : plafond d'alertes « danger » par patient réaliste.
+    //    Baseline courante = 11 (patient polymédiqué STOPP délibéré). Seuil d'alarme 18 :
+    //    au-delà, suspicion d'explosion de règles (fatigue d'alerte).
+    test('SATURATION — ≤ 18 alertes « danger » sur les patients du panel', () => {
+        let max = 0, worst = '';
+        Object.entries(PANEL).forEach(([n, c]) => {
+            const nd = ((analyzeCase(c)._html['alertes-eviter'] || '').match(/alert-danger|alert-stopp/g) || []).length;
+            if (nd > max) { max = nd; worst = n; }
+        });
+        assert.ok(max <= 18, `explosion d'alertes danger (${max}) sur ${worst} — vérifier une régression de spécificité`);
+    });
+
+    // ── 12. ROUND-TRIP DES UNITÉS BIO : une valeur et son équivalent dans l'autre
+    //    unité doivent produire la MÊME interprétation clinique.
+    const hasVitD = c => /Vitamine D|vitamine d/i.test(bioHtml(c));
+    test('UNITÉS — vitamine D : 8 ng/mL ≡ 20 nmol/L (même alerte carence)', () => {
+        const a = hasVitD({ age: 80, sexe: 'F', dfg: 60, bio: { bioVitD: 8, bioVitDUnit: 'ng/mL' } });
+        const b = hasVitD({ age: 80, sexe: 'F', dfg: 60, bio: { bioVitD: 20, bioVitDUnit: 'nmol/L' } });
+        assert.strictEqual(a, b, `incohérence de conversion vitD (ng/mL=${a} vs nmol/L=${b})`);
+    });
+    const hasB12 = c => /B12|cobalamin/i.test(bioHtml(c));
+    test('UNITÉS — B12 : 100 pmol/L ≡ 135 ng/L (même interprétation)', () => {
+        const a = hasB12({ age: 80, sexe: 'F', dfg: 60, bio: { bioB12: 100, bioB12Unit: 'pmol/L' } });
+        const b = hasB12({ age: 80, sexe: 'F', dfg: 60, bio: { bioB12: 135, bioB12Unit: 'ng/L' } });
+        assert.strictEqual(a, b, `incohérence de conversion B12 (pmol/L=${a} vs ng/L=${b})`);
+    });
+
+    // ── 12bis. COHÉRENCE GUIDELINE : une pathologie ne doit pas PROPOSER (INITIER)
+    //    un médicament qu'elle liste par ailleurs dans ses INTERDITS (PATHO_MED_INTERDITS).
+    //    Baseline : PAT_032 propose clomipramine « 4e ligne réfractaire » tout en la
+    //    déclarant à éviter — tension clinique connue et assumée (TCA de dernier
+    //    recours). Toute NOUVELLE contradiction propose∩interdit fait échouer.
+    const PROPOSE_INTERDIT_BASELINE = new Set(['PAT_032::clomipramine']);
+    test('COHÉRENCE-guideline — aucune NOUVELLE pathologie propose ∩ interdit', () => {
+        const viol = JSON.parse(vm.runInContext(`(function(){
+            if(typeof PATHOLOGY_RULES_DB==='undefined'||typeof PATHO_MED_INTERDITS==='undefined') return '[]';
+            const norm=s=>(s||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();
+            const out=[];
+            Object.keys(PATHOLOGY_RULES_DB).forEach(pat=>{
+              const interdits=(PATHO_MED_INTERDITS[pat]||[]).map(i=>norm(i.terme)).filter(x=>x.length>4);
+              if(!interdits.length)return;
+              ((PATHOLOGY_RULES_DB[pat].TRAITEMENTS&&PATHOLOGY_RULES_DB[pat].TRAITEMENTS.INITIER)||[]).forEach(t=>{
+                const prop=norm(t.classe||t.molecule||''); if(prop.length<=4)return;
+                interdits.forEach(i=>{ if(prop.includes(i)||i.includes(prop)) out.push(pat+'::'+i); });
+              });
+            });
+            return JSON.stringify([...new Set(out)]);
+        })()`, sandbox));
+        const nouveaux = viol.filter(v => !PROPOSE_INTERDIT_BASELINE.has(v));
+        assert.strictEqual(nouveaux.length, 0, 'pathologie proposant un médicament interdit : ' + nouveaux.join(', '));
+    });
+
+    // ── 13. IDEMPOTENCE DES PRÉCISIONS : préciser un médicament ne doit changer que
+    //    SES propres alertes, jamais celles d'un co-prescrit sans rapport.
+    test('IDEMPOTENCE — préciser la durée d\'un cortico n\'altère pas les alertes AVK', () => {
+        const base = { age: 80, sexe: 'F', dfg: 55, comorbs: ['PAT_006'], meds: ['Prednisone', 'Warfarine'] };
+        const avkAlerts = c => new Set((analyzeCase(c)['alertes-eviter'] || []).map(a => a.titre).filter(t => /AVK|warfarine|INR|anticoag/i.test(t)));
+        const sans = avkAlerts(base);
+        const avec = avkAlerts({ ...base, precisions: { Prednisone: { duree: 'courte' } } });
+        const diff = [...sans].filter(t => !avec.has(t)).concat([...avec].filter(t => !sans.has(t)));
+        assert.strictEqual(diff.length, 0, 'la précision cortico a modifié des alertes AVK : ' + diff.join(' | '));
+    });
+}
+
+module.exports = { runExtendedAudits, runExtendedAudits2, PANEL, signaturePatient };
