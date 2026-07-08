@@ -4122,7 +4122,9 @@ const RECOS_SUPPLEMENT = [
         message: "REMEDIES : Fer oral au long cours (> 3 mois) — vérifier NFS et ferritine pour confirmer la réponse. Arrêter si ferritine normalisée.",
         severite: "warning",
         condition: {
-            med_keys: ["fer", "fumarate ferreux", "sulfate ferreux", "ascorbate ferreux"],
+            // « ferreux »/« ferrique » couvrent tous les sels de fer sans le faux match
+            // de la clé nue « fer » sur « calciFERol » (vitamine D) — bug corrigé.
+            med_keys: ["ferreux", "ferrique"],
             // Désarmée si la cure est de courte durée (< 1 mois — phase d'induction).
             contexte_clinique_absent: ["fer_duree_breve"]
         }

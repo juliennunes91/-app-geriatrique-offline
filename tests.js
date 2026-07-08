@@ -2028,6 +2028,40 @@ console.log('\n📚 Conformité littérature — 5 cas psychogériatriques chron
 }
 
 // ============================================================================
+// CORRECTIFS DE TERRAIN (retours utilisateur)
+// ============================================================================
+console.log('\n🔧 Correctifs de terrain');
+{
+    const { analyzeCase } = require('./oracle_harness');
+    const ev = r => (r['alertes-eviter'] || []).map(a => a.titre).join(' ~ ');
+    const biotxt = r => (r['alertes-bio'] || []).map(a => a.titre).join(' ~ ');
+
+    // #2 — la clé "fer" ne doit plus matcher calciFERol (vitamine D)
+    test('Fix#2 — vitamine D ne déclenche PAS « Fer oral au long cours »', () => {
+        assert.ok(!/Fer oral au long cours/i.test(ev(analyzeCase({ age: 80, sexe: 'F', dfg: 60, meds: ['Cholecalciferol'] }))), 'faux positif fer sur vitamine D');
+    });
+    test('Fix#2 — un vrai fer déclenche toujours la règle', () => {
+        assert.ok(/Fer oral au long cours/i.test(ev(analyzeCase({ age: 80, sexe: 'F', dfg: 60, meds: ['Fumarate ferreux'] }))), 'la règle fer doit rester active');
+    });
+
+    // #3 — hypochlorémie : seuil < 98 (96 doit ressortir)
+    test('Fix#3 — chlore 96 → hypochlorémie légère affichée', () => {
+        assert.ok(/Hypochlorémie/i.test(biotxt(analyzeCase({ age: 80, sexe: 'F', dfg: 60, bio: { bioChlore: 96 } }))), 'chlore 96 doit ressortir');
+    });
+    test('Fix#3 — chlore 99 (normal) → rien', () => {
+        assert.ok(!/Hypochlorémie/i.test(biotxt(analyzeCase({ age: 80, sexe: 'F', dfg: 60, bio: { bioChlore: 99 } }))), 'chlore 99 ne doit rien afficher');
+    });
+
+    // #4 — insuffisance rénale textuelle dans les anomalies bio (KDIGO)
+    test('Fix#4 — DFG 40 → « Insuffisance rénale chronique » en bio', () => {
+        assert.ok(/Insuffisance rénale chronique/i.test(biotxt(analyzeCase({ age: 80, sexe: 'F', dfg: 40 }))), 'IRC doit ressortir textuellement');
+    });
+    test('Fix#4 — DFG 70 (normal) → pas d\'alerte IRC', () => {
+        assert.ok(!/Insuffisance rénale chronique/i.test(biotxt(analyzeCase({ age: 80, sexe: 'F', dfg: 70 }))), 'DFG normal ne doit pas déclencher IRC');
+    });
+}
+
+// ============================================================================
 // LINTER D'INVARIANTS DU CORPUS DE RÈGLES (cross-check moteur/dictionnaires/rendu)
 // ============================================================================
 require('./tests_rules_invariants').runRuleInvariantTests(test, assert);

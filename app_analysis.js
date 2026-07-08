@@ -1425,6 +1425,22 @@ function analyserPrescription() {
         }
     }
 
+    // --- Fonction rénale : stadification KDIGO (DFG) rendue textuellement en bio ---
+    // Le DFG alimentait déjà les scores et l'adaptation posologique, mais n'apparaissait
+    // pas comme anomalie biologique explicite. On l'affiche ici (stade G KDIGO).
+    {
+        const dfgR = bioValues['BIO_004'];
+        if (dfgR > 0 && dfgR < 60) {
+            let stade, cls, icon, conduite;
+            if (dfgR < 15)      { stade = 'G5 — insuffisance rénale terminale'; cls = 'danger alert-stopp'; icon = '🚨'; conduite = 'Néphroprotection, préparation suppléance (dialyse/greffe), adaptation posologique majeure, éviction néphrotoxiques.'; }
+            else if (dfgR < 30) { stade = 'G4 — insuffisance rénale sévère'; cls = 'danger'; icon = '🚨'; conduite = 'Avis néphrologique, adaptation/arrêt des médicaments à élimination rénale, éviter AINS et produits de contraste, surveiller K+.'; }
+            else if (dfgR < 45) { stade = 'G3b — insuffisance rénale modérée'; cls = 'warning border-warning'; icon = '⚠️'; conduite = 'Adapter les posologies (AOD, metformine, etc.), surveiller K+ et fonction rénale, éviter AINS/néphrotoxiques.'; }
+            else                { stade = 'G3a — insuffisance rénale légère à modérée'; cls = 'warning border-warning'; icon = '⚠️'; conduite = 'Adaptation posologique selon molécules, surveillance annuelle du DFG et de l\'albuminurie, prudence AINS.'; }
+            addAlert('alertes-bio', `<div class="alert alert-${cls} shadow-sm"><strong>${icon} Insuffisance rénale chronique ${stade}</strong> (DFG ${dfgR} ml/min/1,73m²)
+                <br><em>Conduite :</em> ${conduite}</div>`, 'bio');
+        }
+    }
+
     // --- SYND_005 : Anémie (Hb < 13 H / < 12 F) ---
     {
         let hb = bioValues['BIO_009'];
@@ -1789,12 +1805,14 @@ function analyserPrescription() {
             <br><em>Conduite :</em> ${bioValues['BIO_040'] < 30 ? 'TP < 30% — urgence hémostatique, vitamine K IV si AVK, PFC si IHC sévère.' : 'Rechercher cause : insuffisance hépatique, AVK, CIVD. Adapter anticoagulation.'}</div>`, 'bio');
     }
 
-    // --- Hypochlorémie (< 95 mmol/L) ou Hyperchlorémie (> 110 mmol/L) ---
+    // --- Hypochlorémie (< 98 mmol/L, seuil clinique standard) ou Hyperchlorémie (> 110) ---
     if (bioValues['BIO_041'] > 0) {
-        if (bioValues['BIO_041'] < 95) {
-            addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hypochlorémie (${bioValues['BIO_041']} mmol/L)</strong>
-                <br><em>Causes fréquentes :</em> Vomissements, aspirations gastriques, diurétiques (furosémide). Alcalose métabolique associée probable.
-                <br><em>Conduite :</em> Corriger la cause, NaCl IV si sévère.</div>`, 'bio');
+        if (bioValues['BIO_041'] < 98) {
+            const clV = bioValues['BIO_041'];
+            const marquee = clV < 95; // < 95 = marquée ; 95-97 = légère
+            addAlert('alertes-bio', `<div class="alert alert-${marquee ? 'warning border-warning' : 'info border-info'} shadow-sm"><strong>${marquee ? '⚠️' : '💡'} Hypochlorémie ${marquee ? 'marquée' : 'légère'} (${clV} mmol/L)</strong>
+                <br><em>Causes fréquentes :</em> Vomissements, aspirations gastriques, diurétiques (furosémide, thiazidiques). Alcalose métabolique associée probable.
+                <br><em>Conduite :</em> ${marquee ? 'Corriger la cause, NaCl IV si sévère.' : 'Rechercher pertes digestives/diurétiques, contrôler ionogramme et équilibre acido-basique.'}</div>`, 'bio');
         } else if (bioValues['BIO_041'] > 110) {
             addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hyperchlorémie (${bioValues['BIO_041']} mmol/L)</strong>
                 <br><em>Causes fréquentes :</em> Perfusion NaCl excessive, acidose tubulaire, IRC. Acidose hyperchlorémique possible.
