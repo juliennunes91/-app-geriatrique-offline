@@ -639,10 +639,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "severite": "warning",
         "condition": {
             "med_keys": [
-                "fer",
-                "fumarate ferreux",
-                "sulfate ferreux",
-                "gluconate ferreux"
+                "ferreux",
+                "ferrique"
             ],
             "contexte_clinique": "dose_fer_elevee",
             "_med_keys_legacy_dropped": [
@@ -1508,7 +1506,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
             "med_keys": [
                 "iec",
                 "ara2",
-                "ica",
+                "inhibiteur calcique",
                 "beta-bloquants",
                 "diuretiques"
             ],

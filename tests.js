@@ -2072,6 +2072,49 @@ console.log('\n🔧 Correctifs de terrain');
 }
 
 // ============================================================================
+// AUDIT PERMANENT #3 — CALIBRATION DES SEUILS (boundary tests)
+// Verrouille les bornes cliniques exactes : un futur changement de seuil qui
+// raterait un cas pathologique limite (ou sur-déclencherait un cas normal) fait
+// échouer la suite. Complète l'audit de spécificité (INV-O) et de complétude (#4).
+// ============================================================================
+console.log('\n🎯 Audit permanent — calibration des seuils (boundary)');
+{
+    const { analyzeCase } = require('./oracle_harness');
+    const biotxt = r => (r['alertes-bio'] || []).map(a => a.titre).join(' ~ ');
+    const boundary = (label, bioObj, re, attendu) => test('Seuil — ' + label, () => {
+        const present = re.test(biotxt(analyzeCase({ age: 80, sexe: 'F', dfg: 70, ...bioObj })));
+        assert.strictEqual(present, attendu, `${label} : attendu ${attendu ? 'présent' : 'absent'}`);
+    });
+    // Hypochlorémie : seuil < 98
+    boundary('chlore 97 → hypochlorémie présente', { bio: { bioChlore: 97 } }, /Hypochlorémie/i, true);
+    boundary('chlore 98 → absente (borne)', { bio: { bioChlore: 98 } }, /Hypochlorémie/i, false);
+    // IRC (DFG) : seuil < 60
+    boundary('DFG 59 → IRC présente', { dfg: 59 }, /Insuffisance rénale chronique/i, true);
+    boundary('DFG 60 → absente (borne)', { dfg: 60 }, /Insuffisance rénale chronique/i, false);
+    // Stades IRC (KDIGO)
+    boundary('DFG 28 → stade G4', { dfg: 28 }, /G4/i, true);
+    boundary('DFG 12 → stade G5', { dfg: 12 }, /G5/i, true);
+}
+
+// ============================================================================
+// AUDIT PERMANENT #4 — COMPLÉTUDE DE SORTIE (paramètre saisi → rendu textuel)
+// Garantit que les paramètres fondamentaux saisis apparaissent TEXTUELLEMENT
+// dans l'onglet où le clinicien les cherche (et pas seulement en interne).
+// ============================================================================
+console.log('\n📋 Audit permanent — complétude de sortie par onglet');
+{
+    const { analyzeCase } = require('./oracle_harness');
+    const biotxt = r => (r['alertes-bio'] || []).map(a => a.titre).join(' ~ ');
+    // Cas riche : chaque anomalie saisie doit ressortir en clair dans « Bio »
+    const r = analyzeCase({ age: 82, sexe: 'F', dfg: 35, bio: { bioChlore: 94, patientK: 5.6, patientNa: 128 } });
+    const bt = biotxt(r);
+    test('Complétude — IRC (DFG 35) rendue en bio', () => assert.ok(/Insuffisance rénale chronique/i.test(bt)));
+    test('Complétude — hypochlorémie (94) rendue en bio', () => assert.ok(/Hypochlorémie/i.test(bt)));
+    test('Complétude — dyskaliémie (K 5.6) rendue en bio', () => assert.ok(/kali[ée]mie|hyperkali/i.test(bt)));
+    test('Complétude — dysnatrémie (Na 128) rendue en bio', () => assert.ok(/natr[ée]mie|hyponatr/i.test(bt)));
+}
+
+// ============================================================================
 // LINTER D'INVARIANTS DU CORPUS DE RÈGLES (cross-check moteur/dictionnaires/rendu)
 // ============================================================================
 require('./tests_rules_invariants').runRuleInvariantTests(test, assert);

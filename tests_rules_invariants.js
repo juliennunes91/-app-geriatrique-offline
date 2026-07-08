@@ -299,6 +299,50 @@ function runRuleInvariantTests(test, assert) {
         assert.strictEqual(bad.length, 0, `règles danger sans alternatives:${fmt(bad)}`);
     });
 
+    // ---- INV-O : SPÉCIFICITÉ — collisions de sous-chaîne des med_keys ----------
+    // Le matching par sous-chaîne (matchesDrugClass) peut capturer un médicament
+    // par accident (« statine » ⊂ « cilaSTATINE », « fer » ⊂ « calciFERol »).
+    // On énumère, pour chaque med_key POSITIVE de chaque règle active, les
+    // médicaments matchés où la clé n'apparaît PAS en début de mot dans le DCI
+    // (collision de sous-chaîne). Toute collision NON présente dans l'allowlist
+    // (paires cliniquement légitimes : isomères, sels, dérivés) fait échouer le
+    // test → attrape proactivement la famille de bugs fer/statine.
+    const COLLISIONS_LEGITIMES = new Set([
+        'promazine::levomepromazine',       // lévomépromazine EST une promazine
+        'chlorpheniramine::dexchlorpheniramine', // isomère dextro
+        'valproate::divalproatedesodium',   // divalproate = valproate
+        'ferreux::ascorbateferreux', 'ferreux::fumarateferreux', 'ferreux::sulfateferreux',
+        'calcium::carbonatedecalcium', 'calcium::pidolatedecalcium'
+    ]);
+    test('INV-O — spécificité : aucune collision de sous-chaîne parasite (med_keys)', () => {
+        const { sandbox } = require('./oracle_harness').loadApp();
+        // Récolte les med_keys positives de toutes les règles actives + calcule
+        // les collisions en sandbox (accès à matchesDrugClass / MASTER_DB).
+        const keys = [...new Set(active.flatMap(r => r.medKeys))];
+        const collisions = vm.runInContext(`(function(){
+            const norm = s => (s||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+            const keys = ${JSON.stringify(keys)};
+            const out = [];
+            keys.forEach(k => {
+                const nk = norm(k);
+                if (nk.length < 3) return;
+                MASTER_DB.MEDICAMENTS.forEach(m => {
+                    if (!matchesDrugClass(norm(m.dci), norm(m.classe||''), nk)) return;
+                    const d = norm(m.dci);
+                    // collision = la clé est DANS le DCI mais PAS en début de mot,
+                    // et la classe ne contient pas la clé (match purement accidentel).
+                    if (d.includes(nk) && !(new RegExp('(^|[^a-z])'+nk).test(d)) && !norm(m.classe||'').includes(nk)) {
+                        out.push(nk + '::' + d);
+                    }
+                });
+            });
+            return JSON.stringify([...new Set(out)]);
+        })()`, sandbox);
+        const parasites = JSON.parse(collisions).filter(c => !COLLISIONS_LEGITIMES.has(c));
+        assert.strictEqual(parasites.length, 0,
+            `collisions de sous-chaîne parasites (ajouter à l'allowlist si légitime, sinon spécifier la clé):${fmt(parasites)}`);
+    });
+
     // ---- SECTION AUDIT (informative — ne fait jamais échouer la suite) ----
     const auditLines = [];
     const audit = (label, items) => {
