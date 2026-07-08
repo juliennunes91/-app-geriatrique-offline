@@ -332,7 +332,7 @@ const GERIA_RECOS_DB = {
             message: "Statine en prévention cardiovasculaire primaire chez patient ≥ 85 ans avec fragilité établie ou espérance de vie < 3 ans : pas de preuve d'efficacité. STOPPFrail recommande l'arrêt.",
             severite: "warning",
             condition: {
-                med_keys: ["statine", "atorvastatine", "rosuvastatine", "simvastatine", "pravastatine", "fluvastatine"],
+                med_keys: ["atorvastatine", "rosuvastatine", "simvastatine", "pravastatine", "fluvastatine", "pitavastatine"],
                 age_min: 85,
                 fragile: true,
                 comorbs_absent: ["PAT_004", "PAT_007", "PAT_008"]
@@ -1805,7 +1805,7 @@ const GERIA_RECOS_DB = {
             message: "STOPPFrail : Statine chez patient sévèrement fragile ou en fin de vie. La prévention primaire n'apporte pas de bénéfice à court terme. Envisager l'arrêt même en prévention secondaire si espérance de vie < 1-2 ans.",
             severite: "warning",
             condition: {
-                med_keys: ["statine", "atorvastatine", "rosuvastatine", "simvastatine", "pravastatine"],
+                med_keys: ["atorvastatine", "rosuvastatine", "simvastatine", "pravastatine", "fluvastatine", "pitavastatine"],
                 fragile: true
             },
             alternatives: "Déprescription avec réévaluation"

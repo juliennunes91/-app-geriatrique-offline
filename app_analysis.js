@@ -2008,8 +2008,15 @@ function analyserPrescription() {
             }
         }
 
-        // Statines chez le très fragile (CFS ≥ 7) sans ATCD cardiovasculaire
-        const statinMeds = activeMeds.filter(m => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), 'statine'));
+        // Statines chez le très fragile (CFS ≥ 7) sans ATCD cardiovasculaire.
+        // NB : ne PAS utiliser matchesDrugClass(...,'statine') — « statine » est
+        // sous-chaîne de « cilaSTATINE » (imipénem/cilastatine, antibiotique) →
+        // faux positif. Tous les vrais statines finissent en « -vastatine »
+        // (cilastatine n'a pas le « va ») ; la classe « Statine » les couvre aussi.
+        const statinMeds = activeMeds.filter(m => {
+            const d = sanitizeText(m.dci), cl = sanitizeText(m.classe || '');
+            return /vastatine/.test(d) || cl.includes('statine');
+        });
         if (statinMeds.length > 0 && getVal('scoreCFS') >= 7 && !activeComorbs.some(c => ['PAT_004', 'PAT_007', 'PAT_008'].includes(c))) {
             deprescriptionGuides.push({
                 meds: statinMeds.map(m => m.dci.toUpperCase()).join(', '),

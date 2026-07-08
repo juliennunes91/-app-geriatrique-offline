@@ -2052,6 +2052,16 @@ console.log('\n🔧 Correctifs de terrain');
         assert.ok(!/Hypochlorémie/i.test(biotxt(analyzeCase({ age: 80, sexe: 'F', dfg: 60, bio: { bioChlore: 99 } }))), 'chlore 99 ne doit rien afficher');
     });
 
+    // #5 (audit de spécificité) — « statine » ⊂ « cilaSTATINE » (imipénem/cilastatine)
+    test('Fix#5 — imipénem/cilastatine ne déclenche PAS d\'alerte statine', () => {
+        const r = analyzeCase({ age: 86, sexe: 'M', dfg: 55, meds: ['Imipenem + cilastatine'], flags: ['patientFragile'], cfs: 7 });
+        assert.ok(!/statine/i.test(ev(r)), 'faux positif statine sur cilastatine');
+    });
+    test('Fix#5 — une vraie statine (fragile) reste détectée', () => {
+        const r = analyzeCase({ age: 86, sexe: 'M', dfg: 55, meds: ['Atorvastatine'], flags: ['patientFragile'], cfs: 7 });
+        assert.ok(/statine/i.test(ev(r)), 'déprescription statine doit rester active');
+    });
+
     // #4 — insuffisance rénale textuelle dans les anomalies bio (KDIGO)
     test('Fix#4 — DFG 40 → « Insuffisance rénale chronique » en bio', () => {
         assert.ok(/Insuffisance rénale chronique/i.test(biotxt(analyzeCase({ age: 80, sexe: 'F', dfg: 40 }))), 'IRC doit ressortir textuellement');
