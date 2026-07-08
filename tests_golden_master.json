@@ -1,0 +1,635 @@
+{
+ "geriatrique_polymed_STOPP": {
+  "alertes-eviter": [
+   "AINS + DFG < 50",
+   "AINS + HTA sévère (PAS > 170 et/ou PAD > 100)",
+   "AMITRIPTYLINE — Déconseillé Dépression (sujet âgé / Late-Life Depression)",
+   "Action immédiate",
+   "Antiagrégant seul en remplacement de l'anticoagulant dans la FA",
+   "Antidépresseur chez patient chuteur",
+   "Antidépresseurs tricycliques chez le sujet âgé",
+   "Aspirine en prévention primaire cardiovasculaire",
+   "Benzodiazépine chez patient chuteur",
+   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépines / Z-drugs : DIAZEPAM",
+   "Cascades iatrogéniques détectées",
+   "Citalopram > 20 mg ou Escitalopram > 10 mg ou TCA en cas d'arythmie / QT prolongé / hypokaliémie",
+   "DIAZEPAM — Déconseillé Dépression (sujet âgé / Late-Life Depression)",
+   "Digoxine en 1ère ligne pour FA (contrôle de fréquence > 3 mois)",
+   "Digoxine ≥ 125 µg/j au long cours + DFG < 30",
+   "GLIBENCLAMIDE — CI Diabète de type 2",
+   "GLIBENCLAMIDE — Prudence Diabète de type 2",
+   "IBUPROFENE — Déconseillé Hypertension Artérielle (HTA)",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Polypharmacie sans réévaluation (REMEDIES)",
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+   "Réévaluation annuelle de chaque traitement chronique",
+   "Sulfamide à longue demi-vie (glibenclamide, chlorpropamide, glimépiride)",
+   "Tricyclique (TCA) en 1ère ligne pour dépression"
+  ],
+  "alertes-initier": [
+   "Anti-résorptif ou anabolique osseux pour ostéoporose",
+   "Anticoagulant pour FA (chronique ou paroxystique)",
+   "Antihypertenseur si PAS > 140 (ou > 150 si fragile)",
+   "Bêtabloquant pour FA chronique (contrôle de fréquence)",
+   "IPP avec AINS (cure courte ou prolongée)",
+   "Réévaluation planifiée",
+   "Vitamine D pour ostéoporose et/ou fracture de fragilité"
+  ],
+  "alertes-bio": [
+   "Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
+   "Insuffisance rénale chronique G4 — insuffisance rénale sévère"
+  ],
+  "alertes-interact": [
+   "Co-prescription à risque : ACIDE ACETYLSALICYLIQUE",
+   "Co-prescription à risque : AMITRIPTYLINE",
+   "Co-prescription à risque : DIAZEPAM",
+   "Co-prescription à risque : GLIBENCLAMIDE",
+   "Co-prescription à risque : IBUPROFENE"
+  ],
+  "alertes-suivi": [
+   "ACIDE ACETYLSALICYLIQUE — Alertes cliniques",
+   "AMITRIPTYLINE — Alertes cliniques",
+   "DIAZEPAM — Alertes cliniques",
+   "DIGOXINE — Alertes cliniques",
+   "GLIBENCLAMIDE — Alertes cliniques",
+   "IBUPROFENE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACIDE ACETYLSALICYLIQUE",
+   "Posologies : AMITRIPTYLINE",
+   "Posologies : DIAZEPAM",
+   "Posologies : DIGOXINE",
+   "Posologies : GLIBENCLAMIDE",
+   "Posologies : IBUPROFENE"
+  ]
+ },
+ "schizo_chronique_haldol": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Anticholinergique correcteur des effets extrapyramidaux des antipsychotiques",
+   "Antipsychotique au long cours + maladie vasculaire connue",
+   "Antipsychotique au long cours : ECG/QTc et prolactine",
+   "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
+   "Antipsychotique au long cours : surveillance métabolique",
+   "Antipsychotique chez patient chuteur",
+   "Cascades iatrogéniques détectées",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Flupentixol, fluphénazine, halopéridol > 2 mg/j"
+  ],
+  "alertes-initier": [
+   "Antiagrégant / statine pour syndrome coronarien",
+   "Antiagrégant pour maladie vasculaire",
+   "Bêtabloquant pour coronaropathie symptomatique (angor)",
+   "IEC en post-SCA / coronaropathie",
+   "Réévaluation planifiée",
+   "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "HALOPERIDOL — Alertes cliniques",
+   "TROPATEPINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : HALOPERIDOL",
+   "Posologies : TROPATEPINE"
+  ]
+ },
+ "bipolaire_lithium": {
+  "alertes-eviter": [
+   "AINS + DFG < 50",
+   "Action immédiate",
+   "Cascades iatrogéniques détectées",
+   "Diurétique sans ionogramme de surveillance",
+   "Lithium + AINS ou diurétique thiazidique : toxicité lithique",
+   "Lithium au long cours : surveillance d'organe (rein, thyroïde, parathyroïde)",
+   "Lithium sans monitorage régulier",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [
+   "IPP avec AINS (cure courte ou prolongée)"
+  ],
+  "alertes-bio": [
+   "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
+  ],
+  "alertes-interact": [
+   "Co-prescription à risque : HYDROCHLOROTHIAZIDE",
+   "Co-prescription à risque : IBUPROFENE",
+   "Co-prescription à risque : LITHIUM"
+  ],
+  "alertes-suivi": [
+   "HYDROCHLOROTHIAZIDE — Alertes cliniques",
+   "IBUPROFENE — Alertes cliniques",
+   "LITHIUM — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : HYDROCHLOROTHIAZIDE",
+   "Posologies : IBUPROFENE",
+   "Posologies : LITHIUM"
+  ]
+ },
+ "clozapine_fumeur": {
+  "alertes-eviter": [
+   "Antipsychotique au long cours : ECG/QTc et prolactine",
+   "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
+   "Antipsychotique au long cours : surveillance métabolique",
+   "Clozapine / Olanzapine chez le fumeur : interaction tabac (CYP1A2)",
+   "Clozapine chez le sujet âgé : risques spécifiques (au-delà de la NFS)",
+   "Clozapine sans NFS hebdomadaire",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "Laxatif osmotique pour constipation chronique bénigne"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "CLOZAPINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CLOZAPINE"
+  ]
+ },
+ "depression_recurrente": {
+  "alertes-eviter": [
+   "Antidépresseur chez patient chuteur",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Hyponatrémie légère (130-134) — Na 132 mmol/L"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "SERTRALINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : SERTRALINE"
+  ]
+ },
+ "vloslp_tardif": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antipsychotique au long cours + maladie vasculaire connue",
+   "Antipsychotique chez patient chuteur",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [
+   "Antiagrégant / statine pour syndrome coronarien",
+   "Antiagrégant pour maladie vasculaire",
+   "Bêtabloquant pour coronaropathie symptomatique (angor)",
+   "IEC en post-SCA / coronaropathie",
+   "Réévaluation planifiée",
+   "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "RISPERIDONE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : RISPERIDONE"
+  ]
+ },
+ "IC_HFrEF": {
+  "alertes-eviter": [
+   "Diurétique sans ionogramme de surveillance",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [
+   "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "BISOPROLOL — Alertes cliniques",
+   "FUROSEMIDE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : BISOPROLOL",
+   "Posologies : FUROSEMIDE"
+  ]
+ },
+ "FA_non_anticoagulee": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antiagrégant seul en remplacement de l'anticoagulant dans la FA",
+   "Aspirine en prévention primaire cardiovasculaire"
+  ],
+  "alertes-initier": [
+   "Anticoagulant pour FA (chronique ou paroxystique)",
+   "Bêtabloquant pour FA chronique (contrôle de fréquence)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [
+   "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ACIDE ACETYLSALICYLIQUE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACIDE ACETYLSALICYLIQUE"
+  ]
+ },
+ "diabete_IRC": {
+  "alertes-eviter": [
+   "GLICLAZIDE — Prudence Diabète de type 2",
+   "METFORMINE — CI Maladie Rénale Chronique (MRC)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Insuffisance rénale chronique G3b — insuffisance rénale modérée"
+  ],
+  "alertes-interact": [
+   "Co-prescription à risque : GLICLAZIDE",
+   "Co-prescription à risque : METFORMINE"
+  ],
+  "alertes-suivi": [
+   "GLICLAZIDE — Alertes cliniques",
+   "METFORMINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : GLICLAZIDE",
+   "Posologies : METFORMINE"
+  ]
+ },
+ "palliatif_fragile": {
+  "alertes-eviter": [
+   "ALENDRONATE — Déconseillé Soins Palliatifs",
+   "ATORVASTATINE — Déconseillé Soins Palliatifs",
+   "Bisphosphonate / Dénosumab (espérance de vie < 2 ans)",
+   "Bisphosphonates (STOPP/FRAIL)",
+   "Deprescription preventive globale chez le fragile severe (STOPP/FRAIL)",
+   "Réévaluation planifiée",
+   "Statines (STOPP/FRAIL)",
+   "Statines (patient très fragile, prévention primaire) : ATORVASTATINE",
+   "Statines en prévention primaire / patient fragile"
+  ],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné",
+   "Vitamine D pour ostéoporose et/ou fracture de fragilité"
+  ],
+  "alertes-bio": [
+   "Insuffisance rénale chronique G3b — insuffisance rénale modérée"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ALENDRONATE — Alertes cliniques",
+   "ATORVASTATINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ALENDRONATE",
+   "Posologies : ATORVASTATINE"
+  ]
+ },
+ "hepatopathie": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Benzodiazépine / opioïde + cirrhose sévère",
+   "Benzodiazépine ≥ 4 semaines",
+   "Cascades iatrogéniques détectées",
+   "DIAZEPAM — Déconseillé Hépatopathie chronique / Cirrhose",
+   "Médicament hépatotoxique + hépatopathie chronique / cirrhose",
+   "PARACETAMOL — Prudence Hépatopathie chronique / Cirrhose"
+  ],
+  "alertes-initier": [
+   "Lactulose / rifaximine pour encéphalopathie hépatique (cirrhose)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "DIAZEPAM — Alertes cliniques",
+   "PARACETAMOL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Adaptations hépatiques — Child-Pugh C",
+   "Posologies : DIAZEPAM",
+   "Posologies : PARACETAMOL"
+  ]
+ },
+ "demence_SCPD": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Anticholinergique puissant + Démence ou Delirium",
+   "Antimuscarinique systémique + Démence",
+   "Antipsychotique chez patient dément — durée et réévaluation",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "OXYBUTYNINE — CI Syndrome Démentiel (Générique)",
+   "Oxybutynine (toutes formes)",
+   "RISPERIDONE — Prudence Syndrome Démentiel (Générique)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : RISPERIDONE"
+  ],
+  "alertes-suivi": [
+   "OXYBUTYNINE — Alertes cliniques",
+   "RISPERIDONE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : OXYBUTYNINE",
+   "Posologies : RISPERIDONE"
+  ]
+ },
+ "parkinson_psychose": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antipsychotique (sauf clozapine, quétiapine) + Parkinson / Démence à corps de Lewy",
+   "Antipsychotique chez patient dément — durée et réévaluation",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Flupentixol, fluphénazine, halopéridol > 2 mg/j",
+   "HALOPERIDOL — CI Démence à Corps de Lewy (DCL)",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [
+   "Rivastigmine pour démence à corps de Lewy / Parkinson avec démence"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "HALOPERIDOL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : HALOPERIDOL"
+  ]
+ },
+ "anticoag_antiagr": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antiagrégant + Anticoagulant dans FA (sans stent récent)",
+   "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
+   "Aspirine + clopidogrel au long cours prevention AVC"
+  ],
+  "alertes-initier": [
+   "Bêtabloquant pour FA chronique (contrôle de fréquence)",
+   "Bêtabloquant pour coronaropathie symptomatique (angor)",
+   "IEC en post-SCA / coronaropathie",
+   "Réévaluation planifiée",
+   "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
+  ],
+  "alertes-bio": [
+   "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
+  ],
+  "alertes-interact": [
+   "Co-prescription à risque : APIXABAN"
+  ],
+  "alertes-suivi": [
+   "APIXABAN — Alertes cliniques",
+   "CLOPIDOGREL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : APIXABAN",
+   "Posologies : CLOPIDOGREL"
+  ]
+ },
+ "QT_polypharmacie": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antiarythmique classe I/III sans ECG régulier",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Flupentixol, fluphénazine, halopéridol > 2 mg/j",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament allongeant le QTc + QTc déjà prolongé"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Hypokaliémie légère (3.0-3.4) — K 3.1 mmol/L",
+   "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée",
+   "QTc prolongé (≥ 470 ms) — 480 ms"
+  ],
+  "alertes-interact": [
+   "CI ABSOLUE — AMIODARONE",
+   "CI ABSOLUE — HALOPERIDOL",
+   "Co-prescription à risque : CITALOPRAM"
+  ],
+  "alertes-suivi": [
+   "AMIODARONE — Alertes cliniques",
+   "CITALOPRAM — Alertes cliniques",
+   "HALOPERIDOL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : AMIODARONE",
+   "Posologies : CITALOPRAM",
+   "Posologies : HALOPERIDOL"
+  ]
+ },
+ "iono_severe": {
+  "alertes-eviter": [
+   "Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
+   "Diurétique sans ionogramme de surveillance",
+   "IEC/ARA2 + Hyperkaliémie (K+ > 5.5)",
+   "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Hyperkaliémie sévère (5.5-6.4) — K 5.8 mmol/L",
+   "Hypochlorémie marquée (93 mmol/L)",
+   "Hyponatrémie sévère (< 125) — Na 124 mmol/L",
+   "Insuffisance rénale chronique G3b — insuffisance rénale modérée"
+  ],
+  "alertes-interact": [
+   "Co-prescription à risque : FUROSEMIDE",
+   "Co-prescription à risque : RAMIPRIL"
+  ],
+  "alertes-suivi": [
+   "FUROSEMIDE — Alertes cliniques",
+   "RAMIPRIL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : FUROSEMIDE",
+   "Posologies : RAMIPRIL"
+  ]
+ },
+ "vitamine_D_seule": {
+  "alertes-eviter": [],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "CHOLECALCIFEROL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CHOLECALCIFEROL"
+  ]
+ },
+ "antibio_cilastatine": {
+  "alertes-eviter": [
+   "Deprescription preventive globale chez le fragile severe (STOPP/FRAIL)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+  ],
+  "alertes-bio": [
+   "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "IMIPENEM + CILASTATINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : IMIPENEM + CILASTATINE"
+  ]
+ },
+ "usage_alcool": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Benzodiazépine ≥ 4 semaines",
+   "Cascades iatrogéniques détectées",
+   "Médicament sédatif + alcool excessif"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "DIAZEPAM — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : DIAZEPAM"
+  ]
+ },
+ "LAI_depot": {
+  "alertes-eviter": [
+   "Antipsychotique au long cours : ECG/QTc et prolactine",
+   "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
+   "Antipsychotique au long cours : surveillance métabolique",
+   "Antipsychotique d'action prolongée (LAI/dépôt) : réversibilité lente",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "PALIPERIDONE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : PALIPERIDONE"
+  ]
+ },
+ "sujet_jeune_psy": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Benzodiazépine ≥ 4 semaines",
+   "Cascades iatrogéniques détectées",
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : VALPROATE"
+  ],
+  "alertes-suivi": [
+   "OLANZAPINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique",
+   "VALPROATE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : OLANZAPINE",
+   "Posologies : VALPROATE"
+  ]
+ },
+ "osteoporose_omission": {
+  "alertes-eviter": [],
+  "alertes-initier": [
+   "Anti-résorptif ou anabolique osseux pour ostéoporose",
+   "Vitamine D pour ostéoporose et/ou fracture de fragilité"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": []
+ },
+ "BPCO": {
+  "alertes-eviter": [],
+  "alertes-initier": [
+   "iSGLT2 (pilier 4)"
+  ],
+  "alertes-bio": [
+   "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "TIOTROPIUM — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : TIOTROPIUM"
+  ]
+ },
+ "anticholinergique_charge": {
+  "alertes-eviter": [
+   "2 médicaments à effet anticholinergique concomitants",
+   "Action immédiate",
+   "Antidépresseurs tricycliques chez le sujet âgé",
+   "Antihistaminique H1 1ère génération en 1ère intention (allergie/prurit)",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Oxybutynine (toutes formes)",
+   "Risque de délirium — charge anticholinergique élevée (ACB ≥ 3)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : AMITRIPTYLINE",
+   "Co-prescription à risque : HYDROXYZINE",
+   "Co-prescription à risque : OXYBUTYNINE"
+  ],
+  "alertes-suivi": [
+   "AMITRIPTYLINE — Alertes cliniques",
+   "HYDROXYZINE — Alertes cliniques",
+   "OXYBUTYNINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : AMITRIPTYLINE",
+   "Posologies : HYDROXYZINE",
+   "Posologies : OXYBUTYNINE"
+  ]
+ },
+ "normal_temoin": {
+  "alertes-eviter": [
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "AMLODIPINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : AMLODIPINE"
+  ]
+ }
+}

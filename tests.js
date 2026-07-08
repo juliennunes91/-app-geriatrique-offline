@@ -2115,6 +2115,11 @@ console.log('\n📋 Audit permanent — complétude de sortie par onglet');
 }
 
 // ============================================================================
+// AUDITS PERMANENTS ÉTENDUS (golden-master, sécurité dure, fuzzer, scores…)
+// ============================================================================
+require('./tests_audit_extended').runExtendedAudits(test, assert);
+
+// ============================================================================
 // LINTER D'INVARIANTS DU CORPUS DE RÈGLES (cross-check moteur/dictionnaires/rendu)
 // ============================================================================
 require('./tests_rules_invariants').runRuleInvariantTests(test, assert);
