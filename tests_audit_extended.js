@@ -313,6 +313,36 @@ function runExtendedAudits2(test, assert) {
         assert.strictEqual(a, b, `incohérence de conversion B12 (pmol/L=${a} vs ng/L=${b})`);
     });
 
+    // ── 11bis. DÉCOUVERTE — conseil drug-spécifique non protégé dans les conduites.
+    //    Audit GÉNÉRIQUE (≠ liste codée en dur) : scanne TOUTES les CONDUITE_IMMEDIATE
+    //    des syndromes ; pour chaque verbe d'action (arrêt/adapter/suspendre…) suivi
+    //    d'une molécule NOMMÉE (DCI réel, hors termes de classe), vérifie que la clause
+    //    est couverte par le filtre de pertinence (CONDUITE_CLAUSES_CONDITIONNELLES lu
+    //    dans app_analysis.js). Toute conduite conseillant d'arrêter un médicament
+    //    spécifique — affichable sans ce médicament — est signalée. Aurait trouvé
+    //    seule les cas héparine/amiodarone/AVK/metformine (auto-test intégré).
+    test('DÉCOUVERTE — aucun conseil drug-spécifique non protégé dans les conduites', () => {
+        const norm = s => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+        const src = fs.readFileSync(path.join(__dirname, 'app_analysis.js'), 'utf8');
+        const bloc = (src.match(/CONDUITE_CLAUSES_CONDITIONNELLES\s*=\s*\[([\s\S]*?)\];/) || [, ''])[1];
+        const gated = [...bloc.matchAll(/clause:\s*\/(.+?)\/([a-z]*)/g)].map(m => new RegExp(m[1], m[2]));
+        const dciSet = new Set(JSON.parse(vm.runInContext('JSON.stringify(MASTER_DB.MEDICAMENTS.map(m=>m.dci))', sandbox)).map(norm).filter(d => d.length > 4));
+        const syndromes = JSON.parse(vm.runInContext('JSON.stringify(Object.entries(MASTER_DB.SYNDROMES).map(([id,s])=>[id,s.NOM_SYNDROME,s.CONDUITE_IMMEDIATE||""]))', sandbox));
+        const CLASSES = /\b(AINS|IEC|ARA2|sartan|diur[ée]tique|b[êe]tabloquant|anticoagulant|antiagr[ée]gant|corticoïde|statine|sulfamide|insuline|benzodiaz|antipsychotique|neuroleptique|opio[iï]de|antid[ée]presseur|s[ée]rotoninergique|\bIPP\b|digitalique|thiazidique|[ée]pargneur|glinide|antidiab[ée]tique|kayexalate|patiromer|glucose|vitamine|n[ée]phrotoxique|suspect)/i;
+        const SPECIFIQUES = ['heparine', 'avk', 'amiodarone'];
+        const ACTION = /(arr[êe]t|adapter|suspendre|d[ée]prescrire|r[ée][ée]valu|r[ée]duire|diminuer|stopper)/i;
+        const flags = [];
+        syndromes.forEach(([id, nom, conduite]) => {
+            conduite.split(/[.,](?![^(]*\))/).forEach(seg => {
+                const mA = seg.match(ACTION); if (!mA || CLASSES.test(seg)) return;
+                const after = norm(seg.slice(mA.index));
+                const spec = after.split(/[^a-z0-9]+/).filter(t => t.length > 4).find(t => dciSet.has(t) || SPECIFIQUES.includes(t));
+                if (spec && !gated.some(re => re.test(seg))) flags.push(`${id} « ${seg.trim().slice(0, 50)} » [${spec}]`);
+            });
+        });
+        assert.strictEqual(flags.length, 0, 'conseil « arrêter X » affichable sans X prescrit (ajouter une clause à CONDUITE_CLAUSES_CONDITIONNELLES) :\n      ' + flags.join('\n      '));
+    });
+
     // ── 12bis. COHÉRENCE GUIDELINE : une pathologie ne doit pas PROPOSER (INITIER)
     //    un médicament qu'elle liste par ailleurs dans ses INTERDITS (PATHO_MED_INTERDITS).
     //    Baseline : PAT_032 propose clomipramine « 4e ligne réfractaire » tout en la
