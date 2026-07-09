@@ -882,6 +882,10 @@ function _computeAnalysisHash() {
      'chkESPT','chkTroublePersonnalite','chkUsageAlcool','chkUsageSubstances','chkTSADI',
      'chkAntipsyLAI'
     ].forEach(id => parts.push(isChecked(id)));
+    // Alertes masquées par l'utilisateur (bouton ✖) : DOIVENT entrer dans le hash,
+    // sinon masquer/réafficher ne change pas le hash → analyserPrescription renvoie
+    // le DOM mémoïsé NON filtré (le masquage ne s'appliquerait ni à l'écran ni au PDF).
+    parts.push('mask:' + (window._maskedAlerts ? [...window._maskedAlerts].sort().join(',') : ''));
     return parts.join('|');
 }
 

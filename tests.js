@@ -2115,6 +2115,31 @@ console.log('\n📋 Audit permanent — complétude de sortie par onglet');
 }
 
 // ============================================================================
+// MASQUAGE D'ALERTES ↔ MÉMOÏSATION (régression : masquer n'agissait ni à
+// l'écran ni dans le PDF car _maskedAlerts n'était pas dans le hash → le DOM
+// mémoïsé non filtré était restauré).
+// ============================================================================
+console.log('\n🙈 Masquage d\'alertes ↔ mémoïsation');
+{
+    const { loadApp } = require('./oracle_harness');
+    const vm = require('vm');
+    const { sandbox } = loadApp();
+    test('Masquage — ajouter une alerte masquée change le hash de mémoïsation', () => {
+        const changed = vm.runInContext(`(function(){
+            activeMeds.length=0;
+            const m=MASTER_DB.MEDICAMENTS.find(x=>sanitizeText(x.dci)==='spironolactone');
+            if(m)activeMeds.push({dci:m.dci,classe:m.classe,core_id:'spironolactone',db_ref:m,albumine:0});
+            document._inputs.patientAge={value:78};
+            window._maskedAlerts=new Set(); const h1=_computeAnalysisHash();
+            window._maskedAlerts=new Set(['id:EV_B13']); const h2=_computeAnalysisHash();
+            window._maskedAlerts=new Set();
+            return h1!==h2;
+        })()`, sandbox);
+        assert.ok(changed, 'le hash doit changer quand une alerte est masquée (sinon masquage inopérant écran+PDF)');
+    });
+}
+
+// ============================================================================
 // AUDITS PERMANENTS ÉTENDUS (golden-master, sécurité dure, fuzzer, scores…)
 // ============================================================================
 require('./tests_audit_extended').runExtendedAudits(test, assert);
