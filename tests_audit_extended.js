@@ -353,13 +353,19 @@ function runExtendedAudits2(test, assert) {
     //    Un conseil de conduite spécifique d'un médicament (« arrêt héparine si TIH »)
     //    ne doit apparaître QUE si ce médicament est prescrit. Verrouille le
     //    mécanisme _conduitePertinente (bug thrombopénie/héparine).
-    test('PERTINENCE — « arrêt héparine/TIH » absent d\'une thrombopénie SANS héparine', () => {
-        const html = bioHtml({ age: 80, sexe: 'F', dfg: 60, bio: { plaq: 120 } });
-        assert.ok(!/h[ée]parine|\bTIH\b/i.test(html), 'conseil héparine/TIH affiché sans héparine prescrite');
-    });
-    test('PERTINENCE — « arrêt héparine/TIH » présent d\'une thrombopénie AVEC héparine', () => {
-        const html = bioHtml({ age: 80, sexe: 'F', dfg: 60, bio: { plaq: 120 }, meds: ['Enoxaparine'] });
-        assert.ok(/h[ée]parine|\bTIH\b/i.test(html), 'conseil héparine/TIH doit rester si héparine prescrite');
+    //    Data-driven sur les 4 différentiels : chacun ne doit apparaître QUE si le
+    //    médicament est prescrit (verrouille toute la classe, pas juste l'héparine).
+    [
+        { label: 'héparine/TIH (thrombopénie)', bio: { plaq: 120 }, med: 'Enoxaparine', motif: /h[ée]parine|\bTIH\b/i },
+        { label: 'amiodarone (TSH basse)', bio: { bioTsh: 0.01 }, med: 'Amiodarone', motif: /amiodarone/i },
+        { label: 'dose AVK (INR haut)', bio: { bioInr: 6 }, med: 'Warfarine', motif: /adapter dose avk|dose AVK/i },
+        { label: 'metformine (lactate haut)', bio: { dfg: 25, bioLact: 5 }, med: 'Metformine', motif: /arr[êe]t metformine/i },
+    ].forEach(({ label, bio, med, motif }) => {
+        const base = { age: 80, sexe: 'F', dfg: bio.dfg || 60, bio };
+        test('PERTINENCE — ' + label + ' : absent SANS le médicament', () =>
+            assert.ok(!motif.test(bioHtml(base)), 'conseil drug-spécifique affiché sans le médicament'));
+        test('PERTINENCE — ' + label + ' : présent AVEC le médicament', () =>
+            assert.ok(motif.test(bioHtml({ ...base, meds: [med] })), 'conseil drug-spécifique perdu alors que le médicament est prescrit'));
     });
 }
 

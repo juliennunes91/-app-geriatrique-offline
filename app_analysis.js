@@ -1385,8 +1385,17 @@ function analyserPrescription() {
     // héparine si TIH suspectée » affiché dans une thrombopénie sans héparine.
     const _aMedRegex = (re) => (typeof activeMeds !== 'undefined' && Array.isArray(activeMeds)) &&
         activeMeds.some(m => re.test((m.dci || '') + ' ' + (m.classe || '')));
+    // Chaque entrée : une clause spécifique d'une molécule NOMMÉE, retirée si la
+    // molécule n'est pas prescrite (les syndromes concernés se déclenchent sur une
+    // valeur bio à causes multiples). On ne gate PAS les check-lists multi-classes
+    // (AINS/IEC/ARA2 dans l'IRA/hyperK) = principes de gestion, déjà personnalisés
+    // par la ligne d'imputabilité iatrogène.
     const CONDUITE_CLAUSES_CONDITIONNELLES = [
-        { clause: /h[ée]parine|\bTIH\b|score 4T/i, present: () => _aMedRegex(/h[ée]parine|hbpm|enoxaparine|tinzaparine|dalteparine|nadroparine|fondaparinux|calciparine|lovenox|innohep|fragmine|fraxiparine/i) }
+        { clause: /h[ée]parine|\bTIH\b|score 4T/i,          present: () => _aMedRegex(/h[ée]parine|hbpm|enoxaparine|tinzaparine|dalteparine|nadroparine|fondaparinux|calciparine|lovenox|innohep|fragmine|fraxiparine/i) },
+        { clause: /amiodarone/i,                             present: () => _aMedRegex(/amiodarone|cordarone/i) },
+        { clause: /(arr[êe]t|adapter)[^,]*\bAVK\b|dose AVK/i, present: () => _aMedRegex(/\bavk\b|warfarine|fluindione|acenocoumarol|coumadine|previscan|sintrom|antivitamine k/i) },
+        { clause: /metformine/i,                             present: () => _aMedRegex(/metformine|glucophage|stagid|metformin/i) },
+        { clause: /arr[êe]t lithium/i,                       present: () => _aMedRegex(/lithium|teralithe|neurolithium/i) }
     ];
     const _conduitePertinente = (conduite) => {
         if (!conduite) return conduite;
