@@ -348,6 +348,19 @@ function runExtendedAudits2(test, assert) {
         const diff = [...sans].filter(t => !avec.has(t)).concat([...avec].filter(t => !sans.has(t)));
         assert.strictEqual(diff.length, 0, 'la précision cortico a modifié des alertes AVK : ' + diff.join(' | '));
     });
+
+    // ── 14. PERTINENCE DES CONSEILS DRUG-SPÉCIFIQUES CONDITIONNELS
+    //    Un conseil de conduite spécifique d'un médicament (« arrêt héparine si TIH »)
+    //    ne doit apparaître QUE si ce médicament est prescrit. Verrouille le
+    //    mécanisme _conduitePertinente (bug thrombopénie/héparine).
+    test('PERTINENCE — « arrêt héparine/TIH » absent d\'une thrombopénie SANS héparine', () => {
+        const html = bioHtml({ age: 80, sexe: 'F', dfg: 60, bio: { plaq: 120 } });
+        assert.ok(!/h[ée]parine|\bTIH\b/i.test(html), 'conseil héparine/TIH affiché sans héparine prescrite');
+    });
+    test('PERTINENCE — « arrêt héparine/TIH » présent d\'une thrombopénie AVEC héparine', () => {
+        const html = bioHtml({ age: 80, sexe: 'F', dfg: 60, bio: { plaq: 120 }, meds: ['Enoxaparine'] });
+        assert.ok(/h[ée]parine|\bTIH\b/i.test(html), 'conseil héparine/TIH doit rester si héparine prescrite');
+    });
 }
 
 module.exports = { runExtendedAudits, runExtendedAudits2, PANEL, signaturePatient };

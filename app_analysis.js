@@ -1378,6 +1378,27 @@ function analyserPrescription() {
     // =========================================================
     // 3. MOTEUR BIOLOGIQUE (Syndromes d'Iatrogénie)
     // =========================================================
+    // Clauses de conduite CONDITIONNELLES à la présence d'un médicament : un
+    // conseil drug-spécifique qui n'est pertinent QUE si le médicament est
+    // prescrit (≠ médicament intrinsèque au syndrome comme lithium/AVK/amiodarone,
+    // qui restent toujours affichés). Curaté et extensible. Cf. bug : « arrêt
+    // héparine si TIH suspectée » affiché dans une thrombopénie sans héparine.
+    const _aMedRegex = (re) => (typeof activeMeds !== 'undefined' && Array.isArray(activeMeds)) &&
+        activeMeds.some(m => re.test((m.dci || '') + ' ' + (m.classe || '')));
+    const CONDUITE_CLAUSES_CONDITIONNELLES = [
+        { clause: /h[ée]parine|\bTIH\b|score 4T/i, present: () => _aMedRegex(/h[ée]parine|hbpm|enoxaparine|tinzaparine|dalteparine|nadroparine|fondaparinux|calciparine|lovenox|innohep|fragmine|fraxiparine/i) }
+    ];
+    const _conduitePertinente = (conduite) => {
+        if (!conduite) return conduite;
+        let parts = conduite.split(/,(?![^(]*\))/); // virgules hors parenthèses
+        CONDUITE_CLAUSES_CONDITIONNELLES.forEach(cc => {
+            if (!cc.present()) parts = parts.filter(p => !cc.clause.test(p));
+        });
+        const out = parts.map(p => p.trim()).filter(Boolean).join(', ');
+        // Recapitalise si la 1re clause a été retirée.
+        return out ? out.charAt(0).toUpperCase() + out.slice(1) : 'Surveillance';
+    };
+
     const checkBioSyndrome = (syndId, conditionRemplie, opts) => {
         if(!conditionRemplie) return;
         opts = opts || {};
@@ -1391,7 +1412,7 @@ function analyserPrescription() {
                 : (String(s.GRAVITE).includes('Sévère') || String(s.GRAVITE).includes('Severe'));
             // Libellé : surchargeable pour les syndromes gradués (ex. hyponatrémie légère/modérée/sévère).
             let nom = opts.labelOverride || s.NOM_SYNDROME;
-            addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${nom}</strong>${imputStr}<br><small>${s.CONDUITE_IMMEDIATE || 'Surveillance'}</small></div>`, 'bio');
+            addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${nom}</strong>${imputStr}<br><small>${_conduitePertinente(s.CONDUITE_IMMEDIATE) || 'Surveillance'}</small></div>`, 'bio');
         } catch(e) { GeriaLog.warn('Erreur syndrome bio:', e.message); }
     };
 
