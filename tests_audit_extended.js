@@ -387,7 +387,7 @@ function runExtendedAudits2(test, assert) {
             doseCase('Acide acetylsalicylique', 300), doseCase('Acide acetylsalicylique', 75), /aspirine|prévention|acide/i],
         ['AINS + DFG < 50 (STOPP)',
             { age: 80, sexe: 'F', dfg: 45, meds: ['Ibuprofene'] }, { age: 80, sexe: 'F', dfg: 55, meds: ['Ibuprofene'] }, /AINS \+ DFG/i],
-        ['Nitrofurantoïne + DFG < 45 (MHRA/BNF)',
+        ['Nitrofurantoïne + DFG < 45 (STOPP v3 E8 / MHRA 2015 / BNF)',
             { age: 80, sexe: 'F', dfg: 40, meds: ['Nitrofurantoine'] }, { age: 80, sexe: 'F', dfg: 55, meds: ['Nitrofurantoine'] }, /Nitrofuranto/i],
     ];
     // Test du DELTA : franchir le seuil doit AJOUTER une alerte spécifique (matchant

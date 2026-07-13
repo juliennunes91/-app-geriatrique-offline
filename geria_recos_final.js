@@ -1024,7 +1024,7 @@ const GERIA_RECOS_DB = {
             ref_code: "STOPP3-E8",
             section: "Rénal",
             titre: "Nitrofurantoïne + DFG < 45",
-            message: "Nitrofurantoïne + DFG < 45 ml/min (toxicité pulmonaire, neuropathie périphérique + efficacité réduite par ↓ concentration urinaire). Gradation selon le DFG :\n• DFG 30-44 ml/min : zone grise. Contre-indication de principe (MHRA 2014 / BNF, seuil régulateur le plus conservateur), MAIS cure courte (3-7 j) tolérée avec prudence pour une cystite basse non compliquée à germe multirésistant documenté, si bénéfice > risque (MHRA « short course with caution »). Beers 2023 et STOPP/START v2-v3 autorisent la nitrofurantoïne jusqu'à DFG ≥ 30 (seuil plus permissif).\n• DFG < 30 ml/min : contre-indication absolue, consensus de toutes les sources (MHRA, BNF, Beers 2023, STOPP).",
+            message: "Nitrofurantoïne + DFG < 45 ml/min (toxicité pulmonaire, neuropathie périphérique + efficacité réduite car concentration urinaire abaissée). Seuil < 45 = STOPP/START v3 critère E8 ET contre-indication MHRA (fév. 2015) / BNF. Gradation selon le DFG :\n• DFG 30-44 ml/min : zone grise. Contre-indication de principe (STOPP v3 / MHRA / BNF), MAIS cure courte (3-7 j) tolérée avec prudence pour une cystite basse non compliquée à germe multirésistant documenté, si bénéfice > risque (MHRA « short course with caution »). NB : les critères Beers 2023 sont plus permissifs et ne l'évitent qu'en dessous de 30 (CrCl < 30).\n• DFG < 30 ml/min : contre-indication absolue, consensus de toutes les sources (STOPP v3, MHRA, BNF, Beers 2023).",
             severite: "danger",
             condition: {
                 med_keys: ["nitrofurantoine"],
