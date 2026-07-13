@@ -8,3 +8,8 @@ test_cases/screenshots/
 
 # Temp / logs
 *.log
+
+# Fichiers de travail temporaires des audits littérature (régénérables)
+scratch_*.json
+scratch_*.cjs
+scratch_results/
