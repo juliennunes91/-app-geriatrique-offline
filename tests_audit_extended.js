@@ -446,6 +446,38 @@ function runExtendedAudits2(test, assert) {
         });
     });
 
+    // ── 12c. NON-CONTAMINATION DE CLASSE dans les interactions (DDI).
+    //    Beaucoup d'interactions ANSM sont spécifiques d'une famille (« ANTIVITAMINES K »
+    //    → ↑INR avec paracétamol/miconazole) et ne concernent PAS la famille sœur (AOD).
+    //    Fusionner AVK et AOD faisait matcher un AOD (apixaban) sur le terme « ANTIVITAMINES K »,
+    //    produisant un message trompeur mentionnant les AVK/INR sur un patient qui n'en prend pas.
+    //    Cette garde vérifie END-TO-END qu'aucune famille ne « fuit » sur la famille sœur.
+    const interactHtml = c => (analyzeCase(c)._html['alertes-interact'] || '');
+    const RE_AVK = /antivitamine\s*K|\bAVK\b|\bINR\b/i;
+    const RE_AOD = /\bAOD\b|anticoagulant oral direct|apixaban|rivaroxaban|dabigatran|edoxaban/i;
+    const AVK_PARTNERS = ['Paracetamol', 'Miconazole']; // partenaires à interaction AVK-spécifique
+    // (a) un AOD seul + partenaire AVK-spécifique ne doit JAMAIS afficher un message AVK/INR
+    ['Apixaban', 'Rivaroxaban', 'Dabigatran', 'Edoxaban'].forEach(aod => {
+        AVK_PARTNERS.forEach(partner => {
+            test(`Non-contamination AVK→AOD — ${aod} + ${partner} n'évoque pas les AVK/INR`, () => {
+                const h = interactHtml({ age: 80, sexe: 'F', dfg: 70, meds: [aod, partner] });
+                assert.ok(!RE_AVK.test(h),
+                    `${aod} + ${partner} affiche à tort un message AVK/INR : ${(h.match(RE_AVK) || [''])[0]}`);
+            });
+        });
+    });
+    // (b) contrôle positif : un AVK + paracétamol DOIT bien déclencher l'interaction (sinon
+    //    la garde (a) passerait trivialement en cas de matching cassé).
+    test('Non-contamination — contrôle positif : Warfarine + Paracetamol évoque bien l\'INR', () => {
+        const h = interactHtml({ age: 80, sexe: 'F', dfg: 70, meds: ['Warfarine', 'Paracetamol'] });
+        assert.ok(RE_AVK.test(h), 'Warfarine + Paracetamol devrait afficher l\'interaction AVK/INR (matching AVK cassé ?)');
+    });
+    // NB : on ne teste PAS « warfarine ne cite jamais AOD » car les cartes ANSM
+    // combinées (« AMIODARONE ↔ AVK / AOD ») nomment légitimement les deux familles
+    // dans leur libellé explicatif — c'est du texte, pas une fuite de matching.
+    // La vraie classe de bug (une interaction AVK-spécifique qui SE DÉCLENCHE sur un
+    // AOD absent d'AVK) est verrouillée par les gardes (a) ci-dessus.
+
     // ── 13. IDEMPOTENCE DES PRÉCISIONS : préciser un médicament ne doit changer que
     //    SES propres alertes, jamais celles d'un co-prescrit sans rapport.
     test('IDEMPOTENCE — préciser la durée d\'un cortico n\'altère pas les alertes AVK', () => {

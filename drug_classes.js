@@ -48,10 +48,29 @@ const DRUG_CLASSES = {
         classeMatch: ['thiazid'],
         dcis: ['hydrochlorothiazide', 'indapamide', 'chlortalidone', 'cicletanine']
     },
+    // AVK et AOD SÉPARÉS : beaucoup d'interactions ANSM sont spécifiques des AVK
+    // (paracétamol, miconazole, antibiotiques → ↑INR) et NE s'appliquent PAS aux
+    // AOD. Fusionner les deux faisait matcher un AOD (apixaban) sur le terme ANSM
+    // « ANTIVITAMINES K » (message trompeur mentionnant les AVK/INR). Les classes
+    // DB distinguent proprement le préfixe (« AVK … » vs « AOD … »).
+    avk: {
+        aliases: ['avk', 'antivitaminesk', 'antivitaminek', 'antivitaminesksynthese', 'antiinfectieuxethemostase'],
+        classeMatch: ['avk'],
+        dcis: ['acenocoumarol', 'warfarine', 'fluindione', 'phenprocoumone']
+    },
+    aod: {
+        aliases: ['aod', 'anticoagulantoraldirect', 'anticoagulantsoraudirects', 'anticoagulantsoraux', 'autresanticoagulantsoraux'],
+        classeMatch: ['aod'],
+        dcis: ['apixaban', 'rivaroxaban', 'dabigatran', 'edoxaban']
+    },
+    // Classe large : pour les termes GÉNÉRIQUES (« anticoagulant ») qui doivent
+    // couvrir AVK + AOD + héparines. Le match par classeMatch 'anticoag' ne capte
+    // pas les classes DB « AVK … »/« AOD … » (préfixes distincts) ; le match large
+    // passe par la liste dcis (union) — intentionnel.
     anticoagulant: {
-        aliases: ['anticoag', 'anticoagulant', 'aod', 'avk', 'antivitaminesk', 'anticoagulantsoraux', 'autresanticoagulantsoraux', 'antiinfectieuxethemostase'],
-        classeMatch: ['anticoag', 'aod', 'avk'],
-        dcis: ['apixaban', 'rivaroxaban', 'dabigatran', 'edoxaban', 'acenocoumarol', 'warfarine', 'fluindione', 'enoxaparine', 'tinzaparine', 'dalteparine', 'fondaparinux']
+        aliases: ['anticoag', 'anticoagulant'],
+        classeMatch: ['anticoag'],
+        dcis: ['apixaban', 'rivaroxaban', 'dabigatran', 'edoxaban', 'acenocoumarol', 'warfarine', 'fluindione', 'phenprocoumone', 'enoxaparine', 'tinzaparine', 'dalteparine', 'fondaparinux']
     },
     heparine: {
         aliases: ['heparine', 'heparinesdosescurativesetousujetage'],
