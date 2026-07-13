@@ -7914,7 +7914,7 @@ const DDI_MERGED_DB = [
     "auc_ratio": 3.9,
     "mechanism": "Inhibition forte CYP2C8 (glucuronide)",
     "category": "Inhibiteur modere / Ajustement dose",
-    "note": "Aquilante 2013; Niemi 2003: AUC x3.9. Surveillance glycémie; réduction dose pioglitazone",
+    "note": "Aquilante 2013 (pioglitazone/CYP2C8): AUC x3.9. Surveillance glycémie; réduction dose pioglitazone (NB : Niemi 2003 concerne la rosiglitazone, pas la pioglitazone)",
     "effet": "Inhibition forte (Surdosage majeur du substrat)",
     "couleur": "danger",
     "source": "literature"
@@ -7969,7 +7969,7 @@ const DDI_MERGED_DB = [
     "auc_ratio": 1.91,
     "mechanism": "Inhibition OATP1B1 + faible CYP2C8",
     "category": "Inhibiteur faible / Surveillance",
-    "note": "FDA 2011: contre-indication de l'association. AUC simvastatin acid x1.91 (Kyrklund 2002)",
+    "note": "FDA 2011: contre-indication de l'association. AUC simvastatin acid x1.91 (Backman et al. 2000, Clin Pharmacol Ther ; +185% acide simvastatine)",
     "effet": "Inhibition modérée (Surveillance recommandée)",
     "couleur": "warning",
     "source": "literature"
