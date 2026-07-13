@@ -149,7 +149,7 @@ const EV_DEPRESCRIPTION = {
         ev_min_mois: 12,             // bénéfice CV à ≥ 12 mois
         cfs_max: 7,
         condition: "Prévention secondaire (post-IDM, AVC, AOMI documentés)",
-        ref: "STOPPFrail v2 ; ESC 2024 Dyslipidaemia",
+        ref: "STOPPFrail v2 ; ESC/EAS 2019 Dyslipidaemia",
         action: "Déprescription si EV < 12 mois ou CFS ≥ 8 (fin de vie)"
     },
     "ANTIAGREGANT_PREVENTION_PRIMAIRE": {
@@ -1099,7 +1099,7 @@ const PATHOLOGY_RULES_DB = {
         REFERENCE: "ESC 2018 Syncope | Consensus gériatrique 2023 | STOPP/START v3",
         SOURCES_EBM: {
                   "INITIER": {
-                            "Midodrine": "ESC_SYNCOPE_2018 §5.4, IB",
+                            "Midodrine": "ESC_SYNCOPE_2018 §5.4, IIaB",
                             "Fludrocortisone": "ESC_SYNCOPE_2018 §5.4, IIaC",
                             "Mesures non pharmacologiques": "ESC_SYNCOPE_2018 §5.4, IC"
                   },
@@ -1114,7 +1114,7 @@ const PATHOLOGY_RULES_DB = {
         TRAITEMENTS: {
             INITIER: [
                 { classe: "Mesures non pharmacologiques", indication: "PREMIÈRE INTENTION SYSTÉMATIQUE", composants: ["Hydratation ≥ 1.5-2L/j", "Apport sodé 6-10 g/j (sauf IC)", "Bas de contention classe II", "Surélévation tête de lit 10-20°", "Exercices de contre-pression (handgrip, croiser les jambes)"], niveau_preuve: "IC" },
-                { classe: "Midodrine 2.5-10 mg x3/j", indication: "Si mesures non pharmacologiques insuffisantes", ci: ["HTA supine sévère (> 180 systolique)", "IC", "Rétention urinaire", "Phéochromocytome"], note: "Dernière prise avant 18h (HTA supine nocturne)", niveau_preuve: "IB" },
+                { classe: "Midodrine 2.5-10 mg x3/j", indication: "Si mesures non pharmacologiques insuffisantes", ci: ["HTA supine sévère (> 180 systolique)", "IC", "Rétention urinaire", "Phéochromocytome"], note: "Dernière prise avant 18h (HTA supine nocturne)", niveau_preuve: "IIaB" },
                 { classe: "Fludrocortisone 50-200 µg/j", indication: "Alternative ou complément à midodrine", ci: ["IC", "HTA sévère"], note: "Surveillance K+ (hypokaliémie), poids (rétention)", bio_suivi: ["BIO_001", "BIO_002"], niveau_preuve: "IIaC" },
                 { classe: "Dompéridone 10 mg x3/j", indication: "Si nausées/gastroparésie associée (Parkinson)", note: "Surveillance QTc (ECG avant et après 1 semaine)", bio_suivi: ["BIO_031"] },
                 { classe: "Droxidopa (si disponible)", indication: "Hypotension orthostatique neurogène (Parkinson, AMS)", note: "Non disponible en France en 2026" }
@@ -1998,7 +1998,7 @@ const PATHOLOGY_RULES_DB = {
     "PAT_019": {
         ID: "PAT_019",
         NOM: "Dyslipidémie",
-        REFERENCE: "ESC 2024 Dyslipidaemia | ESC 2021 CVD Prevention",
+        REFERENCE: "ESC/EAS 2019 Dyslipidaemia | ESC 2021 CVD Prevention",
         SOURCES_EBM: {
                   "INITIER": {
                             "Statine": "ESC_DYSLIP_2019 §6.1, IA",
@@ -2416,10 +2416,10 @@ const PATHOLOGY_RULES_DB = {
     "PAT_027": {
         ID: "PAT_027",
         NOM: "Insomnie",
-        REFERENCE: "ESRS 2023 | ACP 2024 | Beers 2023 | STOPP/START v3",
+        REFERENCE: "ESRS 2023 | ACP 2016 | Beers 2023 | STOPP/START v3",
         SOURCES_EBM: {
                   "INITIER": {
-                            "TCC-I": "ACP 2024 §3.1, A"
+                            "TCC-I": "ACP 2016 §3.1, A"
                   },
                   "EVITER": {
                             "BZD": "STOPP D5 + Beers 2023"
@@ -3511,7 +3511,7 @@ const PATHOLOGY_RULES_DB = {
         SOURCES_EBM: {
             "INITIER": {
                 "TCC-I": "AASM 2021 — 1ère intention",
-                "Mélatonine LP (2 mg)": "AASM 2021 — ≥55 ans, 1-2h avant coucher"
+                "Mélatonine LP (2 mg)": "AMM EMA (Circadin) — ≥55 ans, 1-2h avant coucher, max 13 sem (l'AASM 2021 ne couvre que la TCC-I, pas la mélatonine)"
             },
             "EVITER": { "BZD et apparentés (zopiclone, zolpidem)": "STOPP B7 — chutes, dépendance" }
         },
@@ -3569,7 +3569,7 @@ const PATHOLOGY_RULES_DB = {
             "INITIER": {
                 "Bilan martial (ferritine, coefficient saturation)": "AASM 2024 — cible ferritine > 75 ng/mL",
                 "Gabapentine / Gabapentin énacarbil": "AASM 2024 — 1ère intention sujet âgé",
-                "Ropinirole / Pramipexole faible dose": "AASM 2024 — alternative (risque d'augmentation)"
+                "Ropinirole / Pramipexole faible dose": "AASM 2024 — déconseillés au long cours (reco conditionnelle CONTRE, risque d'augmentation) ; réserver à l'échec des gabapentinoïdes"
             },
             "EVITER": {
                 "Antidopaminergiques (métoclopramide, antipsychotiques)": "Aggravent le SJSR",

@@ -2774,7 +2774,7 @@ const GERIA_RECOS_DB = {
         // ====================================================================
         {
             id: "IN_E01",
-            sources: ["STOPP3"],
+            sources: ["STOPP3", "KDIGO"],
             ref_code: "START3-E1",
             section: "Rénal",
             titre: "1α-OH-cholécalciférol ou calcitriol si IRC sévère + hypocalcémie + hyperparathyroïdie secondaire",
@@ -4004,7 +4004,7 @@ const RECOS_SUPPLEMENT = [
     {
         id: "SUP_PIMC_02", sources: ["PIM_CHECK"],
         titre: "Diurétique sans ionogramme de surveillance",
-        message: "PIM-Check : Tout diurétique au long cours nécessite un ionogramme de surveillance (K+, Na+, créatinine) au minimum tous les 6 mois.",
+        message: "PIM-Check : tout diurétique au long cours impose une surveillance ionique (K+, Na+, créatinine). En pratique gériatrique : ionogramme au moins tous les 6 mois, et après toute majoration de dose ou épisode aigu (l'intervalle relève de la bonne pratique, non d'un seuil PIM-Check chiffré).",
         severite: "warning",
         condition: {
             med_keys: ["diuretique", "furosemide", "bumetanide", "hydrochlorothiazide", "indapamide", "spironolactone"],
@@ -4056,7 +4056,7 @@ const RECOS_SUPPLEMENT = [
     {
         id: "SUP_PIMC_07", sources: ["PIM_CHECK"],
         titre: "Antiarythmique classe I/III sans ECG régulier",
-        message: "PIM-Check : Antiarythmiques classe I (flécaïnide, propafénone) et III (amiodarone, dronédarone, sotalol) : ECG avec mesure QTc au minimum tous les 6 mois.",
+        message: "PIM-Check : antiarythmiques classe I (flécaïnide, propafénone) et III (amiodarone, dronédarone, sotalol) — surveillance ECG/QTc requise. En pratique : ECG avec mesure du QTc au moins tous les 6 mois (et à chaque changement de dose ou d'interaction ; l'intervalle relève de la bonne pratique, non d'un seuil PIM-Check chiffré).",
         severite: "warning",
         condition: {
             med_keys: ["flecainide", "propafenone", "amiodarone", "dronedarone", "sotalol"],
@@ -4214,7 +4214,7 @@ const RECOS_SUPPLEMENT = [
     {
         id: "SUP_EU7_01", sources: ["EU7PIM"],
         titre: "Cinnarizine / Flunarizine",
-        message: "EU(7)-PIM : Cinnarizine et flunarizine — risque de parkinsonisme, dépression, prise de poids. Durée maximale recommandée : 4-8 semaines.",
+        message: "EU(7)-PIM : cinnarizine et flunarizine = médicaments potentiellement inappropriés chez le sujet âgé (parkinsonisme, dépression, prise de poids). Usage prolongé déconseillé — durée la plus courte possible (les fourchettes de durée type 4-8 semaines relèvent de la bonne pratique, non d'un seuil EU(7)-PIM chiffré).",
         severite: "warning",
         condition: { med_keys: ["cinnarizine", "flunarizine"] }
     },
@@ -4246,8 +4246,8 @@ const RECOS_SUPPLEMENT = [
     },
     {
         id: "SUP_EU7_05", sources: ["EU7PIM", "PRISCUS"],
-        titre: "Loperamide > 3 jours ou > 12 mg/j",
-        message: "EU(7)-PIM / PRISCUS : Lopéramide > 3 jours ou > 12 mg/j — risque de mégacôlon toxique, rétention fécale. Réserver à l'usage ponctuel.",
+        titre: "Loperamide au long cours ou à forte dose",
+        message: "EU(7)-PIM / PRISCUS : lopéramide au long cours (> 3 j) — risque de mégacôlon toxique et de rétention fécale ; à forte dose, allongement du QT / torsades (alerte FDA 2016). Dose maximale AMM = 16 mg/j ; réserver à l'usage ponctuel (le seuil de dose exact n'est pas chiffré par EU(7)-PIM/PRISCUS).",
         severite: "warning",
         condition: {
             med_keys: ["loperamide"],
