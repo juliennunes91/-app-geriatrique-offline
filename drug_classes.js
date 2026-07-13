@@ -29,8 +29,11 @@ const DRUG_CLASSES = {
         dcis: []
     },
     betabloquant: {
-        aliases: ['beta', 'betabloquant', 'betabloquants', 'betabloquantsdanslinsuffisancecardiaque'],
-        classeMatch: ['beta'],
+        // Alias 'beta' RETIRÉ : trop court, matchait par sous-chaîne « bêtahistine »
+        // (antivertigineux) et tout DCI commençant par « beta ». Les vrais β-bloquants
+        // sont couverts par la liste dcis + l'alias/classeMatch spécifique 'betabloquant'.
+        aliases: ['betabloquant', 'betabloquants', 'betabloquantsdanslinsuffisancecardiaque'],
+        classeMatch: ['betabloquant'],
         dcis: ['bisoprolol', 'metoprolol', 'nebivolol', 'carvedilol', 'atenolol', 'propranolol', 'acebutolol', 'betaxolol', 'sotalol', 'nadolol', 'pindolol', 'timolol', 'celiprolol', 'labetalol']
     },
     diuretique: {
@@ -442,6 +445,18 @@ function matchesDrugClass(dci, classe, key) {
     return dci.includes(key) || (key.length >= 4 && classe.includes(key)) || key.includes(dci);
 }
 
+// Denylist anti-collision de sous-chaîne : paires (dci, terme) qui SE RESSEMBLENT
+// par sous-chaîne mais sont des médicaments SANS rapport → ne doivent jamais matcher.
+// Nécessaire car la branche permissive de matchesDrugClassAnsm fait « dci.includes(t) »
+// pour les DCI absentes des définitions de classe (drug_classes ne couvre pas tout
+// MASTER_DB). Chaque entrée est un garde-fou documenté d'une collision réelle constatée.
+const _ANSM_MATCH_DENYLIST = [
+    // « FER » (terme ANSM sels de fer) ⊂ calci-FÉR-ol / ergocalci-FÉR-ol (vitamine D).
+    { dci: /calciferol$/, term: /^fer$/ },
+    // clidinium (antispasmodique) ⊂ uméclidinium / aclidinium (LAMA bronchodilatateurs).
+    { dci: /^clidinium$/, term: /^(um|ac)?eclidinium$|^umeclidinium$|^aclidinium$/ },
+];
+
 /**
  * Version avec gestion du pluriel et ANSM (pour medMatchesAnsmTerm).
  * Normalise le terme de recherche (pluriels, accords) avant matching.
@@ -451,6 +466,10 @@ function matchesDrugClassAnsm(dci, classe, rawTerm) {
     // Gestion pluriels (trailing)
     if (t.endsWith('s') && !t.includes('ains') && !t.includes('isrs')) t = t.slice(0, -1);
     if (t.endsWith('aux')) t = t.replace(/aux$/, 'al');
+    // Garde anti-collision explicite (paires ressemblantes sans rapport clinique).
+    for (const d of _ANSM_MATCH_DENYLIST) {
+        if (d.dci.test(dci) && (d.term.test(t) || d.term.test(rawTerm))) return false;
+    }
     // Matching direct DCI/classe avant le référentiel
     // Protection anti-collision : exiger match EXACT si t ou dci est une DCI connue.
     if (_ALL_DCIS_SET.has(t) || _ALL_DCIS_SET.has(dci)) {

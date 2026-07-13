@@ -509,4 +509,90 @@ function runExtendedAudits2(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, PANEL, signaturePatient };
+// ============================================================================
+// AUDIT DE COLLISION DE MATCHING (toute la base)
+// ----------------------------------------------------------------------------
+// Balaie TOUTE la surface de matching (toutes les clés : classes, termes ANSM des
+// DDI, med_keys des règles) × TOUS les médicaments du MASTER_DB, et détecte les
+// collisions de sous-chaîne : un médicament matché par une clé qui n'est qu'une
+// sous-chaîne accidentelle de sa DCI (ex. « fer » ⊂ calci-fér-ol, « beta » ⊂
+// bêtahistine, « ANTIVITAMINES K » ⊂ classe fourre-tout contenant les AOD).
+// Les collisions LÉGITIMES (prodrogues, sels, associations, familles « -sartan »)
+// sont figées dans ALLOWLIST. Toute NOUVELLE collision fait échouer l'audit —
+// c'est le filet permanent contre cette famille de bugs (fer/calciférol,
+// statine/cilastatine, AVK/AOD… qui revenaient version après version).
+function runCollisionAudit(test, assert) {
+    const { sandbox } = loadApp();
+    // Le scan tourne DANS le sandbox (accès aux globals `const` par leur nom).
+    const SCAN = `(function(){
+        var norm = sanitizeText;
+        var meds = (MASTER_DB && MASTER_DB.MEDICAMENTS) || [];
+        var medList = meds.map(function(m){ return { dci: norm(m.dci), raw: m.dci }; });
+        var DCIS = new Set(medList.map(function(m){ return m.dci; }));
+        var keys = new Set();
+        (typeof DDI_GENERAL_DB!=='undefined'?DDI_GENERAL_DB:[]).forEach(function(d){ if(d.d1)keys.add(norm(d.d1)); if(d.d2)keys.add(norm(d.d2)); });
+        (typeof DDI_MERGED_DB!=='undefined'?DDI_MERGED_DB:[]).forEach(function(d){ if(d.perpetrator)keys.add(norm(d.perpetrator)); if(d.victim)keys.add(norm(d.victim)); });
+        function harvest(o){ if(!o||typeof o!=='object')return; for(var k in o){ var v=o[k];
+            if(/^(med_keys|med_keys_2|med_absent|classes|classe)$/.test(k)&&Array.isArray(v)) v.forEach(function(x){ if(typeof x==='string')keys.add(norm(x)); });
+            else if(typeof v==='object') harvest(v); } }
+        if(typeof GERIA_RECOS_DB!=='undefined')harvest(GERIA_RECOS_DB);
+        if(typeof RECOS_SUPPLEMENT!=='undefined')harvest(RECOS_SUPPLEMENT);
+        if(typeof PATHOLOGY_RULES_DB!=='undefined')harvest(PATHOLOGY_RULES_DB);
+        if(typeof DRUG_CLASSES!=='undefined')Object.values(DRUG_CLASSES).forEach(function(def){ (def.aliases||[]).forEach(function(a){ keys.add(norm(a)); }); });
+        var out=[];
+        keys.forEach(function(key){
+            if(!key||key.length<3)return;
+            medList.forEach(function(m){
+                if(m.dci===key)return;
+                var matched=false; try{ matched=matchesDrugClassAnsm(m.dci,'',key); }catch(e){ return; }
+                if(!matched)return;
+                var keyInDci=m.dci.indexOf(key)>=0&&key!==m.dci;
+                var dciInKey=key.indexOf(m.dci)>=0&&key!==m.dci;
+                if(keyInDci||dciInKey){
+                    var suspicious=DCIS.has(key)||(key.length<=6&&keyInDci);
+                    if(suspicious)out.push(key+'::'+m.dci);
+                }
+            });
+        });
+        return JSON.stringify(Array.from(new Set(out)).sort());
+    })()`;
+    let found;
+    try { found = JSON.parse(vm.runInContext(SCAN, sandbox)); }
+    catch (e) { test('Collision — scan exécutable', () => assert.ok(false, 'scan a échoué : ' + e.message)); return; }
+
+    // ALLOWLIST des collisions LÉGITIMES (prodrogue/sel/association/famille suffixe).
+    // Signature = cléNormalisée::dciNormalisée. Toute collision hors liste = régression.
+    const ALLOWLIST = new Set([
+        'aprepitant::fosaprepitant', 'fosaprepitant::aprepitant',        // prodrogue ↔ actif
+        'brompheniramine::pheniramine', 'chlorpheniramine::pheniramine',
+        'chlorpheniramine::dexchlorpheniramine', 'dexchlorpheniramine::chlorpheniramine',
+        'dexchlorpheniramine::pheniramine',                              // antihistaminiques -phéniramine
+        'loratadine::desloratadine',                                     // loratadine ↔ métabolite actif
+        'metronidazole::spiramycinemetronidazole',                       // association
+        'piperacillinetazobactam::piperacilline',                        // association ↔ composant
+        'valproate::divalproatedesodium',                                // sel de valproate
+        'fer::ascorbateferreux', 'fer::fumarateferreux', 'fer::sulfateferreux', // vrais sels de fer
+        'ginkgo::ginkgobiloba',                                          // extrait
+        'sartan::candesartan', 'sartan::eprosartan', 'sartan::irbesartan',
+        'sartan::losartan', 'sartan::olmesartan', 'sartan::telmisartan', 'sartan::valsartan', // famille -sartan
+    ]);
+    const nouvelles = found.filter(sig => !ALLOWLIST.has(sig));
+    test('Collision de matching — aucune NOUVELLE collision hors allowlist', () => {
+        assert.ok(nouvelles.length === 0,
+            'collision(s) de sous-chaîne détectée(s) — un médicament est matché par une clé sans rapport clinique :\n  ' +
+            nouvelles.join('\n  ') +
+            '\n(si légitime : ajouter à ALLOWLIST ; sinon corriger la classe/denylist dans drug_classes.js)');
+    });
+    // Verrou explicite des collisions historiques déjà corrigées (ne doivent JAMAIS revenir).
+    const REGRESSIONS_INTERDITES = [
+        'fer::cholecalciferol', 'fer::ergocalciferol',   // fer ↔ calciférol
+        'clidinium::umeclidinium', 'clidinium::aclidinium', // antispasmodique ↔ LAMA
+    ];
+    REGRESSIONS_INTERDITES.forEach(sig => {
+        test('Collision — régression interdite : ' + sig, () => {
+            assert.ok(!found.includes(sig), 'collision historique réapparue : ' + sig);
+        });
+    });
+}
+
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, PANEL, signaturePatient };
