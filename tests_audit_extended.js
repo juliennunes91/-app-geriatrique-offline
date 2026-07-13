@@ -389,6 +389,15 @@ function runExtendedAudits2(test, assert) {
             { age: 80, sexe: 'F', dfg: 45, meds: ['Ibuprofene'] }, { age: 80, sexe: 'F', dfg: 55, meds: ['Ibuprofene'] }, /AINS \+ DFG/i],
         ['Nitrofurantoïne + DFG < 45 (STOPP v3 E8 / MHRA 2015 / BNF)',
             { age: 80, sexe: 'F', dfg: 40, meds: ['Nitrofurantoine'] }, { age: 80, sexe: 'F', dfg: 55, meds: ['Nitrofurantoine'] }, /Nitrofuranto/i],
+        // Seuils rénaux STOPP/START v3 (section E) — vérifiés contre PMC10447584 (audit littérature 2026).
+        ['Metformine + DFG < 30 (STOPP v3 E6 / Beers 2023)',
+            { age: 80, sexe: 'F', dfg: 25, meds: ['Metformine'] }, { age: 80, sexe: 'F', dfg: 40, meds: ['Metformine'] }, /Metformine.*DFG|acidose/i],
+        ['Dabigatran + DFG < 30 (STOPP v3 E2)',
+            { age: 80, sexe: 'F', dfg: 25, meds: ['Dabigatran'] }, { age: 80, sexe: 'F', dfg: 40, meds: ['Dabigatran'] }, /Dabigatran/i],
+        ['Anti-Xa (rivaroxaban/apixaban/edoxaban) + DFG < 15 (STOPP v3 E3)',
+            { age: 80, sexe: 'F', dfg: 12, meds: ['Apixaban'] }, { age: 80, sexe: 'F', dfg: 25, meds: ['Apixaban'] }, /Anti-Xa|apixaban|rivaroxaban/i],
+        ['Colchicine + DFG < 10 (STOPP v3 E5)',
+            { age: 80, sexe: 'F', dfg: 8, meds: ['Colchicine'] }, { age: 80, sexe: 'F', dfg: 20, meds: ['Colchicine'] }, /Colchicine/i],
     ];
     // Test du DELTA : franchir le seuil doit AJOUTER une alerte spécifique (matchant
     // le motif) absente sous le seuil — robuste aux alertes de fond partagées (une
@@ -419,6 +428,21 @@ function runExtendedAudits2(test, assert) {
         test('Borne statine haute intensité — ' + label, () => {
             assert.strictEqual(statineHauteDose(cas), attendu,
                 `SUP_PIMC_12 devrait ${attendu ? 'se déclencher' : 'rester silencieuse'} pour ce cas`);
+        });
+    });
+
+    // ── 12b. GARDE ANTI-RÉFÉRENCE-FANTÔME : fige les corrections d'attribution issues
+    //    de l'audit littérature (fiches pathologie). Un guideline cité doit exister ;
+    //    ces motifs précis ont été identifiés comme faux et corrigés → interdits de retour.
+    const pathoSrc = fs.readFileSync(path.join(__dirname, 'geria_pathology_rules_v3.js'), 'utf8');
+    const REFS_FANTOMES = [
+        ['ESC 2024 Dyslipidaemia', /ESC\s*2024\s*Dyslipidaemia/i, 'la guideline ESC/EAS dyslipidémies est 2019, pas 2024'],
+        ['ACP 2024 (insomnie)', /ACP\s*2024/i, 'la guideline ACP insomnie chronique est 2016, pas 2024'],
+        ['Midodrine HTO cotée classe I', /Midodrine[^\n]*§5\.4,\s*IB\b/i, 'ESC 2018 : midodrine dans l\'HTO = IIaB, jamais classe I'],
+    ];
+    REFS_FANTOMES.forEach(([label, re, why]) => {
+        test('Référence fantôme absente — ' + label, () => {
+            assert.ok(!re.test(pathoSrc), `référence erronée réapparue (${why})`);
         });
     });
 
