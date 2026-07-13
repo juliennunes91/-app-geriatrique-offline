@@ -750,10 +750,11 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
                 // Digoxine ≤ 125 µg/j : sous le seuil de toxicité → désarme EV_E01 (digoxine + DFG < 30).
                 if (/digoxine/i.test(dci) && p.dose <= 125) ctxClinique.push('dose_digoxine_basse');
                 // Statine dose basse (sous le seuil « haute intensité ») → désarme SUP_PIMC_12.
-                // Seuils ESC/EAS : atorvastatine ≤ 40, rosuvastatine ≤ 20 ne sont PAS « haute intensité ».
+                // Haute intensité (AHA/ACC 2018) = atorvastatine 40-80 mg, rosuvastatine 20-40 mg.
+                // Donc SEULES les doses STRICTEMENT inférieures (atorva < 40, rosuva < 20) sont « dose basse ».
                 if (fam === 'statine') {
-                    if (/atorvastatine/i.test(dci) && p.dose <= 40) ctxClinique.push('statine_dose_basse');
-                    else if (/rosuvastatine/i.test(dci) && p.dose <= 20) ctxClinique.push('statine_dose_basse');
+                    if (/atorvastatine/i.test(dci) && p.dose < 40) ctxClinique.push('statine_dose_basse');
+                    else if (/rosuvastatine/i.test(dci) && p.dose < 20) ctxClinique.push('statine_dose_basse');
                 }
             }
         });

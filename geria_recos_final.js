@@ -4105,7 +4105,7 @@ const RECOS_SUPPLEMENT = [
     {
         id: "SUP_PIMC_12", sources: ["PIM_CHECK"],
         titre: "Statine haute dose chez > 75 ans sans réévaluation",
-        message: "PIM-Check : Statine haute intensité (atorvastatine > 40 mg, rosuvastatine > 20 mg) chez > 75 ans — réévaluer le rapport bénéfice/risque. Risque musculaire accru.",
+        message: "PIM-Check : Statine haute intensité (atorvastatine ≥ 40 mg, rosuvastatine ≥ 20 mg — définition AHA/ACC 2018) chez > 75 ans — réévaluer le rapport bénéfice/risque. Risque musculaire accru.",
         severite: "warning",
         condition: {
             med_keys: ["atorvastatine", "rosuvastatine"],

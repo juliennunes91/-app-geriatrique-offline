@@ -401,6 +401,27 @@ function runExtendedAudits2(test, assert) {
         });
     });
 
+    // Borne « statine haute intensité » (AHA/ACC 2018 : atorvastatine 40-80 mg,
+    // rosuvastatine 20-40 mg). SUP_PIMC_12 doit s'ARMER À la borne (atorva 40,
+    // rosuva 20) chez > 75 ans, et rester désarmée en dessous (atorva 20, rosuva 10).
+    // Régression du bug d'attribution : « > 40 / > 20 » excluait à tort 40 et 20 mg.
+    const statineHauteDose = c => {
+        const h = analyzeCase(c)._html || {};
+        return Object.values(h).some(html => /Statine haute (dose|intensité)/i.test(html || ''));
+    };
+    const statCase = (dci, dose) => ({ age: 80, sexe: 'F', dfg: 70, meds: [dci], precisions: { [dci]: { dose } } });
+    [
+        ['Atorvastatine 40 mg = haute intensité → armée', statCase('Atorvastatine', 40), true],
+        ['Atorvastatine 20 mg = modérée → désarmée', statCase('Atorvastatine', 20), false],
+        ['Rosuvastatine 20 mg = haute intensité → armée', statCase('Rosuvastatine', 20), true],
+        ['Rosuvastatine 10 mg = modérée → désarmée', statCase('Rosuvastatine', 10), false],
+    ].forEach(([label, cas, attendu]) => {
+        test('Borne statine haute intensité — ' + label, () => {
+            assert.strictEqual(statineHauteDose(cas), attendu,
+                `SUP_PIMC_12 devrait ${attendu ? 'se déclencher' : 'rester silencieuse'} pour ce cas`);
+        });
+    });
+
     // ── 13. IDEMPOTENCE DES PRÉCISIONS : préciser un médicament ne doit changer que
     //    SES propres alertes, jamais celles d'un co-prescrit sans rapport.
     test('IDEMPOTENCE — préciser la durée d\'un cortico n\'altère pas les alertes AVK', () => {
