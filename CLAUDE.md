@@ -100,6 +100,80 @@ calendrier de surveillance daté (modèle PAAM).
 
 Le cross-référencement (affichage d'une source ESC sur une alerte STOPP/START) se fait via `findEbmSource()` dans `geria_engine_v2.js` — **ne pas mélanger** les sources entre les deux fichiers.
 
+## Ajout d'un médicament dans la base (PROCÉDURE OBLIGATOIRE)
+
+**À chaque ajout d'une DCI**, suivre cette checklist dans l'ordre. Ne jamais
+livrer un médicament « à moitié intégré » (entrée DB sans classe, sans interaction,
+ou sans surveillance). Chaque donnée chiffrée DOIT citer sa source primaire
+(RCP/AMM, STOPP/START v3, Beers 2023, PRISCUS 2.0, FORTA, ANSM, ESC/KDIGO…) —
+**attribution exacte** (leçon nitrofurantoïne : bon chiffre ≠ bonne source).
+
+### 1. Entrée `MASTER_DB.MEDICAMENTS` (`geria_database.js`)
+Renseigner **tous** les champs (laisser `""`/`0`/`[]` si non applicable, jamais
+absent) :
+- `dci`, `princeps`, `classe` (libellé cohérent avec la famille — préfixe utilisé
+  par le matching, ex. « AOD … » / « AVK … » / « β-bloquant … »).
+- `poso_hab`, **`poso_ger`** (adaptation gériatrique explicite), **`poso_ren`**
+  (paliers DFG), `atb_legere/moderee/severe/terminale` (posologie ATB par stade
+  rénal — antibiotiques uniquement).
+- `acb` / `cia` (charge anticholinergique, échelle ACB 0-3), `bhe` (passage
+  barrière hémato-encéphalique), `albumine` (% liaison protéique — pour le
+  déplacement), `qt_risque` (statut **CredibleMeds** : known/possible/conditional).
+- `scores` `{qt, sero, saign, chute, sedat, hypoG}` (0-3) — alimente les scores
+  composites ; à sourcer.
+- `suivi_initial`, `suivi_periodique` (séparés par `|`), `alerte_clinique`,
+  `notes_cliniques`, `source` (références EBM datées).
+- `bio_cible` : liste des `BIO_xxx` de surveillance pertinents (voir §4).
+
+### 2. Recherches littérature à faire AVANT de saisir
+- Posologie **gériatrique** + adaptation **rénale** et **hépatique** (Child-Pugh).
+- Statut **PIM/omission** : figure-t-il dans STOPP/START v3, Beers 2023, PRISCUS,
+  FORTA, EU(7)-PIM, STOPPFrail ? Avec quel seuil (âge/dose/DFG) ?
+- **QT** (CredibleMeds), **charge anticholinergique** (ACB), **liaison albumine**.
+- **Métabolisme** (CYP450, P-gp) → base des interactions PK (§3).
+
+### 3. Rattachement de classe + interactions
+- `drug_classes.js` : ajouter la DCI (normalisée) dans la liste `dcis` de la
+  **bonne classe**. Créer une classe seulement si nécessaire. **Ne jamais créer
+  d'alias court (< 4 car.) ni ambigu** (cf. bug `beta`⊂bêtahistine, `fer`⊂calciférol).
+  Si la DCI se distingue mal d'une famille sœur, vérifier qu'elle tombe du bon côté
+  du préfixe de `classe` (ex. AVK vs AOD).
+- Si la DCI porte une **précision** (durée/dose/indication), câbler
+  `medPrecisionFamily()` (`drug_classes.js`).
+- **Interactions ANSM** : ajouter la/les paires dans `ddi_general.js`
+  (`d1`/`d2`/`couleur`/`details`). **Interactions PK** (magnitude) : `ddi_merged_V2.js`
+  (`perpetrator`/`victim`/`auc_ratio`/`mechanism`/`note` **avec citation nommée**).
+  Refléter aussi dans `ddi_interact` (texte) et `ddi_interact_v2` (structuré) de
+  l'entrée MASTER_DB.
+
+### 4. Paramètres biologiques
+- Lier les `BIO_xxx` de surveillance dans `bio_cible`.
+- Si le médicament introduit un **seuil bio déclencheur** (ex. « éviter si K+ > X »),
+  ajouter la règle correspondante dans `geria_recos_final.js` (`condition.bio`).
+
+### 5. Paramètres cliniques / pathologiques
+- Si le médicament est un **traitement d'une pathologie** : l'ajouter dans
+  `PATHOLOGY_RULES_DB` (`geria_pathology_rules_v3.js`) — bloc `TRAITEMENTS`
+  (`INITIER`/`EVITER`), avec `niveau_preuve`/`niveau`, `SOURCES_EBM` et `REFERENCE`
+  (guideline **existante** et datée).
+- Si le médicament est un **PIM ou une omission** gériatrique : l'ajouter aux
+  `med_keys`/`med_absent` des règles STOPP/START/Beers/FORTA (`geria_recos_final.js`).
+- Si une **cascade UI** (checkbox/précision) est nécessaire : synchroniser
+  `index.html` **ET** `index_modern.html` (IDs, handlers, attributs identiques).
+
+### 6. Vérification obligatoire (anti-régression)
+- Lancer `node tests.js` → **tout doit passer**. En particulier `runCollisionAudit`
+  (audit de collision de sous-chaîne sur toute la base) : si la nouvelle DCI crée
+  une collision, l'ajouter à l'`ALLOWLIST` **si légitime** (prodrogue/sel/association),
+  sinon corriger la classe/denylist. Vérifier de visu qu'elle ne déclenche pas une
+  alerte/interaction d'une famille sans rapport.
+- Ajouter au moins un **test de bornes** si un nouveau seuil chiffré est introduit
+  (bloc `SEUILS`, `tests_audit_extended.js`).
+
+### 7. Version + Service Worker
+- Bumper le numéro de version (pied de page `index.html`/`index_modern.html`) et le
+  `BUILD_ID` de `sw.js` dans le même commit (voir sections dédiées ci-dessous).
+
 ## Service Worker
 
 À chaque ajout/renommage d'un fichier applicatif, mettre à jour :
