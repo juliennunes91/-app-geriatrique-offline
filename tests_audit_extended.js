@@ -368,6 +368,39 @@ function runExtendedAudits2(test, assert) {
         assert.strictEqual(nouveaux.length, 0, 'pathologie proposant un médicament interdit : ' + nouveaux.join(', '));
     });
 
+    // ── 12ter. CONFORMITÉ SEUILS — LITTÉRATURE (ancrage externe des seuils numériques)
+    //    Chaque seuil est cité et testé À LA BORNE (juste au-dessus déclenche, juste
+    //    en dessous ne déclenche pas). Fige les valeurs contre toute dérive et
+    //    documente leur provenance. Toute borne cassée = écart avec la littérature.
+    const evSet = c => new Set((analyzeCase(c)['alertes-eviter'] || []).map(a => a.titre));
+    const doseCase = (dci, dose, extra) => ({ age: 80, sexe: 'F', dfg: 70, meds: [dci], precisions: { [dci]: { dose } }, ...(extra || {}) });
+    // [libellé+source, cas déclencheur, cas non-déclencheur, motif attendu]
+    const SEUILS = [
+        ['Digoxine > 125 µg/j + IR (Beers 2023 / STOPP-B12)',
+            { age: 80, sexe: 'F', dfg: 25, meds: ['Digoxine'], precisions: { Digoxine: { dose: 250 } } },
+            { age: 80, sexe: 'F', dfg: 25, meds: ['Digoxine'], precisions: { Digoxine: { dose: 100 } } }, /Digoxine/i],
+        ['Citalopram > 20 mg/j sujet âgé, QT (FDA 2011 / ANSM)',
+            doseCase('Citalopram', 25), doseCase('Citalopram', 15), /citalopram|QT|torsade|allonge/i],
+        ['Escitalopram > 10 mg/j sujet âgé, QT (FDA / ANSM)',
+            doseCase('Escitalopram', 15), doseCase('Escitalopram', 8), /escitalopram|QT|torsade|allonge/i],
+        ['Aspirine > 100 mg/j au long cours (STOPP v2 C1)',
+            doseCase('Acide acetylsalicylique', 300), doseCase('Acide acetylsalicylique', 75), /aspirine|prévention|acide/i],
+        ['AINS + DFG < 50 (STOPP)',
+            { age: 80, sexe: 'F', dfg: 45, meds: ['Ibuprofene'] }, { age: 80, sexe: 'F', dfg: 55, meds: ['Ibuprofene'] }, /AINS \+ DFG/i],
+        ['Nitrofurantoïne + DFG < 45 (MHRA/BNF)',
+            { age: 80, sexe: 'F', dfg: 40, meds: ['Nitrofurantoine'] }, { age: 80, sexe: 'F', dfg: 55, meds: ['Nitrofurantoine'] }, /Nitrofuranto/i],
+    ];
+    // Test du DELTA : franchir le seuil doit AJOUTER une alerte spécifique (matchant
+    // le motif) absente sous le seuil — robuste aux alertes de fond partagées (une
+    // digoxine/un ISRS restent flaggés pour d'autres raisons quelle que soit la dose).
+    SEUILS.forEach(([label, casPos, casNeg, motif]) => {
+        test('Seuil littérature — ' + label, () => {
+            const pos = evSet(casPos), neg = evSet(casNeg);
+            const ajoutees = [...pos].filter(t => !neg.has(t) && motif.test(t));
+            assert.ok(ajoutees.length > 0, `franchir le seuil doit ajouter une alerte spécifique (motif ${motif}). Au-dessus: ${[...pos].filter(t=>motif.test(t)).join(' | ')||'aucune'}`);
+        });
+    });
+
     // ── 13. IDEMPOTENCE DES PRÉCISIONS : préciser un médicament ne doit changer que
     //    SES propres alertes, jamais celles d'un co-prescrit sans rapport.
     test('IDEMPOTENCE — préciser la durée d\'un cortico n\'altère pas les alertes AVK', () => {
