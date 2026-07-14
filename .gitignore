@@ -13,3 +13,4 @@ test_cases/screenshots/
 scratch_*.json
 scratch_*.cjs
 scratch_results/
+scratch_*/
