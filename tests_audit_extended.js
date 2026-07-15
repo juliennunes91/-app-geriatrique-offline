@@ -595,4 +595,46 @@ function runCollisionAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, PANEL, signaturePatient };
+// ============================================================================
+// AUDIT DE RÉFÉRENCE QT/CredibleMeds
+// ----------------------------------------------------------------------------
+// Fige les classifications QT/TdP vérifiées contre CredibleMeds (sweep Phase 4a).
+// scores.qt attendu : Known Risk = 3, Possible = 2, Conditional = 1.
+// Verrouille les corrections (sous-estimations dangereuses fluconazole/HCQ/donépézil/
+// ivabradine + reclassements) contre toute régression lors d'un futur ré-import.
+function runQtReferenceAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const dump = vm.runInContext(
+        'JSON.stringify(MASTER_DB.MEDICAMENTS.map(function(m){return {dci:m.dci,qt:(m.scores&&m.scores.qt)||0};}))',
+        sandbox);
+    const meds = JSON.parse(dump);
+    const byDci = {};
+    meds.forEach(m => { byDci[m.dci] = m.qt; });
+    // Valeur scores.qt EXACTE attendue (vérifiée CredibleMeds). Clé = dci exact en base.
+    const REF = {
+        // Known Risk (qt=3) — corrigés + ancres qui ne doivent jamais chuter
+        'Fluconazole': 3, 'Hydroxychloroquine': 3, 'Donépézil': 3, 'Ivabradine': 3,
+        'Roxithromycine': 3, 'Sulpiride': 3,
+        'Amiodarone': 3, 'Sotalol': 3, 'Azithromycine': 3, 'Citalopram': 3,
+        'Escitalopram': 3, 'Domperidone': 3, 'Haloperidol': 3, 'Methadone': 3,
+        'Moxifloxacine': 3, 'Levofloxacine': 3, 'Disopyramide': 3, 'Dronedarone': 3,
+        // Possible (qt=2) — reclassés
+        'Clomipramine': 2, 'Desipramine': 2, 'Asenapine': 2, 'Toltérodine': 2,
+        'Norfloxacine': 2, 'Ofloxacine': 2, 'Nortriptyline': 2, 'Olanzapine': 2,
+        'Pimavansérine': 2, 'Solifenacine': 2, 'Pipamperone': 2, 'Prochlorperazine': 2,
+        'Maprotiline': 2, 'Delamanide': 2,
+        // Conditional (qt=1) — dé-sur-classé
+        'Trazodone': 1,
+        // Conditional correct laissé tel quel (contrôle anti-sur-correction)
+        'Ciprofloxacine': 1,
+    };
+    Object.entries(REF).forEach(([dci, expected]) => {
+        test('QT/CredibleMeds — ' + dci + ' doit avoir scores.qt=' + expected, () => {
+            assert.ok(dci in byDci, 'médicament absent de la base : ' + dci);
+            assert.strictEqual(byDci[dci], expected,
+                `${dci} : scores.qt=${byDci[dci]} attendu ${expected} (classification CredibleMeds figée — régression ?)`);
+        });
+    });
+}
+
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, PANEL, signaturePatient };
