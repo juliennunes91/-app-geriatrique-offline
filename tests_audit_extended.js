@@ -730,4 +730,48 @@ function runProteinBindingAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, PANEL, signaturePatient };
+// ============================================================================
+// AUDIT SCORES COMPOSITES (sero/saign/chute/sedat/hypoG) — invariants de classe
+// ----------------------------------------------------------------------------
+// Ces scores 0-3 alimentent les scores composites (syndrome sérotoninergique,
+// hémorragie, chute, sédation, hypoglycémie). Pas de table source unique →
+// verrouillés par INVARIANTS DE CLASSE pharmacologiques (Phase 4c, vérif agents).
+// Détecte toute régression/omission (ex. un ISRS qui retombe à sero=1, un
+// sulfamide sans hypoG, un anticoagulant sans saign).
+function runCompositeScoreAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const dump = vm.runInContext(
+        'JSON.stringify(MASTER_DB.MEDICAMENTS.map(function(m){return {dci:m.dci,s:m.scores||{}};}))', sandbox);
+    const meds = JSON.parse(dump);
+    const norm = s => vm.runInContext('sanitizeText(' + JSON.stringify(s) + ')', sandbox);
+    const byNorm = {}; meds.forEach(m => { byNorm[norm(m.dci)] = m.s; });
+    const val = (dci, dim) => { const s = byNorm[norm(dci)]; return s ? (+s[dim] || 0) : null; };
+
+    // [libellé, dimension, comparateur, seuil, [dci...]]
+    const INV = [
+        ['ISRS -> sero>=2', 'sero', '>=', 2, ['fluoxetine', 'paroxetine', 'sertraline', 'citalopram', 'escitalopram', 'fluvoxamine']],
+        ['IRSN -> sero>=2', 'sero', '>=', 2, ['venlafaxine', 'duloxetine', 'milnacipran']],
+        ['IMAO/linézolide -> sero=3', 'sero', '===', 3, ['linezolide', 'iproniazide']],
+        ['Bupropion non sérotoninergique -> sero=0', 'sero', '===', 0, ['bupropion']],
+        ['Sulfamides hypoglyc. -> hypoG=3', 'hypoG', '===', 3, ['glibenclamide', 'glimepiride', 'glipizide']],
+        ['Antidiab. sans hypo propre -> hypoG=0', 'hypoG', '===', 0, ['metformine', 'sitagliptine', 'empagliflozin', 'dapagliflozin', 'acarbose']],
+        ['Anticoagulants oraux -> saign=3', 'saign', '===', 3, ['warfarine', 'apixaban', 'rivaroxaban', 'dabigatran', 'edoxaban', 'acenocoumarol', 'fluindione']],
+        ['Paracétamol -> saign=0', 'saign', '===', 0, ['paracetamol']],
+        ['Benzodiazépines -> sedat=3', 'sedat', '===', 3, ['diazepam', 'lorazepam', 'oxazepam', 'alprazolam', 'bromazepam']],
+        ['Benzodiazépines -> chute=3', 'chute', '===', 3, ['diazepam', 'lorazepam', 'oxazepam', 'alprazolam', 'bromazepam']],
+        ['ADT tertiaires -> chute=3', 'chute', '===', 3, ['amitriptyline', 'clomipramine', 'imipramine', 'doxepine']],
+        ['Alpha-1 bloquants systémiques -> chute=3', 'chute', '===', 3, ['prazosine', 'doxazosine', 'terazosine']],
+        ['Gabapentinoïdes -> sedat>=2', 'sedat', '>=', 2, ['gabapentine', 'pregabaline']],
+    ];
+    const cmp = { '>=': (a, b) => a >= b, '===': (a, b) => a === b };
+    INV.forEach(([label, dim, op, thr, dcis]) => {
+        test('Score composite — ' + label, () => {
+            const bad = dcis.map(d => ({ d, v: val(d, dim) }))
+                .filter(x => x.v !== null && !cmp[op](x.v, thr))
+                .map(x => `${x.d}:${dim}=${x.v}`);
+            assert.ok(bad.length === 0, 'invariant de classe violé : ' + bad.join(', '));
+        });
+    });
+}
+
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, PANEL, signaturePatient };
