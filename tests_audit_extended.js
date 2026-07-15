@@ -635,6 +635,28 @@ function runQtReferenceAudit(test, assert) {
                 `${dci} : scores.qt=${byDci[dci]} attendu ${expected} (classification CredibleMeds figée — régression ?)`);
         });
     });
+
+    // Conformité à la LISTE OFFICIELLE CredibleMeds (fixture qt_ref_crediblemeds.json,
+    // fournie par le Dr Nunes — listes Known + Possible Risk of TdP). La base DOIT
+    // coller pour chaque molécule couverte : Known->3, Possible->2.
+    const qref = JSON.parse(fs.readFileSync(path.join(__dirname, 'qt_ref_crediblemeds.json'), 'utf8'));
+    const want = { KR: 3, PR: 2 };
+    const dump2 = vm.runInContext(
+        'JSON.stringify(MASTER_DB.MEDICAMENTS.map(function(m){return {dci:m.dci,qt:(m.scores&&m.scores.qt)||0};}))',
+        sandbox);
+    const byNorm = {};
+    const norm = s => vm.runInContext('sanitizeText(' + JSON.stringify(s) + ')', sandbox);
+    JSON.parse(dump2).forEach(m => { byNorm[norm(m.dci)] = m; });
+    const qmis = [];
+    Object.entries(qref).forEach(([name, cat]) => {
+        const m = byNorm[norm(name)];
+        if (!m) return; // molécule CredibleMeds absente de la base : hors périmètre
+        if (m.qt !== want[cat]) qmis.push(`${m.dci}: qt=${m.qt} attendu ${want[cat]} (${cat})`);
+    });
+    test('QT/CredibleMeds — base conforme à la liste officielle (Known/Possible)', () => {
+        assert.ok(qmis.length === 0,
+            'écart(s) avec la liste CredibleMeds Known/Possible :\n  ' + qmis.join('\n  '));
+    });
 }
 
 // ============================================================================
