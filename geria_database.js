@@ -1673,7 +1673,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": { "qt": 0, "sero": 0, "saign": 0, "chute": 0, "sedat": 0, "hypoG": 0 },
                     "bhe": "",
-                    "albumine": "~98% (SHBG/albumine)",
+                    "albumine": "60",
                     "qt_risque": "",
                     "ddi_interact": "↑ effet AVK (surveillance INR). Corticoïdes/œstrogènes (antagonisme). Insuline/ADO (↑ sensibilité à l'insuline).",
                     "ddi_interact_v2": [],
@@ -2574,7 +2574,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,8",
+                    "albumine": "71",
                     "qt_risque": "",
                     "ddi_interact": "Opioïdes (CI relative — FDA Black Box), Sédatifs centraux, Autres BZD, Antipsychotiques, Antihistaminiques sédatifs, Gabapentinoïdes, Alcool, Inhibiteurs CYP3A4 puissants (Alprazolam = substrat CYP3A4)",
                     "ddi_interact_v2": [
@@ -2774,7 +2774,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "10 - 20 %",
+                    "albumine": "40",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
                     "ddi_interact_v2": [],
@@ -2846,7 +2846,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":3,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "> 96%",
+                    "albumine": "100",
                     "qt_risque": "DANGER — Risque CONNU torsades de pointes (CredibleMeds KR) — paradoxalement plus FAIBLE que sotalol",
                     "ddi_interact": "AVK warfarine ↑ x2 (CI augmentation INR — ↓ AVK 30-50% à l'initiation), AOD dabigatran ↑ 1,5x P-gp, Digoxine ↑ x2 (↓ digoxine 50% — bradycardie), Statines RHABDOMYOLYSE (simvastatine max 20, atorvastatine max 40 — RCP), CYP3A4 substrats (ciclosporine/tacrolimus ↑), Bétabloquants (bradycardie/BAV — surveillance), Vérapamil/Diltiazem (cumul bradycardie — éviter), Médicaments QT (TORSADES — CI nombreuses : sotalol/quinidine/disopyramide/macrolides/fluoroquinolones/antifongiques/antipsychotiques/ondansétron/méthadone), Diurétiques hypoK (torsades), Phénytoïne ↑ x2-3, Lithium (hypothyroïdie additive)",
                     "ddi_interact_v2": [
@@ -3832,7 +3832,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "0.0",
-                    "albumine": "< 10%",
+                    "albumine": "4",
                     "qt_risque": "",
                     "ddi_interact": "CCB non-DHP (vérapamil/diltiazem CI HFrEF), Anti-arythmiques (amiodarone/sotalol/digoxine bradycardie), Clonidine (rebond HTA arrêt brutal), Insuline/Sulfonylurées (masquage hypo), AINS (↓ effet antiHTA), IRC : accumulation (élimination rénale exclusive), Lithium (↑ lithémie via élimination rénale)",
                     "ddi_interact_v2": [
@@ -5067,7 +5067,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,7",
+                    "albumine": "60",
                     "qt_risque": "",
                     "ddi_interact": "Opioïdes (CI relative — FDA Black Box), Sédatifs centraux, Autres BZD, Antipsychotiques, Antihistaminiques sédatifs, Gabapentinoïdes, Alcool, Inhibiteurs CYP3A4 (substrat)",
                     "ddi_interact_v2": [
@@ -6899,7 +6899,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "0,9",
+                    "albumine": "94",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
                     "ddi_interact_v2": [],
@@ -7779,7 +7779,7 @@ const MASTER_DB = {
                     "cia": 3,
                     "scores": {"qt":2,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,95",
+                    "albumine": "95",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "QT-allongeurs, Autres APP (cumul agranulocytose - CI relative), Antagonistes D2, Lévodopa (DCL — alternative possible faible dose), Anticholinergiques (ACB=3), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Inducteurs CYP1A2 (Tabac/rifampicine), Inhibiteurs CYP1A2 puissants (Fluvoxamine = CI relative), Substances myélotoxiques (CARBAMAZÉPINE = CI ABSOLUE)",
                     "ddi_interact_v2": [
@@ -8724,7 +8724,7 @@ const MASTER_DB = {
                     "cia": 3,
                     "scores": {"qt":2,"sero":1,"saign":1,"chute":2,"sedat":2,"hypoG":0},
                     "bhe": "",
-                    "albumine": "73-92",
+                    "albumine": "86",
                     "qt_risque": "(PR) Risque Possible (CredibleMeds) — QTc, reclassé Conditional→Possible",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), Alcool, QT-prolongateurs",
                     "ddi_interact_v2": [
@@ -8962,7 +8962,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "> 98 %",
+                    "albumine": "99",
                     "qt_risque": "",
                     "ddi_interact": "Opioïdes (CI relative — FDA Black Box 2016), Sédatifs centraux, Autres BZD, Antipsychotiques, Antihistaminiques sédatifs, Gabapentinoïdes, Alcool, Inhibiteurs CYP3A4 (Diazépam = substrat CYP3A4/2C19)",
                     "ddi_interact_v2": [
@@ -9445,7 +9445,7 @@ const MASTER_DB = {
                     "cia": 2,
                     "scores": {"qt":3,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "50-80%",
+                    "albumine": "89",
                     "qt_risque": "DANGER — Risque CONNU torsades (CredibleMeds KR)",
                     "ddi_interact": "PIM ABSOLU Beers 2023 chez âgé (anticholinergique +++ + QT + hypoglycémie + inotrope -), Médicaments QT (amiodarone, sotalol, macrolides, fluoroquinolones, antifongiques, antipsychotiques, ondansétron, méthadone — CI ASSOCIATION), Anticholinergiques (cumul ACB +++ → rétention urinaire, glaucome, confusion, constipation), Sulfonylurées/Insuline (hypoglycémie additive — effet insulino-sécrétagogue), Bétabloquants/CCB non-DHP (inotrope -, BAV — éviter), Inhibiteurs CYP3A4 puissants (kétoconazole/ritonavir/clarithromycine ↑), Inducteurs CYP3A4 (rifampicine ↓), Diurétiques hypoK (torsades), Glaucome aigu (CI), Hypertrophie prostatique (CI relative), Myasthénie (CI)",
                     "ddi_interact_v2": [
@@ -10238,7 +10238,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":1,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "> 90 %",
+                    "albumine": "95",
                     "qt_risque": "",
                     "ddi_interact": "IMAO (CI), Linézolide (CI), Triptans, Tramadol, autres ISRS/IRSN/ATC/Mirtazapine, AVK, AOD/HBPM, Antiagrégants, AINS, Lithium, MTX, Thiazidiques, Substrats CYP2D6 (modéré : Tamoxifène, Métoprolol)",
                     "ddi_interact_v2": [
@@ -11080,7 +11080,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "40",
+                    "albumine": "4",
                     "qt_risque": "",
                     "ddi_interact": "Aluminium (chelation - espacer 2h)",
                     "ddi_interact_v2": [
@@ -11516,7 +11516,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":3,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "> 98 %",
+                    "albumine": "100",
                     "qt_risque": "",
                     "ddi_interact": "Amiodarone, Métronidazole, Macrolides, Antifongiques azolés, AINS, ISRS, Méthotrexate, Inducteurs enzymatiques",
                     "ddi_interact_v2": [
@@ -11616,7 +11616,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":1,"sero":1,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,95",
+                    "albumine": "94",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "IMAO (CI), Linézolide/Bleu méthylène (CI), Triptans, Tramadol/Pethidine, autres ISRS/IRSN/ATC, AVK, AOD/HBPM, Antiagrégants, AINS, Lithium, MTX, Thiazidiques, Substrats CYP2D6 (Tamoxifène, Métoprolol, Codéine, ATC)",
                     "ddi_interact_v2": [
@@ -12156,7 +12156,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "> 98 %",
+                    "albumine": "98",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Aminosides (ototoxicite + nephrotoxicite synergiques) - Digoxine (potentialise toxicite via hypokaliemie) - AINS (perte d'efficacite + IRA) - IEC/ARA2 (1ere dose hypotension) - Lithium (intoxication) - Sulfamides hypoglycemiants",
                     "ddi_interact_v2": [
@@ -12418,7 +12418,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":3,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "",
+                    "albumine": "92",
                     "qt_risque": "?? Risque Connu (KR)",
                     "ddi_interact": "QT-allongeurs (Halopéridol = KR), Autres APP (cumul QT/EPS), Antagonistes D2, Lévodopa (antagonisme), Anticholinergiques, Sédatifs centraux, Lithium (SNM), Antihypertenseurs (hypotension), IMAO, Inducteurs CYP, Inhibiteurs CYP3A4/2D6",
                     "ddi_interact_v2": [
@@ -12865,7 +12865,7 @@ const MASTER_DB = {
                     "cia": 3,
                     "scores": {"qt":2,"sero":1,"saign":1,"chute":2,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,86",
+                    "albumine": "93",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "IMAO non-sélectifs (CI ABSOLUE), Linézolide (CI), ISRS/IRSN (sérotoninergique), Anticholinergiques (cumul ACB=3), QT-allongeurs (PR), Sympathomimétiques, Sédatifs centraux, Antihypertenseurs (Clonidine = antagonisme), Inhibiteurs CYP2D6, Inducteurs CYP",
                     "ddi_interact_v2": [
@@ -14617,7 +14617,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,85",
+                    "albumine": "91",
                     "qt_risque": "",
                     "ddi_interact": "Sédatifs centraux (cumul), Opioïdes (CI relative), Antipsychotiques, ATC, Antihistaminiques sédatifs, Gabapentinoïdes, Alcool — Lorazepam ne passe PAS par CYP (glucuroconjugaison)",
                     "ddi_interact_v2": [
@@ -15439,7 +15439,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,3",
+                    "albumine": "40",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "LevoDOPA (antagonisme) - Neuroleptiques",
                     "ddi_interact_v2": [
@@ -15611,7 +15611,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "< 20",
+                    "albumine": "11",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Alcool (antabuse +++), AVK (potentiation +++), Lithium, Phenobarbital",
                     "ddi_interact_v2": [
@@ -16097,7 +16097,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "30%",
+                    "albumine": "20",
                     "qt_risque": "",
                     "ddi_interact": "ASTHME — CI ABSOLUE (non cardiosélectif), BPCO sévère prudence, BRADYCARDIE/BAV (CCB non-DHP/digoxine/amiodarone), ARRÊT BRUTAL = REBOND, IC décompensée (CI), Hypoglycémie masquée DT2, Sympathomimétiques (antagonisme)",
                     "ddi_interact_v2": [
@@ -16416,7 +16416,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":2,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "> 95%",
+                    "albumine": "99",
                     "qt_risque": "(PR) Risque Possible (CredibleMeds) — QTc",
                     "ddi_interact": "Inhibiteurs CYP3A4 puissants (kétoconazole/itraconazole/clarithromycine/ritonavir ↑ exposition x3-5 — hypotension), Inducteurs CYP3A4 (rifampicine ↓), Jus de pamplemousse (↑ x2-3 — éviter), Ciclosporine/Tacrolimus (↑ leur exposition), Statines simvastatine/atorvastatine (↑ — limiter), Magnésium IV (hypotension), Bétabloquants (cumul hypotension), AINS (↓ effet), Cimétidine (↑ nicardipine)",
                     "ddi_interact_v2": [
@@ -17010,7 +17010,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "0,95",
+                    "albumine": "95",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Clopidogrel, Methotrexate, Atazanavir",
                     "ddi_interact_v2": [
@@ -17187,7 +17187,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,97",
+                    "albumine": "98",
                     "qt_risque": "",
                     "ddi_interact": "Sédatifs centraux (cumul), Opioïdes (CI relative), Antipsychotiques, ATC, Antihistaminiques sédatifs, Gabapentinoïdes, Alcool — Oxazepam ne passe PAS par CYP (glucuroconjugaison) → préférée chez âgé/IRC/IH",
                     "ddi_interact_v2": [
@@ -17835,7 +17835,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "1",
-                    "albumine": "40-57%",
+                    "albumine": "51",
                     "qt_risque": "",
                     "ddi_interact": "ASTHME — CI ABSOLUE (non cardiosélectif), BRADYCARDIE/BAV (CCB non-DHP, digoxine, amiodarone), ARRÊT BRUTAL = REBOND, Hypoglycémie masquée DT2, Sympathomimétiques (antagonisme), Lupus médicamenteux ASI",
                     "ddi_interact_v2": [
@@ -18019,7 +18019,7 @@ const MASTER_DB = {
                     "cia": 2,
                     "scores": {"qt":2,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "> 90%",
+                    "albumine": "45",
                     "qt_risque": "(PR) Risque Possible",
                     "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, Agranulocytose/SMN, Levodopa antagonisme, Cumul ACB, Sédatifs centraux, Lithium neurotoxicité, ↓ seuil épileptogène",
                     "ddi_interact_v2": [
@@ -18063,7 +18063,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "0,9",
+                    "albumine": "94",
                     "qt_risque": "",
                     "ddi_interact": "Aucune majeure documentee",
                     "ddi_interact_v2": [],
@@ -18425,7 +18425,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":0,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "70-90%",
+                    "albumine": "93",
                     "qt_risque": "",
                     "ddi_interact": "AINS (ulcère/hémorragie x4-12), AVK (↑ INR), Inducteurs/Inhibiteurs CYP3A4, VACCINS VIVANTS CI ABSOLUE si > 20 mg/j > 14 j, Insuline/Sulfamides (hyperglycémie), Diurétiques (hypoK), Digoxine (toxicité si hypoK), QUINOLONES (rupture tendineuse x4-46), Amphotéricine B (hypoK), Ciclosporine (cumul IS), Bisphosphonates (prévention GIOP si > 7,5 mg/j > 3 mois)",
                     "ddi_interact_v2": [
@@ -19314,7 +19314,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "0,73",
+                    "albumine": "56",
                     "qt_risque": "",
                     "ddi_interact": "ARA2 (CI cumul SRA), Sacubitril (CI simultanée — délai 36 h), ARM/Diurétiques épargneurs K+/Sels KCl (hyperkaliémie cumulée), AINS (triple whammy → IRA), Lithium (↑ lithiémie), Allopurinol (réactions cutanées sévères), Triméthoprime/Cotrimoxazole (hyperkaliémie additive âgé), Insuline/Sulfamides (hypoglycémie modeste), Sympathomimétiques (antagonisme)",
                     "ddi_interact_v2": [
@@ -19626,7 +19626,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":3,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,9",
+                    "albumine": "89",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "QT-allongeurs (Risperidone = CR), Autres APP, Antagonistes D2, Lévodopa, Anticholinergiques, Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Inducteurs CYP3A4 (rifampicine/millepertuis), Inhibiteurs CYP2D6 (fluoxétine/paroxétine ↑ exposition), Inhibiteurs CYP3A4",
                     "ddi_interact_v2": [
@@ -20206,7 +20206,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":1,"sero":1,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "> 98 %",
+                    "albumine": "99",
                     "qt_risque": "? Risque Conditionnel (CR — favorable vs citalopram/escitalopram)",
                     "ddi_interact": "IMAO, Tramadol, Lithium, Warfarine, QT",
                     "ddi_interact_v2": [
@@ -20549,7 +20549,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":3,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "0%",
+                    "albumine": "18",
                     "qt_risque": "DANGER — Risque CONNU torsades de pointes (CredibleMeds KR)",
                     "ddi_interact": "Médicaments allongeant QT (amiodarone, dronédarone, quinidine, disopyramide, antipsychotiques, macrolides, fluoroquinolones, antifongiques azolés, ondansétron, méthadone, antiémétiques 5HT3 — CI ASSOCIATION), Diurétiques (thiazidiques/anse — hypokaliémie majore QT — CI), CCB non-DHP (BAV/bradycardie sévère), Digoxine (bradycardie + ↑ digoxinémie via P-gp), Insuline/Sulfonylurées (masquage hypo + ↑ QT si hypoK), Clonidine (rebond HTA), AINS (↓ effet + IRA → accumulation rénale)",
                     "ddi_interact_v2": [
@@ -21441,7 +21441,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "40-60",
+                    "albumine": "56",
                     "qt_risque": "? Risque Conditionnel (CR)",
                     "ddi_interact": "Macrolides (augmente concentration +++), Fluoroquinolones (augmente concentration), Rifampicine (diminue concentration), Carbamazepine (diminue), Phenobarbital (diminue), Cimetidine (augmente), Benzodiazepines",
                     "ddi_interact_v2": [
@@ -21745,7 +21745,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":2,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "0,98",
+                    "albumine": "97",
                     "qt_risque": "",
                     "ddi_interact": "AINS, AVK/AOD/HBPM, ISRS, Cimétidine (déconseillé), Aspirine (bithérapie SCA)",
                     "ddi_interact_v2": [
@@ -21925,7 +21925,7 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "",
-                    "albumine": "60%",
+                    "albumine": "35",
                     "qt_risque": "",
                     "ddi_interact": "ASTHME — CI ABSOLUE même collyre (bronchospasme FATAL documenté +++ Timolol), BPCO sévère prudence, IC décompensée, BRADYCARDIE/BAV (additif), β-bloquants systémiques (cumul absorption systémique collyre 10-20 mg PO équivalent), Hypoglycémie masquée DT2, ARRÊT BRUTAL collyre = REBOND HTA oculaire (sevrage progressif)",
                     "ddi_interact_v2": [
@@ -24299,7 +24299,7 @@ const MASTER_DB = {
                     "scores": {"qt":0,"sero":0,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
                     "qt_risque": "",
-                    "albumine": "> 95-99% (Risque surdosage si dénutrition)",
+                    "albumine": "100",
                     "ddi_interact": "Risque Cardiovasculaire majoré par rapport aux autres AINS. Corticoïdes, ISRS.",
                     "ddi_interact_v2": [
                               { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY (Lapi BMJ 2013, Dreischulte KI 2015) ↑ x3-5 IRA. PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE/IEC le temps de l'AINS.", "severite": "danger" },
@@ -24529,7 +24529,7 @@ const MASTER_DB = {
                     "scores": {"qt":0,"sero":0,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
                     "qt_risque": "",
-                    "albumine": "> 95-99% (Risque surdosage si dénutrition)",
+                    "albumine": "99",
                     "ddi_interact": "Hépatotoxique (Usage restreint max 15j). Corticoïdes, ISRS.",
                     "ddi_interact_v2": [
                               { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY (Lapi BMJ 2013, Dreischulte KI 2015) ↑ x3-5 IRA. PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE/IEC le temps de l'AINS.", "severite": "danger" },
@@ -24625,7 +24625,7 @@ const MASTER_DB = {
                     "scores": {"qt":0,"sero":0,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
                     "qt_risque": "",
-                    "albumine": "> 95-99% (Risque surdosage si dénutrition)",
+                    "albumine": "94",
                     "ddi_interact": "PIM Beers 2023 / STOPP H2 / FORTA-D — À ÉVITER chez âgé. TRIPLE WHAMMY rénal (IEC/ARA2 + diurétique + AINS = IRA), Anticoagulants (AVK/AOD — saignement digestif x2-3), Antiagrégants plaquettaires (aspirine/clopidogrel/prasugrel/ticagrélor — saignement digestif x3-5), Corticoïdes (ulcère/hémorragie x4-12 — Piper 1991), ISRS/IRSN (saignement digestif x2-3 — Dalton 2003), IEC/ARA2 (↓ effet antiHTA + IRA), Diurétiques (↓ efficacité + IRA), Lithium (↑ x60% lithémie — toxicité), Méthotrexate (↑ exposition + néphrotoxicité), Ciclosporine/Tacrolimus (néphrotoxicité), Bisphosphonates (ulcère cumulé), Sulfamides hypoglycémiants (déplacement albumine — hypoglycémie), Quinolones (convulsions — théorique), Pemetrexed (toxicité hématologique), DIGOXINE (toxicité), Cardiopathie/IC (CI relative ESC 2021)",
                     "ddi_interact_v2": [
                               { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY : IEC/ARA2 + diurétique + AINS = ↑ x3-5 IRA hospitalisée (Lapi BMJ 2013, Dreischulte KI 2015). PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE +/- IEC le temps de l'AINS (sick day rules).", "severite": "danger" },
@@ -24673,7 +24673,7 @@ const MASTER_DB = {
                     "scores": {"qt":0,"sero":0,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
                     "qt_risque": "",
-                    "albumine": "> 95-99% (Risque surdosage si dénutrition)",
+                    "albumine": "99",
                     "ddi_interact": "PIM Beers 2023 / STOPP H2 / FORTA-D — À ÉVITER chez âgé. TRIPLE WHAMMY rénal (IEC/ARA2 + diurétique + AINS = IRA), Anticoagulants (AVK/AOD — saignement digestif x2-3), Antiagrégants plaquettaires (aspirine/clopidogrel/prasugrel/ticagrélor — saignement digestif x3-5), Corticoïdes (ulcère/hémorragie x4-12 — Piper 1991), ISRS/IRSN (saignement digestif x2-3 — Dalton 2003), IEC/ARA2 (↓ effet antiHTA + IRA), Diurétiques (↓ efficacité + IRA), Lithium (↑ x60% lithémie — toxicité), Méthotrexate (↑ exposition + néphrotoxicité), Ciclosporine/Tacrolimus (néphrotoxicité), Bisphosphonates (ulcère cumulé), Sulfamides hypoglycémiants (déplacement albumine — hypoglycémie), Quinolones (convulsions — théorique), Pemetrexed (toxicité hématologique), DIGOXINE (toxicité), Cardiopathie/IC (CI relative ESC 2021)",
                     "ddi_interact_v2": [
                               { "classe": "TRIPLE WHAMMY RÉNAL (IEC/ARA2 + DIURÉTIQUE + AINS) — IRA", "dcis": ["ramipril", "enalapril", "perindopril", "lisinopril", "captopril", "trandolapril", "zofenopril", "fosinopril", "benazepril", "cilazapril", "imidapril", "moexipril", "quinapril", "spirapril", "losartan", "valsartan", "candesartan", "telmisartan", "olmesartan", "irbesartan", "azilsartan", "eprosartan", "furosemide", "bumetanide", "torasemide", "piretanide", "hydrochlorothiazide", "indapamide", "chlortalidone", "cicletanine", "spironolactone", "eplerenone", "finerenone", "amiloride", "triamterene"], "commentaire": "TRIPLE WHAMMY : IEC/ARA2 + diurétique + AINS = ↑ x3-5 IRA hospitalisée (Lapi BMJ 2013, Dreischulte KI 2015). PIM ABSOLU STOPP/Beers. Si AINS indispensable < 5 j : surveillance créat + hydratation. SUSPENDRE DIURÉTIQUE +/- IEC le temps de l'AINS (sick day rules).", "severite": "danger" },

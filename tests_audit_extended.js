@@ -702,4 +702,32 @@ function runAnticholinergicAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, PANEL, signaturePatient };
+// ============================================================================
+// AUDIT LIAISON PROTÉIQUE (albumine, % PPB — Zhang et al. 2011)
+// ----------------------------------------------------------------------------
+// Fige le champ `albumine` (% liaison aux protéines plasmatiques) contre la
+// Table 1 de Zhang F. et al., Drug Discovery Today 2011;17:475-485 (222 médocs),
+// fournie par le Dr Nunes. Le % PPB varie selon les sources : tolérance ±12 pts —
+// détecte les erreurs grossières (0/vide sur un médoc fortement lié : la logique
+// de DÉPLACEMENT albuminique en dépend) sans imposer une valeur unique stricte.
+function runProteinBindingAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const dump = vm.runInContext(
+        'JSON.stringify(MASTER_DB.MEDICAMENTS.map(function(m){return {dci:m.dci,alb:m.albumine};}))', sandbox);
+    const byDci = {};
+    JSON.parse(dump).forEach(m => { byDci[m.dci] = parseFloat(m.alb); });
+    const ref = JSON.parse(fs.readFileSync(path.join(__dirname, 'ppb_ref_zhang2011.json'), 'utf8'));
+    const TOL = 12;
+    const mis = [];
+    Object.entries(ref).forEach(([dci, exp]) => {
+        if (!(dci in byDci)) return;
+        const cur = byDci[dci];
+        if (isNaN(cur) || Math.abs(cur - exp) > TOL) mis.push(`${dci}: albumine=${isNaN(cur) ? '(vide)' : cur} attendu ~${exp} (Zhang 2011, tol ±${TOL})`);
+    });
+    test('Liaison protéique — base conforme à Zhang 2011 (±12 pts)', () => {
+        assert.ok(mis.length === 0,
+            'écart(s) majeur(s) de % liaison albumine vs Zhang 2011 :\n  ' + mis.join('\n  '));
+    });
+}
+
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, PANEL, signaturePatient };
