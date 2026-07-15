@@ -702,9 +702,11 @@ console.log('\n🧪 Intégrité base MEDICAMENTS');
             `Scores invalides : ${invalid.map(m => `${m.dci}=${m.acb}`).join(', ')}`);
     });
 
-    test('MEDICAMENTS : anticholinergiques canoniques scorés ≥ Boustani 2008', () => {
+    test('MEDICAMENTS : anticholinergiques canoniques flaggés (ACB Boustani OU CIA Briet)', () => {
+        // La charge anticholinergique est captée par max(ACB, CIA) : certains médocs
+        // (cyamémazine, dexchlorphéniramine) sont « Non concerné » sur l'ACB US mais
+        // cotés 3 sur le CIA français (Briet). Le composite utilise les deux échelles.
         const required = {
-            // Sample représentatif — extension possible
             amitriptyline: 3, oxybutynine: 3, hydroxyzine: 3, diphenhydramine: 3,
             paroxetine: 3, quetiapine: 3, olanzapine: 3, solifenacine: 3,
             cyproheptadine: 3, cyamemazine: 3, dexchlorpheniramine: 3,
@@ -714,8 +716,8 @@ console.log('\n🧪 Intégrité base MEDICAMENTS');
         for (const [k, expected] of Object.entries(required)) {
             const m = meds.find(x => sanitizeText(x.dci) === k);
             if (!m) { issues.push(`${k} : absent`); continue; }
-            const cur = parseFloat(m.acb) || 0;
-            if (cur < expected) issues.push(`${m.dci} : ACB=${cur} < ${expected}`);
+            const cur = Math.max(parseFloat(m.acb) || 0, parseFloat(m.cia) || 0);
+            if (cur < expected) issues.push(`${m.dci} : max(ACB,CIA)=${cur} < ${expected}`);
         }
         assert.strictEqual(issues.length, 0, issues.join(' | '));
     });

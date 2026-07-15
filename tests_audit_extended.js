@@ -654,30 +654,29 @@ function runAnticholinergicAudit(test, assert) {
     const byDci = {}; meds.forEach(m => { byDci[m.dci] = m; });
 
     // Invariant : aucun acb=3 avec cia=0 (cia manifestement non renseigné).
-    test('Anticholinergique — aucun acb=3 avec cia=0 (échelle ADS non renseignée)', () => {
+    test('Anticholinergique — aucun acb=3 avec cia=0 (échelle CIA-Briet non renseignée)', () => {
         const bad = meds.filter(m => m.acb >= 3 && m.cia === 0).map(m => m.dci);
         assert.ok(bad.length === 0,
             'anticholinergique(s) structurel(s) avec cia=0 (ADS/Carnahan manquant) : ' + bad.join(', '));
     });
 
-    // Gel des valeurs corrigées (Phase 4b, vérifiées ACB/ADS).
-    const REF = {
-        // Omissions ACB corrigées
-        'Maprotiline': { acb: 2 }, 'Mequitazine': { acb: 3 }, 'Pheniramine': { acb: 2 },
-        'Dosulepine': { acb: 3 }, 'Prochlorperazine': { acb: 2 }, 'Belladonna': { acb: 3, cia: 3 },
-        // CIA (ADS) remis à 3 sur anticholinergiques structuraux
-        'Benztropine': { cia: 3 }, 'Hyoscyamine': { cia: 3 }, 'Nortriptyline': { cia: 3 },
-        'Thioridazine': { cia: 3 }, 'Trifluoperazine': { cia: 3 }, 'Darifenacin': { cia: 3 },
-        // CIA remis à 0 sur NON-anticholinergiques
-        'Tizanidine': { cia: 0 }, 'Methadone': { cia: 0 }, 'Baclofene': { cia: 0 },
-        'Pseudoephedrine': { cia: 0 }, 'Primidone': { cia: 0 },
-    };
-    Object.entries(REF).forEach(([dci, exp]) => {
-        test('Anticholinergique — ' + dci + ' figé (' + Object.entries(exp).map(([k, v]) => k + '=' + v).join(',') + ')', () => {
-            assert.ok(dci in byDci, 'absent de la base : ' + dci);
-            if (exp.acb !== undefined) assert.strictEqual(byDci[dci].acb, exp.acb, dci + ' acb=' + byDci[dci].acb + ' attendu ' + exp.acb);
-            if (exp.cia !== undefined) assert.strictEqual(byDci[dci].cia, exp.cia, dci + ' cia=' + byDci[dci].cia + ' attendu ' + exp.cia);
-        });
+    // Gel contre la TABLE DE RÉFÉRENCE (calculateur charge anticholinergique
+    // Briet 2017 / Boustani 2012, fourni par le Dr Nunes). La base DOIT coller à
+    // cette table pour chaque molécule couverte — toute dérive future échoue.
+    const ref = JSON.parse(fs.readFileSync(path.join(__dirname, 'anticho_ref_briet2017.json'), 'utf8'));
+    const norm = s => vm.runInContext('sanitizeText(' + JSON.stringify(s) + ')', sandbox);
+    const byNorm = {};
+    meds.forEach(m => { byNorm[norm(m.dci)] = m; });
+    const mismatches = [];
+    Object.entries(ref).forEach(([dci, v]) => {
+        const m = byNorm[norm(dci)] || byNorm[norm(dci).replace('phenamine', 'pheniramine')];
+        if (!m) return; // molécule de la table absente de la base : hors périmètre
+        if (m.acb !== v.acb) mismatches.push(`${m.dci}: acb=${m.acb} attendu ${v.acb}`);
+        if (m.cia !== v.cia) mismatches.push(`${m.dci}: cia=${m.cia} attendu ${v.cia}`);
+    });
+    test('Anticholinergique — base conforme à la table de référence (Briet 2017 / Boustani)', () => {
+        assert.ok(mismatches.length === 0,
+            'écart(s) avec la table de référence anticholinergique :\n  ' + mismatches.join('\n  '));
     });
 }
 
