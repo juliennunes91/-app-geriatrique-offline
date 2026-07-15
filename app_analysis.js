@@ -1240,7 +1240,8 @@ function analyserPrescription() {
         //   ACB ≥ 3   : haute charge — RR confusion x1.5, RR mortalité x1.26 (Fox 2011 JAGS)
         //   ACB 1-2   : charge modérée — surveillance
         //   ACB = 0   : aucune
-        // CIA (Carnahan 2006, ADS) sert d'échelle complémentaire (charge sédative/cognitive)
+        // CIA — échelle d'imprégnation anticholinergique de Briet et al. 2017 (échelle
+        // française, complémentaire à l'ACB de Boustani)
         // BHE (Rudolph 2008 ARS) distingue passage central vs périphérique pour cibler la déprescription.
         let acbClass = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
         let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé — confusion, chutes, mortalité (Fox 2011, Beers 2023)'

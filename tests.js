@@ -2146,6 +2146,7 @@ require('./tests_audit_extended').runExtendedAudits(test, assert);
 require('./tests_audit_extended').runExtendedAudits2(test, assert);
 require('./tests_audit_extended').runCollisionAudit(test, assert);
 require('./tests_audit_extended').runQtReferenceAudit(test, assert);
+require('./tests_audit_extended').runAnticholinergicAudit(test, assert);
 
 // ============================================================================
 // LINTER D'INVARIANTS DU CORPUS DE RÈGLES (cross-check moteur/dictionnaires/rendu)

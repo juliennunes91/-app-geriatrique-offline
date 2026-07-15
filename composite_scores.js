@@ -27,11 +27,11 @@ const SCORE_DEFINITIONS = {
         sources: ['Boustani 2008 ARS', 'Salahudeen 2015 (méta-analyse)', 'Coupland JAMA Int Med 2019']
     },
     cia: {
-        label: 'CIA — Charge Inhibiteurs Anticholinergiques (étendue)',
-        description: 'Variante interne intégrant des molécules au passage BHE limité (ammoniums quaternaires inclus). Pour comparaison avec ACB strict.',
+        label: 'CIA — Charge d\'Imprégnation Anticholinergique (Briet 2017)',
+        description: 'Échelle française d\'imprégnation anticholinergique (Briet et al., Fundam Clin Pharmacol 2017) — cotation 1-3 adaptée aux prescriptions gériatriques françaises. Complémentaire à l\'ACB (Boustani), intègre des molécules au passage BHE limité (ammoniums quaternaires inclus).',
         thresholds: { low: 1, moderate: 2, high: 3 },
         units: 'points',
-        sources: ['Adaptation interne']
+        sources: ['Briet et al., Fundam Clin Pharmacol 2017']
     },
     qt: {
         label: 'QTc — Charge QT cumulée',

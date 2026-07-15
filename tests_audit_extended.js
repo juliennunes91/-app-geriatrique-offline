@@ -637,4 +637,48 @@ function runQtReferenceAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, PANEL, signaturePatient };
+// ============================================================================
+// AUDIT CHARGE ANTICHOLINERGIQUE (ACB Boustani 2008 + CIA Briet 2017)
+// ----------------------------------------------------------------------------
+// Fige les corrections de la Phase 4b et verrouille l'invariant qui a révélé
+// les erreurs : un anticholinergique STRUCTUREL (acb=3, échelle Boustani) ne
+// peut PAS avoir cia=0 (échelle d'imprégnation anticholinergique de Briet et al.
+// 2017) — les deux échelles cotent haut les anticholinergiques établis. Détecte
+// tout futur champ cia non renseigné.
+function runAnticholinergicAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const dump = vm.runInContext(
+        'JSON.stringify(MASTER_DB.MEDICAMENTS.map(function(m){return {dci:m.dci,acb:(+m.acb||0),cia:(+m.cia||0)};}))',
+        sandbox);
+    const meds = JSON.parse(dump);
+    const byDci = {}; meds.forEach(m => { byDci[m.dci] = m; });
+
+    // Invariant : aucun acb=3 avec cia=0 (cia manifestement non renseigné).
+    test('Anticholinergique — aucun acb=3 avec cia=0 (échelle ADS non renseignée)', () => {
+        const bad = meds.filter(m => m.acb >= 3 && m.cia === 0).map(m => m.dci);
+        assert.ok(bad.length === 0,
+            'anticholinergique(s) structurel(s) avec cia=0 (ADS/Carnahan manquant) : ' + bad.join(', '));
+    });
+
+    // Gel des valeurs corrigées (Phase 4b, vérifiées ACB/ADS).
+    const REF = {
+        // Omissions ACB corrigées
+        'Maprotiline': { acb: 2 }, 'Mequitazine': { acb: 3 }, 'Pheniramine': { acb: 2 },
+        'Dosulepine': { acb: 3 }, 'Prochlorperazine': { acb: 2 }, 'Belladonna': { acb: 3, cia: 3 },
+        // CIA (ADS) remis à 3 sur anticholinergiques structuraux
+        'Benztropine': { cia: 3 }, 'Hyoscyamine': { cia: 3 }, 'Nortriptyline': { cia: 3 },
+        'Thioridazine': { cia: 3 }, 'Trifluoperazine': { cia: 3 }, 'Darifenacin': { cia: 3 },
+        // CIA remis à 0 sur NON-anticholinergiques
+        'Tizanidine': { cia: 0 }, 'Methadone': { cia: 0 }, 'Baclofene': { cia: 0 },
+        'Pseudoephedrine': { cia: 0 }, 'Primidone': { cia: 0 },
+    };
+    Object.entries(REF).forEach(([dci, exp]) => {
+        test('Anticholinergique — ' + dci + ' figé (' + Object.entries(exp).map(([k, v]) => k + '=' + v).join(',') + ')', () => {
+            assert.ok(dci in byDci, 'absent de la base : ' + dci);
+            if (exp.acb !== undefined) assert.strictEqual(byDci[dci].acb, exp.acb, dci + ' acb=' + byDci[dci].acb + ' attendu ' + exp.acb);
+            if (exp.cia !== undefined) assert.strictEqual(byDci[dci].cia, exp.cia, dci + ' cia=' + byDci[dci].cia + ' attendu ' + exp.cia);
+        });
+    });
+}
+
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, PANEL, signaturePatient };
