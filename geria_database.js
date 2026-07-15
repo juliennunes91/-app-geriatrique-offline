@@ -14973,10 +14973,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'adaptation renale stricte (prudence severe IRC)",
                     "acb": 0,
                     "cia": 3,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":2,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "88",
-                    "qt_risque": "Risque Conditionnel (CR)",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds) — QTc, prudence si facteurs de risque associés",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), Alcool, QT-prolongateurs, Carbamazepine",
                     "ddi_interact_v2": [
                               {
@@ -16757,10 +16757,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG<30: 400mg/24h",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":2,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "15",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds) — fluoroquinolone, QTc",
                     "ddi_interact": "Antiacides, AVK, Theophylline",
                     "ddi_interact_v2": [
                               {
@@ -16816,10 +16816,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'adaptation renale stricte",
                     "acb": 3,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":1,"saign":1,"chute":2,"sedat":2,"hypoG":0},
+                    "scores": {"qt":2,"sero":1,"saign":1,"chute":2,"sedat":2,"hypoG":0},
                     "bhe": "",
                     "albumine": "87-95",
-                    "qt_risque": "Risque Conditionnel (CR)",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds) — TCA, reclassé Conditional->Possible",
                     "ddi_interact": "IMAO (CI), ISRS (syndrome serotoninergique), QT-prolongateurs, Alcool",
                     "ddi_interact_v2": [
                               {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique.","severite":"danger"},
@@ -16853,10 +16853,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG 20-50: 200mg/12h; DFG<20: 200mg/24h",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":2,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "32",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds) — fluoroquinolone, QTc",
                     "ddi_interact": "Antiacides, AVK, AINS",
                     "ddi_interact_v2": [
                               {
@@ -16919,10 +16919,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement",
                     "acb": 3,
                     "cia": 2,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
+                    "scores": {"qt":2,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "0,93",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds) — antipsychotique, QTc dose-dépendant",
                     "ddi_interact": "QT-allongeurs (Olanzapine = CR), Autres APP, Antagonistes D2, Lévodopa (DCL — DECONSEILLE), Anticholinergiques (ACB=3), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Inducteurs CYP1A2 (Tabac, rifampicine), Inhibiteurs CYP1A2 (Fluvoxamine, ciprofloxacine)",
                     "ddi_interact_v2": [
                               { "classe": "QT-allongeurs (Olanzapine = CR)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "erythromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "fluconazole", "voriconazole", "citalopram", "escitalopram", "ondansetron", "domperidone", "methadone", "tramadol", "hydroxyzine"], "commentaire": "Cumul QT — surveillance ECG. CI Pimozide/Thioridazine.", "severite": "warning" },
@@ -17869,10 +17869,10 @@ const MASTER_DB = {
                     "poso_ren": "↓ dose si DFG < 30",
                     "acb": 1,
                     "cia": 1,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
+                    "scores": {"qt":2,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "> 90%",
-                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds) — QTc, prudence si facteurs de risque associés",
                     "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, SMN, EPS, Levodopa antagonisme, Sédatifs centraux, Lithium",
                     "ddi_interact_v2": [
                               { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
@@ -18605,10 +18605,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'adaptation renale stricte",
                     "acb": 0,
                     "cia": 2,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
+                    "scores": {"qt":2,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "90",
-                    "qt_risque": "Risque Conditionnel (CR)",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds) — QTc, prudence si facteurs de risque associés",
                     "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs (Risk_CR), SMN, Agranulocytose, Levodopa antagonisme, EPS (dystonie aiguë), Cumul ACB, Sédatifs centraux, Lithium",
                     "ddi_interact_v2": [
                               { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
@@ -19887,10 +19887,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'adaptation si DFG>10 (elimination hépatique)",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":3,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "96",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "DANGER — Risque CONNU torsades (CredibleMeds Known Risk) — surveillance ECG/QTc, éviter associations QT + hypoK/hypoMg",
                     "ddi_interact": "Ciclosporine, Digoxine, Ergotamine, AVK",
                     "ddi_interact_v2": [
                               {
@@ -20506,10 +20506,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG ≥ 30 : 5-10 mg/j | DFG < 30 : max 5 mg/j | Hémodialyse : max 5 mg/j",
                     "acb": 3,
                     "cia": 3,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":2,"sedat":0,"hypoG":0},
+                    "scores": {"qt":2,"sero":0,"saign":0,"chute":2,"sedat":0,"hypoG":0},
                     "bhe": "0.5 (BHE+/- — moins que oxybutynine, mais ACB=3 — risque cognitif documenté)",
                     "albumine": "98%",
-                    "qt_risque": "(CR) Conditionnel — QTc dose-dépendant (surtout 10 mg)",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds) — QTc, prudence si facteurs de risque associés",
                     "ddi_interact": "PIM Beers 2023 / STOPP B7 chez âgé (préférable à oxybutynine mais reste anticholinergique — réévaluer 4-6 sem), CUMUL ACB (autres anticholinergiques), IACHE/MÉMANTINE (antagonisme PD — Sink JAGS 2008), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir → ↑ x2-3 — max 5 mg/j), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE/HBP non traitée (CI relative), QT-prolongateurs (additif), Hyperthermie estivale (↓ sudation)",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM (Beers 2023, STOPP B7, FORTA-D) — TROUBLES COGNITIFS / CHUTES (moins marqué qu'oxybutynine)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "ACB=3 mais BHE moindre que oxybutynine. Coupland JAMA Int Med 2019 : cumul ACB ↑ démence. PRÉFÉRABLE à oxybutynine si anticholinergique nécessaire. Mais PRÉFÉRER MIRABÉGRON (β3-agoniste, ACB=0) en 1ère intention chez âgé. Réévaluation 4-6 sem.", "severite": "warning" },
@@ -20963,10 +20963,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG 30-60: 50% dose; DFG<30: reduire de 75%",
                     "acb": 0,
                     "cia": 1,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
+                    "scores": {"qt":3,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "40",
-                    "qt_risque": "Risque Conditionnel (CR)",
+                    "qt_risque": "DANGER — Risque CONNU torsades (CredibleMeds Known Risk) — surveillance ECG/QTc, éviter associations QT + hypoK/hypoMg",
                     "ddi_interact": "QT-allongeurs (Sulpiride = CR), Autres APP, Antagonistes D2 (cumul EPS + hyperprolactinémie), Lévodopa (DCL EVITER), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Antiacides/Sucralfate (↓ absorption), Élimination rénale (adapter dose IRC)",
                     "ddi_interact_v2": [
                               { "classe": "QT-allongeurs (Sulpiride = CR — risque dose-dépendant, accumulation IRC)", "dcis": ["amiodarone", "sotalol", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "citalopram", "escitalopram", "trazodone", "ondansetron", "haloperidol", "methadone", "hydroxyzine"], "commentaire": "Cumul QT — surveillance ECG. Élimination rénale → adapter dose si IRC.", "severite": "warning" },
@@ -26001,10 +26001,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement renal",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":2,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":3,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1 (passage BHE — action centrale)",
                     "albumine": "96%",
-                    "qt_risque": "(PR) - Bradycardie et allongement PR, pas QTc directement",
+                    "qt_risque": "DANGER — Risque CONNU torsades (CredibleMeds Known Risk) — surveillance ECG/QTc, éviter associations QT + hypoK/hypoMg",
                     "ddi_interact": "Betabloquants, Digoxine, Diltiazem, Verapamil (bradycardie additive — risque chute/syncope) | Anticholinergiques (antagonisme pharmacologique — perte d'efficacite) | Inhibiteurs CYP3A4/2D6 (augmentation exposition)",
                     "ddi_interact_v2": [
                               {
@@ -27122,10 +27122,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG ≥ 15 : pas d'ajustement (élimination hépatique CYP3A4) | DFG < 15 : prudence (peu de données) | Cirrhose Child-Pugh C : CI",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":3,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
                     "albumine": "70%",
-                    "qt_risque": "Bradycardie sinusale modérée (pas QTc directement allongé, mais bradycardie → risque torsades en cumul)",
+                    "qt_risque": "DANGER — Risque CONNU torsades (CredibleMeds Known Risk) — surveillance ECG/QTc, éviter associations QT + hypoK/hypoMg",
                     "ddi_interact": "Inhibiteurs CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir — CI ABSOLUE ↑ x6-9), Inhibiteurs CYP3A4 MODÉRÉS (vérapamil/diltiazem — CI car double bradycardie ; érythromycine/fluconazole/diltiazem ↑ x2-3), Médicaments QT (sotalol/amiodarone/quinidine — bradycardie majorée → torsades), Diurétiques hypokaliémiants (QT en cas de bradycardie), Inducteurs CYP3A4 (↓ efficacité), Jus de pamplemousse (↑ x2)",
                     "ddi_interact_v2": [
                               {
@@ -29053,10 +29053,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG < 30 : non recommandée (données limitées)",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":3,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":2,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1 (action centrale 5-HT2A/2C)",
                     "albumine": "95%",
-                    "qt_risque": "(KR) - Prolongation QTc dose-dépendante",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds — reclassé Known->Possible)",
                     "ddi_interact": "Inhibiteurs puissants CYP3A4 (kétoconazole, clarithromycine, ritonavir) → ↓ dose à 10 mg | Inducteurs CYP3A4 (rifampicine, phénytoïne, carbamazépine) : éviter | Autres allongeurs QT (CI relative)",
                     "ddi_interact_v2": [
                               {
