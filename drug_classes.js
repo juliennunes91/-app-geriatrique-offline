@@ -91,9 +91,12 @@ const DRUG_CLASSES = {
         dcis: ['quetiapine', 'risperidone', 'olanzapine', 'haloperidol', 'aripiprazole', 'clozapine', 'tiapride', 'loxapine', 'cyamemazine', 'paliperidone', 'amisulpride', 'sulpiride', 'pipamperone']
     },
     benzodiazepine: {
+        // classeMatch 'hypnotique' RETIRÉ : captait doxylamine (antihistaminique) et
+        // phénobarbital (barbiturique). 'benzodiaz' conservé mais _CLASS_EXCLUDE écarte
+        // la thiéno-benzodiazépine (olanzapine, antipsychotique). Z-drugs via dcis.
         aliases: ['benzodiazepine', 'benzodiazepines', 'benzodiazepinesetapparente'],
-        classeMatch: ['benzodiaz', 'hypnotique'],
-        dcis: ['diazepam', 'lorazepam', 'oxazepam', 'bromazepam', 'alprazolam', 'clonazepam', 'clorazepate', 'prazepam', 'zolpidem', 'zopiclone', 'lormetazepam', 'nitrazepam', 'midazolam']
+        classeMatch: ['benzodiaz'],
+        dcis: ['diazepam', 'lorazepam', 'oxazepam', 'bromazepam', 'alprazolam', 'clonazepam', 'clorazepate', 'prazepam', 'zolpidem', 'zopiclone', 'zaleplon', 'lormetazepam', 'nitrazepam', 'midazolam', 'chlordiazepoxide', 'clobazam', 'clotiazepam', 'estazolam', 'loprazolam', 'nordazepam']
     },
     isrs: {
         aliases: ['isrs', 'ssri', 'inhibiteursselectifsdelarecapturedelaserotonine'],
@@ -368,9 +371,19 @@ const _DCI_AMBIGUOUS = new Map();
     }
 })();
 
+// Exclusions de classe : libellés de classe qui contiennent le token par SOUS-CHAÎNE
+// mais désignent une famille SANS rapport (voire opposée). Ex. « thieno-BENZODIAZépine »
+// (olanzapine, antipsychotique) ⊄ benzodiazépines ; « ANTI-DIUREtique » (desmopressine)
+// = l'inverse d'un diurétique. Garde-fous documentés (collisions Phase 5).
+const _CLASS_EXCLUDE = {
+    benzodiazepine: /thieno|dibenzo|antipsychotique/,
+    diuretique: /antidiur/,
+};
+
 function _classMatchesMed(classId, dci, classe) {
     const def = DRUG_CLASSES[classId];
     if (!def) return false;
+    if (_CLASS_EXCLUDE[classId] && _CLASS_EXCLUDE[classId].test(classe)) return false;
     // Match sur classeMatch : exiger début de chaîne (préfixe) pour les acronymes ≤ 5 chars
     // afin d'éviter qu'un descriptif comme "préférer aux AINS" matche un Paracétamol.
     // Pour les chaînes longues (≥ 6 chars, ex: 'antiinflammatoire'), substring reste OK.
@@ -500,7 +513,7 @@ function medPrecisionFamily(classe, dci) {
     if (/corticoïde|corticoide|glucocorticoïde/i.test(cl) && !/inhalé|\bICS\b/i.test(cl)) return 'cortico';
     if (/opio[iï]de|opiac/i.test(cl) && !/antidiarrh|antidépresseur/i.test(cl)) return 'opioide';
     if (/pompe à protons|pompe a protons|\(IPP\)/i.test(cl)) return 'ipp';
-    if (/benzodiazepine|benzodiazépine|hypnotique z/i.test(cl)) return 'bzd';
+    if ((/benzodiaz[eé]pine|hypnotique z/i.test(cl)) && !/thieno|dibenzo|antipsychotique/i.test(cl)) return 'bzd';
     if (/\bAINS\b|anti-inflammatoire non st/i.test(cl)) return 'ains';
     if (/fer\b|iron\b|sulfate ferreux|fumarate ferreux|gluconate ferreux|martia/i.test(cl)) return 'fer';
     // Familles REMEDIES « long cours / dose-dépendant » (Phase 1 — extension)
@@ -519,7 +532,7 @@ function medPrecisionFamily(classe, dci) {
         || /épargnant.*potassium|antialdosterone|antialdostérone|\bARM\b/i.test(cl)) return 'epargnant_k';
     // Diurétiques (anse / thiazidiques) — APRÈS épargnant_k pour ne pas capter spironolactone.
     if (/furosemide|furosémide|bumetanide|bumétanide|torasemide|torasémide|hydrochlorothiazide|indapamide|chlortalidone|chlortalidone|pirétanide|piretanide/i.test(d)
-        || /diur[eé]tique/i.test(cl)) return 'diuretique';
+        || (/diur[eé]tique/i.test(cl) && !/antidiur/i.test(cl))) return 'diuretique';
     if (/\blithium\b/i.test(d)) return 'lithium';
     if (/warfarine|fluindione|acenocoumarol|acénocoumarol|phenprocoumone/i.test(d)
         || /\bAVK\b|antivitamine\s*K/i.test(cl)) return 'avk';

@@ -537,12 +537,7 @@
   ]
  },
  "sujet_jeune_psy": {
-  "alertes-eviter": [
-   "Action immédiate",
-   "Benzodiazépine ≥ 4 semaines",
-   "Cascades iatrogéniques détectées",
-   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
-  ],
+  "alertes-eviter": [],
   "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [

@@ -774,4 +774,43 @@ function runCompositeScoreAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, PANEL, signaturePatient };
+// ============================================================================
+// GOLDEN MASTER D'APPARTENANCE DE CLASSE (collisions non-sous-chaîne)
+// ----------------------------------------------------------------------------
+// Fige la composition EXACTE de chaque classe DRUG_CLASSES (membres = médocs
+// que _classMatchesMed rattache). Complète runCollisionAudit (sous-chaîne DCI) :
+// détecte les collisions par LIBELLÉ DE CLASSE et les contaminations sémantiques
+// (ex. olanzapine « thiéno-benzodiazépine » ⊄ benzos ; desmopressine
+// « antidiurétique » ⊄ diurétiques). Toute dérive d'appartenance = revue.
+function runClassMembershipAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const current = JSON.parse(vm.runInContext(`(function(){
+        var meds = MASTER_DB.MEDICAMENTS.map(function(m){return {dci:m.dci, ndci:sanitizeText(m.dci), nclasse:sanitizeText(m.classe||'')};});
+        var res = {};
+        for (var cid in DRUG_CLASSES) {
+            var mem = [];
+            meds.forEach(function(m){ try { if (_classMatchesMed(cid, m.ndci, m.nclasse)) mem.push(m.dci); } catch(e){} });
+            res[cid] = mem.sort();
+        }
+        return JSON.stringify(res);
+    })()`, sandbox));
+    const goldenPath = path.join(__dirname, 'class_members_golden.json');
+    if (!fs.existsSync(goldenPath) || process.env.GOLDEN_UPDATE === '1') {
+        fs.writeFileSync(goldenPath, JSON.stringify(current, null, 1));
+        console.log('  ℹ️  Golden d\'appartenance de classe ' + (process.env.GOLDEN_UPDATE === '1' ? 'RÉGÉNÉRÉ' : 'CRÉÉ'));
+        return;
+    }
+    const golden = JSON.parse(fs.readFileSync(goldenPath, 'utf8'));
+    Object.keys(golden).forEach(cid => {
+        test('Appartenance de classe — ' + cid, () => {
+            const g = new Set(golden[cid] || []), c = new Set(current[cid] || []);
+            const added = [...c].filter(x => !g.has(x)).map(x => '+' + x);
+            const removed = [...g].filter(x => !c.has(x)).map(x => '-' + x);
+            const diff = added.concat(removed);
+            assert.ok(diff.length === 0,
+                'composition de classe modifiée (si voulu : GOLDEN_UPDATE=1) : ' + diff.join(', '));
+        });
+    });
+}
+
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, PANEL, signaturePatient };
