@@ -1727,7 +1727,7 @@ const GERIA_RECOS_DB = {
             ref_code: "BEERS-MUSC",
             section: "Musculo",
             titre: "Myorelaxants à éviter (méthocarbamol, tizanidine, baclofène systémique)",
-            message: "Myorelaxants systémiques (méthocarbamol, tizanidine, baclofène oral à haute dose) : sédation, effets anticholinergiques, efficacité non prouvée à long terme. PIM selon Beers/PRISCUS.",
+            message: "Myorelaxants systémiques : sédation, faiblesse, chutes, efficacité non prouvée à long terme. Méthocarbamol = PIM Beers 2023 ; tizanidine et baclofène = PIM PRISCUS 2.0 / EU(7)-PIM (baclofène surtout si DFG < 60). NB : Beers 2023 EXCLUT explicitement tizanidine et baclofène de son critère myorelaxant.",
             severite: "warning",
             condition: {
                 med_keys: ["methocarbamol", "tizanidine", "baclofene", "thiocolchicoside"]
@@ -1890,7 +1890,7 @@ const GERIA_RECOS_DB = {
             ref_code: "STOPPFrail-6",
             section: "SNC",
             titre: "Inhibiteur acétylcholinestérase / Mémantine si démence sévère (MMSE < 10)",
-            message: "STOPPFrail : Inhibiteur de l'acétylcholinestérase ou mémantine si démence sévère (MMSE < 10 ou stade avancé) ou si pas de bénéfice observé. Envisager l'arrêt progressif.",
+            message: "Démence sévère (MMSE < 10 / stade avancé) ou absence de bénéfice : envisager l'arrêt progressif. STOPPFrail retient la MÉMANTINE ; pour les anticholinestérasiques (donépézil, rivastigmine, galantamine), l'arrêt relève de la déprescription de bon usage — le consensus Delphi STOPPFrail n'a PAS retenu les IAChE.",
             severite: "warning",
             condition: {
                 med_keys: ["donepezil", "rivastigmine", "galantamine", "memantine"],
