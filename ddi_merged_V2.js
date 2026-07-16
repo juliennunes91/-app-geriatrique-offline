@@ -2279,10 +2279,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Ciclosporin",
   "victim": "Felodipine",
-  "auc_ratio": 11.343,
+  "auc_ratio": 3,
   "mechanism": "Inhibition CYP3A4 - Ki=0.06uM [I]=0.7uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -2290,10 +2290,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Ciclosporin",
   "victim": "Fentanyl",
-  "auc_ratio": 11.343,
+  "auc_ratio": 2,
   "mechanism": "Inhibition CYP3A4 - Ki=0.06uM [I]=0.7uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) ; fentanyl souvent IV (faible premier passage) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -2356,10 +2356,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Ciclosporin",
   "victim": "Nicardipine",
-  "auc_ratio": 11.343,
+  "auc_ratio": 1.5,
   "mechanism": "Inhibition CYP3A4 - Ki=0.06uM [I]=0.7uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "DIRECTION RÉELLE INVERSE : la nicardipine élève la ciclosporine (inh. CYP3A4/P-gp), pas l'inverse (magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -3291,10 +3291,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Cobicistat",
   "victim": "Diltiazem",
-  "auc_ratio": 18.5,
+  "auc_ratio": 3,
   "mechanism": "Inhibition CYP3A4 - Ki=0.009uM [I]=2.1uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) ; diltiazem lui-même inhibiteur CYP3A modéré [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -3390,10 +3390,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Cobicistat",
   "victim": "Loprazolam",
-  "auc_ratio": 11.915,
+  "auc_ratio": 1.5,
   "mechanism": "Inhibition CYP3A4 - Ki=0.009uM [I]=2.1uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "Loprazolam = nitrobenzodiazépine (nitro-réduction/glucuronidation), voie CYP3A4 MINEURE : pas d'interaction majeure justifiée (magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -3401,10 +3401,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Cobicistat",
   "victim": "Manidipine",
-  "auc_ratio": 18.5,
+  "auc_ratio": 6,
   "mechanism": "Inhibition CYP3A4 - Ki=0.009uM [I]=2.1uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -3423,10 +3423,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Cobicistat",
   "victim": "Nifedipine",
-  "auc_ratio": 18.5,
+  "auc_ratio": 6,
   "mechanism": "Inhibition CYP3A4 - Ki=0.009uM [I]=2.1uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -3445,10 +3445,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Cobicistat",
   "victim": "Nitrendipine",
-  "auc_ratio": 18.5,
+  "auc_ratio": 6,
   "mechanism": "Inhibition CYP3A4 - Ki=0.009uM [I]=2.1uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -13367,10 +13367,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Ritonavir",
   "victim": "Diltiazem",
-  "auc_ratio": 19.652,
+  "auc_ratio": 3,
   "mechanism": "Inhibition CYP3A4 - Ki=0.014uM [I]=15.0uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) ; diltiazem lui-même inhibiteur CYP3A modéré [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -13499,10 +13499,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Ritonavir",
   "victim": "Loprazolam",
-  "auc_ratio": 12.367,
+  "auc_ratio": 1.5,
   "mechanism": "Inhibition CYP3A4 - Ki=0.014uM [I]=15.0uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "Loprazolam = nitrobenzodiazépine, voie CYP3A4 MINEURE : pas d'interaction majeure justifiée (magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -13521,10 +13521,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Ritonavir",
   "victim": "Manidipine",
-  "auc_ratio": 19.652,
+  "auc_ratio": 6,
   "mechanism": "Inhibition CYP3A4 - Ki=0.014uM [I]=15.0uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -13565,10 +13565,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Ritonavir",
   "victim": "Nifedipine",
-  "auc_ratio": 19.652,
+  "auc_ratio": 6,
   "mechanism": "Inhibition CYP3A4 - Ki=0.014uM [I]=15.0uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -13587,10 +13587,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Ritonavir",
   "victim": "Nitrendipine",
-  "auc_ratio": 19.652,
+  "auc_ratio": 6,
   "mechanism": "Inhibition CYP3A4 - Ki=0.014uM [I]=15.0uM - modele statique FDA",
   "category": null,
-  "note": null,
+  "note": "(magnitude modélisée — modèle statique, non mesurée) [revu]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
