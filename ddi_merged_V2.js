@@ -3214,10 +3214,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Cobicistat",
   "victim": "Atazanavir",
-  "auc_ratio": 11,
+  "auc_ratio": 3,
   "mechanism": "Boosting PK",
   "category": "Fort inhibiteur / Contre-indication probable",
-  "note": null,
+  "note": "Boosting : AUC ~x2.4 (le x11 = Cmin, pas AUC) [corrigé]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
@@ -8362,10 +8362,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Itraconazole",
   "victim": "Triazolam",
-  "auc_ratio": 10.5,
+  "auc_ratio": 27,
   "mechanism": null,
   "category": null,
-  "note": null,
+  "note": "Varhe 1994 CPT: AUC x27 (CYP3A4) [corrigé]",
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
   "source": "DDI_DB"
@@ -11717,10 +11717,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Quinidine",
   "victim": "Venlafaxine",
-  "auc_ratio": 12,
+  "auc_ratio": 1.5,
   "mechanism": null,
   "category": null,
-  "note": null,
+  "note": "Metabolite actif O-desmethyl compense : AUC entite active ~inchangee (parent +20-70%) [corrigé]",
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
   "source": "DDI_DB"
@@ -13191,10 +13191,10 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Ritonavir",
   "victim": "Atazanavir",
-  "auc_ratio": 11,
+  "auc_ratio": 3,
   "mechanism": "Boosting PK (effet voulu)",
   "category": "Fort inhibiteur / Contre-indication probable",
-  "note": null,
+  "note": "Boosting : AUC x2.4-3.4 (le x11 = Cmin, pas AUC) [corrigé]",
   "effet": null,
   "couleur": null,
   "source": "DDI_AUC_DB"
