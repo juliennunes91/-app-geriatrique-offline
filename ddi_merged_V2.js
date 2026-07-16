@@ -391,9 +391,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition CYP3A4",
   "category": "Inhibiteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Amiodarone",
+  "victim": "Simvastatin",
+  "auc_ratio": 1.54,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition modérée (Surveillance recommandée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Amiodarone",
@@ -600,9 +611,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition moderee CYP3A4",
   "category": "Inhibiteur modere / Ajustement dose",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Aprepitant",
+  "victim": "Dexamethasone",
+  "auc_ratio": 2,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Aprepitant",
@@ -1084,9 +1106,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Induction CYP3A4",
   "category": "Inducteur modere / Augmentation dose probable",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Bosentan",
+  "victim": "Ciclosporin",
+  "auc_ratio": 0.54,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Induction modérée (Efficacité diminuée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Bosentan",
@@ -1117,9 +1150,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Induction CYP3A4",
   "category": "Inducteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Bosentan",
+  "victim": "Simvastatin",
+  "auc_ratio": 0.66,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Induction modérée (Efficacité diminuée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Bosentan",
@@ -1476,13 +1520,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Carbamazepine",
   "victim": "Alprazolam",
-  "auc_ratio": 0.42,
+  "auc_ratio": 0.45,
   "mechanism": "Induction CYP3A4",
   "category": "Inducteur modere / Augmentation dose probable",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Carbamazepine",
+  "victim": "Alprazolam",
+  "auc_ratio": 0.42,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Induction forte (Risque de perte d'efficacité totale)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Carbamazepine",
@@ -3713,9 +3768,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition moderee CYP3A4",
   "category": "Inhibiteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Diltiazem",
+  "victim": "Amlodipine",
+  "auc_ratio": 1.5,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition modérée (Surveillance recommandée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Diltiazem",
@@ -3995,13 +4061,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Diltiazem",
   "victim": "Nifedipine",
-  "auc_ratio": 2.21,
+  "auc_ratio": 2,
   "mechanism": "Inhibition moderee CYP3A4",
   "category": "Inhibiteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Diltiazem",
+  "victim": "Nifedipine",
+  "auc_ratio": 2.21,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Diltiazem",
@@ -4098,9 +4175,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition moderee CYP3A4",
   "category": "Inhibiteur modere / Ajustement dose",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Diltiazem",
+  "victim": "Simvastatin",
+  "auc_ratio": 4.7,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Diltiazem",
@@ -4351,9 +4439,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition CYP2D6",
   "category": "Inhibiteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Dronedarone",
+  "victim": "Metoprolol",
+  "auc_ratio": 1.6,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition modérée (Surveillance recommandée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Dronedarone",
@@ -4578,13 +4677,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Efavirenz",
   "victim": "Atorvastatin",
-  "auc_ratio": 0.42,
+  "auc_ratio": 0.57,
   "mechanism": "Induction CYP3A4",
   "category": "Inducteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Efavirenz",
+  "victim": "Atorvastatin",
+  "auc_ratio": 0.42,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Induction forte (Risque de perte d'efficacité totale)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Efavirenz",
@@ -4604,9 +4714,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Induction CYP3A4 - modele statique FDA",
   "category": null,
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Efavirenz",
+  "victim": "Carbamazepine",
+  "auc_ratio": 0.73,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Induction modérée (Efficacité diminuée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Efavirenz",
@@ -4853,13 +4974,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Efavirenz",
   "victim": "Simvastatin",
-  "auc_ratio": 0.31,
+  "auc_ratio": 0.42,
   "mechanism": "Induction CYP3A4",
   "category": "Inducteur modere / Augmentation dose probable",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Efavirenz",
+  "victim": "Simvastatin",
+  "auc_ratio": 0.31,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Induction forte (Risque de perte d'efficacité totale)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Efavirenz",
@@ -5271,13 +5403,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Erythromycin",
   "victim": "Simvastatin",
+  "auc_ratio": 6,
+  "mechanism": null,
+  "category": null,
+  "note": null,
+  "effet": "Inhibition forte (Surdosage majeur du substrat)",
+  "couleur": "danger",
+  "source": "DDI_DB"
+ },
+ {
+  "perpetrator": "Erythromycin",
+  "victim": "Simvastatin",
   "auc_ratio": 6.2,
   "mechanism": "Inhibition CYP3A4 + OATP1B1",
   "category": "Fort inhibiteur / Contre-indication probable",
   "note": "Kantola et al. 1998: AUC(0-24) simvastatin +6.2x; AUC acide simvastatine +3.9x",
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_DB+literature"
+  "source": "literature"
  },
  {
   "perpetrator": "Erythromycin",
@@ -5363,9 +5506,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition CYP2C19",
   "category": "Inducteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Esomeprazole",
+  "victim": "Clopidogrel",
+  "auc_ratio": 0.62,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Induction modérée (Efficacité diminuée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Esomeprazole",
@@ -5964,13 +6118,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Fluconazole",
   "victim": "Warfarin",
-  "auc_ratio": 2.84,
+  "auc_ratio": 1.77,
   "mechanism": "Inhibition forte CYP2C9",
   "category": "Inhibiteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluconazole",
+  "victim": "Warfarin",
+  "auc_ratio": 2.84,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluconazole",
@@ -6023,9 +6188,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition forte CYP2D6",
   "category": "Inhibiteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluoxetine",
+  "victim": "Amitriptyline",
+  "auc_ratio": 1.9,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition modérée (Surveillance recommandée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluoxetine",
@@ -6052,13 +6228,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Fluoxetine",
   "victim": "Clomipramine",
-  "auc_ratio": 4,
+  "auc_ratio": 2.5,
   "mechanism": "Inhibition forte CYP2D6",
   "category": "Inhibiteur modere / Ajustement dose",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluoxetine",
+  "victim": "Clomipramine",
+  "auc_ratio": 4,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluoxetine",
@@ -6118,13 +6305,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Fluoxetine",
   "victim": "Imipramine",
-  "auc_ratio": 3.5,
+  "auc_ratio": 1.933,
   "mechanism": "Inhibition CYP2D6 - Ki=0.17uM [I]=0.7uM - modele statique FDA",
+  "category": null,
+  "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluoxetine",
+  "victim": "Imipramine",
+  "auc_ratio": 3.5,
+  "mechanism": null,
   "category": null,
   "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluoxetine",
@@ -6261,13 +6459,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Fluoxetine",
   "victim": "Risperidone",
-  "auc_ratio": 4.7,
+  "auc_ratio": 1.75,
   "mechanism": "Inhibition CYP2D6",
   "category": "Inhibiteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluoxetine",
+  "victim": "Risperidone",
+  "auc_ratio": 4.7,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluoxetine",
@@ -6342,9 +6551,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition CYP3A4",
   "category": "Inhibiteur modere / Ajustement dose",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluvoxamine",
+  "victim": "Alprazolam",
+  "auc_ratio": 2,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluvoxamine",
@@ -6408,9 +6628,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition forte CYP1A2",
   "category": "Inhibiteur modere / Ajustement dose",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluvoxamine",
+  "victim": "Clozapine",
+  "auc_ratio": 2.58,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluvoxamine",
@@ -6419,20 +6650,42 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition forte CYP2C19",
   "category": "Inhibiteur modere / Ajustement dose",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluvoxamine",
+  "victim": "Diazepam",
+  "auc_ratio": 2.8,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
+ },
+ {
+  "perpetrator": "Fluvoxamine",
+  "victim": "Duloxetine",
+  "auc_ratio": 2.4,
+  "mechanism": "Inhibition CYP1A2",
+  "category": "Inhibiteur modere / Ajustement dose",
+  "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
  },
  {
   "perpetrator": "Fluvoxamine",
   "victim": "Duloxetine",
   "auc_ratio": 5.6,
-  "mechanism": "Inhibition CYP1A2",
-  "category": "Inhibiteur modere / Ajustement dose",
+  "mechanism": null,
+  "category": null,
   "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluvoxamine",
@@ -6540,9 +6793,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition forte CYP1A2",
   "category": "Inhibiteur modere / Ajustement dose",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluvoxamine",
+  "victim": "Olanzapine",
+  "auc_ratio": 1.52,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition modérée (Surveillance recommandée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluvoxamine",
@@ -6668,13 +6932,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Fluvoxamine",
   "victim": "Warfarin",
-  "auc_ratio": 1.98,
+  "auc_ratio": 1.65,
   "mechanism": "Inhibition CYP1A2+2C9",
   "category": "Inhibiteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Fluvoxamine",
+  "victim": "Warfarin",
+  "auc_ratio": 1.98,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition modérée (Surveillance recommandée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Fluvoxamine",
@@ -10093,20 +10368,42 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition CYP2C19 (activation prodrogue)",
   "category": "Inducteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Omeprazole",
+  "victim": "Clopidogrel",
+  "auc_ratio": 0.58,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Induction modérée (Efficacité diminuée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
+ },
+ {
+  "perpetrator": "Omeprazole",
+  "victim": "Diazepam",
+  "auc_ratio": 1.26,
+  "mechanism": "Inhibition CYP2C19",
+  "category": "Inhibiteur faible / Surveillance",
+  "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
  },
  {
   "perpetrator": "Omeprazole",
   "victim": "Diazepam",
   "auc_ratio": 1.64,
-  "mechanism": "Inhibition CYP2C19",
-  "category": "Inhibiteur faible / Surveillance",
+  "mechanism": null,
+  "category": null,
   "note": null,
   "effet": "Inhibition modérée (Surveillance recommandée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Omeprazole",
@@ -10606,13 +10903,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Paroxetine",
   "victim": "Imipramine",
-  "auc_ratio": 2,
+  "auc_ratio": 1.75,
   "mechanism": "Inhibition CYP2D6 - Ki=0.08uM [I]=0.2uM - modele statique FDA",
+  "category": null,
+  "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Paroxetine",
+  "victim": "Imipramine",
+  "auc_ratio": 2,
+  "mechanism": null,
   "category": null,
   "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Paroxetine",
@@ -10628,13 +10936,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Paroxetine",
   "victim": "Metoprolol",
-  "auc_ratio": 5.1,
+  "auc_ratio": 5,
   "mechanism": "Inhibition forte CYP2D6",
   "category": "Inhibiteur modere / Ajustement dose",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Paroxetine",
+  "victim": "Metoprolol",
+  "auc_ratio": 5.1,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Paroxetine",
@@ -10753,9 +11072,20 @@ const DDI_MERGED_DB = [
   "mechanism": "Inhibition forte (prodrogue)",
   "category": "Inducteur faible / Surveillance",
   "note": null,
+  "effet": null,
+  "couleur": null,
+  "source": "DDI_AUC_DB"
+ },
+ {
+  "perpetrator": "Paroxetine",
+  "victim": "Tramadol",
+  "auc_ratio": 1.4,
+  "mechanism": null,
+  "category": null,
+  "note": null,
   "effet": "Inhibition modérée (Surveillance recommandée)",
   "couleur": "warning",
-  "source": "DDI_AUC_DB+DDI_DB"
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Paroxetine",
@@ -14715,7 +15045,18 @@ const DDI_MERGED_DB = [
   "note": null,
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "both+DDI_DB"
+  "source": "both"
+ },
+ {
+  "perpetrator": "Verapamil",
+  "victim": "Simvastatin",
+  "auc_ratio": 4.42,
+  "mechanism": null,
+  "category": null,
+  "note": null,
+  "effet": "Inhibition forte (Surdosage majeur du substrat)",
+  "couleur": "danger",
+  "source": "DDI_DB"
  },
  {
   "perpetrator": "Verapamil",
@@ -15061,13 +15402,24 @@ const DDI_MERGED_DB = [
  {
   "perpetrator": "Voriconazole",
   "victim": "Tacrolimus",
+  "auc_ratio": 4.4,
+  "mechanism": null,
+  "category": null,
+  "note": null,
+  "effet": "Inhibition forte (Surdosage majeur du substrat)",
+  "couleur": "danger",
+  "source": "DDI_DB"
+ },
+ {
+  "perpetrator": "Voriconazole",
+  "victim": "Tacrolimus",
   "auc_ratio": 5.8,
   "mechanism": "Inhibition forte CYP3A4 (mécanisme-based) + CYP3A5",
   "category": "Fort inhibiteur / Contre-indication probable",
   "note": "PBPK (Moj 2017) + études cliniques: AUC ratio 4-6x (jusqu'à 6x en CYP2C19 PM). Réduction dose tacrolimus 66-75% nécessaire",
   "effet": "Inhibition forte (Surdosage majeur du substrat)",
   "couleur": "danger",
-  "source": "DDI_DB+literature"
+  "source": "literature"
  },
  {
   "perpetrator": "Voriconazole",
