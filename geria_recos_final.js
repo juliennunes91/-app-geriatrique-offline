@@ -2166,7 +2166,7 @@ const GERIA_RECOS_DB = {
             ref_code: "SYND-051-QT",
             section: "Risque rythmique",
             titre: "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
-            message: "SYND_051 : Association ≥ 2 médicaments CredibleMeds Risk_KR (citalopram > 20, halopéridol, quétiapine, dompéridone, ondansétron, méthadone, fluoroquinolones, macrolides, antifongiques azolés, sotalol, amiodarone) ± hypokaliémie/hypomagnésémie/bradycardie = risque torsades de pointes. ECG obligatoire avant, à J7 puis si modif.",
+            message: "SYND_051 : Association ≥ 2 médicaments QT-allongeants ± hypokaliémie/hypomagnésémie/bradycardie = risque de torsades de pointes. CredibleMeds Known Risk : citalopram > 20, halopéridol, dompéridone, ondansétron, méthadone, sotalol, amiodarone, moxifloxacine, érythromycine/clarithromycine, fluconazole. Risque conditionnel (CR) : quétiapine (torsades surtout si surdosage, hypokaliémie ou LQTS congénital). ECG obligatoire avant, à J7 puis si modif.",
             severite: "warning",
             condition: {
                 qt_check: true,
@@ -2243,7 +2243,7 @@ const GERIA_RECOS_DB = {
             ref_code: "PIM-Check-1",
             section: "Cardiovasculaire",
             titre: "Dronédarone + IC (PIM-Check)",
-            message: "PIM-Check : Dronédarone avec insuffisance cardiaque — surmortalité démontrée (étude PALLAS). Contre-indication absolue.",
+            message: "PIM-Check : Dronédarone avec insuffisance cardiaque — surmortalité démontrée en IC sévère (NYHA III–IV) par l'étude ANDROMEDA (Køber, NEJM 2008, arrêtée précocement pour excès de mortalité) ; surmortalité également démontrée en FA permanente (PALLAS, NEJM 2011). Contre-indication absolue en IC.",
             severite: "danger",
             condition: {
                 med_keys: ["dronedarone"],
@@ -2344,11 +2344,11 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_N02",
-            sources: ["BEERS"],
+            sources: ["BEERS", "STOPP3"],
             ref_code: "HEPATO-2",
             section: "Hépatologie",
             titre: "Benzodiazépine / opioïde + cirrhose sévère",
-            message: "Benzodiazépine ou opioïde avec cirrhose sévère : risque d'encéphalopathie hépatique, sédation prolongée par diminution du métabolisme hépatique.",
+            message: "Benzodiazépines et opioïdes = PIM du sujet âgé (Beers 2023 ; alerte renforcée sur la co-prescription BZD + opioïde) et sédatifs à éviter selon STOPP v3. En cas de cirrhose sévère, risque spécifique majoré : encéphalopathie hépatique et sédation prolongée par réduction du métabolisme hépatique (consensus hépatologique AASLD/EASL ; Beers 2023 ne comporte pas de critère médicament–maladie propre à la cirrhose).",
             severite: "danger",
             condition: {
                 med_keys: ["benzodiazepine", "diazepam", "lorazepam", "oxazepam", "alprazolam", "bromazepam", "clorazepate", "opioid", "morphine", "oxycodone", "fentanyl", "tramadol", "codeine"],
