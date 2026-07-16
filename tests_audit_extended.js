@@ -813,4 +813,50 @@ function runClassMembershipAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, PANEL, signaturePatient };
+// ============================================================================
+// INTÉGRITÉ STRUCTURELLE DES BASES D'INTERACTIONS (Phase 3)
+// ----------------------------------------------------------------------------
+// Le thésaurus ANSM (ddi_general) est un export officiel : on ne vérifie pas son
+// contenu contre la littérature (circulaire) mais son INTÉGRITÉ DE TRANSCRIPTION —
+// et on la FIGE : couleur valide, cohérence libellé↔couleur, pas d'auto-paire,
+// pas de description vide. Attrape toute entrée malformée ajoutée au fil de l'eau.
+function runDdiIntegrityAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const gen = JSON.parse(vm.runInContext('JSON.stringify(typeof DDI_GENERAL_DB!=="undefined"?DDI_GENERAL_DB:[])', sandbox));
+    const merged = JSON.parse(vm.runInContext('JSON.stringify(typeof DDI_MERGED_DB!=="undefined"?DDI_MERGED_DB:[])', sandbox));
+    const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[^a-z ]/g, '').trim();
+    const okColor = { danger: 1, warning: 1, info: 1 };
+
+    test('ANSM — couleurs valides (danger/warning/info)', () => {
+        const bad = gen.filter(d => d.couleur && !okColor[d.couleur]).map(d => d.d1 + '+' + d.d2);
+        assert.ok(bad.length === 0, 'couleur invalide : ' + bad.slice(0, 10).join(', '));
+    });
+    test('ANSM — cohérence libellé de gravité ↔ couleur', () => {
+        const bad = [];
+        gen.forEach(d => (d.details || []).forEach(dt => {
+            const l = norm(dt.level);
+            let exp = null;
+            if (/majeure|contreindication|deconseillee/.test(l)) exp = 'danger';
+            else if (/surveillance|precaution|prendre en compte/.test(l)) exp = 'warning';
+            if (exp && dt.couleur && dt.couleur !== exp) bad.push(`${d.d1}+${d.d2}:"${dt.level}"=${dt.couleur}≠${exp}`);
+        }));
+        assert.ok(bad.length === 0, bad.slice(0, 10).join(' | '));
+    });
+    test('ANSM — pas d\'auto-paire (d1==d2) ni d1/d2 manquant', () => {
+        const bad = gen.filter(d => !d.d1 || !d.d2 || norm(d.d1) === norm(d.d2)).map((d, i) => (d.d1 || '?') + '+' + (d.d2 || '?'));
+        assert.ok(bad.length === 0, bad.slice(0, 10).join(', '));
+    });
+    test('ANSM — aucune description vide', () => {
+        const bad = [];
+        gen.forEach(d => (d.details || []).forEach(dt => { if (!dt.desc || !String(dt.desc).trim()) bad.push(d.d1 + '+' + d.d2); }));
+        assert.ok(bad.length === 0, bad.slice(0, 10).join(', '));
+    });
+    test('DDI PK (merged) — pas d\'auto-paire ni auc_ratio négatif', () => {
+        const nm = s => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const bad = merged.filter(d => (nm(d.perpetrator) && nm(d.perpetrator) === nm(d.victim)) || (d.auc_ratio != null && d.auc_ratio < 0))
+            .map(d => d.perpetrator + '+' + d.victim);
+        assert.ok(bad.length === 0, bad.slice(0, 10).join(', '));
+    });
+}
+
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runDdiIntegrityAudit, PANEL, signaturePatient };
