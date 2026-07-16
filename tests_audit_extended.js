@@ -859,4 +859,28 @@ function runDdiIntegrityAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runDdiIntegrityAudit, PANEL, signaturePatient };
+// ============================================================================
+// COMPLÉTUDE POSOLOGIE (poso_ger / poso_ren) — Phase 4e
+// ----------------------------------------------------------------------------
+// Pas de base synthétique unique pour les adaptations gér./rénales (éparpillées
+// RCP/KDIGO). À défaut de fixture, on FIGE la COMPLÉTUDE : chaque médoc doit avoir
+// poso_ger ET poso_ren non vides, et un médoc à élimination rénale doit mentionner
+// une adaptation (seuil DFG) OU dire explicitement « pas d'ajustement ».
+function runPosologyCompletenessAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const meds = JSON.parse(vm.runInContext(
+        'JSON.stringify(MASTER_DB.MEDICAMENTS.map(function(m){return {dci:m.dci,classe:m.classe,pg:m.poso_ger,pr:m.poso_ren};}))', sandbox));
+    test('Posologie — poso_ger et poso_ren jamais vides', () => {
+        const bad = meds.filter(m => !m.pg || !String(m.pg).trim() || !m.pr || !String(m.pr).trim()).map(m => m.dci);
+        assert.ok(bad.length === 0, 'poso vide : ' + bad.slice(0, 15).join(', '));
+    });
+    // Un médoc à élimination rénale notoire doit adresser le rénal (seuil OU « pas d'ajustement »).
+    const RENAL = /aod|anti-xa|dabigatran|apixaban|rivaroxaban|edoxaban|metformin|gliptin|digoxin|lithium|colchicin|allopurinol|aminoglycos|gentamic|amikac|vancomyc|nitrofuranto|acyclovir|aciclovir|valaciclovir|gabapentin|pregabalin|sotalol|atenolol/i;
+    const ADDR = /dfg|clcr|clairance|ml\/min|dialyse|insuffisance r[eé]nale|adapter|r[eé]duire|contre-indi|pas d.ajustement|elimination biliaire/i;
+    test('Posologie — médocs à élimination rénale adressent le rénal', () => {
+        const bad = meds.filter(m => RENAL.test(m.dci + ' ' + m.classe) && !ADDR.test(String(m.pr))).map(m => m.dci);
+        assert.ok(bad.length === 0, 'élimination rénale sans mention d\'adaptation : ' + bad.join(', '));
+    });
+}
+
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
