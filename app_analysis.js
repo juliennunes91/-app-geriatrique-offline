@@ -416,6 +416,7 @@ function preCalculerScores() {
     scoreACB_global = 0; scoreCIA_global = 0; maxQTLevel_global = 0;
     globalQT_CountKR = 0; globalQT_CountCR_PR = 0; infoQT_global = [];
 
+    // Passe 1 — ACB/CIA + QT établi (KR) et possible (PR) : inconditionnels.
     activeMeds.forEach(m => {
         let ref = m.db_ref; if (!ref) return;
         // Cache parseFloat dans db_ref pour éviter recalculs
@@ -424,7 +425,48 @@ function preCalculerScores() {
         if (ref._cia > 0) scoreCIA_global += ref._cia;
         let qt = String(ref.qt_risque || "");
         if (qt.includes("(KR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 2); infoQT_global.push(m.dci); globalQT_CountKR++; }
-        else if (qt.includes("(PR)") || qt.includes("(CR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 1); infoQT_global.push(m.dci); globalQT_CountCR_PR++; }
+        else if (qt.includes("(PR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 1); infoQT_global.push(m.dci); globalQT_CountCR_PR++; }
+    });
+
+    // Passe 2 — QT CONDITIONNEL (CR) : ne compte QUE si la condition propre au
+    // médicament est réunie chez CE patient (ions bas, bradycardie, QT-établi
+    // co-prescrit…). Un médicament CR isolé sans sa condition ne monte plus la
+    // charge QT → fin des fausses alertes (diurétique seul à kaliémie normale,
+    // IPP isolé, inhibiteur CYP sans substrat QT co-prescrit, etc.).
+    activeMeds.forEach(m => {
+        let ref = m.db_ref; if (!ref) return;
+        if (!String(ref.qt_risque || "").includes("(CR)")) return;
+        if (_qtCrConditionMet(ref)) {
+            maxQTLevel_global = Math.max(maxQTLevel_global, 1);
+            infoQT_global.push(m.dci);
+            globalQT_CountCR_PR++;
+        }
+    });
+}
+
+/**
+ * Le risque QT conditionnel (CR) d'un médicament est-il ACTIVÉ chez ce patient ?
+ * S'appuie sur le champ structuré `qt_cr.conditions` (geria_database.js).
+ * Chaque mécanisme (inducteur électrolytique, inhibiteur PK, bradycardisant,
+ * dose-dépendant) porte sa/ses condition(s) déclenchante(s) propres.
+ * Absence de données structurées → comportement historique (on compte).
+ */
+function _qtCrConditionMet(ref) {
+    const cr = ref.qt_cr;
+    if (!cr || !Array.isArray(cr.conditions)) return true;
+    const K  = getBioVal('patientK');   // kaliémie (NaN si absente)
+    const Mg = getBioVal('bioMg');       // magnésémie (NaN si absente)
+    const comorbs = (typeof activeComorbs !== 'undefined' && Array.isArray(activeComorbs)) ? activeComorbs : [];
+    return cr.conditions.some(c => {
+        switch (c) {
+            case 'hypoK':  return K  > 0 && K  < 3.5;   // BIO_001
+            case 'hypoMg': return Mg > 0 && Mg < 0.7;   // BIO_006
+            case 'bradycardie': return comorbs.indexOf('PAT_035') !== -1; // bradycardie/BAV
+            case 'association_qt':
+            case 'substrat_qt_coprescrit': return globalQT_CountKR >= 1;  // un QT établi co-prescrit
+            case 'surdosage': return false; // dose non structurée → non auto-détectable
+            default: return false;
+        }
     });
 }
 

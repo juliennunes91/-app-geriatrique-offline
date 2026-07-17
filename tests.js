@@ -986,6 +986,47 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
 }
 
 // ============================================================================
+// QT CONDITIONNEL (CR) — déclenchement gaté sur la condition propre au médoc
+// ============================================================================
+console.log('\n🧪 Oracle — QT conditionnel (CR) gaté sur la condition patient');
+{
+    const { analyzeCase } = require('./oracle_harness');
+    const hasQT = out => (out._synthData && Array.isArray(out._synthData.riskChips)
+                          && out._synthData.riskChips.some(c => /^QT /.test(c.label || '')))
+                      || /QT (Conditionnel|Possible|Établi)/.test((out._html && out._html['alertes-synthese']) || '');
+
+    // Inducteur électrolytique SEUL, ions normaux, pas de QT-établi co-prescrit → PAS de charge QT
+    test('Ésoméprazole seul, ions normaux → pas de charge QT (fin du faux positif)', () => {
+        assert.ok(!hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Esomeprazole'], bio: { k: 4.2, mg: 0.9 } })));
+    });
+    test('HCTZ seul, kaliémie normale → pas de charge QT', () => {
+        assert.ok(!hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Hydrochlorothiazide'], bio: { k: 4.2 } })));
+    });
+    // Même médicament AVEC sa condition déclenchante → la charge QT réapparaît
+    test('Ésoméprazole + hypomagnésémie (0.5) → charge QT activée', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Esomeprazole'], bio: { k: 4.2, mg: 0.5 } })));
+    });
+    test('HCTZ + hypokaliémie (3.0) → charge QT activée', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Hydrochlorothiazide'], bio: { k: 3.0 } })));
+    });
+    // Molécule déclassée (vérapamil, non torsadogène) : jamais de charge QT, même hypoK
+    test('Vérapamil (déclassé) + hypokaliémie → toujours pas de charge QT', () => {
+        assert.ok(!hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Verapamil'], bio: { k: 3.0 } })));
+    });
+    // Trazodone (CR authentique CredibleMeds) : gaté sur surdosage/association_qt/hypoK
+    test('Trazodone (CR) seul, ions normaux → pas de charge QT', () => {
+        assert.ok(!hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Trazodone'], bio: { k: 4.2 } })));
+    });
+    test('Trazodone (CR) + hypokaliémie (3.0) → charge QT activée', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Trazodone'], bio: { k: 3.0 } })));
+    });
+    // Sanity : un QT établi (KR) reste inconditionnel
+    test('Citalopram (KR) seul → charge QT inconditionnelle', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Citalopram'] })));
+    });
+}
+
+// ============================================================================
 // EXTRACTEUR DE TEXTE LIBRE (POC Tier 1)
 // ============================================================================
 console.log('\n🧪 GeriaTextExtractor — POC Tier 1');

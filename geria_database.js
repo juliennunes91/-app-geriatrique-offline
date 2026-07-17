@@ -5215,6 +5215,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "95%",
                     "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "ANSM/RCP (effet de classe diuretique ; hors CredibleMeds)" },
                     "ddi_interact": "Bloc DDI commun diurétique anse (cf Furosémide) : AINS triple whammy, IEC/ARA2 (hypotension 1ère dose), Digoxine (hypoK), Lithium (↑ lithémie), Aminosides (ototoxicité), Sulfonylurées, Médicaments QT (torsades par hypoK), Corticoïdes (cumul hypoK), IRSS/Carbamazépine (hyponatrémie), Probénécide (↓ effet), Cholestyramine (↓ absorption)",
                     "ddi_interact_v2": [
                               { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "↓ effet + IRA. Triple whammy = NTA. FORTA-D.", "severite": "danger" },
@@ -6785,6 +6786,7 @@ const MASTER_DB = {
                     "bhe": "0.0",
                     "albumine": "> 75%",
                     "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "ANSM/RCP (effet de classe ; hors CredibleMeds)" },
                     "ddi_interact": "Bloc DDI thiazidiques commun : AINS triple whammy + ↓ effet, IEC/ARA2 (hypotension, hyponatrémie), Lithium ↑ lithémie/intoxication, Digoxine (hypoK potentialise toxicité), Médicaments QT (torsades), IRSS/Carbamazépine (HYPONATRÉMIE SÉVÈRE +++), Corticoïdes (cumul hypoK), Sulfonylurées/Insuline (hyperglycémie), Calcium/Vit D (hypercalcémie — risque + marqué que HCTZ par T½ longue), Allopurinol (goutte), Photosensibilisation (moindre que HCTZ)",
                     "ddi_interact_v2": [
                               { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "↓ effet antiHTA + IRA. Triple whammy = NTA.", "severite": "danger" },
@@ -6928,10 +6930,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement strict (élimination hépatique) MAIS NÉPHROTOXICITÉ DOSE-DÉPENDANTE → adaptation dose selon créatinine + dosage sérique C0 ou C2 (HPLC/immunoenzymatique) | Si créat ↑ > 30% baseline : ↓ dose 25-50% ou arrêt temporaire",
                     "acb": 0,
                     "cia": 1,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "90%",
-                    "qt_risque": "(CR) Conditionnel — QTc rapporté si hypoK/hypoMg",
+                    "qt_risque": "(--) Pas de QT intrinseque — interaction PK (inhibiteur CYP3A4/P-gp) elevant un substrat QT co-prescrit +/- hypomagnesemie.",
                     "ddi_interact": "ALLOPURINOL/FÉBUXOSTAT (↑ ciclosporine), COLCHICINE (CI absolue IRC — rhabdomyolyse/aplasie ; DFG normal ↓ 50-75% + surveillance), STATINES (rhabdomyolyse — simvastatine CI ; atorvastatine max 10 mg, rosuvastatine max 5 mg, pravastatine/fluvastatine préférées), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir → ↑ ciclosporine x3-4 — ↓ dose 25-50%), INDUCTEURS CYP3A4 (rifampicine/phénytoïne/carbamazepine/millepertuis → ↓ ciclosporine x2-4 — rejet), DIGOXINE (↑ digoxinémie x2 par P-gp), DABIGATRAN/EDOXABAN (CI ABSOLUE — substrat P-gp), DRONÉDARONE (CI — ↑ exposition), AINS (néphrotoxicité additive), IEC/ARA2 + DIURÉTIQUES (hyperK, IRA), TACROLIMUS/ÉVÉROLIMUS (CI absolue — cumul néphrotoxicité), VACCINS VIVANTS (CI), JUS DE PAMPLEMOUSSE (↑ exposition x2), Anti-TNF/biothérapies (cumul infections), MÉTHOTREXATE (cumul toxicité), MYCOPHÉNOLATE (cumul immunosuppression)",
                     "ddi_interact_v2": [
                               { "classe": "Colchicine — CONTRE-INDICATION ABSOLUE EN IRC (rhabdomyolyse/aplasie mortelle)", "dcis": ["colchicine"], "commentaire": "Inhibition P-gp + CYP3A4 → ↑ exposition colchicine → toxicité majeure (rhabdomyolyse, aplasie médullaire, neuropathie). CI ABSOLUE en IRC. DFG normal : ↓ colchicine 50-75% + NFS/CPK rapprochée. Préférer corticoïde court pour crise goutte.", "severite": "danger" },
@@ -9155,6 +9157,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "80%",
                     "qt_risque": "(CR) Conditionnel — bradycardie + hypoK",
+                    "qt_cr": { "mecanisme": "bradycardisant", "conditions": ["bradycardie", "hypoK", "association_qt"], "source": "CredibleMeds (CR, ajout officiel)" },
                     "ddi_interact": "Bêta-bloquants (CI HFrEF — BAV/IC), Digoxine (↑ x1,3-1,5 — bradycardie additive), Statines (↑ atorvastatine x2,5, simvastatine x4,5 — rhabdomyolyse, RCP simva max 20 mg, atorva max 40 mg), Ivabradine (CI ABSOLUE — ANSM 2014), Ciclosporine/Tacrolimus (↑ x2-3), Carbamazépine (↑ x2-3 — neurotoxicité), Théophylline (↑ exposition), Buspirone (↑ x10 — sédation), Inhibiteurs CYP3A4 puissants (↑ diltiazem), Inducteurs CYP3A4 (↓ efficacité), Sildénafil/PDE5 (hypotension), Anesthésiques généraux (hypotension)",
                     "ddi_interact_v2": [
                               {
@@ -11005,6 +11008,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "97%",
                     "qt_risque": "(CR) Risque Conditionnel — hypoMg torsadogène",
+                    "qt_cr": { "mecanisme": "inducteur_hypoMg", "conditions": ["hypoMg", "hypoK", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "CLOPIDOGREL — ↓ effet antiagrégant MAJEUR (FDA 2009/EMA 2010 — éviter ; switch pantoprazole), DÉPRESCRIPTION STOPPFrail SF05, Méthotrexate HD, HYPOMAGNÉSÉMIE, OSTÉOPOROSE/FRACTURES, VIT B12, C. DIFFICILE, Absorption pH-dépendante, Cilostazol/Diazépam/Phénytoïne/Voriconazole (↑ par inhibition CYP2C19)",
                     "ddi_interact_v2": [
                               { "classe": "CLOPIDOGREL — ↓ effet antiagrégant (FDA 2009/EMA 2010 — ÉVITER ASSOCIATION)", "dcis": ["clopidogrel"], "commentaire": "Esoméprazole = inhibiteur CYP2C19 puissant → ↓ métabolite actif clopidogrel → ↑ événements CV. FDA/EMA recommandent éviter. SWITCH IPP = PANTOPRAZOLE ou RABÉPRAZOLE (peu CYP2C19).", "severite": "danger" },
@@ -12533,6 +12537,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "40-68%",
                     "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "Bloc DDI thiazidiques commun : AINS triple whammy + ↓ effet, IEC/ARA2 (hypotension, hyponatrémie), Lithium ↑ lithémie/intoxication, Digoxine (hypoK potentialise toxicité), Médicaments QT (torsades), IRSS/Carbamazépine (HYPONATRÉMIE SÉVÈRE +++), Corticoïdes (cumul hypoK), Sulfonylurées/Insuline (hyperglycémie), Allopurinol (goutte), Calcium/Vit D (hypercalcémie), PHOTOSENSIBILISATION/CARCINOMES CUTANÉS (méta-analyse Pedersen 2018, ANSM 2018) — protection solaire stricte",
                     "ddi_interact_v2": [
                               { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "↓ effet antiHTA + IRA fonctionnelle. Triple whammy = NTA.", "severite": "danger" },
@@ -12659,6 +12664,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "80%",
                     "qt_risque": "(CR) Risque Conditionnel — EMA 2015 ALERTE QTc (restriction > 65 ans, max 50 mg/j, ECG si FR QTc)",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "hypoMg", "bradycardie", "association_qt"], "source": "CredibleMeds (CR) ; EMA 2015 (restriction >65 ans)" },
                     "ddi_interact": "PIM ABSOLU CHEZ ÂGÉ (Beers 2023/STOPP K1/FORTA-D/PRISCUS/EMA 2015 restriction QTc), CUMUL ACB (ACB=3 fort), QT-PROLONGATEURS (effet additif — torsades), Sédatifs centraux (BZD/opioïdes/alcool/antidépresseurs — chutes), IACHE/MÉMANTINE (antagonisme PD), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), HBP non traitée/Rétention urinaire (CI relative), Iléus/Myasthénie (CI), Hyperthermie estivale (↓ sudation)",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers 2023/STOPP K1/FORTA-D/PRISCUS/EMA 2015)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "EMA 2015 : restriction prescription > 65 ans (mortalité QTc + bénéfice/risque défavorable). À ÉVITER ABSOLUMENT. Pour anxiété : préférer thérapies non médicamenteuses, oxazépam court terme si BZD nécessaire (Beers acceptable courte durée), buspirone, ou ISRS pour anxiété chronique.", "severite": "danger" },
@@ -12957,6 +12963,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "79%",
                     "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "Bloc DDI thiazidiques commun : AINS (↓ effet, triple whammy), IEC/ARA2 (hypotension 1ère dose, hyponatrémie sévère), Lithium (↑ lithémie/intoxication), Digoxine (hypoK potentialise toxicité), Médicaments QT (torsades par hypoK +++), IRSS/Carbamazépine (HYPONATRÉMIE SÉVÈRE +++ chez âgé), Corticoïdes (cumul hypoK), Sulfonylurées/Insuline (hyperglycémie thiazidique), Allopurinol (↑ goutte risque), Calcium/Vit D (hypercalcémie + thiazide ↓ excrétion Ca → hypercalcémie majeure)",
                     "ddi_interact_v2": [
                               { "classe": "AINS — TRIPLE WHAMMY", "dcis": ["ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "etoricoxib", "indometacine", "piroxicam"], "commentaire": "↓ effet antiHTA + IRA fonctionnelle. Triple whammy (AINS+IEC+thiazide) = NTA. FORTA-D.", "severite": "danger" },
@@ -13633,10 +13640,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG < 30 : max 250 mg/j | HD : 200-300 mg/j + dose supplémentaire 50% post-HD",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "< 15%",
-                    "qt_risque": "(CR) Risque Conditionnel — ALLONGEMENT PR + BAV (effet de classe NaV)",
+                    "qt_risque": "(--) Pas de risque QT/TdP — allongement de l'intervalle PR et bloc AV (effet dromotrope, canal NaV). Surveillance ECG de conduction si bradycardie/BAV ou co-bradycardisant.",
                     "ddi_interact": "ALLONGEMENT PR / BAV 2e-3e degré (additif avec β-bloquants/CCB non-DHP/digoxine — ECG baseline + à doses fortes), Inducteurs enzymatiques (carbamazépine/phénytoïne/phénobarbital — ↓ lacosamide 20-30%), Sédatifs centraux, Idéations suicidaires (effet de classe), PAS DE CYP MAJEUR (avantage interactions PK)",
                     "ddi_interact_v2": [
                               { "classe": "ALLONGEMENT PR / BAV — additif avec β-bloquants / CCB non-DHP / digoxine", "dcis": ["bisoprolol", "metoprolol", "atenolol", "nebivolol", "carvedilol", "diltiazem", "verapamil", "digoxine", "amiodarone", "dronedarone", "flecainide"], "commentaire": "Lacosamide allonge PR (effet NaV). Cumul → BAV 2e-3e degré. ECG baseline obligatoire + à 200 mg/j et + à chaque titration. Surveillance si bithérapie cardio.", "severite": "danger" },
@@ -13778,6 +13785,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "97%",
                     "qt_risque": "(CR) Risque Conditionnel — hypomagnésémie torsadogène",
+                    "qt_cr": { "mecanisme": "inducteur_hypoMg", "conditions": ["hypoMg", "hypoK", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "CLOPIDOGREL — ↓ effet antiagrégant (inhibition CYP2C19 → ↓ métabolite actif — FDA 2009/EMA 2010 alerte ; pantoprazole préférable car peu CYP2C19), MÉTHOTREXATE haute dose oncologique (↑ exposition), TICAGRELOR (peu affecté), HYPOMAGNÉSÉMIE (FDA 2011 — usage > 1 an, surveillance Mg), HYPOCALCÉMIE/OSTÉOPOROSE (FDA 2010 — ↑ fractures usage > 1 an, hanche/vertèbre), CARENCE B12 (Vit B12 absorption Ca++ dépendante — surveillance ≥ 2 ans), NÉPHRITE INTERSTITIELLE AIGUË (rare), INFECTIONS C. DIFFICILE (FDA 2012 — ↑ x2-3), PNEUMOPATHIES communautaires (↑ x1,3), ABSORPTION LÉVOTHYROXINE/ANTIFONGIQUES AZOLÉS/FER/CALCIUM (↓ acidité gastrique nécessaire — espacer/surveillance), DÉPRESCRIPTION STOPPFrail SF05",
                     "ddi_interact_v2": [
                               { "classe": "DÉPRESCRIPTION STOPPFrail SF05 / Beers / REMEDIES — si pas d'indication active", "dcis": ["surveillance ipp"], "commentaire": "75% IPP prescriptions abusives. Réévaluer indication active : RGO/œsophagite (8 sem cure courte sauf œsophagite sévère), Helicobacter (10 jours), protection AINS si âgé/ATCD ulcère, protection cortico ≥ 7,5 mg prednisone, hémorragie digestive haute. SINON DÉPRESCRIRE.", "severite": "danger" },
@@ -13963,10 +13971,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG ≥ 80 : 500-1500 mg x2/j | DFG 50-79 : 500-1000 mg x2/j | DFG 30-49 : 250-750 mg x2/j | DFG < 30 : 250-500 mg x2/j | HD : 500-1000 mg x1/j + 250-500 mg post-dialyse",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "< 10%",
-                    "qt_risque": "(CR) Risque Conditionnel — QTc surdosage",
+                    "qt_risque": "(--) Non torsadogene — retire de la liste CredibleMeds QTdrugs (aucun signal).",
                     "ddi_interact": "PEU D'INTERACTIONS PHARMACOCINÉTIQUES (avantage gériatrie — pas CYP, pas P-gp, pas liaison albumine), TROUBLES COMPORTEMENTAUX (irritabilité/agressivité/dépression — Keppra rage 5-15%), IDÉATIONS SUICIDAIRES (effet de classe antiépileptiques — FDA 2008 alerte), Sédatifs centraux (sédation/chutes additives), Carbamazépine/Phénytoïne/Phénobarbital (↓ levetiracetam 20-30% par induction), Méthotrexate (↓ clairance levetiracetam — ↑ exposition)",
                     "ddi_interact_v2": [
                               { "classe": "TROUBLES COMPORTEMENTAUX — Keppra rage / dépression / idéations suicidaires", "dcis": ["antecedent depression", "trouble bipolaire", "antecedent suicidaire"], "commentaire": "Irritabilité/agressivité 5-15% (Keppra rage). Dépression. Idéations suicidaires (effet de classe antiépileptiques — FDA Black Box 2008 alerte). Information patient/entourage. Surveillance. Pyridoxine 100-300 mg/j PO peut atténuer (off-label). Switch lacosamide ou autre AE si intolérable.", "severite": "danger" },
@@ -14207,10 +14215,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement DFG",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "> 99%",
-                    "qt_risque": "(CR) Conditionnel — QTc en thyréotoxicose iatrogène",
+                    "qt_risque": "(--) Pas de TdP — la sur-substitution donne FA/arythmie (raccourcit plutot le QT). Cf. thyreotoxicose iatrogene.",
                     "ddi_interact": "ABSORPTION ↓ (sels de fer, calcium, IPP, sucralfate, sevelamer, hydroxyde aluminium/magnésium, cholestyramine, sels de potassium, raloxifène, café — ESPACER ≥ 4 H), INDUCTEURS CYP3A4/UGT (rifampicine, phénytoïne, carbamazepine, phénobarbital, millepertuis — ↑ besoins x1,5-2), AVK warfarine (↑ INR — surveillance), Glucides hyperabs (↓ absorption), AMIODARONE (effet biphasique — hyper-/hypothyroïdie selon période), LITHIUM (↓ T4 — surveillance), INHIBITEURS TYROSINE KINASE (sunitinib/sorafenib/imatinib ↓ T4 — ↑ besoins), ESTROGÈNES (↑ TBG → ↑ besoins), CORTICOÏDES haute dose (↓ TSH faussement), Bêtabloquants (↓ conversion T4→T3 — surveillance), INSULINE/Sulfamides (modifie sensibilité), DIGOXINE (↓ digoxinémie — ↑ besoins en thyréotoxicose), MAGNÉSIUM (espacer ≥ 4h)",
                     "ddi_interact_v2": [
                               { "classe": "ABSORPTION ↓ — Sels de fer / calcium / IPP / sucralfate / sevelamer / antiacides (ESPACER ≥ 4 H)", "dcis": ["sulfate ferreux", "fumarate ferreux", "gluconate ferreux", "fer iv", "carbonate calcium", "citrate calcium", "lanthane carbonate", "sevelamer", "hydroxyde aluminium", "hydroxyde magnesium", "sucralfate", "cholestyramine", "colesevelam", "colestipol", "omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole"], "commentaire": "↓ absorption lévothyroxine (chélation/↓ acidité gastrique nécessaire). ESPACER ≥ 4 HEURES (IPP : prise lévothyroxine 4h après IPP du matin). Café/jus orange : ↓ absorption — eau plate uniquement. Soja : ↓ exposition. Surveillance TSH à introduction de tout chélateur.", "severite": "danger" },
@@ -14482,6 +14490,7 @@ const MASTER_DB = {
                     "bhe": "0 (à dose thérapeutique)",
                     "albumine": "97%",
                     "qt_risque": "(CR) Risque Conditionnel — TORSADES à hautes doses (FDA Black Box 2016)",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage"], "source": "CredibleMeds (CR) ; FDA 2016 (surdosage/abus)" },
                     "ddi_interact": "DOSES ABUSIVES — FDA Black Box 2016 (Torsades fatales — mésusage addictif), C. DIFFICILE/colite pseudo-membraneuse CI ABSOLUE (mégacôlon), Inhibiteurs P-gp (kétoconazole/quinine/vérapamil — ↑ exposition cérébrale, perte protection BHE), Inhibiteurs CYP3A4/2C8 (↑ exposition), QT-prolongateurs (à hautes doses), Opioïdes oraux (cumul rare car loperamide périphérique)",
                     "ddi_interact_v2": [
                               { "classe": "C. DIFFICILE / Colite pseudo-membraneuse / Dysenterie — CI ABSOLUE", "dcis": ["antecedent c difficile", "colite pseudo membraneuse", "dysenterie"], "commentaire": "CI ABSOLUE — risque mégacôlon toxique. Si suspicion diarrhée à toxines : pas de loperamide.", "severite": "danger" },
@@ -15108,7 +15117,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "50-70%",
-                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_risque": "(CR) Conditionnel — QT intrinseque (phenothiazine, blocage hERG) ; ANSM Primalan",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "bradycardie", "association_qt", "surdosage"], "source": "ANSM/RCP Primalan (hors liste CredibleMeds US)" },
                     "ddi_interact": "QT-prolongateurs, CUMUL ACB, IACHE/Mémantine antagonisme, Glaucome/HBP CI, Sédatifs",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM (Beers/STOPP/FORTA-D) — préférer 2ème gén", "dcis": ["age sup 65 ans", "demence"], "commentaire": "Phénothiazine 1ère gén. Préférer cétirizine/loratadine 2ème gén (moins ACB, pas BHE).", "severite": "warning" },
@@ -16378,10 +16388,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement",
                     "acb": 2,
                     "cia": 1,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "73%",
-                    "qt_risque": "(CR) Risque Conditionnel — tachycardie + anomalies ECG",
+                    "qt_risque": "(--) Non torsadogene — effets anticholinergiques/convulsivants (pas QT).",
                     "ddi_interact": "PIM âgé (ANSM — ACB + sympathomimétique + ↓ seuil épileptogène), IMAO non sélectifs CI ABSOLUE (crise HTA), Glaucome angle fermé/HBP/Rétention urinaire CI (effet ACB), ↓ SEUIL ÉPILEPTOGÈNE (ATCD épilepsie/sevrage BZD/alcool — CI), Sympathomimétiques (HTA additive), Anticholinergiques (cumul ACB), Sédatifs centraux, Anesthésiques généraux (cumul)",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM (ANSM) — ÉVITER si possible", "dcis": ["age sup 65 ans"], "commentaire": "ACB + sympathomimétique + sueurs + tachycardie. Préférer paracétamol/tramadol.", "severite": "danger" },
@@ -17395,6 +17405,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "98%",
                     "qt_risque": "(CR) Risque Conditionnel — hypoMg torsadogène",
+                    "qt_cr": { "mecanisme": "inducteur_hypoMg", "conditions": ["hypoMg", "hypoK", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "DÉPRESCRIPTION STOPPFrail SF05/Beers/REMEDIES si pas d'indication active, CLOPIDOGREL (effet modeste — IPP PRÉFÉRABLE avec clopidogrel — Bhatt COGENT 2010), Méthotrexate HD (↑ exposition), HYPOMAGNÉSÉMIE (FDA 2011), OSTÉOPOROSE/FRACTURES (FDA 2010), VIT B12 carence (≥ 2 ans), C. DIFFICILE (FDA 2012), NÉPHRITE INTERSTITIELLE (rare), Absorption pH-dépendante (lévothyroxine/fer/Ca/azolés)",
                     "ddi_interact_v2": [
                               { "classe": "DÉPRESCRIPTION STOPPFrail SF05 / Beers / REMEDIES", "dcis": ["surveillance ipp"], "commentaire": "Réévaluer indication active. SINON DÉPRESCRIRE (75% prescriptions abusives).", "severite": "danger" },
@@ -18515,10 +18526,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG ≥ 60 : 150-600 mg/j | DFG 30-59 : 75-300 mg/j en 2-3 prises | DFG 15-29 : 25-150 mg/j en 1-2 prises | DFG < 15 : 25-75 mg/j en 1 prise. Hémodialyse : dose supplémentaire post-HD (RCP Lyrica)",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":2,"sedat":2,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":2,"sedat":2,"hypoG":0},
                     "bhe": "1 (sédation, troubles cognitifs)",
                     "albumine": "0%",
-                    "qt_risque": "(CR) Conditionnel — QTc rapporté en surdosage/association",
+                    "qt_risque": "(--) Non torsadogene — absent des listes QT.",
                     "ddi_interact": "OPIOÏDES — FDA BLACK BOX 2019 DÉPRESSION RESPIRATOIRE FATALE (morphine, oxycodone, fentanyl, tramadol, codéine — méta-analyses Gomes BMJ 2017/CMAJ 2018), Sédatifs centraux (BZD/Z-drugs/alcool — dépression respi cumulée, FDA 2019), Inhibiteurs IPDE5/Antihypertenseurs (hypotension), Métformine (œdèmes additifs), MILLEPERTUIS/IMAO (interactions noradrénaline théoriques), Insuffisance rénale (accumulation), MÉSUSAGE/DÉPENDANCE (ANSM 2021 — ordonnance sécurisée maintenue catégorie I depuis mai 2021 en France)",
                     "ddi_interact_v2": [
                               { "classe": "OPIOÏDES — FDA BLACK BOX 2019 (DÉPRESSION RESPIRATOIRE FATALE)", "dcis": ["morphine", "oxycodone", "fentanyl", "hydromorphone", "buprenorphine", "tramadol", "codeine", "tapentadol", "methadone", "dihydrocodeine", "poudre d'opium", "pethidine"], "commentaire": "FDA Black Box décembre 2019 : pregabaline + opioïde = ↑ x1,5-3 risque dépression respiratoire FATALE (Gomes BMJ 2017 + CMAJ 2018 : OR 2,5 décès en cohorte Canada). Effet additif dépresseur SNC + dépression respi centrale. Mécanisme : modulation α2δ pré-synaptique + opioïde mu → dépression bulbaire. ÉVITER ou doses minimales + surveillance respiratoire renforcée. PIM FORTA-D chez âgé.", "severite": "danger" },
@@ -18926,10 +18937,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'adaptation (usage court)",
                     "acb": 0,
                     "cia": 2,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "20-50%",
-                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_risque": "(--) Non torsadogene — sympathomimetique (risque hemodynamique : HTA, tachycardie), pas QT.",
                     "ddi_interact": "ANSM 2023 RESTRICTIONS — PRES / AVC ISCHÉMIQUE (alerte renforcée — éviter combinaisons rhume OTC chez âgé/HTA/CV), IMAO non sélectifs CI ABSOLUE (crise HTA), Antihypertenseurs (antagonisme), Antidépresseurs tricycliques (HTA), Glaucome angle fermé CI, HBP/Rétention urinaire CI, Hyperthyroïdie CI, Cardiopathie/coronaropathie/AVC CI, Anesthésiques halogénés (arythmie), Bromocriptine (HTA)",
                     "ddi_interact_v2": [
                               { "classe": "ANSM 2023 — RESTRICTIONS PRES / AVC ischémique (alerte renforcée)", "dcis": ["age sup 65 ans", "hta", "antecedent avc", "antecedent coronaropathie"], "commentaire": "ANSM février 2023 : alerte PRES (Posterior Reversible Encephalopathy Syndrome) + AVC ischémique avec décongestionnants vasoconstricteurs. Évaluation EMA en cours. ÉVITER chez âgé/HTA/ATCD CV.", "severite": "danger" },
@@ -19278,6 +19289,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "97%",
                     "qt_risque": "(CR) Risque Conditionnel — hypoMg torsadogène",
+                    "qt_cr": { "mecanisme": "inducteur_hypoMg", "conditions": ["hypoMg", "hypoK", "association_qt"], "source": "ANSM/RCP (effet de classe IPP ; hors CredibleMeds)" },
                     "ddi_interact": "DÉPRESCRIPTION STOPPFrail SF05/Beers/REMEDIES, Clopidogrel (effet modeste, métabolisme non-CYP), Méthotrexate HD, HYPOMAGNÉSÉMIE (FDA 2011), OSTÉOPOROSE/FRACTURES (FDA 2010), VIT B12 (≥ 2 ans), C. DIFFICILE (FDA 2012), Absorption pH-dépendante",
                     "ddi_interact_v2": [
                               { "classe": "DÉPRESCRIPTION STOPPFrail SF05/Beers/REMEDIES", "dcis": ["surveillance ipp"], "commentaire": "Réévaluer indication active.", "severite": "danger" },
@@ -22432,6 +22444,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "89-95",
                     "qt_risque": "(CR) Risque Conditionnel (CredibleMeds) — QTc surtout en surdosage, association QT ou hypokaliémie",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage", "association_qt", "hypoK"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "IMAO non-sélectifs (CI ABSOLUE), Linézolide (CI), QT-allongeurs (Trazodone = RE — risque ÉTABLI torsades), ISRS/IRSN/Mirtazapine/ATC (sérotoninergique), Sédatifs centraux (très sédatif), Antihypertenseurs (hypotension), Inducteurs/Inhibiteurs CYP3A4, Alcool",
                     "ddi_interact_v2": [
                               { "classe": "IMAO non-sélectifs / IMAO-B forte dose — CONTRE-INDICATION ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et trazodone.", "severite": "danger" },
@@ -23232,10 +23245,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement (métabolisme hépatique CYP3A4). Cirrhose Child C : ↓ dose 70%",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "90%",
-                    "qt_risque": "(CR) Conditionnel — bradycardie + hypoK",
+                    "qt_risque": "(--) Pas de TdP — bloqueur hERG equilibre (blocage Ca-L compensateur). Reste bradycardisant/BAV.",
                     "ddi_interact": "Bêta-bloquants (CI ABSOLUE — BAV, asystolie, choc — surtout IV), Digoxine (↑ x1,5-2 — bradycardie + toxicité), Statines (↑ simvastatine x2,5 → max 20 mg, atorvastatine x2 → max 40 mg, rhabdomyolyse), Ivabradine (CI ABSOLUE — ANSM 2014), AOD (↑ exposition dabigatran/édoxaban/apixaban — saignement), Ciclosporine/Tacrolimus (↑ x2-3), Inhibiteurs CYP3A4 puissants (↑ vérapamil), Inducteurs CYP3A4 (↓), Carbamazépine (↑ x2-3 neurotoxicité), Théophylline/Buspirone (↑ exposition), Lithium (neurotoxicité décrite), Anesthésiques (hypotension/BAV) — PRUDENCE EXTRÊME",
                     "ddi_interact_v2": [
                               {
@@ -27432,10 +27445,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement DFG (élimination hépatique). Prudence DFG < 30.",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1",
                     "albumine": "Donnees limitees",
-                    "qt_risque": "(CR) - QTc rapporté à forte dose",
+                    "qt_risque": "(--) Non torsadogene — agoniste dopaminergique.",
                     "ddi_interact": "Antipsychotiques (antagonisme PD — CI Parkinson), TROUBLES IMPULSIVITÉ (effet de classe DA-agonistes — FDA 2007), HYPOTENSION orthostatique, SOMNOLENCE SUBITE, NAUSÉES (prendre milieu repas), QT-prolongateurs (Risk_CR à forte dose), Métoclopramide CI, Tetrabenazine antagonisme",
                     "ddi_interact_v2": [
                               { "classe": "Antipsychotiques — antagonisme PD (CI Parkinson)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "fluphenazine", "risperidone", "olanzapine", "metoclopramide", "tetrabenazine"], "commentaire": "Antagonisme D2. CI Parkinson — préférer clozapine/quetiapine.", "severite": "danger" },
@@ -27598,10 +27611,10 @@ const MASTER_DB = {
                     "poso_ren": "CI ABSOLUE DFG < 30 (accumulation norpéthidine neurotoxique — convulsions). DFG 30-60 : ↓ dose 50% + éviter usage prolongé.",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":3,"saign":0,"chute":3,"sedat":3,"hypoG":0},
+                    "scores": {"qt": 0,"sero":3,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1",
                     "albumine": "58-75%",
-                    "qt_risque": "(CR) - QTc rapporté en surdosage",
+                    "qt_risque": "(--) Non torsadogene — vrai risque geriatrique : convulsions (norpethidine, IR) et syndrome serotoninergique.",
                     "ddi_interact": "IMAO (CI ABSOLUE — crise hypertensive, hyperthermie maligne) | ISRS (syndrome serotoninergique) | Phenytoine (augmente metabolite toxique)",
                     "ddi_interact_v2": [
                               {
@@ -27738,10 +27751,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG < 30: debuter 25 mg",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
                     "albumine": "96%",
-                    "qt_risque": "(CR) - Modeste allongement QTc",
+                    "qt_risque": "(--) Non torsadogene — TQT negatif (parmi les IPDE5, seul le vardenafil porte un signal QT).",
                     "ddi_interact": "DÉRIVÉS NITRÉS — CI ABSOLUE (collapsus hypotension sévère — espacer ≥ 24h sildénafil/48h tadalafil), RIOCIGUAT — CI ABSOLUE (hypotension sévère HTAP), Alpha-bloquants (hypotension — espacer 6h ou dose minimale), Inhibiteurs CYP3A4 puissants (↑ exposition x3-7 — kétoconazole/ritonavir/clarithromycine — ↓ dose), Antihypertenseurs (hypotension additive), IC sévère/HTA non contrôlée/ATCD AVC/IDM récent (STOPP B14 CI), Priapisme (urgence), Perte audition/vision (urgence), Aspirine + sildénafil dose élevée (saignement modeste)",
                     "ddi_interact_v2": [
                               { "classe": "DÉRIVÉS NITRÉS — CI ABSOLUE (collapsus hypotension sévère)", "dcis": ["trinitrine", "isosorbide dinitrate", "isosorbide mononitrate", "nicorandil", "molsidomine"], "commentaire": "Cumul vasodilatation NO/GMPc → COLLAPSUS. CI ABSOLUE. Espacer ≥ 24h après sildénafil (≥ 48h tadalafil). En cas d'urgence cardio (IDM) sous PDE5 : nitrates SUSPENDUS 24-48h, alternatives morphine + héparine + revascularisation.", "severite": "danger" },
@@ -27775,10 +27788,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG 30-50: max 5 mg/j | DFG < 30: eviter (peu de donnees)",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
                     "albumine": "94%",
-                    "qt_risque": "(CR) - Modeste allongement QTc",
+                    "qt_risque": "(--) Non torsadogene — TQT negatif.",
                     "ddi_interact": "Mêmes interactions sildénafil mais DEMI-VIE LONGUE 36h — espacer ≥ 48h nitrates : DÉRIVÉS NITRÉS CI ABSOLUE (48h), RIOCIGUAT CI ABSOLUE, Alpha-bloquants HBP (Tadalafil 5 mg/j LP autorisé HBP avec α-bloquant — mais surveillance), Inhibiteurs CYP3A4 puissants (↑ exposition x3-5 — ↓ dose), STOPP B14 (CI IC sévère/HTA non contrôlée/IDM-AVC récent), Riociguat CI",
                     "ddi_interact_v2": [
                               { "classe": "DÉRIVÉS NITRÉS — CI ABSOLUE (espacer ≥ 48h car demi-vie longue)", "dcis": ["trinitrine", "isosorbide dinitrate", "isosorbide mononitrate", "nicorandil", "molsidomine"], "commentaire": "Cumul vasodilatation → COLLAPSUS. CI ABSOLUE. DEMI-VIE 36h → ESPACER ≥ 48h nitrates (vs 24h sildénafil).", "severite": "danger" },
@@ -27858,6 +27871,7 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "99.8%",
                     "qt_risque": "(CR) - Allongement QTc par inhibition CYP3A4 (accumulation substrats)",
+                    "qt_cr": { "mecanisme": "inhibiteur_pk", "conditions": ["substrat_qt_coprescrit", "association_qt"], "source": "CredibleMeds (CR) — via inhibition CYP3A4" },
                     "ddi_interact": "INHIBITEUR PUISSANT CYP3A4 + P-gp — interactions majeures avec AOD, statines, ICa, immunosuppresseurs, opiacees, BZD | AOD: STOPP3-C14 risque hemorragique | Simvastatine/Lovastatine CI | Domperidone CI (QTc)",
                     "ddi_interact_v2": [
                               {
@@ -27949,6 +27963,7 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "99%",
                     "qt_risque": "(CR) - Allongement QTc",
+                    "qt_cr": { "mecanisme": "inhibiteur_pk", "conditions": ["substrat_qt_coprescrit", "association_qt"], "source": "CredibleMeds (CR) — via inhibition CYP3A4" },
                     "ddi_interact": "INHIBITEUR PUISSANT CYP3A4 — memes interactions que itraconazole | IPP, Anti-H2 (diminuent absorption — pH-dependante)",
                     "ddi_interact_v2": [
                               {
@@ -28047,10 +28062,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'ajustement",
                     "acb": 1,
                     "cia": 1,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1",
                     "albumine": "91%",
-                    "qt_risque": "(CR) - QTc rapporté",
+                    "qt_risque": "(--) Non torsadogene — risque extrapyramidal/parkinsonisme (pas QT).",
                     "ddi_interact": "Depresseurs SNC (sedation additive) | Anti-Parkinson (antagonisme — CI)",
                     "ddi_interact_v2": [],
                     "suivi_initial": "Recherche syndrome parkinsonien",
@@ -28315,10 +28330,10 @@ const MASTER_DB = {
                     "poso_ren": "CI si DFG < 15",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
                     "albumine": "97%",
-                    "qt_risque": "(CR) - Interaction QTc via inhibition CYP2C8",
+                    "qt_risque": "(--) Non torsadogene — inhibiteur CYP2C8/OATP (interactions statines/repaglinide, pas QT).",
                     "ddi_interact": "Statines (rhabdomyolyse — surtout simvastatine, lovastatine = CI. Prudence ++) | Repaglinide (augmentation x8 — CI) | Anticoagulants (augmente INR) | Pioglitazone (augmente exposition x3)",
                     "ddi_interact_v2": [
                               {
