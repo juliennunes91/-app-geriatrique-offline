@@ -211,7 +211,7 @@ function runExtendedAudits(test, assert) {
         // typos (« STPOP », « BERS »…). Liste calée sur le corpus réel.
         const KNOWN = new Set(['STOPP3', 'STOPP', 'START', 'BEERS', 'FORTA', 'PRISCUS', 'EU7PIM', 'STOPPFRAIL', 'REMEDIES', 'PIM_CHECK',
             'Pharmacovigilance', 'ANSM', 'EMA', 'FDA', 'HAS', 'Maudsley', 'CANMAT', 'KDIGO', 'GOLD', 'SFGG', 'CredibleMeds',
-            'ESC', 'ESC_HTN_2024', 'ESC_HF', 'ESC_AF', 'ESMO', 'ACR', 'IOF', 'ICI', 'ERC', 'ETA/ATA 2023', 'ILAE 2022',
+            'ESC', 'ESC_HTN_2024', 'ESC_HF', 'ESC_AF', 'ESMO', 'ACR', 'IOF', 'ICI', 'ERC', 'ATA 2014/ETA 2013', 'ATA 2016/ETA 2018', 'ILAE 2022',
             'SFGG_SF3PA_SFPC_2026']);
         const bad = JSON.parse(vm.runInContext(`(function(){
             const out=new Set(); const scan=arr=>(arr||[]).forEach(r=>(r.sources||[]).forEach(s=>out.add(s)));

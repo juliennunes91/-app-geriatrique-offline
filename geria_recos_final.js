@@ -3026,7 +3026,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_J02",
-            sources: ["ETA/ATA 2023", "FORTA"],
+            sources: ["ATA 2014/ETA 2013", "FORTA"],
             ref_code: "START-J2",
             section: "Endocrine",
             titre: "Lévothyroxine pour hypothyroïdie confirmée",
@@ -3040,7 +3040,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_J03",
-            sources: ["ETA/ATA 2023"],
+            sources: ["ATA 2016/ETA 2018"],
             ref_code: "START-J3",
             section: "Endocrine",
             titre: "Antithyroïdien de synthèse (ATS) pour hyperthyroïdie",
@@ -4285,17 +4285,17 @@ const RECOS_SUPPLEMENT = [
         }
     },
     {
-        id: "SUP_INT_012", sources: ["BEERS"],
+        id: "SUP_INT_012", sources: ["ANSM"],
         titre: "Lithium + AINS ou diurétique thiazidique : toxicité lithique",
-        message: "Beers 2023 : les AINS et les diurétiques thiazidiques réduisent la clairance rénale du lithium → ↑ lithémie et risque de toxicité (tremblements, confusion, troubles digestifs, atteinte rénale), marge thérapeutique étroite. Éviter l'association ou surveiller étroitement lithémie et fonction rénale.",
+        message: "ANSM (Thésaurus des interactions) : les AINS et les diurétiques thiazidiques réduisent la clairance rénale du lithium → ↑ lithémie et risque de toxicité (tremblements, confusion, troubles digestifs, atteinte rénale), marge thérapeutique étroite. Éviter l'association ou surveiller étroitement lithémie et fonction rénale. NB : la Table 5 de Beers 2023 ne retient, pour le lithium, que les diurétiques de l'anse et les IEC/ARA2/ARNI.",
         severite: "danger",
         condition: { med_keys: ["lithium"], med_keys_2: ["ains", "ibuprofene", "naproxene", "diclofenac", "ketoprofene", "celecoxib", "hydrochlorothiazide", "indapamide", "thiazidique"] },
         alternatives: "Remplacer l'AINS par paracétamol ou opioïde faible. Remplacer le thiazide par IEC/ARA2 ou inhibiteur calcique. Si association inévitable : doser la lithémie à J7-J14 et adapter."
     },
     {
-        id: "SUP_INT_002", sources: ["BEERS", "EU7PIM"],
+        id: "SUP_INT_002", sources: ["BEERS"],
         titre: "Phénytoïne + Cotrimoxazole : risque de toxicité",
-        message: "Beers/EU(7)-PIM : Le TMP-SMX inhibe le métabolisme de la phénytoïne → surdosage (nystagmus, ataxie, convulsions). Éviter l'association ou doser la phénytoïnémie.",
+        message: "Beers 2023 (Table 5) : Le TMP-SMX inhibe le métabolisme de la phénytoïne → surdosage (nystagmus, ataxie, convulsions). Éviter l'association ou doser la phénytoïnémie.",
         severite: "danger",
         condition: { med_keys: ["phenytoine"], med_keys_2: ["cotrimoxazole", "trimethoprime", "sulfamethoxazole"] },
         alternatives: "Préférer un autre antibiotique selon antibiogramme (amoxicilline, fosfomycine pour cystite, nitrofurantoïne selon DFG). Si cotrimoxazole indispensable : doser la phénytoïnémie à J3-J5."
@@ -4376,9 +4376,9 @@ const RECOS_SUPPLEMENT = [
         alternatives: "Réduire la digoxine de 50% à l'introduction de l'amiodarone. Doser la digoxinémie à J7 (cible 0,5-0,9 ng/mL chez l'âgé). Surveiller signes de toxicité (nausées, troubles visuels, bradycardie)."
     },
     {
-        id: "SUP_INT_011", sources: ["BEERS"],
+        id: "SUP_INT_011", sources: ["ANSM"],
         titre: "Inhibiteur calcique non-DHP + Bêtabloquant : trouble conductif",
-        message: "Beers 2023 : L'association vérapamil ou diltiazem + bêtabloquant expose au risque de BAV, bradycardie sévère, insuffisance cardiaque aiguë. À éviter sauf indication spécifique.",
+        message: "ANSM (Thésaurus des interactions) : L'association vérapamil ou diltiazem + bêtabloquant expose au risque de BAV, bradycardie sévère, insuffisance cardiaque aiguë (association déconseillée ; contre-indiquée pour le vérapamil IV). À éviter sauf indication spécifique. NB : cette paire ne figure pas dans la Table 5 de Beers 2023.",
         severite: "danger",
         condition: { med_keys: ["verapamil", "diltiazem"], med_keys_2: ["betabloquant"] },
         alternatives: "Choisir UN SEUL : maintenir le bêtabloquant (priorité HFrEF/post-SCA) et remplacer le non-DHP par un DHP (amlodipine) ou un autre antihypertenseur. Si vérapamil/diltiazem indispensable (FA réfractaire au BB), arrêt progressif du BB sous ECG."
