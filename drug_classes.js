@@ -263,6 +263,11 @@ const DRUG_CLASSES = {
         classeMatch: ['fibrate'],
         dcis: ['fenofibrate', 'gemfibrozil', 'bezafibrate', 'ciprofibrate']
     },
+    calcimimetique: {
+        aliases: ['calcimimetique', 'calcimimetiques'],
+        classeMatch: ['calcimim'],
+        dcis: ['cinacalcet', 'etelcalcetide']
+    },
     dopaminergique: {
         aliases: ['dopaminergique', 'dopaminergiques'],
         classeMatch: ['dopaminergique', 'agonistedopaminergique'],

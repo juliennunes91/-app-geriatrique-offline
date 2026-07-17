@@ -1032,6 +1032,19 @@ console.log('\n🧪 Oracle — QT conditionnel (CR) gaté sur la condition patie
     test('Sotalol (KR format CredibleMeds) seul → charge QT reconnue', () => {
         assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Sotalol'] })));
     });
+    // Nouveaux médicaments CR : abiratérone (hypoK minéralocorticoïde) + cinacalcet (hypoCa)
+    test('Abiratérone seule, kaliémie normale → pas de charge QT', () => {
+        assert.ok(!hasQT(analyzeCase({ age: 80, sexe: 'M', meds: ['Abiratérone'], bio: { k: 4.2 } })));
+    });
+    test('Abiratérone + hypokaliémie (3.0) → charge QT activée', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'M', meds: ['Abiratérone'], bio: { k: 3.0 } })));
+    });
+    test('Cinacalcet seul, calcémie normale → pas de charge QT', () => {
+        assert.ok(!hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Cinacalcet'], bio: { ca: 2.4 } })));
+    });
+    test('Cinacalcet + hypocalcémie (2.0) → charge QT activée (condition hypoCa)', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Cinacalcet'], bio: { ca: 2.0 } })));
+    });
 }
 
 // ============================================================================

@@ -1617,6 +1617,188 @@ const MASTER_DB = {
     },
     "MEDICAMENTS": [
           {
+                    "dci": "Abiratérone",
+                    "princeps": "Zytiga (acétate d'abiratérone) ; Yonsa ; génériques",
+                    "classe": "Hormonothérapie — anti-androgène (inhibiteur du CYP17A1)",
+                    "poso_hab": "1000 mg/j PO à jeun (≥1 h avant / ≥2 h après repas) TOUJOURS avec prednisone 5 mg (x2/j mCRPC, x1/j mCSPC). Source : RCP Zytiga (EMA) / FDA.",
+                    "poso_ger": "Pas d'adaptation liée à l'âge. Vigilance : corriger l'hypokaliémie et contrôler la TA AVANT initiation ; surveiller rétention hydrosodée (IC). Source : RCP Zytiga §4.2/4.4.",
+                    "poso_ren": "IR légère à modérée : pas d'adaptation. IR sévère/dialyse : pas de donnée (élimination fécale ~88 %) → prudence. Source : FDA §8.7.",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {
+                              "qt": 2,
+                              "sero": 0,
+                              "saign": 0,
+                              "chute": 1,
+                              "sedat": 0,
+                              "hypoG": 0
+                    },
+                    "bhe": "0",
+                    "albumine": "99%",
+                    "qt_risque": "(CR) Risque Conditionnel (CredibleMeds) — hypokaliémie minéralocorticoïde (excès CYP17) torsadogène",
+                    "qt_cr": {
+                              "mecanisme": "inducteur_hypoK",
+                              "conditions": [
+                                        "hypoK",
+                                        "association_qt",
+                                        "substrat_qt_coprescrit",
+                                        "surdosage"
+                              ],
+                              "source": "CredibleMeds (CR) ; RCP Zytiga (EMA)"
+                    },
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "ddi_interact": "Inhibiteur CYP2D6 fort (métoprolol/propafénone/flécaïnide → surdosage ; tramadol/codéine → perte d'efficacité) | Inducteurs CYP3A4 (rifampicine, millepertuis, carbamazépine → ↓ efficacité, déconseillé) | Hypokaliémiants/QT (diurétiques, autres QT → torsades) | À jeun impératif (repas ↑ fortement l'exposition)",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Substrats CYP2D6 à marge étroite — abiratérone inhibiteur fort",
+                                        "dcis": [
+                                                  "metoprolol",
+                                                  "propafenone",
+                                                  "flecainide",
+                                                  "dextromethorphane",
+                                                  "tramadol",
+                                                  "codeine",
+                                                  "amitriptyline",
+                                                  "clomipramine"
+                                        ],
+                                        "commentaire": "↑ exposition des substrats 2D6 (surdosage bêtabloquant/antiarythmique) ; ↓ effet analgésique du tramadol/codéine (prodrogues). RCP Zytiga.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Inducteurs puissants du CYP3A4 — association déconseillée",
+                                        "dcis": [
+                                                  "rifampicine",
+                                                  "rifabutine",
+                                                  "carbamazepine",
+                                                  "phenytoine",
+                                                  "phenobarbital",
+                                                  "millepertuis",
+                                                  "enzalutamide"
+                                        ],
+                                        "commentaire": "↓ importante des concentrations d'abiratérone → perte d'efficacité. ANSM Thésaurus.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Hypokaliémiants / QT-prolongateurs — additif torsadogène",
+                                        "dcis": [
+                                                  "furosemide",
+                                                  "bumetanide",
+                                                  "hydrochlorothiazide",
+                                                  "indapamide",
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "citalopram",
+                                                  "hydroxyzine"
+                                        ],
+                                        "commentaire": "Abiratérone → hypokaliémie minéralocorticoïde ; l'association majore le risque de torsades. Surveiller K+ et ECG.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "K+ (correction préalable) | Tension artérielle (contrôle HTA préalable) | ASAT/ALAT + bilirubine (bilan hépatique de référence) | Signes d'IC / rétention hydrosodée | ECG (QTc) si co-QT ou trouble électrolytique",
+                    "suivi_periodique": "Kaliémie mensuelle (rapprochée si hypoK) | TA mensuelle | ASAT/ALAT + bilirubine /2 semaines pendant 3 mois puis mensuelle | Œdèmes/rétention | Glycémie (corticoïde associé)",
+                    "alerte_clinique": "Excès minéralocorticoïde (inhibition CYP17) : hypokaliémie + HTA + rétention → corriger K+ et contrôler TA AVANT initiation ; co-prescrire un corticoïde. Hépatotoxicité potentiellement sévère. TdP conditionnel (hypokaliémie).",
+                    "notes_cliniques": "Sujet âgé : cumul fréquent avec diurétiques et autres QT → surveiller K+. CI en Child-Pugh C ; 250 mg/j en Child-Pugh B (AUC x4). Inhibiteur CYP2D6 fort (tramadol/codéine inefficaces, bêtabloquants/antiarythmiques majorés). À prendre à jeun.",
+                    "source": "RCP/SmPC Zytiga (EMA) ; FDA PI Zytiga (NDA 202379) ; FDA ClinPharm Review (liaison protéique) ; CredibleMeds QTdrugs.org (Conditional Risk) ; ANSM Thésaurus des interactions.",
+                    "bio_cible": [
+                              "BIO_001",
+                              "BIO_013",
+                              "BIO_014",
+                              "BIO_017",
+                              "BIO_006"
+                    ]
+          },
+          {
+                    "dci": "Cinacalcet",
+                    "princeps": "Mimpara ; Sensipar",
+                    "classe": "Calcimimétique (agoniste allostérique du récepteur sensible au calcium, CaSR)",
+                    "poso_hab": "30 mg/j initial, titration par paliers → max 180 mg/j (cible PTH 150-300 pg/mL), pendant le repas. Source : RCP Mimpara (EMA).",
+                    "poso_ger": "Pas d'adaptation liée à l'âge. Titration lente ; surveiller étroitement la calcémie corrigée (hypocalcémie symptomatique : chutes, convulsions, QT long). Source : RCP Mimpara.",
+                    "poso_ren": "Pas d'adaptation selon le DFG (PK identique en IRC/dialyse — indication même de l'hyperparathyroïdie secondaire de l'IRC). Ajustement sur la CALCÉMIE, pas le DFG. Source : RCP Mimpara §4.2 ; KDIGO 2017.",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {
+                              "qt": 2,
+                              "sero": 0,
+                              "saign": 0,
+                              "chute": 1,
+                              "sedat": 0,
+                              "hypoG": 0
+                    },
+                    "bhe": "0",
+                    "albumine": "95%",
+                    "qt_risque": "(CR) Risque Conditionnel (CredibleMeds) — hypocalcémie torsadogène",
+                    "qt_cr": {
+                              "mecanisme": "inducteur_hypoCa",
+                              "conditions": [
+                                        "hypoCa",
+                                        "association_qt",
+                                        "substrat_qt_coprescrit",
+                                        "surdosage"
+                              ],
+                              "source": "CredibleMeds (CR) ; RCP Mimpara (EMA)"
+                    },
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "ddi_interact": "Inhibiteur CYP2D6 PUISSANT (métoprolol/flécaïnide/propafénone/tricycliques → surdosage ; tramadol/codéine → perte d'efficacité) | Inhibiteurs CYP3A4 forts (kétoconazole → AUC cinacalcet x2,3 → hypocalcémie accrue) | Hypocalcémiants/QT (dénosumab, autres QT) | Prendre pendant le repas",
+                    "ddi_interact_v2": [
+                              {
+                                        "classe": "Substrats CYP2D6 à marge étroite — cinacalcet inhibiteur puissant",
+                                        "dcis": [
+                                                  "metoprolol",
+                                                  "flecainide",
+                                                  "propafenone",
+                                                  "amitriptyline",
+                                                  "clomipramine",
+                                                  "tramadol",
+                                                  "codeine",
+                                                  "venlafaxine"
+                                        ],
+                                        "commentaire": "↑ exposition des substrats 2D6 (surdosage) ; ↓ effet analgésique tramadol/codéine. RCP Mimpara ; ANSM.",
+                                        "severite": "danger"
+                              },
+                              {
+                                        "classe": "Inhibiteurs puissants du CYP3A4 — ↑ cinacalcet",
+                                        "dcis": [
+                                                  "ketoconazole",
+                                                  "itraconazole",
+                                                  "clarithromycine",
+                                                  "erythromycine",
+                                                  "voriconazole"
+                                        ],
+                                        "commentaire": "↑ exposition cinacalcet (AUC x2,3 avec kétoconazole) → hypocalcémie accrue. Surveiller la calcémie.",
+                                        "severite": "warning"
+                              },
+                              {
+                                        "classe": "Hypocalcémiants / QT-prolongateurs — additif",
+                                        "dcis": [
+                                                  "denosumab",
+                                                  "acide zoledronique",
+                                                  "amiodarone",
+                                                  "sotalol",
+                                                  "citalopram",
+                                                  "hydroxyzine"
+                                        ],
+                                        "commentaire": "Cinacalcet → hypocalcémie ; association majorant l'hypocalcémie et le risque de QT long/torsades.",
+                                        "severite": "warning"
+                              }
+                    ],
+                    "suivi_initial": "Calcémie corrigée de l'albumine — impératif avant initiation (ne pas débuter si < LIN) | Phosphorémie | PTH | Magnésémie | ECG (QTc) si prédisposition/co-QT",
+                    "suivi_periodique": "Calcémie corrigée à J7 (ou après changement de dose) puis mensuelle (surveillance +++ hypocalcémie) | PTH toutes les 1-4 sem en titration puis 1-3 mois | Phosphorémie mensuelle | Symptômes d'hypocalcémie (paresthésies, tétanie, convulsions, QT long)",
+                    "alerte_clinique": "HYPOCALCÉMIE dose-dépendante (déclencheur QT/TdP) : ne pas initier si calcium corrigé < LIN ; surveiller la calcémie +++ (J7 puis mensuelle) ; seuil convulsif abaissé. Inhibiteur CYP2D6 PUISSANT (nombreuses interactions).",
+                    "notes_cliniques": "Sujet âgé : surveiller la calcémie corrigée (hypocalcémie = chutes, convulsions, QT long). Prudence si insuffisance hépatique modérée/sévère (AUC x2,4 à x4,2). Prendre pendant les repas. Inhibiteur CYP2D6 fort (métoprolol, flécaïnide, propafénone, tricycliques ; tramadol/codéine inefficaces).",
+                    "source": "RCP/SmPC Mimpara (EMA/EPAR) ; FDA PI Sensipar (NDA 021688) ; CredibleMeds QTdrugs.org (Conditional Risk) ; KDIGO 2017 CKD-MBD ; ANSM Thésaurus des interactions.",
+                    "bio_cible": [
+                              "BIO_005",
+                              "BIO_006",
+                              "BIO_035"
+                    ]
+          },
+          {
                     "dci": "Estradiol",
                     "princeps": "Provames, Estrofem, Oromone, Oesclim, Vivelle, Estreva (gel/patch)",
                     "classe": "Œstrogène systémique (traitement hormonal de la ménopause) — PIM sujet âgé (STOPP J5/J8, Beers)",
