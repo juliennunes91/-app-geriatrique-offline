@@ -424,7 +424,7 @@ function preCalculerScores() {
         if (ref._acb > 0) scoreACB_global += ref._acb;
         if (ref._cia > 0) scoreCIA_global += ref._cia;
         let qt = String(ref.qt_risque || "");
-        if (qt.includes("(KR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 2); infoQT_global.push(m.dci); globalQT_CountKR++; }
+        if (/\bKR\b/.test(qt)) { maxQTLevel_global = Math.max(maxQTLevel_global, 2); infoQT_global.push(m.dci); globalQT_CountKR++; }
         else if (qt.includes("(PR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 1); infoQT_global.push(m.dci); globalQT_CountCR_PR++; }
     });
 

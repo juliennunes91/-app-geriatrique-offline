@@ -378,7 +378,7 @@ const GeriaEngineV2 = (() => {
             if (acbMedCount < 2) return false;
         }
         if (c.acb_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && parseFloat(m.db_ref.acb) >= 2))) return false;
-        if (c.qt_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && String(m.db_ref.qt_risque || '').includes('(KR)')))) return false;
+        if (c.qt_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && /\bKR\b/.test(String(m.db_ref.qt_risque || ''))))) return false;
         if (c.polypharmacie && c.seuil) {
             // Si med_keys est défini : on exige seuil méds DIFFÉRENTS de la liste
             // (ex: ≥ 3 antidépresseurs distincts). Sinon, seuil sur le total.

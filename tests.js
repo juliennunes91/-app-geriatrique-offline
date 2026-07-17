@@ -1024,6 +1024,14 @@ console.log('\n🧪 Oracle — QT conditionnel (CR) gaté sur la condition patie
     test('Citalopram (KR) seul → charge QT inconditionnelle', () => {
         assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Citalopram'] })));
     });
+    // Régression : amiodarone/sotalol tagués « (CredibleMeds KR) » doivent être
+    // reconnus comme risque établi (détection /\bKR\b/, pas includes("(KR)")).
+    test('Amiodarone (KR format CredibleMeds) seule → charge QT reconnue', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Amiodarone'] })));
+    });
+    test('Sotalol (KR format CredibleMeds) seul → charge QT reconnue', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Sotalol'] })));
+    });
 }
 
 // ============================================================================

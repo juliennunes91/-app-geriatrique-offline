@@ -2643,7 +2643,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":2,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "67",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "PIM Beers/STOPP K2 chez âgé (ACB + BHE+ — hallucinations, confusion, livedo reticularis), Anticholinergiques (cumul confusion), Cotrimoxazole/Triamtérène (compétition tubulaire — ↑ amantadine), Bupropion (↓ seuil épileptogène), Inducteurs CYP minimes, QT-prolongateurs (Risk_CR), Levodopa (synergie thérapeutique), Antipsychotiques (antagonisme PD)",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM (Beers/STOPP K2/PRISCUS) — hallucinations + livedo + ACB", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "Amantadine : confusion/hallucinations 5-30% chez âgé, livedo reticularis, œdèmes MI. Élimination rénale exclusive → ajustement DFG impératif. PIM si MCI/démence.", "severite": "danger" },
@@ -3017,7 +3018,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":3,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "0,16",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage", "hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "QT-allongeurs (Amisulpride = CR), Autres APP, Antagonistes D2, Lévodopa (DCL — DECONSEILLE), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO",
                     "ddi_interact_v2": [
                               { "classe": "QT-allongeurs (Amisulpride = CR — risque dose-dépendant)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "erythromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "fluconazole", "voriconazole", "citalopram", "escitalopram", "ondansetron", "domperidone", "methadone", "tramadol", "hydroxyzine"], "commentaire": "Cumul QT — surveillance ECG (Amisulpride = effet QT dose-dépendant, élimination rénale → cumul si IRC).", "severite": "warning" },
@@ -3063,7 +3065,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":2,"saign":1,"chute":3,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "0,95",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage", "association_qt", "hypoK"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "IMAO non-sélectifs (CI ABSOLUE), Linézolide/Bleu méthylène (CI), ISRS/IRSN/Mirtazapine (sérotoninergique), Anticholinergiques (cumul ACB=3 — MAJEUR), QT-allongeurs (ATC=CR), Sympathomimétiques (crise HTA), Sédatifs centraux, Antihypertenseurs (hypotension), Inhibiteurs CYP2D6 (↑ amitriptyline), Inducteurs CYP, AINS/Antiagrégants",
                     "ddi_interact_v2": [
                               { "classe": "IMAO non-sélectifs / IMAO-B forte dose — CONTRE-INDICATION ABSOLUE", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal + crise HTA. Délai 14 j entre arrêt IMAO et amitriptyline (5 sem si fluoxetine).", "severite": "danger" },
@@ -3799,7 +3802,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "0,86",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "inhibiteur_pk", "conditions": ["substrat_qt_coprescrit", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "Protease (CYP3A4)",
                     "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique (bilirubine +++) | NFS | Bilan lipidique | Glycemie | Créatinine | Srologie VHB/VHC | ECG (PR)",
@@ -7057,7 +7061,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0.0",
                     "albumine": "0,2",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "inhibiteur_pk", "conditions": ["substrat_qt_coprescrit", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "CYP3A4/2D6 inhibiteur",
                     "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG | Bilan hépatique | NFS",
@@ -9350,7 +9355,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "98-99",
-                    "qt_risque": "Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage", "association_qt", "hypoK"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "Alcool, Benzodiazepines, Autres anticholinergiques (cumul ACB +++), QT-prolongateurs",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers 2023/STOPP K1/FORTA-D/PRISCUS) — ACB=3 FORT", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "ACB=3 (un des plus forts). BHE+. AUX USA = produit en vente libre (Tylenol PM, Benadryl) → utilisation auto-prescription chez âgé fréquente → confusion/chutes/démence. ÉVITER ABSOLUMENT. Pour insomnie : mesures non pharmacologiques + mélatonine si nécessaire.", "severite": "danger" },
@@ -9858,7 +9864,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":1,"saign":1,"chute":3,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "0,76",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage", "association_qt", "hypoK"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "IMAO - Depresseurs SNC",
                     "ddi_interact_v2": [
                               {"classe":"Cumul ACB — anticholinergiques (chutes/confusion/démence Coupland 2019)","dcis":["amitriptyline","clomipramine","imipramine","nortriptyline","oxybutynine","tolterodine","solifenacine","fesoterodine","trospium","darifenacine","atropine","scopolamine","biperidene","trihexyphenidyle","diphenhydramine","doxylamine","promethazine","hydroxyzine","alimemazine","chlorpheniramine","olanzapine","quetiapine","clozapine"],"commentaire":"Score ACB cumulé à surveiller (Coupland JAMA Int Med 2019 — démence x2-3 si charge ACB ≥ 3 chronique). Réévaluer prescription.","severite":"danger"}
@@ -11160,7 +11167,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "15 - 20 %",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["association_qt", "hypoK", "hypoMg"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "Minimal d'interaction",
                     "ddi_interact_v2": [],
                     "suivi_initial": "Créatinine/DFG si IRC",
@@ -11621,7 +11629,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":2,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "94",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "IMAO (CI), Linézolide/Bleu méthylène (CI), Triptans, Tramadol/Pethidine, autres ISRS/IRSN/ATC, AVK, AOD/HBPM, Antiagrégants, AINS, Lithium, MTX, Thiazidiques, Substrats CYP2D6 (Tamoxifène, Métoprolol, Codéine, ATC)",
                     "ddi_interact_v2": [
                               { "classe": "IMAO non-sélectifs / IMAO-B (CONTRE-INDICATION)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j arrêt IMAO → fluoxetine, et 5 SEMAINES post-fluoxetine → IMAO (demi-vie norfluoxétine ~16 j).", "severite": "danger" },
@@ -11891,7 +11900,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":2,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "0,8",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "IMAO (CI), Linézolide (CI), Triptans, Tramadol, autres ISRS/IRSN/ATC, AVK, AOD/HBPM, Antiagrégants, AINS, Lithium, MTX, Thiazidiques, Substrats CYP1A2/2C19 (Théophylline, Clozapine, Agomélatine CI, Tizanidine, Oméprazole, Caféine)",
                     "ddi_interact_v2": [
                               { "classe": "IMAO non-sélectifs / IMAO-B (CONTRE-INDICATION)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal.", "severite": "danger" },
@@ -12161,7 +12171,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "98",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "Aminosides (ototoxicite + nephrotoxicite synergiques) - Digoxine (potentialise toxicite via hypokaliemie) - AINS (perte d'efficacite + IRA) - IEC/ARA2 (1ere dose hypotension) - Lithium (intoxication) - Sulfamides hypoglycemiants",
                     "ddi_interact_v2": [
                               {
@@ -15450,7 +15461,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":1,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "40",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "LevoDOPA (antagonisme) - Neuroleptiques",
                     "ddi_interact_v2": [
                               {
@@ -15622,7 +15634,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "11",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["association_qt", "hypoK"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "Alcool (antabuse +++), AVK (potentiation +++), Lithium, Phenobarbital",
                     "ddi_interact_v2": [
                               {
@@ -17021,7 +17034,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "95",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "inducteur_hypoMg", "conditions": ["hypoMg", "hypoK", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "Clopidogrel, Methotrexate, Atazanavir",
                     "ddi_interact_v2": [
                               {
@@ -17482,7 +17496,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":2,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "0,95",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "IMAO (CI), Linézolide/Bleu méthylène (CI), Triptans, Tramadol, autres ISRS/IRSN/ATC, AVK, AOD/HBPM, Antiagrégants, AINS, Lithium, MTX, Thiazidiques, Substrats CYP2D6 (Tamoxifène, Métoprolol, Codéine, ATC), autres anticholinergiques (cumul ACB)",
                     "ddi_interact_v2": [
                               { "classe": "IMAO non-sélectifs / IMAO-B (CONTRE-INDICATION)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et paroxétine.", "severite": "danger" },
@@ -19016,7 +19031,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "0,83",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage", "hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "QT-allongeurs (Quétiapine = CR), Autres APP, Antagonistes D2, Lévodopa (PRUDENCE en DCL — quétiapine = SEUL APP toléré), Anticholinergiques (ACB=3), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Inducteurs CYP3A4, Inhibiteurs CYP3A4 puissants",
                     "ddi_interact_v2": [
                               { "classe": "QT-allongeurs (Quétiapine = CR — risque dose-dépendant)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "erythromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "fluconazole", "voriconazole", "citalopram", "escitalopram", "ondansetron", "domperidone", "methadone", "tramadol", "hydroxyzine"], "commentaire": "Cumul QT — surveillance ECG. CI Pimozide/Thioridazine.", "severite": "warning" },
@@ -19639,7 +19655,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":3,"sedat":2,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "89",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(CR) Risque Conditionnel",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage", "hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "QT-allongeurs (Risperidone = CR), Autres APP, Antagonistes D2, Lévodopa, Anticholinergiques, Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Inducteurs CYP3A4 (rifampicine/millepertuis), Inhibiteurs CYP2D6 (fluoxétine/paroxétine ↑ exposition), Inhibiteurs CYP3A4",
                     "ddi_interact_v2": [
                               { "classe": "QT-allongeurs (Risperidone = CR)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "erythromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "fluconazole", "voriconazole", "citalopram", "escitalopram", "ondansetron", "domperidone", "methadone", "tramadol", "hydroxyzine"], "commentaire": "Cumul QT — surveillance ECG. CI Pimozide/Thioridazine.", "severite": "warning" },
@@ -20219,7 +20236,8 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":2,"saign":1,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "99",
-                    "qt_risque": "? Risque Conditionnel (CR — favorable vs citalopram/escitalopram)",
+                    "qt_risque": "(CR) Risque Conditionnel (CR — favorable vs citalopram/escitalopram)",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "IMAO, Tramadol, Lithium, Warfarine, QT",
                     "ddi_interact_v2": [
                               { "classe": "IMAO non-sélectifs / IMAO-B (CONTRE-INDICATION)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "selegiline", "rasagiline", "moclobemide"], "commentaire": "Syndrome sérotoninergique fatal. Délai 14 j entre arrêt IMAO et sertraline.", "severite": "danger" },
@@ -25485,7 +25503,8 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
-                    "qt_risque": "Modéré",
+                    "qt_risque": "(CR) Risque Conditionnel (CredibleMeds) — azolé, via inhibition CYP3A4 (accumulation substrats QT)",
+                    "qt_cr": { "mecanisme": "inhibiteur_pk", "conditions": ["substrat_qt_coprescrit", "association_qt"], "source": "CredibleMeds (CR)" },
                     "albumine": "> 98%",
                     "ddi_interact": "Inhibiteur puissant CYP3A4: Statines (CI), Ciclosporine, Tacrolimus, Sirolimus",
                     "ddi_interact_v2": [
@@ -25888,7 +25907,8 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "0",
-                    "qt_risque": "Modéré",
+                    "qt_risque": "(CR) Risque Conditionnel (CredibleMeds) — azolé, QT intrinsèque + inhibition CYP3A4",
+                    "qt_cr": { "mecanisme": "inhibiteur_pk", "conditions": ["substrat_qt_coprescrit", "association_qt"], "source": "CredibleMeds (CR)" },
                     "albumine": "58%",
                     "ddi_interact": "Inhibiteur puissant CYP2C19/CYP3A4: Rifampicine (CI), Statines, Ciclosporine, Tacrolimus, Sirolimus (CI)",
                     "ddi_interact_v2": [
