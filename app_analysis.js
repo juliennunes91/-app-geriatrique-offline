@@ -456,11 +456,13 @@ function _qtCrConditionMet(ref) {
     if (!cr || !Array.isArray(cr.conditions)) return true;
     const K  = getBioVal('patientK');   // kaliémie (NaN si absente)
     const Mg = getBioVal('bioMg');       // magnésémie (NaN si absente)
+    const Ca = getBioVal('bioCa');       // calcémie (NaN si absente)
     const comorbs = (typeof activeComorbs !== 'undefined' && Array.isArray(activeComorbs)) ? activeComorbs : [];
     return cr.conditions.some(c => {
         switch (c) {
-            case 'hypoK':  return K  > 0 && K  < 3.5;   // BIO_001
-            case 'hypoMg': return Mg > 0 && Mg < 0.7;   // BIO_006
+            case 'hypoK':  return K  > 0 && K  < 3.5;    // BIO_001
+            case 'hypoMg': return Mg > 0 && Mg < 0.7;    // BIO_006
+            case 'hypoCa': return Ca > 0 && Ca < 2.10;   // BIO_005 (hypocalcémie → ex. cinacalcet)
             case 'bradycardie': return comorbs.indexOf('PAT_035') !== -1; // bradycardie/BAV
             case 'association_qt':
             case 'substrat_qt_coprescrit': return globalQT_CountKR >= 1;  // un QT établi co-prescrit

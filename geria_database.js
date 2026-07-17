@@ -26151,7 +26151,8 @@ const MASTER_DB = {
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1",
                     "albumine": "18%",
-                    "qt_risque": "",
+                    "qt_risque": "(CR) Risque Conditionnel (CredibleMeds) — bradycardisant (effet cholinergique)",
+                    "qt_cr": { "mecanisme": "bradycardisant", "conditions": ["bradycardie", "association_qt"], "source": "CredibleMeds (CR)" },
                     "ddi_interact": "Betabloquants, Digoxine (bradycardie) | Anticholinergiques (antagonisme) | Ketoconazole, Paroxetine (inhibiteurs CYP2D6/3A4 — augmentation exposition)",
                     "ddi_interact_v2": [
                               {
