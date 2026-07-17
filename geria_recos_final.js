@@ -2532,7 +2532,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "IN_B04",
-            sources: ["STOPP3", "FORTA", "BEERS"],
+            sources: ["STOPP3", "FORTA"],
             ref_code: "START3-B4",
             section: "Cardiovasculaire",
             titre: "Bêtabloquant pour coronaropathie symptomatique (angor)",

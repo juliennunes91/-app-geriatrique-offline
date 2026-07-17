@@ -83,7 +83,6 @@
    "Antiagrégant pour maladie vasculaire",
    "Bêtabloquant pour coronaropathie symptomatique (angor)",
    "IEC en post-SCA / coronaropathie",
-   "Réévaluation planifiée",
    "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
   ],
   "alertes-bio": [],
@@ -185,7 +184,6 @@
    "Antiagrégant pour maladie vasculaire",
    "Bêtabloquant pour coronaropathie symptomatique (angor)",
    "IEC en post-SCA / coronaropathie",
-   "Réévaluation planifiée",
    "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
   ],
   "alertes-bio": [],
@@ -384,7 +382,6 @@
    "Bêtabloquant pour FA chronique (contrôle de fréquence)",
    "Bêtabloquant pour coronaropathie symptomatique (angor)",
    "IEC en post-SCA / coronaropathie",
-   "Réévaluation planifiée",
    "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
   ],
   "alertes-bio": [
