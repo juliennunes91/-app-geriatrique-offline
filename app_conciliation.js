@@ -43,6 +43,7 @@
             medicament: o.medicament || '',
             posologie: o.posologie || '',
             statut: o.statut || 'maintien',
+            substitutVers: o.substitutVers || '',  // médicament de remplacement (statut « substitution »)
             commentaire: o.commentaire || '',
             auto: !!o.auto
         };
@@ -121,7 +122,7 @@
                 <td class="text-muted small">${i + 1}</td>
                 <td><input type="text" class="form-control form-control-sm" value="${_esc(l.medicament)}" oninput="window.conciliationSetLine(${l.id},'medicament',this.value)">${autoTag}</td>
                 <td><input type="text" class="form-control form-control-sm" placeholder="ex. 5 mg 1-0-0" value="${_esc(l.posologie)}" oninput="window.conciliationSetLine(${l.id},'posologie',this.value)"></td>
-                <td>${_statutSelect(l)}</td>
+                <td>${_statutSelect(l)}${l.statut === 'substitution' ? `<input type="text" class="form-control form-control-sm mt-1" placeholder="→ remplacé par…" value="${_esc(l.substitutVers || '')}" oninput="window.conciliationSetLine(${l.id},'substitutVers',this.value)">` : ''}</td>
                 <td><input type="text" class="form-control form-control-sm" placeholder="justification / précision" value="${_esc(l.commentaire)}" oninput="window.conciliationSetLine(${l.id},'commentaire',this.value)"></td>
                 <td><button type="button" class="btn btn-outline-danger btn-sm" title="Supprimer la ligne" onclick="window.conciliationDeleteLine(${l.id})">×</button></td>
             </tr>`;
@@ -174,7 +175,8 @@
         ['dateConcil', 'type', 'includeInPdf'].forEach(k => { if (saved[k] != null) base[k] = saved[k]; });
         if (Array.isArray(saved.lignes)) {
             base.lignes = saved.lignes.map(l => _newLine({
-                medicament: l.medicament, posologie: l.posologie, statut: l.statut, commentaire: l.commentaire, auto: l.auto
+                medicament: l.medicament, posologie: l.posologie, statut: l.statut,
+                substitutVers: l.substitutVers, commentaire: l.commentaire, auto: l.auto
             }));
         }
         window.conciliationData = base;
@@ -219,7 +221,7 @@
         d.lignes.forEach((l, i) => {
             html += `<tr>
                 <td style="border:1px solid #999;padding:3px 4px;">${i + 1}</td>
-                <td style="border:1px solid #999;padding:3px 4px;">${_esc(l.medicament)}</td>
+                <td style="border:1px solid #999;padding:3px 4px;">${_esc(l.medicament)}${l.statut === 'substitution' && l.substitutVers ? ' <strong>&rarr;</strong> ' + _esc(l.substitutVers) : ''}</td>
                 <td style="border:1px solid #999;padding:3px 4px;">${_esc(l.posologie)}</td>
                 <td style="border:1px solid #999;padding:3px 4px;font-weight:700;">${_esc(statutLbl(l.statut))}</td>
                 <td style="border:1px solid #999;padding:3px 4px;color:#555;">${_esc(l.commentaire)}</td>
