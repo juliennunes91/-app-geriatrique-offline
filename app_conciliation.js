@@ -1,9 +1,14 @@
 /* ============================================================================
- * app_conciliation.js — Onglet Conciliation médicamenteuse
+ * app_conciliation.js — Onglet « Avis pharma » (Synthèse pharmaceutique
+ * gériatrique)
  *
- * Fiche de conciliation des traitements médicamenteux (inspirée HAS 2018 —
- * « Mettre en œuvre la conciliation des traitements médicamenteux en
- * établissement de santé » — et des travaux SFPC).
+ * Synthèse pharmaceutique globale du sujet âgé : le pharmacien passe en revue
+ * l'ordonnance et PROPOSE au prescripteur des changements (maintien /
+ * modification / ajout / arrêt / substitution), avec justification.
+ * Référentiels : SFPC (intervention pharmaceutique, bilan de médication),
+ * STOPP/START. (NB : ce n'est PAS une conciliation médicamenteuse au sens du
+ * rapprochement de listes aux transitions ; les identifiants internes
+ * `conciliation*` sont conservés pour la stabilité du code.)
  *
  * Structure « liste unique + statut » :
  *   Médicament | Posologie | Statut (Maintien / Modification / Ajout / Arrêt /
@@ -13,7 +18,7 @@
  *   - Pré-remplissage best-effort depuis l'ordonnance active (activeMeds),
  *     statut « Maintien » par défaut, non destructif.
  *   - Sérialisation/restauration pour export/import JSON patient.
- *   - Export PDF autonome (« PDF Conciliation seul ») + intégration au PDF
+ *   - Export PDF autonome (« PDF Synthèse pharma seul ») + intégration au PDF
  *     synthèse GeriaAssist via un toggle.
  * ============================================================================ */
 (function () {
@@ -90,16 +95,16 @@
 
         let html = `
         <div class="card mb-3"><div class="card-body">
-            <h5 class="card-title">🔄 Conciliation médicamenteuse</h5>
-            <p class="text-muted small mb-3">Fiche de conciliation des traitements médicamenteux (inspirée <em>HAS 2018</em> / SFPC). Traçabilité des décisions ligne par ligne : maintien, modification, ajout, arrêt, substitution.</p>
+            <h5 class="card-title">💊 Synthèse pharmaceutique gériatrique</h5>
+            <p class="text-muted small mb-3">Propositions d'optimisation thérapeutique adressées au prescripteur (référentiels <em>SFPC</em> — intervention pharmaceutique / bilan de médication, <em>STOPP/START</em>). Proposition ligne par ligne : maintien, modification, ajout, arrêt, substitution.</p>
             <div class="row g-2">
-                <div class="col-md-4"><label class="fw-bold small">Date de conciliation</label><input type="date" class="form-control form-control-sm" value="${_esc(d.dateConcil)}" oninput="window.conciliationSet('dateConcil',this.value)"></div>
+                <div class="col-md-4"><label class="fw-bold small">Date de la synthèse</label><input type="date" class="form-control form-control-sm" value="${_esc(d.dateConcil)}" oninput="window.conciliationSet('dateConcil',this.value)"></div>
                 <div class="col-md-5"><label class="fw-bold small">Type / contexte</label><input type="text" class="form-control form-control-sm" placeholder="Entrée / Sortie / Transfert — optionnel" value="${_esc(d.type)}" oninput="window.conciliationSet('type',this.value)"></div>
                 <div class="col-md-3 d-flex align-items-end"><button type="button" class="btn btn-sm btn-outline-primary w-100" onclick="window.conciliationAutofillRefresh()" title="Reprendre les médicaments de l'ordonnance saisie">Pré-remplir depuis l'ordonnance</button></div>
             </div>
             <div class="form-check mt-3">
                 <input type="checkbox" class="form-check-input" id="concilIncludePdf" ${d.includeInPdf ? 'checked' : ''} onchange="window.conciliationSet('includeInPdf',this.checked)">
-                <label class="form-check-label small" for="concilIncludePdf"><strong>Inclure la conciliation dans l'export PDF GeriaAssist</strong> (sinon utiliser le bouton « PDF Conciliation seul »)</label>
+                <label class="form-check-label small" for="concilIncludePdf"><strong>Inclure la synthèse pharmaceutique dans l'export PDF GeriaAssist</strong> (sinon utiliser le bouton « PDF Synthèse pharma seul »)</label>
             </div>
         </div></div>`;
 
@@ -109,7 +114,7 @@
                     <th style="width:32px;">#</th>
                     <th>Médicament</th>
                     <th style="width:22%;">Posologie</th>
-                    <th style="width:150px;">Statut</th>
+                    <th style="width:150px;">Proposition</th>
                     <th>Commentaire</th>
                     <th style="width:36px;"></th>
                 </tr></thead><tbody>`;
@@ -135,7 +140,7 @@
             </div>
         </div></div>`;
 
-        html += `<div class="text-end mb-2"><button type="button" class="btn btn-outline-danger btn-sm" onclick="window.exporterConciliationPDF()" title="PDF dédié à la fiche de conciliation">📄 Export PDF Conciliation seul</button></div>`;
+        html += `<div class="text-end mb-2"><button type="button" class="btn btn-outline-danger btn-sm" onclick="window.exporterConciliationPDF()" title="PDF dédié à la synthèse pharmaceutique">📄 Export PDF Synthèse pharma seul</button></div>`;
 
         wrap.innerHTML = html;
     }
@@ -197,8 +202,8 @@
 
         let html = `<div class="pdf-block" style="page-break-before:${standalone ? 'auto' : 'always'};font-family:Arial,sans-serif;color:#222;">
             <div style="text-align:center;border-bottom:2px solid #0d6efd;padding-bottom:6px;margin-bottom:8px;">
-                <div style="font-size:14px;font-weight:700;color:#0d6efd;">FICHE DE CONCILIATION MÉDICAMENTEUSE</div>
-                <div style="font-size:9px;color:#666;">Conciliation des traitements médicamenteux — inspirée HAS 2018 / SFPC</div>
+                <div style="font-size:14px;font-weight:700;color:#0d6efd;">SYNTHÈSE PHARMACEUTIQUE GÉRIATRIQUE</div>
+                <div style="font-size:9px;color:#666;">Propositions d'optimisation thérapeutique adressées au prescripteur — SFPC (intervention pharmaceutique / bilan de médication) · STOPP/START</div>
             </div>
             <div style="font-size:10px;margin-bottom:6px;">
                 <strong>Patient :</strong> ${_esc(nom) || '...........................'}
@@ -212,7 +217,7 @@
                     <th style="border:1px solid #999;padding:3px 4px;text-align:left;width:28px;">N°</th>
                     <th style="border:1px solid #999;padding:3px 4px;text-align:left;">Médicament</th>
                     <th style="border:1px solid #999;padding:3px 4px;text-align:left;width:20%;">Posologie</th>
-                    <th style="border:1px solid #999;padding:3px 4px;text-align:left;width:80px;">Statut</th>
+                    <th style="border:1px solid #999;padding:3px 4px;text-align:left;width:80px;">Proposition</th>
                     <th style="border:1px solid #999;padding:3px 4px;text-align:left;">Commentaire</th>
                 </tr></thead><tbody>`;
         if (!d.lignes.length) {
@@ -235,10 +240,10 @@
 
         html += `<table style="width:100%;border-collapse:collapse;font-size:9px;margin-top:8px;">
             <tr style="height:44px;vertical-align:top;">
-                <td style="border:1px solid #999;padding:4px;width:50%;"><strong>Médecin / prescripteur :</strong><br><em style="color:#777;">Nom, date, signature</em></td>
-                <td style="border:1px solid #999;padding:4px;width:50%;"><strong>Pharmacien :</strong><br><em style="color:#777;">Nom, date, signature</em></td>
+                <td style="border:1px solid #999;padding:4px;width:50%;"><strong>Pharmacien (propose) :</strong><br><em style="color:#777;">Nom, date, signature</em></td>
+                <td style="border:1px solid #999;padding:4px;width:50%;"><strong>Médecin (valide) :</strong><br><em style="color:#777;">Nom, date, signature</em></td>
             </tr></table>
-            <div style="font-size:7px;color:#aaa;text-align:center;margin-top:6px;">Généré par GeriaAssist — Fiche de conciliation médicamenteuse — Usage professionnel</div>
+            <div style="font-size:7px;color:#aaa;text-align:center;margin-top:6px;">Généré par GeriaAssist — Synthèse pharmaceutique gériatrique — Usage professionnel</div>
         </div>`;
         return html;
     }
@@ -256,7 +261,7 @@
         const nom = (document.getElementById('patientNom')?.value || 'Patient').replace(/[^a-zA-Z0-9àâäéèêëïîôùûüÿçÀÂÄÉÈÊËÏÎÔÙÛÜŸÇ_ -]/g, '');
         html2pdf().set({
             margin: [8, 6, 10, 6],
-            filename: 'GeriaAssist_Conciliation_' + nom + '_' + new Date().toISOString().slice(0, 10) + '.pdf',
+            filename: 'GeriaAssist_SynthesePharma_' + nom + '_' + new Date().toISOString().slice(0, 10) + '.pdf',
             image: { type: 'jpeg', quality: 0.95 },
             html2canvas: { scale: 2, useCORS: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
