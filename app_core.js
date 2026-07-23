@@ -67,6 +67,7 @@ function _collectPatientData() {
         meds: activeMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id })),
         suspended: window.suspendedMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id })),
         paam: (typeof window.paamSerialize === 'function') ? window.paamSerialize() : undefined,
+        conciliation: (typeof window.conciliationSerialize === 'function') ? window.conciliationSerialize() : undefined,
         psyScores: (typeof window.psyScoresSerialize === 'function') ? window.psyScoresSerialize() : undefined
     };
 }
@@ -124,6 +125,8 @@ function _restorePatientData(data) {
     }
     // Restaurer la PAAM si présente dans l'import (sinon laisse la grille vide).
     if (data.paam && typeof window.paamRestore === 'function') window.paamRestore(data.paam);
+    // Restaurer la conciliation médicamenteuse si présente dans l'import.
+    if (data.conciliation && typeof window.conciliationRestore === 'function') window.conciliationRestore(data.conciliation);
     // Restaurer les scores psychiatriques (AIMS, métabolique) — Item 3.
     if (data.psyScores && typeof window.psyScoresRestore === 'function') window.psyScoresRestore(data.psyScores);
     if (typeof renderTags === 'function') renderTags();
@@ -542,6 +545,11 @@ function buildPdfContent() {
     if (window.paamData && window.paamData.includeInPdf && typeof window.buildPaamPdfHtml === 'function') {
         html += window.buildPaamPdfHtml({ standalone: false });
     }
+    // Annexe Conciliation médicamenteuse — incluse si l'utilisateur a coché
+    // « Inclure la conciliation dans l'export PDF » dans l'onglet Conciliation.
+    if (window.conciliationData && window.conciliationData.includeInPdf && typeof window.buildConciliationPdfHtml === 'function') {
+        html += window.buildConciliationPdfHtml({ standalone: false });
+    }
     return html;
 }
 
@@ -609,6 +617,8 @@ window.resetPatient = function() {
     if (window._maskedAlerts && typeof window._maskedAlerts.clear === 'function') window._maskedAlerts.clear();
     // Purger la grille PAAM (procédure auto-administration) — données spécifiques au résident.
     if (typeof window.paamReset === 'function') window.paamReset();
+    // Purger la fiche de conciliation médicamenteuse — spécifique au patient.
+    if (typeof window.conciliationReset === 'function') window.conciliationReset();
     // Purger les scores psychiatriques (AIMS, syndrome métabolique) — Item 3.
     if (typeof window.psyScoresReset === 'function') window.psyScoresReset();
 
