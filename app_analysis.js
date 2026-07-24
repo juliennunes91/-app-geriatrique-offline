@@ -3683,13 +3683,26 @@ function analyserPrescription() {
             }
         }
 
-        // Commentaire libre (si renseigné)
-        let freeText = (document.getElementById('freeTextNote') || {}).value || '';
-        if (freeText.trim()) {
-            synthHtml += `<div class="card mb-3 border-secondary"><div class="card-header py-2 bg-light">
-                <strong>Commentaire clinique</strong>
-            </div><div class="card-body p-2"><span class="small" style="white-space:pre-wrap;">${freeText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span></div></div>`;
+        // ── Bloc de tête de la synthèse : fonction rénale (gras, tout en haut) +
+        //    Conclusion générale (commentaire libre de la page 1) + propositions
+        //    de l'onglet « Avis pharma » (2ᵉ position). Prépendu à synthHtml.
+        let topBlock = '';
+        const _dfgVal = (document.getElementById('patientDFG') || {}).value || '';
+        const _dfgN = parseFloat(_dfgVal);
+        if (!isNaN(_dfgN) && _dfgN > 0) {
+            const _stg = _dfgN >= 90 ? 'normale (stade 1)' : _dfgN >= 60 ? 'stade 2' : _dfgN >= 45 ? 'IRC modérée (stade 3A)' : _dfgN >= 30 ? 'IRC modérée (stade 3B)' : _dfgN >= 15 ? 'IRC sévère (stade 4)' : 'IRC terminale (stade 5)';
+            const _rcol = _dfgN < 30 ? '#dc3545' : _dfgN < 45 ? '#fd7e14' : '#0d6efd';
+            topBlock += `<div class="mb-2" style="font-weight:700;color:${_rcol};">🫘 Fonction rénale : DFG ${escapeHtml(_dfgVal)} ml/min — ${_stg}</div>`;
         }
+        const _free = (document.getElementById('freeTextNote') || {}).value || '';
+        if (_free.trim()) {
+            topBlock += `<div class="card mb-3 border-secondary"><div class="card-header py-2 bg-light"><strong>Conclusion générale</strong></div><div class="card-body p-2"><span class="small" style="white-space:pre-wrap;">${escapeHtml(_free)}</span></div></div>`;
+        }
+        if (window.conciliationData && window.conciliationData.includeInPdf && typeof window.buildConciliationReportBlock === 'function') {
+            const _cb = window.buildConciliationReportBlock();
+            if (_cb) topBlock += `<div class="mb-3">${_cb}</div>`;
+        }
+        synthHtml = topBlock + synthHtml;
 
         if (!synthHtml) synthHtml = '<div class="alert alert-light">Lancez l\'analyse pour voir la synthèse.</div>';
         addAlert('alertes-synthese', synthHtml);

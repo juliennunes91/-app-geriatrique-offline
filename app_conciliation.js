@@ -37,7 +37,7 @@
 
     // ---- 2. Modèle de données globale --------------------------------------
     function _emptyData() {
-        return { dateConcil: '', type: '', lignes: [], includeInPdf: false };
+        return { dateConcil: '', type: '', lignes: [], discussion: '', includeInPdf: true };
     }
     window.conciliationData = window.conciliationData || _emptyData();
 
@@ -104,7 +104,7 @@
             </div>
             <div class="form-check mt-3">
                 <input type="checkbox" class="form-check-input" id="concilIncludePdf" ${d.includeInPdf ? 'checked' : ''} onchange="window.conciliationSet('includeInPdf',this.checked)">
-                <label class="form-check-label small" for="concilIncludePdf"><strong>Inclure la synthèse pharmaceutique dans l'export PDF GeriaAssist</strong> (sinon utiliser le bouton « PDF Synthèse pharma seul »)</label>
+                <label class="form-check-label small" for="concilIncludePdf"><strong>Inclure les propositions dans le rapport de synthèse GeriaAssist</strong> (en 2ᵉ position ; sinon utiliser le bouton « PDF Synthèse pharma seul »)</label>
             </div>
         </div></div>`;
 
@@ -138,6 +138,11 @@
                 ${STATUTS.map(s => `<span class="me-2"><span class="badge bg-${s.cls}${s.cls === 'warning' ? ' text-dark' : ''}">${s.lbl}</span> ${counts[s.v]}</span>`).join('')}
                 <span class="ms-2">Total : <strong>${d.lignes.length}</strong></span>
             </div>
+        </div></div>`;
+
+        html += `<div class="card mb-3"><div class="card-body py-2">
+            <label class="fw-bold small text-primary">Discussion / commentaire pharmaceutique</label>
+            <textarea class="form-control form-control-sm mt-1" rows="3" placeholder="Analyse pharmaceutique globale, justification des propositions, points de vigilance, échange avec le prescripteur…" oninput="window.conciliationSet('discussion', this.value)">${_esc(d.discussion || '')}</textarea>
         </div></div>`;
 
         html += `<div class="text-end mb-2"><button type="button" class="btn btn-outline-danger btn-sm" onclick="window.exporterConciliationPDF()" title="PDF dédié à la synthèse pharmaceutique">📄 Export PDF Synthèse pharma seul</button></div>`;
@@ -177,7 +182,7 @@
     window.conciliationRestore = function (saved) {
         if (!saved || typeof saved !== 'object') return;
         const base = _emptyData();
-        ['dateConcil', 'type', 'includeInPdf'].forEach(k => { if (saved[k] != null) base[k] = saved[k]; });
+        ['dateConcil', 'type', 'discussion', 'includeInPdf'].forEach(k => { if (saved[k] != null) base[k] = saved[k]; });
         if (Array.isArray(saved.lignes)) {
             base.lignes = saved.lignes.map(l => _newLine({
                 medicament: l.medicament, posologie: l.posologie, statut: l.statut,
@@ -238,6 +243,10 @@
         d.lignes.forEach(l => { if (counts[l.statut] != null) counts[l.statut]++; });
         html += `<div style="font-size:9px;margin-top:6px;">${STATUTS.map(s => `<strong>${s.lbl} :</strong> ${counts[s.v]} &nbsp;`).join('')} <strong>Total :</strong> ${d.lignes.length}</div>`;
 
+        if (d.discussion && d.discussion.trim()) {
+            html += `<div style="font-size:9.5px;margin-top:6px;border:1px solid #999;border-radius:3px;padding:4px 6px;"><strong>Discussion / commentaire pharmaceutique :</strong><br><span style="white-space:pre-wrap;">${_esc(d.discussion)}</span></div>`;
+        }
+
         html += `<table style="width:100%;border-collapse:collapse;font-size:9px;margin-top:8px;">
             <tr style="height:44px;vertical-align:top;">
                 <td style="border:1px solid #999;padding:4px;width:50%;"><strong>Pharmacien (propose) :</strong><br><em style="color:#777;">Nom, date, signature</em></td>
@@ -248,6 +257,38 @@
         return html;
     }
     window.buildConciliationPdfHtml = _buildConciliationPdfHtml;
+
+    // Bloc compact pour intégration dans le rapport de synthèse (2ᵉ position) —
+    // pas de saut de page, pas de bloc signature (réservé au PDF autonome).
+    function _buildConciliationReportBlock() {
+        const d = window.conciliationData;
+        if (!d || !Array.isArray(d.lignes) || !d.lignes.length) return '';
+        const statutLbl = v => (STATUTS.find(s => s.v === v) || {}).lbl || '';
+        const rows = d.lignes.map((l, i) => `<tr>
+            <td style="border:1px solid #bbb;padding:2px 4px;">${i + 1}</td>
+            <td style="border:1px solid #bbb;padding:2px 4px;">${_esc(l.medicament)}${l.statut === 'substitution' && l.substitutVers ? ' <strong>&rarr;</strong> ' + _esc(l.substitutVers) : ''}</td>
+            <td style="border:1px solid #bbb;padding:2px 4px;">${_esc(l.posologie)}</td>
+            <td style="border:1px solid #bbb;padding:2px 4px;font-weight:700;">${_esc(statutLbl(l.statut))}</td>
+            <td style="border:1px solid #bbb;padding:2px 4px;color:#555;">${_esc(l.commentaire)}</td>
+        </tr>`).join('');
+        let html = `<div class="pdf-block" style="page-break-inside:avoid;break-inside:avoid;margin-bottom:6px;border:1px solid #b6d4fe;border-radius:4px;padding:5px 7px;background:#f7fbff;">
+            <strong style="font-size:11px;color:#0d6efd;">💊 Synthèse pharmaceutique — propositions au prescripteur</strong>
+            <table style="width:100%;border-collapse:collapse;font-size:9px;margin-top:4px;">
+                <thead><tr style="background:#e7f1ff;">
+                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;width:24px;">N°</th>
+                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;">Médicament</th>
+                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;width:20%;">Posologie</th>
+                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;width:80px;">Proposition</th>
+                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;">Commentaire</th>
+                </tr></thead><tbody>${rows}</tbody>
+            </table>`;
+        if (d.discussion && d.discussion.trim()) {
+            html += `<div style="font-size:9px;margin-top:4px;"><strong>Discussion :</strong> <span style="white-space:pre-wrap;">${_esc(d.discussion)}</span></div>`;
+        }
+        html += `</div>`;
+        return html;
+    }
+    window.buildConciliationReportBlock = _buildConciliationReportBlock;
 
     // ---- 9. Export PDF autonome --------------------------------------------
     window.exporterConciliationPDF = function () {

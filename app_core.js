@@ -359,6 +359,28 @@ function buildPdfContent() {
         <br><span style="font-size:10px;"><strong>${nom ? escapeHtml(nom) + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}</strong>${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}</span>
     </div>`;
 
+    // Fonction rénale — en gras, tout en haut du rapport
+    const _dfgN = parseFloat(dfg);
+    if (!isNaN(_dfgN) && _dfgN > 0) {
+        const _stg = _dfgN >= 90 ? 'normale (stade 1)' : _dfgN >= 60 ? 'stade 2' : _dfgN >= 45 ? 'IRC modérée (stade 3A)' : _dfgN >= 30 ? 'IRC modérée (stade 3B)' : _dfgN >= 15 ? 'IRC sévère (stade 4)' : 'IRC terminale (stade 5)';
+        const _rcol = _dfgN < 30 ? '#dc3545' : _dfgN < 45 ? '#fd7e14' : '#0d6efd';
+        html += `<div class="pdf-block" style="${blockStyle}font-size:12px;font-weight:700;color:${_rcol};padding:2px 0;">🫘 Fonction rénale : DFG ${escapeHtml(dfg)} ml/min — ${_stg}</div>`;
+    }
+
+    // Conclusion générale (« commentaire libre » de la page 1) — en haut du rapport
+    const _freeText = (document.getElementById('freeTextNote')?.value || '').trim();
+    if (_freeText) {
+        html += `<div class="pdf-block" style="${blockStyle}border:1px solid #6c757d;border-radius:4px;padding:5px 8px;background:#f8f9fa;">
+            <strong style="font-size:11px;color:#212529;">Conclusion générale</strong>
+            <div style="font-size:9.5px;white-space:pre-wrap;margin-top:2px;">${escapeHtml(_freeText)}</div>
+        </div>`;
+    }
+
+    // Synthèse pharmaceutique (onglet « Avis pharma ») — 2ᵉ position
+    if (window.conciliationData && window.conciliationData.includeInPdf && typeof window.buildConciliationReportBlock === 'function') {
+        html += window.buildConciliationReportBlock();
+    }
+
     // Bandeau saisies aberrantes (synthData.aberrantInputs) — en TÊTE pour visibilité
     if (sd && sd.aberrantInputs && sd.aberrantInputs.length > 0) {
         const items = sd.aberrantInputs.map(a =>
@@ -545,11 +567,8 @@ function buildPdfContent() {
     if (window.paamData && window.paamData.includeInPdf && typeof window.buildPaamPdfHtml === 'function') {
         html += window.buildPaamPdfHtml({ standalone: false });
     }
-    // Annexe Conciliation médicamenteuse — incluse si l'utilisateur a coché
-    // « Inclure la conciliation dans l'export PDF » dans l'onglet Conciliation.
-    if (window.conciliationData && window.conciliationData.includeInPdf && typeof window.buildConciliationPdfHtml === 'function') {
-        html += window.buildConciliationPdfHtml({ standalone: false });
-    }
+    // NB : la synthèse pharmaceutique (« Avis pharma ») est désormais rendue en
+    // 2ᵉ position du rapport (bloc compact ci-dessus), plus en annexe de fin.
     return html;
 }
 
