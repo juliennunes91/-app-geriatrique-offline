@@ -1092,20 +1092,47 @@ console.log('\n🧪 QT — invariants structurels du gating conditionnel');
         assert.deepStrictEqual(morts, [],
             'conditions indétectables → alerte QT jamais déclenchée (déclassement silencieux) : ' + morts.join(', '));
     });
+    // INVARIANT DE SÉCURITÉ — le champ texte qt_risque (lu par le moteur) et le
+    // score numérique scores.qt (lu par les scores composites) doivent désigner
+    // la MÊME catégorie. C'est la divergence entre les deux qui a rendu 19
+    // médicaments à risque établi (méthadone, dompéridone, moxifloxacine…)
+    // invisibles au moteur : notés « (RE) » ou « Known Risk » au lieu de « KR ».
+    test('QT — tout médicament scores.qt=3 est vu « risque établi » par le moteur', () => {
+        const ETABLI = /\bKR\b|\(RE\)|Known Risk|Risque [EÉ]tabli/i;
+        const invisibles = [];
+        const reDci = /"dci":\s*"([^"]+)"/g;
+        let mm, prev = null, prevName = null;
+        const segs = [];
+        while ((mm = reDci.exec(src)) !== null) {
+            if (prev !== null) segs.push([prevName, src.slice(prev, mm.index)]);
+            prev = mm.index; prevName = mm[1];
+        }
+        if (prev !== null) segs.push([prevName, src.slice(prev, prev + 6000)]);
+        segs.forEach(([dci, seg]) => {
+            const q = (seg.match(/"scores":\s*\{[^}]*"qt":\s*(\d+)/) || [])[1];
+            const t = (seg.match(/"qt_risque":\s*"([^"]*)"/) || [])[1] || '';
+            if (q === '3' && !ETABLI.test(t)) invisibles.push(dci);
+        });
+        assert.deepStrictEqual(invisibles, [],
+            'risque QT ÉTABLI invisible au moteur (notation non reconnue) : ' + invisibles.join(', '));
+    });
     test('QT — toute condition citée appartient au vocabulaire connu', () => {
         const VOCAB = DETECTABLES.concat(['surdosage']);
         const bad = [];
         entries.forEach(([d, o]) => (o.conditions || []).forEach(c => { if (!VOCAB.includes(c)) bad.push(d + ':' + c); }));
         assert.deepStrictEqual(bad, [], 'condition inconnue (typo ?) : ' + bad.join(', '));
     });
-    test('QT — tout médicament porteur de qt_cr est bien tagué (CR)', () => {
+    // Un qt_cr n'est lu QUE si le médicament est au niveau conditionnel selon
+    // qtRiskLevel() — soit (CR), soit (SR) pour les β2-mimétiques. Sinon le
+    // gating est ignoré silencieusement.
+    test('QT — tout médicament porteur de qt_cr est au niveau conditionnel', () => {
         const bad = entries.filter(([d]) => {
             const i = src.indexOf('"dci": "' + d + '"');
             const seg = src.slice(i, i + 4000);
             const t = (seg.match(/"qt_risque":\s*"([^"]*)"/) || [])[1] || '';
-            return !t.includes('(CR)');
+            return !/\(CR\)|\(SR\)/.test(t);
         }).map(([d]) => d);
-        assert.deepStrictEqual(bad, [], 'qt_cr présent mais pas de tag (CR) → gating ignoré : ' + bad.join(', '));
+        assert.deepStrictEqual(bad, [], 'qt_cr présent hors niveau conditionnel → gating ignoré : ' + bad.join(', '));
     });
 }
 

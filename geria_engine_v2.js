@@ -378,7 +378,12 @@ const GeriaEngineV2 = (() => {
             if (acbMedCount < 2) return false;
         }
         if (c.acb_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && parseFloat(m.db_ref.acb) >= 2))) return false;
-        if (c.qt_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && /\bKR\b/.test(String(m.db_ref.qt_risque || ''))))) return false;
+        // qt_check : exige au moins un médicament à risque QT ÉTABLI. Passe par
+        // l'utilitaire partagé qtRiskLevel (utils.js) qui reconnaît toutes les
+        // notations de la base (KR / RE / « Known Risk » / « Risque Etabli »).
+        if (c.qt_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref &&
+            (typeof qtRiskLevel === 'function' ? qtRiskLevel(m.db_ref.qt_risque) === 3
+                                               : /\bKR\b/.test(String(m.db_ref.qt_risque || '')))))) return false;
         if (c.polypharmacie && c.seuil) {
             // Si med_keys est défini : on exige seuil méds DIFFÉRENTS de la liste
             // (ex: ≥ 3 antidépresseurs distincts). Sinon, seuil sur le total.

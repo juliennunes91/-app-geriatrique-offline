@@ -12132,6 +12132,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "50-65%",
                     "qt_risque": "(SR) Spécial — QTc + torsades si hypoK cumulée",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "JAMAIS MONOTHÉRAPIE EN ASTHME (CI absolue — SMART 2006), ICS-FORMOTÉROL PRN (stratégie MART/SMART GINA 2024 step 1-2, SYGMA 1-2 NEJM 2018), Bêtabloquants non sélectifs CI ABSOLUE asthme, HYPOKALIÉMIE additive (diurétiques/corticoïdes/théophylline/β2), QT-prolongateurs + hypoK = TORSADES, IMAO/TCA (HTA/tachycardie), Halogénés anesthésiques, Inhibiteurs CYP3A4 (effet moindre que salmétérol — pas de CI), Digoxine si hypoK",
                     "ddi_interact_v2": [
                               { "classe": "MONOTHÉRAPIE LABA ASTHME — CI ABSOLUE (SMART 2006)", "dcis": ["asthme monotherapie laba"], "commentaire": "SMART 2006 — mortalité asthme x4,4 LABA seul. TOUJOURS COMBINÉ ICS. En BPCO : monothérapie LABA possible.", "severite": "danger" },
@@ -13115,6 +13116,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "95%",
                     "qt_risque": "(SR) Spécial — QTc + hypoK",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "BPCO UNIQUEMENT (pas d'AMM asthme isolé — risque mortalité monothérapie LABA dans asthme), Bêtabloquants non sélectifs CI ABSOLUE, HYPOKALIÉMIE additive, QT-prolongateurs, IMAO/TCA, Halogénés anesthésiques, Digoxine si hypoK",
                     "ddi_interact_v2": [
                               { "classe": "ASTHME — PAS D'AMM ISOLÉE (uniquement BPCO)", "dcis": ["asthme"], "commentaire": "Indacatérol n'a PAS d'AMM en asthme monothérapie. En BPCO uniquement (GOLD 2024 Groupe B/E). Pour asthme : préférer ICS-formotérol (Symbicort) ou ICS-salmétérol (Seretide).", "severite": "danger" },
@@ -20167,6 +20169,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "10%",
                     "qt_risque": "(SR) Spécial — QTc + risque torsades si hypokaliémie cumulée",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "USAGE EXCESSIF SABA → ASTHME NON CONTRÔLÉ — MORTALITÉ (GINA 2024 + SABINA — abandon monothérapie SABA, préférer ICS-formotérol PRN), HYPOKALIÉMIE additive (DIURÉTIQUES, CORTICOÏDES, THÉOPHYLLINE, BÊTAMIMÉTIQUES répétés) — TORSADES DE POINTES, TACHYCARDIE/TROUBLES RYTHME (additif avec IMAO/antidépresseurs tricycliques/sympathomimétiques), HYPERGLYCÉMIE/ACIDOCÉTOSE (DT2 — adapter ADO/insuline), BÊTABLOQUANTS non sélectifs (ANTAGONISME — propranolol CI ABSOLUE asthme), HALOGÉNÉS ANESTHÉSIQUES (troubles rythme — sevoflurane/desflurane), DIGOXINE (↑ toxicité si hypoK), QT-prolongateurs (additif si hypoK)",
                     "ddi_interact_v2": [
                               { "classe": "USAGE EXCESSIF SABA — ASTHME NON CONTRÔLÉ / MORTALITÉ (GINA 2024 — abandon monothérapie)", "dcis": ["asthme non controle"], "commentaire": "GINA 2024 : ABANDON monothérapie SABA en asthme adulte/adolescent (toutes sévérités). Préférer ICS-formotérol PRN (Symbicort/DuoResp) en step 1-2 (SYGMA 1-2 NEJM 2018, Beasley NEJM 2019, RELIEF 2003). SABINA observational ↑ mortalité si > 3 conditionnements/an. Si > 2 utilisations/sem ou > 1 conditionnement/mois : asthme NON CONTRÔLÉ — REVOIR contrôle/observance/technique/comorbidités/declencheurs.", "severite": "danger" },
@@ -20206,6 +20209,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "96%",
                     "qt_risque": "(SR) Spécial — QTc + torsades si hypokaliémie cumulée",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "JAMAIS EN MONOTHÉRAPIE ASTHME — TOUJOURS COMBINÉ ICS (SMART 2006, GINA 2024 — mortalité accrue LABA seul en asthme), Bêtabloquants non sélectifs CI ABSOLUE asthme, HYPOKALIÉMIE additive (diurétiques/corticoïdes/théophylline/β2 cumulés) → TORSADES, INHIBITEURS CYP3A4 PUISSANTS (ritonavir/cobicistat/kétoconazole/itraconazole — ↑ exposition salmétérol → tachycardie/QTc — CI relative), IMAO/Antidépresseurs tricycliques (HTA/tachycardie), QT-prolongateurs, Halogénés anesthésiques (rythme), Hyperglycémie DT2, Digoxine (toxicité si hypoK)",
                     "ddi_interact_v2": [
                               { "classe": "MONOTHÉRAPIE LABA EN ASTHME — CONTRE-INDICATION ABSOLUE (mortalité — SMART 2006)", "dcis": ["asthme monotherapie laba"], "commentaire": "SMART 2006 (Nelson Chest) : ↑ mortalité asthme avec LABA monothérapie (RR 4,4 décès liés asthme). LABA SEUL CI ABSOLUE en asthme. TOUJOURS COMBINÉ ICS (Seretide salmétérol/fluticasone). En BPCO, LABA monothérapie possible (sécurité acceptable — GOLD 2024).", "severite": "danger" },
@@ -21619,6 +21623,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "25%",
                     "qt_risque": "(SR) Spécial",
+                    "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "Mêmes interactions que salbutamol : USAGE EXCESSIF = asthme non contrôlé (GINA 2024 — abandon SABA seul, préférer ICS-formotérol PRN), Bêtabloquants non sélectifs CI ABSOLUE asthme, HYPOKALIÉMIE additive, QT-prolongateurs, IMAO/TCA, Halogénés, Digoxine, Hyperglycémie DT2",
                     "ddi_interact_v2": [
                               { "classe": "USAGE EXCESSIF SABA — asthme non contrôlé (GINA 2024 abandon)", "dcis": ["asthme non controle"], "commentaire": "Préférer ICS-formotérol PRN (SYGMA 1-2). > 2 fois/sem = NON CONTRÔLÉ.", "severite": "danger" },

@@ -7,6 +7,27 @@ const escapeHtml = str => {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Niveau de risque QT/torsades à partir du champ `qt_risque` (MASTER_DB).
+// SOURCE UNIQUE DE VÉRITÉ : la base emploie plusieurs notations héritées pour
+// une même catégorie CredibleMeds. Toute lecture du risque QT DOIT passer par
+// cette fonction — un simple includes('(KR)') laissait 19 des 33 médicaments à
+// risque ÉTABLI invisibles (méthadone, dompéridone, moxifloxacine, pimozide…),
+// car ils sont notés « (RE) », « Risque Etabli » ou « CredibleMeds Known Risk ».
+//   3 = risque établi/connu (KR, RE, Known Risk)
+//   2 = risque possible (PR)
+//   1 = risque conditionnel (CR) ou spécial β2-mimétique (SR — sous hypokaliémie)
+//   0 = aucun risque répertorié
+const QT_LEVEL_ETABLI = 3, QT_LEVEL_POSSIBLE = 2, QT_LEVEL_CONDITIONNEL = 1;
+const qtRiskLevel = (qtRisque) => {
+    const t = String(qtRisque == null ? '' : qtRisque);
+    if (!t) return 0;
+    if (/\bKR\b|\(RE\)|Known Risk|Risque [EÉ]tabli/i.test(t)) return QT_LEVEL_ETABLI;
+    if (/\(PR\)/.test(t)) return QT_LEVEL_POSSIBLE;
+    if (/\(CR\)|\(SR\)/.test(t)) return QT_LEVEL_CONDITIONNEL;
+    return 0;
+};
+
 // Nettoyeur universel (enlève accents, espaces, majuscules) avec cache LRU
 const sanitizeText = (() => {
     const _cache = new Map();

@@ -423,9 +423,11 @@ function preCalculerScores() {
         if (ref._acb === undefined) { ref._acb = parseFloat(ref.acb) || 0; ref._cia = parseFloat(ref.cia) || 0; }
         if (ref._acb > 0) scoreACB_global += ref._acb;
         if (ref._cia > 0) scoreCIA_global += ref._cia;
-        let qt = String(ref.qt_risque || "");
-        if (/\bKR\b/.test(qt)) { maxQTLevel_global = Math.max(maxQTLevel_global, 2); infoQT_global.push(m.dci); globalQT_CountKR++; }
-        else if (qt.includes("(PR)")) { maxQTLevel_global = Math.max(maxQTLevel_global, 1); infoQT_global.push(m.dci); globalQT_CountCR_PR++; }
+        // Niveau QT via l'utilitaire partagé (utils.js) : reconnaît TOUTES les
+        // notations de la base (KR / RE / « Known Risk » / « Risque Etabli »).
+        const lvlQT = (typeof qtRiskLevel === 'function') ? qtRiskLevel(ref.qt_risque) : 0;
+        if (lvlQT === 3) { maxQTLevel_global = Math.max(maxQTLevel_global, 2); infoQT_global.push(m.dci); globalQT_CountKR++; }
+        else if (lvlQT === 2) { maxQTLevel_global = Math.max(maxQTLevel_global, 1); infoQT_global.push(m.dci); globalQT_CountCR_PR++; }
     });
 
     // Passe 2 — QT CONDITIONNEL (CR) : ne compte QUE si la condition propre au
@@ -435,7 +437,8 @@ function preCalculerScores() {
     // IPP isolé, inhibiteur CYP sans substrat QT co-prescrit, etc.).
     activeMeds.forEach(m => {
         let ref = m.db_ref; if (!ref) return;
-        if (!String(ref.qt_risque || "").includes("(CR)")) return;
+        const lvl = (typeof qtRiskLevel === 'function') ? qtRiskLevel(ref.qt_risque) : 0;
+        if (lvl !== 1) return; // conditionnel (CR) ou spécial β2 (SR) uniquement
         if (_qtCrConditionMet(ref)) {
             maxQTLevel_global = Math.max(maxQTLevel_global, 1);
             infoQT_global.push(m.dci);
