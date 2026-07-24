@@ -1045,6 +1045,68 @@ console.log('\n🧪 Oracle — QT conditionnel (CR) gaté sur la condition patie
     test('Cinacalcet + hypocalcémie (2.0) → charge QT activée (condition hypoCa)', () => {
         assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Cinacalcet'], bio: { ca: 2.0 } })));
     });
+    // ── Audit Opus 5 : régressions de gating détectées et corrigées ──────────
+    // Lopéramide n'avait que la condition « surdosage » (jamais détectable) →
+    // il ne contribuait JAMAIS à la charge QT (déclassement silencieux).
+    test('Lopéramide + hypokaliémie (3.0) → charge QT activée (condition morte corrigée)', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Loperamide'], bio: { k: 3.0 } })));
+    });
+    test('Lopéramide seul, ions normaux → pas de charge QT', () => {
+        assert.ok(!hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Loperamide'], bio: { k: 4.2 } })));
+    });
+    // Péthidine et Mépéridine = MÊME molécule (2 fiches) → doivent se comporter
+    // à l'identique. Elles divergeaient (l'une déclassée, l'autre CR).
+    test('Péthidine et Mépéridine (même molécule) — comportement QT identique', () => {
+        const p = hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Pethidine'], bio: { k: 4.2 } }));
+        const m = hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Meperidine'], bio: { k: 4.2 } }));
+        assert.strictEqual(p, m, 'divergence QT entre deux fiches de la même molécule');
+    });
+    // Propafénone : officiellement CredibleMeds Conditional, elle était
+    // invisible au moteur (prose sans code) → aucune alerte même en hypoK.
+    test('Propafénone + hypokaliémie (3.0) → charge QT activée (n\'est plus invisible)', () => {
+        assert.ok(hasQT(analyzeCase({ age: 80, sexe: 'F', meds: ['Propafenone'], bio: { k: 3.0 } })));
+    });
+}
+
+// ============================================================================
+// QT — INVARIANTS STRUCTURELS (anti-régression de classe)
+// ============================================================================
+console.log('\n🧪 QT — invariants structurels du gating conditionnel');
+{
+    const fs = require('fs');
+    const src = fs.readFileSync(__dirname + '/geria_database.js', 'utf8');
+    // Conditions réellement évaluables par _qtCrConditionMet (app_analysis.js).
+    const DETECTABLES = ['hypoK', 'hypoMg', 'hypoCa', 'bradycardie', 'association_qt', 'substrat_qt_coprescrit'];
+    const entries = [];
+    const re = /"dci":\s*"([^"]+)"|"qt_cr":\s*(\{[^}]*\})/g;
+    let m, cur = null;
+    while ((m = re.exec(src)) !== null) {
+        if (m[1]) cur = m[1];
+        else if (m[2] && cur) { try { entries.push([cur, JSON.parse(m[2])]); } catch (e) { /* ignore */ } }
+    }
+    test('QT — chaque qt_cr comporte au moins une condition DÉTECTABLE', () => {
+        const morts = entries.filter(([, o]) =>
+            Array.isArray(o.conditions) && o.conditions.length > 0 &&
+            !o.conditions.some(c => DETECTABLES.includes(c))
+        ).map(([d]) => d);
+        assert.deepStrictEqual(morts, [],
+            'conditions indétectables → alerte QT jamais déclenchée (déclassement silencieux) : ' + morts.join(', '));
+    });
+    test('QT — toute condition citée appartient au vocabulaire connu', () => {
+        const VOCAB = DETECTABLES.concat(['surdosage']);
+        const bad = [];
+        entries.forEach(([d, o]) => (o.conditions || []).forEach(c => { if (!VOCAB.includes(c)) bad.push(d + ':' + c); }));
+        assert.deepStrictEqual(bad, [], 'condition inconnue (typo ?) : ' + bad.join(', '));
+    });
+    test('QT — tout médicament porteur de qt_cr est bien tagué (CR)', () => {
+        const bad = entries.filter(([d]) => {
+            const i = src.indexOf('"dci": "' + d + '"');
+            const seg = src.slice(i, i + 4000);
+            const t = (seg.match(/"qt_risque":\s*"([^"]*)"/) || [])[1] || '';
+            return !t.includes('(CR)');
+        }).map(([d]) => d);
+        assert.deepStrictEqual(bad, [], 'qt_cr présent mais pas de tag (CR) → gating ignoré : ' + bad.join(', '));
+    });
 }
 
 // ============================================================================

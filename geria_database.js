@@ -14683,7 +14683,7 @@ const MASTER_DB = {
                     "bhe": "0 (à dose thérapeutique)",
                     "albumine": "97%",
                     "qt_risque": "(CR) Risque Conditionnel — TORSADES à hautes doses (FDA Black Box 2016)",
-                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage"], "source": "CredibleMeds (CR) ; FDA 2016 (surdosage/abus)" },
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["surdosage", "association_qt", "hypoK"], "source": "CredibleMeds (CR) ; FDA 2016 (surdosage/abus)" },
                     "ddi_interact": "DOSES ABUSIVES — FDA Black Box 2016 (Torsades fatales — mésusage addictif), C. DIFFICILE/colite pseudo-membraneuse CI ABSOLUE (mégacôlon), Inhibiteurs P-gp (kétoconazole/quinine/vérapamil — ↑ exposition cérébrale, perte protection BHE), Inhibiteurs CYP3A4/2C8 (↑ exposition), QT-prolongateurs (à hautes doses), Opioïdes oraux (cumul rare car loperamide périphérique)",
                     "ddi_interact_v2": [
                               { "classe": "C. DIFFICILE / Colite pseudo-membraneuse / Dysenterie — CI ABSOLUE", "dcis": ["antecedent c difficile", "colite pseudo membraneuse", "dysenterie"], "commentaire": "CI ABSOLUE — risque mégacôlon toxique. Si suspicion diarrhée à toxines : pas de loperamide.", "severite": "danger" },
@@ -15275,7 +15275,7 @@ const MASTER_DB = {
                     "scores": {"qt":1,"sero":2,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "65-75",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "(--) Non torsadogène — absente de la liste CredibleMeds (cohérence avec la fiche « Pethidine », même molécule). Vrai risque gériatrique : convulsions (norpéthidine, insuffisance rénale) et syndrome sérotoninergique.",
                     "ddi_interact": "IMAO (CI absolue - deces), ISRS (syndrome serotoninergique), MAO-B inhibiteurs",
                     "ddi_interact_v2": [
                               {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique.","severite":"danger"},
@@ -25838,7 +25838,8 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":1,"sero":0,"saign":0,"chute":1,"sedat":0,"hypoG":0},
                     "bhe": "0",
-                    "qt_risque": "Élargissement QRS (pas QTc directement, mais pro-arythmie si cardiopathie)",
+                    "qt_risque": "(CR) Risque Conditionnel (CredibleMeds) — élargissement QRS surtout (pas QTc directement), pro-arythmie si cardiopathie structurelle, bradycardie ou hypokaliémie",
+                    "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "hypoMg", "bradycardie", "association_qt"], "source": "CredibleMeds (CR) ; RCP Rythmol (effet Ic : élargissement QRS)" },
                     "albumine": "85-97%",
                     "ddi_interact": "CARDIOPATHIE STRUCTURELLE = CI ABSOLUE (CAST), Digoxine (↑ x1,5-2 — ↓ dose 50%), Bétabloquants (cumul bradycardie/inotrope-), AVK warfarine (↑ INR x2 — saignement), Ciclosporine/Tacrolimus (↑), Inhibiteurs CYP2D6 (paroxétine/fluoxétine/quinidine ↑ propafénone x2-5), Inhibiteurs CYP3A4 (ritonavir, kétoconazole ↑), Anti-arythmiques (cumul QRS/QT — amiodarone, sotalol, quinidine), Diurétiques hypoK (pro-arythmie), Rifampicine (↓), Inhibiteurs PDE5 (hypotension)",
                     "ddi_interact_v2": [
