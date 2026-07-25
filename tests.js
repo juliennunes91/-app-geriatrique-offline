@@ -1133,6 +1133,26 @@ console.log('\n🧪 QT — invariants structurels du gating conditionnel');
         });
         assert.deepStrictEqual(bad, [], 'régression sur les molécules blanchies : ' + bad.join(', '));
     });
+    // Molécules dégagées parce que leur risque RÉEL est documenté ailleurs dans
+    // la fiche (convulsions, bradycardie, vasoconstriction, charge ACB). Le tag
+    // QT y était trompeur : il bruitait l'alerte ET masquait le vrai danger.
+    test('QT — molécules dégagées (risque réel couvert) : aucun tag QT résiduel', () => {
+        const DEGAGEES = ['Sumatriptan', 'Naratriptan', 'Brompheniramine', 'Cyproheptadine', 'Propiverine',
+                          'Belladonna', 'Hyoscyamine', 'Bromocriptine', 'Buspirone', 'Pheniramine',
+                          'Amoxapine', 'Bupropion', 'Sofosbuvir', 'Daclatasvir', 'Ephedrine', 'Cobicistat'];
+        const bad = [];
+        DEGAGEES.forEach(dci => {
+            const i = src.indexOf('"dci": "' + dci + '"');
+            if (i < 0) { bad.push(dci + ' (absent)'); return; }
+            const seg = src.slice(i, i + 4000);
+            const t = (seg.match(/"qt_risque":\s*"([^"]*)"/) || [])[1] || '';
+            const a = (seg.match(/"alerte_clinique":\s*"([^"]*)"/) || [])[1] || '';
+            if (/\bKR\b|\(RE\)|Known Risk|Risque [EÉ]tabli|\(PR\)|\(CR\)|\(SR\)/.test(t)) bad.push(dci + ' : tag QT réapparu');
+            // le texte clinique ne doit plus annoncer un QT que le moteur ne signale plus
+            if (/QT[-\s]?prolongation|Allongement QTc/i.test(a)) bad.push(dci + ' : alerte_clinique annonce encore un QT');
+        });
+        assert.deepStrictEqual(bad, [], 'régression sur les molécules dégagées : ' + bad.join(', '));
+    });
     test('QT — toute condition citée appartient au vocabulaire connu', () => {
         const VOCAB = DETECTABLES.concat(['surdosage']);
         const bad = [];
