@@ -1116,6 +1116,23 @@ console.log('\n🧪 QT — invariants structurels du gating conditionnel');
         assert.deepStrictEqual(invisibles, [],
             'risque QT ÉTABLI invisible au moteur (notation non reconnue) : ' + invisibles.join(', '));
     });
+    // Retraits décidés sur PREUVE NÉGATIVE (études thorough-QT formelles ou
+    // absence totale de signal). Figés ici pour qu'un futur ajout ne les
+    // ré-étiquette pas silencieusement ; la justification vit dans qt_divergence.
+    test('QT — molécules blanchies sur preuve négative : aucun tag QT résiduel', () => {
+        const BLANCHIES = ['Delafloxacine', 'Doxycycline', 'Minocycline', 'Fesoterodine', 'Indacaterol'];
+        const bad = [];
+        BLANCHIES.forEach(dci => {
+            const i = src.indexOf('"dci": "' + dci + '"');
+            if (i < 0) { bad.push(dci + ' (absent de la base)'); return; }
+            const seg = src.slice(i, i + 4000);
+            const t = (seg.match(/"qt_risque":\s*"([^"]*)"/) || [])[1] || '';
+            const q = (seg.match(/"scores":\s*\{[^}]*"qt":\s*(\d+)/) || [])[1];
+            if (/\bKR\b|\(RE\)|Known Risk|Risque [EÉ]tabli|\(PR\)|\(CR\)|\(SR\)/.test(t)) bad.push(dci + ' : tag QT réapparu');
+            if (q !== '0') bad.push(dci + ' : scores.qt=' + q + ' (attendu 0)');
+        });
+        assert.deepStrictEqual(bad, [], 'régression sur les molécules blanchies : ' + bad.join(', '));
+    });
     test('QT — toute condition citée appartient au vocabulaire connu', () => {
         const VOCAB = DETECTABLES.concat(['surdosage']);
         const bad = [];
