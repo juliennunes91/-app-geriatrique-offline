@@ -2989,6 +2989,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "40-60",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Sel de théophylline : même profil. Risque arythmique par surdosage et hypokaliémie, pas de torsadogénicité propre. Surveiller théophyllinémie et kaliémie.", "source": "Bittar G & Friedman HS, Chest 1990;98(3):672-8 ; StatPearls, Theophylline Toxicity, 2023 (l'aminophylline est le sel d'éthylènediamine de la théophylline, ~80 % de théophylline bas" },
                     "ddi_interact": "Memes interactions theophylline | Adeneralsine (antagonisme - relais test de stress)",
                     "ddi_interact_v2": [
                               {
@@ -3429,6 +3430,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "90",
                     "qt_risque": "Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Risque principal de l'amoxapine : convulsions/etat de mal et insuffisance renale par rhabdomyolyse en surdosage, plus que l'allongement du QT.", "source": "Notice FDA amoxapine / DailyMed, rubriques Warnings et Overdosage ; Litovitz & Troutman, JAMA 1983 (convulsions et deces sous amoxapine) ; Amoxapine, StatPearls 2023" },
                     "ddi_interact": "IMAO (CI), Alcool, QT-prolongateurs, Anticholinergiques",
                     "ddi_interact_v2": [
                               {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
@@ -4649,6 +4651,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Alcaloïdes atropiniques : tachycardie et anomalies ECG d'origine autonomique en intoxication, pas de torsade. Enjeu réel = charge anticholinergique (confusion, rétention, chute).", "source": "Intoxication à Atropa belladonna, J Med Case Rep 2012 ; échelle ACB" },
                     "ddi_interact": "Alcool, Anticholinergiques (cumul ACB +++)",
                     "ddi_interact_v2": [
                               {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
@@ -5292,6 +5295,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "96",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Pas de signal QT retrouve pour la bromocriptine ; risques reels : hypotension orthostatique, hallucinations et fibroses valvulaires/pleurales.", "source": "Monographie bromocriptine, FDA / accessdata (rubrique postmarketing : valvulopathie, fibrose valvulaire, pericardite) ; Kang J et al., Eur J Pharmacol 2003 (effets differentiels de" },
                     "ddi_interact": "FIBROSE valvulaire/pleurale/rétropéritonéale (FDA warning — ergoline) — PRÉFÉRER non-ergot (ropinirole/rotigotine/pramipexole), Inhibiteurs CYP3A4 (kétoconazole/ritonavir/clarithromycine — ↑ exposition), Macrolides érythromycine (↑ concentration), Antipsychotiques (antagonisme PD — CI), Antihypertenseurs (hypotension additive +++), TROUBLES IMPULSIVITÉ (jeu pathologique, hypersexualité — FDA 2007), HYPOTENSION orthostatique majeure, Alcool, Hyperprolactinémie",
                     "ddi_interact_v2": [
                               { "classe": "FIBROSE (valvulaire/pleurale/rétropéritonéale) — FDA warning ergoline", "dcis": ["surveillance fibrose"], "commentaire": "Valvulopathie (régurgitations) + fibrose pleurale/rétropéritonéale documentées avec ergolines (pergolide retiré 2007, bromocriptine restriction). PRÉFÉRER NON-ERGOT (ropinirole/rotigotine/pramipexole) chez Parkinson nouveau. Surveillance écho cardiaque + EFR + créatinine si traitement > 6 mois.", "severite": "danger" },
@@ -5331,6 +5335,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "> 95",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Aucun cas humain de torsade de pointes publie ni mention QT au RCP. Blocage hERG in vitro seulement. Le risque geriatrique reel est anticholinergique et sedatif.", "source": "Absence de signal : recherche RCP/FDA et litterature negative ; unique donnee = Park et al., « Electrophysiological effects of brompheniramine on cardiac ion channels and action po" },
                     "ddi_interact": "Alcool, Anticholinergiques, QT-prolongateurs",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB Beers + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén.", "severite": "danger" },
@@ -5401,6 +5406,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "95%",
                     "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "qt_divergence": { "statut": "mecanisme_indirect", "libelle": "Risque QT indirect (trouble électrolytique)", "detail": "Pas de risque QT propre : le bumétanide favorise l'hypokaliémie et l'hypomagnésémie, qui allongent le QT et favorisent la torsade. Surveiller K+/Mg2+ si co-prescription QT.", "source": "RCP Burinex/bumétanide (rubriques 4.4/4.5, ANSM-emc) ; AZCERT/CredibleMeds Conditional Risk (furosémide) ; StatPearls « Torsade de Pointes » 2023" },
                     "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "ANSM/RCP (effet de classe diuretique ; hors CredibleMeds)" },
                     "ddi_interact": "Bloc DDI commun diurétique anse (cf Furosémide) : AINS triple whammy, IEC/ARA2 (hypotension 1ère dose), Digoxine (hypoK), Lithium (↑ lithémie), Aminosides (ototoxicité), Sulfonylurées, Médicaments QT (torsades par hypoK), Corticoïdes (cumul hypoK), IRSS/Carbamazépine (hyponatrémie), Probénécide (↓ effet), Cholestyramine (↓ absorption)",
                     "ddi_interact_v2": [
@@ -5486,6 +5492,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "84%",
                     "qt_risque": "(PR) Risque Possible",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Bupropion : risque dominant = abaissement du seuil epileptogene. QTc/QRS allonges seulement en surdosage massif, sans torsades rapportees.", "source": "Isbister GK & Balit CR, J Clin Psychopharmacol 2003 (Bupropion overdose: QTc prolongation and its clinical significance) ; Caillier B et al., 2012 (QRS widening and QT prolongation" },
                     "ddi_interact": "↓ SEUIL ÉPILEPTOGÈNE (CI ATCD épilepsie/TCA/anorexie/sevrage BZD/alcool — FDA Black Box), INHIBITEUR PUISSANT CYP2D6 (↑ métoprolol/tamoxifène/codéine — modifications cliniques), IMAO non sélectifs CI ABSOLUE 14j wash-out, SYNDROME SÉROTONINERGIQUE (ISRS/IRSN/triptans — possible mais rare), Inducteurs CYP2B6 (ritonavir/efavirenz/carbamazépine — ↓ bupropion), Hyperthermie/Insomnie/Anxiété, HTA (effet noradrénergique)",
                     "ddi_interact_v2": [
                               { "classe": "↓ SEUIL ÉPILEPTOGÈNE — CI ATCD épilepsie/TCA/anorexie (FDA Black Box)", "dcis": ["antecedent epilepsie", "trouble alimentaire", "anorexie", "boulimie", "antecedent traumatisme cranien"], "commentaire": "Convulsions 0,4% à 300 mg/j, 2-4% à 450 mg/j. CI ABSOLUE ATCD épilepsie/TCA/anorexie/boulimie. PRUDENCE traumatisme crânien.", "severite": "danger" },
@@ -5529,6 +5536,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "86%",
                     "qt_risque": "(PR) Risque Possible",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Pas de signal QT etabli pour la buspirone : absente de CredibleMeds, non mentionnee dans le RCP. Anxiolytique raisonnable chez le sujet age.", "source": "Notice FDA buspirone (absence de QT/arythmie parmi les evenements emergents sur plus de 3500 sujets) ; Stock EM et al., Ann Pharmacother 2018 (association statistique QTc chez des " },
                     "ddi_interact": "AVANTAGE gériatrie vs BZD (pas chutes/dépendance/sédation marquée), Substrat CYP3A4 (inhibiteurs ↑ x10 — éviter), IMAO non sélectifs CI ABSOLUE (crise HTA), ISRS/IRSN (syndrome sérotoninergique rare), Délai d'action 2-4 semaines, Pamplemousse (↑ exposition x4-9)",
                     "ddi_interact_v2": [
                               { "classe": "AVANTAGE gériatrique vs BZD (anxiété chronique)", "dcis": ["age sup 65 ans", "demence", "anxiete chronique"], "commentaire": "Pas de chutes, pas de dépendance, pas de sédation marquée. ALTERNATIVE PRÉFÉRABLE BZD chez âgé pour TAG (vs lorazépam/oxazépam court terme). MAIS délai 2-4 sem.", "severite": "info" },
@@ -5897,6 +5905,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 90",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "La notice FDA precise que les effets cardiaques, dont l'allongement du QT, n'ont pas ete etudies. Aucun cas de torsade de pointes publie ; risque anticholinergique au premier plan.", "source": "FDA prescribing information, carbinoxamine maleate (DailyMed / Karbinal ER), rubrique Warnings and Precautions : « Cardiac effects, including prolongation of QT interval have not b" },
                     "ddi_interact": "Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB Beers + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén.", "severite": "danger" },
@@ -6894,6 +6903,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "72%",
                     "qt_risque": "(KR) Risque Connu — QTc + Torsades",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Blocage hERG et allongement du QT documentes in vitro et chez l'animal ; de rares torsades de pointes publiees. Risque faible aux doses usuelles, majore par les co-medications.", "source": "Park et al., « Block of hERG K+ channel by classic histamine H1 receptor antagonist chlorpheniramine », Korean J Physiol Pharmacol, 2009 (IC50 17,1 uM) ; cas de TdP chlorpheniramin" },
                     "ddi_interact": "PIM ABSOLU âgé, CUMUL ACB, QT-prolongateurs (Risk_KR), Sédatifs centraux, IACHE/Mémantine antagonisme, Glaucome angle fermé CI, HBP/Iléus/Myasthénie CI",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB=3 + BHE + QTc Risk_KR. ÉVITER. Préférer cétirizine/loratadine 2ème gén pour allergie chez âgé.", "severite": "danger" },
@@ -6972,6 +6982,7 @@ const MASTER_DB = {
                     "bhe": "0.0",
                     "albumine": "> 75%",
                     "qt_risque": "(CR) Conditionnel — par hypoK",
+                    "qt_divergence": { "statut": "mecanisme_indirect", "libelle": "Risque QT indirect (trouble électrolytique)", "detail": "Pas de blocage hERG : l'hypokaliémie (marquée et prolongée, demi-vie longue) allonge le QT. Cas de torsade décrits. Contrôler K+/Mg2+, surtout si autre médicament QT.", "source": "RCP chlortalidone (Hygroton), rubriques 4.4/4.8 ; Cleveland Clinic J Med 2015;82(8):527 (comparaison HCTZ/chlortalidone, hypokaliémie plus fréquente et plus profonde) ; cas publiés" },
                     "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "hypoMg", "association_qt"], "source": "ANSM/RCP (effet de classe ; hors CredibleMeds)" },
                     "ddi_interact": "Bloc DDI thiazidiques commun : AINS triple whammy + ↓ effet, IEC/ARA2 (hypotension, hyponatrémie), Lithium ↑ lithémie/intoxication, Digoxine (hypoK potentialise toxicité), Médicaments QT (torsades), IRSS/Carbamazépine (HYPONATRÉMIE SÉVÈRE +++), Corticoïdes (cumul hypoK), Sulfonylurées/Insuline (hyperglycémie), Calcium/Vit D (hypercalcémie — risque + marqué que HCTZ par T½ longue), Allopurinol (goutte), Photosensibilisation (moindre que HCTZ)",
                     "ddi_interact_v2": [
@@ -7501,6 +7512,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 90",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Inhibiteur hERG tres puissant in vitro (IC50 12 nM) ; a eviter en cas de QT long congenital ou acquis. Aucune torsade de pointes publiee en usage clinique courant.", "source": "Kim KS et al., « Clemastine, a conventional antihistamine, is a high potency inhibitor of the hERG K+ channel », J Mol Cell Cardiol, 2005 ; Welzel et al., « Management of anaphylax" },
                     "ddi_interact": "Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB Beers + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén.", "severite": "danger" },
@@ -8023,6 +8035,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "97 - 98 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Aucun effet QT propre (étude QT approfondie négative) ; le risque est indirect, par inhibition du CYP3A4 accumulant un substrat torsadogène. Allonge en revanche le PR.", "source": "FDA TYBOST (cobicistat) label, rubrique 12.2 « Cardiac Electrophysiology » (étude QT/QTc approfondie, 48 sujets sains, doses uniques 250 et 400 mg = 1,67 et 2,67 × la dose thérapeu" },
                     "ddi_interact": "CYP3A4 inhibiteur puissant",
                     "ddi_interact_v2": [
                               {
@@ -8376,6 +8389,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "93",
                     "qt_risque": "Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "extrapolation_classe", "libelle": "Risque QT extrapolé de la classe", "detail": "Cyclobenzaprine : quasi-identique a l'amitriptyline (CredibleMeds conditionnel). Risque geriatrique majeur = charge anticholinergique et chute.", "source": "Notice FDA cyclobenzaprine / Flexeril (rubrique Warnings renvoyant explicitement aux arythmies et allongement de la conduction des tricycliques) ; Michalets EL et al., Ann Pharmaco" },
                     "ddi_interact": "IMAO (CI +++), ISRS (syndrome serotoninergique), Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
                               {"classe":"ISRS","dcis":["citalopram","escitalopram","fluoxetine","paroxetine","sertraline","fluvoxamine"],"commentaire":"syndrome serotoninergique.","severite":"danger"},
@@ -8465,6 +8479,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "96-99",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Pas d'allongement du QT dans le modele animal in vivo de reference, contrairement a l'hydroxyzine. Risque anticholinergique et sedatif, non torsadogene.", "source": "Nakamura et al., « The conventional antihistamine drug cyproheptadine lacks QT-interval-prolonging action in halothane-anesthetized guinea pigs: comparison with hydroxyzine », Jour" },
                     "ddi_interact": "ISRS (antagonisme), Anticholinergiques (cumul ACB), IMAO (CI)",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D) — ACB + orexigène", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+ + orexigène + prise de poids. ÉVITER.", "severite": "danger" },
@@ -8568,6 +8583,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "0,99",
                     "qt_risque": "? Risque Possible (PR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Pas de signal QT ; le risque documenté est une bradycardie ou un bloc AV sévère avec sofosbuvir + amiodarone. Surveiller la fréquence cardiaque, pas le QTc.", "source": "RCP/SmPC EMA Daklinza (daclatasvir), rubrique 4.4 « Bradycardie sévère et bloc cardiaque » ; FDA Drug Safety Communication du 24/03/2015 ; Renet S et al., Gastroenterology 2015;149" },
                     "ddi_interact": "NS5A",
                     "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS | Créatinine | ECG (bradycardie si sofosbuvir associe)",
@@ -8815,6 +8831,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "84",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Étude QT approfondie négative (300 et 900 mg IV vs moxifloxacine) ; aucune mise en garde QT au RCP/label. Signal QT non établi, contrairement aux autres fluoroquinolones.", "source": "Litwin JS et al., Antimicrob Agents Chemother 2015;59(6):3469-73 (thorough QT study) ; FDA BAXDELA label §12.2, 2017 ; EMA Quofenix SmPC (pas de rubrique QT en 4.4)" },
                     "ddi_interact": "Antiacides, Methotrexate",
                     "ddi_interact_v2": [
                               {
@@ -9067,6 +9084,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,72",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "extrapolation_classe", "libelle": "Risque QT extrapolé de la classe", "detail": "Pas de donnee QT propre ; enantiomere actif de la chlorpheniramine, qui bloque le hERG. Risque theorique faible, a considerer seulement si QT long ou co-medication torsadogene.", "source": "Extrapolation depuis la chlorpheniramine (Park et al., Korean J Physiol Pharmacol, 2009) ; Silva et al., « Contractile and electrical activities of dexchlorpheniramine on rat heart" },
                     "ddi_interact": "Depresseurs SNC - Alcool",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB élevé + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers fort + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén pour allergie.", "severite": "danger" },
@@ -9222,7 +9240,8 @@ const MASTER_DB = {
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "0,25",
-                    "qt_risque": "? Risque Possible (PR)",
+                    "qt_risque": "Pas d'allongement du QT — la digoxine RACCOURCIT le QT (imprégnation digitalique). Risque rythmique = toxicité digitalique (TV bidirectionnelle, BAV), majorée par l'hypokaliémie.",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "La digoxine RACCOURCIT le QT (imprégnation digitalique) et ne donne pas de torsade : le risque est la toxicité digitalique (BAV, TV bidirectionnelle), majorée par l'hypokaliémie.", "source": "Circulation 2004;109:e211 « Digitalis Administration: An Underappreciated but Common Cause of Short QT Interval » ; LITFL ECG Library, Digoxin Effect (2023)" },
                     "ddi_interact": "Amiodarone - Verapamil - Diltiazem - Quinidine - Macrolides (clarithromycine, erythromycine) - Hypokaliemiants (diuretiques anse/thiazidiques) - Calcium IV - Spironolactone",
                     "ddi_interact_v2": [
                               {
@@ -9503,6 +9522,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "98",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Allongement du QT possible aux doses elevees (RCP allemand) ; torsades de pointes rapportees. Prudence si hypokaliemie, hypomagnesemie, bradycardie ou autre QT-prolongateur.", "source": "Fachinformation Vomex A (dimenhydrinate), Allemagne, versions 2022-2025, rubriques 4.4/4.5/4.8 ; cas publie « Torsade-de-Pointes-Tachykardie unter Dimenhydrinat », Krankenhauspharm" },
                     "ddi_interact": "Alcool, Anticholinergiques, QT-prolongateurs",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D) — ACB Beers + BHE+", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers. ÉVITER. Préférer 2ème gén.", "severite": "danger" },
@@ -9931,6 +9951,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "84",
                     "qt_risque": "Risque Etabli (RE)",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Dosulepine : allongement du QTc et torsades rapportes, cardiotoxicite majeure en surdosage. A ne pas initier chez le sujet age.", "source": "Case report Dothiepin, QT prolongation and torsades de pointes, 2011 (PMID 21455382) ; NHS Specialist Pharmacy Service, Choosing an antidepressant for people with coronary heart di" },
                     "ddi_interact": "IMAO (CI +++), Alcool, QT-prolongateurs, Anticholinergiques, ISRS (syndrome serotoninergique)",
                     "ddi_interact_v2": [
                               {
@@ -10085,6 +10106,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "82-93",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Aucun signal QT/torsades documenté : absente des listes CredibleMeds et des revues d'antibiotiques torsadogènes ; souvent retenue comme alternative en cas de QT long.", "source": "Owens RC & Nolin TD, Clin Infect Dis 2006;43(12):1603-11 (« Antimicrobial-Associated QT Interval Prolongation ») ; J Antimicrob Chemother 2017;72(5):1272-4 (« Antimicrobials and QT" },
                     "ddi_interact": "Antiacides, Fer, Bismuth (chelation), AVK, Contraceptifs oraux, Retinoides (HTIC)",
                     "ddi_interact_v2": [
                               {
@@ -10160,6 +10182,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "~ 25 %",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Torsades de pointes et QRS elargi decrits en surdosage (blocage hERG et canal sodique). Aucun signal QT etabli aux doses usuelles ; surveiller ECG si intoxication.", "source": "Ryu et al., « Torsades de pointes after doxylamine overdose: A case report », HeartRhythm Case Reports, 2025 ; cas pediatrique d'elargissement du QRS, Pediatric Emergency Medicine " },
                     "ddi_interact": "Depresseurs SNC - Alcool",
                     "ddi_interact_v2": [
                               {"classe":"ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB élevé + BHE+ + chutes/démence","dcis":["age sup 65 ans","demence","trouble cognitif"],"commentaire":"ACB Beers fort + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén pour allergie.","severite":"danger"},
@@ -10760,6 +10783,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Pas de signal d'allongement du QT : le risque est adrénergique (tachycardie, HTA, arythmies ventriculaires, ischémie), majoré sur cardiopathie ou séquelle d'infarctus.", "source": "J Am Coll Cardiol 2004;44(6) « Ephedrine increases ventricular arrhythmias in conscious dogs after myocardial infarction » (9/15 animaux avec majoration des arythmies ventriculaire" },
                     "ddi_interact": "IMAO (CI absolue - crise hypertensive mortelle), Antidepresseurs, Guanethidine",
                     "ddi_interact_v2": [
                               {
@@ -11571,6 +11595,7 @@ const MASTER_DB = {
                     "bhe": "0 (BHE- ; avantage chez âgé)",
                     "albumine": "50% (métabolite actif 5-hydroxyméthyl-tolterodine)",
                     "qt_risque": "(PR) Possible — QTc dose-dépendant",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Étude thorough-QT négative (4 et 28 mg/j) : pas d'allongement du QT. Effet cardiaque à retenir = tachycardie dose-dépendante (jusqu'à +11 bpm), non le QT.", "source": "Notice FDA Toviaz (rubrique 12.2 Clinical Pharmacology, étude QT avec moxifloxacine en contrôle positif) ; AAPS J 2018;20:83 (modélisation QSTS : le 5-HMT ne prolonge pas le QT mal" },
                     "ddi_interact": "PIM Beers 2023 / STOPP B7 / FORTA-D (préférable à oxybutynine — BHE faible), CUMUL ACB, IACHE/MÉMANTINE (antagonisme PD), INHIBITEURS CYP3A4 PUISSANTS (kétoconazole/itraconazole/clarithromycine/ritonavir → ↑ x2-3 — MAX 4 mg/j), GLAUCOME ANGLE FERMÉ (CI ABSOLUE), RÉTENTION URINAIRE (CI relative), QT-prolongateurs (additif), Iléus/Myasthénie (CI), Hyperthermie estivale",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM (Beers 2023, STOPP B7, FORTA-D) — BHE faible (avantage)", "dcis": ["age sup 65 ans", "demence", "trouble cognitif", "mci"], "commentaire": "ACB=3 mais BHE FAIBLE (avantage vs oxybutynine/solifénacine/tolterodine). Préférable chez âgé fragile si anticholinergique nécessaire. MAIS préférer MIRABÉGRON en 1ère ligne (β3 non anticholinergique). Réévaluation 4-6 sem.", "severite": "warning" },
@@ -11906,6 +11931,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "> 90%",
                     "qt_risque": "(KR) Risque Connu",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Allongement du QT rapporte (tres rare) sous fluphenazine, avec blocage hERG demontre : ECG si association torsadogene ou trouble ionique.", "source": "Lee HA et al., Eur J Pharmacol 2013 (blocage hERG / allongement du potentiel d'action, PMID 23395964) ; Monographie Modecate / fluphenazine decanoate, Sante Canada (rubrique QT) ; " },
                     "ddi_interact": "FDA Black Box 2005 démence (mortalité), QT-prolongateurs (Risk_KR), Agranulocytose, SMN, Hypotension orthostatique, Cumul ACB, Levodopa antagonisme, Lithium (neurotoxicité), Sédatifs centraux",
                     "ddi_interact_v2": [
                               { "classe": "DÉMENCE — FDA Black Box 2005 / EMA 2008", "dcis": ["demence", "age sup 65 ans", "syndrome confusionnel"], "commentaire": "Mortalité +60-70%. PIM ABSOLU Beers/STOPP K1/FORTA-D. Dose minimale + durée minimale + réévaluation.", "severite": "danger" },
@@ -12132,6 +12158,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "50-65%",
                     "qt_risque": "(SR) Spécial — QTc + torsades si hypoK cumulée",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Le RCP/notice indique que le formotérol peut lui-même allonger le QTc, en plus de l'hypokaliémie β2. Prudence si autre médicament QT, hypokaliémie ou cardiopathie.", "source": "Notice FDA Foradil Aerolizer (2012) et Perforomist (2018), rubrique Warnings/Precautions : « formoterol may induce prolongation of the QTc interval » ; RCP formotérol (rubriques 4." },
                     "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "JAMAIS MONOTHÉRAPIE EN ASTHME (CI absolue — SMART 2006), ICS-FORMOTÉROL PRN (stratégie MART/SMART GINA 2024 step 1-2, SYGMA 1-2 NEJM 2018), Bêtabloquants non sélectifs CI ABSOLUE asthme, HYPOKALIÉMIE additive (diurétiques/corticoïdes/théophylline/β2), QT-prolongateurs + hypoK = TORSADES, IMAO/TCA (HTA/tachycardie), Halogénés anesthésiques, Inhibiteurs CYP3A4 (effet moindre que salmétérol — pas de CI), Digoxine si hypoK",
                     "ddi_interact_v2": [
@@ -12899,6 +12926,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "< 50",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Pas de blocage hERG : allongement du QTc décrit après atropiniques IV et en intoxication, d'origine autonomique/tachycardie. Risque réel = syndrome anticholinergique et confusion.", "source": "Annila et al., effet de l'atropine sur le QT et l'amplitude de l'onde T chez le volontaire sain (QTc 410 -> 454 ms à 5 min, PMID 8251290) ; Karger, Dev Pharmacol Ther « Long Q-T Sy" },
                     "ddi_interact": "Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
                               {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
@@ -13116,6 +13144,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "95%",
                     "qt_risque": "(SR) Spécial — QTc + hypoK",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Étude thorough-QT négative jusqu'à 600 µg/j (ΔΔQTcF < 5 ms) : pas de risque QT propre. Reste l'hypokaliémie de classe β2 ; prudence si QT long connu.", "source": "Khindri et al., BMC Pulm Med 2011;11:31 (thorough-QT ICH E14, 404 sujets, moxifloxacine en contrôle positif) ; RCP Onbrez Breezhaler rubrique 4.4" },
                     "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "BPCO UNIQUEMENT (pas d'AMM asthme isolé — risque mortalité monothérapie LABA dans asthme), Bêtabloquants non sélectifs CI ABSOLUE, HYPOKALIÉMIE additive, QT-prolongateurs, IMAO/TCA, Halogénés anesthésiques, Digoxine si hypoK",
                     "ddi_interact_v2": [
@@ -14938,6 +14967,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "90",
                     "qt_risque": "Risque Etabli (RE)",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Effet QT faible sous loxapine (etudes thorough-QT : environ +5 ms) ; prudence si association torsadogene, forme injectable et hypokaliemie.", "source": "Spyker DA et al., J Clin Pharmacol 2014 (thorough QT loxapine inhalee, PMID 24375070) ; Kahn A et al., 2015 (tQT doses repetees, PMID 26501204) ; RCP Loxapac injectable, ANSM / bas" },
                     "ddi_interact": "QT-allongeurs (Loxapine = RE — Risque ÉTABLI), Autres APP, Antagonistes D2, Lévodopa (DCL EVITER), Anticholinergiques (ACB=2), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Inducteurs CYP",
                     "ddi_interact_v2": [
                               { "classe": "QT-allongeurs (Loxapine = Risque ÉTABLI RE)", "dcis": ["amiodarone", "sotalol", "dronedarone", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "citalopram", "escitalopram", "trazodone", "ondansetron", "haloperidol", "methadone", "hydroxyzine"], "commentaire": "Loxapine = QT RE. Cumul à éviter. CI Pimozide/Thioridazine.", "severite": "danger" },
@@ -15313,6 +15343,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "50-70%",
                     "qt_risque": "(CR) Conditionnel — QT intrinseque (phenothiazine, blocage hERG) ; ANSM Primalan",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Allongement du QT documente au RCP : risque de torsades de pointes majore chez le metaboliseur lent CYP2D6 ou sous inhibiteur CYP2D6 (paroxetine, fluoxetine, terbinafine).", "source": "RCP ANSM PRIMALAN (mequitazine), mise a jour 23/05/2024 ; Prescrire, « Mequitazine (Primalan) : un medicament a ecarter des soins » (bilan annuel)" },
                     "qt_cr": { "mecanisme": "direct_dose", "conditions": ["hypoK", "bradycardie", "association_qt", "surdosage"], "source": "ANSM/RCP Primalan (hors liste CredibleMeds US)" },
                     "ddi_interact": "QT-prolongateurs, CUMUL ACB, IACHE/Mémantine antagonisme, Glaucome/HBP CI, Sédatifs",
                     "ddi_interact_v2": [
@@ -16002,6 +16033,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "75",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Pas d'allongement du QT documenté ; proposée comme alternative à l'azithromycine chez le patient à risque, avec effet antiarythmique en modèle expérimental.", "source": "Eur Heart J Cardiovasc Pharmacother 2020;6(4):265-6 (« Cardiac safety and potential efficacy: two reasons for considering minocycline in place of azithromycin in COVID-19 managemen" },
                     "ddi_interact": "Antiacides, fer, isotretinoine (HTIC), AVK",
                     "ddi_interact_v2": [
                               {
@@ -16393,6 +16425,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "0,29",
                     "qt_risque": "? Risque Possible (PR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Naratriptan : risque de vasoconstriction coronaire, non de torsade. Contre-indique si coronaropathie, angor spastique, AVC ou WPW.", "source": "Notice FDA Amerge / naratriptan 2016 (rubriques Contraindications et Warnings : reduction de 1 a 10 % du diametre coronaire chez des sujets suspects de coronaropathie ; contre-indi" },
                     "ddi_interact": "Mêmes CI que sumatriptan : ATCD CV (CI ABSOLUE), IMAO (CI 14j), Autres triptans/Ergot (CI 24h), ISRS/IRSN (SS — FDA 2006). Faible métabolisme CYP (avantage interactions PK).",
                     "ddi_interact_v2": [
                               { "classe": "ATCD CARDIOVASCULAIRE — CI ABSOLUE", "dcis": ["antecedent coronaropathie", "antecedent avc", "aomi severe", "hta non controlee"], "commentaire": "Vasoconstricteur.", "severite": "danger" },
@@ -17317,6 +17350,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "95",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Torsades decrites sous orphenadrine meme a faible dose sur QT long congenital ; blocage sodique quinidine-like et arythmies en surdosage.", "source": "Sharma AN et al., 2006 (Torsades de pointes in congenital long QT syndrome following low-dose orphenadrine, PMID 16700864) ; Clarke B et al., Ann Emerg Med 1991 (reversion d'une TV" },
                     "ddi_interact": "QT-prolongateurs, Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
                               {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
@@ -17813,6 +17847,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "> 70",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Aucun signal QT ni torsade de pointes retrouve. En surdosage : tachycardie supraventriculaire et effets atropiniques, sans allongement du QT documente.", "source": "Absence de signal : recherche RCP/FDA et litterature negative ; cas de reference disponible = « Pheniramine induced supraventricular tachycardia resistant to adenosine: A case repo" },
                     "ddi_interact": "Alcool, Anticholinergiques, IMAO",
                     "ddi_interact_v2": [
                               { "classe": "ÂGÉ — PIM ABSOLU (Beers/STOPP K1/FORTA-D/PRISCUS) — ACB Beers + BHE+ + chutes/démence", "dcis": ["age sup 65 ans", "demence", "trouble cognitif"], "commentaire": "ACB Beers + BHE+. Cumul → démence (Coupland 2019). ÉVITER. Préférer cétirizine/loratadine 2ème gén.", "severite": "danger" },
@@ -18231,6 +18266,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "45",
                     "qt_risque": "(PR) Risque Possible",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Allongement du QT rapporte (tres rare) sous pipotiazine, phenothiazine torsadogene : corriger K+/Mg2+ et ECG avant association a risque.", "source": "Monographie Piportil L4 (pipotiazine palmitate), Sante Canada ; listes torsadogenes OMEDIT Pays de la Loire (2020) ; RCP Piportil, ANSM" },
                     "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs, Agranulocytose/SMN, Levodopa antagonisme, Cumul ACB, Sédatifs centraux, Lithium neurotoxicité, ↓ seuil épileptogène",
                     "ddi_interact_v2": [
                               { "classe": "DÉMENCE — FDA Black Box 2005 / EMA 2008", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
@@ -18819,6 +18855,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "90",
                     "qt_risque": "(PR) Risque Possible (CredibleMeds) — QTc, prudence si facteurs de risque associés",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "La prochlorperazine bloque le canal hERG et peut allonger le QT : ECG si dose elevee, age avance, hypokaliemie ou co-prescription torsadogene.", "source": "Kim KS et al., Eur J Pharmacol 2006 (blocage du canal hERG humain et de l'IKr des cardiomyocytes de cobaye par la prochlorperazine) ; notices FDA / DailyMed prochlorperazine (effet" },
                     "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs (Risk_CR), SMN, Agranulocytose, Levodopa antagonisme, EPS (dystonie aiguë), Cumul ACB, Sédatifs centraux, Lithium",
                     "ddi_interact_v2": [
                               { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
@@ -18931,6 +18968,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "85-90",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Pas d'étude QT dédiée mais aucun signal de pharmacovigilance (QT long, mort subite, FV). Risque gériatrique réel = charge anticholinergique et tachycardie, non le QT.", "source": "Santé Canada, Regulatory Decision Summary Mictoryl/Mictoryl Pediatric (revue de pharmacovigilance : aucun cas de QT long, arrêt cardiaque, mort subite ou FV attribué à la propivéri" },
                     "ddi_interact": "QT-prolongateurs, Alcool, Anticholinergiques",
                     "ddi_interact_v2": [
                               {"classe":"Alcool","dcis":["alcool"],"commentaire":"","severite":"warning"},
@@ -19489,6 +19527,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "97%",
                     "qt_risque": "(CR) Risque Conditionnel — hypoMg torsadogène",
+                    "qt_divergence": { "statut": "mecanisme_indirect", "libelle": "Risque QT indirect (trouble électrolytique)", "detail": "Hypomagnésémie possible après >3 mois d'IPP, pouvant donner arythmie ventriculaire et QT long. Doser Mg2+ si traitement prolongé, diurétique associé ou autre médicament QT.", "source": "RCP Pariet/rabéprazole rubrique 4.4 (hypomagnésémie sévère, « arythmie ventriculaire » ; alerte EMA 2011 classe IPP) ; The Medical Letter 2018 (PPIs and Torsades de Pointes) ; Circ" },
                     "qt_cr": { "mecanisme": "inducteur_hypoMg", "conditions": ["hypoMg", "hypoK", "association_qt"], "source": "ANSM/RCP (effet de classe IPP ; hors CredibleMeds)" },
                     "ddi_interact": "DÉPRESCRIPTION STOPPFrail SF05/Beers/REMEDIES, Clopidogrel (effet modeste, métabolisme non-CYP), Méthotrexate HD, HYPOMAGNÉSÉMIE (FDA 2011), OSTÉOPOROSE/FRACTURES (FDA 2010), VIT B12 (≥ 2 ans), C. DIFFICILE (FDA 2012), Absorption pH-dépendante",
                     "ddi_interact_v2": [
@@ -20169,6 +20208,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "10%",
                     "qt_risque": "(SR) Spécial — QTc + risque torsades si hypokaliémie cumulée",
+                    "qt_divergence": { "statut": "mecanisme_indirect", "libelle": "Risque QT indirect (trouble électrolytique)", "detail": "Hypokaliémie dose-dépendante (nébulisation, fortes doses, IV) pouvant allonger le QT. Aux doses inhalées usuelles, effet QT négligeable. Surveiller K+ si crise sévère ou diurétique.", "source": "RCP Ventoline/salbutamol rubrique 4.4 « hypokaliémie potentiellement grave » ; Am J Emerg Med 1995 (hypokaliémie après doses usuelles de salbutamol nébulisé) ; Cureus 2022 (QT prol" },
                     "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "USAGE EXCESSIF SABA → ASTHME NON CONTRÔLÉ — MORTALITÉ (GINA 2024 + SABINA — abandon monothérapie SABA, préférer ICS-formotérol PRN), HYPOKALIÉMIE additive (DIURÉTIQUES, CORTICOÏDES, THÉOPHYLLINE, BÊTAMIMÉTIQUES répétés) — TORSADES DE POINTES, TACHYCARDIE/TROUBLES RYTHME (additif avec IMAO/antidépresseurs tricycliques/sympathomimétiques), HYPERGLYCÉMIE/ACIDOCÉTOSE (DT2 — adapter ADO/insuline), BÊTABLOQUANTS non sélectifs (ANTAGONISME — propranolol CI ABSOLUE asthme), HALOGÉNÉS ANESTHÉSIQUES (troubles rythme — sevoflurane/desflurane), DIGOXINE (↑ toxicité si hypoK), QT-prolongateurs (additif si hypoK)",
                     "ddi_interact_v2": [
@@ -20209,6 +20249,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "96%",
                     "qt_risque": "(SR) Spécial — QTc + torsades si hypokaliémie cumulée",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Fortes doses (12-20x la dose recommandée) : allongement significatif du QTc avec risque d'arythmie ventriculaire. Aux doses usuelles, effet cardiovasculaire négligeable.", "source": "Notice FDA Serevent/Serevent Diskus (rubrique Overdosage/Warnings : « large doses of inhaled or oral salmeterol, 12 to 20 times the recommended dose, have been associated with clin" },
                     "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "JAMAIS EN MONOTHÉRAPIE ASTHME — TOUJOURS COMBINÉ ICS (SMART 2006, GINA 2024 — mortalité accrue LABA seul en asthme), Bêtabloquants non sélectifs CI ABSOLUE asthme, HYPOKALIÉMIE additive (diurétiques/corticoïdes/théophylline/β2 cumulés) → TORSADES, INHIBITEURS CYP3A4 PUISSANTS (ritonavir/cobicistat/kétoconazole/itraconazole — ↑ exposition salmétérol → tachycardie/QTc — CI relative), IMAO/Antidépresseurs tricycliques (HTA/tachycardie), QT-prolongateurs, Halogénés anesthésiques (rythme), Hyperglycémie DT2, Digoxine (toxicité si hypoK)",
                     "ddi_interact_v2": [
@@ -20694,6 +20735,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "61 - 65 %",
                     "qt_risque": "? Risque Possible (PR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Pas de signal QT/torsades : l'effet documenté est une bradycardie sévère (bloc AV, pacemaker, arrêt) avec l'amiodarone. Monitorage de la FC 48 h, pas du QTc.", "source": "FDA Drug Safety Communication du 24/03/2015 (Sovaldi/Harvoni + amiodarone) ; RCP/SmPC EMA Sovaldi et Harvoni, rubrique 4.4 ; Renet S et al., Gastroenterology 2015;149(6):1378-80" },
                     "ddi_interact": "Polymerase inhibiteur",
                     "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | NFS | Créatinine/DFG (CI si DFG<30) | ECG si amiodarone associee",
@@ -20897,6 +20939,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "oct-25",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Signal QT réel : le RCP liste allongement du QT et torsades de pointes ; cas décrits chez le nouveau-né à forte dose et après administration IV chez le sujet à risque.", "source": "RCP ANSM Rovamycine (spiramycine), rubriques 4.4, 4.8 et 4.9 ; Stramba-Badiale M et al., Am Heart J 1997;133(1):108-11 (allongement du QT et arythmies menaçantes sous spiramycine e" },
                     "ddi_interact": "",
                     "ddi_interact_v2": [],
                     "suivi_initial": "Bilan hépatique | ECG si FR QTc",
@@ -20927,6 +20970,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "25-40",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Double contribution : le RCP Rodogyl/Birodogyl liste QT long et torsades et contre-indique l'association aux torsadogènes ; le métronidazole allonge aussi le QT.", "source": "RCP ANSM Rodogyl / Birodogyl (spiramycine + métronidazole), rubriques 4.3, 4.4, 4.5 et 4.8 ; FDA FLAGYL (metronidazole) label 2024, rubrique Adverse Reactions (« QT prolongation ha" },
                     "ddi_interact": "Alcool (antabuse), AVK",
                     "ddi_interact_v2": [
                               {
@@ -21229,6 +21273,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "14-21%",
                     "qt_risque": "(PR) Risque Possible — Vasospasme coronaire",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Le risque cardiaque du sumatriptan est la vasoconstriction coronaire (angor, IDM), pas la torsade. Contre-indique si coronaropathie ou AVC.", "source": "RCP/SmPC sumatriptan (rubriques 4.3 et 4.4 : contre-indication en cas de cardiopathie ischemique, angor de Prinzmetal, HTA non controlee, AVC/AIT) ; Stillman MJ & Stillman MT, Head" },
                     "ddi_interact": "ATCD CORONAROPATHIE/AVC/AOMI sévère — CI ABSOLUE (vasospasme), HTA non contrôlée — CI, IMAO non sélectifs — CI ABSOLUE (wash-out 14 j), ISRS/IRSN — SYNDROME SÉROTONINERGIQUE (FDA 2006 alerte), ERGOTAMINE/AUTRES TRIPTANS — CI ABSOLUE (vasoconstriction additive ≥ 24h), Lithium (syndrome sérotoninergique), Millepertuis (SS)",
                     "ddi_interact_v2": [
                               { "classe": "ATCD CARDIOVASCULAIRE — CI ABSOLUE (coronaropathie/AVC/AOMI sévère/HTA non contrôlée)", "dcis": ["antecedent coronaropathie", "antecedent avc", "aomi severe", "hta non controlee", "angor instable"], "commentaire": "Triptans = vasoconstricteurs 5-HT1B → CI ABSOLUE ATCD coronaropathie/AVC/AOMI sévère/HTA non contrôlée. ↑ x2-3 IDM/AVC chez patients à risque (Hall 2004). PIM Beers chez âgé : prudence > 65 ans, évaluation CV systématique.", "severite": "danger" },
@@ -21623,6 +21668,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "25%",
                     "qt_risque": "(SR) Spécial",
+                    "qt_divergence": { "statut": "mecanisme_indirect", "libelle": "Risque QT indirect (trouble électrolytique)", "detail": "Hypokaliémie β2 dose-dépendante allongeant le QT ; QT allongé décrit après bolus IV. Prudence avec diurétiques, corticoïdes, xanthines et digoxine (toxicité majorée).", "source": "RCP Bricanyl (SmPC, rubriques 4.4/4.5 : hypokaliémie, arythmies, potentialisation de la toxicité digitalique) ; notice FDA terbutaline sulfate injection (allongement du QT chez 10 " },
                     "qt_cr": { "mecanisme": "inducteur_hypoK", "conditions": ["hypoK", "association_qt"], "source": "RCP β2-mimétique (hypokaliémie dose-dépendante) ; risque QT conditionnel" },
                     "ddi_interact": "Mêmes interactions que salbutamol : USAGE EXCESSIF = asthme non contrôlé (GINA 2024 — abandon SABA seul, préférer ICS-formotérol PRN), Bêtabloquants non sélectifs CI ABSOLUE asthme, HYPOKALIÉMIE additive, QT-prolongateurs, IMAO/TCA, Halogénés, Digoxine, Hyperglycémie DT2",
                     "ddi_interact_v2": [
@@ -21660,6 +21706,7 @@ const MASTER_DB = {
                     "bhe": "1.0",
                     "albumine": "56",
                     "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Pas de torsadogénicité propre : le risque est la tachyarythmie du surdosage et l'hypokaliémie induite (cofacteur de TdP). Surveiller théophyllinémie et kaliémie.", "source": "Bittar G & Friedman HS, Chest 1990;98(3):672-8 (« Cardiac arrhythmias during theophylline toxicity: a prospective continuous electrocardiographic study ») ; Sessler CN, Am J Med 19" },
                     "ddi_interact": "Macrolides (augmente concentration +++), Fluoroquinolones (augmente concentration), Rifampicine (diminue concentration), Carbamazepine (diminue), Phenobarbital (diminue), Cimetidine (augmente), Benzodiazepines",
                     "ddi_interact_v2": [
                               {
@@ -22860,6 +22907,7 @@ const MASTER_DB = {
                     "bhe": "",
                     "albumine": "> 90",
                     "qt_risque": "Risque Conditionnel (CR)",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Le RCP de la trifluoperazine liste allongement du QT et torsades de pointes : contre-indiquee si QT long acquis, hypokaliemie ou bradycardie.", "source": "SmPC Trifluoperazine (UK, electronic Medicines Compendium / emc, rubriques 4.3, 4.4 et 4.8) ; Product Monograph Trifluoperazine, AA Pharma Canada 2021" },
                     "ddi_interact": "FDA Black Box 2005 démence, QT-prolongateurs (Risk_CR), Agranulocytose/SMN, Levodopa antagonisme, Cumul ACB, Sédatifs centraux, Lithium neurotoxicité (Cohen 1974), EPS +++ (phénothiazine pipérazine)",
                     "ddi_interact_v2": [
                               { "classe": "DÉMENCE — FDA Black Box 2005", "dcis": ["demence", "age sup 65 ans"], "commentaire": "Mortalité +60-70%. PIM ABSOLU.", "severite": "danger" },
@@ -25763,7 +25811,8 @@ const MASTER_DB = {
                     "cia": 0,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1",
-                    "qt_risque": "(PR) - Risque possible via métabolites",
+                    "qt_risque": "Pas d'allongement du QT — la primidone RACCOURCIT le QT (utilisée historiquement dans le QT long congénital). NB : le relais par phénobarbital peut, lui, allonger le QTc.",
+                    "qt_divergence": { "statut": "non_etabli", "libelle": "Risque QT non établi", "detail": "Aucun signal QT pour la primidone, qui raccourcit plutot le QT et a ete utilisee dans le syndrome du QT long congenital.", "source": "Wanamaker WM et al., Ann Intern Med 1980 (Primidone in the treatment of the long QT syndrome: QT shortening and ventricular arrhythmia suppression, PMID 7396315) ; Chadwick D et al" },
                     "albumine": "20%",
                     "ddi_interact": "Inducteur CYP: AVK, AOD, Contraceptifs, Statines, Corticoïdes",
                     "ddi_interact_v2": [
@@ -28234,6 +28283,7 @@ const MASTER_DB = {
                     "bhe": "0",
                     "albumine": "99%",
                     "qt_risque": "(PR) - Allongement QTc modere",
+                    "qt_divergence": { "statut": "confirme_autre_source", "libelle": "Risque QT confirmé hors CredibleMeds", "detail": "Tamoxifène : allongement du QT décrit (blocage hERG, cas de TdP), classé Possible Risk par CredibleMeds. Prudence si autre médicament QT, hypokaliémie ou bradycardie.", "source": "CredibleMeds/AZCERT, liste Possible Risk of TdP (tamoxifène) ; Fung, Imeson & Cusano, J Oncol Pharm Pract 2018;24(7):525 « The clinical significance of QT prolongation associated w" },
                     "ddi_interact": "INHIBITEURS CYP2D6 — ↓ ENDOXIFÈNE (métabolite actif) → ↓ EFFICACITÉ ANTI-TUMORALE (FDA 2010 + Goetz JCO 2018 — paroxétine/fluoxétine/bupropion/duloxetine CI ABSOLUE — préférer sertraline/citalopram/escitalopram/venlafaxine), INHIBITEUR P-gp (↑ apixaban/rivaroxaban/dabigatran — STOPP C14), AVK ↑ INR, MTEV (CI ATCD), CANCER ENDOMÈTRE (échographie pelvienne annuelle), RÉTINOPATHIE rare, IDM/AVC ↑ (CI ATCD)",
                     "ddi_interact_v2": [
                               { "classe": "INHIBITEURS CYP2D6 — ↓ ENDOXIFÈNE (CI ABSOLUE — FDA 2010 + Goetz JCO 2018)", "dcis": ["paroxetine", "fluoxetine", "bupropion", "duloxetine", "terbinafine", "quinidine"], "commentaire": "Tamoxifène = prodrogue activée en endoxifène par CYP2D6. Inhibiteurs CYP2D6 puissants → ↓ endoxifène → ↓ efficacité anti-tumorale. PRÉFÉRER : sertraline, citalopram, escitalopram, venlafaxine (peu CYP2D6) en cas d'antidépresseur nécessaire. Métaboliseurs CYP2D6 lents (5-10% Caucasiens) : effet thérapeutique réduit.", "severite": "danger" },
@@ -28302,7 +28352,8 @@ const MASTER_DB = {
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1",
                     "albumine": "99%",
-                    "qt_risque": "(PR) - Bloqueur calcique — QTc possible",
+                    "qt_risque": "Pas d'allongement du QT in vivo — inhibiteur hERG puissant in vitro mais raccourcit le QT et prévient les torsades en modèle animal. Risque réel : parkinsonisme, dépression, chute.",
+                    "qt_divergence": { "statut": "mecanisme_autre", "libelle": "Risque cardiaque de mécanisme non-QT", "detail": "Flunarizine : risque geriatrique = parkinsonisme induit, depression et sedation. Pas de torsades rapportees malgre un blocage hERG in vitro.", "source": "Cavalli A et al., 2007 (Flunarizine is a highly potent inhibitor of cardiac hERG potassium current, IC50 5,7 nM) ; Vos MA et al., 1995 (effets de la flunarizine sur les torsades de" },
                     "ddi_interact": "Depresseurs SNC | Anti-Parkinson (antagonisme)",
                     "ddi_interact_v2": [],
                     "suivi_initial": "Recherche syndrome parkinsonien | Humeur",
