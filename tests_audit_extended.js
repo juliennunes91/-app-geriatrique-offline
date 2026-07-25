@@ -625,8 +625,12 @@ function runQtReferenceAudit(test, assert) {
         'Maprotiline': 2, 'Delamanide': 2,
         // Conditional (qt=1) — dé-sur-classé
         'Trazodone': 1,
-        // Conditional correct laissé tel quel (contrôle anti-sur-correction)
-        'Ciprofloxacine': 1,
+        // Ciprofloxacine : figée à 1 par une session antérieure, mais la LISTE
+        // OFFICIELLE CredibleMeds fournie par le Dr Nunes la donne en Known Risk
+        // (comme moxifloxacine et lévofloxacine). L'ancien appariement du test de
+        // conformité, strictement anglais, sautait « Ciprofloxacine » et masquait
+        // l'écart. La liste officielle fait foi → 3.
+        'Ciprofloxacine': 3,
     };
     Object.entries(REF).forEach(([dci, expected]) => {
         test('QT/CredibleMeds — ' + dci + ' doit avoir scores.qt=' + expected, () => {
@@ -646,10 +650,24 @@ function runQtReferenceAudit(test, assert) {
         sandbox);
     const byNorm = {};
     const norm = s => vm.runInContext('sanitizeText(' + JSON.stringify(s) + ')', sandbox);
-    JSON.parse(dump2).forEach(m => { byNorm[norm(m.dci)] = m; });
+    // Appariement FR ↔ EN : la référence est en anglais (« Ciprofloxacin »), la
+    // base en français (« Ciprofloxacine »). Un appariement strict sautait
+    // SILENCIEUSEMENT 17 molécules — dont la ciprofloxacine (Known Risk classée
+    // conditionnelle) et le dextrométhorphane (Possible Risk invisible). On
+    // génère donc les variantes de graphie usuelles.
+    const variants = (s) => {
+        const b = norm(s); const out = new Set([b]);
+        if (b.endsWith('e')) out.add(b.slice(0, -1)); else out.add(b + 'e');
+        [['ine', 'in'], ['ene', 'en'], ['ide', 'id']].forEach(([fr, en]) => {
+            if (b.endsWith(fr)) out.add(b.slice(0, -fr.length) + en);
+        });
+        return [...out];
+    };
+    JSON.parse(dump2).forEach(m => { variants(m.dci).forEach(v => { if (!byNorm[v]) byNorm[v] = m; }); });
     const qmis = [];
     Object.entries(qref).forEach(([name, cat]) => {
-        const m = byNorm[norm(name)];
+        let m = null;
+        for (const v of variants(name)) { if (byNorm[v]) { m = byNorm[v]; break; } }
         if (!m) return; // molécule CredibleMeds absente de la base : hors périmètre
         if (m.qt !== want[cat]) qmis.push(`${m.dci}: qt=${m.qt} attendu ${want[cat]} (${cat})`);
     });

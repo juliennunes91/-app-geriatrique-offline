@@ -7274,10 +7274,10 @@ const MASTER_DB = {
                     "poso_ren": "DFG 30-50: 250-500mg/12h; DFG<30: 250mg/12h",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":3,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "",
                     "albumine": "20-40",
-                    "qt_risque": "? Risque Conditionnel (CR)",
+                    "qt_risque": "DANGER — Risque CONNU torsades (CredibleMeds Known Risk) — fluoroquinolone, QTc ; corriger K+/Mg++, ECG si autre QT-allongeant",
                     "ddi_interact": "AVK (potentiation), AINS (epilepsie), Methotrexate, Theophylline, Antiacides",
                     "ddi_interact_v2": [
                               {
@@ -9098,10 +9098,10 @@ const MASTER_DB = {
                     "poso_ren": "Pas d'adaptation renale",
                     "acb": 0,
                     "cia": 1,
-                    "scores": {"qt":0,"sero":1,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":2,"sero":1,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
                     "albumine": "50-70",
-                    "qt_risque": "",
+                    "qt_risque": "(PR) Risque Possible (CredibleMeds) — QTc ; majoré par les inhibiteurs du CYP2D6 (accumulation)",
                     "ddi_interact": "ISRS (syndrome serotoninergique), IMAO (CI absolue), Fluoxetine/Paroxetine (inhibiteurs CYP2D6 - accumulation)",
                     "ddi_interact_v2": [
                               {
@@ -26336,7 +26336,7 @@ const MASTER_DB = {
                     "poso_ren": "CI si DFG < 9. Prudence si DFG < 30 (max 16 mg/j)",
                     "acb": 0,
                     "cia": 0,
-                    "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt":1,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1",
                     "albumine": "18%",
                     "qt_risque": "(CR) Risque Conditionnel (CredibleMeds) — bradycardisant (effet cholinergique)",

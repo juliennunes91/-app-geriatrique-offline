@@ -374,6 +374,29 @@ function _renderSuiviBio(bioPlan, suiviPerMed, bioValues, mode, addAlertFn, coun
         }
     }
 
+    // Traçabilité de la classification QT — affichée quel que soit le mode.
+    // Signale les molécules dont le statut torsadogène n'est PAS consensuel
+    // (hors listes CredibleMeds, divergence de sources, mécanisme indirect) afin
+    // que le clinicien sache pondérer l'alerte QT plutôt que de la subir.
+    {
+        const _divs = activeMeds
+            .map(m => m.db_ref)
+            .filter(r => r && r.qt_divergence && r.qt_divergence.libelle);
+        if (_divs.length) {
+            const items = _divs.map(r => `<li class="small"><strong>${escapeHtml(r.dci)}</strong> — ${escapeHtml(r.qt_divergence.libelle)}`
+                + (r.qt_divergence.detail ? ` <span class="text-muted">${escapeHtml(r.qt_divergence.detail)}</span>` : '')
+                + (r.qt_divergence.source ? ` <em class="text-muted">(${escapeHtml(r.qt_divergence.source)})</em>` : '')
+                + `</li>`).join('');
+            const html = `<div class="alert alert-secondary border shadow-sm py-2 px-2">
+                <strong>🔎 Classification QT non consensuelle (${_divs.length})</strong>
+                <div class="small text-muted">Ces molécules ne figurent pas telles quelles dans les listes CredibleMeds, ou les sources divergent. L'alerte QT correspondante est à pondérer.</div>
+                <ul class="mb-0 mt-1">${items}</ul>
+            </div>`;
+            if (directMode) { if (targetEl) targetEl.innerHTML += html; }
+            else addAlertFn('alertes-suivi', html, 'suivi');
+        }
+    }
+
     // Alertes cliniques (toujours affichées quel que soit le mode)
     if (!directMode) {
         activeMeds.forEach(m => {

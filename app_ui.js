@@ -330,6 +330,19 @@ function renderTags() {
             btnRemove.addEventListener('click', () => removeMed(m.dci));
             btnRemove.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); removeMed(m.dci); } });
             span.appendChild(labelNode); span.appendChild(btnSuspend);
+            // Marqueur de traçabilité QT : signale immédiatement, dès l'ajout du
+            // médicament, que sa classification torsadogène n'est pas consensuelle
+            // (absente des listes CredibleMeds, divergence entre sources, ou
+            // mécanisme indirect). Détail au survol.
+            const _qd = m.db_ref && m.db_ref.qt_divergence;
+            if (_qd && _qd.libelle) {
+                let badge = document.createElement('span');
+                badge.textContent = ' ⚠QT?';
+                badge.style.cssText = 'margin-left:4px;font-size:0.72em;font-weight:700;cursor:help;opacity:0.9;';
+                badge.title = _qd.libelle + (_qd.detail ? '\n' + _qd.detail : '') + (_qd.source ? '\nSource : ' + _qd.source : '');
+                badge.setAttribute('aria-label', 'Classification QT non consensuelle pour ' + m.dci + ' : ' + _qd.libelle);
+                span.appendChild(badge);
+            }
             if (_medPrecisionSpec(m)) {
                 const hasP = m.precisions && Object.keys(m.precisions).length;
                 let btnEdit = document.createElement('span');
