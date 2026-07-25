@@ -345,18 +345,48 @@ function buildPdfContent() {
     const poids = document.getElementById('patientPoids')?.value || '';
     const dfg = document.getElementById('patientDFG')?.value || '';
 
+    // ── Jeu de styles de l'export ────────────────────────────────────────────
+    // Rythme vertical volontairement aéré. Le rendu précédent (corps 8-9 px,
+    // marges de 2 px, line-height 1.4) était trop condensé : les changements de
+    // partie ne se distinguaient plus du contenu. Tout l'espacement et toutes
+    // les tailles passent désormais par ces constantes — ne pas réintroduire de
+    // valeurs en dur dans les blocs ci-dessous.
+    //
     // Pagebreak : autoriser le découpage multi-page, mais refuser la coupure À
     // L'INTÉRIEUR d'un bloc (.pdf-block). html2pdf v0.10+ respecte
     // page-break-inside:avoid. Évite les troncatures sur dossiers lourds.
-    const blockStyle = 'page-break-inside:avoid;break-inside:avoid;margin-bottom:6px;';
+    const blockStyle = 'page-break-inside:avoid;break-inside:avoid;margin:0 0 14px 0;';
+    const S = {
+        card:  'border:1px solid #dde2e8;border-radius:6px;padding:10px 12px;background:#fff;',
+        body:  'font-size:9.5px;line-height:1.6;',
+        item:  'font-size:9.5px;line-height:1.55;padding:5px 0;',
+        muted: '#5a636c',
+        rule:  '1px dotted #e4e8ec'
+    };
+    // hex → rgba : filets/fonds teintés dans la couleur de section sans dépendre
+    // du support des hex 8 chiffres par html2canvas.
+    const rgba = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`; };
+    // Coupe au dernier mot entier. Le tronquage brut à N caractères laissait des
+    // fins de phrase en plein mot (« …PIM selon toutes les listes (Beers, EU(7 »).
+    const clamp = (t, n) => {
+        t = String(t || '').trim();
+        if (t.length <= n) return t;
+        const cut = t.slice(0, n), sp = cut.lastIndexOf(' ');
+        return (sp > n * 0.6 ? cut.slice(0, sp) : cut).replace(/[\s,;:(«-]+$/, '') + '…';
+    };
+    // Titre de section : capitales espacées + filet coloré. C'est LE repère qui
+    // signale un changement de partie dans le document.
+    const secTitle = (txt, color, sub) => `<div style="margin:0 0 8px 0;padding-bottom:5px;border-bottom:1px solid ${rgba(color, 0.35)};">
+        <span style="font-size:10.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:${color};">${txt}</span>${sub ? `<span style="font-size:8.5px;font-weight:400;color:#8a939c;margin-left:7px;">${sub}</span>` : ''}
+    </div>`;
 
-    let html = `<div style="font-family:Arial,sans-serif;font-size:10px;color:#222;line-height:1.4;padding:10px;">`;
+    let html = `<div style="font-family:Arial,sans-serif;font-size:10px;color:#1f2933;line-height:1.6;padding:4px 6px;">`;
 
     // En-tête
-    html += `<div class="pdf-block" style="${blockStyle}border-bottom:2px solid #0d6efd;padding-bottom:4px;">
-        <strong style="font-size:14px;color:#0d6efd;">GeriaAssist — Synthèse Pharmaco-Clinique</strong>
-        <span style="float:right;font-size:9px;color:#888;">${new Date().toLocaleDateString('fr-FR')}</span>
-        <br><span style="font-size:10px;"><strong>${nom ? escapeHtml(nom) + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}</strong>${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}</span>
+    html += `<div class="pdf-block" style="${blockStyle}border-bottom:2.5px solid #0d6efd;padding-bottom:8px;">
+        <strong style="font-size:15px;color:#0d6efd;letter-spacing:0.01em;">GeriaAssist — Synthèse Pharmaco-Clinique</strong>
+        <span style="float:right;font-size:9px;color:#8a939c;">${new Date().toLocaleDateString('fr-FR')}</span>
+        <div style="font-size:10.5px;line-height:1.7;margin-top:5px;"><strong>${nom ? escapeHtml(nom) + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}</strong>${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}</div>
     </div>`;
 
     // Fonction rénale — en gras, tout en haut du rapport
@@ -364,15 +394,15 @@ function buildPdfContent() {
     if (!isNaN(_dfgN) && _dfgN > 0) {
         const _stg = _dfgN >= 90 ? 'normale (stade 1)' : _dfgN >= 60 ? 'stade 2' : _dfgN >= 45 ? 'IRC modérée (stade 3A)' : _dfgN >= 30 ? 'IRC modérée (stade 3B)' : _dfgN >= 15 ? 'IRC sévère (stade 4)' : 'IRC terminale (stade 5)';
         const _rcol = _dfgN < 30 ? '#dc3545' : _dfgN < 45 ? '#fd7e14' : '#0d6efd';
-        html += `<div class="pdf-block" style="${blockStyle}font-size:12px;font-weight:700;color:${_rcol};padding:2px 0;">🫘 Fonction rénale : DFG ${escapeHtml(dfg)} ml/min — ${_stg}</div>`;
+        html += `<div class="pdf-block" style="${blockStyle}font-size:12px;font-weight:700;color:${_rcol};background:${rgba(_rcol, 0.07)};border-left:4px solid ${_rcol};border-radius:0 5px 5px 0;padding:8px 12px;">🫘 Fonction rénale : DFG ${escapeHtml(dfg)} ml/min — ${_stg}</div>`;
     }
 
     // Conclusion générale (« commentaire libre » de la page 1) — en haut du rapport
     const _freeText = (document.getElementById('freeTextNote')?.value || '').trim();
     if (_freeText) {
-        html += `<div class="pdf-block" style="${blockStyle}border:1px solid #6c757d;border-radius:4px;padding:5px 8px;background:#f8f9fa;">
-            <strong style="font-size:11px;color:#212529;">Conclusion générale</strong>
-            <div style="font-size:9.5px;white-space:pre-wrap;margin-top:2px;">${escapeHtml(_freeText)}</div>
+        html += `<div class="pdf-block" style="${blockStyle}${S.card}background:#f8f9fa;border-color:#c8ced5;">
+            ${secTitle('Conclusion générale', '#495057')}
+            <div style="${S.body}white-space:pre-wrap;">${escapeHtml(_freeText)}</div>
         </div>`;
     }
 
@@ -384,11 +414,11 @@ function buildPdfContent() {
     // Bandeau saisies aberrantes (synthData.aberrantInputs) — en TÊTE pour visibilité
     if (sd && sd.aberrantInputs && sd.aberrantInputs.length > 0) {
         const items = sd.aberrantInputs.map(a =>
-            `<span style="display:inline-block;background:#ffc107;color:#000;border-radius:2px;padding:1px 5px;margin:1px;font-size:8px;font-weight:bold;">${escapeHtml(a.field)} = ${escapeHtml(a.value)}</span>`
+            `<span style="display:inline-block;background:#ffc107;color:#000;border-radius:3px;padding:2px 6px;margin:2px 4px 2px 0;font-size:8.5px;line-height:1.5;font-weight:bold;">${escapeHtml(a.field)} = ${escapeHtml(a.value)}</span>`
         ).join('');
-        html += `<div class="pdf-block" style="${blockStyle}background:#fff3cd;border-left:3px solid #fd7e14;color:#664d03;border-radius:3px;padding:5px 8px;font-size:9px;">
-            <strong>⚠️ Saisies hors plages plausibles (${sd.aberrantInputs.length})</strong> <span style="font-size:8px;">— vérifier l'unité / la valeur</span>
-            <div style="margin-top:2px;">${items}</div>
+        html += `<div class="pdf-block" style="${blockStyle}background:#fff3cd;border-left:4px solid #fd7e14;color:#664d03;border-radius:0 5px 5px 0;padding:9px 12px;font-size:9.5px;">
+            <strong>⚠️ Saisies hors plages plausibles (${sd.aberrantInputs.length})</strong> <span style="font-size:8.5px;">— vérifier l'unité / la valeur</span>
+            <div style="margin-top:5px;">${items}</div>
         </div>`;
     }
 
@@ -401,8 +431,8 @@ function buildPdfContent() {
         if (b.nbDanger > 0) counts.push(`<strong>${b.nbDanger} danger</strong>`);
         if (b.nbWarning > 0) counts.push(`${b.nbWarning} vigilance`);
         if (b.nbOmissions > 0) counts.push(`${b.nbOmissions} omission${b.nbOmissions > 1 ? 's' : ''}`);
-        html += `<div class="pdf-block" style="${blockStyle}background:${bg};color:${fg};border-radius:4px;padding:5px 8px;font-size:10px;">
-            ${b.icon} <strong>${escapeHtml(b.msg)}</strong>${counts.length ? ' — <span style="font-size:9px;">' + counts.join(' · ') + '</span>' : ''}
+        html += `<div class="pdf-block" style="${blockStyle}background:${bg};color:${fg};border-radius:5px;padding:9px 12px;font-size:10.5px;line-height:1.6;">
+            ${b.icon} <strong>${escapeHtml(b.msg)}</strong>${counts.length ? ' — <span style="font-size:9.5px;">' + counts.join(' · ') + '</span>' : ''}
         </div>`;
     }
 
@@ -411,10 +441,11 @@ function buildPdfContent() {
         const chips = sd.riskChips.map(c => {
             const cbg = c.level === 'danger' ? '#dc3545' : c.level === 'warning' ? '#ffc107' : '#198754';
             const cfg = c.level === 'warning' ? '#000' : '#fff';
-            return `<span style="display:inline-block;background:${cbg};color:${cfg};border-radius:3px;padding:1px 5px;margin:1px;font-size:8px;font-weight:bold;">${escapeHtml(c.label)}</span>`;
+            return `<span style="display:inline-block;background:${cbg};color:${cfg};border-radius:3px;padding:3px 7px;margin:2px 5px 2px 0;font-size:8.5px;line-height:1.5;font-weight:bold;">${escapeHtml(c.label)}</span>`;
         }).join('');
-        html += `<div class="pdf-block" style="${blockStyle}border:1px solid #ccc;border-radius:4px;padding:4px;">
-            <strong style="font-size:9px;color:#0d6efd;">Profil de risque</strong><br>${chips}
+        html += `<div class="pdf-block" style="${blockStyle}${S.card}">
+            ${secTitle('Profil de risque', '#0d6efd')}
+            <div>${chips}</div>
         </div>`;
     }
 
@@ -423,28 +454,28 @@ function buildPdfContent() {
         const items = sd.topActions.map(a => {
             const lbg = a.level === 'danger' ? '#dc3545' : a.level === 'warning' ? '#ffc107' : '#0dcaf0';
             const lfg = a.level === 'warning' ? '#000' : '#fff';
-            return `<li style="margin:2px 0;font-size:9px;">${a.icon} <span style="background:${lbg};color:${lfg};border-radius:2px;padding:0 4px;font-size:7px;font-weight:bold;">${escapeHtml(a.kind)}</span> ${escapeHtml(a.txt)}</li>`;
+            return `<li style="margin:0 0 6px 0;${S.body}padding-left:2px;">${a.icon} <span style="background:${lbg};color:${lfg};border-radius:2px;padding:1px 5px;font-size:7.5px;font-weight:bold;">${escapeHtml(a.kind)}</span> ${escapeHtml(a.txt)}</li>`;
         }).join('');
-        html += `<div class="pdf-block" style="${blockStyle}border-left:3px solid #dc3545;background:#fff8e1;padding:4px 6px;">
-            <strong style="font-size:10px;color:#664d03;">⚡ Top ${sd.topActions.length} actions prioritaires</strong>
-            <ol style="margin:2px 0 0 16px;padding:0;">${items}</ol>
+        html += `<div class="pdf-block" style="${blockStyle}border-left:4px solid #dc3545;background:#fff8e1;border-radius:0 5px 5px 0;padding:10px 12px;">
+            ${secTitle(`⚡ Top ${sd.topActions.length} actions prioritaires`, '#b8860b')}
+            <ol style="margin:0 0 -6px 17px;padding:0;">${items}</ol>
         </div>`;
     }
 
     // Mécanismes récurrents (synthData.mechanismClusters) — compact
     if (sd && sd.mechanismClusters && sd.mechanismClusters.length > 0) {
-        const cls = sd.mechanismClusters.map(cl => {
+        const cls = sd.mechanismClusters.map((cl, i) => {
             const c = cl.severity === 'danger' ? '#dc3545' : '#ffc107';
-            const meds = (cl.meds || []).slice(0, 6).map(d => `<span style="display:inline-block;background:#f4f4f4;border:1px solid #ddd;border-radius:2px;padding:0 3px;margin:1px;font-size:7px;">${escapeHtml(d)}</span>`).join('');
-            return `<div style="border-left:3px solid ${c};padding:2px 5px;margin:2px 0;">
-                <strong style="font-size:9px;">${escapeHtml(cl.label)}</strong>
-                <div style="font-size:8px;color:#555;">${escapeHtml(cl.summary || '')}</div>
-                ${meds ? '<div style="margin-top:1px;">' + meds + '</div>' : ''}
-                ${cl.advice ? `<em style="font-size:7.5px;color:#666;">${escapeHtml(cl.advice)}</em>` : ''}
+            const meds = (cl.meds || []).slice(0, 6).map(d => `<span style="display:inline-block;background:#f4f4f4;border:1px solid #ddd;border-radius:2px;padding:1px 5px;margin:2px 4px 2px 0;font-size:8px;line-height:1.5;">${escapeHtml(d)}</span>`).join('');
+            return `<div style="border-left:3px solid ${c};padding:4px 0 4px 8px;margin:${i ? '9px' : '0'} 0 0 0;">
+                <strong style="font-size:9.5px;line-height:1.55;">${escapeHtml(cl.label)}</strong>
+                <div style="font-size:9px;line-height:1.55;color:${S.muted};margin-top:2px;">${escapeHtml(cl.summary || '')}</div>
+                ${meds ? '<div style="margin-top:4px;">' + meds + '</div>' : ''}
+                ${cl.advice ? `<em style="display:block;font-size:8.5px;line-height:1.5;color:#767f88;margin-top:3px;">${escapeHtml(cl.advice)}</em>` : ''}
             </div>`;
         }).join('');
-        html += `<div class="pdf-block" style="${blockStyle}border:1px solid #9eeaf9;border-radius:4px;padding:4px;background:#f0fcff;">
-            <strong style="font-size:10px;color:#055160;">🔍 Mécanismes récurrents (${sd.mechanismClusters.length})</strong>
+        html += `<div class="pdf-block" style="${blockStyle}${S.card}border-color:#9eeaf9;background:#f0fcff;">
+            ${secTitle('🔍 Mécanismes récurrents', '#055160', `${sd.mechanismClusters.length}`)}
             ${cls}
         </div>`;
     }
@@ -452,39 +483,39 @@ function buildPdfContent() {
     // Interactions DANGER (synthData.interactCritical) — top 5
     if (sd && sd.interactCritical && sd.interactCritical.length > 0) {
         const its = sd.interactCritical.slice(0, 5).map(it => {
-            const txt = (it.text || '').replace(/<[^>]+>/g, '').slice(0, 200);
-            return `<li style="font-size:9px;margin:1px 0;">${escapeHtml(txt)}</li>`;
+            const txt = clamp((it.text || '').replace(/<[^>]+>/g, ''), 200);
+            return `<li style="${S.body}margin:0 0 6px 0;">${escapeHtml(txt)}</li>`;
         }).join('');
-        html += `<div class="pdf-block" style="${blockStyle}border-left:3px solid #dc3545;padding:3px 6px;background:#fff;">
-            <strong style="font-size:10px;color:#dc3545;">⚠️ Interactions critiques (${Math.min(5, sd.interactCritical.length)}${sd.interactCritical.length > 5 ? ' / ' + sd.interactCritical.length : ''})</strong>
-            <ul style="margin:2px 0 0 14px;padding:0;">${its}</ul>
+        html += `<div class="pdf-block" style="${blockStyle}${S.card}border-left:4px solid #dc3545;border-radius:0 5px 5px 0;">
+            ${secTitle('⚠️ Interactions critiques', '#dc3545', `${Math.min(5, sd.interactCritical.length)}${sd.interactCritical.length > 5 ? ' / ' + sd.interactCritical.length : ''}`)}
+            <ul style="margin:0 0 -6px 15px;padding:0;">${its}</ul>
         </div>`;
     }
 
     // 2 colonnes : Comorbidités + Médicaments
-    html += `<div class="pdf-block" style="${blockStyle}display:flex;gap:8px;">`;
+    html += `<div class="pdf-block" style="${blockStyle}display:flex;gap:11px;">`;
 
     // Comorbidités
-    html += `<div style="flex:1;border:1px solid #ccc;border-radius:4px;padding:4px;">
-        <strong style="font-size:9px;color:#0d6efd;">Comorbidités</strong><br>`;
+    html += `<div style="flex:1;${S.card}">
+        ${secTitle('Comorbidités', '#0d6efd')}`;
     if (activeComorbs.length === 0) {
-        html += `<em>Aucune</em>`;
+        html += `<em style="${S.body}color:${S.muted};">Aucune</em>`;
     } else {
         activeComorbs.forEach(c => {
             const nom = (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES[c]) ? MASTER_DB.PATHOLOGIES[c].NOM_STANDARD : c;
-            html += `<span style="display:inline-block;background:#e7f1ff;border-radius:3px;padding:1px 4px;margin:1px;font-size:8px;">${escapeHtml(nom)}</span>`;
+            html += `<span style="display:inline-block;background:#e7f1ff;border-radius:3px;padding:2px 6px;margin:2px 5px 2px 0;font-size:8.5px;line-height:1.55;">${escapeHtml(nom)}</span>`;
         });
     }
     html += `</div>`;
 
     // Médicaments
-    html += `<div style="flex:1;border:1px solid #ccc;border-radius:4px;padding:4px;">
-        <strong style="font-size:9px;color:#0d6efd;">Médicaments (${activeMeds.length})</strong><br>`;
+    html += `<div style="flex:1;${S.card}">
+        ${secTitle('Médicaments', '#0d6efd', `${activeMeds.length}`)}`;
     if (activeMeds.length === 0) {
-        html += `<em>Aucun</em>`;
+        html += `<em style="${S.body}color:${S.muted};">Aucun</em>`;
     } else {
         activeMeds.forEach(m => {
-            html += `<span style="display:inline-block;background:#fff3cd;border-radius:3px;padding:1px 4px;margin:1px;font-size:8px;">${escapeHtml(m.dci)}</span>`;
+            html += `<span style="display:inline-block;background:#fff3cd;border-radius:3px;padding:2px 6px;margin:2px 5px 2px 0;font-size:8.5px;line-height:1.55;">${escapeHtml(m.dci)}</span>`;
         });
     }
     html += `</div></div>`;
@@ -492,14 +523,14 @@ function buildPdfContent() {
     // Scores — version compacte
     const divScores = document.getElementById('alertes-scores');
     if (divScores && divScores.querySelectorAll('.alert').length > 0) {
-        html += `<div class="pdf-block" style="${blockStyle}border:1px solid #0dcaf0;border-radius:4px;padding:4px;">
-            <strong style="font-size:9px;color:#0dcaf0;">Scores cliniques</strong><br>`;
-        divScores.querySelectorAll('.alert').forEach(a => {
+        html += `<div class="pdf-block" style="${blockStyle}${S.card}border-color:#9ee5f2;">
+            ${secTitle('Scores cliniques', '#0b8fa8')}`;
+        divScores.querySelectorAll('.alert').forEach((a, i) => {
             const strong = a.querySelector('strong');
             const concl = a.querySelectorAll('small');
             const label = strong ? strong.textContent.trim() : '';
             const detail = concl.length >= 2 ? concl[concl.length - 1].textContent.trim() : '';
-            html += `<div style="margin:2px 0;"><strong style="font-size:8px;">${label}</strong> <span style="font-size:8px;color:#555;">${detail}</span></div>`;
+            html += `<div style="${S.item}${i ? 'border-top:' + S.rule + ';' : ''}"><strong>${label}</strong> <span style="color:${S.muted};">${detail}</span></div>`;
         });
         html += `</div>`;
     }
@@ -522,16 +553,24 @@ function buildPdfContent() {
         const alerts = el.querySelectorAll('.alert:not(.alert-light)');
         if (alerts.length === 0) return;
 
-        html += `<div class="pdf-block" style="${blockStyle}border-left:3px solid ${s.color};padding-left:6px;">
-            <strong style="font-size:10px;color:${s.color};">${s.titre} (${alerts.length})</strong>`;
-        alerts.forEach(a => {
+        // Le conteneur de section reste SÉCABLE : une section de 25+ alertes
+        // dépasse la hauteur d'une page, et la marquer .pdf-block la ferait
+        // déborder (donc tronquer). Chaque entrée porte en revanche .pdf-block
+        // pour n'être jamais coupée en deux d'une page à l'autre.
+        html += `<div style="margin:0 0 14px 0;border-left:4px solid ${s.color};border-radius:0 5px 5px 0;background:${rgba(s.color, 0.04)};padding:10px 12px;">
+            <div class="pdf-block">${secTitle(s.titre, s.color, `${alerts.length}`)}</div>`;
+        alerts.forEach((a, i) => {
             const strong = a.querySelector('strong');
             const title = strong ? strong.textContent.trim() : '';
             let detail = '';
             // Cibler prioritairement le corps du message ; tomber sur small/em en fallback
             const msgNode = a.querySelector('div.small, span.small, small, em');
-            if (msgNode) detail = msgNode.textContent.trim().substring(0, 200);
-            html += `<div style="font-size:9px;margin:2px 0;">• <strong>${escapeHtml(title)}</strong>${detail ? ' — <span style="color:#555;">' + escapeHtml(detail) + '</span>' : ''}</div>`;
+            if (msgNode) detail = clamp(msgNode.textContent, 200);
+            // Titre et détail sur 2 lignes : à 28 entrées, le format « titre — détail »
+            // au fil du texte rendait chaque item indiscernable du suivant.
+            html += `<div class="pdf-block" style="${S.item}${i ? 'border-top:' + S.rule + ';' : ''}">
+                <strong>${escapeHtml(title)}</strong>${detail ? `<div style="color:${S.muted};margin-top:2px;">${escapeHtml(detail)}</div>` : ''}
+            </div>`;
         });
         html += `</div>`;
     });
@@ -549,16 +588,16 @@ function buildPdfContent() {
             byFreq[freqScore].push(bioName);
         }
         const keys = Object.keys(byFreq).map(Number).sort((a, b) => a - b);
-        html += `<div class="pdf-block" style="${blockStyle}border-left:3px solid #6c757d;padding-left:6px;">
-            <strong style="font-size:10px;color:#6c757d;">Bilans à prévoir sur l'année</strong>`;
-        keys.forEach(score => {
+        html += `<div class="pdf-block" style="${blockStyle}border-left:4px solid #6c757d;border-radius:0 5px 5px 0;background:${rgba('#6c757d', 0.04)};padding:10px 12px;">
+            ${secTitle('Bilans à prévoir sur l\'année', '#5a636c')}`;
+        keys.forEach((score, i) => {
             const lbl = freqLabels[score] || 'Variable';
-            html += `<div style="font-size:9px;margin:2px 0;"><strong>${lbl} :</strong> <span style="color:#555;">${byFreq[score].map(b => escapeHtml(b)).join(', ')}</span></div>`;
+            html += `<div style="${S.item}${i ? 'border-top:' + S.rule + ';' : ''}"><strong>${lbl} :</strong> <span style="color:${S.muted};">${byFreq[score].map(b => escapeHtml(b)).join(', ')}</span></div>`;
         });
         html += `</div>`;
     }
 
-    html += `<div style="text-align:center;margin-top:6px;font-size:7px;color:#aaa;">Document généré par GeriaAssist — Usage professionnel uniquement</div>`;
+    html += `<div style="text-align:center;margin-top:16px;padding-top:8px;border-top:1px solid #e4e8ec;font-size:8px;color:#9aa2aa;">Document généré par GeriaAssist — Usage professionnel uniquement</div>`;
     html += `</div>`;
 
     // Annexe PAAM — incluse si l'utilisateur a coché « Inclure la PAAM dans

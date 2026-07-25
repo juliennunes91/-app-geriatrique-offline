@@ -264,26 +264,33 @@
         const d = window.conciliationData;
         if (!d || !Array.isArray(d.lignes) || !d.lignes.length) return '';
         const statutLbl = v => (STATUTS.find(s => s.v === v) || {}).lbl || '';
+        // Aération alignée sur l'export de synthèse (cf. buildPdfContent) : cellules
+        // à 5px/7px et interlignage 1.55, sinon le tableau ressort comme un pavé
+        // dense au milieu d'un rapport désormais aéré.
+        const _td = 'border:1px solid #ccd3da;padding:5px 7px;line-height:1.55;vertical-align:top;';
         const rows = d.lignes.map((l, i) => `<tr>
-            <td style="border:1px solid #bbb;padding:2px 4px;">${i + 1}</td>
-            <td style="border:1px solid #bbb;padding:2px 4px;">${_esc(l.medicament)}${l.statut === 'substitution' && l.substitutVers ? ' <strong>&rarr;</strong> ' + _esc(l.substitutVers) : ''}</td>
-            <td style="border:1px solid #bbb;padding:2px 4px;">${_esc(l.posologie)}</td>
-            <td style="border:1px solid #bbb;padding:2px 4px;font-weight:700;">${_esc(statutLbl(l.statut))}</td>
-            <td style="border:1px solid #bbb;padding:2px 4px;color:#555;">${_esc(l.commentaire)}</td>
+            <td style="${_td}">${i + 1}</td>
+            <td style="${_td}">${_esc(l.medicament)}${l.statut === 'substitution' && l.substitutVers ? ' <strong>&rarr;</strong> ' + _esc(l.substitutVers) : ''}</td>
+            <td style="${_td}">${_esc(l.posologie)}</td>
+            <td style="${_td}font-weight:700;">${_esc(statutLbl(l.statut))}</td>
+            <td style="${_td}color:#5a636c;">${_esc(l.commentaire)}</td>
         </tr>`).join('');
-        let html = `<div class="pdf-block" style="page-break-inside:avoid;break-inside:avoid;margin-bottom:6px;border:1px solid #b6d4fe;border-radius:4px;padding:5px 7px;background:#f7fbff;">
-            <strong style="font-size:11px;color:#0d6efd;">💊 Synthèse pharmaceutique — propositions au prescripteur</strong>
-            <table style="width:100%;border-collapse:collapse;font-size:9px;margin-top:4px;">
+        const _th = 'border:1px solid #ccd3da;padding:5px 7px;text-align:left;letter-spacing:0.04em;text-transform:uppercase;font-size:8.5px;';
+        let html = `<div class="pdf-block" style="page-break-inside:avoid;break-inside:avoid;margin:0 0 14px 0;border:1px solid #b6d4fe;border-radius:6px;padding:10px 12px;background:#f7fbff;">
+            <div style="margin:0 0 8px 0;padding-bottom:5px;border-bottom:1px solid rgba(13,110,253,0.35);">
+                <span style="font-size:10.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#0d6efd;">💊 Synthèse pharmaceutique — propositions au prescripteur</span>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:9px;">
                 <thead><tr style="background:#e7f1ff;">
-                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;width:24px;">N°</th>
-                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;">Médicament</th>
-                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;width:20%;">Posologie</th>
-                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;width:80px;">Proposition</th>
-                    <th style="border:1px solid #bbb;padding:2px 4px;text-align:left;">Commentaire</th>
+                    <th style="${_th}width:24px;">N°</th>
+                    <th style="${_th}">Médicament</th>
+                    <th style="${_th}width:20%;">Posologie</th>
+                    <th style="${_th}width:80px;">Proposition</th>
+                    <th style="${_th}">Commentaire</th>
                 </tr></thead><tbody>${rows}</tbody>
             </table>`;
         if (d.discussion && d.discussion.trim()) {
-            html += `<div style="font-size:9px;margin-top:4px;"><strong>Discussion :</strong> <span style="white-space:pre-wrap;">${_esc(d.discussion)}</span></div>`;
+            html += `<div style="font-size:9.5px;line-height:1.6;margin-top:9px;padding-top:7px;border-top:1px dotted #c4d4e8;"><strong>Discussion :</strong> <span style="white-space:pre-wrap;">${_esc(d.discussion)}</span></div>`;
         }
         html += `</div>`;
         return html;
