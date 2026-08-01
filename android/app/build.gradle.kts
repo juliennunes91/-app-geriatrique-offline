@@ -123,4 +123,7 @@ tasks.named("preBuild").configure { dependsOn(copyWebApp) }
 dependencies {
     implementation("androidx.webkit:webkit:1.12.1")
     implementation("androidx.core:core-ktx:1.13.1")
+    // ComponentActivity : registerForActivityResult (sélecteur de fichier OCR)
+    // et onBackPressedDispatcher. core-ktx ne la fournit PAS.
+    implementation("androidx.activity:activity-ktx:1.9.3")
 }
