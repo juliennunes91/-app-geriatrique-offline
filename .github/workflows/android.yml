@@ -44,10 +44,12 @@ jobs:
           else
             NAME="${{ github.event.inputs.version }}"
           fi
-          # versionCode monotone dérivé du versionName : 1.72 → 10720
-          IFS='.' read -r MA MI PA <<< "${NAME}.0.0"
-          CODE=$(( 10#${MA:-0} * 10000 + 10#${MI:-0} * 100 + 10#${PA:-0} ))
-          if [[ "$CODE" -le 0 ]]; then CODE=${GITHUB_RUN_NUMBER}; fi
+          # versionCode monotone dérivé du versionName : 1.72 → 17200.
+          # awk plutôt que `read` : « read MA MI PA <<< 1.72.0.0 » place tout le
+          # reste (« 0.0 ») dans PA et casse l'arithmétique. Les segments absents
+          # valent 0.
+          CODE=$(awk -v n="$NAME" 'BEGIN{split(n,a,"."); printf "%d", (a[1]+0)*10000 + (a[2]+0)*100 + (a[3]+0)}')
+          if [[ -z "$CODE" || "$CODE" -le 0 ]]; then CODE=${GITHUB_RUN_NUMBER}; fi
           echo "name=${NAME}" >> "$GITHUB_OUTPUT"
           echo "code=${CODE}" >> "$GITHUB_OUTPUT"
           echo "Version ${NAME} (code ${CODE})"
