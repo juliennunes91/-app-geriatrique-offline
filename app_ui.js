@@ -627,4 +627,25 @@ function filterMaskedAlerts(alertes) {
     if (!alertes || !alertes.length || !window._maskedAlerts.size) return alertes || [];
     return alertes.filter(a => !window._maskedAlerts.has(geriaAlertKey(a)));
 }
+/**
+ * Associe les libellés de cases à cocher restés orphelins à leur input.
+ *
+ * 73 des 87 <label class="form-check-label"> de l'UI classique n'avaient pas
+ * d'attribut « for » : taper le texte ne cochait rien et la seule cible tactile
+ * était la case elle-même (20 px), très inconfortable au doigt sur téléphone.
+ * Tous les inputs portant déjà un id, l'appariement se fait automatiquement —
+ * inutile d'éditer 73 endroits du HTML, et les deux UIs en bénéficient.
+ */
+function linkOrphanCheckboxLabels(root) {
+    (root || document).querySelectorAll('.form-check').forEach(fc => {
+        const input = fc.querySelector('input[type="checkbox"], input[type="radio"]');
+        const label = fc.querySelector('label.form-check-label');
+        if (input && label && input.id && !label.getAttribute('for')) {
+            label.setAttribute('for', input.id);
+        }
+    });
+}
+window.linkOrphanCheckboxLabels = linkOrphanCheckboxLabels;
+
 document.addEventListener('DOMContentLoaded', initGeriaPrefs);
+document.addEventListener('DOMContentLoaded', () => linkOrphanCheckboxLabels());

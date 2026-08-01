@@ -562,14 +562,42 @@ details[open] > summary {
 }
 
 /* ── Responsive ── */
+/* ── Interrupteur « form-switch » dans un conteneur paddé ────────────────────
+   Bootstrap donne padding-left:1.5em à .form-check et margin-left:-2.5em au
+   curseur ; la classe utilitaire p-2 (padding:.5rem !important) écrase ce
+   padding-left, et le curseur ressort donc HORS de son conteneur. Visible sur
+   grand écran (chevauchement de la bordure), franchement coupé sur téléphone
+   où le bloc touche le bord de l'écran. */
+.form-check.form-switch.p-2 {
+    padding-left: 3rem !important;
+}
+
+/* ================================================================
+   TÉLÉPHONE — confort tactile
+   Cibles agrandies pour l'usage au doigt : l'audit relevait 53 cibles
+   interactives sur 85 sous les 44 px recommandés, les plus gênantes étant
+   les onglets (29 px) et les boutons empilés sur les pastilles de
+   médicament (~20 px), sources d'erreurs de frappe.
+   ================================================================ */
 @media (max-width: 576px) {
     .nav-tabs .nav-link {
-        padding: 6px 8px;
+        padding: 10px 10px;
         font-size: 0.72rem;
+        min-height: 42px;
+        display: flex;
+        align-items: center;
     }
 
     .ga-header h2 {
         font-size: 1.1rem;
+    }
+
+    /* Titre et barre d'outils empilés : côte à côte, les boutons passaient
+       par-dessus le logo faute de place. */
+    .ga-header .d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 10px;
     }
 
     .section-box {
@@ -578,6 +606,61 @@ details[open] > summary {
 
     .ga-indicator-row .ga-indicator-value {
         font-size: 1.5rem;
+    }
+
+    /* Boutons de la barre d'outils et d'action */
+    .btn-sm,
+    .btn-group-sm > .btn {
+        min-height: 40px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    /* Pastilles médicament/comorbidité : le libellé reste compact, mais les
+       trois commandes (suspendre / préciser / retirer) deviennent des cibles
+       distinctes et espacées. */
+    .tag-badge {
+        padding: 8px 10px !important;
+        margin-bottom: 4px;
+    }
+
+    .tag-badge [role="button"] {
+        min-width: 40px;
+        min-height: 40px;
+        margin-left: 2px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+    }
+
+    /* Cases à cocher : la case grossit un peu, mais surtout la rangée gagne en
+       hauteur. Combinée à l'appariement automatique des libellés
+       (linkOrphanCheckboxLabels, app_ui.js), toute la ligne devient cliquable :
+       c'est ce qui rend ces contrôles réellement utilisables au doigt. */
+    .form-check {
+        min-height: 40px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .form-check-input {
+        width: 1.4em;
+        height: 1.4em;
+    }
+
+    .form-switch .form-check-input {
+        width: 2.5em;
+    }
+
+    /* Le curseur élargi à 2,5em vient buter contre son libellé : on décale. */
+    .form-check.form-switch.p-2 {
+        padding-left: 3.75rem !important;
+    }
+
+    .form-check-label {
+        display: inline-block;
+        width: calc(100% - 0.5em);
     }
 }
 
