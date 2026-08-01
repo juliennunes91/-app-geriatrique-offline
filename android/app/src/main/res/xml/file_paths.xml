@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Photos prises pour l'OCR -->
+    <cache-path name="captures" path="captures/" />
+    <!-- APK de mise à jour téléchargé -->
+    <cache-path name="updates" path="updates/" />
+    <!-- Exports PDF/JSON sur Android 8-9 (avant MediaStore) -->
+    <external-files-path name="exports" path="Download/" />
+</paths>

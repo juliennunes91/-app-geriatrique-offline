@@ -124,7 +124,7 @@
                             <div class="form-check"><input type="radio" name="spcDisplayMode" id="spcDisplayModal" value="modal" class="form-check-input" onchange="setSpcDisplayMode('modal')"><label class="form-check-label small" for="spcDisplayModal">Fenêtre modale</label></div>
                         </div>
                     </div>
-                    <a href="index_modern.html" class="btn btn-outline-info btn-sm" title="Nouvelle interface moderne">UI Moderne</a>
+                    <a href="index_modern.html" class="btn btn-outline-info btn-sm" id="btnUiModerne" title="Nouvelle interface moderne">UI Moderne</a>
                 </div>
             </div>
         </div>
@@ -609,7 +609,18 @@
         // ================================================================
         // SERVICE WORKER + AUTO-UPDATE
         // ================================================================
-        if ('serviceWorker' in navigator) {
+        // Application native Android (coquille WebView) : les assets sont déjà
+        // embarqués dans l'APK. Le service worker n'y apporte rien et n'est pas
+        // livré, et l'UI moderne en est absente (elle dépend de Tailwind CDN).
+        const IS_NATIVE_APP = / GeriaAssistApp\//.test(navigator.userAgent);
+        if (IS_NATIVE_APP) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const b = document.getElementById('btnUiModerne');
+                if (b) b.style.display = 'none';
+            });
+        }
+
+        if ('serviceWorker' in navigator && !IS_NATIVE_APP) {
             navigator.serviceWorker.register('./sw.js').then(reg => {
                 console.log('SW enregistré:', reg.scope);
                 // Auto-update detection
