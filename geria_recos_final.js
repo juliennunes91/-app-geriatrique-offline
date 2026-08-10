@@ -2830,7 +2830,10 @@ const GERIA_RECOS_DB = {
                 bio_strict: true,
                 comorbs: ["PAT_029"],
                 bio: { "BIO_046": { op: ">", val: 300 } },
-                med_absent: ["iec", "ara2"]
+                med_absent: ["iec", "ara2"],
+                // Nephroprotection a horizon pluriannuel : sans objet en fragilite
+                // severe (CFS >= 7) ou l'objectif devient le confort (STOPPFrail v2).
+                frailty_exclude: true
             },
             alternatives: "Ramipril, énalapril, ou valsartan, candésartan"
         },
@@ -2955,7 +2958,11 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 comorbs: ["PAT_025"],
-                med_absent: ["alendronate", "risedronate", "acide zoledronique", "denosumab", "teriparatide"]
+                med_absent: ["alendronate", "risedronate", "acide zoledronique", "denosumab", "teriparatide"],
+                // STOPPFrail v2 : le benefice antifracturaire d'un anti-resorptif ne se
+                // materialise qu'apres 1 a 2 ans — l'initier en fragilite severe (CFS >= 7)
+                // expose aux effets indesirables sans esperance de benefice.
+                frailty_exclude: true
             },
             alternatives: "Alendronate 70 mg/sem, risédronate 35 mg/sem, dénosumab 60 mg/6 mois"
         },
@@ -3035,7 +3042,10 @@ const GERIA_RECOS_DB = {
                 bio_strict: true,
                 comorbs_any: ["PAT_016", "PAT_016a", "PAT_016b"],
                 bio: { "BIO_046": { op: ">", val: 30 }, "BIO_004": { op: ">", val: 30 } },
-                med_absent: ["iec", "ara2"]
+                med_absent: ["iec", "ara2"],
+                // Nephroprotection a horizon pluriannuel : sans objet en fragilite
+                // severe (CFS >= 7) ou l'objectif devient le confort (STOPPFrail v2).
+                frailty_exclude: true
             },
             alternatives: "Ramipril, périndopril, ou valsartan, candésartan"
         },

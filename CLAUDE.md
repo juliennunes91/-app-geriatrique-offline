@@ -262,6 +262,63 @@ grand écran doit rester inchangé.
   `margin-left:-2.5em` ; la classe utilitaire `p-2` écrase ce padding et fait
   **sortir le curseur de son conteneur**. Ajouter un `padding-left` explicite.
 
+## Criticité affichée — la sévérité déclarée est un plancher
+
+`computeAlertScore()` (`geria_engine_v2.js`) faisait dépendre la **couleur** d'une
+alerte du nombre de sources citées : `danger` = 40 pts, seuil rouge = 60, bonus de
+consensus jusqu'à **+38**. Une contre-indication de RCP citée par une seule source
+restait donc orange pendant qu'un PIM à huit sources passait au rouge — 58 des 111
+règles `danger` déclenchées sur le panel n'atteignaient jamais le rouge.
+
+**La sévérité déclarée en base est désormais le plancher de sa propre bande** :
+`danger` ≥ 60, `warning` ≥ 30 (`SCORE_MIN_CRITIQUE` / `SCORE_MIN_IMPORTANT`). Le
+score continue de trier AU-DESSUS du plancher. Ne jamais rétablir une graduation
+qui laisse la bibliographie primer sur le risque encouru.
+
+Corollaire : le rendu ne doit pas court-circuiter le scoring. `DUPLICATE_WATCH`
+(`app_analysis.js`) codait `alert-warning` en dur pour toutes les classes — un
+doublon d'anticoagulants curatifs était gradué comme un doublon de statines. Chaque
+entrée porte maintenant sa `severite`.
+
+## Collisions de sous-chaîne — deux familles, deux audits
+
+1. **Collision de DCI** (citalopram ⊂ escitalopram) → `runCollisionAudit`.
+2. **Collision de LIBELLÉ DE CLASSE** — invisible pour l'audit ci-dessus, qui appelle
+   le matcheur avec `classe = ''`. C'est cette famille qui a produit les faux positifs
+   les plus coûteux : `paracetamol` ⊂ la classe du **néfopam** (« alternative
+   paracétamol »), `calcique` ⊂ « … déficit calcique » (carbonate de calcium reconnu
+   inhibiteur calcique ET antihypertenseur), `statine` ⊂ cila-**statine**, `corticoide`
+   ⊂ « corticoïde **inhalé** », `thyroidien` ⊂ « **anti**thyroïdien » (carbimazole pris
+   pour une hormone substitutive), `fer` ⊂ calci-**fér**-ol.
+   → `runRuleKeyResolutionAudit` fige, pour **chaque clé employée par le corpus**, la
+   liste des médicaments qu'elle résout, avec le vrai `classe` (`rule_keys_golden.json`).
+
+Trois garde-fous à connaître dans `matchesDrugClass()` :
+- `_CLASS_EXCLUDE` teste le **libellé de classe**, `_CLASS_EXCLUDE_DCI` teste la **DCI**
+  (nécessaire pour les collisions passant par `dciSuffix`).
+- une clé de **moins de 4 caractères** ne matche plus par sous-chaîne, ni du libellé
+  **ni de la DCI** ; les acronymes légitimes (`iec`, `ara2`) sont des alias exacts.
+- déclarer une molécule dans une classe la fait entrer dans `_ALL_DCIS_SET`, ce qui
+  déclenche la garde « match EXACT » — c'est le remède aux libellés qui *citent* une
+  molécule sans en être (classes mono-molécule `aspirine`, `paracetamol`).
+
+**Invariant « aucune clé morte »** : une clé qui ne résout aucun médicament est soit
+une erreur de saisie, soit une molécule absente de `MASTER_DB`. Les cas connus sont
+listés nommément dans `CLES_MORTES_CONNUES` avec leur motif — on ne retire une entrée
+qu'en corrigeant la règle ou en ajoutant la molécule, **jamais** en amendant le test.
+Point ouvert : `IN_E03` est la seule règle dont toutes les clés `med_absent` sont
+mortes (les agents stimulant l'érythropoïèse ne sont pas en base), donc elle propose
+d'initier un ASE chez un patient qui en reçoit déjà.
+
+## Fragilité sévère (`frailty_exclude`)
+
+Ne s'active qu'à **CFS ≥ 7** ou case « patient fragile » cochée — le seuil de
+STOPPFrail, pas la fragilité modérée. Porté par les omissions dont le bénéfice
+demande des années : `IN_B02` (statine), `IN_H04` (anti-résorptif), `IN_E04` et
+`IN_J01` (néphroprotection). **Ne pas** l'étendre à la vitamine D (`IN_H03`,
+`IN_H05` — STOPPFrail la conserve pour la prévention des chutes), ni aux vaccins
+grippe/pneumocoque, ni à `IN_B01` dont la cible s'assouplit déjà chez le fragile.
+
 ## Service Worker
 
 À chaque ajout/renommage d'un fichier applicatif, mettre à jour :
