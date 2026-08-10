@@ -624,5 +624,1877 @@
   "alertes-usage": [
    "Posologies : AMLODIPINE"
   ]
+ },
+ "cov_EV_B01_EV_B02": {
+  "alertes-eviter": [
+   "Digoxine + IC à FE préservée (HFpEF)",
+   "Digoxine dans l'IC (FORTA-D sauf FA)",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée",
+   "VERAPAMIL — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
+   "Vérapamil/Diltiazem + IC FE réduite (NYHA III-IV)"
+  ],
+  "alertes-initier": [
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : DIGOXINE",
+   "Co-prescription à risque : VERAPAMIL"
+  ],
+  "alertes-suivi": [
+   "Classification QT non consensuelle",
+   "DIGOXINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique",
+   "VERAPAMIL — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : DIGOXINE",
+   "Posologies : VERAPAMIL"
+  ]
+ },
+ "cov_EV_B05": {
+  "alertes-eviter": [
+   "Bêtabloquant en monothérapie pour HTA simple",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ACEBUTOLOL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACEBUTOLOL"
+  ]
+ },
+ "cov_EV_B06": {
+  "alertes-eviter": [
+   "Amiodarone en 1ère intention (TSV)",
+   "Antiarythmique classe I/III sans ECG régulier",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "Anticoagulant pour FA (chronique ou paroxystique)",
+   "Bêtabloquant pour FA chronique (contrôle de fréquence)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "AMIODARONE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : AMIODARONE"
+  ]
+ },
+ "cov_EV_B07_EV_B09": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Diurétique de l'anse en 1ère intention pour HTA",
+   "Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
+   "Diurétique sans ionogramme de surveillance",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Thiazidique + hypokaliémie / hyponatrémie / hypercalcémie / goutte"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Hypokaliémie critique (< 2.5 — risque arythmie/torsades) — K 2 mmol/L"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "FUROSEMIDE — Alertes cliniques",
+   "HYDROCHLOROTHIAZIDE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : FUROSEMIDE",
+   "Posologies : HYDROCHLOROTHIAZIDE"
+  ]
+ },
+ "cov_EV_B09b_EV_B10": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Diurétique de l'anse en 1ère intention pour HTA",
+   "Diurétique de l'anse pour HTA + incontinence urinaire",
+   "Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
+   "Diurétique sans ionogramme de surveillance",
+   "FUROSEMIDE — Déconseillé Incontinence urinaire",
+   "FUROSEMIDE — Prudence Incontinence urinaire",
+   "HYDROCHLOROTHIAZIDE — Prudence Incontinence urinaire",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Thiazidique + Hyponatrémie"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Hyponatrémie sévère (< 125) — Na 117 mmol/L"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "FUROSEMIDE — Alertes cliniques",
+   "HYDROCHLOROTHIAZIDE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : FUROSEMIDE",
+   "Posologies : HYDROCHLOROTHIAZIDE"
+  ]
+ },
+ "cov_EV_B11_EV_B13": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Anti-aldostérone + épargnant potassique sans surveillance K+",
+   "Antihypertenseur central (méthyldopa, clonidine, moxonidine, rilménidine)",
+   "Diurétique sans ionogramme de surveillance",
+   "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : BENAZEPRIL"
+  ],
+  "alertes-suivi": [
+   "BENAZEPRIL — Alertes cliniques",
+   "METHYLDOPA — Alertes cliniques",
+   "SPIRONOLACTONE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : BENAZEPRIL",
+   "Posologies : METHYLDOPA",
+   "Posologies : SPIRONOLACTONE"
+  ]
+ },
+ "cov_EV_B14_EV_B17": {
+  "alertes-eviter": [
+   "AINS au long cours + maladie vasculaire connue",
+   "AINS/Corticoïde + IC nécessitant diurétique de l'anse",
+   "Action immédiate",
+   "CELECOXIB — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
+   "CELECOXIB — CI Syndrome Coronarien Chronique (SCC)",
+   "IPDE5 + IC sévère ou dérivés nitrés"
+  ],
+  "alertes-initier": [
+   "Antiagrégant / statine pour syndrome coronarien",
+   "Antiagrégant pour maladie vasculaire",
+   "Bêtabloquant pour coronaropathie symptomatique (angor)",
+   "IEC en post-SCA / coronaropathie",
+   "IPP avec AINS (cure courte ou prolongée)",
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
+   "Réévaluation planifiée",
+   "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "CELECOXIB — Alertes cliniques",
+   "SILDENAFIL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CELECOXIB",
+   "Posologies : SILDENAFIL"
+  ]
+ },
+ "cov_EV_B19_EV_B20": {
+  "alertes-eviter": [
+   "AINS/Corticoïde + IC nécessitant diurétique de l'anse",
+   "Action immédiate",
+   "Antihypertenseur (hors IEC/ARA2) + sténose aortique sévère symptomatique",
+   "CELECOXIB — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
+   "Cascades iatrogéniques détectées",
+   "Diurétique sans ionogramme de surveillance",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [
+   "IPP avec AINS (cure courte ou prolongée)",
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : ALTIZIDE"
+  ],
+  "alertes-suivi": [
+   "ALTIZIDE — Alertes cliniques",
+   "CELECOXIB — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ALTIZIDE",
+   "Posologies : CELECOXIB"
+  ]
+ },
+ "cov_EV_B22_EV_PRISC_01": {
+  "alertes-eviter": [
+   "Digoxine avec hypokaliémie / hypomagnésémie non corrigée",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Nifédipine à libération immédiate",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Hypokaliémie sévère (2.5-2.9) — K 2.5 mmol/L"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "Classification QT non consensuelle",
+   "DIGOXINE — Alertes cliniques",
+   "NIFEDIPINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : DIGOXINE",
+   "Posologies : NIFEDIPINE"
+  ]
+ },
+ "cov_EV_FORTA_02_EV_PIM_01": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antiarythmique classe I/III sans ECG régulier",
+   "DRONEDARONE — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
+   "Digoxine dans l'IC (FORTA-D sauf FA)",
+   "Dronédarone + IC (PIM-Check)"
+  ],
+  "alertes-initier": [
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : DRONEDARONE"
+  ],
+  "alertes-suivi": [
+   "Classification QT non consensuelle",
+   "DIGOXINE — Alertes cliniques",
+   "DRONEDARONE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : DIGOXINE",
+   "Posologies : DRONEDARONE"
+  ]
+ },
+ "cov_EV_PIM_02_EV_N05": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antiarythmique classe I/III sans ECG régulier",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Flécaïnide / Propafénone + cardiopathie structurelle",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament allongeant le QT + QT long congénital"
+  ],
+  "alertes-initier": [
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "CITALOPRAM — Alertes cliniques",
+   "FLECAINIDE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CITALOPRAM",
+   "Posologies : FLECAINIDE"
+  ]
+ },
+ "cov_EV_N08_EV_N09": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Association de ≥ 2 bradycardisants + bradycardie",
+   "Bradycardisants + Bradycardie / BAV",
+   "Bêtabloquant + Vérapamil/Diltiazem",
+   "DIGOXINE — CI Bradycardie",
+   "Inhibiteur calcique non-DHP + Bêtabloquant : trouble conductif",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament inotrope négatif + post-arrêt cardiaque",
+   "VERAPAMIL — CI Bradycardie"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "CI ABSOLUE — VERAPAMIL",
+   "Co-prescription à risque : ACEBUTOLOL",
+   "Co-prescription à risque : DIGOXINE"
+  ],
+  "alertes-suivi": [
+   "ACEBUTOLOL — Alertes cliniques",
+   "Classification QT non consensuelle",
+   "DIGOXINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique",
+   "VERAPAMIL — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : ACEBUTOLOL",
+   "Posologies : DIGOXINE",
+   "Posologies : VERAPAMIL"
+  ]
+ },
+ "cov_IN_M01": {
+  "alertes-eviter": [],
+  "alertes-initier": [
+   "Anticoagulant pour MTEV (TVP/EP) documentée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": []
+ },
+ "cov_EV_C01_EV_C02": {
+  "alertes-eviter": [
+   "AVK sans surveillance INR régulière documentée",
+   "Action immédiate",
+   "Antiagrégant + Anticoagulant dans FA (sans stent récent)",
+   "Antiagrégant/Anticoagulant + risque hémorragique significatif",
+   "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
+   "Aspirine > 100 mg/j au long cours",
+   "Aspirine en prévention primaire cardiovasculaire"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : ACIDE ACETYLSALICYLIQUE"
+  ],
+  "alertes-suivi": [
+   "ACENOCOUMAROL — Alertes cliniques",
+   "ACIDE ACETYLSALICYLIQUE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACENOCOUMAROL",
+   "Posologies : ACIDE ACETYLSALICYLIQUE"
+  ]
+ },
+ "cov_EV_C06_EV_C10": {
+  "alertes-eviter": [
+   "AINS + Anticoagulant",
+   "AVK sans surveillance INR régulière documentée",
+   "Action immédiate",
+   "Antiagrégant + Anticoagulant dans FA (sans stent récent)",
+   "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
+   "Aspirine en prévention primaire cardiovasculaire",
+   "Ticlopidine : à éviter en toute circonstance"
+  ],
+  "alertes-initier": [
+   "IPP avec AINS (cure courte ou prolongée)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : CELECOXIB",
+   "Co-prescription à risque : TICLOPIDINE"
+  ],
+  "alertes-suivi": [
+   "ACENOCOUMAROL — Alertes cliniques",
+   "CELECOXIB — Alertes cliniques",
+   "TICLOPIDINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACENOCOUMAROL",
+   "Posologies : CELECOXIB",
+   "Posologies : TICLOPIDINE"
+  ]
+ },
+ "cov_EV_C11_EV_C13": {
+  "alertes-eviter": [
+   "AVK en 1ère intention dans FA (sauf valve mécanique/sténose mitrale/ClCr < 15)",
+   "AVK sans surveillance INR régulière documentée",
+   "Action immédiate",
+   "Dabigatran + Diltiazem/Vérapamil",
+   "Doublon thérapeutique — Anticoagulants curatifs",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [
+   "Bêtabloquant pour FA chronique (contrôle de fréquence)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ACENOCOUMAROL — Alertes cliniques",
+   "DABIGATRAN — Alertes cliniques",
+   "DILTIAZEM — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACENOCOUMAROL",
+   "Posologies : DABIGATRAN",
+   "Posologies : DILTIAZEM"
+  ]
+ },
+ "cov_EV_C14_EV_C17": {
+  "alertes-eviter": [
+   "AOD + inhibiteur P-gp",
+   "AVK + Amiodarone : surveiller INR étroitement",
+   "AVK sans surveillance INR régulière documentée",
+   "Action immédiate",
+   "Antiarythmique classe I/III sans ECG régulier",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Doublon thérapeutique — Anticoagulants curatifs",
+   "Ginkgo biloba + anticoagulant ou antiagrégant : risque hémorragique"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : ACENOCOUMAROL",
+   "Co-prescription à risque : AMIODARONE",
+   "Co-prescription à risque : APIXABAN",
+   "Co-prescription à risque : GINKGO BILOBA"
+  ],
+  "alertes-suivi": [
+   "ACENOCOUMAROL — Alertes cliniques",
+   "AMIODARONE — Alertes cliniques",
+   "APIXABAN — Alertes cliniques",
+   "GINKGO BILOBA — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACENOCOUMAROL",
+   "Posologies : AMIODARONE",
+   "Posologies : APIXABAN",
+   "Posologies : GINKGO BILOBA"
+  ]
+ },
+ "cov_EV_FORTA_01": {
+  "alertes-eviter": [
+   "Aspirine en prévention primaire cardiovasculaire",
+   "Dipyridamole (FORTA-D)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "DIPYRIDAMOLE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : DIPYRIDAMOLE"
+  ]
+ },
+ "cov_EV_D01_EV_D03": {
+  "alertes-eviter": [
+   "AMITRIPTYLINE — CI Syndrome Démentiel (Générique)",
+   "Action immédiate",
+   "Anticholinergique puissant + Démence ou Delirium",
+   "Antidépresseurs tricycliques chez le sujet âgé",
+   "IRSN + HTA sévère",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [
+   "Antihypertenseur si PAS > 140 (ou > 150 si fragile)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : AMITRIPTYLINE",
+   "Co-prescription à risque : VENLAFAXINE"
+  ],
+  "alertes-suivi": [
+   "AMITRIPTYLINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique",
+   "VENLAFAXINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : AMITRIPTYLINE",
+   "Posologies : VENLAFAXINE"
+  ]
+ },
+ "cov_EV_D04_EV_D06": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antipsychotique anticholinergique + HBP symptomatique",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "ISRS + Hyponatrémie actuelle ou récente (Na+ < 130)",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Phénothiazine en 1ère intention (psychose/SCPD)"
+  ],
+  "alertes-initier": [
+   "Alpha-1 bloquant sélectif pour HBP symptomatique"
+  ],
+  "alertes-bio": [
+   "Hyponatrémie sévère (< 125) — Na 117 mmol/L"
+  ],
+  "alertes-interact": [
+   "Co-prescription à risque : CITALOPRAM"
+  ],
+  "alertes-suivi": [
+   "CHLORPROMAZINE — Alertes cliniques",
+   "CITALOPRAM — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CHLORPROMAZINE",
+   "Posologies : CITALOPRAM"
+  ]
+ },
+ "cov_EV_D09_EV_D10": {
+  "alertes-eviter": [
+   "ALPRAZOLAM — Déconseillé Insomnie",
+   "ALPRAZOLAM — Déconseillé Syndrome Démentiel (Générique)",
+   "Action immédiate",
+   "Benzodiazépine pour agitation/SCPD dans la démence",
+   "Benzodiazépine ≥ 2 semaines pour insomnie",
+   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépines / Z-drugs : ALPRAZOLAM",
+   "Cascades iatrogéniques détectées"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ALPRAZOLAM — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ALPRAZOLAM"
+  ]
+ },
+ "cov_EV_D11_EV_D16": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antipsychotique comme hypnotique (sauf psychose ou SCPD)",
+   "Benzodiazépine ≥ 2 semaines pour insomnie",
+   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépines / Z-drugs : ZOLPIDEM",
+   "Cascades iatrogéniques détectées",
+   "Hypnotique Z ≥ 2 semaines pour insomnie",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+   "ZOLPIDEM — Déconseillé Insomnie"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : AMISULPRIDE"
+  ],
+  "alertes-suivi": [
+   "AMISULPRIDE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique",
+   "ZOLPIDEM — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : AMISULPRIDE",
+   "Posologies : ZOLPIDEM"
+  ]
+ },
+ "cov_EV_D17_EV_D18": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Bradycardisants + Bradycardie / BAV",
+   "Bêtabloquant + Inhibiteur acétylcholinestérase : bradycardie",
+   "Inhibiteur acétylcholinestérase + bradycardisant",
+   "Inhibiteur acétylcholinestérase sans ECG de référence",
+   "Inhibiteur de l'acétylcholinestérase + bradycardie < 60 / BAV",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ACEBUTOLOL — Alertes cliniques",
+   "DONÉPÉZIL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACEBUTOLOL",
+   "Posologies : DONÉPÉZIL"
+  ]
+ },
+ "cov_EV_D19_EV_D20": {
+  "alertes-eviter": [
+   "Mémantine + antécédent d'épilepsie",
+   "Nootropique pour la démence (Ginkgo Biloba, piracétam...)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "Antiépileptique pour épilepsie active",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "GINKGO BILOBA — Alertes cliniques",
+   "MEMANTINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : GINKGO BILOBA",
+   "Posologies : MEMANTINE"
+  ]
+ },
+ "cov_EV_D21_EV_D22": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Cascades iatrogéniques détectées",
+   "Lévodopa/agoniste dopaminergique pour tremblement essentiel bénin",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Phénothiazine en 1ère intention (psychose/SCPD)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : LEVODOPA"
+  ],
+  "alertes-suivi": [
+   "CHLORPROMAZINE — Alertes cliniques",
+   "LEVODOPA — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CHLORPROMAZINE",
+   "Posologies : LEVODOPA"
+  ]
+ },
+ "cov_EV_D25_EV_BEERS_01": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antihistaminique H1 1ère génération en 1ère intention (allergie/prurit)",
+   "Antihistaminique H1 1ère génération pour insomnie",
+   "HYDROXYZINE — Déconseillé Insomnie",
+   "Méprobamate, barbituriques"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "HYDROXYZINE — Alertes cliniques",
+   "MEPROBAMATE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : HYDROXYZINE",
+   "Posologies : MEPROBAMATE"
+  ]
+ },
+ "cov_EV_SF06": {
+  "alertes-eviter": [
+   "Inhibiteur acétylcholinestérase / Mémantine si démence sévère (MMSE < 10)",
+   "Inhibiteur acétylcholinestérase sans ECG de référence",
+   "Médicament anti-Alzheimer si démence sévère sans bénéfice observé",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "DONÉPÉZIL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : DONÉPÉZIL"
+  ]
+ },
+ "cov_EV_FORTA_04": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antidépresseurs tricycliques chez le sujet âgé",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "DOXEPINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : DOXEPINE"
+  ]
+ },
+ "cov_IN_D01_IN_D02": {
+  "alertes-eviter": [],
+  "alertes-initier": [
+   "Antidépresseur non tricyclique pour dépression majeure",
+   "L-DOPA ou agoniste dopaminergique pour Parkinson avec handicap fonctionnel",
+   "Sertraline en 1ère intention pour dépression du sujet âgé"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": []
+ },
+ "cov_IN_D03_IN_D05": {
+  "alertes-eviter": [],
+  "alertes-initier": [
+   "ISRS (ou IRSNA / prégabaline) pour trouble anxieux généralisé persistant et sévère",
+   "Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": []
+ },
+ "cov_IN_D06_IN_J04": {
+  "alertes-eviter": [],
+  "alertes-initier": [
+   "Agoniste dopaminergique pour syndrome des jambes sans repos",
+   "Antiépileptique pour épilepsie active",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": []
+ },
+ "cov_EV_E02_EV_E03": {
+  "alertes-eviter": [
+   "Anti-Xa (rivaroxaban, apixaban, edoxaban) + DFG < 15",
+   "Dabigatran + DFG < 30",
+   "Doublon thérapeutique — Anticoagulants curatifs",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
+   "Insuffisance rénale chronique G5 — insuffisance rénale terminale"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "DABIGATRAN — Alertes cliniques",
+   "RIVAROXABAN — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : DABIGATRAN",
+   "Posologies : RIVAROXABAN"
+  ]
+ },
+ "cov_EV_E05": {
+  "alertes-eviter": [
+   "Colchicine + DFG < 10",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
+   "Insuffisance rénale chronique G5 — insuffisance rénale terminale"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "COLCHICINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : COLCHICINE"
+  ]
+ },
+ "cov_EV_E06": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Metformine + DFG < 30"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
+   "Insuffisance rénale chronique G4 — insuffisance rénale sévère"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "METFORMINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : METFORMINE"
+  ]
+ },
+ "cov_EV_E07": {
+  "alertes-eviter": [
+   "Anti-aldostérone + DFG < 30",
+   "Diurétique sans ionogramme de surveillance",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
+   "Insuffisance rénale chronique G4 — insuffisance rénale sévère"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "SPIRONOLACTONE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : SPIRONOLACTONE"
+  ]
+ },
+ "cov_EV_E08": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Nitrofurantoïne + DFG < 45"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "Insuffisance rénale chronique G3b — insuffisance rénale modérée"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "NITROFURANTOINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : NITROFURANTOINE"
+  ]
+ },
+ "cov_EV_E09_EV_E10": {
+  "alertes-eviter": [
+   "Bisphosphonate + DFG < 30",
+   "Méthotrexate + DFG < 30",
+   "Méthotrexate sans supplémentation en acide folique",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "Acide folique avec méthotrexate"
+  ],
+  "alertes-bio": [
+   "Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
+   "Insuffisance rénale chronique G4 — insuffisance rénale sévère"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ALENDRONATE — Alertes cliniques",
+   "METHOTREXATE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ALENDRONATE",
+   "Posologies : METHOTREXATE"
+  ]
+ },
+ "cov_IN_E01_IN_E03": {
+  "alertes-eviter": [],
+  "alertes-initier": [
+   "1α-OH-cholécalciférol ou calcitriol si IRC sévère + hypocalcémie + hyperparathyroïdie secondaire",
+   "Agent stimulant l'érythropoïèse pour anémie de l'IRC sévère",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [
+   "Anémie",
+   "Anémie Rénale (Déficit en EPO)",
+   "Anémie détectée — Bilan martial recommandé",
+   "Anémie — doser B12 et folates",
+   "Hypocalcémie symptomatique (< 1.9) — Ca 1.1 mmol/L",
+   "Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
+   "Insuffisance rénale chronique G4 — insuffisance rénale sévère"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": []
+ },
+ "cov_IN_E04": {
+  "alertes-eviter": [],
+  "alertes-initier": [
+   "IEC/ARA2 pour protéinurie dans la MRC",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [
+   "Albuminurie KDIGO A3 — protéinurie sévère (≥ 300) — 330 mg/g (ou mg/24h)"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": []
+ },
+ "cov_EV_F01_EV_F02": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "IPP (sans indication claire) : OMEPRAZOLE",
+   "IPP > 8 semaines à pleine dose pour ulcère non compliqué",
+   "METOCLOPRAMIDE — CI Maladie de Parkinson",
+   "Métoclopramide et prokinétiques"
+  ],
+  "alertes-initier": [
+   "L-DOPA ou agoniste dopaminergique pour Parkinson avec handicap fonctionnel"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "METOCLOPRAMIDE — Alertes cliniques",
+   "OMEPRAZOLE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : METOCLOPRAMIDE",
+   "Posologies : OMEPRAZOLE"
+  ]
+ },
+ "cov_EV_F03_EV_F05": {
+  "alertes-eviter": [
+   "Corticoïde + antécédent d'ulcère ou œsophagite érosive (sans IPP)",
+   "Corticoïde systémique > 3 mois sans bilan ostéoporose",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament constipant + constipation chronique",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "IPP pour RGO sévère ou sténose peptique",
+   "Laxatif osmotique pour constipation chronique bénigne"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "BECLOMETASONE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique",
+   "VERAPAMIL — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : BECLOMETASONE",
+   "Posologies : VERAPAMIL"
+  ]
+ },
+ "cov_EV_F07_EV_BEERS_04": {
+  "alertes-eviter": [
+   "AMISULPRIDE — Déconseillé Dysphagie / Troubles de déglutition",
+   "Action immédiate",
+   "Antipsychotique + Dysphagie",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Métoclopramide au long cours (> 12 semaines)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : AMISULPRIDE"
+  ],
+  "alertes-suivi": [
+   "AMISULPRIDE — Alertes cliniques",
+   "METOCLOPRAMIDE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : AMISULPRIDE",
+   "Posologies : METOCLOPRAMIDE"
+  ]
+ },
+ "cov_IN_F01_IN_F02": {
+  "alertes-eviter": [
+   "ACIDE ACETYLSALICYLIQUE — Prudence Ulcère Gastro-Duodénal (UGD)",
+   "Aspirine en prévention primaire cardiovasculaire"
+  ],
+  "alertes-initier": [
+   "IPP pour RGO sévère ou sténose peptique",
+   "IPP si aspirine faible dose + antécédent d'ulcère ou RGO"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ACIDE ACETYLSALICYLIQUE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACIDE ACETYLSALICYLIQUE"
+  ]
+ },
+ "cov_EV_G01_EV_G02": {
+  "alertes-eviter": [
+   "Théophylline chez le sujet âgé (PIM, marge thérapeutique étroite)",
+   "Théophylline en monothérapie pour BPCO"
+  ],
+  "alertes-initier": [
+   "Corticoïde inhalé quotidien pour asthme modéré-sévère ou BPCO GOLD 3-4",
+   "LAMA ou LABA pour asthme/BPCO symptomatique (GOLD 1-2)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "AMINOPHYLLINE — Alertes cliniques",
+   "Classification QT non consensuelle",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : AMINOPHYLLINE"
+  ]
+ },
+ "cov_EV_G03_EV_G04": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Benzodiazépine + insuffisance respiratoire aiguë ou chronique",
+   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépines / Z-drugs : ALPRAZOLAM",
+   "Cascades iatrogéniques détectées",
+   "LAMA + Glaucome à angle fermé / obstruction vésicale",
+   "TIOTROPIUM — CI Glaucome à angle fermé",
+   "TIOTROPIUM — Prudence Glaucome à angle fermé"
+  ],
+  "alertes-initier": [
+   "Corticoïde inhalé quotidien pour asthme modéré-sévère ou BPCO GOLD 3-4"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ALPRAZOLAM — Alertes cliniques",
+   "TIOTROPIUM — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ALPRAZOLAM",
+   "Posologies : TIOTROPIUM"
+  ]
+ },
+ "cov_EV_H01_EV_H03": {
+  "alertes-eviter": [
+   "AINS > 3 mois pour arthrose (paracétamol non essayé)",
+   "AINS non-COX2 + antécédent d'ulcère/hémorragie GI (sans IPP)",
+   "Action immédiate",
+   "CELECOXIB — CI Ulcère Gastro-Duodénal (UGD)"
+  ],
+  "alertes-initier": [
+   "IPP avec AINS (cure courte ou prolongée)",
+   "IPP pour RGO sévère ou sténose peptique"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "CELECOXIB — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CELECOXIB"
+  ]
+ },
+ "cov_EV_H06_EV_H07": {
+  "alertes-eviter": [
+   "AINS + Corticoïde concomitant (rhumatisme)",
+   "AINS ou colchicine > 3 mois pour prévention goutte (sans inhibiteur xanthine-oxydase)",
+   "Action immédiate",
+   "Corticoïde systémique > 3 mois sans bilan ostéoporose"
+  ],
+  "alertes-initier": [
+   "IPP avec AINS (cure courte ou prolongée)",
+   "Inhibiteur xanthine-oxydase pour goutte récidivante"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "BECLOMETASONE — Alertes cliniques",
+   "CELECOXIB — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : BECLOMETASONE",
+   "Posologies : CELECOXIB"
+  ]
+ },
+ "cov_EV_H09_EV_BEERS_03": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Myorelaxants à éviter (méthocarbamol, tizanidine, baclofène systémique)",
+   "Opioïde au long cours pour arthrose",
+   "Opioïde fort en 1ère intention pour douleur légère",
+   "Opioïde quotidien régulier sans laxatif co-prescrit",
+   "Opioïdes : BUPRENORPHINE"
+  ],
+  "alertes-initier": [
+   "Laxatif systématique avec opioïde quotidien"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "BUPRENORPHINE — Alertes cliniques",
+   "METHOCARBAMOL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : BUPRENORPHINE",
+   "Posologies : METHOCARBAMOL"
+  ]
+ },
+ "cov_EV_I04_EV_I05": {
+  "alertes-eviter": [
+   "ALFUZOSINE — Déconseillé Hypotension Orthostatique",
+   "Action immédiate",
+   "Alpha-1 bloquant (sauf silodosine) + hypotension orthostatique / syncope",
+   "Antimuscarinique systémique + Constipation",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "OXYBUTYNINE — Déconseillé Hypotension Orthostatique",
+   "Oxybutynine (toutes formes)"
+  ],
+  "alertes-initier": [
+   "Laxatif osmotique pour constipation chronique bénigne"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ALFUZOSINE — Alertes cliniques",
+   "OXYBUTYNINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ALFUZOSINE",
+   "Posologies : OXYBUTYNINE"
+  ]
+ },
+ "cov_EV_I06_IN_I01": {
+  "alertes-eviter": [
+   "Mirabégron + HTA sévère ou labile"
+  ],
+  "alertes-initier": [
+   "Alpha-1 bloquant sélectif pour HBP symptomatique",
+   "Antihypertenseur si PAS > 140 (ou > 150 si fragile)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "MIRABEGRON — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : MIRABEGRON"
+  ]
+ },
+ "cov_EV_J02_EV_J03": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Bêtabloquant non cardiosélectif + Diabète avec hypoglycémies fréquentes",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "PIOGLITAZONE — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
+   "PIOGLITAZONE — Prudence Diabète (type non précisé)",
+   "Thiazolidinedione + IC"
+  ],
+  "alertes-initier": [
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "PIOGLITAZONE — Alertes cliniques",
+   "PROPRANOLOL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : PIOGLITAZONE",
+   "Posologies : PROPRANOLOL"
+  ]
+ },
+ "cov_EV_J04_EV_J09": {
+  "alertes-eviter": [
+   "Lévothyroxine pour hypothyroïdie infraclinique (TSH < 10)",
+   "Réévaluation planifiée",
+   "iSGLT2 + Hypotension symptomatique"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "CANAGLIFLOZIN — Alertes cliniques",
+   "LEVOTHYROXINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CANAGLIFLOZIN",
+   "Posologies : LEVOTHYROXINE"
+  ]
+ },
+ "cov_EV_J10_EV_BEERS_02": {
+  "alertes-eviter": [
+   "Desmopressine pour incontinence/pollakiurie",
+   "Insuline en schéma « sliding scale » seule (sans basale)",
+   "Insuline sliding scale seule (sans basale)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "DESMOPRESSINE — Alertes cliniques",
+   "INSULINE ASPART — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : DESMOPRESSINE",
+   "Posologies : INSULINE ASPART"
+  ]
+ },
+ "cov_EV_SF03_IN_J01": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Antidiabétique oral si HbA1c à cible chez fragile"
+  ],
+  "alertes-initier": [
+   "IEC/ARA2 pour diabète avec protéinurie (sauf IRC sévère)",
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+  ],
+  "alertes-bio": [
+   "Albuminurie KDIGO A2 — microalbuminurie (30-299) — 33 mg/g (ou mg/24h)",
+   "Insuffisance rénale chronique G3b — insuffisance rénale modérée"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "METFORMINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : METFORMINE"
+  ]
+ },
+ "cov_IN_J02_IN_J03": {
+  "alertes-eviter": [],
+  "alertes-initier": [
+   "Antithyroïdien de synthèse (ATS) pour hyperthyroïdie",
+   "Lévothyroxine pour hypothyroïdie confirmée"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": []
+ },
+ "cov_EV_K03_EV_K04": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Benzodiazépine chez patient chuteur",
+   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépines / Z-drugs : ZOLPIDEM",
+   "Cascades iatrogéniques détectées",
+   "Hypnotique Z ≥ 2 semaines pour insomnie",
+   "Vasodilatateur chez patient chuteur / hypotension orthostatique",
+   "Z-drug chez patient chuteur"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "HYDRALAZINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique",
+   "ZOLPIDEM — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : HYDRALAZINE",
+   "Posologies : ZOLPIDEM"
+  ]
+ },
+ "cov_EV_K05_EV_K06": {
+  "alertes-eviter": [
+   "2 médicaments à effet anticholinergique concomitants",
+   "Action immédiate",
+   "Antihistaminique H1 1ère gén. chez patient chuteur",
+   "Antihistaminique H1 1ère génération en 1ère intention (allergie/prurit)",
+   "Antiépileptique chez patient chuteur",
+   "Risque de délirium — charge anticholinergique élevée (ACB ≥ 3)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : CARBAMAZEPINE"
+  ],
+  "alertes-suivi": [
+   "CARBAMAZEPINE — Alertes cliniques",
+   "HYDROXYZINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CARBAMAZEPINE",
+   "Posologies : HYDROXYZINE"
+  ]
+ },
+ "cov_EV_K07_EV_K09": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Alpha-bloquant antihypertenseur chez patient chuteur",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Opioïde chez patient chuteur",
+   "Opioïde fort en 1ère intention pour douleur légère",
+   "Opioïde quotidien régulier sans laxatif co-prescrit",
+   "Opioïdes : BUPRENORPHINE"
+  ],
+  "alertes-initier": [
+   "Laxatif systématique avec opioïde quotidien"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "BUPRENORPHINE — Alertes cliniques",
+   "DOXAZOSINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : BUPRENORPHINE",
+   "Posologies : DOXAZOSINE"
+  ]
+ },
+ "cov_EV_K10_EV_K12": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Alpha-bloquant prostatique (sauf silodosine) chez patient chuteur",
+   "Antimuscarinique pour vessie hyperactive chez patient chuteur",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Oxybutynine (toutes formes)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ALFUZOSINE — Alertes cliniques",
+   "OXYBUTYNINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ALFUZOSINE",
+   "Posologies : OXYBUTYNINE"
+  ]
+ },
+ "cov_EV_L05_EV_L06": {
+  "alertes-eviter": [
+   "Gabapentinoïde pour douleur non neuropathique",
+   "Paracétamol ≥ 3 g/j + dénutrition (BMI < 18) ou hépatopathie",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "GABAPENTINE — Alertes cliniques",
+   "NEFOPAM — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : GABAPENTINE",
+   "Posologies : NEFOPAM"
+  ]
+ },
+ "cov_EV_SF01_EV_SF02": {
+  "alertes-eviter": [
+   "Antihypertenseur chez le très fragile",
+   "Antihypertenseurs (STOPP/FRAIL)",
+   "Deprescription preventive globale chez le fragile severe (STOPP/FRAIL)",
+   "Diurétique sans ionogramme de surveillance",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée",
+   "Statines (STOPP/FRAIL)",
+   "Statines (patient très fragile, prévention primaire) : ATORVASTATINE",
+   "Statines en prévention primaire / patient fragile"
+  ],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ALTIZIDE — Alertes cliniques",
+   "ATORVASTATINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ALTIZIDE",
+   "Posologies : ATORVASTATINE"
+  ]
+ },
+ "cov_EV_SF07": {
+  "alertes-eviter": [
+   "Fer oral — Indication et durée",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "FUMARATE FERREUX — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : FUMARATE FERREUX"
+  ]
+ },
+ "cov_EV_SYND_043_EV_SYND_043b": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "CI ABSOLUE : Linézolide + ISRS/IRSN/Tramadol/IMAO",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Constipation opioïde / anticholinergique — prophylaxie laxative requise",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Opioïde quotidien régulier sans laxatif co-prescrit",
+   "Opioïdes : TRAMADOL",
+   "Risque de syndrome sérotoninergique — association sérotoninergique + tramadol/IMAO/linézolide"
+  ],
+  "alertes-initier": [
+   "Laxatif systématique avec opioïde quotidien"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "CI ABSOLUE — TRAMADOL",
+   "Co-prescription à risque : CITALOPRAM",
+   "Co-prescription à risque : LINEZOLIDE"
+  ],
+  "alertes-suivi": [
+   "CITALOPRAM — Alertes cliniques",
+   "LINEZOLIDE — Alertes cliniques",
+   "TRAMADOL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CITALOPRAM",
+   "Posologies : LINEZOLIDE",
+   "Posologies : TRAMADOL"
+  ]
+ },
+ "cov_EV_SYND_044_EV_SYND_045": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépines / Z-drugs : DIAZEPAM",
+   "Cascades iatrogéniques détectées",
+   "Constipation opioïde / anticholinergique — prophylaxie laxative requise",
+   "Diurétique sans ionogramme de surveillance",
+   "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Opioïde fort en 1ère intention pour douleur légère",
+   "Opioïde quotidien régulier sans laxatif co-prescrit",
+   "Opioïdes : MORPHINE",
+   "Polypharmacie sans réévaluation (REMEDIES)",
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+   "Risque de dépression respiratoire — BZD/Z-drug + opioïde (FDA Black Box 2016)",
+   "Réévaluation annuelle de chaque traitement chronique",
+   "Triple whammy : AINS + IEC/ARA2 + diurétique — risque IRA"
+  ],
+  "alertes-initier": [
+   "IPP avec AINS (cure courte ou prolongée)",
+   "Laxatif systématique avec opioïde quotidien"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : ALTIZIDE",
+   "Co-prescription à risque : BENAZEPRIL",
+   "Co-prescription à risque : CELECOXIB",
+   "Co-prescription à risque : DIAZEPAM",
+   "Co-prescription à risque : MORPHINE"
+  ],
+  "alertes-suivi": [
+   "ALTIZIDE — Alertes cliniques",
+   "BENAZEPRIL — Alertes cliniques",
+   "CELECOXIB — Alertes cliniques",
+   "DIAZEPAM — Alertes cliniques",
+   "MORPHINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ALTIZIDE",
+   "Posologies : BENAZEPRIL",
+   "Posologies : CELECOXIB",
+   "Posologies : DIAZEPAM",
+   "Posologies : MORPHINE"
+  ]
+ },
+ "cov_EV_SFGG_AD_02_EV_SFGG_AD_04": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Combinaison de 3 antidépresseurs (CI absolue)",
+   "Combinaisons d'antidépresseurs interdites (2 ISRS, 2 IRSN, ISRS+IRSN, ISRS-IRSN+IMAO/TCA)",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Miansérine — préférer mirtazapine (alerte ANSM)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : MIANSERINE",
+   "Co-prescription à risque : SERTRALINE",
+   "Co-prescription à risque : VENLAFAXINE"
+  ],
+  "alertes-suivi": [
+   "MIANSERINE — Alertes cliniques",
+   "SERTRALINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique",
+   "VENLAFAXINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : MIANSERINE",
+   "Posologies : SERTRALINE",
+   "Posologies : VENLAFAXINE"
+  ]
+ },
+ "cov_EV_SFGG_AD_05_EV_SFGG_AD_06": {
+  "alertes-eviter": [
+   "Agomélatine ≥ 75 ans — éviter (RCP Valdoxan 2025)",
+   "Tianéptine — éviter chez le sujet âgé (risque dépendance)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "AGOMELATINE — Alertes cliniques",
+   "TIANEPTINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : AGOMELATINE",
+   "Posologies : TIANEPTINE"
+  ]
+ },
+ "cov_EV_SFGG_AD_07": {
+  "alertes-eviter": [
+   "ISRS / IRSN / Vortioxétine + AINS — risque hémorragique majoré",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "IPP avec AINS (cure courte ou prolongée)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : IBUPROFENE",
+   "Co-prescription à risque : SERTRALINE"
+  ],
+  "alertes-suivi": [
+   "IBUPROFENE — Alertes cliniques",
+   "SERTRALINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : IBUPROFENE",
+   "Posologies : SERTRALINE"
+  ]
+ },
+ "cov_EV_SYND_049": {
+  "alertes-eviter": [
+   "Corticoïde systémique > 3 mois sans bilan ostéoporose",
+   "Corticoïde systémique ≥ 3 mois — prévention sarcopénie/ostéoporose GIOP"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "PREDNISONE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : PREDNISONE"
+  ]
+ },
+ "cov_EV_N04": {
+  "alertes-eviter": [
+   "Méthotrexate / paracétamol haute dose + alcool excessif",
+   "Méthotrexate sans supplémentation en acide folique",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "Acide folique avec méthotrexate"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "METHOTREXATE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : METHOTREXATE"
+  ]
+ },
+ "cov_EV_N06_EV_N07": {
+  "alertes-eviter": [
+   "Immunosuppresseur / corticoïde au long cours + sepsis aigu",
+   "Médicament néphrotoxique + sepsis aigu",
+   "Méthotrexate sans supplémentation en acide folique",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [
+   "Acide folique avec méthotrexate",
+   "IPP avec AINS (cure courte ou prolongée)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "CI ABSOLUE — METHOTREXATE"
+  ],
+  "alertes-suivi": [
+   "CELECOXIB — Alertes cliniques",
+   "METHOTREXATE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CELECOXIB",
+   "Posologies : METHOTREXATE"
+  ]
+ },
+ "cov_SUP_PIMC_05_SUP_PIMC_06": {
+  "alertes-eviter": [
+   "AVK sans surveillance INR régulière documentée",
+   "Antiagregant ou anticoagulant",
+   "Inhibiteur acétylcholinestérase sans ECG de référence",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ACENOCOUMAROL — Alertes cliniques",
+   "DONÉPÉZIL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ACENOCOUMAROL",
+   "Posologies : DONÉPÉZIL"
+  ]
+ },
+ "cov_SUP_PIMC_12_SUP_REM_01": {
+  "alertes-eviter": [
+   "Fer oral au long cours sans vérification de la réponse",
+   "Réévaluation planifiée",
+   "Statine haute dose chez > 75 ans sans réévaluation"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "ASCORBATE FERREUX — Alertes cliniques",
+   "ATORVASTATINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : ASCORBATE FERREUX",
+   "Posologies : ATORVASTATINE"
+  ]
+ },
+ "cov_SUP_REM_02_SUP_REM_03": {
+  "alertes-eviter": [
+   "Antihypertenseurs (STOPP/FRAIL)",
+   "Inhibiteur acétylcholinestérase sans ECG de référence",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament anti-Alzheimer si démence sévère sans bénéfice observé",
+   "Réévaluation planifiée",
+   "Supplémentation calcique > 1000 mg/j"
+  ],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "CARBONATE DE CALCIUM — Alertes cliniques",
+   "DONÉPÉZIL — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CARBONATE DE CALCIUM",
+   "Posologies : DONÉPÉZIL"
+  ]
+ },
+ "cov_SUP_REM_04_SUP_REM_05": {
+  "alertes-eviter": [
+   "Antispasmodiques GI au long cours",
+   "Laxatif stimulant au long cours"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "BISACODYL — Alertes cliniques",
+   "MEBEVERINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : BISACODYL",
+   "Posologies : MEBEVERINE"
+  ]
+ },
+ "cov_SUP_REM_07_SUP_REM_08": {
+  "alertes-eviter": [
+   "Anti-vertigineux au long cours (bétahistine, méclizine)",
+   "Réévaluation planifiée",
+   "Vasodilatateurs cérébraux/périphériques (efficacité non prouvée)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "BETAHISTINE — Alertes cliniques",
+   "PENTOXIFYLLINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : BETAHISTINE",
+   "Posologies : PENTOXIFYLLINE"
+  ]
+ },
+ "cov_SUP_EU7_03_SUP_EU7_05": {
+  "alertes-eviter": [
+   "Loperamide au long cours ou à forte dose",
+   "Réévaluation planifiée",
+   "Scopolamine (antiémétique)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "LOPERAMIDE — Alertes cliniques",
+   "SCOPOLAMINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : LOPERAMIDE",
+   "Posologies : SCOPOLAMINE"
+  ]
+ },
+ "cov_SUP_EU7_06_SUP_EU7_07": {
+  "alertes-eviter": [
+   "Antacides contenant aluminium",
+   "Paraffine liquide (laxatif)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "PARAFFINE — Alertes cliniques",
+   "SUCRALFATE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : PARAFFINE",
+   "Posologies : SUCRALFATE"
+  ]
+ },
+ "cov_SUP_INT_001_SUP_INT_002": {
+  "alertes-eviter": [
+   "IEC/ARA2 + Cotrimoxazole : hyperkaliémie sévère",
+   "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
+   "Lithium + IEC/ARA2 : surveiller lithémie",
+   "Lithium sans monitorage régulier",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Phénytoïne + Cotrimoxazole : risque de toxicité",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "Co-prescription à risque : BENAZEPRIL",
+   "Co-prescription à risque : LITHIUM",
+   "Co-prescription à risque : PHENYTOINE"
+  ],
+  "alertes-suivi": [
+   "BENAZEPRIL — Alertes cliniques",
+   "COTRIMOXAZOLE — Alertes cliniques",
+   "LITHIUM — Alertes cliniques",
+   "PHENYTOINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : BENAZEPRIL",
+   "Posologies : COTRIMOXAZOLE",
+   "Posologies : LITHIUM",
+   "Posologies : PHENYTOINE"
+  ]
+ },
+ "cov_SUP_INT_003_SUP_INT_004": {
+  "alertes-eviter": [
+   "AVK + Amiodarone : surveiller INR étroitement",
+   "AVK sans surveillance INR régulière documentée",
+   "Antiarythmique classe I/III sans ECG régulier",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Réévaluation planifiée",
+   "Théophylline + Fluoroquinolones : toxicité théophylline",
+   "Théophylline chez le sujet âgé (PIM, marge thérapeutique étroite)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "CI ABSOLUE — AMIODARONE",
+   "Co-prescription à risque : CIPROFLOXACINE",
+   "Co-prescription à risque : WARFARINE"
+  ],
+  "alertes-suivi": [
+   "AMINOPHYLLINE — Alertes cliniques",
+   "AMIODARONE — Alertes cliniques",
+   "CIPROFLOXACINE — Alertes cliniques",
+   "Classification QT non consensuelle",
+   "Tableau croisé — Surveillance biologique",
+   "WARFARINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : AMINOPHYLLINE",
+   "Posologies : AMIODARONE",
+   "Posologies : CIPROFLOXACINE",
+   "Posologies : WARFARINE"
+  ]
+ },
+ "cov_SUP_INT_005_SUP_INT_006": {
+  "alertes-eviter": [
+   "Action immédiate",
+   "Alpha-1 bloquants comme antihypertenseurs",
+   "Alpha-bloquant HTA + Diurétique de l'anse (femme)",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Colchicine + Macrolide : CONTRE-INDICATION ABSOLUE",
+   "Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
+   "Diurétique sans ionogramme de surveillance",
+   "Incontinence urinaire iatrogène — revue médicamenteuse",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "CI ABSOLUE — COLCHICINE",
+   "Co-prescription à risque : CLARITHROMYCINE",
+   "Co-prescription à risque : DOXAZOSINE",
+   "Co-prescription à risque : FUROSEMIDE"
+  ],
+  "alertes-suivi": [
+   "CLARITHROMYCINE — Alertes cliniques",
+   "COLCHICINE — Alertes cliniques",
+   "DOXAZOSINE — Alertes cliniques",
+   "FUROSEMIDE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique"
+  ],
+  "alertes-usage": [
+   "Posologies : CLARITHROMYCINE",
+   "Posologies : COLCHICINE",
+   "Posologies : DOXAZOSINE",
+   "Posologies : FUROSEMIDE"
+  ]
+ },
+ "cov_SUP_INT_009_SUP_INT_010": {
+  "alertes-eviter": [
+   "AVK + Amiodarone : surveiller INR étroitement",
+   "AVK + ISRS : surveillance INR",
+   "AVK sans surveillance INR régulière documentée",
+   "Antiarythmique classe I/III sans ECG régulier",
+   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Digoxine + Amiodarone : surveiller digoxinémie",
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "CI ABSOLUE — AMIODARONE",
+   "Co-prescription à risque : CITALOPRAM",
+   "Co-prescription à risque : DIGOXINE",
+   "Co-prescription à risque : WARFARINE"
+  ],
+  "alertes-suivi": [
+   "AMIODARONE — Alertes cliniques",
+   "CITALOPRAM — Alertes cliniques",
+   "Classification QT non consensuelle",
+   "DIGOXINE — Alertes cliniques",
+   "Tableau croisé — Surveillance biologique",
+   "WARFARINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "Posologies : AMIODARONE",
+   "Posologies : CITALOPRAM",
+   "Posologies : DIGOXINE",
+   "Posologies : WARFARINE"
+  ]
  }
 }
