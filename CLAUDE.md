@@ -174,6 +174,94 @@ absent) :
 - Bumper le numéro de version (pied de page `index.html`/`index_modern.html`) et le
   `BUILD_ID` de `sw.js` dans le même commit (voir sections dédiées ci-dessous).
 
+## Panel de patients & couverture des règles (golden-master)
+
+`PANEL` (`tests_audit_extended.js`) contient **106 patients** : 25 archétypes
+écrits à la main + 81 patients de couverture nommés `cov_<ID_RÈGLE>[_<ID2>]`.
+Il alimente le golden-master (`tests_golden_master.json`) et un second audit.
+
+**Deux pièges qui ont déjà faussé une mesure — ne pas les refaire :**
+
+1. **Ne JAMAIS mesurer la couverture par les titres d'alertes.** Le moteur
+   **fusionne et réécrit** les titres au rendu (EV_D01 et EV_D02 ressortent tous
+   deux sous « Antidépresseurs tricycliques chez le sujet âgé »). Seuls les
+   **identifiants de règle** font foi ; ils survivent dans le HTML via
+   `maskGeriaAlert('id:…')`.
+2. **13 règles sont indéclenchables par construction** : `checkRuleOptimized`
+   (`geria_engine_v2.js`) rejette d'emblée `type: 'manual_review'` et
+   `type: 'duplication_check'`. Les exclure du dénominateur (247 déclenchables
+   sur 260, dont **235 couvertes = 95 %**).
+
+**Outil** — `node tools/coverage_panel.cjs` (rapport) ou `--generate` (dérive les
+patients manquants depuis les conditions déclarées par les règles : `med_keys`
+résolues par inversion exacte de `matchesDrugClass`, contextes ← cases à cocher,
+seuils bio). Chaque patient généré est **vérifié** : il ne sort que s'il
+déclenche réellement sa règle cible.
+
+**À faire après tout ajout de règles** : lancer l'outil, coller les patients
+proposés dans `PANEL`, puis `GOLDEN_UPDATE=1 node tests.js && node tests.js`.
+Relire la dérive du golden : elle doit correspondre exactement à l'intention.
+
+## Risque QT — source unique de vérité
+
+`qtRiskLevel()` (`utils.js`) est le **seul** point de lecture du risque QT.
+La base emploie plusieurs notations héritées pour une même catégorie —
+`KR`, `(RE)`, « Known Risk », « Risque Etabli » — et un `includes('(KR)')` naïf
+avait laissé **19 médicaments à risque établi invisibles** (méthadone,
+dompéridone, moxifloxacine…). Tout nouveau consommateur doit passer par cette
+fonction : 3 = établi, 2 = possible, 1 = conditionnel (CR ou SR), 0 = aucun.
+
+- `qt_cr {mecanisme, conditions[]}` : le risque **conditionnel** n'est compté que
+  si la condition propre au médicament est réunie chez le patient (`hypoK`,
+  `hypoMg`, `hypoCa`, `bradycardie`, `association_qt`, `substrat_qt_coprescrit`).
+  `surdosage` n'est pas détectable — une règle qui n'aurait QUE cette condition
+  ne se déclencherait jamais (invariant de test dédié).
+- `qt_divergence {statut, libelle, detail, source}` : trace les classifications
+  **non consensuelles** (hors listes CredibleMeds, mécanisme non-QT, preuve
+  négative). Affiché en pastille « ⚠QT? » à l'ajout du médicament et en encart
+  dans l'onglet Suivi.
+- Référence officielle : `qt_ref_crediblemeds.json` (Known + Possible).
+  L'appariement avec la base doit gérer les graphies FR/EN (`Ciprofloxacine` vs
+  `Ciprofloxacin`) — un appariement strict sautait silencieusement 17 molécules.
+
+## Application Android (APK)
+
+Coquille WebView native dans `android/`, sans Capacitor ni Cordova. Distribution
+par **Releases GitHub** (tag `v*`) ou build manuel (`workflow_dispatch`).
+Paquet : `io.github.juliennunes91.geriaassist`.
+
+- **Le SDK Android n'est pas installable dans l'environnement de développement**
+  (`dl.google.com` bloqué) : la compilation se valide **en CI**, pas en local.
+- Les assets ne sont **pas dupliqués** dans le dépôt : une tâche Gradle les copie
+  depuis la racine. Exclus de l'APK : `index_modern.html` (dépend de Tailwind CDN,
+  inutilisable hors ligne), `sw.js` (son `cache.addAll()` atomique référencerait
+  un fichier retiré), le moteur Tesseract non-SIMD, les harnais de test.
+- **Trois adaptations WebView indispensables** : les exports PDF/JSON passent par
+  un shim injecté (`html2pdf` produit un `blob:` + clic d'ancre que la WebView
+  ignore **silencieusement**) ; l'OCR exige `onShowFileChooser` ; `localStorage`
+  exige `domStorageEnabled`. Contenu servi via `WebViewAssetLoader` sur
+  `https://appassets.androidplatform.net` — **pas** en `file://`, qui interdit
+  workers et WASM.
+- **Signature** : sans le secret `KEYSTORE_BASE64`, la CI signe avec la clé debug.
+  Changer de clé ensuite impose une désinstallation/réinstallation (Android refuse
+  un changement de signature). Secrets attendus : `KEYSTORE_BASE64`,
+  `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`.
+- L'UI web détecte la coquille via l'UA (`GeriaAssistApp/`) pour masquer le bouton
+  « UI Moderne » et ne pas enregistrer le service worker.
+
+## Ergonomie mobile (UI classique)
+
+Corrections sous `@media (max-width: 576px)` dans `geria-theme.css` — le rendu
+grand écran doit rester inchangé.
+
+- **Libellés de cases à cocher** : 73 des 87 `<label class="form-check-label">`
+  n'avaient pas d'attribut `for`, donc taper le texte ne cochait rien.
+  `linkOrphanCheckboxLabels()` (`app_ui.js`) les apparie automatiquement au
+  chargement — préférer cela à l'édition de dizaines de balises.
+- **Piège Bootstrap** : `.form-check` reçoit `padding-left:1.5em` et le curseur
+  `margin-left:-2.5em` ; la classe utilitaire `p-2` écrase ce padding et fait
+  **sortir le curseur de son conteneur**. Ajouter un `padding-left` explicite.
+
 ## Service Worker
 
 À chaque ajout/renommage d'un fichier applicatif, mettre à jour :

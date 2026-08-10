@@ -22,3 +22,6 @@ android/app/build/
 android/local.properties
 *.jks
 *.keystore
+
+# Sortie de tools/coverage_panel.cjs --generate (à coller dans PANEL, non versionnée)
+tools/coverage_panel_out.js
