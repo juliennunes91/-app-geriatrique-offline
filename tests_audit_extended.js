@@ -56,7 +56,7 @@ const PANEL = {
     'LAI_depot': { age: 75, sexe: 'M', dfg: 68, flags: ['chkSchizoChronique', 'chkAntipsyLAI'], bio: { psyOnsetAge: '28' }, meds: ['Paliperidone'] },
     'sujet_jeune_psy': { age: 34, sexe: 'F', dfg: 110, meds: ['Valproate', 'Olanzapine'] },
     'osteoporose_omission': { age: 82, sexe: 'F', dfg: 60, comorbs: ['PAT_025'], meds: [] },
-    'BPCO': { age: 76, sexe: 'M', dfg: 58, comorbs: ['PAT_003'], flags: ['chkTabac'], meds: ['Tiotropium'] },
+    'BPCO': { age: 76, sexe: 'M', dfg: 58, comorbs: ['PAT_023', 'PAT_003'], flags: ['chkTabac'], meds: ['Tiotropium'] },
     'anticholinergique_charge': { age: 83, sexe: 'F', dfg: 60, meds: ['Oxybutynine', 'Amitriptyline', 'Hydroxyzine'] },
     'normal_temoin': { age: 78, sexe: 'M', dfg: 80, meds: ['Amlodipine'] },
 
@@ -305,7 +305,10 @@ function runExtendedAudits(test, assert) {
         const KNOWN = new Set(['STOPP3', 'STOPP', 'START', 'BEERS', 'FORTA', 'PRISCUS', 'EU7PIM', 'STOPPFRAIL', 'REMEDIES', 'PIM_CHECK',
             'Pharmacovigilance', 'ANSM', 'EMA', 'FDA', 'HAS', 'Maudsley', 'CANMAT', 'KDIGO', 'GOLD', 'SFGG', 'CredibleMeds',
             'ESC', 'ESC_HTN_2024', 'ESC_HF', 'ESC_AF', 'ESMO', 'ACR', 'IOF', 'ICI', 'ERC', 'ATA 2014/ETA 2013', 'ATA 2016/ETA 2018', 'ILAE 2022',
-            'SFGG_SF3PA_SFPC_2026']);
+            'SFGG_SF3PA_SFPC_2026',
+            // Ajouts 2026 : omissions iSGLT2 (IN_E05), sevrage tabagique BPCO (IN_G03),
+            // thiamine dans le trouble de l'usage de l'alcool (IN_N01).
+            'ADA', 'NICE', 'EFNS']);
         const bad = JSON.parse(vm.runInContext(`(function(){
             const out=new Set(); const scan=arr=>(arr||[]).forEach(r=>(r.sources||[]).forEach(s=>out.add(s)));
             scan(GERIA_RECOS_DB.EVITER);scan(GERIA_RECOS_DB.INITIER);scan(RECOS_SUPPLEMENT);
@@ -1034,6 +1037,11 @@ const CLES_MORTES_CONNUES = new Set([
     'sene', 'sennosides',                     // SUP_REM_04 — séné (la base ne contient que le bisacodyl)
     'ferrique',                               // SUP_REM_01 — sels ferriques (la base n'a que les ferreux)
     'phosphalugel',                           // SUP_EU7_06 — nom commercial, molécule absente
+    // IN_G03 (sevrage tabagique BPCO) : la base ne contient que le bupropion. Les
+    // substituts nicotiniques, la varenicline (recommercialisee en France en juin 2025
+    // apres reformulation) et la cytisine restent a ajouter — d'ici la, la regle ne peut
+    // pas voir qu'une aide au sevrage est deja en cours.
+    'nicotine', 'substitutnicotinique', 'varenicline', 'cytisine',
 ]);
 
 // ============================================================================

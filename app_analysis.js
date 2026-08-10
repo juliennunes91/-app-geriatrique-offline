@@ -1102,6 +1102,7 @@ function analyserPrescription() {
         activeComorbs: activeComorbs,
         bioValues: bioValues,
         patientAge: patientAge,
+        patientSexe: sexe,
         isFragile: isFragile,
         // Fragilité sévère STOPPFrail : CFS ≥ seuil (réf. CLINICAL_THRESHOLDS) ou palliatif.
         fragiliteSevere: (getVal('scoreCFS') >= ((typeof CLINICAL_THRESHOLDS !== 'undefined' && CLINICAL_THRESHOLDS.CFS_FRAGILITE_SEVERE) || 6)) || isChecked('chkPalliatif'),

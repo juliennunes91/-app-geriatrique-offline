@@ -43,6 +43,9 @@ const GERIA_RECOS_DB = {
         "ESC":       { nom: "ESC Guidelines",        annee: 2024, ref: "European Society of Cardiology Clinical Practice Guidelines" },
         "ESC_HTN":   { nom: "ESC 2024 HTN",          annee: 2024, ref: "Mancia G et al., 2024 ESC Guidelines for the management of elevated blood pressure" },
         "IDSA":      { nom: "IDSA",                  annee: 2021, ref: "Infectious Diseases Society of America Clinical Practice Guidelines" },
+        "GOLD":      { nom: "GOLD BPCO",              annee: 2026, ref: "Global Initiative for Chronic Obstructive Lung Disease, GOLD Report 2026 v1.3 (8 dec. 2025)" },
+        "NICE":      { nom: "NICE",                    annee: 2010, ref: "NICE CG100 — Alcohol-use disorders: diagnosis and management of physical complications" },
+        "EFNS":      { nom: "EFNS",                    annee: 2010, ref: "Galvin R. et al., EFNS guidelines for diagnosis, therapy and prevention of Wernicke encephalopathy, Eur J Neurol 2010" },
         "ACR":       { nom: "ACR",                   annee: 2017, ref: "American College of Rheumatology — Glucocorticoid-Induced Osteoporosis Guideline" },
         "IOF":       { nom: "IOF",                   annee: 2024, ref: "International Osteoporosis Foundation Recommendations" },
         "ICI":       { nom: "ICI",                   annee: 2017, ref: "International Continence Society / International Consultation on Incontinence" },
@@ -1121,6 +1124,21 @@ const GERIA_RECOS_DB = {
                 med_absent: ["ipp", "omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole"]
             },
             alternatives: "Ajouter un IPP systématiquement"
+        },
+        {
+            id: "EV_F08",
+            sources: ["FDA", "ANSM"],
+            ref_code: "FDA-2020-CLOZ-GI",
+            section: "Gastro",
+            titre: "Clozapine + constipation — hypomotilité gastro-intestinale",
+            message: "La clozapine déprime le péristaltisme intestinal par son effet anticholinergique : le RCP décrit un continuum allant de la constipation (TRÈS FRÉQUENT, plus d'un patient sur dix) au fécalome, à l'occlusion et à l'iléus paralytique, ce dernier étant une CONTRE-INDICATION ABSOLUE. Le point que la pratique sous-estime : l'hypomotilité digestive tue davantage que l'agranulocytose — létalité de 27,5 % dans la série de 102 cas graves de Palmer (J Clin Psychiatry 2008), alors que seule l'agranulocytose fait l'objet d'une surveillance obligatoire. Incidence des formes graves : 37 pour 10 000 patients initiés (Every-Palmer, CNS Drugs 2017, pharmacovigilance australienne et néo-zélandaise sur 22 ans). La FDA a renforcé son encadré le 28 janvier 2020 après avoir recensé des évolutions vers colite nécrosante, ischémie intestinale et volvulus.",
+            severite: "danger",
+            condition: {
+                med_keys: ["clozapine"],
+                contexte_clinique: "constipation_chronique"
+            },
+            alternatives: "NE PAS attendre la plainte spontanée : l'auto-déclaration de constipation est peu sensible, interroger activement sur la fréquence des selles. Prophylaxie laxative dès la première prescription (protocole de Porirua, Every-Palmer, CNS Drugs 2017) : docusate 100 mg + séné 17,2 mg le soir, macrogol 3350 en cas d'échec — le transit colique médian passe de 110 à 62 heures. Risque majoré par la dose et par toute co-prescription anticholinergique ou opioïde : réévaluer l'ensemble de la charge anticholinergique. Devant des douleurs abdominales, des vomissements ou un arrêt du transit : urgence chirurgicale, arrêt de la clozapine.",
+            recontexte_psy: false
         },
         {
             id: "EV_F07",
@@ -3213,6 +3231,53 @@ const GERIA_RECOS_DB = {
                 med_absent: ["aspirine", "clopidogrel", "ticagrelor", "prasugrel"]
             },
             alternatives: "Aspirine 75-100 mg/j + statine haute intensité (atorvastatine 40-80 mg)"
+        },
+        {
+            id: "IN_E05",
+            sources: ["KDIGO", "ADA"],
+            ref_code: "KDIGO24-SGLT2",
+            section: "Rénal",
+            titre: "Inhibiteur SGLT2 pour néphroprotection dans la MRC",
+            message: "Inhibiteur SGLT2 (dapagliflozine, empagliflozine) chez l'adulte avec maladie rénale chronique et DFG ≥ 20 mL/min/1,73 m² — recommandation KDIGO 2024 de grade 1A. Le bénéfice rénal est établi AVEC ou SANS diabète (EMPA-KIDNEY comptait plus de 50 % de non-diabétiques). Réduction de la progression de la MRC : DAPA-CKD HR 0,61 (0,51-0,72) ; EMPA-KIDNEY HR 0,72 (0,64-0,82) ; CREDENCE HR 0,70 (0,59-0,82). Une fois initié, POURSUIVRE même si le DFG descend sous 20 ; la baisse initiale réversible du DFG n'est pas un motif d'arrêt.",
+            severite: "warning",
+            condition: {
+                bio_strict: true,
+                comorbs: ["PAT_029"],
+                bio: { "BIO_004": { op: ">=", val: 20 } },
+                // Graphies de MASTER_DB : la base porte les DCI sans « e » final
+                // (Dapagliflozin, Empagliflozin…), comme la regle des piliers de l'IC.
+                med_absent: ["isglt2", "sglt2", "dapagliflozin", "empagliflozin", "canagliflozin", "ertugliflozin"]
+            },
+            alternatives: "Dapagliflozine 10 mg/j ou empagliflozine 10 mg/j. Chez le sujet âgé, aucune limite d'âge supérieure n'existe dans KDIGO 2024 ni dans l'ADA 2026, mais deux vigilances : ACIDOCÉTOSE, y compris euglycémique, dont le sur-risque est significatif au-delà de 70 ans (IRR 3,82 [1,12-13,03] vs iDPP4, Diabetologia 2024) — suspendre en cas de jeûne, de chirurgie ou d'infection aiguë ; DÉPLÉTION VOLÉMIQUE en association à un diurétique — réévaluer la dose du diurétique à l'initiation. Le risque d'infection génitale est doublé, à tout âge."
+        },
+        {
+            id: "IN_G03",
+            sources: ["GOLD"],
+            ref_code: "GOLD26-TABAC",
+            section: "Respiratoire",
+            titre: "Aide au sevrage tabagique chez le fumeur actif BPCO",
+            message: "GOLD 2026 place le sevrage tabagique parmi les interventions les plus efficaces pour freiner la progression de la BPCO, réduire les symptômes et prolonger la survie — et en fait un PRÉREQUIS avant de considérer un patient comme pharmacologiquement optimisé. Un fumeur actif BPCO sans aide au sevrage représente donc une omission thérapeutique, quel que soit son âge. L'association d'une pharmacothérapie et d'un accompagnement comportemental augmente significativement les taux de succès.",
+            severite: "warning",
+            condition: {
+                comorbs: ["PAT_023"],
+                contexte_clinique: "tabac",
+                med_absent: ["nicotine", "substitutnicotinique", "varenicline", "bupropion", "cytisine"]
+            },
+            alternatives: "Substitution nicotinique en première intention, en associant un patch de longue durée à une forme orale rapide (l'une des deux stratégies les plus efficaces, GOLD 2026 / OMS 2024). La varénicline est de nouveau commercialisée en France depuis juin 2025 après reformulation. Le bupropion est utilisable mais moins efficace : chez le sujet âgé, 150 mg une fois par jour, à réduire encore si DFG < 90, et à éviter en cas d'antécédent comitial ou de traumatisme crânien (risque convulsif dose-dépendant). Les cigarettes électroniques ne sont PAS recommandées par GOLD 2026."
+        },
+        {
+            id: "IN_N01",
+            sources: ["NICE", "EFNS"],
+            ref_code: "NICE-CG100-B1",
+            section: "Neurologique",
+            titre: "Thiamine (vitamine B1) en cas de trouble de l'usage de l'alcool",
+            message: "Prophylaxie de l'encéphalopathie de Gayet-Wernicke. NICE CG100 : proposer une thiamine parentérale, 200 à 300 mg/j, puis un relais oral, à tout buveur nocif ou dépendant qui est dénutri, à risque de dénutrition, ou porteur d'une hépatopathie décompensée. La carence est fréquente et l'encéphalopathie souvent méconnue chez le sujet âgé, où la confusion est volontiers attribuée à tort à une démence.",
+            severite: "danger",
+            condition: {
+                contexte_clinique: "alcool",
+                med_absent: ["thiamine", "vitamine b1"]
+            },
+            alternatives: "Prophylaxie : thiamine 200-300 mg/j IM ou IV pendant 3 à 5 jours, puis relais oral (NICE CG100). Encéphalopathie de Wernicke suspectée ou constituée : 200 mg trois fois par jour, de préférence par voie INTRAVEINEUSE (EFNS 2010, niveau C), poursuivis tant que l'amélioration se maintient. RÈGLE ABSOLUE : administrer la thiamine AVANT tout apport glucosé — une perfusion de sérum glucosé mobilise les réserves de thiamine pour le métabolisme glucidique et peut déclencher le syndrome de Wernicke-Korsakoff."
         }
     ]
 };
