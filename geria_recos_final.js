@@ -2116,6 +2116,20 @@ const GERIA_RECOS_DB = {
             alternatives: "Revue ACB : swap oxybutynine → mirabégron, amitriptyline → duloxétine (douleur neuropathique), hydroxyzine → mélatonine LP, paroxétine → sertraline. Réorientation, lumière diurne, hydratation. ÉVITER antipsychotiques (sauf agitation sévère : halopéridol 0.25-0.5 mg, courte durée)."
         },
         {
+            id: "EV_SYND_047b",
+            sources: ["BEERS", "STOPP3", "FORTA"],
+            ref_code: "SYND-047b-DELIRIUM",
+            section: "Risque cognitif",
+            titre: "Risque de délirium — anticholinergique fort chez le sujet âgé",
+            message: "SYND_047b : au moins un médicament à charge anticholinergique FORTE (ACB 3 — oxybutynine, amitriptyline, hydroxyzine, doxépine, chlorpromazine, paroxétine) chez un patient de 75 ans ou plus, indépendamment du score cumulé. Inouye NEJM 2014 : OR 2-3 de délirium iatrogène. Rechercher CAM (Confusion Assessment Method), PRISME (Pain / Rétention / Infection / Stool / Médicaments / Environnement). Les formes inhalées et topiques sont exclues (passage systémique négligeable).",
+            severite: "warning",
+            condition: {
+                acb_fort_min: 1,
+                age_min: 75
+            },
+            alternatives: "Substituer par une molécule sans effet anticholinergique : oxybutynine → mirabégron ou rééducation périnéale ; amitriptyline → ISRS non paroxétine ou duloxétine ; hydroxyzine → arrêt (pas d'anxiolytique anticholinergique chez l'âgé) ; chlorpromazine → antipsychotique de 2e génération à faible ACB."
+        },
+        {
             id: "EV_SYND_048",
             sources: ["ESMO", "BEERS", "STOPP3"],
             ref_code: "SYND-048-CONSTIPATION",
@@ -2166,8 +2180,8 @@ const GERIA_RECOS_DB = {
             sources: ["CredibleMeds", "BEERS", "ESC"],
             ref_code: "SYND-051-QT",
             section: "Risque rythmique",
-            titre: "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
-            message: "SYND_051 : Association ≥ 2 médicaments QT-allongeants ± hypokaliémie/hypomagnésémie/bradycardie = risque de torsades de pointes. CredibleMeds Known Risk : citalopram > 20, halopéridol, dompéridone, ondansétron, méthadone, sotalol, amiodarone, moxifloxacine, érythromycine/clarithromycine, fluconazole. Risque conditionnel (CR) : quétiapine (torsades surtout si surdosage, hypokaliémie ou LQTS congénital). ECG obligatoire avant, à J7 puis si modif.",
+            titre: "Médicament à risque QT établi — ECG, kaliémie et magnésémie",
+            message: "SYND_051 : Au moins un médicament à risque QT ÉTABLI (CredibleMeds Known Risk) est présent ; le risque de torsades croît avec le NOMBRE de molécules associées et avec l'hypokaliémie, l'hypomagnésémie ou la bradycardie. Vérifier la charge QT globale de l'ordonnance. Association ≥ 2 médicaments QT-allongeants ± hypokaliémie/hypomagnésémie/bradycardie = risque de torsades de pointes. CredibleMeds Known Risk : citalopram > 20, halopéridol, dompéridone, ondansétron, méthadone, sotalol, amiodarone, moxifloxacine, érythromycine/clarithromycine, fluconazole. Risque conditionnel (CR) : quétiapine (torsades surtout si surdosage, hypokaliémie ou LQTS congénital). ECG obligatoire avant, à J7 puis si modif.",
             severite: "warning",
             condition: {
                 qt_check: true,

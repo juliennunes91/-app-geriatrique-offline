@@ -397,6 +397,19 @@ const GeriaEngineV2 = (() => {
             if (acbMedCount < 2) return false;
         }
         if (c.acb_check && !(ctx.activeMeds && ctx.activeMeds.some(m => m.db_ref && parseFloat(m.db_ref.acb) >= 2))) return false;
+        // acb_fort_min : nombre de médicaments à charge anticholinergique FORTE (ACB 3),
+        // indépendamment du cumul. Complète `acb_cumul`, dont le garde-fou « au moins 2
+        // médicaments ACB ≥ 2 » rendait inatteignable le critère « ≥ 1 anticholinergique
+        // fort chez ≥ 75 ans » que la règle annonçait pourtant dans son message.
+        // Les formes INHALÉES et TOPIQUES sont exclues : le tiotropium porte un ACB élevé
+        // en base, mais son passage systémique ne justifie pas une alerte de délirium.
+        if (c.acb_fort_min) {
+            const forts = (ctx.activeMeds || []).filter(m => {
+                if (!m.db_ref || parseFloat(m.db_ref.acb) < 3) return false;
+                return !/inhal|topique|cutan|ophtalm|nasal|collyre/i.test(m.db_ref.classe || '');
+            }).length;
+            if (forts < c.acb_fort_min) return false;
+        }
         // qt_check : exige au moins un médicament à risque QT ÉTABLI. Passe par
         // l'utilitaire partagé qtRiskLevel (utils.js) qui reconnaît toutes les
         // notations de la base (KR / RE / « Known Risk » / « Risque Etabli »).

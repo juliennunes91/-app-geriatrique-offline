@@ -23,6 +23,7 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "Polypharmacie sans réévaluation (REMEDIES)",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé",
    "Réévaluation annuelle de chaque traitement chronique",
    "Sulfamide à longue demi-vie (glibenclamide, chlorpropamide, glimépiride)",
    "Tricyclique (TCA) en 1ère ligne pour dépression"
@@ -77,8 +78,8 @@
    "Antipsychotique au long cours : surveillance métabolique",
    "Antipsychotique chez patient chuteur",
    "Cascades iatrogéniques détectées",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
-   "Flupentixol, fluphénazine, halopéridol > 2 mg/j"
+   "Flupentixol, fluphénazine, halopéridol > 2 mg/j",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [
    "Antiagrégant / statine pour syndrome coronarien",
@@ -343,7 +344,8 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "OXYBUTYNINE — CI Syndrome Démentiel (Générique)",
    "Oxybutynine (toutes formes)",
-   "RISPERIDONE — Prudence Syndrome Démentiel (Générique)"
+   "RISPERIDONE — Prudence Syndrome Démentiel (Générique)",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -365,10 +367,10 @@
    "Action immédiate",
    "Antipsychotique (sauf clozapine, quétiapine) + Parkinson / Démence à corps de Lewy",
    "Antipsychotique chez patient dément — durée et réévaluation",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "Flupentixol, fluphénazine, halopéridol > 2 mg/j",
    "HALOPERIDOL — CI Démence à Corps de Lewy (DCL)",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [
    "Rivastigmine pour démence à corps de Lewy / Parkinson avec démence",
@@ -417,10 +419,10 @@
   "alertes-eviter": [
    "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "Flupentixol, fluphénazine, halopéridol > 2 mg/j",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "Médicament allongeant le QTc + QTc déjà prolongé",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
   ],
   "alertes-initier": [],
@@ -603,6 +605,7 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "Oxybutynine (toutes formes)",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé",
    "Risque de délirium — charge anticholinergique élevée (ACB ≥ 3)"
   ],
   "alertes-initier": [],
@@ -689,7 +692,7 @@
   "alertes-eviter": [
    "Amiodarone en 1ère intention (TSV)",
    "Antiarythmique classe I/III sans ECG régulier",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "Réévaluation planifiée"
   ],
   "alertes-initier": [
@@ -899,10 +902,10 @@
   "alertes-eviter": [
    "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "Flécaïnide / Propafénone + cardiopathie structurelle",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Médicament allongeant le QT + QT long congénital"
+   "Médicament allongeant le QT + QT long congénital",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [
    "Action immédiate",
@@ -1054,9 +1057,9 @@
    "AVK sans surveillance INR régulière documentée",
    "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "Doublon thérapeutique — Anticoagulants curatifs",
-   "Ginkgo biloba + anticoagulant ou antiagrégant : risque hémorragique"
+   "Ginkgo biloba + anticoagulant ou antiagrégant : risque hémorragique",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1104,7 +1107,8 @@
    "Antidépresseurs tricycliques chez le sujet âgé",
    "IRSN + HTA sévère",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
    "Antihypertenseur si PAS > 140 (ou > 150 si fragile)",
@@ -1129,11 +1133,12 @@
   "alertes-eviter": [
    "Action immédiate",
    "Antipsychotique anticholinergique + HBP symptomatique",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "ISRS + Hyponatrémie actuelle ou récente (Na+ < 130)",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "Phénothiazine en 1ère intention (psychose/SCPD)",
-   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
    "Alpha-1 bloquant sélectif pour HBP symptomatique"
@@ -1255,7 +1260,8 @@
    "Cascades iatrogéniques détectées",
    "Lévodopa/agoniste dopaminergique pour tremblement essentiel bénin",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Phénothiazine en 1ère intention (psychose/SCPD)"
+   "Phénothiazine en 1ère intention (psychose/SCPD)",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1278,7 +1284,8 @@
    "Antihistaminique H1 1ère génération en 1ère intention (allergie/prurit)",
    "Antihistaminique H1 1ère génération pour insomnie",
    "HYDROXYZINE — Déconseillé Insomnie",
-   "Méprobamate, barbituriques"
+   "Méprobamate, barbituriques",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1318,7 +1325,8 @@
   "alertes-eviter": [
    "Action immédiate",
    "Antidépresseurs tricycliques chez le sujet âgé",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1728,7 +1736,8 @@
    "Opioïde au long cours pour arthrose",
    "Opioïde fort en 1ère intention pour douleur légère",
    "Opioïde quotidien régulier sans laxatif co-prescrit",
-   "Opioïdes : BUPRENORPHINE"
+   "Opioïdes : BUPRENORPHINE",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
    "Laxatif systématique avec opioïde quotidien",
@@ -1754,7 +1763,8 @@
    "Antimuscarinique systémique + Constipation",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "OXYBUTYNINE — Déconseillé Hypotension Orthostatique",
-   "Oxybutynine (toutes formes)"
+   "Oxybutynine (toutes formes)",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
    "Laxatif osmotique pour constipation chronique bénigne"
@@ -1926,6 +1936,7 @@
    "Antihistaminique H1 1ère gén. chez patient chuteur",
    "Antihistaminique H1 1ère génération en 1ère intention (allergie/prurit)",
    "Antiépileptique chez patient chuteur",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé",
    "Risque de délirium — charge anticholinergique élevée (ACB ≥ 3)"
   ],
   "alertes-initier": [
@@ -1979,7 +1990,8 @@
    "Alpha-bloquant prostatique (sauf silodosine) chez patient chuteur",
    "Antimuscarinique pour vessie hyperactive chez patient chuteur",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Oxybutynine (toutes formes)"
+   "Oxybutynine (toutes formes)",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
    "Réévaluation planifiée",
@@ -2066,9 +2078,9 @@
   "alertes-eviter": [
    "Action immédiate",
    "CI ABSOLUE : Linézolide + ISRS/IRSN/Tramadol/IMAO",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "Constipation opioïde / anticholinergique — prophylaxie laxative requise",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "Opioïde quotidien régulier sans laxatif co-prescrit",
    "Opioïdes : TRAMADOL",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
@@ -2381,6 +2393,7 @@
   "alertes-eviter": [
    "Action immédiate",
    "Loperamide au long cours ou à forte dose",
+   "Risque de délirium — anticholinergique fort chez le sujet âgé",
    "Scopolamine (antiémétique)"
   ],
   "alertes-initier": [],
@@ -2452,7 +2465,7 @@
    "AVK sans surveillance INR régulière documentée",
    "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "Théophylline + Fluoroquinolones : toxicité théophylline",
    "Théophylline chez le sujet âgé (PIM, marge thérapeutique étroite)"
   ],
@@ -2483,12 +2496,12 @@
    "Action immédiate",
    "Alpha-1 bloquants comme antihypertenseurs",
    "Alpha-bloquant HTA + Diurétique de l'anse (femme)",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "Colchicine + Macrolide : CONTRE-INDICATION ABSOLUE",
    "Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "Diurétique sans ionogramme de surveillance",
    "Incontinence urinaire iatrogène — revue médicamenteuse",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -2519,9 +2532,9 @@
    "AVK sans surveillance INR régulière documentée",
    "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
-   "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "Digoxine + Amiodarone : surveiller digoxinémie",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
