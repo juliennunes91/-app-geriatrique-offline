@@ -4426,7 +4426,13 @@ const RECOS_SUPPLEMENT = [
         severite: "warning",
         condition: {
             med_keys: ["antipsychotique"],
-            contexte_clinique_any: ["psychiatrie_primaire_chronique", "psychose_chronique"]
+            // `psychiatrie_debut_tardif` AJOUTE : la rigueur de chronicite (psyOnsetAge >= 65)
+            // sert a ne pas deprescrire un traitement de fond ancien — elle n'a aucune raison
+            // d'eteindre le DEPISTAGE de la dyskinesie tardive, dont l'age avance est
+            // precisement un facteur de risque majeur. Une psychose d'apparition tardive
+            // (VLOSLP) sous antipsychotique doit etre depistee comme les autres.
+            contexte_clinique_any: ["psychiatrie_primaire_chronique", "psychose_chronique",
+                "psychiatrie_debut_tardif"]
         },
         alternatives: "Si dyskinésie tardive : réduire la dose si possible, envisager un switch vers la clozapine (moins dyskinétique), discuter valbénazine/déutétrabénazine. Ne pas augmenter l'antipsychotique pour masquer les mouvements."
     },

@@ -186,6 +186,7 @@
   "alertes-eviter": [
    "Action immédiate",
    "Antipsychotique au long cours + maladie vasculaire connue",
+   "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
    "Antipsychotique chez patient chuteur",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
   ],
@@ -341,6 +342,7 @@
    "Anticholinergique puissant + Démence ou Delirium",
    "Antimuscarinique systémique + Démence",
    "Antipsychotique chez patient dément — durée et réévaluation",
+   "Cascades iatrogéniques détectées",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "OXYBUTYNINE — CI Syndrome Démentiel (Générique)",
    "Oxybutynine (toutes formes)",
