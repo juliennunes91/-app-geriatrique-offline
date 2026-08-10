@@ -965,6 +965,23 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'] }), reTvp), 'AOD seul (FA) → non');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'], flags: ['chkTvp'] }), reTvp), 'AOD + MTEV → oui');
     });
+    test('IN_E03 : le garde-fou med_absent voit un patient déjà sous ASE', () => {
+        // Avant l'ajout des ASE en base, les 3 clés `med_absent` d'IN_E03 ne résolvaient
+        // AUCUN médicament : la règle proposait d'initier un agent stimulant
+        // l'érythropoïèse chez un patient qui en recevait déjà.
+        // On interroge l'onglet OMISSIONS uniquement : le libelle de classe des ASE
+        // contient lui-meme « agent stimulant l'erythropoiese » et serait capte par une
+        // recherche sur toute la sortie (la carte de posologie du medicament).
+        const propose = c => ((analyzeCase(c)['alertes-initier'] || [])
+            .some(a => /Agent stimulant l(&#39;|')?.{0,2}érythropo/i.test(a.titre || '')));
+        const socle = { age: 82, sexe: 'F', comorbs: ['PAT_029'], bio: { patientDFG: 27, bioHb: 9 } };
+        assert.ok(propose({ ...socle, meds: [] }), 'MRC sévère + Hb 9 sans ASE → proposition');
+        ['Epoetine alfa', 'Epoetine beta', 'Epoetine zeta', 'Darbepoetine alfa',
+         'Methoxy-polyethyleneglycol-epoetine beta'].forEach(m => {
+            assert.ok(!propose({ ...socle, meds: [m] }),
+                'déjà sous ' + m + ' → aucune proposition');
+        });
+    });
     test('Bithérapie aspirine+clopidogrel : clé réparée (med_keys_2)', () => {
         const re = /Aspirine \+ clopidogrel au long cours/i;
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Aspirine'] }), re), 'aspirine seule → non');

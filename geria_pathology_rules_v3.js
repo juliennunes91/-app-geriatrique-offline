@@ -2530,6 +2530,17 @@ const PATHOLOGY_RULES_DB = {
                     classe: "Statine",
                     indication: "Prévention CV dans MRC non dialysé (KDIGO : ne pas initier si dialysé)",
                     niveau_preuve: "IA"
+                },
+                {
+                    classe: "ASE (agent stimulant l'érythropoïèse)",
+                    indication: "Anémie de la MRC, APRÈS correction de toute cause réversible — carence martiale d'abord (KDIGO 2026). Initiation en G5D quand Hb ≤ 9-10 g/dL ; en MRC non dialysée, pas de seuil fixe : décision partagée, en pratique Hb 8,5-10 g/dL.",
+                    note: "La CIBLE est le paramètre de sécurité, pas la molécule : viser Hb < 11,5 g/dL (KDIGO 2026, grade 1D). Ne jamais chercher à normaliser l'hémoglobine — c'est la cible haute qui expose (TREAT : AVC HR 1,92 [1,38-2,68] ; CHOIR : composite CV HR 1,34 [1,03-1,74]). Corriger la carence martiale AVANT : fer si ferritine < 100 ng/mL et TSAT < 40 %, ou ferritine 100-300 ng/mL et TSAT < 25 % (MRC non dialysée) ; ne pas supplémenter si ferritine > 700 ng/mL ou TSAT ≥ 40 %. HTA non contrôlée = contre-indication. Antécédent de néoplasie : rediscuter l'indication (TREAT, décès par cancer 14/188 vs 1/160, p = 0,002).",
+                    bio_suivi: [
+                        "BIO_009",
+                        "BIO_020",
+                        "BIO_010"
+                    ],
+                    niveau_preuve: "1D pour la cible (KDIGO 2026) ; 2D pour l'initiation en MRC non dialysée (KDIGO 2012)"
                 }
             ],
             NEPHROTOXIN_STEWARDSHIP: {

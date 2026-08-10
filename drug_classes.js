@@ -116,6 +116,21 @@ const DRUG_CLASSES = {
         classeMatch: ['alphabloquant'],
         dcis: ['alfuzosine', 'doxazosine', 'prazosine', 'silodosine', 'tamsulosine', 'terazosine', 'urapidil']
     },
+    ase: {
+        // Agents stimulant l'erythropoiese. Classe indispensable : IN_E03 (START v3 E3)
+        // porte `med_absent: ["epoetine","darbepoetine","erythropoietine"]` — sans ces
+        // molecules en base, le garde-fou ne voyait pas un patient DEJA sous ASE et la
+        // regle proposait de l'initier.
+        // Alias 'ase' VOLONTAIREMENT ABSENT : 3 caracteres, il entrait en collision avec
+        // l'ASEnapine (antipsychotique) via le repli permissif — meme famille de bug que
+        // 'beta' dans betahistine. La classe se reconnait par sa liste de DCI et par un
+        // classeMatch long et sans ambiguite.
+        aliases: ['epoetine', 'darbepoetine', 'erythropoietine', 'erythropoietinerecombinante',
+            'agentstimulantlerythropoiese', 'agentsstimulantlerythropoiese'],
+        classeMatch: ['agentstimulantlerythropoiese'],
+        dcis: ['epoetinealfa', 'epoetinebeta', 'epoetinezeta', 'darbepoetinealfa',
+            'methoxypolyethyleneglycolepoetinebeta']
+    },
     barbiturique: {
         // Clé employée par EV_BEERS_01 (« Méprobamate, barbituriques ») — jamais résolue,
         // donc le phénobarbital n'était pas signalé comme PIM par cette règle.

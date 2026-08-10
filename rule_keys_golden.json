@@ -605,7 +605,13 @@
  "dapagliflozin": [
   "Dapagliflozin"
  ],
- "darbepoetine": [],
+ "darbepoetine": [
+  "Darbepoetine alfa",
+  "Epoetine alfa",
+  "Epoetine beta",
+  "Epoetine zeta",
+  "Methoxy-polyethyleneglycol-epoetine beta"
+ ],
  "darifenacine": [
   "Darifenacin"
  ],
@@ -704,14 +710,26 @@
  "eplerenone": [
   "Eplerenone"
  ],
- "epoetine": [],
+ "epoetine": [
+  "Darbepoetine alfa",
+  "Epoetine alfa",
+  "Epoetine beta",
+  "Epoetine zeta",
+  "Methoxy-polyethyleneglycol-epoetine beta"
+ ],
  "ertugliflozin": [
   "Ertugliflozin"
  ],
  "erythromycine": [
   "Erythromycine"
  ],
- "erythropoietine": [],
+ "erythropoietine": [
+  "Darbepoetine alfa",
+  "Epoetine alfa",
+  "Epoetine beta",
+  "Epoetine zeta",
+  "Methoxy-polyethyleneglycol-epoetine beta"
+ ],
  "escitalopram": [
   "Escitalopram"
  ],

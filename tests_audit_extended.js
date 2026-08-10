@@ -1034,11 +1034,6 @@ const CLES_MORTES_CONNUES = new Set([
     'sene', 'sennosides',                     // SUP_REM_04 — séné (la base ne contient que le bisacodyl)
     'ferrique',                               // SUP_REM_01 — sels ferriques (la base n'a que les ferreux)
     'phosphalugel',                           // SUP_EU7_06 — nom commercial, molécule absente
-    // ⚠ IN_E03 (érythropoïèse pour anémie de la MRC) est la SEULE règle dont TOUTES
-    // les clés `med_absent` sont mortes : les ASE ne figurent pas dans MASTER_DB, donc
-    // le garde-fou ne peut pas voir un patient DÉJÀ sous ASE et la règle propose de
-    // l'initier. À corriger en ajoutant les molécules, pas en retirant les clés.
-    'epoetine', 'darbepoetine', 'erythropoietine',
 ]);
 
 // ============================================================================
