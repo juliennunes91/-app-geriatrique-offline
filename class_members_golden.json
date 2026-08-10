@@ -132,6 +132,27 @@
  "paracetamol": [
   "Paracetamol"
  ],
+ "alpha_bloquant": [
+  "Alfuzosine",
+  "Doxazosine",
+  "Prazosine",
+  "Silodosine",
+  "Tamsulosine",
+  "Terazosine",
+  "Urapidil"
+ ],
+ "barbiturique": [
+  "Phenobarbital",
+  "Primidone"
+ ],
+ "cotrimoxazole": [
+  "Cotrimoxazole"
+ ],
+ "antithyroidien": [
+  "Carbimazole",
+  "Propylthiouracile",
+  "Thiamazole"
+ ],
  "antipsychotique": [
   "Amisulpride",
   "Aripiprazole",
@@ -466,12 +487,9 @@
   "Verapamil"
  ],
  "hormone_thyroidienne": [
-  "Carbimazole",
   "Levothyroxine",
   "Liothyronine",
-  "Liotrix",
-  "Propylthiouracile",
-  "Thiamazole"
+  "Liotrix"
  ],
  "fibrate": [
   "Bezafibrate",

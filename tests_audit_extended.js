@@ -657,6 +657,9 @@ function runCollisionAudit(test, assert) {
     // Signature = cléNormalisée::dciNormalisée. Toute collision hors liste = régression.
     const ALLOWLIST = new Set([
         'aprepitant::fosaprepitant', 'fosaprepitant::aprepitant',        // prodrogue ↔ actif
+        // Association fixe : l'ARNI CONTIENT du valsartan — une règle visant les ARA2
+        // doit bien s'appliquer à l'Entresto.
+        'valsartan::sacubitrilvalsartan',
         'brompheniramine::pheniramine', 'chlorpheniramine::pheniramine',
         'chlorpheniramine::dexchlorpheniramine', 'dexchlorpheniramine::chlorpheniramine',
         'dexchlorpheniramine::pheniramine',                              // antihistaminiques -phéniramine
@@ -1008,23 +1011,34 @@ const CLES_MORTES_CONNUES = new Set([
     'ketoprofenegel', 'ibuprofenetopique',    // SUP_CAUT_073  → formes topiques non distinguées
 
     // ------------------------------------------------------------------------
-    // À TRIER — clés mortes révélées par cet audit à sa première exécution.
-    // Elles ne sont PAS validées : elles sont consignées pour que le test reste
-    // vert sur l'existant et échoue sur toute NOUVELLE clé morte. Trois familles :
-    //   (a) molécule absente de MASTER_DB → l'ajouter, ou retirer la clé ;
-    //   (b) alias/abréviation jamais résolue (bzd, lt4, agonisteda, alphabloquant,
-    //       barbiturique, acidevalproique…) → la déclarer dans drug_classes.js ;
-    //   (c) nom commercial employé comme clé (euthyrox, levothyrox, thyrosit,
-    //       thyrozol, neomercazole, phosphalugel) → passer à la DCI.
-    // Chaque entrée retirée d'ici doit l'être en corrigeant la règle, pas le test.
-    'acidevalproique', 'agonisteda', 'alphabloquant', 'avanafil', 'barbiturique',
-    'brivaracetam', 'bzd', 'chlorpropamide', 'darbepoetine', 'epoetine',
-    'erythropoietine', 'eszopiclone', 'euthyrox', 'ferrique', 'folinate', 'folinique',
-    'guanfacine', 'josamycine', 'levothyrox', 'lt4', 'lthyroxine', 'methylnaltrexone',
-    'mometasone', 'naloxegol', 'naloxone', 'neomercazole', 'olodaterol', 'perampanel',
-    'phosphalugel', 'pramiracetam', 'procyclidine', 'quinine', 'rifaximine',
-    'rosiglitazone', 'sacubitril', 'sene', 'sennosides', 'sorbitol', 'sulfamethoxazole',
-    'temazepam', 'tertatolol', 'thyrosit', 'thyrozol', 'vardenafil',
+    // MOLÉCULES ABSENTES DE MASTER_DB — la clé est CORRECTE, c'est la base qui est
+    // incomplète. Elles restent inertes tant que la molécule n'est pas saisie ; si
+    // l'utilisateur la tape en texte libre, le repli `dci.includes(key)` la reconnaît.
+    // Les ajouter suppose la procédure complète de CLAUDE.md (§ « Ajout d'un
+    // médicament ») : entrée MASTER_DB exhaustive, classe, interactions, surveillance.
+    // Ne PAS les retirer d'ici sans avoir ajouté la molécule pour de bon.
+    'avanafil', 'vardenafil',                 // EV_B14 — IPDE5 (sildénafil/tadalafil en base)
+    'brivaracetam', 'perampanel',             // IN_J04 — antiépileptiques récents
+    'rosiglitazone',                          // EV_J02 — retirée du marché UE en 2010
+    'eszopiclone', 'temazepam',               // EV_SYND_044 / EV_D08 — non commercialisés en France
+    'chlorpropamide',                         // EV_J01 — sulfamide non commercialisé en France
+    'guanfacine', 'tertatolol',               // EV_B11 / EV_J03
+    'josamycine',                             // SUP_INT_006 — macrolide
+    'procyclidine', 'pramiracetam',           // EV_D13 / EV_D20
+    'methylnaltrexone', 'naloxegol', 'naloxone', // EV_SYND_048 / EV_L02 — antagonistes opioïdes
+    'rifaximine',                             // IN_M02
+    'olodaterol', 'mometasone',               // IN_G01 / IN_G02 — inhalés
+    'quinine',                                // EV_C14 (la base ne contient que la quinidine)
+    'sorbitol',                               // IN_F05
+    'folinique', 'folinate',                  // IN_H09 / SUP_PIMC_04 — acide folinique
+    'sene', 'sennosides',                     // SUP_REM_04 — séné (la base ne contient que le bisacodyl)
+    'ferrique',                               // SUP_REM_01 — sels ferriques (la base n'a que les ferreux)
+    'phosphalugel',                           // SUP_EU7_06 — nom commercial, molécule absente
+    // ⚠ IN_E03 (érythropoïèse pour anémie de la MRC) est la SEULE règle dont TOUTES
+    // les clés `med_absent` sont mortes : les ASE ne figurent pas dans MASTER_DB, donc
+    // le garde-fou ne peut pas voir un patient DÉJÀ sous ASE et la règle propose de
+    // l'initier. À corriger en ajoutant les molécules, pas en retirant les clés.
+    'epoetine', 'darbepoetine', 'erythropoietine',
 ]);
 
 // ============================================================================

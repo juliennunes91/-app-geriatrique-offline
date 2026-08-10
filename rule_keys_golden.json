@@ -8,7 +8,11 @@
  "acidefolique": [
   "Acide folique"
  ],
- "acidevalproique": [],
+ "acidevalproique": [
+  "Divalproate de sodium",
+  "Valproate",
+  "Valpromide"
+ ],
  "acidezoledronique": [
   "Acide zoledronique"
  ],
@@ -18,7 +22,16 @@
  "agomelatine": [
   "Agomelatine"
  ],
- "agonisteda": [],
+ "agonisteda": [
+  "Amantadine",
+  "Bromocriptine",
+  "Levodopa",
+  "Pimavansérine",
+  "Piribedil",
+  "Pramipexole",
+  "Ropinirole",
+  "Rotigotine"
+ ],
  "ains": [
   "Aceclofenac",
   "Acide tiaprofenique",
@@ -55,7 +68,15 @@
   "Allopurinol",
   "Febuxostat"
  ],
- "alphabloquant": [],
+ "alphabloquant": [
+  "Alfuzosine",
+  "Doxazosine",
+  "Prazosine",
+  "Silodosine",
+  "Tamsulosine",
+  "Terazosine",
+  "Urapidil"
+ ],
  "alprazolam": [
   "Alprazolam"
  ],
@@ -337,7 +358,10 @@
  "baclofene": [
   "Baclofene"
  ],
- "barbiturique": [],
+ "barbiturique": [
+  "Phenobarbital",
+  "Primidone"
+ ],
  "beclometasone": [
   "Beclometasone"
  ],
@@ -418,7 +442,28 @@
  "buspirone": [
   "Buspirone"
  ],
- "bzd": [],
+ "bzd": [
+  "Alprazolam",
+  "Bromazepam",
+  "Chlordiazepoxide",
+  "Clobazam",
+  "Clonazepam",
+  "Clorazepate",
+  "Clotiazepam",
+  "Diazepam",
+  "Estazolam",
+  "Loprazolam",
+  "Lorazepam",
+  "Lormetazepam",
+  "Midazolam",
+  "Nitrazepam",
+  "Nordazepam",
+  "Oxazepam",
+  "Prazepam",
+  "Zaleplon",
+  "Zolpidem",
+  "Zopiclone"
+ ],
  "calcifediol": [
   "Calcifediol"
  ],
@@ -452,9 +497,7 @@
   "Carbamazepine"
  ],
  "carbimazole": [
-  "Carbimazole",
-  "Propylthiouracile",
-  "Thiamazole"
+  "Carbimazole"
  ],
  "carbinoxamine": [
   "Carbinoxamine"
@@ -679,7 +722,11 @@
  "etoricoxib": [
   "Etoricoxib"
  ],
- "euthyrox": [],
+ "euthyrox": [
+  "Levothyroxine",
+  "Liothyronine",
+  "Liotrix"
+ ],
  "febuxostat": [
   "Febuxostat"
  ],
@@ -975,9 +1022,15 @@
  "levomepromazine": [
   "Levomepromazine"
  ],
- "levothyrox": [],
+ "levothyrox": [
+  "Levothyroxine",
+  "Liothyronine",
+  "Liotrix"
+ ],
  "levothyroxine": [
-  "Levothyroxine"
+  "Levothyroxine",
+  "Liothyronine",
+  "Liotrix"
  ],
  "linagliptine": [
   "Linagliptine"
@@ -1009,8 +1062,16 @@
   "Telmisartan",
   "Valsartan"
  ],
- "lt4": [],
- "lthyroxine": [],
+ "lt4": [
+  "Levothyroxine",
+  "Liothyronine",
+  "Liotrix"
+ ],
+ "lthyroxine": [
+  "Levothyroxine",
+  "Liothyronine",
+  "Liotrix"
+ ],
  "macrogol": [
   "Macrogol"
  ],
@@ -1117,7 +1178,11 @@
  "nebivolol": [
   "Nebivolol"
  ],
- "neomercazole": [],
+ "neomercazole": [
+  "Carbimazole",
+  "Propylthiouracile",
+  "Thiamazole"
+ ],
  "nicardipine": [
   "Nicardipine"
  ],
@@ -1356,7 +1421,9 @@
  "roxithromycine": [
   "Roxithromycine"
  ],
- "sacubitril": [],
+ "sacubitril": [
+  "Sacubitril/Valsartan"
+ ],
  "safinamide": [
   "Safinamide"
  ],
@@ -1416,7 +1483,9 @@
   "Rosuvastatine",
   "Simvastatine"
  ],
- "sulfamethoxazole": [],
+ "sulfamethoxazole": [
+  "Cotrimoxazole"
+ ],
  "sulfateferreux": [
   "Fumarate ferreux",
   "Sulfate ferreux"
@@ -1458,8 +1527,6 @@
   "Theophylline"
  ],
  "thiamazole": [
-  "Carbimazole",
-  "Propylthiouracile",
   "Thiamazole"
  ],
  "thiazidique": [
@@ -1477,8 +1544,16 @@
  "thioridazine": [
   "Thioridazine"
  ],
- "thyrosit": [],
- "thyrozol": [],
+ "thyrosit": [
+  "Levothyroxine",
+  "Liothyronine",
+  "Liotrix"
+ ],
+ "thyrozol": [
+  "Carbimazole",
+  "Propylthiouracile",
+  "Thiamazole"
+ ],
  "tianeptine": [
   "Tianeptine"
  ],
@@ -1537,7 +1612,7 @@
   "Trimebutine"
  ],
  "trimethoprime": [
-  "Trimethoprime"
+  "Cotrimoxazole"
  ],
  "trimipramine": [
   "Trimipramine"
@@ -1566,6 +1641,7 @@
   "Irbesartan",
   "Losartan",
   "Olmesartan",
+  "Sacubitril/Valsartan",
   "Telmisartan",
   "Valsartan"
  ],

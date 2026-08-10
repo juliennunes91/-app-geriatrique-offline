@@ -107,6 +107,37 @@ const DRUG_CLASSES = {
         classeMatch: [],
         dcis: ['paracetamol']
     },
+    alpha_bloquant: {
+        // Clé 'alphabloquant' employée par EV_SF02b (hypotension orthostatique) sans
+        // jamais résoudre : les alpha-1 bloquants n'existaient que dans la liste
+        // `hypotenseur_orthostatique`, qui mêle alpha-bloquants et antihypertenseurs
+        // centraux (clonidine, moxonidine) — impossible de viser les seuls alpha-1.
+        aliases: ['alphabloquant', 'alphabloquants', 'alpha1bloquant', 'alpha1bloquants'],
+        classeMatch: ['alphabloquant'],
+        dcis: ['alfuzosine', 'doxazosine', 'prazosine', 'silodosine', 'tamsulosine', 'terazosine', 'urapidil']
+    },
+    barbiturique: {
+        // Clé employée par EV_BEERS_01 (« Méprobamate, barbituriques ») — jamais résolue,
+        // donc le phénobarbital n'était pas signalé comme PIM par cette règle.
+        aliases: ['barbiturique', 'barbituriques'],
+        classeMatch: ['barbiturique'],
+        dcis: ['phenobarbital', 'primidone', 'thiopental']
+    },
+    cotrimoxazole: {
+        // SUP_INT_002 (phénytoïne) et SUP_INT_007 (hyperkaliémie sous IEC/ARA2)
+        // employaient 'sulfamethoxazole' alors que la base porte l'association
+        // « Cotrimoxazole » : ces deux interactions majeures ne se déclenchaient pas
+        // par cette clé.
+        aliases: ['cotrimoxazole', 'sulfamethoxazole', 'sulfamethoxazoletrimethoprime'],
+        classeMatch: [],
+        dcis: ['cotrimoxazole']
+    },
+    antithyroidien: {
+        // IN_J03 : noms commerciaux employés comme clés (Thyrozol, Néo-Mercazole).
+        aliases: ['antithyroidien', 'antithyroidiens', 'thyrozol', 'neomercazole'],
+        classeMatch: ['antithyroidien'],
+        dcis: ['thiamazole', 'carbimazole', 'propylthiouracile', 'benzylthiouracile']
+    },
     antipsychotique: {
         aliases: ['antipsychotique', 'neuroleptique', 'neuroleptiques', 'neuroleptiquesantiemetique'],
         classeMatch: ['antipsychotique', 'neuroleptique'],
@@ -116,7 +147,8 @@ const DRUG_CLASSES = {
         // classeMatch 'hypnotique' RETIRÉ : captait doxylamine (antihistaminique) et
         // phénobarbital (barbiturique). 'benzodiaz' conservé mais _CLASS_EXCLUDE écarte
         // la thiéno-benzodiazépine (olanzapine, antipsychotique). Z-drugs via dcis.
-        aliases: ['benzodiazepine', 'benzodiazepines', 'benzodiazepinesetapparente'],
+        // 'bzd' : abréviation employée comme clé par EV_SYND_046 (FRID) sans jamais résoudre.
+        aliases: ['benzodiazepine', 'benzodiazepines', 'benzodiazepinesetapparente', 'bzd'],
         classeMatch: ['benzodiaz'],
         dcis: ['diazepam', 'lorazepam', 'oxazepam', 'bromazepam', 'alprazolam', 'clonazepam', 'clorazepate', 'prazepam', 'zolpidem', 'zopiclone', 'zaleplon', 'lormetazepam', 'nitrazepam', 'midazolam', 'chlordiazepoxide', 'clobazam', 'clotiazepam', 'estazolam', 'loprazolam', 'nordazepam']
     },
@@ -167,7 +199,9 @@ const DRUG_CLASSES = {
         dcis: ['prednisone', 'prednisolone', 'methylprednisolone', 'dexamethasone', 'betamethasone', 'hydrocortisone']
     },
     arni: {
-        aliases: ['arni'],
+        // 'sacubitril' seul ne résolvait pas : la garde « match EXACT » du matcheur
+        // s'applique dès que la DCI testée est connue (ici 'sacubitrilvalsartan').
+        aliases: ['arni', 'sacubitril', 'sacubitrilvalsartan'],
         classeMatch: [],
         dcis: ['sacubitrilvalsartan']
     },
@@ -196,7 +230,7 @@ const DRUG_CLASSES = {
     // classeMatch vide : matching uniquement sur les DCIs nominatives (évite de capter
     // carbamazépine/lamotrigine qui partagent la classe "antiepileptique").
     valproate_salts: {
-        aliases: ['valproatesalts'],
+        aliases: ['valproatesalts', 'acidevalproique', 'valproate'],
         classeMatch: [],
         dcis: ['valproate', 'valpromide']
     },
@@ -276,7 +310,10 @@ const DRUG_CLASSES = {
         dcis: ['bisoprolol', 'metoprolol', 'nebivolol', 'carvedilol', 'atenolol', 'propranolol', 'sotalol', 'diltiazem', 'verapamil', 'amiodarone', 'dronedarone', 'digoxine', 'ivabradine', 'donepezil', 'rivastigmine', 'galantamine', 'clonidine']
     },
     hormone_thyroidienne: {
-        aliases: ['hormonethyroidienne', 'hormonesthyroidiennes'],
+        // Noms commerciaux et abréviations employés comme clés par IN_J02 — sans eux,
+        // le garde-fou `med_absent` ne reconnaissait pas un patient déjà substitué.
+        aliases: ['hormonethyroidienne', 'hormonesthyroidiennes', 'lthyroxine', 'lt4',
+            'levothyrox', 'euthyrox', 'thyrosit', 'tcaps'],
         classeMatch: ['thyroidien'],
         dcis: ['levothyroxine', 'liothyronine']
     },
@@ -291,7 +328,7 @@ const DRUG_CLASSES = {
         dcis: ['cinacalcet', 'etelcalcetide']
     },
     dopaminergique: {
-        aliases: ['dopaminergique', 'dopaminergiques'],
+        aliases: ['dopaminergique', 'dopaminergiques', 'agonisteda', 'agonistedopaminergique'],
         classeMatch: ['dopaminergique', 'agonistedopaminergique'],
         dcis: ['levodopa', 'ropinirole', 'pramipexole', 'rotigotine', 'piribedil', 'bromocriptine', 'amantadine']
     },
@@ -412,6 +449,11 @@ const _CLASS_EXCLUDE = {
     // à `inhibiteurcalcique` ET à `antihypertenseur` (composite), d'où des alertes
     // antihypertensives chez des patients sans aucun antihypertenseur.
     inhibiteur_calcique: /seldecalcium|carbonatedecalcium|citratedecalcium|supplementcalcique/,
+    // « thyroidien » ⊂ « ANTIthyroïdien » : le carbimazole et le thiamazole étaient
+    // reconnus comme hormones thyroïdiennes, si bien qu'un patient traité pour
+    // HYPERthyroïdie satisfaisait le `med_absent` de IN_J02 (substitution en
+    // hypothyroïdie) — deux situations opposées confondues.
+    hormone_thyroidienne: /antithyroidien/,
 };
 
 // Denylist au niveau DCI. _CLASS_EXCLUDE ne teste que le LIBELLÉ DE CLASSE ; certaines
