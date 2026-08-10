@@ -34,6 +34,7 @@
    "Antihypertenseur si PAS > 140 (ou > 150 si fragile)",
    "Bêtabloquant pour FA chronique (contrôle de fréquence)",
    "IPP avec AINS (cure courte ou prolongée)",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur",
    "Vitamine D pour ostéoporose et/ou fracture de fragilité"
   ],
   "alertes-bio": [
@@ -85,7 +86,8 @@
    "Bêtabloquant pour coronaropathie symptomatique (angor)",
    "IEC en post-SCA / coronaropathie",
    "Réévaluation planifiée",
-   "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
+   "Statine en prévention secondaire (sauf fin de vie / fragile sévère)",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -163,7 +165,10 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "Réévaluation planifiée"
   ],
-  "alertes-initier": [],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
+  ],
   "alertes-bio": [
    "Hyponatrémie légère (130-134) — Na 132 mmol/L"
   ],
@@ -189,7 +194,8 @@
    "Bêtabloquant pour coronaropathie symptomatique (angor)",
    "IEC en post-SCA / coronaropathie",
    "Réévaluation planifiée",
-   "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
+   "Statine en prévention secondaire (sauf fin de vie / fragile sévère)",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -285,7 +291,7 @@
   ],
   "alertes-initier": [
    "Réévaluation planifiée",
-   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur",
    "Vitamine D pour ostéoporose et/ou fracture de fragilité"
   ],
   "alertes-bio": [
@@ -414,7 +420,8 @@
    "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "Flupentixol, fluphénazine, halopéridol > 2 mg/j",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Médicament allongeant le QTc + QTc déjà prolongé"
+   "Médicament allongeant le QTc + QTc déjà prolongé",
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -486,7 +493,7 @@
   "alertes-eviter": [],
   "alertes-initier": [
    "Réévaluation planifiée",
-   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
   ],
   "alertes-bio": [
    "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
@@ -595,6 +602,7 @@
    "Antihistaminique H1 1ère génération en 1ère intention (allergie/prurit)",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "Oxybutynine (toutes formes)",
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "Risque de délirium — charge anticholinergique élevée (ACB ≥ 3)"
   ],
   "alertes-initier": [],
@@ -1095,7 +1103,8 @@
    "Anticholinergique puissant + Démence ou Delirium",
    "Antidépresseurs tricycliques chez le sujet âgé",
    "IRSN + HTA sévère",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
   ],
   "alertes-initier": [
    "Antihypertenseur si PAS > 140 (ou > 150 si fragile)",
@@ -1123,7 +1132,8 @@
    "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "ISRS + Hyponatrémie actuelle ou récente (Na+ < 130)",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Phénothiazine en 1ère intention (psychose/SCPD)"
+   "Phénothiazine en 1ère intention (psychose/SCPD)",
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
   ],
   "alertes-initier": [
    "Alpha-1 bloquant sélectif pour HBP symptomatique"
@@ -1292,7 +1302,7 @@
   ],
   "alertes-initier": [
    "Réévaluation planifiée",
-   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1853,7 +1863,7 @@
   "alertes-initier": [
    "IEC/ARA2 pour diabète avec protéinurie (sauf IRC sévère)",
    "Réévaluation planifiée",
-   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
   ],
   "alertes-bio": [
    "Albuminurie KDIGO A2 — microalbuminurie (30-299) — 33 mg/g (ou mg/24h)",
@@ -1893,7 +1903,10 @@
    "Vasodilatateur chez patient chuteur / hypotension orthostatique",
    "Z-drug chez patient chuteur"
   ],
-  "alertes-initier": [],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
+  ],
   "alertes-bio": [],
   "alertes-interact": [],
   "alertes-suivi": [
@@ -1915,7 +1928,10 @@
    "Antiépileptique chez patient chuteur",
    "Risque de délirium — charge anticholinergique élevée (ACB ≥ 3)"
   ],
-  "alertes-initier": [],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
+  ],
   "alertes-bio": [],
   "alertes-interact": [
    "Co-prescription à risque : CARBAMAZEPINE"
@@ -1942,7 +1958,8 @@
   ],
   "alertes-initier": [
    "Laxatif systématique avec opioïde quotidien",
-   "Réévaluation planifiée"
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1964,7 +1981,10 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "Oxybutynine (toutes formes)"
   ],
-  "alertes-initier": [],
+  "alertes-initier": [
+   "Réévaluation planifiée",
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
+  ],
   "alertes-bio": [],
   "alertes-interact": [],
   "alertes-suivi": [
@@ -2009,7 +2029,7 @@
   ],
   "alertes-initier": [
    "Réévaluation planifiée",
-   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -2030,7 +2050,7 @@
   ],
   "alertes-initier": [
    "Réévaluation planifiée",
-   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -2051,6 +2071,7 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "Opioïde quotidien régulier sans laxatif co-prescrit",
    "Opioïdes : TRAMADOL",
+   "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "Risque de syndrome sérotoninergique — association sérotoninergique + tramadol/IMAO/linézolide"
   ],
   "alertes-initier": [
@@ -2304,7 +2325,7 @@
   ],
   "alertes-initier": [
    "Réévaluation planifiée",
-   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
+   "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur"
   ],
   "alertes-bio": [],
   "alertes-interact": [],

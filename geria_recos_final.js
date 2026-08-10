@@ -2093,7 +2093,8 @@ const GERIA_RECOS_DB = {
             message: "SYND_046 : ≥ 2 classes à risque de chute (BZD/Z-drugs, opioïdes, antipsychotiques, antihypertenseurs multiples, anticholinergiques ACB ≥ 2, hypoglycémiants, antiépileptiques). Score FRID ≥ 3 = OR chute 1.5-2.5 (Seppala JAMDA 2018). Test up-and-go, TA couché-debout, revue médicamenteuse priorisée.",
             severite: "warning",
             condition: {
-                med_keys: ["benzodiazepine", "bzd", "diazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "bromazepam", "zopiclone", "zolpidem"],
+                med_keys: ["benzodiazepine", "bzd", "diazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "bromazepam", "zopiclone", "zolpidem",
+                    "antidepresseur", "isrs", "irsn", "antidepresseur_tricyclique", "mirtazapine", "mianserine"],
                 med_keys_2: ["morphine", "oxycodone", "fentanyl", "tramadol", "codeine", "antipsychotique", "halopéridol", "haloperidol", "risperidone", "olanzapine", "quetiapine", "oxybutynine", "hydroxyzine", "amitriptyline"]
             },
             syndrome_declenche: "SYND_046",
@@ -2949,11 +2950,11 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3"],
             ref_code: "START3-H5",
             section: "Musculo",
-            titre: "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné",
+            titre: "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné / chuteur",
             message: "Supplémentation en vitamine D recommandée de façon quasi systématique chez le sujet âgé fragile, institutionnalisé (EHPAD) ou confiné : prévalence élevée de la carence et réduction du risque de chute/fracture (HAS, recommandations gériatriques). Le dosage de la 25-OH-D n'est pas un préalable ; doser au besoin pour adapter la posologie (carence confirmée si < 20 ng/mL).",
             severite: "warning",
             condition: {
-                contexte_clinique_any: ["fragilite", "institution", "confinement"],
+                contexte_clinique_any: ["fragilite", "institution", "confinement", "chutes"],
                 med_absent: ["cholecalciferol", "calcifediol", "vitamine d"]
             },
             alternatives: "Cholécalciférol 800-4000 UI/j (carence) ou 800-2000 UI/j (entretien systématique chez le fragile/institutionnalisé)"
