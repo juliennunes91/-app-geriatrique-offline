@@ -925,6 +925,109 @@ function runClassMembershipAudit(test, assert) {
 }
 
 // ============================================================================
+// RÉSOLUTION DES CLÉS DE RÈGLE — audit de collision par LIBELLÉ DE CLASSE
+// ----------------------------------------------------------------------------
+// `runCollisionAudit` appelle le matcheur avec `classe = ''` : il ne voit donc que
+// les collisions de DCI (citalopram ⊂ escitalopram) et JAMAIS celles qui passent par
+// le libellé de classe — or ce sont elles qui ont produit les faux positifs les plus
+// coûteux : « paracetamol » ⊂ la classe du NÉFOPAM (« alternative paracétamol »),
+// « calcique » ⊂ « … déficit calcique » (carbonate de calcium reconnu inhibiteur
+// calcique ET antihypertenseur), « statine » ⊂ cila-STATINE, « fer » ⊂ calci-FÉR-ol.
+//
+// Cet audit fige, pour CHAQUE clé réellement employée par le corpus de règles, la
+// liste des médicaments qu'elle résout — avec le vrai `classe`. Toute dérive
+// (nouvelle molécule qui élargit une clé par accident) devient un échec de test.
+function runRuleKeyResolutionAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const current = JSON.parse(vm.runInContext(`(function(){
+        var keys = new Set();
+        function harvest(o){ if(!o||typeof o!=='object')return; for(var k in o){ var v=o[k];
+            if(/^(med_keys|med_keys_2|med_keys_3|med_absent)$/.test(k)&&Array.isArray(v))
+                v.forEach(function(x){ if(typeof x==='string'&&x.trim())keys.add(sanitizeText(x)); });
+            else if(typeof v==='object') harvest(v); } }
+        if(typeof GERIA_RECOS_DB!=='undefined')harvest(GERIA_RECOS_DB);
+        if(typeof RECOS_SUPPLEMENT!=='undefined')harvest(RECOS_SUPPLEMENT);
+        var meds = MASTER_DB.MEDICAMENTS.map(function(m){
+            return {dci:m.dci, ndci:sanitizeText(m.dci), nclasse:sanitizeText(m.classe||'')}; });
+        var res = {};
+        Array.from(keys).sort().forEach(function(key){
+            var hit = [];
+            meds.forEach(function(m){
+                try { if (matchesDrugClass(m.ndci, m.nclasse, key)) hit.push(m.dci); } catch(e){}
+            });
+            res[key] = hit.sort();
+        });
+        return JSON.stringify(res);
+    })()`, sandbox));
+    const goldenPath = path.join(__dirname, 'rule_keys_golden.json');
+    if (!fs.existsSync(goldenPath) || process.env.GOLDEN_UPDATE === '1') {
+        fs.writeFileSync(goldenPath, JSON.stringify(current, null, 1));
+        console.log('  ℹ️  Golden de résolution des clés de règle ' + (process.env.GOLDEN_UPDATE === '1' ? 'RÉGÉNÉRÉ' : 'CRÉÉ'));
+        return;
+    }
+    const golden = JSON.parse(fs.readFileSync(goldenPath, 'utf8'));
+    const keys = new Set([...Object.keys(golden), ...Object.keys(current)]);
+    keys.forEach(key => {
+        test('Résolution de clé — ' + key, () => {
+            const g = new Set(golden[key] || []), c = new Set(current[key] || []);
+            const diff = [...c].filter(x => !g.has(x)).map(x => '+' + x)
+                .concat([...g].filter(x => !c.has(x)).map(x => '-' + x));
+            assert.ok(diff.length === 0,
+                'la clé ne résout plus les mêmes médicaments (si voulu : GOLDEN_UPDATE=1) : ' + diff.join(', '));
+        });
+    });
+    // Invariant permanent : une clé qui ne résout AUCUN médicament est morte.
+    // (Les règles concernées doivent être corrigées ou mises en quarantaine explicite.)
+    const mortes = Object.keys(current).filter(k => current[k].length === 0);
+    test('Résolution de clé — aucune clé morte hors quarantaine', () => {
+        const horsQuarantaine = mortes.filter(k => !CLES_MORTES_CONNUES.has(k));
+        assert.ok(horsQuarantaine.length === 0,
+            'clés ne résolvant aucun médicament : ' + horsQuarantaine.join(', '));
+    });
+}
+
+// Clés mortes CONNUES et assumées : elles appartiennent à des règles déjà placées en
+// SUPPLEMENT_QUARANTINE (app_analysis.js), dont l'état clinique déclencheur n'est pas
+// modélisé (H. pylori actif, hypoxémie, oxygénothérapie, traitement antérieur arrêté,
+// vaccination) ou dont le concept est couvert par une règle native. Elles ne doivent
+// pas faire échouer l'audit, mais toute clé morte NOUVELLE doit le faire.
+const CLES_MORTES_CONNUES = new Set([
+    'aspirineclopidogrelaodavk',              // SUP_STOP_009  → couvert par SUP_PIMC_09
+    'tripletherapieouquadritherapie',         // SUP_START_030 → H. pylori non modélisé
+    'o2concentrateur15hj',                    // SUP_START_033 → oxygénothérapie non modélisée
+    'alendronaterisedronatecholecalciferolcalcium', // SUP_START_039 → couvert par EV_SYND_049
+    'bisphosphonatealendronate',              // SUP_START_040 → état post-arrêt dénosumab
+    'bisphosphonateoudenosumab',              // SUP_START_041 → état post-arrêt tériparatide
+    'thscombineoraloupatch',                  // SUP_STOP_051  → doublon de SUP_STOP_049
+    'oestradiolseuloraloupatch',              // SUP_STOP_052  → statut utérin non modélisé
+    'covid19marnousousunite',                 // SUP_START_059 → vaccination non modélisée
+    'aspirinepreventionprimaire',             // SUP_DEP_065   → indication non détectable
+    'multivitaminessanscarence',              // SUP_DEP_065
+    'supplementssansindication',              // SUP_DEP_065
+    'ainstopiquesdiclofenacgel',              // SUP_CAUT_073  → quarantaine (faux positif)
+    'ketoprofenegel', 'ibuprofenetopique',    // SUP_CAUT_073  → formes topiques non distinguées
+
+    // ------------------------------------------------------------------------
+    // À TRIER — clés mortes révélées par cet audit à sa première exécution.
+    // Elles ne sont PAS validées : elles sont consignées pour que le test reste
+    // vert sur l'existant et échoue sur toute NOUVELLE clé morte. Trois familles :
+    //   (a) molécule absente de MASTER_DB → l'ajouter, ou retirer la clé ;
+    //   (b) alias/abréviation jamais résolue (bzd, lt4, agonisteda, alphabloquant,
+    //       barbiturique, acidevalproique…) → la déclarer dans drug_classes.js ;
+    //   (c) nom commercial employé comme clé (euthyrox, levothyrox, thyrosit,
+    //       thyrozol, neomercazole, phosphalugel) → passer à la DCI.
+    // Chaque entrée retirée d'ici doit l'être en corrigeant la règle, pas le test.
+    'acidevalproique', 'agonisteda', 'alphabloquant', 'avanafil', 'barbiturique',
+    'brivaracetam', 'bzd', 'chlorpropamide', 'darbepoetine', 'epoetine',
+    'erythropoietine', 'eszopiclone', 'euthyrox', 'ferrique', 'folinate', 'folinique',
+    'guanfacine', 'josamycine', 'levothyrox', 'lt4', 'lthyroxine', 'methylnaltrexone',
+    'mometasone', 'naloxegol', 'naloxone', 'neomercazole', 'olodaterol', 'perampanel',
+    'phosphalugel', 'pramiracetam', 'procyclidine', 'quinine', 'rifaximine',
+    'rosiglitazone', 'sacubitril', 'sene', 'sennosides', 'sorbitol', 'sulfamethoxazole',
+    'temazepam', 'tertatolol', 'thyrosit', 'thyrozol', 'vardenafil',
+]);
+
+// ============================================================================
 // INTÉGRITÉ STRUCTURELLE DES BASES D'INTERACTIONS (Phase 3)
 // ----------------------------------------------------------------------------
 // Le thésaurus ANSM (ddi_general) est un export officiel : on ne vérifie pas son
@@ -994,4 +1097,4 @@ function runPosologyCompletenessAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };

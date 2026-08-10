@@ -164,6 +164,10 @@ const GeriaEngineV2 = (() => {
      *   30-59 = Important (orange) 
      *   60-100 = Critique (rouge)
      */
+    // Seuils de triage — source unique de vérité (getTriageLevel + plancher de criticité)
+    const SCORE_MIN_CRITIQUE = 60;   // 🔴 Action immédiate
+    const SCORE_MIN_IMPORTANT = 30;  // 🟠 Réévaluation planifiée
+
     const SEVERITY_WEIGHTS = {
         // Poids de base selon sévérité déclarée
         'danger': 40,
@@ -257,16 +261,31 @@ const GeriaEngineV2 = (() => {
             else if (ctx.scoreACB_global >= 3) score += 5;
         }
         
+        // (H) Plancher de criticité : la sévérité DÉCLARÉE en base prime sur le
+        // consensus bibliographique. Sans ce plancher, une contre-indication formelle
+        // citée par une seule source plafonne à 40 + bonus contextuels (55 au mieux
+        // chez un patient de 80 ans avec bio confirmante) et reste ORANGE, tandis
+        // qu'un PIM cité par huit sources atteint le rouge par le seul bonus de
+        // consensus (+38). Mesuré sur le panel : 58 des 111 règles `danger`
+        // déclenchées n'atteignaient jamais le rouge — dont colchicine + DFG < 10,
+        // dabigatran + DFG < 30, QT long congénital, BZD + opioïde (black box FDA).
+        // Le score continue de différencier les alertes AU-DESSUS du plancher (tri).
+        // Symétrique pour `warning` : une règle déclarée importante ne doit pas tomber
+        // dans le bloc « informatif » replié faute de sources (20 + 8 = 28 < 30 —
+        // c'est ce qui enterrait EV_SYND_049, prévention de l'ostéoporose cortico-induite).
+        if (alert.severite === 'danger') score = Math.max(score, SCORE_MIN_CRITIQUE);
+        else if (alert.severite === 'warning') score = Math.max(score, SCORE_MIN_IMPORTANT);
+
         // Clamp 0-100
         return Math.max(0, Math.min(100, Math.round(score)));
     }
-    
+
     /**
      * Détermine le niveau de triage à partir du score.
      */
     function getTriageLevel(score) {
-        if (score >= 60) return { level: 'CRITIQUE', color: 'danger', icon: '🔴', priority: 1, label: 'Action immédiate requise' };
-        if (score >= 30) return { level: 'IMPORTANT', color: 'warning', icon: '🟠', priority: 2, label: 'Réévaluation planifiée' };
+        if (score >= SCORE_MIN_CRITIQUE) return { level: 'CRITIQUE', color: 'danger', icon: '🔴', priority: 1, label: 'Action immédiate requise' };
+        if (score >= SCORE_MIN_IMPORTANT) return { level: 'IMPORTANT', color: 'warning', icon: '🟠', priority: 2, label: 'Réévaluation planifiée' };
         return { level: 'INFORMATIF', color: 'info', icon: '🔵', priority: 3, label: 'À discuter / documenter' };
     }
 

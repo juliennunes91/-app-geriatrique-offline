@@ -28,12 +28,12 @@
    "Tricyclique (TCA) en 1ère ligne pour dépression"
   ],
   "alertes-initier": [
+   "Action immédiate",
    "Anti-résorptif ou anabolique osseux pour ostéoporose",
    "Anticoagulant pour FA (chronique ou paroxystique)",
    "Antihypertenseur si PAS > 140 (ou > 150 si fragile)",
    "Bêtabloquant pour FA chronique (contrôle de fréquence)",
    "IPP avec AINS (cure courte ou prolongée)",
-   "Réévaluation planifiée",
    "Vitamine D pour ostéoporose et/ou fracture de fragilité"
   ],
   "alertes-bio": [
@@ -84,6 +84,7 @@
    "Antiagrégant pour maladie vasculaire",
    "Bêtabloquant pour coronaropathie symptomatique (angor)",
    "IEC en post-SCA / coronaropathie",
+   "Réévaluation planifiée",
    "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
   ],
   "alertes-bio": [],
@@ -110,7 +111,8 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
   ],
   "alertes-initier": [
-   "IPP avec AINS (cure courte ou prolongée)"
+   "IPP avec AINS (cure courte ou prolongée)",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [
    "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
@@ -134,13 +136,13 @@
  },
  "clozapine_fumeur": {
   "alertes-eviter": [
+   "Action immédiate",
    "Antipsychotique au long cours : ECG/QTc et prolactine",
    "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
    "Antipsychotique au long cours : surveillance métabolique",
    "Clozapine / Olanzapine chez le fumeur : interaction tabac (CYP1A2)",
    "Clozapine chez le sujet âgé : risques spécifiques (au-delà de la NFS)",
-   "Clozapine sans NFS hebdomadaire",
-   "Réévaluation planifiée"
+   "Clozapine sans NFS hebdomadaire"
   ],
   "alertes-initier": [
    "Laxatif osmotique pour constipation chronique bénigne"
@@ -158,7 +160,8 @@
  "depression_recurrente": {
   "alertes-eviter": [
    "Antidépresseur chez patient chuteur",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -185,6 +188,7 @@
    "Antiagrégant pour maladie vasculaire",
    "Bêtabloquant pour coronaropathie symptomatique (angor)",
    "IEC en post-SCA / coronaropathie",
+   "Réévaluation planifiée",
    "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
   ],
   "alertes-bio": [],
@@ -200,11 +204,12 @@
  "IC_HFrEF": {
   "alertes-eviter": [
    "Diurétique sans ionogramme de surveillance",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [
-   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
-   "Réévaluation planifiée"
+   "Action immédiate",
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)"
   ],
   "alertes-bio": [
    "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
@@ -227,9 +232,9 @@
    "Aspirine en prévention primaire cardiovasculaire"
   ],
   "alertes-initier": [
+   "Action immédiate",
    "Anticoagulant pour FA (chronique ou paroxystique)",
-   "Bêtabloquant pour FA chronique (contrôle de fréquence)",
-   "Réévaluation planifiée"
+   "Bêtabloquant pour FA chronique (contrôle de fréquence)"
   ],
   "alertes-bio": [
    "Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
@@ -360,7 +365,8 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
   ],
   "alertes-initier": [
-   "Rivastigmine pour démence à corps de Lewy / Parkinson avec démence"
+   "Rivastigmine pour démence à corps de Lewy / Parkinson avec démence",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -376,13 +382,13 @@
   "alertes-eviter": [
    "Action immédiate",
    "Antiagrégant + Anticoagulant dans FA (sans stent récent)",
-   "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
-   "Aspirine + clopidogrel au long cours prevention AVC"
+   "Anticoagulant + antiagrégant sans indication documentée de double thérapie"
   ],
   "alertes-initier": [
    "Bêtabloquant pour FA chronique (contrôle de fréquence)",
    "Bêtabloquant pour coronaropathie symptomatique (angor)",
    "IEC en post-SCA / coronaropathie",
+   "Réévaluation planifiée",
    "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
   ],
   "alertes-bio": [
@@ -435,12 +441,12 @@
  },
  "iono_severe": {
   "alertes-eviter": [
+   "Action immédiate",
    "Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "Diurétique sans ionogramme de surveillance",
    "IEC/ARA2 + Hyperkaliémie (K+ > 5.5)",
    "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Réévaluation planifiée"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -477,10 +483,7 @@
   ]
  },
  "antibio_cilastatine": {
-  "alertes-eviter": [
-   "Deprescription preventive globale chez le fragile severe (STOPP/FRAIL)",
-   "Réévaluation planifiée"
-  ],
+  "alertes-eviter": [],
   "alertes-initier": [
    "Réévaluation planifiée",
    "Vitamine D chez le sujet âgé fragile / institutionnalisé / confiné"
@@ -521,7 +524,8 @@
    "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
    "Antipsychotique au long cours : surveillance métabolique",
    "Antipsychotique d'action prolongée (LAI/dépôt) : réversibilité lente",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -555,6 +559,7 @@
   "alertes-eviter": [],
   "alertes-initier": [
    "Anti-résorptif ou anabolique osseux pour ostéoporose",
+   "Réévaluation planifiée",
    "Vitamine D pour ostéoporose et/ou fracture de fragilité"
   ],
   "alertes-bio": [],
@@ -567,6 +572,7 @@
  "BPCO": {
   "alertes-eviter": [],
   "alertes-initier": [
+   "Réévaluation planifiée",
    "iSGLT2 (pilier 4)"
   ],
   "alertes-bio": [
@@ -627,16 +633,16 @@
  },
  "cov_EV_B01_EV_B02": {
   "alertes-eviter": [
+   "Action immédiate",
    "Digoxine + IC à FE préservée (HFpEF)",
    "Digoxine dans l'IC (FORTA-D sauf FA)",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Réévaluation planifiée",
    "VERAPAMIL — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "Vérapamil/Diltiazem + IC FE réduite (NYHA III-IV)"
   ],
   "alertes-initier": [
-   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
-   "Réévaluation planifiée"
+   "Action immédiate",
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)"
   ],
   "alertes-bio": [],
   "alertes-interact": [
@@ -657,7 +663,8 @@
  "cov_EV_B05": {
   "alertes-eviter": [
    "Bêtabloquant en monothérapie pour HTA simple",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -678,9 +685,9 @@
    "Réévaluation planifiée"
   ],
   "alertes-initier": [
+   "Action immédiate",
    "Anticoagulant pour FA (chronique ou paroxystique)",
-   "Bêtabloquant pour FA chronique (contrôle de fréquence)",
-   "Réévaluation planifiée"
+   "Bêtabloquant pour FA chronique (contrôle de fréquence)"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -780,13 +787,13 @@
    "IPDE5 + IC sévère ou dérivés nitrés"
   ],
   "alertes-initier": [
+   "Action immédiate",
    "Antiagrégant / statine pour syndrome coronarien",
    "Antiagrégant pour maladie vasculaire",
    "Bêtabloquant pour coronaropathie symptomatique (angor)",
    "IEC en post-SCA / coronaropathie",
    "IPP avec AINS (cure courte ou prolongée)",
    "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
-   "Réévaluation planifiée",
    "Statine en prévention secondaire (sauf fin de vie / fragile sévère)"
   ],
   "alertes-bio": [],
@@ -812,9 +819,9 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
   ],
   "alertes-initier": [
+   "Action immédiate",
    "IPP avec AINS (cure courte ou prolongée)",
-   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
-   "Réévaluation planifiée"
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)"
   ],
   "alertes-bio": [],
   "alertes-interact": [
@@ -832,10 +839,10 @@
  },
  "cov_EV_B22_EV_PRISC_01": {
   "alertes-eviter": [
+   "Action immédiate",
    "Digoxine avec hypokaliémie / hypomagnésémie non corrigée",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Nifédipine à libération immédiate",
-   "Réévaluation planifiée"
+   "Nifédipine à libération immédiate"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -862,8 +869,8 @@
    "Dronédarone + IC (PIM-Check)"
   ],
   "alertes-initier": [
-   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
-   "Réévaluation planifiée"
+   "Action immédiate",
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)"
   ],
   "alertes-bio": [],
   "alertes-interact": [
@@ -890,8 +897,8 @@
    "Médicament allongeant le QT + QT long congénital"
   ],
   "alertes-initier": [
-   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
-   "Réévaluation planifiée"
+   "Action immédiate",
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -940,7 +947,8 @@
  "cov_IN_M01": {
   "alertes-eviter": [],
   "alertes-initier": [
-   "Anticoagulant pour MTEV (TVP/EP) documentée"
+   "Anticoagulant pour MTEV (TVP/EP) documentée",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -981,11 +989,11 @@
    "Action immédiate",
    "Antiagrégant + Anticoagulant dans FA (sans stent récent)",
    "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
-   "Aspirine en prévention primaire cardiovasculaire",
    "Ticlopidine : à éviter en toute circonstance"
   ],
   "alertes-initier": [
-   "IPP avec AINS (cure courte ou prolongée)"
+   "IPP avec AINS (cure courte ou prolongée)",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [
@@ -1014,7 +1022,8 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
   ],
   "alertes-initier": [
-   "Bêtabloquant pour FA chronique (contrôle de fréquence)"
+   "Bêtabloquant pour FA chronique (contrôle de fréquence)",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1065,8 +1074,8 @@
  },
  "cov_EV_FORTA_01": {
   "alertes-eviter": [
-   "Aspirine en prévention primaire cardiovasculaire",
-   "Dipyridamole (FORTA-D)"
+   "Dipyridamole (FORTA-D)",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1089,7 +1098,8 @@
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
   ],
   "alertes-initier": [
-   "Antihypertenseur si PAS > 140 (ou > 150 si fragile)"
+   "Antihypertenseur si PAS > 140 (ou > 150 si fragile)",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [
@@ -1214,8 +1224,8 @@
    "Réévaluation planifiée"
   ],
   "alertes-initier": [
-   "Antiépileptique pour épilepsie active",
-   "Réévaluation planifiée"
+   "Action immédiate",
+   "Antiépileptique pour épilepsie active"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1316,6 +1326,7 @@
   "alertes-initier": [
    "Antidépresseur non tricyclique pour dépression majeure",
    "L-DOPA ou agoniste dopaminergique pour Parkinson avec handicap fonctionnel",
+   "Réévaluation planifiée",
    "Sertraline en 1ère intention pour dépression du sujet âgé"
   ],
   "alertes-bio": [],
@@ -1329,7 +1340,8 @@
   "alertes-eviter": [],
   "alertes-initier": [
    "ISRS (ou IRSNA / prégabaline) pour trouble anxieux généralisé persistant et sévère",
-   "Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré"
+   "Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1341,9 +1353,9 @@
  "cov_IN_D06_IN_J04": {
   "alertes-eviter": [],
   "alertes-initier": [
+   "Action immédiate",
    "Agoniste dopaminergique pour syndrome des jambes sans repos",
-   "Antiépileptique pour épilepsie active",
-   "Réévaluation planifiée"
+   "Antiépileptique pour épilepsie active"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1354,10 +1366,10 @@
  },
  "cov_EV_E02_EV_E03": {
   "alertes-eviter": [
+   "Action immédiate",
    "Anti-Xa (rivaroxaban, apixaban, edoxaban) + DFG < 15",
    "Dabigatran + DFG < 30",
-   "Doublon thérapeutique — Anticoagulants curatifs",
-   "Réévaluation planifiée"
+   "Doublon thérapeutique — Anticoagulants curatifs"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -1377,8 +1389,8 @@
  },
  "cov_EV_E05": {
   "alertes-eviter": [
-   "Colchicine + DFG < 10",
-   "Réévaluation planifiée"
+   "Action immédiate",
+   "Colchicine + DFG < 10"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -1415,10 +1427,10 @@
  },
  "cov_EV_E07": {
   "alertes-eviter": [
+   "Action immédiate",
    "Anti-aldostérone + DFG < 30",
    "Diurétique sans ionogramme de surveillance",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Réévaluation planifiée"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -1454,13 +1466,14 @@
  },
  "cov_EV_E09_EV_E10": {
   "alertes-eviter": [
+   "Action immédiate",
    "Bisphosphonate + DFG < 30",
    "Méthotrexate + DFG < 30",
-   "Méthotrexate sans supplémentation en acide folique",
-   "Réévaluation planifiée"
+   "Méthotrexate sans supplémentation en acide folique"
   ],
   "alertes-initier": [
-   "Acide folique avec méthotrexate"
+   "Acide folique avec méthotrexate",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [
    "Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
@@ -1523,7 +1536,8 @@
    "Métoclopramide et prokinétiques"
   ],
   "alertes-initier": [
-   "L-DOPA ou agoniste dopaminergique pour Parkinson avec handicap fonctionnel"
+   "L-DOPA ou agoniste dopaminergique pour Parkinson avec handicap fonctionnel",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1539,15 +1553,14 @@
  },
  "cov_EV_F03_EV_F05": {
   "alertes-eviter": [
-   "Corticoïde + antécédent d'ulcère ou œsophagite érosive (sans IPP)",
-   "Corticoïde systémique > 3 mois sans bilan ostéoporose",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "Médicament constipant + constipation chronique",
    "Réévaluation planifiée"
   ],
   "alertes-initier": [
    "IPP pour RGO sévère ou sténose peptique",
-   "Laxatif osmotique pour constipation chronique bénigne"
+   "Laxatif osmotique pour constipation chronique bénigne",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1587,11 +1600,13 @@
  "cov_IN_F01_IN_F02": {
   "alertes-eviter": [
    "ACIDE ACETYLSALICYLIQUE — Prudence Ulcère Gastro-Duodénal (UGD)",
-   "Aspirine en prévention primaire cardiovasculaire"
+   "Aspirine en prévention primaire cardiovasculaire",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [
    "IPP pour RGO sévère ou sténose peptique",
-   "IPP si aspirine faible dose + antécédent d'ulcère ou RGO"
+   "IPP si aspirine faible dose + antécédent d'ulcère ou RGO",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1605,12 +1620,14 @@
  },
  "cov_EV_G01_EV_G02": {
   "alertes-eviter": [
+   "Réévaluation planifiée",
    "Théophylline chez le sujet âgé (PIM, marge thérapeutique étroite)",
    "Théophylline en monothérapie pour BPCO"
   ],
   "alertes-initier": [
    "Corticoïde inhalé quotidien pour asthme modéré-sévère ou BPCO GOLD 3-4",
-   "LAMA ou LABA pour asthme/BPCO symptomatique (GOLD 1-2)"
+   "LAMA ou LABA pour asthme/BPCO symptomatique (GOLD 1-2)",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1635,7 +1652,8 @@
    "TIOTROPIUM — Prudence Glaucome à angle fermé"
   ],
   "alertes-initier": [
-   "Corticoïde inhalé quotidien pour asthme modéré-sévère ou BPCO GOLD 3-4"
+   "Corticoïde inhalé quotidien pour asthme modéré-sévère ou BPCO GOLD 3-4",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1658,7 +1676,8 @@
   ],
   "alertes-initier": [
    "IPP avec AINS (cure courte ou prolongée)",
-   "IPP pour RGO sévère ou sténose peptique"
+   "IPP pour RGO sévère ou sténose peptique",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1672,14 +1691,13 @@
  },
  "cov_EV_H06_EV_H07": {
   "alertes-eviter": [
-   "AINS + Corticoïde concomitant (rhumatisme)",
    "AINS ou colchicine > 3 mois pour prévention goutte (sans inhibiteur xanthine-oxydase)",
-   "Action immédiate",
-   "Corticoïde systémique > 3 mois sans bilan ostéoporose"
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [
    "IPP avec AINS (cure courte ou prolongée)",
-   "Inhibiteur xanthine-oxydase pour goutte récidivante"
+   "Inhibiteur xanthine-oxydase pour goutte récidivante",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1703,7 +1721,8 @@
    "Opioïdes : BUPRENORPHINE"
   ],
   "alertes-initier": [
-   "Laxatif systématique avec opioïde quotidien"
+   "Laxatif systématique avec opioïde quotidien",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1744,11 +1763,13 @@
  },
  "cov_EV_I06_IN_I01": {
   "alertes-eviter": [
-   "Mirabégron + HTA sévère ou labile"
+   "Mirabégron + HTA sévère ou labile",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [
    "Alpha-1 bloquant sélectif pour HBP symptomatique",
-   "Antihypertenseur si PAS > 140 (ou > 150 si fragile)"
+   "Antihypertenseur si PAS > 140 (ou > 150 si fragile)",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1770,8 +1791,8 @@
    "Thiazolidinedione + IC"
   ],
   "alertes-initier": [
-   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)",
-   "Réévaluation planifiée"
+   "Action immédiate",
+   "Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1806,10 +1827,10 @@
  },
  "cov_EV_J10_EV_BEERS_02": {
   "alertes-eviter": [
+   "Action immédiate",
    "Desmopressine pour incontinence/pollakiurie",
    "Insuline en schéma « sliding scale » seule (sans basale)",
-   "Insuline sliding scale seule (sans basale)",
-   "Réévaluation planifiée"
+   "Insuline sliding scale seule (sans basale)"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1851,7 +1872,8 @@
   "alertes-eviter": [],
   "alertes-initier": [
    "Antithyroïdien de synthèse (ATS) pour hyperthyroïdie",
-   "Lévothyroxine pour hypothyroïdie confirmée"
+   "Lévothyroxine pour hypothyroïdie confirmée",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1919,7 +1941,8 @@
    "Opioïdes : BUPRENORPHINE"
   ],
   "alertes-initier": [
-   "Laxatif systématique avec opioïde quotidien"
+   "Laxatif systématique avec opioïde quotidien",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -1957,7 +1980,6 @@
  "cov_EV_L05_EV_L06": {
   "alertes-eviter": [
    "Gabapentinoïde pour douleur non neuropathique",
-   "Paracétamol ≥ 3 g/j + dénutrition (BMI < 18) ou hépatopathie",
    "Réévaluation planifiée"
   ],
   "alertes-initier": [],
@@ -2032,7 +2054,8 @@
    "Risque de syndrome sérotoninergique — association sérotoninergique + tramadol/IMAO/linézolide"
   ],
   "alertes-initier": [
-   "Laxatif systématique avec opioïde quotidien"
+   "Laxatif systématique avec opioïde quotidien",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [
@@ -2073,7 +2096,8 @@
   ],
   "alertes-initier": [
    "IPP avec AINS (cure courte ou prolongée)",
-   "Laxatif systématique avec opioïde quotidien"
+   "Laxatif systématique avec opioïde quotidien",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [
@@ -2129,6 +2153,7 @@
  "cov_EV_SFGG_AD_05_EV_SFGG_AD_06": {
   "alertes-eviter": [
    "Agomélatine ≥ 75 ans — éviter (RCP Valdoxan 2025)",
+   "Réévaluation planifiée",
    "Tianéptine — éviter chez le sujet âgé (risque dépendance)"
   ],
   "alertes-initier": [],
@@ -2151,7 +2176,8 @@
    "Réévaluation planifiée"
   ],
   "alertes-initier": [
-   "IPP avec AINS (cure courte ou prolongée)"
+   "IPP avec AINS (cure courte ou prolongée)",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [
@@ -2171,7 +2197,8 @@
  "cov_EV_SYND_049": {
   "alertes-eviter": [
    "Corticoïde systémique > 3 mois sans bilan ostéoporose",
-   "Corticoïde systémique ≥ 3 mois — prévention sarcopénie/ostéoporose GIOP"
+   "Corticoïde systémique ≥ 3 mois — prévention sarcopénie/ostéoporose GIOP",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -2186,12 +2213,13 @@
  },
  "cov_EV_N04": {
   "alertes-eviter": [
+   "Action immédiate",
    "Méthotrexate / paracétamol haute dose + alcool excessif",
-   "Méthotrexate sans supplémentation en acide folique",
-   "Réévaluation planifiée"
+   "Méthotrexate sans supplémentation en acide folique"
   ],
   "alertes-initier": [
-   "Acide folique avec méthotrexate"
+   "Acide folique avec méthotrexate",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -2205,14 +2233,15 @@
  },
  "cov_EV_N06_EV_N07": {
   "alertes-eviter": [
+   "Action immédiate",
    "Immunosuppresseur / corticoïde au long cours + sepsis aigu",
    "Médicament néphrotoxique + sepsis aigu",
-   "Méthotrexate sans supplémentation en acide folique",
-   "Réévaluation planifiée"
+   "Méthotrexate sans supplémentation en acide folique"
   ],
   "alertes-initier": [
    "Acide folique avec méthotrexate",
-   "IPP avec AINS (cure courte ou prolongée)"
+   "IPP avec AINS (cure courte ou prolongée)",
+   "Réévaluation planifiée"
   ],
   "alertes-bio": [],
   "alertes-interact": [
@@ -2231,7 +2260,6 @@
  "cov_SUP_PIMC_05_SUP_PIMC_06": {
   "alertes-eviter": [
    "AVK sans surveillance INR régulière documentée",
-   "Antiagregant ou anticoagulant",
    "Inhibiteur acétylcholinestérase sans ECG de référence",
    "Réévaluation planifiée"
   ],
@@ -2269,9 +2297,7 @@
  },
  "cov_SUP_REM_02_SUP_REM_03": {
   "alertes-eviter": [
-   "Antihypertenseurs (STOPP/FRAIL)",
    "Inhibiteur acétylcholinestérase sans ECG de référence",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
    "Médicament anti-Alzheimer si démence sévère sans bénéfice observé",
    "Réévaluation planifiée",
    "Supplémentation calcique > 1000 mg/j"
@@ -2295,7 +2321,8 @@
  "cov_SUP_REM_04_SUP_REM_05": {
   "alertes-eviter": [
    "Antispasmodiques GI au long cours",
-   "Laxatif stimulant au long cours"
+   "Laxatif stimulant au long cours",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -2331,8 +2358,8 @@
  },
  "cov_SUP_EU7_03_SUP_EU7_05": {
   "alertes-eviter": [
+   "Action immédiate",
    "Loperamide au long cours ou à forte dose",
-   "Réévaluation planifiée",
    "Scopolamine (antiémétique)"
   ],
   "alertes-initier": [],
@@ -2351,7 +2378,8 @@
  "cov_SUP_EU7_06_SUP_EU7_07": {
   "alertes-eviter": [
    "Antacides contenant aluminium",
-   "Paraffine liquide (laxatif)"
+   "Paraffine liquide (laxatif)",
+   "Réévaluation planifiée"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -2368,13 +2396,13 @@
  },
  "cov_SUP_INT_001_SUP_INT_002": {
   "alertes-eviter": [
+   "Action immédiate",
    "IEC/ARA2 + Cotrimoxazole : hyperkaliémie sévère",
    "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
    "Lithium + IEC/ARA2 : surveiller lithémie",
    "Lithium sans monitorage régulier",
    "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Phénytoïne + Cotrimoxazole : risque de toxicité",
-   "Réévaluation planifiée"
+   "Phénytoïne + Cotrimoxazole : risque de toxicité"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -2401,9 +2429,9 @@
   "alertes-eviter": [
    "AVK + Amiodarone : surveiller INR étroitement",
    "AVK sans surveillance INR régulière documentée",
+   "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
    "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
-   "Réévaluation planifiée",
    "Théophylline + Fluoroquinolones : toxicité théophylline",
    "Théophylline chez le sujet âgé (PIM, marge thérapeutique étroite)"
   ],
@@ -2468,11 +2496,11 @@
    "AVK + Amiodarone : surveiller INR étroitement",
    "AVK + ISRS : surveillance INR",
    "AVK sans surveillance INR régulière documentée",
+   "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
    "Charge QT-allongeante — ≥ 2 médicaments Risk_KR",
    "Digoxine + Amiodarone : surveiller digoxinémie",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Réévaluation planifiée"
+   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
   ],
   "alertes-initier": [],
   "alertes-bio": [],

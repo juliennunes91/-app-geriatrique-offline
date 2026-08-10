@@ -2340,6 +2340,7 @@ require('./tests_audit_extended').runAnticholinergicAudit(test, assert);
 require('./tests_audit_extended').runProteinBindingAudit(test, assert);
 require('./tests_audit_extended').runCompositeScoreAudit(test, assert);
 require('./tests_audit_extended').runClassMembershipAudit(test, assert);
+require('./tests_audit_extended').runRuleKeyResolutionAudit(test, assert);
 require('./tests_audit_extended').runDdiIntegrityAudit(test, assert);
 require('./tests_audit_extended').runPosologyCompletenessAudit(test, assert);
 

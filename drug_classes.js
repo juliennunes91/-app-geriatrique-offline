@@ -81,9 +81,31 @@ const DRUG_CLASSES = {
         dcis: ['enoxaparine', 'tinzaparine', 'dalteparine', 'fondaparinux']
     },
     antiagregant: {
-        aliases: ['antiagreg', 'antiagregant', 'aspirine', 'acetylsalicylique', 'antiagregantplaquettaire', 'antiagregantplaquettaires'],
+        // 'aspirine'/'acetylsalicylique' RETIRÉS des alias : ils désignaient TOUTE la classe,
+        // si bien que « Aspirine en prévention primaire » (EV_C16), « aspirine faible dose
+        // + ulcère » (IN_F02) et la règle de dose élevée se déclenchaient sur un patient
+        // sous clopidogrel seul. Ils sont désormais portés par la classe `aspirine`.
+        // Les règles visant toute la classe utilisent 'antiagreg'/'antiagregant'.
+        aliases: ['antiagreg', 'antiagregant', 'antiagregantplaquettaire', 'antiagregantplaquettaires'],
         classeMatch: ['antiagreg', 'antiagr'],
         dcis: ['acideacetylsalicylique', 'clopidogrel', 'prasugrel', 'ticagrelor', 'ticlopidine', 'dipyridamole']
+    },
+    // Classes mono-molécule : leur seul rôle est de faire entrer la DCI dans
+    // _ALL_DCIS_SET, ce qui déclenche la garde « match EXACT » du matcheur et coupe
+    // le repli `classe.includes(key)` sur des libellés qui citent la molécule.
+    aspirine: {
+        aliases: ['aspirine', 'acetylsalicylique', 'acideacetylsalicylique'],
+        classeMatch: [],
+        // Les deux graphies : la base porte « Acide acetylsalicylique », mais l'utilisateur
+        // (et les tests) saisissent « Aspirine ».
+        dcis: ['acideacetylsalicylique', 'aspirine']
+    },
+    paracetamol: {
+        // Sans cette entrée, la clé 'paracetamol' matchait le NÉFOPAM, dont le libellé
+        // de classe contient « alternative paracétamol ».
+        aliases: ['paracetamol', 'acetaminophene'],
+        classeMatch: [],
+        dcis: ['paracetamol']
     },
     antipsychotique: {
         aliases: ['antipsychotique', 'neuroleptique', 'neuroleptiques', 'neuroleptiquesantiemetique'],
@@ -383,12 +405,30 @@ const _DCI_AMBIGUOUS = new Map();
 const _CLASS_EXCLUDE = {
     benzodiazepine: /thieno|dibenzo|antipsychotique/,
     diuretique: /antidiur/,
+    // « corticoide » ⊂ « Corticoïde inhalé (ICS) » : la béclométasone déclenchait les
+    // règles du corticoïde SYSTÉMIQUE (ulcère, AINS + corticoïde, PIM-Check).
+    corticoide: /inhale|\bics\b|nasal|ophtalm|cutane|topique|intraarticulaire/,
+    // « calcique » ⊂ « … déficit calcique » : le carbonate de calcium répondait `true`
+    // à `inhibiteurcalcique` ET à `antihypertenseur` (composite), d'où des alertes
+    // antihypertensives chez des patients sans aucun antihypertenseur.
+    inhibiteur_calcique: /seldecalcium|carbonatedecalcium|citratedecalcium|supplementcalcique/,
+};
+
+// Denylist au niveau DCI. _CLASS_EXCLUDE ne teste que le LIBELLÉ DE CLASSE ; certaines
+// collisions viennent de la DCI elle-même via `dciSuffix` / `dcis.some(d => dci.includes(d))`.
+const _CLASS_EXCLUDE_DCI = {
+    // « statine » ⊂ cila-STATINE (imipénem + cilastatine, antibiotique).
+    statine: /cilastatine/,
+    // « fer » ⊂ calci-FÉR-ol / ergocalci-FÉR-ol (vitamine D). Le garde-fou existait
+    // déjà côté ANSM (_ANSM_MATCH_DENYLIST) mais pas dans le matcheur des règles.
+    fer: /calciferol$/,
 };
 
 function _classMatchesMed(classId, dci, classe) {
     const def = DRUG_CLASSES[classId];
     if (!def) return false;
     if (_CLASS_EXCLUDE[classId] && _CLASS_EXCLUDE[classId].test(classe)) return false;
+    if (_CLASS_EXCLUDE_DCI[classId] && _CLASS_EXCLUDE_DCI[classId].test(dci)) return false;
     // Match sur classeMatch : exiger début de chaîne (préfixe) pour les acronymes ≤ 5 chars
     // afin d'éviter qu'un descriptif comme "préférer aux AINS" matche un Paracétamol.
     // Pour les chaînes longues (≥ 6 chars, ex: 'antiinflammatoire'), substring reste OK.
@@ -458,9 +498,12 @@ function matchesDrugClass(dci, classe, key) {
         return dci === key || classe === key;
     }
     // Garde anti-collision : un key trop court (< 4 car.) ne doit PAS matcher par
-    // sous-chaîne du libellé de classe (ex. "fer" ⊂ "ré-fér-ence", "calci-fér-ol").
+    // sous-chaîne, NI du libellé de classe NI de la DCI (ex. "fer" ⊂ "ré-fér-ence",
+    // ⊂ "calci-FÉR-ol" / "ergocalci-FÉR-ol"). Le garde ne portait que sur `classe`,
+    // laissant `dci.includes('fer')` capter les vitamines D.
     // Les acronymes courts légitimes (iec, ara2…) sont des alias exacts gérés en Passe 1.
-    return dci.includes(key) || (key.length >= 4 && classe.includes(key)) || key.includes(dci);
+    if (key.length < 4) return false;
+    return dci.includes(key) || classe.includes(key) || key.includes(dci);
 }
 
 // Denylist anti-collision de sous-chaîne : paires (dci, terme) qui SE RESSEMBLENT

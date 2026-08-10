@@ -67,6 +67,13 @@ const SUPPLEMENT_QUARANTINE = new Set([
     'SUP_STOP_003', 'SUP_STOP_009', 'SUP_STOP_058',
     // Mortes par médicament : doublons de règles fonctionnelles, ou indication non détectable.
     'SUP_STOP_044', 'SUP_STOP_057', 'SUP_STOP_076', 'SUP_STOP_077', 'SUP_STOP_080',
+    // SUP_STOP_026 (STOPP3-F6) : la condition a perdu sa pathologie — le critère vise
+    // les antiagrégants/anticoagulants EN CAS D'ECTASIE VASCULAIRE ANTRALE GASTRIQUE
+    // (« watermelon stomach »), qui ne figure que dans le message. La règle se
+    // déclenchait donc chez TOUT patient anticoagulé, sous un titre « Antiagregant ou
+    // anticoagulant » qui se lit comme une proscription générale. Pathologie non
+    // modélisée dans MASTER_DB.PATHOLOGIES → quarantaine (même politique que _012).
+    'SUP_STOP_026',
     // Variantes œstrogènes redondantes / indication non détectable (cf. SUP_STOP_049 actif).
     'SUP_STOP_012', 'SUP_STOP_051', 'SUP_STOP_052',
     // Famille SUP_START_* (START3) — déclenchées sur présence, jamais sur absence.
@@ -2160,24 +2167,24 @@ function analyserPrescription() {
             { key: 'iec',                          label: 'IEC',                          note: "Association IEC non recommandée (risque hyperK+/IRA ; ESC 2021)." },
             { key: 'ara2',                         label: 'ARA2',                         note: "Association ARA2 non recommandée (ONTARGET, VA NEPHRON-D)." },
             { key: 'betabloquant',                 label: 'Bêtabloquants',                note: "Association BB systémiques non recommandée (bradycardie, hypoTA)." },
-            { key: 'isrs',                         label: 'ISRS',                         note: "Association de 2 ISRS = syndrome sérotoninergique (Beers 2023, STOPP D14).", exception: "Exception : NaSSA (mirtazapine, miansérine) + ISRS/IRSN n'est PAS un doublon (« California Rocket Fuel » de Stahl 2007 — augmentation potentialisatrice acceptée en dépression résistante chez l'âgé). Cette association sort du DUPLICATE_WATCH." },
-            { key: 'irsn',                         label: 'IRSN',                         note: "Association de 2 IRSN non justifiée (sérotoninergique).", exception: "Exception : NaSSA (mirtazapine, miansérine) + IRSN n'est PAS un doublon (« California Rocket Fuel »). Cette association sort du DUPLICATE_WATCH." },
-            { key: 'antidepresseur_tricyclique',   label: 'Antidépresseurs tricycliques', note: "Association ATC non justifiée (anticholinergique, cardiotox)." },
+            { key: 'isrs',                         label: 'ISRS',                         note: "Association de 2 ISRS = syndrome sérotoninergique (Beers 2023, STOPP D14).", severite: 'danger', exception: "Exception : NaSSA (mirtazapine, miansérine) + ISRS/IRSN n'est PAS un doublon (« California Rocket Fuel » de Stahl 2007 — augmentation potentialisatrice acceptée en dépression résistante chez l'âgé). Cette association sort du DUPLICATE_WATCH." },
+            { key: 'irsn',                         label: 'IRSN',                         note: "Association de 2 IRSN non justifiée (sérotoninergique).", severite: 'danger', exception: "Exception : NaSSA (mirtazapine, miansérine) + IRSN n'est PAS un doublon (« California Rocket Fuel »). Cette association sort du DUPLICATE_WATCH." },
+            { key: 'antidepresseur_tricyclique',   label: 'Antidépresseurs tricycliques', note: "Association ATC non justifiée (anticholinergique, cardiotox).", severite: 'danger' },
             { key: 'benzodiazepine',               label: 'Benzodiazépines',              note: "Association BZD déconseillée (STOPP D5, Beers 2023) — chutes, confusion.", exception: "Exception parfois : 1 hypnotique court + 1 anxiolytique, mais à éviter chez le sujet âgé." },
             { key: 'ipp',                          label: 'IPP',                          note: "Association IPP non justifiée." },
-            { key: 'ains',                         label: 'AINS',                         note: "Association AINS formellement contre-indiquée (saignements, IRA)." },
+            { key: 'ains',                         label: 'AINS',                         note: "Association AINS formellement contre-indiquée (saignements, IRA).", severite: 'danger' },
             { key: 'antipsychotique',              label: 'Antipsychotiques',             note: "Association neuroleptiques à éviter (QT, sédation, surmortalité démence).", exception: "Exception transitoire possible pendant un switch progressif." },
             { key: 'diuretique_thiazidique',       label: 'Diurétiques thiazidiques',     note: "Association thiazidique non justifiée." },
             { key: 'diuretique_anse',              label: 'Diurétiques de l\'anse',       note: "Association de l\'anse non justifiée." },
             { key: 'opioid',                       label: 'Opioïdes',                     note: "Association opioïdes forts déconseillée (sédation, dépression respiratoire).", exception: "Exception : 1 opioïde fond + 1 opioïde interdose (même DCI ou LP+IR) si douleur chronique cancéreuse." },
             { key: 'statine',                      label: 'Statines',                     note: "Association de statines non justifiée." },
-            { key: 'sulfamide_hypoglycemiant',     label: 'Sulfamides hypoglycémiants',   note: "Association sulfamides contre-indiquée (hypoglycémie sévère)." },
+            { key: 'sulfamide_hypoglycemiant',     label: 'Sulfamides hypoglycémiants',   note: "Association sulfamides contre-indiquée (hypoglycémie sévère).", severite: 'danger' },
             { key: 'glinide',                      label: 'Glinides',                     note: "Association glinides non justifiée." },
-            { key: 'anticoagulant',                label: 'Anticoagulants curatifs',      note: "Association AOD/AVK/HBPM curative = risque hémorragique majeur.", exception: "Exception : bridge AVK/HBPM transitoire péri-opératoire." },
+            { key: 'anticoagulant',                label: 'Anticoagulants curatifs',      note: "Association AOD/AVK/HBPM curative = risque hémorragique majeur.", severite: 'danger', exception: "Exception : bridge AVK/HBPM transitoire péri-opératoire." },
             { key: 'antiagregant',                 label: 'Antiagrégants',                note: "Association d\'antiagrégants = risque hémorragique accru.", exception: "Exception : DAPT post-SCA/stent (aspirine + inhibiteur P2Y12) pendant durée limitée (ESC)." },
             { key: 'macrolide',                    label: 'Macrolides',                   note: "Association macrolides non justifiée." },
             { key: 'fluoroquinolone',              label: 'Fluoroquinolones',             note: "Association FQ non justifiée." },
-            { key: 'valproate_salts',              label: 'Sels de valproate (Dépakine / Dépakote / Dépamide)', note: "Association de 2 sels de valproate = surdosage en acide valproïque (hépatotoxicité, hyperammoniémie, thrombopénie). Un seul sel de valproate à la fois." }
+            { key: 'valproate_salts',              label: 'Sels de valproate (Dépakine / Dépakote / Dépamide)', note: "Association de 2 sels de valproate = surdosage en acide valproïque (hépatotoxicité, hyperammoniémie, thrombopénie). Un seul sel de valproate à la fois.", severite: 'danger' }
         ];
 
         const dupFound = [];
@@ -2203,6 +2210,7 @@ function analyserPrescription() {
                     label: cls.label,
                     note: cls.note,
                     exception: cls.exception || '',
+                    severite: cls.severite || 'warning',
                     dcis: uniqDcis
                 });
             }
@@ -2220,17 +2228,22 @@ function analyserPrescription() {
                 const _recontextDup = (d.label === 'Antipsychotiques' && _notePsyApsy)
                     ? `<br><div class="mt-1 p-2 rounded" style="background:#e7f1ff;border-left:3px solid #0d6efd;"><small><strong>${escapeHtml(_notePsyApsy)}</strong></small></div>`
                     : '';
-                addAlert('alertes-eviter', `<div class="alert alert-warning border-warning shadow-sm">
-                    <strong>⚠️ Doublon thérapeutique — ${escapeHtml(d.label)}</strong>
+                // Sévérité par classe : un doublon d'anticoagulants curatifs (never event)
+                // ne doit pas être gradué comme un doublon de statines. La recontextualisation
+                // psychiatrique, quand elle s'applique, redescend l'alerte à `warning`.
+                const _dupSev = (_recontextDup ? 'warning' : (d.severite || 'warning'));
+                const _dupCritique = _dupSev === 'danger';
+                addAlert('alertes-eviter', `<div class="alert alert-${_dupCritique ? 'danger border-danger' : 'warning border-warning'} shadow-sm">
+                    <strong>${_dupCritique ? '🔴' : '⚠️'} Doublon thérapeutique — ${escapeHtml(d.label)}</strong>
                     <span class="badge bg-dark float-end" style="font-size:0.65em;">Doublon classe</span>
                     <br><span class="small">${dciList}</span>
                     <br><small>${escapeHtml(d.note)}</small>
                     ${d.exception ? `<br><small class="text-info fst-italic">${escapeHtml(d.exception)}</small>` : ''}
                     ${_recontextDup}
-                    <br><span class="badge bg-warning text-dark" style="font-size:0.7em;">${_recontextDup ? 'Parfois justifié — surveiller' : 'A ÉVITER sauf justification EBM'}</span>
+                    <br><span class="badge bg-${_dupCritique ? 'danger' : 'warning text-dark'}" style="font-size:0.7em;">${_recontextDup ? 'Parfois justifié — surveiller' : (_dupCritique ? 'ACTION IMMÉDIATE — vérifier l\'indication des deux lignes' : 'A ÉVITER sauf justification EBM')}</span>
                 </div>`, 'eviter');
                 d.dcis.forEach(dci => _regAddMed(dci, 'eviter', {
-                    severity: 'warning',
+                    severity: _dupSev,
                     text: `Doublon thérapeutique (${d.label}) : ${d.dcis.join(' + ')}`,
                     gravite: 'A EVITER',
                     source: 'Doublon classe'

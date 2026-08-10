@@ -126,6 +126,12 @@
   "Ticagrelor",
   "Ticlopidine"
  ],
+ "aspirine": [
+  "Acide acetylsalicylique"
+ ],
+ "paracetamol": [
+  "Paracetamol"
+ ],
  "antipsychotique": [
   "Amisulpride",
   "Aripiprazole",
@@ -251,8 +257,6 @@
  "statine": [
   "Atorvastatine",
   "Fluvastatine",
-  "Imipenem + cilastatine",
-  "Imipenem/Cilastatine/Relebactam",
   "Pravastatine",
   "Rosuvastatine",
   "Simvastatine"
@@ -270,18 +274,13 @@
   "Ranitidine"
  ],
  "corticoide": [
-  "Beclometasone",
   "Betamethasone",
-  "Budesonide",
-  "Ciclesonide",
   "Cortisone",
   "Dexamethasone",
-  "Fluticasone",
   "Hydrocortisone",
   "Methylprednisolone",
   "Prednisolone",
-  "Prednisone",
-  "Triamcinolone"
+  "Prednisone"
  ],
  "arni": [
   "Sacubitril/Valsartan"
@@ -299,7 +298,6 @@
  ],
  "inhibiteur_calcique": [
   "Amlodipine",
-  "Carbonate de calcium",
   "Clevidipine",
   "Diltiazem",
   "Felodipine",
