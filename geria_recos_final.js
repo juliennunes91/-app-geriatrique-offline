@@ -1197,7 +1197,12 @@ const GERIA_RECOS_DB = {
             section: "Respiratoire",
             titre: "LAMA + Glaucome à angle fermé / obstruction vésicale",
             message: "LAMA inhalé (tiotropium, aclidinium, uméclidinium, glycopyrronium) avec glaucome à angle fermé (exacerbation) ou obstruction vésicale (rétention urinaire).",
-            severite: "danger",
+            // Decision du prescripteur : PRUDENCE, pas contre-indication. Pour un LAMA INHALE
+            // le risque de crise de glaucome passe par la projection oculaire accidentelle
+            // (technique d'inhalation), pas par un effet anticholinergique systemique — les
+            // regles par pathologie le classent d'ailleurs deja « PRUDENCE ». Le plancher de
+            // criticite aurait sinon impose le rouge a une precaution de technique.
+            severite: "warning",
             condition: {
                 med_keys: ["tiotropium", "aclidinium", "umeclidinium", "glycopyrronium"],
                 comorbs_any: ["PAT_033"]
