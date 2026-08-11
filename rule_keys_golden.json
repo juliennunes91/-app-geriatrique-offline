@@ -16,9 +16,7 @@
  "acidezoledronique": [
   "Acide zoledronique"
  ],
- "aclidinium": [
-  "Clidinium"
- ],
+ "aclidinium": [],
  "agomelatine": [
   "Agomelatine"
  ],
@@ -599,13 +597,11 @@
   "Prednisone"
  ],
  "corticoideinhale": [
-  "Betamethasone",
-  "Cortisone",
-  "Dexamethasone",
-  "Hydrocortisone",
-  "Methylprednisolone",
-  "Prednisolone",
-  "Prednisone"
+  "Beclometasone",
+  "Budesonide",
+  "Ciclesonide",
+  "Fluticasone",
+  "Triamcinolone"
  ],
  "cotrimoxazole": [
   "Cotrimoxazole"
@@ -834,7 +830,6 @@
   "Fondaparinux"
  ],
  "formoterol": [
-  "Budesonide",
   "Formoterol"
  ],
  "fumarateferreux": [
@@ -1665,7 +1660,6 @@
   "Trospium"
  ],
  "umeclidinium": [
-  "Clidinium",
   "Umeclidinium"
  ],
  "urapidil": [

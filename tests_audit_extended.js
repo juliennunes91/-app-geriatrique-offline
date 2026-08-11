@@ -1042,6 +1042,10 @@ const CLES_MORTES_CONNUES = new Set([
     // apres reformulation) et la cytisine restent a ajouter — d'ici la, la regle ne peut
     // pas voir qu'une aide au sevrage est deja en cours.
     'nicotine', 'substitutnicotinique', 'varenicline', 'cytisine',
+    // EV_G03 (LAMA + glaucome) : l'aclidinium n'est pas en base. La cle paraissait
+    // vivante parce qu'elle captait a tort le CLIDINIUM (antispasmodique) ; la
+    // separation des classes LAMA a revele qu'elle etait morte depuis toujours.
+    'aclidinium',
 ]);
 
 // ============================================================================

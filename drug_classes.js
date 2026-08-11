@@ -141,6 +141,23 @@ const DRUG_CLASSES = {
             'meloxicam', 'indometacine', 'aceclofenac', 'flurbiprofene', 'tenoxicam',
             'nabumetone', 'sulindac', 'acidetiaprofenique', 'acidemefenamique', 'nimesulide']
     },
+    corticoide_inhale: {
+        // Classe DISTINCTE du corticoide systemique. Sans elle, la cle « corticoide inhale »
+        // employee par IN_G02 (med_absent) retombait sur l'alias substring 'corticoide' et
+        // resolvait vers les corticoides SYSTEMIQUES : le garde-fou etait inverse — un patient
+        // sous prednisone eteignait l'omission, un patient sous beclometasone ne l'eteignait pas.
+        aliases: ['corticoideinhale', 'corticoidesinhales', 'ics', 'corticosteroideinhale'],
+        classeMatch: ['corticoideinhale'],
+        dcis: ['beclometasone', 'budesonide', 'fluticasone', 'mometasone', 'ciclesonide', 'triamcinolone']
+    },
+    lama: {
+        // Cle non employee par le corpus a ce jour, mais 'lama' fait 4 caracteres et passe
+        // donc le garde-fou de longueur : par le repli permissif, elle capte le DELAMANIDE
+        // (antituberculeux). Declarer la classe fait gagner la Passe 1 et coupe le repli.
+        aliases: ['lama', 'anticholinergiqueinhale', 'antimuscariniqueinhale'],
+        classeMatch: ['lamaanticholinergique'],
+        dcis: ['tiotropium', 'aclidinium', 'umeclidinium', 'glycopyrronium', 'ipratropium', 'revefenacine']
+    },
     barbiturique: {
         // Clé employée par EV_BEERS_01 (« Méprobamate, barbituriques ») — jamais résolue,
         // donc le phénobarbital n'était pas signalé comme PIM par cette règle.
@@ -583,6 +600,9 @@ const _ANSM_MATCH_DENYLIST = [
     { dci: /calciferol$/, term: /^fer$/ },
     // clidinium (antispasmodique) ⊂ uméclidinium / aclidinium (LAMA bronchodilatateurs).
     { dci: /^clidinium$/, term: /^(um|ac)?eclidinium$|^umeclidinium$|^aclidinium$/ },
+    // « LAMA » (bronchodilatateur anticholinergique inhalé) ⊂ dé-LAMA-nide, un
+    // antituberculeux. Le terme fait 4 caractères et passe donc le garde-fou de longueur.
+    { dci: /^delamanide$/, term: /^lama$/ },
 ];
 
 /**

@@ -162,6 +162,19 @@
   "Piroxicam",
   "Sulindac"
  ],
+ "corticoide_inhale": [
+  "Beclometasone",
+  "Budesonide",
+  "Ciclesonide",
+  "Fluticasone",
+  "Triamcinolone"
+ ],
+ "lama": [
+  "Glycopyrronium",
+  "Ipratropium",
+  "Tiotropium",
+  "Umeclidinium"
+ ],
  "barbiturique": [
   "Phenobarbital",
   "Primidone"
