@@ -249,10 +249,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "message": "Maladie coronarienne, cerebrovasculaire ou arterielle peripherique STABLE — Pas de benefice additionnel. Risque hemorragique majeur",
         "severite": "warning",
         "condition": {
-            "med_keys": [
-                "aspirineclopidogrel  aodavk"
-            ]
+            "type": "manual_review"
         },
+        "_condition_origine": "{\n            \"med_keys\": [\n                \"aspirineclopidogrel  aodavk\"\n            ]\n        }",
+        "_motif_quarantaine": "Cle(s) medicament collee(s) a l'import CSV. La regle est deja dans SUPPLEMENT_QUARANTINE (app_analysis.js) et n'est donc pas rendue ; mais la cle collee a fini par matcher PAR ACCIDENT via le repli d'alias du matcheur (ex. \"ains topiques diclofenac gel\" resolvait celecoxib, ibuprofene et ketoprofene). Condition ramenee a manual_review : le moteur la rejette d'emblee et l'audit de resolution des cles ne recolte plus ces chaines. Condition d'origine conservee ci-dessus.",
         "alternatives": "L'anticoagulation seule est suffisante en maladie vasculaire stable hors indication specifique d'antiagregation",
         "priscus": "Oui",
         "nb_sources": 8
@@ -980,10 +980,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "message": "Corticotherapie systemique au long cours (>3 mois) — Prevention de l'osteoporose induite par les corticosteroides",
         "severite": "warning",
         "condition": {
-            "med_keys": [
-                "alendronaterisedronate  cholecalciferol  calcium"
-            ]
+            "type": "manual_review"
         },
+        "_condition_origine": "{\n            \"med_keys\": [\n                \"alendronaterisedronate  cholecalciferol  calcium\"\n            ]\n        }",
+        "_motif_quarantaine": "Cle(s) medicament collee(s) a l'import CSV. La regle est deja dans SUPPLEMENT_QUARANTINE (app_analysis.js) et n'est donc pas rendue ; mais la cle collee a fini par matcher PAR ACCIDENT via le repli d'alias du matcheur (ex. \"ains topiques diclofenac gel\" resolvait celecoxib, ibuprofene et ketoprofene). Condition ramenee a manual_review : le moteur la rejette d'emblee et l'audit de resolution des cles ne recolte plus ces chaines. Condition d'origine conservee ci-dessus.",
         "alternatives": "Bisphosphonate des la premiere prescription de corticoide >3 mois. Densitometrie osseuse a la baseline",
         "forta": "A (FORTA A)",
         "nb_sources": 8
@@ -1002,11 +1002,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "message": "Apres arret de >=2 doses de denosumab (effet rebond documente) — Prevention du rebond de resorption osseuse et des fractures vertebrales post-arret denosumab",
         "severite": "warning",
         "condition": {
-            "med_keys": [
-                "bisphosphonate alendronate",
-                "acide zoledronique"
-            ]
+            "type": "manual_review"
         },
+        "_condition_origine": "{\n            \"med_keys\": [\n                \"bisphosphonate alendronate\",\n                \"acide zoledronique\"\n            ]\n        }",
+        "_motif_quarantaine": "Cle(s) medicament collee(s) a l'import CSV. La regle est deja dans SUPPLEMENT_QUARANTINE (app_analysis.js) et n'est donc pas rendue ; mais la cle collee a fini par matcher PAR ACCIDENT via le repli d'alias du matcheur (ex. \"ains topiques diclofenac gel\" resolvait celecoxib, ibuprofene et ketoprofene). Condition ramenee a manual_review : le moteur la rejette d'emblee et l'audit de resolution des cles ne recolte plus ces chaines. Condition d'origine conservee ci-dessus.",
         "alternatives": "Bisphosphonate IV (acide zoledronique) 3-6 mois apres derniere injection denosumab = plus efficace",
         "nb_sources": 8
     },
@@ -1024,10 +1023,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "message": "Apres arret de teriparatide ou abaloparatide (prevention perte du gain osseux) — Prevention de la perte de la densite osseuse acquise sous teriparatide",
         "severite": "warning",
         "condition": {
-            "med_keys": [
-                "bisphosphonate ou denosumab"
-            ]
+            "type": "manual_review"
         },
+        "_condition_origine": "{\n            \"med_keys\": [\n                \"bisphosphonate ou denosumab\"\n            ]\n        }",
+        "_motif_quarantaine": "Cle(s) medicament collee(s) a l'import CSV. La regle est deja dans SUPPLEMENT_QUARANTINE (app_analysis.js) et n'est donc pas rendue ; mais la cle collee a fini par matcher PAR ACCIDENT via le repli d'alias du matcheur (ex. \"ains topiques diclofenac gel\" resolvait celecoxib, ibuprofene et ketoprofene). Condition ramenee a manual_review : le moteur la rejette d'emblee et l'audit de resolution des cles ne recolte plus ces chaines. Condition d'origine conservee ci-dessus.",
         "alternatives": "Sans relais anti-resorptif: perte rapide du benefice osseux dans les 12-18 mois",
         "nb_sources": 8
     },
@@ -1284,10 +1283,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "message": "Uterus intact (non hypersterectomisee) — Cancer de l'endometre (hyperplasie puis neoplasie endometriale)",
         "severite": "warning",
         "condition": {
-            "med_keys": [
-                "oestradiol seul oral ou patch"
-            ]
+            "type": "manual_review"
         },
+        "_condition_origine": "{\n            \"med_keys\": [\n                \"oestradiol seul oral ou patch\"\n            ]\n        }",
+        "_motif_quarantaine": "Cle(s) medicament collee(s) a l'import CSV. La regle est deja dans SUPPLEMENT_QUARANTINE (app_analysis.js) et n'est donc pas rendue ; mais la cle collee a fini par matcher PAR ACCIDENT via le repli d'alias du matcheur (ex. \"ains topiques diclofenac gel\" resolvait celecoxib, ibuprofene et ketoprofene). Condition ramenee a manual_review : le moteur la rejette d'emblee et l'audit de resolution des cles ne recolte plus ces chaines. Condition d'origine conservee ci-dessus.",
         "alternatives": "Oestrogene seul uniquement si hysterectomie. Si uterus present: oestrogene+progestatif obligatoire",
         "nb_sources": 8
     },
@@ -1605,13 +1604,11 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "message": "Patient fragile severe (CFS >=7) ou en fin de vie avec ordonnance chargee (polypharmacie >=10 medicaments) — Elimination des medicaments preventifs dont le benefice se manifeste a un horizon superieur a l'esperance de vie. Reduction des effets indesirables, amelioration de la qualite de vie",
         "severite": "info",
         "condition": {
+            "_commentaire": "Cles remises aux formes qui RESOLVENT reellement : les pluriels d'origine (statines, antihypertenseurs, bisphosphonates) resolvaient mal ou pas du tout — \"bisphosphonates\" ne captait que le denosumab, \"antihypertenseurs\" que les antihypertenseurs centraux. Les trois cles en prose (aspirine prevention primaire, multivitamines sans carence, supplements sans indication) sont RETIREES : elles designent une INDICATION, non un medicament, et ne pourront jamais resoudre.",
             "med_keys": [
-                "statines",
-                "antihypertenseurs",
-                "bisphosphonates",
-                "aspirine prevention primaire",
-                "multivitamines sans carence",
-                "supplements sans indication"
+                "statine",
+                "antihypertenseur",
+                "bisphosphonate"
             ],
             "fragilite": "severe"
         },
@@ -1809,12 +1806,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "message": "Arthrose localisee accessible topiquement (genou, mains, epaules) — FORTA B: efficacite sur la douleur locale comparable aux AINS oraux avec moins d'effets systemiques",
         "severite": "info",
         "condition": {
-            "med_keys": [
-                "ains topiques diclofenac gel",
-                "ketoprofene gel",
-                "ibuprofene topique"
-            ]
+            "type": "manual_review"
         },
+        "_condition_origine": "{\n            \"med_keys\": [\n                \"ains topiques diclofenac gel\",\n                \"ketoprofene gel\",\n                \"ibuprofene topique\"\n            ]\n        }",
+        "_motif_quarantaine": "Cle(s) medicament collee(s) a l'import CSV. La regle est deja dans SUPPLEMENT_QUARANTINE (app_analysis.js) et n'est donc pas rendue ; mais la cle collee a fini par matcher PAR ACCIDENT via le repli d'alias du matcheur (ex. \"ains topiques diclofenac gel\" resolvait celecoxib, ibuprofene et ketoprofene). Condition ramenee a manual_review : le moteur la rejette d'emblee et l'audit de resolution des cles ne recolte plus ces chaines. Condition d'origine conservee ci-dessus.",
         "alternatives": "A privilegier avant les AINS oraux si zone accessible. Eviter sur peau lesee ou muqueuses",
         "forta": "B (FORTA B)",
         "nb_sources": 8

@@ -998,21 +998,6 @@ function runRuleKeyResolutionAudit(test, assert) {
 // vaccination) ou dont le concept est couvert par une règle native. Elles ne doivent
 // pas faire échouer l'audit, mais toute clé morte NOUVELLE doit le faire.
 const CLES_MORTES_CONNUES = new Set([
-    'aspirineclopidogrelaodavk',              // SUP_STOP_009  → couvert par SUP_PIMC_09
-    'tripletherapieouquadritherapie',         // SUP_START_030 → H. pylori non modélisé
-    'o2concentrateur15hj',                    // SUP_START_033 → oxygénothérapie non modélisée
-    'alendronaterisedronatecholecalciferolcalcium', // SUP_START_039 → couvert par EV_SYND_049
-    'bisphosphonatealendronate',              // SUP_START_040 → état post-arrêt dénosumab
-    'bisphosphonateoudenosumab',              // SUP_START_041 → état post-arrêt tériparatide
-    'thscombineoraloupatch',                  // SUP_STOP_051  → doublon de SUP_STOP_049
-    'oestradiolseuloraloupatch',              // SUP_STOP_052  → statut utérin non modélisé
-    'covid19marnousousunite',                 // SUP_START_059 → vaccination non modélisée
-    'aspirinepreventionprimaire',             // SUP_DEP_065   → indication non détectable
-    'multivitaminessanscarence',              // SUP_DEP_065
-    'supplementssansindication',              // SUP_DEP_065
-    'ainstopiquesdiclofenacgel',              // SUP_CAUT_073  → quarantaine (faux positif)
-    'ketoprofenegel', 'ibuprofenetopique',    // SUP_CAUT_073  → formes topiques non distinguées
-
     // ------------------------------------------------------------------------
     // MOLÉCULES ABSENTES DE MASTER_DB — la clé est CORRECTE, c'est la base qui est
     // incomplète. Elles restent inertes tant que la molécule n'est pas saisie ; si
@@ -1020,32 +1005,40 @@ const CLES_MORTES_CONNUES = new Set([
     // Les ajouter suppose la procédure complète de CLAUDE.md (§ « Ajout d'un
     // médicament ») : entrée MASTER_DB exhaustive, classe, interactions, surveillance.
     // Ne PAS les retirer d'ici sans avoir ajouté la molécule pour de bon.
-    'avanafil', 'vardenafil',                 // EV_B14 — IPDE5 (sildénafil/tadalafil en base)
-    'brivaracetam', 'perampanel',             // IN_J04 — antiépileptiques récents
+    //
+    // (a) Molécules NON COMMERCIALISÉES EN FRANCE ou retirées du marché — pour
+    //     celles-là, corriger la RÈGLE en retirant la clé serait plus honnête que
+    //     d'ajouter une molécule que le prescripteur ne peut pas prescrire.
+    'cytisine',                               // sevrage tabagique — vente interdite en France
     'rosiglitazone',                          // EV_J02 — retirée du marché UE en 2010
-    'eszopiclone', 'temazepam',               // EV_SYND_044 / EV_D08 — non commercialisés en France
-    'chlorpropamide',                         // EV_J01 — sulfamide non commercialisé en France
+    'chlorpropamide',                         // EV_J01 — non commercialisé en France
+    'temazepam', 'eszopiclone',               // EV_D08 / EV_SYND_044 — non commercialisés en France
+    'avanafil', 'vardenafil',                 // EV_B14 — IPDE5 (sildénafil et tadalafil sont en base)
+    'ferrique',                               // SUP_REM_01 — sels ferriques ; seul le maltol ferrique
+                                              //   existe par voie orale, sans commercialisation
+                                              //   française retrouvée. Les sels FERREUX sont en base.
+    'phosphalugel',                           // SUP_EU7_06 — nom commercial ; la molécule
+                                              //   (phosphate d'aluminium) EST en base : corriger la clé
+    //
+    // (b) Molécules réelles, périphériques, non encore saisies
     'guanfacine', 'tertatolol',               // EV_B11 / EV_J03
     'josamycine',                             // SUP_INT_006 — macrolide
     'procyclidine', 'pramiracetam',           // EV_D13 / EV_D20
-    'methylnaltrexone', 'naloxegol', 'naloxone', // EV_SYND_048 / EV_L02 — antagonistes opioïdes
-    'rifaximine',                             // IN_M02
-    'olodaterol', 'mometasone',               // IN_G01 / IN_G02 — inhalés
     'quinine',                                // EV_C14 (la base ne contient que la quinidine)
-    'sorbitol',                               // IN_F05
-    'folinique', 'folinate',                  // IN_H09 / SUP_PIMC_04 — acide folinique
-    'sene', 'sennosides',                     // SUP_REM_04 — séné (la base ne contient que le bisacodyl)
-    'ferrique',                               // SUP_REM_01 — sels ferriques (la base n'a que les ferreux)
-    'phosphalugel',                           // SUP_EU7_06 — nom commercial, molécule absente
-    // IN_G03 (sevrage tabagique BPCO) : la base ne contient que le bupropion. Les
-    // substituts nicotiniques, la varenicline (recommercialisee en France en juin 2025
-    // apres reformulation) et la cytisine restent a ajouter — d'ici la, la regle ne peut
-    // pas voir qu'une aide au sevrage est deja en cours.
-    'nicotine', 'substitutnicotinique', 'varenicline', 'cytisine',
-    // EV_G03 (LAMA + glaucome) : l'aclidinium n'est pas en base. La cle paraissait
-    // vivante parce qu'elle captait a tort le CLIDINIUM (antispasmodique) ; la
-    // separation des classes LAMA a revele qu'elle etait morte depuis toujours.
-    'aclidinium',
+    'folinate',                               // IN_H09 / SUP_PIMC_04 — synonyme de l'acide folinique,
+                                              //   qui EST en base depuis son ajout : la clé 'folinique'
+                                              //   résout, 'folinate' reste à rattacher comme alias
+    'aclidinium',                             // EV_G03 — la clé paraissait vivante uniquement parce
+                                              //   qu'elle captait à tort le CLIDINIUM (antispasmodique) ;
+                                              //   la séparation des classes LAMA a révélé qu'elle
+                                              //   était morte depuis toujours
+    //
+    // (c) Artefacts d'import CSV dans des règles NON quarantainées
+    'tripletherapieouquadritherapie',         // SUP_START_030 — H. pylori non modélisé
+    'o2concentrateur15hj',                    // SUP_START_033 — oxygénothérapie non modélisée
+    'thscombineoraloupatch',                  // SUP_STOP_051  — doublon de SUP_STOP_049
+    'covid19marnousousunite',                 // SUP_START_059 — vaccination non modélisée
+    'ketoprofenegel', 'ibuprofenetopique',    // SUP_CAUT_073 — formes topiques non distinguées
 ]);
 
 // ============================================================================
