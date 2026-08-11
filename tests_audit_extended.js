@@ -966,7 +966,9 @@ const TITRE_TERRAIN = [
     [/insuffisance cardiaque|HFrEF|FEVG réduite/i, /insuffisance cardiaque|HFrEF|HFpEF/i],
     [/ulcère|ulcere/i, /ulcère|ulcere|gastro-duod/i],
     [/glaucome/i, /glaucome/i],
-    [/démence|demence|alzheimer/i, /démence|demence|alzheimer|cognitif/i],
+    // « anti-Alzheimer » nomme la CLASSE DU MEDICAMENT, pas le terrain du patient :
+    // le lookbehind evite ce faux positif (cf. SUP_REM_03).
+    [/démence|demence|(?<!anti-)alzheimer/i, /démence|demence|alzheimer|cognitif/i],
     [/BPCO/i, /BPCO/i],
     [/cirrhose|hépatopathie/i, /cirrhose|hépatopathie|hepatique/i],
     [/parkinson/i, /parkinson/i],
@@ -994,7 +996,6 @@ const TITRE_ALLOWLIST = new Map([
     ['EV_L06',       'Titre « dénutrition OU hépatopathie » : la dénutrition est vérifiée, la branche hépatique reste à câbler — écart connu, sans sur-déclenchement.'],
     ['EV_SYND_047b', 'Le délirium est la CONSÉQUENCE annoncée, pas un prérequis ; la condition vérifie l\'âge et la charge anticholinergique forte.'],
     ['EV_N02',       'La base modélise « hépatopathie » sans granularité « cirrhose sévère » : la condition est plus large que le titre, non l\'inverse.'],
-    ['SUP_REM_03',   'Titre « si démence sévère » alors que seule la fragilité est vérifiée. Sur-affirmation admise : un anti-Alzheimer implique la démence en pratique, mais le qualificatif « sévère » n\'est pas verifié.'],
 ]);
 
 function runTitreConditionAudit(test, assert) {
@@ -1089,7 +1090,7 @@ const LIBELLE_ALLOWLIST = new Set([
     'Salbutamol::Terbutaline', 'Captopril::Zofenopril', 'Lactulose::Lactitol',
     // Écarts CONNUS et assumés : molécules distinctes, même indication.
     'Allopurinol::Febuxostat', 'Lactulose::Macrogol',
-    'Guaifenesine::Methocarbamol', 'Mélatonine::Agomelatine',
+    'Guaifenesine::Methocarbamol',
     'Carbonate de calcium::Alginate de sodium / bicarbonate',
 ]);
 function runLibelleClasseAudit(test, assert) {

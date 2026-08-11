@@ -4241,9 +4241,14 @@ const RECOS_SUPPLEMENT = [
     },
     {
         id: "SUP_REM_03", sources: ["REMEDIES", "STOPPFRAIL"],
-        titre: "Médicament anti-Alzheimer si démence sévère sans bénéfice observé",
+        titre: "Médicament anti-Alzheimer chez le patient fragile — réévaluer le bénéfice",
         message: "REMEDIES / STOPPFrail : IAChE ou mémantine si démence sévère (MMSE < 10) ou absence de bénéfice observé depuis ≥ 6 mois — envisager arrêt progressif.",
         severite: "warning",
+        // Titre corrige : il affirmait « si demence severe », que l'application ne peut PAS
+        // verifier (le MMSE n'alimente aucun contexte). Gater sur la comorbidite demence a ete
+        // essaye puis ECARTE : deux patients du panel sous donepezil n'ont pas la demence cochee,
+        // et perdre l'alerte pour un dossier incomplet coute plus que l'imprecision du titre.
+        // Le critere de severite (MMSE < 10) reste dans le message, a l'usage du prescripteur.
         condition: { med_keys: ["donepezil", "rivastigmine", "galantamine", "memantine"], fragile: true }
     },
     {

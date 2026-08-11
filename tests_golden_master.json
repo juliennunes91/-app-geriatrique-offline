@@ -1313,7 +1313,7 @@
   "alertes-eviter": [
    "Inhibiteur acétylcholinestérase / Mémantine si démence sévère (MMSE < 10)",
    "Inhibiteur acétylcholinestérase sans ECG de référence",
-   "Médicament anti-Alzheimer si démence sévère sans bénéfice observé",
+   "Médicament anti-Alzheimer chez le patient fragile — réévaluer le bénéfice",
    "Réévaluation planifiée"
   ],
   "alertes-initier": [
@@ -2341,7 +2341,7 @@
  "cov_SUP_REM_02_SUP_REM_03": {
   "alertes-eviter": [
    "Inhibiteur acétylcholinestérase sans ECG de référence",
-   "Médicament anti-Alzheimer si démence sévère sans bénéfice observé",
+   "Médicament anti-Alzheimer chez le patient fragile — réévaluer le bénéfice",
    "Réévaluation planifiée",
    "Supplémentation calcique > 1000 mg/j"
   ],

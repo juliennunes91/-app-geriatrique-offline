@@ -175,6 +175,16 @@ const DRUG_CLASSES = {
         classeMatch: ['antagonisteopioidecentral'],
         dcis: ['naloxone', 'naltrexone', 'nalmefene']
     },
+    melatonine: {
+        // Classe mono-molecule. La cle 'melatonine' captait l'AGOMELATINE — un
+        // ANTIDEPRESSEUR — parce que son libelle « antidepresseur melatoninergique »
+        // contient « melatonine » comme prefixe de « melatoninergique ». L'agomelatine
+        // est parallelement declaree dans la classe `antidepresseur`, ce qui active la
+        // garde « match EXACT » et coupe definitivement la confusion.
+        aliases: ['melatonine', 'melatonin'],
+        classeMatch: [],
+        dcis: ['melatonine']
+    },
     barbiturique: {
         // Clé employée par EV_BEERS_01 (« Méprobamate, barbituriques ») — jamais résolue,
         // donc le phénobarbital n'était pas signalé comme PIM par cette règle.
@@ -224,7 +234,7 @@ const DRUG_CLASSES = {
     antidepresseur: {
         aliases: ['antidepresseur', 'serotonine'],
         classeMatch: ['antidepresseur'],
-        dcis: ['citalopram', 'escitalopram', 'sertraline', 'paroxetine', 'fluoxetine', 'venlafaxine', 'duloxetine', 'mianserine', 'mirtazapine', 'amitriptyline', 'fluvoxamine', 'milnacipran']
+        dcis: ['citalopram', 'escitalopram', 'sertraline', 'paroxetine', 'fluoxetine', 'venlafaxine', 'duloxetine', 'mianserine', 'mirtazapine', 'amitriptyline', 'fluvoxamine', 'milnacipran', 'agomelatine']
     },
     antidepresseur_tricyclique: {
         aliases: ['antidepresseurtricyclique', 'antidepresseursimipraminique', 'imipraminique'],
