@@ -158,6 +158,23 @@ const DRUG_CLASSES = {
         classeMatch: ['lamaanticholinergique'],
         dcis: ['tiotropium', 'aclidinium', 'umeclidinium', 'glycopyrronium', 'ipratropium', 'revefenacine']
     },
+    pamora: {
+        // Antagonistes PERIPHERIQUES des recepteurs mu (constipation induite par les opioides).
+        // A separer imperativement des antagonistes CENTRAUX : sans cela une alerte d'antidote
+        // de surdosage se declencherait sur un traitement de la constipation.
+        aliases: ['pamora', 'antagonisteopioideperipherique'],
+        classeMatch: ['pamora'],
+        dcis: ['methylnaltrexone', 'naloxegol']
+    },
+    antagoniste_opioide_central: {
+        // Deux collisions de sous-chaine reelles justifient cette declaration :
+        //   'naltrexone' ⊂ methyl-NALTREXONE (PAMORA, rien a voir avec l'addictologie) ;
+        //   'naloxone' captait le NALOXEGOL par le LIBELLE de classe, qui le decrit comme
+        //   « derive PEGyle de la naloxone ». Declarer les DCI active la garde « match EXACT ».
+        aliases: ['antagonisteopioidecentral', 'antidoteopioide'],
+        classeMatch: ['antagonisteopioidecentral'],
+        dcis: ['naloxone', 'naltrexone', 'nalmefene']
+    },
     barbiturique: {
         // Clé employée par EV_BEERS_01 (« Méprobamate, barbituriques ») — jamais résolue,
         // donc le phénobarbital n'était pas signalé comme PIM par cette règle.
@@ -487,6 +504,10 @@ const _CLASS_EXCLUDE = {
     // « corticoide » ⊂ « Corticoïde inhalé (ICS) » : la béclométasone déclenchait les
     // règles du corticoïde SYSTÉMIQUE (ulcère, AINS + corticoïde, PIM-Check).
     corticoide: /inhale|\bics\b|nasal|ophtalm|cutane|topique|intraarticulaire/,
+    // « opio » ⊂ « ANTAGONISTE OPIOIDE central » : la naloxone et la naltrexone entraient
+    // dans la classe des opioides et auraient declenche les regles de l'opioide fort, de la
+    // constipation opioide et de la depression respiratoire — alors qu'elles les ANTAGONISENT.
+    opioid: /antagonisteopioide|antidotedusurdosage/,
     // « calcique » ⊂ « … déficit calcique » : le carbonate de calcium répondait `true`
     // à `inhibiteurcalcique` ET à `antihypertenseur` (composite), d'où des alertes
     // antihypertensives chez des patients sans aucun antihypertenseur.

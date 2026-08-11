@@ -96,6 +96,7 @@
   "Altizide"
  ],
  "aluminium": [
+  "Phosphate d'aluminium",
   "Sucralfate"
  ],
  "alverine": [
@@ -198,6 +199,7 @@
   "Trimipramine"
  ],
  "antiepileptique": [
+  "Brivaracetam",
   "Carbamazepine",
   "Clobazam",
   "Divalproate de sodium",
@@ -206,6 +208,7 @@
   "Lamotrigine",
   "Levetiracetam",
   "Oxcarbazepine",
+  "Perampanel",
   "Phenobarbital",
   "Phenytoine",
   "Pregabaline",
@@ -434,7 +437,9 @@
  "bisoprolol": [
   "Bisoprolol"
  ],
- "brivaracetam": [],
+ "brivaracetam": [
+  "Brivaracetam"
+ ],
  "bromazepam": [
   "Bromazepam"
  ],
@@ -601,6 +606,7 @@
   "Budesonide",
   "Ciclesonide",
   "Fluticasone",
+  "Mometasone",
   "Triamcinolone"
  ],
  "cotrimoxazole": [
@@ -612,7 +618,6 @@
  "cyproheptadine": [
   "Cyproheptadine"
  ],
- "cytisine": [],
  "dabigatran": [
   "Dabigatran"
  ],
@@ -825,7 +830,9 @@
   "Fluvoxamine"
  ],
  "folinate": [],
- "folinique": [],
+ "folinique": [
+  "Acide folinique"
+ ],
  "fondaparinux": [
   "Fondaparinux"
  ],
@@ -1036,7 +1043,9 @@
   "Lactitol",
   "Lactulose",
   "Macrogol",
-  "Paraffine"
+  "Paraffine",
+  "Sennosides",
+  "Sorbitol"
  ],
  "lercanidipine": [
   "Lercanidipine"
@@ -1151,7 +1160,9 @@
  "methyldopa": [
   "Methyldopa"
  ],
- "methylnaltrexone": [],
+ "methylnaltrexone": [
+  "Methylnaltrexone"
+ ],
  "methylprednisolone": [
   "Methylprednisolone"
  ],
@@ -1182,7 +1193,9 @@
  "moclobemide": [
   "Moclobemide"
  ],
- "mometasone": [],
+ "mometasone": [
+  "Mometasone"
+ ],
  "morphine": [
   "Morphine"
  ],
@@ -1201,8 +1214,12 @@
  "naftidrofuryl": [
   "Naftidrofuryl"
  ],
- "naloxegol": [],
- "naloxone": [],
+ "naloxegol": [
+  "Naloxegol"
+ ],
+ "naloxone": [
+  "Naloxone"
+ ],
  "naproxene": [
   "Naproxene"
  ],
@@ -1220,7 +1237,9 @@
  "nicergoline": [
   "Nicergoline"
  ],
- "nicotine": [],
+ "nicotine": [
+  "Nicotine"
+ ],
  "nifedipine": [
   "Nifedipine"
  ],
@@ -1254,7 +1273,9 @@
   "Telmisartan",
   "Valsartan"
  ],
- "olodaterol": [],
+ "olodaterol": [
+  "Olodaterol"
+ ],
  "omeprazole": [
   "Omeprazole"
  ],
@@ -1305,7 +1326,9 @@
  "pentoxifylline": [
   "Pentoxifylline"
  ],
- "perampanel": [],
+ "perampanel": [
+  "Perampanel"
+ ],
  "perindopril": [
   "Perindopril"
  ],
@@ -1419,7 +1442,9 @@
   "Nateglinide",
   "Repaglinide"
  ],
- "rifaximine": [],
+ "rifaximine": [
+  "Rifaximine"
+ ],
  "rilmenidine": [
   "Rilmenidine"
  ],
@@ -1471,8 +1496,12 @@
  "selegiline": [
   "Selegiline"
  ],
- "sene": [],
- "sennosides": [],
+ "sene": [
+  "Sennosides"
+ ],
+ "sennosides": [
+  "Sennosides"
+ ],
  "sertraline": [
   "Sertraline"
  ],
@@ -1501,7 +1530,9 @@
  "solifenacine": [
   "Solifenacine"
  ],
- "sorbitol": [],
+ "sorbitol": [
+  "Sorbitol"
+ ],
  "sotalol": [
   "Sotalol"
  ],
@@ -1515,7 +1546,6 @@
   "Rosuvastatine",
   "Simvastatine"
  ],
- "substitutnicotinique": [],
  "sulfamethoxazole": [
   "Cotrimoxazole"
  ],
@@ -1681,7 +1711,9 @@
   "Valsartan"
  ],
  "vardenafil": [],
- "varenicline": [],
+ "varenicline": [
+  "Varenicline"
+ ],
  "vasodilatateur": [
   "Hydralazine",
   "Isosorbide",

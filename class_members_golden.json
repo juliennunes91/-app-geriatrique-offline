@@ -167,6 +167,7 @@
   "Budesonide",
   "Ciclesonide",
   "Fluticasone",
+  "Mometasone",
   "Triamcinolone"
  ],
  "lama": [
@@ -174,6 +175,13 @@
   "Ipratropium",
   "Tiotropium",
   "Umeclidinium"
+ ],
+ "pamora": [
+  "Methylnaltrexone",
+  "Naloxegol"
+ ],
+ "antagoniste_opioide_central": [
+  "Naloxone"
  ],
  "barbiturique": [
   "Phenobarbital",
@@ -367,6 +375,7 @@
   "Verapamil"
  ],
  "antiepileptique": [
+  "Brivaracetam",
   "Carbamazepine",
   "Clobazam",
   "Divalproate de sodium",
@@ -375,6 +384,7 @@
   "Lamotrigine",
   "Levetiracetam",
   "Oxcarbazepine",
+  "Perampanel",
   "Phenobarbital",
   "Phenytoine",
   "Pregabaline",

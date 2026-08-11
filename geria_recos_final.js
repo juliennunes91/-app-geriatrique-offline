@@ -3270,7 +3270,7 @@ const GERIA_RECOS_DB = {
             condition: {
                 comorbs: ["PAT_023"],
                 contexte_clinique: "tabac",
-                med_absent: ["nicotine", "substitutnicotinique", "varenicline", "bupropion", "cytisine"]
+                med_absent: ["nicotine", "varenicline", "bupropion"]
             },
             alternatives: "Substitution nicotinique en première intention, en associant un patch de longue durée à une forme orale rapide (l'une des deux stratégies les plus efficaces, GOLD 2026 / OMS 2024). La varénicline est de nouveau commercialisée en France depuis juin 2025 après reformulation. Le bupropion est utilisable mais moins efficace : chez le sujet âgé, 150 mg une fois par jour, à réduire encore si DFG < 90, et à éviter en cas d'antécédent comitial ou de traumatisme crânien (risque convulsif dose-dépendant). Les cigarettes électroniques ne sont PAS recommandées par GOLD 2026."
         },
