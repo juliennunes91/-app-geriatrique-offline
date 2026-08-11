@@ -908,7 +908,9 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Prednisone'], precisions: { prednisone: { duree: 'longue' } } }), re), 'durée longue → alerte');
     });
     test('Précisions : douleur sévère désarme EV_L01 (opioïde fort)', () => {
-        const re = /Opioïde fort en 1ère intention pour douleur légère/i;
+        // Titre reformule : la regle se declenche quand la severite n'est PAS documentee,
+        // pas sur une « douleur legere » qui n'etait jamais saisie.
+        const re = /Opioïde fort sans palier antalgique ni douleur sévère documentés/i;
         assert.ok(has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'] }), re), 'sans précision → alerte (défaut)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'severe' } } }), re), 'douleur sévère → désarmé');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'legere' } } }), re), 'douleur légère → alerte');

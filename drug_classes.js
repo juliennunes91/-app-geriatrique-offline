@@ -131,6 +131,16 @@ const DRUG_CLASSES = {
         dcis: ['epoetinealfa', 'epoetinebeta', 'epoetinezeta', 'darbepoetinealfa',
             'methoxypolyethyleneglycolepoetinebeta']
     },
+    ains_non_selectif: {
+        // La classe `ains` contient aussi les coxibs (celecoxib, etoricoxib). EV_H01
+        // s'intitule « AINS non-COX2 » et propose comme alternative « un COX-2 + IPP » :
+        // declenchee par le celecoxib, elle recommandait le medicament deja prescrit.
+        aliases: ['ainsnonselectif', 'ainsnoncox2', 'ainsnonselectifs'],
+        classeMatch: [],
+        dcis: ['ibuprofene', 'ketoprofene', 'naproxene', 'diclofenac', 'piroxicam',
+            'meloxicam', 'indometacine', 'aceclofenac', 'flurbiprofene', 'tenoxicam',
+            'nabumetone', 'sulindac', 'acidetiaprofenique', 'acidemefenamique', 'nimesulide']
+    },
     barbiturique: {
         // Clé employée par EV_BEERS_01 (« Méprobamate, barbituriques ») — jamais résolue,
         // donc le phénobarbital n'était pas signalé comme PIM par cette règle.

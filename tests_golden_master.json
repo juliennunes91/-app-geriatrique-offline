@@ -10,7 +10,7 @@
    "Antidépresseurs tricycliques chez le sujet âgé",
    "Aspirine en prévention primaire cardiovasculaire",
    "Benzodiazépine chez patient chuteur",
-   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépine ou Z-drug ≥ 4 semaines",
    "Benzodiazépines / Z-drugs : DIAZEPAM",
    "Cascades iatrogéniques détectées",
    "Citalopram > 20 mg ou Escitalopram > 10 mg ou TCA en cas d'arythmie / QT prolongé / hypokaliémie",
@@ -20,7 +20,7 @@
    "GLIBENCLAMIDE — CI Diabète de type 2",
    "GLIBENCLAMIDE — Prudence Diabète de type 2",
    "IBUPROFENE — Déconseillé Hypertension Artérielle (HTA)",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Polypharmacie sans réévaluation (REMEDIES)",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "Risque de délirium — anticholinergique fort chez le sujet âgé",
@@ -111,7 +111,7 @@
    "Lithium + AINS ou diurétique thiazidique : toxicité lithique",
    "Lithium au long cours : surveillance d'organe (rein, thyroïde, parathyroïde)",
    "Lithium sans monitorage régulier",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
   ],
   "alertes-initier": [
    "IPP avec AINS (cure courte ou prolongée)",
@@ -164,7 +164,7 @@
  "depression_recurrente": {
   "alertes-eviter": [
    "Antidépresseur chez patient chuteur",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Réévaluation planifiée"
   ],
   "alertes-initier": [
@@ -189,7 +189,7 @@
    "Antipsychotique au long cours + maladie vasculaire connue",
    "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
    "Antipsychotique chez patient chuteur",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
   ],
   "alertes-initier": [
    "Antiagrégant / statine pour syndrome coronarien",
@@ -213,7 +213,7 @@
  "IC_HFrEF": {
   "alertes-eviter": [
    "Diurétique sans ionogramme de surveillance",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Réévaluation planifiée"
   ],
   "alertes-initier": [
@@ -318,7 +318,7 @@
   "alertes-eviter": [
    "Action immédiate",
    "Benzodiazépine / opioïde + cirrhose sévère",
-   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépine ou Z-drug ≥ 4 semaines",
    "Cascades iatrogéniques détectées",
    "DIAZEPAM — Déconseillé Hépatopathie chronique / Cirrhose",
    "Médicament hépatotoxique + hépatopathie chronique / cirrhose",
@@ -347,7 +347,7 @@
    "Antimuscarinique systémique + Démence",
    "Antipsychotique chez patient dément — durée et réévaluation",
    "Cascades iatrogéniques détectées",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "OXYBUTYNINE — CI Syndrome Démentiel (Générique)",
    "Oxybutynine (toutes formes)",
    "RISPERIDONE — Prudence Syndrome Démentiel (Générique)",
@@ -375,7 +375,7 @@
    "Antipsychotique chez patient dément — durée et réévaluation",
    "Flupentixol, fluphénazine, halopéridol > 2 mg/j",
    "HALOPERIDOL — CI Démence à Corps de Lewy (DCL)",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [
@@ -426,7 +426,7 @@
    "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
    "Flupentixol, fluphénazine, halopéridol > 2 mg/j",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Médicament allongeant le QTc + QTc déjà prolongé",
    "Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
@@ -461,7 +461,7 @@
    "Diurétique sans ionogramme de surveillance",
    "IEC/ARA2 + Hyperkaliémie (K+ > 5.5)",
    "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -518,7 +518,7 @@
  "usage_alcool": {
   "alertes-eviter": [
    "Action immédiate",
-   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépine ou Z-drug ≥ 4 semaines",
    "Cascades iatrogéniques détectées",
    "Médicament sédatif + alcool excessif"
   ],
@@ -542,7 +542,7 @@
    "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
    "Antipsychotique au long cours : surveillance métabolique",
    "Antipsychotique d'action prolongée (LAI/dépôt) : réversibilité lente",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Réévaluation planifiée"
   ],
   "alertes-initier": [],
@@ -613,7 +613,7 @@
    "Action immédiate",
    "Antidépresseurs tricycliques chez le sujet âgé",
    "Antihistaminique H1 1ère génération en 1ère intention (allergie/prurit)",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Oxybutynine (toutes formes)",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "Risque de délirium — anticholinergique fort chez le sujet âgé",
@@ -640,7 +640,7 @@
  },
  "normal_temoin": {
   "alertes-eviter": [
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -658,7 +658,7 @@
    "Action immédiate",
    "Digoxine + IC à FE préservée (HFpEF)",
    "Digoxine dans l'IC (FORTA-D sauf FA)",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "VERAPAMIL — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "Vérapamil/Diltiazem + IC FE réduite (NYHA III-IV)"
   ],
@@ -685,7 +685,7 @@
  "cov_EV_B05": {
   "alertes-eviter": [
    "Bêtabloquant en monothérapie pour HTA simple",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Réévaluation planifiée"
   ],
   "alertes-initier": [],
@@ -727,7 +727,7 @@
    "Diurétique de l'anse en 1ère intention pour HTA",
    "Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "Diurétique sans ionogramme de surveillance",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Thiazidique + hypokaliémie / hyponatrémie / hypercalcémie / goutte"
   ],
   "alertes-initier": [],
@@ -755,7 +755,7 @@
    "FUROSEMIDE — Déconseillé Incontinence urinaire",
    "FUROSEMIDE — Prudence Incontinence urinaire",
    "HYDROCHLOROTHIAZIDE — Prudence Incontinence urinaire",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Thiazidique + Hyponatrémie"
   ],
   "alertes-initier": [],
@@ -780,7 +780,7 @@
    "Antihypertenseur central (méthyldopa, clonidine, moxonidine, rilménidine)",
    "Diurétique sans ionogramme de surveillance",
    "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -838,7 +838,7 @@
    "CELECOXIB — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "Cascades iatrogéniques détectées",
    "Diurétique sans ionogramme de surveillance",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
   ],
   "alertes-initier": [
    "Action immédiate",
@@ -863,7 +863,7 @@
   "alertes-eviter": [
    "Action immédiate",
    "Digoxine avec hypokaliémie / hypomagnésémie non corrigée",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Nifédipine à libération immédiate"
   ],
   "alertes-initier": [],
@@ -914,7 +914,7 @@
    "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
    "Flécaïnide / Propafénone + cardiopathie structurelle",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Médicament allongeant le QT + QT long congénital",
    "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
@@ -942,7 +942,7 @@
    "Bêtabloquant + Vérapamil/Diltiazem",
    "DIGOXINE — CI Bradycardie",
    "Inhibiteur calcique non-DHP + Bêtabloquant : trouble conductif",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Médicament inotrope négatif + post-arrêt cardiaque",
    "VERAPAMIL — CI Bradycardie"
   ],
@@ -983,7 +983,6 @@
   "alertes-eviter": [
    "AVK sans surveillance INR régulière documentée",
    "Action immédiate",
-   "Antiagrégant + Anticoagulant dans FA (sans stent récent)",
    "Antiagrégant/Anticoagulant + risque hémorragique significatif",
    "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
    "Aspirine > 100 mg/j au long cours",
@@ -1009,7 +1008,6 @@
    "AINS + Anticoagulant",
    "AVK sans surveillance INR régulière documentée",
    "Action immédiate",
-   "Antiagrégant + Anticoagulant dans FA (sans stent récent)",
    "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
    "Ticlopidine : à éviter en toute circonstance"
   ],
@@ -1041,7 +1039,7 @@
    "Action immédiate",
    "Dabigatran + Diltiazem/Vérapamil",
    "Doublon thérapeutique — Anticoagulants curatifs",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
   ],
   "alertes-initier": [
    "Bêtabloquant pour FA chronique (contrôle de fréquence)",
@@ -1117,7 +1115,7 @@
    "Anticholinergique puissant + Démence ou Delirium",
    "Antidépresseurs tricycliques chez le sujet âgé",
    "IRSN + HTA sévère",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
@@ -1145,7 +1143,7 @@
    "Action immédiate",
    "Antipsychotique anticholinergique + HBP symptomatique",
    "ISRS + Hyponatrémie actuelle ou récente (Na+ < 130)",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "Phénothiazine en 1ère intention (psychose/SCPD)",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
@@ -1175,9 +1173,9 @@
    "ALPRAZOLAM — Déconseillé Insomnie",
    "ALPRAZOLAM — Déconseillé Syndrome Démentiel (Générique)",
    "Action immédiate",
+   "Benzodiazépine ou Z-drug ≥ 4 semaines",
    "Benzodiazépine pour agitation/SCPD dans la démence",
    "Benzodiazépine ≥ 2 semaines pour insomnie",
-   "Benzodiazépine ≥ 4 semaines",
    "Benzodiazépines / Z-drugs : ALPRAZOLAM",
    "Cascades iatrogéniques détectées"
   ],
@@ -1196,12 +1194,12 @@
   "alertes-eviter": [
    "Action immédiate",
    "Antipsychotique comme hypnotique (sauf psychose ou SCPD)",
+   "Benzodiazépine ou Z-drug ≥ 4 semaines",
    "Benzodiazépine ≥ 2 semaines pour insomnie",
-   "Benzodiazépine ≥ 4 semaines",
    "Benzodiazépines / Z-drugs : ZOLPIDEM",
    "Cascades iatrogéniques détectées",
    "Hypnotique Z ≥ 2 semaines pour insomnie",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "ZOLPIDEM — Déconseillé Insomnie"
   ],
@@ -1228,7 +1226,7 @@
    "Inhibiteur acétylcholinestérase + bradycardisant",
    "Inhibiteur acétylcholinestérase sans ECG de référence",
    "Inhibiteur de l'acétylcholinestérase + bradycardie < 60 / BAV",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1270,7 +1268,7 @@
    "Action immédiate",
    "Cascades iatrogéniques détectées",
    "Lévodopa/agoniste dopaminergique pour tremblement essentiel bénin",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Phénothiazine en 1ère intention (psychose/SCPD)",
    "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
@@ -1336,7 +1334,7 @@
   "alertes-eviter": [
    "Action immédiate",
    "Antidépresseurs tricycliques chez le sujet âgé",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],
@@ -1459,7 +1457,7 @@
    "Action immédiate",
    "Anti-aldostérone + DFG < 30",
    "Diurétique sans ionogramme de surveillance",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)"
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -1584,7 +1582,7 @@
  },
  "cov_EV_F03_EV_F05": {
   "alertes-eviter": [
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Médicament constipant + constipation chronique",
    "Réévaluation planifiée"
   ],
@@ -1610,7 +1608,7 @@
    "AMISULPRIDE — Déconseillé Dysphagie / Troubles de déglutition",
    "Action immédiate",
    "Antipsychotique + Dysphagie",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Métoclopramide au long cours (> 12 semaines)"
   ],
   "alertes-initier": [],
@@ -1675,7 +1673,7 @@
   "alertes-eviter": [
    "Action immédiate",
    "Benzodiazépine + insuffisance respiratoire aiguë ou chronique",
-   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépine ou Z-drug ≥ 4 semaines",
    "Benzodiazépines / Z-drugs : ALPRAZOLAM",
    "Cascades iatrogéniques détectées",
    "LAMA + Glaucome à angle fermé / obstruction vésicale",
@@ -1701,7 +1699,6 @@
  "cov_EV_H01_EV_H03": {
   "alertes-eviter": [
    "AINS > 3 mois pour arthrose (paracétamol non essayé)",
-   "AINS non-COX2 + antécédent d'ulcère/hémorragie GI (sans IPP)",
    "Action immédiate",
    "CELECOXIB — CI Ulcère Gastro-Duodénal (UGD)"
   ],
@@ -1747,7 +1744,7 @@
    "Action immédiate",
    "Myorelaxants à éviter (méthocarbamol, tizanidine, baclofène systémique)",
    "Opioïde au long cours pour arthrose",
-   "Opioïde fort en 1ère intention pour douleur légère",
+   "Opioïde fort sans palier antalgique ni douleur sévère documentés",
    "Opioïde quotidien régulier sans laxatif co-prescrit",
    "Opioïdes : BUPRENORPHINE",
    "Risque de délirium — anticholinergique fort chez le sujet âgé"
@@ -1774,7 +1771,7 @@
    "Action immédiate",
    "Alpha-1 bloquant (sauf silodosine) + hypotension orthostatique / syncope",
    "Antimuscarinique systémique + Constipation",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "OXYBUTYNINE — Déconseillé Hypotension Orthostatique",
    "Oxybutynine (toutes formes)",
    "Risque de délirium — anticholinergique fort chez le sujet âgé"
@@ -1818,7 +1815,7 @@
   "alertes-eviter": [
    "Action immédiate",
    "Bêtabloquant non cardiosélectif + Diabète avec hypoglycémies fréquentes",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "PIOGLITAZONE — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "PIOGLITAZONE — Prudence Diabète (type non précisé)",
    "Thiazolidinedione + IC"
@@ -1918,7 +1915,7 @@
   "alertes-eviter": [
    "Action immédiate",
    "Benzodiazépine chez patient chuteur",
-   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépine ou Z-drug ≥ 4 semaines",
    "Benzodiazépines / Z-drugs : ZOLPIDEM",
    "Cascades iatrogéniques détectées",
    "Hypnotique Z ≥ 2 semaines pour insomnie",
@@ -1973,9 +1970,9 @@
   "alertes-eviter": [
    "Action immédiate",
    "Alpha-bloquant antihypertenseur chez patient chuteur",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Opioïde chez patient chuteur",
-   "Opioïde fort en 1ère intention pour douleur légère",
+   "Opioïde fort sans palier antalgique ni douleur sévère documentés",
    "Opioïde quotidien régulier sans laxatif co-prescrit",
    "Opioïdes : BUPRENORPHINE"
   ],
@@ -2001,7 +1998,7 @@
    "Action immédiate",
    "Alpha-bloquant prostatique (sauf silodosine) chez patient chuteur",
    "Antimuscarinique pour vessie hyperactive chez patient chuteur",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Oxybutynine (toutes formes)",
    "Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
@@ -2045,7 +2042,7 @@
    "Antihypertenseurs (STOPP/FRAIL)",
    "Deprescription preventive globale chez le fragile severe (STOPP/FRAIL)",
    "Diurétique sans ionogramme de surveillance",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Réévaluation planifiée",
    "Statines (STOPP/FRAIL)",
    "Statines (patient très fragile, prévention primaire) : ATORVASTATINE",
@@ -2091,7 +2088,7 @@
    "Action immédiate",
    "CI ABSOLUE : Linézolide + ISRS/IRSN/Tramadol/IMAO",
    "Constipation opioïde / anticholinergique — prophylaxie laxative requise",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "Opioïde quotidien régulier sans laxatif co-prescrit",
    "Opioïdes : TRAMADOL",
@@ -2123,14 +2120,14 @@
  "cov_EV_SYND_044_EV_SYND_045": {
   "alertes-eviter": [
    "Action immédiate",
-   "Benzodiazépine ≥ 4 semaines",
+   "Benzodiazépine ou Z-drug ≥ 4 semaines",
    "Benzodiazépines / Z-drugs : DIAZEPAM",
    "Cascades iatrogéniques détectées",
    "Constipation opioïde / anticholinergique — prophylaxie laxative requise",
    "Diurétique sans ionogramme de surveillance",
    "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
-   "Opioïde fort en 1ère intention pour douleur légère",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "Opioïde fort sans palier antalgique ni douleur sévère documentés",
    "Opioïde quotidien régulier sans laxatif co-prescrit",
    "Opioïdes : MORPHINE",
    "Polypharmacie sans réévaluation (REMEDIES)",
@@ -2173,7 +2170,7 @@
    "Action immédiate",
    "Combinaison de 3 antidépresseurs (CI absolue)",
    "Combinaisons d'antidépresseurs interdites (2 ISRS, 2 IRSN, ISRS+IRSN, ISRS-IRSN+IMAO/TCA)",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Miansérine — préférer mirtazapine (alerte ANSM)"
   ],
   "alertes-initier": [],
@@ -2217,7 +2214,7 @@
  "cov_EV_SFGG_AD_07": {
   "alertes-eviter": [
    "ISRS / IRSN / Vortioxétine + AINS — risque hémorragique majoré",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Réévaluation planifiée"
   ],
   "alertes-initier": [
@@ -2448,7 +2445,7 @@
    "IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
    "Lithium + IEC/ARA2 : surveiller lithémie",
    "Lithium sans monitorage régulier",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Phénytoïne + Cotrimoxazole : risque de toxicité"
   ],
   "alertes-initier": [],
@@ -2513,7 +2510,7 @@
    "Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "Diurétique sans ionogramme de surveillance",
    "Incontinence urinaire iatrogène — revue médicamenteuse",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [],
@@ -2546,7 +2543,7 @@
    "Action immédiate",
    "Antiarythmique classe I/III sans ECG régulier",
    "Digoxine + Amiodarone : surveiller digoxinémie",
-   "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+   "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [],

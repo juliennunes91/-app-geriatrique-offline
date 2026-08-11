@@ -474,7 +474,11 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["antiagreg", "antiagregant", "acide acetylsalicylique", "clopidogrel"],
-                med_keys_2: ["anticoag", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "acenocoumarol", "warfarine", "fluindione"]
+                med_keys_2: ["anticoag", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "acenocoumarol", "warfarine", "fluindione"],
+                // Le titre affirme « dans FA » : la comorbidite doit donc etre cochee.
+                // Sans elle, la regle affirmait un contexte non verifie et doublonnait
+                // SUP_PIMC_09 (cas general, mieux documente).
+                comorbs: ["PAT_006"]
             },
             alternatives: "Anticoagulant seul si FA sans stent récent"
         },
@@ -699,7 +703,7 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM", "FORTA", "PIM_CHECK", "STOPPFRAIL"],
             ref_code: "STOPP3-D8",
             section: "SNC",
-            titre: "Benzodiazépine ≥ 4 semaines",
+            titre: "Benzodiazépine ou Z-drug ≥ 4 semaines",
             message: "Benzodiazépine ≥ 4 semaines sans indication de prolongation : sédation prolongée, confusion, altération de l'équilibre, chutes, accidents de la route. PIM selon toutes les listes (Beers, PRISCUS, EU(7)-PIM, FORTA-D, PIM-Check, STOPPFrail). Sevrage progressif obligatoire.",
             severite: "danger",
             condition: {
@@ -1227,7 +1231,7 @@ const GERIA_RECOS_DB = {
             message: "AINS non sélectif (non-COX2) avec antécédent d'ulcère ou d'hémorragie gastro-intestinale, sans IPP ou anti-H2 co-prescrit : risque de rechute.",
             severite: "danger",
             condition: {
-                med_keys: ["ains"],
+                med_keys: ["ainsnonselectif"],
                 comorbs: ["PAT_021"],
                 med_absent: ["ipp", "omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole"]
             },
@@ -1633,8 +1637,8 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS"],
             ref_code: "STOPP3-L1",
             section: "Antalgiques",
-            titre: "Opioïde fort en 1ère intention pour douleur légère",
-            message: "Opioïde fort (morphine, oxycodone, fentanyl, buprénorphine, méthadone, péthidine) en première intention pour douleur légère : non-respect de l'échelle OMS. Note : le tramadol est un opioïde de palier 2 (faible) selon l'OMS, traité séparément.",
+            titre: "Opioïde fort sans palier antalgique ni douleur sévère documentés",
+            message: "Opioïde fort (morphine, oxycodone, fentanyl, buprénorphine, méthadone, péthidine) prescrit sans que la sévérité de la douleur soit documentée, hors cancer et hors soins palliatifs : vérifier le respect de l'échelle OMS (paliers 1 et 2 essayés avant le palier 3). Si la douleur est sévère, le préciser sur la ligne du médicament désarme cette alerte. Note : le tramadol est un opioïde de palier 2 (faible) selon l'OMS, traité séparément.",
             severite: "danger",
             condition: {
                 med_keys: ["morphine", "oxycodone", "fentanyl", "buprenorphine", "methadone", "pethidine"],
@@ -1848,7 +1852,7 @@ const GERIA_RECOS_DB = {
             sources: ["STOPPFRAIL", "ESC_HTN_2024"],
             ref_code: "STOPPFrail-2bis",
             section: "Prévention",
-            titre: "Mesure TA couché-debout systématique sous antihypertenseur (≥ 75 ans)",
+            titre: "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
             message: "Toute prescription d'antihypertenseur, antidépresseur sérotoninergique, alpha-bloquant, antiparkinsonien dopaminergique ou antipsychotique chez un patient ≥ 75 ans impose une mesure de TA couché-debout (1 et 3 min) à chaque consultation. Hypotension orthostatique = chute PAS ≥ 20 mmHg ou PAD ≥ 10 mmHg dans les 3 min après lever. Si symptomatique (vertige, chute, syncope) ou ∆ PAS ≥ 30 mmHg : déprescrire l'antihypertenseur le plus récent ou le plus iatrogène (priorité : alpha-bloquant > diurétique > IEC/ARA2 > BB > IC). Réf. : ESC 2024 HTN §6.5 ; STOPPFrail v2 ; Lavan/Gallagher 2017 (Lancet Healthy Longev).",
             severite: "info",
             condition: {
@@ -2894,7 +2898,7 @@ const GERIA_RECOS_DB = {
             ref_code: "START3-F3",
             section: "Gastro",
             titre: "IPP avec AINS (cure courte ou prolongée)",
-            message: "IPP co-prescrit avec tout AINS, en cure courte (< 2 semaines) ou prolongée — gastroprotection.",
+            message: "IPP co-prescrit avec tout AINS, en cure courte (< 2 semaines) ou prolongée — gastroprotection. CETTE RECOMMANDATION SUPPOSE QUE L'AINS EST MAINTENU : si une alerte de l'onglet « À éviter » contre-indique l'AINS (antécédent d'ulcère, DFG < 50, insuffisance cardiaque, maladie vasculaire), la conduite est de l'ARRÊTER, pas de le gastroprotéger.",
             severite: "warning",
             condition: {
                 med_keys: ["ains"],

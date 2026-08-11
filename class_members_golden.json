@@ -148,6 +148,20 @@
   "Epoetine zeta",
   "Methoxy-polyethyleneglycol-epoetine beta"
  ],
+ "ains_non_selectif": [
+  "Aceclofenac",
+  "Acide tiaprofenique",
+  "Diclofenac",
+  "Ibuprofene",
+  "Indometacine",
+  "Ketoprofene",
+  "Meloxicam",
+  "Nabumetone",
+  "Naproxene",
+  "Nimesulide",
+  "Piroxicam",
+  "Sulindac"
+ ],
  "barbiturique": [
   "Phenobarbital",
   "Primidone"

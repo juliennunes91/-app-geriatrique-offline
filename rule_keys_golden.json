@@ -48,6 +48,20 @@
   "Piroxicam",
   "Sulindac"
  ],
+ "ainsnonselectif": [
+  "Aceclofenac",
+  "Acide tiaprofenique",
+  "Diclofenac",
+  "Ibuprofene",
+  "Indometacine",
+  "Ketoprofene",
+  "Meloxicam",
+  "Nabumetone",
+  "Naproxene",
+  "Nimesulide",
+  "Piroxicam",
+  "Sulindac"
+ ],
  "aldactazine": [
   "Aldactazine"
  ],

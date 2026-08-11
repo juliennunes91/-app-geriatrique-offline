@@ -28081,7 +28081,7 @@ const MASTER_DB = {
                     "poso_ren": "Sans objet — médicament retiré du marché ANSM 2012 (pas de prescription). Aucun ajustement applicable.",
                     "acb": 1,
                     "cia": 1,
-                    "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "scores": {"qt": 0, "sero": 0, "saign": 0, "chute": 3, "sedat": 3, "hypoG": 0},
                     "bhe": "1",
                     "albumine": "15-20%",
                     "qt_risque": "",
