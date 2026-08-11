@@ -2360,6 +2360,10 @@ require('./tests_audit_extended').runProteinBindingAudit(test, assert);
 require('./tests_audit_extended').runCompositeScoreAudit(test, assert);
 require('./tests_audit_extended').runClassMembershipAudit(test, assert);
 require('./tests_audit_extended').runRuleKeyResolutionAudit(test, assert);
+require('./tests_audit_extended').runTitreConditionAudit(test, assert);
+require('./tests_audit_extended').runMedAbsentOperantAudit(test, assert);
+require('./tests_audit_extended').runLibelleClasseAudit(test, assert);
+require('./tests_audit_extended').runCouleurCodeeEnDurAudit(test, assert);
 require('./tests_audit_extended').runDdiIntegrityAudit(test, assert);
 require('./tests_audit_extended').runPosologyCompletenessAudit(test, assert);
 

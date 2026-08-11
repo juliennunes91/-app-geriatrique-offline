@@ -310,6 +310,40 @@ Point ouvert : `IN_E03` est la seule règle dont toutes les clés `med_absent` s
 mortes (les agents stimulant l'érythropoïèse ne sont pas en base), donc elle propose
 d'initier un ASE chez un patient qui en reçoit déjà.
 
+## Quatre invariants issus de l'audit croisé
+
+Quatre familles de défaut expliquaient l'essentiel des divergences des 106 dossiers.
+Un audit ponctuel les trouve une fois ; l'invariant les empêche de revenir — y compris
+de la main de celui qui corrige. **Deux fois pendant ce chantier, un test automatique a
+rattrapé ce qu'une relecture avait laissé passer** (collision `ase` ⊂ asénapine,
+neutralisation par erreur de `SUP_DEP_065`).
+
+1. **`runTitreConditionAudit`** — le titre d'une règle ne doit pas affirmer un terrain
+   que sa condition ne vérifie pas. Compare le terrain *nommé* au terrain *vérifié*
+   (comorbidités résolues en clair, contextes, fragilité, âge, biologie). Sept défauts
+   de cette famille avaient été trouvés à la main : `EV_SF02b`, `EV_C04`, `EV_L01`,
+   `EV_D08`, `EV_SYND_051`, `EV_SYND_047`, `EV_H01`. Les cas relus et acceptés sont
+   dans `TITRE_ALLOWLIST` **avec leur justification** — toute nouvelle entrée s'arbitre.
+2. **`runMedAbsentOperantAudit`** — une liste `med_absent` dont *aucune* clé ne résout
+   est un garde-fou inopérant : la règle propose d'initier un traitement que le patient
+   reçoit peut-être déjà (défaut d'`IN_E03`). Plus fort que « aucune clé morte » : c'est
+   la liste **entière** qui doit résoudre au moins un médicament.
+3. **`runLibelleClasseAudit`** — un libellé de classe ne doit pas faire capter une autre
+   molécule. Trois collisions de ce chantier ont été créées **en rédigeant des libellés**
+   (« à distinguer des PAMORA », « dérivé PEGylé de la naloxone », « alternative
+   paracétamol »). N'alerte que si la mention provoque une **vraie** fausse
+   correspondance, pas sur la simple citation d'une molécule voisine.
+4. **`runCouleurCodeeEnDurAudit`** — cliquet sur les couleurs de sévérité écrites en dur
+   dans `app_analysis.js`. `DUPLICATE_WATCH` codait `alert-warning` pour toutes les
+   classes : un doublon d'anticoagulants curatifs était gradué comme un doublon de
+   statines. Une alerte issue d'une **table** doit tirer sa couleur de la sévérité de
+   son entrée.
+
+**Les quatre sont validés par mutation** : casser volontairement `EV_C04`, `IN_E03`, un
+libellé de classe ou ajouter une couleur en dur fait bien échouer le test correspondant.
+Un linter qui n'échoue jamais ne prouve rien — le revérifier après toute modification
+de ces audits.
+
 ## Fragilité sévère (`frailty_exclude`)
 
 Ne s'active qu'à **CFS ≥ 7** ou case « patient fragile » cochée — le seuil de

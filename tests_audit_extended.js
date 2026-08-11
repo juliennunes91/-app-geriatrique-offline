@@ -943,6 +943,199 @@ function runClassMembershipAudit(test, assert) {
 // Cet audit fige, pour CHAQUE clé réellement employée par le corpus de règles, la
 // liste des médicaments qu'elle résout — avec le vrai `classe`. Toute dérive
 // (nouvelle molécule qui élargit une clé par accident) devient un échec de test.
+// ============================================================================
+// QUATRE INVARIANTS ISSUS DE L'AUDIT CROISÉ DES 106 DOSSIERS
+// ----------------------------------------------------------------------------
+// Ces quatre familles de défaut expliquaient à elles seules l'essentiel des
+// divergences relevées. Un audit ponctuel les trouve une fois ; un invariant les
+// empêche de revenir — y compris de la main de celui qui corrige. Deux fois pendant
+// ce chantier, un test automatique a rattrapé ce qu'une relecture avait laissé passer.
+// ============================================================================
+
+// ─── 1. Le TITRE d'une règle doit être cohérent avec sa CONDITION ────────────
+// Sept défauts d'une même famille avaient été trouvés à la main : EV_SF02b annonçait
+// « sous antihypertenseur » et se déclenchait sur les ISRS ; EV_C04 affirmait « dans FA »
+// sans aucune condition de comorbidité ; EV_L01 disait « pour douleur légère » sans
+// vérifier la sévérité ; EV_D08 nommait « benzodiazépine » des Z-drugs ; EV_SYND_051
+// annonçait « ≥ 2 médicaments » et se déclenchait dès un seul.
+// Le linter compare le terrain NOMMÉ dans le titre au terrain réellement VÉRIFIÉ par la
+// condition (comorbidités résolues en clair, contextes, fragilité, âge, biologie).
+const TITRE_TERRAIN = [
+    [/fibrillation|\bFA\b/i, /fibrillation|\bFA\b/i],
+    [/diabèt/i, /diabèt/i],
+    [/insuffisance cardiaque|HFrEF|FEVG réduite/i, /insuffisance cardiaque|HFrEF|HFpEF/i],
+    [/ulcère|ulcere/i, /ulcère|ulcere|gastro-duod/i],
+    [/glaucome/i, /glaucome/i],
+    [/démence|demence|alzheimer/i, /démence|demence|alzheimer|cognitif/i],
+    [/BPCO/i, /BPCO/i],
+    [/cirrhose|hépatopathie/i, /cirrhose|hépatopathie|hepatique/i],
+    [/parkinson/i, /parkinson/i],
+    [/asthme/i, /asthme/i],
+    [/ostéoporose|osteoporose/i, /ostéoporose|osteoporose/i],
+    [/\bHBP\b/i, /HBP|prostat/i],
+    [/épilepsie|epilepsie/i, /épilepsie|epilepsie/i],
+    [/chuteur|chutes/i, /chute/i],
+    [/dysphagie/i, /dysphagie/i],
+    [/constipation/i, /constipation/i],
+    [/délirium|delirium/i, /delirium|démence/i],
+    [/alcool/i, /alcool/i],
+    [/tabac|fumeur/i, /tabac/i],
+    [/sepsis/i, /sepsis/i],
+    [/rétention urinaire/i, /retention|HBP/i],
+];
+// Le terrain n'est un PRÉREQUIS que s'il suit un marqueur de condition. « Risque de
+// délirium » énonce une conséquence, pas un prérequis — d'où ce filtre.
+const TITRE_PRECONDITION = /(chez|si\b|avec|en cas de|dans (la|le|l')|sous|\+)\s/i;
+const TITRE_COMPTE = ['acb_cumul', 'acb_seuil', 'acb_fort_min', 'qt_check', 'med_keys_2', 'med_keys_3'];
+
+// Cas RELUS et acceptés. Toute NOUVELLE entrée doit être arbitrée, pas ajoutée d'office.
+const TITRE_ALLOWLIST = new Map([
+    ['EV_K03',       'Titre « chuteur / hypotension orthostatique » : les deux termes sont alternatifs et la comorbidité PAT_009 (hypotension orthostatique) est bien vérifiée.'],
+    ['EV_L06',       'Titre « dénutrition OU hépatopathie » : la dénutrition est vérifiée, la branche hépatique reste à câbler — écart connu, sans sur-déclenchement.'],
+    ['EV_SYND_047b', 'Le délirium est la CONSÉQUENCE annoncée, pas un prérequis ; la condition vérifie l\'âge et la charge anticholinergique forte.'],
+    ['EV_N02',       'La base modélise « hépatopathie » sans granularité « cirrhose sévère » : la condition est plus large que le titre, non l\'inverse.'],
+    ['SUP_REM_03',   'Titre « si démence sévère » alors que seule la fragilité est vérifiée. Sur-affirmation admise : un anti-Alzheimer implique la démence en pratique, mais le qualificatif « sévère » n\'est pas verifié.'],
+]);
+
+function runTitreConditionAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const regles = JSON.parse(vm.runInContext(`(function(){ var out=[];
+        function scan(o){ if(!o||typeof o!=='object')return;
+          if(o.id&&o.condition&&o.titre){
+            var c=o.condition, voc=[];
+            ['comorbs','comorbs_any','comorbs_absent'].forEach(function(k){ (c[k]||[]).forEach(function(p){
+              voc.push(((MASTER_DB.PATHOLOGIES[p]||{}).NOM_STANDARD)||p); }); });
+            ['contexte_clinique','contexte_clinique_any','contexte_clinique_absent'].forEach(function(k){
+              var v=c[k]; if(typeof v==='string')voc.push(v);
+              else if(Array.isArray(v))v.forEach(function(x){voc.push(x)}); });
+            if(c.fragilite||c.fragile||c.frailty_exclude) voc.push('fragile fragilite');
+            if(c.bio||c.bio_any) voc.push('BIOLOGIE');
+            if(c.age_min||c.age_max) voc.push('AGE');
+            out.push({id:o.id, titre:o.titre, voc:voc.join(' | '), cles:Object.keys(c)});
+          }
+          for(var k in o) if(typeof o[k]==='object') scan(o[k]); }
+        if(typeof GERIA_RECOS_DB!=='undefined')scan(GERIA_RECOS_DB);
+        if(typeof RECOS_SUPPLEMENT!=='undefined')scan(RECOS_SUPPLEMENT);
+        return JSON.stringify(out); })()`, sandbox));
+
+    const ecarts = [];
+    regles.forEach(r => {
+        if (/≥\s*\d+\s*(médicament|medicament|classe)/i.test(r.titre)
+            && !r.cles.some(k => TITRE_COMPTE.includes(k))) {
+            ecarts.push(r.id + ' : le titre annonce un NOMBRE de médicaments sans mécanisme de comptage — « ' + r.titre + ' »');
+            return;
+        }
+        if (!TITRE_PRECONDITION.test(r.titre)) return;
+        for (const [dansTitre, attendu] of TITRE_TERRAIN) {
+            if (!dansTitre.test(r.titre)) continue;
+            if (!attendu.test(r.voc)) {
+                ecarts.push(r.id + ' : le titre affirme un terrain que la condition ne vérifie pas — « '
+                    + r.titre + ' » / condition vérifie : ' + (r.voc || '(rien)'));
+            }
+            break;
+        }
+    });
+    const nouveaux = ecarts.filter(e => !TITRE_ALLOWLIST.has(e.split(' :')[0]));
+    test('Titre ↔ condition — aucune règle n\'affirme un terrain non vérifié', () => {
+        assert.ok(nouveaux.length === 0,
+            'règle(s) dont le titre promet plus que la condition (arbitrer, puis documenter dans TITRE_ALLOWLIST) :\n  '
+            + nouveaux.join('\n  '));
+    });
+}
+
+// ─── 2. Un garde-fou `med_absent` dont AUCUNE clé ne résout est inopérant ────
+// C'était le défaut d'IN_E03 : les agents stimulant l'érythropoïèse n'étant pas en base,
+// la règle ne pouvait pas voir un patient DÉJÀ traité et proposait d'en initier un.
+// Plus fort que l'invariant général « aucune clé morte » : ici c'est la LISTE ENTIÈRE
+// qui doit résoudre au moins un médicament, sinon la protection n'existe pas.
+function runMedAbsentOperantAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const morts = JSON.parse(vm.runInContext(`(function(){
+        var meds=MASTER_DB.MEDICAMENTS.map(function(m){return {d:sanitizeText(m.dci),c:sanitizeText(m.classe||'')}});
+        function resout(k){ var kk=sanitizeText(k);
+          return meds.some(function(m){ try{ return matchesDrugClass(m.d,m.c,kk); }catch(e){ return false; } }); }
+        var out=[];
+        function scan(o){ if(!o||typeof o!=='object')return;
+          if(o.id&&o.condition&&Array.isArray(o.condition.med_absent)&&o.condition.med_absent.length
+             && !o.condition.med_absent.some(resout))
+            out.push(o.id+' (med_absent : '+o.condition.med_absent.join(', ')+')');
+          for(var k in o) if(typeof o[k]==='object') scan(o[k]); }
+        if(typeof GERIA_RECOS_DB!=='undefined')scan(GERIA_RECOS_DB);
+        if(typeof RECOS_SUPPLEMENT!=='undefined')scan(RECOS_SUPPLEMENT);
+        return JSON.stringify(out); })()`, sandbox));
+    test('Garde-fou med_absent — aucune règle ne peut recommander un traitement déjà prescrit', () => {
+        assert.ok(morts.length === 0,
+            'règle(s) dont AUCUNE clé med_absent ne résout : le garde-fou est inopérant, la règle propose '
+            + 'd\'initier un traitement que le patient reçoit peut-être déjà.\n  ' + morts.join('\n  '));
+    });
+}
+
+// ─── 3. Un libellé de classe ne doit pas faire capter une AUTRE molécule ────
+// Trois des collisions de ce chantier ont été créées en RÉDIGEANT des libellés :
+// « à distinguer des PAMORA » sur la naloxone, « dérivé PEGylé de la naloxone » sur le
+// naloxégol, « alternative paracétamol » sur le néfopam. L'audit ne signale pas la simple
+// mention d'une molécule voisine — fréquente et légitime — mais uniquement les cas où
+// cette mention provoque une VRAIE fausse correspondance.
+const LIBELLE_ALLOWLIST = new Set([
+    // Formes ou sels d'une même substance, ou analogues de la même classe : tolérés.
+    'Calcitriol::Alfacalcidol', 'Cholecalciferol::Alfacalcidol', 'Cholecalciferol::Calcifediol',
+    'Cholecalciferol::Calcitriol', 'Calcitriol::Cholecalciferol',
+    'Theophylline::Aminophylline',            // l'aminophylline EST de la théophylline salifiée
+    'Diphenhydramine::Dimenhydrinate',        // le dimenhydrinate CONTIENT de la diphenhydramine
+    'Sulfate ferreux::Fumarate ferreux',      // deux sels ferreux
+    'Valproate::Valpromide',                  // deux sels de valproate
+    'Latanoprost::Bimatoprost', 'Latanoprost::Travoprost', 'Brinzolamide::Dorzolamide',
+    'Alendronate::Ibandronate', 'Risedronate::Ibandronate',
+    'Salbutamol::Terbutaline', 'Captopril::Zofenopril', 'Lactulose::Lactitol',
+    // Écarts CONNUS et assumés : molécules distinctes, même indication.
+    'Allopurinol::Febuxostat', 'Lactulose::Macrogol',
+    'Guaifenesine::Methocarbamol', 'Mélatonine::Agomelatine',
+    'Carbonate de calcium::Alginate de sodium / bicarbonate',
+]);
+function runLibelleClasseAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const paires = JSON.parse(vm.runInContext(`(function(){
+        var meds=MASTER_DB.MEDICAMENTS.map(function(m){return {dci:m.dci,d:sanitizeText(m.dci),c:sanitizeText(m.classe||'')}});
+        var out=[];
+        meds.forEach(function(a){ meds.forEach(function(b){
+          if(a===b || b.d.length<6) return;
+          if(a.c.indexOf(b.d)<0) return;   // le libellé de A ne cite pas B
+          if(a.d.indexOf(b.d)>=0) return;  // association fixe ou sel : le nom est dans la DCI
+          var faux=false; try{ faux = matchesDrugClass(a.d,a.c,b.d); }catch(e){}
+          if(faux) out.push(b.dci+'::'+a.dci);
+        }); });
+        return JSON.stringify(out); })()`, sandbox));
+    const nouveaux = [...new Set(paires)].filter(p => !LIBELLE_ALLOWLIST.has(p));
+    test('Libellé de classe — aucune NOUVELLE fausse correspondance', () => {
+        assert.ok(nouveaux.length === 0,
+            'un libellé de classe cite une molécule d\'une autre classe ET la fait capter par cette clé.\n'
+            + 'Reformuler le libellé, ou ajouter à LIBELLE_ALLOWLIST si l\'analogie est légitime :\n  '
+            + nouveaux.map(p => { const [cle, capte] = p.split('::');
+                return 'la clé « ' + cle + ' » capte ' + capte; }).join('\n  '));
+    });
+}
+
+// ─── 4. Aucun chemin de rendu ne code une couleur de sévérité en dur ────────
+// DUPLICATE_WATCH écrivait `alert-warning` en dur pour TOUTES les classes de doublon :
+// un doublon d'anticoagulants curatifs, qui est un never event, était gradué exactement
+// comme un doublon de statines, et sortait du bloc « Action immédiate ». Le rendu
+// court-circuitait le scoring. Cet audit est un cliquet : le nombre d'occurrences ne
+// doit pas augmenter sans justification.
+const COULEURS_EN_DUR_ATTENDUES = { danger: 8, warning: 17, info: 8 };
+function runCouleurCodeeEnDurAudit(test, assert) {
+    const src = fs.readFileSync(path.join(__dirname, 'app_analysis.js'), 'utf8');
+    ['danger', 'warning', 'info'].forEach(niveau => {
+        const n = (src.match(new RegExp('alert alert-' + niveau, 'g')) || []).length;
+        test('Rendu — couleurs « ' + niveau +' » codées en dur (cliquet)', () => {
+            assert.ok(n <= COULEURS_EN_DUR_ATTENDUES[niveau],
+                n + ' occurrences de `alert-' + niveau + '` codées en dur dans app_analysis.js, contre '
+                + COULEURS_EN_DUR_ATTENDUES[niveau] + ' attendues. Toute alerte issue d\'une TABLE de données '
+                + 'doit tirer sa couleur de la sévérité de son entrée, pas d\'un littéral — sans quoi le rendu '
+                + 'court-circuite le scoring (cf. DUPLICATE_WATCH).');
+        });
+    });
+}
+
 function runRuleKeyResolutionAudit(test, assert) {
     const { sandbox } = loadApp();
     const current = JSON.parse(vm.runInContext(`(function(){
@@ -1111,4 +1304,4 @@ function runPosologyCompletenessAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
