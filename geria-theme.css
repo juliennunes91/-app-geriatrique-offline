@@ -580,6 +580,24 @@ details[open] > summary {
    médicament (~20 px), sources d'erreurs de frappe.
    ================================================================ */
 @media (max-width: 576px) {
+
+    /* Popover des préférences (⚙️) — il est ancré au bouton par `end-0`, donc ses
+       260 px de large partaient vers la GAUCHE et sortaient de l'écran : seule la
+       moitié droite des libellés restait visible. Sur mobile on le sort du flux
+       d'ancrage et on l'étale sur la largeur du viewport.
+       `top: auto` conserve la position statique verticale, c'est-à-dire juste sous
+       le bouton, sans avoir à la calculer. */
+    #uiPrefsPopover {
+        position: fixed !important;
+        left: 0.75rem !important;
+        right: 0.75rem !important;
+        top: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
     .nav-tabs .nav-link {
         padding: 10px 10px;
         font-size: 0.72rem;
