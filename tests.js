@@ -2428,6 +2428,7 @@ require('./tests_audit_extended').runProteinBindingAudit(test, assert);
 require('./tests_audit_extended').runCompositeScoreAudit(test, assert);
 require('./tests_audit_extended').runClassMembershipAudit(test, assert);
 require('./tests_audit_extended').runRuleKeyResolutionAudit(test, assert);
+require('./tests_audit_extended').runPathologyRulesAudit(test, assert);
 require('./tests_audit_extended').runAutocompleteAudit(test, assert);
 require('./tests_audit_extended').runTitreConditionAudit(test, assert);
 require('./tests_audit_extended').runMedAbsentOperantAudit(test, assert);

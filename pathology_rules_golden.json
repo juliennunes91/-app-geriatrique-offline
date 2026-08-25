@@ -1,0 +1,996 @@
+{
+ "PAT_002": {
+  "nom": "Insuffisance Cardiaque FE Réduite (HFrEF)",
+  "initier": [
+   "Fer IV (Carboxymaltose ferrique ou Dérisomaltose ferrique)",
+   "Hydralazine + Dinitrate d'isosorbide",
+   "Ivabradine",
+   "Quadrithérapie fondamentale (4 piliers)",
+   "Vericiguat"
+  ],
+  "eviter": [
+   "AINS",
+   "Diltiazem / Vérapamil",
+   "Dronedarone",
+   "Moxonidine",
+   "Saxagliptine, Alogliptine",
+   "Thiazolidinediones",
+   "Triple blocage SRAA (IEC + ARA2 + ARM)"
+  ],
+  "reference": "ESC 2021 + 2023 Update | ACC ECDP 2024 | PARADIGM-HF | DAPA-HF | EMPEROR-Reduced"
+ },
+ "PAT_003": {
+  "nom": "Insuffisance Cardiaque FE Préservée (HFpEF)",
+  "initier": [
+   "ARM (Spironolactone)",
+   "Diurétiques",
+   "GLP-1 RA (Sémaglutide)",
+   "Tirzépatide (agoniste GIP/GLP-1)",
+   "iSGLT2 (Dapagliflozine, Empagliflozine)"
+  ],
+  "eviter": [
+   "AINS"
+  ],
+  "reference": "ESC 2023 Update | EMPEROR-Preserved | DELIVER | TOPCAT | STEP-HFpEF | SUMMIT"
+ },
+ "PAT_004": {
+  "nom": "Syndrome Coronarien Chronique (SCC)",
+  "initier": [
+   "Antiagrégant plaquettaire",
+   "Bêtabloquant cardiosélectif",
+   "GLP-1 RA (Sémaglutide, Liraglutide, Dulaglutide)",
+   "IEC ou ARA2",
+   "Rivaroxaban 2.5 mg x2/j + Aspirine (Stratégie COMPASS)",
+   "Statine haute intensité"
+  ],
+  "eviter": [
+   "AINS au long cours",
+   "DAPT > 12 mois post-stent"
+  ],
+  "reference": "ESC 2024 CCS Guidelines | ESC 2019 CCS | COMPASS | ISCHEMIA"
+ },
+ "PAT_005": {
+  "nom": "Hypertension Artérielle (HTA)",
+  "initier": [
+   "Combinaison à dose fixe en première intention",
+   "Spironolactone 25-50 mg",
+   "Trithérapie si HTA résistante"
+  ],
+  "eviter": [
+   "AINS au long cours",
+   "Alpha-bloquants en monothérapie",
+   "IEC + ARA2 simultanément"
+  ],
+  "reference": "ESC 2024 HTN | ESC 2018 HTN | SPRINT | STEP"
+ },
+ "PAT_006": {
+  "nom": "Fibrillation Atriale (FA)",
+  "initier": [],
+  "eviter": [
+   "AOD + Antiagrégant",
+   "Dronedarone"
+  ],
+  "reference": "ESC 2024 AF-CARE | FRAIL-AF | RE-LY | ARISTOTLE | ROCKET-AF | ENGAGE-AF"
+ },
+ "PAT_007": {
+  "nom": "Artériopathie Oblitérante (AOMI)",
+  "initier": [
+   "IEC ou ARA2",
+   "Monothérapie antiagrégante",
+   "Programme d'exercice supervisé",
+   "Rivaroxaban 2.5mg x2/j + Aspirine 100 mg/j (stratégie COMPASS)",
+   "Statine haute intensité",
+   "iSGLT2"
+  ],
+  "eviter": [
+   "Anticoagulation curative seule sans antiagrégant",
+   "Bêtabloquants non sélectifs",
+   "DAPT (Aspirine + Clopidogrel) au long cours"
+  ],
+  "reference": "ESC 2024 PAAD | COMPASS | VOYAGER-PAD | EUCLID (essai négatif : ticagrelor non supérieur au clopidogrel)"
+ },
+ "PAT_008": {
+  "nom": "Accident Vasculaire Cérébral (AVC/AIT)",
+  "initier": [
+   "AOD (si FA documentée)",
+   "Antihypertenseur",
+   "DAPT courte durée (AIT/AVC mineur non cardio-embolique)",
+   "Statine haute intensité",
+   "iSGLT2"
+  ],
+  "eviter": [
+   "AINS",
+   "AOD + Antiagrégant au long cours",
+   "Switch DOAC sans raison"
+  ],
+  "reference": "ESO 2024 | AHA/ASA 2024 | ESC 2024 AF | CHANCE | POINT | THALES | SPARCL"
+ },
+ "PAT_009": {
+  "nom": "Hypotension Orthostatique",
+  "initier": [
+   "Dompéridone 10 mg x3/j",
+   "Droxidopa (si disponible)",
+   "Fludrocortisone 50-200 µg/j",
+   "Mesures non pharmacologiques",
+   "Midodrine 2.5-10 mg x3/j"
+  ],
+  "eviter": [
+   "Agonistes dopaminergiques (Pramipexole, Ropinirole)",
+   "Alpha-bloquants (Tamsulosine, Alfuzosine, Doxazosine, Prazosine)",
+   "Antidépresseurs tricycliques (Amitriptyline, Clomipramine, Imipramine, Doxépine)",
+   "Antihypertenseurs (si PAS < 120 mmHg debout)",
+   "Benzodiazépines / Z-drugs",
+   "Diurétiques (surdosage ou non indiqués)",
+   "Dérivés nitrés (Trinitrine, Isosorbide)",
+   "Neuroleptiques classiques (Halopéridol, Chlorpromazine, Lévomépromazine)",
+   "Opioïdes forts"
+  ],
+  "reference": "ESC 2018 Syncope | Consensus gériatrique 2023 | STOPP/START v3"
+ },
+ "PAT_010": {
+  "nom": "Syndrome Démentiel (Générique)",
+  "initier": [
+   "Inhibiteur de l'Acétylcholinestérase (IAChE)",
+   "Mémantine 5-10-15-20 mg/j"
+  ],
+  "eviter": [
+   "Anticholinergiques (Score ACB ≥ 1)",
+   "Antihistaminiques H1 sédatifs (Hydroxyzine, Doxylamine, Prométhazine)",
+   "Antipsychotiques > 12 semaines",
+   "Antispasmodiques urinaires anticholinergiques (Oxybutynine)",
+   "Benzodiazépines",
+   "Opioïdes à forte dose"
+  ],
+  "reference": "EAN/EFNS 2023 | Beers 2023 | STOPP/START v3"
+ },
+ "PAT_011": {
+  "nom": "Maladie d'Alzheimer",
+  "initier": [
+   "Anti-amyloïdes (Lecanemab/Leqembi, Donanemab/Kisunla)",
+   "Donépézil 5→10 mg/j",
+   "Galantamine LP 8→16→24 mg/j",
+   "Mémantine 5→10→15→20 mg/j",
+   "Rivastigmine patch 4.6→9.5→13.3 mg/24h"
+  ],
+  "eviter": [
+   "Anticholinergiques (ACB ≥ 1)",
+   "Antipsychotiques > 12 semaines"
+  ],
+  "reference": "EAN 2023 | NIA-AA 2024 | HAS 2024 | CLARITY-AD (Lecanemab NEJM 2023) | TRAILBLAZER-ALZ 2 (Donanemab JAMA 2023) | EMA 2024"
+ },
+ "PAT_012": {
+  "nom": "Démence à Corps de Lewy (DCL)",
+  "initier": [
+   "Donépézil (5-10 mg/j)",
+   "Mémantine (5-20 mg/j)",
+   "Quétiapine 6.25-50 mg/j (faible dose)",
+   "Rivastigmine (patch 4.6-9.5 mg/24h ou PO 3-12 mg/j)"
+  ],
+  "eviter": [
+   "Anticholinergiques (bipéridène, trihexyphénidyle, oxybutynine, ATC)",
+   "Benzodiazépines / Z-drugs",
+   "Clozapine",
+   "Métoclopramide, Dompéridone (forte dose)",
+   "Neuroleptiques classiques (Halopéridol, Chlorpromazine, Lévomépromazine)",
+   "Rispéridone, Olanzapine"
+  ],
+  "reference": "McKeith 2023 DLB Consortium | McKeith Neurology 2017 | EAN 2023 | NICE DLB 2018 | Watts Aging Ment Health 2022"
+ },
+ "PAT_013": {
+  "nom": "Démence Fronto-Temporale (DFT)",
+  "initier": [
+   "ISRS (Sertraline 25-100 mg, Citalopram 10-20 mg, Escitalopram 5-10 mg)",
+   "Mesures non pharmacologiques",
+   "Mémantine (controverse)",
+   "Quétiapine très basse dose (12.5-25 mg)",
+   "Trazodone 50-150 mg/j (au coucher)"
+  ],
+  "eviter": [
+   "Anticholinergiques (oxybutynine, tolterodine, ATC)",
+   "Antipsychotiques classiques (Halopéridol, Chlorpromazine, Lévomépromazine)",
+   "Antipsychotiques à fort effet anticholinergique (Olanzapine, Quétiapine forte dose)",
+   "Benzodiazépines / Z-drugs (Zolpidem, Zopiclone)",
+   "IAChE (Donépézil, Rivastigmine, Galantamine)",
+   "Opioïdes forts",
+   "Valproate (Dépakine)"
+  ],
+  "reference": "FTD Consortium 2023 | International FTD Research Symposium 2024 | AFTD Expert Recommendations | Lebert 2004 (trazodone) | ALBA-FTD trial | STOPP/START v3 | Beers 2023"
+ },
+ "PAT_014": {
+  "nom": "Maladie de Parkinson",
+  "initier": [
+   "Agonistes dopaminergiques non ergotés",
+   "Amantadine 100-300 mg/j",
+   "Clozapine 6.25-50 mg/j",
+   "IMAO-B",
+   "Inhibiteur COMT",
+   "Lévodopa + inhibiteur DDC"
+  ],
+  "eviter": [
+   "Anticholinergiques (Trihexyphénidyle)",
+   "Antidépresseurs tricycliques",
+   "IMAO-B + Péthidine/Tramadol",
+   "Métoclopramide, Métopimazine",
+   "Neuroleptiques atypiques sauf Clozapine et Quétiapine",
+   "Neuroleptiques classiques (Halopéridol, Chlorpromazine, Lévomépromazine)",
+   "Réserpine, Tétrabénazine"
+  ],
+  "reference": "MDS EBM 2025 | DGN/EAN 2024 | NICE 2024"
+ },
+ "PAT_015": {
+  "nom": "Épilepsie",
+  "initier": [
+   "Lacosamide",
+   "Lamotrigine",
+   "Lévétiracétam"
+  ],
+  "eviter": [
+   "Carbamazépine",
+   "Phénobarbital",
+   "Phénytoïne",
+   "Valproate"
+  ],
+  "reference": "ILAE 2024 | HAS 2023 | EAN 2024"
+ },
+ "PAT_016": {
+  "nom": "Diabète (type non précisé)",
+  "initier": [
+   "GLP-1 RA (Sémaglutide, Dulaglutide, Liraglutide) — si DT2 + surpoids ou maladie CV",
+   "Préciser le type de diabète (DT1 vs DT2) — prises en charge distinctes",
+   "iSGLT2 (Dapagliflozine, Empagliflozine) — si DT2 + maladie CV / rénale / insuffisance cardiaque"
+  ],
+  "eviter": [],
+  "reference": "ADA Standards 2025-2026 | ESC 2023 | KDIGO 2024 | EASD 2024"
+ },
+ "PAT_016a": {
+  "nom": "Diabète de type 1",
+  "initier": [
+   "Insuline basale (analogue lent : Glargine U100/U300, Détémir, Dégludec)",
+   "Insuline prandiale (analogue rapide : Aspart, Lispro, Glulisine, FiAsp)",
+   "Pompe à insuline + CGM (ou AID hybride)",
+   "Éducation thérapeutique (ETP) + glucagon d'urgence (nasal ou IM)"
+  ],
+  "eviter": [
+   "Arrêt de l'insuline basale",
+   "Bêta-bloquant non cardiosélectif",
+   "Metformine / sulfamides / glinides en monothérapie",
+   "Objectif HbA1c < 7 % chez DT1 âgé fragile",
+   "iSGLT2 en DT1 sans cadre spécialisé + éducation cétose"
+  ],
+  "reference": "ADA Standards 2025-2026 §9.6+§13 | ISPAD 2022 | SFD 2023 | EASD 2022 older adults T1D"
+ },
+ "PAT_016b": {
+  "nom": "Diabète de type 2",
+  "initier": [
+   "Finerenone (ARM non stéroïdien)",
+   "GLP-1 RA (Sémaglutide, Liraglutide, Dulaglutide)",
+   "Metformine",
+   "iSGLT2 (Empagliflozine, Dapagliflozine, Canagliflozine)"
+  ],
+  "eviter": [
+   "Glinides (Répaglinide) au long cours chez le très âgé",
+   "Pioglitazone",
+   "Sulfamides hypoglycémiants (Glibenclamide)"
+  ],
+  "reference": "ADA Standards 2025-2026 | ESC 2023 | KDIGO 2024 | EASD 2024"
+ },
+ "PAT_017": {
+  "nom": "Hypothyroïdie",
+  "initier": [
+   "Lévothyroxine"
+  ],
+  "eviter": [
+   "Surdosage LT4 (TSH < 0.4)",
+   "Traitement hypothyroïdie subclinique chez > 80 ans si TSH 4-10"
+  ],
+  "reference": "ETA 2023 | ATA 2024 | TRUST trial"
+ },
+ "PAT_018": {
+  "nom": "Hyperthyroïdie",
+  "initier": [
+   "Bêtabloquant (Propranolol 40-120 mg/j OU Aténolol 50-100 mg/j OU Bisoprolol 2.5-10 mg/j en alternative gériatrique)",
+   "Lugol / Iode en pré-opératoire",
+   "Propylthiouracile (PTU) 300-600 mg/j",
+   "Thiamazole (Thyrozol) 10-40 mg/j OU Carbimazole (Néo-Mercazole) 15-60 mg/j"
+  ],
+  "eviter": [
+   "Amiodarone si ATCD thyroïdien",
+   "Lithium"
+  ],
+  "reference": "ETA 2023 | ATA | ESC 2024 (FA)"
+ },
+ "PAT_019": {
+  "nom": "Dyslipidémie",
+  "initier": [
+   "Acide bempédoïque 180 mg/j",
+   "Anti-PCSK9 (Evolocumab 140 mg/2sem, Alirocumab 75-150 mg/2sem)",
+   "Fénofibrate 145-200 mg/j",
+   "Inclisiran 284 mg SC (J1, J90, puis /6 mois)",
+   "Statine haute intensité",
+   "Ézétimibe 10 mg/j"
+  ],
+  "eviter": [
+   "Arrêt statine en prévention secondaire sans raison",
+   "Gemfibrozil + Statine"
+  ],
+  "reference": "ESC/EAS 2019 Dyslipidaemia | ESC 2021 CVD Prevention"
+ },
+ "PAT_020": {
+  "nom": "Cancer / Tumeur solide",
+  "initier": [],
+  "eviter": [],
+  "reference": "ESMO 2024 | ASCO 2024 | MASCC | ESC Cardio-Onco 2022"
+ },
+ "PAT_021": {
+  "nom": "Ulcère Gastro-Duodénal (UGD)",
+  "initier": [
+   "IPP (Oméprazole 20-40mg, Pantoprazole 40mg, Ésoméprazole 40mg)",
+   "Éradication H. pylori"
+  ],
+  "eviter": [
+   "AINS",
+   "IPP > 8 semaines sans indication documentée"
+  ],
+  "reference": "ESGE 2024 | HAS | ACG 2024"
+ },
+ "PAT_022": {
+  "nom": "Asthme",
+  "initier": [
+   "Track 1 (préféré GINA 2024) : CSI-Formotérol à la demande ET en fond",
+   "Track 2 (alternative) : CSI + SABA de secours"
+  ],
+  "eviter": [
+   "AINS / Aspirine",
+   "Bêtabloquants non cardiosélectifs (Propranolol, Sotalol, Nadolol, Timolol)",
+   "SABA seul sans CSI"
+  ],
+  "reference": "GINA 2024 | SPLF 2021 (Asthme adulte) | HAS 2018 (Asthme adulte) | ERS/ATS 2020 (Severe Asthma) | Beers 2023 | STOPP/START v3"
+ },
+ "PAT_023": {
+  "nom": "BPCO",
+  "initier": [
+   "Azithromycine 250 mg/j ou 500 mg x3/sem",
+   "Classification GOLD ABE et traitement initial",
+   "Dupilumab (anti-IL-4Rα, biologique injectable SC)",
+   "Roflumilast 500 µg/j",
+   "Trithérapie (LAMA + LABA + CSI)"
+  ],
+  "eviter": [
+   "BB non cardiosélectifs",
+   "Benzodiazépines / Opioïdes",
+   "CSI seul (sans LABA)"
+  ],
+  "reference": "GOLD 2025 | SPLF 2023 (BPCO) | HAS 2014 BPCO | ERS/ATS 2017 | IMPACT trial | ETHOS trial | BOREAS | NOTUS | Beers 2023 | STOPP/START v3"
+ },
+ "PAT_024": {
+  "nom": "Goutte",
+  "initier": [],
+  "eviter": [
+   "Aspirine faible dose",
+   "Diurétiques thiazidiques / de l'anse"
+  ],
+  "reference": "EULAR 2023 | ACR 2020 | HAS"
+ },
+ "PAT_025": {
+  "nom": "Ostéoporose",
+  "initier": [
+   "Bisphosphonates (Alendronate 70 mg/sem, Risédronate 35 mg/sem, Zolédronate 5 mg/an IV)",
+   "Dénosumab 60 mg SC /6 mois",
+   "Tériparatide / Romosozumab",
+   "Vitamine D + Calcium"
+  ],
+  "eviter": [
+   "Corticoïdes au long cours"
+  ],
+  "reference": "IOF/ESCEO 2024 | NOGG 2024 | HAS 2024"
+ },
+ "PAT_026": {
+  "nom": "Infection Urinaire",
+  "initier": [],
+  "eviter": [
+   "ATB si bactériurie asymptomatique",
+   "Fluoroquinolones en première intention cystite simple",
+   "Nitrofurantoïne au long cours (> 14j)"
+  ],
+  "reference": "SPILF 2024 | IDSA 2019 (bactériurie asymptomatique) | IDSA 2010 (cystite) | HAS"
+ },
+ "PAT_027": {
+  "nom": "Insomnie",
+  "initier": [
+   "Mélatonine LP 2 mg",
+   "TCC-I (Thérapie Cognitivo-Comportementale de l'Insomnie)",
+   "Trazodone 25-50 mg"
+  ],
+  "eviter": [
+   "Antihistaminiques H1 sédatifs (Hydroxyzine, Doxylamine)",
+   "Benzodiazépines",
+   "Benzodiazépines apparentées (Zolpidem, Zopiclone)"
+  ],
+  "reference": "ESRS 2023 | ACP 2016 | Beers 2023 | STOPP/START v3"
+ },
+ "PAT_028": {
+  "nom": "Vertiges",
+  "initier": [
+   "Bétahistine 24-48 mg/j",
+   "Manœuvre de repositionnement (Epley/Sémont)"
+  ],
+  "eviter": [
+   "Antivertigineux au long cours (Acétylleucine, Méclozine)",
+   "Benzodiazépines"
+  ],
+  "reference": "Bárány Society 2023 | HAS"
+ },
+ "PAT_029": {
+  "nom": "Maladie Rénale Chronique (MRC)",
+  "initier": [
+   "ASE (agent stimulant l'érythropoïèse)",
+   "Finerenone (ARM non stéroïdien)",
+   "GLP-1 RA (Sémaglutide)",
+   "IEC ou ARA2",
+   "Statine",
+   "iSGLT2"
+  ],
+  "eviter": [
+   "AINS",
+   "IEC + ARA2 simultanément",
+   "Metformine si DFG < 30"
+  ],
+  "reference": "KDIGO 2024 | ESC 2023 | ADA 2025 | CONFIDENCE"
+ },
+ "PAT_030": {
+  "nom": "Soins Palliatifs",
+  "initier": [],
+  "eviter": [
+   "Anticoagulants en prévention primaire (FA sans ATCD AVC)",
+   "Antidépresseurs si pas de bénéfice perçu",
+   "Antihypertenseurs (si PAS < 110 ou pronostic < 3 mois)",
+   "Bisphosphonates",
+   "Béta-bloquants (si pas d'IC/post-IDM aigu)",
+   "Hypoglycémiants (sulfamides, metformine, insuline basale fortes doses)",
+   "IPP au long cours sans saignement actif/GERD symptomatique",
+   "Statines",
+   "Vitamines (D, B12, fer PO) sans carence symptomatique"
+  ],
+  "reference": "SFAP 2024 | EAPC 2023 | NICE End of Life 2024"
+ },
+ "PAT_031": {
+  "nom": "Fragilité / Sénescence",
+  "initier": [],
+  "eviter": [
+   "AINS au long cours",
+   "Anticholinergiques (ACB cumulé ≥ 3)",
+   "Antihypertenseurs (si PAS < 120 mmHg ou vertiges/chutes)",
+   "Antipsychotiques > 12 semaines",
+   "Benzodiazépines / Z-drugs",
+   "Bisphosphonates (espérance < 1-2 ans)",
+   "IPP > 8 semaines sans indication claire",
+   "Opioïdes forts en chronique sans réévaluation",
+   "Statines (espérance de vie < 2-3 ans, prévention primaire)",
+   "Sulfamides hypoglycémiants (Glibenclamide, Glimépiride, Glipizide, Gliclazide)"
+  ],
+  "reference": "STOPP/START v3 (2023) | Beers 2023 | NICE Multimorbidity 2024 | Consensus Gériatrique International"
+ },
+ "PAT_032": {
+  "nom": "Dépression (sujet âgé / Late-Life Depression)",
+  "initier": [
+   "Augmentation par antipsychotique atypique (3e-4e ligne)",
+   "Augmentation par lithium (3e ligne)",
+   "Citalopram / Escitalopram (ISRS — alternatives 1ère intention)",
+   "Clomipramine (4e ligne — usage hospitalier)",
+   "Combinaison ISRS/IRSN + Mirtazapine (« California Rocket Fuel »)",
+   "ECT (gold standard pour résistance ou sévérité)",
+   "IRSN (Venlafaxine, Duloxétine, Milnacipran) — 2e ligne",
+   "Lamotrigine (3e-4e ligne, hors AMM)",
+   "Mirtazapine (NaSSA — 1ère ligne si insomnie/dénutrition)",
+   "Psychothérapie / TCC",
+   "Sertraline (ISRS — 1ère intention)",
+   "Vortioxétine (multimodal 5-HT)",
+   "rTMS (Stimulation magnétique transcrânienne)"
+  ],
+  "eviter": [
+   "AINS + ISRS/IRSN/Vortioxétine",
+   "Agomélatine",
+   "Antidépresseur à ACB élevé si plainte cognitive précoce ou MCI",
+   "Benzodiazépines pour la dépression",
+   "Combinaison 2 ISRS / 2 IRSN / ISRS+IRSN / ISRS-IRSN+IMAO/TCA",
+   "Combinaison de 3 antidépresseurs",
+   "IMAO non sélectifs (phénelzine, tranylcypromine, iproniazide)",
+   "ISRS/IRSN/Vortioxétine en cas de saignement récent (< 1 mois, surtout digestif)",
+   "Miansérine",
+   "Paroxétine",
+   "Tianeptine",
+   "Tramadol + ISRS/IRSN/TCA",
+   "Tricycliques en 1ère ligne"
+  ],
+  "reference": "Houix M et al. SFGG/SF3PA/SFPC consensus Eur Psychiatry 2026 (DOI 10.1192/j.eurpsy.2026.12206) | NICE CG90 2022 | APA 2023 | STOPP/START v3 | Beers 2023 | CANMAT 2016"
+ },
+ "PAT_033": {
+  "nom": "Glaucome à angle fermé",
+  "initier": [
+   "Acétazolamide (Diamox) PO/IV",
+   "Alpha2-agoniste topique (brimonidine)",
+   "Analogue prostaglandines (latanoprost, bimatoprost, travoprost)",
+   "Collyre bêtabloquant (timolol 0.25-0.5%)",
+   "Inhibiteur anhydrase carbonique topique (dorzolamide, brinzolamide)",
+   "Iridotomie laser périphérique (YAG)",
+   "Mannitol 20% IV",
+   "Pilocarpine collyre 1-2%"
+  ],
+  "eviter": [
+   "Anticholinergiques systémiques (oxybutynine, trospium, solifenacine, toltérodine)",
+   "Antidépresseurs tricycliques",
+   "Antihistaminiques H1 1ère gén (hydroxyzine, dexchlorphéniramine)",
+   "Antispasmodiques (atropine, scopolamine, butylscopolamine)",
+   "Ipratropium nébulisé",
+   "LAMA inhalés (tiotropium, aclidinium)"
+  ],
+  "reference": "AAO Preferred Practice Pattern 2024 | EGS Guidelines 2024 | STOPP/START v3"
+ },
+ "PAT_034": {
+  "nom": "Hépatopathie chronique / Cirrhose",
+  "initier": [
+   "Lactulose",
+   "Rifaximine",
+   "Spironolactone + Furosémide"
+  ],
+  "eviter": [
+   "AINS (tous)",
+   "Amiodarone",
+   "Benzodiazépines (surtout si encéphalopathie)",
+   "Méthotrexate",
+   "Opioïdes",
+   "Paracétamol > 2 g/j",
+   "Statines si Child-Pugh C",
+   "Valproate"
+  ],
+  "reference": "EASL Clinical Practice Guidelines 2024 | AASLD Practice Guidance 2023 | Verbeeck 2008 Liver Disease Pharmacokinetics"
+ },
+ "PAT_035": {
+  "nom": "Bradycardie",
+  "initier": [
+   "Atropine 0.5 mg IV (bolus, répétable jusqu'à 3 mg)",
+   "Isoprénaline 0.02-0.06 µg/kg/min IV (en USIC)",
+   "Mesures non pharmacologiques systématiques",
+   "Pacemaker temporaire (sonde transveineuse) puis définitif"
+  ],
+  "eviter": [
+   "Amiodarone",
+   "Bêtabloquants",
+   "Clonidine, Méthyldopa",
+   "Digoxine",
+   "Donépézil, Rivastigmine, Galantamine",
+   "Ivabradine",
+   "Vérapamil, Diltiazem"
+  ],
+  "reference": "ESC Guidelines for Cardiac Pacing 2021 | ACLS 2020 (AHA) | STOPP/START v3"
+ },
+ "PAT_036": {
+  "nom": "Maladie thromboembolique veineuse (MTEV)",
+  "initier": [
+   "AOD (apixaban, rivaroxaban) — initiation d'emblée",
+   "AOD (edoxaban, dabigatran) — après 5j HBPM préalable",
+   "AVK (warfarine, acénocoumarol) — si CI AOD et HBPM long cours non envisageable",
+   "HBPM curative (enoxaparine, tinzaparine) — cancer actif ou CI AOD"
+  ],
+  "eviter": [
+   "AINS",
+   "Tamoxifène",
+   "Œstrogènes (contraceptifs, THS)"
+  ],
+  "reference": "ESC Guidelines for PE/DVT 2024 | ASH VTE Guidelines 2023 | ACCP Antithrombotic Guidelines 2024 | HOKUSAI-VTE | RE-COVER"
+ },
+ "PAT_037": {
+  "nom": "Sarcopénie",
+  "initier": [
+   "Apports protéiques optimisés",
+   "Exercice physique en résistance",
+   "Leucine / HMB",
+   "Vitamine D (cholécalciférol)"
+  ],
+  "eviter": [
+   "Corticoïdes systémiques au long cours",
+   "Repos strict prolongé",
+   "Restriction calorique/protéique"
+  ],
+  "reference": "EWGSOP2 2019 | ICFSR 2022 | HAS Dénutrition 2021"
+ },
+ "PAT_038": {
+  "nom": "Dysphagie / Troubles de déglutition",
+  "initier": [
+   "Adaptation des textures (IDDSI)",
+   "Adaptation galénique des médicaments",
+   "CNO si dénutrition associée",
+   "Évaluation orthophonique"
+  ],
+  "eviter": [
+   "Anticholinergiques",
+   "Antipsychotiques",
+   "Benzodiazépines / Sédatifs",
+   "Formes LP / gastro-résistantes non écrasables"
+  ],
+  "reference": "ESSD 2021 | ESPEN Dysphagia 2022 | HAS Fausses routes 2020"
+ },
+ "PAT_039": {
+  "nom": "Incontinence urinaire",
+  "initier": [
+   "Duloxétine (si incontinence d'effort)",
+   "Mictions programmées (prompted voiding)",
+   "Mirabégron (agoniste β3)",
+   "Rééducation périnéale (kinésithérapie)"
+  ],
+  "eviter": [
+   "Alpha-bloquants (si hypotension associée)",
+   "Diurétiques de l'anse (furosémide, bumétanide) pour HTA",
+   "Oxybutynine",
+   "Solifénacine, Toltérodine, Fésotérodine"
+  ],
+  "reference": "ICI/ICS 2023 | EAU Urinary Incontinence 2024 | NICE UI 2019 | Beers 2023"
+ },
+ "PAT_041": {
+  "nom": "Démence vasculaire",
+  "initier": [
+   "Antihypertenseurs",
+   "Donépézil (5-10 mg/j)",
+   "Galantamine (16-24 mg/j LP)",
+   "Statine"
+  ],
+  "eviter": [
+   "Antipsychotiques au long cours",
+   "Benzodiazépines au long cours"
+  ],
+  "reference": "HAS 2018 MNC | O'Brien Lancet Neurol 2015 | ESH/ESC 2023"
+ },
+ "PAT_042": {
+  "nom": "Démence mixte (Alzheimer + vasculaire)",
+  "initier": [
+   "Contrôle FDRCV (HTA, LDL, diabète, AAP/AOD selon indication FA/AVC)",
+   "Donépézil / Galantamine / Rivastigmine",
+   "Mémantine (5-20 mg/j)"
+  ],
+  "eviter": [
+   "AINS au long cours",
+   "Anticholinergiques (ACB cumulé ≥ 3)",
+   "Antipsychotiques classiques au long cours",
+   "Benzodiazépines / Z-drugs",
+   "Opioïdes forts au long cours",
+   "Statines à très haute dose si pas de bénéfice CV démontré"
+  ],
+  "reference": "HAS 2018 MNC | Kalaria Lancet Neurol 2016 | NICE Dementia 2018 | STOPP/START v3 | Beers 2023"
+ },
+ "PAT_043": {
+  "nom": "Trouble neurocognitif léger (MCI) / MBI",
+  "initier": [
+   "Activité physique aérobie régulière",
+   "Correction des facteurs modifiables (sommeil, audition, dépression, polymédication)",
+   "Stimulation cognitive"
+  ],
+  "eviter": [
+   "Anticholinergiques (score ACB ≥ 2)",
+   "IAChE et Mémantine"
+  ],
+  "reference": "Petersen Neurology 2018 | Ismail MBI-C 2017 | SFGG 2024"
+ },
+ "PAT_044": {
+  "nom": "Trouble anxieux généralisé (TAG) du sujet âgé",
+  "initier": [
+   "Buspirone (10-30 mg/j)",
+   "Duloxétine (30-60 mg/j)",
+   "Escitalopram (5-10 mg/j)",
+   "Sertraline (25-100 mg/j)",
+   "TCC / relaxation"
+  ],
+  "eviter": [
+   "Benzodiazépines > 4 semaines",
+   "Hydroxyzine au long cours"
+  ],
+  "reference": "WFSBP 2023 | APA 2020 | SFGG 2024"
+ },
+ "PAT_045": {
+  "nom": "Psychose tardive (VLOSLP) / schizophrénie tardive",
+  "initier": [
+   "Aripiprazole (2-10 mg/j)",
+   "Olanzapine (2.5-7.5 mg/j)",
+   "Quétiapine (12.5-100 mg/j)",
+   "Rispéridone (0.25-2 mg/j)"
+  ],
+  "eviter": [
+   "Chlorpromazine",
+   "Halopéridol > 1 mg/j"
+  ],
+  "reference": "Howard Lancet Psychiatry 2018 | SFGG 2024 | Reinhardt & Cohen AJGP 2015"
+ },
+ "PAT_046": {
+  "nom": "Trouble bipolaire du sujet âgé",
+  "initier": [
+   "Lamotrigine (25-200 mg/j)",
+   "Lithium",
+   "Quétiapine (50-300 mg/j)",
+   "Valproate (500-1500 mg/j)"
+  ],
+  "eviter": [
+   "Antidépresseurs en monothérapie",
+   "Carbamazépine"
+  ],
+  "reference": "CANMAT 2018 | Sajatovic AJGP 2015 | SFGG 2024"
+ },
+ "PAT_047": {
+  "nom": "Catatonie",
+  "initier": [
+   "ECT",
+   "Lorazépam (1-2 mg IV/IM, répétable)",
+   "Support symptomatique (hydratation, prévention MTEV, nutrition)"
+  ],
+  "eviter": [
+   "Antipsychotiques typiques"
+  ],
+  "reference": "Rasmussen Neuropsychobiology 2016 | Sienaert BMC Psychiatry 2014"
+ },
+ "PAT_048": {
+  "nom": "Syndrome confusionnel (delirium)",
+  "initier": [
+   "Halopéridol (0.25-0.5 mg PO/IM, max 2 mg/24h)",
+   "Mesures HELP (réorientation, hydratation, mobilisation, appareillage sensoriel, sommeil)",
+   "Quétiapine (12.5-25 mg)",
+   "Rispéridone (0.25-0.5 mg) ou Olanzapine (2.5-5 mg)"
+  ],
+  "eviter": [
+   "Anticholinergiques (score ACB ≥ 2)",
+   "Benzodiazépines (sauf sevrage OH/BZD)",
+   "Contention physique au long cours"
+  ],
+  "reference": "HAS 2009 confusion âgée | NICE CG103 2023 | SFGG 2024"
+ },
+ "PAT_049": {
+  "nom": "Insomnie chronique du sujet âgé",
+  "initier": [
+   "Daridorexant (25-50 mg)",
+   "Hygiène du sommeil",
+   "Mélatonine LP (2 mg)",
+   "TCC-I"
+  ],
+  "eviter": [
+   "Antihistaminiques H1 (hydroxyzine, doxylamine)",
+   "BZD à demi-vie longue (diazépam, flunitrazépam)",
+   "Trazodone > 50 mg en 1ère intention",
+   "Zopiclone / Zolpidem > 4 semaines"
+  ],
+  "reference": "AASM 2021 | HAS 2006 sommeil | SFGG 2024"
+ },
+ "PAT_050": {
+  "nom": "Trouble comportemental en sommeil paradoxal (TCSP)",
+  "initier": [
+   "Aménagement de la chambre",
+   "Clonazépam (0.25-0.5 mg au coucher, max 1 mg)",
+   "Mélatonine LI à forte dose (3-12 mg au coucher)"
+  ],
+  "eviter": [
+   "Bêta-bloquants",
+   "ISRS/IRSN/TCA (sauf indication psychiatrique forte)"
+  ],
+  "reference": "AASM 2023 RBD | Schenck Sleep 2013 | SFGG 2024"
+ },
+ "PAT_051": {
+  "nom": "Syndrome des jambes sans repos (SJSR)",
+  "initier": [
+   "Fer oral ou IV si ferritine < 75 ng/mL",
+   "Gabapentine (300-900 mg au coucher)",
+   "Prégabaline (75-300 mg)",
+   "Ropinirole (0.25-1 mg) / Pramipexole (0.125-0.5 mg)"
+  ],
+  "eviter": [
+   "ISRS/IRSN (sauf bupropion)",
+   "Métoclopramide, antipsychotiques"
+  ],
+  "reference": "AASM 2024 RLS | EFNS 2012 | SFGG 2024"
+ },
+ "PAT_052": {
+  "nom": "Syndrome d'apnées obstructives du sommeil (SAOS)",
+  "initier": [
+   "Orthèse d'avancée mandibulaire",
+   "PPC nocturne",
+   "Perte de poids, arrêt OH, décubitus latéral"
+  ],
+  "eviter": [
+   "Alcool vespéral",
+   "Benzodiazépines, zopiclone, zolpidem",
+   "Opioïdes au long cours"
+  ],
+  "reference": "ERS/ESC 2023 | HAS 2014 SAOS | SFGG 2024"
+ },
+ "PAT_053": {
+  "nom": "Reflux gastro-œsophagien (RGO)",
+  "initier": [
+   "Alginate (Gaviscon, Topaal) — sachet ou suspension",
+   "Anti-H2 (famotidine 20-40 mg)",
+   "Antiacides (Maalox, Rennie, Phosphalugel)",
+   "FOGD (endoscopie haute)",
+   "IPP demi-dose 4-8 semaines (oméprazole 10 mg, pantoprazole 20 mg, ésoméprazole 20 mg, lansoprazole 15 mg, rabéprazole 10 mg)",
+   "IPP pleine dose 8 semaines (oméprazole 20-40 mg, pantoprazole 40 mg, ésoméprazole 40 mg, lansoprazole 30 mg, rabéprazole 20 mg)",
+   "Mesures hygiéno-diététiques"
+  ],
+  "eviter": [
+   "AINS au long cours",
+   "Atazanavir, rilpivirine, dasatinib, erlotinib, gefitinib + IPP",
+   "Cimétidine",
+   "Dompéridone (Motilium) fortes doses ou > 1 sem",
+   "IPP > 8 semaines sans réévaluation ni indication documentée",
+   "Métoclopramide (Primpéran) au long cours, surtout > 75 ans",
+   "Ranitidine",
+   "Tétracyclines/quinolones/bisphosphonates pris simultanément aux antiacides ou alginates"
+  ],
+  "reference": "SNFGE 2024 | HAS | ACG 2022 (Katz) | AGA 2022 (Yadlapati) | ESGE 2022 | STOPP/START v3"
+ },
+ "PAT_054": {
+  "nom": "Douleur chronique",
+  "initier": [
+   "Adjuvants neuropathiques (duloxétine, gabapentine, prégabaline, lidocaïne patch)",
+   "Approches non médicamenteuses (activité physique adaptée, kinésithérapie, TCC)",
+   "Opioïdes faibles (palier 2) puis forts (palier 3) en titration",
+   "Paracétamol (jusqu'à 3 g/j chez l'âgé)",
+   "Évaluation de la douleur (EN/EVA ; Algoplus/ECPA si troubles cognitifs)"
+  ],
+  "eviter": [
+   "AINS au long cours",
+   "Coprescription opioïde + benzodiazépine ou gabapentinoïde",
+   "Opioïdes forts en 1ère intention (douleur non cancéreuse chronique)"
+  ],
+  "reference": "HAS 2023 (douleur chronique) | SFETD 2024 | OMS (paliers antalgiques) | STOPP/START v3 | Beers 2023"
+ },
+ "PAT_055": {
+  "nom": "Schizophrénie chronique (début à l'âge adulte)",
+  "initier": [
+   "Antipsychotique atypique de maintien (aripiprazole, rispéridone, olanzapine, quétiapine)",
+   "Clozapine"
+  ],
+  "eviter": [
+   "Antipsychotiques typiques fortes doses / anticholinergiques cumulés",
+   "Arrêt ou réduction brutale de l'antipsychotique de fond"
+  ],
+  "reference": "HAS schizophrénie 2007/2024 | Maudsley 14e éd. (sujet âgé) | RANZCP 2016"
+ },
+ "PAT_056": {
+  "nom": "Trouble schizo-affectif",
+  "initier": [
+   "Antipsychotique atypique de maintien",
+   "Thymorégulateur (lithium, valproate ou lamotrigine)"
+  ],
+  "eviter": [
+   "Antidépresseur en monothérapie"
+  ],
+  "reference": "Maudsley 14e éd. | CANMAT 2018 | HAS"
+ },
+ "PAT_057": {
+  "nom": "Trouble délirant persistant (paranoïa)",
+  "initier": [
+   "Antipsychotique atypique faible dose"
+  ],
+  "eviter": [
+   "Escalade de dose injustifiée"
+  ],
+  "reference": "Maudsley 14e éd. | HAS"
+ },
+ "PAT_058": {
+  "nom": "Trouble bipolaire type I (chronique)",
+  "initier": [
+   "Lithium",
+   "Valproate / Lamotrigine / Quétiapine"
+  ],
+  "eviter": [
+   "Antidépresseur en monothérapie",
+   "Arrêt brutal du lithium/thymorégulateur"
+  ],
+  "reference": "CANMAT 2018 | Maudsley 14e éd. | HAS"
+ },
+ "PAT_059": {
+  "nom": "Trouble bipolaire type II (chronique)",
+  "initier": [
+   "Lamotrigine / Quétiapine / Lithium"
+  ],
+  "eviter": [
+   "Antidépresseur en monothérapie"
+  ],
+  "reference": "CANMAT 2018 | Maudsley 14e éd."
+ },
+ "PAT_060": {
+  "nom": "Trouble dépressif récurrent",
+  "initier": [
+   "ISRS (sertraline, escitalopram) ou IRSN"
+  ],
+  "eviter": [
+   "Arrêt prématuré après rémission unique d'une forme récurrente",
+   "Tricycliques"
+  ],
+  "reference": "HAS dépression 2017 | Maudsley 14e éd. | NICE"
+ },
+ "PAT_061": {
+  "nom": "Trouble dépressif persistant (dysthymie)",
+  "initier": [
+   "ISRS / IRSN"
+  ],
+  "eviter": [
+   "Benzodiazépine au long cours"
+  ],
+  "reference": "HAS dépression 2017 | Maudsley 14e éd."
+ },
+ "PAT_062": {
+  "nom": "Trouble obsessionnel-compulsif (TOC)",
+  "initier": [
+   "ISRS dose élevée (sertraline, fluoxétine, fluvoxamine)"
+  ],
+  "eviter": [
+   "Arrêt prématuré"
+  ],
+  "reference": "Maudsley 14e éd. | NICE CG31 | HAS"
+ },
+ "PAT_063": {
+  "nom": "Trouble panique",
+  "initier": [
+   "ISRS / IRSN"
+  ],
+  "eviter": [
+   "Benzodiazépine au long cours"
+  ],
+  "reference": "Maudsley 14e éd. | NICE | HAS"
+ },
+ "PAT_064": {
+  "nom": "Trouble anxieux généralisé chronique",
+  "initier": [
+   "ISRS / IRSN"
+  ],
+  "eviter": [
+   "Benzodiazépine au long cours"
+  ],
+  "reference": "Maudsley 14e éd. | NICE CG113 | HAS"
+ },
+ "PAT_065": {
+  "nom": "État de stress post-traumatique (ESPT)",
+  "initier": [
+   "ISRS (paroxétine, sertraline)"
+  ],
+  "eviter": [
+   "Benzodiazépines"
+  ],
+  "reference": "Maudsley 14e éd. | NICE NG116 | HAS"
+ },
+ "PAT_066": {
+  "nom": "Trouble de la personnalité",
+  "initier": [
+   "Traitement des comorbidités uniquement (ISRS si dépression associée)"
+  ],
+  "eviter": [
+   "Polypharmacie psychotrope (antipsychotique + thymorégulateur + BZD cumulés)"
+  ],
+  "reference": "Maudsley 14e éd. | NICE CG78 (borderline)"
+ },
+ "PAT_067": {
+  "nom": "Trouble de l'usage de l'alcool",
+  "initier": [
+   "Acamprosate / Naltrexone / Baclofène",
+   "Thiamine (vitamine B1)"
+  ],
+  "eviter": [
+   "Benzodiazépine au long cours (hors sevrage encadré)"
+  ],
+  "reference": "HAS mésusage alcool 2015 | Maudsley 14e éd."
+ },
+ "PAT_068": {
+  "nom": "Trouble de l'usage de substances",
+  "initier": [
+   "TSO méthadone ou buprénorphine"
+  ],
+  "eviter": [
+   "TSO + benzodiazépine/dépresseur respiratoire non encadré"
+  ],
+  "reference": "HAS TSO 2018 | Maudsley 14e éd."
+ },
+ "PAT_069": {
+  "nom": "Trouble du spectre de l'autisme / déficience intellectuelle",
+  "initier": [
+   "Antipsychotique atypique faible dose (rispéridone, aripiprazole)"
+  ],
+  "eviter": [
+   "Polypharmacie psychotrope / fortes doses"
+  ],
+  "reference": "HAS TSA 2018 | NICE | Maudsley 14e éd."
+ }
+}

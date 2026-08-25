@@ -310,6 +310,27 @@ Point ouvert : `IN_E03` est la seule règle dont toutes les clés `med_absent` s
 mortes (les agents stimulant l'érythropoïèse ne sont pas en base), donc elle propose
 d'initier un ASE chez un patient qui en reçoit déjà.
 
+## Le filet de régression — trois instruments, et leurs angles morts
+
+1. **`tests_golden_master.json`** — signature par patient des 106 dossiers du panel.
+   Il capture **la sévérité ET le titre** (`severity | titre`) de chaque entrée : sans la
+   sévérité, un changement de gradation reste invisible — c'était le défaut de
+   `DUPLICATE_WATCH`. Huit onglets sont figés, dont **`alertes-scores` et
+   `alertes-synthese`**, ajoutés après avoir constaté qu'une correction du score
+   anticholinergique (voies inhalées) ne produisait **aucune dérive** alors qu'elle
+   changeait l'ACB de 2 à 0 sur plusieurs patients.
+2. **`pathology_rules_golden.json`** — contenu de `PATHOLOGY_RULES_DB` par pathologie
+   (classes INITIER/EVITER, référence, nombre de sources). L'onglet « guidelines » n'est
+   volontairement PAS dans le golden des patients : il dépend des comorbidités, pas de
+   l'ordonnance, et serait répété à l'identique d'un dossier à l'autre. Motivation :
+   l'ajout des ASE aux traitements de la MRC n'avait été détecté par aucun test.
+3. **`rule_keys_golden.json` et `class_members_golden.json`** — résolution de chaque clé
+   de règle et composition de chaque classe (voir la section sur les collisions).
+
+**Règle de méthode** : après toute modification d'un de ces instruments, le **revalider
+par mutation** — casser volontairement ce qu'il est censé attraper et vérifier qu'il
+échoue. Un filet qu'on étend sans le retester peut avoir été désarmé sans qu'on le voie.
+
 ## Quatre invariants issus de l'audit croisé
 
 Quatre familles de défaut expliquaient l'essentiel des divergences des 106 dossiers.

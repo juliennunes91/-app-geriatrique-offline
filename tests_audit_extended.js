@@ -153,13 +153,28 @@ const PANEL = {
     'cov_SUP_INT_005_SUP_INT_006': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Doxazosine","Furosemide","Colchicine","Clarithromycine"]},
     'cov_SUP_INT_009_SUP_INT_010': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Warfarine","Citalopram","Digoxine","Amiodarone"]}
 };
-const TABS_SIG = ['alertes-eviter', 'alertes-initier', 'alertes-bio', 'alertes-interact', 'alertes-suivi', 'alertes-usage'];
+// Onglets figés par le golden-master. `alertes-scores` et `alertes-synthese` ont été
+// AJOUTÉS après avoir constaté qu'ils échappaient totalement au filet : la correction de
+// la charge anticholinergique des voies inhalées ne produisait AUCUNE dérive, alors
+// qu'elle changeait le score ACB de 2 à 0 sur plusieurs patients. Ces deux onglets
+// portent les scores composites chiffrés (PIM global, CHA₂DS₂-VA, HAS-BLED, ORBIT,
+// DOACscore, RISQ-PATH, Tisdale, ACB) et le verdict global du dossier.
+// `alertes-guidelines` n'y figure pas volontairement : son contenu dépend des
+// comorbidités et non de l'ordonnance, il serait redondant d'un patient à l'autre.
+// Il est protégé par un instrument dédié — voir runPathologyRulesAudit.
+const TABS_SIG = ['alertes-eviter', 'alertes-initier', 'alertes-bio', 'alertes-interact',
+    'alertes-suivi', 'alertes-usage', 'alertes-scores', 'alertes-synthese'];
 
 function signaturePatient(c) {
     const r = analyzeCase(c);
     const sig = {};
     TABS_SIG.forEach(t => {
-        sig[t] = [...new Set((r[t] || []).map(a => normTitre(a.titre)).filter(Boolean))].sort();
+        // La SÉVÉRITÉ est capturée avec le titre. Sans elle, un changement de gradation
+        // reste invisible — c'était exactement le défaut de DUPLICATE_WATCH, qui codait
+        // `warning` en dur pour toutes les classes de doublon sans que rien ne l'attrape.
+        sig[t] = [...new Set((r[t] || [])
+            .map(a => (a && a.severity ? a.severity : '?') + ' | ' + normTitre(a.titre))
+            .filter(x => !/\| *$/.test(x)))].sort();
     });
     return sig;
 }
@@ -944,6 +959,61 @@ function runClassMembershipAudit(test, assert) {
 // liste des médicaments qu'elle résout — avec le vrai `classe`. Toute dérive
 // (nouvelle molécule qui élargit une clé par accident) devient un échec de test.
 // ============================================================================
+// RECOMMANDATIONS PAR PATHOLOGIE — golden dédié
+// ----------------------------------------------------------------------------
+// L'onglet « guidelines » n'est pas dans le golden-master des patients : son contenu
+// dépend des COMORBIDITÉS et non de l'ordonnance, il serait donc répété à l'identique
+// d'un patient à l'autre. Il est figé ici, par PATHOLOGIE — représentation compacte et
+// sans redondance, qui protège directement geria_pathology_rules_v3.js.
+// Motivation concrète : l'ajout des agents stimulant l'érythropoïèse aux traitements
+// de la MRC (PAT_029) n'a été détecté par AUCUN test.
+function runPathologyRulesAudit(test, assert) {
+    const { sandbox } = loadApp();
+    const current = JSON.parse(vm.runInContext(`(function(){
+        if (typeof PATHOLOGY_RULES_DB === 'undefined') return '{}';
+        var out = {};
+        for (var id in PATHOLOGY_RULES_DB) {
+            var p = PATHOLOGY_RULES_DB[id] || {}, t = p.TRAITEMENTS || {};
+            var classes = function(l){ return (l || []).map(function(x){ return x.classe || x.terme || '?'; }).sort(); };
+            out[id] = {
+                nom: p.NOM || '',
+                initier: classes(t.INITIER),
+                eviter: classes(t.EVITER),
+                reference: p.REFERENCE || '',
+                nb_sources: (p.SOURCES_EBM || []).length
+            };
+        }
+        return JSON.stringify(out);
+    })()`, sandbox));
+
+    const goldenPath = path.join(__dirname, 'pathology_rules_golden.json');
+    if (!fs.existsSync(goldenPath) || process.env.GOLDEN_UPDATE === '1') {
+        fs.writeFileSync(goldenPath, JSON.stringify(current, null, 1));
+        console.log('  ℹ️  Golden des règles par pathologie ' + (process.env.GOLDEN_UPDATE === '1' ? 'RÉGÉNÉRÉ' : 'CRÉÉ'));
+        return;
+    }
+    const golden = JSON.parse(fs.readFileSync(goldenPath, 'utf8'));
+    const ids = new Set([...Object.keys(golden), ...Object.keys(current)]);
+    ids.forEach(id => {
+        test('Règles par pathologie — ' + id, () => {
+            const g = golden[id], c = current[id];
+            if (!g) return assert.ok(false, 'pathologie AJOUTÉE : ' + id + ' (' + (c.nom || '') + ')');
+            if (!c) return assert.ok(false, 'pathologie SUPPRIMÉE : ' + id + ' (' + (g.nom || '') + ')');
+            const diff = [];
+            ['initier', 'eviter'].forEach(k => {
+                const a = new Set(g[k] || []), b = new Set(c[k] || []);
+                [...b].filter(x => !a.has(x)).forEach(x => diff.push('+' + k + ': ' + x));
+                [...a].filter(x => !b.has(x)).forEach(x => diff.push('-' + k + ': ' + x));
+            });
+            if (g.reference !== c.reference) diff.push('référence : « ' + g.reference + ' » → « ' + c.reference + ' »');
+            if (g.nb_sources !== c.nb_sources) diff.push('sources EBM : ' + g.nb_sources + ' → ' + c.nb_sources);
+            assert.ok(diff.length === 0,
+                (c.nom || id) + ' — contenu modifié (si voulu : GOLDEN_UPDATE=1) :\n  ' + diff.join('\n  '));
+        });
+    });
+}
+
+// ============================================================================
 // RECHERCHE DE L'AUTOCOMPLÉTION — pas de correspondance à cheval sur deux mots
 // ----------------------------------------------------------------------------
 // Signalé en usage : taper « ains » dans le champ médicaments proposait le FENTANYL.
@@ -1349,4 +1419,4 @@ function runPosologyCompletenessAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runAutocompleteAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runPathologyRulesAudit, runAutocompleteAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
