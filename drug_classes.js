@@ -41,6 +41,15 @@ const DRUG_CLASSES = {
         classeMatch: ['diuretique'],
         dcis: ['furosemide', 'bumetanide', 'hydrochlorothiazide', 'indapamide', 'spironolactone', 'altizide', 'chlortalidone', 'amiloride', 'triamterene', 'eplerenone', 'piretanide', 'torasemide', 'cicletanine']
     },
+    // Polyènes. Classe déclarée pour une seule raison : porter l'exclusion de la
+    // suspension buvable (cf. _CLASS_EXCLUDE), qui n'est consultée que pour un
+    // identifiant de classe existant. Alias longs uniquement — « ampho » (< 6 car.)
+    // et « polyene » resteraient sans risque, mais on s'en tient au strict besoin.
+    antifongique_polyenique: {
+        aliases: ['antifongiquepolyenique', 'polyene', 'amphotericine', 'amphotericineb'],
+        classeMatch: ['antifongiquepolyenique'],
+        dcis: ['amphotericine b', 'nystatine']
+    },
     diuretique_anse: {
         aliases: ['diuretiquedelanse', 'diuretiquesdelanse', 'diuretiqueanse', 'diuretiquesanse'],
         classeMatch: ['diuretiquedelanse'],
@@ -521,6 +530,11 @@ const _CLASS_EXCLUDE = {
     // Meme regle pour la sous-classe : elle matche par liste de DCI, pas par libelle.
     ains_non_selectif: /voietopique/,
     diuretique: /antidiur/,
+    // Amphotéricine B en suspension BUVABLE : biodisponibilité digestive quasi nulle
+    // (RCP Fungizone suspension buvable). Elle ne provoque ni hypokaliémie, ni
+    // néphrotoxicité, ni aucune interaction systémique — même marqueur de libellé que
+    // les AINS topiques, posé depuis la précision de voie.
+    antifongique_polyenique: /voieoralenonabsorbee/,
     // « corticoide » ⊂ « Corticoïde inhalé (ICS) » : la béclométasone déclenchait les
     // règles du corticoïde SYSTÉMIQUE (ulcère, AINS + corticoïde, PIM-Check).
     corticoide: /inhale|\bics\b|nasal|ophtalm|cutane|topique|intraarticulaire/,
@@ -705,6 +719,15 @@ function medPrecisionFamily(classe, dci) {
     if (/m[eé]b[eé]v[eé]rine|alv[eé]rine|phloroglucinol|trim[eé]butine/i.test(d) || /antispasmodique/i.test(cl)) return 'antispasmodique';
     if (/b[eé]tahistine|m[eé]clozine|m[eé]clizine|flunarizine|cinnarizine/i.test(d) || /anti-?vertigineux/i.test(cl)) return 'antivertigineux';
     // Familles dose/bilan-dépendantes (Phase 1)
+    // Méthotrexate : deux schémas thérapeutiques sans rapport l'un avec l'autre.
+    // En rhumatologie/dermatologie, 7,5-25 mg par SEMAINE avec acide folique ; en
+    // oncologie, des doses cent fois supérieures avec sauvetage folinique. La consigne
+    // « acide folique 5 mg/sem » est juste pour le premier et fausse pour le second.
+    if (/m[eé]thotrexate|methotrexate/i.test(d) || /m[eé]thotrexate/i.test(cl)) return 'methotrexate';
+    // Amphotéricine B : la suspension buvable n'est PAS absorbée (candidose
+    // oropharyngée/digestive) — ni néphrotoxicité, ni hypokaliémie, ni interaction
+    // systémique. La forme injectable porte au contraire toute la toxicité.
+    if (/amphot[eé]ricine/i.test(d) || /amphot[eé]ricine/i.test(cl)) return 'amphotericine';
     if (/clozapine/i.test(d) || /clozapine/i.test(cl)) return 'clozapine';
     if (/donepezil|donépézil|rivastigmine|galantamine/i.test(d)
         || /ac[eé]tylcholinest[eé]rase|anticholinest[eé]ras/i.test(cl)) return 'anticholinesterase';

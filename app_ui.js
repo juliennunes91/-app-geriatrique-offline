@@ -250,7 +250,9 @@ const MED_PRECISION_FIELDS = {
     clozapine: ['nfs_recent'],
     statine: ['dose'],
     antipsychotique: ['duree'],
-    inhale: ['composition']
+    inhale: ['composition'],
+    methotrexate: ['mtx_schema'],
+    amphotericine: ['voie_ampho']
 };
 const PRECISION_FIELD_DEFS = {
     duree: { label: 'Durée de traitement', type: 'select',
@@ -267,6 +269,14 @@ const PRECISION_FIELD_DEFS = {
     voie: { label: 'Voie d\'administration', type: 'select',
         options: [['', 'Non précisé (traité comme systémique)'], ['orale', 'Orale / systémique'],
                   ['topique', 'Topique (gel, emplâtre, crème)']] },
+    mtx_schema: { label: 'Schéma thérapeutique du méthotrexate', type: 'select',
+        options: [['', 'Non précisé (traité comme faible dose hebdomadaire)'],
+                  ['faible', 'Faible dose HEBDOMADAIRE — rhumatologie / dermatologie (7,5-25 mg/semaine)'],
+                  ['haute', 'Haute dose — protocole oncologique avec sauvetage folinique']] },
+    voie_ampho: { label: 'Voie d\'administration de l\'amphotéricine B', type: 'select',
+        options: [['', 'Non précisé (traité comme injectable)'],
+                  ['orale', 'Suspension BUVABLE (candidose orale/digestive — non absorbée)'],
+                  ['iv', 'INJECTABLE IV (désoxycholate ou liposomale)']] },
     k_recent: { label: 'Kaliémie contrôlée < 1 mois et normale ?', type: 'select',
         options: [['', 'Non précisé'], ['oui', 'Oui — récente et normale'], ['non', 'Non / anormale']] },
     lithium_recent: { label: 'Lithémie contrôlée < 3 mois (cible thérapeutique) ?', type: 'select',

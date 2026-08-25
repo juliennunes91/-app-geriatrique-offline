@@ -3053,7 +3053,12 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["methotrexate"],
-                med_absent: ["acide folique", "folinate", "folinique"]
+                med_absent: ["acide folique", "folinate", "folinique"],
+                // Le supplément hebdomadaire d'acide folique est la prévention du
+                // méthotrexate à FAIBLE dose. En protocole oncologique à haute dose,
+                // la prévention est un sauvetage folinique protocolisé : réclamer un
+                // acide folique hebdomadaire y serait une consigne fausse.
+                contexte_clinique_absent: ["mtx_haute_dose"]
             },
             alternatives: "Acide folique 5-10 mg/semaine (48h après MTX)"
         },
@@ -4149,8 +4154,27 @@ const RECOS_SUPPLEMENT = [
         titre: "Méthotrexate sans supplémentation en acide folique",
         message: "PIM-Check : Méthotrexate sans acide folique co-prescrit — risque de toxicité hématologique et mucite.",
         severite: "danger",
-        condition: { med_keys: ["methotrexate"], med_absent: ["acide folique", "folinate"] },
+        condition: {
+            med_keys: ["methotrexate"], med_absent: ["acide folique", "folinate"],
+            // Idem IN_H09 : consigne propre au schéma hebdomadaire à faible dose.
+            contexte_clinique_absent: ["mtx_haute_dose"]
+        },
         alternatives: "Acide folique 5 mg/sem (24-48 h après le MTX) ou acide folinique 5-10 mg/sem si MTX ≥ 15 mg/sem (BSR/NICE 2017)."
+    },
+    {
+        // Contrepartie du désarmement de IN_H09 / SUP_PIMC_04 en protocole oncologique :
+        // la prévention change de nature, elle ne disparaît pas. Le sauvetage folinique
+        // est protocolisé et la toxicité dépend de l'élimination rénale du MTX, que le
+        // sujet âgé prolonge et que plusieurs coprescriptions banales aggravent.
+        id: "SUP_MTX_01", sources: ["ANSM", "ESMO"],
+        titre: "Méthotrexate haute dose chez le sujet âgé — élimination et sauvetage folinique",
+        message: "Protocole à haute dose déclaré : la prévention n'est pas l'acide folique hebdomadaire mais le SAUVETAGE FOLINIQUE protocolisé (folinate de calcium), guidé par la méthotrexatémie. Chez le sujet âgé, la clairance rénale abaissée prolonge l'exposition et expose à l'aplasie et à la mucite. Hyperhydratation + alcalinisation des urines (pH > 7), méthotrexatémie et créatininémie répétées jusqu'au retour sous le seuil, glucarpidase si insuffisance rénale aiguë avec MTX élevé.",
+        severite: "warning",
+        condition: {
+            med_keys: ["methotrexate"],
+            contexte_clinique: ["mtx_haute_dose"]
+        },
+        alternatives: "Proscrire pendant la cure les médicaments qui retardent l'élimination du méthotrexate : AINS, IPP, probénécide, sulfamides, pénicillines à forte dose."
     },
     {
         id: "SUP_PIMC_05", sources: ["PIM_CHECK"],

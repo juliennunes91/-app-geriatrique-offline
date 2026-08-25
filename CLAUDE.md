@@ -365,6 +365,84 @@ libellé de classe ou ajouter une couleur en dur fait bien échouer le test corr
 Un linter qui n'échoue jamais ne prouve rien — le revérifier après toute modification
 de ces audits.
 
+## Une alerte ne parle que du patient qu'on a devant soi
+
+Trois familles de message affirmaient un fait que la prescription ne portait pas.
+Le remède n'est jamais de supprimer l'information : c'est de la **rattacher à la
+condition qui la rend vraie**.
+
+1. **Commentaire d'interaction qui nomme une molécule absente.** Une entrée
+   `ddi_interact_v2` s'affiche dès qu'**une** de ses `dcis` est présente, mais son
+   `commentaire` est unique. Cinq entrées « Antipsychotiques » portaient une phrase
+   propre à la clozapine (« Miansérine + Clozapine : agranulocytose », « Diazépam +
+   Clozapine : collapsus mortel ») : un patient sous rispéridone lisait un texte
+   parlant d'un médicament qu'il ne prend pas. **Scinder l'entrée** — la molécule
+   citée reçoit sa propre `dcis` — plutôt que retirer la phrase.
+   Invariant : **`runDdiCommentaireConjonctionAudit`**, qui n'alerte que sur une
+   conjonction explicite « hôte + X ». Les phrases qui se donnent pour un cas
+   particulier (« notamment… », « NB : … », citation du bras d'une étude) sont dans
+   `DDI_CONJONCTION_ALLOWLIST` avec leur motif.
+
+2. **Plan de conduite portant sur un traitement non prescrit.** `SYND_029` proposait
+   « adaptation des diurétiques de l'anse, arrêt des AINS » à un patient qui ne
+   recevait ni l'un ni l'autre. Le mécanisme existait déjà —
+   `CONDUITE_CLAUSES_CONDITIONNELLES` dans `app_analysis.js` — il suffisait d'y
+   déclarer les deux clauses. **Toute clause nommant une molécule dans un
+   `CONDUITE_IMMEDIATE` doit y figurer.**
+
+3. **Diagnostic déduit d'un seul chiffre.** Un NT-proBNP au-dessus du seuil d'âge
+   n'est pas une décompensation cardiaque : chez le sujet âgé il monte aussi avec
+   l'insuffisance rénale, la FA, l'anémie, l'embolie pulmonaire, le sepsis. Sans
+   `PAT_002`/`PAT_003` codée, l'alerte annonce une **élévation à interpréter**,
+   liste les facteurs confondants réellement présents chez ce patient, et ne
+   propose aucune titration de diurétique.
+
+**Le thésaurus ANSM n'est pas réécrit.** Il range AVK et AOD sous « anticoagulants
+oraux » et rédige la surveillance pour les AVK (« contrôle de l'INR au 8ᵉ jour ») ;
+affiché tel quel sous apixaban, c'est inapplicable. Le texte officiel est une
+transcription — on ajoute une **mise au point au rendu** (`_noteAodAvk`), jamais une
+correction dans `ddi_general.js`.
+
+## Formes galéniques : une DCI, deux médicaments
+
+Certaines molécules recouvrent deux produits que tout oppose. La saisie doit donc
+poser la question, et la réponse doit **désarmer les règles d'un seul coup** plutôt
+que d'être gatée règle par règle.
+
+- Le mécanisme est le **marqueur de libellé de classe** (`— VOIE TOPIQUE`,
+  `— VOIE ORALE NON ABSORBEE`), posé depuis la précision saisie, plus une entrée
+  `_CLASS_EXCLUDE`. Attention : `_CLASS_EXCLUDE` n'est consulté que pour un
+  **identifiant de classe déclaré** dans `DRUG_CLASSES` — une entrée pour une classe
+  inexistante est morte sans bruit.
+- **Amphotéricine B** : la suspension buvable n'est pratiquement pas absorbée (ni
+  hypokaliémie, ni néphrotoxicité, ni interaction) ; l'injectable porte toute la
+  toxicité. La forme non absorbée est en outre exclue du **matching
+  `ddi_interact_v2`**, des deux côtés (`_nonAbsorbe`) — le marqueur de classe seul
+  ne suffisait pas, ce matching se faisant par DCI.
+- **Méthotrexate** : 7,5-25 mg par *semaine* en rhumatologie contre des doses cent
+  fois supérieures en oncologie. `IN_H09` et `SUP_PIMC_04` (acide folique
+  hebdomadaire) sont désarmés sur `mtx_haute_dose`, et `SUP_MTX_01` prend le relais
+  avec le sauvetage folinique. **Désarmer une prévention impose d'en afficher une
+  autre** — sans quoi le protocole le plus toxique devient le plus silencieux.
+- Défaut par défaut : tant que la précision n'est pas saisie, on retient la forme
+  **la plus exposante** (systémique, injectable).
+
+## Masquage — ce que l'utilisateur peut écarter
+
+`window._maskedAlerts` couvre trois familles de clés, toutes filtrées **en amont du
+rendu** pour que écran, synthèse, PDF et compteurs restent cohérents :
+
+- `id:` / `rc:` — alertes de règle (moteur, `renderSingleAlert`) ;
+- `tt:<titre>|<sévérité>` — blocs HTML bruts des onglets listés dans
+  `ONGLETS_MASQUABLES` (bio, interactions, ANSM, AUC) ;
+- `gl:<pathologie>|<classe>` — recommandations de sociétés savantes, une par une.
+
+La clé `gl:` porte la pathologie pour que masquer « AINS » dans l'insuffisance
+cardiaque ne le masque pas dans l'arthrose. Le post-traitement
+(`_recosMasquables`) ne capture que les blocs `alert … py-1 px-2` **sans `<div>`
+imbriqué** : cartes et `<details>` environnants restent équilibrés — c'est
+vérifiable en comptant `<div>` et `</div>` après masquage.
+
 ## Fragilité sévère (`frailty_exclude`)
 
 Ne s'active qu'à **CFS ≥ 7** ou case « patient fragile » cochée — le seuil de

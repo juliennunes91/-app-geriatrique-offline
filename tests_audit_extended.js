@@ -1236,7 +1236,11 @@ function runLibelleClasseAudit(test, assert) {
 // comme un doublon de statines, et sortait du bloc « Action immédiate ». Le rendu
 // court-circuitait le scoring. Cet audit est un cliquet : le nombre d'occurrences ne
 // doit pas augmenter sans justification.
-const COULEURS_EN_DUR_ATTENDUES = { danger: 8, warning: 17, info: 8 };
+// warning 17 → 18 : encart NT-proBNP élevé SANS insuffisance cardiaque codée. Ce n'est
+// pas une alerte issue d'une table (SYND_029 garde la sienne) mais un texte rédigé sur
+// place — au même titre que l'insuffisance en vitamine D et les stades KDIGO juste
+// au-dessus dans le fichier. Sa couleur ne court-circuite donc aucun scoring.
+const COULEURS_EN_DUR_ATTENDUES = { danger: 8, warning: 18, info: 8 };
 function runCouleurCodeeEnDurAudit(test, assert) {
     const src = fs.readFileSync(path.join(__dirname, 'app_analysis.js'), 'utf8');
     ['danger', 'warning', 'info'].forEach(niveau => {
@@ -1248,6 +1252,61 @@ function runCouleurCodeeEnDurAudit(test, assert) {
                 + 'doit tirer sa couleur de la sévérité de son entrée, pas d\'un littéral — sans quoi le rendu '
                 + 'court-circuite le scoring (cf. DUPLICATE_WATCH).');
         });
+    });
+}
+
+// ─── 5. Un commentaire d'interaction n'affirme pas une association non prescrite ──
+// Une entrée `ddi_interact_v2` est affichée dès qu'UNE de ses `dcis` est présente,
+// mais son `commentaire` est unique. Cinq entrées « Antipsychotiques » portaient un
+// commentaire propre à la CLOZAPINE (« Miansérine + Clozapine : agranulocytose »,
+// « Diazépam + Clozapine : collapsus mortel ») : un patient sous rispéridone lisait
+// une phrase parlant d'un médicament qu'il ne prend pas. Le remède est de SCINDER
+// l'entrée, pas de retirer l'information : la molécule citée obtient sa propre
+// entrée avec sa propre `dcis`.
+// N'alerte que sur une CONJONCTION explicite (« hôte + X » ou « X + hôte »), pas
+// sur la simple citation d'un membre à titre d'exemple ou de référence.
+const DDI_CONJONCTION_ALLOWLIST = new Set([
+    // Citation d'une étude nommant le bras testé — l'information reste vraie
+    // pour toute la classe, la molécule n'est nommée que comme source.
+    'Gabapentine::morphine',      // Gomes BMJ 2017, bras « morphine + gabapentine »
+    // Hedges explicites (« notamment », « NB : ») : la phrase se donne elle-même
+    // comme un cas particulier, elle n'affirme pas l'association.
+    'Lithium::haloperidol',       // « notamment Halopéridol + Lithium »
+    'Mirtazapine::venlafaxine',   // « NB : … California Rocket Fuel »
+    // Liste réduite à des sels de la molécule citée : la conjonction est vraie
+    // pour tous les membres.
+    'Topiramate::valproate',      // dcis = valproate + divalproex
+]);
+function runDdiCommentaireConjonctionAudit(test, assert) {
+    const { sandbox } = loadApp();
+    // NB : surtout PAS sanitizeText ici — il supprime le « + », donc la conjonction
+    // ne pourrait jamais matcher et l'audit ne détecterait plus rien (défaut constaté
+    // à la validation par mutation). On normalise accents et casse en gardant la
+    // ponctuation qui porte le sens.
+    const trouves = JSON.parse(vm.runInContext(`(function(){
+        var out=[];
+        function norm(s){ return String(s||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase(); }
+        MASTER_DB.MEDICAMENTS.forEach(function(m){
+            var host = norm(m.dci);
+            (m.ddi_interact_v2||[]).forEach(function(e){
+                if(!Array.isArray(e.dcis) || e.dcis.length < 2) return;
+                var txt = norm(e.commentaire||'');
+                e.dcis.map(norm).filter(function(d){return d.length>5;}).forEach(function(d){
+                    var re = new RegExp('(' + host + '[a-z]*\\\\s*\\\\+\\\\s*' + d + ')|(' + d + '\\\\s*\\\\+\\\\s*' + host + ')');
+                    if(re.test(txt)) out.push(m.dci + '::' + d);
+                });
+            });
+        });
+        return JSON.stringify(out); })()`, sandbox));
+    const nouveaux = [...new Set(trouves)].filter(p => !DDI_CONJONCTION_ALLOWLIST.has(p));
+    test('Interactions — aucun commentaire n\'affirme une association non prescrite', () => {
+        assert.ok(nouveaux.length === 0,
+            'le commentaire d\'une entrée `ddi_interact_v2` affirme une association « A + B » alors que\n'
+            + 'l\'entrée se déclenche pour d\'autres molécules que B — le patient lit une phrase citant un\n'
+            + 'médicament qu\'il ne prend pas. SCINDER l\'entrée (donner à B sa propre `dcis`), ou ajouter\n'
+            + 'à DDI_CONJONCTION_ALLOWLIST si la phrase se donne explicitement comme un cas particulier :\n  '
+            + nouveaux.map(p => { const [hote, cite] = p.split('::');
+                return 'entrée de « ' + hote +' » : commentaire affirmant l\'association avec « ' + cite + ' »'; }).join('\n  '));
     });
 }
 
@@ -1419,4 +1478,4 @@ function runPosologyCompletenessAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runPathologyRulesAudit, runAutocompleteAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runPathologyRulesAudit, runAutocompleteAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiCommentaireConjonctionAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };

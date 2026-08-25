@@ -2680,7 +2680,7 @@ const MASTER_DB = {
                     "ddi_interact_v2": [
                               { "classe": "Azathioprine / 6-Mercaptopurine — CONTRE-INDICATION ABSOLUE (APLASIE MORTELLE)", "dcis": ["azathioprine", "mercaptopurine", "tioguanine"], "commentaire": "Allopurinol inhibe XO qui métabolise 6-MP/AZA. ↑ exposition x4-5 → APLASIE MÉDULLAIRE GRAVE/MORTELLE. Si association indispensable : RÉDUIRE AZATHIOPRINE de 75% (1/4 dose) + dosage TPMT préalable + NFS hebdomadaire. PRÉFÉRER FÉBUXOSTAT (interaction CYP différente, moindre risque mais surveillance NFS).", "severite": "danger" },
                               { "classe": "AVK warfarine / fluindione / acénocoumarol — ↑ INR x1,5-2", "dcis": ["warfarine", "fluindione", "acenocoumarol", "phenprocoumone"], "commentaire": "↑ INR par inhibition métabolisme hépatique AVK. INR à J3-J7 après initiation/changement dose. ↓ AVK 25% à anticiper.", "severite": "danger" },
-                              { "classe": "Captopril / Énalapril / IEC à groupe thiol — NEUTROPÉNIE / STEVENS-JOHNSON / SYNDROME LUPIQUE", "dcis": ["captopril", "zofenopril"], "commentaire": "Risque allopurinol + captopril (groupe thiol) : ↑ x2-3 neutropénie + Stevens-Johnson + syndrome lupique, surtout si IRC (Pennell Arch Intern Med 1984). NFS si association + IRC. Préférer IEC sans thiol (ramipril, périndopril, énalapril).", "severite": "danger" },
+                              { "classe": "Captopril / Énalapril / IEC à groupe thiol — NEUTROPÉNIE / STEVENS-JOHNSON / SYNDROME LUPIQUE", "dcis": ["captopril", "zofenopril"], "commentaire": "Allopurinol + IEC à groupe thiol (captopril, zofénopril) : ↑ x2-3 neutropénie + Stevens-Johnson + syndrome lupique, surtout si insuffisance rénale chronique (Pennell Arch Intern Med 1984). NFS si l'association est maintenue. Préférer un IEC sans thiol (ramipril, périndopril, énalapril).", "severite": "danger" },
                               { "classe": "Amoxicilline / Ampicilline — ↑ RASH x3-5", "dcis": ["amoxicilline", "ampicilline", "amoxicilline-acide clavulanique"], "commentaire": "↑ x3-5 risque rash maculo-papuleux non allergique (Boston Collaborative Drug Surveillance 1972 — 21,4% vs 7,5% sans). Préférer autre β-lactamine si possible chez patient sous allopurinol.", "severite": "warning" },
                               { "classe": "Cyclophosphamide / Chimiothérapies — ↑ toxicité médullaire", "dcis": ["cyclophosphamide", "ifosfamide", "fluorouracil", "methotrexate"], "commentaire": "Cumul toxicité médullaire/digestive. Méthotrexate : ↑ exposition. NFS rapprochée.", "severite": "warning" },
                               { "classe": "Théophylline — ↑ théophyllinémie", "dcis": ["theophylline"], "commentaire": "↑ exposition théophylline (inhibition CYP1A2). Doser, ↓ dose 25-50%.", "severite": "warning" },
@@ -3327,7 +3327,7 @@ const MASTER_DB = {
                                                   "roxithromycine",
                                                   "telithromycine"
                                         ],
-                                        "commentaire": "Clarithromycine + amlodipine : ↑ hospitalisations chocs/IRA chez âgé (Gandhi JAMA Intern Med 2013 : OR 3,7). Préférer azithromycine (effet CYP3A4 minime). Prudence ou suspendre amlodipine temporairement.",
+                                        "commentaire": "Macrolide inhibiteur du CYP3A4 + amlodipine : ↑ hospitalisations pour choc/insuffisance rénale aiguë chez le sujet âgé (Gandhi JAMA Intern Med 2013 : OR 3,7 sous clarithromycine). Préférer l'azithromycine (effet CYP3A4 minime). Prudence ou suspension temporaire de l'amlodipine.",
                                         "severite": "danger"
                               },
                               {
@@ -9177,7 +9177,8 @@ const MASTER_DB = {
                     "ddi_interact_v2": [
                               { "classe": "Opioïdes forts (CI relative — FDA Black Box 2016 : mortalité x4)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine", "buprenorphine", "hydromorphone"], "commentaire": "FDA Black Box 2016 : mortalité x4. ANTIDOTE flumazénil 0.2 mg IV par paliers (prudence si BZD chronique — convulsions au sevrage).", "severite": "danger" },
                               { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "clonazepam", "bromazepam", "clorazepate", "prazepam", "nordazepam", "chlordiazepoxide", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit — sédation/dépression respiratoire/chutes additives.", "severite": "danger" },
-                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + hypotension. Diazépam + Clozapine : collapsus mortel documenté.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone"], "commentaire": "Sédation cumulée + hypotension orthostatique → chutes.", "severite": "danger" },
+                              { "classe": "Clozapine (collapsus)", "dcis": ["clozapine"], "commentaire": "Sédation cumulée + hypotension. Association benzodiazépine + clozapine : collapsus cardio-respiratoire mortel documenté (RCP Leponex) — PRUDENCE EXTRÊME, surtout à l'instauration.", "severite": "danger" },
                               { "classe": "Antidépresseurs sédatifs", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "clomipramine", "imipramine", "doxepine"], "commentaire": "Sédation cumulée.", "severite": "warning" },
                               { "classe": "Antihistaminiques sédatifs", "dcis": ["hydroxyzine", "doxylamine", "diphenhydramine", "promethazine"], "commentaire": "Sédation cumulée.", "severite": "warning" },
                               { "classe": "Gabapentinoïdes", "dcis": ["gabapentine", "pregabaline"], "commentaire": "Sédation et risque dépression respiratoire (FDA 2019).", "severite": "warning" },
@@ -9425,7 +9426,7 @@ const MASTER_DB = {
                                                   "disopyramide",
                                                   "quinidine"
                                         ],
-                                        "commentaire": "Bradycardie + BAV + QT. Surveillance ECG. Amiodarone + diltiazem rare en pratique (cumul majeur).",
+                                        "commentaire": "Bradycardie, bloc auriculo-ventriculaire et allongement du QT additifs. Surveillance ECG et fréquence cardiaque ; l'association à l'amiodarone ou à la dronédarone cumule les deux mécanismes et reste exceptionnelle en pratique.",
                                         "severite": "danger"
                               },
                               {
@@ -14857,7 +14858,8 @@ const MASTER_DB = {
                     "ddi_interact_v2": [
                               { "classe": "Opioïdes forts (CI relative — dépression respiratoire)", "dcis": ["morphine", "oxycodone", "fentanyl", "methadone", "tramadol", "codeine", "buprenorphine", "hydromorphone"], "commentaire": "Risque dépression respiratoire majeur. CI relative — doses minimales si association indispensable.", "severite": "danger" },
                               { "classe": "Autres BZD/Z-drugs (cumul interdit)", "dcis": ["alprazolam", "oxazepam", "diazepam", "clonazepam", "bromazepam", "clorazepate", "prazepam", "nordazepam", "chlordiazepoxide", "clobazam", "clotiazepam", "estazolam", "loprazolam", "lormetazepam", "nitrazepam", "midazolam", "zolpidem", "zopiclone", "zaleplon"], "commentaire": "Cumul BZD interdit — sédation/dépression respiratoire/chutes additives.", "severite": "danger" },
-                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation cumulée + hypotension orthostatique → chutes. Lorazepam + Clozapine : collapsus mortel documenté — PRUDENCE EXTRÊME.", "severite": "danger" },
+                              { "classe": "Antipsychotiques (sédation + chutes)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "cyamemazine", "loxapine", "quetiapine", "olanzapine", "risperidone"], "commentaire": "Sédation cumulée + hypotension orthostatique → chutes.", "severite": "danger" },
+                              { "classe": "Clozapine (collapsus)", "dcis": ["clozapine"], "commentaire": "Sédation cumulée + hypotension. Association benzodiazépine + clozapine : collapsus cardio-respiratoire mortel documenté (RCP Leponex) — PRUDENCE EXTRÊME, surtout à l'instauration.", "severite": "danger" },
                               { "classe": "Antidépresseurs sédatifs", "dcis": ["mirtazapine", "trazodone", "amitriptyline", "clomipramine", "imipramine", "doxepine"], "commentaire": "Sédation cumulée.", "severite": "warning" },
                               { "classe": "Antihistaminiques sédatifs", "dcis": ["hydroxyzine", "doxylamine", "diphenhydramine", "promethazine", "alimemazine"], "commentaire": "Sédation cumulée.", "severite": "warning" },
                               { "classe": "Gabapentinoïdes (Gabapentine, Prégabaline)", "dcis": ["gabapentine", "pregabaline"], "commentaire": "Sédation et risque dépression respiratoire (alerte FDA 2019).", "severite": "warning" },
@@ -16112,7 +16114,8 @@ const MASTER_DB = {
                               { "classe": "QT-allongeurs (Mirtazapine = PR)", "dcis": ["amiodarone", "sotalol", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "haloperidol", "ondansetron", "methadone"], "commentaire": "Cumul QT — surveillance ECG.", "severite": "warning" },
                               { "classe": "Inducteurs CYP3A4 (↓ mirtazapine)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition mirtazapine.", "severite": "warning" },
                               { "classe": "Inhibiteurs CYP3A4/2D6/1A2 puissants (↑ mirtazapine)", "dcis": ["ketoconazole", "itraconazole", "ritonavir", "clarithromycine", "fluvoxamine", "fluoxetine", "paroxetine"], "commentaire": "↑ exposition mirtazapine — surveillance sédation.", "severite": "warning" },
-                              { "classe": "Antipsychotiques (sédation cumulée)", "dcis": ["haloperidol", "chlorpromazine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation additive. Mirtazapine + Clozapine : risque agranulocytose cumulé (rare mais documenté) — surveillance NFS.", "severite": "warning" }
+                              { "classe": "Antipsychotiques (sédation cumulée)", "dcis": ["haloperidol", "chlorpromazine", "quetiapine", "olanzapine", "risperidone"], "commentaire": "Sédation additive — chutes chez le sujet âgé. Réévaluer l'indication des deux molécules.", "severite": "warning" },
+                              { "classe": "Clozapine (agranulocytose cumulée)", "dcis": ["clozapine"], "commentaire": "Sédation additive. Cumul de deux molécules pourvoyeuses d'agranulocytose (rare mais documenté sous mirtazapine comme sous clozapine) — surveillance NFS.", "severite": "warning" }
                     ],
                     "suivi_initial": "NFS (agranulocytose rare) | Bilan hépatique | Glycémie/HbA1c | Bilan lipidique (prise de poids fréquente) | Ionogramme (Na+ — SIADH possible)",
                     "suivi_periodique": "NFS (si fièvre/angine — agranulocytose rare) | Bilan lipidique + glycémie (annuels) | Bilan hépatique (annuel) | Poids à chaque consultation | Natrémie (à M1 puis annuelle)",
@@ -23233,7 +23236,8 @@ const MASTER_DB = {
                               { "classe": "Inducteurs enzymatiques (↓ valproate)", "dcis": ["rifampicine", "carbamazepine", "phenytoine", "phenobarbital", "millepertuis"], "commentaire": "↓ valproate → perte efficacité. Surveillance valproatémie.", "severite": "warning" },
                               { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "morphine", "oxycodone", "fentanyl", "tramadol"], "commentaire": "Sédation additive — chutes. Diazépam : ↑ taux par valproate.", "severite": "warning" },
                               { "classe": "Zidovudine (AZT)", "dcis": ["zidovudine"], "commentaire": "↑ exposition AZT → toxicité hématologique. Surveillance NFS.", "severite": "warning" },
-                              { "classe": "Antipsychotiques (sédation, EPS)", "dcis": ["haloperidol", "chlorpromazine", "risperidone", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Sédation et EPS additifs. Clozapine + valproate : risque sédation ++.", "severite": "warning" },
+                              { "classe": "Antipsychotiques (sédation, EPS)", "dcis": ["haloperidol", "chlorpromazine", "risperidone", "olanzapine", "quetiapine"], "commentaire": "Sédation et syndrome extrapyramidal additifs.", "severite": "warning" },
+                              { "classe": "Clozapine (sédation majorée)", "dcis": ["clozapine"], "commentaire": "Sédation additive marquée. Le valproate est parfois associé à la clozapine pour prévenir les crises convulsives : association possible mais sédation ++ et surveillance NFS des deux molécules.", "severite": "warning" },
                               { "classe": "Quinolones (↓ seuil épileptogène)", "dcis": ["ciprofloxacine", "levofloxacine", "moxifloxacine", "ofloxacine"], "commentaire": "Quinolones → ↓ seuil épileptogène + ↑ valproate. Risque crises.", "severite": "warning" }
                     ],
                     "suivi_initial": "Bilan hépatique (ALAT/ASAT/bilirubine/TP) | NFS-plaquettes | Ammoniemie | Coagulation (TP, TCA) | Glycemie",
@@ -23322,7 +23326,8 @@ const MASTER_DB = {
                               { "classe": "Inducteurs enzymatiques (↓ valproate)", "dcis": ["rifampicine", "carbamazepine", "phenytoine", "phenobarbital", "millepertuis"], "commentaire": "↓ valproate → perte efficacité. Surveillance valproatémie.", "severite": "warning" },
                               { "classe": "Sédatifs centraux (BZD/Z-drugs/opioïdes/alcool)", "dcis": ["alprazolam", "lorazepam", "oxazepam", "diazepam", "morphine", "oxycodone", "fentanyl", "tramadol"], "commentaire": "Sédation additive — chutes. Diazépam : ↑ taux par valproate.", "severite": "warning" },
                               { "classe": "Zidovudine (AZT)", "dcis": ["zidovudine"], "commentaire": "↑ exposition AZT → toxicité hématologique. Surveillance NFS.", "severite": "warning" },
-                              { "classe": "Antipsychotiques (sédation, EPS)", "dcis": ["haloperidol", "chlorpromazine", "risperidone", "olanzapine", "quetiapine", "clozapine"], "commentaire": "Sédation et EPS additifs. Clozapine + valproate : sédation ++.", "severite": "warning" }
+                              { "classe": "Antipsychotiques (sédation, EPS)", "dcis": ["haloperidol", "chlorpromazine", "risperidone", "olanzapine", "quetiapine"], "commentaire": "Sédation et syndrome extrapyramidal additifs.", "severite": "warning" },
+                              { "classe": "Clozapine (sédation majorée)", "dcis": ["clozapine"], "commentaire": "Sédation additive marquée. Le valproate est parfois associé à la clozapine pour prévenir les crises convulsives : association possible mais sédation ++ et surveillance NFS des deux molécules.", "severite": "warning" }
                     ],
                     "suivi_initial": "Bilan hépatique (ALAT/ASAT/bilirubine/TP) | NFS-plaquettes | Ammoniemie | Coagulation (TP, TCA) | Glycemie",
                     "suivi_periodique": "Bilan hépatique (tous les 3 a 6 mois la 1ere annee puis annuel) | NFS-plaquettes (annuel) | Ammoniemie (si encephalopathie / somnolence inexpliquee) | Dosage serique valproate (fenetre 50-100 mg/L - residuelle)",
@@ -24264,7 +24269,8 @@ const MASTER_DB = {
                               { "classe": "QT-allongeurs (Miansérine = PR)", "dcis": ["amiodarone", "sotalol", "azithromycine", "clarithromycine", "moxifloxacine", "fluconazole", "haloperidol", "ondansetron", "methadone"], "commentaire": "Cumul QT — surveillance ECG.", "severite": "warning" },
                               { "classe": "Anticholinergiques (Miansérine ACB=1)", "dcis": ["amitriptyline", "clomipramine", "imipramine", "doxepine", "oxybutynine", "tolterodine", "atropine", "biperidene", "diphenhydramine", "doxylamine", "promethazine", "hydroxyzine", "paroxetine", "olanzapine", "quetiapine", "chlorpromazine"], "commentaire": "Miansérine ACB=1 — cumul léger.", "severite": "info" },
                               { "classe": "Inducteurs CYP (↓ miansérine)", "dcis": ["rifampicine", "millepertuis", "carbamazepine", "phenytoine", "phenobarbital"], "commentaire": "↓ exposition miansérine.", "severite": "warning" },
-                              { "classe": "Antipsychotiques (sédation + agranulocytose cumulée — Clozapine surveillance NFS)", "dcis": ["haloperidol", "chlorpromazine", "quetiapine", "olanzapine", "risperidone", "clozapine"], "commentaire": "Sédation additive. Miansérine + Clozapine : risque agranulocytose cumulé (rare mais documenté). Surveillance NFS.", "severite": "warning" },
+                              { "classe": "Antipsychotiques (sédation cumulée)", "dcis": ["haloperidol", "chlorpromazine", "quetiapine", "olanzapine", "risperidone"], "commentaire": "Sédation additive — chutes chez le sujet âgé. Réévaluer l'indication des deux molécules.", "severite": "warning" },
+                              { "classe": "Clozapine (agranulocytose cumulée)", "dcis": ["clozapine"], "commentaire": "Sédation additive. Cumul de deux molécules pourvoyeuses d'agranulocytose (rare mais documenté sous miansérine comme sous clozapine). Surveillance NFS.", "severite": "warning" },
                               { "classe": "Anticoagulants/AVK (modulation modeste INR)", "dcis": ["warfarine", "acenocoumarol", "fluindione"], "commentaire": "↑ modeste INR possible. Surveillance.", "severite": "info" }
                     ],
                     "suivi_initial": "NFS (agranulocytose rare) | Bilan hépatique | ECG (QTc) | Glycémie/HbA1c (prise poids fréquente)",
@@ -25259,6 +25265,57 @@ const MASTER_DB = {
                     "source": "RCP Lovenox | ESC 2024"
           },
           {
+                    "dci": "Amphotericine B",
+                    "princeps": "Fungizone (suspension buvable et IV) / AmBisome (liposomale IV) / Abelcet (complexe lipidique IV)",
+                    "classe": "Antifongique polyenique",
+                    "poso_hab": "Suspension BUVABLE : 1,5 a 2 g/j (soit 15-20 mL de suspension a 10 %) en 3-4 prises, candidose oropharyngee ou digestive | IV desoxycholate : 0,5-1 mg/kg/j | IV LIPOSOMALE (AmBisome) : 3 mg/kg/j (5 mg/kg/j en aspergillose ou mucormycose)",
+                    "poso_ger": "Voie orale : posologie inchangee (aucune absorption digestive, donc aucune toxicite systemique). Voie IV : preferer d'emblee la forme LIPOSOMALE chez le sujet age — le desoxycholate cumule nephrotoxicite dose-dependante, hypokaliemie et hypomagnesemie sur un rein deja vieilli, et la deshydratation frequente du sujet age majore le risque. Hydratation salee prealable (500-1000 mL de NaCl 0,9 %) avant chaque perfusion, sauf insuffisance cardiaque.",
+                    "poso_ren": "Voie orale : aucune adaptation (non absorbee). Voie IV : la molecule n'est pas eliminee par le rein et la dose n'est pas reduite sur le DFG, mais c'est elle qui DEGRADE la fonction renale — si la creatinine s'eleve, espacer les perfusions, passer a la forme liposomale ou changer d'antifongique ; corriger K+ et Mg++ avant chaque cure.",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {
+                              "qt": 1,
+                              "sero": 0,
+                              "saign": 0,
+                              "chute": 0,
+                              "sedat": 0,
+                              "hypoG": 0
+                    },
+                    "bhe": "0",
+                    "qt_risque": "Risque conditionnel (CR) — l'amphotericine B ne bloque pas elle-meme le canal hERG et ne figure pas aux listes CredibleMeds ; le risque de torsades vient de l'HYPOKALIEMIE et de l'HYPOMAGNESEMIE qu'elle provoque par voie IV. Nul par voie orale.",
+                    "qt_cr": {
+                              "mecanisme": "Torsades par hypokaliemie/hypomagnesemie induites (tubulopathie), non par blocage direct du canal hERG.",
+                              "conditions": ["hypoK", "hypoMg", "association_qt"]
+                    },
+                    "albumine": "90%",
+                    "ddi_interact": "VOIE IV UNIQUEMENT — Diuretiques de l'anse et thiazidiques (hypokaliemie additive), Corticoides (hypokaliemie additive), Digoxine (toxicite digitalique favorisee par l'hypokaliemie), Aminosides / Vancomycine / Ciclosporine / Tacrolimus / Produits de contraste iodes (nephrotoxicite additive), Curares (potentialises par l'hypokaliemie), Allongeurs du QT (via l'hypokaliemie). AUCUNE interaction par voie orale (non absorbee).",
+                    "ddi_interact_v2": [
+                              { "classe": "Diuretiques hypokaliemiants — HYPOKALIEMIE additive", "dcis": ["furosemide", "bumetanide", "torasemide", "hydrochlorothiazide", "indapamide", "chlortalidone"], "commentaire": "Fuite potassique tubulaire cumulee. Kaliemie et magnesemie avant chaque perfusion, supplementation preventive frequente.", "severite": "danger" },
+                              { "classe": "Corticoides systemiques — HYPOKALIEMIE additive", "dcis": ["prednisone", "prednisolone", "methylprednisolone", "dexamethasone", "hydrocortisone", "betamethasone"], "commentaire": "Effet mineralocorticoide additionne a la tubulopathie. Surveillance du K+.", "severite": "warning" },
+                              { "classe": "Digoxine — toxicite digitalique", "dcis": ["digoxine"], "commentaire": "L'hypokaliemie induite potentialise la digoxine : la toxicite peut apparaitre alors que la digoxinemie reste dans la zone therapeutique. Controler K+ et digoxinemie.", "severite": "danger" },
+                              { "classe": "Nephrotoxiques (aminosides, glycopeptides, anticalcineurines, contraste iode)", "dcis": ["gentamicine", "amikacine", "tobramycine", "vancomycine", "ciclosporine", "tacrolimus", "produits contraste iodes"], "commentaire": "Nephrotoxicite additive. Espacer, hydrater, surveiller la creatinine tous les 2 a 3 jours.", "severite": "danger" },
+                              { "classe": "Curares non depolarisants", "dcis": ["rocuronium", "atracurium", "cisatracurium", "vecuronium"], "commentaire": "Bloc neuromusculaire prolonge par l'hypokaliemie. Informer l'anesthesiste.", "severite": "warning" },
+                              { "classe": "Allongeurs du QT (risque indirect par hypokaliemie)", "dcis": ["amiodarone", "sotalol", "moxifloxacine", "citalopram", "escitalopram", "haloperidol", "ondansetron", "methadone"], "commentaire": "L'amphotericine B n'allonge pas le QT par elle-meme : elle cree l'hypokaliemie qui precipite les torsades. K+ >= 4,0 mmol/L et Mg++ >= 1,0 mmol/L avant et pendant.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "VOIE IV : Ionogramme (K+, Mg++, Na+) | Creatininemie et DFG | NFS | Bilan hepatique | ECG si co-prescription allongeant le QT. VOIE ORALE : aucun bilan systematique.",
+                    "suivi_periodique": "VOIE IV : Kaliemie et magnesemie 2 a 3 fois par semaine pendant toute la duree | Creatininemie tous les 2 a 3 jours | NFS hebdomadaire (anemie par inhibition de l'erythropoietine) | Poids et diurese. VOIE ORALE : surveillance clinique de l'efficacite seulement.",
+                    "alerte_clinique": "VOIE IV : Elevation de la creatinine (nephrotoxicite dose-dependante, premiere cause d'arret) | Hypokaliemie et hypomagnesemie severes, parfois profondes et symptomatiques (crampes, troubles du rythme) | Acidose tubulaire renale | Reaction a la perfusion (fievre, frissons, hypotension) | Anemie normochrome normocytaire. VOIE ORALE (suspension buvable) : AUCUNE toxicite systemique — non absorbee ; troubles digestifs legers et gout desagreable seulement. Ne jamais transposer les alertes de la forme IV a la forme buvable.",
+                    "bio_cible": [
+                              "BIO_001",
+                              "BIO_003",
+                              "BIO_004",
+                              "BIO_009",
+                              "BIO_013",
+                              "BIO_031"
+                    ],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "DEUX MEDICAMENTS SOUS UN SEUL NOM. La suspension BUVABLE n'est pratiquement pas absorbee par le tube digestif : elle agit localement sur la candidose oropharyngee ou digestive et n'expose ni a la nephrotoxicite, ni a l'hypokaliemie, ni a la moindre interaction systemique. La forme INJECTABLE porte toute la toxicite. Preciser la voie dans la fiche du medicament : tant qu'elle n'est pas renseignee, l'analyse retient par prudence la forme injectable. Chez le sujet age, si la voie IV est necessaire, la forme liposomale est preferee au desoxycholate (nephrotoxicite nettement moindre a efficacite comparable).",
+                    "source": "RCP Fungizone suspension buvable | RCP AmBisome | ESCMID-ECMM Candida 2012 | IDSA Candidiasis 2016 | ESCMID-ECMM-ERS Aspergillose 2017"
+          },
+          {
                     "dci": "Fluconazole",
                     "princeps": "Triflucan",
                     "classe": "Antifongique azolé",
@@ -25471,7 +25528,8 @@ const MASTER_DB = {
                     "ddi_interact": "RÉTINOPATHIE (irréversible cumulative ≥ 5 ans — dose-dépendante > 5 mg/kg/j) — FOND D'ŒIL ANNUEL après 5 ans, QT prolongé (Risk_CR), HYPOGLYCÉMIE (potentialisation antidiabétiques), Digoxine (↑ taux), Méfloquine (CI cumul), Tamoxifène (↑ rétinopathie), QT-prolongateurs (Torsades — alerte COVID 2020), Cardiomyopathie/Bloc conduction (rare, surveillance ECG)",
                     "ddi_interact_v2": [
                               { "classe": "RÉTINOPATHIE irréversible cumulative (≥ 5 ans, dose-dépendante)", "dcis": ["surveillance ophtalmologique"], "commentaire": "Risque dose-cumulée et dose-quotidienne dépendante : > 5 mg/kg/j poids réel = risque ↑. Fond d'œil + OCT maculaire AVANT initiation puis ANNUEL après 5 ans (AAO 2016). Si rétinopathie : arrêt définitif (lésions irréversibles).", "severite": "danger" },
-                              { "classe": "QT-prolongateurs — TORSADES (Risk_CR — alerte COVID 2020)", "dcis": ["amiodarone", "sotalol", "flecainide", "azithromycine", "clarithromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "ondansetron", "domperidone", "haloperidol", "quetiapine", "citalopram", "escitalopram", "methadone"], "commentaire": "Alerte COVID 2020 : cumul hydroxychloroquine + azithromycine = Torsades fatales (FDA EUA retirée juin 2020). ECG + ions baseline + monitoring.", "severite": "danger" },
+                              { "classe": "Azithromycine — TORSADES (alerte COVID 2020)", "dcis": ["azithromycine"], "commentaire": "Cumul hydroxychloroquine + azithromycine = torsades de pointes fatales (autorisation d'urgence FDA retirée en juin 2020). ECG + ionogramme avant, monitoring si l'association est maintenue.", "severite": "danger" },
+                              { "classe": "QT-prolongateurs — TORSADES (Risk_CR)", "dcis": ["amiodarone", "sotalol", "flecainide", "clarithromycine", "moxifloxacine", "levofloxacine", "ciprofloxacine", "ondansetron", "domperidone", "haloperidol", "quetiapine", "citalopram", "escitalopram", "methadone"], "commentaire": "Cumul d'allongement du QT → torsades de pointes. ECG + kaliémie/magnésémie avant et pendant, monitoring si l'association est maintenue.", "severite": "danger" },
                               { "classe": "Antidiabétiques (insuline/sulfamides) — HYPOGLYCÉMIE potentialisée", "dcis": ["insuline aspart", "insuline glargine", "glibenclamide", "glimepiride", "gliclazide", "repaglinide"], "commentaire": "Hydroxychloroquine ↓ glycémie (effet propre + potentialisation). Surveillance glycémie + ↓ dose ADO/insuline si nécessaire.", "severite": "warning" },
                               { "classe": "Digoxine — ↑ digoxinémie", "dcis": ["digoxine"], "commentaire": "↑ exposition. Dosage digoxinémie.", "severite": "warning" },
                               { "classe": "Tamoxifène — ↑ risque rétinopathie", "dcis": ["tamoxifene"], "commentaire": "Cumul toxicité rétinienne. Surveillance ophtalmo +++.", "severite": "warning" },
@@ -28100,7 +28158,7 @@ const MASTER_DB = {
                                                   "triamterene",
                                                   "potassium chloride"
                                         ],
-                                        "commentaire": "Cumul ARM = hyperkaliémie SEVERE. CONTRE-INDICATION absolue de l'association finérénone + spironolactone/éplérénone (RCP Kerendia §4.3).",
+                                        "commentaire": "Cumul avec un épargneur de potassium = hyperkaliémie SÉVÈRE. L'association à un autre antagoniste des récepteurs minéralocorticoïdes (spironolactone, éplérénone) est une CONTRE-INDICATION absolue (RCP Kerendia §4.3) ; avec l'amiloride, le triamtérène ou un apport de KCl, surveillance rapprochée de la kaliémie.",
                                         "severite": "danger"
                               },
                               {

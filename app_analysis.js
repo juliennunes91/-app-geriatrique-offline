@@ -821,6 +821,23 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
             } else if (fam === 'ains' && p.voie === 'orale') {
                 m.classe = String(m.classe || '').replace(/ — VOIE TOPIQUE/g, '');
             }
+            // Méthotrexate : le schéma conditionne la prévention de la toxicité.
+            // Faible dose hebdomadaire → acide folique 5 mg/sem. Haute dose oncologique
+            // → sauvetage folinique protocolisé : la consigne « acide folique » n'a plus
+            // de sens et ne doit pas être affichée comme une omission.
+            if (fam === 'methotrexate' && p.mtx_schema === 'haute') ctxClinique.push('mtx_haute_dose');
+            if (fam === 'methotrexate' && p.mtx_schema === 'faible') ctxClinique.push('mtx_faible_dose');
+            // Amphotéricine B buvable : non absorbée. Comme pour les AINS topiques, on
+            // MARQUE le libellé de classe, ce qui la sort des classes systémiques —
+            // plus d'hypokaliémie, plus de néphrotoxicité, plus d'interaction générale.
+            if (fam === 'amphotericine') {
+                if (p.voie_ampho === 'orale') {
+                    ctxClinique.push('amphotericine_orale');
+                    if (!/VOIE ORALE NON ABSORBEE/.test(m.classe || '')) m.classe = (m.classe || '') + ' — VOIE ORALE NON ABSORBEE';
+                } else if (p.voie_ampho === 'iv') {
+                    m.classe = String(m.classe || '').replace(/ — VOIE ORALE NON ABSORBEE/g, '');
+                }
+            }
             if (fam === 'opioide' && p.duree === 'courte') ctxClinique.push('opioide_duree_breve');
             if (fam === 'digoxine' && p.duree === 'courte') ctxClinique.push('digoxine_duree_breve');
             if (fam === 'metoclopramide' && p.duree === 'courte') ctxClinique.push('metoclopramide_duree_breve');
@@ -1087,6 +1104,11 @@ function analyserPrescription() {
         _registry.byDomain[domain].push(entry);
     };
 
+    // Onglets rendus en HTML brut (hors moteur de règles) dont chaque bloc reçoit
+    // un ✖ de masquage session. Le moteur (geria_engine_v2) gère déjà le sien pour
+    // les alertes de règle, clé « id: » ; ici la clé est le titre + la sévérité.
+    const ONGLETS_MASQUABLES = new Set(['alertes-bio', 'alertes-interact', 'alertes-ansm', 'alertes-auc']);
+
     // Batch DOM: accumulate HTML, flush once at end
     const _htmlBuffers = {};
     divs.forEach(id => _htmlBuffers[id] = []);
@@ -1095,20 +1117,23 @@ function analyserPrescription() {
         // Alertes bio (HTML brut) : extraction du titre + masquage session via ✖
         // — la clé est stable (titre + sévérité), donc les filtres écran/synthèse/PDF
         // restent cohérents tant que la valeur biologique source n'a pas changé.
-        if (targetId === 'alertes-bio') {
+        // Le masquage session, jusque-là réservé aux alertes bio, couvre aussi les
+        // onglets d'interactions : une paire jugée non pertinente (association
+        // assumée, molécule suspendue) encombrait la liste sans pouvoir être écartée.
+        if (ONGLETS_MASQUABLES.has(targetId)) {
             const titleMatch = String(htmlStr).match(/<strong[^>]*>([\s\S]*?)<\/strong>/i);
             const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '').trim() : '';
             const severity = /alert-danger|alert-stopp/.test(htmlStr) ? 'danger' : 'warning';
             if (title) {
                 const maskKey = 'tt:' + title + '|' + severity;
                 // Filtre amont : si l'alerte a été masquée, on n'ajoute rien (écran +
-                // synthèse + PDF en cohérence + compteur badge bio cohérent).
+                // synthèse + PDF en cohérence + compteur du badge cohérent).
                 if (window._maskedAlerts && window._maskedAlerts.has(maskKey)) return;
                 // Injection du bouton ✖ juste après le <div class="alert …">.
                 const safeKey = maskKey.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
                 const btn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.7em;" aria-label="Masquer cette alerte" title="Masquer pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${safeKey}');return false;"></button>`;
                 htmlStr = String(htmlStr).replace(/(<div\s+class="alert[^"]*"[^>]*>)/i, '$1' + btn);
-                _regAddDomain('bio', { titre: title, message: '', severity });
+                if (targetId === 'alertes-bio') _regAddDomain('bio', { titre: title, message: '', severity });
             }
         }
         if(_htmlBuffers[targetId]) _htmlBuffers[targetId].push(htmlStr);
@@ -1523,7 +1548,11 @@ function analyserPrescription() {
         { clause: /amiodarone/i,                             present: () => _aMedRegex(/amiodarone|cordarone/i) },
         { clause: /(arr[êe]t|adapter)[^,]*\bAVK\b|dose AVK/i, present: () => _aMedRegex(/\bavk\b|warfarine|fluindione|acenocoumarol|coumadine|previscan|sintrom|antivitamine k/i) },
         { clause: /metformine/i,                             present: () => _aMedRegex(/metformine|glucophage|stagid|metformin/i) },
-        { clause: /arr[êe]t lithium/i,                       present: () => _aMedRegex(/lithium|teralithe|neurolithium/i) }
+        { clause: /arr[êe]t lithium/i,                       present: () => _aMedRegex(/lithium|teralithe|neurolithium/i) },
+        // « Adaptation diurétiques de l'anse (titrer sur poids/diurèse) » et « arrêt AINS »
+        // (SYND_029) étaient affichés à un patient qui ne recevait ni l'un ni l'autre.
+        { clause: /diur[ée]tique(s)? de l'anse/i,             present: () => _aMedRegex(/furosemide|lasilix|bumetanide|burinex|torasemide|torsemide|pirlefine/i) },
+        { clause: /arr[êe]t AINS/i,                           present: () => _aMedRegex(/ains|ibuprofene|naproxene|diclofenac|ketoprofene|piroxicam|celecoxib|etoricoxib|meloxicam|indometacine|nimesulide|acide niflumique|acide mefenamique|aceclofenac|flurbiprofene|tenoxicam|dexketoprofene/i) }
     ];
     const _conduitePertinente = (conduite) => {
         if (!conduite) return conduite;
@@ -1803,12 +1832,34 @@ function analyserPrescription() {
         }
     }
 
-    // --- SYND_029 : IC Décompensation Biologique (NT-proBNP élevé selon âge) ---
+    // --- SYND_029 : NT-proBNP au-dessus du seuil d'âge ---
+    // Un NT-proBNP élevé n'est PAS à lui seul une décompensation cardiaque : chez le
+    // sujet âgé il monte aussi avec l'insuffisance rénale, la FA, l'anémie, l'embolie
+    // pulmonaire ou le sepsis, et le seuil d'exclusion de l'ESC est bien plus bas que
+    // le seuil d'inclusion. Sans insuffisance cardiaque codée, on annonce donc une
+    // élévation à interpréter — pas un diagnostic — et on ne propose pas un plan de
+    // décompensation (titration de diurétique) fondé sur une hypothèse.
     {
         let bnp = bioValues['BIO_028'];
         if (bnp > 0) {
             let seuilBnp = patientAge > 75 ? 1800 : (patientAge > 50 ? 900 : 450);
-            if (bnp > seuilBnp) checkBioSyndrome('SYND_029', true);
+            if (bnp > seuilBnp) {
+                const icConnue = activeComorbs.some(c => ['PAT_002', 'PAT_003'].includes(c));
+                if (icConnue) {
+                    checkBioSyndrome('SYND_029', true);
+                } else {
+                    const dfgB = bioValues['BIO_004'];
+                    const differentiel = [];
+                    if (dfgB > 0 && dfgB < 60) differentiel.push(`insuffisance rénale (DFG ${dfgB} ml/min — le NT-proBNP s'élève par défaut d'élimination)`);
+                    if (activeComorbs.includes('PAT_006')) differentiel.push('fibrillation auriculaire');
+                    if (bioValues['BIO_009'] > 0 && bioValues['BIO_009'] < 11) differentiel.push(`anémie (Hb ${bioValues['BIO_009']} g/dL)`);
+                    const diffStr = differentiel.length
+                        ? `<br><em>Facteurs confondants présents chez ce patient :</em> ${differentiel.join(', ')}.`
+                        : '';
+                    addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ NT-proBNP élevé (${bnp} pg/mL) — pas d'insuffisance cardiaque renseignée</strong>${diffStr}
+                        <br><small><em>Interprétation :</em> au-delà du seuil d'âge (&gt; ${seuilBnp} pg/mL après ${patientAge > 75 ? '75' : patientAge > 50 ? '50' : '50'} ans), mais un NT-proBNP élevé n'affirme pas à lui seul une décompensation cardiaque chez le sujet âgé (insuffisance rénale, FA, anémie, embolie pulmonaire, sepsis, âge). <em>Conduite :</em> confronter à la clinique (dyspnée, œdèmes, prise de poids, crépitants), échocardiographie si le diagnostic d'insuffisance cardiaque n'a jamais été porté. Ne pas instaurer ni titrer un diurétique sur le seul chiffre.</small></div>`, 'bio');
+                }
+            }
         }
     }
 
@@ -2360,8 +2411,16 @@ function analyserPrescription() {
         // une alerte (cible, classe, severite) émise par 2 sources n'est affichée qu'une fois.
         const ddiSeenInteractions = new Set();
 
+        // Une forme galénique NON ABSORBÉE ne participe à aucune interaction
+        // systémique, ni comme source ni comme partenaire : l'amphotéricine B buvable
+        // ne provoque pas l'hypokaliémie que la forme injectable partage avec les
+        // diurétiques et les corticoïdes. Le marqueur est posé sur le libellé de
+        // classe à partir de la précision de voie (même mécanisme que les AINS topiques).
+        const _nonAbsorbe = (med) => /VOIE ORALE NON ABSORBEE/.test(String(med && med.classe || ''));
+
         activeMeds.forEach(m => {
             let ref = m.db_ref; if(!ref) return;
+            if (_nonAbsorbe(m)) return;
 
             // ------ Schéma v2 structuré (ddi_interact_v2) ------
             // Chaque entrée : { classe, dcis:[], commentaire, severite } — on matche uniquement sur
@@ -2386,6 +2445,7 @@ function analyserPrescription() {
                         // Chercher dans les AUTRES meds actifs (hors source)
                         const hit = activeMeds.find(am => {
                             if (am === m) return false;
+                            if (_nonAbsorbe(am)) return false;
                             const amDci = sanitizeText(am.dci);
                             if (amDci.includes(cDci) || cDci.includes(amDci)) return true;
                             return false;
@@ -2538,7 +2598,7 @@ function analyserPrescription() {
                         let crossMatch = (hA.side === 't1' && bSides.has('t2')) || (hA.side === 't2' && bSides.has('t1'));
                         if (!crossMatch) return;
                         let d = ddiGeneralDb[hA.idx];
-                        if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [] };
+                        if(!groupedAnsm[pairName]) groupedAnsm[pairName] = { isDanger: false, raw: [], meds: [mA, mB] };
                         // Exploiter toutes les sources de la paire fusionnée
                         (d.details || []).forEach(detail => {
                             let niveau = String(detail.level || "Interaction").toUpperCase();
@@ -2570,6 +2630,25 @@ function analyserPrescription() {
             addAlert('alertes-auc', `<div class="alert alert-warning border-warning shadow-sm"><strong style="font-size:1.05em;">📈 Pharmacocinétique (AUC) : ${pair}</strong><ul class="mb-0 ps-3">${detailsHtml}</ul></div>`, 'auc');
         }
 
+        // Le thésaurus ANSM regroupe AVK et AOD sous « ANTICOAGULANTS ORAUX », mais
+        // rédige les modalités de surveillance pour les AVK (« contrôle biologique au
+        // 8e jour », « contrôle plus fréquent de l'INR »). Affichée telle quelle à un
+        // patient sous apixaban, la consigne est inapplicable : l'INR ne surveille pas
+        // un AOD. Le texte officiel n'est pas réécrit — on ajoute la mise au point.
+        const _AVK_RE = /antivitamine\s*k|\bavk\b|\binr\b/i;
+        const _noteAodAvk = (data) => {
+            if (!Array.isArray(data.meds)) return '';
+            const aod = data.meds.find(m => /^AOD/i.test(String(m && m.classe || '')));
+            if (!aod) return '';
+            if (data.meds.some(m => /^AVK/i.test(String(m && m.classe || '')))) return '';
+            if (!data.raw.some(x => _AVK_RE.test(x.desc))) return '';
+            return `<div class="mt-2 p-2 border-start border-3 border-primary bg-light small">`
+                + `<strong>⚠️ Transposition aux AOD :</strong> le thésaurus ANSM range ${escapeHtml(aod.dci)} `
+                + `sous « anticoagulants oraux » et rédige la surveillance pour les <strong>antivitamines K</strong>. `
+                + `<strong>L'INR ne surveille pas un AOD</strong> et le contrôle « au 8<sup>e</sup> jour » ne s'y transpose pas. `
+                + `Le risque hémorragique de l'association reste valable : surveiller cliniquement (saignement, hémoglobine), `
+                + `contrôler la fonction rénale, et discuter une gastroprotection.</div>`;
+        };
         for (const [pair, data] of Object.entries(groupedAnsm)) {
             let boxClass = data.isDanger ? "danger alert-stopp" : "warning";
             // Séparer les sources ANSM et Micromedex/BNF
@@ -2584,7 +2663,7 @@ function analyserPrescription() {
             }
             let allSources = [...new Set(data.raw.map(x => x.source))];
             let sourceLabel = allSources.join(' + ');
-            addAlert('alertes-ansm', `<div class="alert alert-${boxClass} shadow-sm"><strong style="font-size:1.05em;">${data.isDanger ? '🚨' : '⚡'} Interactions ${sourceLabel} : ${pair}</strong><ul class="mb-0 ps-3">${itemsHtml}</ul></div>`, 'ansm');
+            addAlert('alertes-ansm', `<div class="alert alert-${boxClass} shadow-sm"><strong style="font-size:1.05em;">${data.isDanger ? '🚨' : '⚡'} Interactions ${sourceLabel} : ${pair}</strong><ul class="mb-0 ps-3">${itemsHtml}</ul>${_noteAodAvk(data)}</div>`, 'ansm');
         }
     } catch(e) { console.error("Erreur Interactions", e); }
 
@@ -2835,11 +2914,30 @@ function analyserPrescription() {
     // 8. ONGLET GUIDELINES — Recommandations EBM par pathologie
     // =========================================================
     const divGuidelines = document.getElementById('alertes-guidelines');
+    // Chaque recommandation de société savante peut être écartée pour la session :
+    // toutes ne concernent pas le patient qu'on a devant soi (objectif abandonné,
+    // ligne thérapeutique déjà arbitrée). La clé est « gl:<pathologie>|<classe> » —
+    // elle reste donc stable d'une analyse à l'autre tant que la comorbidité est
+    // cochée, et le masquage ne déborde pas sur une autre pathologie.
+    // Le motif ne capture que les blocs de traitement (« alert … py-1 px-2 ») sans
+    // <div> imbriqué : le HTML environnant (cartes, <details>) reste intact.
+    const _BLOC_RECO_RE = /<div class="alert alert-[a-z]+ py-1 px-2[^"]*"[^>]*>((?:(?!<\/?div)[\s\S])*?)<\/div>/g;
+    const _recosMasquables = (pathoId, html) => String(html).replace(_BLOC_RECO_RE, (bloc, corps) => {
+        const m = corps.match(/<strong[^>]*>([\s\S]*?)<\/strong>/i);
+        const label = m ? m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() : '';
+        if (!label) return bloc;
+        const maskKey = 'gl:' + pathoId + '|' + label;
+        if (window._maskedAlerts && window._maskedAlerts.has(maskKey)) return '';
+        const safeKey = maskKey.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+        const btn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.6em;" aria-label="Masquer cette recommandation" title="Masquer cette recommandation pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${safeKey}');return false;"></button>`;
+        return bloc.replace(/(<div class="alert[^"]*"[^>]*>)/i, '$1' + btn);
+    });
     if (divGuidelines && typeof PATHOLOGY_RULES_DB !== 'undefined' && activeComorbs.length > 0) {
         let guidelinesHtml = '';
         activeComorbs.forEach(pathoId => {
             const rule = PATHOLOGY_RULES_DB[pathoId];
             if (!rule || !rule.TRAITEMENTS) return;
+            const _glStart = guidelinesHtml.length;
 
             // Résoudre la référence complète via GUIDELINE_INDEX
             let refFull = rule.REFERENCE || '';
@@ -3184,6 +3282,8 @@ function analyserPrescription() {
             }
 
             guidelinesHtml += `</div></div>`;
+            guidelinesHtml = guidelinesHtml.slice(0, _glStart)
+                + _recosMasquables(pathoId, guidelinesHtml.slice(_glStart));
         });
 
         if (guidelinesHtml) {

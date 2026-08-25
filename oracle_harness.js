@@ -207,6 +207,10 @@ function analyzeCase(caseObj) {
             activeComorbs.length = 0;
             (${JSON.stringify(caseObj.comorbs || [])}).forEach(c => activeComorbs.push(c));
             window.suspendedMeds = [];
+            // Alertes masquées par l'utilisateur (clés « id: », « tt: », « gl: ») —
+            // permet de vérifier que le masquage retire bien le bloc ET que le HTML
+            // environnant reste équilibré.
+            window._maskedAlerts = new Set(${JSON.stringify(caseObj.masked || [])});
             _lastAnalysisHash = null; _lastAnalysisResult = null;
         })();
     `, sandbox);
@@ -216,7 +220,7 @@ function analyzeCase(caseObj) {
 
     vm.runInContext('analyserPrescription();', sandbox);
 
-    const containers = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines', 'alertes-synthese'];
+    const containers = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines', 'alertes-synthese', 'alertes-ansm', 'alertes-auc'];
     const result = {};
     result._html = {};
     containers.forEach(id => {
