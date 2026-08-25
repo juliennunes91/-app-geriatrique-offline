@@ -969,6 +969,15 @@ function runAutocompleteAudit(test, assert) {
         assert.ok(cherche('searchMedList', 'doliprane').includes('Paracetamol'), 'princeps Doliprane → Paracétamol');
         assert.ok(cherche('searchMedList', 'amlo').includes('Amlodipine'), 'préfixe de DCI');
     });
+    test('Autocomplétion — une classe thérapeutique est cherchable', () => {
+        // Taper « AINS » ou « IPP » doit lister la classe, APRÈS les molécules dont le nom
+        // correspond — sinon une recherche précise se noie dans sa propre classe.
+        const ains = cherche('searchMedList', 'ains');
+        assert.ok(ains.length >= 10, '« ains » doit lister la classe : ' + ains.length + ' résultat(s)');
+        assert.ok(ains.includes('Ibuprofene') && ains.includes('Diclofenac'), '« ains » → AINS attendus');
+        assert.ok(cherche('searchMedList', 'ipp').includes('Omeprazole'), '« ipp » → IPP');
+        assert.strictEqual(cherche('searchMedList', 'diclofenac')[0], 'Diclofenac', 'la molécule nommée reste en tête');
+    });
     test('Autocomplétion — une requête courte matche en début de mot', () => {
         // « fa » ne doit pas remonter une pathologie via « in-FA-rctus ».
         const r = cherche('searchComorbList', 'fa');

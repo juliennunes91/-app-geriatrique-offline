@@ -65,12 +65,19 @@ const GeriaEngineV2 = (() => {
             const c = rule.condition;
             if (!c) return;
             
-            // Indexer par med_keys
+            // Indexer par med_keys UNIQUEMENT — surtout PAS par med_absent.
+            // `med_absent` designe des molecules que le patient N'A PAS : indexer une regle
+            // dessus revient a ne la rendre candidate que si le patient prend justement ce
+            // qui doit etre absent. 41 regles etaient dans ce cas — presque tout le corpus
+            // des OMISSIONS (piliers de l'IC, anticoagulant dans la FA, statine en prevention
+            // secondaire…). Elles ne devenaient candidates que par accident, via le matching
+            // permissif de la collecte (`indexKey.includes(m.classe)`), donc de facon
+            // dependante du reste de l'ordonnance. Une regle sans cle POSITIVE doit etre
+            // evaluee systematiquement : elle part dans __GLOBAL__.
             const keys = [
                 ...(c.med_keys || []),
                 ...(c.med_keys_2 || []),
-                ...(c.med_keys_3 || []),
-                ...(c.med_absent || [])
+                ...(c.med_keys_3 || [])
             ];
             
             if (keys.length === 0) {
@@ -121,11 +128,21 @@ const GeriaEngineV2 = (() => {
         if (!ctx.activeMeds) return;
         
         // Pré-calculer les propriétés de chaque med actif
-        ctx._medsNormalized = ctx.activeMeds.map(m => ({
-            dci: (m.dci || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, ''),
-            classe: (m.classe || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, ''),
-            raw: m
-        }));
+        const _norm = x => (x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase().replace(/[^a-z0-9]/g, '');
+        ctx._medsNormalized = ctx.activeMeds.map(m => {
+            const classe = _norm(m.classe);
+            return {
+                dci: _norm(m.dci), classe: classe, raw: m,
+                // Forme TOPIQUE (précision de voie saisie par l'utilisateur) : exposition
+                // systémique d'environ 5 à 10 % de la voie orale. Le médicament reste dans
+                // l'ordonnance et garde sa fiche, mais il ne doit satisfaire AUCUNE clé de
+                // règle systémique — y compris les règles qui listent les DCI en dur, comme
+                // le triple whammy. C'est pourquoi l'exclusion est ici, au seul endroit que
+                // TOUTES les façons de cibler un médicament traversent.
+                topique: /voietopique/.test(classe)
+            };
+        });
     }
     
     function hasMedKeyCached(key, ctx) {
@@ -145,7 +162,7 @@ const GeriaEngineV2 = (() => {
         }
 
         // Utilise le référentiel centralisé de drug_classes.js
-        const result = ctx._medsNormalized.some(m => matchesDrugClass(m.dci, m.classe, k));
+        const result = ctx._medsNormalized.some(m => !m.topique && matchesDrugClass(m.dci, m.classe, k));
 
         _medKeyCache[k] = result;
         return result;

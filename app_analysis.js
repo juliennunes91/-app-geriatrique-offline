@@ -771,6 +771,15 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     // cliniques. Elles désarment des faux positifs (ex. corticothérapie brève explicite,
     // douleur sévère justifiant un opioïde fort) sans modifier le comportement par défaut
     // quand rien n'est précisé.
+    // Un LABA presente DIRECTEMENT (salmeterol, formoterol, indacaterol, olodaterol)
+    // pose le meme contexte que celui declare via la composition d'une association fixe :
+    // la regle « LABA sans corticoide inhale dans l'asthme » n'a ainsi qu'un seul point
+    // d'entree, quel que soit le mode de saisie.
+    if (typeof activeMeds !== 'undefined' && Array.isArray(activeMeds)) {
+        activeMeds.forEach(m => {
+            if (/\bu?LABA\b/i.test(m && m.classe || '')) ctxClinique.push('laba_associe');
+        });
+    }
     if (typeof activeMeds !== 'undefined' && Array.isArray(activeMeds)) {
         activeMeds.forEach(m => {
             const p = m && m.precisions; if (!p) return;
@@ -790,6 +799,22 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
             if (fam === 'antivertigineux' && p.duree === 'courte') ctxClinique.push('antivertigineux_duree_breve');
             // Durée brève « usage ponctuel » désarme les règles « long cours » correspondantes
             if (fam === 'ains' && p.duree === 'courte') ctxClinique.push('ains_duree_breve');
+            // Voie topique : on MARQUE le libelle de classe du medicament, ce qui le fait
+            // sortir de la classe `ains` (cf. _CLASS_EXCLUDE dans drug_classes.js). Toutes
+            // les regles de toxicite systemique cessent alors de s'appliquer, sans qu'il
+            // faille en gater aucune individuellement.
+            // Composition d'un dispositif inhalé : les partenaires d'une association fixe
+            // ne sont pas saisis comme médicaments distincts. On les déclare en contexte.
+            if (fam === 'inhale' && p.composition) {
+                if (p.composition === 'ics_laba' || p.composition === 'triple') ctxClinique.push('ics_associe');
+                if (p.composition !== 'seul') ctxClinique.push('laba_associe');
+            }
+            if (fam === 'ains' && p.voie === 'topique') {
+                ctxClinique.push('ains_topique');
+                if (!/VOIE TOPIQUE/.test(m.classe || '')) m.classe = (m.classe || '') + ' — VOIE TOPIQUE';
+            } else if (fam === 'ains' && p.voie === 'orale') {
+                m.classe = String(m.classe || '').replace(/ — VOIE TOPIQUE/g, '');
+            }
             if (fam === 'opioide' && p.duree === 'courte') ctxClinique.push('opioide_duree_breve');
             if (fam === 'digoxine' && p.duree === 'courte') ctxClinique.push('digoxine_duree_breve');
             if (fam === 'metoclopramide' && p.duree === 'courte') ctxClinique.push('metoclopramide_duree_breve');
@@ -2261,6 +2286,10 @@ function analyserPrescription() {
     // =========================================================
     if (typeof checkMedContraPathologies === 'function' && activeComorbs.length > 0) {
         activeMeds.forEach(m => {
+            // Une forme TOPIQUE n'expose pas aux contre-indications systemiques : le gel
+            // de diclofenac ne releve pas de la CI « ulcere gastro-duodenal ». Le marqueur
+            // est pose plus haut, a partir de la precision de voie saisie par l'utilisateur.
+            if (/VOIE TOPIQUE/.test(m.classe || '')) return;
             const alerts = checkMedContraPathologies(m.dci, m.classe, activeComorbs);
             const seenCI = new Set(); // un même médicament peut matcher la CI via sa classe ET son DCI
             alerts.forEach(a => {

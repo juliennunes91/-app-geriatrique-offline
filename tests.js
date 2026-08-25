@@ -967,6 +967,47 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'] }), reTvp), 'AOD seul (FA) → non');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'], flags: ['chkTvp'] }), reTvp), 'AOD + MTEV → oui');
     });
+    test('AINS topique : les règles de toxicité systémique ne s\'appliquent pas', () => {
+        // L'exposition systémique d'un gel d'AINS est d'environ 5 à 10 % de la voie orale :
+        // ni l'ulcère, ni le DFG, ni le triple whammy ne le concernent. L'exclusion est posée
+        // au niveau du moteur (ctx._medsNormalized), donc elle couvre AUSSI les règles qui
+        // listent les DCI en dur — comme le triple whammy.
+        const socle = { age: 82, sexe: 'F', comorbs: ['PAT_021'], bio: { patientDFG: 40 } };
+        const oral = analyzeCase({ ...socle, meds: ['Diclofenac'] });
+        assert.ok(has(oral, /AINS \+ DFG/), 'voie orale : la règle rénale doit se déclencher');
+        assert.ok(has(oral, /AINS non-COX2/), 'voie orale : la règle ulcère doit se déclencher');
+        const topique = analyzeCase({ ...socle, meds: ['Diclofenac'], precisions: { diclofenac: { voie: 'topique' } } });
+        assert.ok(!has(topique, /AINS \+ DFG/), 'voie topique : pas de règle rénale');
+        assert.ok(!has(topique, /AINS non-COX2/), 'voie topique : pas de règle ulcère');
+        assert.ok(!has(topique, /CI Ulcère Gastro/i), 'voie topique : pas de CI par pathologie');
+        const tw = { age: 82, sexe: 'F', comorbs: ['PAT_029'], bio: { patientDFG: 40 },
+                     meds: ['Ibuprofene', 'Ramipril', 'Furosemide'] };
+        assert.ok(has(analyzeCase(tw), /Triple whammy/), 'voie orale : triple whammy');
+        assert.ok(!has(analyzeCase({ ...tw, precisions: { ibuprofene: { voie: 'topique' } } }), /Triple whammy/),
+            'voie topique : pas de triple whammy, alors que la règle liste les DCI en dur');
+    });
+    test('LABA sans corticoïde inhalé dans l\'asthme (EV_G05)', () => {
+        const re = /LABA.{0,40}sans corticoïde inhalé/i;
+        const socle = { age: 72, sexe: 'F', comorbs: ['PAT_022'], bio: {} };
+        assert.ok(has(analyzeCase({ ...socle, meds: ['Salmeterol'] }), re), 'LABA seul → alerte');
+        assert.ok(!has(analyzeCase({ ...socle, meds: ['Salmeterol', 'Fluticasone'] }), re),
+            'corticoïde inhalé présent → pas d\'alerte');
+        // Association fixe : le partenaire n'est pas saisi comme médicament distinct,
+        // c'est la composition déclarée qui l'apporte.
+        assert.ok(has(analyzeCase({ ...socle, meds: ['Umeclidinium'],
+            precisions: { umeclidinium: { composition: 'laba' } } }), re), 'Anoro (LAMA+LABA) → alerte');
+        assert.ok(!has(analyzeCase({ ...socle, meds: ['Umeclidinium'],
+            precisions: { umeclidinium: { composition: 'triple' } } }), re), 'Trelegy (trithérapie) → pas d\'alerte');
+    });
+    test('IN_G02 : ne recommande pas un corticoïde déjà contenu dans le dispositif', () => {
+        const re = /Corticoïde inhalé quotidien/i;
+        const socle = { age: 72, sexe: 'F', comorbs: ['PAT_022'], bio: {}, meds: ['Umeclidinium'] };
+        assert.ok(has(analyzeCase(socle), re), 'composition non précisée → recommandation (Anoro n\'en contient pas)');
+        assert.ok(!has(analyzeCase({ ...socle, precisions: { umeclidinium: { composition: 'triple' } } }), re),
+            'trithérapie déclarée → pas de recommandation');
+        assert.ok(!has(analyzeCase({ ...socle, precisions: { umeclidinium: { composition: 'ics_laba' } } }), re),
+            'association avec corticoïde déclarée → pas de recommandation');
+    });
     test('IN_E03 : le garde-fou med_absent voit un patient déjà sous ASE', () => {
         // Avant l'ajout des ASE en base, les 3 clés `med_absent` d'IN_E03 ne résolvaient
         // AUCUN médicament : la règle proposait d'initier un agent stimulant

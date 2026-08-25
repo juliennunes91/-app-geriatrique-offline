@@ -175,17 +175,27 @@ function searchComorbList(val) {
         .map(c => ({ display: c.label, data: c.id }));
 }
 function searchMedList(val) {
-    const cleanVal = sanitizeText(val); let matches = []; let seenSignatures = new Set();
-    if (!cleanVal) return matches;
+    const cleanVal = sanitizeText(val); let seenSignatures = new Set();
+    if (!cleanVal) return [];
+    // Trois rangs, dans cet ordre : la DCI, puis le nom commercial, puis la CLASSE.
+    // Taper « AINS » ou « IPP » doit lister la classe — mais après les molécules dont
+    // le nom correspond, sinon une recherche précise se noie dans sa propre classe.
+    const parRang = [[], [], []];
     unifiedMedsMap.forEach((data, key) => {
-        // Le champ `princeps` est une LISTE de noms commerciaux : il faut la decouper AVANT
-        // de normaliser. Concatenee, « Effentora, Instanyl » donnait « effentorainstanyl »,
-        // d'ou le fentanyl propose a qui tape « ains ».
-        if(key.includes(cleanVal) || _jetonsMatchent(_jetonsRecherche(data.princeps), cleanVal)) { 
-            let signature = sanitizeText(data.dci_pure);
-            if(!seenSignatures.has(signature)) { seenSignatures.add(signature); matches.push({display: data.dci_pure, data: data}); }
-        } 
-    }); return matches;
+        // Le champ `princeps` est une LISTE de noms commerciaux : il faut la découper AVANT
+        // de normaliser. Concaténée, « Effentora, Instanyl » donnait « effentorainstanyl »,
+        // d'où le fentanyl proposé à qui tape « ains ».
+        let rang = -1;
+        if (key.includes(cleanVal)) rang = 0;
+        else if (_jetonsMatchent(_jetonsRecherche(data.princeps), cleanVal)) rang = 1;
+        else if (_jetonsMatchent(_jetonsRecherche(data.classe), cleanVal)) rang = 2;
+        if (rang < 0) return;
+        const signature = sanitizeText(data.dci_pure);
+        if (seenSignatures.has(signature)) return;
+        seenSignatures.add(signature);
+        parRang[rang].push({ display: data.dci_pure, data: data });
+    });
+    return parRang[0].concat(parRang[1], parRang[2]);
 }
 
 function selectComorb(id) { if(!activeComorbs.includes(id)) { activeComorbs.push(id); renderTags(); } }
@@ -220,7 +230,7 @@ const MED_PRECISION_FIELDS = {
     opioide: ['indication', 'dose'],
     ipp: ['duree'],
     bzd: ['duree'],
-    ains: ['duree'],
+    ains: ['voie', 'duree'],
     fer: ['duree', 'dose'],
     calcium: ['dose'],
     laxatif_stim: ['duree'],
@@ -239,7 +249,8 @@ const MED_PRECISION_FIELDS = {
     loperamide: ['duree', 'dose'],
     clozapine: ['nfs_recent'],
     statine: ['dose'],
-    antipsychotique: ['duree']
+    antipsychotique: ['duree'],
+    inhale: ['composition']
 };
 const PRECISION_FIELD_DEFS = {
     duree: { label: 'Durée de traitement', type: 'select',
@@ -247,6 +258,15 @@ const PRECISION_FIELD_DEFS = {
     indication: { label: 'Indication / intensité de la douleur', type: 'select',
         options: [['', 'Non précisé'], ['legere', 'Douleur légère'], ['moderee', 'Douleur modérée'], ['severe', 'Douleur sévère']] },
     dose: { label: 'Posologie (mg/jour)', type: 'number', placeholder: 'ex. 10' },
+    composition: { label: 'Composition du dispositif inhalé', type: 'select',
+        options: [['', 'Non précisé (traité comme molécule seule)'],
+                  ['seul', 'Molécule seule (ex. Incruse, Onbrez, Pulmicort)'],
+                  ['laba', 'Association LAMA + LABA, SANS corticoïde (ex. Anoro, Ultibro, Spiolto)'],
+                  ['ics_laba', 'Association corticoïde inhalé + LABA (ex. Symbicort, Seretide, Atectura)'],
+                  ['triple', 'Trithérapie corticoïde + LAMA + LABA (ex. Trelegy, Trimbow, Enerzair)']] },
+    voie: { label: 'Voie d\'administration', type: 'select',
+        options: [['', 'Non précisé (traité comme systémique)'], ['orale', 'Orale / systémique'],
+                  ['topique', 'Topique (gel, emplâtre, crème)']] },
     k_recent: { label: 'Kaliémie contrôlée < 1 mois et normale ?', type: 'select',
         options: [['', 'Non précisé'], ['oui', 'Oui — récente et normale'], ['non', 'Non / anormale']] },
     lithium_recent: { label: 'Lithémie contrôlée < 3 mois (cible thérapeutique) ?', type: 'select',

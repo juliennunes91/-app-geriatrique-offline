@@ -1210,6 +1210,24 @@ const GERIA_RECOS_DB = {
             alternatives: "LABA seul"
         },
         {
+            id: "EV_G05",
+            sources: ["FDA", "GOLD"],
+            ref_code: "LABA-ASTHME-ICS",
+            section: "Respiratoire",
+            titre: "β2 de longue durée (LABA) sans corticoïde inhalé dans l'asthme",
+            message: "Un β2-agoniste de longue durée ne doit JAMAIS être utilisé seul dans l'asthme : sans corticoïde inhalé associé, il masque l'inflammation bronchique tout en laissant progresser la maladie, et expose à un risque de DÉCÈS lié à l'asthme. C'est une mise en garde de classe, présente au RCP de tous les LABA. Attention aux ASSOCIATIONS FIXES : Anoro, Ultibro et Spiolto contiennent un LABA SANS corticoïde — ils relèvent de la BPCO, pas de l'asthme. Trelegy, Trimbow, Symbicort, Seretide et Atectura en contiennent un.",
+            severite: "danger",
+            condition: {
+                // Un seul point d'entrée : le contexte est posé soit par la molécule LABA
+                // saisie directement, soit par la composition déclarée d'une association fixe.
+                contexte_clinique: "laba_associe",
+                comorbs: ["PAT_022"],
+                med_absent: ["corticoideinhale", "beclometasone", "budesonide", "fluticasone", "mometasone", "ciclesonide"],
+                contexte_clinique_absent: ["ics_associe"]
+            },
+            alternatives: "Associer un corticoïde inhalé, ou passer à un dispositif qui en contient un (Symbicort, Seretide, Atectura, Trelegy, Trimbow). Si le patient a une BPCO et non un asthme, vérifier le diagnostic : Anoro, Ultibro et Spiolto sont des associations LAMA + LABA destinées à la BPCO."
+        },
+        {
             id: "EV_G04",
             sources: ["STOPP3", "BEERS"],
             ref_code: "STOPP3-G4",
@@ -2953,7 +2971,11 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 comorbs_any: ["PAT_022", "PAT_023"],
-                med_absent: ["beclometasone", "budesonide", "fluticasone", "mometasone", "corticoide inhale"]
+                med_absent: ["beclometasone", "budesonide", "fluticasone", "mometasone", "ciclesonide", "corticoide inhale"],
+                // Ne pas recommander un corticoide inhale DEJA contenu dans le dispositif :
+                // Trelegy, Symbicort, Seretide, Atectura, Trimbow, Enerzair en comportent un,
+                // sans qu'il soit saisi comme medicament distinct.
+                contexte_clinique_absent: ["ics_associe"]
             },
             alternatives: "Budésonide, fluticasone en association LABA"
         },

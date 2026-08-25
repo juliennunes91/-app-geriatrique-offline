@@ -510,6 +510,16 @@ const _DCI_AMBIGUOUS = new Map();
 // = l'inverse d'un diurétique. Garde-fous documentés (collisions Phase 5).
 const _CLASS_EXCLUDE = {
     benzodiazepine: /thieno|dibenzo|antipsychotique/,
+    // AINS par voie TOPIQUE : l'exposition systemique est d'environ 5 a 10 % de celle de
+    // la voie orale (RCP des gels de diclofenac et de ketoprofene). Les regles de toxicite
+    // systemique — ulcere, DFG, HTA, insuffisance cardiaque, triple whammy, lithium — ne
+    // s'appliquent donc pas. Le marqueur est pose sur le LIBELLE de classe au moment de
+    // construire le contexte (app_analysis.js), a partir de la precision saisie : un seul
+    // point de verite, qui couvre toutes les regles presentes et futures sans avoir a
+    // gater chacune d'elles.
+    ains: /voietopique/,
+    // Meme regle pour la sous-classe : elle matche par liste de DCI, pas par libelle.
+    ains_non_selectif: /voietopique/,
     diuretique: /antidiur/,
     // « corticoide » ⊂ « Corticoïde inhalé (ICS) » : la béclométasone déclenchait les
     // règles du corticoïde SYSTÉMIQUE (ulcère, AINS + corticoïde, PIM-Check).
@@ -676,6 +686,13 @@ function matchesDrugClassAnsm(dci, classe, rawTerm) {
 function medPrecisionFamily(classe, dci) {
     const cl = classe || '';
     const d = (dci || '').toLowerCase();
+    // Inhalés de l'asthme et de la BPCO : LAMA, LABA et corticoïdes inhalés existent
+    // massivement en ASSOCIATIONS FIXES (Anoro, Trelegy, Symbicort, Seretide, Ultibro…).
+    // Saisir le princeps n'enregistre qu'UNE des molécules : la précision de composition
+    // permet de déclarer les partenaires, ce qui conditionne deux décisions de sécurité —
+    // ne pas recommander un corticoïde inhalé déjà contenu dans le dispositif, et repérer
+    // un LABA sans corticoïde inhalé dans l'asthme.
+    if (/inhal[ée]|\bICS\b|\bLAMA\b|\bLABA\b|\buLABA\b/i.test(cl)) return 'inhale';
     if (/corticoïde|corticoide|glucocorticoïde/i.test(cl) && !/inhalé|\bICS\b/i.test(cl)) return 'cortico';
     if (/opio[iï]de|opiac/i.test(cl) && !/antidiarrh|antidépresseur/i.test(cl)) return 'opioide';
     if (/pompe à protons|pompe a protons|\(IPP\)/i.test(cl)) return 'ipp';
