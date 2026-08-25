@@ -98,3 +98,82 @@ window.toggleCascade = function(parentId, containerId) {
     if (!parent || !container) return;
     container.style.display = parent.checked ? '' : 'none';
 };
+
+// ═══════════════════════════════════════════════════════════════════════════
+// NORMES BIOLOGIQUES — seuils de SIGNALEMENT, pas intervalles de référence
+// ═══════════════════════════════════════════════════════════════════════════
+// `_bioStatusBadge` ne connaissait que six paramètres et affichait un badge VERT
+// « OK » pour tous les autres : une GGT à 138 UI/L, une albumine à 34 g/L et une
+// CRP à 10 mg/L ressortaient comme normales. Un vert par défaut est pire que pas
+// de badge du tout — il affirme une normalité que rien n'a vérifiée.
+//
+// Ces bornes servent à DÉCIDER DE SIGNALER, pas à rendre un compte-rendu : les
+// intervalles de référence varient d'un laboratoire à l'autre (technique, calibrant)
+// et ceux du laboratoire prévalent toujours. Elles sont volontairement absentes là
+// où aucun seuil unique n'a de sens : INR (dépend de l'indication), troponine
+// (dépend du réactif), NT-proBNP (dépend de l'âge — traité par SYND_029), bilan
+// lipidique (cible fonction du risque cardiovasculaire).
+// `f` / `h` : bornes propres à la femme / à l'homme quand elles diffèrent.
+const BIO_NORMES = {
+    BIO_001: { bas: 3.5,  haut: 5.0 },                                   // Kaliémie mmol/L
+    BIO_002: { bas: 135,  haut: 145 },                                   // Natrémie mmol/L
+    BIO_003: { f: { bas: 45, haut: 90 }, h: { bas: 60, haut: 110 } },    // Créatininémie µmol/L
+    BIO_004: { bas: 60 },                                                // DFG ml/min — < 60 = stade 3 KDIGO
+    BIO_005: { bas: 2.20, haut: 2.60 },                                  // Calcémie mmol/L
+    BIO_006: { bas: 0.70, haut: 1.05 },                                  // Magnésémie mmol/L
+    BIO_007: { bas: 2.5,  haut: 8.0 },                                   // Urée mmol/L
+    BIO_008: { f: { bas: 150, haut: 360 }, h: { bas: 200, haut: 420 } }, // Uricémie µmol/L
+    BIO_009: { f: { bas: 12, haut: 16.5 }, h: { bas: 13, haut: 18 } },   // Hémoglobine g/dL — seuils OMS
+    BIO_010: { bas: 150,  haut: 400 },                                   // Plaquettes G/L
+    BIO_011: { bas: 4,    haut: 10 },                                    // Leucocytes G/L
+    BIO_012: { bas: 1.5,  haut: 7 },                                     // PNN G/L
+    BIO_013: { haut: 45 },                                               // ASAT UI/L
+    BIO_014: { haut: 35 },                                               // ALAT UI/L
+    BIO_015: { f: { haut: 40 }, h: { haut: 60 } },                       // GGT UI/L
+    BIO_016: { bas: 40,   haut: 130 },                                   // PAL UI/L
+    BIO_017: { haut: 21 },                                               // Bilirubine totale µmol/L
+    BIO_018: { f: { haut: 145 }, h: { haut: 170 } },                     // CPK UI/L
+    BIO_019: { bas: 0.4,  haut: 4.5 },                                   // TSH mUI/L
+    BIO_020: { f: { bas: 15, haut: 150 }, h: { bas: 30, haut: 300 } },   // Ferritine µg/L
+    BIO_021: { bas: 148 },                                               // Vitamine B12 pmol/L
+    BIO_022: { bas: 7 },                                                 // Vitamine B9 nmol/L
+    BIO_023: { bas: 30 },                                                // Vitamine D ng/mL
+    BIO_024: { haut: 5 },                                                // CRP mg/L
+    BIO_025: { bas: 3.9,  haut: 6.0 },                                   // Glycémie à jeun mmol/L
+    BIO_026: { haut: 8.0 },                                              // HbA1c % — cible assouplie chez l'âgé
+    BIO_029: { bas: 0.4,  haut: 0.8 },                                   // Lithiémie mEq/L — cible gériatrique
+    BIO_031: { f: { haut: 470 }, h: { haut: 450 } },                     // QTc ms
+    BIO_032: { haut: 0.5 },                                              // Procalcitonine ng/mL
+    BIO_033: { haut: 500 },                                              // D-dimères µg/L FEU
+    BIO_035: { bas: 35,   haut: 50 },                                    // Albumine sérique g/L
+    BIO_036: { haut: 60 },                                               // Lipasémie UI/L
+    BIO_037: { haut: 2.0 },                                              // Lactatémie mmol/L
+    BIO_038: { bas: 25,   haut: 100 },                                   // Réticulocytes ×10⁹/L
+    BIO_039: { bas: 80,   haut: 100 },                                   // VGM fL
+    BIO_040: { bas: 70 },                                                // TP %
+    BIO_041: { bas: 98,   haut: 107 },                                   // Chlorémie mmol/L
+    BIO_042: { bas: 275,  haut: 295 },                                   // Osmolalité mOsm/kg
+    BIO_043: { bas: 0.20 },                                              // Préalbumine g/L
+    BIO_044: { bas: 0.5,  haut: 0.9 },                                   // Digoxinémie ng/mL — cible gériatrique
+    BIO_045: { bas: 0.8,  haut: 1.2 },                                   // TCA ratio
+    BIO_046: { haut: 30 }                                                // Albuminurie mg/24h
+};
+
+/**
+ * Statut d'une valeur biologique vis-à-vis des bornes de signalement.
+ * @returns null si aucune borne connue OU valeur dans les bornes ;
+ *          sinon { sens: 'bas'|'haut', borne: number }.
+ * `sexe` accepte 'F' / 'M' ; toute autre valeur retombe sur les bornes féminines,
+ * plus basses, donc plus sensibles — on préfère signaler à tort que taire.
+ */
+const bioAnormal = (bioId, val, sexe) => {
+    const v = parseFloat(val);
+    if (!isFinite(v) || v <= 0) return null;
+    let n = BIO_NORMES[bioId];
+    if (!n) return null;
+    if (n.f || n.h) n = (String(sexe).toUpperCase() === 'M') ? n.h : n.f;
+    if (!n) return null;
+    if (typeof n.bas === 'number' && v < n.bas) return { sens: 'bas', borne: n.bas };
+    if (typeof n.haut === 'number' && v > n.haut) return { sens: 'haut', borne: n.haut };
+    return null;
+};

@@ -762,26 +762,90 @@ function buildPdfContent() {
         html += `</div>`;
     });
 
-    // Bilans à faire sur l'année (annuel + semestriel + trimestriel) — SANS DCI
+    // ── Plan biologique ─────────────────────────────────────────────────────
+    // Le bloc listait les 30 paramètres du plan rangés par FRÉQUENCE, y compris les
+    // deux fourre-tout « Selon contexte » et « À la demande » — qui ne sont pas des
+    // échéances mais l'aveu qu'aucune n'a été fixée. Le lecteur y cherchait en vain
+    // ce qu'il doit prescrire au prochain bilan.
+    // Le plan est désormais rangé par CRITICITÉ, c'est-à-dire par ce qui décide :
+    //   1. ce qui est déjà anormal chez CE patient — à recontrôler, avec la valeur ;
+    //   2. ce qu'un traitement impose de surveiller — avec la molécule qui l'exige ;
+    //   3. le reste, en une ligne de bilan de routine.
+    // Ce qui n'a ni échéance ni origine médicamenteuse ne figure plus au plan : c'est
+    // un examen d'orientation, pas un bilan à programmer. Le tableau croisé complet
+    // reste dans l'onglet Suivi de l'application.
     if (reg && reg.bioPlan && Object.keys(reg.bioPlan).length > 0) {
         const freqPriority = { 'hebdomadaire': 1, '/semaine': 1, 'bimensuel': 2, '/2sem': 2, 'mensuel': 3, '/mois': 3, '/1m': 3, '/1-3m': 4, 'trimestriel': 5, '/3m': 5, '/3 mois': 5, 'semestriel': 7, '/6m': 7, '/6 mois': 7, 'annuel': 10, '/an': 10, '/12m': 10, 'à la demande': 20 };
         const getFreqScore = (f) => { let fl = String(f || '').toLowerCase(); for (const [k, v] of Object.entries(freqPriority)) { if (fl.includes(k)) return v; } return 15; };
-        const freqLabels = { 1: 'Hebdomadaire', 2: 'Bimensuel', 3: 'Mensuel', 5: 'Trimestriel', 7: 'Semestriel', 10: 'Annuel', 15: 'Selon contexte', 20: 'À la demande' };
-        const byFreq = {};
+        const freqLabels = { 1: 'toutes les semaines', 2: 'tous les quinze jours', 3: 'tous les mois', 4: 'tous les 1 à 3 mois', 5: 'tous les trois mois', 7: 'tous les six mois', 10: 'une fois par an' };
+        const nomBio = (id) => (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[id]) ? MASTER_DB.BIOLOGIE[id].NOM_STANDARD : id;
+        const uniteBio = (id) => (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[id]) ? (MASTER_DB.BIOLOGIE[id].UNITE || '') : '';
+        const valeurs = reg.bioValues || {};
+        const sexeP = document.getElementById('patientSexe')?.value || 'F';
+
+        const aRecontroler = [];   // anomalie constatée
+        const surveillance = [];   // imposée par un traitement
+        const routine = [];        // le reste, avec une échéance
+
         for (const [bioId, data] of Object.entries(reg.bioPlan)) {
-            const bioName = (typeof MASTER_DB !== 'undefined' && MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
-            const freqScore = data.freqs.length > 0 ? Math.min(...data.freqs.map(f => getFreqScore(f))) : 15;
-            if (!byFreq[freqScore]) byFreq[freqScore] = [];
-            byFreq[freqScore].push(bioName);
+            const nom = nomBio(bioId);
+            const score = data.freqs.length > 0 ? Math.min(...data.freqs.map(f => getFreqScore(f))) : 15;
+            const ano = (typeof bioAnormal === 'function') ? bioAnormal(bioId, valeurs[bioId], sexeP) : null;
+            const meds = (data.meds || []).filter(Boolean);
+            if (ano) {
+                aRecontroler.push({ nom, val: valeurs[bioId], unite: uniteBio(bioId), sens: ano.sens, borne: ano.borne, score, meds });
+            } else if (meds.length > 0) {
+                surveillance.push({ nom, score, meds });
+            } else if (score <= 10) {
+                routine.push({ nom, score });
+            }
         }
-        const keys = Object.keys(byFreq).map(Number).sort((a, b) => a - b);
-        html += `<div class="pdf-block" style="${blockStyle}border-left:4px solid #6c757d;border-radius:0 5px 5px 0;background:${rgba('#6c757d', 0.04)};padding:10px 12px;">
-            ${secTitle('Bilans à prévoir sur l\'année', '#5a636c')}`;
-        keys.forEach((score, i) => {
-            const lbl = freqLabels[score] || 'Variable';
-            html += `<div style="${S.item}${i ? 'border-top:' + S.rule + ';' : ''}"><strong>${lbl} :</strong> <span style="color:${S.muted};">${byFreq[score].map(b => escapeHtml(b)).join(', ')}</span></div>`;
-        });
-        html += `</div>`;
+        const parScore = (a, b) => a.score - b.score || a.nom.localeCompare(b.nom, 'fr');
+        aRecontroler.sort(parScore); surveillance.sort(parScore); routine.sort(parScore);
+
+        if (aRecontroler.length + surveillance.length + routine.length > 0) {
+            html += `<div class="pdf-block" style="${blockStyle}border-left:4px solid #6c757d;border-radius:0 5px 5px 0;background:${rgba('#6c757d', 0.04)};padding:10px 12px;">
+                ${secTitle('Plan biologique', '#5a636c')}`;
+            let bloc = 0;
+            const ligne = (titre, corps, couleur) => {
+                html += `<div style="${S.item}${bloc ? 'border-top:' + S.rule + ';' : ''}"><strong${couleur ? ` style="color:${couleur};"` : ''}>${titre}</strong> <span style="color:${S.muted};">${corps}</span></div>`;
+                bloc++;
+            };
+            if (aRecontroler.length > 0) {
+                ligne('À recontrôler — valeur déjà anormale :', aRecontroler.map(x =>
+                    `${escapeHtml(x.nom)} ${escapeHtml(String(x.val))}${x.unite ? ' ' + escapeHtml(x.unite) : ''} `
+                    + `<em style="color:#8a939c;">(norme ${x.sens === 'bas' ? '≥' : '≤'} ${escapeHtml(String(x.borne))}${x.score <= 10 ? ' — ' + freqLabels[x.score] : ''})</em>`
+                ).join(' ; ') + '.', '#b02a37');
+            }
+            if (surveillance.length > 0) {
+                // Regroupé par échéance : c'est ainsi qu'on rédige une ordonnance de bilan.
+                const parEcheance = {};
+                surveillance.forEach(x => { const k = x.score <= 10 ? x.score : 10; (parEcheance[k] = parEcheance[k] || []).push(x); });
+                Object.keys(parEcheance).map(Number).sort((a, b) => a - b).forEach(sc => {
+                    // La molécule qui impose l'examen justifie la prescription — mais au
+                    // palier annuel, où la moitié de l'ordonnance contribue, l'énumération
+                    // fait plus de bruit que de sens : seuls les noms d'examens y figurent.
+                    const avecOrigine = sc <= 7;
+                    ligne(`Surveillance d'un traitement, ${freqLabels[sc] || 'selon le protocole'} :`,
+                        parEcheance[sc].map(x => avecOrigine
+                            ? `${escapeHtml(x.nom)} <em style="color:#8a939c;">(${escapeHtml(x.meds.slice(0, 3).join(', '))}${x.meds.length > 3 ? '…' : ''})</em>`
+                            : escapeHtml(x.nom)).join(avecOrigine ? ' ; ' : ', ') + '.');
+                });
+            }
+            if (routine.length > 0) {
+                ligne('Bilan de suivi des comorbidités :', routine.map(x => escapeHtml(x.nom)).join(', ') + '.');
+            }
+            // Ne jamais réduire en silence : le lecteur doit savoir que le plan a été
+            // trié, et où retrouver ce qui n'y figure pas.
+            const ecartes = Object.keys(reg.bioPlan).length - (aRecontroler.length + surveillance.length + routine.length);
+            if (ecartes > 0) {
+                html += `<div style="${S.item}border-top:${S.rule};font-size:8.5px;color:#8a939c;">
+                    ${ecartes} autre${ecartes > 1 ? 's' : ''} paramètre${ecartes > 1 ? 's' : ''} d'orientation, sans échéance ni surveillance de traitement,
+                    ${ecartes > 1 ? 'ne figurent' : 'ne figure'} pas à ce plan : à demander selon la question clinique posée
+                    (tableau complet dans l'onglet Suivi de l'application).</div>`;
+            }
+            html += `</div>`;
+        }
     }
 
     html += `<div style="text-align:center;margin-top:16px;padding-top:8px;border-top:1px solid #e4e8ec;font-size:8px;color:#9aa2aa;">Document généré par GeriaAssist — Usage professionnel uniquement</div>`;

@@ -915,6 +915,48 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'severe' } } }), re), 'douleur sévère → désarmé');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'legere' } } }), re), 'douleur légère → alerte');
     });
+    test('Précisions : l\'indication du diurétique départage EV_B07 et EV_B08', () => {
+        // STOPP v3 consacre DEUX criteres au diuretique de l'anse, que seule
+        // l'indication separe : premiere intention dans l'HTA (B7), oedemes isoles
+        // (B8). Faute de la connaitre, les deux se declenchaient ensemble et
+        // affirmaient chacun une indication differente pour la meme ligne.
+        const b7 = /1.re intention pour HTA/i, b8 = /pour œdèmes sans IC/i;
+        const cas = ind => analyzeCase({ age: 84, sexe: 'F', comorbs: ['PAT_005'], meds: ['Furosemide'],
+            precisions: ind ? { Furosemide: { indication_diu: ind } } : {} });
+        const sans = cas(null);
+        assert.ok(has(sans, b7) && has(sans, b8), 'sans precision : les deux (le rapport demande de preciser)');
+        assert.ok(has(cas('hta'), b7) && !has(cas('hta'), b8), 'HTA : B7 seul');
+        assert.ok(!has(cas('oedemes'), b7) && has(cas('oedemes'), b8), 'oedemes : B8 seul');
+        ['ic', 'irc', 'cirrhose', 'nephrotique'].forEach(i => {
+            assert.ok(!has(cas(i), b7) && !has(cas(i), b8), i + ' : indication de surcharge, aucun des deux');
+        });
+    });
+    test('Bornes biologiques : pas de « OK » vert par defaut', () => {
+        // _bioStatusBadge ne connaissait que six parametres et rendait un badge VERT
+        // pour tous les autres : une GGT a 138, une albumine a 34 et une CRP a 10
+        // ressortaient normales. Un vert par defaut affirme une normalite que rien
+        // n'a verifiee — pire que pas de badge du tout.
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const vm = require('vm');
+        const ano = (id, v, sx) => JSON.parse(vm.runInContext(
+            `JSON.stringify(bioAnormal(${JSON.stringify(id)}, ${JSON.stringify(v)}, ${JSON.stringify(sx)}))`, sandbox));
+        assert.ok(ano('BIO_035', 34, 'F') && ano('BIO_035', 34, 'F').sens === 'bas', 'albumine 34 g/L → basse');
+        assert.ok(ano('BIO_024', 10, 'F') && ano('BIO_024', 10, 'F').sens === 'haut', 'CRP 10 mg/L → elevee');
+        assert.strictEqual(ano('BIO_035', 42, 'F'), null, 'albumine 42 g/L → normale');
+        // Bornes propres au sexe : une GGT a 50 est elevee chez la femme, pas chez l'homme.
+        assert.ok(ano('BIO_015', 50, 'F'), 'GGT 50 UI/L chez la femme → elevee');
+        assert.strictEqual(ano('BIO_015', 50, 'M'), null, 'GGT 50 UI/L chez l\'homme → normale');
+        // Aucune borne connue → aucun verdict (INR, troponine, NT-proBNP : le seuil
+        // depend de l'indication, du reactif ou de l'age).
+        ['BIO_030', 'BIO_034', 'BIO_028'].forEach(id => {
+            assert.strictEqual(ano(id, 999, 'F'), null, id + ' : pas de borne unique, pas de verdict');
+        });
+        assert.strictEqual(ano('BIO_001', 0, 'F'), null, 'valeur absente → pas de verdict');
+        // Le badge ne doit pas non plus verdir un parametre sans borne.
+        const badge = (id, v) => vm.runInContext(`_bioStatusBadge(${JSON.stringify(id)}, ${v}, 'F')`, sandbox);
+        assert.ok(!/bg-success/.test(badge('BIO_030', 2.5)), 'INR : pas de vert par defaut');
+        assert.ok(/bg-success/.test(badge('BIO_035', 42)), 'albumine normale : vert legitime');
+    });
     test('Précisions : IPP durée brève désarme EV_F02 (> 8 semaines)', () => {
         // Le titre a change : il annoncait « pour ulcere non complique » alors que la
         // condition ne verifie aucun ulcere. On cible desormais l'identifiant de regle,

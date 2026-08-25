@@ -414,6 +414,13 @@ que d'être gatée règle par règle.
   `_CLASS_EXCLUDE`. Attention : `_CLASS_EXCLUDE` n'est consulté que pour un
   **identifiant de classe déclaré** dans `DRUG_CLASSES` — une entrée pour une classe
   inexistante est morte sans bruit.
+- **Diurétique de l'anse** : STOPP v3 lui consacre deux critères que SEULE l'indication
+  sépare — première intention dans l'HTA (`EV_B07`), œdèmes isolés (`EV_B08`). Sans la
+  question, les deux se déclenchaient ensemble en affirmant chacun une indication
+  différente pour la même ligne. La précision `indication_diu` en désarme au moins un ;
+  une indication de surcharge (insuffisance cardiaque, rénale, hépatique, syndrome
+  néphrotique) les désarme tous les deux. Non renseignée, les deux restent et le rapport
+  les fusionne en « préciser l'indication » — ce qui est exactement l'état de la question.
 - **Amphotéricine B** : la suspension buvable n'est pratiquement pas absorbée (ni
   hypokaliémie, ni néphrotoxicité, ni interaction) ; l'injectable porte toute la
   toxicité. La forme non absorbée est en outre exclue du **matching
@@ -485,6 +492,42 @@ Tout est traité **au rendu** (`buildPdfContent`, `app_core.js`) — on ne réé
   d'afficher, et le panneau des scores apparie chaque `<strong>` au texte qui le suit
   (il affichait le score ACB avec le commentaire du CIA) après avoir retiré
   l'infobulle `.score-tooltip`, qui déversait la grille de cotation complète.
+
+## Le plan biologique se range par criticité, pas par fréquence
+
+Le bloc « Bilans à prévoir » listait les 30 paramètres du plan rangés par fréquence,
+avec deux fourre-tout — « Selon contexte » et « À la demande » — qui ne sont pas des
+échéances mais l'aveu qu'aucune n'a été fixée. Le lecteur y cherchait en vain ce qu'il
+doit prescrire au prochain bilan. Trois paliers, dans cet ordre :
+
+1. **À recontrôler** — le paramètre est déjà anormal chez CE patient. Valeur, unité,
+   borne franchie, échéance. C'est là que le dossier parle.
+2. **Surveillance d'un traitement** — groupée par échéance, avec la molécule qui
+   l'impose (jusqu'au semestriel ; au palier annuel l'énumération fait plus de bruit
+   que de sens, seuls les noms d'examens y figurent).
+3. **Bilan de suivi des comorbidités** — le reste, en une ligne.
+
+Ce qui n'a **ni échéance ni origine médicamenteuse** ne figure plus au plan : c'est un
+examen d'orientation, pas un bilan à programmer (une case « Cancer » cochée y faisait
+entrer troponine, procalcitonine, lipase et TSH). Le compte des paramètres écartés est
+affiché — **jamais de réduction silencieuse** — et le tableau croisé complet reste dans
+l'onglet Suivi.
+
+## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
+
+`_bioStatusBadge` ne connaissait que **six** paramètres et rendait un badge VERT « OK »
+pour tous les autres : une GGT à 138 UI/L, une albumine à 34 g/L et une CRP à 10 mg/L
+ressortaient normales. **Un vert par défaut est pire que pas de badge** — il affirme une
+normalité que rien n'a vérifiée.
+
+- Ce sont des **seuils de signalement**, pas des intervalles de référence : ceux du
+  laboratoire prévalent toujours (technique, calibrant).
+- Volontairement **absentes** là où aucun seuil unique n'a de sens : INR (dépend de
+  l'indication), troponine (du réactif), NT-proBNP (de l'âge — traité par `SYND_029`),
+  bilan lipidique (du risque cardiovasculaire). `bioAnormal()` rend alors `null`, et le
+  badge affiche « n. c. » plutôt qu'un verdict.
+- Bornes propres au sexe pour créatinine, uricémie, hémoglobine, GGT, CPK, ferritine
+  et QTc. Sexe inconnu → bornes féminines, plus basses donc plus sensibles.
 
 ## Ce que le rapport ne doit pas nommer
 

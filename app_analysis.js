@@ -227,21 +227,28 @@ function _extractFreqForBio(suiviStr, bioId) {
     }
     return '';
 }
-function _bioStatusBadge(bioId, val) {
+function _bioStatusBadge(bioId, val, sexe) {
     if (!val || val <= 0) return '<span class="badge bg-secondary">—</span>';
+    // Paliers propres, plus sévères que la simple sortie de bornes.
     if (bioId === 'BIO_004' && val < 30) return '<span class="badge bg-danger">Bas</span>';
     if (bioId === 'BIO_004' && val < 60) return '<span class="badge bg-warning text-dark">Abaissé</span>';
     if (bioId === 'BIO_001' && (val < 3.5 || val > 5.0)) return '<span class="badge bg-danger">Anormal</span>';
     if (bioId === 'BIO_002' && val < 130) return '<span class="badge bg-warning text-dark">Bas</span>';
     if (bioId === 'BIO_009' && val < 12) return '<span class="badge bg-warning text-dark">Anémie</span>';
     if (bioId === 'BIO_031' && val >= 450) return '<span class="badge bg-danger">Allongé</span>';
-    return '<span class="badge bg-success">OK</span>';
+    // Bornes de signalement partagées (utils.js). Un « OK » vert n'est affiché QUE
+    // pour un paramètre dont on connaît les bornes : le renvoyer par défaut
+    // affirmait la normalité d'une GGT à 138 ou d'une albumine à 34.
+    const ano = (typeof bioAnormal === 'function') ? bioAnormal(bioId, val, sexe) : null;
+    if (ano) return `<span class="badge bg-warning text-dark">${ano.sens === 'bas' ? 'Bas' : 'Élevé'}</span>`;
+    if (typeof BIO_NORMES !== 'undefined' && BIO_NORMES[bioId]) return '<span class="badge bg-success">OK</span>';
+    return '<span class="badge bg-light text-muted border" title="Pas de borne de signalement pour ce paramètre">n. c.</span>';
 }
 
 /**
  * Rendu MODE TABLEAU CROISÉ : matrice bio (lignes) × médicaments+pathologies (colonnes)
  */
-function _renderSuiviCross(bioPlan, bioValues) {
+function _renderSuiviCross(bioPlan, bioValues, sexe) {
     const bioIds = Object.keys(bioPlan);
     if (bioIds.length === 0) return '';
 
@@ -282,7 +289,7 @@ function _renderSuiviCross(bioPlan, bioValues) {
         let bioName = (MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
         let val = bioValues[bioId];
         let valStr = val > 0 ? `<b>${val}</b>` : '<span class="text-muted">—</span>';
-        let status = _bioStatusBadge(bioId, val);
+        let status = _bioStatusBadge(bioId, val, sexe);
 
         // Fréquence globale la plus stricte
         const allFreqs = [...entry.freqs, ...Object.values(entry.freqByOrigin || {})].filter(Boolean);
@@ -356,7 +363,7 @@ function _renderSuiviPerMed(suiviPerMed, bioValues) {
 /**
  * Fonction interne de rendu appelée par analyserPrescription et par le toggle UI
  */
-function _renderSuiviBio(bioPlan, suiviPerMed, bioValues, mode, addAlertFn, countsObj) {
+function _renderSuiviBio(bioPlan, suiviPerMed, bioValues, mode, addAlertFn, countsObj, sexe) {
     const targetEl = document.getElementById('alertes-suivi');
     if (!targetEl) return;
 
@@ -368,7 +375,7 @@ function _renderSuiviBio(bioPlan, suiviPerMed, bioValues, mode, addAlertFn, coun
 
     let html = '';
     if (mode === 'croix') {
-        html = _renderSuiviCross(bioPlan, bioValues);
+        html = _renderSuiviCross(bioPlan, bioValues, sexe);
     } else {
         html = _renderSuiviPerMed(suiviPerMed, bioValues);
     }
@@ -439,7 +446,7 @@ function _renderSuiviBio(bioPlan, suiviPerMed, bioValues, mode, addAlertFn, coun
 window.renderSuiviBiologique = function(mode) {
     const reg = window._analysisRegistry;
     if (!reg || !reg.bioPlan) return;
-    _renderSuiviBio(reg.bioPlan, reg.suiviPerMed || [], reg.bioValues || {}, mode, null, null);
+    _renderSuiviBio(reg.bioPlan, reg.suiviPerMed || [], reg.bioValues || {}, mode, null, null, (reg && reg.patientSexe) || getStr('patientSexe'));
 };
 
 function preCalculerScores() {
@@ -820,6 +827,18 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
                 if (!/VOIE TOPIQUE/.test(m.classe || '')) m.classe = (m.classe || '') + ' — VOIE TOPIQUE';
             } else if (fam === 'ains' && p.voie === 'orale') {
                 m.classe = String(m.classe || '').replace(/ — VOIE TOPIQUE/g, '');
+            }
+            // Indication du diurétique de l'anse. STOPP v3 lui consacre deux critères
+            // que SEULE l'indication sépare : première intention dans l'HTA (B7) et
+            // œdèmes isolés (B8). Faute de la connaître, les deux se déclenchaient
+            // ensemble et affirmaient chacun une indication différente pour la même
+            // ligne d'ordonnance. Renseignée, elle en désarme au moins un — et une
+            // indication de surcharge (insuffisance cardiaque, rénale, hépatique,
+            // syndrome néphrotique) les désarme tous les deux.
+            if (fam === 'diuretique' && p.indication_diu) {
+                if (p.indication_diu === 'hta') ctxClinique.push('diuretique_indication_hta');
+                else if (p.indication_diu === 'oedemes') ctxClinique.push('diuretique_indication_oedemes');
+                else ctxClinique.push('diuretique_indication_surcharge');
             }
             // Méthotrexate : le schéma conditionne la prévention de la toxicité.
             // Faible dose hebdomadaire → acide folique 5 mg/sem. Haute dose oncologique
@@ -2968,7 +2987,7 @@ function analyserPrescription() {
 
         // Rendu initial (mode par défaut = tableau croisé)
         const currentMode = document.querySelector('input[name="suiviMode"]:checked');
-        _renderSuiviBio(bioPlan, suiviPerMed, bioValues, currentMode ? currentMode.value : 'croix', addAlert, counts);
+        _renderSuiviBio(bioPlan, suiviPerMed, bioValues, currentMode ? currentMode.value : 'croix', addAlert, counts, sexe);
     }
 
 

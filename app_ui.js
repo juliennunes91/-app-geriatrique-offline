@@ -272,7 +272,7 @@ const MED_PRECISION_FIELDS = {
     // Phase 1 — précisions de surveillance bio/durée pour les règles contexte-dépendantes
     iec_ara2: ['k_recent'],
     epargnant_k: ['k_recent'],
-    diuretique: ['iono_recent'],
+    diuretique: ['indication_diu', 'iono_recent'],
     lithium: ['lithium_recent'],
     avk: ['inr_recent'],
     antiarythmique: ['ecg_recent'],
@@ -302,6 +302,18 @@ const PRECISION_FIELD_DEFS = {
     voie: { label: 'Voie d\'administration', type: 'select',
         options: [['', 'Non précisé (traité comme systémique)'], ['orale', 'Orale / systémique'],
                   ['topique', 'Topique (gel, emplâtre, crème)']] },
+    // Deux critères STOPP visent le diurétique de l'anse et se distinguent par la
+    // seule INDICATION : première intention dans l'HTA (B7), œdèmes isolés (B8).
+    // Sans la question, les deux se déclenchaient ensemble — en affirmant chacun une
+    // indication différente pour la même prescription.
+    indication_diu: { label: 'Indication du diurétique', type: 'select',
+        options: [['', 'Non précisée'],
+                  ['ic', 'Insuffisance cardiaque / surcharge — congestion'],
+                  ['irc', 'Surcharge de l\'insuffisance rénale chronique'],
+                  ['cirrhose', 'Ascite / insuffisance hépatique'],
+                  ['nephrotique', 'Syndrome néphrotique'],
+                  ['hta', 'Hypertension artérielle'],
+                  ['oedemes', 'Œdèmes des membres inférieurs isolés']] },
     mtx_schema: { label: 'Schéma thérapeutique du méthotrexate', type: 'select',
         options: [['', 'Non précisé (traité comme faible dose hebdomadaire)'],
                   ['faible', 'Faible dose HEBDOMADAIRE — rhumatologie / dermatologie (7,5-25 mg/semaine)'],

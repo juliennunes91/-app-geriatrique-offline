@@ -193,7 +193,10 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["furosemide", "bumetanide"],
                 comorbs: ["PAT_005"],
-                comorbs_absent: ["PAT_002", "PAT_003"]
+                comorbs_absent: ["PAT_002", "PAT_003"],
+                // Une indication de surcharge rend le diuretique de l'anse legitime ;
+                // une indication d'oedemes isoles releve du critere B8, pas de celui-ci.
+                contexte_clinique_absent: ["diuretique_indication_surcharge", "diuretique_indication_oedemes"]
             },
             alternatives: "Thiazidique/apparenté, IEC/ARA2, inhibiteur calcique"
         },
@@ -207,7 +210,9 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["furosemide", "bumetanide"],
-                comorbs_absent: ["PAT_002", "PAT_003", "PAT_029"]
+                comorbs_absent: ["PAT_002", "PAT_003", "PAT_029"],
+                // Idem, en miroir : c'est le critere des oedemes isoles.
+                contexte_clinique_absent: ["diuretique_indication_surcharge", "diuretique_indication_hta"]
             },
             alternatives: "Surélévation des jambes, contention veineuse"
         },
