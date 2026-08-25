@@ -25,7 +25,11 @@ function initUI() {
     for (const key in MASTER_DB.PATHOLOGIES) {
         let p = MASTER_DB.PATHOLOGIES[key];
         if (PATHO_HIDDEN_FROM_PICKER.has(p.ID_PATHO)) continue;
-        allComorbs.push({ id: p.ID_PATHO, label: p.NOM_STANDARD, search: sanitizeText(p.NOM_STANDARD + " " + p.SYNONYMES) });
+        // `search` est une LISTE de jetons, pas une chaine concatenee : coller le nom et
+        // les synonymes AVANT de normaliser cree des correspondances fantomes a la
+        // jointure de deux mots (« … (FA) | Fibrillation … » -> « fafibrillation »).
+        allComorbs.push({ id: p.ID_PATHO, label: p.NOM_STANDARD,
+            search: _jetonsRecherche(p.NOM_STANDARD + " ; " + (p.SYNONYMES || "")) });
     }
     MASTER_DB.MEDICAMENTS.forEach(m => {
         let key = sanitizeText(m.dci);
@@ -145,11 +149,39 @@ function setupAutocomplete(inputId, listId, searchFunc, selectFunc) {
     document.addEventListener('click', function(e) { if (e.target !== input && !list.contains(e.target)) { list.style.display = 'none'; _activeIdx = -1; } });
 }
 
-function searchComorbList(val) { const cleanVal = sanitizeText(val); return allComorbs.filter(c => c.search.includes(cleanVal) || c.id.toLowerCase().includes(cleanVal)).map(c => ({display: c.label, data: c.id})); }
+// Découpe un libellé en jetons normalisés. Les séparateurs (virgule, slash, parenthèse,
+// point-virgule, espace) sont des FRONTIÈRES : on ne doit jamais matcher à cheval sur deux
+// mots. C'est ce qui faisait sortir le fentanyl sur « ains » — ses princeps « Effentora,
+// Instanyl » devenaient « effentorainstanyl », qui contient « ains ».
+function _jetonsRecherche(txt) {
+    return String(txt || '')
+        .split(/[\s,;/|()\[\].+–—-]+/)
+        .map(t => sanitizeText(t))
+        .filter(Boolean);
+}
+// Une requête COURTE (1 à 3 caractères) ne matche qu'en DÉBUT de mot. Sans cette règle,
+// « fa » remontait le syndrome coronarien via « in-FA-rctus ». Au-delà de 3 caractères on
+// autorise la sous-chaîne, pour que « gesic » trouve encore Durogesic.
+function _jetonsMatchent(jetons, q) {
+    return q.length <= 3 ? jetons.some(t => t.startsWith(q))
+                         : jetons.some(t => t.includes(q));
+}
+
+function searchComorbList(val) {
+    const cleanVal = sanitizeText(val);
+    if (!cleanVal) return [];
+    return allComorbs
+        .filter(c => _jetonsMatchent(c.search, cleanVal) || c.id.toLowerCase().includes(cleanVal))
+        .map(c => ({ display: c.label, data: c.id }));
+}
 function searchMedList(val) {
-    const cleanVal = sanitizeText(val); let matches = []; let seenSignatures = new Set(); 
-    unifiedMedsMap.forEach((data, key) => { 
-        if(key.includes(cleanVal) || sanitizeText(data.princeps).includes(cleanVal)) { 
+    const cleanVal = sanitizeText(val); let matches = []; let seenSignatures = new Set();
+    if (!cleanVal) return matches;
+    unifiedMedsMap.forEach((data, key) => {
+        // Le champ `princeps` est une LISTE de noms commerciaux : il faut la decouper AVANT
+        // de normaliser. Concatenee, « Effentora, Instanyl » donnait « effentorainstanyl »,
+        // d'ou le fentanyl propose a qui tape « ains ».
+        if(key.includes(cleanVal) || _jetonsMatchent(_jetonsRecherche(data.princeps), cleanVal)) { 
             let signature = sanitizeText(data.dci_pure);
             if(!seenSignatures.has(signature)) { seenSignatures.add(signature); matches.push({display: data.dci_pure, data: data}); }
         } 

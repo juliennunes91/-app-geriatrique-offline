@@ -944,6 +944,41 @@ function runClassMembershipAudit(test, assert) {
 // liste des médicaments qu'elle résout — avec le vrai `classe`. Toute dérive
 // (nouvelle molécule qui élargit une clé par accident) devient un échec de test.
 // ============================================================================
+// RECHERCHE DE L'AUTOCOMPLÉTION — pas de correspondance à cheval sur deux mots
+// ----------------------------------------------------------------------------
+// Signalé en usage : taper « ains » dans le champ médicaments proposait le FENTANYL.
+// Cause : le champ `princeps` est une LISTE de noms commerciaux, concaténée AVANT
+// normalisation. « Effentora, Instanyl » devenait « effentorainstanyl », qui contient
+// « ains ». Même famille que les collisions de sous-chaîne du moteur : une
+// normalisation qui supprime les séparateurs, puis un match par sous-chaîne.
+// Le même défaut existait côté comorbidités (« fa » remontait le syndrome coronarien).
+function runAutocompleteAudit(test, assert) {
+    const { sandbox } = loadApp();
+    vm.runInContext('initUI()', sandbox);
+    const cherche = (fn, q) => JSON.parse(vm.runInContext(
+        `JSON.stringify(${fn}(${JSON.stringify(q)}).map(function(x){return x.display}))`, sandbox));
+
+    test('Autocomplétion — « ains » ne propose aucun opioïde (jointure de princeps)', () => {
+        const r = cherche('searchMedList', 'ains');
+        assert.ok(!r.some(d => /fentanyl|morphine|oxycodone/i.test(d)),
+            '« ains » remonte un opioïde : ' + r.join(', '));
+    });
+    test('Autocomplétion — les recherches légitimes fonctionnent toujours', () => {
+        assert.ok(cherche('searchMedList', 'durogesic').includes('Fentanyl'), 'princeps Durogesic → Fentanyl');
+        assert.ok(cherche('searchMedList', 'instanyl').includes('Fentanyl'), 'princeps Instanyl → Fentanyl');
+        assert.ok(cherche('searchMedList', 'doliprane').includes('Paracetamol'), 'princeps Doliprane → Paracétamol');
+        assert.ok(cherche('searchMedList', 'amlo').includes('Amlodipine'), 'préfixe de DCI');
+    });
+    test('Autocomplétion — une requête courte matche en début de mot', () => {
+        // « fa » ne doit pas remonter une pathologie via « in-FA-rctus ».
+        const r = cherche('searchComorbList', 'fa');
+        assert.ok(!r.some(d => /coronarien/i.test(d)), '« fa » remonte le syndrome coronarien : ' + r.join(', '));
+        assert.ok(r.some(d => /Fibrillation/i.test(d)), '« fa » doit toujours remonter la fibrillation atriale');
+        assert.ok(cherche('searchComorbList', 'diab').some(d => /Diabète/i.test(d)), '« diab » → diabète');
+    });
+}
+
+// ============================================================================
 // QUATRE INVARIANTS ISSUS DE L'AUDIT CROISÉ DES 106 DOSSIERS
 // ----------------------------------------------------------------------------
 // Ces quatre familles de défaut expliquaient à elles seules l'essentiel des
@@ -1305,4 +1340,4 @@ function runPosologyCompletenessAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runAutocompleteAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
