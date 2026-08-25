@@ -451,8 +451,14 @@ function preCalculerScores() {
         let ref = m.db_ref; if (!ref) return;
         // Cache parseFloat dans db_ref pour éviter recalculs
         if (ref._acb === undefined) { ref._acb = parseFloat(ref.acb) || 0; ref._cia = parseFloat(ref.cia) || 0; }
-        if (ref._acb > 0) scoreACB_global += ref._acb;
-        if (ref._cia > 0) scoreCIA_global += ref._cia;
+        // Voie LOCALE : la molecule est bien anticholinergique, mais son exposition
+        // systemique ne l'est pas. Elle garde son ACB sur sa fiche et n'entre pas dans
+        // la charge CUMULEE, qui pilote les regles de delirium et de risque cognitif.
+        const _local = (typeof estVoieLocale === 'function') && estVoieLocale(m.classe || ref.classe);
+        if (!_local) {
+            if (ref._acb > 0) scoreACB_global += ref._acb;
+            if (ref._cia > 0) scoreCIA_global += ref._cia;
+        }
         // Niveau QT via l'utilitaire partagé (utils.js) : reconnaît TOUTES les
         // notations de la base (KR / RE / « Known Risk » / « Risque Etabli »).
         const lvlQT = (typeof qtRiskLevel === 'function') ? qtRiskLevel(ref.qt_risque) : 0;
@@ -1347,9 +1353,22 @@ function analyserPrescription() {
         // française, complémentaire à l'ACB de Boustani)
         // BHE (Rudolph 2008 ARS) distingue passage central vs périphérique pour cibler la déprescription.
         let acbClass = scoreACB_global >= 3 ? 'danger' : (scoreACB_global >= 1 ? 'warning' : 'success');
+        // Un anticholinergique par voie LOCALE (LAMA inhalé, collyre) ne compte pas dans la
+        // charge cumulée mais figure bien sur sa fiche : annoncer « aucun médicament
+        // anticholinergique détecté » serait alors contredit par l'écran lui-même.
+        const _acbLocaux = (typeof activeMeds !== 'undefined' ? activeMeds : []).filter(m => {
+            const ref = m && m.db_ref; if (!ref) return false;
+            const v = parseFloat(ref.acb) || parseFloat(ref.cia) || 0;
+            return v > 0 && (typeof estVoieLocale === 'function') && estVoieLocale(m.classe || ref.classe);
+        }).map(m => m.dci);
         let acbInterp = scoreACB_global >= 3 ? 'Risque cognitif élevé — confusion, chutes, mortalité (Fox 2011, Beers 2023)'
             : (scoreACB_global >= 1 ? 'Charge modérée, surveiller (Boustani 2008)'
-            : 'Charge nulle — aucun médicament anticholinergique détecté');
+            : (_acbLocaux.length
+                ? 'Charge systémique nulle — ' + _acbLocaux.join(', ') + ' : anticholinergique par voie LOCALE, '
+                  + 'non comptabilisé dans la charge cumulée (biodisponibilité systémique de l\'ordre de 2 à 3 % '
+                  + 'pour un LAMA inhalé). Les effets locaux restent possibles : sécheresse buccale, glaucome '
+                  + 'par projection oculaire, rétention urinaire.'
+                : 'Charge nulle — aucun médicament anticholinergique détecté'));
         let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé — chutes, somnolence'
             : (scoreCIA_global >= 1 ? 'Charge modérée'
             : 'Charge nulle — aucun médicament sédatif détecté');

@@ -427,7 +427,9 @@ const GeriaEngineV2 = (() => {
         if (c.acb_fort_min) {
             const forts = (ctx.activeMeds || []).filter(m => {
                 if (!m.db_ref || parseFloat(m.db_ref.acb) < 3) return false;
-                return !/inhal|topique|cutan|ophtalm|nasal|collyre/i.test(m.db_ref.classe || '');
+                // Meme predicat partage que la charge cumulee (utils.js) : une seule
+                // definition de « voie locale » pour toute l'application.
+                return !((typeof estVoieLocale === 'function') && estVoieLocale(m.classe || m.db_ref.classe));
             }).length;
             if (forts < c.acb_fort_min) return false;
         }

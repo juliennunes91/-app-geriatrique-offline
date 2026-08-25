@@ -68,6 +68,25 @@ const getBioVal = id => {
     const v = parseFloat(String(el.value).replace(',', '.'));
     return Number.isFinite(v) ? v : NaN;
 };
+// ---------------------------------------------------------------------------
+// VOIE LOCALE — source unique de vérité
+// ---------------------------------------------------------------------------
+// Une molécule administrée par voie inhalée, topique, oculaire ou nasale n'expose
+// pas l'organisme comme la même molécule par voie systémique. Deux conséquences
+// dans cette application :
+//   - elle ne doit pas alimenter les SCORES CUMULÉS (charge anticholinergique) ;
+//   - elle ne doit pas satisfaire les règles de toxicité SYSTÉMIQUE.
+// Cas concret : les LAMA inhalés (tiotropium, uméclidinium, glycopyrronium,
+// ipratropium) portent un ACB de 2 à 3 en base, ce qui est vrai de la molécule
+// mais pas de son exposition réelle — la biodisponibilité systémique du tiotropium
+// inhalé est de l'ordre de 2 à 3 %. Les compter dans la charge anticholinergique
+// cumulée faisait franchir le seuil de risque cognitif à un patient dont toute la
+// charge venait d'un bronchodilatateur.
+// Le marqueur « VOIE TOPIQUE » est ajouté au libellé de classe par app_analysis.js
+// quand l'utilisateur précise la voie d'un AINS.
+const VOIE_LOCALE_RE = /inhal|voie topique|topique|cutan|percutan|ophtalm|collyre|nasal|intraarticulaire|\bICS\b|\bLAMA\b|\bSAMA\b/i;
+const estVoieLocale = classe => VOIE_LOCALE_RE.test(String(classe || ''));
+
 const getStr = id => { let el = document.getElementById(id); return el ? el.value : ""; };
 const isChecked = id => { let el = document.getElementById(id); return el ? el.checked : false; };
 

@@ -967,6 +967,33 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'] }), reTvp), 'AOD seul (FA) → non');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'], flags: ['chkTvp'] }), reTvp), 'AOD + MTEV → oui');
     });
+    test('Charge anticholinergique : les voies LOCALES ne comptent pas', () => {
+        // Les LAMA inhalés portent un ACB de 2 à 3 en base — vrai de la molécule, faux de
+        // son exposition (biodisponibilité systémique du tiotropium inhalé : 2 à 3 %). Les
+        // compter faisait franchir le seuil de risque cognitif à un patient dont toute la
+        // charge venait d'un bronchodilatateur.
+        // NB : le golden-master ne couvre PAS le panneau des scores — sans ce test, la
+        // règle ne serait protégée par rien.
+        const acb = cas => {
+            const r = analyzeCase(cas);
+            const t = Object.entries(r).filter(([k]) => k.startsWith('alertes-'))
+                .flatMap(([, v]) => (v || []).map(x => x.titre)).find(x => /Score ACB/.test(x)) || '';
+            const m = t.match(/Score ACB\s*:\s*(\d+)/);
+            return m ? parseInt(m[1], 10) : null;
+        };
+        assert.strictEqual(acb({ age: 82, sexe: 'F', meds: ['Tiotropium'] }), 0, 'LAMA inhalé seul → 0');
+        assert.strictEqual(acb({ age: 82, sexe: 'F', meds: ['Tiotropium', 'Umeclidinium'] }), 0, 'deux LAMA inhalés → 0');
+        assert.strictEqual(acb({ age: 82, sexe: 'F', meds: ['Oxybutynine'] }), 3, 'anticholinergique systémique → compté');
+        assert.strictEqual(acb({ age: 82, sexe: 'F', meds: ['Tiotropium', 'Oxybutynine'] }), 3,
+            'mixte → seule la part systémique compte');
+        // L'information reste sur la fiche du médicament : on n'efface pas la donnée,
+        // on la retire du CUMUL. Et le panneau ne doit pas se contredire.
+        const r = analyzeCase({ age: 82, sexe: 'F', meds: ['Tiotropium'] });
+        const html = Object.values(r._html || {}).join(' ');
+        assert.ok(/Tiotropium \(ACB 2\)/.test(html), 'la fiche doit continuer d\'afficher l\'ACB de la molécule');
+        assert.ok(!/aucun médicament anticholinergique détecté/.test(html),
+            'le panneau ne doit pas nier un anticholinergique qu\'il affiche par ailleurs');
+    });
     test('AINS topique : les règles de toxicité systémique ne s\'appliquent pas', () => {
         // L'exposition systémique d'un gel d'AINS est d'environ 5 à 10 % de la voie orale :
         // ni l'ulcère, ni le DFG, ni le triple whammy ne le concernent. L'exclusion est posée
