@@ -64,7 +64,17 @@ function calculerDFG(autoSwitch = true) {
         // Cockcroft-Gault — encore utilisé par les RCP/AMM pour adapter les posologies (DOAC, gabapentine, allopurinol).
         if (poids > 0) { let constante = (sexe === 'M') ? 1.23 : 1.04; cgValue = ((140 - age) * poids * constante) / creat; }
     }
-    if (autoSwitch && methodSelect.value === 'manuel' && creat > 0 && age > 0) methodSelect.value = poids > 0 ? 'cg' : 'ckdepi';
+    // Choix automatique de l'estimateur.
+    // Cockcroft-Gault porte l'âge dans sa formule même — (140 − âge) — et s'appuie sur
+    // le poids TOTAL : chez le sujet âgé sarcopénique il sous-estime nettement le DFG.
+    // Sur cette patiente de 84 ans (55 kg, créatinine 126 µmol/L) il rend 25 ml/min
+    // quand CKD-EPI 2021 rend 36 : la divergence enjambe le seuil de 30 qui
+    // contre-indique plusieurs molécules. KDIGO 2024 recommande CKD-EPI 2021 pour
+    // estimer et stadifier la fonction rénale — c'est donc lui qu'on retient d'emblée
+    // à partir de 75 ans, même quand le poids est renseigné.
+    if (autoSwitch && methodSelect.value === 'manuel' && creat > 0 && age > 0) {
+        methodSelect.value = (age >= 75 || poids <= 0) ? 'ckdepi' : 'cg';
+    }
 
     if (methodSelect.value === 'cg') {
         if (cgValue > 0) { dfgInput.value = Math.round(cgValue); dfgInput.placeholder = ""; } else dfgInput.value = "";
@@ -79,6 +89,29 @@ function calculerDFG(autoSwitch = true) {
     else {
         dfgInput.style.backgroundColor = '';
         dfgInput.style.color = '';
+    }
+
+    // Les deux estimateurs ne servent pas à la même chose : CKD-EPI 2021 stadifie la
+    // maladie rénale (KDIGO 2024), Cockcroft-Gault reste celui sur lequel les RCP ont
+    // calé leurs paliers d'adaptation posologique (AOD, gabapentine, allopurinol).
+    // Tant qu'ils tombent dans le même palier, la distinction est théorique. Dès qu'ils
+    // l'enjambent, elle décide d'une dose — l'écart doit alors se voir.
+    const noteDfg = document.getElementById('dfgDivergenceNote');
+    if (noteDfg) {
+        const PALIERS = [15, 30, 50, 60];
+        const palier = v => PALIERS.filter(s => v >= s).length;
+        if (cgValue > 0 && ckdEpiValue > 0 && palier(cgValue) !== palier(ckdEpiValue)) {
+            const retenu = methodSelect.value === 'cg' ? 'Cockcroft-Gault' : 'CKD-EPI 2021';
+            noteDfg.innerHTML = `<span class="text-warning-emphasis">⚠️ Les deux formules ne donnent pas le même palier :</span> `
+                + `CKD-EPI 2021 <strong>${Math.round(ckdEpiValue)}</strong> ml/min, Cockcroft-Gault <strong>${Math.round(cgValue)}</strong> ml/min `
+                + `(valeur retenue : ${retenu}). Le stade de la maladie rénale se lit sur CKD-EPI ; les paliers d'adaptation `
+                + `posologique des RCP (anticoagulants oraux directs, gabapentine, allopurinol) ont été établis sur Cockcroft-Gault. `
+                + `Vérifier la dose sur les deux avant de conclure.`;
+            noteDfg.style.display = '';
+        } else {
+            noteDfg.innerHTML = '';
+            noteDfg.style.display = 'none';
+        }
     }
 
     // Avertissement sarcopénie : DFGe surestime la fonction rénale réelle quand la masse musculaire

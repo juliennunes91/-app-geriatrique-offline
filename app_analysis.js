@@ -1397,9 +1397,25 @@ function analyserPrescription() {
         let ciaInterp = scoreCIA_global >= 3 ? 'Risque sédatif élevé — chutes, somnolence'
             : (scoreCIA_global >= 1 ? 'Charge modérée'
             : 'Charge nulle — aucun médicament sédatif détecté');
-        // Classer les médicaments ACB par passage de la BHE
+        // Classer les médicaments ACB par passage de la BHE.
+        // Les voies LOCALES sont sorties du total (cf. passe 1) : les laisser dans la
+        // LISTE des contributeurs rendait la somme incompréhensible — l'écran affichait
+        // « Score ACB : 5 » puis citait un uméclidinium inhalé qui n'y entrait pas.
+        // Elles sont donc listées à part, avec la raison de leur exclusion.
+        const _estLocal = (m) => (typeof estVoieLocale === 'function')
+            && estVoieLocale(m.classe || (m.db_ref && m.db_ref.classe) || '');
+        const voiesLocales = activeMeds.filter(m => m.db_ref && _estLocal(m)
+            && (parseFloat(m.db_ref.acb) > 0 || parseFloat(m.db_ref.cia) > 0))
+            // On garde la VALEUR : l'information n'est pas effacée, elle est sortie du
+            // cumul. Un lecteur doit pouvoir vérifier pourquoi la somme ne l'inclut pas.
+            .map(m => {
+                const parts = [];
+                if (parseFloat(m.db_ref.acb) > 0) parts.push('ACB ' + m.db_ref.acb);
+                if (parseFloat(m.db_ref.cia) > 0) parts.push('CIA ' + m.db_ref.cia);
+                return `${escapeHtml(m.dci)} (${parts.join(', ')})`;
+            });
         let acbCentral = []; let acbPeripheral = []; let acbUnknown = [];
-        activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0).forEach(m => {
+        activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.acb) > 0 && !_estLocal(m)).forEach(m => {
             let bhe = String(m.db_ref.bhe || '').trim();
             let bheVal = parseFloat(bhe);
             let label = `${escapeHtml(m.dci)} (ACB ${m.db_ref.acb})`;
@@ -1407,11 +1423,16 @@ function analyserPrescription() {
             else if (bhe === '0' || bhe === '0.0' || bhe.includes('ne traverse pas')) acbPeripheral.push(label);
             else acbUnknown.push(label);
         });
-        let ciaMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.cia) > 0).map(m => `${escapeHtml(m.dci)} (CIA ${m.db_ref.cia})`);
+        let ciaMeds = activeMeds.filter(m => m.db_ref && parseFloat(m.db_ref.cia) > 0 && !_estLocal(m)).map(m => `${escapeHtml(m.dci)} (CIA ${m.db_ref.cia})`);
         let bheHtml = '';
+
         if (acbCentral.length > 0) bheHtml += `<br><span class="text-danger small">🧠 <em>Traverse la BHE (effets centraux) :</em> <b>${acbCentral.join(', ')}</b></span>`;
         if (acbPeripheral.length > 0) bheHtml += `<br><span class="text-success small">🛡️ <em>Ne traverse pas la BHE (effets périphériques) :</em> ${acbPeripheral.join(', ')}</span>`;
         if (acbUnknown.length > 0) bheHtml += `<br><span class="text-muted small"><em>BHE non documentée :</em> ${acbUnknown.join(', ')}</span>`;
+        // En DERNIER : la mention est une justification de la somme, pas une des
+        // molécules qui la composent. Placée en tête, elle chassait du rapport la liste
+        // des vrais contributeurs (le PDF tronque le détail d'un score).
+        if (voiesLocales.length > 0) bheHtml += `<br><span class="text-muted small">💨 <em>Non comptés dans le total (voie locale, exposition systémique négligeable) :</em> ${voiesLocales.join(', ')}</span>`;
         addAlert('alertes-scores', `<div class="alert alert-light border border-${acbClass} mb-2 shadow-sm">
             <strong class="text-${acbClass}">Score ACB : ${scoreACB_global}</strong> <em class="text-muted small">— Charge anticholinergique cumulée</em><br>
             <small class="text-muted">${acbInterp}</small>${bheHtml}<br>
@@ -2121,7 +2142,12 @@ function analyserPrescription() {
             { trigger: ['neuroleptique', 'antipsychotique'],
               effect: 'syndrome extrapyramidal', cascade: ['antiparkinsonien', 'levodopa'],
               desc: 'Neuroleptique → Syndrome extrapyramidal → Ajout antiparkinsonien. Privilégier l\'arrêt du neuroleptique plutôt que l\'ajout.' },
-            { trigger: ['oxybutynine', 'solifenacine', 'toltérodine', 'tolterodine', 'trospium', 'flavoxate', 'antimuscarinique'],
+            // Ne PAS employer ici la clé générique « antimuscarinique » : par inclusion
+            // de sous-chaîne elle atteint l'alias « antimuscariniqueinhale » et capte les
+            // LAMA de la BPCO (uméclidinium, tiotropium). Un patient sous Incruse se
+            // voyait annoncer une cascade « antimuscarinique vésical → confusion →
+            // antipsychotique » qui ne le concernait pas. Les DCI vésicales sont nommées.
+            { trigger: ['oxybutynine', 'solifenacine', 'toltérodine', 'tolterodine', 'fesoterodine', 'trospium', 'flavoxate'],
               effect: 'confusion / rétention urinaire', cascade: ['antipsychotique', 'neuroleptique'],
               desc: 'Antimuscarinique vésical → Confusion et/ou rétention urinaire → Ajout d\'un antipsychotique pour « agitation ». Cascade classique : le trouble du comportement est ICI iatrogène. Arrêter l\'antimuscarinique (mirabégron ou rééducation périnéale) AVANT d\'ajouter un neuroleptique, dont la surmortalité chez le dément est établie.' },
             { trigger: ['diuretique'],
@@ -2418,6 +2444,27 @@ function analyserPrescription() {
         // classe à partir de la précision de voie (même mécanisme que les AINS topiques).
         const _nonAbsorbe = (med) => /VOIE ORALE NON ABSORBEE/.test(String(med && med.classe || ''));
 
+        // Le libellé de classe d'une entrée ddi_interact_v2 ÉNUMÈRE les molécules que
+        // l'entrée couvre, pas celles que le patient prend. Affiché tel quel, il annonce
+        // une association inexistante : sous furosémide + venlafaxine, l'entrée
+        // « Carbamazépine / IRSS — hyponatrémie (SIADH) » faisait lire au prescripteur
+        // le nom d'un antiépileptique absent de l'ordonnance.
+        // Quand le libellé nomme une molécule NON prescrite, on n'affiche que sa partie
+        // MÉCANISME (après le dernier tiret cadratin) ; le libellé officiel reste
+        // accessible en infobulle. Les libellés qui ne nomment qu'une classe
+        // (« Macrolides », « AINS ») n'affirment rien de faux et sont conservés.
+        const _libelleInteraction = (g) => {
+            const classe = String(g.classe || '').trim();
+            const nclasse = sanitizeText(classe);
+            const cite = (g.absents || []).some(d => d.length > 5 && nclasse.includes(d));
+            if (!cite || !classe) return { texte: classe, complet: '' };
+            const i = classe.lastIndexOf('—');
+            const mecanisme = i > 0 ? classe.slice(i + 1).trim() : '';
+            if (mecanisme.length >= 4) return { texte: mecanisme, complet: classe };
+            // Pas de partie mécanisme exploitable : on ne garde aucune énumération.
+            return { texte: 'Interaction documentée', complet: classe };
+        };
+
         activeMeds.forEach(m => {
             let ref = m.db_ref; if(!ref) return;
             if (_nonAbsorbe(m)) return;
@@ -2462,9 +2509,13 @@ function analyserPrescription() {
                             return true;
                         });
                         if (newMatched.length > 0) {
+                            const pris = new Set(newMatched.map(x => sanitizeText(x.dci)));
                             foundGroups.push({
                                 classe: entry.classe || '',
                                 matched: newMatched,
+                                // Molécules couvertes par l'entrée que ce patient ne prend PAS :
+                                // si le libellé les nomme, il annonce une association qui n'existe pas.
+                                absents: entry.dcis.map(sanitizeText).filter(d => d && !pris.has(d)),
                                 commentaire: entry.commentaire || '',
                                 severite: entry.severite || 'warning',
                             });
@@ -2477,7 +2528,9 @@ function analyserPrescription() {
                     const groupHtml = foundGroups.map(g => {
                         const drugs = g.matched.map(x => escapeHtml(x.interactor.toUpperCase())).join(', ');
                         const com = g.commentaire ? ` <em class="text-muted">(${escapeHtml(g.commentaire)})</em>` : '';
-                        return `<li><b>${escapeHtml(g.classe)}</b> → ${drugs}${com}</li>`;
+                        const lib = _libelleInteraction(g);
+                        const tt = lib.complet ? ` title="Libellé complet de l'entrée : ${escapeHtml(lib.complet)}"` : '';
+                        return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}</li>`;
                     }).join('');
                     // Refléter la gravité maximale dans le TITRE (et pas seulement dans le
                     // détail déplié) : une contre-indication absolue doit être visible au
@@ -2497,7 +2550,7 @@ function analyserPrescription() {
                         if (g.severite !== 'danger') return;
                         const targets = g.matched.map(x => x.interactor.toUpperCase()).join(', ');
                         _regAddDomain('interact', {
-                            text: `${ref.dci.toUpperCase()} ↔ ${targets} — ${g.classe}`,
+                            text: `${ref.dci.toUpperCase()} ↔ ${targets} — ${_libelleInteraction(g).texte}`,
                             severity: 'danger'
                         });
                     });
@@ -2787,6 +2840,23 @@ function analyserPrescription() {
                 });
             });
         }
+
+        // ── Paramètres dont la pertinence dépend d'une AUTRE prescription ──
+        // Certains `bio_cible` ne décrivent pas la surveillance de la molécule elle-même
+        // mais celle d'une association. L'INR figure ainsi dans la cible du paracétamol
+        // parce qu'une prise chronique à forte dose déséquilibre un AVK : sans AVK au
+        // dossier il n'y a rien à surveiller, et le plan annuel de cette patiente sous
+        // apixaban réclamait pourtant « INR mensuel » — une consigne inapplicable, l'INR
+        // ne mesurant pas l'effet d'un anticoagulant oral direct.
+        const _prescritRegex = (re) => Array.isArray(activeMeds)
+            && activeMeds.some(m => re.test((m.dci || '') + ' ' + (m.classe || '')));
+        const BIO_CONDITIONNEL = [
+            { bio: 'BIO_030', requiert: () => _prescritRegex(/\bavk\b|warfarine|fluindione|acenocoumarol|coumadine|previscan|sintrom|antivitamine\s*k/i),
+              motif: 'INR — ne mesure que l\'effet d\'un antivitamine K' }
+        ];
+        BIO_CONDITIONNEL.forEach(bc => {
+            if (bioPlan[bc.bio] && !bc.requiert()) delete bioPlan[bc.bio];
+        });
 
         // Enrichir freqByOrigin pour les médicaments
         for (const [bioId, entry] of Object.entries(bioPlan)) {

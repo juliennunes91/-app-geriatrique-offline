@@ -650,7 +650,12 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["venlafaxine", "duloxetine", "milnacipran", "desvenlafaxine"],
-                comorbs: ["PAT_005"]
+                comorbs: ["PAT_005"],
+                // Le critere STOPP v3 D3 vise l'hypertension SEVERE (PAS > 180 et/ou
+                // PAD > 105), pas toute hypertension traitee. Se declencher sur la seule
+                // case « HTA » faisait annoncer en rouge une hypertension severe a des
+                // patients dont aucun chiffre tensionnel n'avait ete saisi.
+                contexte_clinique: ["hta_non_controlee"]
             },
             alternatives: "ISRS (sertraline, escitalopram) ou mirtazapine"
         },
@@ -1090,8 +1095,8 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS", "STOPPFRAIL", "FORTA"],
             ref_code: "STOPP3-F2",
             section: "Gastro",
-            titre: "IPP > 8 semaines à pleine dose pour ulcère non compliqué",
-            message: "IPP > 8 semaines à pleine dose pour ulcère gastroduodénal non compliqué : réduction de dose ou arrêt habituellement indiqué. Maintien à demi-dose ou anti-H2 si besoin. Risque au long cours : fractures, C. difficile, hypomagnésémie, néphrite interstitielle.",
+            titre: "Inhibiteur de la pompe à protons au long cours — indication à revoir",
+            message: "Le critère STOPP v3 F2 limite l'inhibiteur de la pompe à protons à pleine dose à huit semaines dans l'ulcère gastroduodénal non compliqué et l'œsophagite peptique érosive. Au-delà, réduire la dose ou arrêter, sauf indication de fond documentée (œsophagite sévère, Barrett, gastroprotection sous anticoagulant ou anti-inflammatoire). Le traitement prolongé expose aux fractures, à l'infection à Clostridioides difficile, à l'hypomagnésémie et à la néphrite interstitielle.",
             severite: "warning",
             condition: {
                 med_keys: ["omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole", "ipp"],

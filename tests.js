@@ -916,7 +916,11 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'legere' } } }), re), 'douleur légère → alerte');
     });
     test('Précisions : IPP durée brève désarme EV_F02 (> 8 semaines)', () => {
-        const re = /IPP &gt; 8 semaines|IPP > 8 semaines/i;
+        // Le titre a change : il annoncait « pour ulcere non complique » alors que la
+        // condition ne verifie aucun ulcere. On cible desormais l'identifiant de regle,
+        // qui survit dans le HTML via maskGeriaAlert('id:EV_F02') et ne depend pas
+        // d'une formulation.
+        const re = /Inhibiteur de la pompe . protons au long cours/i;
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Omeprazole'] }), re), 'sans précision → alerte (défaut)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Omeprazole'], precisions: { omeprazole: { duree: 'courte' } } }), re), 'durée courte → désarmé');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Omeprazole'], precisions: { omeprazole: { duree: 'longue' } } }), re), 'durée longue → alerte');
@@ -990,7 +994,12 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         // on la retire du CUMUL. Et le panneau ne doit pas se contredire.
         const r = analyzeCase({ age: 82, sexe: 'F', meds: ['Tiotropium'] });
         const html = Object.values(r._html || {}).join(' ');
-        assert.ok(/Tiotropium \(ACB 2\)/.test(html), 'la fiche doit continuer d\'afficher l\'ACB de la molécule');
+        // Le panneau listait les molécules à voie locale parmi les contributeurs du
+        // score, alors qu'elles n'entraient pas dans le total : la somme affichée ne
+        // correspondait pas à la liste qui la suivait. Elles ont désormais leur propre
+        // ligne — « Non comptés dans le total » — mais gardent leur VALEUR, sans quoi
+        // on effacerait la donnée au lieu de la sortir du cumul.
+        assert.ok(/Tiotropium \(ACB 2[,)]/.test(html), 'la fiche doit continuer d\'afficher l\'ACB de la molécule');
         assert.ok(!/aucun médicament anticholinergique détecté/.test(html),
             'le panneau ne doit pas nier un anticholinergique qu\'il affiche par ailleurs');
     });

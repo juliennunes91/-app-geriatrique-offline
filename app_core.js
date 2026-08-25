@@ -366,13 +366,103 @@ function buildPdfContent() {
     // hex → rgba : filets/fonds teintés dans la couleur de section sans dépendre
     // du support des hex 8 chiffres par html2canvas.
     const rgba = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`; };
-    // Coupe au dernier mot entier. Le tronquage brut à N caractères laissait des
-    // fins de phrase en plein mot (« …PIM selon toutes les listes (Beers, EU(7 »).
+    // Coupe de préférence à la fin d'une PHRASE, sinon au dernier mot entier.
+    // Le tronquage brut laissait des fins de phrase en plein mot (« …PIM selon
+    // toutes les listes (Beers, EU(7 ») : sur un document lu par un tiers, une
+    // phrase amputée se lit comme une erreur, pas comme un résumé.
     const clamp = (t, n) => {
         t = String(t || '').trim();
         if (t.length <= n) return t;
-        const cut = t.slice(0, n), sp = cut.lastIndexOf(' ');
+        const cut = t.slice(0, n);
+        // Fin de phrase la plus tardive dans la fenêtre autorisée.
+        const pt = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf(' ; '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
+        if (pt > n * 0.45) return cut.slice(0, pt + 1).trim();
+        const sp = cut.lastIndexOf(' ');
         return (sp > n * 0.6 ? cut.slice(0, sp) : cut).replace(/[\s,;:(«-]+$/, '') + '…';
+    };
+
+    // Le corpus est rédigé pour l'écran : il porte l'identifiant interne de la règle
+    // en tête (« SYND_043 : », « PIM-Check : »), emploie des flèches en guise de verbe
+    // et se passe volontiers de déterminants. Sur un document imprimé, remis à un
+    // confrère ou glissé dans un dossier, ces raccourcis se lisent comme du brouillon.
+    // On ne réécrit pas les 300 messages de la base : on nettoie au rendu.
+    const CODE_INTERNE_RE = /^(?:SYND_\d+|EV_[A-Z0-9_]+|IN_[A-Z0-9_]+|SUP_[A-Z0-9_]+|PIM-?Check|REMEDIES|PRISCUS(?:\s*2\.0)?|STOPPFrail(?:\s*v\d)?|STOPP(?:\/START)?(?:\s*v\d)?|Beers(?:\s*\d{4})?|FORTA|EU\(7\)-?PIM)\s*[:—-]\s*/i;
+    const texteClinique = (t) => {
+        let s = String(t || '').replace(/\s+/g, ' ').trim();
+        s = s.replace(CODE_INTERNE_RE, '');
+        // Flèches employées comme verbe ou comme conséquence. « ↑ risque fracture si
+        // usage prolongé » et « Hypovolémie → chutes » ne sont pas des phrases : sur un
+        // document imprimé elles se lisent comme des notes personnelles.
+        // Une flèche isolée exprime une conséquence ; une CHAÎNE de flèches décrit une
+        // succession (la cascade iatrogénique « diurétique → hypokaliémie → potassium »),
+        // que « , d'où … , d'où … » rendrait illisible.
+        const nFleches = (s.match(/→/g) || []).length;
+        s = nFleches >= 2 ? s.replace(/\s*→\s*/g, ', puis ') : s.replace(/\s*→\s*/g, ', d\'où ');
+        if (nFleches >= 2) s = s.replace(/, puis ([A-ZÀ-Þ])(?=[a-zà-ÿ])/g, (m, c) => ', puis ' + c.toLowerCase());
+        s = s.replace(/↑\s*/g, 'augmentation de ').replace(/↓\s*/g, 'diminution de ');
+        // Élision et déterminant après « augmentation / diminution de ».
+        s = s.replace(/(augmentation|diminution) de ([aeiouyéèêàâîôûAEIOUYÉÈÊ])/g, '$1 de l\'$2');
+        s = s.replace(/(augmentation|diminution) de (?!l'|la |le |les |l’)([a-zà-ÿ])/g, '$1 du $2');
+        // « risque fracture », « risque crise » : le substantif complément veut « de ».
+        s = s.replace(/risque (fracture|crise|chute|saignement|confusion|sédation|hypoglycémie|surdosage)/gi,
+            (m, w) => 'risque de ' + w.toLowerCase());
+        // Verbes sans sujet ni déterminant, très fréquents dans les fiches de prudence.
+        s = s.replace(/^Abaisse seuil/i, 'Abaisse le seuil');
+        s = s.replace(/\bseuil épileptogène/gi, 'seuil épileptogène');
+        // Première lettre en capitale, point final s'il manque.
+        if (s) s = s.charAt(0).toUpperCase() + s.slice(1);
+        if (s && !/[.!?…:]$/.test(s)) s += '.';
+        return s;
+    };
+
+    // ── Fusions de rapport ───────────────────────────────────────────────────
+    // Deux règles issues de référentiels DIFFÉRENTS peuvent dire au lecteur
+    // exactement la même chose. Sur l'écran, l'origine distincte (STOPP vs PIM-Check)
+    // justifie deux entrées ; sur un rapport imprimé, elles se lisent comme une
+    // redite — et le prescripteur qui les compte croit à deux problèmes.
+    // La fusion est DÉCLARÉE, jamais devinée par ressemblance : on ne veut pas
+    // qu'une heuristique fasse disparaître une alerte réellement distincte.
+    // Rien n'est perdu — l'application affiche toujours les deux entrées.
+    const FUSIONS_RAPPORT = [
+        {
+            ids: ['EV_SYND_049', 'SUP_PIMC_01'],
+            titre: 'Corticothérapie systémique prolongée — os et muscle',
+            texte: "Une corticothérapie systémique poursuivie au-delà de trois mois expose à l'ostéoporose cortico-induite et à la sarcopénie. Évaluer le risque fracturaire, supplémenter en vitamine D et en calcium, et discuter un bisphosphonate."
+        },
+        {
+            ids: ['EV_B07', 'EV_B08'],
+            titre: "Furosémide — préciser l'indication",
+            texte: "Le diurétique de l'anse n'est recommandé ni en première intention dans l'hypertension artérielle, ni pour des œdèmes des membres inférieurs isolés en l'absence d'insuffisance cardiaque, hépatique ou rénale et de syndrome néphrotique. Documenter l'indication retenue ; si elle ne tient pas, préférer la surélévation des jambes et la contention veineuse."
+        },
+        {
+            ids: ['EV_REM_01', 'SUP_REM_10'],
+            titre: 'Réévaluation annuelle de la totalité de l\'ordonnance',
+            texte: "Au-delà de cinq médicaments, chaque traitement chronique doit être réévalué au moins une fois par an : l'indication est-elle toujours présente, et le bénéfice attendu justifie-t-il encore le risque ? Rechercher en particulier les prescriptions en cascade."
+        }
+    ];
+    const idAlerte = (a) => {
+        const m = a.innerHTML.match(/maskGeriaAlert\('id:([^']+)'\)/);
+        return m ? m[1] : '';
+    };
+
+    // Le détail d'une alerte reprend très souvent son titre mot pour mot (« IPP > 8
+    // semaines à pleine dose pour ulcère non compliqué » suivi de « IPP > 8 semaines
+    // à pleine dose pour ulcère gastroduodénal non compliqué : … »). Imprimer les
+    // deux donne au lecteur l'impression d'un document qui se répète.
+    const sansRedite = (titre, detail) => {
+        const cle = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+        const kt = cle(titre), kd = cle(detail);
+        if (!kt || !kd) return detail;
+        if (kd === kt) return '';
+        // Le détail commence par le titre : ne garder que ce qu'il ajoute.
+        if (kd.startsWith(kt.slice(0, Math.min(kt.length, 45)))) {
+            const mots = String(detail).split(' ');
+            let i = 0, acc = '';
+            while (i < mots.length && cle(acc).length < kt.length * 0.9) { acc += ' ' + mots[i]; i++; }
+            const reste = mots.slice(i).join(' ').replace(/^[\s:;,—-]+/, '');
+            return reste.length >= 25 ? reste : '';
+        }
+        return detail;
     };
     // Titre de section : capitales espacées + filet coloré. C'est LE repère qui
     // signale un changement de partie dans le document.
@@ -386,15 +476,24 @@ function buildPdfContent() {
     html += `<div class="pdf-block" style="${blockStyle}border-bottom:2.5px solid #0d6efd;padding-bottom:8px;">
         <strong style="font-size:15px;color:#0d6efd;letter-spacing:0.01em;">GeriaAssist — Synthèse Pharmaco-Clinique</strong>
         <span style="float:right;font-size:9px;color:#8a939c;">${new Date().toLocaleDateString('fr-FR')}</span>
-        <div style="font-size:10.5px;line-height:1.7;margin-top:5px;"><strong>${nom ? escapeHtml(nom) + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}</strong>${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}</div>
+        <div style="font-size:10.5px;line-height:1.7;margin-top:5px;"><strong>${nom ? escapeHtml(nom) + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}</strong>${poids ? ' | ' + poids + ' kg' : ''}</div>
     </div>`;
 
     // Fonction rénale — en gras, tout en haut du rapport
     const _dfgN = parseFloat(dfg);
     if (!isNaN(_dfgN) && _dfgN > 0) {
-        const _stg = _dfgN >= 90 ? 'normale (stade 1)' : _dfgN >= 60 ? 'stade 2' : _dfgN >= 45 ? 'IRC modérée (stade 3A)' : _dfgN >= 30 ? 'IRC modérée (stade 3B)' : _dfgN >= 15 ? 'IRC sévère (stade 4)' : 'IRC terminale (stade 5)';
+        // Phrase complète : le rapport est lu par un tiers (confrère, pharmacien,
+        // IDE), qui ne doit pas avoir à décoder « DFG 36 — stade 3B ».
+        const _stg = _dfgN >= 90 ? 'une fonction rénale normale (stade 1)'
+            : _dfgN >= 60 ? 'une atteinte rénale légère (stade 2)'
+            : _dfgN >= 45 ? 'une insuffisance rénale chronique modérée (stade 3A)'
+            : _dfgN >= 30 ? 'une insuffisance rénale chronique modérée (stade 3B)'
+            : _dfgN >= 15 ? 'une insuffisance rénale chronique sévère (stade 4)'
+            : 'une insuffisance rénale chronique terminale (stade 5)';
+        const _meth = document.getElementById('dfgMethodSelect')?.value;
+        const _mlbl = _meth === 'ckdepi' ? ' (CKD-EPI 2021)' : _meth === 'cg' ? ' (Cockcroft-Gault)' : '';
         const _rcol = _dfgN < 30 ? '#dc3545' : _dfgN < 45 ? '#fd7e14' : '#0d6efd';
-        html += `<div class="pdf-block" style="${blockStyle}font-size:12px;font-weight:700;color:${_rcol};background:${rgba(_rcol, 0.07)};border-left:4px solid ${_rcol};border-radius:0 5px 5px 0;padding:8px 12px;">🫘 Fonction rénale : DFG ${escapeHtml(dfg)} ml/min — ${_stg}</div>`;
+        html += `<div class="pdf-block" style="${blockStyle}font-size:12px;font-weight:700;color:${_rcol};background:${rgba(_rcol, 0.07)};border-left:4px solid ${_rcol};border-radius:0 5px 5px 0;padding:8px 12px;">🫘 Le débit de filtration glomérulaire estimé est de ${escapeHtml(dfg)} ml/min${_mlbl}, soit ${_stg}.</div>`;
     }
 
     // Conclusion générale (« commentaire libre » de la page 1) — en haut du rapport
@@ -480,16 +579,25 @@ function buildPdfContent() {
         </div>`;
     }
 
-    // Interactions DANGER (synthData.interactCritical) — top 5
+    // Interactions DANGER (synthData.interactCritical) — top 5.
+    // Les trois premières alimentent déjà « Top actions prioritaires » : sur ce
+    // dossier, les deux encadrés affichaient les MÊMES trois lignes l'une sous
+    // l'autre. On ne réimprime donc que ce que le lecteur n'a pas encore lu.
     if (sd && sd.interactCritical && sd.interactCritical.length > 0) {
-        const its = sd.interactCritical.slice(0, 5).map(it => {
-            const txt = clamp((it.text || '').replace(/<[^>]+>/g, ''), 200);
-            return `<li style="${S.body}margin:0 0 6px 0;">${escapeHtml(txt)}</li>`;
-        }).join('');
-        html += `<div class="pdf-block" style="${blockStyle}${S.card}border-left:4px solid #dc3545;border-radius:0 5px 5px 0;">
-            ${secTitle('⚠️ Interactions critiques', '#dc3545', `${Math.min(5, sd.interactCritical.length)}${sd.interactCritical.length > 5 ? ' / ' + sd.interactCritical.length : ''}`)}
-            <ul style="margin:0 0 -6px 15px;padding:0;">${its}</ul>
-        </div>`;
+        const dejaVu = new Set((sd.topActions || []).filter(a => a.kind === 'INTERACTION')
+            .map(a => String(a.txt || '').replace(/\s+/g, ' ').trim().slice(0, 60).toLowerCase()));
+        const restantes = sd.interactCritical.filter(it =>
+            !dejaVu.has(String(it.text || '').replace(/\s+/g, ' ').trim().slice(0, 60).toLowerCase()));
+        if (restantes.length > 0) {
+            const its = restantes.slice(0, 5).map(it => {
+                const txt = clamp((it.text || '').replace(/<[^>]+>/g, ''), 200);
+                return `<li style="${S.body}margin:0 0 6px 0;">${escapeHtml(txt)}</li>`;
+            }).join('');
+            html += `<div class="pdf-block" style="${blockStyle}${S.card}border-left:4px solid #dc3545;border-radius:0 5px 5px 0;">
+                ${secTitle('⚠️ Autres interactions critiques', '#dc3545', `${Math.min(5, restantes.length)}${restantes.length > 5 ? ' / ' + restantes.length : ''}`)}
+                <ul style="margin:0 0 -6px 15px;padding:0;">${its}</ul>
+            </div>`;
+        }
     }
 
     // 2 colonnes : Comorbidités + Médicaments
@@ -525,12 +633,37 @@ function buildPdfContent() {
     if (divScores && divScores.querySelectorAll('.alert').length > 0) {
         html += `<div class="pdf-block" style="${blockStyle}${S.card}border-color:#9ee5f2;">
             ${secTitle('Scores cliniques', '#0b8fa8')}`;
-        divScores.querySelectorAll('.alert').forEach((a, i) => {
-            const strong = a.querySelector('strong');
-            const concl = a.querySelectorAll('small');
-            const label = strong ? strong.textContent.trim() : '';
-            const detail = concl.length >= 2 ? concl[concl.length - 1].textContent.trim() : '';
-            html += `<div style="${S.item}${i ? 'border-top:' + S.rule + ';' : ''}"><strong>${label}</strong> <span style="color:${S.muted};">${detail}</span></div>`;
+        // Une carte peut porter PLUSIEURS scores (ACB et CIA vivent dans la même).
+        // L'ancien rendu prenait le PREMIER <strong> et le DERNIER <small> : il
+        // affichait donc « Score ACB : 5 » suivi du commentaire du CIA et de la liste
+        // des molécules du CIA — un chiffre et une explication qui ne parlaient pas
+        // de la même chose. Chaque <strong> est désormais apparié au texte qui le suit.
+        let lignes = 0;
+        divScores.querySelectorAll('.alert').forEach(aLive => {
+            // Copie de travail : on retire l'infobulle « ? » qui contient la GRILLE de
+            // cotation complète du score. Invisible à l'écran, elle se déversait telle
+            // quelle dans le PDF (« ?HTA +1 | IRC (DFG<50) +1 | … Source: Pisters 2010 »)
+            // et chassait la conclusion, seule ligne réellement utile au lecteur.
+            const a = aLive.cloneNode(true);
+            a.querySelectorAll('.score-tooltip, .score-tip-text').forEach(n => n.remove());
+            const forts = [...a.querySelectorAll('strong')];
+            if (forts.length === 0) return;
+            forts.forEach((st, k) => {
+                const label = st.textContent.trim();
+                if (!label) return;
+                // Texte compris entre ce <strong> et le suivant.
+                let detail = '';
+                let n = st.nextSibling;
+                const stop = forts[k + 1] || null;
+                while (n && n !== stop) {
+                    if (!(stop && n.contains && n.contains(stop))) detail += ' ' + (n.textContent || '');
+                    else break;
+                    n = n.nextSibling;
+                }
+                detail = detail.replace(/\s+/g, ' ').replace(/^[\s—–-]+/, '').trim();
+                html += `<div style="${S.item}${lignes ? 'border-top:' + S.rule + ';' : ''}"><strong>${escapeHtml(label)}</strong> <span style="color:${S.muted};">${escapeHtml(clamp(detail, 240))}</span></div>`;
+                lignes++;
+            });
         });
         html += `</div>`;
     }
@@ -557,21 +690,75 @@ function buildPdfContent() {
         // dépasse la hauteur d'une page, et la marquer .pdf-block la ferait
         // déborder (donc tronquer). Chaque entrée porte en revanche .pdf-block
         // pour n'être jamais coupée en deux d'une page à l'autre.
-        html += `<div style="margin:0 0 14px 0;border-left:4px solid ${s.color};border-radius:0 5px 5px 0;background:${rgba(s.color, 0.04)};padding:10px 12px;">
-            <div class="pdf-block">${secTitle(s.titre, s.color, `${alerts.length}`)}</div>`;
-        alerts.forEach((a, i) => {
-            const strong = a.querySelector('strong');
-            const title = strong ? strong.textContent.trim() : '';
-            let detail = '';
-            // Cibler prioritairement le corps du message ; tomber sur small/em en fallback
+        // Trois régimes de rendu selon la gravité. Le rapport imprimait jusqu'ici les
+        // 23 entrées au même niveau de détail : les trois lignes qui engagent une
+        // décision immédiate se noyaient dans les rappels de méthode (« réévaluer
+        // chaque traitement une fois par an »), tous rédigés avec la même insistance.
+        //   • danger  : titre + explication complète ;
+        //   • warning : titre + explication courte ;
+        //   • info    : titre seul, regroupé en fin de section sur une ligne.
+        // Rien n'est supprimé — l'analyse complète reste consultable dans l'application.
+        const niveau = (a) => /alert-danger|alert-stopp/.test(a.className) ? 'danger'
+            : /alert-info/.test(a.className) ? 'info' : 'warning';
+        const detailDe = (a) => {
+            // Le corps du message d'abord ; à défaut, une liste (les règles qui
+            // énumèrent des molécules n'ont pas de <small> et sortaient VIDES,
+            // laissant un titre suivi d'un deux-points sans rien derrière).
             const msgNode = a.querySelector('div.small, span.small, small, em');
-            if (msgNode) detail = clamp(msgNode.textContent, 200);
+            let d = (msgNode ? msgNode.textContent : '').trim();
+            const li = [...a.querySelectorAll('li')].map(x => x.textContent.replace(/\s+/g, ' ').trim()).filter(Boolean);
+            // Une phrase d'annonce se terminant par « : » sans la liste qu'elle annonce
+            // laissait un deux-points en suspens (« les médicaments suivants augmentent
+            // le risque de crise : » — puis rien). La liste vit dans un <ul>, que le
+            // sélecteur de message ne voyait pas.
+            if (!d) d = li.join(' ; ');
+            else if (/:$/.test(d) && li.length) d = d + ' ' + li.join(' ; ');
+            return d;
+        };
+        // Fusions déclarées : la première entrée d'un groupe présent porte le texte
+        // commun, les suivantes disparaissent du rapport.
+        const fusionsActives = FUSIONS_RAPPORT.filter(f => {
+            const vus = [...alerts].filter(a => f.ids.includes(idAlerte(a)));
+            return vus.length >= 2;
+        });
+        const absorbes = new Set();
+        const porteFusion = new Map(); // alerte → fusion
+        fusionsActives.forEach(f => {
+            const vus = [...alerts].filter(a => f.ids.includes(idAlerte(a)));
+            porteFusion.set(vus[0], f);
+            vus.slice(1).forEach(a => absorbes.add(a));
+        });
+        const retenues = [...alerts].filter(a => !absorbes.has(a));
+        const majeures = retenues.filter(a => niveau(a) !== 'info');
+        const mineures = retenues.filter(a => niveau(a) === 'info');
+
+        html += `<div style="margin:0 0 14px 0;border-left:4px solid ${s.color};border-radius:0 5px 5px 0;background:${rgba(s.color, 0.04)};padding:10px 12px;">
+            <div class="pdf-block">${secTitle(s.titre, s.color, absorbes.size
+                ? `${majeures.length + mineures.length} points — ${alerts.length} alertes, ${absorbes.size} regroupées`
+                : `${alerts.length}`)}</div>`;
+        majeures.forEach((a, i) => {
+            const fus = porteFusion.get(a);
+            const strong = a.querySelector('strong');
+            const title = fus ? fus.titre : (strong ? strong.textContent.trim() : '');
+            const brut = fus ? fus.texte : sansRedite(title, detailDe(a));
+            const detail = brut ? texteClinique(fus ? brut : clamp(brut, niveau(a) === 'danger' ? 260 : 150)) : '';
             // Titre et détail sur 2 lignes : à 28 entrées, le format « titre — détail »
             // au fil du texte rendait chaque item indiscernable du suivant.
             html += `<div class="pdf-block" style="${S.item}${i ? 'border-top:' + S.rule + ';' : ''}">
                 <strong>${escapeHtml(title)}</strong>${detail ? `<div style="color:${S.muted};margin-top:2px;">${escapeHtml(detail)}</div>` : ''}
             </div>`;
         });
+        if (mineures.length > 0) {
+            const titres = mineures.map(a => {
+                const fus = porteFusion.get(a);
+                const st = a.querySelector('strong');
+                return escapeHtml((fus ? fus.titre : (st ? st.textContent : '')).replace(/^[^\wÀ-ÿ]+/, '').trim());
+            }).filter(Boolean);
+            html += `<div class="pdf-block" style="${S.item}${majeures.length ? 'border-top:' + S.rule + ';' : ''}">
+                <strong style="font-weight:600;">Points de méthode (${titres.length})</strong>
+                <div style="color:${S.muted};margin-top:2px;">${titres.join(' · ')}.</div>
+            </div>`;
+        }
         html += `</div>`;
     });
 

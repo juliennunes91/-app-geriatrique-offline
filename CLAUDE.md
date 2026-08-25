@@ -443,6 +443,67 @@ cardiaque ne le masque pas dans l'arthrose. Le post-traitement
 imbriqué** : cartes et `<details>` environnants restent équilibrés — c'est
 vérifiable en comptant `<div>` et `</div>` après masquage.
 
+## DFGe : deux formules, deux usages
+
+`calculerDFG()` (`app_ui.js`) retient **CKD-EPI 2021 dès 75 ans**, même quand le poids
+est renseigné. Cockcroft-Gault porte l'âge dans sa formule — (140 − âge) — et s'appuie
+sur le poids TOTAL : chez le sujet âgé sarcopénique il sous-estime nettement. Sur une
+patiente de 84 ans (55 kg, créatinine 126 µmol/L) il rend 25 ml/min quand CKD-EPI rend
+36 — l'écart enjambe le seuil de 30 qui contre-indique plusieurs molécules.
+
+**Les deux formules ne servent pas à la même chose** et l'application n'en garde qu'une
+valeur : CKD-EPI stadifie la maladie rénale (KDIGO 2024), Cockcroft-Gault est celle sur
+laquelle les RCP ont calé leurs paliers d'adaptation posologique (AOD, gabapentine,
+allopurinol). Dès que les deux tombent dans des paliers différents (15/30/50/60),
+l'encart `#dfgDivergenceNote` affiche **les deux valeurs** et rappelle laquelle sert à
+quoi. Ne jamais supprimer cet encart en croyant simplifier : c'est lui qui empêche de
+doser un anticoagulant sur un estimateur qui n'a pas servi à établir le palier.
+
+## Le rapport PDF n'est pas l'écran imprimé
+
+L'export est lu par un tiers — confrère, pharmacien, IDE — hors de l'application. Sur
+un dossier de 17 médicaments il sortait 23 « prescriptions inappropriées » toutes
+rendues avec la même insistance, des identifiants internes en tête de phrase, des
+flèches en guise de verbe et des titres répétés mot pour mot dans leur propre détail.
+Tout est traité **au rendu** (`buildPdfContent`, `app_core.js`) — on ne réécrit pas les
+300 messages de la base :
+
+- **Trois régimes selon la gravité** : `danger` reçoit l'explication complète,
+  `warning` une explication courte, `info` son seul titre, regroupé en fin de section
+  sous « Points de méthode ». Rien n'est supprimé, l'application affiche tout.
+- **`texteClinique()`** retire l'identifiant de règle en tête (`SYND_043 :`,
+  `PIM-Check :`), convertit les flèches (une seule → « d'où », une chaîne → « puis »),
+  répare les élisions et pose la ponctuation finale.
+- **`sansRedite()`** supprime du détail le préfixe qui répète le titre.
+- **`clamp()`** coupe à la fin d'une PHRASE, plus au milieu d'un mot.
+- **`FUSIONS_RAPPORT`** regroupe des règles qui, venant de référentiels différents,
+  disent au lecteur la même chose (STOPP + PIM-Check sur la corticothérapie prolongée ;
+  les deux critères « diurétique de l'anse » sur l'indication). Les groupes sont
+  **déclarés par identifiant de règle**, jamais devinés par ressemblance — une
+  heuristique ferait disparaître une alerte réellement distincte.
+- Le bloc « Interactions critiques » ne réimprime plus ce que « Top actions » vient
+  d'afficher, et le panneau des scores apparie chaque `<strong>` au texte qui le suit
+  (il affichait le score ACB avec le commentaire du CIA) après avoir retiré
+  l'infobulle `.score-tooltip`, qui déversait la grille de cotation complète.
+
+## Ce que le rapport ne doit pas nommer
+
+- **Libellé d'interaction** : le `classe` d'une entrée `ddi_interact_v2` ÉNUMÈRE les
+  molécules couvertes, pas celles que le patient prend. Sous furosémide + venlafaxine,
+  « Carbamazépine / IRSS — hyponatrémie (SIADH) » faisait lire le nom d'un antiépileptique
+  absent. `_libelleInteraction()` (`app_analysis.js`) ne garde que la partie **mécanisme**
+  quand le libellé nomme une molécule non prescrite ; le libellé officiel reste en infobulle.
+- **Cascades iatrogéniques** : ne jamais employer la clé générique `antimuscarinique`,
+  qui atteint par sous-chaîne l'alias `antimuscariniqueinhale` et capte les LAMA de la
+  BPCO. Les DCI vésicales sont nommées une à une.
+- **Plan biologique** : `BIO_CONDITIONNEL` retire un paramètre dont la pertinence dépend
+  d'une AUTRE prescription. L'INR figure dans la cible du paracétamol (déséquilibre d'un
+  AVK sous forte dose chronique) : sans AVK au dossier, une patiente sous apixaban se
+  voyait réclamer un « INR mensuel » que l'INR ne sait pas mesurer.
+- **Charge anticholinergique** : les voies locales sont hors du total ; elles étaient
+  pourtant listées parmi les contributeurs, si bien que la somme ne correspondait pas à
+  la liste qui la suivait. Elles ont leur propre ligne et **gardent leur valeur**.
+
 ## Fragilité sévère (`frailty_exclude`)
 
 Ne s'active qu'à **CFS ≥ 7** ou case « patient fragile » cochée — le seuil de

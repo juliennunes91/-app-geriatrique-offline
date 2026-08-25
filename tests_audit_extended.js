@@ -89,7 +89,9 @@ const PANEL = {
     'cov_EV_C11_EV_C13': {"age":82,"sexe":"F","comorbs":["PAT_006"],"bio":{"patientDFG":60},"meds":["Acenocoumarol","Dabigatran","Diltiazem"]},
     'cov_EV_C14_EV_C17': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Apixaban","Amiodarone","Ginkgo biloba","Acenocoumarol"]},
     'cov_EV_FORTA_01': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Dipyridamole"]},
-    'cov_EV_D01_EV_D03': {"age":82,"sexe":"F","comorbs":["PAT_010","PAT_005"],"bio":{"patientDFG":60},"meds":["Amitriptyline","Venlafaxine"]},
+    // EV_D03 vise l'HTA SEVERE : la case « HTA non controlee » est desormais requise,
+    // sans quoi la regle annoncait une hypertension severe jamais constatee.
+    'cov_EV_D01_EV_D03': {"age":82,"sexe":"F","comorbs":["PAT_010","PAT_005"],"flags":["chkHtaNonControlee"],"bio":{"patientDFG":60},"meds":["Amitriptyline","Venlafaxine"]},
     'cov_EV_D04_EV_D06': {"age":82,"sexe":"F","flags":["chkHbp"],"bio":{"patientDFG":60,"patientNa":117},"meds":["Chlorpromazine","Citalopram"]},
     'cov_EV_D09_EV_D10': {"age":82,"sexe":"F","comorbs":["PAT_010","PAT_027"],"bio":{"patientDFG":60},"meds":["Alprazolam"]},
     'cov_EV_D11_EV_D16': {"age":82,"sexe":"F","comorbs":["PAT_027"],"bio":{"patientDFG":60},"meds":["Zolpidem","Amisulpride"]},

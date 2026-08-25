@@ -2405,7 +2405,7 @@
  },
  "cov_EV_F01_EV_F02": {
   "alertes-eviter": [
-   "danger | IPP > 8 semaines à pleine dose pour ulcère non compliqué",
+   "danger | Inhibiteur de la pompe à protons au long cours — indication à revoir",
    "danger | METOCLOPRAMIDE — CI Maladie de Parkinson",
    "danger | Métoclopramide et prokinétiques",
    "info | Action immédiate",
