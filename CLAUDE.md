@@ -525,6 +525,8 @@ Tout est traité **au rendu** (`buildPdfContent`, `app_core.js`) — on ne réé
 - **Le commentaire libre est encadré et suivi d'un filet** « Analyse automatisée
   GeriaAssist » : c'est la seule partie écrite par un humain, et fondue dans les mêmes
   cartes grises que le reste, elle se lisait comme une conclusion de l'application.
+  Il est titré « Commentaire **au** prescripteur » : le rapport lui est *adressé* par
+  celui qui a mené la revue d'ordonnance — ne pas rétablir « du ».
 - Le panneau des scores apparie chaque `<strong>` au texte qui le suit
   (il affichait le score ACB avec le commentaire du CIA) après avoir retiré
   l'infobulle `.score-tooltip`, qui déversait la grille de cotation complète.

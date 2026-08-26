@@ -499,18 +499,19 @@ function buildPdfContent() {
         html += `<div class="pdf-block" style="${blockStyle}font-size:12px;font-weight:700;color:${_rcol};background:${rgba(_rcol, 0.07)};border-left:4px solid ${_rcol};border-radius:0 5px 5px 0;padding:8px 12px;">🫘 Le débit de filtration glomérulaire estimé est de ${escapeHtml(dfg)} ml/min${_mlbl}, soit ${_stg}.</div>`;
     }
 
-    // Commentaire libre du prescripteur — en haut du rapport.
+    // Commentaire au prescripteur — en haut du rapport.
     // C'est la SEULE partie du document qu'un humain a écrite : tout le reste est
     // produit par l'analyse. Fondu dans la même carte grise que les blocs générés, il
-    // se lisait comme une conclusion de l'application. Il est donc encadré, titré au
-    // nom de son auteur, et suivi d'un filet qui marque le début de la partie
-    // automatique — pour qu'un lecteur tiers ne puisse pas attribuer à la machine un
+    // se lisait comme une conclusion de l'application. Il est donc encadré, titré par
+    // son DESTINATAIRE — le rapport est adressé au prescripteur par celui qui a mené
+    // la revue d'ordonnance — et suivi d'un filet qui marque le début de la partie
+    // automatique, pour qu'un lecteur tiers ne puisse pas attribuer à la machine un
     // jugement clinique, ni l'inverse.
     const _freeText = (document.getElementById('freeTextNote')?.value || '').trim();
     if (_freeText) {
         html += `<div class="pdf-block" style="page-break-inside:avoid;break-inside:avoid;margin:0 0 6px 0;border:2px solid #495057;border-radius:6px;padding:11px 13px;background:#fff;">
             <div style="margin:0 0 7px 0;padding-bottom:5px;border-bottom:1px solid ${rgba('#495057', 0.35)};">
-                <span style="font-size:10.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#495057;">✍️ Commentaire du prescripteur</span>
+                <span style="font-size:10.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#495057;">✍️ Commentaire au prescripteur</span>
                 <span style="font-size:8.5px;font-weight:400;color:#8a939c;margin-left:7px;">saisi manuellement</span>
             </div>
             <div style="${S.body}white-space:pre-wrap;">${escapeHtml(_freeText)}</div>
