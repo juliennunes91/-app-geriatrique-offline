@@ -430,12 +430,55 @@ function _tagBadgeLayout(span) {
     span.style.maxWidth = '100%';
     span.style.verticalAlign = 'middle';
 }
-function _tagLabelNode(texte) {
+function _tagLabelNode(texte, complet) {
     const lbl = document.createElement('span');
     lbl.textContent = texte;
-    lbl.title = texte;                    // le libellé entier reste consultable
+    lbl.title = complet || texte;         // le libellé entier reste consultable
     lbl.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;';
     return lbl;
+}
+
+// Le champ `princeps` ÉNUMÈRE tous les noms commerciaux d'une molécule — c'est ce qui
+// rend la recherche tolérante, mais c'est illisible sur une pastille : celle de
+// l'uméclidinium fait 133 caractères, celle de la fluticasone 243. Bornée par une
+// ellipse, elle masquait justement ce qui décide — Incruse (LAMA seul), Anoro
+// (LAMA + LABA) ou Trelegy (trithérapie avec corticoïde inhalé).
+// La pastille porte donc la DCI, et UN nom commercial seulement s'il tient. Dès qu'une
+// précision a été saisie, c'est ELLE qui s'affiche : c'est le renseignement qui change
+// la nature du produit, pas la liste des marques. Le libellé complet reste en
+// infobulle, et la recherche continue de couvrir tous les princeps.
+const _LONGUEUR_PASTILLE = 38;
+function _premierPrinceps(princeps) {
+    // Certaines fiches préfixent l'usage (« Constipation : Forlax, … ») : on retire
+    // l'étiquette, pas le nom.
+    const brut = String(princeps || '').replace(/^[^:]{3,28}\s*:\s*/, '').trim();
+    // Le champ mêle des séparateurs de LISTE et des caractères de DOSAGE : découper
+    // naïvement sur « , » ou « / » rendait « Narcan 0 » (virgule décimale) ou
+    // « Narcan 0,4 mg » (barre de « mg/1 mL »). On prend donc le nom de marque tel
+    // qu'il s'écrit : un ou deux mots, arrêtés par le premier chiffre, séparateur ou
+    // commentaire entre parenthèses.
+    const m = brut.match(/^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ'’-]*(?:\s+[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ'’-]*)?/);
+    return m ? m[0].trim() : '';
+}
+const _RESUME_PRECISION = {
+    composition:    { seul: 'molécule seule', laba: '+ LABA', ics_laba: '+ corticoïde inhalé', triple: 'trithérapie' },
+    voie:           { orale: 'voie orale', topique: 'voie topique' },
+    voie_ampho:     { orale: 'buvable', iv: 'injectable' },
+    mtx_schema:     { faible: 'faible dose hebdo.', haute: 'haute dose' },
+    indication_peg: { constipation: 'constipation', preparation: 'préparation colique' },
+    indication_diu: { ic: 'insuffisance cardiaque', irc: 'surcharge IRC', cirrhose: 'ascite',
+                      nephrotique: 'syndrome néphrotique', hta: 'HTA', oedemes: 'œdèmes isolés' }
+};
+function _libellePastille(med) {
+    const dci = String(med.dci || '');
+    const p = med.precisions || {};
+    for (const champ in _RESUME_PRECISION) {
+        const r = p[champ] && _RESUME_PRECISION[champ][p[champ]];
+        if (r) return dci + ' — ' + r;
+    }
+    const princeps = _premierPrinceps(med.db_ref && med.db_ref.princeps);
+    const avec = princeps ? dci + ' (' + princeps + ')' : dci;
+    return avec.length <= _LONGUEUR_PASTILLE ? avec : dci;
 }
 
 function renderTags() {
@@ -454,7 +497,7 @@ function renderTags() {
         activeMeds.forEach(m => {
             let span = document.createElement('span'); span.className = 'badge bg-primary tag-badge';
             _tagBadgeLayout(span);
-            let labelNode = _tagLabelNode(m.label + ' ');
+            let labelNode = _tagLabelNode(_libellePastille(m) + ' ', m.label);
             let btnSuspend = document.createElement('span');
             btnSuspend.textContent = '⏸️'; btnSuspend.title = 'Suspendre'; btnSuspend.style.cssText = 'cursor:pointer;flex:none;margin-left:4px;';
             btnSuspend.setAttribute('aria-label', 'Suspendre ' + m.dci);
@@ -499,7 +542,7 @@ function renderTags() {
         window.suspendedMeds.forEach(m => {
             let span = document.createElement('span'); span.className = 'badge bg-light text-muted border tag-badge'; span.style.textDecoration = 'line-through';
             _tagBadgeLayout(span);
-            let labelNode = _tagLabelNode(m.label + ' ');
+            let labelNode = _tagLabelNode(_libellePastille(m) + ' ', m.label);
             let btnResume = document.createElement('span');
             btnResume.textContent = '▶️'; btnResume.title = 'Réactiver'; btnResume.style.cssText = 'cursor:pointer;flex:none;margin-left:4px;';
             btnResume.setAttribute('aria-label', 'Réactiver ' + m.dci);

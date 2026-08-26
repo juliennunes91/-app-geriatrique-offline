@@ -299,11 +299,23 @@ colonne de 484 px** — suspendre, préciser et retirer partaient hors écran et
 inatteignables.
 
 `_tagBadgeLayout()` / `_tagLabelNode()` (`app_ui.js`) font de la pastille une boîte
-**flex bornée à la largeur de son conteneur** : seul le LIBELLÉ se rétrécit et se termine
-par une ellipse (la DCI ouvrant le libellé, c'est la liste des princeps qui est coupée),
-le texte entier restant en infobulle. Chaque commande porte **`flex:none`** — sans quoi un
-libellé long la comprimerait à zéro. Styles posés **en ligne** : une règle écrite dans une
-seule des deux feuilles ne corrigerait qu'une interface.
+**flex bornée à la largeur de son conteneur**, et chaque commande porte **`flex:none`** —
+sans quoi un libellé long la comprimerait à zéro. Styles posés **en ligne** : une règle
+écrite dans une seule des deux feuilles ne corrigerait qu'une interface.
+
+Mais borner ne suffisait pas : l'ellipse masquait justement ce qui décide. Sur
+l'uméclidinium — Incruse (LAMA seul), Anoro (LAMA + LABA), Trelegy (trithérapie avec
+corticoïde inhalé) — elle coupait après « Anoro Ellipta (avec v ». `_libellePastille()`
+règle le fond : la pastille porte la **DCI**, et un seul nom de marque s'il tient
+(`_LONGUEUR_PASTILLE`). **Dès qu'une précision est saisie, c'est ELLE qui s'affiche** —
+« Umeclidinium — trithérapie », « Macrogol — préparation colique » : c'est le
+renseignement qui change la nature du produit, pas la liste des marques. Le libellé
+complet reste en infobulle, et la recherche continue de couvrir tous les princeps.
+
+Piège de `_premierPrinceps()` : le champ mêle des séparateurs de LISTE et des caractères
+de DOSAGE. Découper sur `,` ou `/` rendait « Narcan 0 » (virgule décimale) ou
+« Narcan 0,4 mg » (barre de « mg/1 mL »). On lit le nom de marque tel qu'il s'écrit —
+un ou deux mots, arrêtés au premier chiffre, séparateur ou commentaire entre parenthèses.
 
 ## Criticité affichée — la sévérité déclarée est un plancher
 

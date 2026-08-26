@@ -951,6 +951,34 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/Constipation chronique/.test(poso(cas(null))) && /2 à 4 L/.test(poso(cas(null))),
             'sans precision : les deux regimes restent affiches (rien n\'est cache par defaut)');
     });
+    test('Pastille : la DCI et la precision priment sur la liste des marques', () => {
+        // Le champ princeps enumere TOUTES les marques : 133 caracteres pour
+        // l'umeclidinium, 243 pour la fluticasone. Borne par une ellipse, le libelle
+        // masquait justement ce qui decide — Incruse (LAMA seul), Anoro (LAMA + LABA)
+        // ou Trelegy (tritherapie avec corticoide inhale).
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const vm = require('vm');
+        const pastille = (dci, precisions) => vm.runInContext(
+            '_libellePastille({dci:' + JSON.stringify(dci)
+            + ',db_ref:MASTER_DB.MEDICAMENTS.find(m=>m.dci===' + JSON.stringify(dci) + ')'
+            + ',precisions:' + JSON.stringify(precisions || null) + '})', sandbox);
+
+        // Un seul nom de marque, jamais la liste.
+        assert.strictEqual(pastille('Umeclidinium'), 'Umeclidinium (Incruse Ellipta)');
+        assert.strictEqual(pastille('Fluticasone'), 'Fluticasone (Flixotide)');
+        // Les separateurs de DOSAGE ne sont pas des separateurs de liste : « Narcan
+        // 0,4 mg/1 mL » ne doit donner ni « Narcan 0 » ni « Narcan 0,4 mg ».
+        assert.strictEqual(pastille('Naloxone'), 'Naloxone (Narcan)');
+        // Une precision saisie change la NATURE du produit : c'est elle qui s'affiche.
+        assert.strictEqual(pastille('Umeclidinium', { composition: 'triple' }), 'Umeclidinium — trithérapie');
+        assert.strictEqual(pastille('Macrogol', { indication_peg: 'preparation' }), 'Macrogol — préparation colique');
+
+        // Aucune pastille de la base ne doit rester illisible.
+        const longueurs = JSON.parse(vm.runInContext(
+            'JSON.stringify(MASTER_DB.MEDICAMENTS.map(m => _libellePastille({dci:m.dci, db_ref:m}).length))', sandbox));
+        assert.ok(Math.max(...longueurs) <= 42,
+            'la plus longue pastille fait ' + Math.max(...longueurs) + ' caracteres (plafond 42)');
+    });
     test('Princeps : un nom commercial n\'appartient qu\'a sa molecule', () => {
         // « Importal » (lactitol) figurait dans les princeps du MACROGOL : taper ce nom
         // proposait les deux molecules, et l'etiquette du macrogol annoncait un produit
