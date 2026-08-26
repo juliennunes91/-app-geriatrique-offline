@@ -15060,9 +15060,9 @@ const MASTER_DB = {
           },
           {
                     "dci": "Macrogol",
-                    "princeps": "Forlax, Transipeg, Movicol, Importal, Klean-Prep (préparation colonoscopie)",
+                    "princeps": "Constipation : Forlax, Transipeg, Movicol, Macrogol Biogaran | Préparation colique : Klean-Prep, Fortrans, Colopeg, Moviprep",
                     "classe": "Laxatif osmotique PEG 4000 — RÉFÉRENCE constipation chronique chez âgé (FORTA-A — meilleure tolérance vs lactulose)",
-                    "poso_hab": "1-2 sachets/j (10-20 g/j) pour constipation chronique | 1-3 L pour préparation colonoscopie",
+                    "poso_hab": "Constipation chronique : 1 à 2 sachets par jour (10-20 g). | Préparation colique : 2 à 4 L de solution selon le protocole d'endoscopie, sur quelques heures.",
                     "poso_ger": "RÉFÉRENCE chez âgé constipation chronique (FORTA-A) ; pas de fermentation colique (vs lactulose — moins de météorisme/flatulences) ; 1 sachet/j puis ajuster",
                     "poso_ren": "Pas d'ajustement (non absorbé)",
                     "acb": 0,

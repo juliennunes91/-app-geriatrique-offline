@@ -931,6 +931,40 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!has(cas(i), b7) && !has(cas(i), b8), i + ' : indication de surcharge, aucun des deux');
         });
     });
+    test('Macrogol : l\'usage declare separe constipation et preparation colique', () => {
+        // Deux usages que tout separe : 10 a 20 g par jour en traitement de fond, ou
+        // 2 a 4 L avales en quelques heures avant endoscopie. La fiche portait les deux
+        // regimes dans la meme ligne et n'alertait sur aucun.
+        const re = /Préparation colique chez le sujet âgé/i;
+        const cas = usage => analyzeCase({ age: 84, sexe: 'F', meds: ['Macrogol', 'Furosemide'],
+            precisions: usage ? { Macrogol: { indication_peg: usage } } : {} });
+        assert.ok(!has(cas(null), re), 'sans precision : traite comme constipation, pas d\'alerte de preparation');
+        assert.ok(!has(cas('constipation'), re), 'constipation : pas d\'alerte de preparation');
+        assert.ok(has(cas('preparation'), re), 'preparation colique : l\'alerte doit se declencher');
+
+        // La posologie affichee ne doit plus obliger le lecteur a choisir lui-meme.
+        const poso = c => (c._html['alertes-usage'] || '').replace(/<[^>]*>/g, ' ');
+        assert.ok(/Constipation chronique/.test(poso(cas('constipation'))) && !/2 à 4 L/.test(poso(cas('constipation'))),
+            'usage constipation : seul le regime de fond est affiche');
+        assert.ok(/2 à 4 L/.test(poso(cas('preparation'))) && !/1 à 2 sachets/.test(poso(cas('preparation'))),
+            'usage preparation : seul le regime de preparation est affiche');
+        assert.ok(/Constipation chronique/.test(poso(cas(null))) && /2 à 4 L/.test(poso(cas(null))),
+            'sans precision : les deux regimes restent affiches (rien n\'est cache par defaut)');
+    });
+    test('Princeps : un nom commercial n\'appartient qu\'a sa molecule', () => {
+        // « Importal » (lactitol) figurait dans les princeps du MACROGOL : taper ce nom
+        // proposait les deux molecules, et l'etiquette du macrogol annoncait un produit
+        // qui n'en est pas. Verifie sur les couples de laxatifs osmotiques, ou la
+        // confusion est la plus facile.
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const vm = require('vm');
+        vm.runInContext('initUI();', sandbox);
+        const trouve = q => JSON.parse(vm.runInContext(
+            'JSON.stringify(searchMedList(' + JSON.stringify(q) + ').map(x => x.display))', sandbox));
+        assert.deepStrictEqual(trouve('importal'), ['Lactitol'], 'Importal est du lactitol, et de lui seul');
+        assert.ok(trouve('forlax').indexOf('Macrogol') >= 0, 'Forlax reste rattache au macrogol');
+        assert.ok(trouve('duphalac').indexOf('Lactulose') >= 0, 'Duphalac reste rattache au lactulose');
+    });
     test('Pastille medicament : le libelle ne chasse jamais les commandes', () => {
         // Le libelle vaut « DCI (princeps) » et certains princeps sont des paragraphes :
         // 260 caracteres pour la naloxone. Bootstrap posant white-space:nowrap sur

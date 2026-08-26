@@ -719,6 +719,11 @@ function medPrecisionFamily(classe, dci) {
     if (/m[eé]b[eé]v[eé]rine|alv[eé]rine|phloroglucinol|trim[eé]butine/i.test(d) || /antispasmodique/i.test(cl)) return 'antispasmodique';
     if (/b[eé]tahistine|m[eé]clozine|m[eé]clizine|flunarizine|cinnarizine/i.test(d) || /anti-?vertigineux/i.test(cl)) return 'antivertigineux';
     // Familles dose/bilan-dépendantes (Phase 1)
+    // Macrogol (PEG) : deux usages que tout sépare. En constipation chronique,
+    // 10 à 20 g par jour — c'est la référence gériatrique. En préparation colique,
+    // 2 à 4 litres avalés en quelques heures : un volume qui expose le sujet âgé à la
+    // déshydratation, aux troubles ioniques et, en cas de dysphagie, à l'inhalation.
+    if (/macrogol|\bPEG\s?(3350|4000)\b/i.test(d) || /macrogol|\bPEG\b/i.test(cl)) return 'macrogol';
     // Méthotrexate : deux schémas thérapeutiques sans rapport l'un avec l'autre.
     // En rhumatologie/dermatologie, 7,5-25 mg par SEMAINE avec acide folique ; en
     // oncologie, des doses cent fois supérieures avec sauvetage folinique. La consigne

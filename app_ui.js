@@ -285,6 +285,7 @@ const MED_PRECISION_FIELDS = {
     antipsychotique: ['duree'],
     inhale: ['composition'],
     methotrexate: ['mtx_schema'],
+    macrogol: ['indication_peg'],
     amphotericine: ['voie_ampho']
 };
 const PRECISION_FIELD_DEFS = {
@@ -314,6 +315,10 @@ const PRECISION_FIELD_DEFS = {
                   ['nephrotique', 'Syndrome néphrotique'],
                   ['hta', 'Hypertension artérielle'],
                   ['oedemes', 'Œdèmes des membres inférieurs isolés']] },
+    indication_peg: { label: 'Usage du macrogol', type: 'select',
+        options: [['', 'Non précisé (traité comme constipation chronique)'],
+                  ['constipation', 'Traitement de la constipation (1 à 2 sachets par jour)'],
+                  ['preparation', 'Préparation colique avant endoscopie (2 à 4 L)']] },
     mtx_schema: { label: 'Schéma thérapeutique du méthotrexate', type: 'select',
         options: [['', 'Non précisé (traité comme faible dose hebdomadaire)'],
                   ['faible', 'Faible dose HEBDOMADAIRE — rhumatologie / dermatologie (7,5-25 mg/semaine)'],

@@ -464,6 +464,11 @@ que d'être gatée règle par règle.
   une indication de surcharge (insuffisance cardiaque, rénale, hépatique, syndrome
   néphrotique) les désarme tous les deux. Non renseignée, les deux restent et le rapport
   les fusionne en « préciser l'indication » — ce qui est exactement l'état de la question.
+- **Macrogol** : 10 à 20 g par jour en constipation chronique (référence gériatrique
+  FORTA-A), contre 2 à 4 L avalés en quelques heures en préparation colique — un autre
+  acte, pas une autre dose. La précision `indication_peg` déclenche `SUP_PEG_01`
+  (charge hydrique, ionogramme, risque d'inhalation si dysphagie) et n'affiche que le
+  régime posologique déclaré, l'autre restant en infobulle.
 - **Amphotéricine B** : la suspension buvable n'est pratiquement pas absorbée (ni
   hypokaliémie, ni néphrotoxicité, ni interaction) ; l'injectable porte toute la
   toxicité. La forme non absorbée est en outre exclue du **matching

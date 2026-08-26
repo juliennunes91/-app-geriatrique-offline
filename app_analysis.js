@@ -840,6 +840,11 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
                 else if (p.indication_diu === 'oedemes') ctxClinique.push('diuretique_indication_oedemes');
                 else ctxClinique.push('diuretique_indication_surcharge');
             }
+            // Macrogol : constipation chronique (10-20 g/j) ou préparation colique
+            // (2 à 4 L en quelques heures). Le second usage n'a de commun avec le
+            // premier que la molécule.
+            if (fam === 'macrogol' && p.indication_peg === 'preparation') ctxClinique.push('peg_preparation_colique');
+            if (fam === 'macrogol' && p.indication_peg === 'constipation') ctxClinique.push('peg_constipation');
             // Méthotrexate : le schéma conditionne la prévention de la toxicité.
             // Faible dose hebdomadaire → acide folique 5 mg/sem. Haute dose oncologique
             // → sauvetage folinique protocolisé : la consigne « acide folique » n'a plus
@@ -2742,6 +2747,26 @@ function analyserPrescription() {
     // =========================================================
     // 5. POSOLOGIES ET PROTOCOLES BIOLOGIQUES INTÉGRÉS V2
     // =========================================================
+    // Certaines fiches portent DEUX régimes dans un même champ, séparés par « | »,
+    // parce que la molécule sert à deux choses (macrogol : 10-20 g/j en constipation,
+    // 2 à 4 L en préparation colique). Affichés ensemble, ils obligent le lecteur à
+    // trancher lui-même. Si la précision de saisie a tranché, on n'affiche que le
+    // segment correspondant, et on garde l'autre en infobulle — on ne supprime rien.
+    const _USAGES_POSO = [
+        { ctx: 'peg_preparation_colique', motif: /pr[ée]paration/i },
+        { ctx: 'peg_constipation',        motif: /constipation/i }
+    ];
+    const _posoSelonUsage = (med, texte) => {
+        const brut = String(texte || '');
+        if (brut.indexOf('|') < 0) return brut;
+        const usage = _USAGES_POSO.find(u => ctxClinique.indexOf(u.ctx) >= 0);
+        if (!usage) return brut;
+        const segments = brut.split('|').map(x => x.trim()).filter(Boolean);
+        const retenu = segments.filter(seg => usage.motif.test(seg));
+        if (!retenu.length || retenu.length === segments.length) return brut;
+        const ecartes = segments.filter(seg => !usage.motif.test(seg)).join(' | ');
+        return `${retenu.join(' ')} <span class="text-muted small" title="${escapeHtml(ecartes)}">(autre usage documenté — au survol)</span>`;
+    };
     activeMeds.forEach(m => {
         let ref = m.db_ref; if (!ref) return;
 
@@ -2750,7 +2775,11 @@ function analyserPrescription() {
 
         if (hasPoso || alb >= 85) {
             let html = `<div class="alert alert-success border border-success shadow-sm"><strong class="text-success">💊 Posologies : ${escapeHtml(ref.dci.toUpperCase())}</strong><br>`;
-            if (ref.poso_hab) html += `<em>Standard :</em> ${ref.poso_hab}<br>`;
+            // Une posologie qui énumère PLUSIEURS usages (« Constipation … | Préparation
+            // colique … ») laisse le lecteur choisir lui-même le régime qui s'applique.
+            // Quand l'usage a été précisé à la saisie, on ne montre que le sien — les
+            // autres restent consultables au survol.
+            if (ref.poso_hab) html += `<em>Standard :</em> ${_posoSelonUsage(m, ref.poso_hab)}<br>`;
             if (ref.poso_ger) html += `<em>👴 Gériatrique :</em> <b>${ref.poso_ger}</b><br>`;
             
             if (ref.poso_ren) {

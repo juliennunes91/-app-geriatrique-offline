@@ -3977,5 +3977,70 @@
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
   ]
+ },
+ "cov_SUP_PEG_01": {
+  "alertes-eviter": [
+   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Réévaluation planifiée",
+   "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
+   "warning | Diurétique sans ionogramme de surveillance",
+   "warning | Préparation colique chez le sujet âgé — volume, ionogramme et déglutition"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | FUROSEMIDE — Alertes cliniques",
+   "warning | MACROGOL — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : FUROSEMIDE",
+   "success | Posologies : MACROGOL"
+  ],
+  "alertes-scores": [
+   "danger | HAS-BLED : 1 point(s)",
+   "info | CHA₂DS₂-VA : 2 point(s)",
+   "info | RISQ-PATH : 2 point(s)",
+   "info | Score PIM Global : 13/100 — ACCEPTABLE",
+   "info | Score de Tisdale : 3 point(s)",
+   "warning | DOACscore : 1 point(s)",
+   "warning | ORBIT-AF : 1 point(s)",
+   "warning | Score ACB : 1"
+  ],
+  "alertes-synthese": [
+   "success | Aucune action majeure identifiée",
+   "success | Dossier sans alerte critique"
+  ]
+ },
+ "cov_SUP_MTX_01": {
+  "alertes-eviter": [
+   "info | Réévaluation planifiée",
+   "warning | Méthotrexate haute dose chez le sujet âgé — élimination et sauvetage folinique"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | METHOTREXATE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : METHOTREXATE"
+  ],
+  "alertes-scores": [
+   "danger | HAS-BLED : 1 point(s)",
+   "info | CHA₂DS₂-VA : 2 point(s)",
+   "info | RISQ-PATH : 2 point(s)",
+   "info | Score ACB : 0",
+   "info | Score PIM Global : 11/100 — ACCEPTABLE",
+   "info | Score de Tisdale : 2 point(s)",
+   "warning | DOACscore : 1 point(s)",
+   "warning | ORBIT-AF : 1 point(s)"
+  ],
+  "alertes-synthese": [
+   "success | Aucune action majeure identifiée",
+   "success | Dossier sans alerte critique"
+  ]
  }
 }

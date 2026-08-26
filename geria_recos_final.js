@@ -4172,6 +4172,21 @@ const RECOS_SUPPLEMENT = [
         alternatives: "Acide folique 5 mg/sem (24-48 h après le MTX) ou acide folinique 5-10 mg/sem si MTX ≥ 15 mg/sem (BSR/NICE 2017)."
     },
     {
+        // La préparation colique n'est pas une posologie du même médicament : c'est un
+        // autre acte. Deux à quatre litres avalés en quelques heures chez un sujet âgé
+        // exposent à la déshydratation, à l'hyponatrémie et à l'hypokaliémie ; en cas de
+        // troubles de la déglutition, au passage dans les voies aériennes.
+        id: "SUP_PEG_01", sources: ["HAS", "SFGG"],
+        titre: "Préparation colique chez le sujet âgé — volume, ionogramme et déglutition",
+        message: "Préparation colique déclarée : le macrogol est ici avalé en grand volume (2 à 4 L) sur quelques heures, et non en traitement de fond. Chez le sujet âgé, cette charge hydrique expose à la déshydratation, à l'hyponatrémie et à l'hypokaliémie, d'autant plus qu'un diurétique, un IEC, un ARA2 ou un antidépresseur sérotoninergique est co-prescrit. Contrôler le ionogramme et la créatininémie avant et après la préparation, et prévoir un apport hydrique adapté. En cas de troubles de la déglutition, le volume à ingérer fait courir un risque d'inhalation : discuter le fractionnement, l'assistance à la prise, ou une alternative avec l'endoscopiste.",
+        severite: "warning",
+        condition: {
+            med_keys: ["macrogol"],
+            contexte_clinique: ["peg_preparation_colique"]
+        },
+        alternatives: "Discuter avec l'endoscopiste la suspension transitoire des diurétiques et des bloqueurs du système rénine-angiotensine le jour de la préparation."
+    },
+    {
         // Contrepartie du désarmement de IN_H09 / SUP_PIMC_04 en protocole oncologique :
         // la prévention change de nature, elle ne disparaît pas. Le sauvetage folinique
         // est protocolisé et la toxicité dépend de l'élimination rénale du MTX, que le

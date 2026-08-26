@@ -153,7 +153,11 @@ const PANEL = {
     'cov_SUP_INT_001_SUP_INT_002': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Lithium","Benazepril","Phenytoine","Cotrimoxazole"]},
     'cov_SUP_INT_003_SUP_INT_004': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Aminophylline","Ciprofloxacine","Warfarine","Amiodarone"]},
     'cov_SUP_INT_005_SUP_INT_006': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Doxazosine","Furosemide","Colchicine","Clarithromycine"]},
-    'cov_SUP_INT_009_SUP_INT_010': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Warfarine","Citalopram","Digoxine","Amiodarone"]}
+    'cov_SUP_INT_009_SUP_INT_010': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Warfarine","Citalopram","Digoxine","Amiodarone"]},
+    // Regles gatees sur un contexte issu d'une PRECISION de saisie : l'outil de
+    // couverture derive les contextes des cases a cocher et ne peut pas les produire.
+    'cov_SUP_PEG_01': {"age":84,"sexe":"F","bio":{"patientDFG":60},"meds":["Macrogol","Furosemide"],"precisions":{"Macrogol":{"indication_peg":"preparation"}}},
+    'cov_SUP_MTX_01': {"age":84,"sexe":"F","bio":{"patientDFG":60},"meds":["Methotrexate"],"precisions":{"Methotrexate":{"mtx_schema":"haute"}}}
 };
 // Onglets figés par le golden-master. `alertes-scores` et `alertes-synthese` ont été
 // AJOUTÉS après avoir constaté qu'ils échappaient totalement au filet : la correction de
