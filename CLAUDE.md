@@ -600,6 +600,36 @@ grippe/pneumocoque, ni à `IN_B01` dont la cible s'assouplit déjà chez le frag
 - `sw.js` → `APP_ASSETS` ou `DATA_ASSETS`
 - `sw.js` → `BUILD_ID` (incrémenter la date)
 
+Un test le vérifie désormais : **tout `<script src>` local des deux UIs doit être
+déclaré dans `sw.js`**. L'oubli ne se voyait qu'à l'usage, hors ligne, chez
+l'utilisateur — l'application se chargeait à moitié, sans message.
+
+## Mise à jour depuis le logiciel (`app_update.js`)
+
+L'application ne rappelle jamais le serveur : c'est sa raison d'être, et c'est ce qui
+permettait de travailler des mois sur une version périmée. La bannière « nouvelle
+version » n'apparaissait que si le navigateur décidait de lui-même de revérifier
+`sw.js`. Un bouton **« Vérifier les mises à jour »** (réglages des deux UIs) rend la
+vérification explicite ; il n'y a **aucune vérification automatique au démarrage** —
+réseaux d'EHPAD capricieux, et un appel silencieux n'apporterait qu'un délai.
+
+Trois pièges, tous rencontrés et traités :
+
+1. **`updateViaCache: 'none'` à l'enregistrement.** Sans cela le navigateur peut
+   resservir un `sw.js` de son cache HTTP, et la vérification conclut à tort « à jour ».
+2. **Ne PAS proposer « Redémarrer » tant que l'installation n'est pas finie.** Un worker
+   fraîchement découvert télécharge encore plusieurs mégaoctets ; recharger à cet instant
+   est servi par l'ANCIEN worker — l'utilisateur retrouve sa version précédente en croyant
+   la mise à jour faite. C'est arrivé au premier essai. On attend l'état `installed` /
+   `activated` (`_suivreInstallation`).
+3. **Couleurs en ligne, jamais par classe.** L'UI classique est en Bootstrap, la moderne
+   en Tailwind : `text-success` laissait le message sans couleur dans l'une des deux.
+
+Le numéro de version a une source unique par UI, `<span id="appVersion">`, lue par le
+module ; le `BUILD_ID` du service worker est affiché à côté — la version dit ce que le
+code annonce, le build ce que le cache contient. La coquille Android n'a pas de service
+worker : elle affiche un renvoi vers la page des versions GitHub.
+
 ## Numéro de version (IMPORTANT)
 
 **À chaque modification fonctionnelle livrée, incrémenter le numéro de version

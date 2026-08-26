@@ -122,6 +122,10 @@
                             <div class="small fw-bold mb-2">Troubles cognitifs &amp; neuropsycho</div>
                             <div class="form-check"><input type="radio" name="spcDisplayMode" id="spcDisplayAccordion" value="accordion" class="form-check-input" onchange="setSpcDisplayMode('accordion')"><label class="form-check-label small" for="spcDisplayAccordion">Accordéon (inline)</label></div>
                             <div class="form-check"><input type="radio" name="spcDisplayMode" id="spcDisplayModal" value="modal" class="form-check-input" onchange="setSpcDisplayMode('modal')"><label class="form-check-label small" for="spcDisplayModal">Fenêtre modale</label></div>
+                            <hr class="my-2">
+                            <div class="small fw-bold mb-2">Mise à jour</div>
+                            <button type="button" class="btn btn-sm btn-outline-primary w-100" id="btnVerifierMaj" onclick="verifierMiseAJour()">Vérifier les mises à jour</button>
+                            <div id="majStatut" class="small mt-1 text-muted" aria-live="polite"></div>
                         </div>
                     </div>
                     <a href="index_modern.html" class="btn btn-outline-info btn-sm" id="btnUiModerne" title="Nouvelle interface moderne">UI Moderne</a>
@@ -536,7 +540,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version 2.61 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version <span id="appVersion">2.62</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>
@@ -593,6 +597,7 @@
     <script src="app_conciliation.js"></script>
     <script src="app_psy_scores.js"></script>
     <script src="app_vaccination.js"></script>
+    <script src="app_update.js"></script>
     <script src="ocr_module.js"></script>
     <script src="child_pugh_adaptations.js"></script>
     <script src="composite_scores.js"></script>
@@ -619,7 +624,10 @@
         }
 
         if ('serviceWorker' in navigator && !IS_NATIVE_APP) {
-            navigator.serviceWorker.register('./sw.js').then(reg => {
+            // updateViaCache:'none' — sans cela le navigateur peut resservir un sw.js
+            // depuis son cache HTTP, et « Vérifier les mises à jour » conclurait à tort
+            // que tout est à jour.
+            navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(reg => {
                 console.log('SW enregistré:', reg.scope);
                 // Auto-update detection
                 reg.addEventListener('updatefound', () => {

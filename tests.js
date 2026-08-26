@@ -931,6 +931,25 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!has(cas(i), b7) && !has(cas(i), b8), i + ' : indication de surcharge, aucun des deux');
         });
     });
+    test('Service worker : tout script charge par l\'UI est dans le cache hors ligne', () => {
+        // CLAUDE.md impose de declarer chaque nouveau fichier applicatif dans sw.js.
+        // Rien ne le verifiait : un oubli ne se voit qu'a l'usage, hors ligne, chez
+        // l'utilisateur — l'application se charge a moitie et echoue sans message.
+        const fs = require('fs'), path = require('path');
+        const lire = f => fs.readFileSync(path.join(__dirname, f), 'utf8');
+        const sw = lire('sw.js');
+        const declares = new Set((sw.match(/'\.\/([^']+)'/g) || []).map(x => x.slice(3, -1)));
+        ['index.html', 'index_modern.html'].forEach(ui => {
+            const html = lire(ui);
+            const scripts = [...html.matchAll(/<script src="([^"]+)"/g)].map(m => m[1])
+                .filter(src => !/^https?:|^\/\//.test(src))      // CDN : hors du cache local
+                .map(src => src.replace(/^\.\//, ''));
+            const manquants = scripts.filter(src => !declares.has(src));
+            assert.deepStrictEqual(manquants, [],
+                ui + ' charge des scripts absents de APP_ASSETS/DATA_ASSETS de sw.js : ' + manquants.join(', ')
+                + '\nHors ligne, ces fichiers ne seront pas servis.');
+        });
+    });
     test('Vaccination : statut, date et aller-retour JSON', () => {
         const { sandbox } = require('./oracle_harness').loadApp();
         const vm = require('vm');
