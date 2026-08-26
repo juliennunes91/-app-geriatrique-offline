@@ -68,7 +68,8 @@ function _collectPatientData() {
         suspended: window.suspendedMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id })),
         paam: (typeof window.paamSerialize === 'function') ? window.paamSerialize() : undefined,
         conciliation: (typeof window.conciliationSerialize === 'function') ? window.conciliationSerialize() : undefined,
-        psyScores: (typeof window.psyScoresSerialize === 'function') ? window.psyScoresSerialize() : undefined
+        psyScores: (typeof window.psyScoresSerialize === 'function') ? window.psyScoresSerialize() : undefined,
+        vaccination: (typeof window.vaccinationSerialize === 'function') ? window.vaccinationSerialize() : undefined
     };
 }
 
@@ -129,6 +130,8 @@ function _restorePatientData(data) {
     if (data.conciliation && typeof window.conciliationRestore === 'function') window.conciliationRestore(data.conciliation);
     // Restaurer les scores psychiatriques (AIMS, métabolique) — Item 3.
     if (data.psyScores && typeof window.psyScoresRestore === 'function') window.psyScoresRestore(data.psyScores);
+    // Restaurer le statut vaccinal.
+    if (data.vaccination && typeof window.vaccinationRestore === 'function') window.vaccinationRestore(data.vaccination);
     if (typeof renderTags === 'function') renderTags();
     if (typeof calculerDFG === 'function') calculerDFG(false);
 }
@@ -520,6 +523,11 @@ function buildPdfContent() {
     // Synthèse pharmaceutique (onglet « Avis pharma ») — 2ᵉ position
     if (window.conciliationData && window.conciliationData.includeInPdf && typeof window.buildConciliationReportBlock === 'function') {
         html += window.buildConciliationReportBlock();
+    }
+
+    // Statut vaccinal (onglet « Vaccination ») — sur demande explicite.
+    if (window.vaccinationData && window.vaccinationData.includeInPdf && typeof window.buildVaccinationReportBlock === 'function') {
+        html += window.buildVaccinationReportBlock();
     }
 
     // Bandeau saisies aberrantes (synthData.aberrantInputs) — en TÊTE pour visibilité
@@ -932,6 +940,8 @@ window.resetPatient = function() {
     if (typeof window.conciliationReset === 'function') window.conciliationReset();
     // Purger les scores psychiatriques (AIMS, syndrome métabolique) — Item 3.
     if (typeof window.psyScoresReset === 'function') window.psyScoresReset();
+    // Purger le statut vaccinal — le carnet du patient precedent n'engage pas le suivant.
+    if (typeof window.vaccinationReset === 'function') window.vaccinationReset();
 
     // 2. Réinitialiser les scores globaux
     globalQT_CountKR = 0; globalQT_CountCR_PR = 0;

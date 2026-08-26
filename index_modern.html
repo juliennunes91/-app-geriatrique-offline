@@ -908,6 +908,7 @@
                         <div id="myTab" class="flex min-w-max" role="tablist">
                             <button class="nav-link tab-btn active px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-secondary text-secondary bg-secondary/5 transition-colors" data-tab="synthese" role="tab" aria-selected="true">Synthèse</button>
                             <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="paam" role="tab" aria-selected="false">PAAM</button>
+                            <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="vaccination" role="tab" aria-selected="false">Vaccination</button>
                             <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="conciliation" role="tab" aria-selected="false">Avis pharma</button>
                             <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="eviter" role="tab" aria-selected="false">Éviter</button>
                             <button class="nav-link tab-btn px-3 py-2.5 text-[11px] font-semibold whitespace-nowrap border-b-2 border-transparent text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-tab="initier" role="tab" aria-selected="false">Omissions</button>
@@ -928,6 +929,9 @@
                         </div>
                         <div class="tab-pane" id="tab-conciliation" role="tabpanel" data-print-title="Synthèse pharmaceutique gériatrique">
                             <div id="conciliation-container" class="text-sm text-on-surface-variant">Chargement de la synthèse pharmaceutique…</div>
+                        </div>
+                        <div class="tab-pane" id="tab-vaccination" role="tabpanel" data-print-title="Statut vaccinal">
+                            <div id="vaccination-container" class="text-sm text-on-surface-variant">Chargement du statut vaccinal…</div>
                         </div>
                         <div class="tab-pane" id="tab-eviter" role="tabpanel" data-print-title="Prescriptions à éviter"><div id="alertes-eviter" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
                         <div class="tab-pane" id="tab-initier" role="tabpanel" data-print-title="Omissions thérapeutiques"><div id="alertes-initier" class="text-sm text-on-surface-variant" aria-live="polite">Cliquez sur Analyser...</div></div>
@@ -993,7 +997,7 @@
 
 <!-- Footer -->
 <footer class="fixed bottom-0 text-[0.68rem] text-on-surface-variant bg-surface-container-lowest/92 px-3 py-1 border-t border-r border-outline-variant rounded-tr-md z-40 leading-tight max-w-[420px] pointer-events-none no-print" style="backdrop-filter:blur(4px); left:16rem;">
-    version 2.51 — créé par Dr Julien Nunes à l'aide de l'IA<br>
+    version 2.60 — créé par Dr Julien Nunes à l'aide de l'IA<br>
     Merci aux testeurs (Dr Juliette Muffet)<br>
     <em>Outil d'aide à la décision pharmaco-clinique. Résultats à valider par l'utilisateur.</em>
 </footer>
@@ -1091,6 +1095,7 @@
 <script src="app_paam.js"></script>
 <script src="app_conciliation.js"></script>
 <script src="app_psy_scores.js"></script>
+<script src="app_vaccination.js"></script>
 <script src="ocr_module.js"></script>
 <script src="child_pugh_adaptations.js"></script>
 <script src="composite_scores.js"></script>

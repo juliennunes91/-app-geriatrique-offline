@@ -41,6 +41,34 @@ L'export PDF GeriaAssist intègre l'annexe PAAM si l'utilisateur a coché « Inc
 la PAAM dans l'export PDF » (toggle dans l'onglet). Un bouton **Export PDF PAAM
 seul** génère un PDF dédié (annexe 1 du document du CH).
 
+## Onglet Vaccination
+
+Relevé du carnet vaccinal du sujet âgé. Module dédié : `app_vaccination.js` (chargé
+après `app_psy_scores.js`), conteneur `#vaccination-container` dans `tab-vaccination`
+(présent dans les deux UIs), modèle `window.vaccinationData`.
+
+**Quatre statuts, dont un qui n'est pas un détail d'ergonomie** : `fait` (avec date),
+`a_faire`, `refus`, et surtout **`inconnu`** — le cas le plus fréquent en pratique,
+quand le carnet n'est pas disponible. Un vaccin dont on ne sait rien n'est ni fait ni à
+faire : le noter « à faire » expose à une injection redondante, le noter « fait » à une
+absence de protection tenue pour acquise. Le rapport lui consacre donc sa propre
+rubrique, « statut non documenté — à vérifier au carnet ».
+
+- **Invariant statut/date** : quitter `fait` purge la date. Une date de vaccination sans
+  vaccination faite est une contradiction que l'export irait imprimer. Testé, et validé
+  par mutation.
+- Liste de référence pré-remplie au statut `inconnu` (grippe, pneumocoque, COVID-19,
+  dTP, zona, VRS) — **repères de périodicité, non des recommandations opposables** : le
+  calendrier vaccinal en vigueur prévaut. Le pré-remplissage est non destructif.
+- Les trois critères START v3 sur les vaccins (`IN_L01`, `IN_L02`, `IN_L03`) sont
+  déclarés `type: "manual_review"` : le moteur les rejette d'emblée et ils ne se
+  déclenchent jamais (ils font partie des 13 règles indéclenchables par construction).
+  Cet onglet est l'endroit où cette revue manuelle a lieu.
+- Sérialisé dans l'export JSON (clé `vaccination`), purgé par `resetPatient()`, intégré
+  au PDF de synthèse sur toggle explicite (`buildVaccinationReportBlock`).
+- `app_vaccination.js` est chargé par `oracle_harness.js` : ses invariants sont testables
+  sans navigateur, contrairement à PAAM et à l'avis pharmaceutique.
+
 ## Maladie psychiatrique primaire chronique (psychogériatrie)
 
 Patients gériatriques porteurs d'une pathologie psychiatrique **chronique

@@ -931,6 +931,50 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!has(cas(i), b7) && !has(cas(i), b8), i + ' : indication de surcharge, aucun des deux');
         });
     });
+    test('Vaccination : statut, date et aller-retour JSON', () => {
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const vm = require('vm');
+        const run = expr => JSON.parse(vm.runInContext('JSON.stringify(' + expr + ')', sandbox));
+        const exec = code => vm.runInContext(code, sandbox);
+
+        exec('window.vaccinationReset();');
+        const ref = run('window.vaccinationData.lignes.length');
+        assert.ok(ref >= 5, 'la liste de reference pre-remplit la grille, vu ' + ref);
+        assert.strictEqual(run("window.vaccinationData.lignes.filter(l=>l.statut!=='inconnu').length"), 0,
+            'tout part au statut INCONNU : ni fait, ni a faire');
+
+        // Le couplage statut/date est l'invariant central : une date de vaccination
+        // sans vaccination faite est une contradiction que l'export irait imprimer.
+        exec("var _id = window.vaccinationData.lignes[0].id;");
+        exec("window.vaccinationSetLine(_id,'statut','fait'); window.vaccinationSetLine(_id,'date','2025-10-14');");
+        assert.strictEqual(run('window.vaccinationData.lignes[0].date'), '2025-10-14', 'date enregistree');
+        exec("window.vaccinationSetLine(_id,'statut','a_faire');");
+        assert.strictEqual(run('window.vaccinationData.lignes[0].date'), '',
+            'quitter « fait » purge la date — pas de date orpheline');
+
+        // Pre-remplissage non destructif : il ne touche jamais une ligne saisie.
+        exec("window.vaccinationSetLine(_id,'statut','fait'); window.vaccinationSetLine(_id,'date','2025-10-14');");
+        const avant = run('window.vaccinationData.lignes.length');
+        exec('window.vaccinationAutofillRefresh();');
+        assert.strictEqual(run('window.vaccinationData.lignes.length'), avant, 'aucun doublon reintroduit');
+        assert.strictEqual(run('window.vaccinationData.lignes[0].date'), '2025-10-14', 'la saisie survit au pre-remplissage');
+
+        // Aller-retour de serialisation (export/import JSON patient).
+        const snap = run('window.vaccinationSerialize()');
+        exec('window.vaccinationReset();');
+        assert.strictEqual(run("window.vaccinationData.lignes.filter(l=>l.statut==='fait').length"), 0, 'reset purge le carnet');
+        exec('window.vaccinationRestore(' + JSON.stringify(snap) + ');');
+        assert.strictEqual(run('window.vaccinationData.lignes[0].date'), '2025-10-14', 'restauration fidele');
+
+        // Le bloc PDF distingue les trois etats — un vaccin au statut inconnu ne doit
+        // jamais etre annonce comme « a faire » (injection redondante) ni comme « fait »
+        // (defaut de protection suppose acquis).
+        const bloc = vm.runInContext('window.buildVaccinationReportBlock()', sandbox);
+        assert.ok(/Statut non document/.test(bloc), 'les statuts inconnus ont leur propre rubrique');
+        assert.ok(/Vaccinations r.alis.es/.test(bloc) && /14\/10\/2025/.test(bloc), 'le fait est date, au format francais');
+        const rubriqueInconnus = (bloc.split('Statut non document')[1] || '').split('</div>')[0];
+        assert.ok(!/Grippe/.test(rubriqueInconnus), 'un vaccin fait ne figure pas parmi les statuts inconnus');
+    });
     test('Bornes biologiques : pas de « OK » vert par defaut', () => {
         // _bioStatusBadge ne connaissait que six parametres et rendait un badge VERT
         // pour tous les autres : une GGT a 138, une albumine a 34 et une CRP a 10

@@ -113,7 +113,11 @@ const APP_FILES = [
     'geria_integration_module.js', 'utils.js', 'patient_state.js', 'drug_classes.js',
     'geria_engine_v2.js', 'app_core.js', 'app_ui.js',
     'child_pugh_adaptations.js', 'composite_scores.js', 'app_analysis.js',
-    'text_extractor.js'
+    'text_extractor.js',
+    // Onglet Vaccination : module autonome, chargé pour que ses invariants
+    // (couplage statut/date, pré-remplissage non destructif, aller-retour JSON)
+    // soient testables sans navigateur.
+    'app_vaccination.js'
 ];
 
 function loadApp() {
