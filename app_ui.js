@@ -408,6 +408,31 @@ function openMedPrecisionModal(dci, opts) {
     const first = card.querySelector('select,input'); if (first && first.focus) first.focus();
 }
 
+// Le libellé d'un médicament vaut « DCI (princeps) », et certains princeps sont des
+// paragraphes entiers : la naloxone en compte 260 caractères. Bootstrap posant
+// `white-space: nowrap` sur `.badge`, la pastille faisait 2024 px de large dans une
+// colonne de 484 px — les commandes de fin de ligne (suspendre / préciser / retirer)
+// partaient hors écran et devenaient INATTEIGNABLES.
+// La pastille devient donc une boîte flex bornée à la largeur de son conteneur : seul
+// le LIBELLÉ se rétrécit et se termine par une ellipse, les boutons ne bougent jamais.
+// La DCI ouvrant le libellé, c'est la liste des princeps qui est coupée — et le texte
+// complet reste disponible au survol.
+// Styles posés EN LIGNE : l'UI classique est en Bootstrap, la moderne en Tailwind, et
+// une règle écrite dans une seule des deux feuilles ne corrigerait qu'une interface.
+function _tagBadgeLayout(span) {
+    span.style.display = 'inline-flex';
+    span.style.alignItems = 'center';
+    span.style.maxWidth = '100%';
+    span.style.verticalAlign = 'middle';
+}
+function _tagLabelNode(texte) {
+    const lbl = document.createElement('span');
+    lbl.textContent = texte;
+    lbl.title = texte;                    // le libellé entier reste consultable
+    lbl.style.cssText = 'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;';
+    return lbl;
+}
+
 function renderTags() {
     let elComorb = document.getElementById('selectedComorbs'); let elMeds = document.getElementById('selectedMeds');
     if(elComorb) {
@@ -423,15 +448,16 @@ function renderTags() {
         const frag = document.createDocumentFragment();
         activeMeds.forEach(m => {
             let span = document.createElement('span'); span.className = 'badge bg-primary tag-badge';
-            let labelNode = document.createTextNode(m.label + ' ');
+            _tagBadgeLayout(span);
+            let labelNode = _tagLabelNode(m.label + ' ');
             let btnSuspend = document.createElement('span');
-            btnSuspend.textContent = '⏸️'; btnSuspend.title = 'Suspendre'; btnSuspend.style.cursor = 'pointer';
+            btnSuspend.textContent = '⏸️'; btnSuspend.title = 'Suspendre'; btnSuspend.style.cssText = 'cursor:pointer;flex:none;margin-left:4px;';
             btnSuspend.setAttribute('aria-label', 'Suspendre ' + m.dci);
             btnSuspend.setAttribute('role', 'button'); btnSuspend.setAttribute('tabindex', '0');
             btnSuspend.addEventListener('click', () => toggleSuspend(m.dci));
             btnSuspend.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSuspend(m.dci); } });
             let btnRemove = document.createElement('span');
-            btnRemove.textContent = '✖'; btnRemove.style.cssText = 'cursor:pointer;color:#ffcccc;margin-left:4px;';
+            btnRemove.textContent = '✖'; btnRemove.style.cssText = 'cursor:pointer;color:#ffcccc;margin-left:4px;flex:none;';
             btnRemove.setAttribute('aria-label', 'Retirer ' + m.dci);
             btnRemove.setAttribute('role', 'button'); btnRemove.setAttribute('tabindex', '0');
             btnRemove.addEventListener('click', () => removeMed(m.dci));
@@ -445,7 +471,7 @@ function renderTags() {
             if (_qd && _qd.libelle) {
                 let badge = document.createElement('span');
                 badge.textContent = ' ⚠QT?';
-                badge.style.cssText = 'margin-left:4px;font-size:0.72em;font-weight:700;cursor:help;opacity:0.9;';
+                badge.style.cssText = 'margin-left:4px;font-size:0.72em;font-weight:700;cursor:help;opacity:0.9;flex:none;';
                 badge.title = _qd.libelle + (_qd.detail ? '\n' + _qd.detail : '') + (_qd.source ? '\nSource : ' + _qd.source : '');
                 badge.setAttribute('aria-label', 'Classification QT non consensuelle pour ' + m.dci + ' : ' + _qd.libelle);
                 span.appendChild(badge);
@@ -455,7 +481,7 @@ function renderTags() {
                 let btnEdit = document.createElement('span');
                 btnEdit.textContent = hasP ? '📝' : '✎';
                 btnEdit.title = hasP ? 'Modifier les précisions (durée/dose/indication)' : 'Préciser durée/dose/indication';
-                btnEdit.style.cssText = 'cursor:pointer;margin-left:4px;';
+                btnEdit.style.cssText = 'cursor:pointer;margin-left:4px;flex:none;';
                 btnEdit.setAttribute('aria-label', 'Préciser ' + m.dci);
                 btnEdit.setAttribute('role', 'button'); btnEdit.setAttribute('tabindex', '0');
                 btnEdit.addEventListener('click', () => openMedPrecisionModal(m.dci, { force: true }));
@@ -467,15 +493,16 @@ function renderTags() {
         });
         window.suspendedMeds.forEach(m => {
             let span = document.createElement('span'); span.className = 'badge bg-light text-muted border tag-badge'; span.style.textDecoration = 'line-through';
-            let labelNode = document.createTextNode(m.label + ' ');
+            _tagBadgeLayout(span);
+            let labelNode = _tagLabelNode(m.label + ' ');
             let btnResume = document.createElement('span');
-            btnResume.textContent = '▶️'; btnResume.title = 'Réactiver'; btnResume.style.cursor = 'pointer';
+            btnResume.textContent = '▶️'; btnResume.title = 'Réactiver'; btnResume.style.cssText = 'cursor:pointer;flex:none;margin-left:4px;';
             btnResume.setAttribute('aria-label', 'Réactiver ' + m.dci);
             btnResume.setAttribute('role', 'button'); btnResume.setAttribute('tabindex', '0');
             btnResume.addEventListener('click', () => toggleSuspend(m.dci));
             btnResume.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSuspend(m.dci); } });
             let btnDel = document.createElement('span');
-            btnDel.textContent = '✖'; btnDel.style.cssText = 'cursor:pointer;margin-left:4px;';
+            btnDel.textContent = '✖'; btnDel.style.cssText = 'cursor:pointer;margin-left:4px;flex:none;';
             btnDel.setAttribute('aria-label', 'Supprimer ' + m.dci);
             btnDel.setAttribute('role', 'button'); btnDel.setAttribute('tabindex', '0');
             btnDel.addEventListener('click', () => { window.suspendedMeds = window.suspendedMeds.filter(x => x.dci !== m.dci); renderTags(); });

@@ -931,6 +931,24 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!has(cas(i), b7) && !has(cas(i), b8), i + ' : indication de surcharge, aucun des deux');
         });
     });
+    test('Pastille medicament : le libelle ne chasse jamais les commandes', () => {
+        // Le libelle vaut « DCI (princeps) » et certains princeps sont des paragraphes :
+        // 260 caracteres pour la naloxone. Bootstrap posant white-space:nowrap sur
+        // .badge, la pastille faisait 2024 px dans une colonne de 484 px et les
+        // commandes de fin de ligne partaient hors ecran. Le rendu doit desormais
+        // borner le LIBELLE, jamais les boutons.
+        const src = require('fs').readFileSync(require('path').join(__dirname, 'app_ui.js'), 'utf8');
+        assert.ok(/function _tagLabelNode/.test(src) && /text-overflow:ellipsis/.test(src),
+            'le libelle doit etre rendu dans un noeud borne par une ellipse');
+        assert.ok(/function _tagBadgeLayout/.test(src) && /inline-flex/.test(src) && /maxWidth = '100%'/.test(src),
+            'la pastille doit etre une boite flex bornee a la largeur de son conteneur');
+        // Chaque commande porte flex:none, sinon le libelle la comprimerait a zero.
+        const commandes = src.match(/btn(?:Suspend|Remove|Edit|Resume|Del)\.style\.cssText = '[^']*'/g) || [];
+        assert.ok(commandes.length >= 5, 'les cinq commandes doivent porter un style explicite, vu ' + commandes.length);
+        const sansFlex = commandes.filter(c => !/flex:none/.test(c));
+        assert.deepStrictEqual(sansFlex, [],
+            'une commande sans flex:none peut etre comprimee par un libelle long : ' + sansFlex.join(' | '));
+    });
     test('Service worker : tout script charge par l\'UI est dans le cache hors ligne', () => {
         // CLAUDE.md impose de declarer chaque nouveau fichier applicatif dans sw.js.
         // Rien ne le verifiait : un oubli ne se voit qu'a l'usage, hors ligne, chez

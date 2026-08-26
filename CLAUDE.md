@@ -290,6 +290,21 @@ grand écran doit rester inchangé.
   `margin-left:-2.5em` ; la classe utilitaire `p-2` écrase ce padding et fait
   **sortir le curseur de son conteneur**. Ajouter un `padding-left` explicite.
 
+## Pastilles de médicament — le libellé ne chasse jamais les commandes
+
+Le libellé d'une pastille vaut « DCI (princeps) », et certains `princeps` sont des
+paragraphes : **260 caractères pour la naloxone**, 56 molécules au-dessus de 60. Bootstrap
+posant `white-space: nowrap` sur `.badge`, la pastille faisait **2024 px de large dans une
+colonne de 484 px** — suspendre, préciser et retirer partaient hors écran et devenaient
+inatteignables.
+
+`_tagBadgeLayout()` / `_tagLabelNode()` (`app_ui.js`) font de la pastille une boîte
+**flex bornée à la largeur de son conteneur** : seul le LIBELLÉ se rétrécit et se termine
+par une ellipse (la DCI ouvrant le libellé, c'est la liste des princeps qui est coupée),
+le texte entier restant en infobulle. Chaque commande porte **`flex:none`** — sans quoi un
+libellé long la comprimerait à zéro. Styles posés **en ligne** : une règle écrite dans une
+seule des deux feuilles ne corrigerait qu'une interface.
+
 ## Criticité affichée — la sévérité déclarée est un plancher
 
 `computeAlertScore()` (`geria_engine_v2.js`) faisait dépendre la **couleur** d'une
