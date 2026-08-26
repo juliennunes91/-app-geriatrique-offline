@@ -488,8 +488,16 @@ Tout est traité **au rendu** (`buildPdfContent`, `app_core.js`) — on ne réé
   les deux critères « diurétique de l'anse » sur l'indication). Les groupes sont
   **déclarés par identifiant de règle**, jamais devinés par ressemblance — une
   heuristique ferait disparaître une alerte réellement distincte.
-- Le bloc « Interactions critiques » ne réimprime plus ce que « Top actions » vient
-  d'afficher, et le panneau des scores apparie chaque `<strong>` au texte qui le suit
+- **« Top actions prioritaires » ne figure PAS dans le rapport** : ce bloc ne contenait
+  rien qui ne soit ailleurs (interactions critiques, alertes danger, omissions), tronqué
+  à 130 caractères. Il reste à l'écran, où il sert de point d'entrée.
+- **Les plafonds de troncature sont hauts** (700 caractères pour une alerte `danger`,
+  450 pour une `warning`) et `clamp()` coupe à la fin d'une phrase : le rapport a maigri
+  par le nombre d'entrées, pas en amputant les messages.
+- **Le commentaire libre est encadré et suivi d'un filet** « Analyse automatisée
+  GeriaAssist » : c'est la seule partie écrite par un humain, et fondue dans les mêmes
+  cartes grises que le reste, elle se lisait comme une conclusion de l'application.
+- Le panneau des scores apparie chaque `<strong>` au texte qui le suit
   (il affichait le score ACB avec le commentaire du CIA) après avoir retiré
   l'infobulle `.score-tooltip`, qui déversait la grille de cotation complète.
 

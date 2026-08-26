@@ -496,12 +496,24 @@ function buildPdfContent() {
         html += `<div class="pdf-block" style="${blockStyle}font-size:12px;font-weight:700;color:${_rcol};background:${rgba(_rcol, 0.07)};border-left:4px solid ${_rcol};border-radius:0 5px 5px 0;padding:8px 12px;">🫘 Le débit de filtration glomérulaire estimé est de ${escapeHtml(dfg)} ml/min${_mlbl}, soit ${_stg}.</div>`;
     }
 
-    // Conclusion générale (« commentaire libre » de la page 1) — en haut du rapport
+    // Commentaire libre du prescripteur — en haut du rapport.
+    // C'est la SEULE partie du document qu'un humain a écrite : tout le reste est
+    // produit par l'analyse. Fondu dans la même carte grise que les blocs générés, il
+    // se lisait comme une conclusion de l'application. Il est donc encadré, titré au
+    // nom de son auteur, et suivi d'un filet qui marque le début de la partie
+    // automatique — pour qu'un lecteur tiers ne puisse pas attribuer à la machine un
+    // jugement clinique, ni l'inverse.
     const _freeText = (document.getElementById('freeTextNote')?.value || '').trim();
     if (_freeText) {
-        html += `<div class="pdf-block" style="${blockStyle}${S.card}background:#f8f9fa;border-color:#c8ced5;">
-            ${secTitle('Conclusion générale', '#495057')}
+        html += `<div class="pdf-block" style="page-break-inside:avoid;break-inside:avoid;margin:0 0 6px 0;border:2px solid #495057;border-radius:6px;padding:11px 13px;background:#fff;">
+            <div style="margin:0 0 7px 0;padding-bottom:5px;border-bottom:1px solid ${rgba('#495057', 0.35)};">
+                <span style="font-size:10.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#495057;">✍️ Commentaire du prescripteur</span>
+                <span style="font-size:8.5px;font-weight:400;color:#8a939c;margin-left:7px;">saisi manuellement</span>
+            </div>
             <div style="${S.body}white-space:pre-wrap;">${escapeHtml(_freeText)}</div>
+        </div>
+        <div style="margin:0 0 14px 0;text-align:center;font-size:8px;color:#a9b0b7;letter-spacing:0.08em;text-transform:uppercase;">
+            <span style="display:inline-block;border-top:1px solid #e4e8ec;padding-top:5px;width:100%;">Analyse automatisée GeriaAssist</span>
         </div>`;
     }
 
@@ -548,18 +560,10 @@ function buildPdfContent() {
         </div>`;
     }
 
-    // Top actions prioritaires (synthData.topActions)
-    if (sd && sd.topActions && sd.topActions.length > 0) {
-        const items = sd.topActions.map(a => {
-            const lbg = a.level === 'danger' ? '#dc3545' : a.level === 'warning' ? '#ffc107' : '#0dcaf0';
-            const lfg = a.level === 'warning' ? '#000' : '#fff';
-            return `<li style="margin:0 0 6px 0;${S.body}padding-left:2px;">${a.icon} <span style="background:${lbg};color:${lfg};border-radius:2px;padding:1px 5px;font-size:7.5px;font-weight:bold;">${escapeHtml(a.kind)}</span> ${escapeHtml(a.txt)}</li>`;
-        }).join('');
-        html += `<div class="pdf-block" style="${blockStyle}border-left:4px solid #dc3545;background:#fff8e1;border-radius:0 5px 5px 0;padding:10px 12px;">
-            ${secTitle(`⚡ Top ${sd.topActions.length} actions prioritaires`, '#b8860b')}
-            <ol style="margin:0 0 -6px 17px;padding:0;">${items}</ol>
-        </div>`;
-    }
+    // « Top actions prioritaires » a été RETIRÉ du rapport : ce bloc ne contenait rien
+    // qui ne figure ailleurs — il reprenait les interactions critiques, les alertes
+    // danger et les omissions déjà rendues dans leurs sections respectives, tronquées
+    // à 130 caractères. Il reste affiché à l'écran, où il sert de point d'entrée.
 
     // Mécanismes récurrents (synthData.mechanismClusters) — compact
     if (sd && sd.mechanismClusters && sd.mechanismClusters.length > 0) {
@@ -579,25 +583,18 @@ function buildPdfContent() {
         </div>`;
     }
 
-    // Interactions DANGER (synthData.interactCritical) — top 5.
-    // Les trois premières alimentent déjà « Top actions prioritaires » : sur ce
-    // dossier, les deux encadrés affichaient les MÊMES trois lignes l'une sous
-    // l'autre. On ne réimprime donc que ce que le lecteur n'a pas encore lu.
+    // Interactions DANGER (synthData.interactCritical). Le bloc « Top actions » ayant
+    // disparu, il n'y a plus de doublon à écarter : la section les porte toutes, en
+    // entier — c'est la seule place du rapport où elles figurent.
     if (sd && sd.interactCritical && sd.interactCritical.length > 0) {
-        const dejaVu = new Set((sd.topActions || []).filter(a => a.kind === 'INTERACTION')
-            .map(a => String(a.txt || '').replace(/\s+/g, ' ').trim().slice(0, 60).toLowerCase()));
-        const restantes = sd.interactCritical.filter(it =>
-            !dejaVu.has(String(it.text || '').replace(/\s+/g, ' ').trim().slice(0, 60).toLowerCase()));
-        if (restantes.length > 0) {
-            const its = restantes.slice(0, 5).map(it => {
-                const txt = clamp((it.text || '').replace(/<[^>]+>/g, ''), 200);
-                return `<li style="${S.body}margin:0 0 6px 0;">${escapeHtml(txt)}</li>`;
-            }).join('');
-            html += `<div class="pdf-block" style="${blockStyle}${S.card}border-left:4px solid #dc3545;border-radius:0 5px 5px 0;">
-                ${secTitle('⚠️ Autres interactions critiques', '#dc3545', `${Math.min(5, restantes.length)}${restantes.length > 5 ? ' / ' + restantes.length : ''}`)}
-                <ul style="margin:0 0 -6px 15px;padding:0;">${its}</ul>
-            </div>`;
-        }
+        const its = sd.interactCritical.map(it => {
+            const txt = texteClinique((it.text || '').replace(/<[^>]+>/g, ''));
+            return `<li style="${S.body}margin:0 0 6px 0;">${escapeHtml(txt)}</li>`;
+        }).join('');
+        html += `<div class="pdf-block" style="${blockStyle}${S.card}border-left:4px solid #dc3545;border-radius:0 5px 5px 0;">
+            ${secTitle('⚠️ Interactions critiques', '#dc3545', `${sd.interactCritical.length}`)}
+            <ul style="margin:0 0 -6px 15px;padding:0;">${its}</ul>
+        </div>`;
     }
 
     // 2 colonnes : Comorbidités + Médicaments
@@ -661,7 +658,7 @@ function buildPdfContent() {
                     n = n.nextSibling;
                 }
                 detail = detail.replace(/\s+/g, ' ').replace(/^[\s—–-]+/, '').trim();
-                html += `<div style="${S.item}${lignes ? 'border-top:' + S.rule + ';' : ''}"><strong>${escapeHtml(label)}</strong> <span style="color:${S.muted};">${escapeHtml(clamp(detail, 240))}</span></div>`;
+                html += `<div style="${S.item}${lignes ? 'border-top:' + S.rule + ';' : ''}"><strong>${escapeHtml(label)}</strong> <span style="color:${S.muted};">${escapeHtml(clamp(detail, 420))}</span></div>`;
                 lignes++;
             });
         });
@@ -741,7 +738,12 @@ function buildPdfContent() {
             const strong = a.querySelector('strong');
             const title = fus ? fus.titre : (strong ? strong.textContent.trim() : '');
             const brut = fus ? fus.texte : sansRedite(title, detailDe(a));
-            const detail = brut ? texteClinique(fus ? brut : clamp(brut, niveau(a) === 'danger' ? 260 : 150)) : '';
+            // Plafonds volontairement HAUTS : le lecteur se plaignait de phrases
+            // coupees en plein raisonnement. Le rapport ayant maigri par ailleurs
+            // (points de methode regroupes, fusions declarees, « Top actions » retire),
+            // il peut porter le message entier. clamp() coupe de toute facon a la fin
+            // d'une phrase — au-dela de ces plafonds, le texte reste donc lisible.
+            const detail = brut ? texteClinique(fus ? brut : clamp(brut, niveau(a) === 'danger' ? 700 : 450)) : '';
             // Titre et détail sur 2 lignes : à 28 entrées, le format « titre — détail »
             // au fil du texte rendait chaque item indiscernable du suivant.
             html += `<div class="pdf-block" style="${S.item}${i ? 'border-top:' + S.rule + ';' : ''}">
@@ -828,7 +830,7 @@ function buildPdfContent() {
                     const avecOrigine = sc <= 7;
                     ligne(`Surveillance d'un traitement, ${freqLabels[sc] || 'selon le protocole'} :`,
                         parEcheance[sc].map(x => avecOrigine
-                            ? `${escapeHtml(x.nom)} <em style="color:#8a939c;">(${escapeHtml(x.meds.slice(0, 3).join(', '))}${x.meds.length > 3 ? '…' : ''})</em>`
+                            ? `${escapeHtml(x.nom)} <em style="color:#8a939c;">(${escapeHtml(x.meds.slice(0, 3).join(', '))}${x.meds.length > 3 ? ' et ' + (x.meds.length - 3) + ' autre' + (x.meds.length > 4 ? 's' : '') : ''})</em>`
                             : escapeHtml(x.nom)).join(avecOrigine ? ' ; ' : ', ') + '.');
                 });
             }
