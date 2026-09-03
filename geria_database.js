@@ -8348,7 +8348,7 @@ const MASTER_DB = {
                     "cia": 3,
                     "scores": {"qt":2,"sero":0,"saign":0,"chute":3,"sedat":3,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,9",
+                    "albumine": "90%",
                     "qt_risque": "? Risque Possible (PR)",
                     "ddi_interact": "QT-allongeurs (Cyamémazine = PR), Autres APP, Antagonistes D2, Lévodopa, Anticholinergiques (ACB=3), Sédatifs centraux, Lithium, Antihypertenseurs, IMAO, Inducteurs CYP, Inhibiteurs CYP3A4",
                     "ddi_interact_v2": [
@@ -23230,7 +23230,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,9",
+                    "albumine": "90%",
                     "qt_risque": "",
                     "ddi_interact": "Carbapénems (CI relative — ↓ valproate MAJEUR), Lamotrigine (↑ x2 → Stevens-Johnson), Aspirine (↑ valproate libre), AVK (↑ INR), Méthotrexate (↑ tox), Topiramate (hyperammoniémie), Inducteurs enzymatiques (↓ valproate), Sédatifs centraux, Zidovudine, IMAO",
                     "ddi_interact_v2": [
@@ -23320,7 +23320,7 @@ const MASTER_DB = {
                     "cia": 1,
                     "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
                     "bhe": "1.0",
-                    "albumine": "0,9",
+                    "albumine": "90%",
                     "qt_risque": "",
                     "ddi_interact": "Carbapénems (CI relative — ↓ valproate MAJEUR), Lamotrigine (↑ x2 → Stevens-Johnson), Aspirine (↑ valproate libre), AVK (↑ INR), Méthotrexate (↑ tox), Topiramate (hyperammoniémie), Inducteurs enzymatiques (↓ valproate), Sédatifs centraux, Zidovudine, IMAO",
                     "ddi_interact_v2": [

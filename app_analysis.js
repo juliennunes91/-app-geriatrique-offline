@@ -731,7 +731,10 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(_declare('chkAtcdUlcere')) ctxClinique.push("atcd_ulcere", "atcd_hemorragie_digestive");
     if(_declare('chkAspirineForte')) ctxClinique.push("dose_aspirine_elevee");
     if(_declare('chkInsulineSlidingScale')) ctxClinique.push("sliding_scale");
-    if(getVal('bioAlbumSg') > 0 && getVal('bioAlbumSg') < 30) ctxClinique.push("denutrition_severe");
+    // L'albuminémie n'est PAS un critère de dénutrition : le cadre GLIM la traite comme
+    // un marqueur d'INFLAMMATION et de pronostic. Le contexte s'appelait
+    // `denutrition_severe`, ce qui faisait dire à la donnée ce qu'elle ne dit pas.
+    if(getVal('bioAlbumSg') > 0 && getVal('bioAlbumSg') < 30) ctxClinique.push("hypoalbuminemie");
     if(_declare('chkFoie')) ctxClinique.push("hepatopathie");
     if(_declare('chkTvp')) ctxClinique.push("mtev");
     if(_declare('chkAvc')) ctxClinique.push("avc");
@@ -1913,6 +1916,23 @@ function analyserPrescription() {
     else if (bioValues['BIO_023'] > 0 && bioValues['BIO_023'] < 30) {
         addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Insuffisance en Vitamine D</strong> (${bioValues['BIO_023']} ng/mL — seuil recommandé ≥ 30)
             <br><em>Conduite :</em> Supplémentation cholécalciférol 800-1000 UI/j ou charge mensuelle, supplémenter calcium si apports insuffisants.</div>`, 'bio');
+    }
+
+    // --- Hypoalbuminémie : ce que l'albumine dit, et ce qu'elle ne dit PAS ---
+    // Le cadre GLIM ne retient pas l'albuminémie comme critère de dénutrition : elle
+    // chute sous l'effet de l'inflammation, de l'hémodilution ou d'une fuite rénale ou
+    // digestive, indépendamment des apports. La donner pour un marqueur nutritionnel
+    // ferait poser un diagnostic que le chiffre ne porte pas — et détournerait de la
+    // seule mesure utile, qui est de chercher la cause. Elle reste en revanche un
+    // marqueur pronostique fort, et elle modifie la pharmacologie des médicaments
+    // fortement liés (cf. SUP_ALB_01).
+    {
+        const alb = bioValues['BIO_035'];
+        if (alb > 0 && alb < 35) {
+            const severe = alb < 30;
+            addAlert('alertes-bio', `<div class="alert alert-${severe ? 'warning border-warning' : 'light border'} shadow-sm"><strong>${severe ? '⚠️' : 'ℹ️'} Albuminémie basse (${alb} g/L${severe ? '' : ' — norme ≥ 35'})</strong>
+                <br><small><em>Ce que cela signifie :</em> l'albuminémie est un marqueur d'<b>inflammation</b> et de <b>pronostic</b>, et non un critère de dénutrition — le cadre GLIM ne la retient pas pour ce diagnostic. Elle baisse avec l'inflammation, l'hémodilution, une fuite rénale ou digestive, indépendamment des apports alimentaires. <em>Conduite :</em> chercher la cause (syndrome inflammatoire, protéinurie, hépatopathie, entéropathie exsudative) et poser le diagnostic nutritionnel sur ses propres critères — perte de poids, indice de masse corporelle, masse musculaire.${severe ? ' Sous 30 g/L, penser aussi à la fraction libre des médicaments fortement liés aux protéines.' : ''}</small></div>`, 'bio');
+        }
     }
 
     // --- SYND_026 : Carence en Folates / B9 (< 7 nmol/L) ---

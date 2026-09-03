@@ -1013,6 +1013,46 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             });
         });
     });
+    test('Hypoalbuminemie : fraction libre, et ce que l\'albumine ne dit PAS', () => {
+        // Quand l'albuminemie chute, la fraction LIBRE d'un medicament fortement lie
+        // augmente : la concentration TOTALE peut rester normale alors que la forme
+        // active est elevee (Dore, Pharmacotherapy 2017, DOI 10.1002/phar.1965). La
+        // liste est CUREE — 177 molecules de la base sont a >= 85 %, les alerter toutes
+        // noierait le lecteur.
+        const re = /Hypoalbuminémie et médicament fortement lié/;
+        const cas = (meds, alb) => analyzeCase({ age: 82, sexe: 'F', meds,
+            bio: alb ? { bioAlbumSg: alb } : {} });
+        assert.ok(has(cas(['Valproate'], 26), re), 'valproate + albumine 26 : alerte');
+        assert.ok(has(cas(['Warfarine'], 26), re), 'AVK + albumine 26 : alerte');
+        assert.ok(!has(cas(['Valproate'], 38), re), 'albumine normale : pas d\'alerte');
+        assert.ok(!has(cas(['Valproate']), re), 'albuminemie NON dosee : ne rien affirmer');
+        assert.ok(!has(cas(['Amlodipine'], 26), re),
+            'molecule fortement liee mais HORS liste curee : pas d\'alerte');
+        // Declenchee sur l'albuminemie SEULE : pas besoin d'une hepatopathie declaree.
+        assert.ok(has(cas(['Phenytoine'], 28), re), 'sans Child-Pugh renseigne : alerte quand meme');
+
+        // L'albumine n'est pas un critere de denutrition (cadre GLIM).
+        const bio = alb => (analyzeCase({ age: 82, sexe: 'F', meds: ['Paracetamol'],
+            bio: { bioAlbumSg: alb } })._html['alertes-bio'] || '').replace(/<[^>]*>/g, ' ');
+        assert.ok(/marqueur d.\s*inflammation/i.test(bio(28)), 'le message doit nommer l\'inflammation');
+        assert.ok(/non un critère de dénutrition/i.test(bio(28)), 'et refuser le diagnostic nutritionnel');
+        assert.ok(!/Albuminémie basse/.test(bio(42)), 'albumine normale : aucun message');
+    });
+    test('EV_D16 : les SPC saisis desarment la regle, ils ne l\'arment jamais', () => {
+        // Le critere STOPP dit « sauf psychose ou SCPD » ; l'application le traduisait
+        // par « sauf demence ». Les symptomes psycho-comportementaux sont desormais lus —
+        // mais seulement pour DESARMER : leur absence dans le formulaire ne prouve pas
+        // leur absence chez le patient.
+        const re = /Antipsychotique comme hypnotique/;
+        const cas = o => analyzeCase({ age: 82, sexe: 'F', comorbs: o.comorbs || ['PAT_027'],
+            flags: o.flags, meds: ['Risperidone'] });
+        assert.ok(has(cas({}), re), 'insomnie seule : la regle se declenche');
+        assert.ok(!has(cas({ comorbs: ['PAT_027', 'PAT_010'] }), re), 'demence : desarmee (inchange)');
+        assert.ok(!has(cas({ flags: ['chkSpcPsychose'] }), re), 'SPC psychose : desarmee');
+        assert.ok(!has(cas({ flags: ['chkSpcAgitation'] }), re), 'SPC agitation : desarmee');
+        assert.ok(has(cas({ flags: ['chkSpcApathie'] }), re),
+            'une apathie n\'est pas une indication d\'antipsychotique : la regle reste');
+    });
     test('Saisie : la case et la comorbidite de la liste produisent le MEME etat', () => {
         // Un contexte clinique doit naitre du FAIT, pas du chemin de saisie. Declarer
         // « dysphagie » par la liste deroulante ne generait pas le contexte `dysphagie` :

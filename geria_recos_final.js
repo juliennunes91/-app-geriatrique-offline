@@ -816,7 +816,15 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["antipsychotique"],
                 comorbs: ["PAT_027"],
-                comorbs_absent: ["PAT_010", "PAT_011", "PAT_012", "PAT_041", "PAT_042", "PAT_015"]
+                comorbs_absent: ["PAT_010", "PAT_011", "PAT_012", "PAT_041", "PAT_042", "PAT_015"],
+                // Le critère STOPP dit « sauf psychose ou SCPD » ; l'application le
+                // traduisait par « sauf démence », faute de lire les symptômes
+                // psycho-comportementaux pourtant saisis. Ils sont désormais lus — mais
+                // seulement pour DÉSARMER la règle, jamais pour l'armer : leur absence
+                // dans le formulaire ne prouve pas leur absence chez le patient, et on
+                // ne déduit pas un fait d'une case non cochée.
+                contexte_clinique_absent: ["spc_psychose", "spc_agitation", "spc_insomnie",
+                                           "spc_desinhibition", "psychose_tardive"]
             },
             alternatives: "Hygiène du sommeil, mélatonine LP, trazodone faible dose"
         },
@@ -4224,6 +4232,43 @@ const RECOS_SUPPLEMENT = [
             contexte_clinique_absent: ["mtx_haute_dose"]
         },
         alternatives: "Acide folique 5 mg/sem (24-48 h après le MTX) ou acide folinique 5-10 mg/sem si MTX ≥ 15 mg/sem (BSR/NICE 2017)."
+    },
+    {
+        // ── Hypoalbuminémie et médicaments fortement liés ──────────────────────
+        // Quand l'albuminémie chute, la fraction LIBRE d'un médicament fortement lié
+        // augmente : la concentration TOTALE, celle que rend le laboratoire, peut rester
+        // normale alors que la forme active est élevée. Démontré pour le valproate —
+        // la concentration libre corrèle aux symptômes neurologiques indésirables
+        // (r = 0,384 ; p = 0,013) là où la totale ne corrèle pas (r = 0,187 ; p = 0,241),
+        // aire sous la courbe 0,776 contre 0,642 (Doré M. et al., Pharmacotherapy 2017 ;
+        // DOI 10.1002/phar.1965).
+        //
+        // LISTE VOLONTAIREMENT CURÉE, pas « tout médicament ≥ 90 % ». La base en compte
+        // 177 : les alerter tous noierait le lecteur, et pour la plupart aucune
+        // conséquence clinique de l'hypoalbuminémie n'est documentée. Ne figurent ici que
+        // les molécules pour lesquelles elle l'est.
+        //
+        // AUCUN FACTEUR DE CORRECTION N'EST PROPOSÉ, et c'est délibéré : les fractions
+        // libres observées vont de 22 à 83 % sans relation nette au poids, à l'âge, à la
+        // créatinine ni à la dose, et il n'existe pas de recommandation consensuelle
+        // d'adaptation posologique (VandenBerg A. et al., Ment Health Clin 2018 ;
+        // DOI 10.9740/mhc.2017.01.013). On alerte et on oriente vers le dosage libre —
+        // on ne calcule pas une correction que la littérature ne soutient pas.
+        //
+        // Déclenchée sur l'ALBUMINÉMIE SEULE, sans exiger d'hépatopathie déclarée : une
+        // albuminémie basse abaisse la liaison quelle qu'en soit la cause — inflammation,
+        // dénutrition, syndrome néphrotique, cirrhose.
+        id: "SUP_ALB_01", sources: ["Pharmacovigilance"],
+        titre: "Hypoalbuminémie et médicament fortement lié aux protéines",
+        message: "Albuminémie basse : pour un médicament fortement lié à l'albumine, la fraction LIBRE — la seule active — augmente alors que la concentration TOTALE rendue par le laboratoire peut rester normale, voire basse. Un dosage \u00ab dans la cible \u00bb n'exclut donc pas un surdosage. Surveiller les signes cliniques de surdosage plutôt que le seul chiffre, et demander la concentration LIBRE quand le laboratoire la propose (valproate, phénytoïne). Aucun facteur de correction n'est proposé ici : les fractions libres observées varient trop d'un patient à l'autre pour qu'un calcul soit défendable.",
+        severite: "warning",
+        condition: {
+            bio_strict: true,
+            med_keys: ["valproate", "divalproate", "phenytoine", "ceftriaxone", "avk",
+                       "sulfamide_hypoglycemiant", "ains"],
+            bio: { "BIO_035": { op: "<", val: 30 } }
+        },
+        alternatives: "Corriger d'abord la cause de l'hypoalbuminémie quand elle est réversible. Pour le valproate et la phénytoïne, préférer le dosage de la fraction libre à l'ajustement sur la concentration totale."
     },
     {
         // La terbinafine orale est une cure de trois mois, souvent pour une onychomycose

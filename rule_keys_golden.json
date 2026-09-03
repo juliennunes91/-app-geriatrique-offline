@@ -529,6 +529,9 @@
  "carvedilol": [
   "Carvedilol"
  ],
+ "ceftriaxone": [
+  "Ceftriaxone"
+ ],
  "celecoxib": [
   "Celecoxib"
  ],
@@ -692,6 +695,11 @@
   "Spironolactone",
   "Torasemide",
   "Triamterene"
+ ],
+ "divalproate": [
+  "Divalproate de sodium",
+  "Valproate",
+  "Valpromide"
  ],
  "domperidone": [
   "Domperidone"
@@ -1554,6 +1562,11 @@
  ],
  "sulfamethoxazole": [
   "Cotrimoxazole"
+ ],
+ "sulfamidehypoglycemiant": [
+  "Glibenclamide",
+  "Gliclazide",
+  "Glimepiride"
  ],
  "sulfateferreux": [
   "Fumarate ferreux",

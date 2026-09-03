@@ -675,6 +675,44 @@ normalité que rien n'a vérifiée.
   pourtant listées parmi les contributeurs, si bien que la somme ne correspondait pas à
   la liste qui la suivait. Elles ont leur propre ligne et **gardent leur valeur**.
 
+## Albuminémie — deux lectures, dont une fausse
+
+**Ce que l'albumine ne dit PAS : la dénutrition.** Le cadre GLIM ne la retient pas comme
+critère diagnostique — elle chute avec l'inflammation, l'hémodilution, une fuite rénale ou
+digestive, indépendamment des apports. Le contexte s'appelait `denutrition_severe`, ce qui
+faisait dire au chiffre ce qu'il ne porte pas ; il s'appelle désormais `hypoalbuminemie`,
+et le message de l'onglet bio nomme l'inflammation et le pronostic, puis renvoie le
+diagnostic nutritionnel à ses propres critères (perte de poids, IMC, masse musculaire).
+
+**Ce qu'elle dit : la pharmacologie change.** `SUP_ALB_01` — sous 30 g/L, la fraction
+LIBRE d'un médicament fortement lié augmente alors que la concentration TOTALE rendue par
+le laboratoire peut rester normale. Démontré pour le valproate : la concentration libre
+corrèle aux symptômes neurologiques (r = 0,384 ; p = 0,013), la totale non (r = 0,187 ;
+p = 0,241) — Doré, *Pharmacotherapy* 2017, DOI 10.1002/phar.1965.
+
+- **Liste CURÉE, jamais « tout médicament ≥ 90 % »** : 177 molécules de la base
+  franchissent ce seuil, les alerter toutes noierait le lecteur. Ne figurent que celles
+  dont la conséquence clinique est documentée (valproate, phénytoïne, ceftriaxone, AVK,
+  sulfamides hypoglycémiants, AINS).
+- **Aucun facteur de correction n'est proposé**, et c'est délibéré : les fractions libres
+  observées vont de 22 à 83 % sans relation nette au poids, à l'âge, à la créatinine ni à
+  la dose (VandenBerg, *Ment Health Clin* 2018, DOI 10.9740/mhc.2017.01.013). On oriente
+  vers le dosage libre, on ne calcule pas ce que la littérature ne soutient pas.
+- Déclenchée sur l'**albuminémie seule** : une albuminémie basse abaisse la liaison quelle
+  qu'en soit la cause, l'hépatopathie n'est pas requise.
+- Corrigé au passage : trois fiches portaient `albumine: "0,9"` — la FRACTION saisie à la
+  place du POURCENTAGE — si bien que le valproate, le divalproate et la cyamémazine ne
+  franchissaient jamais le seuil de 85 % du bloc hépatique.
+
+## Symptômes psycho-comportementaux — ils désarment, ils n'arment jamais
+
+Le critère STOPP d'`EV_D16` dit « antipsychotique comme hypnotique, **sauf psychose ou
+SCPD** » ; l'application le traduisait par « sauf démence », faute de lire les sept
+symptômes pourtant saisis. Ils sont désormais lus — **uniquement pour désarmer la règle**.
+Leur absence dans le formulaire ne prouve pas leur absence chez le patient : on ne déduit
+pas un fait clinique d'une case non cochée. Une apathie ne désarme pas non plus la règle,
+n'étant pas une indication d'antipsychotique.
+
 ## Fragilité sévère (`frailty_exclude`)
 
 Ne s'active qu'à **CFS ≥ 7** ou case « patient fragile » cochée — le seuil de

@@ -4112,5 +4112,42 @@
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
   ]
+ },
+ "cov_SUP_ALB_01": {
+  "alertes-eviter": [
+   "info | Réévaluation planifiée",
+   "warning | AVK sans surveillance INR régulière documentée",
+   "warning | Hypoalbuminémie et médicament fortement lié aux protéines"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "danger | Dénutrition / Hypoalbuminémie Sévère",
+   "warning | Albuminémie basse (26 g/L)"
+  ],
+  "alertes-interact": [
+   "warning | Co-prescription à risque : VALPROATE"
+  ],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | VALPROATE — Alertes cliniques",
+   "warning | WARFARINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : VALPROATE",
+   "success | Posologies : WARFARINE"
+  ],
+  "alertes-scores": [
+   "danger | HAS-BLED : 1 point(s)",
+   "info | CHA₂DS₂-VA : 2 point(s)",
+   "info | RISQ-PATH : 2 point(s)",
+   "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
+   "info | Score de Tisdale : 2 point(s)",
+   "warning | DOACscore : 1 point(s)",
+   "warning | ORBIT-AF : 1 point(s)",
+   "warning | Score ACB : 1"
+  ],
+  "alertes-synthese": [
+   "danger | Dossier avec alertes critiques"
+  ]
  }
 }
