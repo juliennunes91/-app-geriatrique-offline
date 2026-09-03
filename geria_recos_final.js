@@ -628,7 +628,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["antidepresseur tricyclique", "amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "maprotiline", "amoxapine", "dosulepine"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_009", "PAT_033"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042", "PAT_009", "PAT_033"]
             },
             alternatives: "ISRS (sertraline, escitalopram) ou mirtazapine"
         },
@@ -688,7 +688,7 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["antipsychotique"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"],
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"],
                 // Désarmée si la durée précisée est < 1 mois (usage ponctuel documenté).
                 contexte_clinique_absent: ["antipsychotique_duree_breve"]
             },
@@ -732,7 +732,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["benzodiazepine"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"]
             },
             alternatives: "Approche non pharmacologique, trazodone faible dose si nécessaire"
         },
@@ -801,7 +801,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 acb_check: true,
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"]
             },
             alternatives: "Médicaments à faible charge anticholinergique"
         },
@@ -816,7 +816,7 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["antipsychotique"],
                 comorbs: ["PAT_027"],
-                comorbs_absent: ["PAT_010", "PAT_011", "PAT_012", "PAT_015"]
+                comorbs_absent: ["PAT_010", "PAT_011", "PAT_012", "PAT_041", "PAT_042", "PAT_015"]
             },
             alternatives: "Hygiène du sommeil, mélatonine LP, trazodone faible dose"
         },
@@ -872,7 +872,7 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["ginkgo", "piracetam", "pramiracetam"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"]
             },
             alternatives: "Inhibiteurs de l'acétylcholinestérase ou mémantine si indication validée"
         },
@@ -1360,7 +1360,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "flavoxate", "darifenacine"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"]
             },
             alternatives: "Mirabégron (si pas d'HTA sévère), rééducation périnéale"
         },
@@ -1950,7 +1950,7 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["donepezil", "rivastigmine", "galantamine", "memantine"],
                 fragile: true,
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"]
             },
             alternatives: "Arrêt progressif avec surveillance, soins de support"
         },

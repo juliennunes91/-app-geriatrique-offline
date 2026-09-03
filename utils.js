@@ -177,3 +177,32 @@ const bioAnormal = (bioId, val, sexe) => {
     if (typeof n.haut === 'number' && v > n.haut) return { sens: 'haut', borne: n.haut };
     return null;
 };
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PATHOLOGIES OMBRELLES — présentes pour les règles, invisibles à l'affichage
+// ═══════════════════════════════════════════════════════════════════════════
+// La cascade « Troubles cognitifs » impose de cocher le parent (« Syndrome
+// démentiel ») pour révéler le type. Les deux cases alimentent `activeComorbs`,
+// si bien que cocher « Maladie d'Alzheimer » faisait apparaître DEUX comorbidités :
+// « Syndrome Démentiel (Générique) » et « Maladie d'Alzheimer ».
+//
+// L'ombrelle ne peut pas être supprimée de l'analyse : huit règles gériatriques
+// la citent, et surtout la démence VASCULAIRE (PAT_041) comme la démence MIXTE
+// (PAT_042) ne figurent dans aucune de leurs listes — sans le générique, ces deux
+// patients perdraient toutes les règles de la démence. Elle est donc conservée
+// pour le raisonnement et retirée du seul AFFICHAGE, dès qu'un type plus précis
+// est déclaré : c'est le type qui informe le lecteur, le générique ne dit rien
+// de plus. Même principe que le diabète non précisé, masqué du sélecteur.
+const PATHO_OMBRELLES = {
+    PAT_010: ['PAT_011', 'PAT_012', 'PAT_013', 'PAT_014', 'PAT_041', 'PAT_042']
+};
+const comorbsAffichables = (liste) => {
+    if (!Array.isArray(liste) || liste.length < 2) return liste || [];
+    const presents = new Set(liste);
+    const masquer = new Set();
+    for (const ombrelle in PATHO_OMBRELLES) {
+        if (!presents.has(ombrelle)) continue;
+        if (PATHO_OMBRELLES[ombrelle].some(sub => presents.has(sub))) masquer.add(ombrelle);
+    }
+    return masquer.size ? liste.filter(c => !masquer.has(c)) : liste;
+};

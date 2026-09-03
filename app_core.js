@@ -239,7 +239,7 @@ function buildSyntheseText() {
     if (activeComorbs.length === 0) {
         lines.push('Aucune comorbidité sélectionnée.');
     } else {
-        activeComorbs.forEach(c => {
+        (typeof comorbsAffichables === 'function' ? comorbsAffichables(activeComorbs) : activeComorbs).forEach(c => {
             const nom = (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES[c]) ? MASTER_DB.PATHOLOGIES[c].NOM_STANDARD : c;
             lines.push('• ' + nom);
         });
@@ -615,7 +615,7 @@ function buildPdfContent() {
     if (activeComorbs.length === 0) {
         html += `<em style="${S.body}color:${S.muted};">Aucune</em>`;
     } else {
-        activeComorbs.forEach(c => {
+        (typeof comorbsAffichables === 'function' ? comorbsAffichables(activeComorbs) : activeComorbs).forEach(c => {
             const nom = (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES[c]) ? MASTER_DB.PATHOLOGIES[c].NOM_STANDARD : c;
             html += `<span style="display:inline-block;background:#e7f1ff;border-radius:3px;padding:2px 6px;margin:2px 5px 2px 0;font-size:8.5px;line-height:1.55;">${escapeHtml(nom)}</span>`;
         });

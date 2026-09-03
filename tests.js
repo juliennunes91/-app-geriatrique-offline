@@ -951,6 +951,42 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/Constipation chronique/.test(poso(cas(null))) && /2 à 4 L/.test(poso(cas(null))),
             'sans precision : les deux regimes restent affiches (rien n\'est cache par defaut)');
     });
+    test('Demence : l\'ombrelle disparait de l\'affichage, jamais du raisonnement', () => {
+        // La cascade impose de cocher le parent (« Syndrome dementiel ») pour reveler le
+        // type : cocher « Alzheimer » faisait apparaitre DEUX comorbidites. L'ombrelle
+        // ne peut pas etre supprimee de l'analyse — huit regles la citent — elle est
+        // donc retiree du seul AFFICHAGE des qu'un type precis est declare.
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const vm = require('vm');
+        const noms = l => JSON.parse(vm.runInContext('JSON.stringify(comorbsAffichables('
+            + JSON.stringify(l) + ').map(x => MASTER_DB.PATHOLOGIES[x].NOM_STANDARD))', sandbox));
+        assert.deepStrictEqual(noms(['PAT_010', 'PAT_011']), ["Maladie d'Alzheimer"], 'Alzheimer : une seule pastille');
+        assert.deepStrictEqual(noms(['PAT_010', 'PAT_041']), ['Démence vasculaire'], 'vasculaire : une seule pastille');
+        // Seule, l'ombrelle reste : c'est alors la seule information disponible.
+        assert.deepStrictEqual(noms(['PAT_010']), ['Syndrome Démentiel (Générique)'], 'generique seul : conserve');
+        // Elle ne masque rien d'autre.
+        assert.strictEqual(noms(['PAT_005', 'PAT_010', 'PAT_011']).length, 2, 'les autres comorbidites sont intactes');
+    });
+    test('Demence : chaque sous-type declenche les regles sans l\'ombrelle', () => {
+        // PAT_041 (vasculaire) et PAT_042 (mixte) ne figuraient dans AUCUNE liste
+        // `comorbs_any` des regles de la demence : elles ne fonctionnaient que parce que
+        // la cascade cochait aussi le generique. Dependance invisible — et fatale le jour
+        // ou l'on retirerait l'ombrelle.
+        const socle = { age: 82, sexe: 'F', meds: ['Amitriptyline', 'Oxybutynine', 'Risperidone'] };
+        const ids = comorbs => {
+            const r = analyzeCase({ ...socle, comorbs });
+            const html = (r._html['alertes-eviter'] || '');
+            return new Set([...html.matchAll(/maskGeriaAlert\('id:([^']+)'\)/g)].map(m => m[1]));
+        };
+        const ref = ids(['PAT_011']);
+        assert.ok(ref.size >= 8, 'l\'Alzheimer seul doit declencher les regles de la demence, vu ' + ref.size);
+        [['PAT_041', 'vasculaire'], ['PAT_042', 'mixte'], ['PAT_012', 'corps de Lewy']].forEach(([p, lbl]) => {
+            const vu = ids([p]);
+            const manquantes = [...ref].filter(x => !vu.has(x));
+            assert.deepStrictEqual(manquantes, [],
+                'demence ' + lbl + ' : regles perdues faute d\'etre citee — ' + manquantes.join(', '));
+        });
+    });
     test('Pastille : la DCI et la precision priment sur la liste des marques', () => {
         // Le champ princeps enumere TOUTES les marques : 133 caracteres pour
         // l'umeclidinium, 243 pour la fluticasone. Borne par une ellipse, le libelle

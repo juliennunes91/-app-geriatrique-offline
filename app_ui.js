@@ -231,7 +231,38 @@ function searchMedList(val) {
     return parRang[0].concat(parRang[1], parRang[2]);
 }
 
-function selectComorb(id) { if(!activeComorbs.includes(id)) { activeComorbs.push(id); renderTags(); } }
+// Une même pathologie se déclare de deux façons : par la liste déroulante, ou par la
+// cascade de cases à cocher « Troubles cognitifs & neuropsychocomportementaux ». Les
+// deux chemins alimentaient `activeComorbs` sans se connaître : choisir « Maladie
+// d'Alzheimer » dans la liste laissait la cascade fermée, donc les questions sur les
+// symptômes psycho-comportementaux inaccessibles, et cocher la case ajoutait en plus
+// le générique. On relie les deux : le choix dans la liste coche la case, ouvre le
+// parent et déroule la cascade — ensuite, c'est le même état pour tout le monde.
+const COMORB_CASCADE = {
+    PAT_011: { case: 'demTypeMA',   parent: 'chkDemence', bloc: 'cascadeDemence' },
+    PAT_012: { case: 'chkLewy',     parent: 'chkDemence', bloc: 'cascadeDemence' },
+    PAT_013: { case: 'demTypeDLFT', parent: 'chkDemence', bloc: 'cascadeDemence' },
+    PAT_014: { case: 'demTypeDP',   parent: 'chkDemence', bloc: 'cascadeDemence' },
+    PAT_041: { case: 'demTypeVasc', parent: 'chkDemence', bloc: 'cascadeDemence' },
+    PAT_042: { case: 'demTypeMixte',parent: 'chkDemence', bloc: 'cascadeDemence' },
+    PAT_010: { case: 'chkDemence',  parent: null,         bloc: 'cascadeDemence' },
+    PAT_043: { case: 'chkMci',      parent: null,         bloc: 'cascadeMci' }
+};
+function _refleterDansCascade(id) {
+    const c = COMORB_CASCADE[id];
+    if (!c) return;
+    const coche = el => { const e = document.getElementById(el); if (e && !e.checked) e.checked = true; };
+    if (c.parent) coche(c.parent);
+    coche(c.case);
+    // Dérouler le bloc : la case cochée par programme ne déclenche pas `onchange`.
+    if (c.bloc && typeof toggleCascade === 'function' && c.parent) toggleCascade(c.parent, c.bloc);
+    else if (c.bloc && typeof toggleCascade === 'function') toggleCascade(c.case, c.bloc);
+}
+function selectComorb(id) {
+    if(!activeComorbs.includes(id)) { activeComorbs.push(id); }
+    _refleterDansCascade(id);
+    renderTags();
+}
 function selectMed(data) {
     if(!activeMeds.some(m => sanitizeText(m.dci) === sanitizeText(data.dci_pure))) {
         const med = { label: data.dci_pure + (data.princeps ? ` (${data.princeps})` : ''), core_id: data.core_id, dci: data.dci_pure, classe: data.classe, albumine: data.albumine || 0, db_ref: data.db_ref };
@@ -491,7 +522,7 @@ function renderTags() {
     let elComorb = document.getElementById('selectedComorbs'); let elMeds = document.getElementById('selectedMeds');
     if(elComorb) {
         const frag = document.createDocumentFragment();
-        activeComorbs.forEach(c => {
+        comorbsAffichables(activeComorbs).forEach(c => {
             let p = MASTER_DB.PATHOLOGIES[c]; let label = p ? p.NOM_STANDARD : c;
             let span = document.createElement('span'); span.className = 'badge bg-secondary tag-badge'; span.textContent = label + ' ✖';
             span.onclick = () => removeComorb(c); frag.appendChild(span);

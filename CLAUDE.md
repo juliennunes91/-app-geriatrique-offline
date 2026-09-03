@@ -120,6 +120,29 @@ sérialisé en JSON. Export **« Plan de surveillance psychiatrique »**
 (`exporterPsySurveillancePDF()`) : diagnostics + traitements de fond +
 calendrier de surveillance daté (modèle PAAM).
 
+## Pathologies ombrelles — présentes pour les règles, invisibles à l'affichage
+
+La cascade « Troubles cognitifs » impose de cocher le parent (« Syndrome démentiel »,
+`PAT_010`) pour révéler le type : cocher « Maladie d'Alzheimer » faisait donc apparaître
+**deux comorbidités**, le générique et le type.
+
+L'ombrelle ne peut pas être retirée de l'analyse : huit règles la citent. `PATHO_OMBRELLES`
+et `comorbsAffichables()` (`utils.js`) la retirent du **seul affichage** — pastilles,
+synthèse texte, PDF — dès qu'un type plus précis est déclaré. Même principe que le diabète
+non précisé, masqué du sélecteur.
+
+**Piège corrigé au passage** : `PAT_041` (démence vasculaire) et `PAT_042` (mixte) ne
+figuraient dans **aucune** liste `comorbs_any` des huit règles de la démence — elles ne
+fonctionnaient que parce que la cascade cochait aussi le générique. Dépendance invisible,
+et fatale le jour où l'on retirerait l'ombrelle « pour simplifier ». Les deux sont
+désormais citées partout, et un test vérifie que chaque sous-type déclenche seul les mêmes
+règles que l'Alzheimer.
+
+`COMORB_CASCADE` (`app_ui.js`) relie les deux chemins de saisie : choisir un type dans la
+liste déroulante coche la case correspondante, coche son parent et déroule la cascade —
+sans quoi les questions sur les symptômes psycho-comportementaux restaient inaccessibles
+à qui passait par la liste.
+
 ## Architecture des données cliniques
 
 **Attribution des sources (important)** :
