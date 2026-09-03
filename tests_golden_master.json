@@ -32,6 +32,7 @@
    "danger | Anticoagulant pour FA (chronique ou paroxystique)",
    "info | Action immédiate",
    "warning | Anti-résorptif ou anabolique osseux pour ostéoporose",
+   "warning | Antidépresseur non tricyclique pour dépression majeure",
    "warning | Antihypertenseur si PAS > 140 (ou > 150 si fragile)",
    "warning | Bêtabloquant pour FA chronique (contrôle de fréquence)",
    "warning | IPP avec AINS (cure courte ou prolongée)",

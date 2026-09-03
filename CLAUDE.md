@@ -143,6 +143,31 @@ liste déroulante coche la case correspondante, coche son parent et déroule la 
 sans quoi les questions sur les symptômes psycho-comportementaux restaient inaccessibles
 à qui passait par la liste.
 
+## Un fait clinique, deux chemins de saisie — le même état
+
+Une pathologie se déclare soit par la **liste déroulante** des comorbidités, soit par une
+**case à cocher**. Les deux alimentaient `activeComorbs`, mais seule la case poussait le
+`contexte_clinique` : déclarer « dysphagie » par la liste ne générait pas `dysphagie`, et
+les règles qui en dépendent restaient muettes. Mesuré avant correction — `EV_F07` sur une
+dysphagie, `EV_B04` et `EV_D17` sur une bradycardie, `SUP_DEP_060`/`SUP_DEP_065` en soins
+palliatifs, `IN_D02` sur une dépression, `SUP_PSYC_01` à `03` sur une schizophrénie
+chronique. **Le résultat dépendait du chemin de saisie, jamais du dossier.**
+
+`CASE_EQUIVALENTE` + `_declare()` (`app_analysis.js`) rendent les deux chemins
+équivalents : un contexte naît du FAIT. Le même défaut existait un niveau plus bas sur
+`fragiliteSevere`, qui lisait `isChecked('chkPalliatif')` en dur.
+
+**Trois cases restent volontairement hors de la table** — elles ajoutent une
+QUALIFICATION que la comorbidité ne porte pas, et l'inférer serait affirmer un terrain
+non déclaré :
+- `chkDialyse` : être dialysé est un stade, pas la maladie rénale (`PAT_029`) ;
+- `chkScaAigu` / `chkStent` : `PAT_004` est le syndrome coronarien **chronique** ;
+- `chkHtaNonControlee` : « HTA » n'est pas « HTA non contrôlée » — c'est précisément la
+  distinction qui gate `EV_D03`.
+
+Le test correspondant vérifie les deux sens : équivalence là où elle est vraie, et
+**non-inférence** là où elle serait fausse.
+
 ## Architecture des données cliniques
 
 **Attribution des sources (important)** :

@@ -678,60 +678,94 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
 
     // Contexte clinique
     const ctxClinique = [];
-    if(isChecked('chkBrady')) ctxClinique.push("bradycardie");
-    if(isChecked('chkIncontinence')) ctxClinique.push("incontinence");
-    if(isChecked('chkStenoseAortique')) ctxClinique.push("stenose_aortique");
-    if(isChecked('chkSaignement') || isChecked('chkAspirineForte')) { ctxClinique.push("risque_hemorragique"); ctxClinique.push("atcd_hemorragie"); }
-    if(isChecked('chkHbp')) ctxClinique.push("hbp");
-    if(isChecked('chkDepression')) ctxClinique.push("depression");
-    if(isChecked('chkConstipation')) ctxClinique.push("constipation_chronique");
-    if(isChecked('chkDysphagie')) ctxClinique.push("dysphagie");
-    if(isChecked('chkArthrose')) ctxClinique.push("arthrose");
-    if(isChecked('chkChutes')) ctxClinique.push("chutes");
-    if(isChecked('chkInstitution')) ctxClinique.push("institution");
-    if(isChecked('chkConfine')) ctxClinique.push("confinement");
+    // ── Une case cochée et une comorbidité de la liste : le même fait clinique ──
+    // Un contexte doit naître du FAIT, pas du chemin de saisie. Déclarer « dysphagie »
+    // par la liste déroulante ne générait pas le contexte `dysphagie`, si bien que
+    // les règles qui en dépendent restaient muettes — mesuré : EV_F07 perdue sur une
+    // dysphagie, EV_B04 et EV_D17 sur une bradycardie, SUP_DEP_060 et SUP_DEP_065 en
+    // soins palliatifs, IN_D02 sur une dépression, et les trois règles de surveillance
+    // psychiatrique SUP_PSYC_01 à 03 sur une schizophrénie chronique.
+    //
+    // TROIS CASES SONT VOLONTAIREMENT ABSENTES de cette table : elles ajoutent une
+    // QUALIFICATION que la comorbidité ne porte pas, et l'inférer serait affirmer un
+    // terrain non déclaré —
+    //   • `chkDialyse` : être dialysé est un stade, pas la maladie rénale ;
+    //   • `chkScaAigu` / `chkStent` : PAT_004 est le syndrome coronarien CHRONIQUE,
+    //     en déduire un syndrome aigu serait une contradiction ;
+    //   • `chkHtaNonControlee` : « HTA » n'est pas « HTA non contrôlée » — c'est
+    //     précisément la distinction qui gate EV_D03.
+    const CASE_EQUIVALENTE = {
+        chkAvc: 'PAT_008', chkAtcdUlcere: 'PAT_021', chkPalliatif: 'PAT_030',
+        chkDepression: 'PAT_032', chkGlaucome: 'PAT_033', chkFoie: 'PAT_034',
+        chkBrady: 'PAT_035', chkTvp: 'PAT_036', chkDysphagie: 'PAT_038',
+        chkIncontinence: 'PAT_039', chkAnxieteTAG: 'PAT_044', chkPsychoseTardive: 'PAT_045',
+        chkBipolaire: 'PAT_046', chkCatatonie: 'PAT_047', chkDelirium: 'PAT_048',
+        chkInsomnie: 'PAT_049', chkTcsp: 'PAT_050', chkSjsr: 'PAT_051', chkSaos: 'PAT_052',
+        chkDemence: 'PAT_010', demTypeMA: 'PAT_011', chkLewy: 'PAT_012',
+        demTypeDLFT: 'PAT_013', demTypeDP: 'PAT_014', demTypeVasc: 'PAT_041',
+        demTypeMixte: 'PAT_042', chkMci: 'PAT_043',
+        chkSchizoChronique: 'PAT_055', chkSchizoAffectif: 'PAT_056', chkTroubleDelirant: 'PAT_057',
+        chkBipolaireI: 'PAT_058', chkBipolaireII: 'PAT_059', chkDepressionRecurrente: 'PAT_060',
+        chkDysthymie: 'PAT_061', chkTOC: 'PAT_062', chkTroublePanique: 'PAT_063',
+        chkTAGChronique: 'PAT_064', chkESPT: 'PAT_065', chkTroublePersonnalite: 'PAT_066',
+        chkUsageAlcool: 'PAT_067', chkUsageSubstances: 'PAT_068', chkTSADI: 'PAT_069'
+    };
+    const _declare = (chkId) => isChecked(chkId)
+        || (!!CASE_EQUIVALENTE[chkId] && activeComorbs.includes(CASE_EQUIVALENTE[chkId]));
+    if(_declare('chkBrady')) ctxClinique.push("bradycardie");
+    if(_declare('chkIncontinence')) ctxClinique.push("incontinence");
+    if(_declare('chkStenoseAortique')) ctxClinique.push("stenose_aortique");
+    if(_declare('chkSaignement') || _declare('chkAspirineForte')) { ctxClinique.push("risque_hemorragique"); ctxClinique.push("atcd_hemorragie"); }
+    if(_declare('chkHbp')) ctxClinique.push("hbp");
+    if(_declare('chkDepression')) ctxClinique.push("depression");
+    if(_declare('chkConstipation')) ctxClinique.push("constipation_chronique");
+    if(_declare('chkDysphagie')) ctxClinique.push("dysphagie");
+    if(_declare('chkArthrose')) ctxClinique.push("arthrose");
+    if(_declare('chkChutes')) ctxClinique.push("chutes");
+    if(_declare('chkInstitution')) ctxClinique.push("institution");
+    if(_declare('chkConfine')) ctxClinique.push("confinement");
     if(isFragile) ctxClinique.push("fragilite");
-    if(isChecked('chkAnorexie') || (getVal('patientBmi') > 0 && getVal('patientBmi') < 18.5)) ctxClinique.push("denutrition");
-    if(isChecked('chkGlaucome')) ctxClinique.push("glaucome");
-    if(isChecked('chkPalliatif')) ctxClinique.push("palliatif", "esperance_vie_reduite", "stoppfrail");
-    if(isChecked('chkAtcdUlcere')) ctxClinique.push("atcd_ulcere", "atcd_hemorragie_digestive");
-    if(isChecked('chkAspirineForte')) ctxClinique.push("dose_aspirine_elevee");
-    if(isChecked('chkInsulineSlidingScale')) ctxClinique.push("sliding_scale");
+    if(_declare('chkAnorexie') || (getVal('patientBmi') > 0 && getVal('patientBmi') < 18.5)) ctxClinique.push("denutrition");
+    if(_declare('chkGlaucome')) ctxClinique.push("glaucome");
+    if(_declare('chkPalliatif')) ctxClinique.push("palliatif", "esperance_vie_reduite", "stoppfrail");
+    if(_declare('chkAtcdUlcere')) ctxClinique.push("atcd_ulcere", "atcd_hemorragie_digestive");
+    if(_declare('chkAspirineForte')) ctxClinique.push("dose_aspirine_elevee");
+    if(_declare('chkInsulineSlidingScale')) ctxClinique.push("sliding_scale");
     if(getVal('bioAlbumSg') > 0 && getVal('bioAlbumSg') < 30) ctxClinique.push("denutrition_severe");
-    if(isChecked('chkFoie')) ctxClinique.push("hepatopathie");
-    if(isChecked('chkTvp')) ctxClinique.push("mtev");
-    if(isChecked('chkAvc')) ctxClinique.push("avc");
-    if(isChecked('chkDialyse')) ctxClinique.push("hemodialyse");
-    if(isChecked('chkStent') || isChecked('chkScaAigu')) ctxClinique.push("coronarien_aigu");
-    if(isChecked('chkHtaNonControlee')) ctxClinique.push("hta_non_controlee");
-    if(isChecked('chkAlcool')) ctxClinique.push("alcool");
-    if(isChecked('chkTabac')) ctxClinique.push("tabac");
-    if(isChecked('chkSepsis')) ctxClinique.push("sepsis");
-    if(isChecked('chkArret')) ctxClinique.push("arret_cardiaque");
-    if(isChecked('chkLqts')) ctxClinique.push("qt_long_congenital");
+    if(_declare('chkFoie')) ctxClinique.push("hepatopathie");
+    if(_declare('chkTvp')) ctxClinique.push("mtev");
+    if(_declare('chkAvc')) ctxClinique.push("avc");
+    if(_declare('chkDialyse')) ctxClinique.push("hemodialyse");
+    if(_declare('chkStent') || _declare('chkScaAigu')) ctxClinique.push("coronarien_aigu");
+    if(_declare('chkHtaNonControlee')) ctxClinique.push("hta_non_controlee");
+    if(_declare('chkAlcool')) ctxClinique.push("alcool");
+    if(_declare('chkTabac')) ctxClinique.push("tabac");
+    if(_declare('chkSepsis')) ctxClinique.push("sepsis");
+    if(_declare('chkArret')) ctxClinique.push("arret_cardiaque");
+    if(_declare('chkLqts')) ctxClinique.push("qt_long_congenital");
 
     // Troubles cognitifs & neuropsychocomportementaux (SFGG 2024 SPC)
-    if(isChecked('chkDemence')) ctxClinique.push("demence", "trouble_neurocognitif_majeur");
-    if(isChecked('demTypeMA')) ctxClinique.push("alzheimer");
-    if(isChecked('chkLewy')) ctxClinique.push("corps_de_lewy", "dcl");
-    if(isChecked('demTypeDP')) ctxClinique.push("demence_parkinsonienne");
-    if(isChecked('demTypeDLFT')) ctxClinique.push("dlft");
-    if(isChecked('demTypeVasc')) ctxClinique.push("demence_vasculaire");
-    if(isChecked('demTypeMixte')) ctxClinique.push("demence_mixte");
-    if(isChecked('chkSpcAgitation')) ctxClinique.push("spc_agitation", "agitation");
-    if(isChecked('chkSpcPsychose')) ctxClinique.push("spc_psychose", "hallucinations");
-    if(isChecked('chkSpcApathie')) ctxClinique.push("spc_apathie");
-    if(isChecked('chkSpcDepressionSpc')) ctxClinique.push("spc_depression");
-    if(isChecked('chkSpcInsomnie')) ctxClinique.push("spc_insomnie", "inversion_nycthemerale");
-    if(isChecked('chkSpcDesinhibition')) ctxClinique.push("spc_desinhibition", "errance");
-    if(isChecked('chkSpcTca')) ctxClinique.push("spc_tca");
-    if(isChecked('chkMci')) ctxClinique.push("mci", "tnc_leger");
-    if(isChecked('chkMbiMotiv') || isChecked('chkMbiAffect') || isChecked('chkMbiImpuls') || isChecked('chkMbiSocial') || isChecked('chkMbiIdeat')) ctxClinique.push("mbi");
-    if(isChecked('chkPsyPrim')) ctxClinique.push("psy_primaire");
-    if(isChecked('chkAnxieteTAG')) ctxClinique.push("tag", "anxiete_generalisee");
-    if(isChecked('chkPsychoseTardive')) ctxClinique.push("psychose_tardive");
-    if(isChecked('chkBipolaire')) ctxClinique.push("trouble_bipolaire");
-    if(isChecked('chkCatatonie')) ctxClinique.push("catatonie");
+    if(_declare('chkDemence')) ctxClinique.push("demence", "trouble_neurocognitif_majeur");
+    if(_declare('demTypeMA')) ctxClinique.push("alzheimer");
+    if(_declare('chkLewy')) ctxClinique.push("corps_de_lewy", "dcl");
+    if(_declare('demTypeDP')) ctxClinique.push("demence_parkinsonienne");
+    if(_declare('demTypeDLFT')) ctxClinique.push("dlft");
+    if(_declare('demTypeVasc')) ctxClinique.push("demence_vasculaire");
+    if(_declare('demTypeMixte')) ctxClinique.push("demence_mixte");
+    if(_declare('chkSpcAgitation')) ctxClinique.push("spc_agitation", "agitation");
+    if(_declare('chkSpcPsychose')) ctxClinique.push("spc_psychose", "hallucinations");
+    if(_declare('chkSpcApathie')) ctxClinique.push("spc_apathie");
+    if(_declare('chkSpcDepressionSpc')) ctxClinique.push("spc_depression");
+    if(_declare('chkSpcInsomnie')) ctxClinique.push("spc_insomnie", "inversion_nycthemerale");
+    if(_declare('chkSpcDesinhibition')) ctxClinique.push("spc_desinhibition", "errance");
+    if(_declare('chkSpcTca')) ctxClinique.push("spc_tca");
+    if(_declare('chkMci')) ctxClinique.push("mci", "tnc_leger");
+    if(_declare('chkMbiMotiv') || _declare('chkMbiAffect') || _declare('chkMbiImpuls') || _declare('chkMbiSocial') || _declare('chkMbiIdeat')) ctxClinique.push("mbi");
+    if(_declare('chkPsyPrim')) ctxClinique.push("psy_primaire");
+    if(_declare('chkAnxieteTAG')) ctxClinique.push("tag", "anxiete_generalisee");
+    if(_declare('chkPsychoseTardive')) ctxClinique.push("psychose_tardive");
+    if(_declare('chkBipolaire')) ctxClinique.push("trouble_bipolaire");
+    if(_declare('chkCatatonie')) ctxClinique.push("catatonie");
 
     // ── Maladie psychiatrique primaire CHRONIQUE (antérieure à 65 ans) — Bloc 1 ──
     // Ces contextes pilotent la recontextualisation des PIM psychotropes (Bloc 2) :
@@ -756,21 +790,21 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         if (_onsetChronique) (chroniques || []).forEach(c => ctxClinique.push(c));
         else ctxClinique.push('psychiatrie_debut_tardif');
     };
-    if(isChecked('chkSchizoChronique'))     _pushPsy(["schizophrenie"], ["psychose_chronique", "psychiatrie_primaire_chronique"]);
-    if(isChecked('chkSchizoAffectif'))      _pushPsy(["trouble_schizoaffectif"], ["psychose_chronique", "trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
-    if(isChecked('chkTroubleDelirant'))     _pushPsy(["trouble_delirant"], ["psychose_chronique", "psychiatrie_primaire_chronique"]);
-    if(isChecked('chkBipolaireI'))          _pushPsy(["trouble_bipolaire"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
-    if(isChecked('chkBipolaireII'))         _pushPsy(["trouble_bipolaire"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
-    if(isChecked('chkDepressionRecurrente'))_pushPsy(["depression_recurrente", "depression"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
-    if(isChecked('chkDysthymie'))           _pushPsy(["dysthymie", "depression"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
-    if(isChecked('chkTOC'))                 _pushPsy(["toc"], ["psychiatrie_primaire_chronique"]);
-    if(isChecked('chkTroublePanique'))      _pushPsy(["trouble_panique", "anxiete_chronique"], ["psychiatrie_primaire_chronique"]);
-    if(isChecked('chkTAGChronique'))        _pushPsy(["tag", "anxiete_generalisee", "anxiete_chronique"], ["psychiatrie_primaire_chronique"]);
-    if(isChecked('chkESPT'))                _pushPsy(["espt"], ["psychiatrie_primaire_chronique"]);
-    if(isChecked('chkTroublePersonnalite')) _pushPsy(["trouble_personnalite"], ["psychiatrie_primaire_chronique"]);
-    if(isChecked('chkUsageAlcool'))         _pushPsy(["trouble_usage_alcool", "addiction", "alcool"], ["psychiatrie_primaire_chronique"]);
-    if(isChecked('chkUsageSubstances'))     _pushPsy(["trouble_usage_substances", "addiction"], ["psychiatrie_primaire_chronique"]);
-    if(isChecked('chkTSADI'))               _pushPsy(["tsa_di"], ["psychiatrie_primaire_chronique"]);
+    if(_declare('chkSchizoChronique'))     _pushPsy(["schizophrenie"], ["psychose_chronique", "psychiatrie_primaire_chronique"]);
+    if(_declare('chkSchizoAffectif'))      _pushPsy(["trouble_schizoaffectif"], ["psychose_chronique", "trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(_declare('chkTroubleDelirant'))     _pushPsy(["trouble_delirant"], ["psychose_chronique", "psychiatrie_primaire_chronique"]);
+    if(_declare('chkBipolaireI'))          _pushPsy(["trouble_bipolaire"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(_declare('chkBipolaireII'))         _pushPsy(["trouble_bipolaire"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(_declare('chkDepressionRecurrente'))_pushPsy(["depression_recurrente", "depression"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(_declare('chkDysthymie'))           _pushPsy(["dysthymie", "depression"], ["trouble_thymique_chronique", "psychiatrie_primaire_chronique"]);
+    if(_declare('chkTOC'))                 _pushPsy(["toc"], ["psychiatrie_primaire_chronique"]);
+    if(_declare('chkTroublePanique'))      _pushPsy(["trouble_panique", "anxiete_chronique"], ["psychiatrie_primaire_chronique"]);
+    if(_declare('chkTAGChronique'))        _pushPsy(["tag", "anxiete_generalisee", "anxiete_chronique"], ["psychiatrie_primaire_chronique"]);
+    if(_declare('chkESPT'))                _pushPsy(["espt"], ["psychiatrie_primaire_chronique"]);
+    if(_declare('chkTroublePersonnalite')) _pushPsy(["trouble_personnalite"], ["psychiatrie_primaire_chronique"]);
+    if(_declare('chkUsageAlcool'))         _pushPsy(["trouble_usage_alcool", "addiction", "alcool"], ["psychiatrie_primaire_chronique"]);
+    if(_declare('chkUsageSubstances'))     _pushPsy(["trouble_usage_substances", "addiction"], ["psychiatrie_primaire_chronique"]);
+    if(_declare('chkTSADI'))               _pushPsy(["tsa_di"], ["psychiatrie_primaire_chronique"]);
     if(isChecked('chkAntipsyLAI'))          ctxClinique.push("antipsychotique_lai");
     if(isChecked('chkDelirium')) {
         ctxClinique.push("delirium", "confusion");
@@ -1200,7 +1234,12 @@ function analyserPrescription() {
         patientSexe: sexe,
         isFragile: isFragile,
         // Fragilité sévère STOPPFrail : CFS ≥ seuil (réf. CLINICAL_THRESHOLDS) ou palliatif.
-        fragiliteSevere: (getVal('scoreCFS') >= ((typeof CLINICAL_THRESHOLDS !== 'undefined' && CLINICAL_THRESHOLDS.CFS_FRAGILITE_SEVERE) || 6)) || isChecked('chkPalliatif'),
+        // `_declare` et non `isChecked` : déclarer les soins palliatifs par la LISTE des
+        // comorbidités doit valoir déclaration, comme la case. Sans cela, les règles de
+        // déprescription STOPPFrail (SUP_DEP_060, SUP_DEP_065) restaient muettes selon
+        // le seul chemin de saisie — c'est le même défaut que les contextes, un niveau
+        // plus bas.
+        fragiliteSevere: (getVal('scoreCFS') >= ((typeof CLINICAL_THRESHOLDS !== 'undefined' && CLINICAL_THRESHOLDS.CFS_FRAGILITE_SEVERE) || 6)) || isChecked('chkPalliatif') || activeComorbs.includes('PAT_030'),
         scoreACB_global: scoreACB_global,
         contexte_clinique: ctxClinique
     };

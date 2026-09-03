@@ -1013,6 +1013,46 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             });
         });
     });
+    test('Saisie : la case et la comorbidite de la liste produisent le MEME etat', () => {
+        // Un contexte clinique doit naitre du FAIT, pas du chemin de saisie. Declarer
+        // « dysphagie » par la liste deroulante ne generait pas le contexte `dysphagie` :
+        // les regles qui en dependent restaient muettes. Mesure avant correction —
+        // EV_F07 sur une dysphagie, EV_B04 et EV_D17 sur une bradycardie, SUP_DEP_060 et
+        // SUP_DEP_065 en soins palliatifs, IN_D02 sur une depression, et SUP_PSYC_01 a 03
+        // sur une schizophrenie chronique.
+        const ids = c => {
+            const r = analyzeCase(c);
+            const html = Object.entries(r._html).filter(([k]) => k.startsWith('alertes-'))
+                .map(([, v]) => v || '').join(' ');
+            return new Set([...html.matchAll(/maskGeriaAlert\('id:([^']+)'\)/g)].map(m => m[1]));
+        };
+        const memeEtat = (label, pat, flags, meds) => {
+            const socle = { age: 80, sexe: 'F', comorbs: [pat], meds };
+            const parListe = ids(socle);
+            const parCase = ids({ ...socle, flags });
+            const perdues = [...parCase].filter(x => !parListe.has(x));
+            assert.deepStrictEqual(perdues, [],
+                label + ' : declarer par la liste perd ' + perdues.join(', '));
+        };
+        memeEtat('dysphagie', 'PAT_038', ['chkDysphagie'], ['Risperidone', 'Macrogol']);
+        memeEtat('bradycardie', 'PAT_035', ['chkBrady'], ['Bisoprolol', 'Donepezil']);
+        memeEtat('soins palliatifs', 'PAT_030', ['chkPalliatif'], ['Atorvastatine']);
+        memeEtat('depression', 'PAT_032', ['chkDepression'], ['Amitriptyline']);
+        memeEtat('schizophrenie chronique', 'PAT_055',
+            ['chkPsyChronique', 'chkSchizoChronique'], ['Risperidone', 'Clozapine']);
+
+        // Symetrique : trois cases ajoutent une QUALIFICATION que la comorbidite ne
+        // porte pas. L'inferer serait affirmer un terrain non declare.
+        const aRegle = (c, re) => {
+            const r = analyzeCase(c);
+            return re.test((r._html['alertes-eviter'] || '').replace(/<[^>]*>/g, ' '));
+        };
+        const severe = /IRSN \+ HTA sévère/;
+        assert.ok(!aRegle({ age: 80, sexe: 'F', comorbs: ['PAT_005'], meds: ['Venlafaxine'] }, severe),
+            'HTA declaree par la liste ne vaut pas HTA NON CONTROLEE');
+        assert.ok(aRegle({ age: 80, sexe: 'F', comorbs: ['PAT_005'], flags: ['chkHtaNonControlee'], meds: ['Venlafaxine'] }, severe),
+            'la case « HTA non controlee » declenche bien la regle');
+    });
     test('Demence : l\'ombrelle disparait de l\'affichage, jamais du raisonnement', () => {
         // La cascade impose de cocher le parent (« Syndrome dementiel ») pour reveler le
         // type : cocher « Alzheimer » faisait apparaitre DEUX comorbidites. L'ombrelle
