@@ -4172,6 +4172,32 @@ const RECOS_SUPPLEMENT = [
         alternatives: "Acide folique 5 mg/sem (24-48 h après le MTX) ou acide folinique 5-10 mg/sem si MTX ≥ 15 mg/sem (BSR/NICE 2017)."
     },
     {
+        // La terbinafine orale est une cure de trois mois, souvent pour une onychomycose
+        // asymptomatique. Deux garde-fous que le RCP pose et que le sujet âgé rencontre
+        // constamment : la fonction rénale et le foie.
+        id: "SUP_TERB_01", sources: ["ANSM"],
+        titre: "Terbinafine orale et fonction rénale — usage non recommandé sous 50 ml/min",
+        message: "Le RCP de la terbinafine indique que la clairance du produit est réduite d'environ moitié en dessous de 50 ml/min et que son usage n'y a pas été suffisamment étudié : il n'est pas recommandé. Chez ce patient, le débit de filtration estimé est en dessous de ce seuil. Réévaluer l'indication — une onychomycose des orteils asymptomatique ne justifie pas une cure de trois mois — et discuter un traitement local (amorolfine, ciclopirox) ou l'abstention.",
+        severite: "warning",
+        condition: {
+            med_keys: ["terbinafine"],
+            bio: { "BIO_004": { op: "<", val: 50 } },
+            // La crème n'est pas absorbée : la question rénale ne se pose pas.
+            contexte_clinique_absent: ["terbinafine_topique"]
+        },
+        alternatives: "Traitement local (amorolfine, ciclopirox) ; confirmer le dermatophyte par prélèvement mycologique avant toute cure orale."
+    },
+    {
+        id: "SUP_TERB_02", sources: ["ANSM"],
+        titre: "Terbinafine orale — surveillance hépatique et signes d'alerte",
+        message: "La terbinafine orale expose à une hépatite idiosyncrasique, qui peut survenir sans hépatopathie préalable, et à des toxidermies graves. Contrôler les transaminases avant la cure puis à quatre à six semaines. Informer le patient et l'équipe : tout ictère, urines foncées, nausées persistantes ou éruption étendue impose l'arrêt immédiat. Surveiller aussi le poids — la perte du goût, fréquente et parfois prolongée après l'arrêt, fait manger moins.",
+        severite: "warning",
+        condition: {
+            med_keys: ["terbinafine"],
+            contexte_clinique_absent: ["terbinafine_topique"]
+        }
+    },
+    {
         // La préparation colique n'est pas une posologie du même médicament : c'est un
         // autre acte. Deux à quatre litres avalés en quelques heures chez un sujet âgé
         // exposent à la déshydratation, à l'hyponatrémie et à l'hypokaliémie ; en cas de

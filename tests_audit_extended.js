@@ -157,7 +157,8 @@ const PANEL = {
     // Regles gatees sur un contexte issu d'une PRECISION de saisie : l'outil de
     // couverture derive les contextes des cases a cocher et ne peut pas les produire.
     'cov_SUP_PEG_01': {"age":84,"sexe":"F","bio":{"patientDFG":60},"meds":["Macrogol","Furosemide"],"precisions":{"Macrogol":{"indication_peg":"preparation"}}},
-    'cov_SUP_MTX_01': {"age":84,"sexe":"F","bio":{"patientDFG":60},"meds":["Methotrexate"],"precisions":{"Methotrexate":{"mtx_schema":"haute"}}}
+    'cov_SUP_MTX_01': {"age":84,"sexe":"F","bio":{"patientDFG":60},"meds":["Methotrexate"],"precisions":{"Methotrexate":{"mtx_schema":"haute"}}},
+    'cov_SUP_TERB_01_SUP_TERB_02': {"age":82,"sexe":"F","dfg":35,"bio":{"patientDFG":35},"meds":["Terbinafine"]}
 };
 // Onglets figés par le golden-master. `alertes-scores` et `alertes-synthese` ont été
 // AJOUTÉS après avoir constaté qu'ils échappaient totalement au filet : la correction de

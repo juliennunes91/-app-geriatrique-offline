@@ -25387,6 +25387,56 @@ const MASTER_DB = {
                     "source": "RCP Triflucan | ESCMID 2022"
           },
           {
+                    "dci": "Terbinafine",
+                    "princeps": "Lamisil (comprime 250 mg, voie orale) | Lamisilate, Lamisilate Monodose (creme et solution cutanees)",
+                    "classe": "Antifongique allylamine (inhibiteur de la squalene epoxydase)",
+                    "poso_hab": "VOIE ORALE : 250 mg/j en une prise. Onychomycose des ongles de main : 6 semaines ; des orteils : 12 semaines. Dermatophytie cutanee : 2 a 4 semaines. | VOIE CUTANEE : 1 a 2 applications par jour, 1 a 2 semaines selon la localisation.",
+                    "poso_ger": "Pas d'adaptation liee a l'age. La question geriatrique n'est pas la dose, c'est l'INDICATION : une onychomycose des orteils est le plus souvent asymptomatique, et sa cure orale impose douze semaines d'un medicament hepatotoxique et inhibiteur puissant du CYP2D6 chez un patient volontiers polymedique. Reserver la voie orale aux atteintes symptomatiques ou etendues, et au diabetique ou a l'arteritique chez qui la porte d'entree infectieuse compte ; sinon traitement local (amorolfine, ciclopirox) ou abstention. Confirmer le dermatophyte par prelevement mycologique AVANT toute cure orale.",
+                    "poso_ren": "DFG >= 50 : posologie habituelle. DFG < 50 : la clairance de la terbinafine est reduite d'environ moitie et l'usage n'a pas ete suffisamment etudie — NON RECOMMANDE (RCP Lamisil). Non dialysable (liaison proteique > 99 %). Voie cutanee : aucune adaptation, absorption systemique negligeable.",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {
+                              "qt": 0,
+                              "sero": 0,
+                              "saign": 0,
+                              "chute": 0,
+                              "sedat": 0,
+                              "hypoG": 0
+                    },
+                    "bhe": "0",
+                    "qt_risque": "",
+                    "albumine": "99%",
+                    "ddi_interact": "VOIE ORALE UNIQUEMENT — Inhibiteur PUISSANT du CYP2D6 : antidepresseurs tricycliques (surdosage), thioridazine (CI), propafenone et flecainide, beta-bloquants metabolises par le CYP2D6 (metoprolol), risperidone, tolterodine, tamsulosine ; prodrogues activees par le CYP2D6 dont l'effet DISPARAIT (tamoxifene — CI, codeine, tramadol). Rifampicine (diminution de moitie de l'exposition a la terbinafine), cimetidine et fluconazole (augmentation), ciclosporine (diminution de ses concentrations), cafeine (clairance abaissee). Aucune interaction par voie cutanee.",
+                    "ddi_interact_v2": [
+                              { "classe": "Substrats du CYP2D6 a marge therapeutique etroite — SURDOSAGE", "dcis": ["amitriptyline", "clomipramine", "imipramine", "nortriptyline", "desipramine", "doxepine", "thioridazine", "propafenone", "flecainide"], "commentaire": "La terbinafine inhibe puissamment le CYP2D6 : l'exposition du substrat peut etre multipliee par 2 a 5 (RCP Lamisil, etude d'interaction avec la desipramine). Reduire la dose du substrat, ou differer la cure antifongique.", "severite": "danger" },
+                              { "classe": "Tamoxifene — PERTE D'EFFICACITE ANTITUMORALE", "dcis": ["tamoxifene"], "commentaire": "Le tamoxifene est une prodrogue activee en endoxifene par le CYP2D6. Son inhibition reduit la concentration du metabolite actif : association a proscrire pendant l'hormonotherapie.", "severite": "danger" },
+                              { "classe": "Prodrogues antalgiques activees par le CYP2D6 — PERTE D'EFFET", "dcis": ["codeine", "tramadol", "dihydrocodeine"], "commentaire": "L'antalgique n'agit qu'apres conversion par le CYP2D6 : sous terbinafine, l'analgesie peut etre absente alors que la dose semble correcte. Preferer un antalgique non tributaire de cette voie (paracetamol, morphine).", "severite": "warning" },
+                              { "classe": "Beta-bloquants metabolises par le CYP2D6 — bradycardie", "dcis": ["metoprolol", "propranolol", "carvedilol", "nebivolol", "timolol"], "commentaire": "Augmentation de l'exposition au beta-bloquant : surveiller la frequence cardiaque et la pression arterielle, adapter la dose si besoin (thesaurus ANSM).", "severite": "warning" },
+                              { "classe": "Antipsychotiques et urologiques substrats du CYP2D6 — exposition majoree", "dcis": ["risperidone", "haloperidol", "aripiprazole", "tolterodine", "tamsulosine", "solifenacine"], "commentaire": "Exposition majoree : surveiller les effets extrapyramidaux, la sedation ou l'hypotension orthostatique selon la molecule.", "severite": "warning" },
+                              { "classe": "Rifampicine — PERTE D'EFFICACITE de la terbinafine", "dcis": ["rifampicine"], "commentaire": "La rifampicine double la clairance de la terbinafine (RCP Lamisil) : l'echec du traitement antifongique est probable. Differer la cure ou choisir une autre strategie.", "severite": "warning" },
+                              { "classe": "Cimetidine et fluconazole — exposition a la terbinafine majoree", "dcis": ["cimetidine", "fluconazole"], "commentaire": "Diminution de la clairance de la terbinafine (RCP Lamisil) : surveiller la tolerance, notamment hepatique et cutanee.", "severite": "warning" },
+                              { "classe": "Ciclosporine — concentrations abaissees", "dcis": ["ciclosporine"], "commentaire": "Diminution des concentrations sanguines de ciclosporine (thesaurus ANSM). Controler les concentrations et adapter la posologie pendant le traitement et apres son arret.", "severite": "warning" },
+                              { "classe": "Hepatotoxiques — surveillance hepatique rapprochee", "dcis": ["methotrexate", "amiodarone", "isoniazide", "acide valproique", "valproate", "azathioprine", "leflunomide"], "commentaire": "La terbinafine expose a une hepatite idiosyncrasique. Sous un autre hepatotoxique, rapprocher le controle des transaminases et informer le patient des signes d'alerte.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "VOIE ORALE : transaminases et bilirubine AVANT la cure (contre-indiquee si hepatopathie chronique ou active) | Creatininemie et DFG (non recommande si DFG < 50) | NFS si terrain immunodeprime | Prelevement mycologique confirmant le dermatophyte. VOIE CUTANEE : aucun bilan.",
+                    "suivi_periodique": "VOIE ORALE : transaminases a 4-6 semaines de traitement, puis a tout signe d'appel | Poids et appetit a chaque consultation (la dysgueusie fait manger moins) | NFS en cas de fievre, d'angine ou d'infection inexpliquee. VOIE CUTANEE : surveillance clinique de l'efficacite.",
+                    "alerte_clinique": "HEPATITE (ictere, urines foncees, selles decolorees, nausees, asthenie, douleur de l'hypocondre droit) : ARRET IMMEDIAT et bilan hepatique — l'atteinte peut survenir sans hepatopathie prealable | TOXIDERMIE GRAVE (Stevens-Johnson, Lyell, DRESS, pustulose exanthematique aigue generalisee) : toute eruption etendue ou febrile impose l'arret | DYSGUEUSIE ou AGUEUSIE, parfois prolongee apres l'arret : anorexie et amaigrissement, risque nutritionnel reel chez le sujet age | NEUTROPENIE, agranulocytose (rare) | Lupus cutane subaigu induit, poussee de psoriasis | Symptomes depressifs rapportes. VOIE CUTANEE : irritation locale seulement, aucune toxicite systemique.",
+                    "bio_cible": [
+                              "BIO_013",
+                              "BIO_014",
+                              "BIO_017",
+                              "BIO_003",
+                              "BIO_004",
+                              "BIO_012"
+                    ],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "DEUX MEDICAMENTS SOUS UN SEUL NOM. La creme n'est pratiquement pas absorbee : ni hepatotoxicite, ni inhibition du CYP2D6, ni interaction. Le comprime porte toute la toxicite. Preciser la voie dans la fiche du medicament ; tant qu'elle n'est pas renseignee, l'analyse retient par prudence la voie orale. Chez le sujet age, l'inhibition PUISSANTE du CYP2D6 est le point qui decide le plus souvent : elle fait perdre son effet a la codeine, au tramadol et au tamoxifene, et fait au contraire monter l'exposition des tricycliques et de plusieurs beta-bloquants — pour une cure de trois mois, dans une indication souvent de confort.",
+                    "source": "RCP Lamisil (ANSM) | Thesaurus des interactions medicamenteuses ANSM"
+          },
+          {
                     "dci": "Heparine sodique",
                     "princeps": "Heparine Choay (IV) / Calciparine (SC)",
                     "classe": "HNF (Heparine Non Fractionnee)",

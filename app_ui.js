@@ -286,6 +286,7 @@ const MED_PRECISION_FIELDS = {
     inhale: ['composition'],
     methotrexate: ['mtx_schema'],
     macrogol: ['indication_peg'],
+    terbinafine: ['voie_terbinafine'],
     amphotericine: ['voie_ampho']
 };
 const PRECISION_FIELD_DEFS = {
@@ -315,6 +316,10 @@ const PRECISION_FIELD_DEFS = {
                   ['nephrotique', 'Syndrome néphrotique'],
                   ['hta', 'Hypertension artérielle'],
                   ['oedemes', 'Œdèmes des membres inférieurs isolés']] },
+    voie_terbinafine: { label: 'Voie d\'administration de la terbinafine', type: 'select',
+        options: [['', 'Non précisé (traité comme voie orale)'],
+                  ['orale', 'Comprimé (voie orale)'],
+                  ['topique', 'Crème ou solution cutanée (non absorbée)']] },
     indication_peg: { label: 'Usage du macrogol', type: 'select',
         options: [['', 'Non précisé (traité comme constipation chronique)'],
                   ['constipation', 'Traitement de la constipation (1 à 2 sachets par jour)'],
@@ -464,6 +469,7 @@ const _RESUME_PRECISION = {
     composition:    { seul: 'molécule seule', laba: '+ LABA', ics_laba: '+ corticoïde inhalé', triple: 'trithérapie' },
     voie:           { orale: 'voie orale', topique: 'voie topique' },
     voie_ampho:     { orale: 'buvable', iv: 'injectable' },
+    voie_terbinafine: { orale: 'comprimé', topique: 'voie cutanée' },
     mtx_schema:     { faible: 'faible dose hebdo.', haute: 'haute dose' },
     indication_peg: { constipation: 'constipation', preparation: 'préparation colique' },
     indication_diu: { ic: 'insuffisance cardiaque', irc: 'surcharge IRC', cirrhose: 'ascite',

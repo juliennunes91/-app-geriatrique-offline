@@ -840,6 +840,17 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
                 else if (p.indication_diu === 'oedemes') ctxClinique.push('diuretique_indication_oedemes');
                 else ctxClinique.push('diuretique_indication_surcharge');
             }
+            // Terbinafine cutanée : même mécanisme que les AINS topiques — on MARQUE le
+            // libellé de classe, ce qui la sort de sa classe et désarme d'un coup toutes
+            // les règles de toxicité systémique, présentes et futures.
+            if (fam === 'terbinafine') {
+                if (p.voie_terbinafine === 'topique') {
+                    ctxClinique.push('terbinafine_topique');
+                    if (!/VOIE TOPIQUE/.test(m.classe || '')) m.classe = (m.classe || '') + ' — VOIE TOPIQUE';
+                } else if (p.voie_terbinafine === 'orale') {
+                    m.classe = String(m.classe || '').replace(/ — VOIE TOPIQUE/g, '');
+                }
+            }
             // Macrogol : constipation chronique (10-20 g/j) ou préparation colique
             // (2 à 4 L en quelques heures). Le second usage n'a de commun avec le
             // premier que la molécule.

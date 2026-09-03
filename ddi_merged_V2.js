@@ -14223,6 +14223,39 @@ const DDI_MERGED_DB = [
   "source": "DDI_DB"
  },
  {
+  "perpetrator": "Rifampicine",
+  "victim": "Terbinafine",
+  "auc_ratio": 0.5,
+  "mechanism": "Induction du metabolisme hepatique de la terbinafine",
+  "category": null,
+  "note": "RCP Lamisil : la rifampicine augmente d'environ 100 % la clairance de la terbinafine — echec therapeutique probable.",
+  "effet": "Induction forte (Perte d'efficacite du substrat)",
+  "couleur": "danger",
+  "source": "RCP Lamisil (ANSM)"
+ },
+ {
+  "perpetrator": "Cimetidine",
+  "victim": "Terbinafine",
+  "auc_ratio": 1.5,
+  "mechanism": "Diminution de la clairance de la terbinafine",
+  "category": null,
+  "note": "RCP Lamisil : la cimetidine diminue d'environ 33 % la clairance de la terbinafine.",
+  "effet": "Inhibition moderee (Surveillance recommandee)",
+  "couleur": "warning",
+  "source": "RCP Lamisil (ANSM)"
+ },
+ {
+  "perpetrator": "Fluconazole",
+  "victim": "Terbinafine",
+  "auc_ratio": 1.7,
+  "mechanism": "Inhibition des CYP2C9 et CYP3A4 impliques dans le metabolisme de la terbinafine",
+  "category": null,
+  "note": "RCP Lamisil : augmentation d'environ 52 % de la Cmax et 69 % de l'ASC de la terbinafine.",
+  "effet": "Inhibition moderee (Surveillance recommandee)",
+  "couleur": "warning",
+  "source": "RCP Lamisil (ANSM)"
+ },
+ {
   "perpetrator": "Teriflunomide",
   "victim": "Caffeine",
   "auc_ratio": 0.45,

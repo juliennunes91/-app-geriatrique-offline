@@ -50,6 +50,14 @@ const DRUG_CLASSES = {
         classeMatch: ['antifongiquepolyenique'],
         dcis: ['amphotericine b', 'nystatine']
     },
+    // Allylamines. Meme motif que les polyenes : la classe existe pour porter
+    // l'exclusion de la voie cutanee (cf. _CLASS_EXCLUDE), consultee seulement pour un
+    // identifiant de classe declare.
+    antifongique_allylamine: {
+        aliases: ['antifongiqueallylamine', 'allylamine', 'terbinafine'],
+        classeMatch: ['antifongiqueallylamine'],
+        dcis: ['terbinafine']
+    },
     diuretique_anse: {
         aliases: ['diuretiquedelanse', 'diuretiquesdelanse', 'diuretiqueanse', 'diuretiquesanse'],
         classeMatch: ['diuretiquedelanse'],
@@ -535,6 +543,9 @@ const _CLASS_EXCLUDE = {
     // néphrotoxicité, ni aucune interaction systémique — même marqueur de libellé que
     // les AINS topiques, posé depuis la précision de voie.
     antifongique_polyenique: /voieoralenonabsorbee/,
+    // Terbinafine en creme : absorption systemique negligeable — ni hepatotoxicite,
+    // ni inhibition du CYP2D6, ni interaction.
+    antifongique_allylamine: /voietopique/,
     // « corticoide » ⊂ « Corticoïde inhalé (ICS) » : la béclométasone déclenchait les
     // règles du corticoïde SYSTÉMIQUE (ulcère, AINS + corticoïde, PIM-Check).
     corticoide: /inhale|\bics\b|nasal|ophtalm|cutane|topique|intraarticulaire/,
@@ -719,6 +730,9 @@ function medPrecisionFamily(classe, dci) {
     if (/m[eé]b[eé]v[eé]rine|alv[eé]rine|phloroglucinol|trim[eé]butine/i.test(d) || /antispasmodique/i.test(cl)) return 'antispasmodique';
     if (/b[eé]tahistine|m[eé]clozine|m[eé]clizine|flunarizine|cinnarizine/i.test(d) || /anti-?vertigineux/i.test(cl)) return 'antivertigineux';
     // Familles dose/bilan-dépendantes (Phase 1)
+    // Terbinafine : le comprime porte toute la toxicite (hepatite, inhibition
+    // puissante du CYP2D6) ; la creme n'est pratiquement pas absorbee.
+    if (/terbinafine/i.test(d) || /allylamine/i.test(cl)) return 'terbinafine';
     // Macrogol (PEG) : deux usages que tout sépare. En constipation chronique,
     // 10 à 20 g par jour — c'est la référence gériatrique. En préparation colique,
     // 2 à 4 litres avalés en quelques heures : un volume qui expose le sujet âgé à la

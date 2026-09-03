@@ -4042,5 +4042,37 @@
    "success | Aucune action majeure identifiée",
    "success | Dossier sans alerte critique"
   ]
+ },
+ "cov_SUP_TERB_01_SUP_TERB_02": {
+  "alertes-eviter": [
+   "info | Réévaluation planifiée",
+   "warning | Terbinafine orale et fonction rénale — usage non recommandé sous 50 ml/min",
+   "warning | Terbinafine orale — surveillance hépatique et signes d'alerte"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [
+   "warning | Insuffisance rénale chronique G3b — insuffisance rénale modérée"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | TERBINAFINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : TERBINAFINE"
+  ],
+  "alertes-scores": [
+   "danger | HAS-BLED : 2 point(s)",
+   "info | CHA₂DS₂-VA : 2 point(s)",
+   "info | RISQ-PATH : 2 point(s)",
+   "info | Score ACB : 0",
+   "info | Score PIM Global : 10/100 — ACCEPTABLE",
+   "info | Score de Tisdale : 2 point(s)",
+   "warning | DOACscore : 2 point(s)",
+   "warning | ORBIT-AF : 2 point(s)"
+  ],
+  "alertes-synthese": [
+   "warning | Actions de réévaluation suggérées"
+  ]
  }
 }
