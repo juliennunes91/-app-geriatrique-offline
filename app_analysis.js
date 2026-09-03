@@ -617,7 +617,11 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'BIO_045': getBioVal('bioTca'),
         'BIO_046': getBioVal('bioAlbuminurie'),
         // Alias non-canoniques (pas d'ID dans la base) : conservés sous préfixe BIO_
-        'BIO_CST': getBioVal('bioCst'), 'BIO_PHOS': getBioVal('bioPhos'),
+        // Le CST etait saisi dans les deux UIs mais n'existait pas dans
+        // MASTER_DB.BIOLOGIE : aucune regle ne pouvait s'en servir (INV-B). Il a
+        // desormais son code canonique BIO_047 ; l'alias historique est conserve
+        // pour les lectures existantes.
+        'BIO_CST': getBioVal('bioCst'), 'BIO_047': getBioVal('bioCst'), 'BIO_PHOS': getBioVal('bioPhos'),
         'BIO_TEMP': getBioVal('bioTemp'),
         'BIO_T4': getBioVal('bioT4'), 'BIO_T3': getBioVal('bioT3')
     };

@@ -885,7 +885,7 @@
    "info | Réévaluation planifiée",
    "warning | Aide au sevrage tabagique chez le fumeur actif BPCO",
    "warning | Corticoïde inhalé quotidien pour asthme modéré-sévère ou BPCO GOLD 3-4",
-   "warning | iSGLT2 (pilier 4)"
+   "warning | Piliers thérapeutiques de l'IC à FEVG réduite (HFrEF)"
   ],
   "alertes-bio": [
    "warning | Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
@@ -903,7 +903,7 @@
    "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 9/100 — ACCEPTABLE",
+   "info | Score PIM Global : 10/100 — ACCEPTABLE",
    "info | Score de Tisdale : 1 point(s)",
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 2 point(s)"

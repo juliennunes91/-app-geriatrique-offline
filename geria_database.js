@@ -315,6 +315,13 @@ const MASTER_DB = {
             "UNITE": "ratio (vs témoin)",
             "SYNONYMES": "TCA, aPTT, APTT, Heparine non fractionnee, HNF, Cephaline, Hemostase"
         },
+        "BIO_047": {
+            "ID_BIO": "BIO_047",
+            "LOINC": "2500-7",
+            "NOM_STANDARD": "Coefficient de saturation de la transferrine (CST)",
+            "UNITE": "%",
+            "SYNONYMES": "CST, Saturation de la transferrine, TSAT, Coefficient de saturation, Carence martiale"
+        },
         "BIO_046": {
             "ID_BIO": "BIO_046",
             "LOINC": "14959-1",

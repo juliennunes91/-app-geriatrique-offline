@@ -874,11 +874,30 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(all(analyzeCase({ ...dia, dfg: 70, bio: { albuminurie: 50 } })).some(re), 'fire si alb>30 & DFG>30');
         assert.ok(!all(analyzeCase({ ...dia, dfg: 70 })).some(re), 'pas si albuminurie inconnue');
     });
-    test('IN_B07 (anti-aldo) dans piliers HFrEF seulement si DFG>30 connu', () => {
-        const hf = { age: 80, sexe: 'F', comorbs: ['PAT_002'] };
-        const re = /aldost[ée]rone|\bARM\b|spironolactone/i;
-        assert.ok(re.test(initHtml(analyzeCase({ ...hf, dfg: 50 }))), 'présent si DFG 50');
-        assert.ok(!re.test(initHtml(analyzeCase({ ...hf }))), 'absent si DFG inconnu');
+    test('IN_B07 (ARM) : quelle que soit la FEVG, et seulement si DFG>30 connu', () => {
+        // ESC 2026 : l'antagoniste des recepteurs mineralocorticoides passe en classe IA
+        // INDEPENDAMMENT de la fraction d'ejection. Il etait reserve a la FEVG reduite —
+        // un patient a fraction preservee ne se voyait donc rien proposer, alors que
+        // c'est le changement principal de ces recommandations (FINEARTS-HF).
+        const re = /aldost[ée]rone|min[ée]ralocortico|\bARM\b|spironolactone/i;
+        const cas = o => initHtml(analyzeCase({ age: 80, sexe: 'F', ...o }));
+        assert.ok(re.test(cas({ comorbs: ['PAT_002'], dfg: 50 })), 'FEVG reduite : present');
+        assert.ok(re.test(cas({ comorbs: ['PAT_003'], dfg: 50 })), 'FEVG preservee : present (ESC 2026)');
+        // Le garde-fou renal reste : sans DFG connu, on ne propose pas un hyperkaliemiant.
+        assert.ok(!re.test(cas({ comorbs: ['PAT_002'] })), 'absent si DFG inconnu');
+        assert.ok(!re.test(cas({ comorbs: ['PAT_003'], dfg: 25 })), 'absent si DFG 25');
+    });
+    test('IN_B11 : la carence martiale se lit aussi sur le CST (ESC 2026)', () => {
+        // La condition ne testait que la ferritine < 100. Un patient a ferritine 150 et
+        // CST 15 % — cas frequent, l'inflammation chronique elevant la ferritine — ne
+        // declenchait rien, alors que le message annoncait deja ce cas de figure.
+        const re = /carence martiale|Fer IV/i;
+        const cas = bio => initHtml(analyzeCase({ age: 80, sexe: 'F', comorbs: ['PAT_002'],
+            dfg: 50, bio: { patientDFG: 50, ...bio } }));
+        assert.ok(re.test(cas({ bioFer: 60 })), 'ferritine 60 : carence');
+        assert.ok(re.test(cas({ bioFer: 150, bioCst: 15 })), 'ferritine 150 + CST 15 % : carence (ESC 2026)');
+        assert.ok(!re.test(cas({ bioFer: 150, bioCst: 28 })), 'ferritine 150 + CST 28 % : pas de carence');
+        assert.ok(!re.test(cas({})), 'aucune donnee martiale : ne rien affirmer');
     });
     // EV_J09 : lévothyroxine « déconseillée » réservée à l'infraclinique TSH ∈ [4,10[
     // (fourchette bio = tableau de critères). Ne doit pas frapper l'hypothyroïdie patente.

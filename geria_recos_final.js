@@ -2647,16 +2647,27 @@ const GERIA_RECOS_DB = {
             sources: ["ESC_HF", "STOPP3", "FORTA"],
             ref_code: "START3-B7",
             section: "Cardiovasculaire",
-            titre: "Anti-aldostérone / ARM (pilier 3)",
-            message: "Anti-aldostérone (spironolactone, éplérénone) pour HFrEF — pilier pronostique (EMPHASIS-HF). ⚠ Vérifier DFG > 30 ml/min et K+ < 5.0 avant introduction.",
+            titre: "Antagoniste des récepteurs minéralocorticoïdes (pilier 3)",
+            // ESC 2026 (Kober L et al.) : l'ARM passe en classe IA INDÉPENDAMMENT de la
+            // FEVG. Il était ici réservé à la fraction réduite — un patient à fraction
+            // préservée ne se voyait donc rien proposer, alors que c'est le changement
+            // principal de ces recommandations (FINEARTS-HF pour la finérénone). Les
+            // 41-49 %, anciennement « FEVG modérément altérée », rejoignent par ailleurs
+            // la fraction réduite : la catégorie intermédiaire disparaît.
+            message: "Antagoniste des récepteurs minéralocorticoïdes pour insuffisance cardiaque symptomatique, quelle que soit la fraction d'éjection — classe IA de l'ESC 2026. À fraction réduite : spironolactone ou éplérénone (EMPHASIS-HF). À fraction préservée : spironolactone ou finérénone (FINEARTS-HF). ⚠ Chez le sujet âgé, vérifier DFG > 30 mL/min et kaliémie < 5,0 mmol/L avant l'introduction, puis contrôler à J7, J14, M1 : l'hyperkaliémie est la première cause d'arrêt.",
             severite: "warning",
             condition: {
                 bio_strict: true,
-                comorbs: ["PAT_002"],
+                comorbs_any: ["PAT_002", "PAT_003"],
+                // La kaliémie n'est PAS un critère de déclenchement : `bio_strict` vaut
+                // pour toute la condition, donc l'exiger ferait taire la recommandation
+                // d'un pilier pronostique chez tout patient sans ionogramme récent — or
+                // c'est précisément le moment de le demander. Le seuil de 5,0 reste dans
+                // le message, comme consigne AVANT instauration.
                 bio: { "BIO_004": { op: ">", val: 30 } },
-                med_absent: ["spironolactone", "eplerenone", "aldactazine"]
+                med_absent: ["spironolactone", "eplerenone", "aldactazine", "finerenone"]
             },
-            alternatives: "Spironolactone 25 mg ou éplérénone 25 mg, avec monitorage K+ et créatinine à J7, J14, M1, puis /3 mois"
+            alternatives: "Spironolactone 25 mg ou éplérénone 25 mg (fraction réduite) ; spironolactone ou finérénone (fraction préservée). Kaliémie et créatininémie à J7, J14, M1, puis tous les 3 mois."
         },
         {
             id: "IN_B08",
@@ -2695,12 +2706,17 @@ const GERIA_RECOS_DB = {
             ref_code: "START3-B11",
             section: "Cardiovasculaire",
             titre: "Fer IV si carence martiale",
-            message: "Fer intraveineux pour HFrEF symptomatique avec carence martiale documentée (ferritine < 100 µg/L ou 100-299 avec CST < 20%) — AFFIRM-AHF, IRONMAN.",
+            // ESC 2026 : la définition de la carence martiale privilégie désormais un
+            // coefficient de saturation de la transferrine < 20 %. La condition ne testait
+            // que la ferritine < 100 : un patient à ferritine 150 et CST 15 % — cas
+            // fréquent, l'inflammation chronique élevant la ferritine — ne déclenchait
+            // rien, alors que le message annonçait déjà ce cas de figure.
+            message: "Fer intraveineux pour insuffisance cardiaque symptomatique à fraction d'éjection réduite avec carence martiale documentée. L'ESC 2026 retient d'abord un coefficient de saturation de la transferrine < 20 %, ou une ferritine < 100 µg/L (AFFIRM-AHF, IRONMAN). Chez le sujet âgé, la ferritine seule est trompeuse : elle monte avec l'inflammation et peut masquer une carence réelle.",
             severite: "warning",
             condition: {
                 bio_strict: true,
                 comorbs: ["PAT_002"],
-                bio: { "BIO_020": { op: "<", val: 100 } }
+                bio_any: { "BIO_047": { op: "<", val: 20 }, "BIO_020": { op: "<", val: 100 } }
             },
             alternatives: "Carboxymaltose ferrique IV (Ferinject) 500-1000 mg"
         },
