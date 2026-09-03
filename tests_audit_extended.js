@@ -1249,7 +1249,11 @@ function runLibelleClasseAudit(test, assert) {
 // pas une alerte issue d'une table (SYND_029 garde la sienne) mais un texte rédigé sur
 // place — au même titre que l'insuffisance en vitamine D et les stades KDIGO juste
 // au-dessus dans le fichier. Sa couleur ne court-circuite donc aucun scoring.
-const COULEURS_EN_DUR_ATTENDUES = { danger: 8, warning: 18, info: 8 };
+// warning 18 -> 20, info 8 -> 10 : les quatre encarts des symptomes
+// psycho-comportementaux et du MBI. Comme l'insuffisance en vitamine D ou la liste des
+// medicaments epileptogenes, ce sont des textes REDIGES SUR PLACE, pas des entrees de
+// table portant une severite — leur couleur ne court-circuite donc aucun scoring.
+const COULEURS_EN_DUR_ATTENDUES = { danger: 8, warning: 20, info: 10 };
 function runCouleurCodeeEnDurAudit(test, assert) {
     const src = fs.readFileSync(path.join(__dirname, 'app_analysis.js'), 'utf8');
     ['danger', 'warning', 'info'].forEach(niveau => {
@@ -1350,9 +1354,10 @@ const CONTEXTES_SANS_CONSOMMATEUR_CONNUS = new Set([
     // CONSTAT OUVERT — données saisies que rien ne consomme aujourd'hui. Elles sont
     // listées pour que l'audit reste utile, PAS parce que l'état est satisfaisant :
     // le clinicien répond à ces questions et l'analyse n'en tient aucun compte.
-    'spc_agitation', 'agitation', 'spc_psychose', 'hallucinations', 'spc_apathie',
-    'spc_depression', 'spc_insomnie', 'inversion_nycthemerale', 'spc_desinhibition',
-    'errance', 'spc_tca', 'mbi', 'hypoalbuminemie'
+    // Ces trois-la restent sans consommateur : ce sont des synonymes internes des
+    // contextes SPC ci-dessus, conserves pour la lisibilite de la saisie.
+    'agitation', 'hallucinations', 'inversion_nycthemerale', 'errance',
+    'hypoalbuminemie'
 ]);
 function runContexteOrphelinAudit(test, assert) {
     const lire = f => fs.readFileSync(path.join(__dirname, f), 'utf8');

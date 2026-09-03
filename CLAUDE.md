@@ -704,14 +704,31 @@ p = 0,241) — Doré, *Pharmacotherapy* 2017, DOI 10.1002/phar.1965.
   place du POURCENTAGE — si bien que le valproate, le divalproate et la cyamémazine ne
   franchissaient jamais le seuil de 85 % du bloc hépatique.
 
-## Symptômes psycho-comportementaux — ils désarment, ils n'arment jamais
+## Symptômes psycho-comportementaux et MBI
 
-Le critère STOPP d'`EV_D16` dit « antipsychotique comme hypnotique, **sauf psychose ou
-SCPD** » ; l'application le traduisait par « sauf démence », faute de lire les sept
-symptômes pourtant saisis. Ils sont désormais lus — **uniquement pour désarmer la règle**.
-Leur absence dans le formulaire ne prouve pas leur absence chez le patient : on ne déduit
-pas un fait clinique d'une case non cochée. Une apathie ne désarme pas non plus la règle,
-n'étant pas une indication d'antipsychotique.
+Sept symptômes (NPI-C, agitation selon IPA 2015) et cinq items MBI-C étaient saisis et lus
+par personne : le clinicien répondait, l'analyse n'en tenait aucun compte.
+
+**La doctrine, en deux temps.** Une case **cochée** est une déclaration du clinicien : elle
+peut ARMER une alerte. Une case **non cochée** ne prouve rien et n'en désarme aucune. La
+distinction tient les deux usages :
+
+- `EV_D16` dit « antipsychotique comme hypnotique, sauf psychose ou SCPD » ; l'application
+  le traduisait par « sauf démence ». Les SPC déclarés **désarment** désormais la règle —
+  et une apathie ne la désarme pas, n'étant pas une indication d'antipsychotique.
+- Deux garde-fous sont **armés** par un symptôme déclaré : apathie sous antipsychotique ou
+  benzodiazépine (aucun bénéfice démontré, sédation qui l'aggrave), et trouble du sommeil
+  de la démence traité par hypnotique.
+
+**Un seul encart groupé**, jamais un par symptôme : le rapport PDF vient d'être allégé, et
+sept entrées de plus l'auraient réalourdi. Il liste les symptômes déclarés et, pour chacun,
+la conduite de première intention — chercher la cause organique ou iatrogène, puis les
+approches non médicamenteuses, le psychotrope seulement ensuite.
+
+**Le MBI n'est pas une psychiatrie de l'adulte jeune** : des symptômes comportementaux
+apparus après 50 ans et persistant six mois, sans antécédent psychiatrique, sont un marqueur
+de risque de déclin cognitif. Le message oriente vers l'évaluation cognitive et la
+réévaluation des psychotropes en place, pas vers une nouvelle prescription.
 
 ## Fragilité sévère (`frailty_exclude`)
 

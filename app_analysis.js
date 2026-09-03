@@ -2206,6 +2206,90 @@ function analyserPrescription() {
         }
     }
 
+    // ── Symptômes psycho-comportementaux (SCPD) et MBI ─────────────────────────
+    // Sept symptômes étaient saisis (NPI-C, agitation selon IPA 2015) et lus par
+    // personne : le clinicien répondait, l'analyse n'en tenait aucun compte. Ils
+    // produisent désormais deux choses — la conduite de première intention, groupée en
+    // UN encart, et des garde-fous médicamenteux qui n'existaient pas.
+    //
+    // Une case COCHÉE est une déclaration du clinicien : elle peut donc armer une
+    // alerte. Une case NON cochée ne prouve rien et n'en désarme aucune — c'est la
+    // distinction posée pour EV_D16, et elle tient ici aussi.
+    {
+        const SPC = [
+            { ctx: 'spc_agitation',     nom: 'Agitation ou agressivité',
+              conduite: "chercher d'abord la cause avant tout psychotrope : douleur, rétention urinaire, fécalome, infection, effet indésirable médicamenteux, ou environnement inadapté. Démarche DICE (décrire, investiguer, créer, évaluer)." },
+            { ctx: 'spc_psychose',      nom: 'Idées délirantes ou hallucinations',
+              conduite: "éliminer un delirium et une cause iatrogène (anticholinergiques, dopaminergiques, corticoïdes). En cas de démence à corps de Lewy, l'hypersensibilité aux neuroleptiques peut être sévère." },
+            { ctx: 'spc_apathie',       nom: 'Apathie',
+              conduite: "ce n'est ni une dépression, ni une indication d'antipsychotique ou de benzodiazépine. Activités structurées et stimulation adaptée." },
+            { ctx: 'spc_depression',    nom: 'Dépression ou anxiété associée',
+              conduite: "évaluer avant de prescrire : le bénéfice des antidépresseurs dans la dépression de la démence est faible et le risque iatrogène réel chez le sujet âgé." },
+            { ctx: 'spc_insomnie',      nom: 'Troubles du sommeil, inversion nycthémérale',
+              conduite: "exposition à la lumière du jour, activité diurne, hygiène du sommeil. Ni benzodiazépine, ni antipsychotique comme hypnotique." },
+            { ctx: 'spc_desinhibition', nom: 'Désinhibition, errance',
+              conduite: "sécuriser l'environnement et adapter l'accompagnement. La contention chimique n'est pas une réponse." },
+            { ctx: 'spc_tca',           nom: 'Troubles du comportement alimentaire',
+              conduite: "évaluer la déglutition, l'état bucco-dentaire et la douleur avant de conclure à un trouble comportemental ; adapter les textures." }
+        ];
+        const declares = SPC.filter(x => ctxClinique.includes(x.ctx));
+        if (declares.length > 0) {
+            const items = declares.map(x =>
+                `<li><b>${escapeHtml(x.nom)}</b> — ${escapeHtml(x.conduite)}</li>`).join('');
+            addAlert('alertes-eviter', `<div class="alert alert-info border-info shadow-sm">
+                <strong>🧠 Symptômes psycho-comportementaux déclarés (${declares.length}) — conduite de première intention</strong>
+                <span class="badge bg-secondary float-end" style="font-size:0.65em;">NPI-C | IPA 2015</span>
+                <br><span class="small">Avant tout psychotrope : rechercher une cause organique ou iatrogène, puis les approches non médicamenteuses. Le psychotrope ne vient qu'ensuite, à dose minimale et pour une durée définie.</span>
+                <ul class="mb-0 mt-1 small">${items}</ul>
+            </div>`, 'eviter');
+        }
+
+        // Garde-fous armés par un symptôme DÉCLARÉ.
+        // L'apathie est le cas le plus net : elle est régulièrement traitée comme une
+        // agitation ou une dépression, alors qu'aucun psychotrope n'y a fait la preuve
+        // d'un bénéfice — le risque, lui, reste entier.
+        if (ctxClinique.includes('spc_apathie')) {
+            const psy = activeMeds.filter(m => {
+                const d = sanitizeText(m.dci), c = sanitizeText(m.classe || '');
+                try { return matchesDrugClass(d, c, 'antipsychotique') || matchesDrugClass(d, c, 'benzodiazepine'); }
+                catch (e) { return false; }
+            }).map(m => escapeHtml(m.dci.toUpperCase()));
+            if (psy.length > 0) {
+                addAlert('alertes-eviter', `<div class="alert alert-warning border-warning shadow-sm">
+                    <strong>⚠️ Apathie déclarée sous psychotrope : indication à revoir</strong>
+                    <br><span class="small">L'apathie n'est pas une indication d'antipsychotique ni de benzodiazépine, et ces molécules l'aggravent le plus souvent par sédation. Réévaluer l'indication de : <b>${psy.join(', ')}</b>. Si un traitement de la dépression est envisagé, distinguer d'abord l'apathie de la dépression — le repli et la perte d'initiative ne suffisent pas au diagnostic.</span>
+                </div>`, 'eviter');
+            }
+        }
+        // Troubles du sommeil : la benzodiazépine et l'antipsychotique sédatif sont les
+        // deux réponses les plus fréquentes, et les deux moins recommandées.
+        if (ctxClinique.includes('spc_insomnie')) {
+            const hypno = activeMeds.filter(m => {
+                const d = sanitizeText(m.dci), c = sanitizeText(m.classe || '');
+                try { return matchesDrugClass(d, c, 'benzodiazepine') || /zolpidem|zopiclone/i.test(m.dci); }
+                catch (e) { return false; }
+            }).map(m => escapeHtml(m.dci.toUpperCase()));
+            if (hypno.length > 0) {
+                addAlert('alertes-eviter', `<div class="alert alert-warning border-warning shadow-sm">
+                    <strong>⚠️ Trouble du sommeil de la démence traité par hypnotique</strong>
+                    <br><span class="small">Dans les troubles du sommeil liés à une maladie neurocognitive, benzodiazépines et apparentés aggravent la confusion, les chutes et le déclin cognitif sans bénéfice durable sur le sommeil. Concerné : <b>${hypno.join(', ')}</b>. Privilégier l'exposition lumineuse diurne, l'activité en journée et la régularité des horaires ; réévaluer la nécessité du traitement et planifier une décroissance.</span>
+                </div>`, 'eviter');
+            }
+        }
+
+        // MBI — les symptômes comportementaux d'apparition TARDIVE et persistants ne
+        // sont pas un trouble psychiatrique primaire : ils précèdent souvent le déclin
+        // cognitif. Le message vise à éviter qu'on les traite comme une psychiatrie de
+        // l'adulte jeune.
+        if (ctxClinique.includes('mbi')) {
+            addAlert('alertes-eviter', `<div class="alert alert-info border-info shadow-sm">
+                <strong>🧠 Trouble comportemental émergent (MBI) — évaluation cognitive</strong>
+                <span class="badge bg-secondary float-end" style="font-size:0.65em;">MBI-C</span>
+                <br><span class="small">Des symptômes comportementaux apparus après 50 ans et persistant au moins six mois, chez un patient sans trouble psychiatrique antérieur, constituent un marqueur de risque de déclin cognitif — et non un trouble psychiatrique primaire. Proposer une évaluation cognitive plutôt que d'instaurer un psychotrope au long cours, et réévaluer les traitements déjà en place à cette lumière.</span>
+            </div>`, 'eviter');
+        }
+    }
+
     // Médicaments abaissant le seuil épileptogène (si épilepsie active)
     // Données lues depuis MASTER_DB champ epileptogene (eleve/modere/faible)
     if (activeComorbs.includes('PAT_015')) {

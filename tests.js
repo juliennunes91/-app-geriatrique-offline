@@ -1038,6 +1038,46 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/non un critère de dénutrition/i.test(bio(28)), 'et refuser le diagnostic nutritionnel');
         assert.ok(!/Albuminémie basse/.test(bio(42)), 'albumine normale : aucun message');
     });
+    test('SCPD : conduite groupee, et garde-fous armes par un symptome declare', () => {
+        // Sept symptomes etaient saisis et lus par personne. Une case COCHEE est une
+        // declaration du clinicien : elle peut armer. Une case NON cochee ne prouve rien.
+        const t = c => (analyzeCase(c)._html['alertes-eviter'] || '').replace(/<[^>]*>/g, ' ');
+        const cas = o => t({ age: 84, sexe: 'F', comorbs: ['PAT_010'], flags: o.flags || [], meds: o.meds || [] });
+
+        // Un seul encart groupe, jamais un par symptome : le rapport vient d'etre allege.
+        assert.ok(!/Symptômes psycho-comportementaux déclarés/.test(cas({})),
+            'aucun SPC coche : aucun encart');
+        const deux = cas({ flags: ['chkDemence', 'chkSpcAgitation', 'chkSpcApathie'] });
+        assert.ok(/Symptômes psycho-comportementaux déclarés \(2\)/.test(deux),
+            'deux symptomes : UN encart qui en compte deux');
+        assert.strictEqual((deux.match(/conduite de première intention/g) || []).length, 1,
+            'un seul encart, pas un par symptome');
+
+        // Garde-fou 1 : l'apathie n'est une indication ni d'antipsychotique ni de BZD.
+        assert.ok(/Apathie déclarée sous psychotrope/.test(
+            cas({ flags: ['chkDemence', 'chkSpcApathie'], meds: ['Risperidone'] })),
+            'apathie + antipsychotique : alerte');
+        assert.ok(!/Apathie déclarée sous psychotrope/.test(
+            cas({ flags: ['chkDemence', 'chkSpcApathie'], meds: ['Paracetamol'] })),
+            'apathie sans psychotrope : rien a reevaluer');
+        assert.ok(!/Apathie déclarée sous psychotrope/.test(
+            cas({ flags: ['chkDemence'], meds: ['Risperidone'] })),
+            'antipsychotique sans apathie DECLAREE : on ne deduit rien d\'une case non cochee');
+
+        // Garde-fou 2 : hypnotique dans les troubles du sommeil de la demence.
+        assert.ok(/traité par hypnotique/.test(
+            cas({ flags: ['chkDemence', 'chkSpcInsomnie'], meds: ['Zolpidem'] })),
+            'trouble du sommeil + zolpidem : alerte');
+        assert.ok(!/traité par hypnotique/.test(
+            cas({ flags: ['chkDemence', 'chkSpcInsomnie'], meds: ['Paracetamol'] })),
+            'trouble du sommeil sans hypnotique : pas d\'alerte');
+
+        // MBI : marqueur de risque de declin cognitif, pas un trouble psychiatrique.
+        assert.ok(/Trouble comportemental émergent/.test(cas({ flags: ['chkMci', 'chkMbiMotiv'] })),
+            'MBI declare : message d\'evaluation cognitive');
+        assert.ok(!/Trouble comportemental émergent/.test(cas({ flags: ['chkMci'] })),
+            'MCI sans item MBI : pas de message');
+    });
     test('EV_D16 : les SPC saisis desarment la regle, ils ne l\'arment jamais', () => {
         // Le critere STOPP dit « sauf psychose ou SCPD » ; l'application le traduisait
         // par « sauf demence ». Les symptomes psycho-comportementaux sont desormais lus —
