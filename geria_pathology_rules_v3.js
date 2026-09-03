@@ -2563,7 +2563,11 @@ const PATHOLOGY_RULES_DB = {
         },
 
         BIOLOGIE: {
-            SURVEILLANCE_CIBLE: ["BIO_003", "BIO_004", "BIO_001", "BIO_002", "BIO_005", "BIO_009", "BIO_023", "BIO_008", "BIO_035"],
+            // ESC 2026 (maladies cardiovasculaires et maladie renale chronique, avec l'ERA) :
+            // le depistage renal associe le DFG ET le rapport albumine/creatinine urinaire.
+            // La creatinine seule ne suffit plus — l'albuminurie precede la baisse du DFG
+            // et marque a elle seule un risque cardiovasculaire eleve.
+            SURVEILLANCE_CIBLE: ["BIO_003", "BIO_004", "BIO_046", "BIO_001", "BIO_002", "BIO_005", "BIO_009", "BIO_023", "BIO_008", "BIO_035"],
             REGLES: [
                 {
                     bio: "BIO_004",

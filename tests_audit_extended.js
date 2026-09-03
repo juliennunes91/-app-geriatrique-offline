@@ -158,7 +158,8 @@ const PANEL = {
     // couverture derive les contextes des cases a cocher et ne peut pas les produire.
     'cov_SUP_PEG_01': {"age":84,"sexe":"F","bio":{"patientDFG":60},"meds":["Macrogol","Furosemide"],"precisions":{"Macrogol":{"indication_peg":"preparation"}}},
     'cov_SUP_MTX_01': {"age":84,"sexe":"F","bio":{"patientDFG":60},"meds":["Methotrexate"],"precisions":{"Methotrexate":{"mtx_schema":"haute"}}},
-    'cov_SUP_TERB_01_SUP_TERB_02': {"age":82,"sexe":"F","dfg":35,"bio":{"patientDFG":35},"meds":["Terbinafine"]}
+    'cov_SUP_TERB_01_SUP_TERB_02': {"age":82,"sexe":"F","dfg":35,"bio":{"patientDFG":35},"meds":["Terbinafine"]},
+    'cov_IN_E06': {"age":78,"sexe":"M","comorbs":["PAT_029","PAT_016b"],"dfg":40,"bio":{"patientDFG":40,"bioAlbuminurie":250,"patientK":4.2},"meds":["Ramipril"]}
 };
 // Onglets figés par le golden-master. `alertes-scores` et `alertes-synthese` ont été
 // AJOUTÉS après avoir constaté qu'ils échappaient totalement au filet : la correction de

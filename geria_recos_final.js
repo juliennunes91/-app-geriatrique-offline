@@ -3284,6 +3284,39 @@ const GERIA_RECOS_DB = {
             alternatives: "Aspirine 75-100 mg/j + statine haute intensité (atorvastatine 40-80 mg)"
         },
         {
+            // ESC 2026 (Damman K et al., maladies cardiovasculaires et maladie renale
+            // chronique, avec l'European Renal Association) : la finerenone passe en
+            // classe IA chez le diabetique de type 2 avec DFG >= 25 et albuminurie
+            // >= 30 mg/g (FIDELIO-DKD, FIGARO-DKD). Elle n'etait citee par AUCUNE regle.
+            // Deux garde-fous geriatriques : la regle exige l'albuminurie MESUREE
+            // (bio_strict) — on ne propose pas un traitement sur une hypothese — et elle
+            // se tait si un autre antagoniste des recepteurs mineralocorticoides est deja
+            // prescrit, le cumul etant une contre-indication absolue (hyperkaliemie).
+            id: "IN_E06",
+            sources: ["ESC", "KDIGO"],
+            ref_code: "ESC26-CKD-FINE",
+            section: "Rénal",
+            titre: "Finérénone dans la maladie rénale chronique du diabète de type 2",
+            message: "Diabète de type 2 avec maladie rénale chronique albuminurique : la finérénone réduit la progression rénale et les hospitalisations pour insuffisance cardiaque (FIDELIO-DKD, FIGARO-DKD), recommandation de classe IA de l'ESC 2026 à partir d'un DFG de 25 mL/min/1,73 m² et d'une albuminurie de 30 mg/g. Elle s'ajoute au bloqueur du système rénine-angiotensine et à l'inhibiteur de SGLT2, elle ne les remplace pas. Chez le sujet âgé, contrôler la kaliémie avant l'instauration puis à un mois : l'hyperkaliémie est l'effet indésirable qui fait arrêter le traitement, et le risque monte quand le DFG baisse.",
+            severite: "warning",
+            condition: {
+                bio_strict: true,
+                // Type 2 SEULEMENT : FIDELIO-DKD et FIGARO-DKD n'ont inclus que des
+                // diabetiques de type 2. On ne cite donc pas l'ombrelle PAT_016, qui
+                // obligerait a inclure aussi le type 1 (invariant d'heritage des sous-types)
+                // et etendrait la recommandation au-dela de ses essais.
+                comorbs: ["PAT_029", "PAT_016b"],
+                bio: {
+                    "BIO_004": { op: ">=", val: 25 },
+                    "BIO_046": { op: ">=", val: 30 },
+                    "BIO_001": { op: "<", val: 5.0 }
+                },
+                med_absent: ["finerenone", "spironolactone", "eplerenone"],
+                frailty_exclude: true
+            },
+            alternatives: "Finérénone 10 mg/j si DFG 25-59, 20 mg/j si DFG ≥ 60 ; kaliémie et DFG à 1 mois, puis tous les 4 mois."
+        },
+        {
             id: "IN_E05",
             sources: ["KDIGO", "ADA"],
             ref_code: "KDIGO24-SGLT2",

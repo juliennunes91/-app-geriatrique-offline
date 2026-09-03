@@ -4074,5 +4074,42 @@
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
   ]
+ },
+ "cov_IN_E06": {
+  "alertes-eviter": [
+   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Réévaluation planifiée",
+   "warning | IEC/ARA2 sans contrôle créatinine/K+ post-initiation"
+  ],
+  "alertes-initier": [
+   "info | Réévaluation planifiée",
+   "warning | Finérénone dans la maladie rénale chronique du diabète de type 2",
+   "warning | Inhibiteur SGLT2 pour néphroprotection dans la MRC"
+  ],
+  "alertes-bio": [
+   "warning | Albuminurie KDIGO A2 — microalbuminurie (30-299) — 250 mg/g (ou mg/24h)",
+   "warning | Insuffisance rénale chronique G3b — insuffisance rénale modérée"
+  ],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | RAMIPRIL — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : RAMIPRIL"
+  ],
+  "alertes-scores": [
+   "danger | HAS-BLED : 2 point(s)",
+   "info | CHA₂DS₂-VA : 3 point(s)",
+   "info | RISQ-PATH : 1 point(s)",
+   "info | Score ACB : 0",
+   "info | Score PIM Global : 9/100 — ACCEPTABLE",
+   "info | Score de Tisdale : 1 point(s)",
+   "warning | DOACscore : 3 point(s)",
+   "warning | ORBIT-AF : 2 point(s)"
+  ],
+  "alertes-synthese": [
+   "warning | Actions de réévaluation suggérées"
+  ]
  }
 }

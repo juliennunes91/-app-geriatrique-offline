@@ -951,6 +951,25 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/Constipation chronique/.test(poso(cas(null))) && /2 à 4 L/.test(poso(cas(null))),
             'sans precision : les deux regimes restent affiches (rien n\'est cache par defaut)');
     });
+    test('Finerenone (ESC 2026) : proposee sur donnees mesurees, avec ses garde-fous', () => {
+        // L'ESC 2026 lui donne une classe IA dans la MRC albuminurique du diabete de
+        // type 2 ; elle n'etait citee par AUCUNE regle. Les garde-fous comptent autant
+        // que la recommandation : hyperkaliemie, cumul d'antagonistes des recepteurs
+        // mineralocorticoides, et surtout albuminurie MESUREE — on ne propose pas un
+        // traitement sur une hypothese.
+        const re = /Finérénone dans la maladie rénale/;
+        const cas = o => analyzeCase({ age: 78, sexe: 'M', comorbs: ['PAT_029', 'PAT_016b'],
+            meds: o.meds || ['Ramipril'], dfg: o.dfg || 40, cfs: o.cfs,
+            bio: { patientDFG: o.dfg || 40, bioAlbuminurie: o.rac, patientK: o.k || 4.2 } });
+        assert.ok(has(cas({ rac: 250 }), re), 'DT2 + MRC albuminurique, DFG 40 : a proposer');
+        assert.ok(!has(cas({}), re), 'albuminurie NON mesuree : ne rien proposer');
+        assert.ok(!has(cas({ rac: 12 }), re), 'albuminurie normale : hors indication');
+        assert.ok(!has(cas({ rac: 250, dfg: 20 }), re), 'DFG 20 : sous le seuil de 25');
+        assert.ok(!has(cas({ rac: 250, meds: ['Ramipril', 'Spironolactone'] }), re),
+            'cumul d\'antagonistes mineralocorticoides : contre-indication');
+        assert.ok(!has(cas({ rac: 250, k: 5.4 }), re), 'kaliemie 5,4 : ne pas ajouter un hyperkaliemiant');
+        assert.ok(!has(cas({ rac: 250, cfs: 8 }), re), 'fragilite severe : benefice a des annees');
+    });
     test('Scores : aucun message ne cite un score remplace par sa reference', () => {
         // L'ESC 2024 (AF-CARE) a retire la categorie « sexe » du CHA2DS2-VASc, qui
         // devient CHA2DS2-VA a seuil unique. L'application calculait deja le CHA2DS2-VA
