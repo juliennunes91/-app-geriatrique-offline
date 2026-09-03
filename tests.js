@@ -2767,6 +2767,7 @@ require('./tests_audit_extended').runMedAbsentOperantAudit(test, assert);
 require('./tests_audit_extended').runLibelleClasseAudit(test, assert);
 require('./tests_audit_extended').runCouleurCodeeEnDurAudit(test, assert);
 require('./tests_audit_extended').runDdiCommentaireConjonctionAudit(test, assert);
+require('./tests_audit_extended').runContexteOrphelinAudit(test, assert);
 require('./tests_audit_extended').runDdiIntegrityAudit(test, assert);
 require('./tests_audit_extended').runPosologyCompletenessAudit(test, assert);
 

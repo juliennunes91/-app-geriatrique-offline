@@ -1318,6 +1318,82 @@ function runDdiCommentaireConjonctionAudit(test, assert) {
     });
 }
 
+// ─── 6. Aucun contexte clinique produit dans le vide ────────────────────────
+// Une case cochée pousse un `contexte_clinique` ; une règle le consomme. Entre les
+// deux, rien ne vérifiait que le contexte servait à quelque chose — ni qu'un contexte
+// exigé par une règle pouvait seulement être produit. L'audit ferme les deux sens.
+//
+// Le vrai enjeu est le premier : un contexte produit et lu par personne, c'est une
+// QUESTION POSÉE AU CLINICIEN DONT LA RÉPONSE NE CHANGE RIEN. Les sept questions sur
+// les symptômes psycho-comportementaux de la démence sont dans ce cas, comme les cinq
+// du MBI et l'albuminémie < 30 g/L.
+//
+// Trois familles sont légitimes et listées ici avec leur motif :
+//   • REDONDANT — la comorbidité équivalente est, elle, lue par des règles ;
+//   • GUIDELINES — la pathologie alimente l'onglet des sociétés savantes ;
+//   • MIROIR — contrepartie positive d'un verrou (le gate porte sur l'autre valeur).
+const CONTEXTES_SANS_CONSOMMATEUR_CONNUS = new Set([
+    // REDONDANT : la comorbidité fait le travail dans les règles.
+    'glaucome', 'palliatif', 'esperance_vie_reduite', 'stoppfrail', 'atcd_ulcere',
+    'atcd_hemorragie_digestive', 'avc', 'demence', 'trouble_neurocognitif_majeur',
+    'alzheimer', 'corps_de_lewy', 'dcl', 'demence_parkinsonienne', 'dlft',
+    'demence_vasculaire', 'demence_mixte',
+    // GUIDELINES : la pathologie a une entrée PATHOLOGY_RULES_DB, la saisie sert.
+    'mci', 'tnc_leger', 'psychose_tardive', 'catatonie', 'delirium', 'confusion',
+    'delirium_hyperactif', 'delirium_hypoactif', 'delirium_mixte',
+    'trouble_sommeil_primaire', 'insomnie_chronique', 'tcsp', 'sjsr', 'saos',
+    'hemodialyse', 'coronarien_aigu', 'psy_primaire',
+    // MIROIR : le verrou porte sur la valeur opposée (voie systémique, haute dose…).
+    'ains_topique', 'mtx_faible_dose', 'amphotericine_orale', 'peg_constipation',
+    'douleur_legere',
+    // CONSTAT OUVERT — données saisies que rien ne consomme aujourd'hui. Elles sont
+    // listées pour que l'audit reste utile, PAS parce que l'état est satisfaisant :
+    // le clinicien répond à ces questions et l'analyse n'en tient aucun compte.
+    'spc_agitation', 'agitation', 'spc_psychose', 'hallucinations', 'spc_apathie',
+    'spc_depression', 'spc_insomnie', 'inversion_nycthemerale', 'spc_desinhibition',
+    'errance', 'spc_tca', 'mbi', 'denutrition_severe'
+]);
+function runContexteOrphelinAudit(test, assert) {
+    const lire = f => fs.readFileSync(path.join(__dirname, f), 'utf8');
+    const srcAnalyse = lire('app_analysis.js');
+    const litteraux = txt => (txt.match(/"[^"]+"|'[^']+'/g) || []).map(x => x.slice(1, -1));
+    const produits = new Set();
+    for (const m of srcAnalyse.matchAll(/ctxClinique\.push\(([^;]*?)\);/g)) {
+        litteraux(m[1]).forEach(c => produits.add(c));
+    }
+    // Consommation : tout fichier applicatif, en excluant la ligne de production.
+    const FICHIERS = ['geria_recos_final.js', 'geria_pathology_rules_v3.js', 'geria_engine_v2.js',
+        'app_analysis.js', 'geria_integration_module.js', 'composite_scores.js', 'app_core.js'];
+    const corpus = FICHIERS.map(f => lire(f).split('\n').filter(l => !/ctxClinique\.push/.test(l)).join('\n'));
+    const consomme = c => corpus.some(src => src.includes("'" + c + "'") || src.includes('"' + c + '"'));
+
+    const orphelins = [...produits].filter(c => !consomme(c) && !CONTEXTES_SANS_CONSOMMATEUR_CONNUS.has(c));
+    test('Contexte clinique — aucun NOUVEAU contexte produit dans le vide', () => {
+        assert.ok(orphelins.length === 0,
+            'ces contextes sont poussés par une case mais lus par aucune règle : la question posée au\n'
+            + 'clinicien ne change alors rien à l\'analyse. Brancher une règle dessus, ou inscrire le\n'
+            + 'contexte dans CONTEXTES_SANS_CONSOMMATEUR_CONNUS avec son motif :\n  ' + orphelins.join('\n  '));
+    });
+
+    // Sens inverse : un verrou qu'aucune saisie ne peut ouvrir ne se déclenchera jamais.
+    const { sandbox } = loadApp();
+    const exiges = JSON.parse(vm.runInContext(`(function(){
+        var out = {};
+        function harvest(o){ if(!o||typeof o!=='object')return; for(var k in o){ var v=o[k];
+            if(/^(contexte_clinique|contexte_clinique_absent|contexte_absent)$/.test(k)&&Array.isArray(v))
+                v.forEach(function(x){ out[x]=1; });
+            else if(typeof v==='object') harvest(v); } }
+        if(typeof GERIA_RECOS_DB!=='undefined')harvest(GERIA_RECOS_DB);
+        if(typeof RECOS_SUPPLEMENT!=='undefined')harvest(RECOS_SUPPLEMENT);
+        return JSON.stringify(Object.keys(out)); })()`, sandbox));
+    const introuvables = exiges.filter(c => !produits.has(c));
+    test('Contexte clinique — aucun verrou qu\'aucune saisie ne peut ouvrir', () => {
+        assert.ok(introuvables.length === 0,
+            'ces contextes sont exigés par une règle mais AUCUNE saisie ne les produit — la règle ne\n'
+            + 'peut donc jamais se déclencher :\n  ' + introuvables.join('\n  '));
+    });
+}
+
 function runRuleKeyResolutionAudit(test, assert) {
     const { sandbox } = loadApp();
     const current = JSON.parse(vm.runInContext(`(function(){
@@ -1486,4 +1562,4 @@ function runPosologyCompletenessAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runPathologyRulesAudit, runAutocompleteAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiCommentaireConjonctionAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
+module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runPathologyRulesAudit, runAutocompleteAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiCommentaireConjonctionAudit, runContexteOrphelinAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };

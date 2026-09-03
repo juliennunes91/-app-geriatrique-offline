@@ -463,7 +463,17 @@ neutralisation par erreur de `SUP_DEP_065`).
    statines. Une alerte issue d'une **table** doit tirer sa couleur de la sévérité de
    son entrée.
 
-**Les quatre sont validés par mutation** : casser volontairement `EV_C04`, `IN_E03`, un
+5. **`runContexteOrphelinAudit`** — ferme les deux sens de la chaîne « case cochée →
+   contexte → règle ». Un contexte EXIGÉ par une règle mais qu'aucune saisie ne produit
+   est un verrou qui ne s'ouvrira jamais (aucun cas aujourd'hui). Un contexte PRODUIT
+   que personne ne lit est plus insidieux : c'est une question posée au clinicien dont
+   la réponse ne change rien. Les familles légitimes sont listées avec leur motif —
+   REDONDANT (la comorbidité fait le travail), GUIDELINES (la pathologie alimente
+   l'onglet des sociétés savantes), MIROIR (contrepartie positive d'un verrou). Restent
+   sous l'étiquette **CONSTAT OUVERT**, non résolus : les 7 questions sur les symptômes
+   psycho-comportementaux, les 5 du MBI et l'albuminémie < 30 g/L — saisis, jamais lus.
+
+**Les quatre premiers sont validés par mutation** : casser volontairement `EV_C04`, `IN_E03`, un
 libellé de classe ou ajouter une couleur en dur fait bien échouer le test correspondant.
 Un linter qui n'échoue jamais ne prouve rien — le revérifier après toute modification
 de ces audits.
