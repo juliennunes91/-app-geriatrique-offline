@@ -951,6 +951,30 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/Constipation chronique/.test(poso(cas(null))) && /2 à 4 L/.test(poso(cas(null))),
             'sans precision : les deux regimes restent affiches (rien n\'est cache par defaut)');
     });
+    test('Scores : aucun message ne cite un score remplace par sa reference', () => {
+        // L'ESC 2024 (AF-CARE) a retire la categorie « sexe » du CHA2DS2-VASc, qui
+        // devient CHA2DS2-VA a seuil unique. L'application calculait deja le CHA2DS2-VA
+        // dans son panneau de scores pendant qu'une regle affichait encore « >= 2 chez
+        // l'homme, >= 3 chez la femme » : l'ecran se contredisait a deux lignes d'ecart.
+        const fs = require('fs'), path = require('path');
+        const PERIMES = [
+            { motif: /CHA.?2?DS.?2?-?VASc/i, remplace: 'CHA₂DS₂-VA (ESC 2024, le sexe n\'est plus un point du score)' }
+        ];
+        ['geria_recos_final.js', 'geria_pathology_rules_v3.js'].forEach(f => {
+            const src = fs.readFileSync(path.join(__dirname, f), 'utf8');
+            src.split('\n').forEach((ligne, i) => {
+                // On n'inspecte que le texte VU PAR L'UTILISATEUR : les commentaires de
+                // code expliquent justement pourquoi le score a change. Et une mention
+                // historique explicite (« … remplace le CHA2DS2-VASc ») reste legitime.
+                if (/^\s*\/\//.test(ligne)) return;
+                if (/remplace|disparai|devient|ancien/i.test(ligne)) return;
+                PERIMES.forEach(p => {
+                    assert.ok(!p.motif.test(ligne),
+                        f + ':' + (i + 1) + ' emploie un score perime — utiliser ' + p.remplace + '\n  ' + ligne.trim().slice(0, 140));
+                });
+            });
+        });
+    });
     test('Demence : l\'ombrelle disparait de l\'affichage, jamais du raisonnement', () => {
         // La cascade impose de cocher le parent (« Syndrome dementiel ») pour reveler le
         // type : cocher « Alzheimer » faisait apparaitre DEUX comorbidites. L'ombrelle

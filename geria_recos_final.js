@@ -2710,11 +2710,16 @@ const GERIA_RECOS_DB = {
         // ====================================================================
         {
             id: "IN_C01",
-            sources: ["STOPP3", "FORTA"],
+            sources: ["STOPP3", "FORTA", "ESC_AF"],
             ref_code: "START3-C1",
             section: "Coagulation",
             titre: "Anticoagulant pour FA (chronique ou paroxystique)",
-            message: "Anticoagulant (AOD préféré, AVK si CI) pour FA chronique ou paroxystique — prévention de l'AVC. CHA₂DS₂-VASc ≥ 2 chez l'homme, ≥ 3 chez la femme.",
+            // Le message citait encore le CHA₂DS₂-VASc avec ses deux seuils selon le sexe,
+            // alors que l'ESC 2024 (AF-CARE) a retiré la catégorie « sexe » du score : il
+            // devient CHA₂DS₂-VA, à seuil UNIQUE. L'application calcule d'ailleurs déjà le
+            // CHA₂DS₂-VA dans son panneau de scores — la règle disait le contraire de ce
+            // que l'écran affichait juste à côté.
+            message: "Anticoagulant (AOD préféré, AVK si contre-indication) pour FA chronique ou paroxystique — prévention de l'AVC. Le score de référence est le CHA₂DS₂-VA, qui ne compte plus le sexe : anticoagulation recommandée à partir de 2, à considérer à 1. Le sexe féminin reste un modificateur de risque, non un point du score.",
             severite: "danger",
             condition: {
                 comorbs: ["PAT_006"],
