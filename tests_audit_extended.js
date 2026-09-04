@@ -329,7 +329,7 @@ function runExtendedAudits(test, assert) {
         const KNOWN = new Set(['STOPP3', 'STOPP', 'START', 'BEERS', 'FORTA', 'PRISCUS', 'EU7PIM', 'STOPPFRAIL', 'REMEDIES', 'PIM_CHECK',
             'Pharmacovigilance', 'ANSM', 'EMA', 'FDA', 'HAS', 'Maudsley', 'CANMAT', 'KDIGO', 'GOLD', 'SFGG', 'CredibleMeds',
             'ESC', 'ESC_HTN_2024', 'ESC_HF', 'ESC_AF', 'ESMO', 'ACR', 'IOF', 'ICI', 'ERC', 'ATA 2014/ETA 2013', 'ATA 2016/ETA 2018', 'ILAE 2022',
-            'SFGG_SF3PA_SFPC_2026',
+            'SFGG_SF3PA_SFPC_2026', 'SFGG_FCM_SF3PA_2024_SPC',
             // Ajouts 2026 : omissions iSGLT2 (IN_E05), sevrage tabagique BPCO (IN_G03),
             // thiamine dans le trouble de l'usage de l'alcool (IN_N01).
             'ADA', 'NICE', 'EFNS']);
@@ -1253,7 +1253,14 @@ function runLibelleClasseAudit(test, assert) {
 // psycho-comportementaux et du MBI. Comme l'insuffisance en vitamine D ou la liste des
 // medicaments epileptogenes, ce sont des textes REDIGES SUR PLACE, pas des entrees de
 // table portant une severite — leur couleur ne court-circuite donc aucun scoring.
-const COULEURS_EN_DUR_ATTENDUES = { danger: 8, warning: 20, info: 10 };
+// Relecture SFGG/FCM/SF3PA 2024 : les garde-fous SPC passent de 2 a 5 (ISRS, psychotrope
+// sedatif, benzodiazepine anxiolytique, zopiclone, zolpidem, desinhibition sous traitement
+// pourvoyeur) mais partagent desormais UN helper `_spcAlerte` — le litteral n'y figure
+// qu'une fois, et le compte `warning` reste a 20. `info` 10 -> 11 : l'encart melatonine,
+// alternative medicamenteuse portee une seule fois quel que soit le nombre d'hypnotiques.
+// Meme famille que les precedents : textes REDIGES SUR PLACE, armes par un symptome
+// DECLARE, sans entree de table portant une severite derriere eux.
+const COULEURS_EN_DUR_ATTENDUES = { danger: 8, warning: 20, info: 11 };
 function runCouleurCodeeEnDurAudit(test, assert) {
     const src = fs.readFileSync(path.join(__dirname, 'app_analysis.js'), 'utf8');
     ['danger', 'warning', 'info'].forEach(niveau => {

@@ -706,8 +706,9 @@ p = 0,241) — Doré, *Pharmacotherapy* 2017, DOI 10.1002/phar.1965.
 
 ## Symptômes psycho-comportementaux et MBI
 
-Sept symptômes (NPI-C, agitation selon IPA 2015) et cinq items MBI-C étaient saisis et lus
-par personne : le clinicien répondait, l'analyse n'en tenait aucun compte.
+Sept symptômes (les sept du document SFGG 2024 ci-dessous, agitation selon les critères IPA
+2015 qu'il reprend) et cinq items MBI-C étaient saisis et lus par personne : le clinicien
+répondait, l'analyse n'en tenait aucun compte.
 
 **La doctrine, en deux temps.** Une case **cochée** est une déclaration du clinicien : elle
 peut ARMER une alerte. Une case **non cochée** ne prouve rien et n'en désarme aucune. La
@@ -716,14 +717,56 @@ distinction tient les deux usages :
 - `EV_D16` dit « antipsychotique comme hypnotique, sauf psychose ou SCPD » ; l'application
   le traduisait par « sauf démence ». Les SPC déclarés **désarment** désormais la règle —
   et une apathie ne la désarme pas, n'étant pas une indication d'antipsychotique.
-- Deux garde-fous sont **armés** par un symptôme déclaré : apathie sous antipsychotique ou
-  benzodiazépine (aucun bénéfice démontré, sédation qui l'aggrave), et trouble du sommeil
-  de la démence traité par hypnotique.
+- Des garde-fous sont **armés** par un symptôme déclaré : apathie sous ISRS, apathie sous
+  psychotrope sédatif, sommeil sous benzodiazépine anxiolytique, sous zopiclone, sous
+  zolpidem, et désinhibition sous traitement pourvoyeur. Ils passent tous par `_spcAlerte`.
 
 **Un seul encart groupé**, jamais un par symptôme : le rapport PDF vient d'être allégé, et
 sept entrées de plus l'auraient réalourdi. Il liste les symptômes déclarés et, pour chacun,
 la conduite de première intention — chercher la cause organique ou iatrogène, puis les
 approches non médicamenteuses, le psychotrope seulement ensuite.
+
+### La source décide de la molécule nommée, pas le bon sens
+
+Les sept conduites et les trois garde-fous sont alignés sur les **recommandations
+SFGG / Fédération des Centres Mémoire / SF3PA du 21 septembre 2024** (coord. Pr M. Soto,
+CHU Toulouse ; Dr J. Roche, CHU Lille), entrée `SFGG_FCM_SF3PA_2024_SPC` de
+`GERIA_RECOS_DB.SOURCES`. Le texte a **contredit deux messages déjà livrés**, tous deux
+plausibles et tous deux faux :
+
+- **Apathie** — l'alerte visait l'antipsychotique et la benzodiazépine. Le document
+  incrimine les **ISRS**, qui « pourraient accroître les niveaux d'apathie » (Anand 2018),
+  précisément parce qu'on les prescrit en croyant traiter une dépression : d'où l'insistance
+  sur la distinction sémiologique (l'apathie émousse les affects positifs ET négatifs). La
+  seule molécule retenue par le groupe d'experts est le **méthylphénidate** dans la maladie
+  d'Alzheimer, hors AMM. Les deux volets coexistent désormais dans un encart unique.
+- **Sommeil** — l'alerte condamnait « benzodiazépines et apparentés » d'un bloc. Le document
+  sépare : la **zopiclone à 3,75 mg** a deux études favorables sur l'endormissement et est
+  jugée *supérieure* aux benzodiazépines anxiolytiques — mais pour **14 à 28 jours**. Piège
+  de rattachement : la zopiclone appartient en base à la famille des benzodiazépines, et
+  elle sortait **dans les deux listes** du même encart, disant à la fois qu'elle n'a pas sa
+  place et qu'elle a des données. Les Z sont retirés du groupe BZD ; et le **zolpidem**, que
+  le document ne retient pas, reçoit sa propre phrase plutôt que celle écrite pour la
+  zopiclone.
+
+**Une alerte par CONDUITE, pas un encart à volets.** Le rapport PDF coupe une alerte
+`warning` à 450 caractères, à la fin d'une phrase : un encart unique portant trois volets y
+perdait les deux derniers — et c'est précisément le volet zopiclone, celui que la lecture de
+la source a corrigé, qui disparaissait derrière le volet benzodiazépine. Chaque famille
+reçoit donc son alerte, avec son propre budget et les seules molécules qu'elle concerne.
+Cela ne rouvre pas le « un encart par symptôme » que la conduite groupée écarte : l'axe
+n'est pas le symptôme, c'est la conduite. Le titre du volet sédatif dit « psychotrope
+**sédatif** » et non « antipsychotique ou benzodiazépine », la clé `benzodiazepine` captant
+aussi les apparentés — un titre qui nomme une classe à laquelle la molécule listée
+n'appartient pas est le défaut que `runTitreConditionAudit` poursuit.
+
+**Corollaire — citer une source de plus change la couleur.** `EV_D05` (antipsychotique chez
+le dément) est corroborée mot pour mot par ce document (« 3 mois à la dose minimale efficace,
+avec un arrêt progressif ») ; l'y déclarer faisait passer la règle de `warning` à `danger`
+par le seul bonus de consensus. La source n'y est donc **pas** déclarée, et le motif est
+écrit dans le fichier : la bibliographie ne décide pas de la criticité affichée. `EV_D16`,
+dont la clause d'exception « sauf SCPD » vient de ce texte, la déclare (dérive golden : un
+point de score PIM, aucune bande franchie).
 
 **Le MBI n'est pas une psychiatrie de l'adulte jeune** : des symptômes comportementaux
 apparus après 50 ans et persistant six mois, sans antécédent psychiatrique, sont un marqueur

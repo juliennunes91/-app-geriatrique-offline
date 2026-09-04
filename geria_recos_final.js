@@ -36,6 +36,7 @@ const GERIA_RECOS_DB = {
         "KDIGO":     { nom: "KDIGO CKD",             annee: 2024, ref: "KDIGO 2024 Clinical Practice Guideline for CKD Evaluation and Management" },
         "ESMO":      { nom: "ESMO/EAU",              annee: 2024, ref: "ESMO Clinical Practice Guidelines" },
         "SFGG_SF3PA_SFPC_2026": { nom: "SFGG/SF3PA/SFPC 2026 Antidépresseurs SA", annee: 2026, ref: "Houix M. et al., Optimizing Antidepressant Use in Geriatric Depression — Expert Consensus from French societies of geriatrics, old age psychiatry and clinical pharmacy. Eur Psychiatry 2026 ; DOI 10.1192/j.eurpsy.2026.12206" },
+        "SFGG_FCM_SF3PA_2024_SPC": { nom: "SFGG/FCM/SF3PA 2024 SPC", annee: 2024, ref: "Nouvelles recommandations pour la prise en soins des Symptômes Psychologiques et Comportementaux (SPC) dans les maladies neurocognitives — SFGG, Fédération des Centres Mémoire, SF3PA ; coord. Pr M. Soto (CHU Toulouse) et Dr J. Roche (CHU Lille), 21 septembre 2024" },
         "FDA":       { nom: "FDA Drug Safety",       annee: 2024, ref: "U.S. Food & Drug Administration — Drug Safety Communications" },
         "ANSM":      { nom: "ANSM",                  annee: 2024, ref: "Agence nationale de sécurité du médicament — Alertes & RCP" },
         "EMA":       { nom: "EMA",                   annee: 2025, ref: "European Medicines Agency — SmPC & PSUSA" },
@@ -680,6 +681,12 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_D05",
+            // Les recommandations SFGG/FCM/SF3PA 2024 corroborent ce critère (« 3 mois
+            // à la dose minimale efficace, avec un arrêt progressif ») mais ne sont PAS
+            // déclarées ici : une quatrième source pousse le score au-dessus du seuil
+            // rouge et fait passer la règle de « warning » à « danger ». La bibliographie
+            // n'a pas à décider de la criticité affichée — c'est l'inversion que le
+            // plancher de sévérité a été posé pour empêcher.
             sources: ["STOPP3", "BEERS", "FORTA"],
             ref_code: "STOPP3-D5 / STOPP3-D15",
             section: "SNC",
@@ -807,7 +814,7 @@ const GERIA_RECOS_DB = {
         },
         {
             id: "EV_D16",
-            sources: ["STOPP3"],
+            sources: ["STOPP3", "SFGG_FCM_SF3PA_2024_SPC"],
             ref_code: "STOPP3-D16",
             section: "SNC",
             titre: "Antipsychotique comme hypnotique (sauf psychose ou SCPD)",

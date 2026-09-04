@@ -1053,24 +1053,56 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.strictEqual((deux.match(/conduite de première intention/g) || []).length, 1,
             'un seul encart, pas un par symptome');
 
-        // Garde-fou 1 : l'apathie n'est une indication ni d'antipsychotique ni de BZD.
-        assert.ok(/Apathie déclarée sous psychotrope/.test(
+        // Garde-fou 1 : l'apathie. Le document SFGG/FCM/SF3PA 2024 incrimine les ISRS
+        // (Anand 2018) — pas l'antipsychotique, que l'alerte visait avant relecture de
+        // la source. Les deux situations existent, mais elles ne disent pas la meme
+        // chose et ne nomment pas les memes molecules.
+        assert.ok(/Apathie déclarée sous ISRS/.test(
+            cas({ flags: ['chkDemence', 'chkSpcApathie'], meds: ['Sertraline'] })),
+            'apathie + ISRS : la classe que la source incrimine');
+        assert.ok(!/Apathie déclarée sous psychotrope sédatif/.test(
+            cas({ flags: ['chkDemence', 'chkSpcApathie'], meds: ['Sertraline'] })),
+            'apathie + ISRS seul : ne nomme pas une classe absente');
+        assert.ok(/Apathie déclarée sous psychotrope sédatif/.test(
             cas({ flags: ['chkDemence', 'chkSpcApathie'], meds: ['Risperidone'] })),
             'apathie + antipsychotique : alerte');
-        assert.ok(!/Apathie déclarée sous psychotrope/.test(
+        assert.ok(!/Apathie déclarée/.test(
             cas({ flags: ['chkDemence', 'chkSpcApathie'], meds: ['Paracetamol'] })),
             'apathie sans psychotrope : rien a reevaluer');
-        assert.ok(!/Apathie déclarée sous psychotrope/.test(
+        assert.ok(!/Apathie déclarée/.test(
             cas({ flags: ['chkDemence'], meds: ['Risperidone'] })),
             'antipsychotique sans apathie DECLAREE : on ne deduit rien d\'une case non cochee');
 
-        // Garde-fou 2 : hypnotique dans les troubles du sommeil de la demence.
-        assert.ok(/traité par hypnotique/.test(
+        // Garde-fou 2 : le sommeil. La source ne met PAS les hypnotiques sur le meme
+        // plan — la zopiclone a 3,75 mg lui est superieure aux BZD anxiolytiques, le
+        // zolpidem n'y figure pas. La zopiclone appartenant en base a la famille des
+        // benzodiazepines, elle sortait des DEUX cotes du meme encart.
+        const zopi = cas({ flags: ['chkDemence', 'chkSpcInsomnie'], meds: ['Zopiclone'] });
+        assert.ok(/Zopiclone dans le trouble du sommeil/.test(zopi),
+            'zopiclone : son propre message, avec dose et duree');
+        assert.ok(!/traité par benzodiazépine anxiolytique/.test(zopi),
+            'la zopiclone n\'est pas rangee parmi les benzodiazepines anxiolytiques');
+        const oxa = cas({ flags: ['chkDemence', 'chkSpcInsomnie'], meds: ['Oxazepam'] });
+        assert.ok(/traité par benzodiazépine anxiolytique/.test(oxa),
+            'benzodiazepine anxiolytique : pas sa place comme hypnotique');
+        assert.ok(!/Zopiclone dans le trouble du sommeil/.test(oxa),
+            'sous oxazepam, le rapport ne parle pas de la zopiclone');
+        assert.ok(/Zolpidem dans le trouble du sommeil/.test(
             cas({ flags: ['chkDemence', 'chkSpcInsomnie'], meds: ['Zolpidem'] })),
-            'trouble du sommeil + zolpidem : alerte');
-        assert.ok(!/traité par hypnotique/.test(
+            'zolpidem : hors recommandation, sans les donnees de la zopiclone');
+        assert.ok(/mélatonine à libération prolongée/.test(zopi),
+            'l\'alternative medicamenteuse de la source est proposee');
+        assert.ok(!/trouble du sommeil de la démence/i.test(
             cas({ flags: ['chkDemence', 'chkSpcInsomnie'], meds: ['Paracetamol'] })),
             'trouble du sommeil sans hypnotique : pas d\'alerte');
+
+        // Garde-fou 3 : la desinhibition peut etre PRODUITE par le traitement.
+        assert.ok(/Désinhibition déclarée sous traitement pourvoyeur/.test(
+            cas({ flags: ['chkDemence', 'chkSpcDesinhibition'], meds: ['Pramipexole'] })),
+            'desinhibition + agoniste dopaminergique : piste iatrogene');
+        assert.ok(!/Désinhibition déclarée sous traitement pourvoyeur/.test(
+            cas({ flags: ['chkDemence', 'chkSpcDesinhibition'], meds: ['Paracetamol'] })),
+            'desinhibition sans traitement pourvoyeur : pas d\'alerte');
 
         // MBI : marqueur de risque de declin cognitif, pas un trouble psychiatrique.
         assert.ok(/Trouble comportemental émergent/.test(cas({ flags: ['chkMci', 'chkMbiMotiv'] })),

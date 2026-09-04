@@ -2218,19 +2218,19 @@ function analyserPrescription() {
     {
         const SPC = [
             { ctx: 'spc_agitation',     nom: 'Agitation ou agressivité',
-              conduite: "chercher d'abord la cause avant tout psychotrope : douleur, rétention urinaire, fécalome, infection, effet indésirable médicamenteux, ou environnement inadapté. Démarche DICE (décrire, investiguer, créer, évaluer)." },
+              conduite: "les critères IPA 2015 exigent une durée d'au moins deux semaines, un retentissement majeur, et surtout que le symptôme ne soit pas attribuable à une autre étiologie — chercher donc la douleur, la rétention urinaire, le fécalome, l'infection, l'effet indésirable médicamenteux, l'environnement inadapté (démarche DICE). Interventions non médicamenteuses en première intention : psycho-éducation des aidants et des équipes, musicothérapie. Si un traitement s'impose, il dépend du type d'agitation : agressivité physique fréquente ou sévère → antipsychotique atypique ; agressivité verbale (cris, irritabilité) et agitation anxieuse → citalopram jusqu'à 20 mg ou escitalopram jusqu'à 10 mg en première intention (essai CitAD), efficacité jugée à 6 semaines." },
             { ctx: 'spc_psychose',      nom: 'Idées délirantes ou hallucinations',
-              conduite: "éliminer un delirium et une cause iatrogène (anticholinergiques, dopaminergiques, corticoïdes). En cas de démence à corps de Lewy, l'hypersensibilité aux neuroleptiques peut être sévère." },
+              conduite: "éliminer d'abord une cause secondaire — delirium, infection, iatrogénie (anticholinergiques, dopaminergiques, corticoïdes), trouble sensoriel. Un antipsychotique atypique n'est indiqué qu'en cas de risque auto ou hétéro-agressif imminent, de participation anxieuse importante ou d'altération franche du fonctionnement, et hors contre-indication (maladie à corps de Lewy, maladie de Parkinson). Les antipsychotiques typiques sont à éviter ; benzodiazépines et antiépileptiques ne sont pas indiqués dans cette cible." },
             { ctx: 'spc_apathie',       nom: 'Apathie',
-              conduite: "ce n'est ni une dépression, ni une indication d'antipsychotique ou de benzodiazépine. Activités structurées et stimulation adaptée." },
+              conduite: "la distinguer rigoureusement du syndrome dépressif : l'apathie émousse les affects positifs ET négatifs, la dépression associe tristesse et sensibilité accrue aux affects négatifs. Approches non pharmacologiques en priorité (musicothérapie en première intention, activité physique intégrée à une prise en charge individualisée). La seule molécule retenue par le groupe d'experts est le méthylphénidate dans la maladie d'Alzheimer, hors AMM, sur ordonnance sécurisée (28 jours non renouvelables), après bilan cardiologique." },
             { ctx: 'spc_depression',    nom: 'Dépression ou anxiété associée',
-              conduite: "évaluer avant de prescrire : le bénéfice des antidépresseurs dans la dépression de la démence est faible et le risque iatrogène réel chez le sujet âgé." },
+              conduite: "aucune molécule ne dispose d'une preuve robuste dans cette indication ; le consensus retient les ISRS — sertraline, escitalopram, citalopram —, la sertraline pour sa titration progressive et son moindre effet sur le QTc. Éviter la paroxétine (la plus anticholinergique) et la fluoxétine (demi-vie longue), toutes deux inhibitrices du CYP2D6. Les benzodiazépines n'ont aucune indication en traitement de fond de l'anxiété, seulement en usage ponctuel." },
             { ctx: 'spc_insomnie',      nom: 'Troubles du sommeil, inversion nycthémérale',
-              conduite: "exposition à la lumière du jour, activité diurne, hygiène du sommeil. Ni benzodiazépine, ni antipsychotique comme hypnotique." },
+              conduite: "d'abord les règles d'hygiène veille/sommeil (réduction du temps passé au lit, sieste courte de moins de 30 minutes, activité physique diurne, exposition à la lumière du jour), et la luminothérapie, qui améliore le rythme circadien. Chercher une douleur : un antalgique de palier 1 au coucher est une alternative documentée. Si un médicament s'impose, la mélatonine à libération prolongée à partir de 2 mg (les compléments alimentaires dosés sous 2 mg ne sont pas recommandés) ; les benzodiazépines anxiolytiques n'ont pas leur place comme hypnotique." },
             { ctx: 'spc_desinhibition', nom: 'Désinhibition, errance',
-              conduite: "sécuriser l'environnement et adapter l'accompagnement. La contention chimique n'est pas une réponse." },
+              conduite: "vérifier d'abord l'absence de cause iatrogène : agonistes dopaminergiques, dopathérapie et prégabaline peuvent induire des comportements sexuels inappropriés. Sécuriser l'environnement, créer des activités occupationnelles et sociales. En cas de comportement sexuel inapproprié retentissant, la paroxétine jusqu'à 20 mg est la seule situation où cet ISRS est recommandé. Pour une déambulation sévère résistant aux approches non médicamenteuses, l'avis des experts propose la gabapentine jusqu'à 300 mg par jour ou l'acide valproïque." },
             { ctx: 'spc_tca',           nom: 'Troubles du comportement alimentaire',
-              conduite: "évaluer la déglutition, l'état bucco-dentaire et la douleur avant de conclure à un trouble comportemental ; adapter les textures." }
+              conduite: "les troubles de la déglutition, la dénutrition et la perte de poids ne sont pas des troubles du comportement alimentaire et relèvent de leur propre démarche. Avant de conclure : état bucco-dentaire, douleur, traitement anorexigène à réévaluer, prise médicamenteuse en début de repas au goût désagréable (la différer en fin de repas), textures modifiées rendant l'aliment non identifiable. Les traitements pharmacologiques ont montré peu d'intérêt, hors dégénérescence lobaire fronto-temporale." }
         ];
         const declares = SPC.filter(x => ctxClinique.includes(x.ctx));
         if (declares.length > 0) {
@@ -2238,41 +2238,116 @@ function analyserPrescription() {
                 `<li><b>${escapeHtml(x.nom)}</b> — ${escapeHtml(x.conduite)}</li>`).join('');
             addAlert('alertes-eviter', `<div class="alert alert-info border-info shadow-sm">
                 <strong>🧠 Symptômes psycho-comportementaux déclarés (${declares.length}) — conduite de première intention</strong>
-                <span class="badge bg-secondary float-end" style="font-size:0.65em;">NPI-C | IPA 2015</span>
-                <br><span class="small">Avant tout psychotrope : rechercher une cause organique ou iatrogène, puis les approches non médicamenteuses. Le psychotrope ne vient qu'ensuite, à dose minimale et pour une durée définie.</span>
+                <span class="badge bg-secondary float-end" style="font-size:0.65em;">SFGG/FCM/SF3PA 2024</span>
+                <br><span class="small">Avant tout psychotrope : rechercher une cause organique ou iatrogène, puis les approches non médicamenteuses. Le psychotrope ne vient qu'ensuite, à dose minimale et pour une durée définie — l'antipsychotique atypique est prévu pour 3 mois à la dose minimale efficace avec arrêt progressif (AMM de la rispéridone : 6 semaines).</span>
                 <ul class="mb-0 mt-1 small">${items}</ul>
             </div>`, 'eviter');
         }
 
         // Garde-fous armés par un symptôme DÉCLARÉ.
-        // L'apathie est le cas le plus net : elle est régulièrement traitée comme une
-        // agitation ou une dépression, alors qu'aucun psychotrope n'y a fait la preuve
-        // d'un bénéfice — le risque, lui, reste entier.
+        //
+        // Ces trois messages ont une source unique — les recommandations SFGG/FCM/SF3PA
+        // de septembre 2024 — et c'est elle qui décide de la molécule nommée, pas le
+        // raisonnement de bon sens. Deux des trois disaient autre chose avant relecture
+        // du texte : l'apathie visait l'antipsychotique quand le document incrimine les
+        // ISRS, et le sommeil condamnait les « apparentés » alors que le document leur
+        // reconnaît deux études favorables. Une alerte qui nomme une classe s'aligne sur
+        // la source ou ne la nomme pas.
+        const _classeDe = (cle) => activeMeds.filter(m => {
+            const d = sanitizeText(m.dci), c = sanitizeText(m.classe || '');
+            try { return matchesDrugClass(d, c, cle); } catch (e) { return false; }
+        }).map(m => escapeHtml(m.dci.toUpperCase()));
+
+        // Le rapport PDF coupe une alerte « warning » à 450 caractères, à la fin d'une
+        // phrase. Un encart unique portant trois volets y perdrait les deux derniers —
+        // et c'est justement le volet zopiclone, celui que la lecture du document a
+        // corrigé, qui disparaîtrait derrière le volet benzodiazépine. Chaque famille
+        // reçoit donc SON alerte : elle ne nomme que les molécules qu'elle concerne, et
+        // dispose de son propre budget. Ce n'est pas le « une alerte par symptôme » que
+        // l'encart groupé écarte — c'est une alerte par CONDUITE distincte.
+        const _spcAlerte = (titre, corps) => addAlert('alertes-eviter',
+            `<div class="alert alert-warning border-warning shadow-sm">
+                <strong>⚠️ ${titre}</strong>
+                <span class="badge bg-secondary float-end" style="font-size:0.65em;">SFGG/FCM/SF3PA 2024</span>
+                <br><span class="small">${corps}</span>
+            </div>`, 'eviter');
+
+        // Apathie. Le document est explicite sur deux points qui vont à rebours de
+        // l'intuition : les ISRS, prescrits ici en croyant traiter une dépression,
+        // POURRAIENT accroître l'apathie (Anand 2018) ; et la seule molécule que le
+        // groupe d'experts retienne est le méthylphénidate, hors AMM.
         if (ctxClinique.includes('spc_apathie')) {
-            const psy = activeMeds.filter(m => {
-                const d = sanitizeText(m.dci), c = sanitizeText(m.classe || '');
-                try { return matchesDrugClass(d, c, 'antipsychotique') || matchesDrugClass(d, c, 'benzodiazepine'); }
-                catch (e) { return false; }
-            }).map(m => escapeHtml(m.dci.toUpperCase()));
+            const isrs = _classeDe('isrs');
+            const psy = [...new Set(_classeDe('antipsychotique').concat(_classeDe('benzodiazepine')))];
+            if (isrs.length > 0) {
+                _spcAlerte("Apathie déclarée sous ISRS : distinguer l'apathie de la dépression",
+                    `Les ISRS figurent parmi les molécules qui <b>pourraient accroître le niveau d'apathie</b> (Anand 2018) — concerné : <b>${isrs.join(', ')}</b>. Le risque est de traiter comme une dépression ce qui est un syndrome apathique : l'apathie émousse les affects positifs comme négatifs, la dépression associe une tristesse de l'humeur et une sensibilité accrue aux affects négatifs. Réévaluer l'indication avant d'augmenter la dose.`);
+            }
             if (psy.length > 0) {
-                addAlert('alertes-eviter', `<div class="alert alert-warning border-warning shadow-sm">
-                    <strong>⚠️ Apathie déclarée sous psychotrope : indication à revoir</strong>
-                    <br><span class="small">L'apathie n'est pas une indication d'antipsychotique ni de benzodiazépine, et ces molécules l'aggravent le plus souvent par sédation. Réévaluer l'indication de : <b>${psy.join(', ')}</b>. Si un traitement de la dépression est envisagé, distinguer d'abord l'apathie de la dépression — le repli et la perte d'initiative ne suffisent pas au diagnostic.</span>
+                // « psychotrope sédatif » et non « antipsychotique ou benzodiazépine » :
+                // la clé `benzodiazepine` capte aussi les apparentés (zopiclone), et un
+                // titre qui nomme une classe à laquelle la molécule listée n'appartient
+                // pas est exactement le défaut que l'audit des titres poursuit.
+                _spcAlerte("Apathie déclarée sous psychotrope sédatif",
+                    `L'apathie n'est une indication ni d'antipsychotique, ni de benzodiazépine ou apparenté, et la sédation qu'ils induisent en aggrave l'expression. Concerné : <b>${psy.join(', ')}</b>. Réévaluer l'indication qui a motivé la prescription. Les approches non pharmacologiques sont prioritaires ; la seule molécule retenue par le groupe d'experts est le méthylphénidate dans la maladie d'Alzheimer, hors AMM, après bilan cardiologique.`);
+            }
+        }
+        // Troubles du sommeil. Le document ne met pas toutes les molécules sur le même
+        // plan : les benzodiazépines ANXIOLYTIQUES n'ont pas leur place comme hypnotique,
+        // tandis que la zopiclone à 3,75 mg dispose de deux études favorables sur
+        // l'endormissement et leur est jugée supérieure — mais pour 14 à 28 jours, pas
+        // pour un traitement de fond.
+        if (ctxClinique.includes('spc_insomnie')) {
+            // La zopiclone est rattachée en base à la famille des benzodiazépines
+            // (« apparenté »). La lister des deux côtés ferait dire au message qu'elle
+            // n'a pas sa place ET qu'elle a deux études favorables : c'est précisément
+            // la conflation que le document défait. Les Z sont retirés du groupe BZD.
+            // Et à l'intérieur des Z, le document ne retient QUE la zopiclone (et
+            // l'eszopiclone, indisponible en France) : le zolpidem n'y figure pas. Lui
+            // servir la phrase écrite pour la zopiclone reviendrait à lui prêter des
+            // données qu'il n'a pas.
+            const _nom = m => escapeHtml(m.dci.toUpperCase());
+            const zopi  = activeMeds.filter(m => /zopiclone/i.test(m.dci)).map(_nom);
+            const zolp  = activeMeds.filter(m => /zolpidem/i.test(m.dci)).map(_nom);
+            const zdrug = zopi.concat(zolp);
+            const bzd = _classeDe('benzodiazepine').filter(d => !zdrug.includes(d));
+            const NON_MEDIC = " Reprendre d'abord l'hygiène veille/sommeil et la luminothérapie, et chercher une douleur — un antalgique de palier 1 au coucher est une alternative documentée.";
+            if (bzd.length > 0) {
+                _spcAlerte("Trouble du sommeil de la démence traité par benzodiazépine anxiolytique",
+                    `Les benzodiazépines anxiolytiques n'ont pas leur place comme hypnotique dans une maladie neurocognitive : efficacité modeste et risque documenté de majoration du trouble neurocognitif en utilisation prolongée (Gomm 2016). Concerné : <b>${bzd.join(', ')}</b>. Elles ne se conçoivent qu'en usage ponctuel.` + NON_MEDIC);
+            }
+            if (zopi.length > 0) {
+                _spcAlerte("Zopiclone dans le trouble du sommeil de la démence : vérifier dose et durée",
+                    `C'est la molécule de ce groupe qui dispose de données favorables sur l'endormissement, jugée supérieure aux benzodiazépines anxiolytiques — mais à <b>3,75 mg</b> et pour <b>14 à 28 jours</b>, avec sevrage progressif. Au-delà, les risques prennent le dessus : sédation et chutes, accoutumance, aggravation cognitive, effet paradoxal. Concerné : <b>${zopi.join(', ')}</b>.` + NON_MEDIC);
+            }
+            if (zolp.length > 0) {
+                _spcAlerte("Zolpidem dans le trouble du sommeil de la démence : hors recommandation",
+                    `Parmi les apparentés, seule la zopiclone est retenue par les recommandations dans cette indication — le zolpidem n'y figure pas et ne bénéficie donc pas de ces données. Concerné : <b>${zolp.join(', ')}</b>. Réévaluer l'indication et planifier une décroissance.` + NON_MEDIC);
+            }
+            if (bzd.length + zopi.length + zolp.length > 0) {
+                // La mélatonine est l'alternative médicamenteuse du document ; elle est
+                // portée une seule fois, quel que soit le nombre d'hypnotiques en cours.
+                addAlert('alertes-eviter', `<div class="alert alert-info border-info shadow-sm">
+                    <strong>💊 Alternative médicamenteuse dans le trouble du sommeil de la démence</strong>
+                    <span class="badge bg-secondary float-end" style="font-size:0.65em;">SFGG/FCM/SF3PA 2024</span>
+                    <br><span class="small">Si un médicament reste nécessaire : mélatonine à libération prolongée à partir de 2 mg, une à deux heures avant le coucher. Les compléments alimentaires dosés sous 2 mg ne sont pas recommandés — dosages incertains et mise en garde de nutrivigilance de l'ANSES.</span>
                 </div>`, 'eviter');
             }
         }
-        // Troubles du sommeil : la benzodiazépine et l'antipsychotique sédatif sont les
-        // deux réponses les plus fréquentes, et les deux moins recommandées.
-        if (ctxClinique.includes('spc_insomnie')) {
-            const hypno = activeMeds.filter(m => {
-                const d = sanitizeText(m.dci), c = sanitizeText(m.classe || '');
-                try { return matchesDrugClass(d, c, 'benzodiazepine') || /zolpidem|zopiclone/i.test(m.dci); }
-                catch (e) { return false; }
-            }).map(m => escapeHtml(m.dci.toUpperCase()));
-            if (hypno.length > 0) {
+        // Désinhibition. Trois classes peuvent la PRODUIRE : le document signale que les
+        // agonistes dopaminergiques, la dopathérapie et la prégabaline sont pourvoyeurs
+        // de comportements sexuels inappropriés. Une désinhibition déclarée chez un
+        // patient qui en reçoit une est d'abord une piste iatrogène.
+        if (ctxClinique.includes('spc_desinhibition')) {
+            const dopa = _classeDe('dopaminergique');
+            const preg = activeMeds.filter(m => /pregabaline/i.test(sanitizeText(m.dci)))
+                                   .map(m => escapeHtml(m.dci.toUpperCase()));
+            const inducteurs = [...new Set(dopa.concat(preg))];
+            if (inducteurs.length > 0) {
                 addAlert('alertes-eviter', `<div class="alert alert-warning border-warning shadow-sm">
-                    <strong>⚠️ Trouble du sommeil de la démence traité par hypnotique</strong>
-                    <br><span class="small">Dans les troubles du sommeil liés à une maladie neurocognitive, benzodiazépines et apparentés aggravent la confusion, les chutes et le déclin cognitif sans bénéfice durable sur le sommeil. Concerné : <b>${hypno.join(', ')}</b>. Privilégier l'exposition lumineuse diurne, l'activité en journée et la régularité des horaires ; réévaluer la nécessité du traitement et planifier une décroissance.</span>
+                    <strong>⚠️ Désinhibition déclarée sous traitement pourvoyeur</strong>
+                    <span class="badge bg-secondary float-end" style="font-size:0.65em;">SFGG/FCM/SF3PA 2024</span>
+                    <br><span class="small">Agonistes dopaminergiques, dopathérapie et prégabaline sont signalés comme pourvoyeurs de comportements sexuels inappropriés. Concerné : <b>${inducteurs.join(', ')}</b>. Avant d'ajouter un psychotrope, examiner la responsabilité de ce traitement et la possibilité d'en réduire la dose — la cause iatrogène se traite en la retirant, pas en la couvrant.</span>
                 </div>`, 'eviter');
             }
         }
