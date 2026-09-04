@@ -23,7 +23,6 @@
    "warning | Cascades iatrogéniques détectées",
    "warning | DIAZEPAM — Déconseillé Dépression (sujet âgé / Late-Life Depression)",
    "warning | Digoxine en 1ère ligne pour FA (contrôle de fréquence > 3 mois)",
-   "warning | GLIBENCLAMIDE — Prudence Diabète de type 2",
    "warning | IBUPROFENE — Déconseillé Hypertension Artérielle (HTA)",
    "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
@@ -1167,7 +1166,6 @@
    "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "warning | Diurétique sans ionogramme de surveillance",
    "warning | FUROSEMIDE — Déconseillé Incontinence urinaire",
-   "warning | FUROSEMIDE — Prudence Incontinence urinaire",
    "warning | HYDROCHLOROTHIAZIDE — Prudence Incontinence urinaire"
   ],
   "alertes-initier": [],
@@ -1403,6 +1401,7 @@
  },
  "cov_EV_PIM_02_EV_N05": {
   "alertes-eviter": [
+   "danger | FLECAINIDE — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "danger | Flécaïnide / Propafénone + cardiopathie structurelle",
    "danger | Médicament allongeant le QT + QT long congénital",
    "info | Action immédiate",
@@ -1436,7 +1435,7 @@
    "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_N08_EV_N09": {
@@ -1835,6 +1834,7 @@
    "danger | Hypnotique Z ≥ 2 semaines pour insomnie",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "warning | AMISULPRIDE — Déconseillé Insomnie",
    "warning | Cascades iatrogéniques détectées",
    "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "warning | ZOLPIDEM — Déconseillé Insomnie"
@@ -2616,8 +2616,7 @@
    "danger | TIOTROPIUM — CI Glaucome à angle fermé",
    "info | Action immédiate",
    "warning | Cascades iatrogéniques détectées",
-   "warning | LAMA + Glaucome à angle fermé / obstruction vésicale",
-   "warning | TIOTROPIUM — Prudence Glaucome à angle fermé"
+   "warning | LAMA + Glaucome à angle fermé / obstruction vésicale"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",
@@ -2764,7 +2763,6 @@
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | ALFUZOSINE — Déconseillé Hypotension Orthostatique",
-   "warning | OXYBUTYNINE — Déconseillé Hypotension Orthostatique",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [

@@ -2644,10 +2644,25 @@ function analyserPrescription() {
             // est pose plus haut, a partir de la precision de voie saisie par l'utilisateur.
             if (/VOIE TOPIQUE/.test(m.classe || '')) return;
             const alerts = checkMedContraPathologies(m.dci, m.classe, activeComorbs);
+            // Une molécule peut relever de PLUSIEURS clauses d'une même pathologie — la
+            // rispéridone est à la fois « antipsychotique » et « anticholinergique » dans
+            // la démence à corps de Lewy. Elle sortait alors deux fois pour la même
+            // maladie, en « CI » puis en « Déconseillé », le second n'ajoutant rien au
+            // premier sinon du bruit. On ne garde que le degré le plus élevé par couple
+            // (médicament, pathologie) : le motif retenu est celui qui engage le plus.
+            const RANG = { 'CI': 3, 'Déconseillé': 2, 'Prudence': 1 };
+            const prefixeDe = g => (String(g).includes('CONTRE-INDICATION') || String(g).includes('ABSOLUE'))
+                ? 'CI' : (String(g).includes('PRUDENCE') ? 'Prudence' : 'Déconseillé');
+            const plusFort = new Map();
+            alerts.forEach(a => {
+                const r = RANG[prefixeDe(a.gravite)] || 0;
+                if (!plusFort.has(a.patho_nom) || r > plusFort.get(a.patho_nom)) plusFort.set(a.patho_nom, r);
+            });
             const seenCI = new Set(); // un même médicament peut matcher la CI via sa classe ET son DCI
             alerts.forEach(a => {
                 let isSevere = String(a.gravite).includes('CONTRE-INDICATION') || String(a.gravite).includes('ABSOLUE');
-                let alertPrefix = isSevere ? 'CI' : (String(a.gravite).includes('PRUDENCE') ? 'Prudence' : 'Déconseillé');
+                let alertPrefix = prefixeDe(a.gravite);
+                if ((RANG[alertPrefix] || 0) < plusFort.get(a.patho_nom)) return;
                 const ciSig = alertPrefix + '|' + a.patho_nom; // = titre affiché ; évite le doublon
                 if (seenCI.has(ciSig)) return;
                 seenCI.add(ciSig);

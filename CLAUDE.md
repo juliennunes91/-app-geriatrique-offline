@@ -587,6 +587,64 @@ mais l'onglet restait **entièrement vide**, seul des dix à ne rien rendre, ce 
 comme telle. Il porte maintenant un message qui distingue « aucune donnée de ce type » de
 « aucune interaction ».
 
+## Une contre-indication doit parler de SA pathologie
+
+`PATHO_MED_INTERDITS_V4_CLASSES` (`geria_pathology_rules_v3.js`) est indexée par `PAT_xxx`
+mais avait été **rédigée contre une autre numérotation** : ses commentaires annonçaient
+« PAT_006 — Diabète » quand `PAT_006` est la fibrillation atriale. Une cyamémazine chez une
+patiente en ACFA ressortait donc en « Prudence Fibrillation Atriale », motivée par un
+syndrome métabolique. **Neuf blocs** étaient dans ce cas : le rénal servi aux artéritiques
+(`PAT_007`) et aux dyslipidémiques (`PAT_019`), le rhumatologique aux cancéreux (`PAT_020`),
+les chutes aux insomniaques (`PAT_027`), le delirium aux fragiles (`PAT_031`), la rétention
+urinaire de l'HBP aux hypotensions orthostatiques (`PAT_009`).
+
+Le contenu a été **re-ciblé**, jamais supprimé quand il avait une cible : le diabète récupère
+ses trois clauses d'hyperglycémie, la MRC son bloc rénal, le delirium (`PAT_048`, produit par
+`chkDelirium`) ses cinq facteurs déclenchants, qu'il ne recevait pas. Quand la maladie visée
+n'est **pas** une entrée de `MASTER_DB.PATHOLOGIES` — chutes, HBP, rhumatisme inflammatoire
+sont des cases à cocher, pas des `PAT_xxx` —, la clause est retirée : elle est couverte par
+les critères STOPP correspondants, qui ne dépendent d'aucune pathologie.
+
+**Le défaut latent était pire que celui qu'on voyait.** Quatre clés apparaissaient **deux
+fois** dans le littéral, avec un commentaire annonçant une « déduplication automatique par
+terme lors du merge ». Il n'y a pas de merge : en JavaScript la seconde occurrence d'une clé
+**écrase** la première, en silence. Étaient donc perdues :
+
+- `PAT_029` (MRC) — bisphosphonate, lithium, énoxaparine, tinzaparine, daltéparine,
+  fondaparinux, iSGLT2, gabapentine, prégabaline, tous remplacés par « AVK, AOD » ;
+- `PAT_012` (DCL) — antipsychotique, métoclopramide, métopimazine, remplacés par le seul
+  anticholinergique : **l'hypersensibilité aux neuroleptiques de la maladie à corps de Lewy
+  ne sortait plus par ce chemin** ;
+- `PAT_024` (goutte) — thiazidique, aspirine, ciclosporine ;
+- `PAT_027` — les cinq classes pourvoyeuses de chutes.
+
+La fusion a fait apparaître une contradiction que l'écrasement masquait : la MRC *proposait*
+les iSGLT2 (bloc INITIER, KDIGO 2024) tout en les listant à éviter — sur un libellé qui disait
+lui-même « bénéfice cardiorénal **maintenu** ». L'entrée est retirée ; le palier de DFG vit
+dans `poso_ren`, où il est complet.
+
+Deux invariants ferment le dossier — `runContraPathoCoherenceAudit`, validés par mutation :
+aucune clé déclarée deux fois, et le commentaire d'un bloc nomme la **même** pathologie que
+sa clé.
+
+**Corollaire de rendu** : une molécule peut relever de plusieurs clauses d'une même
+pathologie — la rispéridone est à la fois « antipsychotique » et « anticholinergique » dans
+la DCL, et sortait deux fois, en « CI » puis en « Déconseillé ». Seul le degré le plus élevé
+par couple (médicament, pathologie) est affiché. Vérifié : aucune perte sèche sur le panel,
+c'est toujours l'alerte la plus forte qui reste.
+
+**Point ouvert, mesuré et non corrigé** : `checkMedContraPathologies()` compare des chaînes
+**brutes** (`dci.includes(terme)`), sans passer par `matchesDrugClass()`. Il est donc
+sensible aux accents — « corticoide » ne reconnaît pas « Glucocorticoïde », si bien que 11
+des 13 corticoïdes échappent aux clauses qui les visent ; de même 13 opioïdes sur 18, 7
+benzodiazépines sur 20, 8 antiépileptiques sur 18. Mais une simple normalisation d'accents
+réimporterait toutes les collisions que `matchesDrugClass()` existe pour empêcher
+(corticoïdes **inhalés**, naloxone rangée parmi les opioïdes, néfopam capté par
+« paracétamol »). Router ce matcheur vers `matchesDrugClass()` est le bon geste — il gagne
+`anticoagulant` 1→11, `bêtabloquant` 8→15, `diurétique de l'anse` 4→15 — mais il **perd**
+`anticholinergique` 29→7 (atropine, benztropine, clidinium…) et `glitazone` 1→0. À traiter
+en enrichissant d'abord ces classes, pas en basculant le matcheur d'un bloc.
+
 ## Formes galéniques : une DCI, deux médicaments
 
 Certaines molécules recouvrent deux produits que tout oppose. La saisie doit donc

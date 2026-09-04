@@ -4442,16 +4442,35 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
 // ============================================================================
 const PATHO_MED_INTERDITS_V4_CLASSES = {
 
+    // ATTENTION — une clé ne doit APPARAÎTRE QU'UNE FOIS dans cet objet.
+    // Ce littéral en portait quatre en double (PAT_012, PAT_024, PAT_027, PAT_029) avec
+    // un commentaire annonçant une « déduplication automatique par terme lors du merge ».
+    // Il n'y a pas de merge : en JavaScript, la dernière occurrence d'une clé ÉCRASE
+    // la précédente, en silence. Étaient donc perdues, sans que rien ne le signale :
+    //   • PAT_029 (MRC) — bisphosphonate, lithium, énoxaparine, tinzaparine, daltéparine,
+    //     fondaparinux, iSGLT2, gabapentine, prégabaline, tout cela remplacé par « AVK, AOD » ;
+    //   • PAT_012 (DCL) — antipsychotique, métoclopramide, métopimazine, remplacés par le
+    //     seul anticholinergique : l'hypersensibilité aux neuroleptiques de la maladie à
+    //     corps de Lewy ne sortait plus par ce chemin ;
+    //   • PAT_024 (goutte) — thiazidique, aspirine, ciclosporine ;
+    //   • PAT_027 — les cinq classes pourvoyeuses de chutes.
+    // Les blocs sont désormais fusionnés à la source. Un test l'interdit désormais.
 
-    // PAT_002 — Cardiopathie (générale)
+    // PAT_002 — Insuffisance Cardiaque FE Réduite (HFrEF)
+    // Le triptan est RETIRÉ d'ici. Sa contre-indication vise la cardiopathie ISCHÉMIQUE
+    // (RCP : coronaropathie, Prinzmetal, HTA non contrôlée, AVC, AOMI), pas l'insuffisance
+    // cardiaque en tant que telle — et PAT_004 (SCC) comme PAT_008 (AVC/AIT) la portent
+    // déjà. Les antiarythmiques de classe 1C prennent sa place : ils sont contre-indiqués
+    // dans la cardiopathie STRUCTURELLE, ce qu'un HFrEF est par définition.
     "PAT_002": [
-        { terme: "triptan", raison: "Vasospasme coronaire — CI si cardiopathie ischémique (EMA/FDA)", gravite: "CONTRE-INDICATION" }
+        { terme: "flecainide", raison: "Proarythmie — CI dans la cardiopathie structurelle, a fortiori si FEVG altérée (ESC 2024)", gravite: "CONTRE-INDICATION" },
+        { terme: "propafenone", raison: "Proarythmie — CI dans la cardiopathie structurelle, a fortiori si FEVG altérée", gravite: "CONTRE-INDICATION" }
     ],
 
-    // PAT_003 — Fibrillation auriculaire
+    // PAT_003 — Insuffisance Cardiaque FE Préservée (HFpEF)
     "PAT_003": [
-        { terme: "flecainide", condition: "si cardiopathie structurelle", raison: "Proarythmie — CI si FEVG altérée (ESC 2024 AF)", gravite: "PRUDENCE" },
-        { terme: "propafenone", condition: "si cardiopathie structurelle", raison: "Proarythmie — CI si FEVG altérée", gravite: "PRUDENCE" }
+        { terme: "flecainide", condition: "si cardiopathie structurelle", raison: "Proarythmie — CI si cardiopathie structurelle (ESC 2024 AF)", gravite: "PRUDENCE" },
+        { terme: "propafenone", condition: "si cardiopathie structurelle", raison: "Proarythmie — CI si cardiopathie structurelle", gravite: "PRUDENCE" }
     ],
 
     // PAT_004 — Coronarien / SCA
@@ -4468,18 +4487,23 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
         { terme: "ciclosporine", raison: "HTA dose-dépendante (néphrotoxicité)", gravite: "PRUDENCE" }
     ],
 
-    // PAT_006 — Diabète
+    // PAT_006 — Fibrillation Atriale (FA)
+    // Ce bloc portait le contenu du DIABÈTE — hyperglycémie sous corticoïde, sous
+    // thiazidique, syndrome métabolique sous antipsychotique. Une cyamémazine chez une
+    // patiente en ACFA ressortait donc en « Prudence Fibrillation Atriale » avec, pour
+    // motif, un syndrome métabolique. Le contenu est déplacé vers PAT_016/016a/016b, et
+    // les antiarythmiques de classe 1C — dont c'est la vraie cible dans la FA — le remplacent.
     "PAT_006": [
-        { terme: "corticoide", condition: "systémique", raison: "Hyperglycémie dose-dépendante — adapter insuline/ADO", gravite: "PRUDENCE" },
-        { terme: "thiazidique", raison: "Hyperglycémie dose-dépendante, hypokaliémie → ↓ sécrétion insuline", gravite: "PRUDENCE" },
-        { terme: "antipsychotique", raison: "Syndrome métabolique — prise de poids, dyslipidémie, insulinorésistance. Risque maximal : olanzapine, clozapine, quetiapine (ADA 2024)", gravite: "PRUDENCE" }
+        { terme: "flecainide", condition: "si cardiopathie structurelle", raison: "Proarythmie — CI si cardiopathie structurelle ou FEVG altérée (ESC 2024 AF)", gravite: "PRUDENCE" },
+        { terme: "propafenone", condition: "si cardiopathie structurelle", raison: "Proarythmie — CI si cardiopathie structurelle ou FEVG altérée", gravite: "PRUDENCE" }
     ],
 
-    // PAT_007 — Insuffisance rénale chronique (modérée)
+    // PAT_007 — Artériopathie Oblitérante (AOMI)
+    // Ce bloc portait le contenu de l'INSUFFISANCE RÉNALE (metformine, lithium,
+    // bisphosphonate), servi à des artéritiques. Déplacé vers PAT_029 ; ce qui vise
+    // réellement l'AOMI prend sa place.
     "PAT_007": [
-        { terme: "metformine", condition: "si DFG < 30", raison: "Risque acidose lactique si IRC sévère (KDIGO 2024)", gravite: "CONTRE-INDICATION" },
-        { terme: "lithium", raison: "Index thérapeutique étroit — accumulation rénale", gravite: "PRUDENCE" },
-        { terme: "bisphosphonate", condition: "si DFG < 30-35", raison: "CI si IRC sévère — nécrose tubulaire", gravite: "PRUDENCE" }
+        { terme: "ergot", raison: "Vasoconstriction périphérique — CI dans l'artériopathie oblitérante", gravite: "CONTRE-INDICATION" }
     ],
 
     // PAT_008 — AVC / AIT
@@ -4489,10 +4513,16 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
         { terme: "antipsychotique", raison: "↑ mortalité cérébrovasculaire chez le sujet âgé (FDA black box)", gravite: "PRUDENCE" }
     ],
 
-    // PAT_009 — HBP / troubles mictionnels
+    // PAT_009 — Hypotension Orthostatique
+    // Ce bloc portait le contenu de l'HBP (rétention urinaire). L'HBP n'est PAS une entrée
+    // de MASTER_DB.PATHOLOGIES — c'est la case `chkHbp`, exploitée par ses propres critères
+    // STOPP — il n'y a donc rien à re-cibler : la rétention urinaire disparaît d'ici. Le
+    // tricyclique reste, avec le motif qui vaut RÉELLEMENT dans une hypotension
+    // orthostatique : son effet alpha-1 bloquant.
     "PAT_009": [
-        { terme: "anticholinergique", raison: "Rétention urinaire — aggravation HBP", gravite: "DECONSEILLE" },
-        { terme: "tricyclique", raison: "Effet anticholinergique → rétention urinaire", gravite: "DECONSEILLE" }
+        { terme: "tricyclique", raison: "Blocage alpha-1 — aggravation de l'hypotension orthostatique et du risque de chute", gravite: "DECONSEILLE" },
+        { terme: "alpha-1 bloquant", raison: "Vasodilatation — aggravation directe de l'hypotension orthostatique", gravite: "DECONSEILLE" },
+        { terme: "diuretique", raison: "Hypovolémie — aggravation de l'hypotension orthostatique", gravite: "PRUDENCE" }
     ],
 
     // PAT_010 — Démence
@@ -4504,13 +4534,15 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
     ],
 
     // PAT_012 — Maladie de Parkinson
+    // PAT_012 — Démence à Corps de Lewy (classes) — fusionné depuis l'ancien PAT_040 (déduplication automatique par 'terme' lors du merge)
     "PAT_012": [
         { terme: "antipsychotique", raison: "Antagonisme dopaminergique → aggravation syndrome parkinsonien", gravite: "CONTRE-INDICATION" },
         { terme: "metoclopramide", raison: "Antidopaminergique central — aggravation parkinson", gravite: "CONTRE-INDICATION" },
-        { terme: "metopimazine", raison: "Antidopaminergique — risque extrapyramidal", gravite: "PRUDENCE" }
+        { terme: "metopimazine", raison: "Antidopaminergique — risque extrapyramidal", gravite: "PRUDENCE" },
+        { terme: "anticholinergique", raison: "Aggrave hallucinations et cognition en DCL (Watts 2022)", gravite: "CONTRE-INDICATION" }
     ],
 
-    // PAT_014 — Syndrome extrapyramidal
+    // PAT_014 — Maladie de Parkinson (le bloc etait annonce « syndrome extrapyramidal »)
     "PAT_014": [
         { terme: "antipsychotique", raison: "Risque d'aggravation extrapyramidale", gravite: "PRUDENCE" }
     ],
@@ -4522,35 +4554,53 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
         { terme: "isrs", condition: "à dose élevée", raison: "Hyponatrémie → convulsions (rare)", gravite: "PRUDENCE" }
     ],
 
-    // PAT_016 — Hypoglycémies (umbrella)
+    // PAT_016 / PAT_016a / PAT_016b — Diabète. Les trois clauses d'hyperglycémie
+    // ci-dessous (corticoïde, thiazidique, antipsychotique) vivaient sous la clé
+    // « PAT_006 », qui est la fibrillation atriale.
     "PAT_016": [
+        { terme: "corticoide", condition: "systémique", raison: "Hyperglycémie dose-dépendante — adapter insuline/ADO", gravite: "PRUDENCE" },
+        { terme: "thiazidique", raison: "Hyperglycémie dose-dépendante, hypokaliémie → ↓ sécrétion insuline", gravite: "PRUDENCE" },
+        { terme: "antipsychotique", raison: "Syndrome métabolique — prise de poids, dyslipidémie, insulinorésistance (ADA 2024)", gravite: "PRUDENCE" },
         { terme: "sulfamide", raison: "Risque hypoglycémique élevé chez le sujet âgé", gravite: "PRUDENCE" },
         { terme: "glinide", raison: "Sécrétagogue insuline — risque hypoglycémie", gravite: "PRUDENCE" },
         { terme: "fluoroquinolone", raison: "Dysglycémie (hypo et hyper) — FDA warning", gravite: "PRUDENCE" }
     ],
+
     // PAT_016a — Risques DT1
     "PAT_016a": [
+        { terme: "corticoide", condition: "systémique", raison: "Hyperglycémie dose-dépendante — adapter l'insuline", gravite: "PRUDENCE" },
+        { terme: "antipsychotique", raison: "Syndrome métabolique — prise de poids, dyslipidémie, insulinorésistance (ADA 2024)", gravite: "PRUDENCE" },
         { terme: "betabloquant", raison: "Masque symptômes d'hypoglycémie (tachycardie, tremblements) ; favoriser cardiosélectif", gravite: "PRUDENCE" },
         { terme: "fluoroquinolone", raison: "Dysglycémie (hypo et hyper) — FDA warning", gravite: "PRUDENCE" },
         { terme: "corticoide", raison: "Hyperglycémie — réadapter l'insuline systématiquement", gravite: "PRUDENCE" }
     ],
+
     // PAT_016b — Hypoglycémies DT2
     "PAT_016b": [
+        { terme: "corticoide", condition: "systémique", raison: "Hyperglycémie dose-dépendante — adapter le traitement antidiabétique", gravite: "PRUDENCE" },
+        { terme: "thiazidique", raison: "Hyperglycémie dose-dépendante, hypokaliémie → ↓ sécrétion d'insuline", gravite: "PRUDENCE" },
+        { terme: "antipsychotique", raison: "Syndrome métabolique — prise de poids, dyslipidémie, insulinorésistance (ADA 2024)", gravite: "PRUDENCE" },
         { terme: "sulfamide", raison: "Risque hypoglycémique élevé chez le sujet âgé", gravite: "PRUDENCE" },
         { terme: "glinide", raison: "Sécrétagogue insuline — risque hypoglycémie", gravite: "PRUDENCE" },
         { terme: "fluoroquinolone", raison: "Dysglycémie (hypo et hyper) — FDA warning", gravite: "PRUDENCE" }
     ],
 
-    // PAT_019 — Insuffisance rénale (interaction statine)
+    // PAT_019 — Dyslipidémie
+    // Ce bloc portait le contenu de l'INSUFFISANCE RÉNALE (néphrotoxicité des AINS et de
+    // la ciclosporine, accumulation du lithium), déplacé vers PAT_029. Rien ne le
+    // remplace : une dyslipidémie ne contre-indique aucune classe par elle-même, et la
+    // myotoxicité des statines relève de leurs propres règles et de l'onglet AUC.
     "PAT_019": [
-        { terme: "ains", raison: "Néphrotoxicité — vasoconstriction afférente (KDIGO 2024)", gravite: "CONTRE-INDICATION" },
-        { terme: "lithium", raison: "Index thérapeutique étroit — accumulation si IRC", gravite: "PRUDENCE" },
-        { terme: "ciclosporine", raison: "Néphrotoxicité dose-dépendante", gravite: "PRUDENCE" }
     ],
 
-    // PAT_020 — Polyarthrite / rhumatisme inflammatoire
+    // PAT_020 — Cancer / Tumeur solide
+    // Ce bloc portait une recommandation EULAR de RHUMATOLOGIE — « dose minimale efficace »
+    // du corticoïde dans le rhumatisme inflammatoire — servie à des patients atteints de
+    // cancer, chez qui la corticothérapie relève d'indications tout autres. Le rhumatisme
+    // inflammatoire n'est pas une entrée de MASTER_DB.PATHOLOGIES : il n'y a rien à
+    // re-cibler. La corticothérapie prolongée reste couverte par ses critères STOPP et
+    // PIM-Check, qui ne dépendent d'aucune pathologie.
     "PAT_020": [
-        { terme: "corticoide", condition: "≤ 7.5 mg/j prednisone eq.", raison: "Dose minimale efficace — risque ostéoporose, diabète (EULAR 2023)", gravite: "PRUDENCE" }
     ],
 
     // PAT_021 — ATCD ulcère gastrique / hémorragie digestive
@@ -4567,10 +4617,12 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
     ],
 
     // PAT_024 — Goutte
+    // PAT_024 — Goutte (ajouts diurétiques)
     "PAT_024": [
         { terme: "thiazidique", raison: "Hyperuricémie — aggravation goutte", gravite: "DECONSEILLE" },
         { terme: "aspirine", condition: "faible dose", raison: "Diminue l'excrétion urique — aggravation potentielle", gravite: "PRUDENCE" },
-        { terme: "ciclosporine", raison: "Hyperuricémie — aggravation goutte", gravite: "PRUDENCE" }
+        { terme: "ciclosporine", raison: "Hyperuricémie — aggravation goutte", gravite: "PRUDENCE" },
+        { terme: "diuretique de l'anse", raison: "Hyperuricémie → aggravation goutte", gravite: "PRUDENCE" }
     ],
 
     // PAT_025 — Ostéoporose
@@ -4585,12 +4637,16 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
     ],
 
     // PAT_027 — Chutes / troubles de l'équilibre
+    // PAT_027 — Chutes (ajout diurétiques)
+    // PAT_027 — Insomnie
+    // Ce bloc portait le contenu des CHUTES, servi à des insomniaques : « Prudence
+    // Insomnie », motivée par un risque de chute. Les chutes ne sont pas une entrée de
+    // MASTER_DB.PATHOLOGIES (c'est la case `chkChutes`) et disposent déjà de leurs propres
+    // règles — EV_SYND_046 (charge FRID), EV_K02, EV_K05, EV_K08 : rien n'est perdu. Reste
+    // ici ce qui vise l'insomnie elle-même, l'antipsychotique comme hypnotique étant par
+    // ailleurs le sujet d'EV_D16.
     "PAT_027": [
-        { terme: "antipsychotique", raison: "Sédation, hypotension orthostatique → chutes (Beers 2023)", gravite: "PRUDENCE" },
-        { terme: "tricyclique", raison: "Hypotension orthostatique, sédation → chutes", gravite: "DECONSEILLE" },
-        { terme: "opioide", raison: "Sédation, confusion → risque de chutes chez le sujet âgé", gravite: "PRUDENCE" },
-        { terme: "alpha-1 bloquant", raison: "Hypotension orthostatique → chutes", gravite: "PRUDENCE" },
-        { terme: "isrs", condition: "initiation", raison: "Hyponatrémie, vertiges en début de traitement → chutes", gravite: "PRUDENCE" }
+        { terme: "antipsychotique", raison: "Utilisé comme hypnotique : sédation, hypotension, effets extrapyramidaux, sans bénéfice durable sur le sommeil (STOPP v3 D16)", gravite: "DECONSEILLE" }
     ],
 
     // PAT_028 — Vertiges
@@ -4599,16 +4655,33 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
     ],
 
     // PAT_029 — IRC sévère / Dialyse
+    // PAT_029 — IRC sévère (ajouts AVK, AOD)
+    // PAT_029 récupère le contenu rénal qui vivait sous les clés « PAT_007 » (AOMI) et
+    // « PAT_019 » (dyslipidémie). Le lithium y figurait déjà ; seules la metformine, les
+    // AINS et la ciclosporine sont ajoutés.
     "PAT_029": [
+        { terme: "metformine", condition: "si DFG < 30", raison: "Risque d'acidose lactique si insuffisance rénale sévère (KDIGO 2024)", gravite: "CONTRE-INDICATION" },
+        { terme: "ains", raison: "Néphrotoxicité — vasoconstriction de l'artériole afférente (KDIGO 2024)", gravite: "CONTRE-INDICATION" },
+        { terme: "ciclosporine", raison: "Néphrotoxicité dose-dépendante", gravite: "PRUDENCE" },
         { terme: "bisphosphonate", condition: "si DFG < 30", raison: "CI — risque néphrotoxicité, ostéomalacie adynamique", gravite: "CONTRE-INDICATION" },
         { terme: "lithium", raison: "Accumulation toxique — CI si IRC sévère", gravite: "CONTRE-INDICATION" },
         { terme: "enoxaparine", condition: "si DFG < 30", raison: "Accumulation HBPM — risque hémorragique (utiliser HNF)", gravite: "CONTRE-INDICATION" },
         { terme: "tinzaparine", condition: "si DFG < 30", raison: "Accumulation HBPM — privilégier HNF", gravite: "PRUDENCE" },
         { terme: "dalteparine", condition: "si DFG < 30", raison: "Accumulation HBPM — adapter posologie", gravite: "PRUDENCE" },
         { terme: "fondaparinux", condition: "si DFG < 20", raison: "CI si IRC sévère — élimination rénale exclusive", gravite: "CONTRE-INDICATION" },
-        { terme: "isglt2", condition: "si DFG < 20", raison: "Inefficacité glycémique mais bénéfice cardiorénal maintenu (KDIGO 2024)", gravite: "PRUDENCE" },
+        // L'iSGLT2 a ete RETIRE de cette liste. Son libelle disait « inefficacite
+        // glycemique mais benefice cardiorenal MAINTENU » : ce n'est pas un motif
+        // d'eviction, et rendu en « Prudence Maladie Renale Chronique » il mettait en
+        // garde contre la molecule que KDIGO 2024 demande precisement d'initier dans
+        // cette indication — la MRC la PROPOSE par ailleurs (bloc INITIER). La
+        // contradiction existait depuis longtemps ; elle etait invisible parce que la
+        // cle « PAT_029 » etant declaree deux fois, cette entree-ci etait ecrasee. Le
+        // palier de DFG vit dans `poso_ren` de la base, ou il est complet (initiation
+        // jusqu'a DFG >= 25, poursuite possible en dessous selon l'indication).
         { terme: "gabapentine", raison: "Élimination rénale — réduire dose si DFG < 30", gravite: "PRUDENCE" },
-        { terme: "pregabaline", raison: "Élimination rénale — adapter dose si IRC", gravite: "PRUDENCE" }
+        { terme: "pregabaline", raison: "Élimination rénale — adapter dose si IRC", gravite: "PRUDENCE" },
+        { terme: "avk", condition: "si DFG < 15 sans dialyse", raison: "Calciphylaxie possible — surveillance INR renforcée", gravite: "PRUDENCE" },
+        { terme: "aod", condition: "selon seuils DFG spécifiques", raison: "Accumulation si IRC sévère — adapter ou CI selon molécule (EHRA 2024)", gravite: "PRUDENCE" }
     ],
 
     // PAT_030 — Soins palliatifs
@@ -4619,7 +4692,11 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
     ],
 
     // PAT_031 — Confusion / delirium
-    "PAT_031": [
+    // PAT_048 — Syndrome confusionnel (delirium). Ce bloc vivait sous la clé « PAT_031 »,
+    // qui est la Fragilité / Sénescence : ses cinq clauses parlaient de delirium à des
+    // patients fragiles, pendant que le vrai delirium (PAT_048, produit par `chkDelirium`)
+    // n'en recevait aucune.
+    "PAT_048": [
         { terme: "anticholinergique", raison: "Facteur déclenchant majeur du delirium (Beers 2023)", gravite: "CONTRE-INDICATION" },
         { terme: "corticoide", raison: "Agitation, insomnie, confusion dose-dépendante", gravite: "PRUDENCE" },
         { terme: "opioide", raison: "Confusion, sédation — facteur de delirium", gravite: "PRUDENCE" },
@@ -4670,22 +4747,6 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
         { terme: "iec", condition: "hypothyroidie", raison: "Pas de CI mais surveillance TSH (interaction indirecte métabolique)", gravite: "PRUDENCE" }
     ],
 
-    // PAT_024 — Goutte (ajouts diurétiques)
-    "PAT_024": [
-        { terme: "diuretique de l'anse", raison: "Hyperuricémie → aggravation goutte", gravite: "PRUDENCE" }
-    ],
-
-    // PAT_027 — Chutes (ajout diurétiques)
-    "PAT_027": [
-        { terme: "diuretique", raison: "Hypovolémie, hypotension orthostatique → chutes", gravite: "PRUDENCE" }
-    ],
-
-    // PAT_029 — IRC sévère (ajouts AVK, AOD)
-    "PAT_029": [
-        { terme: "avk", condition: "si DFG < 15 sans dialyse", raison: "Calciphylaxie possible — surveillance INR renforcée", gravite: "PRUDENCE" },
-        { terme: "aod", condition: "selon seuils DFG spécifiques", raison: "Accumulation si IRC sévère — adapter ou CI selon molécule (EHRA 2024)", gravite: "PRUDENCE" }
-    ],
-
     // PAT_037 — Sarcopénie (classes thérapeutiques)
     "PAT_037": [
         { terme: "corticoide", condition: "systémique > 1 mois", raison: "Myopathie cortisonique — catabolisme protéique musculaire accéléré (EWGSOP2 2019)", gravite: "DECONSEILLE au long cours" },
@@ -4711,11 +4772,6 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
         { terme: "lithium", raison: "Polyurie + diabète insipide néphrogénique → aggravation incontinence", gravite: "PRUDENCE" }
     ],
 
-    // PAT_012 — Démence à Corps de Lewy (classes) — fusionné depuis l'ancien PAT_040 (déduplication automatique par 'terme' lors du merge)
-    "PAT_012": [
-        { terme: "anticholinergique", raison: "Aggrave hallucinations et cognition en DCL (Watts 2022)", gravite: "CONTRE-INDICATION" }
-    ],
-
     // PAT_053 — RGO (classes & molécules à risque)
     "PAT_053": [
         { terme: "ains", raison: "Aggravation RGO + risque ulcère/œsophagite peptique. Si AINS indispensable → gastroprotection IPP (STOPP F2)", gravite: "PRUDENCE" },
@@ -4725,7 +4781,8 @@ const PATHO_MED_INTERDITS_V4_CLASSES = {
         { terme: "ranitidine", raison: "Médicament RETIRÉ du marché (NDMA potentielle, ANSM 2020)", gravite: "RETIRE — ne plus prescrire" },
         { terme: "atazanavir", raison: "IPP CONTRE-INDIQUÉ (absorption pH-dépendante)", gravite: "CONTRE-INDICATION si IPP associé" },
         { terme: "rilpivirine", raison: "IPP contre-indiqué (↓ absorption)", gravite: "CONTRE-INDICATION si IPP associé" }
-    ]
+    ],
+
 };
 
 // Merge V2, V3, and V4 additions into PATHO_MED_INTERDITS

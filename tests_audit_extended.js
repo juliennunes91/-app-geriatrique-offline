@@ -1370,6 +1370,76 @@ const CONTEXTES_SANS_CONSOMMATEUR_CONNUS = new Set([
     'agitation', 'hallucinations', 'inversion_nycthemerale', 'errance',
     'hypoalbuminemie'
 ]);
+// ─── 6. Une contre-indication médicament/pathologie parle de SA pathologie ──
+// `PATHO_MED_INTERDITS_V4_CLASSES` était indexée par PAT_xxx, mais rédigée contre une
+// AUTRE numérotation : ses commentaires disaient « PAT_006 — Diabète » quand PAT_006 est
+// la fibrillation atriale. Une cyamémazine chez une patiente en ACFA ressortait donc en
+// « Prudence Fibrillation Atriale », motivée par un syndrome métabolique. Neuf blocs
+// étaient dans ce cas — le rénal servi aux artéritiques et aux dyslipidémiques, le
+// rhumatologique aux cancéreux, les chutes aux insomniaques, le delirium aux fragiles.
+//
+// Deux invariants en sortent, tous deux vérifiés par mutation :
+//   a) aucune clé n'apparaît DEUX FOIS dans le littéral — en JavaScript la seconde
+//      écrase la première EN SILENCE, et c'est ainsi que PAT_029 avait perdu HBPM,
+//      fondaparinux, gabapentine et iSGLT2, PAT_012 les antipsychotiques de la DCL ;
+//   b) le commentaire qui annonce un bloc nomme la MÊME pathologie que sa clé.
+function runContraPathoCoherenceAudit(test, assert) {
+    const src = fs.readFileSync(path.join(__dirname, 'geria_pathology_rules_v3.js'), 'utf8');
+    const deb = src.indexOf('const PATHO_MED_INTERDITS_V4_CLASSES');
+    const corps = src.slice(deb, src.indexOf('\n};', deb));
+
+    test('Contre-indications patho — aucune clé en double (la seconde écrase la première)', () => {
+        const cles = [...corps.matchAll(/^\s*"(PAT_\d+[a-z]?)"\s*:\s*\[/gm)].map(m => m[1]);
+        const vus = new Set(), dbl = new Set();
+        cles.forEach(k => (vus.has(k) ? dbl.add(k) : vus.add(k)));
+        assert.strictEqual(dbl.size, 0,
+            'clé(s) déclarée(s) deux fois dans le littéral : ' + [...dbl].join(', ')
+            + '. La seconde occurrence ÉCRASE la première sans erreur ni avertissement — '
+            + 'fusionner les blocs à la source.');
+    });
+
+    test('Contre-indications patho — le commentaire nomme la pathologie de sa clé', () => {
+        const { sandbox } = loadApp();
+        const noms = vm.runInContext('JSON.stringify(Object.fromEntries('
+            + 'Object.entries(MASTER_DB.PATHOLOGIES).map(([k,v])=>[k,v.NOM_STANDARD])))', sandbox);
+        const NOM = JSON.parse(noms);
+        // Les chiffres sont CONSERVES : sans eux « DT1 » et « DT2 » deviennent le meme
+        // mot, et un commentaire de diabete de type 1 passerait pour un de type 2.
+        const n = t => String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]/g, '');
+        // Le commentaire n'a pas à recopier le libellé : il doit partager avec lui un mot
+        // significatif. « Démence » pour « Syndrome Démentiel », « IRC » pour « Maladie
+        // Rénale Chronique » — mais pas « Diabète » pour « Fibrillation Atriale ».
+        const SYN = {
+            PAT_010: ['demen'], PAT_029: ['renal', 'irc', 'mrc', 'dialyse'], PAT_048: ['confusion', 'delirium'],
+            PAT_016: ['diabet', 'hypoglycemi'], PAT_016a: ['dt1', 'diabet'], PAT_016b: ['dt2', 'diabet'],
+            PAT_021: ['ulcere', 'gastri', 'hemorragiedigestive'], PAT_022: ['asthme', 'bpco'],
+            PAT_034: ['hepato', 'cirrhose'], PAT_036: ['mtev', 'thromboembol'], PAT_053: ['rgo', 'reflux'],
+            PAT_004: ['coronar', 'sca', 'scc'], PAT_002: ['hfref', 'insuffisancecardiaque', 'fereduite'],
+            PAT_003: ['hfpef', 'insuffisancecardiaque', 'fepreservee'], PAT_017: ['thyroid'],
+            PAT_037: ['sarcopeni'], PAT_038: ['dysphagi', 'deglutition'], PAT_012: ['lewy', 'dcl'],
+            PAT_014: ['parkinson'], PAT_005: ['hta', 'hypertension'], PAT_008: ['avc', 'ait'],
+            PAT_009: ['orthostatique'], PAT_027: ['insomnie'], PAT_020: ['cancer', 'tumeur'],
+            PAT_007: ['aomi', 'arteriopathie'], PAT_019: ['dyslipidemi'], PAT_006: ['fibrillation']
+        };
+        const mauvais = [];
+        const re = /((?:[ \t]*\/\/[^\n]*\n)+)[ \t]*"(PAT_\d+[a-z]?)"\s*:\s*\[/g;
+        let m;
+        while ((m = re.exec(corps))) {
+            const cle = m[2], comm = n(m[1]), reel = n(NOM[cle] || '');
+            if (!reel) continue;
+            const attendus = (SYN[cle] || []).concat(reel.slice(0, 9));
+            if (!attendus.some(a => a && comm.includes(a))) {
+                mauvais.push(cle + ' (commentaire ≠ « ' + (NOM[cle] || '?') + ' »)');
+            }
+        }
+        assert.strictEqual(mauvais.length, 0,
+            'bloc(s) dont le commentaire annonce une AUTRE pathologie que sa clé : '
+            + mauvais.join(' ; ') + '. C\'est le signe que le contenu vise une autre maladie — '
+            + 'le vérifier clause par clause avant de corriger le seul commentaire.');
+    });
+}
+
 function runContexteOrphelinAudit(test, assert) {
     const lire = f => fs.readFileSync(path.join(__dirname, f), 'utf8');
     const srcAnalyse = lire('app_analysis.js');
@@ -1579,4 +1649,4 @@ function runPosologyCompletenessAudit(test, assert) {
     });
 }
 
-module.exports = { runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runPathologyRulesAudit, runAutocompleteAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiCommentaireConjonctionAudit, runContexteOrphelinAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
+module.exports = { runContraPathoCoherenceAudit, runExtendedAudits, runExtendedAudits2, runCollisionAudit, runQtReferenceAudit, runAnticholinergicAudit, runProteinBindingAudit, runCompositeScoreAudit, runClassMembershipAudit, runRuleKeyResolutionAudit, runPathologyRulesAudit, runAutocompleteAudit, runTitreConditionAudit, runMedAbsentOperantAudit, runLibelleClasseAudit, runCouleurCodeeEnDurAudit, runDdiCommentaireConjonctionAudit, runContexteOrphelinAudit, runDdiIntegrityAudit, runPosologyCompletenessAudit, PANEL, signaturePatient };
