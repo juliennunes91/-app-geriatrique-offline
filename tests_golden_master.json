@@ -89,9 +89,7 @@
    "danger | Flupentixol, fluphénazine, halopéridol > 2 mg/j",
    "info | Action immédiate",
    "warning | Anticholinergique correcteur des effets extrapyramidaux des antipsychotiques",
-   "warning | Antipsychotique au long cours : ECG/QTc et prolactine",
-   "warning | Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
-   "warning | Antipsychotique au long cours : surveillance métabolique",
+   "warning | Antipsychotique au long cours : plan de surveillance",
    "warning | Cascades iatrogéniques détectées",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
@@ -119,7 +117,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
-   "info | Score PIM Global : 32/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 4 point(s)",
    "warning | DOACscore : 0 point(s)",
    "warning | ORBIT-AF : 0 point(s)",
@@ -183,9 +181,7 @@
    "danger | Clozapine chez le sujet âgé : risques spécifiques (au-delà de la NFS)",
    "danger | Clozapine sans NFS hebdomadaire",
    "info | Action immédiate",
-   "warning | Antipsychotique au long cours : ECG/QTc et prolactine",
-   "warning | Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
-   "warning | Antipsychotique au long cours : surveillance métabolique",
+   "warning | Antipsychotique au long cours : plan de surveillance",
    "warning | Clozapine / Olanzapine chez le fumeur : interaction tabac (CYP1A2)"
   ],
   "alertes-initier": [
@@ -208,7 +204,7 @@
    "info | Score de Tisdale : 1 point(s)",
    "warning | DOACscore : 0 point(s)",
    "warning | ORBIT-AF : 0 point(s)",
-   "warning | Score PIM Global : 57/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "info | Actions de réévaluation suggérées"
@@ -255,7 +251,7 @@
    "danger | Antipsychotique chez patient chuteur",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
-   "warning | Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)"
+   "warning | Antipsychotique au long cours : plan de surveillance"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",
@@ -794,9 +790,7 @@
    "info | Antipsychotique d'action prolongée (LAI/dépôt) : réversibilité lente",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
-   "warning | Antipsychotique au long cours : ECG/QTc et prolactine",
-   "warning | Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
-   "warning | Antipsychotique au long cours : surveillance métabolique"
+   "warning | Antipsychotique au long cours : plan de surveillance"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -812,7 +806,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 1 point(s)",
-   "info | Score PIM Global : 12/100 — ACCEPTABLE",
+   "info | Score PIM Global : 11/100 — ACCEPTABLE",
    "info | Score de Tisdale : 1 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
@@ -1095,12 +1089,44 @@
    "info | Actions de réévaluation suggérées"
   ]
  },
+ "cov_EV_B07": {
+  "alertes-eviter": [
+   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Réévaluation planifiée",
+   "warning | Diurétique de l'anse en 1ère intention pour HTA",
+   "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
+   "warning | Diurétique sans ionogramme de surveillance"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | FUROSEMIDE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : FUROSEMIDE"
+  ],
+  "alertes-scores": [
+   "danger | HAS-BLED : 1 point(s)",
+   "info | CHA₂DS₂-VA : 3 point(s)",
+   "info | RISQ-PATH : 3 point(s)",
+   "info | Score PIM Global : 13/100 — ACCEPTABLE",
+   "info | Score de Tisdale : 3 point(s)",
+   "warning | DOACscore : 1 point(s)",
+   "warning | ORBIT-AF : 1 point(s)",
+   "warning | Score ACB : 1"
+  ],
+  "alertes-synthese": [
+   "success | Aucune action majeure identifiée",
+   "success | Dossier sans alerte critique"
+  ]
+ },
  "cov_EV_B07_EV_B09": {
   "alertes-eviter": [
    "danger | Thiazidique + hypokaliémie / hyponatrémie / hypercalcémie / goutte",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
-   "warning | Diurétique de l'anse en 1ère intention pour HTA",
    "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "warning | Diurétique sans ionogramme de surveillance"
   ],
@@ -1137,7 +1163,6 @@
    "danger | Thiazidique + Hyponatrémie",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
-   "warning | Diurétique de l'anse en 1ère intention pour HTA",
    "warning | Diurétique de l'anse pour HTA + incontinence urinaire",
    "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "warning | Diurétique sans ionogramme de surveillance",

@@ -94,8 +94,12 @@ dans `renderSingleAlert()` (geria_engine_v2.js) via `a._recontextualise`.
 **Surveillance dédiée (Bloc 3)** : 7 règles `SUP_PSYC_01`→`SUP_PSYC_07`
 (`RECOS_SUPPLEMENT`), gatées sur `psychiatrie_primaire_chronique` /
 `trouble_thymique_chronique` (sauf clozapine `age_min: 65`, LAI sur contexte,
-tabac sur contexte) : dyskinésie tardive (AIMS), surveillance métabolique,
-ECG/QTc + prolactine, lithium au long cours (rein/thyroïde/parathyroïde),
+tabac sur contexte) : **plan de surveillance de l'antipsychotique au long cours**
+(`SUP_PSYC_01` — dyskinésie tardive/AIMS, métabolique, ECG-QTc + prolactine : trois règles
+fusionnées en une, leurs trois titres commençant tous par « Antipsychotique au long
+cours : » et sortant côte à côte ; la fusion a imposé de retenir l'**union** des périmètres,
+ce qui donne enfin une surveillance métabolique et cardiaque aux psychoses d'apparition
+tardive), lithium au long cours (rein/thyroïde/parathyroïde),
 clozapine du sujet âgé, tabac↔clozapine/olanzapine (CYP1A2, `SUP_PSYC_06`),
 antipsychotique retard LAI/dépôt (`SUP_PSYC_07`, contexte `antipsychotique_lai`
 via `chkAntipsyLAI`). Complètent la recontextualisation sans dupliquer
@@ -515,6 +519,73 @@ oraux » et rédige la surveillance pour les AVK (« contrôle de l'INR au 8ᵉ 
 affiché tel quel sous apixaban, c'est inapplicable. Le texte officiel est une
 transcription — on ajoute une **mise au point au rendu** (`_noteAodAvk`), jamais une
 correction dans `ddi_general.js`.
+
+## « Première intention » est une affirmation sur l'ordonnance entière
+
+Deux critères STOPP décrivent une POSITION dans la stratégie, pas la seule présence d'une
+molécule — et se déclenchaient sans regarder le reste de l'ordonnance :
+
+- `EV_B21` annonçait une **digoxine « en 1ère ligne »** dans la FA chez un patient sous
+  bisoprolol, et lui proposait en alternative « bisoprolol, métoprolol, nébivolol ». Sous
+  bêtabloquant, vérapamil ou diltiazem, la digoxine est une **association**, position que
+  l'ESC retient quand le contrôle de fréquence reste insuffisant.
+- `EV_B07` annonçait un **diurétique de l'anse « en 1ère intention »** dans l'HTA chez une
+  patiente sous irbésartan et lercanidipine.
+
+Les deux portent désormais un `med_absent`, et pour `EV_B07` cette liste est **exactement
+celle de ses propres `alternatives`** : si le patient reçoit déjà l'alternative proposée,
+l'alerte ne décrit pas son dossier. `EV_B08` (œdèmes isolés) n'est pas concerné — il ne
+prétend rien sur l'ordre des lignes. La couverture de `EV_B07` a dû être refaite : ses deux
+patients du panel portaient un thiazidique, `cov_EV_B07` est sur furosémide seul.
+
+## Le libellé d'une classe énonce parfois sa COMPOSITION
+
+Le Gaviscon est décrit « antiacide (bicarbonate/**carbonate de calcium**) ». Les clés
+`calcium` et `carbonate de calcium` n'étant déclarées dans aucune classe, elles tombaient
+dans le dernier recours de `matchesDrugClass` (`classe.includes(key)`) et le captaient :
+`SUP_REM_02` reprochait une « supplémentation calcique > 1000 mg/j » à un patient sous
+antireflux. Remède habituel — la classe `supplement_calcique` existe pour **déclarer** les
+molécules, ce qui les fait entrer dans `_ALL_DCIS_SET` et impose ensuite le match EXACT.
+Même famille que `paracetamol` ⊂ « alternative paracétamol ».
+
+## Le chiffre mesuré parle du patient, la sévérité déclarée n'en sait rien
+
+Une interaction dont le dommage est une **anomalie biologique** ne se juge pas pareillement
+selon que le bilan est inconnu ou sous les yeux. Furosémide + venlafaxine sortait en
+« interaction critique » (cumul SIADH) chez une patiente dont la natrémie mesurée était à
+142 mmol/L. `DDI_MODULATION_BIO` (`app_analysis.js`) pose trois lectures :
+
+- **paramètre anormal** → la sévérité déclarée est maintenue, et la valeur s'affiche :
+  l'alerte devient un constat (« natrémie déjà perturbée : 126 mmol/L ») ;
+- **paramètre normal** → `danger` redescend à `warning`, avec la valeur et la surveillance.
+  Rien n'est masqué ;
+- **paramètre inconnu** → rien ne change. Une absence de dosage n'est pas une normalité.
+
+Piège à connaître : **`bioAnormal()` rend `null` pour DEUX situations opposées** — le
+paramètre est normal, ou aucune borne n'est publiée pour lui (INR, troponine, NT-proBNP).
+Les confondre ferait passer « pas de référence » pour « tout va bien ». La présence d'une
+borne se vérifie donc à part. La sévérité n'est **jamais relevée** par ce chemin.
+
+## Une posologie ne conseille pas sur un médicament non prescrit
+
+Le pantoprazole annonçait « PRÉFÉRABLE chez patient sous clopidogrel (peu CYP2C19 vs
+oméprazole/lansoprazole) » à un lecteur sans clopidogrel : une comparaison entre trois IPP
+dont deux ne le concernent pas. `POSO_CLAUSES_CONDITIONNELLES` retire la clause quand sa
+condition est fausse — même mécanisme déclaré que `CONDUITE_CLAUSES_CONDITIONNELLES`, jamais
+une heuristique de ressemblance. Sept champs `poso_ger` portent une clause de ce type ;
+seules les trois dont la condition est **vérifiable depuis une ordonnance** y figurent
+(clopidogrel, IPP, statine) — « si achlorhydrie » ne se décide pas ainsi.
+
+## L'onglet AUC est rare par construction, et le dit
+
+Il ne montre que les paires dont le **rapport d'aires sous la courbe a été mesuré** dans une
+étude publiée : 1411 paires en base, 861 dont les deux molécules existent dans `MASTER_DB`,
+et il faut encore que le patient reçoive les deux. Vérifié : 10 des 12 paires gériatriques
+classiques sortent (clarithromycine + simvastatine ×11,6 ; diltiazem + simvastatine ×5 ;
+paroxétine + métoprolol ×5 ; oméprazole + clopidogrel ×0,55). Ce n'est donc pas une panne —
+mais l'onglet restait **entièrement vide**, seul des dix à ne rien rendre, ce qui se lit
+comme telle. Il porte maintenant un message qui distingue « aucune donnée de ce type » de
+« aucune interaction ».
 
 ## Formes galéniques : une DCI, deux médicaments
 

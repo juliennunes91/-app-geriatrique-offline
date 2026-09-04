@@ -1125,6 +1125,83 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(has(cas({ flags: ['chkSpcApathie'] }), re),
             'une apathie n\'est pas une indication d\'antipsychotique : la regle reste');
     });
+    test('« Premiere intention » se juge sur l\'ordonnance entiere', () => {
+        // Deux criteres STOPP affirment une POSITION dans la strategie, pas seulement la
+        // presence d'une molecule. Ils se declenchaient sans regarder le reste de
+        // l'ordonnance : sous bisoprolol + digoxine, l'alerte annoncait une digoxine « en
+        // 1ere ligne » et proposait en alternative le betabloquant deja prescrit.
+        const t = o => (analyzeCase({ age: 84, sexe: 'F', dfg: 70, ...o })['alertes-eviter'] || [])
+            .map(a => a.titre).join(' ~ ');
+        const digo = /Digoxine en 1ère ligne/;
+        assert.ok(digo.test(t({ comorbs: ['PAT_006'], meds: ['Digoxine'] })),
+            'digoxine seule dans la FA : premiere ligne, l\'alerte tient');
+        assert.ok(!digo.test(t({ comorbs: ['PAT_006'], meds: ['Digoxine', 'Bisoprolol'] })),
+            'sous betabloquant, la digoxine est une ASSOCIATION, pas une premiere ligne');
+        assert.ok(!digo.test(t({ comorbs: ['PAT_006'], meds: ['Digoxine', 'Diltiazem'] })),
+            'idem sous inhibiteur calcique bradycardisant');
+
+        // Les titres remontent HTML-echappes : l'apostrophe y est « &#39; ».
+        const diu = /Diurétique de l(?:'|&#39;)anse en 1ère intention/;
+        assert.ok(diu.test(t({ comorbs: ['PAT_005'], meds: ['Furosemide'] })),
+            'furosemide seul dans l\'HTA : premiere intention, l\'alerte tient');
+        assert.ok(!diu.test(t({ comorbs: ['PAT_005'], meds: ['Furosemide', 'Irbesartan'] })),
+            'sous ARA2, le diuretique de l\'anse n\'est pas la premiere intention');
+        assert.ok(!diu.test(t({ comorbs: ['PAT_005'], meds: ['Furosemide', 'Amlodipine'] })),
+            'idem sous inhibiteur calcique — la liste est celle des alternatives proposees');
+    });
+    test('Un libelle de classe qui ENONCE sa composition ne vaut pas prescription', () => {
+        // Le libelle du GAVISCON detaille sa composition : « antiacide
+        // (bicarbonate/carbonate de calcium) ». Les cles « calcium » et « carbonate de
+        // calcium » y matchaient par sous-chaine, et SUP_REM_02 reprochait au patient une
+        // « supplementation calcique > 1000 mg/j » qu'il ne recevait pas.
+        const t = meds => (analyzeCase({ age: 84, sexe: 'F', dfg: 70, meds })['alertes-eviter'] || [])
+            .map(a => a.titre).join(' ~ ');
+        assert.ok(!/Supplémentation calcique/.test(t(['Alginate de sodium / bicarbonate'])),
+            'un antireflux n\'est pas une supplementation calcique');
+        assert.ok(/Supplémentation calcique/.test(t(['Carbonate de calcium'])),
+            'un vrai sel de calcium la declenche toujours');
+    });
+    test('Une interaction dont le risque est BIOLOGIQUE se lit sur le bilan du patient', () => {
+        // Furosemide + venlafaxine sortait en « interaction critique » (SIADH) chez une
+        // patiente dont la natremie mesuree etait normale. Le risque est reel, il n'est
+        // pas constitue : le rouge le disait pourtant.
+        const h = bio => analyzeCase({ age: 87, sexe: 'F', dfg: 89, bio, meds: ['Furosemide', 'Venlafaxine'] })
+            ._html['alertes-interact'] || '';
+        const normale = h({ na: 142 }), basse = h({ na: 126 }), inconnue = h({});
+        assert.ok(!/alert-danger/.test(normale) && /dans les bornes/.test(normale),
+            'natremie normale : la severite redescend, la valeur est affichee');
+        assert.ok(/alert-danger/.test(basse) && /déjà perturbée/.test(basse),
+            'natremie basse : la severite declaree est maintenue et le chiffre affiche');
+        assert.ok(/alert-danger/.test(inconnue) && !/dans les bornes/.test(inconnue),
+            'natremie non dosee : rien ne change — une absence de dosage n\'est pas une normalite');
+        // Garde-fou sur la confusion « normal » / « pas de reference » : bioAnormal rend
+        // `null` dans les DEUX cas. Un parametre sans borne publiee (INR) ne doit donc
+        // jamais faire redescendre une severite — la note « dans les bornes » ne peut
+        // apparaitre que pour un parametre effectivement borne.
+        assert.ok(/dans les bornes/.test(normale) && !/dans les bornes/.test(inconnue),
+            'la note de normalite n\'apparait que sur une valeur mesuree et bornee');
+    });
+    test('Une posologie ne conseille pas sur un medicament non prescrit', () => {
+        const poso = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds })._html['alertes-usage'] || '';
+        assert.ok(!/PRÉFÉRABLE chez patient sous clopidogrel/.test(poso(['Pantoprazole'])),
+            'sans clopidogrel, la comparaison entre IPP ne concerne pas ce patient');
+        assert.ok(/PRÉFÉRABLE chez patient sous clopidogrel/.test(poso(['Pantoprazole', 'Clopidogrel'])),
+            'avec clopidogrel, la clause redevient vraie et doit s\'afficher');
+        assert.ok(!/SI IPP/.test(poso(['Carbonate de calcium'])),
+            'sans IPP, l\'alternative citrate ne s\'affiche pas');
+        assert.ok(/SI IPP/.test(poso(['Carbonate de calcium', 'Pantoprazole'])),
+            'sous IPP, elle s\'affiche');
+    });
+    test('L\'onglet AUC dit pourquoi il est vide', () => {
+        // Seul des dix onglets a ne RIEN rendre quand il n'a rien a dire : une page
+        // blanche se lit comme une panne. Il est rare par construction — il n'affiche
+        // que les paires dont le rapport d'AUC a ete mesure.
+        const auc = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds })._html['alertes-auc'] || '';
+        assert.ok(/mesuré/.test(auc(['Paracetamol', 'Furosemide'])),
+            'onglet vide : un message qui explique le silence');
+        assert.ok(/Pharmacocinétique \(AUC\)/.test(auc(['Clarithromycine', 'Simvastatine'])),
+            'paire documentee : le ratio sort toujours');
+    });
     test('Saisie : la case et la comorbidite de la liste produisent le MEME etat', () => {
         // Un contexte clinique doit naitre du FAIT, pas du chemin de saisie. Declarer
         // « dysphagie » par la liste deroulante ne generait pas le contexte `dysphagie` :
@@ -2615,10 +2692,30 @@ console.log('\n🧠 Psychiatrie primaire chronique du sujet âgé');
     });
 
     // Bloc 3 — surveillances
-    test('Bloc3 — antipsychotique chronique déclenche AIMS + métabolique', () => {
-        const t = evTitres({ age: 75, sexe: 'M', dfg: 70, meds: ['Risperidone'], flags: ['chkSchizoChronique'] });
-        assert.ok(/dyskinésie tardive \(AIMS\)/i.test(t), 'SUP_PSYC_01 (AIMS) attendu');
-        assert.ok(/surveillance métabolique/i.test(t), 'SUP_PSYC_02 attendu');
+    test('Bloc3 — antipsychotique chronique : UN plan de surveillance, pas trois cartes', () => {
+        // Les trois surveillances (AIMS, metabolique, ECG/QTc + prolactine) sortaient en
+        // trois alertes dont les titres commencaient tous par « Antipsychotique au long
+        // cours : ». Elles sont fusionnees en un plan unique — le contenu doit rester
+        // entier, c'est la presentation qui change.
+        const r = analyzeCase({ age: 75, sexe: 'M', dfg: 70, meds: ['Risperidone'], flags: ['chkSchizoChronique'] });
+        const t = (r['alertes-eviter'] || []).map(a => a.titre).join(' ~ ');
+        const h = r._html['alertes-eviter'] || '';
+        assert.strictEqual((t.match(/Antipsychotique au long cours/g) || []).length, 1,
+            'une seule entree « Antipsychotique au long cours »');
+        assert.ok(/plan de surveillance/i.test(t), 'SUP_PSYC_01 fusionne attendu');
+        assert.ok(/AIMS/.test(h), 'le volet dyskinesie tardive survit a la fusion');
+        assert.ok(/glycémie à jeun ou HbA1c/.test(h), 'le volet metabolique survit a la fusion');
+        assert.ok(/QTc/.test(h) && /prolactine/i.test(h), 'le volet ECG\/prolactine survit a la fusion');
+    });
+    test('Bloc3 — la psychose d\'apparition TARDIVE recoit le meme plan', () => {
+        // Avant fusion, seul le depistage de la dyskinesie tardive etait arme sur
+        // `psychiatrie_debut_tardif` : ces patients n'avaient ni surveillance
+        // metabolique ni ECG. Le perimetre retenu est l'union des trois.
+        const h = evHtml({ age: 80, sexe: 'F', dfg: 70, meds: ['Risperidone'],
+            flags: ['chkSchizoChronique'], bio: { psyOnsetAge: '70' } });
+        assert.ok(/plan de surveillance/i.test(h), 'plan de surveillance attendu');
+        assert.ok(/glycémie à jeun ou HbA1c/.test(h) && /QTc/.test(h),
+            'metabolique et ECG desormais couverts en cas de debut tardif');
     });
     test('Bloc3 — clozapine du sujet âgé déclenchée (sans dx chronique)', () => {
         const t = evTitres({ age: 78, sexe: 'M', dfg: 70, meds: ['Clozapine'] });
@@ -2716,7 +2813,7 @@ console.log('\n📚 Conformité littérature — 5 cas psychogériatriques chron
         const r = analyzeCase({ age: 72, sexe: 'M', dfg: 65, meds: ['Haloperidol', 'Tropatepine'], comorbs: ['PAT_004'], flags: ['chkSchizoChronique', 'chkChutes'], bio: { psyOnsetAge: '24' } });
         test('Litt.psy CAS1 — recontextualisation « traitement de fond »', () => assert.ok(/Traitement de fond/.test(evHtml(r))));
         test('Litt.psy CAS1 — note « NE PAS déprescrire »', () => assert.ok(/NE PAS déprescrire/.test(evHtml(r))));
-        test('Litt.psy CAS1 — SUP_PSYC_01/02/03 surveillances', () => assert.ok(/dyskinésie tardive \(AIMS\)/i.test(ev(r)) && /surveillance métabolique/i.test(ev(r)) && /ECG\/QTc et prolactine/i.test(ev(r))));
+        test('Litt.psy CAS1 — SUP_PSYC_01 plan de surveillance (3 volets)', () => assert.ok(/plan de surveillance/i.test(ev(r)) && /AIMS/.test(evHtml(r)) && /glycémie à jeun ou HbA1c/.test(evHtml(r)) && /QTc/.test(evHtml(r))));
         test('Litt.psy CAS1 — anticholinergique correcteur (STOPP D13)', () => assert.ok(/Anticholinergique correcteur/i.test(ev(r))));
     }
     // CAS 2 — Bipolaire I sous lithium 40 ans + HCTZ + AINS, DFG 48
@@ -2732,7 +2829,7 @@ console.log('\n📚 Conformité littérature — 5 cas psychogériatriques chron
         test('Litt.psy CAS3 — SUP_PSYC_05 clozapine sujet âgé', () => assert.ok(/Clozapine chez le sujet âgé/i.test(ev(r))));
         test('Litt.psy CAS3 — SUP_PSYC_06 tabac↔clozapine (CYP1A2)', () => assert.ok(/tabac \(CYP1A2\)/i.test(ev(r))));
         test('Litt.psy CAS3 — SUP_PIMC_11 NFS clozapine', () => assert.ok(/Clozapine sans NFS/i.test(ev(r))));
-        test('Litt.psy CAS3 — encadrement surveillance (AIMS + métabolique)', () => assert.ok(/AIMS/i.test(ev(r)) && /surveillance métabolique/i.test(ev(r))));
+        test('Litt.psy CAS3 — encadrement surveillance (plan AIMS + métabolique)', () => assert.ok(/plan de surveillance/i.test(ev(r)) && /AIMS/.test(evHtml(r)) && /glycémie à jeun ou HbA1c/.test(evHtml(r))));
     }
     // CAS 4 — Dépression récurrente, sertraline maintien, chuteuse, Na 132
     {

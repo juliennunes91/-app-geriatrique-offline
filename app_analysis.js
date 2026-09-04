@@ -2710,6 +2710,52 @@ function analyserPrescription() {
         // MÉCANISME (après le dernier tiret cadratin) ; le libellé officiel reste
         // accessible en infobulle. Les libellés qui ne nomment qu'une classe
         // (« Macrolides », « AINS ») n'affirment rien de faux et sont conservés.
+        // Une interaction dont le dommage est une ANOMALIE BIOLOGIQUE ne se juge pas
+        // pareillement selon que le bilan est inconnu ou qu'il est sous les yeux.
+        // Sous furosémide + venlafaxine, le cumul SIADH sortait en « interaction
+        // critique » chez une patiente dont la natrémie mesurée était à 142 mmol/L :
+        // le risque est réel, il n'est pas CONSTITUÉ, et le rouge le disait pourtant.
+        //
+        // Trois lectures, et une seule règle : le chiffre mesuré parle du patient.
+        //   • paramètre anormal   → la sévérité déclarée est maintenue, et la valeur
+        //                           est affichée : l'alerte devient un constat ;
+        //   • paramètre normal    → `danger` redescend à `warning`, avec la valeur et
+        //                           la surveillance à tenir. Rien n'est masqué ;
+        //   • paramètre inconnu   → rien ne change. Une absence de dosage n'est pas une
+        //                           normalité, et c'est le cas le plus fréquent.
+        // La sévérité n'est JAMAIS relevée par ce chemin — un bilan perturbé peut avoir
+        // d'autres causes, et le scoring reste seul juge au-dessus du plancher.
+        const DDI_MODULATION_BIO = [
+            // BIO_002 = natrémie, BIO_001 = kaliémie (et non l'inverse : les deux codes
+            // se suivent dans un ordre qui n'est pas celui de l'ionogramme imprimé).
+            { motif: /hyponatr|siadh/i,                     bio: 'BIO_002', nom: 'natrémie', unite: 'mmol/L' },
+            { motif: /hypokali|hypokali[ée]mi|cumul hypok/i, bio: 'BIO_001', nom: 'kaliémie', unite: 'mmol/L' }
+        ];
+        const _moduleParBiologie = (classe, commentaire, severite, bioVals, sexePatient) => {
+            if (severite !== 'danger') return { severite, note: '' };
+            const texte = `${classe} ${commentaire}`;
+            for (const r of DDI_MODULATION_BIO) {
+                if (!r.motif.test(texte)) continue;
+                const v = bioVals && bioVals[r.bio];
+                if (v === undefined || v === null || v === '' || isNaN(parseFloat(v))) return { severite, note: '' };
+                const val = parseFloat(v);
+                // `bioAnormal` rend `null` pour DEUX situations opposées : le paramètre
+                // est normal, ou aucune borne n'est publiée pour lui. Les confondre
+                // ferait passer « pas de référence » pour « tout va bien ». La présence
+                // d'une borne se vérifie donc à part, avant de lire le verdict.
+                const aUneBorne = (typeof BIO_NORMES !== 'undefined') && !!BIO_NORMES[r.bio];
+                if (!aUneBorne) return { severite, note: '' };
+                let anormal = null;
+                try { anormal = bioAnormal(r.bio, val, sexePatient); } catch (e) { return { severite, note: '' }; }
+                if (anormal) {
+                    return { severite, note: `${r.nom.charAt(0).toUpperCase() + r.nom.slice(1)} déjà perturbée chez ce patient : ${val} ${r.unite}. Le risque n'est plus théorique.` };
+                }
+                return { severite: 'warning',
+                         note: `${r.nom.charAt(0).toUpperCase() + r.nom.slice(1)} mesurée à ${val} ${r.unite}, dans les bornes : le risque reste à surveiller, il n'est pas constitué. Contrôler après toute modification de dose.` };
+            }
+            return { severite, note: '' };
+        };
+
         const _libelleInteraction = (g) => {
             const classe = String(g.classe || '').trim();
             const nclasse = sanitizeText(classe);
@@ -2767,6 +2813,8 @@ function analyserPrescription() {
                         });
                         if (newMatched.length > 0) {
                             const pris = new Set(newMatched.map(x => sanitizeText(x.dci)));
+                            const mod = _moduleParBiologie(entry.classe || '', entry.commentaire || '',
+                                                           entry.severite || 'warning', bioValues, sexe);
                             foundGroups.push({
                                 classe: entry.classe || '',
                                 matched: newMatched,
@@ -2774,7 +2822,8 @@ function analyserPrescription() {
                                 // si le libellé les nomme, il annonce une association qui n'existe pas.
                                 absents: entry.dcis.map(sanitizeText).filter(d => d && !pris.has(d)),
                                 commentaire: entry.commentaire || '',
-                                severite: entry.severite || 'warning',
+                                severite: mod.severite,
+                                noteBio: mod.note
                             });
                         }
                     }
@@ -2785,9 +2834,10 @@ function analyserPrescription() {
                     const groupHtml = foundGroups.map(g => {
                         const drugs = g.matched.map(x => escapeHtml(x.interactor.toUpperCase())).join(', ');
                         const com = g.commentaire ? ` <em class="text-muted">(${escapeHtml(g.commentaire)})</em>` : '';
+                        const nb = g.noteBio ? `<br><span class="small">${escapeHtml(g.noteBio)}</span>` : '';
                         const lib = _libelleInteraction(g);
                         const tt = lib.complet ? ` title="Libellé complet de l'entrée : ${escapeHtml(lib.complet)}"` : '';
-                        return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}</li>`;
+                        return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}${nb}</li>`;
                     }).join('');
                     // Refléter la gravité maximale dans le TITRE (et pas seulement dans le
                     // détail déplié) : une contre-indication absolue doit être visible au
@@ -3007,13 +3057,40 @@ function analyserPrescription() {
         let dfg = bioValues['BIO_004']; let alb = parseFloat(ref.albumine) || 0;
 
         if (hasPoso || alb >= 85) {
+            // Une posologie peut porter une clause qui ne vaut QUE si une autre molécule
+            // est prescrite. Le pantoprazole annonçait « PRÉFÉRABLE chez patient sous
+            // clopidogrel (peu CYP2C19 vs oméprazole/lansoprazole) » à un lecteur dont
+            // l'ordonnance ne comportait pas de clopidogrel : une comparaison entre trois
+            // IPP dont deux ne le concernent pas, pour une indication qu'il n'a pas.
+            // Même mécanisme que CONDUITE_CLAUSES_CONDITIONNELLES : la clause est
+            // DÉCLARÉE avec la condition qui la rend vraie, jamais devinée par ressemblance.
+            // Sept champs `poso_ger` de la base portent une clause de ce type ; seules
+            // celles dont la condition est VÉRIFIABLE par l'application figurent ici —
+            // « si achlorhydrie » ne se décide pas depuis une ordonnance.
+            const POSO_CLAUSES_CONDITIONNELLES = [
+                { dci: /^pantoprazole$/i, clause: /\.\s*PRÉFÉRABLE chez patient sous clopidogrel[^.]*\)/i, requiert: ['clopidogrel'] },
+                { dci: /^carbonate de calcium$/i, clause: /\s*;\s*SI IPP\s*:[^;]*\)/i, requiert: ['ipp'] },
+                { dci: /^bezafibrate$/i, clause: /\s*Préférer fénofibrate si association statine\.?/i, requiert: ['statine'] }
+            ];
+            const _posoSansClauseInutile = (dci, texte) => {
+                let out = String(texte);
+                POSO_CLAUSES_CONDITIONNELLES.forEach(c => {
+                    if (!c.dci.test(String(dci).trim())) return;
+                    const presente = c.requiert.some(k => activeMeds.some(am => {
+                        try { return matchesDrugClass(sanitizeText(am.dci), sanitizeText(am.classe || ''), k); }
+                        catch (e) { return false; }
+                    }));
+                    if (!presente) out = out.replace(c.clause, '');
+                });
+                return out.trim();
+            };
             let html = `<div class="alert alert-success border border-success shadow-sm"><strong class="text-success">💊 Posologies : ${escapeHtml(ref.dci.toUpperCase())}</strong><br>`;
             // Une posologie qui énumère PLUSIEURS usages (« Constipation … | Préparation
             // colique … ») laisse le lecteur choisir lui-même le régime qui s'applique.
             // Quand l'usage a été précisé à la saisie, on ne montre que le sien — les
             // autres restent consultables au survol.
             if (ref.poso_hab) html += `<em>Standard :</em> ${_posoSelonUsage(m, ref.poso_hab)}<br>`;
-            if (ref.poso_ger) html += `<em>👴 Gériatrique :</em> <b>${ref.poso_ger}</b><br>`;
+            if (ref.poso_ger) html += `<em>👴 Gériatrique :</em> <b>${_posoSansClauseInutile(ref.dci, ref.poso_ger)}</b><br>`;
             
             if (ref.poso_ren) {
                 let isDanger = (dfg > 0 && dfg < 50 && (ref.poso_ren.toLowerCase().includes('ci') || ref.poso_ren.toLowerCase().includes('contre-ind')));
@@ -3259,6 +3336,11 @@ function analyserPrescription() {
     if(counts.suivi === 0) document.getElementById('alertes-suivi').innerHTML = '<div class="alert alert-light">Aucun suivi biologique spécifique.</div>';
     if(counts.ansm === 0) document.getElementById('alertes-ansm').innerHTML = '<div class="alert alert-light">Aucune interaction du thésaurus ANSM détectée.</div>';
     if(counts.interact === 0) document.getElementById('alertes-interact').innerHTML = '<div class="alert alert-light">Aucun risque clinique ou Pharmacocinétique détecté.</div>';
+    // L'onglet AUC restait entièrement VIDE quand aucune paire n'était documentée — seul
+    // des dix onglets à ne rien dire, ce qui se lit comme une panne. Il est rare par
+    // construction : il n'affiche que les paires pour lesquelles une étude a MESURÉ le
+    // rapport d'aires sous la courbe. Le dire explicitement vaut mieux qu'une page blanche.
+    if(counts.auc === 0) document.getElementById('alertes-auc').innerHTML = '<div class="alert alert-light">Aucune interaction pharmacocinétique chiffrée pour cette ordonnance.<br><span class="small">Cet onglet n\'affiche que les associations dont le rapport d\'AUC a été <b>mesuré</b> dans une étude publiée. Son silence signifie qu\'aucune donnée de ce type n\'existe pour ces paires — pas qu\'elles sont sans interaction : les risques cliniques figurent dans l\'onglet Interactions et le thésaurus ANSM dans le sien.</span></div>';
     if(counts.bio === 0) document.getElementById('alertes-bio').innerHTML = '<div class="alert alert-light">Aucune anomalie syndromique biologique.</div>';
 
     // =========================================================

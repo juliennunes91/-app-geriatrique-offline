@@ -195,6 +195,12 @@ const GERIA_RECOS_DB = {
                 med_keys: ["furosemide", "bumetanide"],
                 comorbs: ["PAT_005"],
                 comorbs_absent: ["PAT_002", "PAT_003"],
+                // Meme correction que pour la digoxine (EV_B21) : « en PREMIERE
+                // intention » se juge sur l'ordonnance entiere. La liste ci-dessous est
+                // exactement celle des `alternatives` proposees par la regle — si le
+                // patient recoit deja l'une d'elles, le diuretique de l'anse n'est pas
+                // la premiere intention et l'alerte lui recommanderait ce qu'il prend.
+                med_absent: ["iec", "ara2", "inhibiteur calcique", "diuretique_thiazidique"],
                 // Une indication de surcharge rend le diuretique de l'anse legitime ;
                 // une indication d'oedemes isoles releve du critere B8, pas de celui-ci.
                 contexte_clinique_absent: ["diuretique_indication_surcharge", "diuretique_indication_oedemes"]
@@ -419,6 +425,13 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["digoxine"],
                 comorbs: ["PAT_006"],
+                // « PREMIERE ligne » est une affirmation sur l'ordonnance entiere, pas
+                // sur la seule digoxine. Sous betabloquant, verapamil ou diltiazem, la
+                // digoxine est une ASSOCIATION — position que l'ESC retient quand le
+                // controle de frequence reste insuffisant. L'alerte se declenchait
+                // pourtant, et proposait en alternative le betabloquant que le patient
+                // recevait deja : elle parlait d'un dossier qui n'etait pas le sien.
+                med_absent: ["betabloquant", "verapamil", "diltiazem"],
                 // Désarmée si la prescription est explicitement transitoire (< 1 mois).
                 contexte_clinique_absent: ["digoxine_duree_breve"]
             },
@@ -4702,43 +4715,36 @@ const RECOS_SUPPLEMENT = [
     // ne dupliquent pas (atteintes d'organe, dépistage clinique, schéma).
     // ========================================================================
     {
+        // Trois regles distinctes disaient au lecteur une seule chose : « surveillez cet
+        // antipsychotique de fond ». Elles sortaient cote a cote, sous trois titres
+        // commencant tous par « Antipsychotique au long cours : », chacune avec son
+        // encadre et son bloc d'alternatives — trois cartes pour UN plan de surveillance.
+        // Elles sont fusionnees.
+        //
+        // La fusion imposait de trancher une divergence de perimetre, et c'est elle qui
+        // motive le choix : le depistage de la dyskinesie tardive etait arme aussi sur
+        // `psychiatrie_debut_tardif`, la surveillance metabolique et l'ECG non. Or rien
+        // ne justifie de surveiller la glycemie et le QTc d'un schizophrene vieilli et
+        // pas ceux d'une psychose d'apparition tardive traitee au long cours — l'age est
+        // un facteur de risque des DEUX. Le perimetre retenu est donc l'union, ce qui
+        // comble au passage un trou : ces patients n'avaient aucune surveillance
+        // metabolique ni cardiaque proposee.
         id: "SUP_PSYC_01", sources: ["HAS", "Maudsley"],
-        titre: "Antipsychotique au long cours : dépistage de la dyskinésie tardive (AIMS)",
-        message: "Maladie psychiatrique chronique sous antipsychotique : dépister la dyskinésie tardive par l'échelle AIMS (Abnormal Involuntary Movement Scale) au moins 1 fois/an — tous les 3-6 mois si facteurs de risque (âge avancé, dose cumulée élevée, durée prolongée, sexe féminin, antipsychotique typique). Atteinte potentiellement irréversible si non détectée précocement.",
+        titre: "Antipsychotique au long cours : plan de surveillance",
+        message: "Antipsychotique de fond : trois surveillances à tenir ensemble. " +
+            "① Dyskinésie tardive — échelle AIMS au moins 1 fois/an, tous les 3-6 mois si facteurs de risque (âge avancé, dose cumulée élevée, durée prolongée, sexe féminin, antipsychotique typique) : atteinte potentiellement irréversible si elle n'est pas détectée tôt. " +
+            "② Métabolique — poids/IMC/tour de taille, glycémie à jeun ou HbA1c, bilan lipidique, pression artérielle : bilan de référence, à 3 mois, puis au moins annuel (rapproché sous olanzapine et clozapine). Le syndrome métabolique cumulé est une cause majeure de surmortalité cardiovasculaire de ces patients. " +
+            "③ Cardiaque et endocrinien — ECG avec mesure du QTc à l'instauration, puis annuel et à chaque changement de dose ou de molécule (torsades de pointes, risque majoré par l'âge, l'hypokaliémie et les associations QT-allongeantes) ; prolactine en cas de galactorrhée, de troubles sexuels, d'aménorrhée ou d'ostéoporose, surtout sous rispéridone, amisulpride ou halopéridol.",
         severite: "warning",
         condition: {
             med_keys: ["antipsychotique"],
-            // `psychiatrie_debut_tardif` AJOUTE : la rigueur de chronicite (psyOnsetAge >= 65)
-            // sert a ne pas deprescrire un traitement de fond ancien — elle n'a aucune raison
-            // d'eteindre le DEPISTAGE de la dyskinesie tardive, dont l'age avance est
-            // precisement un facteur de risque majeur. Une psychose d'apparition tardive
-            // (VLOSLP) sous antipsychotique doit etre depistee comme les autres.
+            // `psychiatrie_debut_tardif` INCLUS : la rigueur de chronicite (psyOnsetAge
+            // >= 65) sert a ne pas deprescrire un traitement de fond ancien — elle n'a
+            // aucune raison d'eteindre la surveillance d'un antipsychotique en cours.
             contexte_clinique_any: ["psychiatrie_primaire_chronique", "psychose_chronique",
                 "psychiatrie_debut_tardif"]
         },
-        alternatives: "Si dyskinésie tardive : réduire la dose si possible, envisager un switch vers la clozapine (moins dyskinétique), discuter valbénazine/déutétrabénazine. Ne pas augmenter l'antipsychotique pour masquer les mouvements."
-    },
-    {
-        id: "SUP_PSYC_02", sources: ["HAS", "Maudsley"],
-        titre: "Antipsychotique au long cours : surveillance métabolique",
-        message: "Antipsychotique de fond (psychose chronique) : surveillance métabolique régulière — poids/IMC/tour de taille, glycémie à jeun ou HbA1c, bilan lipidique, pression artérielle. Schéma : baseline, à 3 mois, puis au moins annuel (surveillance rapprochée pour olanzapine et clozapine, les plus à risque). Le syndrome métabolique cumulé est une cause majeure de surmortalité cardiovasculaire de ces patients.",
-        severite: "warning",
-        condition: {
-            med_keys: ["antipsychotique"],
-            contexte_clinique_any: ["psychiatrie_primaire_chronique", "psychose_chronique"]
-        },
-        alternatives: "Mesures hygiéno-diététiques, activité physique adaptée. Si prise de poids/dérèglement glycémique majeur : envisager un antipsychotique métaboliquement plus neutre (aripiprazole) après avis psychiatrique. Traiter les facteurs de risque CV (statine, antidiabétique)."
-    },
-    {
-        id: "SUP_PSYC_03", sources: ["HAS", "Maudsley"],
-        titre: "Antipsychotique au long cours : ECG/QTc et prolactine",
-        message: "Antipsychotique de fond : ECG avec mesure du QTc à l'instauration puis annuel (et à chaque changement de dose/molécule) — risque de torsades de pointes, majoré par l'âge, l'hypokaliémie et les associations QT-allongeantes. Doser la prolactine en cas de signes d'hyperprolactinémie (galactorrhée, troubles sexuels, aménorrhée, ostéoporose), surtout sous rispéridone, amisulpride, halopéridol.",
-        severite: "warning",
-        condition: {
-            med_keys: ["antipsychotique"],
-            contexte_clinique_any: ["psychiatrie_primaire_chronique", "psychose_chronique"]
-        },
-        alternatives: "Si QTc allongé (> 470 ms H / > 480 ms F ou Δ > 60 ms) : corriger la kaliémie/magnésémie, réduire la dose, éviter les associations QT, préférer un antipsychotique à faible risque QT (aripiprazole). Si hyperprolactinémie symptomatique : aripiprazole (effet réducteur)."
+        alternatives: "Dyskinésie tardive : réduire la dose si possible, envisager un switch vers la clozapine (moins dyskinétique), discuter valbénazine/déutétrabénazine — ne jamais augmenter l'antipsychotique pour masquer les mouvements. Dérive métabolique : mesures hygiéno-diététiques et activité physique adaptée, puis molécule plus neutre (aripiprazole) après avis psychiatrique, et traitement des facteurs de risque cardiovasculaire. QTc allongé (> 470 ms chez l'homme, > 480 ms chez la femme, ou Δ > 60 ms) : corriger kaliémie et magnésémie, réduire la dose, éviter les associations QT, préférer un antipsychotique à faible risque QT. Hyperprolactinémie symptomatique : aripiprazole (effet réducteur)."
     },
     {
         id: "SUP_PSYC_04", sources: ["HAS", "CANMAT"],

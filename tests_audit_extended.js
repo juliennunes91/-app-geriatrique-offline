@@ -74,6 +74,10 @@ const PANEL = {
     'cov_EV_B01_EV_B02': {"age":82,"sexe":"F","comorbs":["PAT_003","PAT_002"],"bio":{"patientDFG":60},"meds":["Digoxine","Verapamil"]},
     'cov_EV_B05': {"age":82,"sexe":"F","comorbs":["PAT_005"],"bio":{"patientDFG":60},"meds":["Acebutolol"]},
     'cov_EV_B06': {"age":82,"sexe":"F","comorbs":["PAT_006"],"bio":{"patientDFG":60},"meds":["Amiodarone"]},
+    // EV_B07 exige desormais l'ABSENCE d'un antihypertenseur de premiere intention :
+    // le patient ci-dessous, qui porte aussi un thiazidique, ne le declenche donc plus.
+    // Il reste le patient de EV_B09 ; EV_B07 recoit le sien, sur furosemide seul.
+    'cov_EV_B07': {"age":82,"sexe":"F","comorbs":["PAT_005"],"bio":{"patientDFG":60},"meds":["Furosemide"]},
     'cov_EV_B07_EV_B09': {"age":82,"sexe":"F","comorbs":["PAT_005"],"bio":{"patientDFG":60,"patientK":2},"meds":["Furosemide","Hydrochlorothiazide"]},
     'cov_EV_B09b_EV_B10': {"age":82,"sexe":"F","comorbs":["PAT_005"],"flags":["chkIncontinence"],"bio":{"patientNa":117,"patientDFG":60},"meds":["Hydrochlorothiazide","Furosemide"]},
     'cov_EV_B11_EV_B13': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Methyldopa","Spironolactone","Benazepril"]},

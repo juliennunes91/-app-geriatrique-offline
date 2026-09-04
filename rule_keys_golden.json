@@ -493,7 +493,6 @@
   "Cholecalciferol"
  ],
  "calcium": [
-  "Alginate de sodium / bicarbonate",
   "Carbonate de calcium",
   "Pidolate de calcium"
  ],
@@ -523,8 +522,8 @@
   "Carbinoxamine"
  ],
  "carbonatedecalcium": [
-  "Alginate de sodium / bicarbonate",
-  "Carbonate de calcium"
+  "Carbonate de calcium",
+  "Pidolate de calcium"
  ],
  "carvedilol": [
   "Carvedilol"
@@ -695,6 +694,15 @@
   "Spironolactone",
   "Torasemide",
   "Triamterene"
+ ],
+ "diuretiquethiazidique": [
+  "Aldactazine",
+  "Altizide",
+  "Atenolol + chlortalidone",
+  "Chlortalidone",
+  "Cicletanine",
+  "Hydrochlorothiazide",
+  "Indapamide"
  ],
  "divalproate": [
   "Divalproate de sodium",

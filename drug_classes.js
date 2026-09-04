@@ -63,6 +63,22 @@ const DRUG_CLASSES = {
         classeMatch: ['diuretiquedelanse'],
         dcis: ['furosemide', 'bumetanide', 'piretanide', 'torasemide']
     },
+    // Sels de calcium ORAUX a visee de supplementation. La classe existe pour un motif
+    // unique : rendre les cles « calcium » et « carbonate de calcium » EXACTES. Sans
+    // elle, elles tombaient dans le dernier recours de `matchesDrugClass`
+    // (`classe.includes(key)`) et captaient le GAVISCON, dont le libelle de classe
+    // enonce sa composition : « antiacide (bicarbonate/carbonate de calcium) ». Un
+    // patient sous antireflux se voyait reprocher une « supplementation calcique
+    // > 1000 mg/j » (SUP_REM_02) qu'il ne recevait pas. Meme famille que `paracetamol`
+    // ⊂ « alternative paracetamol » : declarer les molecules les fait entrer dans
+    // `_ALL_DCIS_SET`, ce qui impose ensuite le match EXACT.
+    supplement_calcique: {
+        aliases: ['supplementcalcique', 'supplementationcalcique', 'selsdecalcium',
+                  'seldecalcium', 'calcium', 'carbonatedecalcium', 'pidolatedecalcium',
+                  'citratedecalcium'],
+        classeMatch: ['seldecalciumoral'],
+        dcis: ['carbonate de calcium', 'pidolate de calcium', 'citrate de calcium']
+    },
     diuretique_thiazidique: {
         aliases: ['diuretiquethiazidique', 'diuretiquesthiazidiquesetapparente'],
         classeMatch: ['thiazid'],
