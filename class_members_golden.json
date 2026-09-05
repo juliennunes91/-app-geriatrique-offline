@@ -149,6 +149,7 @@
   "Silodosine",
   "Tamsulosine",
   "Terazosine",
+  "Trazosine",
   "Urapidil"
  ],
  "ase": [
@@ -265,7 +266,8 @@
   "Fluoxetine",
   "Fluvoxamine",
   "Paroxetine",
-  "Sertraline"
+  "Sertraline",
+  "Vortioxétine"
  ],
  "irsn": [
   "Desvenlafaxine",
@@ -620,17 +622,14 @@
   "Hyoscyamine",
   "Imipramine",
   "Ipratropium",
-  "Mebeverine",
   "Orphenadrine",
   "Oxybutynine",
-  "Phloroglucinol",
   "Promethazine",
   "Propantheline",
   "Propiverine",
   "Quetiapine",
   "Scopolamine",
   "Solifenacine",
-  "Somatropine",
   "Tiemonium",
   "Tiotropium",
   "Toltérodine",
@@ -696,6 +695,24 @@
   "Semaglutide",
   "Sitagliptine",
   "Vildagliptine"
+ ],
+ "phenothiazine": [
+  "Alimemazine",
+  "Chlorpromazine",
+  "Cyamemazine",
+  "Fluphenazine",
+  "Levomepromazine",
+  "Mequitazine",
+  "Metopimazine",
+  "Perphenazine",
+  "Pipotiazine",
+  "Prochlorperazine",
+  "Promethazine",
+  "Thioridazine",
+  "Trifluoperazine"
+ ],
+ "glitazone": [
+  "Pioglitazone"
  ],
  "potassium": [
   "Potassium"

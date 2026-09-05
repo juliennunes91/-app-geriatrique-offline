@@ -633,17 +633,57 @@ la DCL, et sortait deux fois, en « CI » puis en « Déconseillé ». Seul le d
 par couple (médicament, pathologie) est affiché. Vérifié : aucune perte sèche sur le panel,
 c'est toujours l'alerte la plus forte qui reste.
 
-**Point ouvert, mesuré et non corrigé** : `checkMedContraPathologies()` compare des chaînes
-**brutes** (`dci.includes(terme)`), sans passer par `matchesDrugClass()`. Il est donc
-sensible aux accents — « corticoide » ne reconnaît pas « Glucocorticoïde », si bien que 11
-des 13 corticoïdes échappent aux clauses qui les visent ; de même 13 opioïdes sur 18, 7
-benzodiazépines sur 20, 8 antiépileptiques sur 18. Mais une simple normalisation d'accents
-réimporterait toutes les collisions que `matchesDrugClass()` existe pour empêcher
-(corticoïdes **inhalés**, naloxone rangée parmi les opioïdes, néfopam capté par
-« paracétamol »). Router ce matcheur vers `matchesDrugClass()` est le bon geste — il gagne
-`anticoagulant` 1→11, `bêtabloquant` 8→15, `diurétique de l'anse` 4→15 — mais il **perd**
-`anticholinergique` 29→7 (atropine, benztropine, clidinium…) et `glitazone` 1→0. À traiter
-en enrichissant d'abord ces classes, pas en basculant le matcheur d'un bloc.
+### Le matcheur : enrichir les classes AVANT de basculer
+
+`checkMedContraPathologies()` comparait des chaînes **brutes** (`dci.includes(terme)`). Il
+était donc sensible aux accents : « corticoide » ne reconnaissait pas « Glucocorticoïde », et
+**11 des 13 corticoïdes échappaient aux clauses qui les visent** — de même 13 opioïdes sur
+18, 7 benzodiazépines sur 20, 8 antiépileptiques sur 18.
+
+Ni l'un ni l'autre des deux remèdes évidents n'était bon isolément. Une **normalisation
+d'accents** seule aurait réimporté toutes les collisions que `matchesDrugClass()` existe pour
+empêcher : corticoïdes **inhalés** entrant dans les règles du corticoïde systémique, naloxone
+rangée parmi les opioïdes **qu'elle antagonise**, néfopam capté par « paracétamol ». Et le
+**basculement direct** vers `matchesDrugClass()` perdait `anticholinergique` de 29 à 7
+molécules et `glitazone` de 1 à 0.
+
+L'ordre importe : **on enrichit les classes, puis on bascule.** Quatre déclarations, chacune
+motivée par une perte mesurée :
+
+- `atropinique` reçoit l'alias **`anticholinergique`** — les deux mots désignent la même
+  famille, mais seul le second était déclaré, si bien que la clé employée par huit blocs
+  (démence, DCL, delirium, glaucome, infection urinaire, incontinence, dysphagie) ne
+  résolvait que les 7 médicaments dont le *libellé* porte le mot. Elle en résout 38.
+- une classe **`phenothiazine`**, rendue nécessaire par l'enrichissement précédent : déclarer
+  la chlorpromazine et la cyamémazine dans `atropinique` les a fait entrer dans
+  `_ALL_DCIS_SET`, ce qui déclenche la garde « match EXACT » et les rendait **invisibles** à
+  la clé `phenothiazine`. Le match était accidentel, il est désormais explicite.
+- une classe **`glitazone`** (clé morte, la pioglitazone n'existait que dans la liste
+  générique des antidiabétiques) ;
+- `vortioxetine` dans `isrs` — inclusion **fonctionnelle et non nosologique**, assumée : son
+  propre libellé dit « Antidépresseur multimodal (ISRS + modulateur 5-HT) », et pour les
+  quatre clauses qui emploient cette clé elle se comporte comme un ISRS.
+
+Trois faux positifs sont apparus au passage, tous de familles connues : « somatropine »
+contient « atropine », et deux antispasmodiques — la mébévérine et le phloroglucinol — dont
+le libellé **nie** l'appartenance qu'il cite (« sans effet anticholinergique », « non
+anticholinergique »). Ce sont précisément ceux qu'on prescrit POUR éviter la charge
+atropinique : les compter dedans inversait le conseil.
+
+Résultat mesuré sur toute la base : **1296 → 1520 couples (médicament × clause)**, avec des
+gains qui sont des rattrapages de sécurité (acébutolol → CI bradycardie, donépézil → prudence
+bradycardie, aspirine → CI ulcère, altizide → hypotension orthostatique) et des pertes qui
+sont toutes des faux positifs (dronédarone sous « amiodarone », apraclonidine sous
+« clonidine », desmopressine sous « diurétique », lévofloxacine sous « ofloxacine »,
+acide folinique sous « méthotrexate », cilastatine sous « statine », olanzapine sous
+« benzodiazépine », les agonistes dopaminergiques non ergotés sous « ergot »).
+
+Deux clés ont dû être corrigées à la source plutôt qu'au test : `morphine` dans
+l'hépatopathie visait la classe et non la molécule — codéine, fentanyl, oxycodone et
+hydromorphone n'étaient captés que parce que leur libellé cite la morphine ; la clé porte
+maintenant `opioide`. Et `promazine` (EV_D08) rejoint `CLES_MORTES_CONNUES` : non
+commercialisée en France, elle ne « résolvait » que la lévomépromazine par sous-chaîne, alors
+que la règle nomme déjà explicitement les deux phénothiazines qu'elle vise.
 
 ## Formes galéniques : une DCI, deux médicaments
 

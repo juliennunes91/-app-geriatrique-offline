@@ -1440,6 +1440,7 @@
  },
  "cov_EV_N08_EV_N09": {
   "alertes-eviter": [
+   "danger | ACEBUTOLOL — CI Bradycardie",
    "danger | Association de ≥ 2 bradycardisants + bradycardie",
    "danger | Bradycardisants + Bradycardie / BAV",
    "danger | Bêtabloquant + Vérapamil/Diltiazem",
@@ -1869,12 +1870,14 @@
  },
  "cov_EV_D17_EV_D18": {
   "alertes-eviter": [
+   "danger | ACEBUTOLOL — CI Bradycardie",
    "danger | Bradycardisants + Bradycardie / BAV",
    "danger | Inhibiteur acétylcholinestérase + bradycardisant",
    "danger | Inhibiteur de l'acétylcholinestérase + bradycardie < 60 / BAV",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Bêtabloquant + Inhibiteur acétylcholinestérase : bradycardie",
+   "warning | DONÉPÉZIL — Prudence Bradycardie",
    "warning | Inhibiteur acétylcholinestérase sans ECG de référence"
   ],
   "alertes-initier": [],
@@ -1900,8 +1903,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_D19_EV_D20": {
@@ -2541,8 +2543,8 @@
  },
  "cov_IN_F01_IN_F02": {
   "alertes-eviter": [
+   "danger | ACIDE ACETYLSALICYLIQUE — CI Ulcère Gastro-Duodénal (UGD)",
    "info | Réévaluation planifiée",
-   "warning | ACIDE ACETYLSALICYLIQUE — Prudence Ulcère Gastro-Duodénal (UGD)",
    "warning | Aspirine en prévention primaire cardiovasculaire"
   ],
   "alertes-initier": [
@@ -2570,7 +2572,7 @@
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_G01_EV_G02": {
@@ -3192,6 +3194,7 @@
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "info | Statines (patient très fragile, prévention primaire) : ATORVASTATINE",
+   "warning | ALTIZIDE — Prudence Hypotension Orthostatique",
    "warning | Antihypertenseur chez le très fragile",
    "warning | Diurétique sans ionogramme de surveillance",
    "warning | Statines (STOPP/FRAIL)",
@@ -3224,7 +3227,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_SF07": {

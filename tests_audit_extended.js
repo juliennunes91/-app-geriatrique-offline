@@ -1398,6 +1398,36 @@ function runContraPathoCoherenceAudit(test, assert) {
             + 'fusionner les blocs à la source.');
     });
 
+    test('Contre-indications patho — le matcheur passe par matchesDrugClass', () => {
+        // `checkMedContraPathologies` comparait des chaines BRUTES (`dci.includes(terme)`),
+        // donc sensible aux accents : « corticoide » ne reconnaissait pas
+        // « Glucocorticoide », et 11 des 13 corticoides echappaient aux clauses qui les
+        // visent. Le remede n'est PAS une normalisation d'accents — elle reimporterait
+        // toutes les collisions que `matchesDrugClass` existe pour empecher.
+        assert.ok(/matchesDrugClass\(/.test(
+            src.slice(src.indexOf('function checkMedContraPathologies'))
+               .slice(0, 2000)),
+            'checkMedContraPathologies doit resoudre ses termes via matchesDrugClass, '
+            + 'jamais par comparaison de chaines brutes.');
+
+        const { sandbox } = loadApp();
+        const rend = (dci, classe, patho) => JSON.parse(vm.runInContext(
+            'JSON.stringify(checkMedContraPathologies(' + JSON.stringify(dci) + ','
+            + JSON.stringify(classe) + ',[' + JSON.stringify(patho) + ']).map(a=>a.gravite))', sandbox));
+        // Ce que la sensibilite aux accents faisait manquer.
+        assert.ok(rend('Prednisone', 'Glucocorticoïde systémique', 'PAT_016b').length > 0,
+            'un glucocorticoide systemique doit declencher la clause « corticoide » du diabete');
+        assert.ok(rend('Oxycodone', 'Opioïde fort agoniste mu', 'PAT_034').length > 0,
+            'un opioide fort doit declencher la clause « opioide » de l\'hepatopathie');
+        // Ce que la normalisation d'accents SEULE aurait fait entrer a tort.
+        assert.strictEqual(rend('Beclometasone', 'Corticoïde inhalé (ICS)', 'PAT_016b').length, 0,
+            'un corticoide INHALE ne releve pas des clauses du corticoide systemique');
+        assert.strictEqual(rend('Naloxone', 'ANTAGONISTE OPIOIDE central', 'PAT_034').length, 0,
+            'la naloxone ANTAGONISE les opioides — elle ne releve pas de leurs clauses');
+        assert.strictEqual(rend('Phloroglucinol', 'Antispasmodique musculotrope GI (non anticholinergique)', 'PAT_048').length, 0,
+            'un libelle qui NIE l\'appartenance ne vaut pas appartenance');
+    });
+
     test('Contre-indications patho — le commentaire nomme la pathologie de sa clé', () => {
         const { sandbox } = loadApp();
         const noms = vm.runInContext('JSON.stringify(Object.fromEntries('
@@ -1550,6 +1580,15 @@ const CLES_MORTES_CONNUES = new Set([
     'cytisine',                               // sevrage tabagique — vente interdite en France
     'rosiglitazone',                          // EV_J02 — retirée du marché UE en 2010
     'chlorpropamide',                         // EV_J01 — non commercialisé en France
+    'promazine',                              // EV_D08 — non commercialisée en France. Elle
+                                              //   « resolvait » jusqu'ici la LEVOMEPROMAZINE par
+                                              //   simple sous-chaine (promazine ⊂ levomepromazine),
+                                              //   une correspondance accidentelle : la regle nomme
+                                              //   deja explicitement chlorpromazine ET
+                                              //   levomepromazine dans la meme liste. La collision
+                                              //   a cesse quand la classe `phenothiazine` a ete
+                                              //   declaree — les molecules declarees imposent le
+                                              //   match EXACT.
     'temazepam', 'eszopiclone',               // EV_D08 / EV_SYND_044 — non commercialisés en France
     'avanafil', 'vardenafil',                 // EV_B14 — IPDE5 (sildénafil et tadalafil sont en base)
     'ferrique',                               // SUP_REM_01 — sels ferriques ; seul le maltol ferrique

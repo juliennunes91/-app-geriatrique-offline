@@ -147,7 +147,9 @@ const DRUG_CLASSES = {
         // centraux (clonidine, moxonidine) — impossible de viser les seuls alpha-1.
         aliases: ['alphabloquant', 'alphabloquants', 'alpha1bloquant', 'alpha1bloquants'],
         classeMatch: ['alphabloquant'],
-        dcis: ['alfuzosine', 'doxazosine', 'prazosine', 'silodosine', 'tamsulosine', 'terazosine', 'urapidil']
+        // « Trazosine » est la graphie de MASTER_DB pour la terazosine — la declarer ici
+        // evite qu'elle depende d'un match par libelle de classe.
+        dcis: ['alfuzosine', 'doxazosine', 'prazosine', 'silodosine', 'tamsulosine', 'terazosine', 'trazosine', 'urapidil']
     },
     ase: {
         // Agents stimulant l'erythropoiese. Classe indispensable : IN_E03 (START v3 E3)
@@ -257,7 +259,13 @@ const DRUG_CLASSES = {
     isrs: {
         aliases: ['isrs', 'ssri', 'inhibiteursselectifsdelarecapturedelaserotonine'],
         classeMatch: ['isrs', 'ssri'],
-        dcis: ['citalopram', 'escitalopram', 'sertraline', 'paroxetine', 'fluoxetine', 'fluvoxamine']
+        // Vortioxetine declaree ici a titre FONCTIONNEL, non nosologique : son libelle de
+        // classe dit lui-meme « Antidepresseur multimodal (ISRS + modulateur 5-HT) », et
+        // pour toutes les clauses qui emploient cette cle — hemorragie digestive,
+        // hyponatremie, mydriase, incontinence — elle se comporte comme un ISRS. Le
+        // matcheur ne la voyait plus depuis que le prefixe strict s'applique aux
+        // acronymes de moins de 6 caracteres.
+        dcis: ['citalopram', 'escitalopram', 'sertraline', 'paroxetine', 'fluoxetine', 'fluvoxamine', 'vortioxetine']
     },
     irsn: {
         aliases: ['irsn', 'snri', 'medicamentsmixtesadrenergiquesserotoninergiqu'],
@@ -449,10 +457,17 @@ const DRUG_CLASSES = {
         classeMatch: [],
         dcis: ['doxazosine', 'prazosine', 'tamsulosine', 'alfuzosine', 'clonidine', 'moxonidine']
     },
+    // « anticholinergique » et « atropinique » designent la MEME famille, mais seul le
+    // second etait declare comme alias : la cle `anticholinergique`, employee par huit
+    // blocs de PATHO_MED_INTERDITS (demence, DCL, delirium, glaucome, infection urinaire,
+    // incontinence, dysphagie), ne resolvait donc que 7 medicaments — ceux dont le
+    // LIBELLE de classe porte le mot — au lieu des 21 declares ici. Atropine, benztropine,
+    // clidinium, scopolamine, oxybutynine, les tricycliques et les phenothiazines
+    // passaient au travers.
     atropinique: {
-        aliases: ['atropinique', 'medicamentsatropiniques', 'medicamentaeffetantimuscarinic'],
+        aliases: ['atropinique', 'anticholinergique', 'anticholinergiques', 'medicamentsatropiniques', 'medicamentaeffetantimuscarinic'],
         classeMatch: ['anticholinergique', 'atropinique'],
-        dcis: ['trihexyphenidyle', 'biperidene', 'tropatepine', 'oxybutynine', 'solifenacine', 'fesoterodine', 'amitriptyline', 'clomipramine', 'imipramine', 'hydroxyzine', 'doxylamine', 'alimemazine', 'promethazine', 'chlorpromazine', 'cyamemazine', 'clozapine', 'quetiapine', 'scopolamine', 'atropine', 'ipratropium', 'tiotropium']
+        dcis: ['trihexyphenidyle', 'biperidene', 'tropatepine', 'oxybutynine', 'solifenacine', 'fesoterodine', 'amitriptyline', 'clomipramine', 'imipramine', 'hydroxyzine', 'doxylamine', 'alimemazine', 'promethazine', 'chlorpromazine', 'cyamemazine', 'clozapine', 'quetiapine', 'scopolamine', 'atropine', 'benztropine', 'ipratropium', 'tiotropium']
     },
     imao: {
         aliases: ['imao', 'imaoreversible', 'imaoreversibleycomprisoxazolidinonesetbleudemethylene', 'imaoreversiblesinhibiteursdelamonoamineoxydas', 'imaobnonselecif'],
@@ -478,6 +493,30 @@ const DRUG_CLASSES = {
         aliases: ['antidiabetique', 'antidiabetiques', 'medicamentssusceptiblesdedonnerdeshypoglycemie'],
         classeMatch: ['antidiabetique', 'diabete'],
         dcis: ['metformine', 'gliclazide', 'glibenclamide', 'glimepiride', 'glipizide', 'repaglinide', 'sitagliptine', 'vildagliptine', 'saxagliptine', 'linagliptine', 'canagliflozin', 'dapagliflozin', 'empagliflozin', 'liraglutide', 'semaglutide', 'dulaglutide', 'insuline', 'pioglitazone', 'acarbose']
+    },
+    // Phenothiazines. La classe existe pour un motif de MATCHING, pas de nosologie : la
+    // cle « phenothiazine » (PAT_033, glaucome a angle ferme) tombait dans le dernier
+    // recours `classe.includes(key)` et fonctionnait — jusqu'a ce que la chlorpromazine
+    // et la cyamemazine soient declarees dans `atropinique`. Entrees dans `_ALL_DCIS_SET`,
+    // elles ont alors declenche la garde « match EXACT » et sont devenues INVISIBLES a
+    // cette cle, alors que ce sont les deux phenothiazines les plus prescrites en France.
+    // Declarer la classe rend le match explicite au lieu d'accidentel.
+    phenothiazine: {
+        aliases: ['phenothiazine', 'phenothiazines'],
+        classeMatch: ['phenothiazine'],
+        dcis: ['chlorpromazine', 'cyamemazine', 'levomepromazine', 'fluphenazine', 'perphenazine',
+               'pipotiazine', 'prochlorperazine', 'thioridazine', 'trifluoperazine',
+               'alimemazine', 'promethazine', 'mequitazine', 'metopimazine']
+    },
+    // Thiazolidinediones. Classe mono-famille : la cle « glitazone » etait employee par
+    // PAT_025 (osteoporose, risque fracturaire) et ne resolvait AUCUN medicament — la
+    // pioglitazone n'etait declaree que dans la liste generique des antidiabetiques.
+    glitazone: {
+        aliases: ['glitazone', 'glitazones', 'thiazolidinedione', 'thiazolidinediones'],
+        classeMatch: ['thiazolidinedione'],
+        // La rosiglitazone est retiree du marche UE depuis 2010 et absente de MASTER_DB ;
+        // elle n'est pas declaree ici pour ne pas laisser croire qu'elle est disponible.
+        dcis: ['pioglitazone']
     },
     potassium: {
         aliases: ['potassium', 'selsdepotassium', 'hyperkaliemiant', 'medicamentshyperkaliemiant'],
@@ -578,6 +617,13 @@ const _CLASS_EXCLUDE = {
     // HYPERthyroïdie satisfaisait le `med_absent` de IN_J02 (substitution en
     // hypothyroïdie) — deux situations opposées confondues.
     hormone_thyroidienne: /antithyroidien/,
+    // Declarer « anticholinergique » comme alias de la classe `atropinique` a fait
+    // apparaitre deux libelles qui NIENT l'appartenance qu'ils citent : la mebeverine
+    // (« sans effet anticholinergique — avantage geriatrie vs antispasmodiques
+    // anticholinergiques ») et le phloroglucinol (« non anticholinergique »). Ce sont
+    // precisement les deux antispasmodiques qu'on prescrit POUR eviter la charge
+    // atropinique — les compter dedans inverserait le conseil.
+    atropinique: /nonanticholinergique|sanseffetanticholinergique/,
 };
 
 // Denylist au niveau DCI. _CLASS_EXCLUDE ne teste que le LIBELLÉ DE CLASSE ; certaines
@@ -588,6 +634,10 @@ const _CLASS_EXCLUDE_DCI = {
     // « fer » ⊂ calci-FÉR-ol / ergocalci-FÉR-ol (vitamine D). Le garde-fou existait
     // déjà côté ANSM (_ANSM_MATCH_DENYLIST) mais pas dans le matcheur des règles.
     fer: /calciferol$/,
+    // « atropine » ⊂ soma-TROPINE (hormone de croissance). La benztropine, elle, est
+    // bien un anticholinergique — elle est declaree nommement dans `dcis` pour ne pas
+    // dependre de cette meme sous-chaine.
+    atropinique: /^somatropine$/,
 };
 
 function _classMatchesMed(classId, dci, classe) {

@@ -87,6 +87,7 @@
   "Silodosine",
   "Tamsulosine",
   "Terazosine",
+  "Trazosine",
   "Urapidil"
  ],
  "alprazolam": [
@@ -1028,7 +1029,8 @@
   "Fluoxetine",
   "Fluvoxamine",
   "Paroxetine",
-  "Sertraline"
+  "Sertraline",
+  "Vortioxétine"
  ],
  "itraconazole": [
   "Itraconazole"
@@ -1425,9 +1427,7 @@
   "Prochlorperazine"
  ],
  "procyclidine": [],
- "promazine": [
-  "Levomepromazine"
- ],
+ "promazine": [],
  "promethazine": [
   "Promethazine"
  ],
@@ -1486,7 +1486,9 @@
  "ropinirole": [
   "Ropinirole"
  ],
- "rosiglitazone": [],
+ "rosiglitazone": [
+  "Pioglitazone"
+ ],
  "rosuvastatine": [
   "Atorvastatine",
   "Fluvastatine",

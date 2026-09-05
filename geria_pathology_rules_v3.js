@@ -4400,7 +4400,10 @@ const PATHO_MED_INTERDITS_V3_ADDITIONS = {
         { terme: "valproate", raison: "Hépatotoxicité idiosyncrasique", gravite: "CONTRE-INDICATION" },
         { terme: "paracetamol", condition: "> 2 g/j", raison: "Seuil hépatotoxicité abaissé en cirrhose (max 2 g/j)", gravite: "PRUDENCE" },
         { terme: "benzodiazepine", raison: "Encéphalopathie hépatique — métabolisme prolongé", gravite: "DECONSEILLE" },
-        { terme: "morphine", raison: "Métabolisme hépatique ralenti — encéphalopathie", gravite: "DECONSEILLE" },
+        // « morphine » visait la classe et non la molecule : la codeine, le fentanyl,
+        // l'oxycodone et l'hydromorphone n'etaient captes que parce que leur libelle de
+        // classe cite la morphine. La cle porte desormais ce qu'elle veut dire.
+        { terme: "opioide", raison: "Métabolisme hépatique ralenti — encéphalopathie hépatique", gravite: "DECONSEILLE" },
         { terme: "tramadol", raison: "Métabolisme hépatique — accumulation", gravite: "DECONSEILLE" }
     ],
     "PAT_035": [
@@ -4809,10 +4812,17 @@ function checkMedContraPathologies(medDci, medClasse, activePathoList) {
         let interdits = PATHO_MED_INTERDITS[pathoId];
         if (!interdits) return;
         interdits.forEach(rule => {
-            let termS = rule.terme.toLowerCase();
-            let dciS = (medDci || "").toLowerCase();
-            let classeS = (medClasse || "").toLowerCase();
-            if (dciS.includes(termS) || classeS.includes(termS)) {
+            // Ce matcheur comparait des chaines BRUTES : `dci.includes(terme)`. Il etait
+            // donc sensible aux accents — « corticoide » ne reconnaissait pas
+            // « Glucocorticoide », si bien que 11 des 13 corticoides echappaient aux
+            // clauses qui les visent ; de meme 13 opioides sur 18, 7 benzodiazepines sur
+            // 20, 8 antiepileptiques sur 18. Une simple normalisation d'accents aurait
+            // reimporte toutes les collisions que `matchesDrugClass` existe pour empecher
+            // (corticoides INHALES dans les regles du corticoide systemique, naloxone
+            // rangee parmi les opioides qu'elle antagonise, nefopam capte par
+            // « paracetamol »). On passe donc par le matcheur unifie, qui porte les
+            // denylists, la garde des cles courtes et le match exact.
+            if (matchesDrugClass(sanitizeText(medDci || ""), sanitizeText(medClasse || ""), rule.terme)) {
                 alerts.push({
                     patho: pathoId,
                     patho_nom: PATHOLOGY_RULES_DB[pathoId] ? PATHOLOGY_RULES_DB[pathoId].NOM : pathoId,

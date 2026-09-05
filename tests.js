@@ -365,9 +365,13 @@ console.log('\n🧪 Validation croisée PAT ↔ règles');
 console.log('\n🧪 Intégration checkMedContraPathologies');
 {
     const fs = require('fs');
+    // Comme plus bas : `checkMedContraPathologies` passe par `matchesDrugClass`, donc ce
+    // harnais charge `utils.js` et `drug_classes.js` comme le fait l'application.
+    const utilsCode = fs.readFileSync(__dirname + '/utils.js', 'utf8');
+    const classesCode = fs.readFileSync(__dirname + '/drug_classes.js', 'utf8');
     const rulesCode = fs.readFileSync(__dirname + '/geria_pathology_rules_v3.js', 'utf8');
-    const rulesFn = new Function(rulesCode + '\nreturn { PATHOLOGY_RULES_DB, PATHO_MED_INTERDITS, checkMedContraPathologies };');
-    const { checkMedContraPathologies } = rulesFn();
+    const rulesFn = new Function('window', utilsCode + '\n' + classesCode + '\n' + rulesCode + '\nreturn { PATHOLOGY_RULES_DB, PATHO_MED_INTERDITS, checkMedContraPathologies };');
+    const { checkMedContraPathologies } = rulesFn({});
 
     // PAT_039 (Incontinence) + oxybutynine → CI
     test('Incontinence + oxybutynine → CI détectée', () => {
@@ -431,9 +435,14 @@ console.log('\n🧪 Intégration E2E — Patient gériatrique complet');
     const dbMatch = dbCode.match(/const MASTER_DB\s*=\s*({[\s\S]*});/);
     const MASTER_DB = dbMatch ? eval('(' + dbMatch[1] + ')') : null;
 
+    // `checkMedContraPathologies` passe desormais par `matchesDrugClass` : ce harnais
+    // doit charger `drug_classes.js` (et `utils.js` pour `sanitizeText`) comme le fait
+    // l'application, sans quoi il testerait un matcheur different de celui qui tourne.
+    const utilsCode = fs.readFileSync(__dirname + '/utils.js', 'utf8');
+    const classesCode = fs.readFileSync(__dirname + '/drug_classes.js', 'utf8');
     const rulesCode = fs.readFileSync(__dirname + '/geria_pathology_rules_v3.js', 'utf8');
-    const rulesFn = new Function(rulesCode + '\nreturn { PATHOLOGY_RULES_DB, PATHO_SYNDROME_MAP, PATHO_MED_INTERDITS, checkMedContraPathologies };');
-    const rules = rulesFn();
+    const rulesFn = new Function('window', utilsCode + '\n' + classesCode + '\n' + rulesCode + '\nreturn { PATHOLOGY_RULES_DB, PATHO_SYNDROME_MAP, PATHO_MED_INTERDITS, checkMedContraPathologies };');
+    const rules = rulesFn({});
 
     // Simulate patient: 85 ans, F, fragile, IC + FA + Incontinence + Dysphagie
     // Médicaments: furosémide, bisoprolol, apixaban, oxybutynine, diazépam, oméprazole
