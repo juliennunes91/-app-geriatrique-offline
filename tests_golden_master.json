@@ -486,13 +486,13 @@
    "danger | Anticholinergique puissant + Démence ou Delirium",
    "danger | Antimuscarinique systémique + Démence",
    "danger | Antipsychotique chez patient dément — durée et réévaluation",
-   "danger | OXYBUTYNINE — CI Syndrome Démentiel (Générique)",
+   "danger | OXYBUTYNINE — CI Syndrome Démentiel",
    "danger | Oxybutynine (toutes formes)",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Symptômes psycho-comportementaux déclarés (1) — conduite de première intention",
    "warning | Cascades iatrogéniques détectées",
-   "warning | RISPERIDONE — Prudence Syndrome Démentiel (Générique)",
+   "warning | RISPERIDONE — Prudence Syndrome Démentiel",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],
@@ -1707,7 +1707,7 @@
  },
  "cov_EV_D01_EV_D03": {
   "alertes-eviter": [
-   "danger | AMITRIPTYLINE — CI Syndrome Démentiel (Générique)",
+   "danger | AMITRIPTYLINE — CI Syndrome Démentiel",
    "danger | Anticholinergique puissant + Démence ou Delirium",
    "danger | Antidépresseurs tricycliques chez le sujet âgé",
    "danger | IRSN + HTA sévère",
@@ -1752,7 +1752,7 @@
   "alertes-eviter": [
    "danger | Antipsychotique anticholinergique + HBP symptomatique",
    "danger | ISRS + Hyponatrémie actuelle ou récente (Na+ < 130)",
-   "danger | Phénothiazine en 1ère intention (psychose/SCPD)",
+   "danger | Phénothiazine chez le sujet âgé — préférer une alternative",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie",
@@ -1799,7 +1799,7 @@
    "danger | Benzodiazépines / Z-drugs : ALPRAZOLAM",
    "info | Action immédiate",
    "warning | ALPRAZOLAM — Déconseillé Insomnie",
-   "warning | ALPRAZOLAM — Déconseillé Syndrome Démentiel (Générique)",
+   "warning | ALPRAZOLAM — Déconseillé Syndrome Démentiel",
    "warning | Cascades iatrogéniques détectées"
   ],
   "alertes-initier": [],
@@ -1943,7 +1943,7 @@
  },
  "cov_EV_D21_EV_D22": {
   "alertes-eviter": [
-   "danger | Phénothiazine en 1ère intention (psychose/SCPD)",
+   "danger | Phénothiazine chez le sujet âgé — préférer une alternative",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Cascades iatrogéniques détectées",
@@ -2379,8 +2379,7 @@
    "danger | Hypocalcémie symptomatique (< 1.9) — Ca 1.1 mmol/L",
    "danger | Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
    "danger | Insuffisance rénale chronique G4 — insuffisance rénale sévère",
-   "info | Anémie détectée — Bilan martial recommandé",
-   "info | Anémie — doser B12 et folates",
+   "info | Anémie — orientation du bilan",
    "warning | Anémie",
    "warning | Anémie Rénale (Déficit en EPO)"
   ],

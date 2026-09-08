@@ -909,8 +909,15 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3"],
             ref_code: "STOPP3-D21",
             section: "SNC",
-            titre: "Phénothiazine en 1ère intention (psychose/SCPD)",
-            message: "Phénothiazine en première intention pour psychose ou SCPD : sédation, toxicité anticholinergique. Alternatives plus sûres existantes (exceptions : chlorpromazine pour hoquet, prochlorpérazine pour N/V/vertiges, lévomépromazine comme anti-émétique palliatif).",
+            // Le titre annoncait une « 1ere intention » que l'application ne peut PAS
+            // verifier : elle voit qu'une phenothiazine est prescrite, pas la place
+            // qu'elle occupe dans la strategie. Meme famille que EV_B21 (digoxine) et
+            // EV_B07 (diuretique de l'anse), a une difference pres : la ils avaient une
+            // preuve dans l'ordonnance — l'alternative deja prescrite —, ici il n'y en a
+            // aucune. Le critere STOPP est conserve, mais enonce comme une regle de
+            // choix, ce qui est vrai independamment de la ligne.
+            titre: "Phénothiazine chez le sujet âgé — préférer une alternative",
+            message: "STOPP/START v3 réserve les phénothiazines à la seconde ligne : sédation marquée et charge anticholinergique élevée, pour une efficacité qui n'excède pas celle des antipsychotiques atypiques. Si l'indication est une psychose ou des symptômes psycho-comportementaux, une alternative mieux tolérée est à privilégier. Font exception les usages non psychiatriques, où la molécule est choisie pour une autre propriété : chlorpromazine dans le hoquet rebelle, prochlorpérazine dans les nausées et vertiges, lévomépromazine comme anti-émétique en soins palliatifs.",
             severite: "warning",
             condition: {
                 med_keys: ["chlorpromazine", "levomepromazine", "cyamemazine", "propericiazine", "pipotiazine", "fluphenazine"]

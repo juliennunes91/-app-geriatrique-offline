@@ -1036,6 +1036,28 @@ const GeriaEngineV2 = (() => {
         }
 
         const esc = typeof escapeHtml === 'function' ? escapeHtml : s => String(s||'');
+
+        // Un message qui ENUMERE des classes ne dit pas laquelle concerne ce patient.
+        // « Toute prescription d'antihypertenseur, antidepresseur serotoninergique,
+        // alpha-bloquant, antiparkinsonien dopaminergique ou antipsychotique… » : sur une
+        // ordonnance qui ne comporte qu'un neuroleptique, le lecteur doit refaire lui-meme
+        // le rapprochement, et quatre classes sur cinq ne le concernent pas.
+        // La ligne n'est ajoutee que si la regle cite PLUSIEURS cles et qu'une PARTIE
+        // seulement resout — une alerte qui vise une seule molecule se suffit a elle-meme.
+        let medsConcernes = '';
+        try {
+            const cles = (a.condition && a.condition.med_keys) || [];
+            if (cles.length > 1 && typeof activeMeds !== 'undefined' && typeof matchesDrugClass === 'function') {
+                const hits = activeMeds.filter(m => cles.some(k => {
+                    try { return matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), k); }
+                    catch (e) { return false; }
+                })).map(m => esc(String(m.dci).toUpperCase()));
+                const uniq = [...new Set(hits)];
+                if (uniq.length > 0 && uniq.length < cles.length) {
+                    medsConcernes = `<div class="small mt-1" style="padding-left:0.25rem;"><em class="text-muted">Concerné chez ce patient : <b>${uniq.join(', ')}</b>.</em></div>`;
+                }
+            }
+        } catch (e) { medsConcernes = ''; }
         // Titre amélioré pour les recommandations groupées (multi-thérapie)
         // On calque sur le format INITIER : titre générique (cross_ref_theme)
         // + badge "N critères fusionnés", sans bullet redondante avec la classe.
@@ -1074,6 +1096,7 @@ const GeriaEngineV2 = (() => {
             ${scoreBadge}<strong>${displayTitle}</strong>${mergedBadge}
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(displaySourceLabel)}</span>
             <div class="small mt-1" style="padding-left: 0.25rem;">${recontexteBadge}${safeMessage}</div>
+            ${medsConcernes}
             ${recontexteBanner}
             ${compHtml}
             ${pimBadges}

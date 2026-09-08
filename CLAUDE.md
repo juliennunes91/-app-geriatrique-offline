@@ -685,6 +685,58 @@ maintenant `opioide`. Et `promazine` (EV_D08) rejoint `CLES_MORTES_CONNUES` : no
 commercialisée en France, elle ne « résolvait » que la lévomépromazine par sous-chaîne, alors
 que la règle nomme déjà explicitement les deux phénothiazines qu'elle vise.
 
+## Ce qu'une alerte affirme doit être vérifiable, et ne se dit qu'une fois
+
+Quatre défauts relevés sur un même dossier (F 85 ans, cyamémazine, démence de type non
+précisé, Hb 11,3 / VGM 100,9), tous de lisibilité — l'information était juste, sa mise en
+scène ne l'était pas.
+
+1. **`EV_D21` annonçait une phénothiazine « en 1ère intention ».** L'application voit
+   qu'une phénothiazine est prescrite, jamais la place qu'elle occupe dans la stratégie —
+   à la différence de `EV_B21` et `EV_B07`, où l'alternative déjà prescrite fait preuve.
+   Le critère STOPP est conservé, énoncé comme une **règle de choix** (« réserve les
+   phénothiazines à la seconde ligne »), ce qui est vrai indépendamment de la ligne.
+2. **Un message qui ÉNUMÈRE des classes ne dit pas laquelle concerne le patient.**
+   `EV_SF02b` ouvre sur « antihypertenseur, antidépresseur sérotoninergique,
+   alpha-bloquant, antiparkinsonien dopaminergique ou antipsychotique » : quatre classes
+   sur cinq ne concernaient pas cette patiente. `renderSingleAlert` ajoute désormais
+   « Concerné chez ce patient : … » — mais **seulement** quand la règle cite plusieurs
+   clés et qu'une partie résout ; une alerte qui vise une seule molécule se suffit.
+3. **Une `raison` de contre-indication nommait un traitement absent.** Dans la démence, la
+   clause « anticholinergique » se motive par « aggravation cognitive — antagonisme du
+   traitement pro-cholinergique » : sans anticholinestérasique, la seconde moitié décrit un
+   antagonisme qui n'a rien à antagoniser. `RAISON_CLAUSES_CONDITIONNELLES` — troisième
+   table du même mécanisme déclaré, après `CONDUITE_` et `POSO_`.
+4. **« Seul le degré le plus fort s'affiche » masquait le motif le plus parlant.** La
+   cyamémazine relève, dans la démence, de la clause « anticholinergique » (CI) et de la
+   clause « antipsychotique » (déconseillé) : le lecteur ne voyait que la charge atropinique
+   là où il attend d'abord qu'on lui parle du neuroleptique. Les motifs écartés sont repris
+   sous l'alerte retenue. Et « (Générique) », nomenclature interne de l'ombrelle, disparaît
+   du titre.
+
+## Une anémie, un message — et c'est le VGM qui l'ouvre
+
+Une seule anémie produisait **quatre encarts** : le syndrome `SYND_005`, un « bilan martial
+recommandé », un « doser B12 et folates », et un sous-typage par le VGM — les trois derniers
+côte à côte, sans qu'aucun ne tienne compte de ce que l'autre venait d'établir. Sur une
+patiente à VGM 100,9 le rapport réclamait donc **un bilan martial en premier**, alors que la
+macrocytose oriente d'abord vers B12/B9, la thyroïde et la myélodysplasie.
+
+Un encart unique, « Anémie — orientation du bilan », construit à partir du VGM :
+
+- **< 80 fL** — carence martiale jusqu'à preuve du contraire, et chez le sujet âgé recherche
+  d'un saignement digestif occulte ;
+- **> 100 fL** — vitamines **avant** le bilan martial, puis TSH, alcool, médicaments,
+  myélodysplasie ;
+- **80-100 fL** — le sous-type le moins spécifique ; les réticulocytes tranchent ;
+- **VGM absent** — le dire, et le redemander : il figure sur toute NFS, et c'est lui qui
+  décide des dosages à prescrire.
+
+La liste ne contient **que ce qui manque** : un paramètre déjà revenu n'est pas redemandé, il
+est affiché. `SYND_005` reste — c'est l'entrée de la table des syndromes, elle porte
+l'imputabilité iatrogène (AINS, anticoagulants), information que l'encart d'orientation ne
+duplique pas.
+
 ## Formes galéniques : une DCI, deux médicaments
 
 Certaines molécules recouvrent deux produits que tout oppose. La saisie doit donc

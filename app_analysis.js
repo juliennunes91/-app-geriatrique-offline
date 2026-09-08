@@ -1747,23 +1747,63 @@ function analyserPrescription() {
             //     (peut être dû à thalassémie, hypothyroïdie, variations préanalytiques)
             const ferBas = (fer > 0 && fer < 30);
             const ferFonctionnel = (fer > 0 && fer < 300 && cst > 0 && cst < 20 && crp > 5);
-            if (ferBas || ferFonctionnel) {
-                checkBioSyndrome('SYND_006', true);
-            } else if (!(fer > 0) && !(cst > 0) && hb < seuilAnemia) {
-                // Ferritine et CST non dosés → recommander le bilan martial
-                let inflNote = (crp > 0 && crp > 5) ? ' <em class="text-warning">(CRP élevée : interpréter ferritine avec prudence, seuil carentiel < 100 µg/L en contexte inflammatoire)</em>' : '';
-                addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Anémie détectée — Bilan martial recommandé</strong>
-                    <br><span class="small">Hb ${hb} g/dL (seuil ${seuilAnemia}). Dosage ferritine + CST + CRP indispensable pour orienter le diagnostic étiologique.${inflNote}</span>
-                    <br><em>Si ferritine &lt; 30 µg/L (ou &lt; 100 en inflammation) : carence martiale → fer PO/IV. Si ferritine normale avec CST &lt; 20% : carence fonctionnelle.</em></div>`, 'bio');
-            }
-
+            if (ferBas || ferFonctionnel) checkBioSyndrome('SYND_006', true);
             // SYND_007 : Anémie Macrocytaire / Carence B12-B9
-            if ((b12 > 0 && b12 < 150) || (b9 > 0 && b9 < 7)) {
-                checkBioSyndrome('SYND_007', true);
-            } else if (!(b12 > 0) && !(b9 > 0)) {
-                addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Anémie — doser B12 et folates</strong>
-                    <br><span class="small">Hb ${hb} g/dL. Dosage vitamine B12 et folates recommandé pour exclure une carence (fréquente sous metformine, IPP, antiépileptiques).</span></div>`, 'bio');
+            if ((b12 > 0 && b12 < 150) || (b9 > 0 && b9 < 7)) checkBioSyndrome('SYND_007', true);
+
+            // ── Orientation du bilan : UN message, construit à partir du VGM ──────
+            // Une seule anémie produisait quatre encarts : le syndrome SYND_005, un
+            // « bilan martial recommandé », un « doser B12 et folates », et un
+            // sous-typage par le VGM — les trois derniers posés côte à côte, sans que
+            // l'un tienne compte de l'autre. Sur une patiente à VGM 100,9 le rapport
+            // réclamait donc un bilan martial en premier, alors que la macrocytose
+            // oriente d'abord vers B12/B9, la thyroïde et la myélodysplasie.
+            //
+            // Le VGM figure sur toute NFS : c'est lui qui ouvre l'arbre, et son absence
+            // est elle-même une information à donner. On ne redemande pas un dosage
+            // déjà revenu — la liste ne contient que ce qui manque.
+            const _dose = v => v > 0;
+            const vgmA = bioValues['BIO_039'], retic = bioValues['BIO_038'];
+            const martial = [];
+            if (!_dose(fer)) martial.push('ferritine');
+            if (!_dose(cst)) martial.push('coefficient de saturation');
+            if (!_dose(crp)) martial.push('CRP');
+            const vitam = [];
+            if (!_dose(b12)) vitam.push('vitamine B12');
+            if (!_dose(b9)) vitam.push('folates');
+            const phrase = (intro, l) => l.length ? `${intro} ${l.join(', ')}.` : '';
+
+            let cadre, conduite;
+            if (!_dose(vgmA)) {
+                cadre = "VGM non renseigné — c'est lui qui oriente le bilan, et il figure sur toute numération.";
+                conduite = "Le reprendre sur la NFS avant de choisir les dosages : sous 80 fL l'enquête est martiale, au-dessus de 100 fL elle est vitaminique et thyroïdienne. "
+                    + phrase('À défaut, demander :', martial.concat(vitam));
+            } else if (vgmA < 80) {
+                cadre = `Anémie microcytaire (VGM ${vgmA} fL).`;
+                conduite = "Carence martiale jusqu'à preuve du contraire, et chez le sujet âgé elle impose de chercher un saignement digestif occulte — d'autant plus sous anticoagulant, antiagrégant ou AINS. Autres causes : thalassémie, anémie inflammatoire chronique. "
+                    + phrase('Compléter par :', martial)
+                    + (_dose(fer) ? ` Ferritine ${fer} µg/L${_dose(crp) && crp > 5 ? ' — CRP élevée, le seuil carentiel monte à 100 µg/L en contexte inflammatoire' : ''}.` : '');
+            } else if (vgmA > 100) {
+                cadre = `Anémie macrocytaire (VGM ${vgmA} fL).`;
+                conduite = "L'enquête commence par les carences vitaminiques, non par le bilan martial : B12 et folates d'abord, puis TSH, consommation d'alcool, médicaments (méthotrexate, hydroxyurée, antiépileptiques) et, si tout revient normal, syndrome myélodysplasique. "
+                    + phrase('Compléter par :', vitam)
+                    + (_dose(b12) ? ` B12 ${b12}.` : '') + (_dose(b9) ? ` Folates ${b9}.` : '');
+            } else {
+                cadre = `Anémie normocytaire (VGM ${vgmA} fL).`;
+                conduite = "C'est le sous-type le moins spécifique : inflammation, insuffisance rénale, hémolyse, atteinte médullaire, ou carence débutante avant que le VGM ne bouge. Les réticulocytes tranchent entre origine centrale et périphérique. "
+                    + phrase('Compléter par :', martial.concat(vitam));
             }
+            const noteRetic = _dose(retic)
+                ? `<br><span class="small">Réticulocytes ${retic} G/L : anémie ${retic < 50 ? 'arégénérative — origine centrale ou carentielle' : 'régénérative — hémolyse ou hémorragie récente'}.</span>`
+                : '';
+            const noteRenale = (dfg > 0 && dfg < 45 && hb < 11)
+                ? `<br><span class="small">DFG ${dfg} ml/min avec Hb &lt; 11 : la part rénale (déficit en érythropoïétine) doit être considérée, sans dispenser du reste du bilan.</span>`
+                : '';
+            addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm">
+                <strong>💡 Anémie — orientation du bilan</strong>
+                <br><span class="small">Hb ${hb} g/dL (seuil ${seuilAnemia} chez ${sexe === 'M' ? "l'homme" : 'la femme'}). ${escapeHtml(cadre)}</span>
+                <br><span class="small">${escapeHtml(conduite)}</span>${noteRetic}${noteRenale}
+            </div>`, 'bio');
 
             // SYND_039 : Anémie Rénale (Hb < 11 + DFG < 45)
             if (hb < 11 && dfg > 0 && dfg < 45) {
@@ -2108,21 +2148,10 @@ function analyserPrescription() {
         }
     }
 
-    // --- Anémie subtypée par VGM (BIO_039) — si Hb basse + VGM disponible ---
-    {
-        const hb = bioValues['BIO_009'];
-        const vgm = bioValues['BIO_039'];
-        const seuilHbF = 12, seuilHbM = 13;
-        const anemique = hb > 0 && ((sexe === 'F' && hb < seuilHbF) || (sexe === 'M' && hb < seuilHbM));
-        if (anemique && vgm > 0) {
-            let subtype = '', etiologies = '';
-            if (vgm < 80) { subtype = 'microcytaire (VGM < 80)'; etiologies = 'Carence martiale (ferritine bas + CST < 20 %), thalassémie, saturnisme, anémie inflammatoire chronique.'; }
-            else if (vgm > 100) { subtype = 'macrocytaire (VGM > 100)'; etiologies = 'Carence B12/B9, hypothyroïdie, alcool, médicaments (méthotrexate, hydroxyurée), syndrome myélodysplasique.'; }
-            else { subtype = 'normocytaire (VGM 80-100)'; etiologies = 'Anémie inflammatoire, hémolyse, IRC (EPO), médullaire (réticulocytes utiles).'; }
-            addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm"><strong>💡 Anémie ${subtype} — Hb ${hb} g/dL</strong>
-                <br><em>Étiologies à explorer :</em> ${etiologies}${bioValues['BIO_038'] > 0 ? `<br><em>Réticulocytes ${bioValues['BIO_038']} G/L :</em> ${bioValues['BIO_038'] < 50 ? 'arégénérative (origine centrale / carentielle)' : 'régénérative (hémolyse, hémorragie récente)'}.` : ''}</div>`, 'bio');
-        }
-    }
+    // Le sous-typage par le VGM a ete FUSIONNE dans le message unique « Anemie —
+    // orientation du bilan » (plus haut) : il vivait ici, a distance des deux encarts
+    // qui reclamaient l'un le bilan martial, l'autre les vitamines, sans qu'aucun ne
+    // tienne compte du VGM que celui-ci venait d'etablir.
 
     // --- TP bas (< 50%) — Risque hémorragique ---
     if (bioValues['BIO_040'] > 0 && bioValues['BIO_040'] < 50) {
@@ -2637,6 +2666,25 @@ function analyserPrescription() {
     // =========================================================
     // 3b. CONTRE-INDICATIONS MÉDICAMENT / PATHOLOGIE (pathology_rules_v3)
     // =========================================================
+    // Une `raison` de contre-indication peut nommer un traitement que le patient ne
+    // recoit pas. Dans la demence, la clause « anticholinergique » se justifie par
+    // « aggravation cognitive — antagonisme du traitement pro-cholinergique » : chez une
+    // patiente sans anticholinesterasique, la seconde moitie de la phrase decrit un
+    // antagonisme qui n'a rien a antagoniser. Meme mecanisme declare que
+    // CONDUITE_CLAUSES_CONDITIONNELLES et POSO_CLAUSES_CONDITIONNELLES — la clause est
+    // retiree quand sa condition est fausse, jamais devinee par ressemblance.
+    const RAISON_CLAUSES_CONDITIONNELLES = [
+        { clause: /\s*[—-]\s*antagonisme du traitement pro-cholinergique/i,
+          present: () => activeMeds.some(m => {
+              try { return matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), 'anticholinesterasique'); }
+              catch (e) { return false; }
+          }) }
+    ];
+    const _raisonPertinente = (raison) => {
+        let out = String(raison || '');
+        RAISON_CLAUSES_CONDITIONNELLES.forEach(c => { if (!c.present()) out = out.replace(c.clause, ''); });
+        return out.trim();
+    };
     if (typeof checkMedContraPathologies === 'function' && activeComorbs.length > 0) {
         activeMeds.forEach(m => {
             // Une forme TOPIQUE n'expose pas aux contre-indications systemiques : le gel
@@ -2657,6 +2705,19 @@ function analyserPrescription() {
             alerts.forEach(a => {
                 const r = RANG[prefixeDe(a.gravite)] || 0;
                 if (!plusFort.has(a.patho_nom) || r > plusFort.get(a.patho_nom)) plusFort.set(a.patho_nom, r);
+            });
+            // Ne garder que le degré le plus fort ne veut pas dire jeter les autres MOTIFS.
+            // Une cyamémazine relève, dans la démence, de la clause « anticholinergique »
+            // (contre-indication) et de la clause « antipsychotique » (déconseillé) : ne
+            // montrer que la première faisait lire une charge atropinique là où le lecteur
+            // attend d'abord qu'on lui parle du neuroleptique. Les motifs écartés sont
+            // repris sous l'alerte retenue.
+            const autresMotifs = new Map();
+            alerts.forEach(a => {
+                if ((RANG[prefixeDe(a.gravite)] || 0) < plusFort.get(a.patho_nom)) {
+                    if (!autresMotifs.has(a.patho_nom)) autresMotifs.set(a.patho_nom, []);
+                    autresMotifs.get(a.patho_nom).push(_raisonPertinente(a.raison));
+                }
             });
             const seenCI = new Set(); // un même médicament peut matcher la CI via sa classe ET son DCI
             alerts.forEach(a => {
@@ -2681,10 +2742,15 @@ function analyserPrescription() {
                         }
                     }
                 }
+                // « (Générique) » distingue l'ombrelle de ses sous-types dans le sélecteur ;
+                // dans un titre d'alerte, c'est un mot de nomenclature interne servi au
+                // lecteur — « CI Syndrome Démentiel (Générique) » ne lui dit rien de plus
+                // que « CI Syndrome Démentiel ».
+                const pathoAffiche = String(a.patho_nom || '').replace(/\s*\(Générique\)\s*$/i, '');
                 addAlert('alertes-eviter', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm">
-                    <strong>${isSevere ? '🚨' : '⚠️'} ${escapeHtml(m.dci.toUpperCase())} — ${alertPrefix} ${escapeHtml(a.patho_nom)}</strong>
+                    <strong>${isSevere ? '🚨' : '⚠️'} ${escapeHtml(m.dci.toUpperCase())} — ${alertPrefix} ${escapeHtml(pathoAffiche)}</strong>
                     <span class="badge bg-secondary float-end" style="font-size:0.65em;" title="${sourceLabel}">${sourceLabel.length > 30 ? sourceLabel.substring(0, 30) + '...' : sourceLabel}</span>
-                    <br><span class="small">${a.raison}${a.condition ? ` <em class="text-muted">(${a.condition})</em>` : ''}${a.exception ? `<br><em class="text-info">Exception : ${a.exception}</em>` : ''}</span>
+                    <br><span class="small">${_raisonPertinente(a.raison)}${a.condition ? ` <em class="text-muted">(${a.condition})</em>` : ''}${(autresMotifs.get(a.patho_nom) || []).length ? `<br><em class="text-muted">Également concerné à un moindre degré : ${(autresMotifs.get(a.patho_nom) || []).join(' ; ')}</em>` : ''}${a.exception ? `<br><em class="text-info">Exception : ${a.exception}</em>` : ''}</span>
                     <br><span class="badge bg-${isSevere ? 'danger' : 'warning'} text-${isSevere ? 'white' : 'dark'}" style="font-size:0.7em;">${a.gravite}</span>
                 </div>`, 'eviter');
                 _regAddMed(m.dci, 'eviter', { severity: isSevere ? 'danger' : 'warning', text: `${alertPrefix} ${a.patho_nom} — ${a.raison}`, gravite: a.gravite, source: sourceLabel });

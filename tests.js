@@ -1190,6 +1190,45 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/dans les bornes/.test(normale) && !/dans les bornes/.test(inconnue),
             'la note de normalite n\'apparait que sur une valeur mesuree et bornee');
     });
+    test('Une contre-indication ne nomme pas un traitement absent, et garde ses motifs', () => {
+        // Trois defauts se superposaient sur « CYAMEMAZINE — CI Syndrome Dementiel
+        // (Generique) » : la raison invoquait l'« antagonisme du traitement
+        // pro-cholinergique » chez une patiente sans anticholinesterasique ; le motif
+        // ANTIPSYCHOTIQUE, pourtant le plus parlant pour cette molecule, etait masque par
+        // la regle « seul le degre le plus fort s'affiche » ; et le titre servait au
+        // lecteur un mot de nomenclature interne.
+        const h = meds => analyzeCase({ age: 85, sexe: 'F', dfg: 88, comorbs: ['PAT_010'], meds })
+            ._html['alertes-eviter'] || '';
+        const seul = h(['Cyamemazine']), avecIACh = h(['Cyamemazine', 'Donepezil']);
+        assert.ok(!/antagonisme du traitement pro-cholinergique/.test(seul),
+            'sans anticholinesterasique, il n\'y a rien a antagoniser');
+        assert.ok(/antagonisme du traitement pro-cholinergique/.test(avecIACh),
+            'sous donepezil, la clause redevient vraie et doit s\'afficher');
+        assert.ok(/Aggravation cognitive/.test(seul),
+            'le reste de la raison est conserve — on retire la clause, pas le message');
+        assert.ok(/Également concerné à un moindre degré/.test(seul) && /mortalité/i.test(seul),
+            'le motif antipsychotique reste lisible sous l\'alerte retenue');
+        assert.ok(/CI Syndrome Démentiel/.test(seul) && !/Syndrome Démentiel \(Générique\)/.test(seul),
+            '« (Générique) » est une nomenclature interne, pas une information clinique');
+    });
+    test('Un message qui ENUMERE des classes dit laquelle concerne ce patient', () => {
+        // « Toute prescription d'antihypertenseur, antidepresseur serotoninergique,
+        // alpha-bloquant, antiparkinsonien dopaminergique ou antipsychotique… » : sur une
+        // ordonnance qui ne comporte qu'un neuroleptique, quatre classes sur cinq ne
+        // concernent pas le lecteur.
+        const h = meds => analyzeCase({ age: 85, sexe: 'F', dfg: 88, meds })._html['alertes-eviter'] || '';
+        const sousAntipsy = h(['Cyamemazine']);
+        assert.ok(/couché-debout/.test(sousAntipsy), 'la regle EV_SF02b se declenche bien');
+        assert.ok(/Concerné chez ce patient : <b>CYAMEMAZINE<\/b>/.test(sousAntipsy),
+            'la molecule qui declenche la regle est nommee');
+        // Une regle qui ne cite QU'UNE cle se suffit a elle-meme : pas de ligne en trop.
+        const h2 = analyzeCase({ age: 85, sexe: 'F', dfg: 88, comorbs: ['PAT_010'], meds: ['Risperidone'] })
+            ._html['alertes-eviter'] || '';
+        const bloc = (h2.split(/(?=<div class="alert)/)
+            .find(b => /durée et réévaluation/.test(b)) || '');
+        assert.ok(bloc && !/Concerné chez ce patient/.test(bloc),
+            'une alerte qui ne vise qu\'une classe n\'a pas besoin de la repeter');
+    });
     test('Une posologie ne conseille pas sur un medicament non prescrit', () => {
         const poso = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds })._html['alertes-usage'] || '';
         assert.ok(!/PRÉFÉRABLE chez patient sous clopidogrel/.test(poso(['Pantoprazole'])),
@@ -2363,12 +2402,20 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(/alert-danger|alert-stopp/.test(html22), 'K=2.2 (critique) doit être en danger');
     });
 
-    test('Tier 5 — NaN-safe : anémie sans ferritine/B12 → bilan martial + doser B12 recommandés', () => {
+    test('Tier 5 — anémie sans bilan : UN message qui demande ce qui manque', () => {
         const { analyzeCase } = require('./oracle_harness');
         // Régression à éviter : la migration NaN avait cassé les branches `fer <= 0`.
-        const al = (analyzeCase({ age: 80, sexe: 'F', bio: { hb: 9 }, meds: [] })['alertes-bio'] || []).map(a => a.titre);
-        assert.ok(al.some(t => /[Bb]ilan martial/.test(t)), 'Anémie sans ferritine → bilan martial recommandé');
-        assert.ok(al.some(t => /doser B12/.test(t)), 'Anémie sans B12/B9 → doser B12 et folates');
+        // Les trois encarts (bilan martial / B12-folates / sous-typage VGM) sont fusionnés
+        // en un seul, mais AUCUN examen ne doit avoir disparu au passage.
+        const r = analyzeCase({ age: 80, sexe: 'F', bio: { hb: 9 }, meds: [] });
+        const al = (r['alertes-bio'] || []).map(a => a.titre);
+        const h = r._html['alertes-bio'] || '';
+        assert.strictEqual(al.filter(t => /Anémie — orientation du bilan/.test(t)).length, 1,
+            'un seul encart d\'orientation, pas un par examen');
+        assert.ok(/ferritine/.test(h) && /saturation/.test(h), 'le bilan martial reste demandé');
+        assert.ok(/vitamine B12/.test(h) && /folates/.test(h), 'B12 et folates restent demandés');
+        assert.ok(/VGM non renseigné/.test(h),
+            'sans VGM, le message le dit — c\'est lui qui oriente le reste');
     });
 
     test('Tier 5 — thyroïde : une seule alerte (pas de doublon checkBioSyndrome + custom)', () => {
@@ -2452,12 +2499,26 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(/alert-danger/.test(html400), 'ACR=400 (A3) → danger');
     });
 
-    test('Tier 5 — anémie subtypée par VGM (microcytaire < 80 / macrocytaire > 100)', () => {
+    test('Tier 5 — le VGM ORIENTE le bilan de l\'anémie, il ne fait pas qu\'en nommer le type', () => {
         const { analyzeCase } = require('./oracle_harness');
-        const titres = (hb, vgm) => (analyzeCase({ age: 80, sexe: 'F', bio: { hb, vgm } })['alertes-bio'] || []).map(a => a.titre).join(' | ');
-        assert.ok(/microcytaire/i.test(titres(10, 75)), 'Hb=10 F + VGM=75 → microcytaire');
-        assert.ok(/macrocytaire/i.test(titres(10, 110)), 'Hb=10 F + VGM=110 → macrocytaire');
-        assert.ok(!/microcytaire|macrocytaire/i.test(titres(13, 90)), 'Hb=13 F (pas anémique) + VGM=90 → pas de subtypage');
+        // Une anémie produisait quatre encarts, dont un « bilan martial recommandé » servi
+        // en premier a une macrocytose — alors que la macrocytose oriente d'abord vers
+        // B12/B9, la thyroide et la myelodysplasie. Le VGM ouvre desormais l'arbre.
+        const cas = (hb, vgm) => analyzeCase({ age: 80, sexe: 'F', bio: { hb, vgm } });
+        const html = (hb, vgm) => cas(hb, vgm)._html['alertes-bio'] || '';
+        const titres = (hb, vgm) => (cas(hb, vgm)['alertes-bio'] || []).map(a => a.titre);
+        const micro = html(10, 75), macro = html(10, 110), normo = html(10, 90);
+        assert.ok(/microcytaire/i.test(micro) && /saignement digestif occulte/i.test(micro),
+            'microcytaire : enquete martiale et recherche de saignement');
+        assert.ok(/macrocytaire/i.test(macro) && /non par le bilan martial/i.test(macro),
+            'macrocytaire : les vitamines AVANT le bilan martial, et le message le dit');
+        assert.ok(!/saignement digestif occulte/i.test(macro),
+            'la conduite de la microcytose ne doit pas etre servie a une macrocytose');
+        assert.ok(/normocytaire/i.test(normo), 'normocytaire : sous-type nomme');
+        assert.strictEqual(titres(10, 110).filter(t => /orientation du bilan/.test(t)).length, 1,
+            'un seul encart d\'orientation');
+        assert.ok(!/microcytaire|macrocytaire|orientation du bilan/i.test(html(13, 90)),
+            'Hb=13 chez la femme : pas d\'anemie, donc pas de message');
     });
 
     test('Tier 5 — alias BIO_TP/CL/OSM/PREALB désuets : seuls BIO_040-043 sont consommés', () => {
