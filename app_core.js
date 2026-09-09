@@ -532,25 +532,6 @@ function buildPdfContent() {
         </div>`;
     }
 
-    // Prescriptions assumées — juste après le commentaire humain, car c'en est un
-    // aussi : une décision du prescripteur, pas un produit de l'analyse. Le bloc
-    // existe pour que le lecteur tiers sache qu'un PIM affiché en orange l'est parce
-    // qu'il a été DISCUTÉ, et non parce que l'application le juge secondaire. Sans
-    // cette trace, la couleur adoucie serait un affaiblissement inexpliqué.
-    if (window._justifiedAlerts && window._justifiedAlerts.size) {
-        const lignes = [...window._justifiedAlerts.entries()].map(([cle, v]) => {
-            const lib = String(cle).replace(/^tt:/, '').replace(/\|(danger|warning|info)$/, '')
-                .replace(/^id:/, '').replace(/^rc:/, '').replace(/^gl:/, '').replace(/\|/g, ' — ');
-            const motif = (v && v.motif) ? `<div style="${S.muted ? '' : ''}color:#6c757d;margin-top:2px;">${escapeHtml(v.motif)}</div>` : '';
-            return `<div class="pdf-block" style="${S.item}">${escapeHtml(texteClinique(lib))}${motif}</div>`;
-        }).join('');
-        html += `<div style="margin:0 0 14px 0;border-left:4px solid #0d9488;border-radius:0 5px 5px 0;background:${rgba('#0d9488', 0.05)};padding:10px 12px;">
-            <div class="pdf-block">${secTitle('Prescriptions assumées par le prescripteur', '#0d9488', String(window._justifiedAlerts.size))}</div>
-            <div class="pdf-block" style="${S.body}color:#6c757d;margin-bottom:4px;">Ces points restent surveillés : ils ont été relus et maintenus en connaissance de cause.</div>
-            ${lignes}
-        </div>`;
-    }
-
     // Synthèse pharmaceutique (onglet « Avis pharma ») — 2ᵉ position
     if (window.conciliationData && window.conciliationData.includeInPdf && typeof window.buildConciliationReportBlock === 'function') {
         html += window.buildConciliationReportBlock();
@@ -887,6 +868,48 @@ function buildPdfContent() {
             }
             html += `</div>`;
         }
+    }
+
+    // ── Prescriptions assumées — en FIN de synthèse ──────────────────────────
+    // Le bloc était placé juste après le commentaire humain, en tête de rapport, et
+    // il n'affichait que la CLÉ de l'alerte : « EV_D21 », « EV_D05 ». Un identifiant
+    // interne ne dit rien à qui reçoit le document — c'est le titre de l'alerte qui
+    // porte le sens. Et ce n'est pas une entrée en matière : les points concernés
+    // figurent déjà, en orange, dans « prescriptions inappropriées ». Sa place est
+    // donc à la fin, comme un relevé de décisions : il dit que la couleur adoucie
+    // vient d'un ARBITRAGE, non d'un jugement de l'application.
+    //
+    // Le libellé est retrouvé dans le DOM déjà rendu, par la clé de masquage que
+    // chaque alerte porte — un seul chemin, valable pour les quatre familles de clés
+    // (`id:`, `rc:`, `tt:`, `gl:`), sans dupliquer la logique de titre.
+    if (window._justifiedAlerts && window._justifiedAlerts.size) {
+        const _titreParCle = {};
+        document.querySelectorAll('[onclick*="maskGeriaAlert"]').forEach(btn => {
+            const m = String(btn.getAttribute('onclick') || '').match(/maskGeriaAlert\('((?:[^'\\]|\\.)*)'\)/);
+            if (!m) return;
+            const cle = m[1].replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+            const bloc = btn.closest('.alert') || btn.parentElement;
+            const strong = bloc && bloc.querySelector('strong');
+            if (strong && !_titreParCle[cle]) _titreParCle[cle] = strong.textContent.replace(/\s+/g, ' ').trim();
+        });
+        const lignes = [...window._justifiedAlerts.entries()].map(([cle, v]) => {
+            const titre = _titreParCle[cle]
+                || String(cle).replace(/^tt:/, '').replace(/\|(danger|warning|info)$/, '').replace(/^gl:[^|]*\|/, '');
+            // Le titre vient de l'ÉCRAN : il porte son icône de gradation et, une fois
+            // passé par `texteClinique`, un point final. Les deux gênent ici — l'icône
+            // n'a pas de sens hors de sa liste, et le point coupe la phrase juste avant
+            // le motif qu'on lui accole.
+            const propre = escapeHtml(texteClinique(titre))
+                .replace(/^\s*(?:&#x[0-9a-f]+;|[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\uFE0F])+\s*/gu, '')
+                .replace(/\s*\.\s*$/, '');
+            const motif = (v && v.motif) ? ` — <em style="color:#6c757d;">${escapeHtml(v.motif)}</em>` : '';
+            return `<div class="pdf-block" style="${S.item}">${propre}${motif}</div>`;
+        }).join('');
+        html += `<div style="margin:14px 0 0 0;border-left:4px solid #0d9488;border-radius:0 5px 5px 0;background:${rgba('#0d9488', 0.05)};padding:10px 12px;">
+            <div class="pdf-block">${secTitle('Prescriptions assumées par le prescripteur', '#0d9488', String(window._justifiedAlerts.size))}</div>
+            <div class="pdf-block" style="${S.body}color:#6c757d;margin-bottom:4px;">Points relus et maintenus en connaissance de cause. Ils restent surveillés : leur graduation a été abaissée par décision, non par l'analyse.</div>
+            ${lignes}
+        </div>`;
     }
 
     html += `<div style="text-align:center;margin-top:16px;padding-top:8px;border-top:1px solid #e4e8ec;font-size:8px;color:#9aa2aa;">Document généré par GeriaAssist — Usage professionnel uniquement</div>`;

@@ -878,10 +878,16 @@ non « agir maintenant ».
   `Math.max(SCORE_MIN_IMPORTANT, …)` — écrit puis corrigé pendant ce chantier — **remontait
   en orange une alerte informative** qu'on venait d'assumer, soit l'inverse de ce qui est
   demandé. Un test le vérifie, validé par mutation.
-- **Le rapport le trace** : bloc « Prescriptions assumées par le prescripteur », placé juste
-  après le commentaire humain, car c'en est un aussi. Sans cette trace, un lecteur tiers
-  verrait une couleur adoucie sans explication — il doit savoir qu'un PIM affiché en orange
-  l'est parce qu'il a été **discuté**, non parce que l'application le juge secondaire.
+- **Le rapport le trace** : bloc « Prescriptions assumées par le prescripteur », **en fin de
+  synthèse**. Sans cette trace, un lecteur tiers verrait une couleur adoucie sans explication
+  — il doit savoir qu'un PIM affiché en orange l'est parce qu'il a été **discuté**, non parce
+  que l'application le juge secondaire. Mais ce n'est pas une entrée en matière : les points
+  concernés figurent déjà dans « prescriptions inappropriées », et le bloc se lit comme un
+  relevé de décisions, à la fin. Le libellé est **retrouvé dans le DOM rendu** par la clé de
+  masquage que chaque alerte porte — un seul chemin pour les quatre familles de clés. Il
+  affichait auparavant la clé brute (« EV_D21 »), identifiant interne qui ne dit rien au
+  destinataire ; l'icône de gradation et le point final, hérités de l'écran, sont retirés
+  avant d'accoler le motif.
 - C'est l'inverse d'un bouton silence : ne jamais le faire filtrer l'alerte, ni retirer un
   examen du plan biologique.
 
