@@ -1189,7 +1189,14 @@ function analyserPrescription() {
     // Onglets rendus en HTML brut (hors moteur de règles) dont chaque bloc reçoit
     // un ✖ de masquage session. Le moteur (geria_engine_v2) gère déjà le sien pour
     // les alertes de règle, clé « id: » ; ici la clé est le titre + la sévérité.
-    const ONGLETS_MASQUABLES = new Set(['alertes-bio', 'alertes-interact', 'alertes-ansm', 'alertes-auc']);
+    // `alertes-eviter` en fait partie depuis que les blocs REDIGES SUR PLACE y sont
+    // nombreux : contre-indications medicament/pathologie, doublons therapeutiques,
+    // cascades iatrogenes, encart des symptomes psycho-comportementaux. Seules les alertes
+    // du MOTEUR y portaient les boutons (poses par `renderSingleAlert`) — une « CI Syndrome
+    // Dementiel » ne pouvait donc etre ni masquee ni assumee, alors que les deux alertes
+    // voisines sur la meme molecule l'etaient. Aucun risque de double injection : le moteur
+    // ecrit son HTML par `innerHTML =`, jamais par `addAlert`.
+    const ONGLETS_MASQUABLES = new Set(['alertes-bio', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-eviter']);
 
     // Batch DOM: accumulate HTML, flush once at end
     const _htmlBuffers = {};

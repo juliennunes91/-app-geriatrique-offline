@@ -1358,6 +1358,30 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
                 '« (Générique) » ne doit apparaitre dans AUCUN onglet — trouve dans ' + tab);
         });
     });
+    test('Toute alerte « eviter » est masquable ET assumable', () => {
+        // Les blocs REDIGES SUR PLACE de l'onglet eviter — contre-indications
+        // medicament/pathologie, doublons, cascades, encart SPC — n'avaient aucun bouton :
+        // seules les alertes du MOTEUR en portaient. Une « CI Syndrome Dementiel » ne
+        // pouvait donc etre ni masquee ni assumee, alors que les deux alertes voisines sur
+        // la meme molecule l'etaient.
+        const base = { age: 85, sexe: 'F', dfg: 88, comorbs: ['PAT_010'],
+                       flags: ['chkDemence'], meds: ['Cyamemazine'] };
+        const h = analyzeCase(base)._html['alertes-eviter'] || '';
+        const sans = h.split(/(?=<div class="alert)/)
+            .filter(b => /<strong>/.test(b) && !/maskGeriaAlert/.test(b))
+            .map(b => (b.match(/<strong>([^<]{0,60})/) || [])[1]);
+        assert.strictEqual(sans.length, 0,
+            'alerte(s) sans bouton de masquage : ' + sans.join(' | '));
+
+        const cle = 'tt:🚨 CYAMEMAZINE — CI Syndrome Démentiel|danger';
+        const assum = analyzeCase({ ...base, assumees: [{ cle, motif: 'Seconde ligne assumee.' }] });
+        const ci = (assum['alertes-eviter'] || []).find(a => /CYAMEMAZINE — CI/.test(a.titre));
+        assert.ok(ci, 'assumer ne masque pas');
+        assert.strictEqual(ci.severity, 'warning', 'assumee : elle descend d\'une bande');
+        const masq = analyzeCase({ ...base, masked: [cle] });
+        assert.ok(!(masq['alertes-eviter'] || []).some(a => /CYAMEMAZINE — CI/.test(a.titre)),
+            'masquer la retire bien');
+    });
     test('Une posologie ne conseille pas sur un medicament non prescrit', () => {
         const poso = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds })._html['alertes-usage'] || '';
         assert.ok(!/PRÉFÉRABLE chez patient sous clopidogrel/.test(poso(['Pantoprazole'])),

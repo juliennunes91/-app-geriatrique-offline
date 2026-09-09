@@ -892,7 +892,15 @@ rendu** pour que écran, synthèse, PDF et compteurs restent cohérents :
 
 - `id:` / `rc:` — alertes de règle (moteur, `renderSingleAlert`) ;
 - `tt:<titre>|<sévérité>` — blocs HTML bruts des onglets listés dans
-  `ONGLETS_MASQUABLES` (bio, interactions, ANSM, AUC) ;
+  `ONGLETS_MASQUABLES` (bio, interactions, ANSM, AUC, **et éviter**) ;
+
+`alertes-eviter` a rejoint la liste : cet onglet porte de plus en plus de blocs **rédigés
+sur place** — contre-indications médicament/pathologie, doublons thérapeutiques, cascades
+iatrogènes, encart des symptômes psycho-comportementaux — et seules les alertes du MOTEUR
+y avaient des boutons. Une « CI Syndrome Démentiel » ne pouvait être ni masquée ni assumée
+alors que les deux alertes voisines sur la même molécule l'étaient. Aucun risque de double
+injection : le moteur écrit son HTML par `innerHTML =`, jamais par `addAlert`. Un test
+vérifie que **plus aucune** alerte de l'onglet n'est dépourvue de bouton.
 - `gl:<pathologie>|<classe>` — recommandations de sociétés savantes, une par une.
 
 La clé `gl:` porte la pathologie pour que masquer « AINS » dans l'insuffisance
