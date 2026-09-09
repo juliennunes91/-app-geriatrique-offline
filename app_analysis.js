@@ -1219,8 +1219,8 @@ function analyserPrescription() {
                 // synthèse + PDF en cohérence + compteur du badge cohérent).
                 if (window._maskedAlerts && window._maskedAlerts.has(maskKey)) return;
                 // Injection du bouton ✖ juste après le <div class="alert …">.
-                const safeKey = maskKey.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
-                const safeTitre = title.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+                const safeKey = cleAttributJs(maskKey);
+                const safeTitre = cleAttributJs(title);
                 const btn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.7em;" aria-label="Masquer cette alerte" title="Masquer pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${safeKey}');return false;"></button>`;
                 // Une alerte ASSUMÉE reste affichée : elle descend d'un cran de couleur
                 // et porte le motif. Le même état que pour les alertes du moteur, mais
@@ -3595,7 +3595,7 @@ function analyserPrescription() {
         if (!label) return bloc;
         const maskKey = 'gl:' + pathoId + '|' + label;
         if (window._maskedAlerts && window._maskedAlerts.has(maskKey)) return '';
-        const safeKey = maskKey.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+        const safeKey = cleAttributJs(maskKey);
         const btn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.6em;" aria-label="Masquer cette recommandation" title="Masquer cette recommandation pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${safeKey}');return false;"></button>`;
         return bloc.replace(/(<div class="alert[^"]*"[^>]*>)/i, '$1' + btn);
     });

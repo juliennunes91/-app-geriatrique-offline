@@ -903,6 +903,16 @@ injection : le moteur écrit son HTML par `innerHTML =`, jamais par `addAlert`. 
 vérifie que **plus aucune** alerte de l'onglet n'est dépourvue de bouton.
 - `gl:<pathologie>|<classe>` — recommandations de sociétés savantes, une par une.
 
+**Une clé d'`onclick` traverse DEUX analyseurs**, et c'est le piège qui rendait 31 boutons
+du panel inertes : le navigateur décode d'abord les entités HTML, **puis** JavaScript lit le
+résultat. Échapper l'apostrophe en `&#39;` — le réflexe HTML — la redonne donc telle quelle
+à JavaScript, qui y voit la fin de sa chaîne : handler cassé, clic sans effet, **en
+silence**. Tous les libellés à apostrophe étaient concernés (« Inhibiteur de
+l'Acétylcholinestérase », « Diurétiques de l'anse », « Arrêt ou réduction brutale de
+l'antipsychotique de fond »). `cleAttributJs()` (`utils.js`) est le point de passage unique :
+échappement **JavaScript** (`\'`) pour l'apostrophe, HTML pour le guillemet double et le
+chevron. Un test parcourt le panel et vérifie qu'aucune clé rendue ne contient `&#39;`.
+
 La clé `gl:` porte la pathologie pour que masquer « AINS » dans l'insuffisance
 cardiaque ne le masque pas dans l'arthrose. Le post-traitement
 (`_recosMasquables`) ne capture que les blocs `alert … py-1 px-2` **sans `<div>`

@@ -1382,6 +1382,39 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!(masq['alertes-eviter'] || []).some(a => /CYAMEMAZINE — CI/.test(a.titre)),
             'masquer la retire bien');
     });
+    test('Un bouton de masquage survit a l\'apostrophe de son libelle', () => {
+        // La cle traverse DEUX analyseurs : le navigateur decode les entites HTML, PUIS
+        // JavaScript lit le resultat. L'echapper en `&#39;` la redonne telle quelle a JS,
+        // qui y voit la fin de sa chaine — handler casse, clic sans effet, en silence.
+        // 31 boutons du panel etaient inertes, tous a libelle portant une apostrophe.
+        const T = require('./tests_audit_extended');
+        let casses = 0; const exemples = [];
+        for (const [nom, p] of Object.entries(T.PANEL)) {
+            const r = analyzeCase(p);
+            Object.values(r._html).forEach(h => {
+                const s = String(h); let i = 0;
+                while ((i = s.indexOf("maskGeriaAlert('", i)) >= 0) {
+                    const fin = s.indexOf("')", i + 16);
+                    if (fin < 0) break;
+                    const cle = s.slice(i + 16, fin);
+                    if (cle.includes('&#39;')) { casses++; if (exemples.length < 4) exemples.push(nom + ' :: ' + cle.slice(0, 50)); }
+                    i = fin;
+                }
+            });
+        }
+        assert.strictEqual(casses, 0,
+            'bouton(s) dont la cle contient &#39; — le handler JS est casse : ' + exemples.join(' | '));
+
+        // Et deux recommandations d'une meme pathologie se masquent l'une APRES l'autre.
+        const base = { age: 85, sexe: 'F', dfg: 88, comorbs: ['PAT_010'], flags: ['chkDemence'], meds: ['Cyamemazine'] };
+        const nb = m => ((analyzeCase({ ...base, masked: m })._html['alertes-guidelines'] || '')
+            .match(/maskGeriaAlert\(/g) || []).length;
+        const c1 = "gl:PAT_010|Inhibiteur de l'Acétylcholinestérase (IAChE)";
+        const c2 = 'gl:PAT_010|Mémantine 5-10-15-20 mg/j';
+        const n0 = nb([]);
+        assert.strictEqual(nb([c1]), n0 - 1, 'la premiere se masque');
+        assert.strictEqual(nb([c1, c2]), n0 - 2, 'la seconde AUSSI, cumulativement');
+    });
     test('Une posologie ne conseille pas sur un medicament non prescrit', () => {
         const poso = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds })._html['alertes-usage'] || '';
         assert.ok(!/PRÉFÉRABLE chez patient sous clopidogrel/.test(poso(['Pantoprazole'])),

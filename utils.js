@@ -201,6 +201,21 @@ const PATHO_OMBRELLES = {
 // lecteur — pastille, titre d'alerte, synthèse, rapport, infobulle du tableau de suivi —
 // c'est un mot de nomenclature interne qui n'apprend rien. Un seul point de passage, sans
 // quoi la mention ressort par le chemin qu'on a oublié de corriger : elle l'a fait deux fois.
+// Une clé passée dans un `onclick="…maskGeriaAlert('CLÉ')…"` traverse DEUX analyseurs :
+// le navigateur décode d'abord les entités HTML, puis JavaScript lit le résultat. Échapper
+// l'apostrophe en `&#39;` — le réflexe HTML — la redonne donc TELLE QUELLE à JavaScript,
+// qui y voit la fin de sa chaîne : le handler est syntaxiquement cassé et le clic ne fait
+// rien, en silence. 31 boutons du panel étaient inertes pour cette raison, tous portant un
+// libellé à apostrophe (« Inhibiteur de l'Acétylcholinestérase », « Diurétiques de l'anse »,
+// « Arrêt ou réduction brutale de l'antipsychotique de fond »).
+// L'échappement doit donc être celui de JAVASCRIPT (`\'`), qui survit au décodage HTML ;
+// seuls le guillemet double et le chevron relèvent de l'échappement HTML.
+const cleAttributJs = (cle) => String(cle || '')
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;');
+
 const nomPathoAffiche = (nom) => String(nom || '').replace(/\s*\((?:Générique|Generique)\)\s*$/i, '').trim();
 
 const comorbsAffichables = (liste) => {

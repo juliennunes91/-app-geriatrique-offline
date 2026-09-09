@@ -1108,10 +1108,10 @@ const GeriaEngineV2 = (() => {
         // Le handler est délégué via window.maskGeriaAlert dans geria-shell.js (filtre amont
         // dans analyserPrescription : la synthèse et le PDF sont cohérents avec l'écran).
         const maskKey = a.id ? 'id:' + a.id : (a.ref_code ? 'rc:' + a.ref_code : 'tt:' + ((a.titre || '') + '|' + (a.severite || '')));
-        const maskBtn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.7em;" aria-label="Masquer cette alerte" title="Masquer pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${esc(maskKey).replace(/'/g, '&#39;')}');return false;"></button>`;
+        const maskBtn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.7em;" aria-label="Masquer cette alerte" title="Masquer pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${cleAttributJs(maskKey)}');return false;"></button>`;
         // Bouton « assumer » — voisin du ✖, mais son contraire : il GARDE l'alerte.
-        const kEsc = esc(maskKey).replace(/'/g, '&#39;');
-        const tEsc = esc(a.titre || '').replace(/'/g, '&#39;');
+        const kEsc = cleAttributJs(maskKey);
+        const tEsc = cleAttributJs(a.titre || '');
         const assumeBtn = a._assumee
             ? `<button type="button" class="btn btn-link p-0 float-end ms-2" style="font-size:0.7em;text-decoration:none;color:#0d9488;" title="Retirer la justification" onclick="if(typeof unjustifyGeriaAlert==='function')unjustifyGeriaAlert('${kEsc}');return false;">↺ retirer</button>`
             : `<button type="button" class="btn btn-link p-0 float-end ms-2" style="font-size:0.7em;text-decoration:none;color:#0d9488;" title="Prescription justifiée : l'alerte reste affichée et surveillée, elle cesse de réclamer une action immédiate" onclick="if(typeof justifyGeriaAlert==='function')justifyGeriaAlert('${kEsc}','${tEsc}');return false;">✓ assumer</button>`;
