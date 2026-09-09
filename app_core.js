@@ -745,7 +745,26 @@ function buildPdfContent() {
             porteFusion.set(vus[0], f);
             vus.slice(1).forEach(a => absorbes.add(a));
         });
-        const retenues = [...alerts].filter(a => !absorbes.has(a));
+        // ── Ce qui a été ASSUMÉ ne se lit plus comme une alerte ──────────────────
+        // Une prescription relue et maintenue en connaissance de cause n'appelle plus
+        // d'action : la rendre avec la même insistance rouge que le reste fait paraître
+        // le rapport plus alarmant qu'il ne l'est, et noie ce qui reste vraiment à
+        // trancher. Elle sort donc du corps de la section, dans un relevé calme placé à
+        // sa fin — avec le motif écrit par le prescripteur, qui est l'information utile.
+        //
+        // La clé de masquage que chaque alerte porte dans son HTML sert d'identifiant :
+        // un seul chemin pour les quatre familles (`id:`, `rc:`, `tt:`, `gl:`).
+        const _cleAlerte = (a) => {
+            const m = String(a.innerHTML || '').match(/maskGeriaAlert\('((?:[^'\\]|\\.)*)'\)/);
+            return m ? m[1].replace(/\\'/g, "'").replace(/\\\\/g, '\\') : '';
+        };
+        const _assumee = (a) => {
+            const c = _cleAlerte(a);
+            return !!(c && window._justifiedAlerts && window._justifiedAlerts.has(c));
+        };
+        const retenuesToutes = [...alerts].filter(a => !absorbes.has(a));
+        const assumees = retenuesToutes.filter(_assumee);
+        const retenues = retenuesToutes.filter(a => !_assumee(a));
         const majeures = retenues.filter(a => niveau(a) !== 'info');
         const mineures = retenues.filter(a => niveau(a) === 'info');
 
@@ -779,6 +798,20 @@ function buildPdfContent() {
             html += `<div class="pdf-block" style="${S.item}${majeures.length ? 'border-top:' + S.rule + ';' : ''}">
                 <strong style="font-weight:600;">Points de méthode (${titres.length})</strong>
                 <div style="color:${S.muted};margin-top:2px;">${titres.join(' · ')}.</div>
+            </div>`;
+        }
+        if (assumees.length > 0) {
+            const lignes = assumees.map(a => {
+                const st = a.querySelector('strong');
+                const titre = (st ? st.textContent : '').replace(/^[^\wÀ-ÿ]+/, '').replace(/\s+/g, ' ').trim();
+                const e = window._justifiedAlerts.get(_cleAlerte(a));
+                const motif = (e && e.motif) ? ` — <em>${escapeHtml(e.motif)}</em>` : '';
+                return `<div style="margin-top:2px;">${escapeHtml(titre)}${motif}</div>`;
+            }).join('');
+            html += `<div class="pdf-block" style="${S.item}${(majeures.length || mineures.length) ? 'border-top:' + S.rule + ';' : ''}color:${S.muted};">
+                <strong style="font-weight:600;color:#0d9488;">Assumé par le prescripteur (${assumees.length})</strong>
+                <div style="margin-top:2px;">Relu et maintenu en connaissance de cause ; la surveillance reste due.</div>
+                ${lignes}
             </div>`;
         }
         html += `</div>`;
@@ -870,47 +903,11 @@ function buildPdfContent() {
         }
     }
 
-    // ── Prescriptions assumées — en FIN de synthèse ──────────────────────────
-    // Le bloc était placé juste après le commentaire humain, en tête de rapport, et
-    // il n'affichait que la CLÉ de l'alerte : « EV_D21 », « EV_D05 ». Un identifiant
-    // interne ne dit rien à qui reçoit le document — c'est le titre de l'alerte qui
-    // porte le sens. Et ce n'est pas une entrée en matière : les points concernés
-    // figurent déjà, en orange, dans « prescriptions inappropriées ». Sa place est
-    // donc à la fin, comme un relevé de décisions : il dit que la couleur adoucie
-    // vient d'un ARBITRAGE, non d'un jugement de l'application.
-    //
-    // Le libellé est retrouvé dans le DOM déjà rendu, par la clé de masquage que
-    // chaque alerte porte — un seul chemin, valable pour les quatre familles de clés
-    // (`id:`, `rc:`, `tt:`, `gl:`), sans dupliquer la logique de titre.
-    if (window._justifiedAlerts && window._justifiedAlerts.size) {
-        const _titreParCle = {};
-        document.querySelectorAll('[onclick*="maskGeriaAlert"]').forEach(btn => {
-            const m = String(btn.getAttribute('onclick') || '').match(/maskGeriaAlert\('((?:[^'\\]|\\.)*)'\)/);
-            if (!m) return;
-            const cle = m[1].replace(/\\'/g, "'").replace(/\\\\/g, '\\');
-            const bloc = btn.closest('.alert') || btn.parentElement;
-            const strong = bloc && bloc.querySelector('strong');
-            if (strong && !_titreParCle[cle]) _titreParCle[cle] = strong.textContent.replace(/\s+/g, ' ').trim();
-        });
-        const lignes = [...window._justifiedAlerts.entries()].map(([cle, v]) => {
-            const titre = _titreParCle[cle]
-                || String(cle).replace(/^tt:/, '').replace(/\|(danger|warning|info)$/, '').replace(/^gl:[^|]*\|/, '');
-            // Le titre vient de l'ÉCRAN : il porte son icône de gradation et, une fois
-            // passé par `texteClinique`, un point final. Les deux gênent ici — l'icône
-            // n'a pas de sens hors de sa liste, et le point coupe la phrase juste avant
-            // le motif qu'on lui accole.
-            const propre = escapeHtml(texteClinique(titre))
-                .replace(/^\s*(?:&#x[0-9a-f]+;|[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\uFE0F])+\s*/gu, '')
-                .replace(/\s*\.\s*$/, '');
-            const motif = (v && v.motif) ? ` — <em style="color:#6c757d;">${escapeHtml(v.motif)}</em>` : '';
-            return `<div class="pdf-block" style="${S.item}">${propre}${motif}</div>`;
-        }).join('');
-        html += `<div style="margin:14px 0 0 0;border-left:4px solid #0d9488;border-radius:0 5px 5px 0;background:${rgba('#0d9488', 0.05)};padding:10px 12px;">
-            <div class="pdf-block">${secTitle('Prescriptions assumées par le prescripteur', '#0d9488', String(window._justifiedAlerts.size))}</div>
-            <div class="pdf-block" style="${S.body}color:#6c757d;margin-bottom:4px;">Points relus et maintenus en connaissance de cause. Ils restent surveillés : leur graduation a été abaissée par décision, non par l'analyse.</div>
-            ${lignes}
-        </div>`;
-    }
+    // Les prescriptions assumées ne font plus de bloc à part : elles sont rendues
+    // DANS la section « prescriptions inappropriées », en fin de section, sous
+    // « Assumé par le prescripteur ». Un relevé séparé les répétait une troisième
+    // fois — après l'écran et après la section — et le lecteur devait rapprocher
+    // lui-même les deux listes.
 
     html += `<div style="text-align:center;margin-top:16px;padding-top:8px;border-top:1px solid #e4e8ec;font-size:8px;color:#9aa2aa;">Document généré par GeriaAssist — Usage professionnel uniquement</div>`;
     html += `</div>`;
