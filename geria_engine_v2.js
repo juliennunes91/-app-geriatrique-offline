@@ -293,6 +293,27 @@ const GeriaEngineV2 = (() => {
         if (alert.severite === 'danger') score = Math.max(score, SCORE_MIN_CRITIQUE);
         else if (alert.severite === 'warning') score = Math.max(score, SCORE_MIN_IMPORTANT);
 
+        // (I) Alerte ASSUMÉE par le prescripteur : plafond sous la bande rouge.
+        // C'est le seul endroit où une décision humaine entre dans le score, et elle
+        // n'y entre que dans un sens — vers le bas. Le risque n'a pas diminué : ce qui
+        // change est l'action attendue, « surveiller » et non « agir maintenant ». Le
+        // plafond s'applique APRÈS le plancher de sévérité, sans quoi une règle
+        // déclarée `danger` y remonterait aussitôt. Il ne descend jamais sous la bande
+        // orange : une alerte assumée reste une alerte, elle ne devient pas informative.
+        try {
+            const kJ = alert.id ? 'id:' + alert.id
+                : (alert.ref_code ? 'rc:' + alert.ref_code
+                : 'tt:' + ((alert.titre || '') + '|' + (alert.severite || '')));
+            if (typeof isAlertJustified === 'function' && isAlertJustified(kJ)) {
+                // Uniquement vers le BAS, et seulement depuis la bande rouge. Un
+                // `Math.max(SCORE_MIN_IMPORTANT, …)` aurait REMONTÉ en orange une alerte
+                // informative qu'on venait d'assumer — l'inverse de ce qui est demandé.
+                if (score >= SCORE_MIN_CRITIQUE) score = SCORE_MIN_CRITIQUE - 1;
+                alert._assumee = true;
+                alert._assumeeMotif = (typeof justificationMotif === 'function') ? justificationMotif(kJ) : '';
+            }
+        } catch (e) { /* le score reste celui du risque */ }
+
         // Clamp 0-100
         return Math.max(0, Math.min(100, Math.round(score)));
     }
@@ -1082,6 +1103,15 @@ const GeriaEngineV2 = (() => {
         // dans analyserPrescription : la synthèse et le PDF sont cohérents avec l'écran).
         const maskKey = a.id ? 'id:' + a.id : (a.ref_code ? 'rc:' + a.ref_code : 'tt:' + ((a.titre || '') + '|' + (a.severite || '')));
         const maskBtn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.7em;" aria-label="Masquer cette alerte" title="Masquer pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${esc(maskKey).replace(/'/g, '&#39;')}');return false;"></button>`;
+        // Bouton « assumer » — voisin du ✖, mais son contraire : il GARDE l'alerte.
+        const kEsc = esc(maskKey).replace(/'/g, '&#39;');
+        const tEsc = esc(a.titre || '').replace(/'/g, '&#39;');
+        const assumeBtn = a._assumee
+            ? `<button type="button" class="btn btn-link p-0 float-end ms-2" style="font-size:0.7em;text-decoration:none;color:#0d9488;" title="Retirer la justification" onclick="if(typeof unjustifyGeriaAlert==='function')unjustifyGeriaAlert('${kEsc}');return false;">↺ retirer</button>`
+            : `<button type="button" class="btn btn-link p-0 float-end ms-2" style="font-size:0.7em;text-decoration:none;color:#0d9488;" title="Prescription justifiée : l'alerte reste affichée et surveillée, elle cesse de réclamer une action immédiate" onclick="if(typeof justifyGeriaAlert==='function')justifyGeriaAlert('${kEsc}','${tEsc}');return false;">✓ assumer</button>`;
+        const assumeBanner = a._assumee
+            ? `<div class="mt-1 p-2 rounded" style="background:#ecfdf5;border-left:3px solid #0d9488;"><small><strong>Prescription assumée par le prescripteur</strong> — surveillance maintenue.${a._assumeeMotif ? ' <em>' + esc(a._assumeeMotif) + '</em>' : ''}</small></div>`
+            : '';
         // Bloc 2 — bandeau de recontextualisation « traitement de fond psychiatrique
         // chronique » : l'alerte reste visible (le risque persiste) mais la
         // recommandation est requalifiée (maintien à surveiller, ≠ déprescription).
@@ -1092,11 +1122,12 @@ const GeriaEngineV2 = (() => {
             ? `<span class="badge" style="font-size:0.6em;background:#0d6efd;">Traitement de fond — surveiller</span> `
             : '';
         return `<div class="alert alert-${borderClass} ${bgOpacity} shadow-sm mb-2" style="border-left: 4px solid var(--bs-${borderClass}); padding-left: 0.9rem;">
-            ${maskBtn}
+            ${maskBtn}${assumeBtn}
             ${scoreBadge}<strong>${displayTitle}</strong>${mergedBadge}
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(displaySourceLabel)}</span>
             <div class="small mt-1" style="padding-left: 0.25rem;">${recontexteBadge}${safeMessage}</div>
             ${medsConcernes}
+            ${assumeBanner}
             ${recontexteBanner}
             ${compHtml}
             ${pimBadges}

@@ -1088,6 +1088,12 @@ function _computeAnalysisHash() {
     // sinon masquer/réafficher ne change pas le hash → analyserPrescription renvoie
     // le DOM mémoïsé NON filtré (le masquage ne s'appliquerait ni à l'écran ni au PDF).
     parts.push('mask:' + (window._maskedAlerts ? [...window._maskedAlerts].sort().join(',') : ''));
+    // Assumer une alerte change son score, sa couleur et le rapport : sans cette
+    // ligne, la memoisation resservirait l'analyse precedente et le clic resterait
+    // sans effet visible.
+    parts.push('assum:' + (window._justifiedAlerts
+        ? [...window._justifiedAlerts.entries()].map(e => e[0] + '=' + (e[1] && e[1].motif || '')).sort().join(',')
+        : ''));
     return parts.join('|');
 }
 
@@ -1207,8 +1213,24 @@ function analyserPrescription() {
                 if (window._maskedAlerts && window._maskedAlerts.has(maskKey)) return;
                 // Injection du bouton ✖ juste après le <div class="alert …">.
                 const safeKey = maskKey.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+                const safeTitre = title.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
                 const btn = `<button type="button" class="btn-close float-end ms-2" style="font-size:0.7em;" aria-label="Masquer cette alerte" title="Masquer pour la session" onclick="if(typeof maskGeriaAlert==='function')maskGeriaAlert('${safeKey}');return false;"></button>`;
-                htmlStr = String(htmlStr).replace(/(<div\s+class="alert[^"]*"[^>]*>)/i, '$1' + btn);
+                // Une alerte ASSUMÉE reste affichée : elle descend d'un cran de couleur
+                // et porte le motif. Le même état que pour les alertes du moteur, mais
+                // ces blocs-ci sont du HTML rédigé sur place — le plafond de score n'a
+                // pas de prise sur eux, on agit donc sur la classe CSS.
+                const _assum = (typeof isAlertJustified === 'function') && isAlertJustified(maskKey);
+                let btnAssume;
+                if (_assum) {
+                    btnAssume = `<button type="button" class="btn btn-link p-0 float-end ms-2" style="font-size:0.7em;text-decoration:none;color:#0d9488;" title="Retirer la justification" onclick="if(typeof unjustifyGeriaAlert==='function')unjustifyGeriaAlert('${safeKey}');return false;">↺ retirer</button>`;
+                    htmlStr = String(htmlStr).replace(/alert-danger|alert-stopp/g, 'alert-warning');
+                    const motif = (typeof justificationMotif === 'function') ? justificationMotif(maskKey) : '';
+                    const bandeau = `<div class="mt-1 p-2 rounded" style="background:#ecfdf5;border-left:3px solid #0d9488;"><small><strong>Prescription assumée par le prescripteur</strong> — surveillance maintenue.${motif ? ' <em>' + escapeHtml(motif) + '</em>' : ''}</small></div>`;
+                    htmlStr = String(htmlStr).replace(/<\/div>\s*$/, bandeau + '</div>');
+                } else {
+                    btnAssume = `<button type="button" class="btn btn-link p-0 float-end ms-2" style="font-size:0.7em;text-decoration:none;color:#0d9488;" title="Prescription justifiée : l'alerte reste affichée et surveillée" onclick="if(typeof justifyGeriaAlert==='function')justifyGeriaAlert('${safeKey}','${safeTitre}');return false;">✓ assumer</button>`;
+                }
+                htmlStr = String(htmlStr).replace(/(<div\s+class="alert[^"]*"[^>]*>)/i, '$1' + btn + btnAssume);
                 if (targetId === 'alertes-bio') _regAddDomain('bio', { titre: title, message: '', severity });
             }
         }

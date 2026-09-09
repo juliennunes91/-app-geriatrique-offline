@@ -215,6 +215,10 @@ function analyzeCase(caseObj) {
             // permet de vérifier que le masquage retire bien le bloc ET que le HTML
             // environnant reste équilibré.
             window._maskedAlerts = new Set(${JSON.stringify(caseObj.masked || [])});
+            // Alertes ASSUMEES par le prescripteur : elles restent affichees mais
+            // leur score est plafonne sous la bande rouge. Testable sans navigateur.
+            window._justifiedAlerts = new Map((${JSON.stringify(caseObj.assumees || [])}).map(
+                e => (typeof e === 'string') ? [e, { motif: '', date: '' }] : [e.cle, { motif: e.motif || '', date: e.date || '' }]));
             _lastAnalysisHash = null; _lastAnalysisResult = null;
         })();
     `, sandbox);

@@ -773,6 +773,42 @@ que d'être gatée règle par règle.
 - Défaut par défaut : tant que la précision n'est pas saisie, on retient la forme
   **la plus exposante** (systémique, injectable).
 
+## Alertes assumées — le troisième état
+
+Un PIM peut être **justifié chez ce patient-là** : phénothiazine de seconde ligne après
+échec d'un atypique, antipsychotique en indication non psychiatrique, traitement de fond
+ancien qu'on ne déprescrit pas. L'application gradue le **risque** — qui, lui, ne diminue
+pas —, le clinicien connaît la **justification**, et les deux n'avaient aucun moyen de se
+rencontrer : la seule action offerte était de **masquer**, ce qui emportait la surveillance
+avec l'alerte.
+
+Le cas qui l'a rendu visible : une cyamémazine FORTA D chez une démente de 85 ans sort en
+rouge — c'est exact quant au risque, et inexact quant à la conduite si la molécule a été
+choisie en connaissance de cause.
+
+**Une alerte assumée reste affichée**, garde son plan de suivi et ses examens, et porte le
+motif écrit par le prescripteur. Ce qui change est l'**action attendue** : « surveiller » et
+non « agir maintenant ».
+
+- Modèle : `window._justifiedAlerts`, une **Map** clé → `{motif, date}` (les mêmes familles
+  de clés que le masquage : `id:`, `rc:`, `tt:`, `gl:`). Sérialisée dans l'export JSON
+  (clé `assumees`), purgée par `resetPatient()`, prise dans le hash de mémoïsation — sans
+  quoi le clic resterait sans effet visible.
+- **Deux chemins, deux mécanismes.** Les alertes du moteur passent par un **plafond de
+  score** dans `computeAlertScore` (après le plancher de sévérité, sans quoi une règle
+  `danger` y remonterait aussitôt) ; les blocs rédigés sur place — bio, interactions, ANSM —
+  n'ont pas de score, leur classe CSS est donc rétrogradée au rendu.
+- **Le plafond ne va que vers le BAS, et seulement depuis la bande rouge.** Un
+  `Math.max(SCORE_MIN_IMPORTANT, …)` — écrit puis corrigé pendant ce chantier — **remontait
+  en orange une alerte informative** qu'on venait d'assumer, soit l'inverse de ce qui est
+  demandé. Un test le vérifie, validé par mutation.
+- **Le rapport le trace** : bloc « Prescriptions assumées par le prescripteur », placé juste
+  après le commentaire humain, car c'en est un aussi. Sans cette trace, un lecteur tiers
+  verrait une couleur adoucie sans explication — il doit savoir qu'un PIM affiché en orange
+  l'est parce qu'il a été **discuté**, non parce que l'application le juge secondaire.
+- C'est l'inverse d'un bouton silence : ne jamais le faire filtrer l'alerte, ni retirer un
+  examen du plan biologique.
+
 ## Masquage — ce que l'utilisateur peut écarter
 
 `window._maskedAlerts` couvre trois familles de clés, toutes filtrées **en amont du

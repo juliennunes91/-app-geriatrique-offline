@@ -838,6 +838,91 @@ function maskGeriaAlert(key) {
     window._maskedAlerts.add(key);
     if (typeof analyserPrescription === 'function') analyserPrescription();
 }
+// ═══════════════════════════════════════════════════════════════════════════
+// ALERTES ASSUMÉES — le troisième état, entre « affichée » et « masquée »
+// ═══════════════════════════════════════════════════════════════════════════
+// Un PIM peut être JUSTIFIÉ chez ce patient-là : phénothiazine de seconde ligne
+// après échec d'un atypique, antipsychotique en indication non psychiatrique,
+// traitement de fond ancien qu'on ne déprescrit pas. L'application gradue le
+// RISQUE — qui, lui, ne diminue pas —, le clinicien connaît la JUSTIFICATION, et
+// les deux n'avaient aucun moyen de se rencontrer : la seule action offerte était
+// de MASQUER, ce qui emportait la surveillance avec l'alerte.
+//
+// Une alerte assumée reste AFFICHÉE, garde son plan de suivi et ses examens, mais
+// ne réclame plus une action immédiate : son score est plafonné sous la bande
+// rouge et elle porte le motif écrit par le prescripteur. C'est l'inverse d'un
+// bouton silence — elle devient une décision tracée, que le rapport reprend.
+window._justifiedAlerts = window._justifiedAlerts || new Map();
+
+function isAlertJustified(key) {
+    return !!(key && window._justifiedAlerts && window._justifiedAlerts.has(key));
+}
+function justificationMotif(key) {
+    const e = window._justifiedAlerts && window._justifiedAlerts.get(key);
+    return (e && e.motif) || '';
+}
+function _closeJustifyModal() {
+    const o = document.getElementById('geriaJustifyOverlay');
+    if (o && o.remove) o.remove();
+    if (document.removeEventListener) document.removeEventListener('keydown', _justifyEsc);
+}
+function _justifyEsc(e) { if (e.key === 'Escape') _closeJustifyModal(); }
+
+function justifyGeriaAlert(key, titre) {
+    if (!key) return;
+    _closeJustifyModal();
+    const dejaLa = justificationMotif(key);
+    const overlay = document.createElement('div');
+    overlay.id = 'geriaJustifyOverlay';
+    overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:20000;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,.55);padding:16px;';
+    const card = document.createElement('div');
+    card.style.cssText = 'background:#fff;color:#1e293b;max-width:460px;width:100%;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.3);padding:20px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;';
+    const h = document.createElement('div'); h.style.cssText = 'font-weight:700;font-size:15px;margin-bottom:4px;';
+    h.textContent = 'Assumer cette prescription';
+    const sub = document.createElement('div'); sub.style.cssText = 'font-size:13px;color:#64748b;margin-bottom:12px;';
+    sub.textContent = titre || '';
+    const expl = document.createElement('div'); expl.style.cssText = 'font-size:12px;color:#475569;margin-bottom:12px;line-height:1.45;';
+    expl.textContent = "L'alerte reste affichée et sa surveillance est maintenue : elle cesse seulement de réclamer une action immédiate. Le motif que vous inscrivez ici figurera dans le rapport.";
+    card.appendChild(h); card.appendChild(sub); card.appendChild(expl);
+    const lab = document.createElement('label'); lab.textContent = 'Motif (facultatif)';
+    lab.style.cssText = 'display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:#334155;';
+    const ta = document.createElement('textarea'); ta.rows = 3; ta.value = dejaLa;
+    ta.placeholder = "Ex. : seconde ligne après échec de la rispéridone ; antiémétique en soins palliatifs ; traitement de fond ancien, efficace et toléré.";
+    ta.style.cssText = 'width:100%;padding:8px 10px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;box-sizing:border-box;resize:vertical;';
+    card.appendChild(lab); card.appendChild(ta);
+    const btns = document.createElement('div'); btns.style.cssText = 'display:flex;gap:8px;justify-content:flex-end;margin-top:14px;';
+    const annul = document.createElement('button'); annul.type = 'button'; annul.textContent = 'Annuler';
+    annul.style.cssText = 'padding:8px 14px;border:1px solid #cbd5e1;background:#fff;color:#475569;border-radius:8px;cursor:pointer;font-size:14px;';
+    annul.addEventListener('click', _closeJustifyModal);
+    const ok = document.createElement('button'); ok.type = 'button'; ok.textContent = 'Assumer';
+    ok.style.cssText = 'padding:8px 14px;border:0;background:#0d9488;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;';
+    ok.addEventListener('click', () => {
+        window._justifiedAlerts.set(key, { motif: (ta.value || '').trim(), date: new Date().toISOString().slice(0, 10) });
+        _closeJustifyModal();
+        if (typeof analyserPrescription === 'function') analyserPrescription();
+    });
+    btns.appendChild(annul); btns.appendChild(ok); card.appendChild(btns);
+    overlay.appendChild(card); document.body.appendChild(overlay);
+    overlay.addEventListener('click', e => { if (e.target === overlay) _closeJustifyModal(); });
+    if (document.addEventListener) document.addEventListener('keydown', _justifyEsc);
+    if (ta.focus) ta.focus();
+}
+function unjustifyGeriaAlert(key) {
+    if (!key || !window._justifiedAlerts) return;
+    window._justifiedAlerts.delete(key);
+    if (typeof analyserPrescription === 'function') analyserPrescription();
+}
+function resetJustifiedAlerts() {
+    if (window._justifiedAlerts) window._justifiedAlerts.clear();
+    if (typeof analyserPrescription === 'function') analyserPrescription();
+}
+window.isAlertJustified = isAlertJustified;
+window.justificationMotif = justificationMotif;
+window.justifyGeriaAlert = justifyGeriaAlert;
+window.unjustifyGeriaAlert = unjustifyGeriaAlert;
+window.resetJustifiedAlerts = resetJustifiedAlerts;
+
 function resetMaskedAlerts() {
     window._maskedAlerts.clear();
     if (typeof analyserPrescription === 'function') analyserPrescription();

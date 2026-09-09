@@ -1229,6 +1229,50 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(bloc && !/Concerné chez ce patient/.test(bloc),
             'une alerte qui ne vise qu\'une classe n\'a pas besoin de la repeter');
     });
+    test('Alerte ASSUMEE : elle descend d\'une bande, elle ne disparait pas', () => {
+        // Un PIM peut etre justifie chez ce patient-la. L'application gradue le RISQUE,
+        // le clinicien connait la JUSTIFICATION, et les deux n'avaient aucun moyen de se
+        // rencontrer : la seule action offerte etait de MASQUER, ce qui emportait la
+        // surveillance avec l'alerte.
+        const base = { age: 85, sexe: 'F', dfg: 88, comorbs: ['PAT_010'],
+                       flags: ['chkDemence'], meds: ['Cyamemazine'] };
+        const sev = (r, re) => ((r['alertes-eviter'] || []).find(a => re.test(a.titre)) || {}).severity;
+        const brut = analyzeCase(base);
+        const assum = analyzeCase({ ...base, assumees: [{ cle: 'id:EV_D21', motif: 'Seconde ligne apres echec de la risperidone.' }] });
+
+        assert.strictEqual(sev(brut, /Phénothiazine/), 'danger', 'sans justification : rouge');
+        assert.strictEqual(sev(assum, /Phénothiazine/), 'warning',
+            'assumee : orange — le risque demeure, l\'action immediate non');
+        assert.ok((assum['alertes-eviter'] || []).some(a => /Phénothiazine/.test(a.titre)),
+            'assumer n\'est PAS masquer : l\'alerte reste affichee');
+        const h = assum._html['alertes-eviter'] || '';
+        assert.ok(/Prescription assumée par le prescripteur/.test(h) && /surveillance maintenue/.test(h),
+            'le bandeau dit que la surveillance est maintenue');
+        assert.ok(/Seconde ligne apres échec|Seconde ligne apres echec/.test(h),
+            'le motif ecrit par le prescripteur est repris');
+
+        // Assumer ne REMONTE jamais une alerte : un `Math.max` mal place aurait fait
+        // passer une informative en orange.
+        const info = analyzeCase({ ...base, assumees: [{ cle: 'id:EV_SF02b', motif: '' }] });
+        assert.strictEqual(sev(info, /couché-debout/), 'info',
+            'une alerte informative assumee reste informative');
+
+        // Les autres alertes du dossier ne bougent pas.
+        assert.strictEqual(sev(assum, /durée et réévaluation/), sev(brut, /durée et réévaluation/),
+            'assumer une alerte n\'en gradue aucune autre');
+    });
+    test('Alerte ASSUMEE : le meme etat vaut pour les blocs rediges sur place', () => {
+        // Les onglets bio, interactions et ANSM ne passent pas par le moteur : leur
+        // couleur est ecrite dans le HTML, le plafond de score n'a aucune prise dessus.
+        const cle = 'tt:🚨 Hyponatrémie sévère (< 125) — Na 118 mmol/L|danger';
+        const bio = a => analyzeCase({ age: 85, sexe: 'F', dfg: 88, bio: { na: 118 }, assumees: a });
+        const brut = bio([]), assum = bio([{ cle, motif: 'Hyponatrémie chronique connue.' }]);
+        const svt = r => ((r['alertes-bio'] || []).find(x => /Hyponatr/.test(x.titre)) || {}).severity;
+        assert.strictEqual(svt(brut), 'danger');
+        assert.strictEqual(svt(assum), 'warning', 'le bloc brut redescend aussi');
+        assert.ok((assum['alertes-bio'] || []).some(x => /Hyponatr/.test(x.titre)), 'il reste affiche');
+        assert.ok(/Prescription assumée/.test(assum._html['alertes-bio'] || ''), 'bandeau present');
+    });
     test('Une posologie ne conseille pas sur un medicament non prescrit', () => {
         const poso = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds })._html['alertes-usage'] || '';
         assert.ok(!/PRÉFÉRABLE chez patient sous clopidogrel/.test(poso(['Pantoprazole'])),

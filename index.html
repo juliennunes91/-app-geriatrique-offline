@@ -118,6 +118,7 @@
                             <div class="form-check"><input type="checkbox" data-geria-pref="skipPrecisionsModal" id="prefSkipPrecisions" class="form-check-input" onchange="setGeriaPref('skipPrecisionsModal', this.checked)"><label class="form-check-label small" for="prefSkipPrecisions">Ne pas demander les précisions médicament</label></div>
                             <div class="form-check"><input type="checkbox" data-geria-pref="skipMaskConfirm" id="prefSkipMaskConfirm" class="form-check-input" onchange="setGeriaPref('skipMaskConfirm', this.checked)"><label class="form-check-label small" for="prefSkipMaskConfirm">Masquer une alerte sans confirmation</label></div>
                             <button type="button" class="btn btn-sm btn-link p-0 mt-1 text-decoration-none" onclick="resetMaskedAlerts()">↻ Réafficher toutes les alertes masquées</button>
+                            <button type="button" class="btn btn-sm btn-link p-0 mt-1 text-decoration-none d-block" onclick="resetJustifiedAlerts()">↻ Retirer toutes les justifications</button>
                             <hr class="my-2">
                             <div class="small fw-bold mb-2">Troubles cognitifs &amp; neuropsycho</div>
                             <div class="form-check"><input type="radio" name="spcDisplayMode" id="spcDisplayAccordion" value="accordion" class="form-check-input" onchange="setSpcDisplayMode('accordion')"><label class="form-check-label small" for="spcDisplayAccordion">Accordéon (inline)</label></div>
@@ -540,7 +541,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version <span id="appVersion">3.15</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version <span id="appVersion">3.20</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>

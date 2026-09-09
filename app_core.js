@@ -69,7 +69,13 @@ function _collectPatientData() {
         paam: (typeof window.paamSerialize === 'function') ? window.paamSerialize() : undefined,
         conciliation: (typeof window.conciliationSerialize === 'function') ? window.conciliationSerialize() : undefined,
         psyScores: (typeof window.psyScoresSerialize === 'function') ? window.psyScoresSerialize() : undefined,
-        vaccination: (typeof window.vaccinationSerialize === 'function') ? window.vaccinationSerialize() : undefined
+        vaccination: (typeof window.vaccinationSerialize === 'function') ? window.vaccinationSerialize() : undefined,
+        // Alertes assumees : une decision du prescripteur, pas un etat d'affichage.
+        // Elle doit survivre a l'export/import, sans quoi rouvrir le dossier redemande
+        // de rejustifier ligne par ligne ce qui l'a deja ete.
+        assumees: (window._justifiedAlerts && window._justifiedAlerts.size)
+            ? [...window._justifiedAlerts.entries()].map(([cle, v]) => ({ cle, motif: (v && v.motif) || '', date: (v && v.date) || '' }))
+            : undefined
     };
 }
 
@@ -132,6 +138,11 @@ function _restorePatientData(data) {
     if (data.psyScores && typeof window.psyScoresRestore === 'function') window.psyScoresRestore(data.psyScores);
     // Restaurer le statut vaccinal.
     if (data.vaccination && typeof window.vaccinationRestore === 'function') window.vaccinationRestore(data.vaccination);
+    if (Array.isArray(data.assumees)) {
+        window._justifiedAlerts = window._justifiedAlerts || new Map();
+        window._justifiedAlerts.clear();
+        data.assumees.forEach(e => { if (e && e.cle) window._justifiedAlerts.set(e.cle, { motif: e.motif || '', date: e.date || '' }); });
+    }
     if (typeof renderTags === 'function') renderTags();
     if (typeof calculerDFG === 'function') calculerDFG(false);
 }
@@ -518,6 +529,25 @@ function buildPdfContent() {
         </div>
         <div style="margin:0 0 14px 0;text-align:center;font-size:8px;color:#a9b0b7;letter-spacing:0.08em;text-transform:uppercase;">
             <span style="display:inline-block;border-top:1px solid #e4e8ec;padding-top:5px;width:100%;">Analyse automatisée GeriaAssist</span>
+        </div>`;
+    }
+
+    // Prescriptions assumées — juste après le commentaire humain, car c'en est un
+    // aussi : une décision du prescripteur, pas un produit de l'analyse. Le bloc
+    // existe pour que le lecteur tiers sache qu'un PIM affiché en orange l'est parce
+    // qu'il a été DISCUTÉ, et non parce que l'application le juge secondaire. Sans
+    // cette trace, la couleur adoucie serait un affaiblissement inexpliqué.
+    if (window._justifiedAlerts && window._justifiedAlerts.size) {
+        const lignes = [...window._justifiedAlerts.entries()].map(([cle, v]) => {
+            const lib = String(cle).replace(/^tt:/, '').replace(/\|(danger|warning|info)$/, '')
+                .replace(/^id:/, '').replace(/^rc:/, '').replace(/^gl:/, '').replace(/\|/g, ' — ');
+            const motif = (v && v.motif) ? `<div style="${S.muted ? '' : ''}color:#6c757d;margin-top:2px;">${escapeHtml(v.motif)}</div>` : '';
+            return `<div class="pdf-block" style="${S.item}">${escapeHtml(texteClinique(lib))}${motif}</div>`;
+        }).join('');
+        html += `<div style="margin:0 0 14px 0;border-left:4px solid #0d9488;border-radius:0 5px 5px 0;background:${rgba('#0d9488', 0.05)};padding:10px 12px;">
+            <div class="pdf-block">${secTitle('Prescriptions assumées par le prescripteur', '#0d9488', String(window._justifiedAlerts.size))}</div>
+            <div class="pdf-block" style="${S.body}color:#6c757d;margin-bottom:4px;">Ces points restent surveillés : ils ont été relus et maintenus en connaissance de cause.</div>
+            ${lignes}
         </div>`;
     }
 
@@ -935,6 +965,7 @@ window.resetPatient = function() {
     window.suspendedMeds.length = 0;
     // Purger les alertes masquées (Phase 2) : le dossier précédent n'engage pas le suivant.
     if (window._maskedAlerts && typeof window._maskedAlerts.clear === 'function') window._maskedAlerts.clear();
+    if (window._justifiedAlerts && typeof window._justifiedAlerts.clear === 'function') window._justifiedAlerts.clear();
     // Purger la grille PAAM (procédure auto-administration) — données spécifiques au résident.
     if (typeof window.paamReset === 'function') window.paamReset();
     // Purger la fiche de conciliation médicamenteuse — spécifique au patient.
