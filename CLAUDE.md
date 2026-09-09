@@ -981,6 +981,38 @@ Tout est traité **au rendu** (`buildPdfContent`, `app_core.js`) — on ne réé
 - Le panneau des scores apparie chaque `<strong>` au texte qui le suit
   (il affichait le score ACB avec le commentaire du CIA) après avoir retiré
   l'infobulle `.score-tooltip`, qui déversait la grille de cotation complète.
+- **Un « point de méthode » ne rend qu'un TITRE — donc il doit porter son attribution.**
+  Le régime `info` regroupe les entrées sur une ligne, titre seul. « Mesure de la TA
+  couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans) » sortait ainsi
+  du chapeau : l'écran nomme la molécule qui déclenche la règle (« Concerné chez ce
+  patient : CYAMEMAZINE », posé par `renderSingleAlert`), le rapport perdait cette
+  ligne avec le reste du détail. Elle est reprise après le titre — sauf sur une entrée
+  **fusionnée**, dont le texte est commun à plusieurs règles.
+
+### Ce rendu n'est testable qu'en navigateur
+
+`buildPdfContent()` est écrit CONTRE le DOM rendu : il relit les cartes d'alerte, leur
+classe de sévérité, leur `<strong>`, leur clé de masquage. Le `document.querySelectorAll()`
+du harnais Node rend `[]`, si bien que le rapport y sort **vide** et que tous ses
+invariants passeraient pour vrais. C'était l'angle mort de la zone qui a demandé le plus
+de corrections de lisibilité.
+
+`node tools/tests_ui_playwright.cjs` boote l'application dans Chromium (serveur statique
+local, port éphémère), injecte un dossier au **même format** que `analyzeCase()` du
+harnais, et vérifie le rapport : il n'est pas vide ; une alerte assumée quitte le corps
+de la section pour le relevé de fin, avec son motif ; ce relevé n'existe pas quand rien
+n'est assumé ; **aucun identifiant de règle** (`EV_D21`) ni handler ne parvient au
+destinataire ; « (Générique) » ne s'imprime pas ; un point de méthode qui énumère des
+classes nomme celle qui concerne le patient. Les quatre invariants de rendu sont
+**validés par mutation**. Le test se déclare IGNORÉ, sans échouer, si Playwright ou
+Chromium sont absents — l'application est hors ligne et sans build, ils ne sont pas des
+dépendances du dépôt. Il n'est donc **pas** appelé par `node tests.js` : à lancer
+séparément après toute modification de `buildPdfContent`.
+
+Corollaire trouvé par ce test : `nomPathoAffiche()` manquait encore sur **trois**
+chemins — la liste des comorbidités du PDF, celle de l'export texte, et la pastille de
+comorbidité sélectionnée. Le test d'onglets ne pouvait pas les voir, aucun ne passant
+par un conteneur `alertes-*`.
 
 ## Le plan biologique se range par criticité, pas par fréquence
 

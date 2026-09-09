@@ -523,7 +523,7 @@ function renderTags() {
     if(elComorb) {
         const frag = document.createDocumentFragment();
         comorbsAffichables(activeComorbs).forEach(c => {
-            let p = MASTER_DB.PATHOLOGIES[c]; let label = p ? p.NOM_STANDARD : c;
+            let p = MASTER_DB.PATHOLOGIES[c]; let label = nomPathoAffiche(p ? p.NOM_STANDARD : c);
             let span = document.createElement('span'); span.className = 'badge bg-secondary tag-badge'; span.textContent = label + ' ✖';
             span.onclick = () => removeComorb(c); frag.appendChild(span);
         });

@@ -251,7 +251,7 @@ function buildSyntheseText() {
         lines.push('Aucune comorbidité sélectionnée.');
     } else {
         (typeof comorbsAffichables === 'function' ? comorbsAffichables(activeComorbs) : activeComorbs).forEach(c => {
-            const nom = (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES[c]) ? MASTER_DB.PATHOLOGIES[c].NOM_STANDARD : c;
+            const nom = nomPathoAffiche((typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES[c]) ? MASTER_DB.PATHOLOGIES[c].NOM_STANDARD : c);
             lines.push('• ' + nom);
         });
     }
@@ -627,7 +627,7 @@ function buildPdfContent() {
         html += `<em style="${S.body}color:${S.muted};">Aucune</em>`;
     } else {
         (typeof comorbsAffichables === 'function' ? comorbsAffichables(activeComorbs) : activeComorbs).forEach(c => {
-            const nom = (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES[c]) ? MASTER_DB.PATHOLOGIES[c].NOM_STANDARD : c;
+            const nom = nomPathoAffiche((typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES[c]) ? MASTER_DB.PATHOLOGIES[c].NOM_STANDARD : c);
             html += `<span style="display:inline-block;background:#e7f1ff;border-radius:3px;padding:2px 6px;margin:2px 5px 2px 0;font-size:8.5px;line-height:1.55;">${escapeHtml(nom)}</span>`;
         });
     }
@@ -790,10 +790,29 @@ function buildPdfContent() {
             </div>`;
         });
         if (mineures.length > 0) {
+            // « Points de méthode » ne rend que des TITRES — et un titre qui énumère
+            // cinq classes ne dit pas laquelle concerne le patient. « Mesure de la TA
+            // couché-debout sous médicament hypotenseur ou orthostatique » sortait donc
+            // du chapeau : l'écran porte l'attribution (« Concerné chez ce patient :
+            // CYAMEMAZINE », posée par renderSingleAlert), le rapport la perdait.
+            // On la reprend telle quelle — c'est le seul élément qui rattache la
+            // consigne à l'ordonnance qu'on a devant soi.
+            const concernesDe = (a) => {
+                const n = [...a.querySelectorAll('em')]
+                    .find(e => /Concerné chez ce patient/i.test(e.textContent || ''));
+                if (!n) return '';
+                return [...n.querySelectorAll('b')].map(x => x.textContent.trim())
+                    .filter(Boolean).join(', ');
+            };
             const titres = mineures.map(a => {
                 const fus = porteFusion.get(a);
                 const st = a.querySelector('strong');
-                return escapeHtml((fus ? fus.titre : (st ? st.textContent : '')).replace(/^[^\wÀ-ÿ]+/, '').trim());
+                const t = (fus ? fus.titre : (st ? st.textContent : '')).replace(/^[^\wÀ-ÿ]+/, '').trim();
+                if (!t) return '';
+                // Une fusion porte un texte commun à plusieurs règles : l'attribution
+                // d'une seule d'entre elles n'y a pas sa place.
+                const c = fus ? '' : concernesDe(a);
+                return escapeHtml(c ? `${t} — ${c}` : t);
             }).filter(Boolean);
             html += `<div class="pdf-block" style="${S.item}${majeures.length ? 'border-top:' + S.rule + ';' : ''}">
                 <strong style="font-weight:600;">Points de méthode (${titres.length})</strong>
