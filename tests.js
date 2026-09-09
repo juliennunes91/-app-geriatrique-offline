@@ -1206,8 +1206,13 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             'sous donepezil, la clause redevient vraie et doit s\'afficher');
         assert.ok(/Aggravation cognitive/.test(seul),
             'le reste de la raison est conserve — on retire la clause, pas le message');
-        assert.ok(/Également concerné à un moindre degré/.test(seul) && /mortalité/i.test(seul),
-            'le motif antipsychotique reste lisible sous l\'alerte retenue');
+        // Le motif « mortalite/AVC » n'est plus sous la carte contra-patho : il est
+        // ABSORBE par EV_D05, qui porte la meme molecule et la meme maladie. Il doit
+        // rester lisible — ailleurs, mais une seule fois.
+        assert.ok(/Contre-indication liée à la pathologie[^<]*mortalité/i.test(seul),
+            'le motif antipsychotique est reporté sous la règle du moteur qui le couvre');
+        assert.strictEqual((seul.match(/↑ mortalité et AVC chez déments/g) || []).length, 1,
+            'et il n\'y figure qu\'une fois — pas sur deux cartes voisines');
         assert.ok(/CI Syndrome Démentiel/.test(seul) && !/Syndrome Démentiel \(Générique\)/.test(seul),
             '« (Générique) » est une nomenclature interne, pas une information clinique');
     });
@@ -1272,6 +1277,48 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.strictEqual(svt(assum), 'warning', 'le bloc brut redescend aussi');
         assert.ok((assum['alertes-bio'] || []).some(x => /Hyponatr/.test(x.titre)), 'il reste affiche');
         assert.ok(/Prescription assumée/.test(assum._html['alertes-bio'] || ''), 'bandeau present');
+    });
+    test('Le bandeau de synthese ne contredit jamais l\'ecran', () => {
+        // `a.med_keys` n'existe sur AUCUNE regle — les 154 qui en portent les declarent
+        // sous `condition.med_keys`. La boucle qui alimentait le registre PAR MEDICAMENT
+        // n'inscrivait donc jamais rien : la rubrique « medicaments a retirer » et le
+        // bandeau de gravite qui en derive ne voyaient que la table des
+        // contre-indications par pathologie. 26 des 112 dossiers du panel affichaient un
+        // bandeau contredisant leurs propres cartes — dont 21 annoncant « Dossier sans
+        // alerte critique » au-dessus d'alertes rouges.
+        const T = require('./tests_audit_extended');
+        const incoherents = [];
+        for (const [nom, p] of Object.entries(T.PANEL)) {
+            const r = analyzeCase(p);
+            const rouges = (r['alertes-eviter'] || []).filter(a => a.severity === 'danger').length;
+            const banniere = (r['alertes-synthese'] || []).map(a => a.titre).join(' ');
+            if (rouges > 0 && !/alertes critiques|HAUT risque/.test(banniere)) incoherents.push(nom + ' (' + rouges + ')');
+        }
+        assert.strictEqual(incoherents.length, 0,
+            'dossier(s) dont le bandeau nie des alertes rouges affichees : ' + incoherents.slice(0, 8).join(', '));
+    });
+    test('Une contre-indication deja portee par une regle est ABSORBEE, pas repetee', () => {
+        // Deux corpus jugent la meme prescription : les regles geriatriques et les
+        // contre-indications par pathologie. Quand les deux visent le meme medicament et
+        // la meme maladie, le lecteur recevait deux cartes disant une seule chose.
+        const base = { age: 85, sexe: 'F', dfg: 88, comorbs: ['PAT_010'], flags: ['chkDemence'] };
+        const t = meds => (analyzeCase({ ...base, meds })['alertes-eviter'] || []).map(a => a.titre);
+        const h = meds => analyzeCase({ ...base, meds })._html['alertes-eviter'] || '';
+
+        // Oxybutynine : la clause « anticholinergique » de PAT_010 est couverte par EV_I01
+        // (antimuscarinique + demence, `danger`) — la carte contra-patho disparait.
+        const oxy = t(['Oxybutynine']);
+        assert.ok(oxy.some(x => /Antimuscarinique systémique/.test(x)), 'la regle du moteur tient');
+        assert.ok(!oxy.some(x => /OXYBUTYNINE — CI Syndrome Démentiel/.test(x)),
+            'la contre-indication redondante ne fait plus une carte de plus');
+        assert.ok(/Contre-indication liée à la pathologie/.test(h(['Oxybutynine'])),
+            'son motif est REPORTE sous la regle qui la couvre — rien n\'est supprime');
+
+        // Garde-fou : une clause au verdict PLUS FORT que toutes ses porteuses garde sa
+        // carte. Halopéridol dans la DCL est une contre-indication ABSOLUE.
+        const lewy = (analyzeCase({ age: 80, sexe: 'F', dfg: 70, comorbs: ['PAT_012'], meds: ['Haloperidol'] })['alertes-eviter'] || []).map(a => a.titre);
+        assert.ok(lewy.some(x => /HALOPERIDOL — CI /.test(x)),
+            'une contre-indication ABSOLUE n\'est jamais absorbee dans une regle moins severe');
     });
     test('Une posologie ne conseille pas sur un medicament non prescrit', () => {
         const poso = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds })._html['alertes-usage'] || '';

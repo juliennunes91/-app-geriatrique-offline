@@ -1065,6 +1065,12 @@ const GeriaEngineV2 = (() => {
         // le rapprochement, et quatre classes sur cinq ne le concernent pas.
         // La ligne n'est ajoutee que si la regle cite PLUSIEURS cles et qu'une PARTIE
         // seulement resout — une alerte qui vise une seule molecule se suffit a elle-meme.
+        // Motifs venus de la table des contre-indications par pathologie, absorbés ici
+        // parce qu'ils portent sur le même médicament et la même maladie que cette règle
+        // (voir l'absorption dans app_analysis.js). Ils sont REPORTÉS, jamais supprimés.
+        const absorbeHtml = (a._absorbe && a._absorbe.length)
+            ? `<div class="small mt-1" style="padding-left:0.25rem;"><em class="text-muted">Contre-indication liée à la pathologie : ${a._absorbe.map(x => esc(x)).join(' ; ')}</em></div>`
+            : '';
         let medsConcernes = '';
         try {
             const cles = (a.condition && a.condition.med_keys) || [];
@@ -1127,6 +1133,7 @@ const GeriaEngineV2 = (() => {
             <span class="badge bg-secondary float-end" style="font-size:0.65em;">${esc(displaySourceLabel)}</span>
             <div class="small mt-1" style="padding-left: 0.25rem;">${recontexteBadge}${safeMessage}</div>
             ${medsConcernes}
+            ${absorbeHtml}
             ${assumeBanner}
             ${recontexteBanner}
             ${compHtml}

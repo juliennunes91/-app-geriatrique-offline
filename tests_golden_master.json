@@ -17,13 +17,11 @@
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Polypharmacie sans réévaluation (REMEDIES)",
    "info | Réévaluation annuelle de chaque traitement chronique",
-   "warning | AMITRIPTYLINE — Déconseillé Dépression (sujet âgé / Late-Life Depression)",
    "warning | Antidépresseur chez patient chuteur",
    "warning | Aspirine en prévention primaire cardiovasculaire",
    "warning | Cascades iatrogéniques détectées",
    "warning | DIAZEPAM — Déconseillé Dépression (sujet âgé / Late-Life Depression)",
    "warning | Digoxine en 1ère ligne pour FA (contrôle de fréquence > 3 mois)",
-   "warning | IBUPROFENE — Déconseillé Hypertension Artérielle (HTA)",
    "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
@@ -123,7 +121,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "bipolaire_lithium": {
@@ -206,7 +204,7 @@
    "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "depression_recurrente": {
@@ -281,7 +279,7 @@
    "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "IC_HFrEF": {
@@ -354,7 +352,7 @@
    "warning | ORBIT-AF : 3 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "diabete_IRC": {
@@ -448,8 +446,7 @@
    "danger | Médicament hépatotoxique + hépatopathie chronique / cirrhose",
    "info | Action immédiate",
    "warning | Cascades iatrogéniques détectées",
-   "warning | DIAZEPAM — Déconseillé Hépatopathie chronique / Cirrhose",
-   "warning | PARACETAMOL — Prudence Hépatopathie chronique / Cirrhose"
+   "warning | DIAZEPAM — Déconseillé Hépatopathie chronique / Cirrhose"
   ],
   "alertes-initier": [
    "info | Lactulose / rifaximine pour encéphalopathie hépatique (cirrhose)"
@@ -478,7 +475,7 @@
    "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "demence_SCPD": {
@@ -486,13 +483,11 @@
    "danger | Anticholinergique puissant + Démence ou Delirium",
    "danger | Antimuscarinique systémique + Démence",
    "danger | Antipsychotique chez patient dément — durée et réévaluation",
-   "danger | OXYBUTYNINE — CI Syndrome Démentiel",
    "danger | Oxybutynine (toutes formes)",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Symptômes psycho-comportementaux déclarés (1) — conduite de première intention",
    "warning | Cascades iatrogéniques détectées",
-   "warning | RISPERIDONE — Prudence Syndrome Démentiel",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],
@@ -520,7 +515,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "parkinson_psychose": {
@@ -557,7 +552,7 @@
    "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "anticoag_antiagr": {
@@ -599,7 +594,7 @@
    "warning | ORBIT-AF : 3 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "QT_polypharmacie": {
@@ -688,7 +683,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "vitamine_D_seule": {
@@ -781,7 +776,7 @@
    "warning | Score PIM Global : 56/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "LAI_depot": {
@@ -812,8 +807,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "sujet_jeune_psy": {
@@ -982,7 +976,6 @@
  },
  "cov_EV_B01_EV_B02": {
   "alertes-eviter": [
-   "danger | VERAPAMIL — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "danger | Vérapamil/Diltiazem + IC FE réduite (NYHA III-IV)",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
@@ -1049,8 +1042,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_B06": {
@@ -1085,7 +1077,7 @@
    "warning | Score PIM Global : 42/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Dossier nécessitant vigilance"
   ]
  },
  "cov_EV_B07": {
@@ -1117,8 +1109,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Dossier nécessitant vigilance"
   ]
  },
  "cov_EV_B07_EV_B09": {
@@ -1232,16 +1223,13 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_B14_EV_B17": {
   "alertes-eviter": [
    "danger | AINS au long cours + maladie vasculaire connue",
    "danger | AINS/Corticoïde + IC nécessitant diurétique de l'anse",
-   "danger | CELECOXIB — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
-   "danger | CELECOXIB — CI Syndrome Coronarien Chronique (SCC)",
    "danger | IPDE5 + IC sévère ou dérivés nitrés",
    "info | Action immédiate"
   ],
@@ -1277,14 +1265,13 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_B19_EV_B20": {
   "alertes-eviter": [
    "danger | AINS/Corticoïde + IC nécessitant diurétique de l'anse",
    "danger | Antihypertenseur (hors IEC/ARA2) + sténose aortique sévère symptomatique",
-   "danger | CELECOXIB — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Cascades iatrogéniques détectées",
@@ -1319,7 +1306,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_B22_EV_PRISC_01": {
@@ -1355,13 +1342,12 @@
    "warning | Score PIM Global : 52/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques",
+   "danger | Dossier à HAUT risque",
    "warning | Saisies hors plages plausibles"
   ]
  },
  "cov_EV_FORTA_02_EV_PIM_01": {
   "alertes-eviter": [
-   "danger | DRONEDARONE — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "danger | Dronédarone + IC (PIM-Check)",
    "info | Action immédiate",
    "warning | Antiarythmique classe I/III sans ECG régulier",
@@ -1401,7 +1387,6 @@
  },
  "cov_EV_PIM_02_EV_N05": {
   "alertes-eviter": [
-   "danger | FLECAINIDE — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "danger | Flécaïnide / Propafénone + cardiopathie structurelle",
    "danger | Médicament allongeant le QT + QT long congénital",
    "info | Action immédiate",
@@ -1544,7 +1529,7 @@
    "warning | ORBIT-AF : 4 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_C06_EV_C10": {
@@ -1586,7 +1571,7 @@
    "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_C11_EV_C13": {
@@ -1626,7 +1611,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_C14_EV_C17": {
@@ -1701,13 +1686,11 @@
    "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_D01_EV_D03": {
   "alertes-eviter": [
-   "danger | AMITRIPTYLINE — CI Syndrome Démentiel",
    "danger | Anticholinergique puissant + Démence ou Delirium",
    "danger | Antidépresseurs tricycliques chez le sujet âgé",
    "danger | IRSN + HTA sévère",
@@ -1745,7 +1728,7 @@
    "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_D04_EV_D06": {
@@ -1788,7 +1771,7 @@
    "warning | Score PIM Global : 57/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_D09_EV_D10": {
@@ -1798,8 +1781,6 @@
    "danger | Benzodiazépine ≥ 2 semaines pour insomnie",
    "danger | Benzodiazépines / Z-drugs : ALPRAZOLAM",
    "info | Action immédiate",
-   "warning | ALPRAZOLAM — Déconseillé Insomnie",
-   "warning | ALPRAZOLAM — Déconseillé Syndrome Démentiel",
    "warning | Cascades iatrogéniques détectées"
   ],
   "alertes-initier": [],
@@ -1823,7 +1804,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_D11_EV_D16": {
@@ -1835,10 +1816,8 @@
    "danger | Hypnotique Z ≥ 2 semaines pour insomnie",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
-   "warning | AMISULPRIDE — Déconseillé Insomnie",
    "warning | Cascades iatrogéniques détectées",
-   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
-   "warning | ZOLPIDEM — Déconseillé Insomnie"
+   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1865,7 +1844,7 @@
    "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_D17_EV_D18": {
@@ -1903,7 +1882,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_D19_EV_D20": {
@@ -1938,7 +1917,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_D21_EV_D22": {
@@ -1975,8 +1954,7 @@
    "warning | Score PIM Global : 41/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_D25_EV_BEERS_01": {
@@ -1985,7 +1963,6 @@
    "danger | Antihistaminique H1 1ère génération pour insomnie",
    "danger | Méprobamate, barbituriques",
    "info | Action immédiate",
-   "warning | HYDROXYZINE — Déconseillé Insomnie",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],
@@ -2011,7 +1988,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_SF06": {
@@ -2046,7 +2023,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Dossier nécessitant vigilance"
   ]
  },
  "cov_EV_FORTA_04": {
@@ -2077,8 +2054,7 @@
    "warning | Score PIM Global : 59/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_IN_D01_IN_D02": {
@@ -2196,7 +2172,7 @@
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_E05": {
@@ -2228,7 +2204,7 @@
    "warning | Score PIM Global : 53/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_E06": {
@@ -2260,7 +2236,7 @@
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_E07": {
@@ -2294,7 +2270,7 @@
    "warning | Score PIM Global : 41/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_E08": {
@@ -2325,7 +2301,7 @@
    "warning | Score PIM Global : 57/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_E09_EV_E10": {
@@ -2364,7 +2340,7 @@
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_IN_E01_IN_E03": {
@@ -2465,7 +2441,7 @@
    "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_F03_EV_F05": {
@@ -2501,7 +2477,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_F07_EV_BEERS_04": {
@@ -2537,7 +2513,7 @@
    "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_IN_F01_IN_F02": {
@@ -2606,7 +2582,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_G03_EV_G04": {
@@ -2645,7 +2621,7 @@
    "warning | Score PIM Global : 37/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_H01_EV_H03": {
@@ -2714,7 +2690,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_H09_EV_BEERS_03": {
@@ -2753,7 +2729,7 @@
    "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_I04_EV_I05": {
@@ -2763,7 +2739,6 @@
    "danger | Oxybutynine (toutes formes)",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
-   "warning | ALFUZOSINE — Déconseillé Hypotension Orthostatique",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
@@ -2791,7 +2766,7 @@
    "warning | Score PIM Global : 43/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_I06_IN_I01": {
@@ -2824,13 +2799,12 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_J02_EV_J03": {
   "alertes-eviter": [
    "danger | Bêtabloquant non cardiosélectif + Diabète avec hypoglycémies fréquentes",
-   "danger | PIOGLITAZONE — CI Insuffisance Cardiaque FE Réduite (HFrEF)",
    "danger | Thiazolidinedione + IC",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
@@ -2894,8 +2868,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_J10_EV_BEERS_02": {
@@ -2928,8 +2901,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_SF03_IN_J01": {
@@ -2965,7 +2937,7 @@
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_IN_J02_IN_J03": {
@@ -3032,7 +3004,7 @@
    "warning | Score PIM Global : 42/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_K05_EV_K06": {
@@ -3073,7 +3045,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_K07_EV_K09": {
@@ -3113,7 +3085,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_K10_EV_K12": {
@@ -3151,7 +3123,7 @@
    "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_L05_EV_L06": {
@@ -3182,8 +3154,7 @@
    "warning | Score ACB : 2"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_SF01_EV_SF02": {
@@ -3193,7 +3164,6 @@
    "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "info | Statines (patient très fragile, prévention primaire) : ATORVASTATINE",
-   "warning | ALTIZIDE — Prudence Hypotension Orthostatique",
    "warning | Antihypertenseur chez le très fragile",
    "warning | Diurétique sans ionogramme de surveillance",
    "warning | Statines (STOPP/FRAIL)",
@@ -3226,7 +3196,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "warning | Dossier nécessitant vigilance"
   ]
  },
  "cov_EV_SF07": {
@@ -3259,7 +3229,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_SYND_043_EV_SYND_043b": {
@@ -3407,8 +3377,7 @@
    "warning | Score ACB : 2"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_EV_SFGG_AD_05_EV_SFGG_AD_06": {
@@ -3440,8 +3409,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_SFGG_AD_07": {
@@ -3509,8 +3477,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_N04": {
@@ -3544,7 +3511,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_N06_EV_N07": {
@@ -3583,7 +3550,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_SUP_PIMC_05_SUP_PIMC_06": {
@@ -3615,8 +3582,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_SUP_PIMC_12_SUP_REM_01": {
@@ -3648,8 +3614,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_SUP_REM_02_SUP_REM_03": {
@@ -3686,7 +3651,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "info | Actions de réévaluation suggérées"
+   "warning | Dossier nécessitant vigilance"
   ]
  },
  "cov_SUP_REM_04_SUP_REM_05": {
@@ -3718,8 +3683,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_SUP_REM_07_SUP_REM_08": {
@@ -3751,8 +3715,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_SUP_EU7_03_SUP_EU7_05": {
@@ -3785,8 +3748,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_SUP_EU7_06_SUP_EU7_07": {
@@ -3818,8 +3780,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_SUP_INT_001_SUP_INT_002": {
@@ -3863,7 +3824,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "danger | Dossier avec alertes critiques"
+   "danger | Dossier à HAUT risque"
   ]
  },
  "cov_SUP_INT_003_SUP_INT_004": {
@@ -4036,8 +3997,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Dossier nécessitant vigilance"
   ]
  },
  "cov_SUP_MTX_01": {
@@ -4066,8 +4026,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "success | Aucune action majeure identifiée",
-   "success | Dossier sans alerte critique"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_SUP_TERB_01_SUP_TERB_02": {
@@ -4099,7 +4058,7 @@
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "warning | Dossier nécessitant vigilance"
   ]
  },
  "cov_IN_E06": {
@@ -4136,7 +4095,7 @@
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Actions de réévaluation suggérées"
+   "warning | Dossier nécessitant vigilance"
   ]
  },
  "cov_SUP_ALB_01": {

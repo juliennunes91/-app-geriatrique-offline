@@ -1338,6 +1338,62 @@ function analyserPrescription() {
             eviterFinal = _filterMasked(eviterFinal);
             const initierFiltered = recos.initier ? _filterMasked(recos.initier) : null;
 
+            // ── Absorption des contre-indications médicament/pathologie ───────────
+            // Une même prescription est jugée par DEUX corpus : les règles gériatriques
+            // (`geria_recos_final.js`) et les contre-indications par pathologie
+            // (`PATHO_MED_INTERDITS`). Quand les deux portent sur le MÊME médicament et
+            // la MÊME maladie, le lecteur reçoit deux cartes qui disent une seule chose :
+            // une cyamémazine chez une démente sortait en « Antipsychotique chez patient
+            // dément » ET en « CI Syndrome Démentiel », toutes deux motivées par la
+            // mortalité et le déclin cognitif. 65 clauses de la table sont dans ce cas.
+            //
+            // Le recouvrement n'est PAS deviné par ressemblance de texte — ce que la
+            // doctrine des fusions interdit — mais établi sur l'ÉQUIVALENCE DE CONDITION :
+            // la règle du moteur cite cette pathologie et ses `med_keys` résolvent cette
+            // molécule. Et elle doit être RETENUE : absorber dans une règle qui ne s'est
+            // pas déclenchée ferait disparaître l'information.
+            //
+            // Rien n'est supprimé : le motif de la clause est reporté sous la règle qui
+            // la couvre. Et une clause dont le verdict est PLUS FORT que toutes ses
+            // porteuses garde sa propre carte — c'est le cas des cinq contre-indications
+            // absolues (halopéridol et chlorpromazine dans la DCL, halopéridol et
+            // métoclopramide dans la maladie de Parkinson, aspirine sur ulcère évolutif).
+            window._contraPathoAbsorbees = new Set();
+            if (typeof checkMedContraPathologies === 'function' && activeComorbs.length && _canMatch) {
+                const _rangClause = g => {
+                    const t = String(g || '').toUpperCase();
+                    if (t.includes('ABSOLUE')) return 4;
+                    if (t.includes('CONTRE-INDICATION')) return 3;
+                    if (t.includes('DECONSEILLE') || t.includes('DÉCONSEILLE') || t.includes('DEPRESCRIRE') || t.includes('DÉPRESCRIRE')) return 2;
+                    return 1;
+                };
+                eviterFinal.forEach(a => { a._absorbe = null; });
+                activeMeds.forEach(m => {
+                    if (/VOIE TOPIQUE/.test(m.classe || '')) return;
+                    let clauses = [];
+                    try { clauses = checkMedContraPathologies(m.dci, m.classe, activeComorbs) || []; }
+                    catch (e) { return; }
+                    clauses.forEach(cl => {
+                        const porteuses = eviterFinal.filter(r => {
+                            const c = r.condition || {};
+                            if (![].concat(c.comorbs || [], c.comorbs_any || []).includes(cl.patho)) return false;
+                            return (c.med_keys || []).some(k => {
+                                try { return matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), k); }
+                                catch (e) { return false; }
+                            });
+                        });
+                        if (!porteuses.length) return;
+                        const maxRegle = Math.max(...porteuses.map(r => ({ danger: 3, warning: 2, info: 1 }[r.severite] || 0)));
+                        if (_rangClause(cl.gravite) > maxRegle) return; // verdict plus fort : garde sa carte
+                        window._contraPathoAbsorbees.add(sanitizeText(m.dci) + '|' + cl.patho + '|' + sanitizeText(cl.raison || ''));
+                        const cible = porteuses[0];
+                        cible._absorbe = cible._absorbe || [];
+                        const txt = String(cl.raison || '').trim();
+                        if (txt && !cible._absorbe.includes(txt)) cible._absorbe.push(txt);
+                    });
+                });
+            }
+
             // ── Bloc 2 — Recontextualisation des PIM psychotropes pour maladie ──
             // psychiatrique primaire CHRONIQUE. Quand le patient gériatrique porte
             // une psychose/bipolarité ancienne, certains « à éviter » gériatriques
@@ -1356,9 +1412,49 @@ function analyserPrescription() {
             counts.eviter = eviterFinal.length;
             counts.initier = initierFiltered ? initierFiltered.length : 0;
             // Registre: éviter/initier depuis le moteur V2 (post-filtrage des masquées)
+            //
+            // `a.med_keys` n'existe sur AUCUNE règle : les 154 règles « éviter » qui en
+            // portent les déclarent sous `condition.med_keys`. Cette boucle n'a donc
+            // jamais rien inscrit dans le registre PAR MÉDICAMENT — la section
+            // « médicaments à retirer / substituer » de la synthèse, et le bandeau de
+            // gravité qui en dérive, ne voyaient que la table des contre-indications par
+            // pathologie. Le bandeau pouvait ainsi annoncer « Dossier sans alerte
+            // critique » au-dessus de quatre cartes rouges ; le défaut est resté invisible
+            // tant qu'une contre-indication de pathologie accompagnait le tableau.
+            //
+            // On inscrit en outre sous la DCI RÉELLEMENT PRESCRITE, et non sous la clé de
+            // la règle : la synthèse afficherait « antipsychotique » à la place de
+            // « cyamémazine ».
+            const _clesDe = a => (a.condition && a.condition.med_keys) || a.med_keys || [];
+            const _medsDe = a => {
+                const keys = _clesDe(a);
+                if (!keys.length || !_canMatch) return [];
+                return activeMeds.filter(m => keys.some(k => {
+                    try { return matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), k); }
+                    catch (e) { return false; }
+                }));
+            };
+            // La sévérité inscrite est celle qui est AFFICHÉE, pas celle qui est déclarée.
+            // Les deux divergent par construction : le score trie au-dessus du plancher,
+            // si bien qu'une règle déclarée `warning` peut sortir en rouge (phénothiazine
+            // FORTA D, antidiabétique du fragile). Le bandeau résume ce que le lecteur a
+            // sous les yeux — s'aligner sur la déclaration le ferait mentir. Corollaire
+            // utile : une alerte ASSUMÉE, dont le score est plafonné sous la bande rouge,
+            // cesse d'être comptée comme critique, ce qui est exactement l'intention.
+            const _sevAffichee = a => (a.triage && a.triage.priority === 1) ? 'danger' : (a.severite || 'warning');
             eviterFinal.forEach(a => {
-                (a.med_keys || []).forEach(k => _regAddMed(k, 'eviter', { text: a.titre || a.message || '', severity: a.severite || 'warning', source: a.sources_label || '' }));
-                _regAddDomain('eviter', { titre: a.titre || '', meds: a.med_keys || [], severity: a.severite || 'warning' });
+                const sev = _sevAffichee(a);
+                // Les alertes INFORMATIVES ne sont pas inscrites au registre par
+                // médicament : il alimente la rubrique « médicaments à retirer ou
+                // substituer », et « mesurer la TA couché-debout » est une consigne de
+                // surveillance, pas un argument contre la prescription. Elle reste
+                // affichée à l'écran, à sa place.
+                if (sev !== 'info') _medsDe(a).forEach(m => _regAddMed(m.dci, 'eviter', {
+                    text: a.titre || a.message || '',
+                    severity: sev,
+                    source: a.sources_label || ''
+                }));
+                _regAddDomain('eviter', { titre: a.titre || '', meds: _clesDe(a), severity: sev });
             });
             if (initierFiltered) initierFiltered.forEach(a => {
                 _regAddDomain('initier', {
@@ -2736,6 +2832,10 @@ function analyserPrescription() {
             // repris sous l'alerte retenue.
             const autresMotifs = new Map();
             alerts.forEach(a => {
+                // Un motif DÉJÀ absorbé par une règle du moteur ne doit pas être repris
+                // ici : il serait lu deux fois, sur deux cartes voisines.
+                if (window._contraPathoAbsorbees
+                    && window._contraPathoAbsorbees.has(sanitizeText(m.dci) + '|' + a.patho + '|' + sanitizeText(a.raison || ''))) return;
                 if ((RANG[prefixeDe(a.gravite)] || 0) < plusFort.get(a.patho_nom)) {
                     if (!autresMotifs.has(a.patho_nom)) autresMotifs.set(a.patho_nom, []);
                     autresMotifs.get(a.patho_nom).push(_raisonPertinente(a.raison));
@@ -2746,6 +2846,10 @@ function analyserPrescription() {
                 let isSevere = String(a.gravite).includes('CONTRE-INDICATION') || String(a.gravite).includes('ABSOLUE');
                 let alertPrefix = prefixeDe(a.gravite);
                 if ((RANG[alertPrefix] || 0) < plusFort.get(a.patho_nom)) return;
+                // Déjà reportée sous la règle du moteur qui la couvre (voir l'absorption
+                // plus haut) : on ne fait pas une seconde carte pour la redire.
+                if (window._contraPathoAbsorbees
+                    && window._contraPathoAbsorbees.has(sanitizeText(m.dci) + '|' + a.patho + '|' + sanitizeText(a.raison || ''))) return;
                 const ciSig = alertPrefix + '|' + a.patho_nom; // = titre affiché ; évite le doublon
                 if (seenCI.has(ciSig)) return;
                 seenCI.add(ciSig);
@@ -3862,11 +3966,20 @@ function analyserPrescription() {
             if (!domains.eviter) continue;
             domains.eviter.forEach(e => {
                 let isCI = e.gravite && (String(e.gravite).includes('CONTRE-INDICATION') || String(e.gravite).includes('ABSOLUE'));
+                // La gravité d'une entrée du registre venait du SEUL champ `gravite`, que
+                // seule la table des contre-indications par pathologie renseigne. Une
+                // alerte `danger` du moteur — dabigatran sous DFG 30, antimuscarinique
+                // dans la démence — était donc comptée comme un simple avertissement, et
+                // le bandeau de synthèse pouvait annoncer « Dossier sans alerte critique »
+                // au-dessus de quatre cartes rouges. Le défaut restait invisible tant
+                // qu'une contre-indication de pathologie accompagnait le tableau ; il est
+                // apparu le jour où ces cartes, devenues redondantes, ont été absorbées.
+                const estDanger = isCI || e.severity === 'danger';
                 toRemove.push({
                     dci: dci,
                     action: isCI ? 'ARRÊTER' : 'SUBSTITUER / RÉÉVALUER',
-                    severity: isCI ? 'danger' : 'warning',
-                    priority: isCI ? 1 : 2,
+                    severity: estDanger ? 'danger' : 'warning',
+                    priority: estDanger ? 1 : 2,
                     reason: e.text || '',
                     source: e.source || ''
                 });

@@ -773,6 +773,56 @@ que d'être gatée règle par règle.
 - Défaut par défaut : tant que la précision n'est pas saisie, on retient la forme
   **la plus exposante** (systémique, injectable).
 
+## Deux corpus jugent la même prescription — une seule carte
+
+Les règles gériatriques (`geria_recos_final.js`) et les contre-indications par pathologie
+(`PATHO_MED_INTERDITS`) jugent le même dossier. Quand les deux portent sur le **même
+médicament** et la **même maladie**, le lecteur reçoit deux cartes qui disent une seule
+chose : une cyamémazine chez une démente sortait en « Antipsychotique chez patient dément »
+ET en « CI Syndrome Démentiel », toutes deux motivées par la mortalité et le déclin
+cognitif. **65 clauses de la table sont dans ce cas.**
+
+Le recouvrement n'est **pas deviné par ressemblance de texte** — ce que la doctrine des
+fusions interdit — mais établi sur l'**équivalence de condition** : la règle du moteur cite
+cette pathologie et ses `med_keys` résolvent cette molécule. Et elle doit être **retenue** :
+absorber dans une règle qui ne s'est pas déclenchée ferait disparaître l'information.
+
+Rien n'est supprimé — le motif de la clause est **reporté** sous la règle qui la couvre
+(« Contre-indication liée à la pathologie : … »). Et une clause dont le verdict est **plus
+fort** que toutes ses porteuses garde sa propre carte : ce sont les cinq contre-indications
+absolues (halopéridol et chlorpromazine dans la DCL, halopéridol et métoclopramide dans la
+maladie de Parkinson, aspirine sur ulcère évolutif). Mesuré : 20 cartes absorbées sur le
+panel, aucune perte de verdict.
+
+### Le défaut que l'absorption a mis au jour
+
+`a.med_keys` **n'existe sur aucune règle** : les 154 règles « éviter » qui en portent les
+déclarent sous `condition.med_keys`. La boucle qui alimentait le registre **par médicament**
+n'a donc jamais rien inscrit — et c'est ce registre qui construit la rubrique « médicaments
+à retirer ou substituer » de la synthèse, ainsi que le **bandeau de gravité** qui en dérive.
+Le bandeau ne voyait donc que la table des contre-indications par pathologie.
+
+**26 des 112 dossiers du panel affichaient un bandeau contredisant leurs propres cartes**,
+dont 21 annonçant « Dossier sans alerte critique » au-dessus d'alertes rouges. Le défaut est
+resté invisible tant qu'une contre-indication de pathologie accompagnait le tableau ; il est
+apparu le jour où ces cartes, devenues redondantes, ont été absorbées.
+
+Trois corrections, chacune vérifiée par mutation :
+
+- les alertes du moteur sont inscrites au registre, **sous la DCI réellement prescrite** et
+  non sous la clé de la règle (la synthèse aurait affiché « antipsychotique » à la place de
+  « cyamémazine ») ;
+- la sévérité inscrite est celle qui est **affichée**, pas celle qui est déclarée : le score
+  trie au-dessus du plancher, si bien qu'une règle déclarée `warning` peut sortir en rouge.
+  Corollaire utile — une alerte **assumée**, plafonnée sous la bande rouge, cesse d'être
+  comptée comme critique, ce qui est exactement l'intention ;
+- les alertes **informatives** ne sont pas inscrites : ce registre alimente « médicaments à
+  retirer », et « mesurer la TA couché-debout » est une consigne de surveillance, pas un
+  argument contre la prescription.
+
+Invariant : **`Le bandeau de synthèse ne contredit jamais l'écran`** — aucun dossier du
+panel ne peut afficher une alerte rouge sous une bannière qui la nie.
+
 ## Alertes assumées — le troisième état
 
 Un PIM peut être **justifié chez ce patient-là** : phénothiazine de seconde ligne après
