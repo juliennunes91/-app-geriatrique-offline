@@ -197,6 +197,12 @@ const bioAnormal = (bioId, val, sexe) => {
 const PATHO_OMBRELLES = {
     PAT_010: ['PAT_011', 'PAT_012', 'PAT_013', 'PAT_014', 'PAT_041', 'PAT_042']
 };
+// « (Générique) » distingue l'ombrelle de ses sous-types DANS LE SÉLECTEUR. Servi au
+// lecteur — pastille, titre d'alerte, synthèse, rapport, infobulle du tableau de suivi —
+// c'est un mot de nomenclature interne qui n'apprend rien. Un seul point de passage, sans
+// quoi la mention ressort par le chemin qu'on a oublié de corriger : elle l'a fait deux fois.
+const nomPathoAffiche = (nom) => String(nom || '').replace(/\s*\((?:Générique|Generique)\)\s*$/i, '').trim();
+
 const comorbsAffichables = (liste) => {
     if (!Array.isArray(liste) || liste.length < 2) return liste || [];
     const presents = new Set(liste);

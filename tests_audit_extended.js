@@ -1264,7 +1264,10 @@ function runLibelleClasseAudit(test, assert) {
 // alternative medicamenteuse portee une seule fois quel que soit le nombre d'hypnotiques.
 // Meme famille que les precedents : textes REDIGES SUR PLACE, armes par un symptome
 // DECLARE, sans entree de table portant une severite derriere eux.
-const COULEURS_EN_DUR_ATTENDUES = { danger: 8, warning: 20, info: 11 };
+// warning 20 -> 21, info 11 -> 8 : l'encart d'anemie passe de `info` a `warning` (il
+// remplace desormais SYND_005, qui etait `warning`, et porte son imputabilite iatrogene),
+// et le regroupement des motifs a supprime trois encarts `info` devenus redondants.
+const COULEURS_EN_DUR_ATTENDUES = { danger: 8, warning: 21, info: 11 };
 function runCouleurCodeeEnDurAudit(test, assert) {
     const src = fs.readFileSync(path.join(__dirname, 'app_analysis.js'), 'utf8');
     ['danger', 'warning', 'info'].forEach(niveau => {

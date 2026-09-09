@@ -121,7 +121,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "bipolaire_lithium": {
@@ -204,7 +204,7 @@
    "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "depression_recurrente": {
@@ -475,7 +475,7 @@
    "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "demence_SCPD": {
@@ -515,7 +515,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "parkinson_psychose": {
@@ -552,7 +552,7 @@
    "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "anticoag_antiagr": {
@@ -1077,7 +1077,7 @@
    "warning | Score PIM Global : 42/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_B07": {
@@ -1109,7 +1109,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_B07_EV_B09": {
@@ -1265,7 +1265,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_B19_EV_B20": {
@@ -1611,7 +1611,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_C14_EV_C17": {
@@ -1728,7 +1728,7 @@
    "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_D04_EV_D06": {
@@ -1804,7 +1804,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_D11_EV_D16": {
@@ -1844,7 +1844,7 @@
    "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_D17_EV_D18": {
@@ -1882,7 +1882,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_D19_EV_D20": {
@@ -1988,7 +1988,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_SF06": {
@@ -2023,7 +2023,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_FORTA_04": {
@@ -2355,9 +2355,8 @@
    "danger | Hypocalcémie symptomatique (< 1.9) — Ca 1.1 mmol/L",
    "danger | Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
    "danger | Insuffisance rénale chronique G4 — insuffisance rénale sévère",
-   "info | Anémie — orientation du bilan",
-   "warning | Anémie",
-   "warning | Anémie Rénale (Déficit en EPO)"
+   "warning | Anémie Rénale (Déficit en EPO)",
+   "warning | Anémie — orientation du bilan"
   ],
   "alertes-interact": [],
   "alertes-suivi": [
@@ -2441,7 +2440,7 @@
    "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_F03_EV_F05": {
@@ -2621,7 +2620,7 @@
    "warning | Score PIM Global : 37/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_H01_EV_H03": {
@@ -2766,7 +2765,7 @@
    "warning | Score PIM Global : 43/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_I06_IN_I01": {
@@ -3004,7 +3003,7 @@
    "warning | Score PIM Global : 42/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_K05_EV_K06": {
@@ -3045,7 +3044,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_K07_EV_K09": {
@@ -3085,7 +3084,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_K10_EV_K12": {
@@ -3123,7 +3122,7 @@
    "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_L05_EV_L06": {
@@ -3196,7 +3195,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_SF07": {
@@ -3651,7 +3650,7 @@
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_SUP_REM_04_SUP_REM_05": {
@@ -3997,7 +3996,7 @@
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_SUP_MTX_01": {
@@ -4058,7 +4057,7 @@
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
-   "warning | Dossier nécessitant vigilance"
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_IN_E06": {

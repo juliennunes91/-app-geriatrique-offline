@@ -1320,6 +1320,44 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(lewy.some(x => /HALOPERIDOL — CI /.test(x)),
             'une contre-indication ABSOLUE n\'est jamais absorbee dans une regle moins severe');
     });
+    test('La synthese liste des MEDICAMENTS, pas des regles', () => {
+        // La cyamemazine ressortait TROIS fois dans « medicaments a retirer » — une par
+        // regle qui la vise — et trois fois encore dans les actions prioritaires. Le
+        // lecteur relit le meme nom sans savoir s'il s'agit de trois problemes ou d'un
+        // seul. C'est la molecule qu'on decide de garder ou de retirer, pas la regle.
+        const r = analyzeCase({ age: 85, sexe: 'F', dfg: 88, comorbs: ['PAT_010'],
+                                flags: ['chkDemence'], meds: ['Cyamemazine'] });
+        const h = r._html['alertes-synthese'] || '';
+        const i = h.indexOf('Médicaments à retirer');
+        assert.ok(i >= 0, 'la rubrique existe');
+        const bloc = h.slice(i, i + 2000);
+        assert.strictEqual((bloc.match(/CYAMEMAZINE/g) || []).length, 1,
+            'une seule ligne par molecule');
+        // Les motifs ne sont pas perdus pour autant : ils sont regroupes sous elle.
+        assert.ok(/Antipsychotique chez patient dément/.test(bloc) && /Phénothiazine/.test(bloc),
+            'les motifs des differentes regles sont regroupes, pas jetes');
+        // « Top N actions prioritaires » ne s'affiche plus : il reprenait mot pour mot
+        // les premieres lignes de la rubrique situee juste dessous.
+        assert.ok(!/actions prioritaires/i.test(h),
+            'le bloc « Top actions » ne double plus la rubrique qui le suit');
+    });
+    test('Une seule anemie, et « (Générique) » ne sort jamais au lecteur', () => {
+        const r = analyzeCase({ age: 85, sexe: 'F', dfg: 88, comorbs: ['PAT_010'],
+                                flags: ['chkDemence'], bio: { hb: 11.3, vgm: 100.9 },
+                                meds: ['Cyamemazine', 'Apixaban'] });
+        const bio = (r['alertes-bio'] || []).map(a => a.titre);
+        assert.strictEqual(bio.filter(t => /Anémie/i.test(t)).length, 1,
+            'une seule entree « anemie » — SYND_005 est absorbe par l\'encart d\'orientation');
+        const hb = r._html['alertes-bio'] || '';
+        assert.ok(/Imputabilité iatrogène à considérer/.test(hb) && /ANTICOAGULANT/i.test(hb),
+            'l\'imputabilite iatrogene de SYND_005 est conservee, c\'est sa seule part propre');
+        // « (Générique) » est une nomenclature interne : elle ne doit sortir par AUCUN
+        // chemin — ni titre d'alerte, ni registre, ni synthese, ni rapport.
+        Object.keys(r._html).forEach(tab => {
+            assert.ok(!/\(Générique\)/.test(r._html[tab] || ''),
+                '« (Générique) » ne doit apparaitre dans AUCUN onglet — trouve dans ' + tab);
+        });
+    });
     test('Une posologie ne conseille pas sur un medicament non prescrit', () => {
         const poso = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds })._html['alertes-usage'] || '';
         assert.ok(!/PRÉFÉRABLE chez patient sous clopidogrel/.test(poso(['Pantoprazole'])),

@@ -823,6 +823,32 @@ Trois corrections, chacune vérifiée par mutation :
 Invariant : **`Le bandeau de synthèse ne contredit jamais l'écran`** — aucun dossier du
 panel ne peut afficher une alerte rouge sous une bannière qui la nie.
 
+## La synthèse liste des MÉDICAMENTS, pas des règles
+
+Quatre défauts de lecture sur un même dossier, tous d'agrégation :
+
+- **La cyamémazine ressortait trois fois** dans « médicaments à retirer » — une ligne par
+  règle qui la vise — et trois fois encore dans les actions prioritaires. Le lecteur relit
+  le même nom sans savoir s'il s'agit de trois problèmes ou d'un seul. Les motifs sont
+  désormais **regroupés sous la molécule** : c'est elle qu'on décide de garder ou de
+  retirer, pas la règle. La ligne prend le degré le **plus fort** de ses motifs.
+- **« Top N actions prioritaires » ne s'affiche plus.** Il reprenait mot pour mot les
+  premières lignes de la rubrique située juste dessous — et sur une ordonnance où une seule
+  molécule pose problème, annonçait « Top 3 actions » qui étaient trois fois la même. Il
+  reste calculé pour l'export texte, qui le consomme encore ; le point d'entrée du dossier
+  est le bandeau de gravité.
+- **L'anémie sortait deux fois** : `SYND_005` et l'encart d'orientation. `checkBioSyndrome`
+  accepte maintenant `opts.rendre === false` — le syndrome est calculé sans être affiché, et
+  sa seule part propre, l'**imputabilité iatrogène**, est reprise dans l'encart unique.
+- **« (Générique) » ressortait encore** — dans la liste des comorbidités, le texte du
+  registre et les infobulles du tableau de suivi. La correction précédente n'avait traité
+  que le titre de l'alerte. `nomPathoAffiche()` (`utils.js`) est le point de passage unique ;
+  un test vérifie désormais que la mention n'apparaît dans **aucun** onglet.
+
+**Conséquence sur le bandeau** : `nbDanger` compte maintenant des **molécules** et non des
+règles, puisqu'il dérive de la même liste. Un dossier « à HAUT risque » (≥ 3) l'est parce que
+trois médicaments posent problème, non parce qu'une même molécule reçoit trois critiques.
+
 ## Alertes assumées — le troisième état
 
 Un PIM peut être **justifié chez ce patient-là** : phénothiazine de seconde ligne après

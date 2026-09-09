@@ -1798,6 +1798,12 @@ function analyserPrescription() {
                 : (String(s.GRAVITE).includes('Sévère') || String(s.GRAVITE).includes('Severe'));
             // Libellé : surchargeable pour les syndromes gradués (ex. hyponatrémie légère/modérée/sévère).
             let nom = opts.labelOverride || s.NOM_SYNDROME;
+            // `opts.rendre === false` : le syndrome est CALCULÉ mais pas affiché — son
+            // contenu est repris par un encart qui le couvre déjà. Sert à l'anémie, dont
+            // la conduite de SYND_005 (« bilan martial, réticulocytes, VGM ») est le
+            // doublon de l'encart d'orientation, tandis que son imputabilité iatrogène
+            // ne l'est pas : on récupère la seconde et on laisse tomber la première.
+            if (opts.rendre === false) return { nom, causes, imputStr, isSevere };
             addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${nom}</strong>${imputStr}<br><small>${_conduitePertinente(s.CONDUITE_IMMEDIATE) || 'Surveillance'}</small></div>`, 'bio');
         } catch(e) { GeriaLog.warn('Erreur syndrome bio:', e.message); }
     };
@@ -1853,7 +1859,11 @@ function analyserPrescription() {
         let hb = bioValues['BIO_009'];
         let seuilAnemia = (sexe === 'M') ? 13 : 12;
         if (hb > 0 && hb < seuilAnemia) {
-            checkBioSyndrome('SYND_005', true);
+            // L'anémie sortait DEUX fois dans la synthèse : « Anémie » (SYND_005) et
+            // « Anémie — orientation du bilan ». Le premier n'apporte qu'une chose que le
+            // second n'a pas — l'imputabilité iatrogène —, sa conduite étant le doublon
+            // de l'arbre du VGM. On le calcule sans l'afficher et on récupère cette part.
+            const _synd005 = checkBioSyndrome('SYND_005', true, { rendre: false }) || {};
             // Sous-typage anémie : ferriprive vs macrocytaire vs rénale
             let fer = bioValues['BIO_020']; let cst = bioValues['BIO_CST']; let crp = bioValues['BIO_024'];
             let b12 = bioValues['BIO_021']; let b9 = bioValues['BIO_022']; let dfg = bioValues['BIO_004'];
@@ -1917,10 +1927,13 @@ function analyserPrescription() {
             const noteRenale = (dfg > 0 && dfg < 45 && hb < 11)
                 ? `<br><span class="small">DFG ${dfg} ml/min avec Hb &lt; 11 : la part rénale (déficit en érythropoïétine) doit être considérée, sans dispenser du reste du bilan.</span>`
                 : '';
-            addAlert('alertes-bio', `<div class="alert alert-info border-info shadow-sm">
-                <strong>💡 Anémie — orientation du bilan</strong>
+            const noteImput = (_synd005.causes && _synd005.causes.length)
+                ? `<br><span class="small"><b>Imputabilité iatrogène à considérer :</b> ${escapeHtml(_synd005.causes.join(', ').toUpperCase())} — chercher un saignement occulte avant de conclure à une autre cause.</span>`
+                : '';
+            addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm">
+                <strong>⚠️ Anémie — orientation du bilan</strong>
                 <br><span class="small">Hb ${hb} g/dL (seuil ${seuilAnemia} chez ${sexe === 'M' ? "l'homme" : 'la femme'}). ${escapeHtml(cadre)}</span>
-                <br><span class="small">${escapeHtml(conduite)}</span>${noteRetic}${noteRenale}
+                <br><span class="small">${escapeHtml(conduite)}</span>${noteImput}${noteRetic}${noteRenale}
             </div>`, 'bio');
 
             // SYND_039 : Anémie Rénale (Hb < 11 + DFG < 45)
@@ -2872,14 +2885,17 @@ function analyserPrescription() {
                 // dans un titre d'alerte, c'est un mot de nomenclature interne servi au
                 // lecteur — « CI Syndrome Démentiel (Générique) » ne lui dit rien de plus
                 // que « CI Syndrome Démentiel ».
-                const pathoAffiche = String(a.patho_nom || '').replace(/\s*\(Générique\)\s*$/i, '');
+                const pathoAffiche = (typeof nomPathoAffiche === 'function') ? nomPathoAffiche(a.patho_nom) : a.patho_nom;
                 addAlert('alertes-eviter', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm">
                     <strong>${isSevere ? '🚨' : '⚠️'} ${escapeHtml(m.dci.toUpperCase())} — ${alertPrefix} ${escapeHtml(pathoAffiche)}</strong>
                     <span class="badge bg-secondary float-end" style="font-size:0.65em;" title="${sourceLabel}">${sourceLabel.length > 30 ? sourceLabel.substring(0, 30) + '...' : sourceLabel}</span>
                     <br><span class="small">${_raisonPertinente(a.raison)}${a.condition ? ` <em class="text-muted">(${a.condition})</em>` : ''}${(autresMotifs.get(a.patho_nom) || []).length ? `<br><em class="text-muted">Également concerné à un moindre degré : ${(autresMotifs.get(a.patho_nom) || []).join(' ; ')}</em>` : ''}${a.exception ? `<br><em class="text-info">Exception : ${a.exception}</em>` : ''}</span>
                     <br><span class="badge bg-${isSevere ? 'danger' : 'warning'} text-${isSevere ? 'white' : 'dark'}" style="font-size:0.7em;">${a.gravite}</span>
                 </div>`, 'eviter');
-                _regAddMed(m.dci, 'eviter', { severity: isSevere ? 'danger' : 'warning', text: `${alertPrefix} ${a.patho_nom} — ${a.raison}`, gravite: a.gravite, source: sourceLabel });
+                // Le registre alimente la synthese : il doit porter le MEME texte que
+                // l'ecran — nom de pathologie sans « (Générique) », et raison debarrassee
+                // des clauses dont la condition est fausse. Il gardait les deux.
+                _regAddMed(m.dci, 'eviter', { severity: isSevere ? 'danger' : 'warning', text: `${alertPrefix} ${pathoAffiche} — ${_raisonPertinente(a.raison)}`, gravite: a.gravite, source: sourceLabel });
             });
         });
     }
@@ -3373,7 +3389,11 @@ function analyserPrescription() {
                 for (const [bioId, data] of Object.entries(bioMonitors)) {
                     if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
                     data.pathos.forEach((p, i) => {
-                        let patName = MASTER_DB.PATHOLOGIES[p]?.NOM_STANDARD || p;
+                        // Ce nom voyage jusqu'aux infobulles du tableau croise de suivi :
+                        // il passe par le meme point d'affichage que partout ailleurs.
+                        let patName = (typeof nomPathoAffiche === 'function')
+                            ? nomPathoAffiche(MASTER_DB.PATHOLOGIES[p]?.NOM_STANDARD || p)
+                            : (MASTER_DB.PATHOLOGIES[p]?.NOM_STANDARD || p);
                         if (!bioPlan[bioId].pathos.includes(patName)) bioPlan[bioId].pathos.push(patName);
                         let freq = data.frequences[i] || data.frequences[0] || '';
                         if (freq && !bioPlan[bioId].freqs.includes(freq)) bioPlan[bioId].freqs.push(freq);
@@ -3390,7 +3410,7 @@ function analyserPrescription() {
             activeComorbs.forEach(patId => {
                 const rule = PATHOLOGY_RULES_DB[patId];
                 if (!rule || !rule.BIOLOGIE) return;
-                let patName = rule.NOM || patId;
+                let patName = (typeof nomPathoAffiche === 'function') ? nomPathoAffiche(rule.NOM || patId) : (rule.NOM || patId);
                 (rule.BIOLOGIE.SURVEILLANCE_CIBLE || []).forEach(bioId => {
                     if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
                     if (!bioPlan[bioId].pathos.includes(patName)) bioPlan[bioId].pathos.push(patName);
@@ -3602,7 +3622,7 @@ function analyserPrescription() {
 
             guidelinesHtml += `<div class="card border-0 shadow-sm mb-3">
                 <div class="card-header ga-card-header-recos">
-                    <strong>${rule.NOM}</strong>
+                    <strong>${(typeof nomPathoAffiche === 'function') ? nomPathoAffiche(rule.NOM) : rule.NOM}</strong>
                     <br><small style="opacity:0.85;">${refFull}</small>
                 </div>
                 <div class="card-body p-2">`;
@@ -3986,19 +4006,36 @@ function analyserPrescription() {
             });
         }
         toRemove.sort((a, b) => a.priority - b.priority);
-        // Dédupliquer par (dci + raison) — évite Spironolactone × 2 quand 2 règles génèrent
-        // une alerte identique (ex: doublon thiazidique + doublon anse sur même méd).
+        // ── Une ligne par MÉDICAMENT, pas par règle ──────────────────────────────
+        // La cyamémazine ressortait TROIS fois dans « médicaments à retirer » — une par
+        // règle qui la vise — et trois fois encore dans les actions prioritaires. Le
+        // lecteur relit le même nom sans savoir s'il s'agit de trois problèmes ou d'un
+        // seul. Les motifs sont regroupés sous la molécule : c'est elle qu'on décide de
+        // garder ou de retirer, pas la règle.
+        //
+        // La ligne prend le degré le PLUS FORT de ses motifs — un « à arrêter » ne doit
+        // pas se diluer dans deux « à réévaluer » —, et les motifs sont dédupliqués entre
+        // eux (deux règles peuvent formuler la même chose).
         {
-            const seen = new Set();
-            const filtered = [];
+            const parMed = new Map();
             for (const r of toRemove) {
-                const k = `${(r.dci || '').toLowerCase()}::${(r.reason || '').slice(0, 80).toLowerCase()}`;
-                if (seen.has(k)) continue;
-                seen.add(k);
-                filtered.push(r);
+                const cle = (r.dci || '').toLowerCase();
+                if (!parMed.has(cle)) { parMed.set(cle, { ...r, motifs: [], sources: [] }); }
+                const e = parMed.get(cle);
+                const raison = (r.reason || '').trim();
+                if (raison && !e.motifs.some(x => x.slice(0, 60).toLowerCase() === raison.slice(0, 60).toLowerCase())) e.motifs.push(raison);
+                if (r.source && !e.sources.includes(r.source)) e.sources.push(r.source);
+                if (r.priority < e.priority) { e.priority = r.priority; e.action = r.action; }
+                if (r.severity === 'danger') e.severity = 'danger';
             }
+            const groupes = [...parMed.values()].map(e => ({
+                ...e,
+                reason: e.motifs.join(' · '),
+                source: e.sources.slice(0, 2).join(' | ')
+            }));
+            groupes.sort((a, b) => a.priority - b.priority);
             toRemove.length = 0;
-            toRemove.push(...filtered);
+            toRemove.push(...groupes);
         }
 
         // ── 3. PROBLÈMES BIOLOGIQUES ──
@@ -4102,7 +4139,7 @@ function analyserPrescription() {
             // Top 3 comorbs (pour synthèse en 1 ligne)
             const comorbLabels = (activeComorbs || []).slice(0, 5).map(c => {
                 const p = (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES) ? MASTER_DB.PATHOLOGIES[c] : null;
-                return p ? (p.NOM_STANDARD || c) : c;
+                return p ? ((typeof nomPathoAffiche === 'function') ? nomPathoAffiche(p.NOM_STANDARD || c) : (p.NOM_STANDARD || c)) : c;
             });
             const moreComorbs = nbComorbs > 5 ? ` +${nbComorbs - 5}` : '';
             const comorbStr = comorbLabels.length ? comorbLabels.join(', ') + moreComorbs : 'aucune comorbidité saisie';
@@ -4237,9 +4274,14 @@ function analyserPrescription() {
                     icon: '➕', txt: (a.titre || '').slice(0, 130), level: 'warning', kind: 'OMISSION'
                 }));
             const top = actions.slice(0, 5);
-            // Expose pour le PDF
+            // Exposé pour l'export TEXTE, qui le consomme encore ; le rapport PDF ne le
+            // reprend plus depuis l'allègement, et l'ÉCRAN ne l'affiche plus non plus.
+            // Le bloc reprenait mot pour mot les trois premières lignes de « médicaments
+            // à retirer » situées juste dessous : sur une ordonnance où une seule molécule
+            // pose problème, il annonçait « Top 3 actions » qui étaient trois fois la même
+            // molécule. Le point d'entrée du dossier, c'est le bandeau de gravité.
             synthData.topActions = top;
-            if (!top.length) return '';
+            return '';
             const items = top.map((a, i) => `<li class="mb-1">
                 ${a.icon} <span class="badge bg-${a.level} text-white" style="font-size:0.6em;">${a.kind}</span>
                 <span class="small">${escapeHtml(a.txt)}</span>
