@@ -1186,7 +1186,7 @@
   "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [
-   "warning | Co-prescription à risque : BENAZEPRIL"
+   "warning | Association à surveiller : BENAZEPRIL"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",

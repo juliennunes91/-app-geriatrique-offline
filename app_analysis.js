@@ -3056,18 +3056,95 @@ function analyserPrescription() {
             'chlortalidone|iecara2hypotension1eredosehyponatremie',
             'hydrochlorothiazide|iecara2hypotension1eredosehyponatremie',
             'indapamide|iecara2hypotension1eredosehyponatremie',
-            'trazosine|betabloquants'
+            'trazosine|betabloquants',
             // NE PAS y ajouter « doxazosine / prazosine / terazosine —
             // Antihypertenseurs (cumul hypotension) » ni « isosorbide » : ces entrées
             // décrivent un cumul PERMANENT, dont la première dose n'est que le pic.
+
+            // Chute initiale du DFG sous iSGLT2 associé à un bloqueur du SRAA : 10 à 20 %
+            // ATTENDUS et TRANSITOIRES, c'est l'entrée elle-même qui le dit. Le contrôle
+            // de créatinine se fait à 1-2 semaines ; passé ce cap, la néphroprotection est
+            // le bénéfice recherché, pas un risque à resignaler chaque année.
+            'canagliflozin|iecara2synergiecardiorenale',
+            'dapagliflozin|iecara2arnisynergiecardiorenalerecommandee',
+            'empagliflozin|iecara2arnieffetadditifrenalbeneficecardiorenalmaissurveillance'
+            // N'ONT PAS leur place ici, malgré le mot « initiation » dans leur texte —
+            // c'est la SURVEILLANCE qui s'y fait à J3-J7, pas le risque qui s'y arrête :
+            //   • allopurinol / fébuxostat / fluvastatine / rosuvastatine + AVK :
+            //     l'inhibition enzymatique dure tant que les deux molécules coexistent ;
+            //   • amiodarone / dronédarone / quinidine + digoxine : idem (P-gp), et
+            //     `danger` de surcroît — la table ne descend jamais depuis le rouge ;
+            //   • corticoïde + insuline/sulfamide (hyperglycémie) ou + diurétique
+            //     (hypokaliémie) : le risque dure autant que la corticothérapie, et
+            //     « insulinothérapie transitoire » qualifie le traitement, pas le risque.
         ]);
         const DDI_ASSOCIATION_RECOMMANDEE = new Set([
             // Bloqueur du SRAA + thiazidique : association de première ligne dans l'HTA
-            // (ESC/ESH 2024 §7.3 ; ALLHAT, HYVET, ACCOMPLISH, ASCOT chez le sujet âgé).
-            // Les trois entrées le disent dans leur propre commentaire.
+            // (ESC/ESH 2024 ; ALLHAT, HYVET, ACCOMPLISH, ASCOT chez le sujet âgé).
             'chlortalidone|iecara2hypotension1eredosehyponatremie',
             'hydrochlorothiazide|iecara2hypotension1eredosehyponatremie',
-            'indapamide|iecara2hypotension1eredosehyponatremie'
+            'indapamide|iecara2hypotension1eredosehyponatremie',
+
+            // Bloqueur du SRAA + antagoniste minéralocorticoïde : pilier de l'IC à FE
+            // réduite et de la MRC diabétique (RALES, EPHESUS, EMPHASIS-HF, PARADIGM-HF,
+            // FIDELIO/FIGARO-DKD). L'hyperkaliémie, elle, est un risque PERMANENT : ces
+            // entrées ne figurent PAS dans la table précédente et gardent leur bande
+            // orange. Seul le titre change — on ne reproche pas une co-prescription qu'on
+            // recommande, on en surveille le potassium.
+            'benazepril|armdiuretiquesepargneurskkclhyperkaliemie',
+            'captopril|armdiuretiquesepargneurskkclhyperkaliemiecumulee',
+            'enalapril|armdiuretiquesepargneurskselskclhyperkaliemie',
+            'losartan|armdiuretiquesepargneurskkclhyperkaliemiecumulee',
+            'ramipril|armdiuretiquesepargneurskselskclhyperkaliemiecumulee',
+            'sacubitrilvalsartan|armdiuretiquesepargneurskkclhyperkaliemiecumulee',
+            'eplerenone|iecara2arnihyperkaliemiecumuleeassociationhfrefpostidmavecsurveillance',
+            'spironolactone|iecara2arnihyperkaliemiecumuleeassociationrecommandeehfrefmrcavecsurveillance',
+            'finerenone|iecara2arnihyperkaliemiesurveillanceetroite',
+
+            // Bêtabloquant + ivabradine dans l'IC à FE réduite, FC ≥ 70 sous dose maximale
+            // tolérée (SHIFT ; ESC IC 2023). La bradycardie reste à surveiller.
+            'bisoprolol|ivabradinehfrefassociesurveillancebradycardie',
+            'metoprolol|ivabradinehfrefassocie',
+
+            // Synergies cardiorénales et métaboliques du diabète de type 2 (ESC 2023,
+            // ADA 2025) — déjà informatives, mais titrées « co-prescription à risque ».
+            'canagliflozin|iecara2synergiecardiorenale',
+            'dapagliflozin|iecara2arnisynergiecardiorenalerecommandee',
+            'empagliflozin|iecara2arnieffetadditifrenalbeneficecardiorenalmaissurveillance',
+            'metformine|isglt2synergiefavorablesurveillancedeshydratation',
+            'metformine|glp1rasynergiefavorablepeudhypoglycemie',
+            'alogliptine|metformineisglt2synergiefavorable',
+            'linagliptine|metformineisglt2synergiefavorable',
+            'saxagliptine|metformineisglt2synergiefavorable',
+            'sitagliptine|metformineisglt2synergiefavorable',
+            'vildagliptine|metformineisglt2synergiefavorable',
+            'dulaglutide|isglt2metforminesynergiefavorablecardiorenal',
+            'exenatide|isglt2metforminesynergiefavorable',
+            'liraglutide|isglt2metforminesynergiefavorable',
+            'tirzepatide|isglt2metforminesynergiefavorable',
+
+            // Deux co-prescriptions dont l'entrée dit qu'elles DOIVENT exister.
+            'fumarateferreux|vitcsynergieabsorptionx23',
+            'prednisone|bisphosphonatescalciumvitdpreventiongioprecommandeesidose75mgjprolonge'
+
+            // ── Deux pièges de lecture, et c'est POUR EUX que cette table est déclarée ──
+            // Une expression régulière sur « recommand… » capterait 49 entrées, dont :
+            //   • « Association NON recommandée » (amlodipine + vérapamil/diltiazem) et
+            //     « Tériparatide NON recommandée en 1ère ligne » (prednisone) — elle ferait
+            //     lire l'inverse exact de ce que l'entrée dit ;
+            //   • huit entrées où le mot porte sur AUTRE CHOSE que l'association :
+            //     « gastroprotection IPP recommandée » (aspirine + ISRS, qui est un risque
+            //     hémorragique), « contraception mécanique recommandée » (dexaméthasone),
+            //     « méthode alternative recommandée » (oxcarbazépine — échec contraceptif),
+            //     « chambre d'inhalation recommandée » (fluticasone), « génotypage
+            //     recommandé » (phénytoïne), « recommandation BSR » (méthotrexate + alcool,
+            //     qui est une CI relative), « FDA/EMA recommandent ÉVITER » (esoméprazole +
+            //     clopidogrel), « espacer les prises » (phosphate d'aluminium).
+            // EXCLUE volontairement : « Semaglutide >> iSGLT2 / Metformine / iDPP4 » —
+            // l'entrée couvre trois partenaires, deux recommandés et un DÉCONSEILLÉ
+            // (redondance sémaglutide + iDPP4). Un commentaire unique servant plusieurs
+            // `dcis` ne peut pas être qualifié en bloc : il faudrait scinder l'entrée,
+            // remède habituel de cette famille.
         ]);
 
         const _libelleInteraction = (g) => {
@@ -3155,8 +3232,17 @@ function analyserPrescription() {
                     const isDanger = foundGroups.some(g => g.severite === 'danger');
                     // Une carte dont TOUTES les entrées sont des risques de mise en route
                     // ou des associations recommandées n'est pas une co-prescription à
-                    // risque : c'est une surveillance. Le titre et la couleur le disent.
-                    const surveillanceSeule = foundGroups.every(g => g.severite === 'info' && (g.instauration || g.recommandee));
+                    // risque : c'est une surveillance, et le titre le dit.
+                    //
+                    // Le TITRE et la GRAVITÉ sont deux questions distinctes, et les
+                    // confondre serait le défaut inverse de celui qu'on corrige :
+                    // spironolactone + IEC est recommandée dans l'insuffisance cardiaque
+                    // ET porte une hyperkaliémie qui tue. Elle garde donc sa bande orange
+                    // — la surveillance du potassium est due — mais cesse d'être présentée
+                    // comme un reproche. Seules les cartes dont toutes les entrées sont
+                    // déjà informatives prennent la couleur informative.
+                    const surveillanceSeule = !isDanger && foundGroups.every(g => g.instauration || g.recommandee);
+                    const toutInformatif = foundGroups.every(g => g.severite === 'info');
                     const groupHtml = foundGroups.map(g => {
                         const drugs = g.matched.map(x => escapeHtml(x.interactor.toUpperCase())).join(', ');
                         const com = g.commentaire ? ` <em class="text-muted">(${escapeHtml(g.commentaire)})</em>` : '';
@@ -3174,8 +3260,9 @@ function analyserPrescription() {
                     // premier coup d'œil.
                     const ciAbsolue = foundGroups.some(g => /CONTRE-?INDICATION ABSOLUE|CI ABSOLUE/i.test((g.classe || '') + ' ' + (g.commentaire || '')));
                     const alertClass = (isDanger || ciAbsolue) ? 'alert-danger'
-                        : (surveillanceSeule && !ciAbsolue) ? 'alert-info' : 'alert-warning';
-                    const icon = ciAbsolue ? '🚫' : (isDanger ? '🚨' : (surveillanceSeule ? 'ℹ️' : '⚠️'));
+                        : (surveillanceSeule && toutInformatif && !ciAbsolue) ? 'alert-info' : 'alert-warning';
+                    const icon = ciAbsolue ? '🚫' : (isDanger ? '🚨'
+                        : (surveillanceSeule && toutInformatif) ? 'ℹ️' : '⚠️');
                     const titreInteract = ciAbsolue
                         ? `CI ABSOLUE — ${escapeHtml(ref.dci.toUpperCase())}`
                         : surveillanceSeule

@@ -591,30 +591,68 @@ Na+/créat J7 ») — un traitement conforme aux recommandations gradué comme u
 
 Deux qualificatifs **déclarés** dans `app_analysis.js`, jamais devinés sur la prose :
 
-- `DDI_RISQUE_INSTAURATION` → la phase est **dite** (« risque de mise en route : il porte
-  sur l'instauration et sur toute augmentation de dose ») et la gradation retombe à
-  informatif. **Jamais depuis `danger`** : plusieurs risques d'initiation sont de vrais
-  dangers (digoxine + amiodarone, wash-out de l'Entresto).
-- `DDI_ASSOCIATION_RECOMMANDEE` → l'association est une stratégie validée ; ce qui reste
-  est une surveillance, pas un reproche.
+- `DDI_RISQUE_INSTAURATION` (31 couples) → la phase est **dite** (« risque de mise en
+  route : il porte sur l'instauration et sur toute augmentation de dose ») et la gradation
+  retombe à informatif. **Jamais depuis `danger`** : plusieurs risques d'initiation sont de
+  vrais dangers (digoxine + amiodarone, wash-out de l'Entresto).
+- `DDI_ASSOCIATION_RECOMMANDEE` (28 couples) → l'association est une stratégie validée ; ce
+  qui reste est une surveillance, pas un reproche.
 
-Une carte dont **toutes** les entrées relèvent de l'un ou l'autre change de titre —
-« Association à surveiller » — et n'alimente plus le registre « médicaments à retirer »,
-donc plus le bandeau de gravité. Une carte qui porte aussi un risque permanent le garde :
-sous hydrochlorothiazide + vitamine D, l'hypercalcémie reste orange et le titre avec elle.
+**Titre et gravité sont deux questions distinctes**, et les confondre serait le défaut
+inverse de celui qu'on corrige. Spironolactone + IEC est recommandée dans l'insuffisance
+cardiaque à FE réduite **et** porte une hyperkaliémie qui tue : elle garde sa bande orange
+— le dosage du potassium est dû — mais cesse d'être titrée « co-prescription à risque ».
+Seules les cartes dont toutes les entrées sont déjà informatives prennent la couleur
+informative. Une carte « surveillance » n'alimente en revanche plus le registre
+« médicaments à retirer », donc plus le bandeau de gravité : on ne retire pas ce qu'on
+recommande. Une carte qui porte aussi un risque permanent garde son titre : sous
+hydrochlorothiazide + vitamine D, l'hypercalcémie reste orange et le titre avec elle.
 
 **La clé est le COUPLE (DCI hôte, libellé de l'entrée), pas le libellé seul.** « Bêta-bloquants »
 est employé par six entrées dont **une seule** relève de la première dose (trazosine) ; les
-cinq autres parlent de bradycardie ou de masquage d'hypoglycémie, risques permanents. Un
-couple non déclaré garde son rendu actuel — la table échoue fermée. Sont volontairement
-**hors** de la table les entrées « Antihypertenseurs (cumul hypotension) » (doxazosine,
-prazosine, isosorbide) et l'hypotension orthostatique de la térazosine : elles décrivent un
-cumul **permanent**, dont la première dose n'est que le pic.
+cinq autres parlent de bradycardie ou de masquage d'hypoglycémie, risques permanents.
+Un couple non déclaré garde son rendu actuel — la table échoue fermée.
 
-**Périmètre livré** : la famille hypotensive (28 couples — bloqueur du SRAA ↔ diurétique,
-alpha-bloquant ↔ bêtabloquant). Les autres familles qui mentionnent l'initiation (INR sous
-allopurinol, digoxinémie sous amiodarone, hypokaliémie sous corticoïde) n'y sont pas
-encore ; elles sortent inchangées.
+### Ce qui est dedans, et ce qui n'y est pas
+
+**Instauration** — la famille hypotensive (bloqueur du SRAA ↔ diurétique, alpha-bloquant ↔
+bêtabloquant), plus la **chute initiale du DFG sous iSGLT2** associé à un bloqueur du SRAA :
+10 à 20 %, *attendus et transitoires*, l'entrée le dit elle-même.
+
+Sont **hors** de la table, malgré le mot « initiation » dans leur texte — c'est la
+SURVEILLANCE qui s'y fait à J3-J7, pas le risque qui s'y arrête : allopurinol, fébuxostat,
+fluvastatine, rosuvastatine + AVK (l'inhibition enzymatique dure tant que les deux
+molécules coexistent) ; amiodarone, dronédarone, quinidine + digoxine (P-gp, et `danger`
+de surcroît) ; corticoïde + insuline ou + diurétique (le risque dure autant que la
+corticothérapie — « insulinothérapie transitoire » qualifie le traitement, pas le risque).
+Hors table également : « Antihypertenseurs (cumul hypotension) » (doxazosine, prazosine,
+isosorbide) et l'hypotension orthostatique de la térazosine — cumul **permanent** dont la
+première dose n'est que le pic.
+
+**Recommandée** — SRAA + thiazidique (HTA), SRAA + antagoniste minéralocorticoïde (RALES,
+EPHESUS, EMPHASIS-HF, PARADIGM-HF, FIDELIO/FIGARO-DKD), bêtabloquant + ivabradine (SHIFT),
+les synergies cardiorénales du DT2 (ESC 2023, ADA 2025), fer + vitamine C, et la prévention
+GIOP sous corticoïde.
+
+**Deux pièges de lecture, et c'est POUR EUX que la table est déclarée.** Une expression
+régulière sur « recommand… » capterait 49 entrées, dont :
+
+- **la négation** — « Association **NON** recommandée » (amlodipine + vérapamil),
+  « Tériparatide **non** recommandée en 1ère ligne » : elle ferait lire l'inverse exact de
+  ce que l'entrée dit ;
+- **huit entrées où le mot porte sur autre chose que l'association** — « gastroprotection
+  IPP recommandée » (aspirine + ISRS, qui *est* un risque hémorragique), « contraception
+  mécanique recommandée » (dexaméthasone), « méthode alternative recommandée »
+  (oxcarbazépine — échec contraceptif), « chambre d'inhalation recommandée » (fluticasone),
+  « génotypage recommandé » (phénytoïne), « recommandation BSR » (méthotrexate + alcool,
+  qui est une CI relative), « FDA/EMA recommandent **éviter** » (esoméprazole +
+  clopidogrel), « espacer les prises » (phosphate d'aluminium).
+
+Un test vérifie les deux premiers cas nommément. **Exclue volontairement** :
+« Semaglutide >> iSGLT2 / Metformine / iDPP4 » — l'entrée couvre trois partenaires, deux
+recommandés et un **déconseillé** (redondance sémaglutide + iDPP4). Un commentaire unique
+servant plusieurs `dcis` ne peut pas être qualifié en bloc : il faudrait scinder l'entrée,
+remède habituel de cette famille.
 
 ## Une posologie ne conseille pas sur un médicament non prescrit
 

@@ -1309,6 +1309,32 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/Co-prescription à risque : GALANTAMINE/.test(i(['Galantamine', 'Bisoprolol'])),
             'meme libelle, autre molecule : le risque n\'est pas confine a l\'instauration');
     });
+    test('Une association RECOMMANDEE change de titre, pas de gravite', () => {
+        // Confondre les deux serait le defaut inverse de celui qu'on corrige :
+        // spironolactone + IEC est recommandee dans l'IC a FE reduite ET porte une
+        // hyperkaliemie qui tue. Elle cesse d'etre presentee comme un reproche, elle ne
+        // cesse pas d'appeler un dosage du potassium.
+        const cartes = c => (analyzeCase(c)['alertes-interact'] || []);
+        const arm = cartes({ age: 78, sexe: 'M', dfg: 55, bio: { k: 4.4 },
+                             meds: ['Spironolactone', 'Ramipril'] })
+            .find(a => /SPIRONOLACTONE/.test(a.titre)) || {};
+        assert.ok(/Association à surveiller/.test(arm.titre || ''), 'le titre ne reproche plus');
+        assert.strictEqual(arm.severity, 'warning',
+            'mais la bande reste orange — la surveillance du K+ est due');
+        // Une synergie deja informative prend la couleur informative.
+        const dt2 = cartes({ age: 74, sexe: 'F', dfg: 60, meds: ['Metformine', 'Empagliflozin'] })
+            .find(a => /METFORMINE/.test(a.titre)) || {};
+        assert.ok(/Association à surveiller/.test(dt2.titre || ''), 'synergie cardiorenale : surveillance');
+        assert.strictEqual(dt2.severity, 'info', 'et elle etait deja informative');
+        // ── Les deux pieges qu'une expression reguliere sur « recommand… » raterait ──
+        const t = c => (cartes(c)[0] || {}).titre || '(aucune carte)';
+        assert.ok(/Co-prescription à risque/.test(
+            t({ age: 78, sexe: 'F', dfg: 60, meds: ['Amlodipine', 'Verapamil'] })),
+            '« Association NON recommandee » dit l\'inverse — la table est declaree, pas devinee');
+        assert.ok(/Co-prescription à risque/.test(
+            t({ age: 80, sexe: 'F', dfg: 60, meds: ['Acide acetylsalicylique', 'Citalopram'] })),
+            'ici « recommandee » porte sur la gastroprotection, pas sur l\'association');
+    });
     test('La mesure de TA couche-debout suppose plusieurs lignes a departager', () => {
         // La regle se declenchait chez 46 des 112 patients du panel, et pratiquement
         // chez tous ceux qui portent un antihypertenseur : une consigne qui sort sur
