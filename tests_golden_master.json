@@ -14,7 +14,6 @@
    "danger | Sulfamide à longue demi-vie (glibenclamide, chlorpropamide, glimépiride)",
    "danger | Tricyclique (TCA) en 1ère ligne pour dépression",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Polypharmacie sans réévaluation (REMEDIES)",
    "info | Réévaluation annuelle de chaque traitement chronique",
    "warning | Antidépresseur chez patient chuteur",
@@ -129,7 +128,6 @@
    "danger | AINS + DFG < 50",
    "danger | Lithium + AINS ou diurétique thiazidique : toxicité lithique",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Cascades iatrogéniques détectées",
    "warning | Diurétique sans ionogramme de surveillance",
    "warning | Lithium au long cours : surveillance d'organe (rein, thyroïde, parathyroïde)",
@@ -163,7 +161,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 22/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 24/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 3 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 2 point(s)"
@@ -209,7 +207,6 @@
  },
  "depression_recurrente": {
   "alertes-eviter": [
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "warning | Antidépresseur chez patient chuteur"
   ],
@@ -236,7 +233,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -247,7 +244,6 @@
    "danger | Antipsychotique au long cours + maladie vasculaire connue",
    "danger | Antipsychotique chez patient chuteur",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Antipsychotique au long cours : plan de surveillance"
   ],
   "alertes-initier": [
@@ -276,7 +272,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 47/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -284,7 +280,7 @@
  },
  "IC_HFrEF": {
   "alertes-eviter": [
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "warning | Diurétique sans ionogramme de surveillance"
   ],
@@ -485,7 +481,6 @@
    "danger | Antipsychotique chez patient dément — durée et réévaluation",
    "danger | Oxybutynine (toutes formes)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Symptômes psycho-comportementaux déclarés (1) — conduite de première intention",
    "warning | Cascades iatrogéniques détectées",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
@@ -507,7 +502,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 4",
-   "danger | Score PIM Global : 66/100 — RISQUE ÉLEVÉ",
+   "danger | Score PIM Global : 68/100 — RISQUE ÉLEVÉ",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score de Tisdale : 2 point(s)",
@@ -524,7 +519,6 @@
    "danger | Flupentixol, fluphénazine, halopéridol > 2 mg/j",
    "danger | HALOPERIDOL — CI Démence à Corps de Lewy (DCL)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Antipsychotique chez patient dément — durée et réévaluation",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
@@ -549,7 +543,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 51/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -602,7 +596,7 @@
    "danger | Flupentixol, fluphénazine, halopéridol > 2 mg/j",
    "danger | Médicament allongeant le QTc + QTc déjà prolongé",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Antiarythmique classe I/III sans ECG régulier",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
@@ -647,7 +641,7 @@
   "alertes-eviter": [
    "danger | IEC/ARA2 + Hyperkaliémie (K+ > 5.5)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "warning | Diurétique sans ionogramme de surveillance",
    "warning | IEC/ARA2 sans contrôle créatinine/K+ post-initiation"
@@ -660,8 +654,8 @@
    "warning | Insuffisance rénale chronique G3b — insuffisance rénale modérée"
   ],
   "alertes-interact": [
-   "warning | Co-prescription à risque : FUROSEMIDE",
-   "warning | Co-prescription à risque : RAMIPRIL"
+   "info | ℹ️ Association à surveiller : FUROSEMIDE",
+   "info | ℹ️ Association à surveiller : RAMIPRIL"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -782,7 +776,6 @@
  "LAI_depot": {
   "alertes-eviter": [
    "info | Antipsychotique d'action prolongée (LAI/dépôt) : réversibilité lente",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "warning | Antipsychotique au long cours : plan de surveillance"
   ],
@@ -908,7 +901,6 @@
    "danger | Antihistaminique H1 1ère génération en 1ère intention (allergie/prurit)",
    "danger | Oxybutynine (toutes formes)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé",
    "warning | Risque de délirium — charge anticholinergique élevée (ACB ≥ 3)"
@@ -934,7 +926,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 9",
-   "danger | Score PIM Global : 66/100 — RISQUE ÉLEVÉ",
+   "danger | Score PIM Global : 67/100 — RISQUE ÉLEVÉ",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
@@ -946,9 +938,7 @@
   ]
  },
  "normal_temoin": {
-  "alertes-eviter": [
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
-  ],
+  "alertes-eviter": [],
   "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -964,7 +954,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 4/100 — ACCEPTABLE",
+   "info | Score PIM Global : 0/100 — ACCEPTABLE",
    "info | Score de Tisdale : 1 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -978,7 +968,6 @@
   "alertes-eviter": [
    "danger | Vérapamil/Diltiazem + IC FE réduite (NYHA III-IV)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Digoxine + IC à FE préservée (HFpEF)",
    "warning | Digoxine dans l'IC (FORTA-D sauf FA)"
   ],
@@ -1005,11 +994,11 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
-   "info | Score PIM Global : 34/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score ACB : 1"
+   "warning | Score ACB : 1",
+   "warning | Score PIM Global : 35/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -1017,7 +1006,6 @@
  },
  "cov_EV_B05": {
   "alertes-eviter": [
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "warning | Bêtabloquant en monothérapie pour HTA simple"
   ],
@@ -1036,7 +1024,7 @@
    "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 7/100 — ACCEPTABLE",
+   "info | Score PIM Global : 9/100 — ACCEPTABLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -1082,7 +1070,6 @@
  },
  "cov_EV_B07": {
   "alertes-eviter": [
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "warning | Diurétique de l'anse en 1ère intention pour HTA",
    "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
@@ -1102,7 +1089,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
-   "info | Score PIM Global : 13/100 — ACCEPTABLE",
+   "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 3 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
@@ -1116,7 +1103,7 @@
   "alertes-eviter": [
    "danger | Thiazidique + hypokaliémie / hyponatrémie / hypercalcémie / goutte",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "warning | Diurétique sans ionogramme de surveillance"
   ],
@@ -1152,7 +1139,7 @@
   "alertes-eviter": [
    "danger | Thiazidique + Hyponatrémie",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Diurétique de l'anse pour HTA + incontinence urinaire",
    "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "warning | Diurétique sans ionogramme de surveillance",
@@ -1192,7 +1179,7 @@
    "danger | Anti-aldostérone + épargnant potassique sans surveillance K+",
    "danger | Antihypertenseur central (méthyldopa, clonidine, moxonidine, rilménidine)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Diurétique sans ionogramme de surveillance",
    "warning | IEC/ARA2 sans contrôle créatinine/K+ post-initiation"
   ],
@@ -1273,7 +1260,6 @@
    "danger | AINS/Corticoïde + IC nécessitant diurétique de l'anse",
    "danger | Antihypertenseur (hors IEC/ARA2) + sténose aortique sévère symptomatique",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Cascades iatrogéniques détectées",
    "warning | Diurétique sans ionogramme de surveillance"
   ],
@@ -1300,7 +1286,7 @@
    "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 29/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 3 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -1313,8 +1299,7 @@
   "alertes-eviter": [
    "danger | Digoxine avec hypokaliémie / hypomagnésémie non corrigée",
    "danger | Nifédipine à libération immédiate",
-   "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)"
+   "info | Action immédiate"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -1339,7 +1324,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 52/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 54/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque",
@@ -1390,7 +1375,6 @@
    "danger | Flécaïnide / Propafénone + cardiopathie structurelle",
    "danger | Médicament allongeant le QT + QT long congénital",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Antiarythmique classe I/III sans ECG régulier",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
@@ -1433,7 +1417,7 @@
    "danger | Inhibiteur calcique non-DHP + Bêtabloquant : trouble conductif",
    "danger | VERAPAMIL — CI Bradycardie",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Médicament inotrope négatif + post-arrêt cardiaque"
   ],
   "alertes-initier": [],
@@ -1579,7 +1563,6 @@
    "danger | Dabigatran + Diltiazem/Vérapamil",
    "danger | Doublon thérapeutique — Anticoagulants curatifs",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | AVK en 1ère intention dans FA (sauf valve mécanique/sténose mitrale/ClCr < 15)",
    "warning | AVK sans surveillance INR régulière documentée"
   ],
@@ -1605,7 +1588,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 11/100 — ACCEPTABLE",
+   "info | Score PIM Global : 12/100 — ACCEPTABLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -1695,7 +1678,7 @@
    "danger | Antidépresseurs tricycliques chez le sujet âgé",
    "danger | IRSN + HTA sévère",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
@@ -1737,7 +1720,7 @@
    "danger | ISRS + Hyponatrémie actuelle ou récente (Na+ < 130)",
    "danger | Phénothiazine chez le sujet âgé — préférer une alternative",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
@@ -1815,7 +1798,6 @@
    "danger | Benzodiazépines / Z-drugs : ZOLPIDEM",
    "danger | Hypnotique Z ≥ 2 semaines pour insomnie",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Cascades iatrogéniques détectées",
    "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
   ],
@@ -1841,7 +1823,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 53/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1854,7 +1836,6 @@
    "danger | Inhibiteur acétylcholinestérase + bradycardisant",
    "danger | Inhibiteur de l'acétylcholinestérase + bradycardie < 60 / BAV",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Bêtabloquant + Inhibiteur acétylcholinestérase : bradycardie",
    "warning | DONÉPÉZIL — Prudence Bradycardie",
    "warning | Inhibiteur acétylcholinestérase sans ECG de référence"
@@ -1876,7 +1857,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 18/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -1924,7 +1905,7 @@
   "alertes-eviter": [
    "danger | Phénothiazine chez le sujet âgé — préférer une alternative",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Cascades iatrogéniques détectées",
    "warning | Lévodopa/agoniste dopaminergique pour tremblement essentiel bénin",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
@@ -2030,7 +2011,6 @@
   "alertes-eviter": [
    "danger | Antidépresseurs tricycliques chez le sujet âgé",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],
@@ -2046,12 +2026,12 @@
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 3",
+   "danger | Score PIM Global : 62/100 — RISQUE ÉLEVÉ",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 59/100 — RISQUE MODÉRÉ"
+   "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2243,7 +2223,6 @@
   "alertes-eviter": [
    "danger | Anti-aldostérone + DFG < 30",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Diurétique sans ionogramme de surveillance"
   ],
   "alertes-initier": [],
@@ -2267,7 +2246,7 @@
    "info | Score de Tisdale : 3 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 2 point(s)",
-   "warning | Score PIM Global : 41/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -2445,7 +2424,6 @@
  },
  "cov_EV_F03_EV_F05": {
   "alertes-eviter": [
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "warning | Médicament constipant + constipation chronique"
   ],
@@ -2484,7 +2462,6 @@
    "danger | Antipsychotique + Dysphagie",
    "danger | Métoclopramide au long cours (> 12 semaines)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | AMISULPRIDE — Déconseillé Dysphagie / Troubles de déglutition"
   ],
   "alertes-initier": [],
@@ -2509,7 +2486,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 52/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2737,7 +2714,6 @@
    "danger | Antimuscarinique systémique + Constipation",
    "danger | Oxybutynine (toutes formes)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
@@ -2762,7 +2738,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 43/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2806,7 +2782,6 @@
    "danger | Bêtabloquant non cardiosélectif + Diabète avec hypoglycémies fréquentes",
    "danger | Thiazolidinedione + IC",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | PIOGLITAZONE — Prudence Diabète (type non précisé)"
   ],
   "alertes-initier": [
@@ -2829,7 +2804,7 @@
    "info | CHA₂DS₂-VA : 4 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 29/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 31/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -3054,7 +3029,6 @@
    "danger | Opioïde fort sans palier antalgique ni douleur sévère documentés",
    "danger | Opioïdes : BUPRENORPHINE",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Opioïde quotidien régulier sans laxatif co-prescrit"
   ],
   "alertes-initier": [
@@ -3078,7 +3052,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 31/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -3093,7 +3067,6 @@
    "danger | Antimuscarinique pour vessie hyperactive chez patient chuteur",
    "danger | Oxybutynine (toutes formes)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
@@ -3119,7 +3092,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3160,7 +3133,6 @@
   "alertes-eviter": [
    "info | Antihypertenseurs (STOPP/FRAIL)",
    "info | Deprescription preventive globale chez le fragile severe (STOPP/FRAIL)",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "info | Statines (patient très fragile, prévention primaire) : ATORVASTATINE",
    "warning | Antihypertenseur chez le très fragile",
@@ -3189,7 +3161,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 10/100 — ACCEPTABLE",
+   "info | Score PIM Global : 11/100 — ACCEPTABLE",
    "info | Score de Tisdale : 3 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -3237,7 +3209,6 @@
    "danger | Opioïdes : TRAMADOL",
    "danger | Risque de syndrome sérotoninergique — association sérotoninergique + tramadol/IMAO/linézolide",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | Constipation opioïde / anticholinergique — prophylaxie laxative requise",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie",
    "warning | Opioïde quotidien régulier sans laxatif co-prescrit",
@@ -3269,7 +3240,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 34/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -3287,7 +3258,7 @@
    "danger | Risque de dépression respiratoire — BZD/Z-drug + opioïde (FDA Black Box 2016)",
    "danger | Triple whammy : AINS + IEC/ARA2 + diurétique — risque IRA",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "info | Polypharmacie sans réévaluation (REMEDIES)",
    "info | Réévaluation annuelle de chaque traitement chronique",
    "warning | Cascades iatrogéniques détectées",
@@ -3344,7 +3315,7 @@
    "danger | Combinaison de 3 antidépresseurs (CI absolue)",
    "danger | Combinaisons d'antidépresseurs interdites (2 ISRS, 2 IRSN, ISRS+IRSN, ISRS-IRSN+IMAO/TCA)",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Miansérine — préférer mirtazapine (alerte ANSM)"
   ],
   "alertes-initier": [],
@@ -3413,7 +3384,6 @@
  },
  "cov_EV_SFGG_AD_07": {
   "alertes-eviter": [
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "warning | ISRS / IRSN / Vortioxétine + AINS — risque hémorragique majoré"
   ],
@@ -3443,7 +3413,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3787,7 +3757,6 @@
    "danger | IEC/ARA2 + Cotrimoxazole : hyperkaliémie sévère",
    "danger | Phénytoïne + Cotrimoxazole : risque de toxicité",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
    "warning | Lithium + IEC/ARA2 : surveiller lithémie",
    "warning | Lithium sans monitorage régulier"
@@ -3816,7 +3785,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score PIM Global : 24/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 25/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
@@ -3877,7 +3846,7 @@
    "danger | Colchicine + Macrolide : CONTRE-INDICATION ABSOLUE",
    "info | Action immédiate",
    "info | Incontinence urinaire iatrogène — revue médicamenteuse",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Alpha-bloquant HTA + Diurétique de l'anse (femme)",
    "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "warning | Diurétique sans ionogramme de surveillance",
@@ -3923,7 +3892,6 @@
    "danger | AVK + Amiodarone : surveiller INR étroitement",
    "danger | Digoxine + Amiodarone : surveiller digoxinémie",
    "info | Action immédiate",
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "warning | AVK + ISRS : surveillance INR",
    "warning | AVK sans surveillance INR régulière documentée",
    "warning | Antiarythmique classe I/III sans ECG régulier",
@@ -3959,7 +3927,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 43/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3967,7 +3935,6 @@
  },
  "cov_SUP_PEG_01": {
   "alertes-eviter": [
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "warning | Diurétique de l'anse pour œdèmes sans IC/IHC/IRC/syndrome néphrotique",
    "warning | Diurétique sans ionogramme de surveillance",
@@ -3989,7 +3956,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score PIM Global : 13/100 — ACCEPTABLE",
+   "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 3 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
@@ -4062,7 +4029,6 @@
  },
  "cov_IN_E06": {
   "alertes-eviter": [
-   "info | Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
    "info | Réévaluation planifiée",
    "warning | IEC/ARA2 sans contrôle créatinine/K+ post-initiation"
   ],
@@ -4088,7 +4054,7 @@
    "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 9/100 — ACCEPTABLE",
+   "info | Score PIM Global : 10/100 — ACCEPTABLE",
    "info | Score de Tisdale : 1 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 2 point(s)"
@@ -4105,8 +4071,7 @@
   ],
   "alertes-initier": [],
   "alertes-bio": [
-   "danger | Dénutrition / Hypoalbuminémie Sévère",
-   "warning | Albuminémie basse (26 g/L)"
+   "danger | Albuminémie basse (26 g/L — hypoalbuminémie sévère)"
   ],
   "alertes-interact": [
    "warning | Co-prescription à risque : VALPROATE"

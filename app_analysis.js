@@ -2104,11 +2104,30 @@ function analyserPrescription() {
     // seule mesure utile, qui est de chercher la cause. Elle reste en revanche un
     // marqueur pronostique fort, et elle modifie la pharmacologie des médicaments
     // fortement liés (cf. SUP_ALB_01).
+    // UN SEUL encart, et il contredisait le second. `SYND_033` (« Dénutrition /
+    // Hypoalbuminémie ») sortait juste en dessous, sur le MÊME chiffre, avec la lecture
+    // que ce bloc-ci vient précisément d'écarter : « Évaluation nutritionnelle (MNA),
+    // compléments nutritionnels oraux ». Le lecteur recevait donc, à trois lignes
+    // d'intervalle, « l'albumine n'est pas un critère de dénutrition » puis un
+    // diagnostic de dénutrition posé sur l'albumine. Même remède que pour l'anémie :
+    // le syndrome est CALCULÉ sans être rendu, et sa seule part propre — l'imputabilité
+    // iatrogène (corticoïdes, chimiothérapies, régimes inappropriés) — est reprise ici.
     {
         const alb = bioValues['BIO_035'];
         if (alb > 0 && alb < 35) {
             const severe = alb < 30;
-            addAlert('alertes-bio', `<div class="alert alert-${severe ? 'warning border-warning' : 'light border'} shadow-sm"><strong>${severe ? '⚠️' : 'ℹ️'} Albuminémie basse (${alb} g/L${severe ? '' : ' — norme ≥ 35'})</strong>
+            const sy = checkBioSyndrome('SYND_033', true, { rendre: false }) || {};
+            const imput = (sy.causes && sy.causes.length)
+                ? `<br><em>Imputabilité iatrogène détectée :</em> <b>${escapeHtml(sy.causes.join(', ').toUpperCase())}</b>`
+                : '';
+            // La GRADATION de SYND_033 est conservée, c'est son CONTENU qui était faux :
+            // sous 30 g/L, l'encart reste rouge. La fusion des deux cartes ne doit pas
+            // servir de prétexte à baisser l'alarme — mesuré sur `cov_SUP_ALB_01`
+            // (albuminémie 26 g/L), qui avait perdu sa carte rouge et, avec elle, son
+            // bandeau de synthèse. Entre 30 et 35 g/L, en revanche, la lecture juste est
+            // informative : la seule carte orange qu'il y avait là était celle qui
+            // portait le diagnostic nutritionnel écarté.
+            addAlert('alertes-bio', `<div class="alert alert-${severe ? 'danger alert-stopp' : 'light border'} shadow-sm"><strong>${severe ? '🚨' : 'ℹ️'} Albuminémie basse (${alb} g/L${severe ? ' — hypoalbuminémie sévère' : ' — norme ≥ 35'})</strong>${imput}
                 <br><small><em>Ce que cela signifie :</em> l'albuminémie est un marqueur d'<b>inflammation</b> et de <b>pronostic</b>, et non un critère de dénutrition — le cadre GLIM ne la retient pas pour ce diagnostic. Elle baisse avec l'inflammation, l'hémodilution, une fuite rénale ou digestive, indépendamment des apports alimentaires. <em>Conduite :</em> chercher la cause (syndrome inflammatoire, protéinurie, hépatopathie, entéropathie exsudative) et poser le diagnostic nutritionnel sur ses propres critères — perte de poids, indice de masse corporelle, masse musculaire.${severe ? ' Sous 30 g/L, penser aussi à la fraction libre des médicaments fortement liés aux protéines.' : ''}</small></div>`, 'bio');
         }
     }
@@ -2176,17 +2195,13 @@ function analyserPrescription() {
         }
     }
 
-    // --- SYND_033 : Dénutrition / Hypoalbuminémie Sévère (Albumine < 30 g/L) ---
-    if (bioValues['BIO_035'] > 0 && bioValues['BIO_035'] < 30) checkBioSyndrome('SYND_033', true);
-    // Dénutrition modérée (Albumine 30-35 g/L) — alerte informative
-    else if (bioValues['BIO_035'] > 0 && bioValues['BIO_035'] < 35) {
-        let albCauses = [];
-        let albTerms = MASTER_DB.SYNDROMES['SYND_033'] && MASTER_DB.SYNDROMES['SYND_033'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_033'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
-        albTerms.forEach(d => { if(patientHasMedClass(d)) albCauses.push(d); });
-        let albImput = albCauses.length > 0 ? `<br><em>Imputabilité :</em> <b>${albCauses.join(', ').toUpperCase()}</b>` : '';
-        addAlert('alertes-bio', `<div class="alert alert-warning border-warning shadow-sm"><strong>⚠️ Hypoalbuminémie modérée / Dénutrition</strong> (Albumine ${bioValues['BIO_035']} g/L)${albImput}
-            <br><em>Conduite :</em> Évaluation nutritionnelle (MNA), compléments nutritionnels oraux, adapter posologies des médicaments à forte liaison albumine (risque surdosage).</div>`, 'bio');
-    }
+    // --- SYND_033 : traité PLUS HAUT, dans l'encart unique « Albuminémie basse ». ---
+    // Ce bloc rendait une SECONDE carte sur le même chiffre, et elle disait l'inverse
+    // de la première : « Hypoalbuminémie modérée / Dénutrition — évaluation
+    // nutritionnelle (MNA), compléments nutritionnels oraux ». Or le cadre GLIM ne
+    // retient pas l'albuminémie comme critère de dénutrition (cf. la section dédiée de
+    // CLAUDE.md) : c'est exactement la lecture que l'encart d'au-dessus écarte. Ne pas
+    // rétablir un rendu ici — l'imputabilité iatrogène du syndrome y est déjà reprise.
 
     // --- SYND_034 : Pancréatite Aiguë Biologique (Lipase > 3N = 180 UI/L) ---
     if (bioValues['BIO_036'] > 180) checkBioSyndrome('SYND_034', true);
@@ -2986,6 +3001,75 @@ function analyserPrescription() {
             return { severite, note: '' };
         };
 
+        // ── Un risque de PREMIÈRE DOSE n'est pas un risque en cours ─────────────────
+        // GeriaAssist lit une ordonnance, jamais son histoire : il ne sait pas si
+        // l'association date d'hier ou de dix ans. Une soixantaine d'entrées
+        // `ddi_interact_v2` décrivent pourtant un risque confiné à la MISE EN ROUTE —
+        // « hypotension 1ère dose », « réduire la dose à l'initiation » — et sortaient
+        // au présent, sous le titre « Co-prescription à risque », chez une patiente
+        // sous irbésartan + hydrochlorothiazide depuis des années.
+        // Pire : ces deux-là forment une association que l'entrée elle-même déclare
+        // RECOMMANDÉE (« Association recommandée en HTA. Surveillance Na+/créat J7 »),
+        // et elle était graduée en orange comme un risque de co-prescription.
+        //
+        // Deux qualificatifs DÉCLARÉS, jamais devinés. La clé est le couple
+        // (DCI hôte, libellé de l'entrée) et non le seul libellé : « Bêta-bloquants »
+        // est employé par six entrées dont une seule relève de la première dose — les
+        // cinq autres parlent de bradycardie ou de masquage d'hypoglycémie, risques
+        // permanents. Un couple non déclaré garde son rendu actuel : la table échoue
+        // fermée.
+        //   • INSTAURATION → la phase est DITE, et la gradation retombe à informatif.
+        //     Jamais depuis `danger` : plusieurs risques d'initiation sont de vrais
+        //     dangers (digoxine + amiodarone, wash-out de l'Entresto).
+        //   • RECOMMANDEE  → l'entrée dit que l'association est une stratégie validée.
+        //     Ce qui reste est une surveillance, pas un reproche.
+        const _cleDdi = (dciHote, classe) => sanitizeText(dciHote || '') + '|' + sanitizeText(classe || '');
+        const DDI_RISQUE_INSTAURATION = new Set([
+            // Bloqueur du SRAA ajouté à un diurétique (ou l'inverse) : l'hypotension
+            // est celle de la première dose, elle se prévient en réduisant le diurétique
+            // et en initiant le soir. Elle ne dit rien d'une association installée.
+            'benazepril|diuretiqueshypotension1eredose',
+            'candesartan|diuretiqueshypotension1eredose',
+            'captopril|diuretiqueshypotension1eredosetcourteaggravante',
+            'cilazapril|diuretiqueshypotension1eredose',
+            'doxazosine|diuretiqueshypotension1eredose',
+            'enalapril|diuretiqueshypotension1eredose',
+            'fosinopril|diuretiqueshypotension1eredose',
+            'irbesartan|diuretiqueshypotension1eredose',
+            'lisinopril|diuretiqueshypotension1eredose',
+            'losartan|diuretiqueshypotension1eredose',
+            'moexipril|diuretiqueshypotension1eredose',
+            'olmesartan|diuretiqueshypotension1eredose',
+            'perindopril|diuretiqueshypotension1eredose',
+            'prazosine|diuretiqueshypotension1eredose',
+            'quinapril|diuretiqueshypotension1eredose',
+            'ramipril|diuretiqueseffetadditifhypotenseur',
+            'sacubitrilvalsartan|diuretiqueshypotension1eredose',
+            'telmisartan|diuretiqueshypotension1eredose',
+            'trandolapril|diuretiqueshypotension1eredose',
+            'valsartan|diuretiqueshypotension1eredose',
+            'zofenopril|diuretiqueshypotension1eredose',
+            // Le même fait, vu depuis le diurétique.
+            'bumetanide|iecara2hypotension1eredose',
+            'torasemide|iecara2hypotension1eredose',
+            'furosemide|iecara2',
+            'chlortalidone|iecara2hypotension1eredosehyponatremie',
+            'hydrochlorothiazide|iecara2hypotension1eredosehyponatremie',
+            'indapamide|iecara2hypotension1eredosehyponatremie',
+            'trazosine|betabloquants'
+            // NE PAS y ajouter « doxazosine / prazosine / terazosine —
+            // Antihypertenseurs (cumul hypotension) » ni « isosorbide » : ces entrées
+            // décrivent un cumul PERMANENT, dont la première dose n'est que le pic.
+        ]);
+        const DDI_ASSOCIATION_RECOMMANDEE = new Set([
+            // Bloqueur du SRAA + thiazidique : association de première ligne dans l'HTA
+            // (ESC/ESH 2024 §7.3 ; ALLHAT, HYVET, ACCOMPLISH, ASCOT chez le sujet âgé).
+            // Les trois entrées le disent dans leur propre commentaire.
+            'chlortalidone|iecara2hypotension1eredosehyponatremie',
+            'hydrochlorothiazide|iecara2hypotension1eredosehyponatremie',
+            'indapamide|iecara2hypotension1eredosehyponatremie'
+        ]);
+
         const _libelleInteraction = (g) => {
             const classe = String(g.classe || '').trim();
             const nclasse = sanitizeText(classe);
@@ -3045,14 +3129,22 @@ function analyserPrescription() {
                             const pris = new Set(newMatched.map(x => sanitizeText(x.dci)));
                             const mod = _moduleParBiologie(entry.classe || '', entry.commentaire || '',
                                                            entry.severite || 'warning', bioValues, sexe);
+                            const cleDdi = _cleDdi(ref.dci, entry.classe);
+                            const instauration = DDI_RISQUE_INSTAURATION.has(cleDdi);
+                            const recommandee = DDI_ASSOCIATION_RECOMMANDEE.has(cleDdi);
+                            // La gradation ne retombe que depuis `warning` : un risque
+                            // d'initiation peut être un vrai danger, et le plafond ne
+                            // doit jamais effacer celui-là.
+                            const sevFinale = (instauration && mod.severite === 'warning') ? 'info' : mod.severite;
                             foundGroups.push({
                                 classe: entry.classe || '',
                                 matched: newMatched,
+                                instauration, recommandee,
                                 // Molécules couvertes par l'entrée que ce patient ne prend PAS :
                                 // si le libellé les nomme, il annonce une association qui n'existe pas.
                                 absents: entry.dcis.map(sanitizeText).filter(d => d && !pris.has(d)),
                                 commentaire: entry.commentaire || '',
-                                severite: mod.severite,
+                                severite: sevFinale,
                                 noteBio: mod.note
                             });
                         }
@@ -3061,26 +3153,40 @@ function analyserPrescription() {
 
                 if (foundGroups.length > 0) {
                     const isDanger = foundGroups.some(g => g.severite === 'danger');
+                    // Une carte dont TOUTES les entrées sont des risques de mise en route
+                    // ou des associations recommandées n'est pas une co-prescription à
+                    // risque : c'est une surveillance. Le titre et la couleur le disent.
+                    const surveillanceSeule = foundGroups.every(g => g.severite === 'info' && (g.instauration || g.recommandee));
                     const groupHtml = foundGroups.map(g => {
                         const drugs = g.matched.map(x => escapeHtml(x.interactor.toUpperCase())).join(', ');
                         const com = g.commentaire ? ` <em class="text-muted">(${escapeHtml(g.commentaire)})</em>` : '';
                         const nb = g.noteBio ? `<br><span class="small">${escapeHtml(g.noteBio)}</span>` : '';
+                        const reco = g.recommandee
+                            ? `<br><span class="small text-muted">Association <b>recommandée</b> dans cette indication : ce qui est dû ici est une surveillance, pas un changement.</span>` : '';
+                        const phase = g.instauration
+                            ? `<br><span class="small text-muted">Risque de <b>mise en route</b> : il porte sur l'instauration et sur toute augmentation de dose. L'application lit une ordonnance, pas son ancienneté — sur un traitement déjà installé et bien toléré, cette ligne ne demande rien d'autre que d'y repenser à la prochaine modification.</span>` : '';
                         const lib = _libelleInteraction(g);
                         const tt = lib.complet ? ` title="Libellé complet de l'entrée : ${escapeHtml(lib.complet)}"` : '';
-                        return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}${nb}</li>`;
+                        return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}${nb}${reco}${phase}</li>`;
                     }).join('');
                     // Refléter la gravité maximale dans le TITRE (et pas seulement dans le
                     // détail déplié) : une contre-indication absolue doit être visible au
                     // premier coup d'œil.
                     const ciAbsolue = foundGroups.some(g => /CONTRE-?INDICATION ABSOLUE|CI ABSOLUE/i.test((g.classe || '') + ' ' + (g.commentaire || '')));
-                    const alertClass = (isDanger || ciAbsolue) ? 'alert-danger' : 'alert-warning';
-                    const icon = ciAbsolue ? '🚫' : (isDanger ? '🚨' : '⚠️');
+                    const alertClass = (isDanger || ciAbsolue) ? 'alert-danger'
+                        : (surveillanceSeule && !ciAbsolue) ? 'alert-info' : 'alert-warning';
+                    const icon = ciAbsolue ? '🚫' : (isDanger ? '🚨' : (surveillanceSeule ? 'ℹ️' : '⚠️'));
                     const titreInteract = ciAbsolue
                         ? `CI ABSOLUE — ${escapeHtml(ref.dci.toUpperCase())}`
+                        : surveillanceSeule
+                        ? `Association à surveiller : ${escapeHtml(ref.dci.toUpperCase())}`
                         : `Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}`;
                     addAlert('alertes-interact', `<div class="alert ${alertClass} shadow-sm"><strong>${icon} ${titreInteract}</strong><ul class="mb-0 mt-1">${groupHtml}</ul></div>`, 'interact');
                     const flatList = foundGroups.map(g => `${g.classe}:${g.matched.map(x=>x.interactor).join('/')}`).join(' | ');
-                    _regAddMed(m.dci, 'interact', { text: `Interaction ${flatList}`, severity: isDanger ? 'danger' : 'warning' });
+                    // Ce registre alimente « médicaments à retirer ou substituer » et le
+                    // bandeau de gravité : une surveillance de mise en route n'y a pas sa
+                    // place — même principe que les alertes informatives du moteur.
+                    if (!surveillanceSeule) _regAddMed(m.dci, 'interact', { text: `Interaction ${flatList}`, severity: isDanger ? 'danger' : 'warning' });
                     // Émettre aussi UNE ligne par groupe danger dans byDomain pour
                     // que la Synthèse puisse résumer les interactions critiques.
                     foundGroups.forEach(g => {

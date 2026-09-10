@@ -538,6 +538,19 @@ l'alerte ne décrit pas son dossier. `EV_B08` (œdèmes isolés) n'est pas conce
 prétend rien sur l'ordre des lignes. La couverture de `EV_B07` a dû être refaite : ses deux
 patients du panel portaient un thiazidique, `cov_EV_B07` est sur furosémide seul.
 
+**Troisième membre de la famille, et le plus directement falsifiable** : `EV_B05` reproche
+un **bêtabloquant « en monothérapie »** dans l'HTA simple. Il suffit d'un second
+antihypertenseur pour que le mot soit faux — et l'alerte sortait chez une patiente sous
+céliprolol **+ irbésartan + hydrochlorothiazide**, une trithérapie, en lui proposant comme
+alternatives deux des trois molécules qu'elle prend déjà.
+
+Piège de rédaction du `med_absent` : la clé `antihypertenseur` résout **67 molécules, dont
+les bêtabloquants eux-mêmes** — l'employer ici rendrait la règle indéclenchable, le
+bêtabloquant du patient déclenchant sa propre exclusion. La liste nomme donc les familles
+*autres* (`iec`, `ara2`, `inhibiteur calcique`, `diuretique`, `clonidine`, `moxonidine`), et
+le test garde les deux sens : la vraie monothérapie sort toujours, la bithérapie ne sort
+plus.
+
 ## Le libellé d'une classe énonce parfois sa COMPOSITION
 
 Le Gaviscon est décrit « antiacide (bicarbonate/**carbonate de calcium**) ». Les clés
@@ -565,6 +578,43 @@ Piège à connaître : **`bioAnormal()` rend `null` pour DEUX situations opposé
 paramètre est normal, ou aucune borne n'est publiée pour lui (INR, troponine, NT-proBNP).
 Les confondre ferait passer « pas de référence » pour « tout va bien ». La présence d'une
 borne se vérifie donc à part. La sévérité n'est **jamais relevée** par ce chemin.
+
+## Un risque de PREMIÈRE DOSE n'est pas un risque en cours
+
+GeriaAssist lit une ordonnance, jamais son ancienneté. Une soixantaine d'entrées
+`ddi_interact_v2` décrivent pourtant un risque **confiné à la mise en route** —
+« hypotension 1ère dose », « réduire la dose à l'initiation » — et sortaient au présent,
+en orange, sous le titre « Co-prescription à risque », chez une patiente sous irbésartan +
+hydrochlorothiazide depuis des années. Pire pour cette paire-là : l'entrée déclare
+elle-même l'association **recommandée** (« Association recommandée en HTA. Surveillance
+Na+/créat J7 ») — un traitement conforme aux recommandations gradué comme un risque.
+
+Deux qualificatifs **déclarés** dans `app_analysis.js`, jamais devinés sur la prose :
+
+- `DDI_RISQUE_INSTAURATION` → la phase est **dite** (« risque de mise en route : il porte
+  sur l'instauration et sur toute augmentation de dose ») et la gradation retombe à
+  informatif. **Jamais depuis `danger`** : plusieurs risques d'initiation sont de vrais
+  dangers (digoxine + amiodarone, wash-out de l'Entresto).
+- `DDI_ASSOCIATION_RECOMMANDEE` → l'association est une stratégie validée ; ce qui reste
+  est une surveillance, pas un reproche.
+
+Une carte dont **toutes** les entrées relèvent de l'un ou l'autre change de titre —
+« Association à surveiller » — et n'alimente plus le registre « médicaments à retirer »,
+donc plus le bandeau de gravité. Une carte qui porte aussi un risque permanent le garde :
+sous hydrochlorothiazide + vitamine D, l'hypercalcémie reste orange et le titre avec elle.
+
+**La clé est le COUPLE (DCI hôte, libellé de l'entrée), pas le libellé seul.** « Bêta-bloquants »
+est employé par six entrées dont **une seule** relève de la première dose (trazosine) ; les
+cinq autres parlent de bradycardie ou de masquage d'hypoglycémie, risques permanents. Un
+couple non déclaré garde son rendu actuel — la table échoue fermée. Sont volontairement
+**hors** de la table les entrées « Antihypertenseurs (cumul hypotension) » (doxazosine,
+prazosine, isosorbide) et l'hypotension orthostatique de la térazosine : elles décrivent un
+cumul **permanent**, dont la première dose n'est que le pic.
+
+**Périmètre livré** : la famille hypotensive (28 couples — bloqueur du SRAA ↔ diurétique,
+alpha-bloquant ↔ bêtabloquant). Les autres familles qui mentionnent l'initiation (INR sous
+allopurinol, digoxinémie sous amiodarone, hypokaliémie sous corticoïde) n'y sont pas
+encore ; elles sortent inchangées.
 
 ## Une posologie ne conseille pas sur un médicament non prescrit
 
@@ -702,6 +752,25 @@ scène ne l'était pas.
    sur cinq ne concernaient pas cette patiente. `renderSingleAlert` ajoute désormais
    « Concerné chez ce patient : … » — mais **seulement** quand la règle cite plusieurs
    clés et qu'une partie résout ; une alerte qui vise une seule molécule se suffit.
+
+   **Cela n'a pas suffi**, et le lecteur l'a signalée trois dossiers de suite. `EV_SF02b`
+   se déclenchait chez **46 des 112 patients du panel** — pratiquement tous ceux qui
+   portent un antihypertenseur : une consigne qui sort sur tout le monde n'apprend rien
+   sur personne, elle se lit comme un en-tête. Le seuil est passé à **deux molécules**
+   hypotensantes ou orthostatiques (`polypharmacie: true, seuil: 2`), et ce n'est pas un
+   artifice de volume : la conduite *de la règle elle-même* — « déprescrire le plus récent
+   ou le plus iatrogène (alpha-bloquant > diurétique > IEC/ARA2 > BB > IC) » — énonce un
+   **ordre de priorité**, qui suppose plusieurs lignes à départager. Sous une seule
+   molécule ce classement n'a rien à classer, et le cumul orthostatique qui motive la
+   mesure n'est pas constitué. 46 → 13 patients (41 % → 12 %).
+
+   **Effet de bord à connaître, non corrigé** : `global_score` (`geria_engine_v2.js`)
+   compte pour 30 % la **moyenne** des scores d'alerte. Retirer une entrée informative,
+   donc à score bas, **remonte** cette moyenne : 28 dossiers du panel gagnent 1 à 3
+   points, et deux changent de bande (`cov_EV_B01_EV_B02` 34 → 35, `cov_EV_FORTA_04`
+   59 → 62). Rendre l'application plus sobre rend donc le dossier plus grave — une
+   moyenne n'est pas la bonne statistique ici. La formule n'est pas touchée : elle
+   déplacerait la moitié du panel et c'est un arbitrage à part.
 3. **Une `raison` de contre-indication nommait un traitement absent.** Dans la démence, la
    clause « anticholinergique » se motive par « aggravation cognitive — antagonisme du
    traitement pro-cholinergique » : sans anticholinestérasique, la seconde moitié décrit un
@@ -1096,6 +1165,28 @@ p = 0,241) — Doré, *Pharmacotherapy* 2017, DOI 10.1002/phar.1965.
 - Corrigé au passage : trois fiches portaient `albumine: "0,9"` — la FRACTION saisie à la
   place du POURCENTAGE — si bien que le valproate, le divalproate et la cyamémazine ne
   franchissaient jamais le seuil de 85 % du bloc hépatique.
+
+**Et la lecture fausse était encore imprimée, trois lignes plus bas.** `SYND_033`
+(« Dénutrition / Hypoalbuminémie ») sortait sur le MÊME chiffre, juste sous l'encart
+ci-dessus, avec exactement la lecture que celui-ci vient d'écarter : *« Évaluation
+nutritionnelle (MNA), compléments nutritionnels oraux »*. Le lecteur recevait donc, à trois
+lignes d'intervalle, « l'albumine n'est pas un critère de dénutrition » puis un diagnostic
+de dénutrition posé sur l'albumine. Ce n'était pas une redondance, c'était une
+contradiction — et elle a survécu à la correction précédente parce que celle-ci n'avait
+traité qu'un des deux blocs.
+
+Même remède que pour l'anémie : `checkBioSyndrome('SYND_033', true, { rendre: false })` —
+le syndrome est **calculé sans être rendu**, et sa seule part propre, l'**imputabilité
+iatrogène** (corticoïdes, chimiothérapies, régimes inappropriés), est reprise dans l'encart
+unique. Ne pas rétablir un rendu à cet endroit.
+
+**Fusionner deux cartes n'est pas baisser l'alarme.** La première version de cette fusion
+faisait perdre à `cov_SUP_ALB_01` (albuminémie **26 g/L**) sa carte rouge — et, avec elle,
+son bandeau de synthèse, qui repassait de « Dossier avec alertes critiques » à « Dossier
+nécessitant vigilance ». C'était le CONTENU de `SYND_033` qui était faux, pas sa gradation :
+sous 30 g/L l'encart unique reste `danger`. Entre 30 et 35 g/L il est informatif — la seule
+carte orange qu'il y avait là était précisément celle qui portait le diagnostic écarté. Un
+test fige les deux paliers.
 
 ## Symptômes psycho-comportementaux et MBI
 

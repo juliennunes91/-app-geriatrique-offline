@@ -139,9 +139,12 @@ function ok(cond, msg) { if (!cond) throw new Error(msg); }
 // critères STOPP sur la même molécule (assumables), une consigne de surveillance
 // informative dont le titre énumère cinq classes, et une pathologie « ombrelle »
 // dont la nomenclature interne ne doit pas ressortir.
+// L'amlodipine est là pour EV_SF02b, qui exige deux molécules hypotensantes ou
+// orthostatiques : c'est cette règle qui fournit le « point de méthode » dont on
+// vérifie l'attribution.
 const DOSSIER = {
     age: 85, sexe: 'F', dfg: 88,
-    comorbs: ['PAT_010'], flags: ['chkDemence'], meds: ['Cyamemazine']
+    comorbs: ['PAT_010'], flags: ['chkDemence'], meds: ['Cyamemazine', 'Amlodipine']
 };
 const MOTIF = 'Seconde ligne après échec de la rispéridone.';
 

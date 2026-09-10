@@ -165,7 +165,18 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["betabloquant"],
                 comorbs: ["PAT_005"],
-                comorbs_absent: ["PAT_004", "PAT_002", "PAT_006"]
+                comorbs_absent: ["PAT_004", "PAT_002", "PAT_006"],
+                // « En MONOTHERAPIE » est une affirmation sur l'ordonnance ENTIERE, et
+                // meme plus directement falsifiable que le « 1ere intention » d'EV_B07 ou
+                // d'EV_B21 : il suffit d'un second antihypertenseur pour que la phrase
+                // soit fausse. Elle sortait pourtant chez une patiente sous celiprolol
+                // + irbesartan + hydrochlorothiazide — une TRITHERAPIE —, en lui
+                // proposant comme alternatives deux des trois molecules qu'elle prend.
+                // La liste couvre les familles antihypertensives autres que le
+                // betabloquant lui-meme : la clef `antihypertenseur` serait ici un
+                // contresens, elle resout AUSSI les betabloquants et la regle ne se
+                // declencherait jamais.
+                med_absent: ["iec", "ara2", "inhibiteur calcique", "diuretique", "clonidine", "moxonidine"]
             },
             alternatives: "IEC/ARA2, inhibiteur calcique DHP, thiazidique"
         },
@@ -1920,12 +1931,26 @@ const GERIA_RECOS_DB = {
             sources: ["STOPPFRAIL", "ESC_HTN_2024"],
             ref_code: "STOPPFrail-2bis",
             section: "Prévention",
-            titre: "Mesure de la TA couché-debout sous médicament hypotenseur ou orthostatique (≥ 75 ans)",
-            message: "Toute prescription d'antihypertenseur, antidépresseur sérotoninergique, alpha-bloquant, antiparkinsonien dopaminergique ou antipsychotique chez un patient ≥ 75 ans impose une mesure de TA couché-debout (1 et 3 min) à chaque consultation. Hypotension orthostatique = chute PAS ≥ 20 mmHg ou PAD ≥ 10 mmHg dans les 3 min après lever. Si symptomatique (vertige, chute, syncope) ou ∆ PAS ≥ 30 mmHg : déprescrire l'antihypertenseur le plus récent ou le plus iatrogène (priorité : alpha-bloquant > diurétique > IEC/ARA2 > BB > IC). Réf. : ESC 2024 HTN §6.5 ; STOPPFrail v2 ; Lavan/Gallagher 2017 (Lancet Healthy Longev).",
+            titre: "Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
+            message: "Deux médicaments hypotenseurs ou orthostatiques ou plus (antihypertenseur, antidépresseur sérotoninergique, alpha-bloquant, antiparkinsonien dopaminergique, antipsychotique) chez un patient ≥ 75 ans : mesure de TA couché-debout (1 et 3 min) à chaque consultation. Hypotension orthostatique = chute PAS ≥ 20 mmHg ou PAD ≥ 10 mmHg dans les 3 min après lever. Si symptomatique (vertige, chute, syncope) ou ∆ PAS ≥ 30 mmHg : déprescrire l'antihypertenseur le plus récent ou le plus iatrogène (priorité : alpha-bloquant > diurétique > IEC/ARA2 > BB > IC). Réf. : ESC 2024 HTN §6.5 ; STOPPFrail v2 ; Lavan/Gallagher 2017 (Lancet Healthy Longev).",
             severite: "info",
             condition: {
                 med_keys: ["iec", "ara2", "inhibiteur calcique", "diuretique", "betabloquant", "alpha-bloquant", "tamsulosine", "alfuzosine", "doxazosine", "isrs", "irsn", "tricyclique", "levodopa", "agoniste da", "antipsychotique"],
-                age_min: 75
+                age_min: 75,
+                // Sous UN seul de ces medicaments, la regle se declenchait chez la
+                // quasi-totalite des dossiers geriatriques : 46 des 112 patients du
+                // panel, et pratiquement tous ceux qui portent un antihypertenseur.
+                // Une consigne qui sort sur tout le monde n'apprend rien sur personne —
+                // elle se lit comme un en-tete, et c'est ce que le lecteur a fini par
+                // signaler trois dossiers de suite.
+                // Le seuil de DEUX n'est pas un artifice de volume : la conduite meme de
+                // la regle — « deprescrire le plus recent ou le plus iatrogene
+                // (alpha-bloquant > diuretique > IEC/ARA2 > BB > IC) » — enonce un ORDRE
+                // DE PRIORITE, qui suppose plusieurs lignes a departager. Sous une seule
+                // molecule, ce classement n'a rien a classer, et le risque orthostatique
+                // cumulatif qui motive la mesure n'est pas constitue.
+                polypharmacie: true,
+                seuil: 2
             },
             alternatives: "Tracer la mesure TA couché-debout dans le dossier ; éducation patient sur le passage progressif assis→debout ; bas de contention si HO sévère ; midodrine 2.5 mg x 3/j en dernier recours (ESC 2024)"
         },

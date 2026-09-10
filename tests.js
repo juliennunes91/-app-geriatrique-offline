@@ -1222,7 +1222,9 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         // ordonnance qui ne comporte qu'un neuroleptique, quatre classes sur cinq ne
         // concernent pas le lecteur.
         const h = meds => analyzeCase({ age: 85, sexe: 'F', dfg: 88, meds })._html['alertes-eviter'] || '';
-        const sousAntipsy = h(['Cyamemazine']);
+        // EV_SF02b exige desormais DEUX molecules hypotensantes (cf. le test dedie) :
+        // l'amlodipine fournit la seconde sans rien changer a ce qui est verifie ici.
+        const sousAntipsy = h(['Cyamemazine', 'Amlodipine']);
         assert.ok(/couché-debout/.test(sousAntipsy), 'la regle EV_SF02b se declenche bien');
         assert.ok(/Concerné chez ce patient : <b>CYAMEMAZINE<\/b>/.test(sousAntipsy),
             'la molecule qui declenche la regle est nommee');
@@ -1233,6 +1235,93 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             .find(b => /durée et réévaluation/.test(b)) || '');
         assert.ok(bloc && !/Concerné chez ce patient/.test(bloc),
             'une alerte qui ne vise qu\'une classe n\'a pas besoin de la repeter');
+    });
+    test('« En MONOTHERAPIE » est une affirmation sur l\'ordonnance entiere', () => {
+        // Troisieme membre de la famille EV_B07 / EV_B21, et le plus directement
+        // falsifiable des trois : il suffit d'un second antihypertenseur pour que le mot
+        // « monotherapie » soit faux. EV_B05 sortait pourtant chez une patiente sous
+        // celiprolol + irbesartan + hydrochlorothiazide — une TRITHERAPIE — en lui
+        // proposant comme alternatives deux des trois molecules qu'elle prend deja.
+        const h = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 45, comorbs: ['PAT_005'], meds })
+            ._html['alertes-eviter'] || '';
+        assert.ok(/id:EV_B05/.test(h(['Celiprolol'])),
+            'en vraie monotherapie, le critere STOPP reste vrai et doit sortir');
+        assert.ok(!/id:EV_B05/.test(h(['Celiprolol', 'Irbesartan', 'Hydrochlorothiazide'])),
+            'sous tritherapie, « monotherapie » decrit un autre dossier que celui-ci');
+        assert.ok(!/id:EV_B05/.test(h(['Celiprolol', 'Amlodipine'])),
+            'un inhibiteur calcique associe suffit a falsifier la monotherapie');
+        // Piege a ne pas refaire : la cle `antihypertenseur` resout AUSSI les
+        // betabloquants — mise en med_absent, elle rendrait la regle indeclenchable.
+        // Le premier cas ci-dessus en est le garde-fou.
+    });
+    test('Une albuminemie basse : un seul message, et il ne dit pas « denutrition »', () => {
+        // Deux cartes sortaient sur le meme chiffre, et la seconde contredisait la
+        // premiere : « l'albumine n'est pas un critere de denutrition (GLIM) » puis
+        // « Hypoalbuminemie moderee / Denutrition — evaluation nutritionnelle (MNA),
+        // complements nutritionnels oraux ».
+        const titres = alb => (analyzeCase({ age: 80, sexe: 'F', dfg: 45, bio: { albumSg: alb } })['alertes-bio'] || [])
+            .map(a => a.titre);
+        [33, 26].forEach(v => {
+            const t = titres(v);
+            assert.strictEqual(t.filter(x => /Albuminémie basse/.test(x)).length, 1,
+                `albumine ${v} g/L : une seule carte`);
+            assert.ok(!t.some(x => /Dénutrition/i.test(x)),
+                `albumine ${v} g/L : le chiffre ne porte pas le diagnostic nutritionnel`);
+        });
+        // Fusionner deux cartes n'est PAS baisser l'alarme : la gradation de SYND_033
+        // est conservee sous 30 g/L. Sans cette ligne, `cov_SUP_ALB_01` (albumine 26)
+        // perdait sa carte rouge — et le bandeau de synthese avec elle.
+        const sevAlb = v => ((analyzeCase({ age: 80, sexe: 'F', dfg: 45, bio: { albumSg: v } })['alertes-bio'] || [])
+            .find(a => /Albuminémie basse/.test(a.titre)) || {}).severity;
+        assert.strictEqual(sevAlb(26), 'danger', 'sous 30 g/L : hypoalbuminemie severe, elle reste rouge');
+        assert.strictEqual(sevAlb(33), 'info',
+            'entre 30 et 35 : la seule carte orange etait celle qui portait le diagnostic ecarte');
+        const h = analyzeCase({ age: 80, sexe: 'F', dfg: 45, bio: { albumSg: 33 } })._html['alertes-bio'] || '';
+        assert.ok(/GLIM/.test(h), 'la lecture correcte est conservee, elle n\'est pas supprimee');
+        assert.ok(!/Évaluation nutritionnelle \(MNA\)/.test(h),
+            'la conduite nutritionnelle de SYND_033 ne doit pas revenir par ce chemin');
+        // La seule part PROPRE du syndrome — son imputabilite iatrogene — est reprise.
+        const i = analyzeCase({ age: 80, sexe: 'F', dfg: 45, bio: { albumSg: 26 }, meds: ['Prednisone'] })
+            ._html['alertes-bio'] || '';
+        assert.ok(/Imputabilité iatrogène/.test(i),
+            'le corticoide pourvoyeur reste nomme — c\'est ce que l\'encart n\'apportait pas');
+    });
+    test('Un risque de PREMIERE DOSE ne se donne pas pour un risque en cours', () => {
+        // GeriaAssist lit une ordonnance, jamais son anciennete. « Hypotension 1ere
+        // dose » sortait au present, en orange, sous le titre « Co-prescription a
+        // risque », chez une patiente sous irbesartan + hydrochlorothiazide depuis des
+        // annees — alors que l'entree elle-meme declare l'association RECOMMANDEE.
+        const h = analyzeCase({ age: 80, sexe: 'F', dfg: 45, comorbs: ['PAT_005'],
+                                meds: ['Irbesartan', 'Hydrochlorothiazide'] })._html['alertes-interact'] || '';
+        assert.ok(/Association à surveiller : IRBESARTAN/.test(h),
+            'une surveillance de mise en route n\'est pas une co-prescription a risque');
+        assert.ok(!/Co-prescription à risque : IRBESARTAN/.test(h), 'et le titre ne doit plus l\'affirmer');
+        assert.ok(/Risque de <b>mise en route<\/b>/.test(h), 'la phase du risque est DITE');
+        assert.ok(/Association <b>recommandée<\/b>/.test(h),
+            'et l\'entree qui declare l\'association recommandee le fait lire');
+        // La table est indexee par le COUPLE (DCI hote, libelle) et non par le seul
+        // libelle : « Bêta-bloquants » est employe par six entrees dont une seule releve
+        // de la premiere dose. Les cinq autres — bradycardie, masquage d'hypoglycemie —
+        // sont des risques permanents et doivent le rester.
+        const i = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 60, meds })._html['alertes-interact'] || '';
+        assert.ok(/Association à surveiller : TRAZOSINE/.test(i(['Trazosine', 'Bisoprolol'])),
+            'trazosine + betabloquant : hypotension de premiere dose, declaree');
+        assert.ok(/Co-prescription à risque : GALANTAMINE/.test(i(['Galantamine', 'Bisoprolol'])),
+            'meme libelle, autre molecule : le risque n\'est pas confine a l\'instauration');
+    });
+    test('La mesure de TA couche-debout suppose plusieurs lignes a departager', () => {
+        // La regle se declenchait chez 46 des 112 patients du panel, et pratiquement
+        // chez tous ceux qui portent un antihypertenseur : une consigne qui sort sur
+        // tout le monde n'apprend rien sur personne. Sa propre conduite — « deprescrire
+        // le plus recent ou le plus iatrogene (alpha-bloquant > diuretique > IEC/ARA2 >
+        // BB > IC) » — enonce un ordre de priorite, qui suppose plusieurs lignes.
+        const h = meds => analyzeCase({ age: 85, sexe: 'F', dfg: 70, meds })._html['alertes-eviter'] || '';
+        assert.ok(!/id:EV_SF02b/.test(h(['Amlodipine'])),
+            'sous une seule molecule, le classement de deprescription n\'a rien a classer');
+        assert.ok(/id:EV_SF02b/.test(h(['Amlodipine', 'Furosemide'])),
+            'a deux, le cumul orthostatique est constitue et la mesure decide quelque chose');
+        assert.ok(!/id:EV_SF02b/.test(analyzeCase({ age: 70, sexe: 'F', dfg: 70, meds: ['Amlodipine', 'Furosemide'] })
+            ._html['alertes-eviter'] || ''), 'le seuil d\'age reste celui de la regle');
     });
     test('Alerte ASSUMEE : elle descend d\'une bande, elle ne disparait pas', () => {
         // Un PIM peut etre justifie chez ce patient-la. L'application gradue le RISQUE,
@@ -1257,8 +1346,10 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             'le motif ecrit par le prescripteur est repris');
 
         // Assumer ne REMONTE jamais une alerte : un `Math.max` mal place aurait fait
-        // passer une informative en orange.
-        const info = analyzeCase({ ...base, assumees: [{ cle: 'id:EV_SF02b', motif: '' }] });
+        // passer une informative en orange. EV_SF02b exige deux molecules hypotensantes
+        // ou orthostatiques — l'amlodipine fournit la seconde.
+        const info = analyzeCase({ ...base, meds: ['Cyamemazine', 'Amlodipine'],
+                                   assumees: [{ cle: 'id:EV_SF02b', motif: '' }] });
         assert.strictEqual(sev(info, /couché-debout/), 'info',
             'une alerte informative assumee reste informative');
 
