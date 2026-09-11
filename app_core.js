@@ -64,8 +64,14 @@ function _collectPatientData() {
         date: new Date().toISOString(),
         fields, checkboxes,
         comorbs: [...activeComorbs],
-        meds: activeMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id })),
-        suspended: window.suspendedMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id })),
+        // `precisions` EST une donnee clinique, pas un detail d'affichage : c'est elle
+        // qui distingue le methotrexate hebdomadaire de l'oncologique, le macrogol de
+        // la preparation colique, l'amphotericine B buvable de l'injectable. Omise a
+        // l'export, elle etait perdue au rechargement du dossier — et l'application
+        // retombait sur la forme LA PLUS EXPOSANTE (systemique, injectable), ou
+        // rearmait des regles qu'une precision avait desarmees.
+        meds: activeMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id, precisions: m.precisions || undefined })),
+        suspended: window.suspendedMeds.map(m => ({ dci: m.dci, classe: m.classe, label: m.label, core_id: m.core_id, precisions: m.precisions || undefined })),
         paam: (typeof window.paamSerialize === 'function') ? window.paamSerialize() : undefined,
         conciliation: (typeof window.conciliationSerialize === 'function') ? window.conciliationSerialize() : undefined,
         psyScores: (typeof window.psyScoresSerialize === 'function') ? window.psyScoresSerialize() : undefined,
@@ -117,7 +123,9 @@ function _restorePatientData(data) {
             const key = sanitizeText(m.dci);
             const dbData = unifiedMedsMap.get(key);
             if (dbData && !activeMeds.some(am => sanitizeText(am.dci) === key)) {
-                activeMeds.push({ label: m.label || m.dci, core_id: m.core_id || key, dci: m.dci, classe: m.classe || dbData.classe, albumine: dbData.albumine || 0, db_ref: dbData.db_ref });
+                const _med = { label: m.label || m.dci, core_id: m.core_id || key, dci: m.dci, classe: m.classe || dbData.classe, albumine: dbData.albumine || 0, db_ref: dbData.db_ref };
+                if (m.precisions) _med.precisions = m.precisions;
+                activeMeds.push(_med);
             }
         });
     }
@@ -126,7 +134,9 @@ function _restorePatientData(data) {
             const key = sanitizeText(m.dci);
             const dbData = unifiedMedsMap.get(key);
             if (dbData) {
-                window.suspendedMeds.push({ label: m.label || m.dci, core_id: m.core_id || key, dci: m.dci, classe: m.classe || dbData.classe, albumine: dbData.albumine || 0, db_ref: dbData.db_ref });
+                const _sus = { label: m.label || m.dci, core_id: m.core_id || key, dci: m.dci, classe: m.classe || dbData.classe, albumine: dbData.albumine || 0, db_ref: dbData.db_ref };
+                if (m.precisions) _sus.precisions = m.precisions;
+                window.suspendedMeds.push(_sus);
             }
         });
     }

@@ -172,6 +172,50 @@ non déclaré :
 Le test correspondant vérifie les deux sens : équivalence là où elle est vraie, et
 **non-inférence** là où elle serait fausse.
 
+## Retirer une comorbidité doit la retirer POUR DE BON
+
+Retirer la pastille d'une comorbidité puis relancer l'analyse rendait **exactement le
+même résultat**. Deux défauts se cumulaient, et le premier est le plus grave qui soit
+dans cette application : **l'écran et l'analyse divergeaient** — plus de pastille à
+l'écran, la pathologie toujours comptée dans le raisonnement.
+
+1. **La case à cocher qui déclare la pathologie restait cochée**, et la boucle
+   d'auto-injection de `_buildPatientContext` repoussait le `PAT_xxx` dans
+   `activeComorbs` à l'analyse suivante. C'est la contrepartie du principe « un fait
+   clinique, deux chemins de saisie » : les deux chemins déclarent le même fait, donc
+   **retirer le fait doit retirer les deux**. `removeComorb()` décoche désormais toute
+   case qui déclare la pathologie retirée — un retour **visible**, préférable à un
+   registre de rétractations invisible qui ferait de nouveau diverger l'écran et
+   l'analyse. Plusieurs cases peuvent déclarer la même pathologie (`chkStent` et
+   `chkScaAigu` pour `PAT_004`) : elles sont toutes décochées, sans quoi l'une d'elles
+   la ferait revenir seule.
+2. **`activeComorbs = activeComorbs.filter(…)` REMPLACE le tableau** au lieu de le
+   modifier, ce qui rompait l'alias posé par `patient_state.js`
+   (`let activeComorbs = PatientState._internals.comorbs`) : après le premier retrait,
+   les deux pointaient sur des tableaux différents. Aucun consommateur ne lisait encore
+   `PatientState`, mais la « source unique de vérité » n'en était plus une. Le retrait
+   se fait **en place** (`splice`), pour `removeComorb` comme pour `removeMed`.
+
+La table `CASE_PATHOLOGIE` (`utils.js`) est le point de passage unique, lue dans les
+**deux sens** : `_buildPatientContext` l'emploie pour injecter, `removeComorb` pour
+inverser. Elle vivait en local dans `app_analysis.js`, donc inaccessible à l'interface —
+c'est ce qui rendait l'inversion impossible.
+
+**Ce défaut n'est pas atteignable par le harnais Node** : il vit dans l'état de
+l'interface (case cochée, ordre des appels). Il est couvert par
+`tools/tests_ui_playwright.cjs`, validé par mutation dans les deux sens.
+
+## Une précision est une donnée clinique, pas un détail d'affichage
+
+`_collectPatientData()` sérialisait `{dci, classe, label, core_id}` — **sans
+`precisions`**. Recharger un dossier exporté perdait donc la précision saisie, en
+silence. Or c'est elle qui distingue le méthotrexate hebdomadaire de l'oncologique, le
+macrogol de la préparation colique, l'amphotéricine B buvable de l'injectable, et
+l'indication du diurétique de l'anse. Perdue, l'application retombe sur le **défaut par
+défaut — la forme la plus exposante** — ou, pire, **réarme une règle qu'une précision
+avait désarmée** (`IN_H09` et `SUP_PIMC_04` sous méthotrexate haute dose). Sérialisée et
+relue des deux côtés, pour `meds` comme pour `suspended`.
+
 ## Architecture des données cliniques
 
 **Attribution des sources (important)** :
@@ -790,6 +834,23 @@ scène ne l'était pas.
    sur cinq ne concernaient pas cette patiente. `renderSingleAlert` ajoute désormais
    « Concerné chez ce patient : … » — mais **seulement** quand la règle cite plusieurs
    clés et qu'une partie résout ; une alerte qui vise une seule molécule se suffit.
+
+   **Elle doit lire l'UNION des trois listes de clés**, pas la seule `med_keys`.
+   `EV_SYND_046` exige un sédatif (`med_keys`) **ET** un opioïde, antipsychotique ou
+   anticholinergique (`med_keys_2`) : n'en lire qu'une désignait la miansérine comme
+   **seule** coupable d'une alerte que la rispéridone déclenchait avec elle. Le défaut
+   était dans la correction elle-même, et il ne pouvait apparaître que sur une règle
+   multi-listes.
+
+   **Corollaire trouvé sur le même dossier** : le titre d'`EV_SYND_046` annonçait
+   « FRID ≥ 3 », c'est-à-dire un **score**, alors que sa condition ne vérifie que la
+   co-prescription de **deux classes**. Le score FRID véritable de cette patiente valait
+   **1** (une seule molécule à `scores.chute` ≥ 2). Le décompte réel existe et vit
+   ailleurs — le cluster de mécanisme d'`app_analysis.js`, qui compte les médicaments et
+   n'apparaît qu'à partir de trois. La règle énonce donc ce qu'elle vérifie (« Deux
+   classes pourvoyeuses de chutes associées ») et cite le FRID comme repère, sans
+   s'attribuer un chiffre qu'elle ne calcule pas. Famille `runTitreConditionAudit`,
+   étendue ici au **chiffre** affirmé par un titre.
 
    **Cela n'a pas suffi**, et le lecteur l'a signalée trois dossiers de suite. `EV_SF02b`
    se déclenchait chez **46 des 112 patients du panel** — pratiquement tous ceux qui

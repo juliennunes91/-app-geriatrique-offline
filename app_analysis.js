@@ -626,45 +626,11 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'BIO_T4': getBioVal('bioT4'), 'BIO_T3': getBioVal('bioT3')
     };
 
-    // Auto-injection des PAT codes depuis les checkboxes cliniques
-    const checkboxPatMap = {
-        'chkAvc': 'PAT_008', 'chkAtcdUlcere': 'PAT_021', 'chkDialyse': 'PAT_029',
-        'chkPalliatif': 'PAT_030', 'chkDepression': 'PAT_032', 'chkGlaucome': 'PAT_033',
-        'chkFoie': 'PAT_034', 'chkBrady': 'PAT_035', 'chkTvp': 'PAT_036',
-        'chkStent': 'PAT_004', 'chkScaAigu': 'PAT_004', 'chkHtaNonControlee': 'PAT_005',
-        'chkIncontinence': 'PAT_039', 'chkDysphagie': 'PAT_038',
-        'chkLewy': 'PAT_012',
-        // Troubles cognitifs & neuropsychocomportementaux (SFGG 2024 SPC)
-        'chkDemence': 'PAT_010',
-        'demTypeMA': 'PAT_011', 'demTypeDP': 'PAT_014', 'demTypeDLFT': 'PAT_013',
-        'demTypeVasc': 'PAT_041', 'demTypeMixte': 'PAT_042',
-        'chkMci': 'PAT_043',
-        'chkAnxieteTAG': 'PAT_044',
-        'chkPsychoseTardive': 'PAT_045',
-        'chkBipolaire': 'PAT_046',
-        'chkCatatonie': 'PAT_047',
-        'chkDelirium': 'PAT_048',
-        'chkInsomnie': 'PAT_049',
-        'chkTcsp': 'PAT_050',
-        'chkSjsr': 'PAT_051',
-        'chkSaos': 'PAT_052',
-        // Maladie psychiatrique primaire CHRONIQUE (antérieure à 65 ans) — Bloc 1
-        'chkSchizoChronique': 'PAT_055',
-        'chkSchizoAffectif': 'PAT_056',
-        'chkTroubleDelirant': 'PAT_057',
-        'chkBipolaireI': 'PAT_058',
-        'chkBipolaireII': 'PAT_059',
-        'chkDepressionRecurrente': 'PAT_060',
-        'chkDysthymie': 'PAT_061',
-        'chkTOC': 'PAT_062',
-        'chkTroublePanique': 'PAT_063',
-        'chkTAGChronique': 'PAT_064',
-        'chkESPT': 'PAT_065',
-        'chkTroublePersonnalite': 'PAT_066',
-        'chkUsageAlcool': 'PAT_067',
-        'chkUsageSubstances': 'PAT_068',
-        'chkTSADI': 'PAT_069'
-    };
+    // Auto-injection des PAT codes depuis les checkboxes cliniques.
+    // La table vit dans utils.js (CASE_PATHOLOGIE) : `removeComorb` doit pouvoir
+    // l'INVERSER pour decocher la case quand on retire la pastille, sans quoi la
+    // comorbidite est repoussee ici a l'analyse suivante.
+    const checkboxPatMap = CASE_PATHOLOGIE;
     for (const [chkId, patCode] of Object.entries(checkboxPatMap)) {
         if (isChecked(chkId) && !activeComorbs.includes(patCode)) {
             if (typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES && MASTER_DB.PATHOLOGIES[patCode]) {

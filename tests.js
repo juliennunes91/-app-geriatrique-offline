@@ -1309,6 +1309,25 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/Co-prescription à risque : GALANTAMINE/.test(i(['Galantamine', 'Bisoprolol'])),
             'meme libelle, autre molecule : le risque n\'est pas confine a l\'instauration');
     });
+    test('Une alerte qui exige DEUX classes nomme les deux coupables', () => {
+        // EV_SYND_046 exige un sedatif (med_keys) ET un opioide/antipsychotique/
+        // anticholinergique (med_keys_2). La ligne « Concerne chez ce patient » ne lisait
+        // que la PREMIERE liste : sur une ordonnance mianserine + risperidone, elle
+        // designait la mianserine comme seule coupable d'une alerte que la risperidone
+        // declenchait avec elle.
+        const h = analyzeCase({ age: 87, sexe: 'F', dfg: 85,
+            meds: ['Mianserine', 'Risperidone', 'Hydrochlorothiazide'] })._html['alertes-eviter'] || '';
+        const bloc = h.split(/(?=<div class="alert)/).find(b => /pourvoyeuses de chutes/.test(b)) || '';
+        assert.ok(bloc, 'la regle se declenche bien sur les deux classes');
+        const m = bloc.match(/Concerné chez ce patient : <b>([^<]*)<\/b>/);
+        assert.ok(m, 'les molecules concernees sont nommees');
+        assert.ok(/MIANSERINE/.test(m[1]) && /RISPERIDONE/.test(m[1]),
+            `les DEUX listes sont lues, pas seulement la premiere : ${m[1]}`);
+        // Et le titre n'annonce plus un SCORE que la condition ne compte pas : elle
+        // verifie deux classes, le FRID veritable valait 1 sur le dossier qui l'a montre.
+        assert.ok(!/FRID\s*[≥>]/i.test(bloc),
+            'le titre ne s\'attribue pas un decompte qu\'il ne fait pas');
+    });
     test('Un chiffre biologique sans date ne dit pas s\'il faut agir ou le refaire', () => {
         // Les valeurs n'avaient aucune date : « creatinine 126 µmol/L » se lisait pareil
         // qu'il s'agisse du prelevement de la veille ou de celui du trimestre dernier.
@@ -3198,7 +3217,7 @@ console.log('\n📚 Conformité littérature — cas polymédiqué (STOPP/START/
         ['STOPP — AINS + DFG<50', ev, /AINS \+ DFG/i],
         ['STOPP — Antiagrégant seul au lieu d\'AC (FA)', ev, /Antiagrégant seul en remplacement/i],
         ['STOPP/Beers — Aspirine prévention primaire', ev, /Aspirine en prévention primaire/i],
-        ['FRID ≥ 3 → chutes', ev, /FRID ≥ 3/i],
+        ['Deux classes pourvoyeuses de chutes', ev, /classes pourvoyeuses de chutes/i],
         ['START A1 — Anticoagulation FA', ini, /Anticoagulant pour FA/i],
         ['START — Bisphosphonate/anabolique ostéoporose', ini, /Anti-résorptif ou anabolique/i],
         ['START — Vitamine D ostéoporose', ini, /Vitamine D pour ostéoporose/i],

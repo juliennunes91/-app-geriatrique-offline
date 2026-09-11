@@ -2204,8 +2204,16 @@ const GERIA_RECOS_DB = {
             sources: ["BEERS", "STOPP3", "HAS"],
             ref_code: "SYND-046-CHUTES",
             section: "Risque fonctionnel",
-            titre: "Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
-            message: "SYND_046 : ≥ 2 classes à risque de chute (BZD/Z-drugs, opioïdes, antipsychotiques, antihypertenseurs multiples, anticholinergiques ACB ≥ 2, hypoglycémiants, antiépileptiques). Score FRID ≥ 3 = OR chute 1.5-2.5 (Seppala JAMDA 2018). Test up-and-go, TA couché-debout, revue médicamenteuse priorisée.",
+            // Le titre annonçait « FRID ≥ 3 » — un SCORE — alors que la condition ne
+            // vérifie que la co-prescription de DEUX classes, une de chaque liste. Sur un
+            // dossier réel, l'alerte sortait « FRID ≥ 3 » chez une patiente dont le score
+            // FRID véritable valait 1 (une seule molécule à `scores.chute` ≥ 2). Le vrai
+            // décompte existe et vit ailleurs — le cluster de mécanisme d'app_analysis.js,
+            // qui compte les médicaments et n'apparaît qu'à partir de trois. Cette règle-ci
+            // énonce donc ce qu'elle vérifie, et cite le FRID comme repère, sans
+            // s'attribuer un chiffre qu'elle ne calcule pas.
+            titre: "Deux classes pourvoyeuses de chutes associées",
+            message: "Deux familles à risque de chute sont co-prescrites : d'une part un sédatif ou un antidépresseur (benzodiazépine, apparenté, ISRS/IRSN, tricyclique, miansérine, mirtazapine), d'autre part un opioïde, un antipsychotique ou un anticholinergique. L'association suffit à justifier une revue, indépendamment du décompte : le score FRID (Seppala, JAMDA 2018) associe trois médicaments à risque de chute ou plus à un odds ratio de 1,5 à 2,5, et il est calculé à part dans la synthèse. Test up-and-go, mesure de la TA couché-debout, revue médicamenteuse priorisée.",
             severite: "warning",
             condition: {
                 med_keys: ["benzodiazepine", "bzd", "diazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "bromazepam", "zopiclone", "zolpidem",

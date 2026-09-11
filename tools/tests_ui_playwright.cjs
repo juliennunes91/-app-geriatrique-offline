@@ -270,6 +270,55 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
                 'le lecteur doit distinguer « pas de date » de « pas de bilan »');
         });
 
+        // ── Deux défauts d'ÉTAT D'INTERFACE, hors de portée du harnais Node ──────────
+        const etat = await page.evaluate(() => {
+            const r = {};
+            resetPatient();
+            document.getElementById('patientAge').value = 87;
+            document.getElementById('patientDFG').value = 85;
+            // Chemin « liste déroulante » : la cascade coche la case correspondante.
+            selectComorb('PAT_043');
+            r.apresAjout = { comorbs: [...activeComorbs], caseCochee: document.getElementById('chkMci').checked };
+            analyserPrescription();
+            removeComorb('PAT_043');
+            r.apresRetrait = { comorbs: [...activeComorbs], caseCochee: document.getElementById('chkMci').checked };
+            analyserPrescription();
+            r.apresSecondeAnalyse = [...activeComorbs];
+            r.aliasIntact = (PatientState._internals.comorbs === activeComorbs);
+
+            // Aller-retour JSON avec une précision saisie.
+            resetPatient();
+            const m = MASTER_DB.MEDICAMENTS.find(x => sanitizeText(x.dci) === 'macrogol');
+            activeMeds.push({ dci: m.dci, classe: m.classe, label: m.dci, core_id: 'macrogol',
+                albumine: 0, db_ref: m, precisions: { indication_peg: 'preparation_colique' } });
+            const json = JSON.parse(JSON.stringify(_collectPatientData()));
+            r.exporte = json.meds[0].precisions || null;
+            _restorePatientData(json);
+            r.restaure = (activeMeds[0] || {}).precisions || null;
+            return r;
+        });
+
+        test('Une comorbidité retirée ne revient pas à l\'analyse suivante', () => {
+            ok(etat.apresAjout.caseCochee, 'préalable : le choix par la liste coche la case');
+            ok(etat.apresRetrait.comorbs.length === 0, 'le retrait vide bien activeComorbs');
+            ok(etat.apresRetrait.caseCochee === false,
+                'la case qui déclare la pathologie est décochée — un retour visible, pas un registre caché');
+            ok(etat.apresSecondeAnalyse.length === 0,
+                `la comorbidité est repoussée par la case restée cochée : ${JSON.stringify(etat.apresSecondeAnalyse)}`);
+            ok(etat.aliasIntact,
+                'le retrait se fait EN PLACE : remplacer le tableau rompait l\'alias de patient_state.js');
+        });
+
+        test('Une précision survit à l\'aller-retour JSON', () => {
+            // `precisions` distingue le méthotrexate hebdomadaire de l'oncologique, le
+            // macrogol de la préparation colique : perdue, l'application retombe sur la
+            // forme la plus exposante ou réarme une règle qu'une précision désarmait.
+            ok(etat.exporte && etat.exporte.indication_peg === 'preparation_colique',
+                `la précision est écrite dans l'export : ${JSON.stringify(etat.exporte)}`);
+            ok(etat.restaure && etat.restaure.indication_peg === 'preparation_colique',
+                `et relue à l'import : ${JSON.stringify(etat.restaure)}`);
+        });
+
         test('Le rapport ne lève aucune erreur JavaScript', () => {
             ok(erreurs.length === 0, `erreurs de page : ${erreurs.join(' | ')}`);
         });

@@ -20,8 +20,8 @@
    "warning | Aspirine en prévention primaire cardiovasculaire",
    "warning | Cascades iatrogéniques détectées",
    "warning | DIAZEPAM — Déconseillé Dépression (sujet âgé / Late-Life Depression)",
+   "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Digoxine en 1ère ligne pour FA (contrôle de fréquence > 3 mois)",
-   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
@@ -598,8 +598,8 @@
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
    "warning | Antiarythmique classe I/III sans ECG régulier",
-   "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie",
-   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
+   "warning | Deux classes pourvoyeuses de chutes associées",
+   "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie"
   ],
   "alertes-initier": [],
   "alertes-bio": [
@@ -901,7 +901,7 @@
    "danger | Antihistaminique H1 1ère génération en 1ère intention (allergie/prurit)",
    "danger | Oxybutynine (toutes formes)",
    "info | Action immédiate",
-   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+   "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé",
    "warning | Risque de délirium — charge anticholinergique élevée (ACB ≥ 3)"
   ],
@@ -1679,7 +1679,7 @@
    "danger | IRSN + HTA sévère",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
-   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
+   "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
@@ -1721,8 +1721,8 @@
    "danger | Phénothiazine chez le sujet âgé — préférer une alternative",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
+   "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie",
-   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
@@ -1799,7 +1799,7 @@
    "danger | Hypnotique Z ≥ 2 semaines pour insomnie",
    "info | Action immédiate",
    "warning | Cascades iatrogéniques détectées",
-   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
+   "warning | Deux classes pourvoyeuses de chutes associées"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -3210,9 +3210,9 @@
    "danger | Risque de syndrome sérotoninergique — association sérotoninergique + tramadol/IMAO/linézolide",
    "info | Action immédiate",
    "warning | Constipation opioïde / anticholinergique — prophylaxie laxative requise",
+   "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie",
-   "warning | Opioïde quotidien régulier sans laxatif co-prescrit",
-   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
+   "warning | Opioïde quotidien régulier sans laxatif co-prescrit"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",
@@ -3263,10 +3263,10 @@
    "info | Réévaluation annuelle de chaque traitement chronique",
    "warning | Cascades iatrogéniques détectées",
    "warning | Constipation opioïde / anticholinergique — prophylaxie laxative requise",
+   "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Diurétique sans ionogramme de surveillance",
    "warning | IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
-   "warning | Opioïde quotidien régulier sans laxatif co-prescrit",
-   "warning | Risque de chutes — charge médicamenteuse (FRID ≥ 3)"
+   "warning | Opioïde quotidien régulier sans laxatif co-prescrit"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",

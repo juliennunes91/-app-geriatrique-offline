@@ -273,8 +273,36 @@ function selectMed(data) {
 }
 function addComorbManual() { let input = document.getElementById('inputComorb'); if(!input) return; const val = input.value.trim(); if(val) { let match = searchComorbList(val); if(match.length > 0) selectComorb(match[0].data); } input.value = ''; document.getElementById('listComorb').style.display = 'none'; }
 function addMedManual() { let input = document.getElementById('inputMed'); if(!input) return; const val = input.value.trim(); if(val) { let match = searchMedList(val); if(match.length > 0) selectMed(match[0].data); } input.value = ''; document.getElementById('listMed').style.display = 'none'; }
-function removeComorb(val) { activeComorbs = activeComorbs.filter(c => c !== val); renderTags(); }
-function removeMed(dci) { activeMeds = activeMeds.filter(m => m.dci !== dci); renderTags(); }
+// Retirer une comorbidité doit la retirer POUR DE BON. Deux défauts se cumulaient :
+//
+//   1. La case à cocher qui la déclare restait cochée, et `_buildPatientContext` la
+//      repoussait dans `activeComorbs` à l'analyse suivante. L'écran n'affichait plus
+//      la pastille, l'analyse comptait toujours la pathologie — mesuré : retirer
+//      « trouble cognitif léger » puis relancer rendait exactement le même résultat.
+//      Les deux chemins de saisie déclarent le MÊME fait (cf. CLAUDE.md) : retirer le
+//      fait doit donc retirer les deux. Décocher est un retour VISIBLE, à la différence
+//      d'un registre de rétractations invisible qui ferait de nouveau diverger l'écran
+//      et l'analyse.
+//   2. `activeComorbs = activeComorbs.filter(…)` REMPLACE le tableau au lieu de le
+//      modifier, ce qui rompt l'alias posé par `patient_state.js`
+//      (`let activeComorbs = PatientState._internals.comorbs`) : les deux pointaient
+//      ensuite sur des tableaux différents. Aucun consommateur ne le lisait encore,
+//      mais la « source unique de vérité » n'en était plus une. On retire EN PLACE.
+function removeComorb(val) {
+    if (typeof CASE_PATHOLOGIE !== 'undefined') {
+        Object.entries(CASE_PATHOLOGIE).forEach(([chkId, patCode]) => {
+            if (patCode !== val) return;
+            const e = document.getElementById(chkId);
+            if (e && e.checked) { e.checked = false; if (typeof e.onchange === 'function') e.onchange(); }
+        });
+    }
+    for (let i = activeComorbs.length - 1; i >= 0; i--) if (activeComorbs[i] === val) activeComorbs.splice(i, 1);
+    renderTags();
+}
+function removeMed(dci) {
+    for (let i = activeMeds.length - 1; i >= 0; i--) if (activeMeds[i].dci === dci) activeMeds.splice(i, 1);
+    renderTags();
+}
 function toggleSuspend(dci) {
     let idx = activeMeds.findIndex(m => m.dci === dci);
     if(idx > -1) { window.suspendedMeds.push(activeMeds[idx]); activeMeds.splice(idx, 1); }

@@ -1073,7 +1073,12 @@ const GeriaEngineV2 = (() => {
             : '';
         let medsConcernes = '';
         try {
-            const cles = (a.condition && a.condition.med_keys) || [];
+            // L'UNION des trois listes, et non la seule première. `EV_SYND_046` exige un
+            // sédatif (med_keys) ET un opioïde/antipsychotique/anticholinergique
+            // (med_keys_2) : n'en lire qu'une désignait la miansérine comme seule
+            // coupable d'une alerte que la rispéridone déclenchait avec elle.
+            const _c = a.condition || {};
+            const cles = [...(_c.med_keys || []), ...(_c.med_keys_2 || []), ...(_c.med_keys_3 || [])];
             if (cles.length > 1 && typeof activeMeds !== 'undefined' && typeof matchesDrugClass === 'function') {
                 const hits = activeMeds.filter(m => cles.some(k => {
                     try { return matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), k); }
