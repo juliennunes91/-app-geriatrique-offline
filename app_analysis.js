@@ -1815,6 +1815,24 @@ function analyserPrescription() {
         } catch(e) { GeriaLog.warn('Erreur syndrome bio:', e.message); }
     };
 
+    // ── De quand datent ces valeurs ? ───────────────────────────────────────────
+    // Elles n'avaient aucune date : « créatinine 126 µmol/L » se lisait pareil qu'il
+    // s'agisse du prélèvement de la veille ou de celui du trimestre dernier — et c'est
+    // pourtant ce qui décide s'il faut agir sur le chiffre ou le refaire d'abord.
+    // Pas de `<strong>` dans ce bloc : `addAlert` n'y injecte donc ni bouton de masquage
+    // ni bouton « assumer », ce qui est voulu — une date n'est pas une alerte, on ne
+    // l'écarte pas.
+    {
+        const bd = (typeof bilanBioDate === 'function') ? bilanBioDate(getStr('bioDate')) : null;
+        if (bd) {
+            addAlert('alertes-bio', `<div class="alert alert-light border shadow-sm py-2">
+                <em class="text-muted">🗓️ Bilan biologique du <b>${escapeHtml(bd.libelle)}</b> — ${escapeHtml(bd.anciennete)}.</em></div>`, null);
+        } else {
+            addAlert('alertes-bio', `<div class="alert alert-light border shadow-sm py-2">
+                <em class="text-muted">🗓️ Date du bilan non renseignée — l'ancienneté des valeurs ci-dessous n'est pas connue, et elle ne figurera pas sur l'export.</em></div>`, null);
+        }
+    }
+
     // --- SYND_001 : Cytolyse Hépatique (ASAT > 3N ou ALAT > 3N) ---
     if(bioValues['BIO_013'] > 135 || bioValues['BIO_014'] > 105) checkBioSyndrome('SYND_001', true);
 

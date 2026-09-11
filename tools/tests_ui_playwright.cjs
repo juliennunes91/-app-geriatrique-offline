@@ -78,8 +78,12 @@ function pilote(c, BIO_IDS) {
     const setVal = (id, v) => { const e = document.getElementById(id); if (e) e.value = String(v); };
     const setChk = (id, v) => { const e = document.getElementById(id); if (e) e.checked = !!v; };
 
-    // Un dossier précédent ne doit pas fuiter d'un cas au suivant.
+    // Un dossier précédent ne doit pas fuiter d'un cas au suivant. Les champs laissés
+    // en place sont le piège : `bioDate` gardait la valeur du cas précédent, et le test
+    // « aucune date n'est fabriquée » passait pour faux alors que le code était bon.
     document.querySelectorAll('input[type=checkbox]').forEach(e => { e.checked = false; });
+    Object.values(BIO_IDS).forEach(id => setVal(id, ''));
+    setVal('bioDate', '');
     setVal('patientAge', c.age != null ? c.age : 80);
     setVal('patientSexe', c.sexe || 'F');
     if (c.poids != null) setVal('patientPoids', c.poids);
@@ -240,6 +244,30 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             ok(/couché-debout/i.test(m[0]), 'la consigne de TA couché-debout y figure');
             ok(/couché-debout[^·\n]*CYAMEMAZINE/i.test(m[0]),
                 `la molécule concernée n'est pas rattachée à la consigne :\n      ${m[0].split('\n').slice(0, 3).join(' / ')}`);
+        });
+
+        const dossierDate = { ...DOSSIER, bio: { creat: 101, bioDate: '2026-08-12' } };
+        const avecDate = enTexte((await jouer(dossierDate)).html);
+        const sansDate = enTexte((await jouer({ ...DOSSIER, bio: { creat: 101 } })).html);
+
+        test('Le rapport dit de quand datent les valeurs biologiques', () => {
+            // Sans elle, « créatinine 126 µmol/L » se lit pareil qu'il s'agisse du
+            // prélèvement de la veille ou de celui du trimestre dernier — et c'est ce
+            // qui décide si le tiers qui lit doit agir sur le chiffre ou le refaire.
+            ok(/Bilan biologique du 12\/08\/2026/.test(avecDate),
+                'la date de prélèvement figure en tête de rapport');
+            ok(/dernier bilan le 12\/08\/2026/.test(avecDate),
+                'et sous « Plan biologique », où elle sert à prescrire le suivant');
+            // Elle ne doit pas se confondre avec la date du RAPPORT, en haut à droite.
+            const auj = new Date().toLocaleDateString('fr-FR');
+            ok(avecDate.includes(auj), 'la date du rapport reste présente, distincte');
+            ok(!/Bilan biologique du ' + auj/.test(avecDate), 'les deux ne sont pas confondues');
+        });
+
+        test('Une date de bilan absente est DITE, jamais inventée', () => {
+            ok(!/Bilan biologique du/.test(sansDate), 'aucune date n\'est fabriquée');
+            ok(/date du dernier bilan non renseignée/i.test(sansDate),
+                'le lecteur doit distinguer « pas de date » de « pas de bilan »');
         });
 
         test('Le rapport ne lève aucune erreur JavaScript', () => {

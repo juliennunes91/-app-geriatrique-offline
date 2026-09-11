@@ -1141,6 +1141,46 @@ entrer troponine, procalcitonine, lipase et TSH). Le compte des paramètres éca
 affiché — **jamais de réduction silencieuse** — et le tableau croisé complet reste dans
 l'onglet Suivi.
 
+## Un chiffre biologique sans date ne dit pas s'il faut agir ou le refaire
+
+Les valeurs saisies n'avaient **aucune date**. « Créatinine 126 µmol/L » se lisait donc
+pareil qu'il s'agisse du prélèvement de la veille ou de celui du trimestre dernier — et
+c'est pourtant ce qui décide si le tiers qui lit le rapport doit agir sur le chiffre ou
+le refaire d'abord.
+
+Champ `bioDate` (type `date`), placé avec la créatinine et le DFG — donc **visible sans
+déplier** la biologie complète, puisqu'il qualifie aussi ces deux-là. Sérialisé dans
+l'export JSON, **purgé par `resetPatient()`** : la date du dossier précédent ferait dater
+les valeurs du suivant d'un prélèvement qui n'est pas le sien.
+
+`bilanBioDate()` (`utils.js`) est le **point de passage unique** — écran, PDF, export
+texte disent exactement la même chose. Il rend `{iso, libelle, jours, anciennete, futur}`.
+
+- **L'ancienneté est un fait, pas un verdict.** « Il y a 3 mois » se dit ; « bilan trop
+  ancien » serait un seuil que rien ne fixe — il dépend du paramètre (une kaliémie sous
+  diurétique ne vieillit pas comme une TSH) et de la question posée. On donne au lecteur
+  de quoi trancher, on ne tranche pas pour lui.
+- **Une date postérieure au jour de l'analyse est une faute de saisie**, pas un bilan à
+  venir : elle est signalée comme telle plutôt qu'affichée « il y a −81 jours ».
+- **Une saisie vide ou invalide rend `null`** — l'absence de date reste l'absence de date,
+  elle ne devient jamais « aujourd'hui ».
+- Piège d'arrondi corrigé : 730 jours donnaient « il y a 1 an et **12 mois** ». Le reste
+  est reporté sur l'année dès qu'il atteint 12.
+
+**Trois rendus, trois usages.** En tête de rapport elle qualifie *tout* le document (et ne
+se confond pas avec la date du rapport, en haut à droite) ; sous « Plan biologique » elle
+dit de quand date le dernier bilan, ce qui sert à prescrire le suivant ; dans l'onglet Bio
+elle ouvre la liste. **Son absence est DITE** — « date du dernier bilan non renseignée » —
+sans quoi le lecteur ne distingue pas « pas de date » de « pas de bilan ».
+
+Le bandeau de l'onglet Bio ne porte **pas** de `<strong>`, donc `addAlert` n'y injecte ni
+masquage ni « assumer » et il n'est pas compté comme une alerte : on n'écarte pas une date.
+
+*Piège rencontré dans le harnais Playwright, pas dans l'application* : le pilote de test ne
+vidait que les cases à cocher, si bien que `bioDate` gardait la valeur du cas précédent et
+que le test « aucune date n'est fabriquée » échouait sur du code correct. Les champs bio
+sont désormais blanchis entre deux dossiers.
+
 ## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
 
 `_bioStatusBadge` ne connaissait que **six** paramètres et rendait un badge VERT « OK »

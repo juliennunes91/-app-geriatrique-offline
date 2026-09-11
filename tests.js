@@ -1309,6 +1309,49 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/Co-prescription à risque : GALANTAMINE/.test(i(['Galantamine', 'Bisoprolol'])),
             'meme libelle, autre molecule : le risque n\'est pas confine a l\'instauration');
     });
+    test('Un chiffre biologique sans date ne dit pas s\'il faut agir ou le refaire', () => {
+        // Les valeurs n'avaient aucune date : « creatinine 126 µmol/L » se lisait pareil
+        // qu'il s'agisse du prelevement de la veille ou de celui du trimestre dernier.
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const vm = require('vm');
+        const REF = '2026-09-11T10:00:00';
+        const d = (v) => JSON.parse(vm.runInContext(
+            'JSON.stringify(bilanBioDate(' + JSON.stringify(v) + ', ' + JSON.stringify(REF) + '))', sandbox));
+        assert.strictEqual(d('2026-08-12').libelle, '12/08/2026', 'la date est rendue en clair');
+        assert.strictEqual(d('2026-09-11').anciennete, 'aujourd\'hui');
+        assert.strictEqual(d('2026-09-10').anciennete, 'hier');
+        assert.strictEqual(d('2026-08-12').anciennete, 'il y a 30 jours');
+        assert.strictEqual(d('2026-06-01').anciennete, 'il y a 3 mois');
+        // L'arrondi du reste pouvait atteindre 12 : 730 jours donnaient « 1 an et 12 mois ».
+        assert.strictEqual(d('2024-09-11').anciennete, 'il y a 2 ans');
+        assert.strictEqual(d('2024-03-11').anciennete, 'il y a 2 ans et 6 mois');
+        // Une date POSTERIEURE est une faute de saisie, pas un bilan a venir.
+        assert.ok(/post[ée]rieure/.test(d('2027-01-01').anciennete), 'le futur est signale');
+        // L'absence de date reste l'absence de date — elle ne devient pas « aujourd'hui ».
+        [null, '', '   ', 'n\'importe quoi', '12/08/2026', '2026-13-45'].forEach(v => {
+            assert.strictEqual(d(v), null, `saisie non exploitable : ${JSON.stringify(v)}`);
+        });
+        assert.strictEqual(vm.runInContext('typeof bilanBioDate', sandbox), 'function',
+            'le point de passage est unique et partagé par l\'écran, le PDF et l\'export texte');
+    });
+    test('La date du bilan est affichee, et son absence est DITE', () => {
+        const bio = extra => analyzeCase({ age: 80, sexe: 'F', dfg: 45,
+            bio: { albumSg: 33, ...extra } })._html['alertes-bio'] || '';
+        // L'ancienneté dépend du jour où le test tourne : on ne fige que le libellé.
+        const avec = bio({ bioDate: '2026-08-12' });
+        assert.ok(/Bilan biologique du <b>12\/08\/2026<\/b>/.test(avec), 'la date saisie est rendue');
+        const sans = bio({});
+        assert.ok(/Date du bilan non renseignée/.test(sans),
+            'une date absente se DIT — sinon le lecteur ne distingue pas « pas de date » de « pas de bilan »');
+        assert.ok(!/Bilan biologique du/.test(sans), 'et rien n\'est inventé');
+        // Ce bandeau n'est pas une alerte : il ne porte pas de <strong>, donc `addAlert`
+        // n'y injecte ni masquage ni « assumer ». On n'écarte pas une date.
+        const bloc = avec.split('</div>')[0];
+        assert.ok(!/maskGeriaAlert|justifyGeriaAlert/.test(bloc),
+            'le bandeau de date n\'est ni masquable ni assumable');
+        assert.ok(!(analyzeCase({ age: 80, sexe: 'F', dfg: 45, bio: { bioDate: '2026-08-12' } })['alertes-bio'] || [])
+            .some(a => /Bilan biologique/.test(a.titre)), 'et il n\'est pas compté comme une alerte');
+    });
     test('Une association RECOMMANDEE change de titre, pas de gravite', () => {
         // Confondre les deux serait le defaut inverse de celui qu'on corrige :
         // spironolactone + IEC est recommandee dans l'IC a FE reduite ET porte une

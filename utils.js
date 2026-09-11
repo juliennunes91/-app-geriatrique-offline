@@ -228,3 +228,46 @@ const comorbsAffichables = (liste) => {
     }
     return masquer.size ? liste.filter(c => !masquer.has(c)) : liste;
 };
+
+// ── Date du bilan biologique ────────────────────────────────────────────────
+// Les valeurs saisies n'avaient aucune date : un rapport lu par un tiers — confrère,
+// pharmacien, IDE — voyait « créatinine 126 µmol/L » sans savoir si le prélèvement
+// datait de la veille ou du trimestre précédent. Or c'est ce qui décide s'il faut agir
+// sur le chiffre ou le refaire d'abord.
+//
+// Point de passage unique, pour que l'écran et le PDF disent exactement la même chose.
+// L'ANCIENNETÉ est calculée et affichée telle quelle, sans verdict : « il y a 3 mois »
+// est un fait, « bilan trop ancien » serait un seuil que rien ne fixe — il dépend du
+// paramètre (une kaliémie sous diurétique ne vieillit pas comme une TSH) et de la
+// question posée. On donne au lecteur de quoi trancher, on ne tranche pas pour lui.
+// Rend `null` si la saisie est vide ou invalide : l'absence de date reste l'absence de
+// date, elle ne devient pas « aujourd'hui ».
+const bilanBioDate = (valeur, aujourdhui) => {
+    const s = String(valeur || '').trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
+    const d = new Date(s + 'T12:00:00');
+    if (isNaN(d.getTime())) return null;
+    const ref = aujourdhui ? new Date(aujourdhui) : new Date();
+    ref.setHours(12, 0, 0, 0);
+    const jours = Math.round((ref.getTime() - d.getTime()) / 86400000);
+    const [a, m, j] = s.split('-');
+    const libelle = `${j}/${m}/${a}`;
+    // Une date POSTÉRIEURE au jour de l'analyse est une faute de saisie, pas un bilan
+    // à venir : on le dit plutôt que d'afficher « il y a -12 jours ».
+    let anciennete;
+    if (jours < 0) anciennete = 'date postérieure au jour de l\'analyse, à vérifier';
+    else if (jours === 0) anciennete = "aujourd'hui";
+    else if (jours === 1) anciennete = 'hier';
+    else if (jours < 31) anciennete = `il y a ${jours} jours`;
+    else if (jours < 365) { const mo = Math.round(jours / 30.44); anciennete = `il y a ${mo} mois`; }
+    else {
+        let an = Math.floor(jours / 365.25);
+        let reste = Math.round((jours - an * 365.25) / 30.44);
+        // L'arrondi du reste peut atteindre 12 (730 jours donnaient « 1 an et 12 mois ») :
+        // on reporte alors sur l'année.
+        if (reste >= 12) { an += 1; reste = 0; }
+        anciennete = reste >= 1 ? `il y a ${an} an${an > 1 ? 's' : ''} et ${reste} mois`
+                                : `il y a ${an} an${an > 1 ? 's' : ''}`;
+    }
+    return { iso: s, libelle, jours, anciennete, futur: jours < 0 };
+};

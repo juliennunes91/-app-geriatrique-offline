@@ -52,7 +52,7 @@ window.importerPatientJSON = function() {
 
 function _collectPatientData() {
     const fields = {};
-    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
+    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #bioDate, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
         if (el) fields[el.id] = el.value;
     });
     const checkboxes = {};
@@ -218,6 +218,13 @@ function buildSyntheseText() {
     lines.push('=== SYNTHÈSE GERIAASSIST ===');
     lines.push(`Date : ${new Date().toLocaleDateString('fr-FR')}`);
     lines.push(`Patient : ${nom ? nom + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}${poids ? ' | ' + poids + ' kg' : ''}${dfg ? ' | DFG ' + dfg + ' ml/min' : ''}`);
+    // La date du PRÉLÈVEMENT, distincte de celle du rapport ci-dessus. Le DFG figure
+    // sur la ligne précédente : sans elle, il n'a pas d'âge.
+    {
+        const bd = (typeof bilanBioDate === 'function')
+            ? bilanBioDate(document.getElementById('bioDate')?.value) : null;
+        if (bd) lines.push(`Bilan biologique du ${bd.libelle} — ${bd.anciennete}.`);
+    }
     lines.push('');
 
     // Bandeau saisies aberrantes (synthData.aberrantInputs)
@@ -486,11 +493,21 @@ function buildPdfContent() {
 
     let html = `<div style="font-family:Arial,sans-serif;font-size:10px;color:#1f2933;line-height:1.6;padding:4px 6px;">`;
 
+    // La DATE DU PRÉLÈVEMENT, à ne pas confondre avec celle du rapport (en haut à
+    // droite). Sans elle, « créatinine 126 µmol/L » se lit pareil qu'il s'agisse du
+    // bilan de la veille ou de celui du trimestre dernier — et c'est ce qui décide si
+    // le tiers qui lit doit agir sur le chiffre ou le refaire d'abord. Deux mentions,
+    // deux usages : ici elle qualifie TOUT le document, et dans « Plan biologique »
+    // elle dit de quand date le dernier bilan pour prescrire le suivant.
+    const _bilanBio = (typeof bilanBioDate === 'function')
+        ? bilanBioDate(document.getElementById('bioDate')?.value) : null;
+
     // En-tête
     html += `<div class="pdf-block" style="${blockStyle}border-bottom:2.5px solid #0d6efd;padding-bottom:8px;">
         <strong style="font-size:15px;color:#0d6efd;letter-spacing:0.01em;">GeriaAssist — Synthèse Pharmaco-Clinique</strong>
         <span style="float:right;font-size:9px;color:#8a939c;">${new Date().toLocaleDateString('fr-FR')}</span>
         <div style="font-size:10.5px;line-height:1.7;margin-top:5px;"><strong>${nom ? escapeHtml(nom) + ' — ' : ''}${age} ans | ${sexe === 'F' ? 'Femme' : 'Homme'}</strong>${poids ? ' | ' + poids + ' kg' : ''}</div>
+        ${_bilanBio ? `<div style="font-size:9px;color:#8a939c;margin-top:1px;">Bilan biologique du <b style="color:#5a636c;">${escapeHtml(_bilanBio.libelle)}</b> — ${escapeHtml(_bilanBio.anciennete)}.</div>` : ''}
     </div>`;
 
     // Fonction rénale — en gras, tout en haut du rapport
@@ -879,7 +896,9 @@ function buildPdfContent() {
 
         if (aRecontroler.length + surveillance.length + routine.length > 0) {
             html += `<div class="pdf-block" style="${blockStyle}border-left:4px solid #6c757d;border-radius:0 5px 5px 0;background:${rgba('#6c757d', 0.04)};padding:10px 12px;">
-                ${secTitle('Plan biologique', '#5a636c')}`;
+                ${secTitle('Plan biologique', '#5a636c', _bilanBio
+                    ? `dernier bilan le ${escapeHtml(_bilanBio.libelle)}, ${escapeHtml(_bilanBio.anciennete)}`
+                    : 'date du dernier bilan non renseignée')}`;
             let bloc = 0;
             const ligne = (titre, corps, couleur) => {
                 html += `<div style="${S.item}${bloc ? 'border-top:' + S.rule + ';' : ''}"><strong${couleur ? ` style="color:${couleur};"` : ''}>${titre}</strong> <span style="color:${S.muted};">${corps}</span></div>`;
@@ -1038,6 +1057,9 @@ window.resetPatient = function() {
         'scoreCFS': '0', 'bioQtc': '',
         'bioTp': '', 'bioChlore': '', 'bioOsm': '', 'bioPrealb': '', 'bioAlbuminurie': '',
         'bioVgm': '', 'bioRetic': '',
+        // La date du bilan appartient au dossier precedent : la laisser en place
+        // ferait dater les valeurs du suivant d'un prelevement qui n'est pas le sien.
+        'bioDate': '',
         'cpManual': '0', 'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1',
         'psyOnsetAge': ''
     };
