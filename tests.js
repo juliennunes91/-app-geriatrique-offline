@@ -1324,9 +1324,18 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!z.some(t => /Cascades iatrog/.test(t)),
             'une cascade exige un medicament de cascade — l\'hypnotique seul n\'en est pas une');
         // La vraie benzodiazepine garde ses criteres propres.
+        // La vraie benzodiazepine garde ses criteres propres (D8 duree, K1 chutes) —
+        // fusionnes a leur tour en UNE carte, comme les Z-drugs.
         const b = ev(['Lorazepam']).map(a => a.titre);
-        assert.ok(b.some(t => /Benzodiazépine ≥ 4 semaines/.test(t)) && b.some(t => /Benzodiazépine chez patient chuteur/.test(t)),
-            `STOPP D8 et K1 restent armes sur une benzodiazepine : ${b.join(' | ')}`);
+        assert.strictEqual(b.filter(t => /^🔴 Benzodiazépines chez le sujet âgé/.test(t)).length, 1,
+            `une carte pour la benzodiazepine : ${b.join(' | ')}`);
+        const hb = analyzeCase({ age: 96, sexe: 'F', dfg: 37, flags: ['chkChutes'], meds: ['Lorazepam'] })._html['alertes-eviter'] || '';
+        assert.ok(/2 critères fusionnés/.test(hb), 'D8 et K1 sont bien tous deux portes par la carte');
+        // Un critere de securite dure fusionne ne perd ni sa place ni sa couleur.
+        const resp = analyzeCase({ age: 85, sexe: 'F', dfg: 60, flags: ['chkChutes'], comorbs: ['PAT_023'], meds: ['Lorazepam'] });
+        assert.ok(/respirat/i.test(resp._html['alertes-eviter'] || ''), 'le critere insuffisance respiratoire reste lisible');
+        assert.ok(resp['alertes-eviter'].some(a => /Benzodiazépines chez le sujet âgé/.test(a.titre) && a.severity === 'danger'),
+            'et la carte fusionnee reste rouge');
         // La fusion prend la gravite du membre le plus grave, jamais celle du premier venu.
         assert.ok(ev(['Zopiclone']).some(a => /Z-drugs/.test(a.titre) && a.severity === 'danger'),
             'la carte fusionnee reste rouge');
@@ -3288,7 +3297,7 @@ console.log('\n📚 Conformité littérature — cas polymédiqué (STOPP/START/
         ['STOPP B12 — Digoxine >125µg + IR', ev, /Digoxine ≥ 125|Digoxine.*DFG/i],
         ['STOPP B21 — Digoxine 1ère ligne FA', ev, /Digoxine en 1ère ligne/i],
         ['Beers — Sulfamide longue durée (glibenclamide)', ev, /Sulfamide à longue|GLIBENCLAMIDE/i],
-        ['STOPP K — BZD longue demi-vie (diazépam)', ev, /Benzodiazépine ≥ 4|Benzodiazépine chez patient chuteur/i],
+        ['STOPP K — BZD longue demi-vie (diazépam)', ev, /Benzodiazépine ≥ 4|Benzodiazépine chez patient chuteur|Benzodiazépines chez le sujet âgé/i],
         ['STOPP/Beers — Tricyclique (amitriptyline)', ev, /tricycliques chez le sujet âgé|TCA.*1ère ligne/i],
         ['STOPP — AINS + DFG<50', ev, /AINS \+ DFG/i],
         ['STOPP — Antiagrégant seul au lieu d\'AC (FA)', ev, /Antiagrégant seul en remplacement/i],

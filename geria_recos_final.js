@@ -4917,7 +4917,12 @@ const CROSS_REF_GROUPS = [
         // `enrichRuleWithCrossRef` retient le PREMIER groupe trouvé — il atterrissait ici.
         rule_ids: ["EV_D08", "EV_D09", "EV_D10", "EV_G04", "EV_K01"],
         pim_dict_keys: ["diazepam", "bromazepam", "alprazolam", "lorazepam", "oxazepam", "clorazepate", "prazepam", "nordazepam", "nitrazepam", "clobazam", "clonazepam", "lormetazepam", "zolpidem", "zopiclone"],
-        fusion_strategy: "distinct_context",  // garder les règles séparées mais afficher les sources fusionnées
+        // Une carte pour la molécule, les critères en complément — même choix que
+        // GRP_ZDRUG et GRP_TCA. Sous lorazépam chez une chuteuse, « ≥ 4 semaines » et
+        // « chuteur » sortaient en deux cartes rouges pour une seule conduite (sevrer).
+        // La base de la carte est le membre le plus GRAVE (deduplicateAlerts) : une
+        // insuffisance respiratoire (G04) ne peut pas être rétrogradée par la fusion.
+        fusion_strategy: "merge_display",
         note: "Chaque règle a un contexte clinique différent (durée, insomnie, SCPD, chutes, IR). On garde les conditions distinctes mais on affiche le support multi-sources complet sur chacune."
     },
 

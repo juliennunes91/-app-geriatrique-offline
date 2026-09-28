@@ -5,9 +5,8 @@
    "danger | AINS + HTA sévère (PAS > 170 et/ou PAD > 100)",
    "danger | Antiagrégant seul en remplacement de l'anticoagulant dans la FA",
    "danger | Antidépresseurs tricycliques chez le sujet âgé",
-   "danger | Benzodiazépine chez patient chuteur",
-   "danger | Benzodiazépine ≥ 4 semaines",
    "danger | Benzodiazépines / Z-drugs : DIAZEPAM",
+   "danger | Benzodiazépines chez le sujet âgé",
    "danger | Citalopram > 20 mg ou Escitalopram > 10 mg ou TCA en cas d'arythmie / QT prolongé / hypokaliémie",
    "danger | Digoxine ≥ 125 µg/j au long cours + DFG < 30",
    "danger | GLIBENCLAMIDE — CI Diabète de type 2",
@@ -1747,10 +1746,8 @@
  },
  "cov_EV_D09_EV_D10": {
   "alertes-eviter": [
-   "danger | Benzodiazépine pour agitation/SCPD dans la démence",
-   "danger | Benzodiazépine ≥ 2 semaines pour insomnie",
-   "danger | Benzodiazépine ≥ 4 semaines",
    "danger | Benzodiazépines / Z-drugs : ALPRAZOLAM",
+   "danger | Benzodiazépines chez le sujet âgé",
    "info | Action immédiate"
   ],
   "alertes-initier": [],
@@ -2548,9 +2545,8 @@
  },
  "cov_EV_G03_EV_G04": {
   "alertes-eviter": [
-   "danger | Benzodiazépine + insuffisance respiratoire aiguë ou chronique",
-   "danger | Benzodiazépine ≥ 4 semaines",
    "danger | Benzodiazépines / Z-drugs : ALPRAZOLAM",
+   "danger | Benzodiazépines chez le sujet âgé",
    "danger | TIOTROPIUM — CI Glaucome à angle fermé",
    "info | Action immédiate",
    "warning | LAMA + Glaucome à angle fermé / obstruction vésicale"

@@ -27,6 +27,22 @@ Types de modifications à synchroniser :
 - Nouveau bouton, nouveau modal, nouvelle section
 - Changement de texte de label visible
 
+## Méthode de travail — le temps de réponse
+
+`node tests.js` prend **3 à 4 minutes** ; une session l'a lancé plus de dix fois pour une
+seule livraison, et c'est ce qui a porté une réponse au-delà de 30 minutes. Règles :
+
+- **Vérifier par un appel ciblé** (`node -e` + `analyzeCase(...)`) pendant qu'on corrige ;
+  la suite complète ne tourne **qu'une fois** avant commit (et une seconde seulement après
+  `GOLDEN_UPDATE`).
+- **Mutations ciblées** : muter, rejouer le seul scénario concerné par `analyzeCase`,
+  restaurer — jamais la suite complète par mutation (quatre mutations = un quart d'heure).
+- **Relire la dérive du golden par script** (diff `avant`/`après`, comptage par titre,
+  contrôle « aucune gravité abaissée ») plutôt qu'en relançant la suite.
+- Lancer la suite Node et Playwright **en arrière-plan** et rédiger CLAUDE.md pendant ce
+  temps.
+- Un signalement = un commit ; ne pas empiler trois chantiers avant la première livraison.
+
 ## Onglet PAAM (Auto-administration)
 
 L'onglet **PAAM** (Prise en charge de l'Auto-Administration des Médicaments)
@@ -236,8 +252,11 @@ l'autre. Cinq causes, aucune devinée par ressemblance de texte :
    et `enrichRuleWithCrossRef` retient le premier groupe trouvé : il atterrissait là.
    `deduplicateAlerts` prend désormais pour base le membre le plus **grave**, pas le
    premier rencontré — une fusion ne doit jamais pouvoir baisser l'alarme.
-   `GRP_BZD_GENERAL` reste `distinct_context` : ses membres ont des conduites différentes
-   (insuffisance respiratoire, SCPD) — arbitrage clinique ouvert.
+   `GRP_BZD_GENERAL` est passé à son tour en `merge_display` (arbitrage du prescripteur) :
+   sous lorazépam chez une chuteuse, « ≥ 4 semaines » et « chuteur » faisaient deux cartes
+   rouges pour une seule conduite. Le critère « insuffisance respiratoire » (G04) reste
+   lisible dans la carte fusionnée, et la base du membre le plus grave garantit qu'il ne
+   peut pas être rétrogradé — un test le vérifie.
 3. **Une cascade exige un médicament de cascade.** L'entrée « BZD → somnolence/chutes »
    avait `cascade: []` et sortait sur l'hypnotique seul : elle redisait les critères STOPP
    sous un nom qui n'était pas le sien. Retirée.
