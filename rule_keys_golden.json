@@ -406,6 +406,25 @@
   "Zolpidem",
   "Zopiclone"
  ],
+ "benzodiazepinestricte": [
+  "Alprazolam",
+  "Bromazepam",
+  "Chlordiazepoxide",
+  "Clobazam",
+  "Clonazepam",
+  "Clorazepate",
+  "Clotiazepam",
+  "Diazepam",
+  "Estazolam",
+  "Loprazolam",
+  "Lorazepam",
+  "Lormetazepam",
+  "Midazolam",
+  "Nitrazepam",
+  "Nordazepam",
+  "Oxazepam",
+  "Prazepam"
+ ],
  "betabloquant": [
   "Acebutolol",
   "Atenolol",

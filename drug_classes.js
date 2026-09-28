@@ -256,6 +256,18 @@ const DRUG_CLASSES = {
         classeMatch: ['benzodiaz'],
         dcis: ['diazepam', 'lorazepam', 'oxazepam', 'bromazepam', 'alprazolam', 'clonazepam', 'clorazepate', 'prazepam', 'zolpidem', 'zopiclone', 'zaleplon', 'lormetazepam', 'nitrazepam', 'midazolam', 'chlordiazepoxide', 'clobazam', 'clotiazepam', 'estazolam', 'loprazolam', 'nordazepam']
     },
+    // Benzodiazépines VRAIES, sans les apparentés « Z ». STOPP v3 les sépare : D8 et K1
+    // visent les benzodiazépines, D11 et K4 les hypnotiques Z. La clé `benzodiazepine`
+    // désigne la famille « benzodiazépines ET apparentés » (c'est son alias
+    // `benzodiazepinesetapparente`), si bien qu'une zopiclone déclenchait les quatre
+    // critères à la fois — deux titrés « Benzodiazépine » pour une molécule qui n'en est
+    // pas une. Pas de `classeMatch` : le libellé des Z-drugs dit « non-benzodiazepine »,
+    // et une sous-chaîne « benzodiaz » les y ferait rentrer.
+    benzodiazepine_stricte: {
+        aliases: ['benzodiazepinestricte'],
+        classeMatch: [],
+        dcis: ['alprazolam', 'bromazepam', 'chlordiazepoxide', 'clobazam', 'clonazepam', 'clorazepate', 'clotiazepam', 'diazepam', 'estazolam', 'loprazolam', 'lorazepam', 'lormetazepam', 'midazolam', 'nitrazepam', 'nordazepam', 'oxazepam', 'prazepam']
+    },
     isrs: {
         aliases: ['isrs', 'ssri', 'inhibiteursselectifsdelarecapturedelaserotonine'],
         classeMatch: ['isrs', 'ssri'],
@@ -737,6 +749,12 @@ const _ANSM_MATCH_DENYLIST = [
     { dci: /^delamanide$/, term: /^lama$/ },
 ];
 
+// Termes courts du thésaurus → clé du référentiel qui les résout. Les interactions ANSM
+// « FER » sont des interactions d'ABSORPTION digestive (hormones thyroïdiennes,
+// cyclines, quinolones, bisphosphonates) : elles visent le fer ORAL, et la clé
+// `feroral` résout exactement les trois sels ferreux de la base.
+const _ANSM_TERME_COURT = { fer: 'feroral' };
+
 /**
  * Version avec gestion du pluriel et ANSM (pour medMatchesAnsmTerm).
  * Normalise le terme de recherche (pluriels, accords) avant matching.
@@ -749,6 +767,19 @@ function matchesDrugClassAnsm(dci, classe, rawTerm) {
     // Garde anti-collision explicite (paires ressemblantes sans rapport clinique).
     for (const d of _ANSM_MATCH_DENYLIST) {
         if (d.dci.test(dci) && (d.term.test(t) || d.term.test(rawTerm))) return false;
+    }
+    // Terme COURT (< 4 caractères) : jamais de sous-chaîne, comme dans matchesDrugClass.
+    // Le garde existait là-bas et manquait ici. Le seul terme court du thésaurus est
+    // « FER », et il captait 23 molécules dont 20 n'étaient pas du fer — par
+    // « ré-FÉR-ence » (macrogol, allopurinol, amoxicilline, fosfomycine, nitrendipine,
+    // cétirizine…), « FER-menté » (lactulose), « inter-FÉR-ent » (inclisiran),
+    // « calci-FÉR-ol » (alfacalcidol, calcitriol, calcifédiol). Un patient sous macrogol
+    // lisait « prendre les hormones thyroïdiennes à distance du fer ». Le denylist
+    // précédent ne traitait que la DCI `…calciferol` : un symptôme, pas la cause.
+    // Le terme court passe par un alias DÉCLARÉ vers une clé du référentiel.
+    if (t.length < 4) {
+        const alias = _ANSM_TERME_COURT[t];
+        return !!alias && matchesDrugClass(dci, classe, alias);
     }
     // Matching direct DCI/classe avant le référentiel
     // Protection anti-collision : exiger match EXACT si t ou dci est une DCI connue.

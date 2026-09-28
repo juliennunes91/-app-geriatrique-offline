@@ -1341,6 +1341,14 @@ function analyserPrescription() {
                     return 1;
                 };
                 eviterFinal.forEach(a => { a._absorbe = null; });
+                // Recouvrements DÉCLARÉS, pour les règles qui ne citent pas la pathologie
+                // dans leur condition mais dont le MOTIF est celui de la clause. Jamais
+                // devinés sur le texte : chaque entrée se justifie ici.
+                //   • EV_F02 (IPP au long cours) ↔ ostéoporose : le message de la règle
+                //     nomme lui-même les fractures parmi les risques du traitement prolongé.
+                //     Sous pantoprazole chez une ostéoporotique, « IPP au long cours » et
+                //     « Prudence ostéoporose » disaient la même chose sur deux cartes.
+                const ABSORPTION_DECLAREE = { EV_F02: ['PAT_025'] };
                 activeMeds.forEach(m => {
                     if (/VOIE TOPIQUE/.test(m.classe || '')) return;
                     let clauses = [];
@@ -1349,7 +1357,9 @@ function analyserPrescription() {
                     clauses.forEach(cl => {
                         const porteuses = eviterFinal.filter(r => {
                             const c = r.condition || {};
-                            if (![].concat(c.comorbs || [], c.comorbs_any || []).includes(cl.patho)) return false;
+                            const cite = [].concat(c.comorbs || [], c.comorbs_any || []).includes(cl.patho)
+                                || (ABSORPTION_DECLAREE[r.id] || []).includes(cl.patho);
+                            if (!cite) return false;
                             return (c.med_keys || []).some(k => {
                                 try { return matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), k); }
                                 catch (e) { return false; }
@@ -2587,10 +2597,13 @@ function analyserPrescription() {
               desc: 'AINS → HTA secondaire + Gastropathie → Ajout IPP + Majoration antihypertenseur. Préférer le paracétamol.' },
             { trigger: ['corticoide'],
               effect: 'hyperglycémie/ostéoporose', cascade: ['insuline', 'antidiabetique', 'bisphosphonate'],
-              desc: 'Corticoïde → Hyperglycémie + Ostéoporose → Ajout antidiabétique + Bisphosphonate. Évaluer la possibilité de sevrage.' },
-            { trigger: ['benzodiazepine', 'hypnotique'],
-              effect: 'somnolence/chutes', cascade: [],
-              desc: 'BZD → Somnolence diurne, chutes, troubles cognitifs. Déprescription progressive recommandée (réduction 25% toutes les 2 semaines).' }
+              desc: 'Corticoïde → Hyperglycémie + Ostéoporose → Ajout antidiabétique + Bisphosphonate. Évaluer la possibilité de sevrage.' }
+            // Retiré : « BZD → somnolence/chutes », sans médicament de cascade. Une cascade
+            // est un effet indésirable TRAITÉ par un second médicament ; celle-ci n'en avait
+            // pas, et se déclenchait sur l'hypnotique seul. Elle redisait donc, sous un nom
+            // qui n'était pas le sien, ce que portent déjà STOPP D8/D11/K1/K4 et le
+            // protocole de déprescription — sur une zopiclone, c'était la cinquième carte.
+            // Toute entrée de cette table DOIT nommer un médicament de cascade.
         ];
 
         let cascadeAlerts = [];
@@ -2909,6 +2922,9 @@ function analyserPrescription() {
     // =========================================================
     // 4. MOTEUR DES INTERACTIONS (TABAC, DDI, ANSM & AUC)
     // =========================================================
+    // Paires du thésaurus ANSM repliées dans l'onglet Interactions (cf. plus bas) :
+    // l'onglet ANSM doit le DIRE, y compris quand il n'a plus rien d'autre à montrer.
+    let _ansmReplies = [];
     try {
         if (isChecked('chkTabac')) {
             let cyp1a2_drugs = ['clozapine', 'olanzapine', 'duloxetine', 'theophylline', 'erlotinib', 'haloperidol', 'fluvoxamine', 'agomelatine'];
@@ -2922,6 +2938,31 @@ function analyserPrescription() {
         // Dédoublonnage UI cross-source (alert fatigue, CDS 2024) :
         // une alerte (cible, classe, severite) émise par 2 sources n'est affichée qu'une fois.
         const ddiSeenInteractions = new Set();
+
+        // ── Une interaction est une PAIRE, pas deux cartes ─────────────────────────
+        // La base décrit chaque association depuis ses DEUX molécules : lévothyroxine →
+        // pantoprazole (« espacer ≥ 4 h ») ET pantoprazole → lévothyroxine (« absorption
+        // pH-dépendante, espacer »). Rendues par hôte, elles faisaient deux cartes pour un
+        // seul fait — et le thésaurus ANSM en ajoutait une troisième dans l'onglet voisin.
+        // Sur un dossier de 13 médicaments, trois des quatre cartes ANSM redisaient une
+        // ligne déjà présente.
+        // Les cartes sont donc COLLECTÉES puis rendues une fois toutes les sources lues :
+        //   • la paire vue depuis la seconde molécule est repliée sous la première, son
+        //     commentaire gardé (« vu depuis … ») s'il apporte autre chose ;
+        //   • la paire du thésaurus ANSM déjà présente est repliée sous la même ligne,
+        //     TEXTE OFFICIEL INCHANGÉ, niveau et source affichés — on déplace la
+        //     transcription, on ne la réécrit pas ;
+        //   • la gravité retenue est la PLUS FORTE des lectures : replier ne baisse jamais
+        //     l'alarme ;
+        //   • l'onglet ANSM dit combien de paires il a confiées à l'onglet Interactions.
+        // Le registre de synthèse est alimenté AVANT le repli, à l'identique : la synthèse
+        // et le bandeau ne changent pas.
+        const _cartesV2 = [];
+        const _paireVue = new Map();   // paire non ordonnée → groupe qui la porte
+        const _clePaire = (a, b) => [sanitizeText(a), sanitizeText(b)].sort().join('||');
+        const _RANG_SEV = { info: 1, warning: 2, danger: 3 };
+        const _plusFort = (a, b) => ((_RANG_SEV[a] || 0) >= (_RANG_SEV[b] || 0) ? a : b);
+        const _RE_CI_ABSOLUE = /CONTRE-?INDICATION ABSOLUE|CI ABSOLUE/i;
 
         // Une forme galénique NON ABSORBÉE ne participe à aucune interaction
         // systémique, ni comme source ni comme partenaire : l'amphotéricine B buvable
@@ -3206,6 +3247,7 @@ function analyserPrescription() {
                                 absents: entry.dcis.map(sanitizeText).filter(d => d && !pris.has(d)),
                                 commentaire: entry.commentaire || '',
                                 severite: sevFinale,
+                                sevBrute: mod.severite,
                                 noteBio: mod.note
                             });
                         }
@@ -3213,46 +3255,9 @@ function analyserPrescription() {
                 });
 
                 if (foundGroups.length > 0) {
+                    // Registre de synthèse : calculé AVANT le repli, comme auparavant.
                     const isDanger = foundGroups.some(g => g.severite === 'danger');
-                    // Une carte dont TOUTES les entrées sont des risques de mise en route
-                    // ou des associations recommandées n'est pas une co-prescription à
-                    // risque : c'est une surveillance, et le titre le dit.
-                    //
-                    // Le TITRE et la GRAVITÉ sont deux questions distinctes, et les
-                    // confondre serait le défaut inverse de celui qu'on corrige :
-                    // spironolactone + IEC est recommandée dans l'insuffisance cardiaque
-                    // ET porte une hyperkaliémie qui tue. Elle garde donc sa bande orange
-                    // — la surveillance du potassium est due — mais cesse d'être présentée
-                    // comme un reproche. Seules les cartes dont toutes les entrées sont
-                    // déjà informatives prennent la couleur informative.
                     const surveillanceSeule = !isDanger && foundGroups.every(g => g.instauration || g.recommandee);
-                    const toutInformatif = foundGroups.every(g => g.severite === 'info');
-                    const groupHtml = foundGroups.map(g => {
-                        const drugs = g.matched.map(x => escapeHtml(x.interactor.toUpperCase())).join(', ');
-                        const com = g.commentaire ? ` <em class="text-muted">(${escapeHtml(g.commentaire)})</em>` : '';
-                        const nb = g.noteBio ? `<br><span class="small">${escapeHtml(g.noteBio)}</span>` : '';
-                        const reco = g.recommandee
-                            ? `<br><span class="small text-muted">Association <b>recommandée</b> dans cette indication : ce qui est dû ici est une surveillance, pas un changement.</span>` : '';
-                        const phase = g.instauration
-                            ? `<br><span class="small text-muted">Risque de <b>mise en route</b> : il porte sur l'instauration et sur toute augmentation de dose. L'application lit une ordonnance, pas son ancienneté — sur un traitement déjà installé et bien toléré, cette ligne ne demande rien d'autre que d'y repenser à la prochaine modification.</span>` : '';
-                        const lib = _libelleInteraction(g);
-                        const tt = lib.complet ? ` title="Libellé complet de l'entrée : ${escapeHtml(lib.complet)}"` : '';
-                        return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}${nb}${reco}${phase}</li>`;
-                    }).join('');
-                    // Refléter la gravité maximale dans le TITRE (et pas seulement dans le
-                    // détail déplié) : une contre-indication absolue doit être visible au
-                    // premier coup d'œil.
-                    const ciAbsolue = foundGroups.some(g => /CONTRE-?INDICATION ABSOLUE|CI ABSOLUE/i.test((g.classe || '') + ' ' + (g.commentaire || '')));
-                    const alertClass = (isDanger || ciAbsolue) ? 'alert-danger'
-                        : (surveillanceSeule && toutInformatif && !ciAbsolue) ? 'alert-info' : 'alert-warning';
-                    const icon = ciAbsolue ? '🚫' : (isDanger ? '🚨'
-                        : (surveillanceSeule && toutInformatif) ? 'ℹ️' : '⚠️');
-                    const titreInteract = ciAbsolue
-                        ? `CI ABSOLUE — ${escapeHtml(ref.dci.toUpperCase())}`
-                        : surveillanceSeule
-                        ? `Association à surveiller : ${escapeHtml(ref.dci.toUpperCase())}`
-                        : `Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}`;
-                    addAlert('alertes-interact', `<div class="alert ${alertClass} shadow-sm"><strong>${icon} ${titreInteract}</strong><ul class="mb-0 mt-1">${groupHtml}</ul></div>`, 'interact');
                     const flatList = foundGroups.map(g => `${g.classe}:${g.matched.map(x=>x.interactor).join('/')}`).join(' | ');
                     // Ce registre alimente « médicaments à retirer ou substituer » et le
                     // bandeau de gravité : une surveillance de mise en route n'y a pas sa
@@ -3268,6 +3273,30 @@ function analyserPrescription() {
                             severity: 'danger'
                         });
                     });
+
+                    // Repli de la paire vue depuis l'autre molécule.
+                    foundGroups.forEach(g => {
+                        g.matched = g.matched.filter(x => {
+                            const cle = _clePaire(ref.dci, x.interactor);
+                            const porteur = _paireVue.get(cle);
+                            if (!porteur) { _paireVue.set(cle, g); return true; }
+                            porteur.autreCote = porteur.autreCote || [];
+                            porteur.autreCote.push({ hote: ref.dci, lib: _libelleInteraction(g).texte, commentaire: g.commentaire });
+                            // Un verdict ne se perd JAMAIS au repli : si l'autre côté déclare une
+                            // contre-indication absolue, la ligne qui reste la porte. Sans cela
+                            // « CI ABSOLUE — VÉRAPAMIL » disparaissait sous la carte du partenaire
+                            // (mesuré : trois dossiers du panel).
+                            if (_RE_CI_ABSOLUE.test((g.classe || '') + ' ' + (g.commentaire || ''))) porteur.ciAbsolue = true;
+                            porteur.recommandee = porteur.recommandee || g.recommandee;
+                            // Confiné à la mise en route seulement si les DEUX lectures le disent.
+                            porteur.instauration = porteur.instauration && g.instauration;
+                            porteur.sevBrute = _plusFort(porteur.sevBrute, g.sevBrute);
+                            porteur.severite = (porteur.instauration && porteur.sevBrute === 'warning') ? 'info' : porteur.sevBrute;
+                            return false;
+                        });
+                    });
+                    const gardes = foundGroups.filter(g => g.matched.length > 0);
+                    if (gardes.length > 0) _cartesV2.push({ m, ref, groupes: gardes });
                 }
                 return; // v2 traité : on ne retombe pas sur le chemin texte libre pour cette entrée
             }
@@ -3416,7 +3445,76 @@ function analyserPrescription() {
                 + `Le risque hémorragique de l'association reste valable : surveiller cliniquement (saignement, hémoglobine), `
                 + `contrôler la fonction rénale, et discuter une gastroprotection.</div>`;
         };
+        // ── Repli des paires ANSM déjà présentes, puis rendu des cartes d'interaction ──
+        const _ansmReplieesIci = new Set();
+        const _ligneAnsm = (x) => `<br><span class="small"><span class="${x.isDanger ? 'text-danger' : 'text-dark'} fw-bold">${x.isDanger ? '🔴' : '🟠'} ${escapeHtml(x.level)}</span> <span class="badge ${x.source === 'ANSM' ? 'bg-primary' : 'bg-info'}" style="font-size:0.6em;">${escapeHtml(x.source)}</span> <span class="text-muted">${escapeHtml(x.desc)}</span></span>`;
         for (const [pair, data] of Object.entries(groupedAnsm)) {
+            if (!Array.isArray(data.meds) || data.meds.length < 2) continue;
+            const porteur = _paireVue.get(_clePaire(data.meds[0].dci, data.meds[1].dci));
+            if (!porteur) continue;
+            (porteur.ansm = porteur.ansm || []).push(data);
+            // Le thésaurus peut être plus sévère que la base : c'est lui qui l'emporte.
+            if (data.isDanger) { porteur.sevBrute = 'danger'; porteur.severite = 'danger'; }
+            _ansmReplieesIci.add(pair);
+        }
+        _cartesV2.forEach(({ ref, groupes }) => {
+            const isDanger = groupes.some(g => g.severite === 'danger');
+            // Une carte dont TOUTES les entrées sont des risques de mise en route
+            // ou des associations recommandées n'est pas une co-prescription à
+            // risque : c'est une surveillance, et le titre le dit.
+            //
+            // Le TITRE et la GRAVITÉ sont deux questions distinctes, et les
+            // confondre serait le défaut inverse de celui qu'on corrige :
+            // spironolactone + IEC est recommandée dans l'insuffisance cardiaque
+            // ET porte une hyperkaliémie qui tue. Elle garde donc sa bande orange
+            // — la surveillance du potassium est due — mais cesse d'être présentée
+            // comme un reproche. Seules les cartes dont toutes les entrées sont
+            // déjà informatives prennent la couleur informative.
+            // Le titre suit la NATURE de l'association, la couleur sa GRAVITÉ. Depuis que
+            // le thésaurus est replié ici, une association recommandée peut recevoir la
+            // lecture la plus sévère d'une source tierce (BNF : spironolactone + IEC
+            // « majeure — hyperkaliémie ») : elle devient rouge, elle reste recommandée.
+            // « Co-prescription à risque » lui ferait reprocher ce qu'on lui recommande.
+            const surveillanceSeule = groupes.every(g => g.instauration || g.recommandee);
+            const toutInformatif = groupes.every(g => g.severite === 'info');
+            const groupHtml = groupes.map(g => {
+                const drugs = g.matched.map(x => escapeHtml(x.interactor.toUpperCase())).join(', ');
+                const com = g.commentaire ? ` <em class="text-muted">(${escapeHtml(g.commentaire)})</em>` : '';
+                const nb = g.noteBio ? `<br><span class="small">${escapeHtml(g.noteBio)}</span>` : '';
+                const reco = g.recommandee
+                    ? `<br><span class="small text-muted">Association <b>recommandée</b> dans cette indication : ce qui est dû ici est une surveillance, pas un changement.</span>` : '';
+                const phase = g.instauration
+                    ? `<br><span class="small text-muted">Risque de <b>mise en route</b> : il porte sur l'instauration et sur toute augmentation de dose. L'application lit une ordonnance, pas son ancienneté — sur un traitement déjà installé et bien toléré, cette ligne ne demande rien d'autre que d'y repenser à la prochaine modification.</span>` : '';
+                // L'autre molécule de la paire : son commentaire n'est repris que s'il
+                // apporte autre chose que celui déjà affiché.
+                const autre = (g.autreCote || [])
+                    .filter(o => o.commentaire && sanitizeText(o.commentaire) !== sanitizeText(g.commentaire))
+                    .map(o => `<br><span class="small text-muted">Vu depuis ${escapeHtml(o.hote.toUpperCase())} : ${escapeHtml(o.commentaire)}</span>`).join('');
+                const ansm = (g.ansm || []).map(d => d.raw.map(_ligneAnsm).join('') + _noteAodAvk(d)).join('');
+                const ciAutre = (g.ciAbsolue && !_RE_CI_ABSOLUE.test((g.classe || '') + ' ' + (g.commentaire || '')))
+                    ? `<br><span class="small text-danger fw-bold">🚫 Contre-indication absolue (déclarée depuis l'autre molécule de la paire)</span>` : '';
+                const lib = _libelleInteraction(g);
+                const tt = lib.complet ? ` title="Libellé complet de l'entrée : ${escapeHtml(lib.complet)}"` : '';
+                return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}${ciAutre}${nb}${reco}${phase}${autre}${ansm}</li>`;
+            }).join('');
+            // Refléter la gravité maximale dans le TITRE (et pas seulement dans le
+            // détail déplié) : une contre-indication absolue doit être visible au
+            // premier coup d'œil.
+            const ciAbsolue = groupes.some(g => g.ciAbsolue || _RE_CI_ABSOLUE.test((g.classe || '') + ' ' + (g.commentaire || '')));
+            const alertClass = (isDanger || ciAbsolue) ? 'alert-danger'
+                : (surveillanceSeule && toutInformatif && !ciAbsolue) ? 'alert-info' : 'alert-warning';
+            const icon = ciAbsolue ? '🚫' : (isDanger ? '🚨'
+                : (surveillanceSeule && toutInformatif) ? 'ℹ️' : '⚠️');
+            const titreInteract = ciAbsolue
+                ? `CI ABSOLUE — ${escapeHtml(ref.dci.toUpperCase())}`
+                : surveillanceSeule
+                ? `Association à surveiller : ${escapeHtml(ref.dci.toUpperCase())}`
+                : `Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}`;
+            addAlert('alertes-interact', `<div class="alert ${alertClass} shadow-sm"><strong>${icon} ${titreInteract}</strong><ul class="mb-0 mt-1">${groupHtml}</ul></div>`, 'interact');
+        });
+
+        for (const [pair, data] of Object.entries(groupedAnsm)) {
+            if (_ansmReplieesIci.has(pair)) continue;
             let boxClass = data.isDanger ? "danger alert-stopp" : "warning";
             // Séparer les sources ANSM et Micromedex/BNF
             let ansmItems = data.raw.filter(x => x.source === 'ANSM');
@@ -3431,6 +3529,12 @@ function analyserPrescription() {
             let allSources = [...new Set(data.raw.map(x => x.source))];
             let sourceLabel = allSources.join(' + ');
             addAlert('alertes-ansm', `<div class="alert alert-${boxClass} shadow-sm"><strong style="font-size:1.05em;">${data.isDanger ? '🚨' : '⚡'} Interactions ${sourceLabel} : ${pair}</strong><ul class="mb-0 ps-3">${itemsHtml}</ul>${_noteAodAvk(data)}</div>`, 'ansm');
+        }
+        // Jamais de réduction silencieuse : l'onglet dit ce qu'il a confié à l'autre.
+        // Pas de <strong> — ce n'est pas une alerte, elle ne se masque ni ne s'assume.
+        _ansmReplies = [..._ansmReplieesIci];
+        if (_ansmReplies.length) {
+            addAlert('alertes-ansm', `<div class="alert alert-light border small text-muted">${_ansmReplies.length} interaction${_ansmReplies.length > 1 ? 's' : ''} du thésaurus figure${_ansmReplies.length > 1 ? 'nt' : ''} dans l'onglet <em>Interactions</em>, sous la ligne qui décrit la même paire, avec ${_ansmReplies.length > 1 ? 'leur' : 'son'} niveau et ${_ansmReplies.length > 1 ? 'leur' : 'son'} texte officiels : ${_ansmReplies.map(p => escapeHtml(p)).join(' ; ')}.</div>`, null);
         }
     } catch(e) { console.error("Erreur Interactions", e); }
 
@@ -3745,7 +3849,9 @@ function analyserPrescription() {
     if(counts.initier === 0) document.getElementById('alertes-initier').innerHTML = '<div class="alert alert-light">Aucune omission majeure détectée.</div>';
     if(counts.usage === 0) document.getElementById('alertes-usage').innerHTML = '<div class="alert alert-light">Aucune adaptation posologique spécifique requise.</div>';
     if(counts.suivi === 0) document.getElementById('alertes-suivi').innerHTML = '<div class="alert alert-light">Aucun suivi biologique spécifique.</div>';
-    if(counts.ansm === 0) document.getElementById('alertes-ansm').innerHTML = '<div class="alert alert-light">Aucune interaction du thésaurus ANSM détectée.</div>';
+    // « Aucune interaction » serait FAUX quand les paires ont été repliées dans l'onglet
+    // Interactions : on garde alors la note qui le dit.
+    if(counts.ansm === 0 && !_ansmReplies.length) document.getElementById('alertes-ansm').innerHTML = '<div class="alert alert-light">Aucune interaction du thésaurus ANSM détectée.</div>';
     if(counts.interact === 0) document.getElementById('alertes-interact').innerHTML = '<div class="alert alert-light">Aucun risque clinique ou Pharmacocinétique détecté.</div>';
     // L'onglet AUC restait entièrement VIDE quand aucune paire n'était documentée — seul
     // des dix onglets à ne rien dire, ce qui se lit comme une panne. Il est rare par

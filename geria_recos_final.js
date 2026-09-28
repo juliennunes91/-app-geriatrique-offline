@@ -744,11 +744,16 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM", "FORTA", "PIM_CHECK", "STOPPFRAIL"],
             ref_code: "STOPP3-D8",
             section: "SNC",
-            titre: "Benzodiazépine ou Z-drug ≥ 4 semaines",
+            // Le titre disait « ou Z-drug » ; la condition, le message et le critère STOPP
+            // (D8) ne visent que les benzodiazépines — les Z-drugs ont leur propre critère
+            // (D11, deux semaines et non quatre).
+            titre: "Benzodiazépine ≥ 4 semaines",
             message: "Benzodiazépine ≥ 4 semaines sans indication de prolongation : sédation prolongée, confusion, altération de l'équilibre, chutes, accidents de la route. PIM selon toutes les listes (Beers, PRISCUS, EU(7)-PIM, FORTA-D, PIM-Check, STOPPFrail). Sevrage progressif obligatoire.",
             severite: "danger",
             condition: {
-                med_keys: ["benzodiazepine", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "prazepam", "nordazepam", "clobazam", "clonazepam", "nitrazepam", "lormetazepam", "temazepam", "midazolam"],
+                // `benzodiazepine_stricte` et non `benzodiazepine`, qui résout aussi les
+                // hypnotiques Z : une zopiclone sortait ici ET sous EV_D11.
+                med_keys: ["benzodiazepine_stricte", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "prazepam", "nordazepam", "clobazam", "clonazepam", "nitrazepam", "lormetazepam", "temazepam", "midazolam"],
                 comorbs_absent: ["PAT_030"]
             },
             alternatives: "Sevrage progressif (réduction 25% toutes les 2-4 semaines), TCC insomnie, mélatonine LP si insomnie"
@@ -1562,7 +1567,10 @@ const GERIA_RECOS_DB = {
             message: "Benzodiazépine chez patient avec antécédent de chutes : sédation diurne, altération du sensorium, déséquilibre.",
             severite: "danger",
             condition: {
-                med_keys: ["benzodiazepine"],
+                // STOPP K1 vise les benzodiazépines, K4 les hypnotiques Z : la clé
+                // `benzodiazepine` (« et apparentés ») faisait sortir les deux sur une
+                // zopiclone, sous un titre qui la nommait benzodiazépine.
+                med_keys: ["benzodiazepine_stricte"],
                 contexte_clinique: "chutes"
             },
             alternatives: "Sevrage progressif, TCC, mélatonine LP"
@@ -4905,7 +4913,9 @@ const CROSS_REF_GROUPS = [
         theme: "Benzodiazépines chez le sujet âgé",
         description: "Regroupement de toutes les règles ciblant les BZD dans différents contextes (durée, insomnie, SCPD, chutes, insuffisance respiratoire). Chaque contexte reste distinct mais partage le même socle multi-sources.",
         merged_sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM", "FORTA", "PIM_CHECK", "STOPPFRAIL"],
-        rule_ids: ["EV_D08", "EV_D09", "EV_D10", "EV_G04", "EV_K01", "EV_K04"],
+        // EV_K04 retiré : c'est un critère Z-drug, déclaré aussi dans GRP_ZDRUG, et
+        // `enrichRuleWithCrossRef` retient le PREMIER groupe trouvé — il atterrissait ici.
+        rule_ids: ["EV_D08", "EV_D09", "EV_D10", "EV_G04", "EV_K01"],
         pim_dict_keys: ["diazepam", "bromazepam", "alprazolam", "lorazepam", "oxazepam", "clorazepate", "prazepam", "nordazepam", "nitrazepam", "clobazam", "clonazepam", "lormetazepam", "zolpidem", "zopiclone"],
         fusion_strategy: "distinct_context",  // garder les règles séparées mais afficher les sources fusionnées
         note: "Chaque règle a un contexte clinique différent (durée, insomnie, SCPD, chutes, IR). On garde les conditions distinctes mais on affiche le support multi-sources complet sur chacune."
@@ -5193,7 +5203,11 @@ const CROSS_REF_GROUPS = [
         merged_sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM", "FORTA", "PIM_CHECK"],
         rule_ids: ["EV_D11", "EV_K04"],
         pim_dict_keys: ["zolpidem", "zopiclone"],
-        fusion_strategy: "distinct_context",
+        // Une carte, deux critères. Même molécule, même conduite (sevrer l'hypnotique,
+        // hygiène du sommeil, TCC-I) : les rendre séparément faisait lire deux fois
+        // « arrêter la zopiclone » à deux lignes d'intervalle. Les deux messages restent
+        // — le second en complément —, comme pour les tricycliques (GRP_TCA).
+        fusion_strategy: "merge_display",
         note: "D11=≥2 sem insomnie, K4=chutes. Lié au GRP_BZD_GENERAL mais classe distincte."
     },
 
@@ -5268,6 +5282,12 @@ function deduplicateAlerts(alerts) {
                 return e.cross_ref_group === enriched.cross_ref_group;
             });
             
+            // La carte fusionnée prend la base du membre le plus GRAVE, pas du premier
+            // rencontré : sans quoi l'ordre d'arrivée déciderait de la couleur, et une
+            // fusion pourrait baisser l'alarme.
+            const _base = groupAlerts.reduce((m, a) => ((a.score || 0) > (m.score || 0) ? a : m), groupAlerts[0]);
+            if (_base !== alert) Object.assign(enriched, enrichRuleWithCrossRef(_base));
+            groupAlerts.sort((x, y) => (x === _base ? -1 : y === _base ? 1 : 0));
             // Fusionner les messages — garder les sources propres (pas cross-ref)
             const primarySources = [...new Set(groupAlerts.flatMap(a => a.sources || []))];
             const allMessages = groupAlerts.map(a => a.message);

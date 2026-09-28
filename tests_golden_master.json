@@ -6,7 +6,7 @@
    "danger | Antiagrégant seul en remplacement de l'anticoagulant dans la FA",
    "danger | Antidépresseurs tricycliques chez le sujet âgé",
    "danger | Benzodiazépine chez patient chuteur",
-   "danger | Benzodiazépine ou Z-drug ≥ 4 semaines",
+   "danger | Benzodiazépine ≥ 4 semaines",
    "danger | Benzodiazépines / Z-drugs : DIAZEPAM",
    "danger | Citalopram > 20 mg ou Escitalopram > 10 mg ou TCA en cas d'arythmie / QT prolongé / hypokaliémie",
    "danger | Digoxine ≥ 125 µg/j au long cours + DFG < 30",
@@ -18,7 +18,6 @@
    "info | Réévaluation annuelle de chaque traitement chronique",
    "warning | Antidépresseur chez patient chuteur",
    "warning | Aspirine en prévention primaire cardiovasculaire",
-   "warning | Cascades iatrogéniques détectées",
    "warning | DIAZEPAM — Déconseillé Dépression (sujet âgé / Late-Life Depression)",
    "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Digoxine en 1ère ligne pour FA (contrôle de fréquence > 3 mois)",
@@ -142,7 +141,6 @@
   ],
   "alertes-interact": [
    "danger | Co-prescription à risque : HYDROCHLOROTHIAZIDE",
-   "danger | Co-prescription à risque : IBUPROFENE",
    "danger | Co-prescription à risque : LITHIUM"
   ],
   "alertes-suivi": [
@@ -364,7 +362,6 @@
    "warning | Insuffisance rénale chronique G3b — insuffisance rénale modérée"
   ],
   "alertes-interact": [
-   "warning | Co-prescription à risque : GLICLAZIDE",
    "warning | Co-prescription à risque : METFORMINE"
   ],
   "alertes-suivi": [
@@ -438,10 +435,9 @@
  "hepatopathie": {
   "alertes-eviter": [
    "danger | Benzodiazépine / opioïde + cirrhose sévère",
-   "danger | Benzodiazépine ou Z-drug ≥ 4 semaines",
+   "danger | Benzodiazépine ≥ 4 semaines",
    "danger | Médicament hépatotoxique + hépatopathie chronique / cirrhose",
    "info | Action immédiate",
-   "warning | Cascades iatrogéniques détectées",
    "warning | DIAZEPAM — Déconseillé Hépatopathie chronique / Cirrhose"
   ],
   "alertes-initier": [
@@ -566,7 +562,7 @@
    "warning | Insuffisance rénale chronique G3a — insuffisance rénale légère à modérée"
   ],
   "alertes-interact": [
-   "warning | Co-prescription à risque : APIXABAN"
+   "danger | Co-prescription à risque : APIXABAN"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -609,8 +605,7 @@
   ],
   "alertes-interact": [
    "danger | CI ABSOLUE — AMIODARONE",
-   "danger | CI ABSOLUE — HALOPERIDOL",
-   "danger | Co-prescription à risque : CITALOPRAM"
+   "danger | CI ABSOLUE — CITALOPRAM"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -654,8 +649,7 @@
    "warning | Insuffisance rénale chronique G3b — insuffisance rénale modérée"
   ],
   "alertes-interact": [
-   "info | ℹ️ Association à surveiller : FUROSEMIDE",
-   "info | ℹ️ Association à surveiller : RAMIPRIL"
+   "info | ℹ️ Association à surveiller : FUROSEMIDE"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -741,10 +735,9 @@
  },
  "usage_alcool": {
   "alertes-eviter": [
-   "danger | Benzodiazépine ou Z-drug ≥ 4 semaines",
+   "danger | Benzodiazépine ≥ 4 semaines",
    "danger | Médicament sédatif + alcool excessif",
-   "info | Action immédiate",
-   "warning | Cascades iatrogéniques détectées"
+   "info | Action immédiate"
   ],
   "alertes-initier": [
    "danger | Thiamine (vitamine B1) en cas de trouble de l'usage de l'alcool",
@@ -909,7 +902,6 @@
   "alertes-bio": [],
   "alertes-interact": [
    "danger | Co-prescription à risque : AMITRIPTYLINE",
-   "danger | Co-prescription à risque : HYDROXYZINE",
    "danger | Co-prescription à risque : OXYBUTYNINE"
   ],
   "alertes-suivi": [
@@ -977,8 +969,7 @@
   ],
   "alertes-bio": [],
   "alertes-interact": [
-   "danger | Co-prescription à risque : DIGOXINE",
-   "danger | Co-prescription à risque : VERAPAMIL"
+   "danger | Co-prescription à risque : DIGOXINE"
   ],
   "alertes-suivi": [
    "info | Classification QT non consensuelle",
@@ -1423,8 +1414,7 @@
   "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [
-   "danger | CI ABSOLUE — VERAPAMIL",
-   "danger | Co-prescription à risque : ACEBUTOLOL",
+   "danger | CI ABSOLUE — ACEBUTOLOL",
    "danger | Co-prescription à risque : DIGOXINE"
   ],
   "alertes-suivi": [
@@ -1530,8 +1520,8 @@
   ],
   "alertes-bio": [],
   "alertes-interact": [
-   "danger | Co-prescription à risque : TICLOPIDINE",
-   "warning | Co-prescription à risque : CELECOXIB"
+   "danger | Co-prescription à risque : CELECOXIB",
+   "danger | Co-prescription à risque : TICLOPIDINE"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -1611,10 +1601,9 @@
   "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [
-   "danger | Co-prescription à risque : ACENOCOUMAROL",
    "danger | Co-prescription à risque : AMIODARONE",
-   "danger | Co-prescription à risque : GINKGO BILOBA",
-   "warning | Co-prescription à risque : APIXABAN"
+   "danger | Co-prescription à risque : APIXABAN",
+   "danger | Co-prescription à risque : GINKGO BILOBA"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -1688,8 +1677,7 @@
   ],
   "alertes-bio": [],
   "alertes-interact": [
-   "warning | Co-prescription à risque : AMITRIPTYLINE",
-   "warning | Co-prescription à risque : VENLAFAXINE"
+   "warning | Co-prescription à risque : AMITRIPTYLINE"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -1759,12 +1747,11 @@
  },
  "cov_EV_D09_EV_D10": {
   "alertes-eviter": [
-   "danger | Benzodiazépine ou Z-drug ≥ 4 semaines",
    "danger | Benzodiazépine pour agitation/SCPD dans la démence",
    "danger | Benzodiazépine ≥ 2 semaines pour insomnie",
+   "danger | Benzodiazépine ≥ 4 semaines",
    "danger | Benzodiazépines / Z-drugs : ALPRAZOLAM",
-   "info | Action immédiate",
-   "warning | Cascades iatrogéniques détectées"
+   "info | Action immédiate"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1793,12 +1780,10 @@
  "cov_EV_D11_EV_D16": {
   "alertes-eviter": [
    "danger | Antipsychotique comme hypnotique (sauf psychose ou SCPD)",
-   "danger | Benzodiazépine ou Z-drug ≥ 4 semaines",
    "danger | Benzodiazépine ≥ 2 semaines pour insomnie",
    "danger | Benzodiazépines / Z-drugs : ZOLPIDEM",
    "danger | Hypnotique Z ≥ 2 semaines pour insomnie",
    "info | Action immédiate",
-   "warning | Cascades iatrogéniques détectées",
    "warning | Deux classes pourvoyeuses de chutes associées"
   ],
   "alertes-initier": [],
@@ -1823,7 +1808,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 53/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 51/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1913,7 +1898,7 @@
   "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [
-   "warning | Co-prescription à risque : LEVODOPA"
+   "danger | Co-prescription à risque : LEVODOPA"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -2564,11 +2549,10 @@
  "cov_EV_G03_EV_G04": {
   "alertes-eviter": [
    "danger | Benzodiazépine + insuffisance respiratoire aiguë ou chronique",
-   "danger | Benzodiazépine ou Z-drug ≥ 4 semaines",
+   "danger | Benzodiazépine ≥ 4 semaines",
    "danger | Benzodiazépines / Z-drugs : ALPRAZOLAM",
    "danger | TIOTROPIUM — CI Glaucome à angle fermé",
    "info | Action immédiate",
-   "warning | Cascades iatrogéniques détectées",
    "warning | LAMA + Glaucome à angle fermé / obstruction vésicale"
   ],
   "alertes-initier": [
@@ -2943,14 +2927,10 @@
  },
  "cov_EV_K03_EV_K04": {
   "alertes-eviter": [
-   "danger | Benzodiazépine chez patient chuteur",
-   "danger | Benzodiazépine ou Z-drug ≥ 4 semaines",
    "danger | Benzodiazépines / Z-drugs : ZOLPIDEM",
-   "danger | Hypnotique Z ≥ 2 semaines pour insomnie",
    "danger | Vasodilatateur chez patient chuteur / hypotension orthostatique",
-   "danger | Z-drug chez patient chuteur",
-   "info | Action immédiate",
-   "warning | Cascades iatrogéniques détectées"
+   "danger | Z-drugs (zolpidem, zopiclone)",
+   "info | Action immédiate"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",
@@ -2975,7 +2955,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 42/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3221,8 +3201,7 @@
   "alertes-bio": [],
   "alertes-interact": [
    "danger | CI ABSOLUE — TRAMADOL",
-   "danger | Co-prescription à risque : CITALOPRAM",
-   "danger | Co-prescription à risque : LINEZOLIDE"
+   "danger | Co-prescription à risque : CITALOPRAM"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -3251,7 +3230,7 @@
  },
  "cov_EV_SYND_044_EV_SYND_045": {
   "alertes-eviter": [
-   "danger | Benzodiazépine ou Z-drug ≥ 4 semaines",
+   "danger | Benzodiazépine ≥ 4 semaines",
    "danger | Benzodiazépines / Z-drugs : DIAZEPAM",
    "danger | Opioïde fort sans palier antalgique ni douleur sévère documentés",
    "danger | Opioïdes : MORPHINE",
@@ -3276,10 +3255,8 @@
   "alertes-bio": [],
   "alertes-interact": [
    "danger | Co-prescription à risque : ALTIZIDE",
-   "danger | Co-prescription à risque : BENAZEPRIL",
-   "danger | Co-prescription à risque : DIAZEPAM",
-   "danger | Co-prescription à risque : MORPHINE",
-   "warning | Co-prescription à risque : CELECOXIB"
+   "danger | Co-prescription à risque : CELECOXIB",
+   "danger | Co-prescription à risque : DIAZEPAM"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -3321,9 +3298,8 @@
   "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [
-   "warning | Co-prescription à risque : MIANSERINE",
-   "warning | Co-prescription à risque : SERTRALINE",
-   "warning | Co-prescription à risque : VENLAFAXINE"
+   "danger | Co-prescription à risque : SERTRALINE",
+   "warning | Co-prescription à risque : MIANSERINE"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -3393,7 +3369,6 @@
   ],
   "alertes-bio": [],
   "alertes-interact": [
-   "danger | Co-prescription à risque : IBUPROFENE",
    "danger | Co-prescription à risque : SERTRALINE"
   ],
   "alertes-suivi": [
@@ -3764,8 +3739,7 @@
   "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [
-   "danger | Co-prescription à risque : BENAZEPRIL",
-   "warning | Co-prescription à risque : LITHIUM",
+   "danger | Co-prescription à risque : LITHIUM",
    "warning | Co-prescription à risque : PHENYTOINE"
   ],
   "alertes-suivi": [
@@ -3857,7 +3831,6 @@
   "alertes-interact": [
    "danger | CI ABSOLUE — COLCHICINE",
    "danger | Co-prescription à risque : FUROSEMIDE",
-   "warning | Co-prescription à risque : CLARITHROMYCINE",
    "warning | Co-prescription à risque : DOXAZOSINE"
   ],
   "alertes-suivi": [
@@ -3900,8 +3873,7 @@
   "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [
-   "danger | CI ABSOLUE — AMIODARONE",
-   "danger | Co-prescription à risque : CITALOPRAM",
+   "danger | CI ABSOLUE — CITALOPRAM",
    "danger | Co-prescription à risque : DIGOXINE",
    "danger | Co-prescription à risque : WARFARINE"
   ],

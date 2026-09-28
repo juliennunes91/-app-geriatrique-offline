@@ -260,6 +260,25 @@
   "Zolpidem",
   "Zopiclone"
  ],
+ "benzodiazepine_stricte": [
+  "Alprazolam",
+  "Bromazepam",
+  "Chlordiazepoxide",
+  "Clobazam",
+  "Clonazepam",
+  "Clorazepate",
+  "Clotiazepam",
+  "Diazepam",
+  "Estazolam",
+  "Loprazolam",
+  "Lorazepam",
+  "Lormetazepam",
+  "Midazolam",
+  "Nitrazepam",
+  "Nordazepam",
+  "Oxazepam",
+  "Prazepam"
+ ],
  "isrs": [
   "Citalopram",
   "Escitalopram",

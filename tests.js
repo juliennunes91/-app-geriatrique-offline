@@ -1309,6 +1309,62 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/Co-prescription à risque : GALANTAMINE/.test(i(['Galantamine', 'Bisoprolol'])),
             'meme libelle, autre molecule : le risque n\'est pas confine a l\'instauration');
     });
+    test('Un hypnotique Z n\'est pas une benzodiazepine, et sort sur UNE carte', () => {
+        // Dossier reel : sous zopiclone seule chez une chuteuse, SIX cartes — deux titrees
+        // « Benzodiazepine » (la cle `benzodiazepine` resout aussi les apparentes Z), les
+        // deux criteres Z-drugs separes, une « cascade » sans medicament de cascade, et le
+        // protocole de deprescription.
+        const ev = meds => analyzeCase({ age: 96, sexe: 'F', dfg: 37, flags: ['chkChutes'], meds })['alertes-eviter'] || [];
+        const z = ev(['Zopiclone']).map(a => a.titre);
+        assert.ok(!z.some(t => /Benzodiazépine (chez|≥)/.test(t)),
+            `aucun critere BENZODIAZEPINE sur un hypnotique Z : ${z.join(' | ')}`);
+        // (le protocole de deprescription « Benzodiazepines / Z-drugs » n'est pas un critere)
+        assert.strictEqual(z.filter(t => /Z-drugs \(|Hypnotique Z|Z-drug chez/.test(t)).length, 1,
+            'les criteres D11 (duree) et K4 (chutes) sont fusionnes en une carte');
+        assert.ok(!z.some(t => /Cascades iatrog/.test(t)),
+            'une cascade exige un medicament de cascade — l\'hypnotique seul n\'en est pas une');
+        // La vraie benzodiazepine garde ses criteres propres.
+        const b = ev(['Lorazepam']).map(a => a.titre);
+        assert.ok(b.some(t => /Benzodiazépine ≥ 4 semaines/.test(t)) && b.some(t => /Benzodiazépine chez patient chuteur/.test(t)),
+            `STOPP D8 et K1 restent armes sur une benzodiazepine : ${b.join(' | ')}`);
+        // La fusion prend la gravite du membre le plus grave, jamais celle du premier venu.
+        assert.ok(ev(['Zopiclone']).some(a => /Z-drugs/.test(a.titre) && a.severity === 'danger'),
+            'la carte fusionnee reste rouge');
+    });
+    test('IPP au long cours chez une osteoporotique : un motif, une carte', () => {
+        const r = analyzeCase({ age: 96, sexe: 'F', dfg: 37, comorbs: ['PAT_025'], meds: ['Pantoprazole'], precisions: { Pantoprazole: { duree: 'longue' } } });
+        const t = (r['alertes-eviter'] || []).map(a => a.titre);
+        assert.ok(!t.some(x => /PANTOPRAZOLE — Prudence Ostéoporose/i.test(x)), `plus de carte separee : ${t.join(' | ')}`);
+        assert.ok(/Contre-indication liée à la pathologie[^<]*fracture/i.test(r._html['alertes-eviter'] || ''),
+            'le motif osteoporotique est reporte sous la regle qui le couvre — rien n\'est perdu');
+    });
+    test('« FER » du thesaurus ne designe que le fer', () => {
+        // Terme court, et il captait 23 molecules dont 20 n'etaient pas du fer — par
+        // « re-FER-ence » dans leur libelle. Sous macrogol : « prendre les hormones
+        // thyroidiennes a distance du fer ».
+        const txt = meds => { const r = analyzeCase({ age: 80, sexe: 'F', dfg: 60, meds });
+            return (r._html['alertes-ansm'] || '') + (r._html['alertes-interact'] || ''); };
+        assert.ok(!/MACROGOL/.test(txt(['Levothyroxine', 'Macrogol'])), 'macrogol n\'est pas du fer');
+        assert.ok(!/ALLOPURINOL/.test(txt(['Levothyroxine', 'Allopurinol'])), 'allopurinol non plus');
+        assert.ok(/SULFATE FERREUX/.test(txt(['Levothyroxine', 'Sulfate ferreux'])), 'le vrai fer reste detecte');
+    });
+    test('Une interaction est une PAIRE : une ligne, quelle que soit la source', () => {
+        const r = analyzeCase({ age: 96, sexe: 'F', dfg: 37, meds: ['Levothyroxine', 'Pantoprazole'] });
+        const cartes = (r['alertes-interact'] || []).concat(r['alertes-ansm'] || []);
+        assert.strictEqual(cartes.length, 1,
+            `lévothyroxine + pantoprazole : une carte, pas trois : ${cartes.map(a => a.titre).join(' | ')}`);
+        const h = r._html['alertes-interact'] || '';
+        assert.ok(/PRÉCAUTION D'EMPLOI|PR&Eacute;CAUTION|PRÉCAUTION D&#39;EMPLOI/.test(h) && /ANSM/.test(h),
+            'le niveau et le texte officiels du thesaurus sont repris sous la ligne');
+        const a = r._html['alertes-ansm'] || '';
+        assert.ok(/figure[nt]* dans l'onglet|figure[nt]* dans l&#39;onglet/.test(a) && /LEVOTHYROXINE \+ PANTOPRAZOLE/.test(a),
+            'l\'onglet ANSM dit ce qu\'il a confie — jamais de reduction silencieuse');
+        // Replier ne perd jamais un verdict : la CI absolue declaree depuis le verapamil
+        // disparaissait sous la carte du partenaire.
+        const ci = analyzeCase({ age: 82, sexe: 'F', flags: ['chkBrady', 'chkArret'], dfg: 60,
+            meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
+        assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
+    });
     test('Une alerte qui exige DEUX classes nomme les deux coupables', () => {
         // EV_SYND_046 exige un sedatif (med_keys) ET un opioide/antipsychotique/
         // anticholinergique (med_keys_2). La ligne « Concerne chez ce patient » ne lisait
@@ -1381,8 +1437,11 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
                              meds: ['Spironolactone', 'Ramipril'] })
             .find(a => /SPIRONOLACTONE/.test(a.titre)) || {};
         assert.ok(/Association à surveiller/.test(arm.titre || ''), 'le titre ne reproche plus');
-        assert.strictEqual(arm.severity, 'warning',
-            'mais la bande reste orange — la surveillance du K+ est due');
+        // La gravite n'est jamais ABAISSEE par le statut recommande. Depuis le repli du
+        // thesaurus dans l'onglet Interactions, la lecture BNF « majeure — hyperkaliemie »
+        // atteint cette carte : elle est rouge, et reste titree comme une surveillance.
+        assert.ok(arm.severity === 'warning' || arm.severity === 'danger',
+            `la surveillance du K+ est due — jamais informative : ${arm.severity}`);
         // Une synergie deja informative prend la couleur informative.
         const dt2 = cartes({ age: 74, sexe: 'F', dfg: 60, meds: ['Metformine', 'Empagliflozin'] })
             .find(a => /METFORMINE/.test(a.titre)) || {};

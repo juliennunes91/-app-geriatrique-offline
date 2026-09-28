@@ -216,6 +216,67 @@ défaut — la forme la plus exposante** — ou, pire, **réarme une règle qu'u
 avait désarmée** (`IN_H09` et `SUP_PIMC_04` sous méthotrexate haute dose). Sérialisée et
 relue des deux côtés, pour `meds` comme pour `suspended`.
 
+## Un médicament, une carte ; une interaction, une ligne
+
+Dossier réel : 13 médicaments, et **trois molécules produisaient huit cartes** dans
+l'onglet « éviter » ; l'onglet Interactions et le thésaurus ANSM se répétaient l'un
+l'autre. Cinq causes, aucune devinée par ressemblance de texte :
+
+1. **Un hypnotique Z n'est pas une benzodiazépine.** La clé `benzodiazepine` désigne
+   « benzodiazépines ET apparentés » (c'est son alias). STOPP v3 sépare pourtant les deux
+   familles : D8/K1 pour les benzodiazépines, D11/K4 pour les Z. Une zopiclone déclenchait
+   donc les quatre critères, dont deux titrés « Benzodiazépine ». Classe
+   `benzodiazepine_stricte` (17 molécules, **sans `classeMatch`** : le libellé des Z dit
+   « non-benzodiazépine » et une sous-chaîne les y ferait rentrer), employée par `EV_D08`
+   et `EV_K01`. Le titre d'`EV_D08` disait « ou Z-drug » ; sa condition et son message ne
+   l'ont jamais dit.
+2. **Deux critères, une molécule, une conduite : une carte.** `GRP_ZDRUG` passe en
+   `merge_display` (comme `GRP_TCA`) — D11 (durée) et K4 (chutes) sortent sous une seule
+   carte, le second message en complément. `EV_K04` figurait AUSSI dans `GRP_BZD_GENERAL`,
+   et `enrichRuleWithCrossRef` retient le premier groupe trouvé : il atterrissait là.
+   `deduplicateAlerts` prend désormais pour base le membre le plus **grave**, pas le
+   premier rencontré — une fusion ne doit jamais pouvoir baisser l'alarme.
+   `GRP_BZD_GENERAL` reste `distinct_context` : ses membres ont des conduites différentes
+   (insuffisance respiratoire, SCPD) — arbitrage clinique ouvert.
+3. **Une cascade exige un médicament de cascade.** L'entrée « BZD → somnolence/chutes »
+   avait `cascade: []` et sortait sur l'hypnotique seul : elle redisait les critères STOPP
+   sous un nom qui n'était pas le sien. Retirée.
+4. **Absorption déclarée** — `ABSORPTION_DECLAREE` (`app_analysis.js`) pour les règles
+   dont le MOTIF couvre une clause de pathologie qu'elles ne citent pas dans leur
+   condition. Seule entrée : `EV_F02` ↔ ostéoporose (son message nomme les fractures).
+   Le motif de la clause est reporté sous la règle, rien n'est perdu.
+5. **« FER » captait 23 molécules, dont 20 sans fer** — par « ré-FÉR-ence » dans leur
+   libellé (macrogol, allopurinol, amoxicilline, fosfomycine, cétirizine…), « FER-menté »,
+   « inter-FÉR-ent », « calci-FÉR-ol ». Le garde des clés courtes existait dans
+   `matchesDrugClass` et manquait dans `matchesDrugClassAnsm`. Un terme < 4 caractères ne
+   matche plus par sous-chaîne ; il passe par un alias déclaré
+   (`_ANSM_TERME_COURT = { fer: 'feroral' }`) — les interactions ANSM « fer » sont
+   d'absorption digestive, donc du fer oral. Le denylist sur `…calciferol` traitait un
+   symptôme.
+
+### L'interaction est une paire
+
+La base décrit chaque association depuis ses **deux** molécules, et le thésaurus ANSM en
+ajoute une troisième lecture dans l'onglet voisin. Les cartes `ddi_interact_v2` sont
+désormais **collectées** puis rendues une fois toutes les sources lues (`_cartesV2`,
+`_paireVue`) :
+
+- la paire vue depuis la seconde molécule est repliée sous la première ; son commentaire
+  reste (« Vu depuis … ») s'il apporte autre chose ;
+- la paire ANSM déjà présente est repliée sous la même ligne, **texte officiel inchangé**,
+  niveau et source affichés — la transcription est déplacée, pas réécrite ;
+- la gravité retenue est la **plus forte** des lectures, et un verdict de contre-indication
+  absolue déclaré depuis l'autre côté est **porté** par la ligne qui reste (sans quoi
+  « CI ABSOLUE — VÉRAPAMIL » disparaissait sous la carte du partenaire — trois dossiers) ;
+- l'onglet ANSM **dit** ce qu'il a confié à l'autre, et ne prétend plus « aucune
+  interaction » quand il les a toutes confiées ;
+- le **titre suit la nature, la couleur la gravité** : une association recommandée qui
+  reçoit la lecture BNF « majeure » (spironolactone + IEC) devient rouge et reste titrée
+  « Association à surveiller ».
+
+Mesuré sur les 112 dossiers : **72 → 55 cartes** d'interactions, **aucune** gravité
+abaissée, **aucune** contre-indication perdue.
+
 ## Architecture des données cliniques
 
 **Attribution des sources (important)** :
