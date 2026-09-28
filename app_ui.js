@@ -945,6 +945,129 @@ function resetJustifiedAlerts() {
     if (window._justifiedAlerts) window._justifiedAlerts.clear();
     if (typeof analyserPrescription === 'function') analyserPrescription();
 }
+// ── Assumer EN MASSE ─────────────────────────────────────────────────────────
+// Sur une ordonnance relue en réunion, dix alertes peuvent relever de la même décision
+// (« traitement de fond ancien, toléré, décision collégiale ») : les assumer une à une
+// obligeait à rouvrir dix fois la même fenêtre et à recopier dix fois le même motif.
+//
+// Les candidates sont lues dans le DOM RENDU — les boutons « ✓ assumer » que moteur et
+// blocs rédigés sur place posent déjà, avec leur clé. Un seul chemin pour les quatre
+// familles de clés (`id:`, `rc:`, `tt:`, `gl:`), aucune liste parallèle à maintenir.
+// Rien n'est coché d'avance : assumer reste une décision, pas un réglage par défaut.
+const _ONGLETS_ASSUMABLES = ['alertes-eviter', 'alertes-interact', 'alertes-bio', 'alertes-ansm'];
+const _RE_BOUTON_ASSUMER = /justifyGeriaAlert\('((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\)/;
+const _desechapperJs = s => String(s || '').replace(/\\(.)/g, '$1');
+
+function _alertesAssumables(ongletId) {
+    const ids = ongletId ? [ongletId] : _ONGLETS_ASSUMABLES;
+    const vus = new Set(); const out = [];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el || typeof el.querySelectorAll !== 'function') return;
+        el.querySelectorAll('button[onclick*="justifyGeriaAlert("]').forEach(b => {
+            const m = String(b.getAttribute('onclick') || '').match(_RE_BOUTON_ASSUMER);
+            if (!m) return;
+            const cle = _desechapperJs(m[1]);
+            if (!cle || vus.has(cle) || isAlertJustified(cle)) return;
+            vus.add(cle);
+            // Le titre affiché, sans l'icône de gradation.
+            out.push({ cle, titre: _desechapperJs(m[2]).replace(/^[^\wÀ-ÿ]+/, '').trim() || cle, onglet: id });
+        });
+    });
+    return out;
+}
+
+function justifyGeriaAlertsEnMasse(ongletId) {
+    const candidates = _alertesAssumables(ongletId);
+    if (!candidates.length) return;
+    _closeJustifyModal();
+    const overlay = document.createElement('div');
+    overlay.id = 'geriaJustifyOverlay';
+    overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:20000;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,.55);padding:16px;';
+    const card = document.createElement('div');
+    card.style.cssText = 'background:#fff;color:#1e293b;max-width:560px;width:100%;max-height:88vh;display:flex;flex-direction:column;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.3);padding:20px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;';
+    const h = document.createElement('div'); h.style.cssText = 'font-weight:700;font-size:15px;margin-bottom:4px;';
+    h.textContent = 'Assumer plusieurs alertes';
+    const expl = document.createElement('div'); expl.style.cssText = 'font-size:12px;color:#475569;margin-bottom:10px;line-height:1.45;';
+    expl.textContent = "Cochez les alertes qui relèvent d'une même décision. Elles restent affichées et leur surveillance est maintenue ; le motif commun figurera dans le rapport, une fois pour toutes.";
+    card.appendChild(h); card.appendChild(expl);
+
+    const toutes = document.createElement('label');
+    toutes.style.cssText = 'display:flex;gap:8px;align-items:center;font-size:12px;font-weight:600;color:#334155;margin-bottom:6px;cursor:pointer;';
+    const cbToutes = document.createElement('input'); cbToutes.type = 'checkbox';
+    toutes.appendChild(cbToutes); toutes.appendChild(document.createTextNode(`Tout cocher (${candidates.length})`));
+    card.appendChild(toutes);
+
+    const liste = document.createElement('div');
+    liste.style.cssText = 'overflow:auto;border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;margin-bottom:10px;flex:1 1 auto;min-height:60px;';
+    const cases = candidates.map(c => {
+        const l = document.createElement('label');
+        l.style.cssText = 'display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:4px 0;cursor:pointer;border-bottom:1px dashed #f1f5f9;';
+        const cb = document.createElement('input'); cb.type = 'checkbox'; cb.style.marginTop = '3px';
+        const t = document.createElement('span'); t.textContent = c.titre;
+        l.appendChild(cb); l.appendChild(t); liste.appendChild(l);
+        return { c, cb };
+    });
+    card.appendChild(liste);
+
+    const lab = document.createElement('label'); lab.textContent = 'Motif commun (facultatif)';
+    lab.style.cssText = 'display:block;font-size:12px;font-weight:600;margin-bottom:4px;color:#334155;';
+    const ta = document.createElement('textarea'); ta.rows = 2;
+    ta.placeholder = 'Ex. : traitement de fond ancien, efficace et toléré — décision collégiale du ' + new Date().toLocaleDateString('fr-FR') + '.';
+    ta.style.cssText = 'width:100%;padding:8px 10px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;box-sizing:border-box;resize:vertical;';
+    card.appendChild(lab); card.appendChild(ta);
+
+    const btns = document.createElement('div'); btns.style.cssText = 'display:flex;gap:8px;justify-content:flex-end;margin-top:14px;';
+    const annul = document.createElement('button'); annul.type = 'button'; annul.textContent = 'Annuler';
+    annul.style.cssText = 'padding:8px 14px;border:1px solid #cbd5e1;background:#fff;color:#475569;border-radius:8px;cursor:pointer;font-size:14px;';
+    annul.addEventListener('click', _closeJustifyModal);
+    const ok = document.createElement('button'); ok.type = 'button';
+    ok.style.cssText = 'padding:8px 14px;border:0;background:#0d9488;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;';
+    const majBouton = () => {
+        const n = cases.filter(x => x.cb.checked).length;
+        ok.textContent = n ? `Assumer la sélection (${n})` : 'Assumer la sélection';
+        ok.disabled = !n; ok.style.opacity = n ? '1' : '.5';
+        cbToutes.checked = n === cases.length;
+    };
+    cases.forEach(x => x.cb.addEventListener('change', majBouton));
+    cbToutes.addEventListener('change', () => { cases.forEach(x => { x.cb.checked = cbToutes.checked; }); majBouton(); });
+    majBouton();
+    ok.addEventListener('click', () => {
+        const date = new Date().toISOString().slice(0, 10);
+        const motif = (ta.value || '').trim();
+        cases.filter(x => x.cb.checked).forEach(x => window._justifiedAlerts.set(x.c.cle, { motif, date }));
+        _closeJustifyModal();
+        if (typeof analyserPrescription === 'function') analyserPrescription();
+    });
+    btns.appendChild(annul); btns.appendChild(ok); card.appendChild(btns);
+    overlay.appendChild(card); document.body.appendChild(overlay);
+    overlay.addEventListener('click', e => { if (e.target === overlay) _closeJustifyModal(); });
+    if (document.addEventListener) document.addEventListener('keydown', _justifyEsc);
+}
+
+// Point d'entrée posé par le code, pas par le HTML : les deux interfaces le reçoivent à
+// l'identique, sans rien à synchroniser à la main. Une barre discrète en tête de chaque
+// onglet qui compte au moins deux alertes encore assumables. Pas de classe « alert » ni
+// de <strong> : ce n'est pas une alerte, elle n'est ni comptée, ni masquable.
+function _barreAssumerEnMasse() {
+    _ONGLETS_ASSUMABLES.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el || typeof el.querySelector !== 'function' || typeof el.insertAdjacentHTML !== 'function') return;
+        const ancienne = el.querySelector('.geria-assumer-masse');
+        if (ancienne && ancienne.remove) ancienne.remove();
+        const n = _alertesAssumables(id).length;
+        if (n < 2) return;
+        el.insertAdjacentHTML('afterbegin', `<div class="geria-assumer-masse" style="display:flex;justify-content:flex-end;margin:0 0 6px 0;">`
+            + `<button type="button" onclick="if(typeof justifyGeriaAlertsEnMasse==='function')justifyGeriaAlertsEnMasse('${id}');return false;" `
+            + `style="font-size:12px;padding:3px 10px;border:1px solid #0d9488;color:#0d9488;background:#fff;border-radius:999px;cursor:pointer;" `
+            + `title="Assumer plusieurs alertes de cet onglet avec un motif commun">✓ Assumer plusieurs… (${n})</button></div>`);
+    });
+}
+window.justifyGeriaAlertsEnMasse = justifyGeriaAlertsEnMasse;
+window._barreAssumerEnMasse = _barreAssumerEnMasse;
+window._alertesAssumables = _alertesAssumables;
+
 window.isAlertJustified = isAlertJustified;
 window.justificationMotif = justificationMotif;
 window.justifyGeriaAlert = justifyGeriaAlert;

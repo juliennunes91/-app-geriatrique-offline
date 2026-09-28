@@ -1124,6 +1124,32 @@ non « agir maintenant ».
 - C'est l'inverse d'un bouton silence : ne jamais le faire filtrer l'alerte, ni retirer un
   examen du plan biologique.
 
+### Assumer une INTERACTION — le registre écrit après le rendu
+
+Une interaction critique assumée passait en orange à l'écran et **restait** « interaction
+critique » dans la synthèse, le bandeau et le PDF : le registre de synthèse était écrit
+pendant la collecte, avant que le rendu sache si la carte qui porte la paire était
+assumée. Les écritures sont maintenant **différées** (`_regInteractDiffere`) et vidées
+une fois l'assomption connue (`_pairesAssumees`) : la paire sort des « critiques » et du
+compte du bandeau, reste au registre des médicaments en orange, et figure dans un relevé
+calme « Interactions assumées par le prescripteur », avec le motif — à l'écran comme dans
+le rapport. Même logique que le plafond des alertes du moteur.
+
+### Assumer EN MASSE
+
+Une ordonnance relue en réunion peut porter dix alertes relevant d'une même décision.
+`justifyGeriaAlertsEnMasse(onglet)` (`app_ui.js`) ouvre une liste à cocher et un motif
+commun. Les candidates sont lues **dans le DOM rendu** — les boutons « ✓ assumer » que
+moteur et blocs rédigés posent déjà, avec leur clé : un seul chemin pour les quatre
+familles de clés, aucune liste parallèle. **Rien n'est coché d'avance** : assumer reste une
+décision. Le point d'entrée (« ✓ Assumer plusieurs… (N) », dès deux candidates) est
+**injecté par le code** en tête des onglets éviter, interactions, bio et ANSM — les deux
+interfaces le reçoivent sans synchronisation manuelle ; il est posé avant la
+mémoïsation pour survivre à un résultat restauré du cache, et ne porte ni classe `alert`
+ni `<strong>` (ni compté, ni masquable). Dans le PDF, les décisions sont **regroupées par
+motif** : un motif commun s'écrit une fois, suivi des titres qu'il couvre. Couvert par
+Playwright, validé par mutation.
+
 ## Masquage — ce que l'utilisateur peut écarter
 
 `window._maskedAlerts` couvre trois familles de clés, toutes filtrées **en amont du

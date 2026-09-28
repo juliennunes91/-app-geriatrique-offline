@@ -319,6 +319,63 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
                 `et relue à l'import : ${JSON.stringify(etat.restaure)}`);
         });
 
+        // ── Assumer en masse, et interaction assumée dans le PDF ─────────────────────
+        const masse = await page.evaluate(() => {
+            const r = {};
+            resetPatient();
+            document.getElementById('patientAge').value = 96;
+            document.getElementById('patientDFG').value = 37;
+            document.getElementById('chkChutes').checked = true;
+            const parDci = {}; MASTER_DB.MEDICAMENTS.forEach(m => { parDci[sanitizeText(m.dci)] = m; });
+            ['Levothyroxine', 'Pantoprazole', 'Zopiclone', 'Escitalopram', 'Acide acetylsalicylique'].forEach(n => {
+                const m = parDci[sanitizeText(n)];
+                activeMeds.push({ dci: m.dci, classe: m.classe, label: m.dci, core_id: sanitizeText(m.dci), albumine: 0, db_ref: m });
+            });
+            _lastAnalysisHash = null; analyserPrescription();
+            const barre = document.querySelector('#alertes-eviter .geria-assumer-masse button');
+            r.barre = barre ? barre.textContent : null;
+            const n = _alertesAssumables('alertes-eviter').length;
+            r.candidates = n;
+            justifyGeriaAlertsEnMasse('alertes-eviter');
+            const modal = document.getElementById('geriaJustifyOverlay');
+            const cases = [...modal.querySelectorAll('input[type=checkbox]')];
+            r.aucuneCocheeDavance = cases.every(c => !c.checked);
+            cases[0].checked = true; cases[0].dispatchEvent(new Event('change'));   // « tout cocher »
+            modal.querySelector('textarea').value = 'Décision collégiale du 28/09';
+            [...modal.querySelectorAll('button')].find(b => /Assumer la sélection/.test(b.textContent)).click();
+            r.assumees = window._justifiedAlerts.size;
+            r.motifsIdentiques = [...window._justifiedAlerts.values()].every(v => v.motif === 'Décision collégiale du 28/09');
+            r.pdf = buildPdfContent();
+            // Interaction critique assumée : hors des « critiques » du rapport.
+            const btn = [...document.querySelectorAll('#alertes-interact button[onclick*="justifyGeriaAlert("]')]
+                .find(b => /LEVOTHYROXINE/.test(b.getAttribute('onclick')));
+            const m = btn && btn.getAttribute('onclick').match(/justifyGeriaAlert\('((?:[^'\\]|\\.)*)'/);
+            r.cleInteraction = m ? m[1].replace(/\\(.)/g, '$1') : null;
+            if (r.cleInteraction) window._justifiedAlerts.set(r.cleInteraction, { motif: 'Prises espacées, TSH stable', date: '2026-09-28' });
+            _lastAnalysisHash = null; analyserPrescription();
+            r.pdfInteraction = buildPdfContent();
+            return r;
+        });
+        const pdfMasse = enTexte(masse.pdf), pdfInter = enTexte(masse.pdfInteraction);
+
+        test('On peut assumer plusieurs alertes d\'un coup, avec un motif commun', () => {
+            ok(masse.barre && /Assumer plusieurs/.test(masse.barre), `la barre est posée dans l'onglet : ${masse.barre}`);
+            ok(masse.candidates >= 2, `au moins deux candidates : ${masse.candidates}`);
+            ok(masse.aucuneCocheeDavance, 'rien n\'est coché d\'avance — assumer reste une décision');
+            ok(masse.assumees === masse.candidates, `toutes les cochées sont assumées : ${masse.assumees}/${masse.candidates}`);
+            ok(masse.motifsIdentiques, 'le motif commun est porté par chacune');
+            const occ = (pdfMasse.match(/Décision collégiale du 28\/09/g) || []).length;
+            ok(occ === 1, `le rapport écrit le motif commun UNE fois, pas ${occ}`);
+        });
+
+        test('Une interaction assumée quitte « Interactions critiques » du PDF, avec son motif', () => {
+            ok(masse.cleInteraction, 'préalable : la carte lévothyroxine porte un bouton « assumer »');
+            const crit = (pdfInter.match(/Interactions critiques[\s\S]{0,400}/) || [''])[0];
+            ok(!/LEVOTHYROXINE ↔ PANTOPRAZOLE/.test(crit), 'la paire n\'est plus listée parmi les critiques');
+            ok(/Interactions assumées par le prescripteur[\s\S]{0,200}LEVOTHYROXINE ↔ PANTOPRAZOLE[\s\S]{0,60}TSH stable/.test(pdfInter),
+                'elle figure au relevé des interactions assumées, avec le motif');
+        });
+
         test('Le rapport ne lève aucune erreur JavaScript', () => {
             ok(erreurs.length === 0, `erreurs de page : ${erreurs.join(' | ')}`);
         });

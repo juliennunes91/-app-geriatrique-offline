@@ -1365,6 +1365,23 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Une interaction ASSUMEE sort des « critiques » — sans disparaitre', () => {
+        // Signale sur un dossier reel : la carte levothyroxine + pantoprazole passait en
+        // orange a l'ecran, mais restait « interaction critique » dans la synthese, le
+        // bandeau et le PDF — le registre etait ecrit avant que l'assomption soit connue.
+        const base = { age: 96, sexe: 'F', dfg: 37, meds: ['Levothyroxine', 'Pantoprazole'] };
+        const r0 = analyzeCase(base);
+        const carte = r0['alertes-interact'][0];
+        assert.strictEqual(carte.severity, 'danger', 'prealable : la paire est critique');
+        assert.ok(r0._synthData.interactCritical.length >= 1, 'prealable : elle figure aux critiques');
+        const r = analyzeCase({ ...base, assumees: [{ cle: 'tt:' + carte.titre + '|danger', motif: 'Prises espacees, TSH stable' }] });
+        assert.strictEqual(r._synthData.interactCritical.length, 0, 'assumee : plus une interaction critique');
+        assert.ok(r._synthData.banner.nbDanger < r0._synthData.banner.nbDanger, 'et le bandeau cesse de la compter');
+        const a = r._synthData.interactAssumees || [];
+        assert.ok(a.length === 1 && /LEVOTHYROXINE ↔ PANTOPRAZOLE/.test(a[0].titre) && /TSH stable/.test(a[0].motif),
+            'elle est relevee a part, avec le motif — jamais retiree en silence');
+        assert.ok((r['alertes-interact'] || []).length === 1, 'la carte reste affichee : assumer n\'est pas masquer');
+    });
     test('Une alerte qui exige DEUX classes nomme les deux coupables', () => {
         // EV_SYND_046 exige un sedatif (med_keys) ET un opioide/antipsychotique/
         // anticholinergique (med_keys_2). La ligne « Concerne chez ce patient » ne lisait

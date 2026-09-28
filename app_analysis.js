@@ -2925,6 +2925,8 @@ function analyserPrescription() {
     // Paires du thésaurus ANSM repliées dans l'onglet Interactions (cf. plus bas) :
     // l'onglet ANSM doit le DIRE, y compris quand il n'a plus rien d'autre à montrer.
     let _ansmReplies = [];
+    // Interactions dont la carte a été assumée : relevées à part dans la synthèse et le PDF.
+    let _interactAssumees = [];
     try {
         if (isChecked('chkTabac')) {
             let cyp1a2_drugs = ['clozapine', 'olanzapine', 'duloxetine', 'theophylline', 'erlotinib', 'haloperidol', 'fluvoxamine', 'agomelatine'];
@@ -2963,6 +2965,8 @@ function analyserPrescription() {
         const _RANG_SEV = { info: 1, warning: 2, danger: 3 };
         const _plusFort = (a, b) => ((_RANG_SEV[a] || 0) >= (_RANG_SEV[b] || 0) ? a : b);
         const _RE_CI_ABSOLUE = /CONTRE-?INDICATION ABSOLUE|CI ABSOLUE/i;
+        const _regInteractDiffere = [];     // écritures de registre en attente du rendu
+        const _pairesAssumees = new Set();  // paires portées par une carte assumée
 
         // Une forme galénique NON ABSORBÉE ne participe à aucune interaction
         // systémique, ni comme source ni comme partenaire : l'amphotéricine B buvable
@@ -3255,23 +3259,22 @@ function analyserPrescription() {
                 });
 
                 if (foundGroups.length > 0) {
-                    // Registre de synthèse : calculé AVANT le repli, comme auparavant.
+                    // Registre de synthèse : calculé AVANT le repli (mêmes groupes), mais
+                    // ÉCRIT après le rendu — seul le rendu sait si la carte qui porte la
+                    // paire a été ASSUMÉE. Écrit ici, le registre ignorait l'assomption :
+                    // la carte passait en orange à l'écran et restait « interaction
+                    // critique » dans la synthèse, le bandeau et le PDF.
                     const isDanger = foundGroups.some(g => g.severite === 'danger');
                     const surveillanceSeule = !isDanger && foundGroups.every(g => g.instauration || g.recommandee);
-                    const flatList = foundGroups.map(g => `${g.classe}:${g.matched.map(x=>x.interactor).join('/')}`).join(' | ');
-                    // Ce registre alimente « médicaments à retirer ou substituer » et le
-                    // bandeau de gravité : une surveillance de mise en route n'y a pas sa
-                    // place — même principe que les alertes informatives du moteur.
-                    if (!surveillanceSeule) _regAddMed(m.dci, 'interact', { text: `Interaction ${flatList}`, severity: isDanger ? 'danger' : 'warning' });
-                    // Émettre aussi UNE ligne par groupe danger dans byDomain pour
-                    // que la Synthèse puisse résumer les interactions critiques.
-                    foundGroups.forEach(g => {
-                        if (g.severite !== 'danger') return;
-                        const targets = g.matched.map(x => x.interactor.toUpperCase()).join(', ');
-                        _regAddDomain('interact', {
-                            text: `${ref.dci.toUpperCase()} ↔ ${targets} — ${_libelleInteraction(g).texte}`,
-                            severity: 'danger'
-                        });
+                    _regInteractDiffere.push({
+                        dci: m.dci,
+                        surveillanceSeule,
+                        flatList: foundGroups.map(g => `${g.classe}:${g.matched.map(x=>x.interactor).join('/')}`).join(' | '),
+                        groupes: foundGroups.map(g => ({
+                            danger: g.severite === 'danger',
+                            paires: g.matched.map(x => _clePaire(ref.dci, x.interactor)),
+                            text: `${ref.dci.toUpperCase()} ↔ ${g.matched.map(x => x.interactor.toUpperCase()).join(', ')} — ${_libelleInteraction(g).texte}`
+                        }))
                     });
 
                     // Repli de la paire vue depuis l'autre molécule.
@@ -3510,7 +3513,29 @@ function analyserPrescription() {
                 : surveillanceSeule
                 ? `Association à surveiller : ${escapeHtml(ref.dci.toUpperCase())}`
                 : `Co-prescription à risque : ${escapeHtml(ref.dci.toUpperCase())}`;
+            // Même clé que celle que `addAlert` calcule pour le bouton « assumer ».
+            const cleCarte = 'tt:' + `${icon} ${titreInteract}` + '|' + (alertClass === 'alert-danger' ? 'danger' : 'warning');
+            if (typeof isAlertJustified === 'function' && isAlertJustified(cleCarte)) {
+                groupes.forEach(g => g.matched.forEach(x => _pairesAssumees.add(_clePaire(ref.dci, x.interactor))));
+                _interactAssumees.push({
+                    titre: groupes.map(g => `${ref.dci.toUpperCase()} ↔ ${g.matched.map(x => x.interactor.toUpperCase()).join(', ')}`).join(' ; '),
+                    motif: (typeof justificationMotif === 'function') ? justificationMotif(cleCarte) : ''
+                });
+            }
             addAlert('alertes-interact', `<div class="alert ${alertClass} shadow-sm"><strong>${icon} ${titreInteract}</strong><ul class="mb-0 mt-1">${groupHtml}</ul></div>`, 'interact');
+        });
+        // Registre, maintenant que l'assomption est connue. Une paire assumée n'est plus
+        // une « interaction critique » (synthèse, bandeau, PDF) : elle est relevée à part,
+        // avec le motif — même traitement que les alertes du moteur, plafonnées sous la
+        // bande rouge. Elle reste au registre des médicaments, en orange.
+        _regInteractDiffere.forEach(r => {
+            const assumee = p => _pairesAssumees.has(p);
+            const dangerActif = r.groupes.some(g => g.danger && !g.paires.every(assumee));
+            if (!r.surveillanceSeule) _regAddMed(r.dci, 'interact', { text: `Interaction ${r.flatList}`, severity: dangerActif ? 'danger' : 'warning' });
+            r.groupes.forEach(g => {
+                if (!g.danger || g.paires.every(assumee)) return;
+                _regAddDomain('interact', { text: g.text, severity: 'danger' });
+            });
         });
 
         for (const [pair, data] of Object.entries(groupedAnsm)) {
@@ -4838,6 +4863,14 @@ function analyserPrescription() {
                 </div>`);
                 synthHtml += `</div></div>`;
             }
+            // Une interaction assumée sort des « critiques » mais ne disparaît pas : relevé
+            // calme, une ligne par décision, avec le motif du prescripteur.
+            if (_interactAssumees.length > 0) {
+                synthHtml += `<div class="small text-muted mb-3 ps-2" style="border-left:3px solid #0d9488;">
+                    <strong style="color:#0d9488;">Interactions assumées par le prescripteur (${_interactAssumees.length})</strong>
+                    ${_interactAssumees.map(x => `<div>${escapeHtml(x.titre)}${x.motif ? ' — <em>' + escapeHtml(x.motif) + '</em>' : ''}</div>`).join('')}
+                </div>`;
+            }
 
             // Section 4 : PROBLÈMES BIOLOGIQUES
             if (bioIssues.length > 0) {
@@ -4883,6 +4916,7 @@ function analyserPrescription() {
         // déjà alimentés par les synthBuild*).
         synthData.mechanismClusters = mechanismClusters;
         synthData.interactCritical = interactCritical;
+        synthData.interactAssumees = _interactAssumees.slice();
         synthData.bioIssues = bioIssues;
         synthData.toAdd = toAdd;
         synthData.toRemoveFiltered = toRemoveFiltered;
@@ -4902,6 +4936,9 @@ function analyserPrescription() {
     if (typeof _saveSession === 'function') _saveSession();
 
     // Sauvegarder le résultat pour la memoization
+    // Barre « assumer plusieurs » — posée AVANT la mémoïsation, pour qu'un résultat
+    // restauré depuis le cache la porte aussi.
+    if (typeof _barreAssumerEnMasse === 'function') { try { _barreAssumerEnMasse(); } catch (e) { /* non bloquant */ } }
     const divs_memo = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines', 'alertes-synthese'];
     _lastAnalysisResult = {};
     divs_memo.forEach(id => { const el = document.getElementById(id); if (el) _lastAnalysisResult[id] = el.innerHTML; });

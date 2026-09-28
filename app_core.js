@@ -643,6 +643,18 @@ function buildPdfContent() {
             <ul style="margin:0 0 -6px 15px;padding:0;">${its}</ul>
         </div>`;
     }
+    // Interactions ASSUMÉES : hors des « critiques », jamais hors du rapport. Même forme
+    // calme que le relevé des prescriptions assumées — un tiers doit voir que la paire a
+    // été relue et maintenue, et pourquoi.
+    if (sd && sd.interactAssumees && sd.interactAssumees.length > 0) {
+        const lignes = sd.interactAssumees.map(x =>
+            `<div style="margin-top:2px;">${escapeHtml(x.titre)}${x.motif ? ` — <em>${escapeHtml(x.motif)}</em>` : ''}</div>`).join('');
+        html += `<div class="pdf-block" style="${blockStyle}${S.item}color:${S.muted};">
+            <strong style="font-weight:600;color:#0d9488;">Interactions assumées par le prescripteur (${sd.interactAssumees.length})</strong>
+            <div style="margin-top:2px;">Relues et maintenues en connaissance de cause ; la surveillance reste due.</div>
+            ${lignes}
+        </div>`;
+    }
 
     // 2 colonnes : Comorbidités + Médicaments
     html += `<div class="pdf-block" style="${blockStyle}display:flex;gap:11px;">`;
@@ -847,13 +859,21 @@ function buildPdfContent() {
             </div>`;
         }
         if (assumees.length > 0) {
-            const lignes = assumees.map(a => {
+            // Assumées EN MASSE, dix alertes portent le même motif : le répéter dix fois
+            // noierait le relevé. Une ligne par MOTIF, les titres qu'il couvre à la suite.
+            const parMotif = new Map();
+            assumees.forEach(a => {
                 const st = a.querySelector('strong');
                 const titre = (st ? st.textContent : '').replace(/^[^\wÀ-ÿ]+/, '').replace(/\s+/g, ' ').trim();
                 const e = window._justifiedAlerts.get(_cleAlerte(a));
-                const motif = (e && e.motif) ? ` — <em>${escapeHtml(e.motif)}</em>` : '';
-                return `<div style="margin-top:2px;">${escapeHtml(titre)}${motif}</div>`;
-            }).join('');
+                const motif = (e && e.motif) ? e.motif.trim() : '';
+                // Sans motif, chaque décision garde sa ligne : rien ne les rassemble.
+                const cle = motif || ('\u0000' + titre);
+                if (!parMotif.has(cle)) parMotif.set(cle, { motif, titres: [] });
+                parMotif.get(cle).titres.push(titre);
+            });
+            const lignes = [...parMotif.values()].map(g =>
+                `<div style="margin-top:2px;">${g.titres.map(escapeHtml).join(' ; ')}${g.motif ? ` — <em>${escapeHtml(g.motif)}</em>` : ''}</div>`).join('');
             html += `<div class="pdf-block" style="${S.item}${(majeures.length || mineures.length) ? 'border-top:' + S.rule + ';' : ''}color:${S.muted};">
                 <strong style="font-weight:600;color:#0d9488;">Assumé par le prescripteur (${assumees.length})</strong>
                 <div style="margin-top:2px;">Relu et maintenu en connaissance de cause ; la surveillance reste due.</div>
