@@ -346,7 +346,8 @@ const MED_PRECISION_FIELDS = {
     methotrexate: ['mtx_schema'],
     macrogol: ['indication_peg'],
     terbinafine: ['voie_terbinafine'],
-    amphotericine: ['voie_ampho']
+    amphotericine: ['voie_ampho'],
+    levodopa: ['association_dopa']
 };
 const PRECISION_FIELD_DEFS = {
     duree: { label: 'Durée de traitement', type: 'select',
@@ -403,6 +404,11 @@ const PRECISION_FIELD_DEFS = {
         options: [['', 'Non précisé'], ['oui', 'Oui — surveillance active'], ['non', 'Non / interrompue']] },
     iono_recent: { label: 'Ionogramme (K+/Na+/créat) < 6 mois ?', type: 'select',
         options: [['', 'Non précisé'], ['oui', 'Oui — récent et normal'], ['non', 'Non / anormal']] },
+    // Les partenaires déclarés entrent dans l'analyse : c'est la fiche carbidopa qui
+    // porte la CI absolue avec les IMAO non sélectifs, la fiche entacapone la sienne.
+    association_dopa: { label: 'Association de la lévodopa', type: 'select',
+        options: [['', 'Non précisée (partenaires non analysés)']].concat(
+            Object.entries(typeof DOPA_ASSOCIATIONS !== 'undefined' ? DOPA_ASSOCIATIONS : {}).map(([k, v]) => [k, 'Lévodopa ' + v.libelle])) },
     digox_recent: { label: 'Digoxinémie contrôlée (cible 0,5-0,9 ng/mL) ?', type: 'select',
         options: [['', 'Non précisé'], ['oui', 'Oui — dans la cible'], ['non', 'Non / hors cible']] }
 };
@@ -531,6 +537,7 @@ const _RESUME_PRECISION = {
     voie_terbinafine: { orale: 'comprimé', topique: 'voie cutanée' },
     mtx_schema:     { faible: 'faible dose hebdo.', haute: 'haute dose' },
     indication_peg: { constipation: 'constipation', preparation: 'préparation colique' },
+    association_dopa: Object.fromEntries(Object.entries(typeof DOPA_ASSOCIATIONS !== 'undefined' ? DOPA_ASSOCIATIONS : {}).map(([k, v]) => [k, v.court])),
     indication_diu: { ic: 'insuffisance cardiaque', irc: 'surcharge IRC', cirrhose: 'ascite',
                       nephrotique: 'syndrome néphrotique', hta: 'HTA', oedemes: 'œdèmes isolés' }
 };

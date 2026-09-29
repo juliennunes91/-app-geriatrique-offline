@@ -844,6 +844,10 @@ function medPrecisionFamily(classe, dci) {
     // oropharyngée/digestive) — ni néphrotoxicité, ni hypokaliémie, ni interaction
     // systémique. La forme injectable porte au contraire toute la toxicité.
     if (/amphot[eé]ricine/i.test(d) || /amphot[eé]ricine/i.test(cl)) return 'amphotericine';
+    // Lévodopa : la DCI saisie n'est jamais seule — l'association (inhibiteur de la
+    // décarboxylase, ± inhibiteur de la COMT) se déclare en précision. `^levodopa$`
+    // et non /dopa/ : la méthyldopa est un antihypertenseur central.
+    if (/^l[eé]vodopa$/i.test(d) || /pr[eé]curseur dopamine/i.test(cl)) return 'levodopa';
     if (/clozapine/i.test(d) || /clozapine/i.test(cl)) return 'clozapine';
     if (/donepezil|donépézil|rivastigmine|galantamine/i.test(d)
         || /ac[eé]tylcholinest[eé]rase|anticholinest[eé]ras/i.test(cl)) return 'anticholinesterase';

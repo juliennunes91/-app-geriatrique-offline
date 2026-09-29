@@ -376,6 +376,22 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
                 'elle figure au relevé des interactions assumées, avec le motif');
         });
 
+        const dopa = await page.evaluate(() => {
+            resetPatient();
+            const m = MASTER_DB.MEDICAMENTS.find(x => x.dci === 'Levodopa');
+            activeMeds.push({ dci: m.dci, classe: m.classe, label: m.label || m.dci, core_id: 'levodopa', albumine: 0, db_ref: m });
+            openMedPrecisionModal('Levodopa', { force: true });
+            const sel = [...document.querySelectorAll('#medPrecisionOverlay select')];
+            const opts = sel.length ? [...sel[0].options].map(o => o.textContent) : [];
+            if (typeof closeMedPrecisionModal === 'function') closeMedPrecisionModal();
+            return opts;
+        });
+        test('La saisie d\'une lévodopa propose le type d\'association', () => {
+            ok(dopa.length >= 7, `options proposées : ${dopa.length}`);
+            ok(dopa.some(o => /bensérazide/.test(o)) && dopa.some(o => /entacapone \(Stalevo\)/.test(o)),
+                `Modopar et Stalevo figurent parmi les choix : ${dopa.join(' | ')}`);
+        });
+
         test('Le rapport ne lève aucune erreur JavaScript', () => {
             ok(erreurs.length === 0, `erreurs de page : ${erreurs.join(' | ')}`);
         });

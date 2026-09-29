@@ -388,9 +388,22 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "severite": "warning",
         "condition": {
             "med_keys": [
-                "levodopacarbidopa",
+                "levodopa",
                 "pramipexole",
                 "ropinirole"
+            ],
+            "_note": "Une CASCADE exige son agent causal : la regle sortait sur toute dopatherapie, y compris chez un patient sans neuroleptique ni antiemetique, et sur un ropinirole prescrit pour des jambes sans repos. Elle exige desormais un medicament pourvoyeur de syndrome parkinsonien (med_keys_2), et se tait quand une pathologie qui justifie la dopatherapie est declaree.",
+            "med_keys_2": [
+                "antipsychotique",
+                "metoclopramide",
+                "metopimazine",
+                "flunarizine",
+                "cinnarizine"
+            ],
+            "comorbs_absent": [
+                "PAT_014",
+                "PAT_012",
+                "PAT_051"
             ]
         },
         "alternatives": "Traitement correct: arreter ou reduire l'agent causal. Si antipsychotique necessaire: changer pour quetiapine/clozapine",

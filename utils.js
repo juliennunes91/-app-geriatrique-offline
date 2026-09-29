@@ -321,3 +321,27 @@ const CASE_PATHOLOGIE = {
         'chkUsageSubstances': 'PAT_068',
         'chkTSADI': 'PAT_069'
     };
+
+// ── Dopathérapie : une ligne « Lévodopa », plusieurs médicaments ─────────────────
+// La lévodopa ne se prescrit jamais seule : elle est associée à un inhibiteur de la
+// dopa-décarboxylase (bensérazide — Modopar ; carbidopa — Sinemet), parfois à un
+// inhibiteur de la COMT (entacapone — Stalevo, Lecigon). Saisie seule, elle faisait
+// disparaître de l'analyse tout ce que portent ses partenaires : dans la base, c'est la
+// fiche CARBIDOPA qui porte la contre-indication absolue avec les IMAO non sélectifs
+// (linézolide compris) et l'antagonisme des neuroleptiques, et la fiche ENTACAPONE la
+// sienne. `partenaires` liste les DCI telles qu'elles existent dans MASTER_DB — le
+// bensérazide n'y figure pas : il est déclaré (doublons d'inhibiteur de la
+// décarboxylase) sans qu'on lui prête des interactions qui ne sont pas les siennes.
+const DOPA_ASSOCIATIONS = {
+    benserazide:              { libelle: '+ bensérazide (Modopar)',                    court: '+ bensérazide',            ddc: 'benserazide', partenaires: [] },
+    carbidopa:                { libelle: '+ carbidopa (Sinemet)',                      court: '+ carbidopa',              ddc: 'carbidopa',   partenaires: ['Carbidopa'] },
+    carbidopa_entacapone:     { libelle: '+ carbidopa + entacapone (Stalevo)',         court: '+ carbidopa + entacapone', ddc: 'carbidopa',   partenaires: ['Carbidopa', 'Entacapone'], icomt: true },
+    gel_carbidopa:            { libelle: 'gel intestinal + carbidopa (Duodopa)',       court: 'gel intestinal',           ddc: 'carbidopa',   partenaires: ['Carbidopa'], continu: true },
+    gel_carbidopa_entacapone: { libelle: 'gel intestinal + carbidopa + entacapone (Lecigon)', court: 'gel + entacapone',  ddc: 'carbidopa',   partenaires: ['Carbidopa', 'Entacapone'], icomt: true, continu: true },
+    sc_foslevodopa:           { libelle: 'foslévodopa + foscarbidopa sous-cutanée (Vyalev)',  court: 'SC continue',       ddc: 'carbidopa',   partenaires: ['Carbidopa'], continu: true }
+};
+// Composition DÉCLARÉE d'une ligne d'ordonnance : la DCI saisie, puis ses partenaires.
+const associationDopa = (med) => {
+    const v = med && med.precisions && med.precisions.association_dopa;
+    return (v && DOPA_ASSOCIATIONS[v]) || null;
+};

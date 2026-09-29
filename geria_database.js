@@ -14282,6 +14282,16 @@ const MASTER_DB = {
                     "ddi_interact": "IMAO (crise hypertensive +++), Fer (chelation - absorption reduite), Antipsychotiques (antagonisme), Domperidone (stimule peristaltisme - aide nausee)",
                     "ddi_interact_v2": [
                               {
+                                        "classe": "IMAO non sélectifs — CI ABSOLUE (crise hypertensive)",
+                                        "dcis": [
+                                                  "phenelzine",
+                                                  "tranylcypromine",
+                                                  "linezolide"
+                                        ],
+                                        "commentaire": "Association contre-indiquée (RCP Modopar / Sinemet, rubrique 4.3) : accumulation de dopamine et de noradrénaline, risque de crise hypertensive. Le linézolide est un IMAO non sélectif réversible.",
+                                        "severite": "danger"
+                              },
+                              {
                                         "classe": "Fer",
                                         "dcis": [
                                                   "fer"

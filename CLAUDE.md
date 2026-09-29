@@ -42,6 +42,9 @@ seule livraison, et c'est ce qui a porté une réponse au-delà de 30 minutes. R
 - Lancer la suite Node et Playwright **en arrière-plan** et rédiger CLAUDE.md pendant ce
   temps.
 - Un signalement = un commit ; ne pas empiler trois chantiers avant la première livraison.
+- Pour attendre une tâche de fond, **ne jamais** écrire `while pgrep -f "node tests.js"` :
+  le motif se trouve dans la ligne de commande de la boucle elle-même, qui s'attend sans
+  fin. Lancer la tâche avec `run_in_background` et attendre sa notification.
 
 ## Onglet PAAM (Auto-administration)
 
@@ -295,6 +298,54 @@ désormais **collectées** puis rendues une fois toutes les sources lues (`_cart
 
 Mesuré sur les 112 dossiers : **72 → 55 cartes** d'interactions, **aucune** gravité
 abaissée, **aucune** contre-indication perdue.
+
+## Dopathérapie : une ligne « Lévodopa », plusieurs médicaments
+
+La lévodopa ne se prescrit jamais seule — inhibiteur de la dopa-décarboxylase (bensérazide :
+Modopar ; carbidopa : Sinemet), parfois inhibiteur de la COMT (entacapone : Stalevo,
+Lecigon), parfois en pompe (Duodopa, Lecigon, Vyalev). Saisie seule, elle faisait
+**disparaître de l'analyse tout ce que portent ses partenaires** : dans la base, c'est la
+fiche **carbidopa** qui porte la contre-indication absolue avec les IMAO non sélectifs
+(linézolide compris) et l'antagonisme des neuroleptiques, la fiche **entacapone** la sienne.
+
+- Précision `association_dopa` (famille `levodopa` dans `medPrecisionFamily`, `^lévodopa$`
+  — la méthyldopa est un antihypertenseur). Table `DOPA_ASSOCIATIONS` (`utils.js`) : pour
+  chaque association, les **partenaires tels qu'ils existent dans `MASTER_DB`**. Le
+  bensérazide n'a pas de fiche : il est déclaré (doublons d'inhibiteur de la
+  décarboxylase) sans qu'on lui prête des interactions qui ne sont pas les siennes.
+- **Les fiches des partenaires rejoignent celle de la lévodopa** dans l'onglet
+  Interactions, la ligne disant « porté par la carbidopa déclarée dans l'association » ;
+  une entrée qui vise exactement les mêmes molécules qu'une entrée de la fiche hôte n'est
+  pas répétée (égalité d'ensembles, pas de texte). Côté partenaire et côté thésaurus ANSM,
+  la ligne est reconnue par toute sa composition déclarée (`_composants`).
+- **Trou de données comblé** : la CI IMAO non sélectifs appartient à la lévodopa (RCP
+  Modopar / Sinemet, 4.3) et manquait à sa fiche — sous Modopar, rien ne sortait.
+- **Doublons déclarés** (`DOUBLONS_DOPA`) : Stalevo + entacapone/opicapone (double
+  inhibition de la COMT) ; Sinemet + carbidopa (double saisie, informatif) ; Modopar +
+  carbidopa (deux inhibiteurs de la décarboxylase).
+- **« Fer » trouvait « cholécalci-FER-ol »** dans le matching `ddi_interact_v2` : la fiche
+  lévodopa annonçait une chélation avec la vitamine D. Même garde des clés courtes que le
+  thésaurus, par l'alias `_ANSM_TERME_COURT`.
+
+### Le lien avec les pathologies parkinsoniennes
+
+Deux règles affirmaient un terrain qu'elles ne vérifiaient pas :
+
+- **`EV_D22`** titrait « tremblement essentiel bénin » sur la seule **absence** de maladie de
+  Parkinson — donc aussi sur une DCL ou un syndrome des jambes sans repos, où ropinirole et
+  pramipexole sont en première ligne. Elle dit désormais ce qu'elle constate, « sans
+  indication déclarée », se tait sur `PAT_014` / `PAT_012` / `PAT_051`, et rappelle que
+  c'est la pathologie déclarée qui permet de vérifier les contre-indications
+  (neuroleptiques, métoclopramide). **Pas d'inférence** : on ne coche pas Parkinson parce
+  qu'une lévodopa est prescrite, on le demande.
+- **`SUP_STOP_015`** (STOPP D23, parkinsonisme iatrogène) décrit une **cascade** mais
+  n'exigeait aucun agent causal — et sa clé `levodopacarbidopa` ne désignait aucun
+  médicament : elle ne s'était donc jamais déclenchée sur la lévodopa. Elle exige
+  désormais un pourvoyeur (neuroleptique, métoclopramide, métopimazine, flunarizine,
+  cinnarizine) et se tait devant une pathologie qui justifie la dopathérapie. Le bloc
+  « Cascades iatrogéniques » ne garde, pour les neuroleptiques, que les **correcteurs
+  anticholinergiques** (trihexyphénidyle, tropatépine, bipéridène), que STOPP D23 ne
+  couvre pas — sans quoi la même cascade sortait deux fois.
 
 ## Architecture des données cliniques
 

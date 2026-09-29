@@ -945,12 +945,20 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3"],
             ref_code: "STOPP3-D22",
             section: "SNC",
-            titre: "Lévodopa/agoniste dopaminergique pour tremblement essentiel bénin",
-            message: "Lévodopa ou agoniste dopaminergique pour tremblement essentiel bénin : aucune preuve d'efficacité.",
+            // Le titre affirmait un TREMBLEMENT ESSENTIEL que rien ne vérifie : la condition
+            // ne regardait que l'ABSENCE de maladie de Parkinson. L'alerte sortait donc
+            // chez un patient atteint de DCL, ou de syndrome des jambes sans repos — où
+            // ropinirole et pramipexole sont en première ligne. Elle dit désormais ce
+            // qu'elle constate : une dopathérapie sans indication déclarée. C'est aussi le
+            // seul endroit où l'absence de pathologie se voit, et elle a une conséquence :
+            // les contre-indications propres à la maladie de Parkinson (neuroleptiques,
+            // métoclopramide) ne peuvent être vérifiées que si elle est déclarée.
+            titre: "Lévodopa ou agoniste dopaminergique sans indication déclarée",
+            message: "Aucune pathologie parkinsonienne ni syndrome des jambes sans repos n'est déclaré. STOPP v3 (D22) écarte la lévodopa et les agonistes dopaminergiques dans le tremblement essentiel, faute d'efficacité. Si l'indication est une maladie de Parkinson, une démence à corps de Lewy ou un syndrome des jambes sans repos, la déclarer : c'est elle qui permet de vérifier les contre-indications propres à ces maladies (neuroleptiques, métoclopramide) et d'afficher leurs recommandations.",
             severite: "warning",
             condition: {
                 med_keys: ["levodopa", "ropinirole", "pramipexole", "rotigotine", "piribedil"],
-                comorbs_absent: ["PAT_014"]
+                comorbs_absent: ["PAT_014", "PAT_012", "PAT_051"]
             },
             alternatives: "Propranolol, primidone"
         },

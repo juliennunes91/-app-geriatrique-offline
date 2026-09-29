@@ -1888,8 +1888,8 @@
    "danger | Phénothiazine chez le sujet âgé — préférer une alternative",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
-   "warning | Cascades iatrogéniques détectées",
-   "warning | Lévodopa/agoniste dopaminergique pour tremblement essentiel bénin",
+   "warning | Levodopa ou agoniste dopaminergique pour syndrome parkinsonien iatrogene",
+   "warning | Lévodopa ou agoniste dopaminergique sans indication déclarée",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [],

@@ -1374,6 +1374,53 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Dopatherapie : l\'association declaree fait entrer ses partenaires dans l\'analyse', () => {
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const vm = require('vm');
+        assert.strictEqual(vm.runInContext("medPrecisionFamily('Antiparkinsonien (precurseur dopamine)', 'Levodopa')", sandbox), 'levodopa');
+        assert.strictEqual(vm.runInContext("medPrecisionFamily('Antihypertenseur central', 'Methyldopa')", sandbox), null,
+            'la methyldopa n\'est pas une dopatherapie');
+        const I = (meds, asso) => analyzeCase({ age: 80, sexe: 'M', dfg: 60, meds,
+            precisions: asso ? { Levodopa: { association_dopa: asso } } : {} });
+        // La CI IMAO appartient a la levodopa (RCP Modopar/Sinemet 4.3) : elle sort quelle que
+        // soit l'association — y compris Modopar, dont le bensérazide n'a pas de fiche.
+        for (const a of [null, 'benserazide', 'carbidopa', 'carbidopa_entacapone']) {
+            const r = I(['Levodopa', 'Linezolide'], a);
+            assert.ok((r['alertes-interact'] || []).some(x => /CI ABSOLUE/.test(x.titre)), `levodopa (${a || 'non precisee'}) + linezolide : CI absolue`);
+            assert.strictEqual(((r._html['alertes-interact'] || '').match(/IMAO non sélectifs/g) || []).length, 1,
+                'une seule ligne IMAO — la carbidopa et l\'entacapone portent la meme');
+        }
+        // Un partenaire declare apporte ses propres interactions, en le disant.
+        const h = I(['Levodopa', 'Adrenaline'], 'carbidopa_entacapone')._html['alertes-interact'] || '';
+        assert.ok(/Adrénergiques/.test(h) && /Porté par la entacapone déclarée/.test(h),
+            'l\'interaction de l\'entacapone sort sous Stalevo, avec sa fiche d\'origine');
+        assert.ok(!/Adrénergiques/.test(I(['Levodopa', 'Adrenaline'], 'benserazide')._html['alertes-interact'] || ''),
+            'et pas sous Modopar, qui ne contient pas d\'entacapone');
+        // « Fer » ne trouve plus cholecalci-FER-ol.
+        assert.ok(!/CHOLECALCIFEROL/.test(I(['Levodopa', 'Cholecalciferol'])._html['alertes-interact'] || ''), 'la vitamine D n\'est pas du fer');
+        assert.ok(/SULFATE FERREUX/.test(I(['Levodopa', 'Sulfate ferreux'])._html['alertes-interact'] || ''), 'le fer reste detecte');
+        // Ce que l'association contient deja.
+        const ev = (meds, asso) => (I(meds, asso)['alertes-eviter'] || []).map(x => x.severity + '|' + x.titre).join(' ;; ');
+        assert.ok(/warning\|⚠️ Double inhibition de la COMT/.test(ev(['Levodopa', 'Opicapone'], 'carbidopa_entacapone')), 'Stalevo + opicapone');
+        assert.ok(/info\|ℹ️ Carbidopa saisie deux fois/.test(ev(['Levodopa', 'Carbidopa'], 'carbidopa')), 'Sinemet + carbidopa : double saisie');
+        assert.ok(/warning\|⚠️ Deux inhibiteurs de la dopa-décarboxylase/.test(ev(['Levodopa', 'Carbidopa'], 'benserazide')), 'Modopar + carbidopa');
+        assert.ok(!/Double inhibition/.test(ev(['Levodopa', 'Opicapone'], 'carbidopa')), 'Sinemet + opicapone est une association usuelle');
+    });
+    test('Dopatherapie et pathologies parkinsoniennes : aucune indication n\'est inventee', () => {
+        const ev = o => (analyzeCase({ age: 80, sexe: 'M', dfg: 60, ...o })['alertes-eviter'] || []).map(x => x.titre).join(' ;; ');
+        // EV_D22 affirmait un « tremblement essentiel » sur la seule absence de Parkinson.
+        assert.ok(!/tremblement essentiel/i.test(ev({ meds: ['Levodopa'] })), 'le titre n\'affirme plus un terrain non verifie');
+        assert.ok(/sans indication déclarée/.test(ev({ meds: ['Levodopa'] })), 'il dit ce qu\'il constate');
+        for (const p of ['PAT_014', 'PAT_012', 'PAT_051'])
+            assert.ok(!/sans indication déclarée/.test(ev({ meds: ['Levodopa'], comorbs: [p] })), `${p} declaree : l'indication est connue`);
+        // STOPP D23 est une CASCADE : sans agent causal, pas de « parkinsonisme iatrogene ».
+        assert.ok(!/iatrogene/i.test(ev({ meds: ['Levodopa'] })), 'pas de cascade sans neuroleptique');
+        assert.ok(!/iatrogene/i.test(ev({ meds: ['Ropinirole'], comorbs: ['PAT_051'] })), 'ropinirole des jambes sans repos : pas une cascade');
+        const casc = ev({ meds: ['Levodopa', 'Risperidone'] });
+        assert.ok(/iatrogene/i.test(casc), 'avec un neuroleptique, la cascade est signalee');
+        assert.ok(!/Cascades iatrogéniques/.test(casc), 'une seule fois : le bloc des cascades garde les correcteurs anticholinergiques');
+        assert.ok(/Cascades iatrogéniques/.test(ev({ meds: ['Trihexyphenidyle', 'Haloperidol'] })), 'correcteur anticholinergique : cascade signalee');
+    });
     test('Une interaction ASSUMEE sort des « critiques » — sans disparaitre', () => {
         // Signale sur un dossier reel : la carte levothyroxine + pantoprazole passait en
         // orange a l'ecran, mais restait « interaction critique » dans la synthese, le

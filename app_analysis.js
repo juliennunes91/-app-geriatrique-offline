@@ -2572,9 +2572,13 @@ function analyserPrescription() {
             // dans l'IC/HTA (ESC 2021/2023). On ne la traite donc plus comme une cascade iatrogène.
             // La détection d'hypotension / chutes iatrogène est couverte par les alertes
             // spécifiques (EV_K01, EV_K02, dashboard polypharmacie).
+            // Les DOPAMINERGIQUES ajoutés à un neuroleptique relèvent de STOPP D23, porté par
+            // SUP_STOP_015 (qui exige l'agent causal) : les garder ici faisait sortir la même
+            // cascade deux fois. Ce bloc garde les CORRECTEURS ANTICHOLINERGIQUES, que la
+            // règle STOPP ne couvre pas — et qui ajoutent une charge atropinique au sujet âgé.
             { trigger: ['neuroleptique', 'antipsychotique'],
-              effect: 'syndrome extrapyramidal', cascade: ['antiparkinsonien', 'levodopa'],
-              desc: 'Neuroleptique → Syndrome extrapyramidal → Ajout antiparkinsonien. Privilégier l\'arrêt du neuroleptique plutôt que l\'ajout.' },
+              effect: 'syndrome extrapyramidal', cascade: ['trihexyphenidyle', 'tropatepine', 'biperidene'],
+              desc: 'Neuroleptique → Syndrome extrapyramidal → Ajout d\'un correcteur anticholinergique (charge atropinique, confusion, rétention). Privilégier la réduction ou le changement du neuroleptique plutôt que l\'ajout.' },
             // Ne PAS employer ici la clé générique « antimuscarinique » : par inclusion
             // de sous-chaîne elle atteint l'alias « antimuscariniqueinhale » et capte les
             // LAMA de la BPCO (uméclidinium, tiotropium). Un patient sous Incruse se
@@ -2715,6 +2719,39 @@ function analyserPrescription() {
                 <div class="card-body p-2">${depHtml}</div>
             </div>`, 'eviter');
         }
+    }
+
+    // ── Dopathérapie : ce que l'association déclarée contient déjà ────────────
+    // Une ligne « Lévodopa + carbidopa + entacapone » EST un inhibiteur de la COMT : y
+    // ajouter l'entacapone ou l'opicapone double l'inhibition (RCP Ongentys : ne pas
+    // associer deux inhibiteurs de la COMT). Et un second inhibiteur de la
+    // décarboxylase est soit une saisie en double, soit une redondance. Table déclarée,
+    // la couleur vient de l'entrée.
+    {
+        const DOUBLONS_DOPA = [
+            { test: (a, d) => a.icomt && /^(entacapone|opicapone|tolcapone)$/.test(d), severite: 'warning',
+              titre: 'Double inhibition de la COMT',
+              texte: (a, dp) => `L'association déclarée (lévodopa ${a.libelle}) contient déjà de l'entacapone ; ${dp} y ajoute un second inhibiteur de la COMT. Ne pas associer deux inhibiteurs de la COMT (RCP Comtan, Ongentys) : dyskinésies, hypotension orthostatique, sans gain attendu.` },
+            { test: (a, d) => d === 'carbidopa' && a.ddc === 'carbidopa', severite: 'info',
+              titre: 'Carbidopa saisie deux fois',
+              texte: (a) => `La carbidopa est déjà contenue dans l'association déclarée (lévodopa ${a.libelle}) : la ligne séparée est vraisemblablement une double saisie, à retirer de l'ordonnance analysée.` },
+            { test: (a, d) => d === 'carbidopa' && a.ddc === 'benserazide', severite: 'warning',
+              titre: 'Deux inhibiteurs de la dopa-décarboxylase',
+              texte: (a) => `La lévodopa est déclarée associée au bensérazide, et de la carbidopa est prescrite en plus : deux inhibiteurs de la décarboxylase périphérique, sans bénéfice attendu. Vérifier l'ordonnance.` }
+        ];
+        activeMeds.forEach(m => {
+            const a = (typeof associationDopa === 'function') ? associationDopa(m) : null;
+            if (!a) return;
+            activeMeds.forEach(o => {
+                if (o === m) return;
+                const d = sanitizeText(o.dci);
+                DOUBLONS_DOPA.forEach(r => {
+                    if (!r.test(a, d)) return;
+                    addAlert('alertes-eviter', `<div class="alert alert-${r.severite} shadow-sm"><strong>${r.severite === 'info' ? 'ℹ️' : '⚠️'} ${escapeHtml(r.titre)} : ${escapeHtml(o.dci.toUpperCase())}</strong>
+                        <br><span class="small">${escapeHtml(r.texte(a, o.dci.toLowerCase()))}</span></div>`, 'eviter');
+                });
+            });
+        });
     }
 
     // =========================================================
@@ -2959,6 +2996,11 @@ function analyserPrescription() {
         //   • l'onglet ANSM dit combien de paires il a confiées à l'onglet Interactions.
         // Le registre de synthèse est alimenté AVANT le repli, à l'identique : la synthèse
         // et le bandeau ne changent pas.
+        // DCI d'une ligne d'ordonnance, partenaires déclarés compris (sanitisées).
+        const _composants = (am) => {
+            const a = (typeof associationDopa === 'function') ? associationDopa(am) : null;
+            return [sanitizeText(am.dci)].concat(a ? a.partenaires.map(sanitizeText) : []);
+        };
         const _cartesV2 = [];
         const _paireVue = new Map();   // paire non ordonnée → groupe qui la porte
         const _clePaire = (a, b) => [sanitizeText(a), sanitizeText(b)].sort().join('||');
@@ -3202,7 +3244,26 @@ function analyserPrescription() {
                 const selfParts = selfDci.split(/[\/\+\s,-]+/).filter(p => p && p.length >= 4);
 
                 const foundGroups = []; // { classe, matched:[{dci, interactor}], commentaire, severite }
-                ref.ddi_interact_v2.forEach(entry => {
+                // Une association déclarée (lévodopa + carbidopa ± entacapone) apporte les
+                // fiches de ses partenaires : c'est la carbidopa qui porte la CI absolue
+                // avec les IMAO non sélectifs, l'entacapone la sienne. Chaque entrée garde
+                // la trace de sa fiche d'origine (`_via`) pour que la ligne le dise.
+                const _entrees = ref.ddi_interact_v2.slice();
+                const _asso = (typeof associationDopa === 'function') ? associationDopa(m) : null;
+                if (_asso) _asso.partenaires.forEach(dp => {
+                    const fp = MASTER_DB.MEDICAMENTS.find(x => x.dci === dp);
+                    // Une entrée du partenaire qui vise EXACTEMENT les mêmes molécules qu'une
+                    // entrée de la fiche hôte n'ajoute rien : la CI IMAO est portée par la
+                    // lévodopa comme par la carbidopa. Égalité d'ensembles, pas de texte.
+                    const _memes = (x, y) => { const X = new Set((x || []).map(sanitizeText)); const Y = (y || []).map(sanitizeText);
+                        return X.size === Y.length && Y.every(v => X.has(v)); };
+                    (fp && fp.ddi_interact_v2 || []).forEach(e => {
+                        if (ref.ddi_interact_v2.some(h => _memes(h.dcis, e.dcis))) return;
+                        _entrees.push(Object.assign({}, e, { _via: dp }));
+                    });
+                    sanitizeText(dp).split(/[\/\+\s,-]+/).filter(x => x.length >= 4).forEach(x => selfParts.push(x));
+                });
+                _entrees.forEach(entry => {
                     if (!entry || !Array.isArray(entry.dcis) || entry.dcis.length === 0) return;
                     const matched = [];
                     entry.dcis.forEach(dciCanon => {
@@ -3216,9 +3277,16 @@ function analyserPrescription() {
                         const hit = activeMeds.find(am => {
                             if (am === m) return false;
                             if (_nonAbsorbe(am)) return false;
-                            const amDci = sanitizeText(am.dci);
-                            if (amDci.includes(cDci) || cDci.includes(amDci)) return true;
-                            return false;
+                            return _composants(am).some(amDci => {
+                                // Clé courte : jamais de sous-chaîne. « Fer » (fiche lévodopa)
+                                // trouvait « cholécalci-FER-ol » : chélation annoncée entre la
+                                // lévodopa et la vitamine D. Même garde que le thésaurus.
+                                if (cDci.length < 4) {
+                                    const al = (typeof _ANSM_TERME_COURT !== 'undefined') ? _ANSM_TERME_COURT[cDci] : null;
+                                    return amDci === cDci || (!!al && matchesDrugClass(amDci, sanitizeText(am.classe || ''), al));
+                                }
+                                return amDci.includes(cDci) || cDci.includes(amDci);
+                            });
                         });
                         if (hit) matched.push({ dci: dciCanon, interactor: hit.dci });
                     });
@@ -3235,7 +3303,7 @@ function analyserPrescription() {
                             const pris = new Set(newMatched.map(x => sanitizeText(x.dci)));
                             const mod = _moduleParBiologie(entry.classe || '', entry.commentaire || '',
                                                            entry.severite || 'warning', bioValues, sexe);
-                            const cleDdi = _cleDdi(ref.dci, entry.classe);
+                            const cleDdi = _cleDdi(entry._via || ref.dci, entry.classe);
                             const instauration = DDI_RISQUE_INSTAURATION.has(cleDdi);
                             const recommandee = DDI_ASSOCIATION_RECOMMANDEE.has(cleDdi);
                             // La gradation ne retombe que depuis `warning` : un risque
@@ -3250,6 +3318,7 @@ function analyserPrescription() {
                                 // si le libellé les nomme, il annonce une association qui n'existe pas.
                                 absents: entry.dcis.map(sanitizeText).filter(d => d && !pris.has(d)),
                                 commentaire: entry.commentaire || '',
+                                via: entry._via || '',
                                 severite: sevFinale,
                                 sevBrute: mod.severite,
                                 noteBio: mod.note
@@ -3344,9 +3413,14 @@ function analyserPrescription() {
             activeMeds.forEach(med => {
                 let key = sanitizeText(med.dci);
                 let hits = [];
+                const _aso = (typeof associationDopa === 'function') ? associationDopa(med) : null;
+                const _formes = [med].concat(_aso ? _aso.partenaires.map(dp => {
+                    const fp = MASTER_DB.MEDICAMENTS.find(x => x.dci === dp);
+                    return { dci: dp, classe: fp ? fp.classe : '' };
+                }) : []);
                 ddiGeneralDb.forEach((d, idx) => {
-                    if (medMatchesAnsmTerm(med, d.d1 || "")) hits.push({idx, side:'t1'});
-                    if (medMatchesAnsmTerm(med, d.d2 || "")) hits.push({idx, side:'t2'});
+                    if (_formes.some(f => medMatchesAnsmTerm(f, d.d1 || ""))) hits.push({idx, side:'t1'});
+                    if (_formes.some(f => medMatchesAnsmTerm(f, d.d2 || ""))) hits.push({idx, side:'t2'});
                 });
                 ddiGeneralIndex.set(key, hits);
             });
@@ -3498,7 +3572,8 @@ function analyserPrescription() {
                     ? `<br><span class="small text-danger fw-bold">🚫 Contre-indication absolue (déclarée depuis l'autre molécule de la paire)</span>` : '';
                 const lib = _libelleInteraction(g);
                 const tt = lib.complet ? ` title="Libellé complet de l'entrée : ${escapeHtml(lib.complet)}"` : '';
-                return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}${ciAutre}${nb}${reco}${phase}${autre}${ansm}</li>`;
+                const via = g.via ? `<br><span class="small text-muted">Porté par la ${escapeHtml(g.via.toLowerCase())} déclarée dans l'association.</span>` : '';
+                return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}${ciAutre}${via}${nb}${reco}${phase}${autre}${ansm}</li>`;
             }).join('');
             // Refléter la gravité maximale dans le TITRE (et pas seulement dans le
             // détail déplié) : une contre-indication absolue doit être visible au
