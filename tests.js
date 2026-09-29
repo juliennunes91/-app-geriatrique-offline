@@ -1384,8 +1384,11 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             precisions: asso ? { Levodopa: { association_dopa: asso } } : {} });
         // La CI IMAO appartient a la levodopa (RCP Modopar/Sinemet 4.3) : elle sort quelle que
         // soit l'association — y compris Modopar, dont le bensérazide n'a pas de fiche.
-        for (const a of [null, 'benserazide', 'carbidopa', 'carbidopa_entacapone']) {
-            const r = I(['Levodopa', 'Linezolide'], a);
+        for (const a of [null, 'benserazide', 'carbidopa', 'carbidopa_entacapone'])
+        for (const imao of ['Linezolide', 'Iproniazide']) {
+            // L'iproniazide (Marsilid) est le seul IMAO non selectif commercialise en France :
+            // il manquait aux fiches levodopa et carbidopa.
+            const r = I(['Levodopa', imao], a);
             assert.ok((r['alertes-interact'] || []).some(x => /CI ABSOLUE/.test(x.titre)), `levodopa (${a || 'non precisee'}) + linezolide : CI absolue`);
             assert.strictEqual(((r._html['alertes-interact'] || '').match(/IMAO non sélectifs/g) || []).length, 1,
                 'une seule ligne IMAO — la carbidopa et l\'entacapone portent la meme');
@@ -1396,6 +1399,10 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             'l\'interaction de l\'entacapone sort sous Stalevo, avec sa fiche d\'origine');
         assert.ok(!/Adrénergiques/.test(I(['Levodopa', 'Adrenaline'], 'benserazide')._html['alertes-interact'] || ''),
             'et pas sous Modopar, qui ne contient pas d\'entacapone');
+        // La fiche bensérazide ne se voit pas preter les interactions de la carbidopa (fer, B6).
+        for (const m of ['Sulfate ferreux', 'Pyridoxine'])
+            assert.ok(!/Porté par/.test(I(['Levodopa', m], 'benserazide')._html['alertes-interact'] || ''),
+                `Modopar + ${m} : pas d'interaction attribuee au benserazide`);
         // « Fer » ne trouve plus cholecalci-FER-ol.
         assert.ok(!/CHOLECALCIFEROL/.test(I(['Levodopa', 'Cholecalciferol'])._html['alertes-interact'] || ''), 'la vitamine D n\'est pas du fer');
         assert.ok(/SULFATE FERREUX/.test(I(['Levodopa', 'Sulfate ferreux'])._html['alertes-interact'] || ''), 'le fer reste detecte');

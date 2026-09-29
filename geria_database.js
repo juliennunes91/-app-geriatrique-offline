@@ -4778,6 +4778,34 @@ const MASTER_DB = {
                     "source": "RCP Désuric ; SFR 2020 ; ANSM"
           },
           {
+                    "dci": "Benserazide",
+                    "princeps": "Modopar (toujours associé à la lévodopa)",
+                    "classe": "Antiparkinsonien (inhibiteur DDC peripherique - toujours associe a levodopa)",
+                    "poso_hab": "Uniquement en association fixe lévodopa/bensérazide 4:1 (Modopar 62,5 / 125 / 250, LP 125, dispersible 125) | la dose se règle sur la lévodopa",
+                    "poso_ger": "Pas d'adaptation propre au bensérazide. Chez le sujet âgé, demi-vie et ASC de la lévodopa augmentées d'environ 25 %, jugé peu important (RCP Modopar 5.2) : titration progressive de l'association",
+                    "poso_ren": "Insuffisance rénale légère à modérée : pas de réduction de dose (RCP Modopar 4.2) | IR sévère : pas de donnée, prudence",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "bhe": "0",
+                    "albumine": "",
+                    "qt_risque": "",
+                    "ddi_interact": "Toujours en association avec LÉVODOPA (Modopar) — voir interactions LÉVODOPA. IMAO non sélectifs : CI (RCP Modopar 4.3). Les interactions fer et vitamine B6 décrites pour la lévodopa/carbidopa ne sont pas documentées pour le bensérazide.",
+                    "ddi_interact_v2": [
+                              { "classe": "IMAO non sélectifs — CI ABSOLUE (crise hypertensive)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "linezolide"], "commentaire": "Association lévodopa/bensérazide contre-indiquée (RCP Modopar 4.3) : arrêter l'IMAO non sélectif irréversible au moins 2 semaines avant. IMAO-B sélectifs (sélégiline, rasagiline) et moclobémide non contre-indiqués.", "severite": "danger" }
+                    ],
+                    "suivi_initial": "Celui de la lévodopa (pas de surveillance propre au bensérazide)",
+                    "suivi_periodique": "Celui de la lévodopa",
+                    "alerte_clinique": "Pas d'effet propre : effets indésirables de l'association portés par la lévodopa",
+                    "bio_cible": [],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "Inhibiteur de la dopa-décarboxylase périphérique, ne franchit pas la barrière hémato-encéphalique aux doses thérapeutiques. Hydroxylé dans l'intestin et le foie ; éliminé sous forme de métabolites (64 % urines, 24 % fèces). Pas de donnée en insuffisance hépatique.",
+                    "source": "RCP Modopar (Roche, 2023) rubriques 4.2, 4.3, 4.5, 5.2 ; Vidal Modopar"
+          },
+          {
                     "dci": "Benztropine",
                     "princeps": "Cogentin",
                     "classe": "Antiparkinsonien / Antiakathisique anticholinergique (ACB=3)",
@@ -5826,7 +5854,7 @@ const MASTER_DB = {
                     "qt_risque": "",
                     "ddi_interact": "Toujours en association avec LÉVODOPA (Sinemet/Modopar) — voir interactions LÉVODOPA, IMAO non sélectifs CI ABSOLUE, Antipsychotiques antagonisme PD (CI), Sels de fer (chélation — espacer 2h), Vitamine B6 forte dose (déconseillé — antagonise carbidopa)",
                     "ddi_interact_v2": [
-                              { "classe": "IMAO non sélectifs — CI ABSOLUE (crise hypertensive)", "dcis": ["phenelzine", "tranylcypromine", "linezolide"], "commentaire": "CI ABSOLUE — crise HTA. Wash-out 14 j. IMAO-B sélectifs (sélégiline ≤ 10 mg/j, rasagiline 1 mg/j) acceptables.", "severite": "danger" },
+                              { "classe": "IMAO non sélectifs — CI ABSOLUE (crise hypertensive)", "dcis": ["iproniazide", "phenelzine", "tranylcypromine", "linezolide"], "commentaire": "CI ABSOLUE — crise HTA. Wash-out 14 j. IMAO-B sélectifs (sélégiline ≤ 10 mg/j, rasagiline 1 mg/j) acceptables.", "severite": "danger" },
                               { "classe": "Antipsychotiques — antagonisme PD (CI Parkinson)", "dcis": ["haloperidol", "chlorpromazine", "levomepromazine", "risperidone", "olanzapine", "metoclopramide"], "commentaire": "Antagonisme D2. CI Parkinson — préférer clozapine/quetiapine si psychose.", "severite": "danger" },
                               { "classe": "Sels de fer — CHÉLATION (espacer ≥ 2h)", "dcis": ["sulfate ferreux", "fumarate ferreux", "ascorbate ferreux"], "commentaire": "Chélation absorption. Espacer ≥ 2h.", "severite": "warning" },
                               { "classe": "Vitamine B6 forte dose — antagonisme carbidopa (déconseillé)", "dcis": ["pyridoxine"], "commentaire": "Forte dose B6 (> 25 mg/j sans carbidopa) accélère décarboxylation lévodopa périphérique. Carbidopa l'empêche mais éviter B6 ≥ 100 mg/j.", "severite": "warning" },
@@ -14284,6 +14312,7 @@ const MASTER_DB = {
                               {
                                         "classe": "IMAO non sélectifs — CI ABSOLUE (crise hypertensive)",
                                         "dcis": [
+                                                  "iproniazide",
                                                   "phenelzine",
                                                   "tranylcypromine",
                                                   "linezolide"

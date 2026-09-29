@@ -329,11 +329,11 @@ const CASE_PATHOLOGIE = {
 // disparaître de l'analyse tout ce que portent ses partenaires : dans la base, c'est la
 // fiche CARBIDOPA qui porte la contre-indication absolue avec les IMAO non sélectifs
 // (linézolide compris) et l'antagonisme des neuroleptiques, et la fiche ENTACAPONE la
-// sienne. `partenaires` liste les DCI telles qu'elles existent dans MASTER_DB — le
-// bensérazide n'y figure pas : il est déclaré (doublons d'inhibiteur de la
-// décarboxylase) sans qu'on lui prête des interactions qui ne sont pas les siennes.
+// sienne. `partenaires` liste les DCI telles qu'elles existent dans MASTER_DB. La fiche
+// bensérazide ne porte que ce que le RCP Modopar lui attribue (CI IMAO) : les
+// interactions fer et B6 sont celles de la lévodopa/carbidopa, pas les siennes.
 const DOPA_ASSOCIATIONS = {
-    benserazide:              { libelle: '+ bensérazide (Modopar)',                    court: '+ bensérazide',            ddc: 'benserazide', partenaires: [] },
+    benserazide:              { libelle: '+ bensérazide (Modopar)',                    court: '+ bensérazide',            ddc: 'benserazide', partenaires: ['Benserazide'] },
     carbidopa:                { libelle: '+ carbidopa (Sinemet)',                      court: '+ carbidopa',              ddc: 'carbidopa',   partenaires: ['Carbidopa'] },
     carbidopa_entacapone:     { libelle: '+ carbidopa + entacapone (Stalevo)',         court: '+ carbidopa + entacapone', ddc: 'carbidopa',   partenaires: ['Carbidopa', 'Entacapone'], icomt: true },
     gel_carbidopa:            { libelle: 'gel intestinal + carbidopa (Duodopa)',       court: 'gel intestinal',           ddc: 'carbidopa',   partenaires: ['Carbidopa'], continu: true },

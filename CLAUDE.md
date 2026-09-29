@@ -310,9 +310,7 @@ fiche **carbidopa** qui porte la contre-indication absolue avec les IMAO non sé
 
 - Précision `association_dopa` (famille `levodopa` dans `medPrecisionFamily`, `^lévodopa$`
   — la méthyldopa est un antihypertenseur). Table `DOPA_ASSOCIATIONS` (`utils.js`) : pour
-  chaque association, les **partenaires tels qu'ils existent dans `MASTER_DB`**. Le
-  bensérazide n'a pas de fiche : il est déclaré (doublons d'inhibiteur de la
-  décarboxylase) sans qu'on lui prête des interactions qui ne sont pas les siennes.
+  chaque association, les **partenaires tels qu'ils existent dans `MASTER_DB`**.
 - **Les fiches des partenaires rejoignent celle de la lévodopa** dans l'onglet
   Interactions, la ligne disant « porté par la carbidopa déclarée dans l'association » ;
   une entrée qui vise exactement les mêmes molécules qu'une entrée de la fiche hôte n'est
@@ -320,6 +318,12 @@ fiche **carbidopa** qui porte la contre-indication absolue avec les IMAO non sé
   la ligne est reconnue par toute sa composition déclarée (`_composants`).
 - **Trou de données comblé** : la CI IMAO non sélectifs appartient à la lévodopa (RCP
   Modopar / Sinemet, 4.3) et manquait à sa fiche — sous Modopar, rien ne sortait.
+- **Fiche `Benserazide`** (RCP Modopar 4.2/4.3/5.2) : partenaire de l'association Modopar.
+  Elle ne porte **que** la CI IMAO non sélectifs, dont l'ensemble de `dcis` est identique à
+  celui de la lévodopa — donc repliée, jamais une seconde ligne. Les interactions fer et B6
+  sont celles de la lévodopa/carbidopa : ne pas les lui prêter (un test le vérifie).
+- **L'iproniazide** (Marsilid), seul IMAO non sélectif commercialisé en France, manquait à
+  la CI IMAO des trois fiches : lévodopa + Marsilid ne sortait pas.
 - **Doublons déclarés** (`DOUBLONS_DOPA`) : Stalevo + entacapone/opicapone (double
   inhibition de la COMT) ; Sinemet + carbidopa (double saisie, informatif) ; Modopar +
   carbidopa (deux inhibiteurs de la décarboxylase).
