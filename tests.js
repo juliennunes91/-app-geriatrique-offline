@@ -1412,23 +1412,25 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             SUP_STOP_069: 'glibenclamide, glimepiride : le diabete est porte par la molecule', SUP_STOP_075: 'anticholinergiques antiparkinsoniens : tout sujet age',
             SUP_STOP_079: 'domperidone : tout sujet age', SUP_CAUT_072: 'gabapentinoides : cotation FORTA, quelle que soit l\'indication',
             SUP_CAUT_074: 'mirtazapine : cotation FORTA (informatif)',
-            // Cles mortes (aucun medicament resolu) : inertes. A conditionner avant toute
-            // correction de leurs cles.
-            SUP_STOP_003: 'cle morte', SUP_STOP_044: 'cle morte', SUP_STOP_051: 'cle morte', SUP_STOP_057: 'cle morte',
-            SUP_STOP_058: 'cle morte', SUP_STOP_076: 'cle morte', SUP_STOP_077: 'cle morte', SUP_STOP_080: 'cle morte'
         };
         const { sandbox } = require('./oracle_harness').loadApp();
         const seules = JSON.parse(require('vm').runInContext(`JSON.stringify(RECOS_SUPPLEMENT_INTEGRATION.filter(r => {
             const k = Object.keys(r.condition || {}); return k.length === 1 && k[0] === 'med_keys'; }).map(r => r.id))`, sandbox));
         assert.deepStrictEqual(seules.filter(id => !AGE_SEUL[id]), [], 'regles a med_keys seul non justifiees');
         const sort = (o, id) => Object.values(analyzeCase({ age: 80, sexe: 'F', dfg: 60, ...o })._html || {}).join(' ').indexOf('id:' + id) >= 0;
-        assert.ok(!sort({ meds: ['Estradiol'] }, 'SUP_STOP_049'), 'estradiol : plus d\'« antecedent de cancer du sein » affirme');
+        assert.ok(!/cancer du sein/i.test(analyzeCase({ age: 80, sexe: 'F', dfg: 60, meds: ['Estradiol'] })._html['alertes-eviter'] || ''), 'estradiol : plus d\'« antecedent de cancer du sein » affirme (la fiche de suivi, elle, peut citer le risque)');
         assert.ok(!sort({ meds: ['Alendronate'] }, 'SUP_STOP_036') && sort({ meds: ['Alendronate'], flags: ['chkAtcdUlcere'] }, 'SUP_STOP_036'), 'bisphosphonate oral : sur antecedent ulcereux declare');
         assert.ok(sort({ meds: ['Alendronate'], comorbs: ['PAT_021'] }, 'SUP_STOP_036'), '... par la liste comme par la case');
         assert.ok(!sort({ meds: ['Doxazosine'] }, 'SUP_STOP_004') && sort({ meds: ['Doxazosine'], comorbs: ['PAT_005'] }, 'SUP_STOP_004'), 'alpha-bloquant : seulement dans l\'HTA');
         assert.ok(!sort({ meds: ['Doxazosine'], comorbs: ['PAT_005'], flags: ['chkHbp'] }, 'SUP_STOP_004'), '... et pas s\'il traite une HBP');
         assert.ok(!sort({ meds: ['Darifenacin'] }, 'SUP_STOP_042') && sort({ meds: ['Darifenacin'], flags: ['chkGlaucome'] }, 'SUP_STOP_042'), 'antimuscarinique : seulement sur glaucome');
         assert.ok(sort({ meds: ['Paroxetine'] }, 'SUP_STOP_016'), 'un PIM d\'age sort toujours sur la molecule');
+        // Les huit regles a cle morte : ranimees sous condition, ou retirees.
+        assert.ok(!sort({ meds: ['Duloxetine'] }, 'SUP_STOP_044') && sort({ meds: ['Duloxetine'], flags: ['chkIncontinence'] }, 'SUP_STOP_044'), 'duloxetine : sur incontinence declaree');
+        assert.ok(!sort({ meds: ['Estradiol'] }, 'SUP_STOP_051') && sort({ meds: ['Estradiol'], comorbs: ['PAT_008'] }, 'SUP_STOP_051'), 'oestrogene : sur maladie arterielle');
+        assert.ok(sort({ meds: ['Estradiol'] }, 'SUP_STOP_049') && !sort({ meds: ['Estradiol'], comorbs: ['PAT_008'] }, 'SUP_STOP_049'), 'oestrogene systemique : Beers 2023, une seule carte avec la maladie arterielle');
+        const c080 = JSON.parse(require('vm').runInContext(`JSON.stringify(RECOS_SUPPLEMENT_INTEGRATION.find(r => r.id === 'SUP_STOP_080').condition)`, sandbox));
+        assert.deepStrictEqual(c080.comorbs_absent, ['PAT_015'], 'clonazepam conditionne hors epilepsie (en quarantaine : EV_D08 le porte)');
     });
     test('Dossier IRC G4 sous ASE et BZD + Z : un fait, une carte', () => {
         // Cas reel anonymise : H 76 ans, DFG 18, Hb 10,3 normocytaire, darbepoetine,

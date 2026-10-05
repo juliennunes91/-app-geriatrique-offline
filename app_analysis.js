@@ -66,7 +66,11 @@ const SUPPLEMENT_QUARANTINE = new Set([
     // checkbox chkInsulineSlidingScale alimente le contexte_clinique "sliding_scale".
     'SUP_STOP_003', 'SUP_STOP_009', 'SUP_STOP_058',
     // Mortes par médicament : doublons de règles fonctionnelles, ou indication non détectable.
-    'SUP_STOP_044', 'SUP_STOP_057', 'SUP_STOP_076', 'SUP_STOP_077', 'SUP_STOP_080',
+    // SUP_STOP_044 RAVIVÉ (revue 2026-10) : condition ramenée au terrain qu'il nomme —
+    // contexte « incontinence » — au lieu du DCI nu qui sur-déclenchait.
+    // SUP_STOP_080 conditionné (comorbs_absent épilepsie) mais MAINTENU en quarantaine :
+    // EV_D08 et le protocole de déprescription portent déjà le clonazépam.
+    'SUP_STOP_057', 'SUP_STOP_076', 'SUP_STOP_077', 'SUP_STOP_080',
     // SUP_STOP_026 (STOPP3-F6) : la condition a perdu sa pathologie — le critère vise
     // les antiagrégants/anticoagulants EN CAS D'ECTASIE VASCULAIRE ANTRALE GASTRIQUE
     // (« watermelon stomach »), qui ne figure que dans le message. La règle se
@@ -75,7 +79,9 @@ const SUPPLEMENT_QUARANTINE = new Set([
     // modélisée dans MASTER_DB.PATHOLOGIES → quarantaine (même politique que _012).
     'SUP_STOP_026',
     // Variantes œstrogènes redondantes / indication non détectable (cf. SUP_STOP_049 actif).
-    'SUP_STOP_012', 'SUP_STOP_051', 'SUP_STOP_052',
+    // SUP_STOP_051 RAVIVÉ (revue 2026-10) : œstrogène systémique + maladie artérielle
+    // DÉCLARÉE (coronaropathie, AVC, AOMI) ; SUP_STOP_049 se tait alors (une carte).
+    'SUP_STOP_012', 'SUP_STOP_052',
     // Famille SUP_START_* (START3) — déclenchées sur présence, jamais sur absence.
     'SUP_START_007', 'SUP_START_013', 'SUP_START_020', 'SUP_START_021', 'SUP_START_022',
     'SUP_START_023', 'SUP_START_024', 'SUP_START_028', 'SUP_START_029', 'SUP_START_030',

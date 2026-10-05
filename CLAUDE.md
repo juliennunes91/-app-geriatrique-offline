@@ -1128,8 +1128,19 @@ qui redisaient une autre.
   GeriaAssist sait le saisir (11 : contexte ou comorbidité, les deux chemins de saisie étant
   équivalents), **retirée** quand il ne l'est pas, quand un critère propre conditionné la
   double, ou quand c'est un START écrit à l'envers (25), **conservée** quand son seul terrain
-  est l'âge (15). Huit autres ont des clés mortes : inertes, à conditionner avant de réparer
-  leurs clés. Invariant `runIntegrationTerrainAudit` : toute règle du module à `med_keys` seul
+  est l'âge (15). Huit autres avaient des clés mortes : trois retirées comme doublons de
+  règles propres (nifédipine LI, oxybutynine, tianeptine), deux comme invérifiables (opioïde
+  LP sans interdose, patch de lidocaïne), trois ranimées sur leur terrain (`044` duloxétine
+  sur incontinence, `051` œstrogène sur maladie artérielle, `080` clonazépam hors épilepsie —
+  ce dernier conditionné mais laissé en quarantaine, `EV_D08` le portant déjà).
+  **À connaître avant toute revue de ce module** : `SUPPLEMENT_QUARANTINE`
+  (`app_analysis.js`) en écarte déjà une partie au rendu — toute la famille START, `012`,
+  `026`, `043`, `050`, `052`… Une règle conditionnée qui y reste n'a aucun effet à l'écran.
+  **Erreur commise puis réparée** : retirer `SUP_STOP_049` pour son « antécédent de cancer du
+  sein » invérifiable avait supprimé la SEULE alerte sur l'œstrogène systémique. Le critère
+  juste — Beers 2023, éviter chez la femme âgée — est rétabli ; il se tait devant une maladie
+  artérielle déclarée, où `051` porte un motif plus fort. Retirer une affirmation fausse ne
+  doit pas retirer l'alerte vraie qu'elle habillait. Invariant `runIntegrationTerrainAudit` : toute règle du module à `med_keys` seul
   est nommée dans `AGE_SEUL` avec son motif. Validé par mutation.
   Corollaire : retirer une règle peut faire RESSORTIR celle qu'elle absorbait. `SUP_STOP_005`
   (« Antiarythmiques ») était replié sous `SUP_STOP_067` retiré ; il est réapparu en doublon

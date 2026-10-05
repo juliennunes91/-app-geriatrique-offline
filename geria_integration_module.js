@@ -51,30 +51,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
     // l'anse. Masqué sous EV_B08 tant que celui-ci sortait, il RESSORTAIT seul dès qu'une
     // indication déclarée (précision indication_diu) faisait taire EV_B08 — défaisant
     // exactement ce que la précision devait obtenir. Porté par EV_B08.
-    {
-        "id": "SUP_STOP_003",
-        "csv_ref": "RECO_0025",
-        "sources": [
-            "BEERS",
-            "FORTA",
-            "PRISCUS",
-            "PIM_CHECK"
-        ],
-        "ref_code": "RECO_0025",
-        "section": "Cardiovasculaire",
-        "titre": "Nifedipine forme immediate",
-        "message": "HTA ou angor chez le sujet age (toute indication) — Hypotension reflex, tachycardie, risque SCA",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "nifedipine gelules 10mg"
-            ]
-        },
-        "alternatives": "Utiliser uniquement formes LP. Nifedipine LP = acceptable",
-        "forta": "D (FORTA D)",
-        "priscus": "Oui",
-        "nb_sources": 8
-    },
+    // SUP_STOP_003 (« Nifedipine forme immediate ») RETIRÉ — doublon de la règle « Nifédipine à libération immédiate » (clé morte « nifedipine gelules 10mg »).
     {
         "id": "SUP_STOP_004",
         "csv_ref": "RECO_0026",
@@ -714,6 +691,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "priscus": "Oui",
         "nb_sources": 8
     },
+    // Clé morte réparée et terrain conditionné (revue 2026-10).
     {
         "id": "SUP_STOP_044",
         "csv_ref": "RECO_0155",
@@ -723,15 +701,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         ],
         "ref_code": "STOPP3-I7",
         "section": "Urogénital",
-        "titre": "Duloxetine",
-        "message": "Incontinence par urgence mictionnelle ou urgenturie (sans composante de stress) — Indication dans l'incontinence de STRESS uniquement (pas dans l'incontinence par urgence)",
+        "titre": "Duloxétine chez un patient incontinent : vérifier l'indication",
+        "message": "Dans l'incontinence urinaire, la duloxétine n'a d'indication que dans l'incontinence d'EFFORT ; elle est sans effet dans l'incontinence par urgenturie, et ses effets indésirables (nausées, hyponatrémie, chutes) demeurent. Si elle est prescrite pour l'incontinence, en vérifier le type.",
         "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "duloxetine yentreve",
-                "cymbalta"
-            ]
-        },
+        "condition": { "med_keys": ["duloxetine"], "contexte_clinique": "incontinence" },
         "alternatives": "Duloxetine: uniquement dans l'incontinence d'effort (stress). Antimuscarinique ou mirabegron si urgence",
         "nb_sources": 8
     },
@@ -739,7 +712,27 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
     // SUP_START_046 (« Oestrogene local voie vaginale ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
     // SUP_START_047 (« Oestrogene local voie vaginale ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
     // SUP_START_048 (« Inhibiteur de la PDE5 ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
-    // SUP_STOP_049 (« Oestrogene systemique (oral ou patch) ») RETIRÉ — terrain affirmé (antécédent de cancer du sein) non saisissable dans GeriaAssist.
+    // SUP_STOP_049 RÉTABLI sous sa forme juste (revue 2026-10). Son message affirmait un
+    // « antécédent de cancer du sein » (STOPP J5) qu'aucune saisie ne vérifie ; le retirer
+    // avait supprimé la SEULE alerte sur l'œstrogène systémique. Le critère juste est celui
+    // de Beers 2023 : éviter l'œstrogène systémique chez la femme âgée, quel que soit le
+    // terrain. Il se tait devant une maladie artérielle déclarée, où SUP_STOP_051 porte un
+    // motif plus fort — une molécule, une carte.
+    {
+        "id": "SUP_STOP_049",
+        "csv_ref": "RECO_0166",
+        "sources": [
+            "BEERS"
+        ],
+        "ref_code": "BEERS-2023-ESTROGENS",
+        "section": "Endocrine",
+        "titre": "Œstrogène systémique (oral ou patch) chez la femme âgée",
+        "message": "Œstrogène systémique chez la femme âgée — Beers 2023 : à éviter (potentiel carcinogène pour le sein et l'endomètre ; aucune protection cardiovasculaire ni cognitive démontrée).",
+        "severite": "warning",
+        "condition": { "med_keys": ["estradiol", "estrogenes conjugues"], "comorbs_absent": ["PAT_004", "PAT_007", "PAT_008"] },
+        "alternatives": "Œstrogène par voie vaginale à faible dose : acceptable (exposition systémique minimale). Réévaluer l'indication et la durée.",
+        "nb_sources": 1
+    },
     {
         "id": "SUP_STOP_050",
         "csv_ref": "RECO_0167",
@@ -765,6 +758,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "alternatives": "CI absolue si ATCD TVP/EP. Exception: oestrogene local (vaginal) - voir I3/I4",
         "nb_sources": 8
     },
+    // Clé morte réparée et terrain conditionné (revue 2026-10).
     {
         "id": "SUP_STOP_051",
         "csv_ref": "RECO_0168",
@@ -776,14 +770,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         ],
         "ref_code": "STOPP3-J7",
         "section": "Endocrine",
-        "titre": "Hormonotherapie menopausique (oestrogene + progestatif)",
-        "message": "Maladies arterielles stenose coronarienne, cerebrovasculaire ou arterielle peripherique etablie — Thrombose arterielle aigue",
+        "titre": "Œstrogène systémique et maladie artérielle établie",
+        "message": "Maladie artérielle établie (coronaropathie, AVC/AIT, artériopathie des membres inférieurs) sous œstrogène systémique — risque de thrombose artérielle aiguë.",
         "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "ths combine oral ou patch"
-            ]
-        },
+        "condition": { "med_keys": ["estradiol", "estrogenes conjugues"], "comorbs_any": ["PAT_004", "PAT_007", "PAT_008"] },
         "alternatives": "CI si maladie arterielle etablie. Oestrogene seul transdermal: profil thromboembolique plus favorable",
         "nb_sources": 8
     },
@@ -912,51 +902,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "priscus": "Oui",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_STOP_057",
-        "csv_ref": "RECO_0190",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "STOPP3-L3",
-        "section": "Antalgiques",
-        "titre": "Opioide longue duree seul sans opioide de secours",
-        "message": "Douleurs moderes a severes de fond (sans opioide d'action rapide pour acces douloureux) — Douleur de fond non soulagee, pas de possibilite de traitement des acces douloureux",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "morphine lp",
-                "oxycodone lp",
-                "fentanyl patch",
-                "buprenorphine patch"
-            ]
-        },
-        "alternatives": "Toujours associer un opioide d'action rapide (morphine IR, oxycodone IR) pour les acces douloureux paroxystiques",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_STOP_058",
-        "csv_ref": "RECO_0191",
-        "sources": [
-            "STOPP3",
-            "PIM_CHECK"
-        ],
-        "ref_code": "STOPP3-L4",
-        "section": "Antalgiques",
-        "titre": "Patch de lidocaine pour arthrose chronique",
-        "message": "Douleur chronique d'arthrose (quelle que soit la localisation) — Pas de preuve claire d'efficacite dans l'arthrose. Usage limite aux douleurs neuropathiques localisees",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "patch de lidocaine 5"
-            ]
-        },
-        "alternatives": "Indication validee: nevralgie post-zosterienne et douleurs neuropathiques localisees. Pas d'indication dans l'arthrose",
-        "nb_sources": 8
-    },
+    // SUP_STOP_057 (« Opioide longue duree seul sans opioide de secours ») RETIRÉ — terrain invérifiable : GeriaAssist ne distingue ni la forme LP de l'opioïde ni l'absence d'interdose.
+    // SUP_STOP_058 (« Patch de lidocaine pour arthrose chronique ») RETIRÉ — lidocaïne en patch absente de MASTER_DB (clé morte) ; le terrain « arthrose » ne dirait pas l'indication du patch.
     // SUP_START_059 (« Vaccin SARS-CoV2 ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
     {
         "id": "SUP_DEP_060",
@@ -1319,52 +1266,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "priscus": "Oui",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_STOP_076",
-        "csv_ref": "RECO_0218",
-        "sources": [
-            "BEERS",
-            "FORTA",
-            "PRISCUS",
-            "STOPPFRAIL",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "RECO_0218",
-        "section": "SNC",
-        "titre": "Oxybutynine",
-        "message": "Sujet age (particulierement >75 ans) — Fort profil anticholinergique, passage BHE important: deterioration cognitive, confusion, retention urinaire aigue. Score ACB=3",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "oxybutynine ditropan",
-                "driptane"
-            ]
-        },
-        "alternatives": "Preferer solifenacine, fesoterodine ou darifenacine (selectivite M3). Mirabegron si contre-indication anticholinergiques. Reeducation vesicale en premier",
-        "forta": "D (FORTA D)",
-        "priscus": "Oui",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_STOP_077",
-        "csv_ref": "RECO_0219",
-        "sources": [
-            "PIM_CHECK"
-        ],
-        "ref_code": "RECO_0219",
-        "section": "SNC",
-        "titre": "Tianeptine",
-        "message": "Tout patient age (risque d'abus et de pharmacodependance) — Potentiel d'abus et de dependance (agoniste opioide mu a fortes doses), syndrome de sevrage",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "stablon"
-            ]
-        },
-        "alternatives": "ANSM: alertes repetees sur le detournement d'usage de la tianeptine. Surveillance accrue",
-        "nb_sources": 8
-    },
+    // SUP_STOP_076 (« Oxybutynine ») RETIRÉ — doublon de la règle « Oxybutynine (toutes formes) » (clé morte « oxybutynine ditropan »).
+    // SUP_STOP_077 (« Tianeptine ») RETIRÉ — doublon de la règle « Tianeptine — éviter chez le sujet âgé » (clé morte « stablon »).
     // SUP_STOP_078 (« Medicaments nefrotoxiques en association chez le sujet age ») RETIRÉ — doublon non conditionné d'EV_SYND_045 (triple whammy, med_keys/_2/_3).
     {
         "id": "SUP_STOP_079",
@@ -1390,6 +1293,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "priscus": "Oui",
         "nb_sources": 8
     },
+    // Clé morte réparée et terrain conditionné (revue 2026-10).
     {
         "id": "SUP_STOP_080",
         "csv_ref": "RECO_0222",
@@ -1402,14 +1306,10 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         ],
         "ref_code": "RECO_0222",
         "section": "SNC",
-        "titre": "Clonazepam (indication non epilepsie)",
-        "message": "Utilisation comme anxiolytique ou hypnotique (hors epilepsie) — BZD de longue duree d'action: risque de chutes, sedation prolongee, dependance elevee. Non indique en dehors de l'epilepsie",
+        "titre": "Clonazépam sans épilepsie déclarée",
+        "message": "Clonazépam sans épilepsie déclarée — benzodiazépine à longue durée d'action, sans indication en dehors de l'épilepsie : chutes, sédation prolongée, dépendance élevée.",
         "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "rivotril"
-            ]
-        },
+        "condition": { "med_keys": ["clonazepam"], "comorbs_absent": ["PAT_015"] },
         "alternatives": "Clonazepam uniquement pour epilepsie (indication AMM). Prescriptions chez le sujet age comme anxiolytique: inappropriees",
         "forta": "D (FORTA D: hors epilepsie)",
         "priscus": "Oui",
