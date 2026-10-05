@@ -1397,6 +1397,40 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!est, `${d} n'est pas un diuretique`);
         }
     });
+    test('Interface moderne : aucune ressource en ligne, CSS compile a jour', () => {
+        // Tailwind (CDN) et Google Fonts etaient bloquables par l'etablissement et
+        // inaccessibles en file:// hors ligne : la page perdait toute mise en page et ses
+        // icones s'affichaient comme des mots. Tout est desormais local et GENERE par
+        // tools/build_modern_offline.cjs — a relancer apres tout ajout de classe ou d'icone.
+        const h = fs.readFileSync('index_modern.html', 'utf8');
+        const externes = [...h.matchAll(/<(?:script|link)\b[^>]*(?:src|href)="(https?:[^"]+)"/g)].map(m => m[1]);
+        assert.deepStrictEqual(externes, [], 'aucun script ni feuille de style en ligne');
+        const sw = fs.readFileSync('sw.js', 'utf8');
+        for (const f of ['lib/fonts-modern.css', 'lib/tailwind-modern.css']) {
+            assert.ok(h.includes(`href="${f}"`) && sw.includes(`'./${f}'`), `${f} charge par la page et declare dans sw.js`);
+        }
+        // Chaque icone employee est embarquee dans la police reduite.
+        const polices = fs.readFileSync('lib/fonts-modern.css', 'utf8');
+        const embarquees = ((/Icônes embarquées : ([^*]+)\*\//.exec(polices) || [])[1] || '').split(',').map(s => s.trim());
+        for (const m of h.matchAll(/<span[^>]*class="[^"]*material-symbols-outlined[^"]*"[^>]*>\s*([a-z_0-9]+)\s*<\/span>/g))
+            assert.ok(embarquees.includes(m[1]), `icone « ${m[1]} » absente de lib/fonts-modern.css : relancer node tools/build_modern_offline.cjs`);
+        // Chaque classe de la page existe dans le CSS compile (ou dans le <style> de la page).
+        const css = fs.readFileSync('lib/tailwind-modern.css', 'utf8').replace(/\\2c /g, ',').replace(/\\/g, '');
+        const style = (h.match(/<style[^>]*>[\s\S]*?<\/style>/g) || []).join('\n');
+        const CLASSES_SANS_CSS = {
+            // Crochets lus par le JavaScript, sans style propre.
+            'nav-link': 'crochet JS', 'tab-btn': 'crochet JS', 'tab-content': 'crochet JS',
+            // Couleurs ou opacites jamais definies dans la configuration : deja sans effet
+            // sous le CDN, la compilation locale n'a rien change.
+            'border-info/40': 'couleur non definie', 'bg-tertiary-fixed': 'couleur non definie',
+            'bg-tertiary-fixed/30': 'couleur non definie', 'border-tertiary-fixed': 'couleur non definie',
+            'border-surface-variant': 'couleur non definie', 'bg-surface-container-lowest/92': 'opacite hors echelle'
+        };
+        const toks = new Set();
+        for (const m of h.matchAll(/class="([^"]+)"/g)) m[1].split(/\s+/).filter(Boolean).forEach(x => toks.add(x));
+        const manquantes = [...toks].filter(x => !css.includes('.' + x) && !style.includes('.' + x) && !CLASSES_SANS_CSS[x]);
+        assert.deepStrictEqual(manquantes, [], 'classes absentes de lib/tailwind-modern.css : relancer node tools/build_modern_offline.cjs');
+    });
     test('OCR et import PDF : aucun acces reseau, chargement compatible file://', () => {
         // Ouverte en file:// (disque, partage d'etablissement), l'application ne peut ni
         // fetch(), ni import(), ni lancer un worker depuis un fichier : les deux imports ne

@@ -487,6 +487,32 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             });
         }
 
+        // Interface moderne en file://, réseau coupé : mise en page, polices et icônes locales.
+        {
+            const ctx = await nav.newContext();
+            const externes = [];
+            await ctx.route('**/*', r => { const u = r.request().url(); if (/^(file|data|blob):/.test(u)) return r.continue(); externes.push(u); return r.abort(); });
+            const p = await ctx.newPage();
+            const errs = []; p.on('pageerror', e => errs.push(e.message));
+            await p.goto('file://' + path.join(RACINE, 'index_modern.html'));
+            await p.evaluate(() => document.fonts.ready);
+            const m = await p.evaluate(() => ({
+                fond: getComputedStyle(document.body).backgroundColor,
+                icones: document.fonts.check('22px "Material Symbols Outlined"'),
+                titres: document.fonts.check('16px Manrope'),
+                // Une icône rendue par la police a la largeur d'un glyphe, pas d'un mot.
+                largeurIcone: (() => { const s = [...document.querySelectorAll('.material-symbols-outlined')].find(x => x.textContent.trim() === 'settings'); return s ? s.getBoundingClientRect().width : -1; })()
+            }));
+            await ctx.close();
+            test('L\'interface moderne est entièrement locale (file://, sans réseau)', () => {
+                ok(externes.length === 0, `aucune requête hors du disque : ${externes.join(' ; ')}`);
+                ok(m.fond === 'rgb(247, 249, 251)', `Tailwind compilé appliqué (fond « surface ») : ${m.fond}`);
+                ok(m.icones && m.titres, `polices embarquées chargées : icônes ${m.icones}, Manrope ${m.titres}`);
+                ok(m.largeurIcone > 0 && m.largeurIcone < 40, `l'icône « settings » est un glyphe, pas un mot : ${m.largeurIcone}px`);
+                ok(errs.length === 0, `aucune erreur JavaScript : ${errs.join(' | ')}`);
+            });
+        }
+
         test('Le rapport ne lève aucune erreur JavaScript', () => {
             ok(erreurs.length === 0, `erreurs de page : ${erreurs.join(' | ')}`);
         });

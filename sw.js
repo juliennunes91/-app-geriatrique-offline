@@ -1,7 +1,7 @@
 // Service Worker - GeriaAssist v1.05 (Phase 53 — Cardio diurétiques : Furosémide (pierre HFrEF, biodispo variable 10-100%, DOSE Felker NEJM 2011, TRANSFORM-HF 2023, triple whammy NTA, IRSS/carbamazépine hyponatrémie sévère SIADH), Torasémide (biodispo stable 80-100%, TORIC 2002 ↓ mortalité suggestif, TRANSFORM-HF 2023), Bumétanide (alternative furosémide résistance, 1 mg ≈ 40 mg furo), Indapamide (référence HTA âgé HYVET Beckett NEJM 2008 ↓AVC-30% ↓mortalité-21% > 80 ans, PROGRESS, ADVANCE), HCTZ (CARCINOMES CUTANÉS Pedersen JAMA Intern Med 2018 ANSM/EMA 2018, hyponatrémie SIADH, hypercalcémie thiazidique), Chlortalidone (ALLHAT 2002 + SHEP 1991 ↓AVC-36% > 60 ans, T½ longue 40-60h, équivalence chlortalidone 12,5 mg ≈ HCTZ 25 mg))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20261005-imports-hors-ligne';
-const CACHE_NAME = `geriaassist-v132-${BUILD_ID}`;
+const BUILD_ID = '20261005-ui-moderne-locale';
+const CACHE_NAME = `geriaassist-v133-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
@@ -11,6 +11,8 @@ const APP_ASSETS = [
     './offline.html',
     './manifest.json',
     './lib/bootstrap.min.css',
+    './lib/fonts-modern.css',
+    './lib/tailwind-modern.css',
     './geria-theme.css',
     './geria-styles.css',
     './geria-shell.js',

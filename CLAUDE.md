@@ -1500,8 +1500,28 @@ hors du disque, avec et sans WebAssembly SIMD.
   toujours passée.
 - Le service worker n'est plus enregistré en `file://` (il y échouait en erreur console).
 
-**Reste dépendant du réseau** : l'interface moderne (Tailwind CDN, Google Fonts). Hors
-ligne, elle perd sa mise en page ; l'interface classique est entièrement locale.
+### L'interface moderne est locale, elle aussi
+
+Elle chargeait Tailwind depuis `cdn.tailwindcss.com` (compilé dans le navigateur à chaque
+ouverture) et ses polices depuis Google Fonts : bloqués par l'établissement ou ouverte en
+`file://` hors ligne, elle perdait toute mise en page et ses icônes s'affichaient comme des
+mots (« settings », « print »).
+
+- `lib/tailwind-modern.css` (Tailwind 3.4.19 compilé) et `lib/fonts-modern.css` (polices en
+  base64 — Manrope et Inter en sous-ensemble latin, Material Symbols réduit aux icônes
+  employées) sont **GÉNÉRÉS** par `node tools/build_modern_offline.cjs` (réseau requis, poste
+  de développement ; Tailwind n'est pas une dépendance du dépôt, `npx` récupère la version
+  figée). La configuration Tailwind vit dans `tools/tailwind.modern.config.cjs`, **source
+  unique** — elle ne doit pas revenir en ligne dans la page.
+- **À relancer après tout ajout d'une classe Tailwind ou d'une icône** dans
+  `index_modern.html`. Un test Node le rappelle : toute classe de la page doit exister dans le
+  CSS compilé, toute icône dans la police réduite. `CLASSES_SANS_CSS` liste nommément les
+  exceptions (crochets JS, couleurs jamais définies dans la configuration — déjà sans effet
+  sous le CDN). Validé par mutation.
+- La feuille Tailwind est liée **en fin d'en-tête**, après le `<style>` de la page : le CDN
+  y injectait ses règles, et c'est cet ordre qui départage les conflits.
+- Test Playwright : interface moderne en `file://`, réseau coupé — zéro requête externe,
+  fond « surface » appliqué, polices chargées, icône rendue comme un glyphe.
 
 ## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
 
