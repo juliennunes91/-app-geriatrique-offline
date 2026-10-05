@@ -437,6 +437,56 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             ok(importe.sexe === 'F' && importe.age === '81', `identité appliquée : ${importe.sexe} ${importe.age}`);
         });
 
+        // ── Imports en file://, réseau coupé ─────────────────────────────────────────
+        // Ouverte depuis un disque ou un partage d'établissement, l'application est en
+        // file:// : Chrome y refuse fetch(), import() et new Worker(fichier). L'OCR et
+        // l'import PDF doivent fonctionner quand même, SANS aucune requête hors du disque.
+        // Le second passage simule un navigateur sans WebAssembly SIMD.
+        const ordo = path.join(os.tmpdir(), `ordo_fictive_${process.pid}.png`);
+        const pdfF = path.join(os.tmpdir(), `bilan_fictif2_${process.pid}.pdf`);
+        {
+            const p = await nav.newPage();
+            await p.setContent('<div style="font:28px Arial;padding:30px;background:#fff;">ORDONNANCE<br>Amlodipine 5 mg 1 cp le matin<br>Furosemide 40 mg 1 cp/j</div>');
+            await p.screenshot({ path: ordo });
+            await p.setContent(`<body style="font:12px Arial;position:relative;">${cell(30, 20, 'Prélevé le 02−09−2026')}${cell(30, 60, 'Hémoglobine')}${cell(320, 60, '11,4')}${cell(360, 60, 'g/dl')}</body>`);
+            fs.writeFileSync(pdfF, await p.pdf({ format: 'A4' }));
+            await p.close();
+        }
+        const horsLigne = async (simd) => {
+            const ctx = await nav.newContext();
+            const externes = [];
+            await ctx.route('**/*', r => { const u = r.request().url(); if (/^(file|data|blob):/.test(u)) return r.continue(); externes.push(u); return r.abort(); });
+            if (!simd) await ctx.addInitScript(() => { WebAssembly.validate = () => false; });
+            const p = await ctx.newPage();
+            const errs = []; p.on('pageerror', e => errs.push(e.message));
+            await p.goto('file://' + path.join(RACINE, 'index.html'));
+            await p.evaluate(() => ocrOpenModal());
+            await p.setInputFiles('#ocrFileInput', ordo);
+            let st = {}; const t0 = Date.now();
+            while (Date.now() - t0 < 90000) {
+                st = await p.evaluate(() => ({ etat: document.getElementById('ocrProgressText').textContent, meds: document.getElementById('ocrMedList').textContent }));
+                if (/Erreur/.test(st.etat) || st.meds) break;
+                await p.waitForTimeout(500);
+            }
+            await p.evaluate(() => { document.querySelectorAll('.modal').forEach(m => { m.classList.remove('show'); m.style.display = 'none'; }); document.querySelectorAll('.modal-backdrop').forEach(b => b.remove()); });
+            await p.setInputFiles('#bioImportFile', pdfF);
+            await p.waitForSelector('#bioImportDialog', { timeout: 30000 }).catch(() => {});
+            const pdf = await p.evaluate(() => { const d = document.getElementById('bioImportDialog'); return d ? d.textContent : ''; });
+            await ctx.close();
+            return { st, pdf, externes, errs };
+        };
+        const avecSimd = await horsLigne(true);
+        const sansSimd = await horsLigne(false);
+        fs.unlinkSync(ordo); fs.unlinkSync(pdfF);
+        for (const [nom, r] of [['avec SIMD', avecSimd], ['sans SIMD', sansSimd]]) {
+            test(`OCR et import PDF fonctionnent en file://, sans réseau (${nom})`, () => {
+                ok(/Amlodipine/.test(r.st.meds) && /Furosemide/.test(r.st.meds), `OCR : ${r.st.etat} | ${r.st.meds}`);
+                ok(/Hémoglobine/.test(r.pdf) && /11,4/.test(r.pdf), `import PDF : ${r.pdf.slice(0, 160)}`);
+                ok(r.externes.length === 0, `aucune requête hors du disque : ${r.externes.join(' ; ')}`);
+                ok(r.errs.length === 0, `aucune erreur JavaScript : ${r.errs.join(' | ')}`);
+            });
+        }
+
         test('Le rapport ne lève aucune erreur JavaScript', () => {
             ok(erreurs.length === 0, `erreurs de page : ${erreurs.join(' | ')}`);
         });

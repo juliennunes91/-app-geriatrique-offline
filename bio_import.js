@@ -272,18 +272,37 @@
     }
 
     // ── Partie navigateur ──────────────────────────────────────────────────────────
-    let _pdfjs = null;
+    // pdf.js 3.11 (build « legacy », format script classique) : chargé par balises
+    // <script>, worker compris, et exécuté SANS worker séparé (« fake worker » sur le fil
+    // principal, ce que pdf.js fait dès que `pdfjsWorker` est défini). Ouvert en file://,
+    // Chrome refuse import() et new Worker(fichier) : la version 4, module ES uniquement,
+    // ne pouvait pas s'y charger. Aucun accès réseau.
+    // isEvalSupported: false — parade documentée à la CVE-2024-4367 (code arbitraire via une
+    // police piégée), corrigée seulement en 4.2.67.
+    const _scripts = new Map();
+    function _chargerScript(rel) {
+        if (_scripts.has(rel)) return _scripts.get(rel);
+        const p = new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = new URL(rel, document.baseURI).href;
+            s.onload = () => resolve();
+            s.onerror = () => { _scripts.delete(rel); reject(new Error('fichier introuvable : ' + rel + ' (copie de l\'application incomplète ?)')); };
+            document.head.appendChild(s);
+        });
+        _scripts.set(rel, p);
+        return p;
+    }
     async function _chargerPdfjs() {
-        if (_pdfjs) return _pdfjs;
-        const base = new URL('lib/', document.baseURI).href;
-        _pdfjs = await import(base + 'pdf.min.js');
-        _pdfjs.GlobalWorkerOptions.workerSrc = base + 'pdf.worker.min.js';
-        return _pdfjs;
+        await _chargerScript('lib/pdf.min.js');
+        await _chargerScript('lib/pdf.worker.min.js');
+        const lib = global.pdfjsLib;
+        if (!lib || !global.pdfjsWorker) throw new Error('lecteur PDF non chargé');
+        return lib;
     }
 
     async function itemsDuPdf(buffer) {
         const pdfjs = await _chargerPdfjs();
-        const doc = await pdfjs.getDocument({ data: new Uint8Array(buffer), isEvalSupported: false }).promise;
+        const doc = await pdfjs.getDocument({ data: new Uint8Array(buffer), isEvalSupported: false, useWorkerFetch: false, disableFontFace: true }).promise;
         const items = [];
         for (let p = 1; p <= doc.numPages; p++) {
             const tc = await (await doc.getPage(p)).getTextContent();

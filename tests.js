@@ -1397,6 +1397,23 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!est, `${d} n'est pas un diuretique`);
         }
     });
+    test('OCR et import PDF : aucun acces reseau, chargement compatible file://', () => {
+        // Ouverte en file:// (disque, partage d'etablissement), l'application ne peut ni
+        // fetch(), ni import(), ni lancer un worker depuis un fichier : les deux imports ne
+        // chargent que des balises <script> locales. Le test Playwright le verifie en vrai.
+        for (const f of ['ocr_module.js', 'bio_import.js']) {
+            const src = fs.readFileSync(f, 'utf8').replace(/\/\/.*$/gm, '');
+            assert.ok(!/\bfetch\s*\(|\bimport\s*\(|https?:\/\//.test(src), `${f} : ni fetch, ni import(), ni URL externe`);
+        }
+        const sw = fs.readFileSync('sw.js', 'utf8');
+        for (const f of ['lib/ocr/tesseract-worker.inline.js', 'lib/ocr/tesseract-core-simd.inline.js', 'lib/ocr/tesseract-core.inline.js', 'lib/ocr/fra.traineddata.inline.js', 'lib/pdf.min.js', 'lib/pdf.worker.min.js']) {
+            assert.ok(fs.existsSync(f), `${f} present (node tools/build_ocr_offline.cjs)`);
+            assert.ok(sw.includes(`'./${f}'`), `${f} declare dans sw.js`);
+        }
+        // Correctif du defaut Tesseract.js 5.1.1 (langue en octets designee par `data`).
+        const w = fs.readFileSync('lib/ocr/tesseract-worker.inline.js', 'utf8');
+        assert.ok(w.includes('return"string"==typeof t?t:t.code})).join("+")') && !w.includes('t:t.data})).join("+")'), 'worker OCR corrige');
+    });
     test('Import de bilan PDF : seul le resultat du jour, dans la bonne unite', () => {
         const B = require('./bio_import.js');
         // Compte rendu FICTIF reproduisant la mise en page d'un export de laboratoire :

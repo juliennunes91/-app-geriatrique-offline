@@ -543,7 +543,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version <span id="appVersion">3.56</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version <span id="appVersion">3.57</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>
@@ -627,7 +627,9 @@
             });
         }
 
-        if ('serviceWorker' in navigator && !IS_NATIVE_APP) {
+        // En file:// (application ouverte depuis un disque ou un partage), pas de service
+        // worker possible : on n'essaie pas, plutôt que d'afficher une erreur.
+        if ('serviceWorker' in navigator && !IS_NATIVE_APP && location.protocol !== 'file:') {
             // updateViaCache:'none' — sans cela le navigateur peut resservir un sw.js
             // depuis son cache HTTP, et « Vérifier les mises à jour » conclurait à tort
             // que tout est à jour.

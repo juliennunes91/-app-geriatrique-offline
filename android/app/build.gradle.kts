@@ -29,7 +29,7 @@ val copyWebApp by tasks.registering(Copy::class) {
         // hors ligne. L'APK embarque uniquement l'UI classique.
         exclude("geria-shell.js", "geria-styles.css")
         // Service worker : son cache.addAll() est atomique et référence le moteur
-        // Tesseract non-SIMD qu'on retire ci-dessous → il échouerait en bloc.
+        // OCR sans SIMD qu'on retire ci-dessous → il échouerait en bloc.
         // Inutile de toute façon : les assets sont déjà locaux dans l'APK.
         exclude("sw.js")
     }
@@ -38,10 +38,10 @@ val copyWebApp by tasks.registering(Copy::class) {
         include("bootstrap.min.css", "bootstrap.bundle.min.js")
         include("html2pdf.bundle.min.js")
         include("pdf.min.js", "pdf.worker.min.js", "pdf.js.LICENSE")
-        include("tesseract.min.js", "tesseract-worker.min.js")
-        // Un seul moteur : le SIMD est celui référencé par ocr_module.js.
-        include("tesseract-core-simd.wasm.js")
-        include("tessdata/**")
+        include("tesseract.min.js")
+        // OCR embarqué (lib/ocr, généré par tools/build_ocr_offline.cjs). Un seul moteur :
+        // la WebView Android gère WebAssembly SIMD, le moteur sans SIMD est inutile ici.
+        include("ocr/tesseract-worker.inline.js", "ocr/tesseract-core-simd.inline.js", "ocr/fra.traineddata.inline.js")
     }
 
     doLast {

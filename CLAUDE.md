@@ -511,7 +511,7 @@ Paquet : `io.github.juliennunes91.geriaassist`.
 - Les assets ne sont **pas dupliqués** dans le dépôt : une tâche Gradle les copie
   depuis la racine. Exclus de l'APK : `index_modern.html` (dépend de Tailwind CDN,
   inutilisable hors ligne), `sw.js` (son `cache.addAll()` atomique référencerait
-  un fichier retiré), le moteur Tesseract non-SIMD, les harnais de test.
+  un fichier retiré), le moteur OCR sans SIMD (`lib/ocr/tesseract-core.inline.js`), les harnais de test.
 - **Trois adaptations WebView indispensables** : les exports PDF/JSON passent par
   un shim injecté (`html2pdf` produit un `blob:` + clic d'ancre que la WebView
   ignore **silencieusement**) ; l'OCR exige `onShowFileChooser` ; `localStorage`
@@ -1424,9 +1424,9 @@ sont désormais blanchis entre deux dossiers.
 
 Bouton « Importer un bilan biologique » sous la date du bilan (deux UIs, `#bioImportFile`).
 Lit la **couche texte** du compte rendu du laboratoire avec pdf.js (`lib/pdf.min.js` +
-`lib/pdf.worker.min.js`, v4.10 legacy, Apache-2.0, chargés par `import()` dynamique au
-premier usage — renommés en `.js` parce que `WebViewAssetLoader` ne connaît pas le type
-MIME de `.mjs`). Un PDF scanné (sans texte) est renvoyé vers l'OCR image.
+`lib/pdf.worker.min.js`, **v3.11 legacy UMD**, Apache-2.0), chargés par balises `<script>`
+au premier usage — voir « Imports hors ligne » ci-dessous pour le choix de la v3. Un PDF
+scanné (sans texte) est renvoyé vers l'OCR image.
 
 **Un compte rendu est un tableau, pas du texte libre.** À côté du résultat du jour se
 trouvent l'intervalle de référence et l'**antériorité** — la valeur du bilan précédent,
@@ -1463,6 +1463,45 @@ milliers, ligne secondaire en mg/L sans libellé) ; le test Playwright fait **im
 PDF par Chromium** un compte rendu fictif et le relit par le vrai chemin (pdf.js + worker).
 Validés par mutation : lire l'antériorité, désancrer « hémoglobine », casser le facteur
 de la créatinine.
+
+## Imports hors ligne — OCR et PDF fonctionnent en `file://`, sans réseau
+
+En établissement, GeriaAssist est ouvert **comme un fichier** (double-clic sur `index.html`
+depuis un disque ou un partage) sous Chrome, et l'accès en ligne peut être bloqué. En
+`file://`, Chrome refuse `fetch()`, `import()` et `new Worker(fichier)`, et aucun service
+worker ne s'enregistre. Les deux imports échouaient donc dès la première étape — l'OCR sur
+« URL scheme file is not supported », l'import PDF sur le module pdf.js. Les tests
+passaient : ils servaient l'application en http.
+
+**Règle : un import ne charge que des balises `<script>` locales.** Un test Node interdit
+`fetch(`, `import(` et toute URL externe dans `ocr_module.js` et `bio_import.js` ; le test
+Playwright ouvre l'application en `file://`, **coupe tout réseau** et exige zéro requête
+hors du disque, avec et sans WebAssembly SIMD.
+
+- **OCR** : `lib/ocr/*.inline.js`, GÉNÉRÉS par `node tools/build_ocr_offline.cjs` depuis
+  `tools/vendor/tesseract/` (sources jamais servies). Le moteur et le worker y sont des
+  **fonctions** dont `ocr_module.js` relit le texte pour fabriquer le worker en mémoire
+  (`blob:`) — le worker trouve `TesseractCore` déjà défini et ne télécharge rien. Le modèle
+  français y est en base64, remis au worker en octets (`{code: 'fra', data}`).
+- **Défaut de Tesseract.js 5.1.1 corrigé à la génération** : une langue fournie en octets
+  est désignée à l'initialisation par `data` au lieu de `code` (« couldn't load any
+  languages »). Le motif est vérifié unique ; une mise à jour de Tesseract qui le change
+  fait échouer la génération plutôt que l'OCR. Validé par mutation (le test hors ligne
+  échoue si l'on réintroduit le défaut).
+- **Moteur sans SIMD** chargé si `WebAssembly.validate` refuse le SIMD (navigateurs
+  anciens) ; imposer le SIMD faisait échouer l'OCR sans explication. WebAssembly désactivé
+  par politique de sécurité → message explicite.
+- **Délai maximal de 60 s** à l'initialisation : un échec du moteur ne rejette pas toujours
+  sa promesse, et la barre restait figée sur « Initialisation OCR... ».
+- **pdf.js 3.11 et non 4.x** : la v4 n'existe qu'en module ES, inchargeable en `file://`.
+  La v3 legacy est un script classique, et son worker, chargé lui aussi par `<script>`,
+  s'exécute sur le fil principal (`pdfjsWorker` défini → « fake worker »). La v3 porte la
+  CVE-2024-4367 (code via une police piégée) : parade documentée `isEvalSupported: false`,
+  toujours passée.
+- Le service worker n'est plus enregistré en `file://` (il y échouait en erreur console).
+
+**Reste dépendant du réseau** : l'interface moderne (Tailwind CDN, Google Fonts). Hors
+ligne, elle perd sa mise en page ; l'interface classique est entièrement locale.
 
 ## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
 
