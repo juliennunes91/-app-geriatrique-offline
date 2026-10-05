@@ -1374,6 +1374,29 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Bicarbonate de sodium, Kayexalate, Lokelma : fiches completes et interactions', () => {
+        const vm = require('vm');
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const I = meds => analyzeCase({ age: 80, sexe: 'M', dfg: 40, meds });
+        for (const d of ['Bicarbonate de sodium', 'Polystyrene sulfonate de sodium', 'Cyclosilicate de zirconium sodique']) {
+            const f = vm.runInContext(`MASTER_DB.MEDICAMENTS.find(m => m.dci === ${JSON.stringify(d)})`, sandbox);
+            assert.ok(f, `${d} en base`);
+            for (const k of ['princeps', 'classe', 'poso_hab', 'poso_ger', 'poso_ren', 'suivi_initial', 'alerte_clinique', 'source'])
+                assert.ok(String(f[k] || '').length > 3, `${d} : ${k} renseigne`);
+        }
+        // Le thesaurus ANSM ecrit « SODIUM (BICARBONATE DE) » : l'ordre inverse doit rejoindre la DCI.
+        const li = I(['Lithium', 'Bicarbonate de sodium'])._html['alertes-interact'] || '';
+        assert.ok(/PRÉCAUTION D(&#39;|')EMPLOI/.test(li) && /élimination rénale par les sels de sodium/.test(li), 'lithium + bicarbonate : precaution ANSM, texte officiel');
+        assert.ok((I(['Polystyrene sulfonate de sodium', 'Sorbitol'])['alertes-interact'] || []).some(x => x.severity === 'danger'), 'Kayexalate + sorbitol : necrose colique');
+        assert.ok(/Chélateurs du potassium/.test((I(['Polystyrene sulfonate de sodium', 'Cyclosilicate de zirconium sodique'])['alertes-eviter'] || []).map(x => x.titre).join(' ')), 'Kayexalate + Lokelma : doublon');
+        assert.ok(/pH-dépendante/.test(I(['Cyclosilicate de zirconium sodique', 'Posaconazole'])._html['alertes-interact'] || ''), 'Lokelma + azole : espacer');
+        // Le libelle « traitement de l'hyperkaliemie » ne fait entrer ni la resine ni le
+        // cyclosilicate dans les diuretiques (dont « hypokaliemiant » est un alias).
+        for (const d of ['Polystyrene sulfonate de sodium', 'Cyclosilicate de zirconium sodique']) {
+            const est = vm.runInContext(`(() => { const f = MASTER_DB.MEDICAMENTS.find(m => m.dci === ${JSON.stringify(d)}); return matchesDrugClass(sanitizeText(f.dci), sanitizeText(f.classe), 'diuretique'); })()`, sandbox);
+            assert.ok(!est, `${d} n'est pas un diuretique`);
+        }
+    });
     test('Import de bilan PDF : seul le resultat du jour, dans la bonne unite', () => {
         const B = require('./bio_import.js');
         // Compte rendu FICTIF reproduisant la mise en page d'un export de laboratoire :

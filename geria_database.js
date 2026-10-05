@@ -5016,6 +5016,35 @@ const MASTER_DB = {
                     "source": "RCP Dulcolax | SNFGE 2018"
           },
           {
+                    "dci": "Bicarbonate de sodium",
+                    "princeps": "Gélules 1 g (préparation magistrale) / Bicafres 1 g (comprimé gastro-résistant)",
+                    "classe": "Alcalinisant oral (bicarbonate de sodium) — acidose métabolique de la maladie rénale chronique",
+                    "poso_hab": "Gélules de 1 g ou comprimés gastro-résistants de 1 g, en 2 à 3 prises par jour | Bicafres : 2 à 3 cp/j à l'instauration, dose ajustée pour un bicarbonate plasmatique ≥ 22 mmol/L ; jusqu'à 8 g/j évalués dans la MRC (RCP Bicafres)",
+                    "poso_ger": "Pas d'adaptation propre à l'âge : débuter à la dose basse et ajuster sur le bicarbonate plasmatique. Apport sodé à compter : 1 g de bicarbonate de sodium apporte 11,9 mmol (274 mg) de sodium (calcul stœchiométrique, M = 84,01 g/mol) — à intégrer au bilan sodé de l'insuffisant cardiaque ou de l'hypertendu",
+                    "poso_ren": "Indication propre de la MRC : traiter si bicarbonate plasmatique < 18 mmol/L (KDIGO 2024), sans dépasser la limite supérieure de la normale ; surveiller PA, kaliémie et état volémique (KDIGO 2024)",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "bhe": "",
+                    "albumine": "",
+                    "qt_risque": "",
+                    "ddi_interact": "LITHIUM (précaution d'emploi ANSM : la charge sodée augmente l'élimination rénale du lithium — baisse de la lithémie) | MÉMANTINE (l'alcalinisation des urines diminue son élimination)",
+                    "ddi_interact_v2": [
+                              { "classe": "Lithium — baisse de la lithémie (charge sodée)", "dcis": ["lithium"], "commentaire": "Précaution d'emploi (Thésaurus ANSM) : les sels de sodium augmentent l'élimination rénale du lithium. Éviter les surcharges sodées ; contrôler la lithémie à l'introduction et à l'arrêt du bicarbonate.", "severite": "warning" },
+                              { "classe": "Mémantine — élimination diminuée (alcalinisation urinaire)", "dcis": ["memantine"], "commentaire": "L'alcalinisation des urines diminue l'élimination rénale de la mémantine (RCP Ebixa 4.5). Surveiller la tolérance.", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Bicarbonate plasmatique (réserve alcaline) | Natrémie | Kaliémie | Pression artérielle | Poids, œdèmes",
+                    "suivi_periodique": "Bicarbonate plasmatique (à chaque bilan rénal) | Natrémie | Kaliémie | Pression artérielle et état volémique",
+                    "alerte_clinique": "Surcharge sodée : œdèmes, HTA, décompensation cardiaque | Alcalose métabolique si surdosage (bicarbonate au-dessus de la normale) | Ballonnements, éructations (libération de CO2)",
+                    "bio_cible": ["BIO_002", "BIO_001"],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "Traitement de l'acidose métabolique de la maladie rénale chronique. Seuil d'instauration KDIGO 2024 : bicarbonate < 18 mmol/L chez l'adulte. La gélule de 1 g est une préparation magistrale ; Bicafres est la première spécialité orale autorisée dans cette indication.",
+                    "source": "RCP Bicafres (ANSM) ; Avis de la Commission de la transparence HAS, Bicafres ; KDIGO 2024 Clinical Practice Guideline for CKD (acidose métabolique) ; Thésaurus des interactions ANSM (lithium + bicarbonate de sodium)"
+          },
+          {
                     "dci": "Bisoprolol",
                     "princeps": "Detensiel, Cardensiel",
                     "classe": "Betabloquant cardioselectif (B1)",
@@ -8447,6 +8476,34 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "notes_cliniques": "Antidépresseur tricyclique : ACB élevé (anticholinergique fort), QT, hypotension orthostatique, chutes. À ÉVITER chez âgé (Beers 2023, STOPP D1, FORTA-D, PRISCUS).",
                     "source": "RCP Flexeril | Beers 2023"
+          },
+          {
+                    "dci": "Cyclosilicate de zirconium sodique",
+                    "princeps": "Lokelma",
+                    "classe": "Chélateur sélectif du potassium (cyclosilicate de zirconium, non absorbé) — traitement de l'hyperkaliémie",
+                    "poso_hab": "Correction : 10 g 3 fois par jour pendant 24 à 72 h | Entretien : 5 g une fois par jour, de 5 g un jour sur deux à 10 g par jour | Dialysé : les jours sans dialyse (RCP Lokelma)",
+                    "poso_ger": "Pas d'adaptation liée à l'âge (RCP Lokelma). Apport sodé à compter : environ 400 mg de sodium par dose de 5 g",
+                    "poso_ren": "Pas d'adaptation (non absorbé) ; schéma propre au patient dialysé (RCP Lokelma)",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "bhe": "",
+                    "albumine": "",
+                    "qt_risque": "",
+                    "ddi_interact": "Médicaments à biodisponibilité dépendante du pH gastrique (antifongiques azolés, certains antirétroviraux, inhibiteurs de tyrosine kinase) : espacer d'au moins 2 h (RCP Lokelma 4.5)",
+                    "ddi_interact_v2": [
+                              { "classe": "Médicaments à absorption pH-dépendante — espacer d'au moins 2 h", "dcis": ["ketoconazole", "itraconazole", "posaconazole", "atazanavir", "rilpivirine", "erlotinib", "dasatinib", "nilotinib"], "commentaire": "Le cyclosilicate de zirconium sodique élève transitoirement le pH gastrique : l'administrer au moins 2 h avant ou 2 h après ces médicaments (RCP Lokelma 4.5).", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Kaliémie (à 24-72 h de la correction) | Natrémie | Poids, œdèmes",
+                    "suivi_periodique": "Kaliémie (à chaque adaptation de dose et sous bloqueur du SRAA) | Poids, œdèmes",
+                    "alerte_clinique": "Hypokaliémie → réduire ou suspendre | Œdèmes (charge sodée, plus fréquents à 15 g/j) | Radio-opaque : peut apparaître sur un cliché abdominal",
+                    "bio_cible": ["BIO_001", "BIO_002"],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "Échangeur d'ions inorganique non absorbé, sélectif du potassium (et de l'ammonium). Permet de poursuivre un bloqueur du SRAA chez le patient hyperkaliémique. Environ 400 mg de sodium par sachet de 5 g, absorption inconnue.",
+                    "source": "RCP Lokelma (EMA, EPAR) rubriques 4.2, 4.4, 4.5"
           },
           {
                     "dci": "Cycloserine",
@@ -25882,6 +25939,36 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "notes_cliniques": "Antiémétique 5-HT3 : ALLONGEMENT QT (Risk_KR — surtout dose IV unique > 16 mg, ANSM 2012). Constipation, céphalées. Indication chimio, post-op. ECG avant si âgé/cardiopathie/QT à risque. Phase 8 SYND_051.",
                     "source": "RCP Zophren | RCP"
+          },
+          {
+                    "dci": "Polystyrene sulfonate de sodium",
+                    "princeps": "Kayexalate",
+                    "classe": "Résine échangeuse de cations sodium/potassium (non absorbée) — traitement de l'hyperkaliémie",
+                    "poso_hab": "Voie orale : 15 g, 1 à 4 fois par jour (RCP Kayexalate) | Voie rectale : selon RCP",
+                    "poso_ger": "Pas d'adaptation posologique propre à l'âge ; risque de constipation et de fécalome majoré chez le sujet âgé. Ne pas associer au sorbitol (nécrose colique)",
+                    "poso_ren": "Pas d'adaptation (non absorbé)",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "bhe": "",
+                    "albumine": "",
+                    "qt_risque": "",
+                    "ddi_interact": "SORBITOL (nécrose colique, parfois mortelle — association déconseillée) | Autres médicaments oraux : espacer d'au moins 2 h (RCP) | LÉVOTHYROXINE, LITHIUM (fixation, absorption diminuée) | DIGOXINE (toxicité majorée par l'hypokaliémie) | Antiacides et laxatifs cationiques (Thésaurus ANSM)",
+                    "ddi_interact_v2": [
+                              { "classe": "Sorbitol — nécrose colique (association déconseillée)", "dcis": ["sorbitol"], "commentaire": "Sténoses, ischémie et nécrose intestinales, parfois mortelles, rapportées avec la résine seule ou associée au sorbitol ; l'administration concomitante de sorbitol est déconseillée (RCP Kayexalate).", "severite": "danger" },
+                              { "classe": "Lévothyroxine, lithium — absorption diminuée par fixation", "dcis": ["levothyroxine", "lithium"], "commentaire": "La résine peut fixer ces médicaments dans le tube digestif. Prendre la résine au moins 2 h avant ou 2 h après tout autre médicament oral (RCP Kayexalate).", "severite": "warning" },
+                              { "classe": "Digoxine — toxicité majorée par l'hypokaliémie", "dcis": ["digoxine"], "commentaire": "L'hypokaliémie induite par la résine majore la toxicité de la digoxine. Contrôler la kaliémie (RCP Kayexalate).", "severite": "warning" }
+                    ],
+                    "suivi_initial": "Kaliémie (quotidienne en phase de correction) | Natrémie | Calcémie | Magnésémie | Transit",
+                    "suivi_periodique": "Kaliémie (à chaque adaptation) | Natrémie | Calcémie | Magnésémie | Transit (constipation, douleurs abdominales)",
+                    "alerte_clinique": "Nécrose ou ischémie intestinale (douleurs abdominales, rectorragies) → arrêt | Constipation, fécalome | Hypokaliémie | Surcharge sodée : 4,1 mmol (100 mg) de sodium par gramme | Hypocalcémie, hypomagnésémie",
+                    "bio_cible": ["BIO_001", "BIO_002", "BIO_005", "BIO_006"],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "Résine échangeuse d'ions non absorbée : échange le sodium contre le potassium dans le côlon. Action lente (heures) : ne traite pas seule une hyperkaliémie menaçante. Apport sodé : environ 4,1 mmol (100 mg) de sodium par gramme.",
+                    "source": "RCP Kayexalate (ANSM) 4.2/4.4/4.5 ; Monographie Kayexalate (Sanofi Canada) ; Thésaurus des interactions ANSM (polystyrène sulfonate de sodium)"
           },
           {
                     "dci": "Posaconazole",

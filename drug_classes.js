@@ -72,6 +72,19 @@ const DRUG_CLASSES = {
     // > 1000 mg/j » (SUP_REM_02) qu'il ne recevait pas. Meme famille que `paracetamol`
     // ⊂ « alternative paracetamol » : declarer les molecules les fait entrer dans
     // `_ALL_DCIS_SET`, ce qui impose ensuite le match EXACT.
+    // Le thésaurus ANSM écrit « SODIUM (BICARBONATE DE) » : sans alias, l'ordre inversé
+    // ne rejoint jamais la DCI et la précaution d'emploi avec le lithium ne sortait pas.
+    bicarbonate_sodium: {
+        aliases: ['sodiumbicarbonatede', 'bicarbonatesodium'],
+        classeMatch: [],
+        dcis: ['bicarbonatedesodium']
+    },
+    // Traitements de l'hyperkaliémie par échange d'ions dans le tube digestif.
+    chelateur_potassium: {
+        aliases: ['chelateurdupotassium', 'chelateurpotassium'],
+        classeMatch: [],
+        dcis: ['polystyrenesulfonatedesodium', 'cyclosilicatedezirconiumsodique']
+    },
     supplement_calcique: {
         aliases: ['supplementcalcique', 'supplementationcalcique', 'selsdecalcium',
                   'seldecalcium', 'calcium', 'carbonatedecalcium', 'pidolatedecalcium',

@@ -2770,6 +2770,7 @@ function analyserPrescription() {
             { key: 'antidepresseur_tricyclique',   label: 'Antidépresseurs tricycliques', note: "Association ATC non justifiée (anticholinergique, cardiotox).", severite: 'danger' },
             { key: 'benzodiazepine',               label: 'Benzodiazépines',              note: "Association BZD déconseillée (STOPP D5, Beers 2023) — chutes, confusion.", exception: "Exception parfois : 1 hypnotique court + 1 anxiolytique, mais à éviter chez le sujet âgé." },
             { key: 'ipp',                          label: 'IPP',                          note: "Association IPP non justifiée." },
+            { key: 'chelateur_potassium',          label: 'Chélateurs du potassium',      note: "Deux traitements de l'hyperkaliémie associés (résine et cyclosilicate) : cumul du risque d'hypokaliémie et de la charge sodée, sans association évaluée dans les RCP. Relais non soldé ?", severite: 'warning' },
             { key: 'ains',                         label: 'AINS',                         note: "Association AINS formellement contre-indiquée (saignements, IRA).", severite: 'danger' },
             { key: 'antipsychotique',              label: 'Antipsychotiques',             note: "Association neuroleptiques à éviter (QT, sédation, surmortalité démence).", exception: "Exception transitoire possible pendant un switch progressif." },
             { key: 'diuretique_thiazidique',       label: 'Diurétiques thiazidiques',     note: "Association thiazidique non justifiée." },

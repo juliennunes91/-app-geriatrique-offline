@@ -351,6 +351,23 @@ Deux règles affirmaient un terrain qu'elles ne vérifiaient pas :
   anticholinergiques** (trihexyphénidyle, tropatépine, bipéridène), que STOPP D23 ne
   couvre pas — sans quoi la même cascade sortait deux fois.
 
+## Correcteurs de l'insuffisant rénal : bicarbonate, Kayexalate, Lokelma
+
+Trois fiches (`Bicarbonate de sodium`, `Polystyrene sulfonate de sodium`,
+`Cyclosilicate de zirconium sodique`), chacune sourcée sur son RCP. Trois points de câblage :
+
+- **Une DCI composée s'écrit normalisée dans `drug_classes.js`** (`bicarbonatedesodium`,
+  sans espaces) : `_DCI_SET` est comparé à la DCI passée par `sanitizeText`, et une forme
+  avec espaces n'y est jamais trouvée — en silence.
+- **Le thésaurus ANSM inverse l'ordre** (« SODIUM (BICARBONATE DE) ») : alias
+  `sodiumbicarbonatede` de la classe `bicarbonate_sodium`, sans quoi la précaution
+  d'emploi lithium + bicarbonate ne sortait pas. Validé par mutation.
+- **Ne pas écrire « hypokaliémiant » dans le libellé d'une résine** : c'est un alias de la
+  classe `diuretique`. Les libellés disent « traitement de l'hyperkaliémie ».
+- Doublon `chelateur_potassium` dans `DUPLICATE_WATCH` (résine + cyclosilicate).
+- Point ouvert : pas de paramètre « bicarbonate plasmatique » dans `MASTER_DB.BIOLOGIE`,
+  donc pas de champ ni d'alerte sur la cible de 22 mmol/L — le suivi est écrit en clair.
+
 ## Architecture des données cliniques
 
 **Attribution des sources (important)** :
