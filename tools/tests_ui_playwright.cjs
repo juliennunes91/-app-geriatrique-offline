@@ -392,6 +392,51 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
                 `Modopar et Stalevo figurent parmi les choix : ${dopa.join(' | ')}`);
         });
 
+        // Import d'un bilan PDF : un compte rendu FICTIF est imprimé en PDF par Chromium,
+        // puis relu par pdf.js dans l'application — le chemin réel, worker compris.
+        const os = require('os');
+        const cr = await nav.newPage();
+        const cell = (x, y, s) => `<span style="position:absolute;left:${x}px;top:${y}px;">${s}</span>`;
+        await cr.setContent(`<html><body style="font:12px Arial;position:relative;">${[
+            cell(30, 20, 'M. Patient FICTIF'), cell(30, 40, 'Date de naissance'), cell(160, 40, '03−04−1945'), cell(240, 40, '(81 ans) Sexe : F'),
+            cell(30, 60, 'Prélevé le 02−09−2026 à 08:30'),
+            cell(420, 100, '(13,0−18,0)'), cell(540, 100, '9,3'),
+            cell(30, 114, 'Hémoglobine'), cell(320, 114, '11,4'), cell(360, 114, 'g/dl'),
+            cell(30, 140, 'Créatinine'), cell(320, 140, '13,6'), cell(360, 140, 'mg/L'), cell(420, 140, '(6,7−11,8)'),
+            cell(30, 166, 'Sodium sérique'), cell(320, 166, '133'), cell(360, 166, 'mmol/L'),
+            cell(30, 192, 'Magnésium'), cell(320, 192, '0,8'), cell(360, 192, 'mmol/kg')
+        ].join('')}</body></html>`);
+        const pdfFictif = path.join(os.tmpdir(), `bilan_fictif_${process.pid}.pdf`);
+        fs.writeFileSync(pdfFictif, await cr.pdf({ format: 'A4' }));
+        await cr.close();
+        await page.evaluate(() => { resetPatient(); document.getElementById('patientSexe').value = 'M'; document.getElementById('patientAge').value = '80'; });
+        await page.setInputFiles('#bioImportFile', pdfFictif);
+        await page.waitForSelector('#bioImportAppliquer', { timeout: 20000 });
+        const apercu = await page.evaluate(() => {
+            const d = document.getElementById('bioImportDialog');
+            const coche = t => { const tr = [...d.querySelectorAll('tr')].find(r => r.textContent.includes(t)); const c = tr && tr.querySelector('input'); return c ? { coche: c.checked, actif: !c.disabled } : null; };
+            return { texte: d.textContent, mg: coche('Magnésium'), hb: coche('Hémoglobine') };
+        });
+        await page.click('#bioImportAppliquer');
+        const importe = await page.evaluate(() => ({
+            hb: document.getElementById('bioHb').value, creat: document.getElementById('bioCreat').value,
+            na: document.getElementById('patientNa').value, mg: document.getElementById('bioMg').value,
+            date: document.getElementById('bioDate').value, sexe: document.getElementById('patientSexe').value,
+            age: document.getElementById('patientAge').value
+        }));
+        fs.unlinkSync(pdfFictif);
+        test('Un bilan PDF s\'importe : résultat du jour, unité convertie, aperçu avant application', () => {
+            ok(/Diffère de la saisie actuelle/.test(apercu.texte), 'l\'écart d\'identité (F 81 ans / M 80 ans) est signalé');
+            ok(apercu.hb && apercu.hb.coche, 'l\'hémoglobine est proposée cochée');
+            ok(apercu.mg && !apercu.mg.actif, 'une unité inconnue (mmol/kg) n\'est pas applicable');
+            ok(importe.hb === '11.4', `résultat du jour, pas l'antériorité : ${importe.hb}`);
+            ok(importe.creat === '120', `créatinine 13,6 mg/L convertie en µmol/L : ${importe.creat}`);
+            ok(importe.na === '133', `natrémie : ${importe.na}`);
+            ok(importe.mg === '', `magnésium non appliqué : ${importe.mg}`);
+            ok(importe.date === '2026-09-02', `date de prélèvement : ${importe.date}`);
+            ok(importe.sexe === 'F' && importe.age === '81', `identité appliquée : ${importe.sexe} ${importe.age}`);
+        });
+
         test('Le rapport ne lève aucune erreur JavaScript', () => {
             ok(erreurs.length === 0, `erreurs de page : ${erreurs.join(' | ')}`);
         });

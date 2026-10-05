@@ -1,7 +1,7 @@
 // Service Worker - GeriaAssist v1.05 (Phase 53 — Cardio diurétiques : Furosémide (pierre HFrEF, biodispo variable 10-100%, DOSE Felker NEJM 2011, TRANSFORM-HF 2023, triple whammy NTA, IRSS/carbamazépine hyponatrémie sévère SIADH), Torasémide (biodispo stable 80-100%, TORIC 2002 ↓ mortalité suggestif, TRANSFORM-HF 2023), Bumétanide (alternative furosémide résistance, 1 mg ≈ 40 mg furo), Indapamide (référence HTA âgé HYVET Beckett NEJM 2008 ↓AVC-30% ↓mortalité-21% > 80 ans, PROGRESS, ADVANCE), HCTZ (CARCINOMES CUTANÉS Pedersen JAMA Intern Med 2018 ANSM/EMA 2018, hyponatrémie SIADH, hypercalcémie thiazidique), Chlortalidone (ALLHAT 2002 + SHEP 1991 ↓AVC-36% > 60 ans, T½ longue 40-60h, équivalence chlortalidone 12,5 mg ≈ HCTZ 25 mg))
 // Version auto-incrémentée : modifier BUILD_ID à chaque déploiement
-const BUILD_ID = '20260929-benserazide';
-const CACHE_NAME = `geriaassist-v129-${BUILD_ID}`;
+const BUILD_ID = '20261005-import-bilan';
+const CACHE_NAME = `geriaassist-v130-${BUILD_ID}`;
 
 // Fichiers applicatifs (cache-first, rarement modifiés)
 const APP_ASSETS = [
@@ -16,6 +16,8 @@ const APP_ASSETS = [
     './geria-shell.js',
     './lib/bootstrap.bundle.min.js',
     './lib/html2pdf.bundle.min.js',
+    './lib/pdf.min.js',
+    './lib/pdf.worker.min.js',
     './lib/tesseract.min.js',
     './lib/tesseract-worker.min.js',
     './lib/tesseract-core-simd.wasm.js',
@@ -34,6 +36,7 @@ const APP_ASSETS = [
     './app_analysis.js',
     './text_extractor.js',
     './extractor_ui.js',
+    './bio_import.js',
     './app_legend.js',
     './drug_classes.js',
     './geria_engine_v2.js',

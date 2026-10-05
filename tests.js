@@ -1374,6 +1374,74 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Import de bilan PDF : seul le resultat du jour, dans la bonne unite', () => {
+        const B = require('./bio_import.js');
+        // Compte rendu FICTIF reproduisant la mise en page d'un export de laboratoire :
+        // intervalle de reference et anteriorite sur la ligne AU-DESSUS du libelle, signe
+        // moins U+2212, espace de milliers, ligne secondaire sans libelle dans une autre unite.
+        let y = 800; const L = [];
+        const row = (...cells) => { cells.forEach(([x, str]) => L.push({ str, x, y, page: 1 })); y -= 14; };
+        row([35, 'M. Patient FICTIF']); row([37, 'Date de naissance'], [150, '03−04−1945'], [203, '(81 ans) Sexe : F']);
+        row([37, 'Prélèvement du 02−09−2026 à 08:30']); row([37, 'Edition du 03−09−2026']);
+        row([402, '(13,0−18,0)'], [523, '9,3']); row([56, 'Hémoglobine'], [316, '11,4'], [345, 'g/dl']);
+        row([402, '(4,00−11,00)'], [518, '8,30']); row([33, 'LEUCOCYTES'], [316, '7,20'], [345, 'giga/l']);
+        row([56, 'Polynucléaires neutrophiles'], [317, '4,10'], [345, 'giga/l']);
+        row([56, 'Polynucléaires neutrophiles %'], [316, '56,9'], [345, '%']);
+        row([402, '(170−440)'], [521, '232']); row([33, 'PLAQUETTES :'], [319, '210'], [345, 'G/l']);
+        row([402, '(59,0−104,0)'], [514, '87,0']); row([33, 'Créatinine Sanguine'], [311, '120,0'], [345, 'μmol/L']);
+        row([320, '13,6'], [345, 'mg/L'], [402, '(6,7−11,8)'], [518, '9,8']);
+        row([33, 'Urée'], [320, '0,60'], [345, 'g/L']);
+        row([33, 'Glycémie à jeun'], [316, '1,26'], [345, 'g/L']);
+        row([33, 'Hémoglobine glyquée'], [316, '7,1'], [345, '%']);
+        row([33, 'Calcium'], [316, '92'], [345, 'mg/L']);
+        row([33, 'NT pro BNP'], [302, '1 349,0'], [345, 'pg/ml']);
+        row([33, 'BNP'], [316, '210'], [345, 'pg/ml']);
+        row([33, 'Procalcitonine'], [316, '< 0,05'], [345, 'ng/ml']);
+        row([33, 'Magnésium'], [316, '0,8'], [345, 'mmol/kg']);
+        row([33, 'Vitamine D'], [316, '62'], [345, 'nmol/L']);
+        row([33, 'DFG estimé CKD−EPI'], [316, '38,2'], [345, 'mL/min/1.73m2']);
+        row([33, 'Potassium sérique'], [316, '4,1'], [345, 'mmol/L']);
+        row([33, 'Potassium sérique'], [316, '5,6'], [345, 'mmol/L']);
+        const r = B.analyserCompteRendu(L);
+        const v = ch => r.valeurs.find(x => x.champ === ch) || {};
+        assert.strictEqual(v('bioHb').valeurCible, 11.4, 'resultat du jour, pas l\'anteriorite (9,3)');
+        assert.strictEqual(v('bioHb').ref, '(13,0-18,0)', 'intervalle du laboratoire lu sur la ligne du dessus');
+        assert.strictEqual(v('bioGb').valeurCible, 7.2);
+        assert.strictEqual(v('bioPnn').valeurCible, 4.1, 'le pourcentage ne remplace pas la valeur absolue');
+        assert.strictEqual(v('bioPlaq').valeurCible, 210, '« G/l » est un compte (giga), pas des grammes');
+        assert.strictEqual(v('bioCreat').valeurCible, 120, 'la ligne secondaire en mg/L, sans libelle, n\'est pas lue');
+        assert.strictEqual(v('bioUree').valeurCible, 9.99, 'uree 0,60 g/L = 9,99 mmol/L (M = 60,06)');
+        assert.strictEqual(v('bioGly').valeurCible, 6.99, 'glycemie 1,26 g/L = 6,99 mmol/L (M = 180,16)');
+        assert.strictEqual(v('bioCa').valeurCible, 2.3, 'calcium 92 mg/L = 2,30 mmol/L (M = 40,08)');
+        assert.strictEqual(v('bioHba1c').valeurCible, 7.1, 'hemoglobine glyquee → HbA1c');
+        const seule = (lib, val, u) => B.analyserCompteRendu([{ str: lib, x: 30, y: 10, page: 1 }, { str: val, x: 300, y: 10, page: 1 }, { str: u, x: 340, y: 10, page: 1 }]).valeurs[0];
+        assert.strictEqual(seule('Créatinine', '13,6', 'mg/L').valeurCible, 120, 'creatinine 13,6 mg/L = 120 µmol/L (M = 113,12)');
+        assert.strictEqual(seule('Bilirubine totale', '12', 'mg/L').valeurCible, 20.5, 'bilirubine 12 mg/L = 20,5 µmol/L (M = 584,66)');
+        assert.strictEqual(seule('Hémoglobine', '114', 'g/L').valeurCible, 11.4, 'Hb g/L → g/dL');
+        assert.strictEqual(r.valeurs.filter(x => x.champ === 'bioHb').length, 1, '« Hémoglobine glyquée » n\'est pas l\'hemoglobine');
+        assert.strictEqual(v('bioBnp').valeurCible, 1349, 'espace de milliers ; et le BNP n\'est pas le NT-proBNP');
+        assert.strictEqual(v('bioPct').statut, 'censure', 'une valeur bornee n\'est pas un resultat');
+        assert.strictEqual(v('bioMg').statut, 'unite', 'unite inconnue : montree, jamais appliquee');
+        assert.strictEqual(v('bioVitD').uniteSelect, 'nmol/L', 'champ a unite choisie : le selecteur suit le laboratoire');
+        assert.strictEqual(v('patientK').statut, 'conflit', 'deux kaliemies differentes : on ne choisit pas a la place du lecteur');
+        assert.strictEqual(r.dfgLabo.valeur, 38.2, 'le DFG du laboratoire est lu pour etre montre');
+        assert.ok(!r.valeurs.some(x => x.champ === 'patientDFG'), '... et jamais applique');
+        assert.strictEqual(r.date, '2026-09-02', 'date de PRELEVEMENT, pas d\'edition');
+        assert.strictEqual(r.identite.naissance, '1945-04-03');
+        assert.strictEqual(r.identite.sexe, 'F');
+        assert.strictEqual(B.ageA('1945-04-03', '2026-04-02'), 80, 'l\'age change au jour anniversaire');
+        assert.strictEqual(B.datePrelevement('Edition du 03-09-2026'), null, 'sans prelevement mentionne, aucune date');
+        // Les deux interfaces exposent chaque champ cible, et chaque option d'unite.
+        for (const f of ['index.html', 'index_modern.html']) {
+            const html = fs.readFileSync(f, 'utf8');
+            for (const p of B.BIO_IMPORT_PARAMS) {
+                assert.ok(html.includes(`id="${p.champ}"`), `${f} : champ ${p.champ}`);
+                if (p.selectUnite) for (const o of new Set(Object.values(p.selectUnite.unites)))
+                    assert.ok(new RegExp(`id="${p.selectUnite.id}"[^]*?value="${o}"`).test(html), `${f} : ${p.selectUnite.id} propose ${o}`);
+            }
+            assert.ok(/id="bioImportFile"[^>]*accept="[^"]*pdf/.test(html) && html.includes('bio_import.js'), `${f} : import de bilan branche`);
+        }
+    });
     test('Dopatherapie : l\'association declaree fait entrer ses partenaires dans l\'analyse', () => {
         const { sandbox } = require('./oracle_harness').loadApp();
         const vm = require('vm');

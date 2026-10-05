@@ -37,6 +37,7 @@ val copyWebApp by tasks.registering(Copy::class) {
         into("lib")
         include("bootstrap.min.css", "bootstrap.bundle.min.js")
         include("html2pdf.bundle.min.js")
+        include("pdf.min.js", "pdf.worker.min.js", "pdf.js.LICENSE")
         include("tesseract.min.js", "tesseract-worker.min.js")
         // Un seul moteur : le SIMD est celui référencé par ocr_module.js.
         include("tesseract-core-simd.wasm.js")

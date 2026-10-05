@@ -1403,6 +1403,50 @@ vidait que les cases à cocher, si bien que `bioDate` gardait la valeur du cas p
 que le test « aucune date n'est fabriquée » échouait sur du code correct. Les champs bio
 sont désormais blanchis entre deux dossiers.
 
+## Import d'un bilan biologique PDF (`bio_import.js`)
+
+Bouton « Importer un bilan biologique » sous la date du bilan (deux UIs, `#bioImportFile`).
+Lit la **couche texte** du compte rendu du laboratoire avec pdf.js (`lib/pdf.min.js` +
+`lib/pdf.worker.min.js`, v4.10 legacy, Apache-2.0, chargés par `import()` dynamique au
+premier usage — renommés en `.js` parce que `WebViewAssetLoader` ne connaît pas le type
+MIME de `.mjs`). Un PDF scanné (sans texte) est renvoyé vers l'OCR image.
+
+**Un compte rendu est un tableau, pas du texte libre.** À côté du résultat du jour se
+trouvent l'intervalle de référence et l'**antériorité** — la valeur du bilan précédent,
+souvent sur la ligne au-dessus. Aplatir le texte et prendre « le premier nombre après le
+libellé » (ce que fait l'extracteur de texte libre) expose à saisir l'antériorité. Les
+lignes sont donc reconstruites depuis les positions pdf.js, et la valeur est le premier
+nombre qui SUIT le libellé sur SA ligne, avant tout intervalle entre parenthèses.
+
+- **Table déclarée** `BIO_IMPORT_PARAMS` : libellés **ancrés** (« hémoglobine » ne capte
+  pas « hémoglobine glyquée » ; « BNP » n'est pas le NT-proBNP), unités acceptées et
+  facteurs tirés des **masses molaires** (créatinine mg/L × 8,84 ; urée g/L × 16,65 ;
+  glucose g/L × 5,551 ; calcium mg/L × 0,02495…). Une unité absente de la table n'est
+  **jamais** appliquée : la ligne est montrée en rouge, décochée et désactivée.
+- « G/l » d'un compte cellulaire est un **giga**, pas des grammes : les paramètres de
+  comptage ont leur propre table d'unités, la casse n'est pas un indice.
+- Volontairement **non importés** : T4/T3 (libre ou totale ?), D-dimères (FEU/DDU), TCA
+  (ratio ou secondes), albuminurie, et le **DFG du laboratoire** — affiché, jamais appliqué,
+  GeriaAssist le recalcule depuis la créatinine.
+- Valeur **censurée** (« < 0,05 ») : bornée, pas mesurée — montrée, non appliquée. Même
+  analyse lue deux fois avec deux valeurs : **conflit**, non appliquée.
+- Valeur convertie **hors des bornes** `min`/`max` du champ : décochée d'office — c'est
+  presque toujours une erreur d'unité.
+- **Aperçu obligatoire** : libellé lu, valeur et unité du laboratoire, intervalle de
+  référence du laboratoire (il prévaut), valeur convertie, valeur actuellement saisie.
+- **Date de prélèvement** (jamais la date d'édition) → `bioDate`. **Identité** montrée pour
+  l'identitovigilance, avec alerte si l'âge ou le sexe diffèrent de la saisie ; âge et
+  sexe sont appliqués AVANT la créatinine (le DFG se recalcule à chaque saisie). Le nom
+  n'est jamais reporté.
+
+**Données de test : un compte rendu FICTIF.** Le compte rendu réel ayant servi à la mise
+au point porte nom, date de naissance et INS : il ne doit jamais entrer dans le dépôt. Le
+test Node reproduit sa mise en page (antériorité au-dessus, signe moins U+2212, espace de
+milliers, ligne secondaire en mg/L sans libellé) ; le test Playwright fait **imprimer en
+PDF par Chromium** un compte rendu fictif et le relit par le vrai chemin (pdf.js + worker).
+Validés par mutation : lire l'antériorité, désancrer « hémoglobine », casser le facteur
+de la créatinine.
+
 ## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
 
 `_bioStatusBadge` ne connaissait que **six** paramètres et rendait un badge VERT « OK »
