@@ -1119,10 +1119,26 @@ qui redisaient une autre.
   ceux-ci sortaient, ils **ressortaient seuls dès que la précision d'indication faisait taire
   les vrais critères** — défaisant exactement ce que la précision devait obtenir. Le
   prescripteur l'avait assumé avec le motif « pas HTA ».
-  **Point ouvert** : 60 règles de ce module n'ont que `med_keys` pour condition, alors que
-  leur message affirme un terrain (« antécédent de cancer du sein », « glaucome à angle
-  fermé »…). Par identifiant, une seule sort sur le panel — les autres sont absorbées par des
-  groupes ou ne se déclenchent pas — mais chacune peut ressortir de la même façon.
+  **Revue complète du module qui suivit** : 60 règles n'y avaient que `med_keys` pour
+  condition alors que leur message affirmait un terrain. Le panel n'en voyait qu'une, faute de
+  contenir les molécules : testées une à une, quinze sortaient seules — l'estradiol annonçait
+  un « antécédent de cancer du sein », l'alendronate un « antécédent d'œsophagite », la
+  darifénacine un « glaucome à angle fermé », la doxazosine (souvent prescrite pour l'HBP) un
+  « traitement de l'HTA », en rouge. Chacune a été **conditionnée** sur son terrain quand
+  GeriaAssist sait le saisir (11 : contexte ou comorbidité, les deux chemins de saisie étant
+  équivalents), **retirée** quand il ne l'est pas, quand un critère propre conditionné la
+  double, ou quand c'est un START écrit à l'envers (25), **conservée** quand son seul terrain
+  est l'âge (15). Huit autres ont des clés mortes : inertes, à conditionner avant de réparer
+  leurs clés. Invariant `runIntegrationTerrainAudit` : toute règle du module à `med_keys` seul
+  est nommée dans `AGE_SEUL` avec son motif. Validé par mutation.
+  Corollaire : retirer une règle peut faire RESSORTIR celle qu'elle absorbait. `SUP_STOP_005`
+  (« Antiarythmiques ») était replié sous `SUP_STOP_067` retiré ; il est réapparu en doublon
+  d'`EV_PIM_02` (flécaïnide) et d'`EV_PIM_01` (dronédarone), et ne garde plus que le sotalol et
+  le disopyramide, que nulle autre règle ne couvre dans l'IC. **Après tout retrait, relire les
+  cartes AJOUTÉES par la dérive du golden, pas seulement les retirées.**
+  Piège de mesure rencontré : résoudre les clés avec `sanitizeText` + `matchesDrugClass`
+  surestime ce que le moteur voit — `hasMedKeyCached` normalise autrement, et « oestradiol
+  oralpatch » n'y désigne rien. Seul `analyzeCase` fait foi.
 - **Doublon ou interaction** : oxazépam + zopiclone sortait en « Doublon thérapeutique —
   Benzodiazépines » (Éviter) ET en « Co-prescription à risque » (Interactions, plus grave).
   `DUPLICATE_WATCH` se tait quand la base **déclare** déjà la paire en interaction

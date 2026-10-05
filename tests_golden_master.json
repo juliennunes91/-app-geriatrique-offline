@@ -64,7 +64,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 3 point(s)",
    "danger | Score ACB : 5",
-   "danger | Score PIM Global : 68/100 — RISQUE ÉLEVÉ",
+   "danger | Score PIM Global : 69/100 — RISQUE ÉLEVÉ",
    "info | CHA₂DS₂-VA : 4 point(s)",
    "info | RISQ-PATH : 6 point(s)",
    "info | Score de Tisdale : 2 point(s)",
@@ -229,7 +229,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -338,7 +338,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 13/100 — ACCEPTABLE",
+   "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 3 point(s)"
@@ -496,7 +496,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 4",
-   "danger | Score PIM Global : 68/100 — RISQUE ÉLEVÉ",
+   "danger | Score PIM Global : 70/100 — RISQUE ÉLEVÉ",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score de Tisdale : 2 point(s)",
@@ -576,7 +576,7 @@
    "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 13/100 — ACCEPTABLE",
+   "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 1 point(s)",
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 3 point(s)"
@@ -624,7 +624,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 2 point(s)",
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 48/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -662,7 +662,7 @@
    "danger | HAS-BLED : 2 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score PIM Global : 16/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 3 point(s)",
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 2 point(s)",
@@ -916,7 +916,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 9",
-   "danger | Score PIM Global : 67/100 — RISQUE ÉLEVÉ",
+   "danger | Score PIM Global : 68/100 — RISQUE ÉLEVÉ",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
@@ -987,7 +987,7 @@
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 35/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -1024,6 +1024,7 @@
  },
  "cov_EV_B06": {
   "alertes-eviter": [
+   "info | Amiodarone FORTA C (FA refractaire)",
    "info | Réévaluation planifiée",
    "warning | Amiodarone en 1ère intention (TSV)",
    "warning | Antiarythmique classe I/III sans ECG régulier",
@@ -1313,7 +1314,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 54/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque",
@@ -1353,7 +1354,7 @@
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 52/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1390,7 +1391,7 @@
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1431,7 +1432,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score PIM Global : 29/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
@@ -1495,7 +1496,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 13/100 — ACCEPTABLE",
+   "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 4 point(s)"
@@ -1540,7 +1541,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 2 point(s)",
-   "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 37/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -1576,7 +1577,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 12/100 — ACCEPTABLE",
+   "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -1621,7 +1622,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 20/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 22/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -1737,7 +1738,7 @@
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 57/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -2126,7 +2127,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 14/100 — ACCEPTABLE",
+   "info | Score PIM Global : 18/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 2 point(s)"
@@ -2289,7 +2290,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 16/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 2 point(s)"
@@ -2566,7 +2567,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 37/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 38/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2710,7 +2711,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2776,7 +2777,7 @@
    "info | CHA₂DS₂-VA : 4 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 31/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 32/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 3 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -3020,7 +3021,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 31/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -3060,7 +3061,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3304,7 +3305,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 34/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
@@ -3376,7 +3377,7 @@
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 2 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3402,7 +3403,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
@@ -3437,7 +3438,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 16/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -3804,7 +3805,6 @@
  },
  "cov_SUP_INT_005_SUP_INT_006": {
   "alertes-eviter": [
-   "danger | Alpha-1 bloquants comme antihypertenseurs",
    "danger | Colchicine + Macrolide : CONTRE-INDICATION ABSOLUE",
    "info | Action immédiate",
    "info | Incontinence urinaire iatrogène — revue médicamenteuse",
@@ -3842,7 +3842,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 37/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3887,7 +3887,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3946,7 +3946,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 11/100 — ACCEPTABLE",
+   "info | Score PIM Global : 9/100 — ACCEPTABLE",
    "info | Score de Tisdale : 2 point(s)",
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)"

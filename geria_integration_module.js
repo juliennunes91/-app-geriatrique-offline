@@ -30,6 +30,16 @@
 //          nouvelles règles STOPP v3 / Dalleur 2025 non encore converties.
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// REVUE 2026-10 : 60 règles de ce module n'avaient que med_keys pour condition, alors que leur
+// message affirmait un terrain (« antécédent de cancer du sein », « glaucome à angle fermé »,
+// « traitement de l'HTA »…). Une telle règle sort chez TOUT patient qui reçoit la molécule ;
+// absorbée sous un critère propre tant que celui-ci sort, elle RESSORT seule dès qu'une
+// précision le fait taire (SUP_STOP_001/002, diurétique de l'anse). Chacune a été :
+//  - CONDITIONNÉE sur le terrain qu'elle affirme quand GeriaAssist sait le saisir ;
+//  - RETIRÉE quand le terrain n'est pas saisissable, quand un critère propre conditionné la
+//    double, ou quand c'est un START écrit à l'envers (med_keys au lieu de med_absent) ;
+//  - CONSERVÉE telle quelle quand son seul terrain est l'âge (paroxétine, dompéridone…).
+// Invariant : runIntegrationTerrainAudit (tests.js).
 const RECOS_SUPPLEMENT_INTEGRATION = [
     // SUP_STOP_001 (« Diurétique de l'anse en première ligne pour HTA ») RETIRÉ : import
     // défectueux de STOPP B7 — condition réduite à la seule présence d'un diurétique de
@@ -85,7 +95,9 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
                 "doxazosine",
                 "prazosine",
                 "terazosine"
-            ]
+            ],
+            "comorbs": ["PAT_005"],
+            "contexte_clinique_absent": ["hbp"]
         },
         "alternatives": "Acceptable si indication urologiques (BPH). A eviter comme antihypertenseur seul",
         "forta": "D (FORTA D pour HTA)",
@@ -103,75 +115,26 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         ],
         "ref_code": "RECO_0027",
         "section": "Cardiovasculaire",
-        "titre": "Antiarythmiques",
+        // Flécaïnide et propafénone retirées : EV_PIM_02 porte déjà « classe Ic + cardiopathie
+        // structurelle » ; dronédarone retirée : EV_PIM_01 porte « dronédarone + IC ». Les
+        // cartes sortaient côte à côte. Reste ce qu'aucune autre règle ne dit.
+        "titre": "Sotalol ou disopyramide et insuffisance cardiaque",
         "message": "Insuffisance cardiaque associee ou FEVG alteree (<40%) — Effet proarythmique, inotropisme negatif, decompensation cardiaque",
         "severite": "warning",
         "condition": {
             "med_keys": [
-                "flecainide",
-                "propafenone",
-                "dronedarone",
                 "sotalol",
                 "disopyramide"
-            ]
+            ],
+            "comorbs_any": ["PAT_002", "PAT_003"]
         },
         "alternatives": "Sotalol et dronedarone: augmentent mortalite si FEVG alteree. Disopyramide: fort effet anti-cholinergique",
         "forta": "D (FORTA D si FEVG alteree)",
         "priscus": "Oui",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_STOP_006",
-        "csv_ref": "RECO_0028",
-        "sources": [
-            "BEERS",
-            "FORTA",
-            "PRISCUS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "RECO_0028",
-        "section": "Cardiovasculaire",
-        "titre": "Amiodarone",
-        "message": "En association avec d'autres medicaments allongeant QTc ou si dysthyroidie — Accumulation tissulaire, toxicite thyroidienne, pulmonaire, hepatique, oculaire",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "amiodarone"
-            ]
-        },
-        "alternatives": "Surveillance TSH, bilan hepatique, EFR, ophtalmologie tous les 6 mois minimum",
-        "forta": "C/D (FORTA C pour FA refractaire)",
-        "priscus": "Oui",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_007",
-        "csv_ref": "RECO_0032",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "FORTA",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-B4",
-        "section": "Cardiovasculaire",
-        "titre": "Beta-bloquant",
-        "message": "Maladie coronarienne symptomatique (ischemique) — Reduction de l'angor, prevention des recidives",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "bisoprolol",
-                "metoprolol",
-                "carvedilol",
-                "nebivolol"
-            ]
-        },
-        "alternatives": "Cardioselectifs preferes. Maintien recommande longtemps apres IDM",
-        "forta": "A (FORTA A)",
-        "nb_sources": 8
-    },
+    // SUP_STOP_006 (« Amiodarone ») RETIRÉ — terrain affirmé (« association allongeant le QTc ou dysthyroïdie ») non vérifiable par sa condition ; le cumul QT est traité par le moteur QT.
+    // SUP_START_007 (« Beta-bloquant ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
     {
         "id": "SUP_STOP_008",
         "csv_ref": "RECO_0042",
@@ -285,37 +248,14 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
             "med_keys": [
                 "oestradiol oralpatch",
                 "testosterone"
-            ]
+            ],
+            "contexte_clinique": "mtev"
         },
         "alternatives": "CI absolue si ATCD TVP/EP personnel. Exception: oestrogene local (voie vaginale) = risque systemique minimal",
         "priscus": "Oui",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_START_013",
-        "csv_ref": "RECO_0056",
-        "sources": [
-            "BEERS",
-            "PRISCUS",
-            "PIM_CHECK"
-        ],
-        "ref_code": "RECO_0056",
-        "section": "Coagulation",
-        "titre": "Anticoagulant",
-        "message": "AVK si CI aux AOD\" — Fibrillation auriculaire chronique ou paroxystique (score CHA2DS2-VASc >=2 chez H, >=3 chez F)",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "aod apixaban",
-                "rivaroxaban",
-                "dabigatran",
-                "edoxaban"
-            ]
-        },
-        "alternatives": "8",
-        "priscus": "A (FORTA A)",
-        "nb_sources": 0
-    },
+    // SUP_START_013 (« Anticoagulant ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
     {
         "id": "SUP_STOP_014",
         "csv_ref": "RECO_0064",
@@ -333,7 +273,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "condition": {
             "med_keys": [
                 "tous les isrs"
-            ]
+            ],
+            "contexte_clinique_any": ["atcd_hemorragie", "atcd_hemorragie_digestive"]
         },
         "alternatives": "Evaluer alternative. Si maintien ISRS: protection gastrique (IPP), surveillance hemostase",
         "nb_sources": 8
@@ -483,126 +424,11 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "priscus": "Oui",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_START_020",
-        "csv_ref": "RECO_0091",
-        "sources": [
-            "STOPP3",
-            "FORTA",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-D5",
-        "section": "SNC",
-        "titre": "ISRS (ou IRSNA si ISRS CI, ou pregabaline)",
-        "message": "Trouble anxieux generalis persistent et severe avec retentissement sur les activites et la qualite de vie — Reduction des symptomes anxieux. Maintien de l'autonomie",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "sertraline",
-                "escitalopram",
-                "venlafaxine",
-                "pregabaline"
-            ]
-        },
-        "alternatives": "Evaluer d'abord les causes organiques et iatrogenes d'anxiete. Approche non pharmacologique en complement",
-        "forta": "A (FORTA A)",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_021",
-        "csv_ref": "RECO_0092",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "FORTA",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-D6",
-        "section": "SNC",
-        "titre": "Agoniste dopaminergique",
-        "message": "Syndrome des jambes sans repos avec retentissement sur la qualite de vie (apres exclusion carence martiale et IRC severe - DFG<30) — Reduction des symptomes et amelioration du sommeil",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "ropinirole",
-                "pramipexole",
-                "rotigotine"
-            ]
-        },
-        "alternatives": "Exclure carence en fer (ferritine <50 µg/L → supplementation d'abord). CI si DFG<30 pour pramipexole",
-        "forta": "B (FORTA B)",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_022",
-        "csv_ref": "RECO_0093",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-D7",
-        "section": "SNC",
-        "titre": "Propranolol",
-        "message": "Tremblement essentiel avec retentissement fonctionnel — Reduction significative du tremblement (efficacite demontree)",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "propranolol"
-            ]
-        },
-        "alternatives": "Alternative: primidone. Attention bradycardie, hypoglycemie masquee, bronchospasme si asthme",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_023",
-        "csv_ref": "RECO_0105",
-        "sources": [
-            "STOPP3",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-E2",
-        "section": "Rénal",
-        "titre": "Chelateurs du phosphore",
-        "message": "IRC severe (DFG<30 ml/min) avec hyperphosphatemie persistante >1.76 mmol/L malgre regime alimentaire — Prevention de l'hyperparathyroidie secondaire et des calcifications vasculaires",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "carbonate de calcium",
-                "sevelamer",
-                "carbonate de lanthane"
-            ]
-        },
-        "alternatives": "Sevelamer: prefere car n'entraine pas de surcharge calcique. Prise au repas obligatoire",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_024",
-        "csv_ref": "RECO_0106",
-        "sources": [
-            "STOPP3",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-E3",
-        "section": "Rénal",
-        "titre": "Analogue de l'erythropoietine",
-        "message": "IRC severe (DFG<30 ml/min) avec anemie symptomatique non attributable a une carence ferrique ou en hematinogens (Hb cible 10-12 g/dL) — Amelioration des symptomes de l'anemie, reduction des transfusions",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "darbepoetine",
-                "epoetine alfa",
-                "epoetine beta"
-            ]
-        },
-        "alternatives": "Evaluer et corriger d'abord les carences (fer, B12, folates) avant EPO. Cible Hb: 10-12 g/dL",
-        "nb_sources": 8
-    },
+    // SUP_START_020 (« ISRS (ou IRSNA si ISRS CI, ou pregabaline) ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_021 (« Agoniste dopaminergique ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_022 (« Propranolol ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_023 (« Chelateurs du phosphore ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_024 (« Analogue de l'erythropoietine ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
     {
         "id": "SUP_STOP_025",
         "csv_ref": "RECO_0111",
@@ -630,29 +456,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "alternatives": "Dose maximale utile: 100-200 mg/j d'element fer. Si malabsorption: fer IV prefere",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_STOP_026",
-        "csv_ref": "RECO_0113",
-        "sources": [
-            "STOPP3",
-            "PIM_CHECK"
-        ],
-        "ref_code": "STOPP3-F6",
-        "section": "Gastro",
-        "titre": "Antiagregant ou anticoagulant",
-        "message": "Ectasie vasculaire antrale gastrique (estomac en pasteque / watermelon stomach) — Hemorragie digestive majeure",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "aspirine",
-                "clopidogrel",
-                "aod",
-                "avk"
-            ]
-        },
-        "alternatives": "Condition rare. Si anticoagulation ou antiagregation indispensable: traitement endoscopique de la GAVE d'abord",
-        "nb_sources": 8
-    },
+    // SUP_STOP_026 (« Antiagregant ou anticoagulant ») RETIRÉ — terrain affirmé (ectasie vasculaire antrale gastrique) non saisissable dans GeriaAssist.
     {
         "id": "SUP_STOP_027",
         "csv_ref": "RECO_0115",
@@ -676,73 +480,9 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "alternatives": "Complement nutritionnel oral, evaluation nutritionnelle dietetique. Mirtazapine si depression+anorexie associees",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_START_028",
-        "csv_ref": "RECO_0119",
-        "sources": [
-            "STOPP3",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-F4",
-        "section": "Gastro",
-        "titre": "Fibre alimentaire",
-        "message": "Diverticulose avec antecedent de constipation — Prevention des complications de la diverticulose, regularisation du transit",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "psyllium",
-                "ispaghule",
-                "methylcellulose"
-            ]
-        },
-        "alternatives": "Hydratation suffisante indispensable (>1.5 L/j). Eviter si subocclusion",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_029",
-        "csv_ref": "RECO_0121",
-        "sources": [
-            "STOPP3",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-F6",
-        "section": "Gastro",
-        "titre": "Probiotiques",
-        "message": "Antibiotherapie (prevention de la diarrhee a Clostridioides difficile) - sauf immunodeprime severe ou denutrition severe — Reduction du risque de diarrhee a C.difficile sous antibiotiques",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "saccharomyces boulardii",
-                "lactobacillus rhamnosus"
-            ]
-        },
-        "alternatives": "Exclure immunodepression severe. Saccharomyces boulardii: CI si Candida bacteremie",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_030",
-        "csv_ref": "RECO_0122",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-F7",
-        "section": "Gastro",
-        "titre": "Eradication H.pylori",
-        "message": "Ulcere peptique actif associe a H.pylori — Guerison de l'ulcere, prevention des recidives, reduction du risque de cancer gastrique",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "triple therapie ou quadritherapie"
-            ]
-        },
-        "alternatives": "Verification eradication par test respiratoire a l'uree ou coproantigenee a 4 semaines post-traitement",
-        "nb_sources": 8
-    },
+    // SUP_START_028 (« Fibre alimentaire ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_029 (« Probiotiques ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_030 (« Eradication H.pylori ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
     {
         "id": "SUP_STOP_031",
         "csv_ref": "RECO_0124",
@@ -762,84 +502,16 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
             "med_keys": [
                 "prednisolone",
                 "methylprednisolone"
-            ]
+            ],
+            "comorbs": ["PAT_023"]
         },
         "alternatives": "CSI inhales (fluticasone, budesonide) sont le standard de soin. Corticosteroides systemiques uniquement pour exacerbations aigues",
         "priscus": "Oui",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_START_032",
-        "csv_ref": "RECO_0127",
-        "sources": [
-            "BEERS",
-            "FORTA",
-            "PRISCUS",
-            "PIM_CHECK"
-        ],
-        "ref_code": "RECO_0127",
-        "section": "Respiratoire",
-        "titre": "LAMA ou LABA",
-        "message": "formoterol, salmeterol, indacaterol (LABA)\" — Asthme ou BPCO GOLD 1-2 symptomatiques",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "tiotropium",
-                "aclidinium",
-                "umeclidinium"
-            ]
-        },
-        "alternatives": "8",
-        "forta": "Oui",
-        "priscus": "A (FORTA A)",
-        "nb_sources": 0
-    },
-    {
-        "id": "SUP_START_033",
-        "csv_ref": "RECO_0129",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-G3",
-        "section": "Respiratoire",
-        "titre": "Oxygenotherapie de longue duree",
-        "message": "Hypoxemie chronique (pO2 <8.0 kPa ou 60 mmHg) ou SaO2 <88% au repos — Reduction de la mortalite (COPD), amelioration symptomatique",
-        "severite": "danger",
-        "condition": {
-            "med_keys": [
-                "o2 concentrateur  15hj"
-            ]
-        },
-        "alternatives": "Evaluation: 2 gazometries arterielles a distance d'une exacerbation. Cible SaO2: 88-92% dans la BPCO",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_STOP_034",
-        "csv_ref": "RECO_0133",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "STOPP3-H4",
-        "section": "Musculo",
-        "titre": "Corticoide systemique au long cours en monotherapie",
-        "message": "Polyarthrite rhumatoide en monotherapie (>3 mois) — Effets indesirables systemiques des corticoides au long cours (diabete, osteoporose, infections, cataracte)",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "prednisolone",
-                "prednisone",
-                "methylprednisolone"
-            ]
-        },
-        "alternatives": "Methotrexate ou biotherapie (anti-TNF, anti-IL6, abatacept) en association pour permettre reduction corticoides",
-        "nb_sources": 8
-    },
+    // SUP_START_032 (« LAMA ou LABA ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_033 (« Oxygenotherapie de longue duree ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_STOP_034 (« Corticoide systemique au long cours en monotherapie ») RETIRÉ — terrain affirmé (polyarthrite rhumatoïde) non saisissable dans GeriaAssist.
     {
         "id": "SUP_STOP_035",
         "csv_ref": "RECO_0134",
@@ -857,7 +529,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
             "med_keys": [
                 "prednisolone",
                 "methylprednisolone"
-            ]
+            ],
+            "contexte_clinique": "arthrose"
         },
         "alternatives": "Injections intra-articulaires de corticoide: indication limitee, maximum 3/an par articulation",
         "nb_sources": 8
@@ -882,7 +555,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
                 "alendronate",
                 "risedronate",
                 "ibandronate"
-            ]
+            ],
+            "contexte_clinique_any": ["atcd_ulcere", "dysphagie"]
         },
         "alternatives": "Bisphosphonate IV (acide zoledronique 1x/an) si voie orale contre-indiquee. Denosumab: alternative",
         "priscus": "Oui",
@@ -915,33 +589,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "priscus": "Oui",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_START_038",
-        "csv_ref": "RECO_0140",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "FORTA",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-H1",
-        "section": "Musculo",
-        "titre": "Traitement de fond (DMARD) rhumatologie",
-        "message": "Polyarthrite rhumatoide active et invalidante — Reduction de l'activite de la maladie, prevention des lesions articulaires",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "methotrexate",
-                "leflunomide",
-                "hydroxychloroquine",
-                "sulfasalazine"
-            ]
-        },
-        "alternatives": "Methotrexate en premiere ligne avec acide folique. Biotherapie si echec des csDMARD",
-        "forta": "A (FORTA A)",
-        "nb_sources": 8
-    },
+    // SUP_START_038 (« Traitement de fond (DMARD) rhumatologie ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
     {
         "id": "SUP_START_039",
         "csv_ref": "RECO_0141",
@@ -1031,7 +679,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
                 "darifenacine",
                 "fesoterodine",
                 "trospium"
-            ]
+            ],
+            "contexte_clinique": "glaucome"
         },
         "alternatives": "Mirabegron: alternative si glaucome. Consultation ophtalmo pour confirmer le type de glaucome",
         "priscus": "Oui",
@@ -1058,7 +707,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
                 "solifenacine",
                 "darifenacine",
                 "fesoterodine"
-            ]
+            ],
+            "contexte_clinique": "hbp"
         },
         "alternatives": "Mesurer le residu post-mictionnel systematiquement. Si >200 mL: eviter tout antimuscarinique",
         "priscus": "Oui",
@@ -1085,121 +735,11 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "alternatives": "Duloxetine: uniquement dans l'incontinence d'effort (stress). Antimuscarinique ou mirabegron si urgence",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_START_045",
-        "csv_ref": "RECO_0158",
-        "sources": [
-            "STOPP3",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-I2",
-        "section": "Urogénital",
-        "titre": "Inhibiteur de la 5-alpha reductase",
-        "message": "HBP avec volumes importants / SBAU persistants (quand prostatectomie non indiquee) — Reduction du volume prostatique, amelioration des symptomes a long terme, prevention de la retention",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "finasteride",
-                "dutasteride"
-            ]
-        },
-        "alternatives": "Effet apres 6 mois minimum. Efficacite accrue en association avec alpha-bloquant si volume prostatique >40mL",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_046",
-        "csv_ref": "RECO_0159",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-I3",
-        "section": "Urogénital",
-        "titre": "Oestrogene local voie vaginale",
-        "message": "Secheresse et atrophie vaginales symptomatiques (dyspareunie, prurit) — Amelioration des symptomes locaux, amelioration de la qualite de vie sexuelle",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "oestradiol ovule",
-                "creme",
-                "anneau vaginal"
-            ]
-        },
-        "alternatives": "Tres faible absorption systemique (niveau physiologique). Peut etre utilisee meme si ATCD cancer sein si gyneco d'accord",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_047",
-        "csv_ref": "RECO_0160",
-        "sources": [
-            "STOPP3",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-I4",
-        "section": "Urogénital",
-        "titre": "Oestrogene local voie vaginale",
-        "message": "Infections urinaires recurrentes chez la femme (prevention) — Reduction significative du risque de recidives d'IU (restauration de la flore lactobacillaire)",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "oestradiol vaginal"
-            ]
-        },
-        "alternatives": "Indication validee par HAS dans les IU recurrentes de la femme post-menopausee",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_START_048",
-        "csv_ref": "RECO_0161",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-I5",
-        "section": "Urogénital",
-        "titre": "Inhibiteur de la PDE5",
-        "message": "Dysfonction erectile persistante causant une detresse psychologique — Amelioration de la fonction erectile, qualite de vie",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "sildenafil",
-                "tadalafil",
-                "vardenafil",
-                "avanafil"
-            ]
-        },
-        "alternatives": "CI absolue avec nitrates. Prudence si HTA non controlee, IC severe, ATCD AVC/IDM recent (<6 mois)",
-        "nb_sources": 8
-    },
-    {
-        "id": "SUP_STOP_049",
-        "csv_ref": "RECO_0166",
-        "sources": [
-            "STOPP3",
-            "BEERS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "STOPP3-J5",
-        "section": "Endocrine",
-        "titre": "Oestrogene systemique (oral ou patch)",
-        "message": "Antecedent de cancer du sein — Recidive tumorale",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "estradiol",
-                "estrogenes conjugues"
-            ]
-        },
-        "alternatives": "Exception: oestrogene local (vaginal) = risque systemique minimal, peut etre discute avec oncologue",
-        "nb_sources": 8
-    },
+    // SUP_START_045 (« Inhibiteur de la 5-alpha reductase ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_046 (« Oestrogene local voie vaginale ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_047 (« Oestrogene local voie vaginale ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_START_048 (« Inhibiteur de la PDE5 ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
+    // SUP_STOP_049 (« Oestrogene systemique (oral ou patch) ») RETIRÉ — terrain affirmé (antécédent de cancer du sein) non saisissable dans GeriaAssist.
     {
         "id": "SUP_STOP_050",
         "csv_ref": "RECO_0167",
@@ -1219,7 +759,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
                 "oestradiol oral",
                 "patch",
                 "oestrogenes conjugues"
-            ]
+            ],
+            "contexte_clinique": "mtev"
         },
         "alternatives": "CI absolue si ATCD TVP/EP. Exception: oestrogene local (vaginal) - voir I3/I4",
         "nb_sources": 8
@@ -1416,27 +957,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "alternatives": "Indication validee: nevralgie post-zosterienne et douleurs neuropathiques localisees. Pas d'indication dans l'arthrose",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_START_059",
-        "csv_ref": "RECO_0201",
-        "sources": [
-            "STOPP3",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "START3-L4",
-        "section": "Vaccins",
-        "titre": "Vaccin SARS-CoV2",
-        "message": "Tous les patients ages selon les recommandations nationales (booster annuel en France 2024) — Prevention des formes graves, hospitalisations et deces COVID-19",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "covid-19 marn ou sous-unite"
-            ]
-        },
-        "alternatives": "Rappels annuels recommandes pour les >65 ans et les immunodeprimes. Co-administration avec grippe possible",
-        "nb_sources": 8
-    },
+    // SUP_START_059 (« Vaccin SARS-CoV2 ») RETIRÉ — règle START écrite avec med_keys : son sens était inversé (un START propose d'INITIER un traitement absent). Inerte en pratique ; les START utiles sont portés par IN_* (med_absent).
     {
         "id": "SUP_DEP_060",
         "csv_ref": "RECO_0202",
@@ -1619,30 +1140,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "priscus": "Oui",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_STOP_067",
-        "csv_ref": "RECO_0209",
-        "sources": [
-            "FORTA",
-            "PRISCUS",
-            "PIM_CHECK"
-        ],
-        "ref_code": "RECO_0209",
-        "section": "Cardiovasculaire",
-        "titre": "Antiarythmiques classe Ic en premisses chez le sujet age",
-        "message": "Patient age (>65 ans) avec cardiopathie structurelle ou post-IDM — Effet proarythmique, augmentation de la mortalite post-IDM (etude CAST)",
-        "severite": "danger",
-        "condition": {
-            "med_keys": [
-                "flecainide",
-                "propafenone"
-            ]
-        },
-        "alternatives": "Flecainide et propafenone: uniquement si absence de cardiopathie structurelle et sous surveillance specialisee",
-        "forta": "D (FORTA D: cardiopathie structurelle)",
-        "priscus": "Oui",
-        "nb_sources": 8
-    },
+    // SUP_STOP_067 (« Antiarythmiques classe Ic en premisses chez le sujet age ») RETIRÉ — doublon non conditionné d'EV_PIM_02 (flécaïnide/propafénone + cardiopathie, comorbs_any).
     {
         "id": "SUP_STOP_068",
         "csv_ref": "RECO_0210",
@@ -1697,29 +1195,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "priscus": "Oui",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_CAUT_070",
-        "csv_ref": "RECO_0212",
-        "sources": [
-            "FORTA",
-            "PRISCUS",
-            "PIM_CHECK"
-        ],
-        "ref_code": "RECO_0212",
-        "section": "Cardiovasculaire",
-        "titre": "Digoxine FORTA C (IC)",
-        "message": "Insuffisance cardiaque a FE reduite (ICFEr) (prevention FA rapide) — Benefice sur la frequence mais pas sur la mortalite. Fenetre therapeutique etroite. Dose max 0.125 mg/j apres 70 ans",
-        "severite": "info",
-        "condition": {
-            "med_keys": [
-                "digoxine"
-            ]
-        },
-        "alternatives": "Digoxine: FORTA C = utilisation avec prudence. Surveillance dosage serrique, ionogramme, creatinine",
-        "forta": "C (FORTA C: ICFEr)",
-        "priscus": "Oui",
-        "nb_sources": 8
-    },
+    // SUP_CAUT_070 (« Digoxine FORTA C (IC) ») RETIRÉ — doublon non conditionné d'EV_FORTA_02 (digoxine dans l'IC, comorbs_any).
     {
         "id": "SUP_CAUT_071",
         "csv_ref": "RECO_0213",
@@ -1737,7 +1213,8 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "condition": {
             "med_keys": [
                 "amiodarone"
-            ]
+            ],
+            "comorbs": ["PAT_006"]
         },
         "alternatives": "Surveillance semi-annuelle: TSH+FT4, bilan hepatique, EFR+radio thorax, bilan ophtalmique",
         "forta": "C (FORTA C)",
@@ -1888,29 +1365,7 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         "alternatives": "ANSM: alertes repetees sur le detournement d'usage de la tianeptine. Surveillance accrue",
         "nb_sources": 8
     },
-    {
-        "id": "SUP_STOP_078",
-        "csv_ref": "RECO_0220",
-        "sources": [
-            "BEERS",
-            "PRISCUS",
-            "REMEDIES",
-            "PIM_CHECK"
-        ],
-        "ref_code": "RECO_0220",
-        "section": "Cardiovasculaire",
-        "titre": "Medicaments nefrotoxiques en association chez le sujet age",
-        "message": "Association triple: AINS + IEC ou ARA2 + diuretique (nephrotoxicite synergique) — Insuffisance renale aigue (IRA) severe (triple whammy = multiplicateur de risque x4)",
-        "severite": "danger",
-        "condition": {
-            "med_keys": [
-                "ains  iecara2  diuretique"
-            ]
-        },
-        "alternatives": "Eviter systematiquement cette triple association. Si AINS indispensable: arreter temporairement IEC/ARA2 + diuretique",
-        "priscus": "Oui",
-        "nb_sources": 8
-    },
+    // SUP_STOP_078 (« Medicaments nefrotoxiques en association chez le sujet age ») RETIRÉ — doublon non conditionné d'EV_SYND_045 (triple whammy, med_keys/_2/_3).
     {
         "id": "SUP_STOP_079",
         "csv_ref": "RECO_0221",

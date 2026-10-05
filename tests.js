@@ -1397,6 +1397,39 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!est, `${d} n'est pas un diuretique`);
         }
     });
+    test('runIntegrationTerrainAudit — une regle du module d\'integration ne sort pas sur la seule molecule si elle affirme un terrain', () => {
+        // 60 regles n'avaient que med_keys pour condition alors que leur message affirmait un
+        // terrain (« antecedent de cancer du sein », « glaucome a angle ferme »…) : elles
+        // sortaient chez tout patient sous la molecule, ou ressortaient des qu'une precision
+        // faisait taire le critere propre qui les absorbait (SUP_STOP_001/002). Toute regle a
+        // med_keys SEUL est desormais listee ici, avec le motif qui l'autorise.
+        const AGE_SEUL = {
+            SUP_STOP_016: 'paroxetine : tout sujet age', SUP_STOP_017: 'fluoxetine : tout sujet age',
+            SUP_STOP_018: 'barbituriques : tout usage', SUP_STOP_019: 'myorelaxants : tout sujet age',
+            SUP_STOP_027: 'megestrol : quelle qu\'en soit l\'indication', SUP_STOP_037: 'indometacine, ketorolac : tout sujet age',
+            SUP_STOP_054: 'testosterone : conduite d\'indication, pas un antecedent', SUP_STOP_055: 'hormone de croissance : conduite d\'indication',
+            SUP_STOP_056: 'antihypertenseurs centraux : tout sujet age', SUP_STOP_066: 'phenothiazines fortes doses : tout sujet age (PRISCUS)',
+            SUP_STOP_069: 'glibenclamide, glimepiride : le diabete est porte par la molecule', SUP_STOP_075: 'anticholinergiques antiparkinsoniens : tout sujet age',
+            SUP_STOP_079: 'domperidone : tout sujet age', SUP_CAUT_072: 'gabapentinoides : cotation FORTA, quelle que soit l\'indication',
+            SUP_CAUT_074: 'mirtazapine : cotation FORTA (informatif)',
+            // Cles mortes (aucun medicament resolu) : inertes. A conditionner avant toute
+            // correction de leurs cles.
+            SUP_STOP_003: 'cle morte', SUP_STOP_044: 'cle morte', SUP_STOP_051: 'cle morte', SUP_STOP_057: 'cle morte',
+            SUP_STOP_058: 'cle morte', SUP_STOP_076: 'cle morte', SUP_STOP_077: 'cle morte', SUP_STOP_080: 'cle morte'
+        };
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const seules = JSON.parse(require('vm').runInContext(`JSON.stringify(RECOS_SUPPLEMENT_INTEGRATION.filter(r => {
+            const k = Object.keys(r.condition || {}); return k.length === 1 && k[0] === 'med_keys'; }).map(r => r.id))`, sandbox));
+        assert.deepStrictEqual(seules.filter(id => !AGE_SEUL[id]), [], 'regles a med_keys seul non justifiees');
+        const sort = (o, id) => Object.values(analyzeCase({ age: 80, sexe: 'F', dfg: 60, ...o })._html || {}).join(' ').indexOf('id:' + id) >= 0;
+        assert.ok(!sort({ meds: ['Estradiol'] }, 'SUP_STOP_049'), 'estradiol : plus d\'« antecedent de cancer du sein » affirme');
+        assert.ok(!sort({ meds: ['Alendronate'] }, 'SUP_STOP_036') && sort({ meds: ['Alendronate'], flags: ['chkAtcdUlcere'] }, 'SUP_STOP_036'), 'bisphosphonate oral : sur antecedent ulcereux declare');
+        assert.ok(sort({ meds: ['Alendronate'], comorbs: ['PAT_021'] }, 'SUP_STOP_036'), '... par la liste comme par la case');
+        assert.ok(!sort({ meds: ['Doxazosine'] }, 'SUP_STOP_004') && sort({ meds: ['Doxazosine'], comorbs: ['PAT_005'] }, 'SUP_STOP_004'), 'alpha-bloquant : seulement dans l\'HTA');
+        assert.ok(!sort({ meds: ['Doxazosine'], comorbs: ['PAT_005'], flags: ['chkHbp'] }, 'SUP_STOP_004'), '... et pas s\'il traite une HBP');
+        assert.ok(!sort({ meds: ['Darifenacin'] }, 'SUP_STOP_042') && sort({ meds: ['Darifenacin'], flags: ['chkGlaucome'] }, 'SUP_STOP_042'), 'antimuscarinique : seulement sur glaucome');
+        assert.ok(sort({ meds: ['Paroxetine'] }, 'SUP_STOP_016'), 'un PIM d\'age sort toujours sur la molecule');
+    });
     test('Dossier IRC G4 sous ASE et BZD + Z : un fait, une carte', () => {
         // Cas reel anonymise : H 76 ans, DFG 18, Hb 10,3 normocytaire, darbepoetine,
         // furosemide avec indication declaree « IRC », oxazepam + zopiclone.
