@@ -1397,6 +1397,28 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!est, `${d} n'est pas un diuretique`);
         }
     });
+    test('« Nouveau patient » remet a zero tout champ du dossier, et seulement les preferences survivent', () => {
+        // « Nouveau » laissait la synthese du patient precedent a l'ecran (alertes-synthese
+        // absent de la liste videe), le texte libre importe, le commentaire au prescripteur
+        // (qui partait dans le PDF du patient suivant) et quatre cases cliniques. Tout champ
+        // d'une interface doit etre NOMME dans resetPatient, ou declare ici comme preference.
+        const PREFERENCES = {
+            prefSkipPrecisions: 'reglage utilisateur', prefSkipMaskConfirm: 'reglage utilisateur',
+            spcDisplayAccordion: 'mode d\'affichage', spcDisplayModal: 'mode d\'affichage',
+            suiviModeCroix: 'mode d\'affichage', suiviModeMed: 'mode d\'affichage'
+        };
+        const core = fs.readFileSync('app_core.js', 'utf8');
+        const i = core.indexOf('window.resetPatient = function');
+        const reset = core.slice(i, core.indexOf('\n};', i));
+        for (const f of ['index.html', 'index_modern.html']) {
+            const h = fs.readFileSync(f, 'utf8');
+            const oublies = [...h.matchAll(/<(?:input|textarea|select)\b[^>]*\bid="([^"]+)"/g)].map(m => m[1])
+                .filter(id => !reset.includes(`'${id}'`) && !PREFERENCES[id]);
+            assert.deepStrictEqual(oublies, [], `${f} : champs que « Nouveau » ne remet pas a zero`);
+            const conteneurs = [...h.matchAll(/id="(alertes-[a-z]+)"/g)].map(m => m[1]).filter(id => !reset.includes(`'${id}'`));
+            assert.deepStrictEqual(conteneurs, [], `${f} : resultats que « Nouveau » laisse affiches`);
+        }
+    });
     test('Sonde a demeure et protheses articulaires : declarees, tracees, et lues par l\'analyse', () => {
         const t = o => (analyzeCase({ age: 82, sexe: 'F', dfg: 50, ...o })['alertes-eviter'] || [])
             .concat(analyzeCase({ age: 82, sexe: 'F', dfg: 50, ...o })['alertes-suivi'] || []).map(x => x.titre).join(' ;; ');

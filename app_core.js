@@ -1099,7 +1099,14 @@ window.resetPatient = function() {
         // ferait dater les valeurs du suivant d'un prelevement qui n'est pas le sien.
         'bioDate': '',
         'cpManual': '0', 'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1',
-        'psyOnsetAge': ''
+        'psyOnsetAge': '',
+        'bioB12Unit': 'pmol/L', 'bioB9Unit': 'nmol/L',
+        // Texte libre importé et commentaire au prescripteur : ils appartiennent au dossier
+        // précédent — le commentaire partirait dans le PDF du patient suivant.
+        'extractorText': '', 'freeTextNote': '',
+        // Saisies en cours et filtre d'affichage.
+        'inputComorb': '', 'inputMed': '', 'searchAlertes': '',
+        'bioImportFile': '', 'ocrFileInput': ''
     };
     for (const [id, val] of Object.entries(defaults)) {
         const el = document.getElementById(id);
@@ -1116,6 +1123,7 @@ window.resetPatient = function() {
         'chkIncontinence', 'chkHbp', 'chkConstipation', 'chkDysphagie',
         'chkGlaucome', 'chkStenoseAortique', 'chkAspirineForte',
         'chkSAD', 'chkPTH', 'chkPTG', 'chkPTE',
+        'chkInstitution', 'chkConfine', 'chkArthrose', 'chkInsulineSlidingScale',
         'patientFragile',
         // Troubles cognitifs & neuropsychocomportementaux (SFGG 2024)
         'chkDemence', 'chkMci', 'chkPsyPrim', 'chkDelirium', 'chkSommeil',
@@ -1158,7 +1166,9 @@ window.resetPatient = function() {
     // 5. Vider l'affichage des tags et résultats
     if (typeof renderTags === 'function') renderTags();
 
-    const divs = ['alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact',
+    // alertes-synthese manquait : c'est l'onglet ouvert par défaut, si bien que la synthèse
+    // du patient précédent restait affichée après « Nouveau ».
+    const divs = ['alertes-synthese', 'alertes-scores', 'alertes-eviter', 'alertes-initier', 'alertes-interact',
                    'alertes-ansm', 'alertes-auc', 'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines'];
     divs.forEach(id => {
         const el = document.getElementById(id);
@@ -1193,6 +1203,11 @@ window.resetPatient = function() {
             else el.innerHTML = '';
         }
     });
+    // Résultats de l'import de texte libre, arrêts qu'il avait relevés, aperçu d'import de
+    // bilan encore ouvert : tout cela décrit le patient précédent.
+    { const er = document.getElementById('extractorResults'); if (er) er.innerHTML = ''; }
+    window.GeriaExtractorLastStopped = [];
+    { const d = document.getElementById('bioImportDialog'); if (d) d.remove(); }
     // Fermer les listes d'autocomplete encore ouvertes
     document.querySelectorAll('.autocomplete-container ul, [id^="auto"][id$="List"]').forEach(ul => {
         ul.style.display = 'none';

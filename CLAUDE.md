@@ -224,6 +224,21 @@ c'est ce qui rendait l'inversion impossible.
 l'interface (case cochée, ordre des appels). Il est couvert par
 `tools/tests_ui_playwright.cjs`, validé par mutation dans les deux sens.
 
+## « Nouveau patient » ne laisse rien du dossier précédent
+
+`resetPatient()` (`app_core.js`) tient des listes **nommées** de champs, et chaque ajout à
+l'interface pouvait y échapper sans bruit. Après « Nouveau », restaient à l'écran la
+**synthèse** du patient précédent (`alertes-synthese` manquait à la liste des conteneurs
+vidés — c'est l'onglet ouvert par défaut), le **texte libre** importé, le **commentaire au
+prescripteur** (qui partait dans le PDF du patient suivant), quatre cases cliniques
+(institution, confinement, arthrose, insuline en « sliding scale ») et les unités B12/B9.
+
+Invariant (test Node) : **tout `input`/`textarea`/`select` des deux interfaces est nommé dans
+`resetPatient()`, ou déclaré dans `PREFERENCES`** (réglages et modes d'affichage, qui doivent
+survivre) ; tout conteneur `alertes-*` y est vidé. Un champ ajouté sans y penser fait échouer
+le test. Validé par mutation. Le scénario réel (analyse puis « Nouveau ») est rejoué dans
+Chromium par `tools/tests_ui_playwright.cjs`.
+
 ## Une précision est une donnée clinique, pas un détail d'affichage
 
 `_collectPatientData()` sérialisait `{dci, classe, label, core_id}` — **sans

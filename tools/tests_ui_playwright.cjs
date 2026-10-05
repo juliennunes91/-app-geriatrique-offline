@@ -487,6 +487,33 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             });
         }
 
+        // « Nouveau patient » : le dossier précédent ne doit rien laisser à l'écran.
+        const apresReset = await page.evaluate(() => {
+            resetPatient();
+            const m = MASTER_DB.MEDICAMENTS.find(x => x.dci === 'Cyamemazine');
+            activeMeds.push({ dci: m.dci, classe: m.classe, label: m.dci, core_id: 'cyamemazine', albumine: 0, db_ref: m });
+            document.getElementById('extractorText').value = 'Texte libre du patient précédent';
+            document.getElementById('freeTextNote').value = 'Commentaire du patient précédent';
+            document.getElementById('chkArthrose').checked = true;
+            _lastAnalysisHash = null; analyserPrescription();
+            const avant = (document.getElementById('alertes-synthese').textContent || '').length;
+            resetPatient();
+            return {
+                avant,
+                synthese: document.getElementById('alertes-synthese').textContent,
+                texte: document.getElementById('extractorText').value,
+                note: document.getElementById('freeTextNote').value,
+                arthrose: document.getElementById('chkArthrose').checked,
+                meds: activeMeds.length
+            };
+        });
+        test('« Nouveau patient » efface la synthèse, le texte libre et le commentaire', () => {
+            ok(apresReset.avant > 50, `préalable : une synthèse était affichée (${apresReset.avant} caractères)`);
+            ok(!/CYAMEMAZINE|Cyamemazine/i.test(apresReset.synthese), `la synthèse du patient précédent a disparu : ${apresReset.synthese.slice(0, 120)}`);
+            ok(apresReset.texte === '' && apresReset.note === '', 'texte libre et commentaire vidés');
+            ok(!apresReset.arthrose && apresReset.meds === 0, 'cases et ordonnance remises à zéro');
+        });
+
         // Interface moderne en file://, réseau coupé : mise en page, polices et icônes locales.
         {
             const ctx = await nav.newContext();
