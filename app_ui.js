@@ -759,6 +759,9 @@ async function _ocrRunRecognition(imageData) {
 
         result.medications.forEach((med, idx) => {
             const isAlready = alreadyActive.has(sanitizeText(med.dci));
+            // Seule une reconnaissance EXACTE (DCI ou marque) est cochée d'office ; une lecture
+            // approchée (faute d'OCR tolérée) est proposée, à confirmer.
+            const cocheDoffice = med.score >= 80;
             const confidence = med.score >= 80 ? 'text-success' : med.score >= 50 ? 'text-warning' : 'text-danger';
             const confidenceLabel = med.score >= 80 ? 'Fiable' : med.score >= 50 ? 'Probable' : 'Incertain';
 
@@ -766,7 +769,7 @@ async function _ocrRunRecognition(imageData) {
             div.className = 'form-check mb-1';
             div.innerHTML =
                 '<input class="form-check-input" type="checkbox" id="ocrMed' + idx + '" value="' + idx + '"' +
-                (isAlready ? ' disabled' : ' checked') + '>' +
+                (isAlready ? ' disabled' : (cocheDoffice ? ' checked' : '')) + '>' +
                 '<label class="form-check-label" for="ocrMed' + idx + '">' +
                 '<strong>' + escapeHtml(med.dci) + '</strong>' +
                 (med.princeps ? ' <small class="text-muted">(' + escapeHtml(med.princeps) + ')</small>' : '') +

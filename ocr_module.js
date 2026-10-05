@@ -28,123 +28,101 @@ const OcrModule = (() => {
         return matrix[b.length][a.length];
     }
 
-    // Build search index from unifiedMedsMap
+    // ── Reconnaissance des médicaments dans le texte OCR ─────────────────────────
+    // Sur une capture de logiciel de prescription, l'ancien appariement reconnaissait
+    // vingt-quatre médicaments fantômes pour quatre vrais : le champ « princeps » était
+    // découpé sur « / » et « , », si bien que « Bonviva (PO 150 mg/mois ou IV 3 mg/3 mois) »
+    // devenait un « nom » « mois » — et le mot « mois » de la posologie désignait
+    // l'ibandronate et le dénosumab, notés « Fiable » ; la correspondance par PRÉFIXE faisait
+    // de « ACIDE » (acide folique) un acide fusidique, zolédronique, acétylsalicylique…
+    // Désormais : correspondance EXACTE d'une DCI entière ou d'un nom de marque extrait
+    // comme un nom ; tolérance d'une faute de frappe sur les mots longs seulement. Ni
+    // préfixe, ni sous-chaîne.
+    const MOTS_GENERIQUES = new Set(['comprime', 'comprimes', 'gelule', 'gelules', 'solution', 'injectable', 'buvable',
+        'voie', 'orale', 'oral', 'patch', 'sachet', 'sirop', 'collyre', 'creme', 'pommade', 'forme', 'formes', 'faible',
+        'dose', 'generique', 'generiques', 'mois', 'jour', 'jours', 'semaine', 'semaines', 'avec', 'sans', 'pour', 'dans',
+        'chez', 'seul', 'adulte', 'enfant', 'retard', 'unidose', 'ampoule', 'flacon', 'stylo', 'poudre', 'suspension',
+        'goutte', 'gouttes', 'matin', 'soir', 'nuit', 'midi', 'pendant', 'besoin', 'acide', 'sodium', 'calcium']);
+    const _norm = s => sanitizeText(String(s || '')).replace(/[0-9]+/g, '');
+    // Noms de marque d'un champ princeps : listes séparées par « / », « ; », « | » ou une
+    // virgule NON décimale ; chaque segment est lu comme un nom (avant toute parenthèse
+    // ou dose), un ou deux mots.
+    function _marques(princeps) {
+        const out = new Set();
+        // Parenthèses retirées AVANT le découpage : « (mal des transports/soins palliatifs) »
+        // découpé sur « / » donnait un nom « soins ».
+        let s = String(princeps || '');
+        while (/\([^()]*\)/.test(s)) s = s.replace(/\([^()]*\)/g, ' ');
+        s = s.replace(/[()]/g, ' ');
+        s.split(/[\/;|]|,(?!\d)|\s[—–-]\s/).forEach(seg => {
+            const nom = seg.replace(/\d.*$/, '').trim();
+            const mots = nom.split(/\s+/).filter(Boolean);
+            if (!mots.length) return;
+            const un = _norm(mots[0]);
+            if (un.length >= 4 && !MOTS_GENERIQUES.has(un)) out.add(un);
+            if (mots.length >= 2) {
+                const deux = _norm(mots[0] + mots[1]);
+                if (deux.length >= 6 && !MOTS_GENERIQUES.has(_norm(mots[1]))) out.add(deux);
+            }
+        });
+        return [...out];
+    }
     function _buildSearchTerms() {
         const terms = [];
         if (typeof unifiedMedsMap === 'undefined') return terms;
-        unifiedMedsMap.forEach((data, key) => {
-            terms.push({ clean: key, dci: data.dci_pure, princeps: data.princeps, data: data });
-            // Also index princeps names (split by / , space)
-            if (data.princeps) {
-                data.princeps.split(/[\/,]+/).forEach(p => {
-                    const cleanP = sanitizeText(p.trim());
-                    if (cleanP.length >= 3) {
-                        terms.push({ clean: cleanP, dci: data.dci_pure, princeps: data.princeps, data: data });
-                    }
-                });
-            }
+        unifiedMedsMap.forEach((data) => {
+            const dci = _norm(data.dci_pure);
+            if (dci.length >= 4) terms.push({ clean: dci, dci: data.dci_pure, princeps: data.princeps, data });
+            _marques(data.princeps).forEach(m => terms.push({ clean: m, dci: data.dci_pure, princeps: data.princeps, data }));
         });
         return terms;
     }
 
-    // Extract candidate words from OCR text
+    // Candidats : mots et suites de deux ou trois mots d'une MÊME ligne (« ACIDE FOLIQUE »),
+    // chiffres retirés (« GABAPENTINE100 »).
     function _extractCandidates(rawText) {
-        // Split on whitespace, punctuation, line breaks
-        // Keep words that could be medication names (>= 3 chars, mostly alpha)
-        const words = rawText.split(/[\s,;:\-\(\)\[\]\/\n\r\t\|]+/);
         const candidates = [];
         const seen = new Set();
-        for (const w of words) {
-            const cleaned = w.replace(/[^a-zA-ZÀ-ÿ0-9]/g, '').trim();
-            if (cleaned.length < 3) continue;
-            const key = sanitizeText(cleaned);
-            if (key.length < 3 || seen.has(key)) continue;
-            seen.add(key);
-            candidates.push({ original: cleaned, clean: key });
-        }
-        // Also try multi-word combinations (e.g., "acide clavulanique")
-        const lines = rawText.split(/[\n\r]+/);
-        for (const line of lines) {
-            const lineWords = line.trim().split(/\s+/);
-            for (let i = 0; i < lineWords.length - 1; i++) {
-                const bigram = lineWords[i] + ' ' + lineWords[i + 1];
-                const cleanBigram = sanitizeText(bigram);
-                if (cleanBigram.length >= 5 && !seen.has(cleanBigram)) {
-                    seen.add(cleanBigram);
-                    candidates.push({ original: bigram, clean: cleanBigram });
-                }
-                if (i < lineWords.length - 2) {
-                    const trigram = lineWords[i] + ' ' + lineWords[i + 1] + ' ' + lineWords[i + 2];
-                    const cleanTrigram = sanitizeText(trigram);
-                    if (cleanTrigram.length >= 8 && !seen.has(cleanTrigram)) {
-                        seen.add(cleanTrigram);
-                        candidates.push({ original: trigram, clean: cleanTrigram });
-                    }
+        String(rawText || '').split(/[\n\r]+/).forEach(line => {
+            const mots = line.split(/[\s,;:()\[\]\/|]+/).map(_norm).filter(w => w.length >= 2);
+            for (let i = 0; i < mots.length; i++) {
+                for (let n = 1; n <= 3 && i + n <= mots.length; n++) {
+                    const clean = mots.slice(i, i + n).join('');
+                    if (clean.length < 4 || seen.has(clean)) continue;
+                    if (n === 1 && MOTS_GENERIQUES.has(clean)) continue;
+                    seen.add(clean);
+                    candidates.push({ original: line.trim().split(/\s+/).slice(i, i + n).join(' '), clean });
                 }
             }
-        }
+        });
         return candidates;
     }
 
-    // Match candidates against medication database
     function _matchMedications(candidates) {
         const searchTerms = _buildSearchTerms();
         if (searchTerms.length === 0) return [];
-
-        const matches = new Map(); // dci -> best match info
-
-        for (const candidate of candidates) {
-            for (const term of searchTerms) {
-                let score = 0;
-                const cLen = candidate.clean.length;
-                const tLen = term.clean.length;
-
-                // Exact match
-                if (candidate.clean === term.clean) {
-                    score = 100;
-                }
-                // Substring match (candidate contains the DB term or vice versa)
-                else if (cLen >= 4 && tLen >= 4) {
-                    if (term.clean.includes(candidate.clean) && cLen >= tLen * 0.6) {
-                        score = 80;
-                    } else if (candidate.clean.includes(term.clean) && tLen >= cLen * 0.6) {
-                        score = 80;
-                    }
-                    // Prefix match (first 4+ chars match)
-                    else if (cLen >= 4 && tLen >= 4) {
-                        const prefixLen = Math.min(cLen, tLen, 8);
-                        if (candidate.clean.substring(0, prefixLen) === term.clean.substring(0, prefixLen)) {
-                            score = 70;
-                        }
-                    }
-                }
-
-                // Fuzzy match (Levenshtein) for longer words
-                if (score === 0 && cLen >= 5 && tLen >= 5) {
-                    const maxDist = Math.max(1, Math.floor(Math.min(cLen, tLen) * 0.25));
-                    const dist = levenshtein(candidate.clean, term.clean);
-                    if (dist <= maxDist) {
-                        score = Math.max(0, 60 - dist * 10);
-                    }
-                }
-
-                if (score > 0) {
-                    const dciKey = sanitizeText(term.dci);
-                    const existing = matches.get(dciKey);
-                    if (!existing || existing.score < score) {
-                        matches.set(dciKey, {
-                            dci: term.dci,
-                            princeps: term.princeps,
-                            data: term.data,
-                            score: score,
-                            matchedText: candidate.original
-                        });
-                    }
-                }
+        const exact = new Map();
+        searchTerms.forEach(t => { if (!exact.has(t.clean)) exact.set(t.clean, []); exact.get(t.clean).push(t); });
+        const longs = searchTerms.filter(t => t.clean.length >= 7);
+        const matches = new Map();
+        const retenir = (term, score, cand) => {
+            const k = sanitizeText(term.dci);
+            const ex = matches.get(k);
+            if (!ex || ex.score < score) matches.set(k, { dci: term.dci, princeps: term.princeps, data: term.data, score, matchedText: cand.original });
+        };
+        for (const cand of candidates) {
+            const hits = exact.get(cand.clean);
+            if (hits) { hits.forEach(t => retenir(t, 100, cand)); continue; }
+            // Faute de lecture : une lettre sur un mot long (≥ 7), deux sur un très long (≥ 11).
+            const c = cand.clean;
+            if (c.length < 7) continue;
+            for (const t of longs) {
+                if (Math.abs(t.clean.length - c.length) > 2) continue;
+                const d = levenshtein(c, t.clean);
+                if (d === 1) retenir(t, 75, cand);
+                else if (d === 2 && c.length >= 11 && t.clean.length >= 11) retenir(t, 50, cand);
             }
         }
-
-        // Sort by score descending
         return Array.from(matches.values()).sort((a, b) => b.score - a.score);
     }
 
@@ -265,5 +243,5 @@ const OcrModule = (() => {
         }
     }
 
-    return { init, recognize, processImage, terminate, _matchMedications, _extractCandidates };
+    return { init, recognize, processImage, terminate, _matchMedications, _extractCandidates, _marques };
 })();

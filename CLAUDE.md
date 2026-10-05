@@ -1600,6 +1600,29 @@ hors du disque, avec et sans WebAssembly SIMD.
   toujours passée.
 - Le service worker n'est plus enregistré en `file://` (il y échouait en erreur console).
 
+### La reconnaissance des médicaments dans le texte OCR
+
+Sur une capture de logiciel de prescription (4 médicaments), l'OCR en proposait **24** :
+dénosumab et ibandronate « Fiable », six acides « Probable », scopolamine sur « soins »…
+Trois causes dans `ocr_module.js`, toutes d'appariement — la lecture Tesseract était bonne :
+
+- le champ `princeps` était découpé sur « / » et « , » : « Bonviva (PO 150 mg/mois ou IV
+  3 mg/3 mois) » produisait un « nom » `mois`, que le mot « mois » de la posologie
+  retrouvait ; « (mal des transports/soins palliatifs) » produisait `soins` ;
+- la correspondance par **préfixe** faisait de « ACIDE » (acide folique) un acide fusidique,
+  zolédronique, acétylsalicylique… ; et par **sous-chaîne**, « comprimé » désignait le
+  phosphate d'aluminium.
+
+Désormais `_marques()` lit chaque marque **comme un nom** — parenthèses retirées avant le
+découpage, coupure au premier chiffre, mots génériques exclus (`MOTS_GENERIQUES` : forme,
+posologie, « acide »…) — et l'appariement est **exact** (DCI entière, y compris sur deux ou
+trois mots d'une même ligne, ou marque). Une faute de lecture n'est tolérée que sur un mot
+long (une lettre dès 7 caractères, deux dès 11), et une telle lecture n'est **pas cochée
+d'office** dans l'aperçu. Test : la capture fictive rend exactement ses 4 médicaments ; le
+rappel reste ≥ 99 % sur toutes les DCI et premières marques de la base ; validé par mutation
+(l'ancien algorithme échoue). « VIT B12 » (collyre) n'est pas reconnu : la cyanocobalamine
+de la base est la forme systémique, et l'apparier serait une erreur.
+
 ### L'interface moderne est locale, elle aussi
 
 Elle chargeait Tailwind depuis `cdn.tailwindcss.com` (compilé dans le navigateur à chaque

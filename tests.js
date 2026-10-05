@@ -1397,6 +1397,38 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!est, `${d} n'est pas un diuretique`);
         }
     });
+    test('OCR : une capture de logiciel de prescription ne fabrique pas de medicaments fantomes', () => {
+        // Capture reelle : 4 medicaments, 24 reconnus. « mois » (posologie) designait
+        // l'ibandronate et le denosumab, via des fragments de princeps decoupes sur « / » ;
+        // « ACIDE » (acide folique) designait six autres acides par prefixe. Texte FICTIF
+        // reprenant la mise en page (lignes de prescription + libelles du logiciel).
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const vm = require('vm');
+        vm.runInContext(`MASTER_DB.MEDICAMENTS.forEach(m => { const k = sanitizeText(m.dci); if (k) unifiedMedsMap.set(k, { dci_pure: m.dci, princeps: m.princeps || '', db_ref: m }); });`, sandbox);
+        vm.runInContext(fs.readFileSync('ocr_module.js', 'utf8'), sandbox);
+        const R = txt => JSON.parse(vm.runInContext(`JSON.stringify(OcrModule._matchMedications(OcrModule._extractCandidates(${JSON.stringify(txt)})).map(m => [m.dci, m.score]))`, sandbox));
+        const ordo = ['Prescriptions médicales - SERVICE', 'Résident de 91 ans, admis depuis son domicile. Douleurs neuropathiques.',
+            'ACIDE FOLIQUE 5 mg VIATRIS, cpr', '1 comprimé, Matin, Soir, Per os, pendant 91 Jours',
+            'DOLIPRANE 1 000 mg, cpr', '1 gramme, Nuit, Per os, pendant 4 mois, 3 semaines, 5 jours',
+            'GABAPENTINE 100 mg ARROW GENERIQUES, gélu', '1 gélule, Soir, Per os, pendant 96 Jours',
+            'SERESTA 10 mg, cpr', '1 comprimé, Nuit, Per os, pendant 5 mois, 3 jours',
+            'VIT B12, 0.05% THEA, collyre, récipient unidose 0.4 mL', '1 goutte, si besoin, Voie ophtalmique',
+            'Actes de soins Diététique Examens Insuline.Pompe Laboratoire Matériel médical Médicaments Perfusions Protocoles'].join('\n');
+        assert.deepStrictEqual(R(ordo).map(x => x[0]).sort(), ['Acide folique', 'Gabapentine', 'Oxazepam', 'Paracetamol'], 'les quatre medicaments, et eux seuls');
+        assert.ok(R(ordo).every(x => x[1] === 100), 'tous reconnus exactement');
+        // Rappel : toute DCI et toute premiere marque de la base se reconnaissent encore.
+        const rappel = JSON.parse(vm.runInContext(`(() => { let d = 0, m = 0, n = 0;
+            const R = t => OcrModule._matchMedications(OcrModule._extractCandidates(t));
+            for (const x of MASTER_DB.MEDICAMENTS) {
+                if (R(x.dci.toUpperCase() + ' 10 mg').some(y => y.dci === x.dci)) d++;
+                if (OcrModule._marques(x.princeps).length) { n++; const b = x.princeps.replace(/\\([^()]*\\)/g, ' ').split(/[\\/;,|]/)[0].trim().split(/\\s+/)[0];
+                    if (R(b + ' 20 mg cpr').some(y => y.dci === x.dci)) m++; } }
+            return JSON.stringify({ d: d / MASTER_DB.MEDICAMENTS.length, m: m / n }); })()`, sandbox));
+        assert.ok(rappel.d >= 0.99 && rappel.m >= 0.99, `rappel DCI ${rappel.d}, marques ${rappel.m}`);
+        // Une faute de lecture sur un mot long reste reconnue, mais pas « Fiable ».
+        const faute = R('GABAPENTlNE 300 mg');
+        assert.ok(faute.some(x => x[0] === 'Gabapentine' && x[1] < 80), 'GABAPENTlNE (l pour I) : propose, non coche d\'office');
+    });
     test('runIntegrationTerrainAudit — une regle du module d\'integration ne sort pas sur la seule molecule si elle affirme un terrain', () => {
         // 60 regles n'avaient que med_keys pour condition alors que leur message affirmait un
         // terrain (« antecedent de cancer du sein », « glaucome a angle ferme »…) : elles
