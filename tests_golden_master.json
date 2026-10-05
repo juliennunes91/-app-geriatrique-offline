@@ -34,7 +34,6 @@
    "warning | Vitamine D pour ostéoporose et/ou fracture de fragilité"
   ],
   "alertes-bio": [
-   "danger | Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
    "danger | Insuffisance rénale chronique G4 — insuffisance rénale sévère"
   ],
   "alertes-interact": [
@@ -2110,7 +2109,6 @@
   ],
   "alertes-initier": [],
   "alertes-bio": [
-   "danger | Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
    "danger | Insuffisance rénale chronique G5 — insuffisance rénale terminale"
   ],
   "alertes-interact": [],
@@ -2144,7 +2142,6 @@
   ],
   "alertes-initier": [],
   "alertes-bio": [
-   "danger | Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
    "danger | Insuffisance rénale chronique G5 — insuffisance rénale terminale"
   ],
   "alertes-interact": [],
@@ -2166,7 +2163,7 @@
    "warning | Score PIM Global : 53/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_E06": {
@@ -2176,7 +2173,6 @@
   ],
   "alertes-initier": [],
   "alertes-bio": [
-   "danger | Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
    "danger | Insuffisance rénale chronique G4 — insuffisance rénale sévère"
   ],
   "alertes-interact": [],
@@ -2198,7 +2194,7 @@
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_E07": {
@@ -2209,7 +2205,6 @@
   ],
   "alertes-initier": [],
   "alertes-bio": [
-   "danger | Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
    "danger | Insuffisance rénale chronique G4 — insuffisance rénale sévère"
   ],
   "alertes-interact": [],
@@ -2231,7 +2226,7 @@
    "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_E08": {
@@ -2277,7 +2272,6 @@
    "warning | Acide folique avec méthotrexate"
   ],
   "alertes-bio": [
-   "danger | Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
    "danger | Insuffisance rénale chronique G4 — insuffisance rénale sévère"
   ],
   "alertes-interact": [],
@@ -2314,9 +2308,7 @@
   ],
   "alertes-bio": [
    "danger | Hypocalcémie symptomatique (< 1.9) — Ca 1.1 mmol/L",
-   "danger | Insuffisance Rénale Chronique - Stade Avancé (G3b-G4)",
    "danger | Insuffisance rénale chronique G4 — insuffisance rénale sévère",
-   "warning | Anémie Rénale (Déficit en EPO)",
    "warning | Anémie — orientation du bilan"
   ],
   "alertes-interact": [],
@@ -2335,7 +2327,7 @@
    "warning | ORBIT-AF : 4 point(s)"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_IN_E04": {
@@ -3850,7 +3842,7 @@
    "warning | DOACscore : 1 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 37/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"

@@ -1397,6 +1397,32 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!est, `${d} n'est pas un diuretique`);
         }
     });
+    test('Dossier IRC G4 sous ASE et BZD + Z : un fait, une carte', () => {
+        // Cas reel anonymise : H 76 ans, DFG 18, Hb 10,3 normocytaire, darbepoetine,
+        // furosemide avec indication declaree « IRC », oxazepam + zopiclone.
+        const cas = { age: 76, sexe: 'M', dfg: 18, comorbs: ['PAT_005', 'PAT_016b', 'PAT_029'], flags: ['chkHbp'],
+            bio: { bioCreat: 299, bioHb: 10.3, bioVgm: 92.6, patientK: 4.28, patientNa: 137 },
+            meds: ['Paracetamol', 'Escitalopram', 'Furosemide', 'Acide acetylsalicylique', 'Oxazepam', 'Cholecalciferol', 'Zopiclone', 'Darbepoetine alfa'],
+            precisions: { Furosemide: { indication_diu: 'irc' }, Oxazepam: { duree: 'longue' }, Zopiclone: { duree: 'longue' } } };
+        const r = analyzeCase(cas);
+        const bio = (r['alertes-bio'] || []).map(x => x.titre).join(' ;; ');
+        // L'IRC sortait en deux cartes rouges (stade G4 + SYND_015), l'anemie en deux (orientation + SYND_039).
+        assert.strictEqual((bio.match(/Insuffisance r[ée]nale chronique/gi) || []).length, 1, `une carte IRC : ${bio}`);
+        assert.strictEqual((bio.match(/An[ée]mie/g) || []).length, 1, `une carte anemie : ${bio}`);
+        const h = r._html['alertes-bio'] || '';
+        assert.ok(/traitée par DARBEPOETINE ALFA/.test(h) && /11,5 g\/dL/.test(h), 'la carte d\'anemie sait que l\'ASE est prescrit (KDIGO 2012)');
+        // SUP_STOP_001/002 : doubles defectueux de STOPP B7/B8, qui ressortaient quand la
+        // precision d'indication faisait taire EV_B07/EV_B08.
+        const ev = (r['alertes-eviter'] || []).map(x => x.titre).join(' ;; ');
+        assert.ok(!/anse/i.test(ev), `indication IRC declaree : aucun critere « diuretique de l'anse » : ${ev}`);
+        const hta = (analyzeCase({ age: 80, sexe: 'F', dfg: 60, comorbs: ['PAT_005'], meds: ['Furosemide'] })['alertes-eviter'] || []).map(x => x.titre).join(' ;; ');
+        assert.ok(/1ère intention pour HTA/.test(hta), 'sans precision, STOPP B7 sort toujours (EV_B07)');
+        // Doublon BZD + Z : l'interaction declaree le porte deja.
+        assert.ok(!/Doublon thérapeutique — Benzodiazépines/.test(ev), 'pas de doublon en plus de l\'interaction declaree');
+        assert.ok(/OXAZEPAM/.test((r['alertes-interact'] || []).map(x => x.titre).join(' ')), '... l\'interaction est bien la');
+        assert.ok(/Doublon thérapeutique — IEC/.test((analyzeCase({ age: 80, sexe: 'F', dfg: 60, meds: ['Ramipril', 'Perindopril'] })['alertes-eviter'] || []).map(x => x.titre).join(' ')),
+            'un doublon sans interaction declaree reste signale');
+    });
     test('« Nouveau patient » remet a zero tout champ du dossier, et seulement les preferences survivent', () => {
         // « Nouveau » laissait la synthese du patient precedent a l'ecran (alertes-synthese
         // absent de la liste videe), le texte libre importe, le commentaire au prescripteur

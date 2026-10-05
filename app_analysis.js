@@ -1852,11 +1852,17 @@ function analyserPrescription() {
         if (dfgR > 0 && dfgR < 60) {
             let stade, cls, icon, conduite;
             if (dfgR < 15)      { stade = 'G5 — insuffisance rénale terminale'; cls = 'danger alert-stopp'; icon = '🚨'; conduite = 'Néphroprotection, préparation suppléance (dialyse/greffe), adaptation posologique majeure, éviction néphrotoxiques.'; }
-            else if (dfgR < 30) { stade = 'G4 — insuffisance rénale sévère'; cls = 'danger'; icon = '🚨'; conduite = 'Avis néphrologique, adaptation/arrêt des médicaments à élimination rénale, éviter AINS et produits de contraste, surveiller K+.'; }
+            else if (dfgR < 30) { stade = 'G4 — insuffisance rénale sévère'; cls = 'danger'; icon = '🚨'; conduite = 'Avis néphrologique, adaptation/arrêt des médicaments à élimination rénale, éviter AINS et produits de contraste, surveiller K+ et le bilan phosphocalcique.'; }
             else if (dfgR < 45) { stade = 'G3b — insuffisance rénale modérée'; cls = 'warning border-warning'; icon = '⚠️'; conduite = 'Adapter les posologies (AOD, metformine, etc.), surveiller K+ et fonction rénale, éviter AINS/néphrotoxiques.'; }
             else                { stade = 'G3a — insuffisance rénale légère à modérée'; cls = 'warning border-warning'; icon = '⚠️'; conduite = 'Adaptation posologique selon molécules, surveillance annuelle du DFG et de l\'albuminurie, prudence AINS.'; }
+            // SYND_015 (« IRC stade avancé », DFG < 30) sortait en seconde carte rouge sur le
+            // MÊME chiffre, sa conduite redisant celle-ci. Il est calculé sans être rendu ; sa
+            // seule part propre, l'imputabilité iatrogène, est reprise ici.
+            const _sy015 = dfgR < 30 ? (checkBioSyndrome('SYND_015', true, { rendre: false }) || {}) : {};
+            const noteImputRen = (_sy015.causes && _sy015.causes.length)
+                ? `<br><span class="small"><b>Néphrotoxiques à réévaluer :</b> ${escapeHtml(_sy015.causes.join(', ').toUpperCase())}.</span>` : '';
             addAlert('alertes-bio', `<div class="alert alert-${cls} shadow-sm"><strong>${icon} Insuffisance rénale chronique ${stade}</strong> (DFG ${dfgR} ml/min/1,73m²)
-                <br><em>Conduite :</em> ${conduite}</div>`, 'bio');
+                <br><em>Conduite :</em> ${conduite}${noteImputRen}</div>`, 'bio');
         }
     }
 
@@ -1930,9 +1936,17 @@ function analyserPrescription() {
             const noteRetic = _dose(retic)
                 ? `<br><span class="small">Réticulocytes ${retic} G/L : anémie ${retic < 50 ? 'arégénérative — origine centrale ou carentielle' : 'régénérative — hémolyse ou hémorragie récente'}.</span>`
                 : '';
-            const noteRenale = (dfg > 0 && dfg < 45 && hb < 11)
-                ? `<br><span class="small">DFG ${dfg} ml/min avec Hb &lt; 11 : la part rénale (déficit en érythropoïétine) doit être considérée, sans dispenser du reste du bilan.</span>`
-                : '';
+            // SYND_039 (« Anémie rénale ») sortait en seconde carte sur la même anémie. Sa conduite
+            // est reprise ici, et dépend de ce qui est DÉJÀ prescrit : sous agent stimulant
+            // l'érythropoïèse, l'anémie rénale n'est plus une hypothèse mais un traitement à
+            // piloter (KDIGO Anémie 2012).
+            const ase = (dfg > 0 && dfg < 45 && hb < 11)
+                ? (activeMeds || []).filter(m => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), 'epoetine')).map(m => m.dci.toUpperCase())
+                : [];
+            const noteRenale = !(dfg > 0 && dfg < 45 && hb < 11) ? ''
+                : ase.length
+                ? `<br><span class="small">Anémie de la maladie rénale chronique traitée par ${escapeHtml(ase.join(', '))} : ne pas viser une Hb au-delà de 11,5 g/dL ni la porter intentionnellement au-dessus de 13 ; statut martial (ferritine, CST) au moins tous les 3 mois sous ASE — fer IV à discuter si CST ≤ 30 % et ferritine ≤ 500 µg/L (KDIGO Anémie 2012).</span>`
+                : `<br><span class="small">DFG ${dfg} ml/min avec Hb &lt; 11 : la part rénale (déficit en érythropoïétine) doit être considérée, sans dispenser du reste du bilan — corriger d'abord une carence martiale, puis discuter un ASE si Hb &lt; 10 g/dL, avec avis néphrologique (KDIGO Anémie 2012).</span>`;
             const noteImput = (_synd005.causes && _synd005.causes.length)
                 ? `<br><span class="small"><b>Imputabilité iatrogène à considérer :</b> ${escapeHtml(_synd005.causes.join(', ').toUpperCase())} — chercher un saignement occulte avant de conclure à une autre cause.</span>`
                 : '';
@@ -1942,10 +1956,8 @@ function analyserPrescription() {
                 <br><span class="small">${escapeHtml(conduite)}</span>${noteImput}${noteRetic}${noteRenale}
             </div>`, 'bio');
 
-            // SYND_039 : Anémie Rénale (Hb < 11 + DFG < 45)
-            if (hb < 11 && dfg > 0 && dfg < 45) {
-                checkBioSyndrome('SYND_039', true);
-            }
+            // SYND_039 : Anémie rénale (Hb < 11 + DFG < 45) — reprise dans la carte ci-dessus.
+            if (hb < 11 && dfg > 0 && dfg < 45) checkBioSyndrome('SYND_039', true, { rendre: false });
         }
     }
 
@@ -2024,8 +2036,7 @@ function analyserPrescription() {
             <br><em>Conduite :</em> Contrôle NFS à 48-72h, rechercher cause iatrogène, arrêt médicament suspect si PNN en baisse.</div>`, 'bio');
     }
 
-    // --- SYND_015 : IRC Avancée (DFG < 30) ---
-    if (bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 30) checkBioSyndrome('SYND_015', true);
+    // --- SYND_015 : IRC avancée (DFG < 30) — repris dans la carte de stade KDIGO, plus haut.
 
     // --- SYND_016 : Hyperuricémie (> 420 µmol/L H, > 360 F) ---
     {
@@ -2809,7 +2820,23 @@ function analyserPrescription() {
             if (hasNaSSA && (cls.key === 'isrs' || cls.key === 'irsn' || cls.key === 'antidepresseur')) {
                 uniqDcis = uniqDcis.filter(d => !NASSA_DCIS.has(d));
             }
-            if (uniqDcis.length >= 2) {
+            // Une association que la base DÉCLARE déjà comme interaction (entrée
+            // ddi_interact_v2 de l'une citant l'autre, gravité au moins égale) sort dans
+            // l'onglet Interactions : la redire ici en « doublon » faisait deux cartes pour
+            // une seule conduite (oxazépam + zopiclone : « Doublon — Benzodiazépines » ET
+            // « Co-prescription à risque », la seconde plus grave). Équivalence établie sur
+            // les DONNÉES, jamais sur la ressemblance des textes.
+            const _rang = { info: 0, warning: 1, danger: 2 };
+            const _fiche = d => (MASTER_DB.MEDICAMENTS || []).find(m => sanitizeText(m.dci) === sanitizeText(d));
+            const _gravitePaire = (a, b) => {
+                const lu = (f, autre) => ((f && f.ddi_interact_v2) || [])
+                    .filter(e => (e.dcis || []).some(x => sanitizeText(x) === sanitizeText(autre)))
+                    .map(e => _rang[e.severite] ?? 0);
+                return Math.max(-1, ...lu(_fiche(a), b), ...lu(_fiche(b), a));
+            };
+            const _couverte = uniqDcis.length >= 2 && uniqDcis.every((a, i) => uniqDcis.every((b, j) =>
+                j <= i || _gravitePaire(a, b) >= (_rang[cls.severite || 'warning'] ?? 1)));
+            if (uniqDcis.length >= 2 && !_couverte) {
                 dupFound.push({
                     label: cls.label,
                     note: cls.note,

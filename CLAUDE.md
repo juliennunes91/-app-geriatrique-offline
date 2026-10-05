@@ -1098,6 +1098,38 @@ est affiché. `SYND_005` reste — c'est l'entrée de la table des syndromes, el
 l'imputabilité iatrogène (AINS, anticoagulants), information que l'encart d'orientation ne
 duplique pas.
 
+## Un dossier d'insuffisant rénal sévère : un fait, une carte
+
+Dossier réel (H 76 ans, DFG 18, Hb 10,3 sous darbépoétine, furosémide pour IRC, oxazépam +
+zopiclone), relu par le prescripteur avec dix-huit « assumer » — dont plusieurs sur des cartes
+qui redisaient une autre.
+
+- **IRC** : la carte de stade KDIGO et `SYND_015` (« IRC stade avancé ») sortaient en deux
+  cartes rouges sur le même DFG. `SYND_015` est calculé sans être rendu (`rendre: false`) ;
+  son imputabilité (néphrotoxiques présents) et le bilan phosphocalcique passent dans la
+  carte de stade.
+- **Anémie** : `SYND_039` (« anémie rénale ») doublait l'encart d'orientation. Même remède,
+  et l'encart **sait désormais si un ASE est prescrit** : sous darbépoétine, l'anémie rénale
+  n'est plus une hypothèse mais un traitement à piloter (Hb ≤ 11,5, jamais > 13 visé ;
+  statut martial tous les 3 mois ; fer IV si CST ≤ 30 % et ferritine ≤ 500 — KDIGO Anémie
+  2012).
+- **`SUP_STOP_001` et `SUP_STOP_002` retirés** (`geria_integration_module.js`) : imports
+  défectueux de STOPP B7/B8, condition réduite à la présence d'un diurétique de l'anse,
+  message tronqué, « alternatives » valant « 8 ». Masqués sous `EV_B07`/`EV_B08` tant que
+  ceux-ci sortaient, ils **ressortaient seuls dès que la précision d'indication faisait taire
+  les vrais critères** — défaisant exactement ce que la précision devait obtenir. Le
+  prescripteur l'avait assumé avec le motif « pas HTA ».
+  **Point ouvert** : 60 règles de ce module n'ont que `med_keys` pour condition, alors que
+  leur message affirme un terrain (« antécédent de cancer du sein », « glaucome à angle
+  fermé »…). Par identifiant, une seule sort sur le panel — les autres sont absorbées par des
+  groupes ou ne se déclenchent pas — mais chacune peut ressortir de la même façon.
+- **Doublon ou interaction** : oxazépam + zopiclone sortait en « Doublon thérapeutique —
+  Benzodiazépines » (Éviter) ET en « Co-prescription à risque » (Interactions, plus grave).
+  `DUPLICATE_WATCH` se tait quand la base **déclare** déjà la paire en interaction
+  (`ddi_interact_v2` de l'une citant l'autre, gravité au moins égale) — équivalence établie
+  sur les données, jamais sur la ressemblance des textes. Deux IEC, sans interaction
+  déclarée entre eux, gardent leur doublon.
+
 ## Formes galéniques : une DCI, deux médicaments
 
 Certaines molécules recouvrent deux produits que tout oppose. La saisie doit donc

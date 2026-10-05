@@ -31,51 +31,16 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const RECOS_SUPPLEMENT_INTEGRATION = [
-    {
-        "id": "SUP_STOP_001",
-        "csv_ref": "RECO_0010",
-        "sources": [
-            "BEERS",
-            "STOPPFRAIL"
-        ],
-        "ref_code": "RECO_0010",
-        "section": "Cardiovasculaire",
-        "titre": "Diuretique de l'anse en premiere ligne pour HTA",
-        "message": "HTA sans insuffisance cardiaque concomitante necessitant un diuretique — \"Manque de donnees sur les outcomes",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "furosemide",
-                "bumetanide",
-                "torasemide"
-            ]
-        },
-        "alternatives": "8",
-        "nb_sources": 0
-    },
-    {
-        "id": "SUP_STOP_002",
-        "csv_ref": "RECO_0011",
-        "sources": [
-            "BEERS",
-            "FORTA"
-        ],
-        "ref_code": "RECO_0011",
-        "section": "Cardiovasculaire",
-        "titre": "Diuretique de l'anse pour oedemes des chevilles isoles",
-        "message": "Oedemes dependants sans signes cliniques/biologiques/radiologiques d'IC, hepatopathie, syndrome nephrotique ou insuffisance renale — \"Risque de deshydratation, hypokaliemie",
-        "severite": "warning",
-        "condition": {
-            "med_keys": [
-                "furosemide",
-                "bumetanide",
-                "torasemide"
-            ]
-        },
-        "alternatives": "8",
-        "forta": "Oui",
-        "nb_sources": 0
-    },
+    // SUP_STOP_001 (« Diurétique de l'anse en première ligne pour HTA ») RETIRÉ : import
+    // défectueux de STOPP B7 — condition réduite à la seule présence d'un diurétique de
+    // l'anse (il sortait chez TOUT patient sous furosémide, HTA ou non, et malgré une
+    // indication déclarée), message tronqué, « alternatives » valant « 8 ». Le critère
+    // est porté correctement par EV_B07 (HTA, med_absent, précision indication_diu).
+    // SUP_STOP_002 (« Diurétique de l'anse pour œdèmes des chevilles isolés ») RETIRÉ,
+    // même défaut que SUP_STOP_001 : STOPP B8 réduit à la présence d'un diurétique de
+    // l'anse. Masqué sous EV_B08 tant que celui-ci sortait, il RESSORTAIT seul dès qu'une
+    // indication déclarée (précision indication_diu) faisait taire EV_B08 — défaisant
+    // exactement ce que la précision devait obtenir. Porté par EV_B08.
     {
         "id": "SUP_STOP_003",
         "csv_ref": "RECO_0025",
