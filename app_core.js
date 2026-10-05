@@ -272,6 +272,10 @@ function buildSyntheseText() {
             lines.push('• ' + nom);
         });
     }
+    {
+        const dispo = (typeof dispositifsDeclares === 'function') ? dispositifsDeclares() : [];
+        if (dispo.length) lines.push('Porteur de : ' + dispo.map(d => d.libelle).join(', '));
+    }
     lines.push('');
 
     // Médicaments
@@ -669,6 +673,10 @@ function buildPdfContent() {
             const nom = nomPathoAffiche((typeof MASTER_DB !== 'undefined' && MASTER_DB.PATHOLOGIES[c]) ? MASTER_DB.PATHOLOGIES[c].NOM_STANDARD : c);
             html += `<span style="display:inline-block;background:#e7f1ff;border-radius:3px;padding:2px 6px;margin:2px 5px 2px 0;font-size:8.5px;line-height:1.55;">${escapeHtml(nom)}</span>`;
         });
+    }
+    {
+        const dispo = (typeof dispositifsDeclares === 'function') ? dispositifsDeclares() : [];
+        if (dispo.length) html += `<div style="${S.body}margin-top:4px;">Porteur de : ${escapeHtml(dispo.map(d => d.libelle).join(', '))}</div>`;
     }
     html += `</div>`;
 
@@ -1107,6 +1115,7 @@ window.resetPatient = function() {
         'chkPalliatif', 'chkAtcdUlcere', 'chkChutes', 'chkDepression',
         'chkIncontinence', 'chkHbp', 'chkConstipation', 'chkDysphagie',
         'chkGlaucome', 'chkStenoseAortique', 'chkAspirineForte',
+        'chkSAD', 'chkPTH', 'chkPTG', 'chkPTE',
         'patientFragile',
         // Troubles cognitifs & neuropsychocomportementaux (SFGG 2024)
         'chkDemence', 'chkMci', 'chkPsyPrim', 'chkDelirium', 'chkSommeil',

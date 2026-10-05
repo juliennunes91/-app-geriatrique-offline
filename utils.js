@@ -283,6 +283,22 @@ const bilanBioDate = (valeur, aujourdhui) => {
 // Plusieurs cases peuvent declarer la MEME pathologie (chkStent et chkScaAigu pour
 // le syndrome coronarien) : le retrait les decoche toutes, sans quoi l'une d'elles
 // la ferait revenir seule.
+// ── Dispositifs implantés ────────────────────────────────────────────────────────
+// Déclarés par case à cocher (section « Habitudes de vie & État général »). Ce ne sont pas
+// des pathologies : ils ne vont pas dans activeComorbs. Table unique des LIBELLÉS
+// (synthèse, export texte, PDF) ; les contextes sont écrits en clair dans
+// app_analysis.js, où l'audit d'atteignabilité les lit.
+const DISPOSITIFS = [
+    { id: 'chkSAD', libelle: 'sonde urinaire à demeure' },
+    { id: 'chkPTH', libelle: 'prothèse totale de hanche' },
+    { id: 'chkPTG', libelle: 'prothèse totale de genou' },
+    { id: 'chkPTE', libelle: "prothèse totale d'épaule" }
+];
+const dispositifsDeclares = () => DISPOSITIFS.filter(d => {
+    const el = (typeof document !== 'undefined') ? document.getElementById(d.id) : null;
+    return !!(el && el.checked);
+});
+
 const CASE_PATHOLOGIE = {
         'chkAvc': 'PAT_008', 'chkAtcdUlcere': 'PAT_021', 'chkDialyse': 'PAT_029',
         'chkPalliatif': 'PAT_030', 'chkDepression': 'PAT_032', 'chkGlaucome': 'PAT_033',

@@ -1397,6 +1397,29 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!est, `${d} n'est pas un diuretique`);
         }
     });
+    test('Sonde a demeure et protheses articulaires : declarees, tracees, et lues par l\'analyse', () => {
+        const t = o => (analyzeCase({ age: 82, sexe: 'F', dfg: 50, ...o })['alertes-eviter'] || [])
+            .concat(analyzeCase({ age: 82, sexe: 'F', dfg: 50, ...o })['alertes-suivi'] || []).map(x => x.titre).join(' ;; ');
+        const sad = /sonde urinaire à demeure : infection ou colonisation/, proth = /prothèse articulaire : pas d/;
+        assert.ok(sad.test(t({ meds: ['Amoxicilline'], flags: ['chkSAD'] })), 'SAD + antibiotique : rappel SPILF');
+        assert.ok(sad.test(t({ meds: ['Ciprofloxacine'], flags: ['chkSAD'] })), '... y compris une fluoroquinolone (classe antibiotique)');
+        for (const p of ['chkPTH', 'chkPTG', 'chkPTE'])
+            assert.ok(proth.test(t({ meds: ['Amoxicilline'], flags: [p] })), `${p} + antibiotique : rappel ANSM`);
+        // Le dispositif seul ne dit rien : un rappel sur tout porteur se lirait comme un en-tete.
+        assert.ok(!sad.test(t({ meds: ['Paracetamol'], flags: ['chkSAD'] })) && !proth.test(t({ meds: ['Paracetamol'], flags: ['chkPTH'] })), 'sans antibiotique, aucun rappel');
+        assert.ok(!sad.test(t({ meds: ['Rifaximine'], flags: ['chkSAD'] })), 'un antibiotique non absorbe n\'est pas une antibiotherapie systemique');
+        assert.ok(!sad.test(t({ meds: ['Amoxicilline'] })), 'sans sonde declaree, aucun rappel');
+        // Trace dans la synthese (et le PDF, par la meme table DISPOSITIFS).
+        const s = analyzeCase({ age: 82, sexe: 'F', dfg: 50, meds: ['Paracetamol'], flags: ['chkSAD', 'chkPTG'] })._html['alertes-synthese'] || '';
+        assert.ok(/Porteur de : sonde urinaire à demeure, prothèse totale de genou/.test(s), 'la synthese dit ce que le patient porte');
+        // Les deux interfaces, la remise a zero et le hash de memoisation connaissent les quatre cases.
+        const core = fs.readFileSync('app_core.js', 'utf8'), ana = fs.readFileSync('app_analysis.js', 'utf8');
+        for (const id of ['chkSAD', 'chkPTH', 'chkPTG', 'chkPTE']) {
+            for (const f of ['index.html', 'index_modern.html']) assert.ok(fs.readFileSync(f, 'utf8').includes(`id="${id}"`), `${f} : ${id}`);
+            assert.ok(core.includes(`'${id}'`), `resetPatient decoche ${id}`);
+            assert.ok(ana.includes(`'${id}'`), `${id} dans le hash de memoisation`);
+        }
+    });
     test('Interface moderne : aucune ressource en ligne, CSS compile a jour', () => {
         // Tailwind (CDN) et Google Fonts etaient bloquables par l'etablissement et
         // inaccessibles en file:// hors ligne : la page perdait toute mise en page et ses

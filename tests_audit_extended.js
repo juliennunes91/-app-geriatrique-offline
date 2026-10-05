@@ -164,7 +164,9 @@ const PANEL = {
     'cov_SUP_MTX_01': {"age":84,"sexe":"F","bio":{"patientDFG":60},"meds":["Methotrexate"],"precisions":{"Methotrexate":{"mtx_schema":"haute"}}},
     'cov_SUP_TERB_01_SUP_TERB_02': {"age":82,"sexe":"F","dfg":35,"bio":{"patientDFG":35},"meds":["Terbinafine"]},
     'cov_IN_E06': {"age":78,"sexe":"M","comorbs":["PAT_029","PAT_016b"],"dfg":40,"bio":{"patientDFG":40,"bioAlbuminurie":250,"patientK":4.2},"meds":["Ramipril"]},
-    'cov_SUP_ALB_01': {"age":84,"sexe":"F","bio":{"bioAlbumSg":26},"meds":["Valproate","Warfarine"]}
+    'cov_SUP_ALB_01': {"age":84,"sexe":"F","bio":{"bioAlbumSg":26},"meds":["Valproate","Warfarine"]},
+    'cov_SUP_SAD_01': {"age":86,"sexe":"M","dfg":45,"flags":["chkSAD"],"meds":["Amoxicilline"]},
+    'cov_SUP_PROTH_01': {"age":79,"sexe":"F","dfg":70,"flags":["chkPTH"],"meds":["Amoxicilline"]}
 };
 // Onglets figés par le golden-master. `alertes-scores` et `alertes-synthese` ont été
 // AJOUTÉS après avoir constaté qu'ils échappaient totalement au filet : la correction de
@@ -336,7 +338,10 @@ function runExtendedAudits(test, assert) {
             'SFGG_SF3PA_SFPC_2026', 'SFGG_FCM_SF3PA_2024_SPC',
             // Ajouts 2026 : omissions iSGLT2 (IN_E05), sevrage tabagique BPCO (IN_G03),
             // thiamine dans le trouble de l'usage de l'alcool (IN_N01).
-            'ADA', 'NICE', 'EFNS']);
+            'ADA', 'NICE', 'EFNS',
+            // Dispositifs implantés : sonde à demeure (SUP_SAD_01), prothèse articulaire
+            // (SUP_PROTH_01).
+            'SPILF', 'SF2H', 'ANSM_DENT']);
         const bad = JSON.parse(vm.runInContext(`(function(){
             const out=new Set(); const scan=arr=>(arr||[]).forEach(r=>(r.sources||[]).forEach(s=>out.add(s)));
             scan(GERIA_RECOS_DB.EVITER);scan(GERIA_RECOS_DB.INITIER);scan(RECOS_SUPPLEMENT);

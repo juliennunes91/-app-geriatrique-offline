@@ -709,6 +709,11 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(_declare('chkHtaNonControlee')) ctxClinique.push("hta_non_controlee");
     if(_declare('chkAlcool')) ctxClinique.push("alcool");
     if(_declare('chkTabac')) ctxClinique.push("tabac");
+    // Dispositifs implantés : un contexte par nature de dispositif — les trois prothèses
+    // articulaires n'en font qu'un. Écrits en clair : l'audit d'atteignabilité lit les
+    // push littéraux (table DISPOSITIFS de utils.js pour les seuls libellés).
+    if(_declare('chkSAD')) ctxClinique.push("sonde_urinaire_demeure");
+    if(_declare('chkPTH') || _declare('chkPTG') || _declare('chkPTE')) ctxClinique.push("prothese_articulaire");
     if(_declare('chkSepsis')) ctxClinique.push("sepsis");
     if(_declare('chkArret')) ctxClinique.push("arret_cardiaque");
     if(_declare('chkLqts')) ctxClinique.push("qt_long_congenital");
@@ -1033,7 +1038,7 @@ function _computeAnalysisHash() {
     ['chkStent','chkAlcool','chkAnorexie','chkTabac','chkAvc','chkTvp','chkSaignement',
      'chkBrady','chkHtaNonControlee','chkArret','chkScaAigu','chkLqts','chkDialyse',
      'chkFoie','chkSepsis','chkPalliatif','chkAtcdUlcere','chkChutes','chkDepression',
-     'chkInstitution','chkConfine',
+     'chkInstitution','chkConfine','chkSAD','chkPTH','chkPTG','chkPTE',
      'chkIncontinence','chkHbp','chkConstipation','chkDysphagie','chkGlaucome',
      'chkStenoseAortique','chkAspirineForte','chkInsulineSlidingScale','chkLewy',
      // Troubles cognitifs & neuropsychocomportementaux
@@ -4534,11 +4539,13 @@ function analyserPrescription() {
             });
             const moreComorbs = nbComorbs > 5 ? ` +${nbComorbs - 5}` : '';
             const comorbStr = comorbLabels.length ? comorbLabels.join(', ') + moreComorbs : 'aucune comorbidité saisie';
+            const dispo = (typeof dispositifsDeclares === 'function') ? dispositifsDeclares().map(d => d.libelle) : [];
+            const dispoStr = dispo.length ? '<br><span class="small text-muted">Porteur de : ' + escapeHtml(dispo.join(', ')) + '</span>' : '';
             return `<div class="card mb-2 shadow-sm" style="border-left:4px solid #0d6efd;">
                 <div class="card-body py-2 px-3">
                     <strong>${sexeLabel} ${ageStr}${fragLabel}</strong>
                     <span class="text-muted"> — ${nbComorbs} comorbidité${nbComorbs > 1 ? 's' : ''} · ${nbMeds} médicament${nbMeds > 1 ? 's' : ''}${polyLabel}</span>
-                    <br><span class="small text-muted">${escapeHtml(comorbStr)}</span>
+                    <br><span class="small text-muted">${escapeHtml(comorbStr)}</span>${dispoStr}
                 </div>
             </div>`;
         };

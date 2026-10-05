@@ -79,6 +79,16 @@ const DRUG_CLASSES = {
         classeMatch: [],
         dcis: ['bicarbonatedesodium']
     },
+    // Antibiotiques à visée SYSTÉMIQUE. La clé brute « antibiotique » ne tombait que dans le
+    // dernier recours de matchesDrugClass (libellé) : toute DCI déjà déclarée ailleurs
+    // (fluoroquinolones, macrolides, aminosides…) y échappait par la garde de match exact —
+    // 62 antibiotiques résolus sur 85. Les antibiotiques non absorbés sont exclus
+    // (_CLASS_EXCLUDE) : la rifaximine n'est pas un traitement d'infection systémique.
+    antibiotique: {
+        aliases: ['antibiotique', 'antibiotiques', 'antibiotiquesystemique'],
+        classeMatch: ['antibiotique'],
+        dcis: []
+    },
     // Traitements de l'hyperkaliémie par échange d'ions dans le tube digestif.
     chelateur_potassium: {
         aliases: ['chelateurdupotassium', 'chelateurpotassium'],
@@ -606,6 +616,7 @@ const _DCI_AMBIGUOUS = new Map();
 // (olanzapine, antipsychotique) ⊄ benzodiazépines ; « ANTI-DIUREtique » (desmopressine)
 // = l'inverse d'un diurétique. Garde-fous documentés (collisions Phase 5).
 const _CLASS_EXCLUDE = {
+    antibiotique: /nonabsorb/,
     benzodiazepine: /thieno|dibenzo|antipsychotique/,
     // AINS par voie TOPIQUE : l'exposition systemique est d'environ 5 a 10 % de celle de
     // la voie orale (RCP des gels de diclofenac et de ketoprofene). Les regles de toxicite

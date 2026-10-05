@@ -368,6 +368,32 @@ Trois fiches (`Bicarbonate de sodium`, `Polystyrene sulfonate de sodium`,
 - Point ouvert : pas de paramètre « bicarbonate plasmatique » dans `MASTER_DB.BIOLOGIE`,
   donc pas de champ ni d'alerte sur la cible de 22 mmol/L — le suivi est écrit en clair.
 
+## Dispositifs implantés : sonde à demeure, prothèses articulaires
+
+Quatre cases dans « Habitudes de vie & État général » (deux UIs) : `chkSAD`, `chkPTH`,
+`chkPTG`, `chkPTE`. Table unique `DISPOSITIFS` (`utils.js`) pour les libellés de la synthèse
+(« Porteur de : … »), de l'export texte et du PDF. Les contextes (`sonde_urinaire_demeure`,
+`prothese_articulaire`) sont écrits **en clair** dans `app_analysis.js` : l'audit
+d'atteignabilité ne lit que les `ctxClinique.push("…")` littéraux, et une production depuis la
+table le faisait échouer. Ce ne sont pas des pathologies — ils n'entrent pas dans
+`activeComorbs`.
+
+**Une case ne doit pas être une question orpheline** (`runContexteOrphelinAudit`) : chaque
+contexte est lu par une règle, et **le dispositif seul ne déclenche rien** — un rappel sur
+tout porteur de sonde se lirait comme un en-tête (leçon d'`EV_SF02b`). Les deux règles
+sortent quand un **antibiotique** est prescrit, là où le dispositif change la décision :
+
+- `SUP_SAD_01` (SPILF 2015, SF2H 2015) — sous sonde, la bactériurie est attendue : une
+  colonisation ne se traite pas (E-I), on ne change pas la sonde pour l'ECBU (D-III) ;
+- `SUP_PROTH_01` (ANSM 2011) — aucune antibioprophylaxie avant un soin dentaire chez le
+  porteur de prothèse articulaire (grade C).
+
+**Classe `antibiotique` créée pour l'occasion** : la clé brute ne résolvait que 62 des 85
+antibiotiques — toute DCI déjà déclarée ailleurs (fluoroquinolones, macrolides, aminosides)
+y échappait par la garde de match exact. `classeMatch: ['antibiotique']` sur le libellé, et
+`_CLASS_EXCLUDE` écarte la rifaximine (non absorbée). 81 résolus ; les seuls écarts sont la
+rifaximine et deux faux amis (maprotiline « tétracyclique », tamoxifène).
+
 ## Architecture des données cliniques
 
 **Attribution des sources (important)** :

@@ -43,6 +43,9 @@ const GERIA_RECOS_DB = {
         "CredibleMeds": { nom: "CredibleMeds QT",    annee: 2024, ref: "AZCERT QT Drug Lists (Risk_KR/Risk_PR/Risk_CR/Risk_TdP)" },
         "ESC":       { nom: "ESC Guidelines",        annee: 2024, ref: "European Society of Cardiology Clinical Practice Guidelines" },
         "ESC_HTN":   { nom: "ESC 2024 HTN",          annee: 2024, ref: "Mancia G et al., 2024 ESC Guidelines for the management of elevated blood pressure" },
+        "SPILF":     { nom: "SPILF 2015",              annee: 2017, ref: "SPILF — Diagnostic et antibiothérapie des infections urinaires bactériennes communautaires de l'adulte (2015, actualisation 2017)" },
+        "SF2H":      { nom: "SF2H 2015",               annee: 2015, ref: "SF2H/SPILF/AFU — Prévention et prise en charge des infections urinaires associées aux soins de l'adulte (2015)" },
+        "ANSM_DENT": { nom: "ANSM 2011 bucco-dentaire", annee: 2011, ref: "AFSSAPS/ANSM — Prescription des antibiotiques en pratique bucco-dentaire, septembre 2011" },
         "IDSA":      { nom: "IDSA",                  annee: 2021, ref: "Infectious Diseases Society of America Clinical Practice Guidelines" },
         "GOLD":      { nom: "GOLD BPCO",              annee: 2026, ref: "Global Initiative for Chronic Obstructive Lung Disease, GOLD Report 2026 v1.3 (8 dec. 2025)" },
         "NICE":      { nom: "NICE",                    annee: 2010, ref: "NICE CG100 — Alcohol-use disorders: diagnosis and management of physical complications" },
@@ -4823,6 +4826,31 @@ const RECOS_SUPPLEMENT = [
             age_min: 65
         },
         alternatives: "Laxatif osmotique prophylactique systématique. Titration plus lente chez l'âgé. Surveillance cardiaque rapprochée à l'instauration. Réévaluer la clozapinémie lors de tout changement de statut tabagique ou d'ajout d'inhibiteur/inducteur du CYP1A2."
+    },
+    {
+        // Le dispositif déclaré ne déclenche rien seul : un rappel qui sortirait chez tout
+        // porteur de sonde se lirait comme un en-tête. Il sort quand un ANTIBIOTIQUE est
+        // prescrit — c'est là que la colonisation attendue se confond avec une infection.
+        id: "SUP_SAD_01", sources: ["SPILF", "SF2H"],
+        titre: "Antibiotique chez un porteur de sonde urinaire à demeure : infection ou colonisation ?",
+        message: "Sous sonde à demeure, la bactériurie est attendue : une colonisation asymptomatique ne se traite pas (SPILF 2015, grade E-I), sauf avant un geste urologique — l'antibiotique n'obtiendrait qu'une stérilisation transitoire des urines et sélectionnerait des bactéries multirésistantes. Ne pas changer la sonde pour réaliser l'ECBU (SF2H 2015, D-III).",
+        severite: "info",
+        condition: {
+            med_keys: ["antibiotique"],
+            contexte_clinique: "sonde_urinaire_demeure"
+        },
+        alternatives: "Vérifier que l'antibiotique répond à une infection symptomatique (fièvre, frissons, douleur sus-pubienne ou lombaire, sepsis) et non à un ECBU positif isolé. Réévaluer à 48-72 h sur l'antibiogramme."
+    },
+    {
+        id: "SUP_PROTH_01", sources: ["ANSM_DENT"],
+        titre: "Porteur de prothèse articulaire : pas d'antibioprophylaxie avant un soin dentaire",
+        message: "Les porteurs de prothèse articulaire ne sont plus considérés comme à risque d'infection prothétique lors d'un geste bucco-dentaire : aucune antibioprophylaxie n'est recommandée, quels que soient l'ancienneté de la prothèse et le terrain (ANSM 2011, grade C). Si l'antibiotique prescrit vise cette prévention, il n'a pas d'indication.",
+        severite: "info",
+        condition: {
+            med_keys: ["antibiotique"],
+            contexte_clinique: "prothese_articulaire"
+        },
+        alternatives: "La prévention de l'infection prothétique passe par l'hygiène bucco-dentaire et des soins dentaires réguliers."
     },
     {
         id: "SUP_PSYC_06", sources: ["Maudsley", "ANSM"],
