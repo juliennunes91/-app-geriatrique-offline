@@ -3,13 +3,13 @@ function initUI() {
     if(typeof MASTER_DB === 'undefined') return;
 
     // =====================================================================
-    // 1. DDI : ddi_general.js (ANSM+BNF fusionnées) + ddi_merged_V2.js (AUC)
+    // 1. DDI : ddi_general.js (ANSM+BNF fusionnées) + ddi_pk.js (rapports d'AUC)
     // =====================================================================
     if (typeof DDI_GENERAL_DB !== 'undefined') {
         console.log(`[DDI] DDI_GENERAL_DB chargé : ${DDI_GENERAL_DB.length} interactions (ANSM + BNF/Micromedex fusionnées)`);
     }
-    if (typeof DDI_MERGED_DB !== 'undefined') {
-        console.log(`[DDI] DDI_MERGED_DB chargé : ${DDI_MERGED_DB.length} paires d'interactions AUC`);
+    if (typeof DDI_PK_DB !== 'undefined') {
+        console.log(`[DDI] DDI_PK_DB chargé : ${DDI_PK_DB.length} rapports d'AUC (mesurés et prédits)`);
     }
 
     // POSOLOGIE_DB, SUIVI_BIOLOGIQUE_DB, ATB_DB : données migrées dans MASTER_DB (v0.40)

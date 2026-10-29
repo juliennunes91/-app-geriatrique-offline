@@ -660,7 +660,7 @@ function runCollisionAudit(test, assert) {
         var DCIS = new Set(medList.map(function(m){ return m.dci; }));
         var keys = new Set();
         (typeof DDI_GENERAL_DB!=='undefined'?DDI_GENERAL_DB:[]).forEach(function(d){ if(d.d1)keys.add(norm(d.d1)); if(d.d2)keys.add(norm(d.d2)); });
-        (typeof DDI_MERGED_DB!=='undefined'?DDI_MERGED_DB:[]).forEach(function(d){ if(d.perpetrator)keys.add(norm(d.perpetrator)); if(d.victim)keys.add(norm(d.victim)); });
+        (typeof DDI_PK_DB!=='undefined'?DDI_PK_DB:[]).forEach(function(d){ if(d.s)keys.add(norm(d.s)); if(d.i)keys.add(norm(d.i)); });
         function harvest(o){ if(!o||typeof o!=='object')return; for(var k in o){ var v=o[k];
             if(/^(med_keys|med_keys_2|med_absent|classes|classe)$/.test(k)&&Array.isArray(v)) v.forEach(function(x){ if(typeof x==='string')keys.add(norm(x)); });
             else if(typeof v==='object') harvest(v); } }
@@ -703,6 +703,7 @@ function runCollisionAudit(test, assert) {
         'metronidazole::spiramycinemetronidazole',                       // association
         'piperacillinetazobactam::piperacilline',                        // association ↔ composant
         'valproate::divalproatedesodium',                                // sel de valproate
+        'divalproatedesodium::valproate',                                // idem, sens inverse (clé de ddi_pk.js)
         'fer::ascorbateferreux', 'fer::fumarateferreux', 'fer::sulfateferreux', // vrais sels de fer
         'ginkgo::ginkgobiloba',                                          // extrait
         'sartan::candesartan', 'sartan::eprosartan', 'sartan::irbesartan',
@@ -1636,7 +1637,8 @@ const CLES_MORTES_CONNUES = new Set([
 function runDdiIntegrityAudit(test, assert) {
     const { sandbox } = loadApp();
     const gen = JSON.parse(vm.runInContext('JSON.stringify(typeof DDI_GENERAL_DB!=="undefined"?DDI_GENERAL_DB:[])', sandbox));
-    const merged = JSON.parse(vm.runInContext('JSON.stringify(typeof DDI_MERGED_DB!=="undefined"?DDI_MERGED_DB:[])', sandbox));
+    const pk = JSON.parse(vm.runInContext('JSON.stringify(typeof DDI_PK_DB!=="undefined"?DDI_PK_DB:[])', sandbox));
+    const dcis = new Set(JSON.parse(vm.runInContext('JSON.stringify(MASTER_DB.MEDICAMENTS.map(m => m.dci))', sandbox)));
     const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[^a-z ]/g, '').trim();
     const okColor = { danger: 1, warning: 1, info: 1 };
 
@@ -1664,10 +1666,19 @@ function runDdiIntegrityAudit(test, assert) {
         gen.forEach(d => (d.details || []).forEach(dt => { if (!dt.desc || !String(dt.desc).trim()) bad.push(d.d1 + '+' + d.d2); }));
         assert.ok(bad.length === 0, bad.slice(0, 10).join(', '));
     });
-    test('DDI PK (merged) — pas d\'auto-paire ni auc_ratio négatif', () => {
-        const nm = s => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-        const bad = merged.filter(d => (nm(d.perpetrator) && nm(d.perpetrator) === nm(d.victim)) || (d.auc_ratio != null && d.auc_ratio < 0))
-            .map(d => d.perpetrator + '+' + d.victim);
+    test('DDI PK — pas d\'auto-paire, rapport d\'AUC strictement positif', () => {
+        const bad = pk.filter(d => d.s === d.i || !(d.auc > 0)).map(d => d.s + '+' + (d.i || d.ctx));
+        assert.ok(bad.length === 0, bad.slice(0, 10).join(', '));
+    });
+    test('DDI PK — substrat et interacteur sont des DCI EXACTES de MASTER_DB', () => {
+        // L'appariement se fait par égalité : une DCI mal orthographiée serait une
+        // ligne morte, jamais affichée, sans aucun bruit.
+        const bad = pk.filter(d => !dcis.has(d.s) || (d.i && !dcis.has(d.i)) || (!d.i && d.ctx !== 'tabac')).map(d => d.s + '+' + (d.i || d.ctx));
+        assert.ok(bad.length === 0, bad.slice(0, 10).join(', '));
+    });
+    test('DDI PK — une valeur MESURÉE nomme sa référence, une prédiction son intervalle', () => {
+        const bad = pk.filter(d => (d.n === 'mesure' && !d.ref) || (d.n === 'predit' && !(d.p5 > 0 && d.p95 >= d.auc && d.p5 <= d.auc))
+            || !['mesure', 'non_source', 'predit'].includes(d.n)).map(d => d.s + '+' + (d.i || d.ctx) + ':' + d.n);
         assert.ok(bad.length === 0, bad.slice(0, 10).join(', '));
     });
 }

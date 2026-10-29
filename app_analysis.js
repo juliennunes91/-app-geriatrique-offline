@@ -3005,11 +3005,16 @@ function analyserPrescription() {
     let _interactAssumees = [];
     try {
         if (isChecked('chkTabac')) {
+            // Liste clinique historique, complétée par les substrats dont DDI-Predictor
+            // prédit une baisse d'exposition chez le fumeur (10-20 cigarettes/j).
             let cyp1a2_drugs = ['clozapine', 'olanzapine', 'duloxetine', 'theophylline', 'erlotinib', 'haloperidol', 'fluvoxamine', 'agomelatine'];
-            let affected = activeMeds.filter(m => cyp1a2_drugs.some(d => sanitizeText(m.dci).includes(d)));
+            let affected = activeMeds.filter(m => cyp1a2_drugs.some(d => sanitizeText(m.dci).includes(d)) || pkLignes(m.dci, 'ctx:tabac').length);
             if (affected.length > 0) {
-                let medNames = affected.map(m => escapeHtml(m.dci.toUpperCase())).join(', ');
-                addAlert('alertes-auc', `<div class="alert alert-warning border-warning shadow-sm"><strong style="font-size:1.05em; color:#d97706;">🚬 Interaction Tabac (Induction CYP1A2)</strong><br>Le tabagisme diminue fortement l'efficacité de : <b>${medNames}</b>.<br><em class="text-danger small">⚠️ Attention : arrêt brutal = risque de surdosage.</em></div>`, 'auc');
+                let medNames = affected.map(m => {
+                    const p = pkLignes(m.dci, 'ctx:tabac')[0];
+                    return escapeHtml(m.dci.toUpperCase()) + (p ? ` <span class="small fw-normal">(AUC ${pkRatio(p.auc)} prédit)</span>` : '');
+                }).join(', ');
+                addAlert('alertes-auc', `<div class="alert alert-warning border-warning shadow-sm"><strong style="font-size:1.05em; color:#d97706;">🚬 Interaction Tabac (Induction CYP1A2)</strong><br>Le tabagisme accélère le métabolisme et diminue l'exposition à : <b>${medNames}</b>.<br><em class="text-danger small">⚠️ Attention : arrêt brutal = risque de surdosage.</em></div>`, 'auc');
             }
         }
 
@@ -3443,7 +3448,7 @@ function analyserPrescription() {
             }
         });
 
-        let groupedAnsm = {}; let groupedAuc = {};
+        let groupedAnsm = {}; const _pkCartes = [];
 
         // --- Pré-indexation DDI_GENERAL_DB (ANSM + BNF/Micromedex fusionnées) ---
         let ddiGeneralDb = typeof DDI_GENERAL_DB !== 'undefined' && Array.isArray(DDI_GENERAL_DB) ? DDI_GENERAL_DB : null;
@@ -3472,31 +3477,12 @@ function analyserPrescription() {
                 let dciA = sanitizeText(mA.dci); let dciB = sanitizeText(mB.dci);
                 let matchesAuc = [];
 
-                // AUC EXTERNE
-                if(typeof DDI_MERGED_DB !== 'undefined') {
-                    let rootsA = [dciA]; let rootsB = [dciB];
-                    if (dciA.includes('rifampic')) rootsA.push('rifampin');
-                    if (dciA.includes('quetiap')) rootsA.push('quetiapine');
-                    if (dciB.includes('rifampic')) rootsB.push('rifampin');
-                    if (dciB.includes('quetiap')) rootsB.push('quetiapine');
-
-                    let aucFiltered = DDI_MERGED_DB.filter(d => {
-                        let p = sanitizeText(String(d.perpetrator)); let v = sanitizeText(String(d.victim));
-                        return (rootsA.some(r => r.includes(p)) && rootsB.some(r => r.includes(v))) || (rootsB.some(r => r.includes(p)) && rootsA.some(r => r.includes(v)));
-                    });
-                    matchesAuc.push(...aucFiltered);
-                }
-
-                // AUC RÈGLES
-                if ((dciA.includes('ritonavir') && dciB.includes('quetiapine')) || (dciB.includes('ritonavir') && dciA.includes('quetiapine'))) matchesAuc.push({ auc_ratio: 6.2, mechanism: "Inhibition puissante CYP3A4", note: "FDA" });
-                if ((dciA.includes('clarithromycin') && dciB.includes('quetiapine')) || (dciB.includes('clarithromycin') && dciA.includes('quetiapine'))) matchesAuc.push({ auc_ratio: 2.8, mechanism: "Inhibition forte CYP3A4", note: "PK" });
-                if ((dciA.includes('ritonavir') && dciB.includes('apixaban')) || (dciB.includes('ritonavir') && dciA.includes('apixaban'))) matchesAuc.push({ auc_ratio: 2.5, mechanism: "Inhibition CYP3A4 & P-gp (Risque Hémorragique Majeur)", note: "FDA" });
-                if ((dciA.includes('clarithromycin') && dciB.includes('apixaban')) || (dciB.includes('clarithromycin') && dciA.includes('apixaban'))) matchesAuc.push({ auc_ratio: 1.6, mechanism: "Inhibition CYP3A4", note: "PK" });
-
-                if (matchesAuc.length > 0) {
-                    if(!groupedAuc[pairName]) groupedAuc[pairName] = { items: [] };
-                    matchesAuc.forEach(m => { if(!isNaN(parseFloat(m.auc_ratio))) groupedAuc[pairName].items.push(m); });
-                }
+                // Rapports d'AUC (ddi_pk.js) : les deux sens, chacun est une carte —
+                // « exposition à A modifiée par B » n'est pas « à B modifiée par A ».
+                [[mA, mB], [mB, mA]].forEach(([sub, inter]) => {
+                    const lignes = pkLignes(sub.dci, inter.dci);
+                    if (lignes.length) _pkCartes.push({ sub, inter, lignes });
+                });
 
                 // DDI_GENERAL_DB (ANSM + BNF/Micromedex) — utilise l'index pré-calculé
                 if (ddiGeneralDb) {
@@ -3527,20 +3513,44 @@ function analyserPrescription() {
             }
         }
 
-        for (const [pair, data] of Object.entries(groupedAuc)) {
-            let uniqueItems = []; data.items.forEach(item => { if(!uniqueItems.some(u => parseFloat(u.auc_ratio) === parseFloat(item.auc_ratio))) uniqueItems.push(item); });
-            let detailsHtml = uniqueItems.map(m => {
-                let ratio = parseFloat(m.auc_ratio); let txtRatio = ratio < 1 ? `x${ratio} (Baisse)` : `x${ratio} (Hausse)`;
-                let src = m.source || m.note || m.ref || '';
-                let srcBadge = src ? ` <span class="badge bg-info" style="font-size:0.6em;">${escapeHtml(String(src))}</span>` : '';
-                // mechanism est null dans ~65% de DDI_MERGED_DB → fallback sur effet
-                // (toujours renseigné) pour ne pas afficher "null" dans l'onglet AUC.
-                let mecanisme = m.mechanism || m.effet || '';
-                let mecHtml = mecanisme ? `<br><em class="text-muted small">${escapeHtml(String(mecanisme))}</em>` : '';
-                return `<li style="margin-bottom:6px;"><span class="fw-bold">${(ratio >= 3 || ratio <= 0.3) ? '🔴' : '🟠'} Ratio ${txtRatio}</span>${srcBadge}${mecHtml}</li>`;
-            }).join('');
-            addAlert('alertes-auc', `<div class="alert alert-warning border-warning shadow-sm"><strong style="font-size:1.05em;">📈 Pharmacocinétique (AUC) : ${pair}</strong><ul class="mb-0 ps-3">${detailsHtml}</ul></div>`, 'auc');
-        }
+        // ── Onglet AUC : une carte par sens, trois natures de valeur jamais confondues ──
+        // MESURÉ (étude chez l'homme, RCP), PRÉDIT (DDI-Predictor), et HÉRITÉ (valeur
+        // de l'ancienne base sans référence traçable). La couleur suit l'ampleur de la
+        // valeur la plus fiable disponible — mesurée d'abord, puis prédite.
+        const _pct = auc => (auc >= 1 ? '+' : '−') + Math.round(Math.abs(auc - 1) * 100) + ' %';
+        const _remTxt = codes => codes.map(c => (typeof DDI_PK_REMARQUES !== 'undefined' && DDI_PK_REMARQUES[c]) || '').filter(Boolean);
+        _pkCartes.forEach(({ sub, inter, lignes }) => {
+            const mes = lignes.filter(e => e.n === 'mesure'), pred = lignes.filter(e => e.n === 'predit'), her = lignes.filter(e => e.n === 'non_source');
+            const ref = mes.length ? mes : pred.length ? pred : her;
+            const pire = ref.reduce((a, e) => (Math.abs(Math.log(e.auc)) > Math.abs(Math.log(a.auc)) ? e : a));
+            const amp = pkAmpleur(pire.auc);
+            if (amp === 'nulle') return;
+            const cls = amp === 'forte' ? 'alert-danger border-danger' : amp === 'moderee' ? 'alert-warning border-warning' : 'alert-info border-info';
+            const sens = pire.auc >= 1 ? 'augmentée' : 'diminuée';
+            // Promédicament : le rapport porte sur le métabolite actif (codéine → morphine).
+            const objet = (pire.rem || []).includes('R1') ? 'exposition au métabolite actif' : 'exposition';
+            const adv = amp === 'forte' ? 'fortement ' : amp === 'moderee' ? 'nettement ' : '';
+            let html = '';
+            mes.forEach(e => {
+                html += `<li>🔬 <span class="fw-bold">Mesuré : ${pkRatio(e.auc)}</span> (exposition ${_pct(e.auc)})`
+                    + (e.ref ? ` <span class="text-muted small">— ${escapeHtml(e.ref)}</span>` : '') + '</li>';
+            });
+            if (pred.length) {
+                const doses = pred.map(e => `${pkRatio(e.auc)} <span class="text-muted small">[P5–P95 : ${pkRatio(e.p5).slice(1)}–${pkRatio(e.p95).slice(1)}]</span>`
+                    + ((e.dose || e.var) ? ` <span class="small">${escapeHtml([e.var, e.dose ? inter.dci.toLowerCase() + ' ' + e.dose : ''].filter(Boolean).join(', '))}</span>` : ''));
+                const rems = _remTxt([...new Set(pred.flatMap(e => e.rem || []))]);
+                html += `<li>🧮 <span class="fw-bold">Prédit (DDI-Predictor) :</span> ${doses.join(' ; ')}`
+                    + (rems.length ? `<br><em class="text-muted small">${escapeHtml(rems.join(' ; '))}</em>` : '') + '</li>';
+            }
+            her.forEach(e => {
+                html += `<li>⚪ Valeur héritée, sans référence tracée : ${pkRatio(e.auc)}`
+                    + (e.mec ? ` <span class="text-muted small">— ${escapeHtml(e.mec)}</span>` : '') + ' <span class="small">(ordre de grandeur à vérifier)</span></li>';
+            });
+            const prodrogue = lignes.some(e => (e.rem || []).includes('R1'))
+                ? `<div class="small mt-1">Promédicament : une baisse est une perte d'efficacité, une hausse un excès du métabolite actif.</div>` : '';
+            const pied = pred.length ? `<div class="small text-muted mt-1">Prédiction : modèle in vivo des CYP (adulte, métaboliseur normal, état d'équilibre) ; les transporteurs ne sont pas pris en compte.</div>` : '';
+            addAlert('alertes-auc', `<div class="alert ${cls} shadow-sm"><strong style="font-size:1.05em;">📈 ${escapeHtml(sub.dci.toUpperCase())} : ${objet} ${adv}${sens} par ${escapeHtml(inter.dci.toUpperCase())}</strong><ul class="mb-0 ps-3">${html}</ul>${prodrogue}${pied}</div>`, 'auc');
+        });
 
         // Le thésaurus ANSM regroupe AVK et AOD sous « ANTICOAGULANTS ORAUX », mais
         // rédige les modalités de surveillance pour les AVK (« contrôle biologique au
@@ -3996,7 +4006,7 @@ function analyserPrescription() {
     // des dix onglets à ne rien dire, ce qui se lit comme une panne. Il est rare par
     // construction : il n'affiche que les paires pour lesquelles une étude a MESURÉ le
     // rapport d'aires sous la courbe. Le dire explicitement vaut mieux qu'une page blanche.
-    if(counts.auc === 0) document.getElementById('alertes-auc').innerHTML = '<div class="alert alert-light">Aucune interaction pharmacocinétique chiffrée pour cette ordonnance.<br><span class="small">Cet onglet n\'affiche que les associations dont le rapport d\'AUC a été <b>mesuré</b> dans une étude publiée. Son silence signifie qu\'aucune donnée de ce type n\'existe pour ces paires — pas qu\'elles sont sans interaction : les risques cliniques figurent dans l\'onglet Interactions et le thésaurus ANSM dans le sien.</span></div>';
+    if(counts.auc === 0) document.getElementById('alertes-auc').innerHTML = '<div class="alert alert-light">Aucune interaction pharmacocinétique chiffrée pour cette ordonnance.<br><span class="small">Cet onglet montre les rapports d\'AUC <b>mesurés</b> (étude chez l\'homme, RCP) et ceux <b>prédits</b> par DDI-Predictor quand l\'exposition est au moins doublée ou divisée par deux. Son silence ne dit pas qu\'une association est sans risque : le modèle ne couvre que les interactions médiées par les CYP, et les risques cliniques figurent dans l\'onglet Interactions et le thésaurus ANSM dans le sien.</span></div>';
     if(counts.bio === 0) document.getElementById('alertes-bio').innerHTML = '<div class="alert alert-light">Aucune anomalie syndromique biologique.</div>';
 
     // =========================================================

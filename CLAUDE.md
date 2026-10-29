@@ -482,8 +482,11 @@ absent) :
 - Si la DCI porte une **précision** (durée/dose/indication), câbler
   `medPrecisionFamily()` (`drug_classes.js`).
 - **Interactions ANSM** : ajouter la/les paires dans `ddi_general.js`
-  (`d1`/`d2`/`couleur`/`details`). **Interactions PK** (magnitude) : `ddi_merged_V2.js`
-  (`perpetrator`/`victim`/`auc_ratio`/`mechanism`/`note` **avec citation nommée**).
+  (`d1`/`d2`/`couleur`/`details`). **Interactions PK** (rapport d'AUC mesuré) :
+  `tools/data/pk_mesures.json` (`s`/`i` en DCI exactes, `auc`, `mecanisme`, `ref` **avec
+  citation nommée**), puis `node tools/build_ddi_pk.cjs`. Une DCI ajoutée qui figure
+  parmi les substrats/interacteurs de DDI-Predictor reçoit ses prédictions en relançant
+  ce même script (`--rapport` liste les noms encore non appariés).
   Refléter aussi dans `ddi_interact` (texte) et `ddi_interact_v2` (structuré) de
   l'entrée MASTER_DB.
 
@@ -925,16 +928,58 @@ une heuristique de ressemblance. Sept champs `poso_ger` portent une clause de ce
 seules les trois dont la condition est **vérifiable depuis une ordonnance** y figurent
 (clopidogrel, IPP, statine) — « si achlorhydrie » ne se décide pas ainsi.
 
-## L'onglet AUC est rare par construction, et le dit
+## Interactions pharmacocinétiques chiffrées — `ddi_pk.js`
 
-Il ne montre que les paires dont le **rapport d'aires sous la courbe a été mesuré** dans une
-étude publiée : 1411 paires en base, 861 dont les deux molécules existent dans `MASTER_DB`,
-et il faut encore que le patient reçoive les deux. Vérifié : 10 des 12 paires gériatriques
-classiques sortent (clarithromycine + simvastatine ×11,6 ; diltiazem + simvastatine ×5 ;
-paroxétine + métoprolol ×5 ; oméprazole + clopidogrel ×0,55). Ce n'est donc pas une panne —
-mais l'onglet restait **entièrement vide**, seul des dix à ne rien rendre, ce qui se lit
-comme telle. Il porte maintenant un message qui distingue « aucune donnée de ce type » de
-« aucune interaction ».
+L'onglet AUC lisait `ddi_merged_V2.js` : 1411 paires de **quatre provenances mêlées et
+non distinguées à l'affichage**, en noms anglais, appariées par **sous-chaîne**
+(`dci.includes(nomAnglais)` — la dihydrocodéine recevait les chiffres de la codéine). Le
+relevé fait en le démontant :
+
+- `DDI_DB` (885) : prédictions sans mécanisme ni provenance ; 827 recouvertes par
+  DDI-Predictor, dont la moitié seulement à ±10 % — une version ancienne d'un modèle.
+- `DDI_AUC_DB` « modèle statique FDA » (257, `Ki=… [I]=…`) : estimations maison, à ±10 %
+  de DDI-Predictor **une fois sur quatre** (amiodarone + félodipine ×8,6 contre ×1,6).
+- `literature` (137) : la note nommait une étude **33 fois** ; le reste était une
+  extrapolation (« profil similaire », « estimation basée sur… »).
+- quatre règles codées en dur dans `app_analysis.js`, dont **ritonavir + quétiapine ×6,2**
+  — chiffre de l'étude au **kétoconazole** (leçon nitrofurantoïne : bon chiffre, mauvaise
+  source). L'étude kétoconazole est en base, sous son nom.
+
+**Désormais une base générée, trois natures jamais confondues** (`n`) :
+
+- `mesure` — étude chez l'homme ou RCP, **référence nommée obligatoire** (test) ;
+- `predit` — DDI-Predictor (M. Tod, extraction complète 280 × 170 des 28-29/10/2026,
+  avec l'accord de l'auteur), avec l'intervalle **P5–P95**, la dose de l'interacteur et les
+  remarques du site (promédicament, marge étroite, inhibition irréversible…) ;
+- `non_source` — valeur héritée sans référence traçable, affichée comme « ordre de grandeur
+  à vérifier » plutôt que supprimée (196) : les 114 valeurs non modélisées de l'ancienne base
+  (transporteurs P-gp/OATP, que DDI-Predictor ne couvre pas) et les extrapolations.
+
+Retirés : les estimations « modèle statique », `DDI_DB`, le boosting volontaire des
+antirétroviraux (effet recherché, et « ×48 » sur le bosentan était une Cmin), et les valeurs
+comprises entre 0,8 et 1,25 (« pas d'effet notable », FDA 2020).
+
+- **Sources** : `tools/vendor/ddi_predictor/auc_ratios_2026-10.csv` (brut, ne pas éditer)
+  et `tools/data/pk_mesures.json` (à la main). `ddi_pk.js` est **généré** ; un test vérifie
+  qu'il correspond exactement à ses sources (`--verifier`). Validé par mutation.
+- **Appariement exact** des noms anglais aux DCI de `MASTER_DB`, avec une table `ALIAS`
+  déclarée (le valproate de DDI-Predictor est l'exposition à l'acide valproïque : divalproate
+  et valpromide la reçoivent). 142 substrats et 78 interacteurs appariés ; les autres
+  n'existent pas en base.
+- **Seuil d'affichage des prédictions : ×2 ou ×0,5** (effet modéré FDA) — celui à partir
+  duquel le site juge qu'une adaptation de dose peut s'imposer. Si une dose le franchit,
+  **toutes** les doses du couple sont gardées (fluconazole 100/200/400 mg/j).
+- **Variante du substrat** : la fraction active ou le racémique quand le site les donne,
+  sinon chaque énantiomère étiqueté (carvédilol R/S).
+- **Une carte par SENS** : « exposition au MÉTOPROLOL augmentée par la PAROXÉTINE ». La
+  couleur suit l'ampleur (FDA : ≥ 5 rouge, ≥ 2 orange, sinon informatif) de la valeur **la
+  plus fiable disponible** — mesurée, puis prédite, puis héritée. Promédicament (R1) : le
+  titre dit « exposition au métabolite actif », la baisse est une perte d'efficacité.
+- **Tabac** : DDI-Predictor modélise le tabac comme interacteur. Il n'a pas sa carte mais
+  chiffre l'encart « Interaction tabac » existant (seuil ×0,8 ici, l'induction y étant déjà
+  affirmée sans chiffre) et y fait entrer tizanidine, mélatonine, ropinirole, rasagiline…
+- L'onglet n'alimente ni le bandeau ni le registre de synthèse. Vide, il dit pourquoi —
+  modèle limité aux CYP, les risques cliniques sont dans les onglets Interactions et ANSM.
 
 ## Une contre-indication doit parler de SA pathologie
 

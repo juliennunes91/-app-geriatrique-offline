@@ -2045,13 +2045,50 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
     });
     test('L\'onglet AUC dit pourquoi il est vide', () => {
         // Seul des dix onglets a ne RIEN rendre quand il n'a rien a dire : une page
-        // blanche se lit comme une panne. Il est rare par construction — il n'affiche
-        // que les paires dont le rapport d'AUC a ete mesure.
+        // blanche se lit comme une panne. Le message dit aussi ce que l'onglet ne
+        // couvre pas (modele limite aux CYP).
         const auc = meds => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds })._html['alertes-auc'] || '';
-        assert.ok(/mesuré/.test(auc(['Paracetamol', 'Furosemide'])),
+        assert.ok(/mesurés.*prédits.*CYP/s.test(auc(['Paracetamol', 'Furosemide'])),
             'onglet vide : un message qui explique le silence');
-        assert.ok(/Pharmacocinétique \(AUC\)/.test(auc(['Clarithromycine', 'Simvastatine'])),
+        assert.ok(/SIMVASTATINE : exposition/.test(auc(['Clarithromycine', 'Simvastatine'])),
             'paire documentee : le ratio sort toujours');
+    });
+    test('AUC (ddi_pk.js) : mesure, prediction et valeur heritee ne sont jamais confondues', () => {
+        const auc = (meds, flags) => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds, flags })._html['alertes-auc'] || '';
+        // Erythromycine + simvastatine : etude mesuree (Kantola 1998) ET prediction.
+        const ery = auc(['Erythromycine', 'Simvastatine']);
+        assert.ok(/Mesuré : ×6,2/.test(ery) && /Kantola/.test(ery), 'la valeur mesuree sort avec sa reference');
+        assert.ok(/Prédit \(DDI-Predictor\)/.test(ery) && /P5–P95/.test(ery), 'la prediction sort avec son intervalle P5-P95');
+        assert.ok(/alert-danger/.test(ery) && /fortement augmentée/.test(ery), 'ampleur forte (≥ 5) : carte rouge');
+        // Paroxetine + metoprolol : prediction + valeur heritee etiquetee comme telle.
+        const par = auc(['Paroxetine', 'Metoprolol']);
+        assert.ok(/METOPROLOL : exposition nettement augmentée par PAROXETINE/.test(par), 'le SENS est dit : substrat, puis interacteur');
+        assert.ok(/sans référence tracée/.test(par), 'une valeur sans reference le dit');
+        // Promedicament : le rapport porte sur le metabolite actif.
+        assert.ok(/CODEINE : exposition au métabolite actif fortement diminuée/.test(auc(['Codeine', 'Paroxetine'])),
+            'codeine sous paroxetine : perte d\'efficacite, pas une baisse de toxicite');
+    });
+    test('AUC (ddi_pk.js) : appariement EXACT des DCI, jamais par sous-chaine', () => {
+        // L'ancienne base etait lue par `dci.includes(nomAnglais)` : la dihydrocodeine
+        // recevait les chiffres de la codeine. Aucune donnee n'existe pour elle.
+        const h = analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds: ['Dihydrocodeine', 'Paroxetine'] })._html['alertes-auc'] || '';
+        assert.ok(!/ : exposition/.test(h), 'dihydrocodeine + paroxetine : aucune carte empruntee a la codeine');
+        // Le valproate de DDI-Predictor est l'exposition a l'acide valproique : le
+        // divalproate la porte aussi (alias DECLARE, pas une sous-chaine).
+        const v = analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds: ['Divalproate de sodium', 'Lamotrigine'] })._html['alertes-auc'] || '';
+        const v2 = analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds: ['Valproate', 'Lamotrigine'] })._html['alertes-auc'] || '';
+        assert.ok(/LAMOTRIGINE/.test(v2) === /LAMOTRIGINE/.test(v), 'valproate et divalproate rendent la meme chose');
+    });
+    test('AUC : le tabac chiffre l\'induction du CYP1A2 quand DDI-Predictor la predit', () => {
+        const h = analyzeCase({ age: 70, sexe: 'H', dfg: 70, meds: ['Tizanidine'], flags: ['chkTabac'] })._html['alertes-auc'] || '';
+        assert.ok(/TIZANIDINE/.test(h) && /×0,57 prédit/.test(h), 'tizanidine (hors liste historique) entre par la donnee, avec son ratio');
+        const sans = analyzeCase({ age: 70, sexe: 'H', dfg: 70, meds: ['Tizanidine'] })._html['alertes-auc'] || '';
+        assert.ok(!/Tabac/.test(sans), 'non-fumeur : rien');
+    });
+    test('ddi_pk.js correspond exactement a ses sources (CSV DDI-Predictor + pk_mesures.json)', () => {
+        const r = require('child_process').spawnSync(process.execPath, ['tools/build_ddi_pk.cjs', '--verifier'], { cwd: __dirname, encoding: 'utf8' });
+        assert.strictEqual(r.status, 0, (r.stderr || r.stdout).trim());
+        assert.ok(!fs.existsSync(require('path').join(__dirname, 'ddi_merged_V2.js')), 'l\'ancienne base ne doit pas revenir');
     });
     test('Saisie : la case et la comorbidite de la liste produisent le MEME etat', () => {
         // Un contexte clinique doit naitre du FAIT, pas du chemin de saisie. Declarer

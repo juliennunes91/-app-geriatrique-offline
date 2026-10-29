@@ -361,3 +361,33 @@ const associationDopa = (med) => {
     const v = med && med.precisions && med.precisions.association_dopa;
     return (v && DOPA_ASSOCIATIONS[v]) || null;
 };
+
+// ── Interactions pharmacocinétiques chiffrées (ddi_pk.js) ──────────────────────
+// Appariement EXACT par DCI, jamais par sous-chaîne : l'ancienne lecture de
+// ddi_merged_V2.js testait `dci.includes(nomAnglais)`, si bien que « citalopram »
+// prêtait ses chiffres à l'escitalopram. Clé : substrat|interacteur, ou
+// substrat|ctx:tabac pour un interacteur qui est un contexte clinique.
+let _PK_INDEX = null;
+const pkIndex = () => {
+    if (_PK_INDEX) return _PK_INDEX;
+    _PK_INDEX = new Map();
+    if (typeof DDI_PK_DB === 'undefined' || !Array.isArray(DDI_PK_DB)) return _PK_INDEX;
+    DDI_PK_DB.forEach(e => {
+        const k = sanitizeText(e.s) + '|' + (e.i ? sanitizeText(e.i) : 'ctx:' + e.ctx);
+        if (!_PK_INDEX.has(k)) _PK_INDEX.set(k, []);
+        _PK_INDEX.get(k).push(e);
+    });
+    return _PK_INDEX;
+};
+const pkLignes = (substratDci, interacteurDci) =>
+    pkIndex().get(sanitizeText(substratDci) + '|' + (String(interacteurDci).startsWith('ctx:') ? interacteurDci : sanitizeText(interacteurDci))) || [];
+// ×2,5 · ×0,25 · ×12 — l'ordre de grandeur, pas une fausse précision.
+const pkRatio = (x) => {
+    const v = Number(x);
+    return '×' + (v >= 10 ? String(Math.round(v)) : String(Math.round(v * 100) / 100)).replace('.', ',');
+};
+// Bandes FDA 2020 (Clinical Drug Interaction Studies), celles de l'extraction DDI-Predictor.
+const pkAmpleur = (auc) => {
+    const m = auc >= 1 ? auc : 1 / auc;
+    return m >= 5 ? 'forte' : m >= 2 ? 'moderee' : m >= 1.25 ? 'faible' : 'nulle';
+};

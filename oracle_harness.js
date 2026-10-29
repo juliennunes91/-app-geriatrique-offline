@@ -108,7 +108,7 @@ function buildSandbox() {
 }
 
 const APP_FILES = [
-    'ddi_general.js', 'ddi_merged_V2.js', 'app_legend.js',
+    'ddi_general.js', 'ddi_pk.js', 'app_legend.js',
     'geria_database.js', 'geria_pathology_rules_v3.js', 'geria_recos_final.js',
     'geria_integration_module.js', 'utils.js', 'patient_state.js', 'drug_classes.js',
     'geria_engine_v2.js', 'app_core.js', 'app_ui.js',

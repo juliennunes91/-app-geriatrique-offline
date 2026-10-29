@@ -1,0 +1,1970 @@
+{
+ "_lisezmoi": "Rapports d AUC MESURÉS chez l homme (n=mesure, référence nommée dans ref) ou repris de l ancienne base sans référence traçable (n=non_source). Source éditable : ajouter ici une valeur mesurée, avec sa référence, puis lancer node tools/build_ddi_pk.cjs. s = substrat, i = interacteur (DCI MASTER_DB exactes).",
+ "sources": {
+  "LITT": {
+   "libelle": "Étude publiée",
+   "detail": "Rapport d AUC mesuré chez l homme ; la référence nommée figure sous la valeur."
+  },
+  "RCP": {
+   "libelle": "RCP",
+   "detail": "Résumé des caractéristiques du produit (rubriques 4.5 / 5.2)."
+  },
+  "NS": {
+   "libelle": "Sans référence tracée",
+   "detail": "Valeur reprise de l ancienne base sans référence traçable : ordre de grandeur à vérifier avant toute décision de dose."
+  },
+  "DDIP": {
+   "libelle": "DDI-Predictor (prédiction)",
+   "detail": "Rapport d AUC PRÉDIT par DDI-Predictor (M. Tod, version académique, www.ddi-predictor.org), modèle in vivo des interactions médiées par les CYP. Adulte, métaboliseur normal, voie orale, état d équilibre ; transporteurs non pris en compte. Extraction des 28-29 octobre 2026, avec l accord de M. Michel Tod."
+  }
+ },
+ "entrees": [
+  {
+   "s": "Acenocoumarol",
+   "i": "Amiodarone",
+   "auc": 1.7,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition CYP2C9 (via déséthylamiodarone, métabolite actif)",
+   "ref": "Caraco 1989; Fondevila 1991: +27-110% AUC S-warfarine. Réduction dose AVK ~25% requis. Surveillance INR ++"
+  },
+  {
+   "s": "Acenocoumarol",
+   "i": "Fluvoxamine",
+   "auc": 1.65,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C9 + CYP1A2",
+   "ref": "Fluvoxamine fort inhibiteur CYP2C9 et CYP1A2. Acénocoumarol substrat CYP2C9. Risque surdosage AVK hémorragique. INR ++"
+  },
+  {
+   "s": "Acenocoumarol",
+   "i": "Voriconazole",
+   "auc": 1.7,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C9 + CYP2C19",
+   "ref": "Voriconazole fort inhibiteur CYP2C9 (warfarine +3.5x par étude; acénocoumarol effet similaire). INR rapproché obligatoire"
+  },
+  {
+   "s": "Alprazolam",
+   "i": "Aprepitant",
+   "auc": 2.2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Alprazolam",
+   "i": "Carbamazepine",
+   "auc": 0.45,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4"
+  },
+  {
+   "s": "Alprazolam",
+   "i": "Clarithromycine",
+   "auc": 2.5,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Alprazolam substrat CYP3A4. FDA/SPC clarithromycin: 'caution and appropriate dose adjustments when co-administered'"
+  },
+  {
+   "s": "Alprazolam",
+   "i": "Cobicistat",
+   "auc": 4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Alprazolam",
+   "i": "Diltiazem",
+   "auc": 1.76,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Alprazolam",
+   "i": "Fluvoxamine",
+   "auc": 2.7,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4"
+  },
+  {
+   "s": "Alprazolam",
+   "i": "Ritonavir",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Alprazolam",
+   "i": "Voriconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Substrat CYP3A4 (moins sensible que triazolam). Réduction dose alprazolam recommandée; surveillance sédation"
+  },
+  {
+   "s": "Amitriptyline",
+   "i": "Fluoxetine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6"
+  },
+  {
+   "s": "Amitriptyline",
+   "i": "Quinidine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Amitriptyline substrat CYP2D6. Quinidine fort inhibiteur. Accumulation → risque toxicité cardiaque (QT), sédation"
+  },
+  {
+   "s": "Amlodipine",
+   "i": "Diltiazem",
+   "auc": 1.57,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Amlodipine",
+   "i": "Itraconazole",
+   "auc": 2.2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Amlodipine substrat CYP3A4 (modérément sensible). Hypotension, œdèmes des membres inférieurs. Surveillance TA"
+  },
+  {
+   "s": "Amlodipine",
+   "i": "Ketoconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Amlodipine substrat CYP3A4. Accumulation → hypotension, œdèmes. Réduction dose ou surveillance TA rapprochée"
+  },
+  {
+   "s": "Amlodipine",
+   "i": "Ritonavir",
+   "auc": 2.6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Amlodipine",
+   "i": "Voriconazole",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 (mécanisme-based)",
+   "ref": "Amlodipine substrat CYP3A4 (moins sensible). Accumulation → hypotension, œdèmes. Réduire dose ou surveiller TA"
+  },
+  {
+   "s": "Apixaban",
+   "i": "Amiodarone",
+   "auc": 1.39,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4+P-gp"
+  },
+  {
+   "s": "Apixaban",
+   "i": "Carbamazepine",
+   "auc": 0.44,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4+P-gp"
+  },
+  {
+   "s": "Apixaban",
+   "i": "Ciclosporine",
+   "auc": 1.77,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp"
+  },
+  {
+   "s": "Apixaban",
+   "i": "Clarithromycine",
+   "auc": 1.6,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Étude PK phase I (Frost 2015, Am J Cardiovasc Drugs): GMR AUC 1.595 (90%CI 1.506-1.698)"
+  },
+  {
+   "s": "Apixaban",
+   "i": "Ritonavir",
+   "auc": 1.59,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte"
+  },
+  {
+   "s": "Atorvastatine",
+   "i": "Carbamazepine",
+   "auc": 0.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction forte CYP3A4"
+  },
+  {
+   "s": "Atorvastatine",
+   "i": "Ciclosporine",
+   "auc": 8.7,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition OATP1B1"
+  },
+  {
+   "s": "Atorvastatine",
+   "i": "Cobicistat",
+   "auc": 8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Atorvastatine",
+   "i": "Diltiazem",
+   "auc": 2.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Atorvastatine",
+   "i": "Efavirenz",
+   "auc": 0.57,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4"
+  },
+  {
+   "s": "Atorvastatine",
+   "i": "Gemfibrozil",
+   "auc": 1.35,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition OATP1B1 + faible CYP2C8",
+   "ref": "Effet plus faible que sur simvastatin; inhibition CYP3A4 non significative (Jacobson 2004)"
+  },
+  {
+   "s": "Atorvastatine",
+   "i": "Ritonavir",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Atorvastatine",
+   "i": "Verapamil",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Buspirone",
+   "i": "Clarithromycine",
+   "auc": 5.9,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 (IRCYP3A4 élevé)",
+   "ref": "Buspirone substrat très sensible CYP3A4 (érythromycine x5.91 documenté). Clarithromycin profil similaire/supérieur. Sédation"
+  },
+  {
+   "s": "Buspirone",
+   "i": "Cobicistat",
+   "auc": 5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp (booster PK)",
+   "ref": "Buspirone substrat CYP3A4 très sensible (érythromycine x5.91, itraconazole x19). Cobicistat profil similaire kétoconazole"
+  },
+  {
+   "s": "Buspirone",
+   "i": "Ketoconazole",
+   "auc": 19,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Kivistö 1997: buspirone AUC x19 avec kétoconazole. Contre-indication. Réduire dose drastiquement ou éviter"
+  },
+  {
+   "s": "Buspirone",
+   "i": "Posaconazole",
+   "auc": 8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Buspirone substrat très sensible CYP3A4. Posaconazole fort inhibiteur. Sédation profonde. Contre-indiqué"
+  },
+  {
+   "s": "Buspirone",
+   "i": "Ritonavir",
+   "auc": 15,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Buspirone substrat CYP3A4 très sensible. Ritonavir fort inhibiteur. Risque sédation profonde. Contre-indication pratique"
+  },
+  {
+   "s": "Buspirone",
+   "i": "Voriconazole",
+   "auc": 8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 (mécanisme-based)",
+   "ref": "Buspirone substrat très sensible CYP3A4. Voriconazole fort inhibiteur mécanisme-based. Sédation. Réduire dose x5-10"
+  },
+  {
+   "s": "Carbamazepine",
+   "i": "Verapamil",
+   "auc": 1.46,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Carvedilol",
+   "i": "Bupropion",
+   "auc": 2.2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Carvedilol substrat CYP2D6. Bupropion fort inhibiteur CYP2D6 (Ki ~5µM). Risque bradycardie/hypotension excessive"
+  },
+  {
+   "s": "Carvedilol",
+   "i": "Quinidine",
+   "auc": 2.1,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Carvedilol substrat CYP2D6. Quinidine fort inhibiteur. Bradycardie excessive, hypotension. Réduction dose ou éviter"
+  },
+  {
+   "s": "Celecoxib",
+   "i": "Amiodarone",
+   "auc": 1.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition modérée CYP2C9",
+   "ref": "Célécoxib substrat CYP2C9. Accumulation possible; surveillance effets indésirables (rénaux, digestifs)"
+  },
+  {
+   "s": "Celecoxib",
+   "i": "Fluvoxamine",
+   "auc": 1.7,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C9 + CYP1A2",
+   "ref": "Célécoxib substrat CYP2C9. Fluvoxamine fort inhibiteur CYP2C9 et 1A2. Accumulation → risque cardiovasculaire et rénal"
+  },
+  {
+   "s": "Celecoxib",
+   "i": "Voriconazole",
+   "auc": 1.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C9 + CYP2C19",
+   "ref": "Célécoxib substrat CYP2C9. Voriconazole fort inhibiteur CYP2C9. Surveillance effets indésirables (rénaux, digestifs, CV)"
+  },
+  {
+   "s": "Ciclosporine",
+   "i": "Bosentan",
+   "auc": 0.49,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4"
+  },
+  {
+   "s": "Clomipramine",
+   "i": "Fluoxetine",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6"
+  },
+  {
+   "s": "Clomipramine",
+   "i": "Quinidine",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Clomipramine substrat CYP2D6. Inhibition quinidine → accumulation → QTc, anticholinergique ++. Surveillance ECG"
+  },
+  {
+   "s": "Clopidogrel",
+   "i": "Carbamazepine",
+   "auc": 0.79,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP2C19"
+  },
+  {
+   "s": "Clopidogrel",
+   "i": "Esomeprazole",
+   "auc": 0.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2C19"
+  },
+  {
+   "s": "Clopidogrel",
+   "i": "Omeprazole",
+   "auc": 0.55,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2C19 (activation prodrogue)"
+  },
+  {
+   "s": "Clozapine",
+   "i": "Fluvoxamine",
+   "auc": 3.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP1A2"
+  },
+  {
+   "s": "Codeine",
+   "i": "Bupropion",
+   "auc": 0.6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition (prodrogue)"
+  },
+  {
+   "s": "Codeine",
+   "i": "Fluoxetine",
+   "auc": 0.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition activation (prodrogue)"
+  },
+  {
+   "s": "Codeine",
+   "i": "Paroxetine",
+   "auc": 0.45,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte (prodrogue)"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Ciclosporine",
+   "auc": 2.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4+P-gp"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Cobicistat",
+   "auc": 2.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4+P-gp"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Diltiazem",
+   "auc": 1.9,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4+P-gp"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Erythromycine",
+   "auc": 1.57,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4 + P-gp (modéré)",
+   "ref": "Cas clinique publié; inhibition plus faible que clarithromycin; azithromycin préféré"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Fluconazole",
+   "auc": 1.4,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition modérée CYP3A4 (sans P-gp)",
+   "ref": "FDA label colchicine: +40% AUC. CYP3A4 seul sans P-gp = interaction modeste"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Itraconazole",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Inhibition duale CYP3A4+P-gp (similaire clarithromycin). Risque toxicité colchicine; contre-indication relative"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Ketoconazole",
+   "auc": 3,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "FDA label colchicine: fort inhibiteur (kétoconazole) → AUC colchicine x3. CI si insuffisance rénale/hépatique"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Posaconazole",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Inhibition duale CYP3A4+P-gp similaire clarithromycin. Risque toxicité colchicine; éviter ou réduire dose colchicine"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Ritonavir",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte"
+  },
+  {
+   "s": "Colchicine",
+   "i": "Verapamil",
+   "auc": 2.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4+P-gp"
+  },
+  {
+   "s": "Dabigatran",
+   "i": "Amiodarone",
+   "auc": 1.58,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp"
+  },
+  {
+   "s": "Dabigatran",
+   "i": "Ciclosporine",
+   "auc": 2.45,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp forte"
+  },
+  {
+   "s": "Dabigatran",
+   "i": "Dronedarone",
+   "auc": 2.1,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp forte"
+  },
+  {
+   "s": "Dabigatran",
+   "i": "Ritonavir",
+   "auc": 1.53,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp partielle"
+  },
+  {
+   "s": "Dabigatran",
+   "i": "Verapamil",
+   "auc": 1.43,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp"
+  },
+  {
+   "s": "Desipramine",
+   "i": "Paroxetine",
+   "auc": 4,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Paroxetine fort inhibiteur CYP2D6 (PM-like effect). Desipramine AUC x4 documenté (Crewe 1992). QTc, anticholinergique ++"
+  },
+  {
+   "s": "Desipramine",
+   "i": "Quinidine",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Quinidine prototype inhibiteur CYP2D6. Desipramine substrat. AUC x3 (analog tricyclique). QTc cumulatif. Éviter"
+  },
+  {
+   "s": "Dexamethasone",
+   "i": "Aprepitant",
+   "auc": 2.2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Diazepam",
+   "i": "Fluvoxamine",
+   "auc": 3.2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C19"
+  },
+  {
+   "s": "Diazepam",
+   "i": "Omeprazole",
+   "auc": 1.26,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2C19"
+  },
+  {
+   "s": "Diazepam",
+   "i": "Ritonavir",
+   "auc": 4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Diclofenac",
+   "i": "Amiodarone",
+   "auc": 1.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition modérée CYP2C9 (via déséthylamiodarone)",
+   "ref": "Diclofenac substrat CYP2C9. Accumulation modérée attendue avec amiodarone. Surveiller effets rénaux et digestifs"
+  },
+  {
+   "s": "Diclofenac",
+   "i": "Voriconazole",
+   "auc": 1.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C9",
+   "ref": "Diclofenac substrat CYP2C9. Voriconazole fort inhibiteur. Accumulation → toxicité rénale, digestive. Surveiller"
+  },
+  {
+   "s": "Digoxine",
+   "i": "Amiodarone",
+   "auc": 1.7,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp"
+  },
+  {
+   "s": "Digoxine",
+   "i": "Ciclosporine",
+   "auc": 1.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp"
+  },
+  {
+   "s": "Digoxine",
+   "i": "Clarithromycine",
+   "auc": 1.7,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition P-gp intestinale et rénale",
+   "ref": "Inhibition P-gp; plusieurs études cliniques (Hooton 2005); ajustement dose recommandé"
+  },
+  {
+   "s": "Digoxine",
+   "i": "Dronedarone",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp"
+  },
+  {
+   "s": "Digoxine",
+   "i": "Ritonavir",
+   "auc": 1.86,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp"
+  },
+  {
+   "s": "Digoxine",
+   "i": "Spironolactone",
+   "auc": 1.25,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Reduction clearance renale"
+  },
+  {
+   "s": "Digoxine",
+   "i": "Verapamil",
+   "auc": 1.44,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition P-gp"
+  },
+  {
+   "s": "Diltiazem",
+   "i": "Clarithromycine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Diltiazem substrat CYP3A4. Association bidirectionnelle (diltiazem inhibe aussi CYP3A4). Bradycardie cumulative possible"
+  },
+  {
+   "s": "Diltiazem",
+   "i": "Itraconazole",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Diltiazem substrat CYP3A4 (CR ~0.60). Itraconazole fort inhibiteur. Accumulation diltiazem → bradycardie, bloc AV. ECG"
+  },
+  {
+   "s": "Diltiazem",
+   "i": "Ketoconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Diltiazem substrat CYP3A4. Ketoconazole fort inhibiteur. Bradycardie, bloc AV. Surveiller ECG et hémodynamique"
+  },
+  {
+   "s": "Diltiazem",
+   "i": "Posaconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Diltiazem substrat CYP3A4. Posaconazole fort inhibiteur. Accumulation → bradycardie, bloc AV. ECG et surveillance"
+  },
+  {
+   "s": "Diltiazem",
+   "i": "Voriconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 (mécanisme-based)",
+   "ref": "Diltiazem substrat CYP3A4. Voriconazole fort inhibiteur. Bradycardie, bloc AV. Surveiller ECG, adapter dose diltiazem"
+  },
+  {
+   "s": "Divalproate de sodium",
+   "i": "Carbamazepine",
+   "auc": 0.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction glucuronidation"
+  },
+  {
+   "s": "Duloxetine",
+   "i": "Fluvoxamine",
+   "auc": 2.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP1A2"
+  },
+  {
+   "s": "Edoxaban",
+   "i": "Carbamazepine",
+   "auc": 0.65,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction P-gp"
+  },
+  {
+   "s": "Felodipine",
+   "i": "Clarithromycine",
+   "auc": 4,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4 (CRF3A4 élevé)",
+   "ref": "Felodipine substrat CYP3A4 très sensible. Bailey 1996 erythromycin x2.4; clarithromycin attendu x3-5. Œdèmes, hypotension"
+  },
+  {
+   "s": "Felodipine",
+   "i": "Cobicistat",
+   "auc": 4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp (booster PK)",
+   "ref": "Cobicistat profil similaire ritonavir. Felodipine substrat CYP3A4 très sensible. Hypotension, œdèmes. Eviter"
+  },
+  {
+   "s": "Felodipine",
+   "i": "Ritonavir",
+   "auc": 5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Felodipine substrat CYP3A4 très sensible. Ritonavir fort inhibiteur. Hypotension, tachycardie réflexe. Éviter ou réduire dose"
+  },
+  {
+   "s": "Fentanyl",
+   "i": "Clarithromycine",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Fentanyl substrat CYP3A4. Cas cliniques documentés de dépression respiratoire sévère. Réduire dose fentanyl, surveillance"
+  },
+  {
+   "s": "Fentanyl",
+   "i": "Cobicistat",
+   "auc": 5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp (booster PK)",
+   "ref": "Fentanyl substrat CYP3A4. Cobicistat fort inhibiteur. Risque dépression respiratoire fatal. Éviter ou réduire doses ++"
+  },
+  {
+   "s": "Fentanyl",
+   "i": "Itraconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Inhibition CYP3A4 documentée. Accumulation fentanyl → risque sédation prolongée, dépression respiratoire"
+  },
+  {
+   "s": "Fentanyl",
+   "i": "Ketoconazole",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "CYP3A4 inhibition. Augmentation exposition fentanyl; surveillance clinique sédation et dépression respiratoire"
+  },
+  {
+   "s": "Fentanyl",
+   "i": "Posaconazole",
+   "auc": 2.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Fentanyl substrat CYP3A4. Surveillance sédation/dépression respiratoire; réduction dose fentanyl recommandée"
+  },
+  {
+   "s": "Fentanyl",
+   "i": "Ritonavir",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Fentanyl",
+   "i": "Voriconazole",
+   "auc": 2.8,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4 (mécanisme-based)",
+   "ref": "Phromsomber 2011: administration concomitante fentanyl IV + voriconazole → dépression respiratoire. Surveillance renforcée"
+  },
+  {
+   "s": "Fluvastatine",
+   "i": "Ciclosporine",
+   "auc": 3.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2C9 + OATP"
+  },
+  {
+   "s": "Fluvastatine",
+   "i": "Diltiazem",
+   "auc": 3.6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Glimepiride",
+   "i": "Amiodarone",
+   "auc": 1.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition modérée CYP2C9",
+   "ref": "Glimepiride substrat CYP2C9. Risque hypoglycémie par accumulation; surveillance glycémique renforcée"
+  },
+  {
+   "s": "Glimepiride",
+   "i": "Fluvoxamine",
+   "auc": 1.6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C9",
+   "ref": "Glimépiride substrat CYP2C9. Fluvoxamine inhibe CYP2C9. Risque hypoglycémie. Surveiller glycémie si association"
+  },
+  {
+   "s": "Glimepiride",
+   "i": "Voriconazole",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C9 + CYP2C19",
+   "ref": "Glimépiride substrat CYP2C9. Voriconazole fort inhibiteur. Risque hypoglycémie sévère. Réduire dose sulfonylurée"
+  },
+  {
+   "s": "Haloperidol",
+   "i": "Bupropion",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Haloperidol substrat CYP2D6. Bupropion fort inhibiteur. Risque allongement QTc, effets extrapyramidaux. Réduire dose haloperidol"
+  },
+  {
+   "s": "Haloperidol",
+   "i": "Carbamazepine",
+   "auc": 0.55,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4"
+  },
+  {
+   "s": "Haloperidol",
+   "i": "Fluoxetine",
+   "auc": 1.53,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2D6"
+  },
+  {
+   "s": "Haloperidol",
+   "i": "Paroxetine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Haloperidol substrat CYP2D6. Paroxetine fort inhibiteur. Accumulation → QTc, effets extrapyramidaux. Surveillance ECG"
+  },
+  {
+   "s": "Haloperidol",
+   "i": "Quinidine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Haloperidol substrat CYP2D6. Quinidine fort inhibiteur. Accumulation → QTc, extrapyramidal. Surveillance ECG et clinique"
+  },
+  {
+   "s": "Lamotrigine",
+   "i": "Carbamazepine",
+   "auc": 0.45,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction glucuronidation"
+  },
+  {
+   "s": "Lamotrigine",
+   "i": "Divalproate de sodium",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition glucuronidation"
+  },
+  {
+   "s": "Lamotrigine",
+   "i": "Valproate",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition glucuronidation"
+  },
+  {
+   "s": "Lamotrigine",
+   "i": "Valpromide",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition glucuronidation"
+  },
+  {
+   "s": "Levomepromazine",
+   "i": "Bupropion",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Levopromazine substrat CYP2D6. Accumulation → sédation excessive, hypotension orthostatique. Réduire dose"
+  },
+  {
+   "s": "Levomepromazine",
+   "i": "Fluoxetine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Fluoxetine + levopromazine: inhibition CYP2D6. Sédation, hypotension. Surveillance clinique et neurologique"
+  },
+  {
+   "s": "Levomepromazine",
+   "i": "Paroxetine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Levopromazine substrat CYP2D6. Paroxetine fort inhibiteur → sédation, hypotension orthostatique, QTc. Réduire dose"
+  },
+  {
+   "s": "Levomepromazine",
+   "i": "Quinidine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Levopromazine substrat CYP2D6. Accumulation → sédation, hypotension orthostatique, QTc. Réduire dose antipsychotique"
+  },
+  {
+   "s": "Losartan",
+   "i": "Amiodarone",
+   "auc": 1.45,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition modérée CYP2C9 (conversion losartan → E3174 réduite)",
+   "ref": "Inhibition CYP2C9 par déséthylamiodarone; réduit formation métabolite actif E3174 (antihypertenseur principal)"
+  },
+  {
+   "s": "Losartan",
+   "i": "Fluvoxamine",
+   "auc": 1.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition modérée CYP2C9 (conversion en métabolite actif E3174 réduite)",
+   "ref": "Losartan produit actif via CYP2C9 → E3174. Fluvoxamine réduit cette conversion → perte efficacité antihypertensive"
+  },
+  {
+   "s": "Losartan",
+   "i": "Ritonavir",
+   "auc": 0.75,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP2C9"
+  },
+  {
+   "s": "Losartan",
+   "i": "Voriconazole",
+   "auc": 1.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C9 (réduction conversion E3174 actif)",
+   "ref": "Losartan prodrug CYP2C9 → E3174. Voriconazole réduit conversion → perte partielle d'efficacité antihypertensive"
+  },
+  {
+   "s": "Methylprednisolone",
+   "i": "Aprepitant",
+   "auc": 1.34,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee"
+  },
+  {
+   "s": "Metoprolol",
+   "i": "Amiodarone",
+   "auc": 1.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2D6"
+  },
+  {
+   "s": "Metoprolol",
+   "i": "Bupropion",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2D6"
+  },
+  {
+   "s": "Metoprolol",
+   "i": "Diltiazem",
+   "auc": 1.6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition faible CYP2D6"
+  },
+  {
+   "s": "Metoprolol",
+   "i": "Dronedarone",
+   "auc": 1.64,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2D6"
+  },
+  {
+   "s": "Metoprolol",
+   "i": "Fluoxetine",
+   "auc": 4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6"
+  },
+  {
+   "s": "Metoprolol",
+   "i": "Paroxetine",
+   "auc": 5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6"
+  },
+  {
+   "s": "Metoprolol",
+   "i": "Ritonavir",
+   "auc": 2.6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2D6"
+  },
+  {
+   "s": "Metoprolol",
+   "i": "Verapamil",
+   "auc": 1.32,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition faible CYP2D6"
+  },
+  {
+   "s": "Nebivolol",
+   "i": "Quinidine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Nebivolol substrat CYP2D6. Quinidine fort inhibiteur → accumulation → bradycardie, bloc AV. Surveillance FC/TA"
+  },
+  {
+   "s": "Nifedipine",
+   "i": "Clarithromycine",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Nifédipine substrat CYP3A4 (CRF3A4 ~0.65). Inhibition clarithromycin attendue: AUC x2-3. Hypotension possible"
+  },
+  {
+   "s": "Nifedipine",
+   "i": "Diltiazem",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Nifedipine",
+   "i": "Itraconazole",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Nifédipine substrat CYP3A4. Itraconazole fort inhibiteur CYP3A4+P-gp. Hypotension, œdèmes. Réduire dose CCB"
+  },
+  {
+   "s": "Nifedipine",
+   "i": "Ketoconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Nifédipine substrat CYP3A4 (CRF ~0.65). Ketoconazole fort inhibiteur. Réduire dose CCB; surveiller TA"
+  },
+  {
+   "s": "Nifedipine",
+   "i": "Posaconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Nifédipine substrat CYP3A4. Posaconazole fort inhibiteur. Hypotension, tachycardie réflexe. Réduire dose CCB"
+  },
+  {
+   "s": "Nifedipine",
+   "i": "Voriconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 (mécanisme-based)",
+   "ref": "Nifédipine substrat CYP3A4. Voriconazole fort inhibiteur mécanisme-based. Hypotension, œdèmes. Surveillance TA"
+  },
+  {
+   "s": "Nortriptyline",
+   "i": "Bupropion",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Nortriptyline fortement métabolisé par CYP2D6. Accumulation → allongement QT. Monitoring taux plasmatiques recommandé"
+  },
+  {
+   "s": "Nortriptyline",
+   "i": "Quinidine",
+   "auc": 3.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Nortriptyline fortement métabolisé par CYP2D6. Quinidine → accumulation → QTc, toxicité cardiaque. Surveillance ECG"
+  },
+  {
+   "s": "Olanzapine",
+   "i": "Fluvoxamine",
+   "auc": 2.3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP1A2"
+  },
+  {
+   "s": "Omeprazole",
+   "i": "Fluvoxamine",
+   "auc": 6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C19"
+  },
+  {
+   "s": "Oxycodone",
+   "i": "Bupropion",
+   "auc": 1.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6 (réduction conversion en oxymorphone)",
+   "ref": "Conversion CYP2D6 → oxymorphone (métabolite actif) réduite. Peut diminuer analgésie et augmenter effets oxycodone non métabolisé"
+  },
+  {
+   "s": "Oxycodone",
+   "i": "Fluoxetine",
+   "auc": 1.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6 (réduction conversion oxymorphone active)",
+   "ref": "Fluoxetine inhibe CYP2D6 → moins de conversion oxycodone → oxymorphone (métabolite analgésique). Peut réduire analgésie"
+  },
+  {
+   "s": "Oxycodone",
+   "i": "Paroxetine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6 (réduction conversion oxymorphone)",
+   "ref": "Oxycodone → oxymorphone (CYP2D6). Paroxetine réduit cette conversion. Possible perte d'efficacité analgésique. Surveiller"
+  },
+  {
+   "s": "Oxycodone",
+   "i": "Quinidine",
+   "auc": 1.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6 (réduction conversion oxymorphone)",
+   "ref": "Quinidine réduit conversion oxycodone → oxymorphone. Effet analgésique peut diminuer; effets propres oxycodone augmentent"
+  },
+  {
+   "s": "Oxycodone",
+   "i": "Ritonavir",
+   "auc": 2.9,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Perphenazine",
+   "i": "Bupropion",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Perphenazine substrat CYP2D6. Accumulation → effets extrapyramidaux, sédation, allongement QTc"
+  },
+  {
+   "s": "Perphenazine",
+   "i": "Fluoxetine",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Perphenazine très sensible à CYP2D6. Fluoxetine fort inhibiteur. Accumulation → effets extrapyramidaux, QTc. Réduire dose"
+  },
+  {
+   "s": "Pioglitazone",
+   "i": "Gemfibrozil",
+   "auc": 3.9,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP2C8 (glucuronide)",
+   "ref": "Aquilante 2013 (pioglitazone/CYP2C8): AUC x3.9. Surveillance glycémie; réduction dose pioglitazone (NB : Niemi 2003 concerne la rosiglitazone, pas la pioglitazone)"
+  },
+  {
+   "s": "Pravastatine",
+   "i": "Ciclosporine",
+   "auc": 8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition OATP1B1"
+  },
+  {
+   "s": "Pravastatine",
+   "i": "Clarithromycine",
+   "auc": 1.96,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition OATP1B1/1B3",
+   "ref": "Hougaard et al. 2020: ~2-fold AUC increase; principalement OATP1B1 (pas CYP3A4)"
+  },
+  {
+   "s": "Pravastatine",
+   "i": "Gemfibrozil",
+   "auc": 2.02,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition OATP1B1 + OAT3 rénal",
+   "ref": "Kyrklund et al. 2003: AUC +102%. Mécanisme: inhibition uptake hépatique OATP + rénal OAT3"
+  },
+  {
+   "s": "Propranolol",
+   "i": "Fluoxetine",
+   "auc": 3.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6"
+  },
+  {
+   "s": "Propranolol",
+   "i": "Paroxetine",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6"
+  },
+  {
+   "s": "Quetiapine",
+   "i": "Clarithromycine",
+   "auc": 7,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Cas clinique (Schulz-DuBois 2008): taux plasmatiques ~7x supérieurs; CYP3A4 + P-gp inhibition"
+  },
+  {
+   "s": "Quetiapine",
+   "i": "Erythromycine",
+   "auc": 2.29,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition modérée CYP3A4",
+   "ref": "Etude PK 19 patients schizophrènes (Wang 2013): AUC +129%, t1/2 +92%, clearance -52%"
+  },
+  {
+   "s": "Quetiapine",
+   "i": "Fluconazole",
+   "auc": 2.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition modérée CYP3A4",
+   "ref": "Estimation basée sur le profil inhibiteur CYP3A4 du fluconazole; surveillance clinique recommandée"
+  },
+  {
+   "s": "Quetiapine",
+   "i": "Itraconazole",
+   "auc": 6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Contre-indication recommandée (SPC quetiapine). Profil similaire kétoconazole; réduction dose ×6 ou éviter"
+  },
+  {
+   "s": "Quetiapine",
+   "i": "Ketoconazole",
+   "auc": 6.22,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Étude 12 volontaires sains (ketoconazole 200mg/j): AUC +522%, Cmax +235% (Prescribing info quetiapine)"
+  },
+  {
+   "s": "Quetiapine",
+   "i": "Posaconazole",
+   "auc": 6.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Contre-indication recommandée (SPC quetiapine). Profil similaire kétoconazole (AUC x6.22). Éviter l'association"
+  },
+  {
+   "s": "Quetiapine",
+   "i": "Voriconazole",
+   "auc": 4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 (mécanisme-based)",
+   "ref": "Inhibition CYP3A4 majeure (PBPK et données kétoconazole ~6x). Réduction dose quétiapine ou éviter l'association"
+  },
+  {
+   "s": "Repaglinide",
+   "i": "Clopidogrel",
+   "auc": 3.9,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP2C8 (glucuronide actif, mécanisme-based)",
+   "ref": "Tornio 2014: AUC x3.9. Clopidogrel acyl glucuronide = inhibiteur mécanisme-dépendant CYP2C8"
+  },
+  {
+   "s": "Repaglinide",
+   "i": "Gemfibrozil",
+   "auc": 8.1,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP2C8 + OATP1B1 (glucuronide actif)",
+   "ref": "Niemi et al. 2003: 600mg BID → AUC x8.1. Contre-indication absolue; risque hypoglycémie sévère"
+  },
+  {
+   "s": "Risperidone",
+   "i": "Bupropion",
+   "auc": 1.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2D6"
+  },
+  {
+   "s": "Risperidone",
+   "i": "Fluoxetine",
+   "auc": 1.75,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2D6"
+  },
+  {
+   "s": "Risperidone",
+   "i": "Paroxetine",
+   "auc": 3.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6"
+  },
+  {
+   "s": "Risperidone",
+   "i": "Quinidine",
+   "auc": 2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6",
+   "ref": "Risperidone substrat CYP2D6. Quinidine fort inhibiteur → accumulation risperidone → EPS, QTc. Surveillance ECG"
+  },
+  {
+   "s": "Rivaroxaban",
+   "i": "Amiodarone",
+   "auc": 1.29,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4+P-gp"
+  },
+  {
+   "s": "Rivaroxaban",
+   "i": "Carbamazepine",
+   "auc": 0.26,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4+P-gp"
+  },
+  {
+   "s": "Rivaroxaban",
+   "i": "Dronedarone",
+   "auc": 1.76,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee"
+  },
+  {
+   "s": "Rivaroxaban",
+   "i": "Efavirenz",
+   "auc": 0.55,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4+P-gp"
+  },
+  {
+   "s": "Rivaroxaban",
+   "i": "Ritonavir",
+   "auc": 2.51,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte"
+  },
+  {
+   "s": "Rosuvastatine",
+   "i": "Ciclosporine",
+   "auc": 10.6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition OATP1B1+BCRP"
+  },
+  {
+   "s": "Rosuvastatine",
+   "i": "Gemfibrozil",
+   "auc": 1.88,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition OATP1B1",
+   "ref": "Schneck 2004: AUC x1.88 (90%CI 1.60-2.21). Effet similaire à pravastatin (OATP1B1 principalement)"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Amiodarone",
+   "auc": 1.75,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Aprepitant",
+   "auc": 1.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Bosentan",
+   "auc": 0.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Ciclosporine",
+   "auc": 8.7,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP3A4+OATP1B1"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Cobicistat",
+   "auc": 12,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Diltiazem",
+   "auc": 5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Dronedarone",
+   "auc": 4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Efavirenz",
+   "auc": 0.42,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Erythromycine",
+   "auc": 6.2,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition CYP3A4 + OATP1B1",
+   "ref": "Kantola et al. 1998: AUC(0-24) simvastatin +6.2x; AUC acide simvastatine +3.9x"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Gemfibrozil",
+   "auc": 1.91,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition OATP1B1 + faible CYP2C8",
+   "ref": "FDA 2011: contre-indication de l'association. AUC simvastatin acid x1.91 (Backman et al. 2000, Clin Pharmacol Ther ; +185% acide simvastatine)"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Ritonavir",
+   "auc": 30,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Simvastatine",
+   "i": "Voriconazole",
+   "auc": 5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 (mécanisme-based) + OATP1B1",
+   "ref": "Simvastatin substrat CYP3A4 très sensible. Voriconazole fort inhibiteur. Risque rhabdomyolyse. Éviter l'association"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Bosentan",
+   "auc": 0.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP3A4"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Carbamazepine",
+   "auc": 0.2,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction forte CYP3A4"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Cimetidine",
+   "auc": 1.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition modérée CYP3A4 (+ compétition excrétion rénale tubulaire)",
+   "ref": "Cimetidine inhibiteur modéré CYP3A4; surveillance taux tacrolimus lors d'association, notamment insuffisance rénale"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Clarithromycine",
+   "auc": 5,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp + OATP",
+   "ref": "StatPearls 2024; Circulation 2004: macrolides réduisent clairance tacrolimus. Réduction dose 50-75% et TDM rapproché"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Cobicistat",
+   "auc": 20,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp (booster PK)",
+   "ref": "Profil similaire ritonavir. Contre-indication pratique; si indispensable: réduction dose massive + TDM rapproché"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Diltiazem",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Dronedarone",
+   "auc": 1.8,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition moderee CYP3A4"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Felodipine",
+   "auc": 1.6,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition modérée CYP3A4 intestinal",
+   "ref": "Butani 2002 (Transplantation): case report felodipine augmente concentrations tacrolimus. TDM recommandé"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Fluconazole",
+   "auc": 5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Itraconazole",
+   "auc": 3.5,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4 + CYP3A5",
+   "ref": "Etudes cliniques transplantés (Vanhove 1999 Ann Pharmacother): nécessite réduction dose tac. Surveillance taux sanguins ++"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Ketoconazole",
+   "auc": 5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4",
+   "ref": "Fort inhibiteur CYP3A4. Parfois utilisé intentionnellement (dose-sparing strategy). Surveillance TDM obligatoire"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Millepertuis",
+   "auc": 0.42,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction forte CYP3A4 + P-gp (hyperforine)",
+   "ref": "Contre-indication absolue chez transplantés. Cas de rejets aigus documentés. Arrêt brutal risque rebond AUC"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Nifedipine",
+   "auc": 1.5,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition modérée CYP3A4 intestinal + P-gp",
+   "ref": "Seifeldin 1997: nifédipine réduit besoins dose tacrolimus liver tx. Interaction documentée; TDM requis"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Phenobarbital",
+   "auc": 0.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction forte CYP3A4 + P-gp (inducteur barbiturique)",
+   "ref": "Inducteur CYP3A4 puissant (similaire carbamazépine). Réduction AUC tacrolimus 50-70%. Augmentation dose + TDM rapproché"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Rifabutine",
+   "auc": 0.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction modérée CYP3A4 + P-gp",
+   "ref": "Rifabutine inducteur CYP3A4 moins puissant que rifampicine. Réduction AUC tacrolimus attendue 40-60%. Ajustement dose + TDM"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Rifampicine",
+   "auc": 0.32,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Induction forte CYP3A4 + P-gp + induction hépatique globale",
+   "ref": "PBPK (Moj 2017): AUC tacrolimus réduit ~68% (ratio 0.32). Risque rejet aigu. Contre-indication relative; TDM intensif si indispensable"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Ritonavir",
+   "auc": 57,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Données de cas: jusqu'à 50-60x; adapté en pratique par réduction dose extrême (ex: 0.5mg/sem). Suivi TDM quotidien"
+  },
+  {
+   "s": "Tacrolimus",
+   "i": "Voriconazole",
+   "auc": 5.8,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4 (mécanisme-based) + CYP3A5",
+   "ref": "PBPK (Moj 2017) + études cliniques: AUC ratio 4-6x (jusqu'à 6x en CYP2C19 PM). Réduction dose tacrolimus 66-75% nécessaire"
+  },
+  {
+   "s": "Terbinafine",
+   "i": "Cimetidine",
+   "auc": 1.5,
+   "n": "mesure",
+   "src": "RCP",
+   "mecanisme": "Diminution de la clairance de la terbinafine",
+   "ref": "RCP Lamisil (ANSM) — RCP Lamisil : la cimetidine diminue d'environ 33 % la clairance de la terbinafine."
+  },
+  {
+   "s": "Terbinafine",
+   "i": "Fluconazole",
+   "auc": 1.7,
+   "n": "mesure",
+   "src": "RCP",
+   "mecanisme": "Inhibition des CYP2C9 et CYP3A4 impliques dans le metabolisme de la terbinafine",
+   "ref": "RCP Lamisil (ANSM) — RCP Lamisil : augmentation d'environ 52 % de la Cmax et 69 % de l'ASC de la terbinafine."
+  },
+  {
+   "s": "Terbinafine",
+   "i": "Rifampicine",
+   "auc": 0.5,
+   "n": "mesure",
+   "src": "RCP",
+   "mecanisme": "Induction du metabolisme hepatique de la terbinafine",
+   "ref": "RCP Lamisil (ANSM) — RCP Lamisil : la rifampicine augmente d'environ 100 % la clairance de la terbinafine — echec therapeutique probable."
+  },
+  {
+   "s": "Tramadol",
+   "i": "Fluoxetine",
+   "auc": 0.6,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition activation"
+  },
+  {
+   "s": "Tramadol",
+   "i": "Paroxetine",
+   "auc": 0.55,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte (prodrogue)"
+  },
+  {
+   "s": "Tramadol",
+   "i": "Quinidine",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2D6 (réduction conversion M1 actif)",
+   "ref": "Tramadol converti par CYP2D6 → O-desméthyltramadol (M1, forte affinité µ-opioïde). Quinidine réduit M1 → perte analgésie"
+  },
+  {
+   "s": "Valproate",
+   "i": "Carbamazepine",
+   "auc": 0.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction glucuronidation"
+  },
+  {
+   "s": "Valpromide",
+   "i": "Carbamazepine",
+   "auc": 0.4,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction glucuronidation"
+  },
+  {
+   "s": "Verapamil",
+   "i": "Clarithromycine",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Verapamil substrat CYP3A4 et P-gp. Risque bradycardie/BAV sévère. Eviter ou monitorer ECG et hémodynamique"
+  },
+  {
+   "s": "Verapamil",
+   "i": "Itraconazole",
+   "auc": 2.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Verapamil substrat CYP3A4+P-gp. Itraconazole double inhibiteur. Risque bradycardie/bloc AV. Surveillance ECG"
+  },
+  {
+   "s": "Verapamil",
+   "i": "Ketoconazole",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "Verapamil substrat CYP3A4+P-gp. Double inhibition. Bradycardie, bloc AV. Surveillance ECG requise"
+  },
+  {
+   "s": "Verapamil",
+   "i": "Posaconazole",
+   "auc": 3,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP3A4 + P-gp",
+   "ref": "SPC posaconazole: fort inhibiteur CYP3A4. Verapamil substrat sensible. Bradycardie/BAV. Surveiller ECG"
+  },
+  {
+   "s": "Verapamil",
+   "i": "Ritonavir",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4"
+  },
+  {
+   "s": "Verapamil",
+   "i": "Voriconazole",
+   "auc": 3,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP3A4 (mécanisme-based)",
+   "ref": "Verapamil substrat CYP3A4+P-gp. Voriconazole inhibe CYP3A4. Bradycardie, bloc AV. Surveillance ECG requise"
+  },
+  {
+   "s": "Warfarine",
+   "i": "Amiodarone",
+   "auc": 1.44,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2C9"
+  },
+  {
+   "s": "Warfarine",
+   "i": "Aprepitant",
+   "auc": 0.66,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP2C9"
+  },
+  {
+   "s": "Warfarine",
+   "i": "Carbamazepine",
+   "auc": 0.5,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP2C9"
+  },
+  {
+   "s": "Warfarine",
+   "i": "Clarithromycine",
+   "auc": 1.3,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition CYP2C9 + interaction pharmacodynamique",
+   "ref": "Prescribing info Clarithromycin: risque sérieux d'hémorragie; suivi INR impératif"
+  },
+  {
+   "s": "Warfarine",
+   "i": "Efavirenz",
+   "auc": 1.43,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP2C9"
+  },
+  {
+   "s": "Warfarine",
+   "i": "Fluconazole",
+   "auc": 1.77,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition forte CYP2C9"
+  },
+  {
+   "s": "Warfarine",
+   "i": "Fluvoxamine",
+   "auc": 1.65,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Inhibition CYP1A2+2C9"
+  },
+  {
+   "s": "Warfarine",
+   "i": "Ritonavir",
+   "auc": 0.65,
+   "n": "non_source",
+   "src": "NS",
+   "mecanisme": "Induction CYP2C9"
+  },
+  {
+   "s": "Warfarine",
+   "i": "Voriconazole",
+   "auc": 2.16,
+   "n": "mesure",
+   "src": "LITT",
+   "mecanisme": "Inhibition forte CYP2C9 (S-warfarine) + CYP2C19",
+   "ref": "SPC voriconazole: S-warfarine (énantiomère actif) AUC +2.16x. Réduction dose warfarine recommandée; surveillance INR ++"
+  }
+ ]
+}
