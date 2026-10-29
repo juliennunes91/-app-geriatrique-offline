@@ -417,6 +417,30 @@ rifaximine et deux faux amis (maprotiline « tétracyclique », tamoxifène).
 
 Le cross-référencement (affichage d'une source ESC sur une alerte STOPP/START) se fait via `findEbmSource()` dans `geria_engine_v2.js` — **ne pas mélanger** les sources entre les deux fichiers.
 
+## Recos de l'insuffisance cardiaque — ESC 2026, relues dans le texte intégral
+
+L'onglet guidelines (`PAT_002` / `PAT_003`, `geria_pathology_rules_v3.js`) citait encore
+l'ESC 2021/2023 alors que les règles gériatriques (`IN_B07`, `IN_B11`, finérénone) avaient
+déjà été alignées sur l'ESC 2026 : un ARM « I A » côté règles, « IIb » côté onglet, sur le
+même dossier. Réécrits depuis les tableaux de recommandations du texte intégral (Køber,
+Adamo *et al.*, Eur Heart J 2026;47:5346-5457 — clé `ESC_HF_2026` de `GUIDELINE_INDEX`) :
+
+- **Le seuil est FEVG < 50 %** pour les quatre piliers (BB, IEC/ARNI/ARA2, ARM stéroïdien,
+  iSGLT2, tous I A) : l'ESC 2026 fusionne FEr et FEmr. `PAT_003` (FEp) reçoit iSGLT2 I A,
+  **ARM (spironolactone ou finérénone) I A**, sémaglutide/tirzépatide IIa B1 (obésité).
+- **Niveaux B1/B2** : nouveauté 2026 (B1 = essai randomisé unique de qualité, B2 = non
+  randomisé). Les écrire tels quels, ne pas les rabattre sur « B ».
+- **Carence martiale = CST < 20 %** (et non plus ferritine < 100 ou 100-299 + CST < 20 %) :
+  la règle bio de `PAT_002` porte sur `BIO_047`, la ferritine reste paramètre associé.
+- Contre-indications relues : AINS/COX-2 **III B2**, saxagliptine seule (l'alogliptine
+  n'est plus citée), triple blocage du SRAA gardé avec sa référence 2021.
+- Le libellé de la source gériatrique `ESC_HF` (« ESC 2021/2023 IC ») de
+  `geria_recos_final.js` est laissé tel quel : les critères qui la citent n'ont pas été
+  réécrits, et changer l'étiquette ferait attribuer à 2026 un texte qui ne l'est pas.
+
+Test : « Recos IC (onglet guidelines) : ESC 2026 », validé par mutation (ARM rétrogradé
+en IIb → échec).
+
 ## Ajout d'un médicament dans la base (PROCÉDURE OBLIGATOIRE)
 
 **À chaque ajout d'une DCI**, suivre cette checklist dans l'ordre. Ne jamais

@@ -17,6 +17,7 @@
 const GUIDELINE_INDEX = {
     "ESC_HF_2021":      { ref: "McDonagh TA et al. Eur Heart J 2022;43:4368. ESC Guidelines for acute and chronic HF 2021" },
     "ESC_HF_2023":      { ref: "McDonagh TA et al. Eur Heart J 2023;44:3627. 2023 Focused Update HF" },
+    "ESC_HF_2026":      { ref: "Køber L, Adamo M et al. Eur Heart J 2026;47:5346-5457. 2026 ESC Guidelines for the management of heart failure (doi 10.1093/eurheartj/ehag100)" },
     "ACC_HF_2022":      { ref: "Heidenreich PA et al. Circulation 2022;145:e895. AHA/ACC/HFSA Guideline for HF Management" },
     "ACC_HFrEF_2024":   { ref: "Maddox TM et al. JACC 2024;83:1444. ACC ECDP for HFrEF 2024" },
     "ESC_AF_2024":      { ref: "Van Gelder IC et al. Eur Heart J 2024;45:3314. ESC Guidelines for AF 2024" },
@@ -222,76 +223,95 @@ const PATHOLOGY_RULES_DB = {
 
     "PAT_002": {
         ID: "PAT_002",
+        // ESC 2026 (Eur Heart J 2026;47:5346, doi 10.1093/eurheartj/ehag100) : la FEVG
+        // « modérément altérée » (41-49 %) disparaît ; l'IC à FE réduite couvre désormais
+        // toute FEVG < 50 %. Classes et niveaux relus dans le texte intégral (Recommendation
+        // Tables 5, 18, 19, 22, 23 ; Table des doses). Nouveauté de notation : niveaux B1/B2.
         NOM: "Insuffisance Cardiaque FE Réduite (HFrEF)",
-        REFERENCE: "ESC 2021 + 2023 Update | ACC ECDP 2024 | PARADIGM-HF | DAPA-HF | EMPEROR-Reduced",
+        REFERENCE: "ESC 2026 HF Guidelines (Eur Heart J 2026;47:5346-5457) | PARADIGM-HF | DAPA-HF | EMPEROR-Reduced | STRONG-HF",
         SOURCES_EBM: {
                   "INITIER": {
-                            "Quadrithérapie": "ESC_HF_2021 Rec Table 1, IA + STRONG-HF",
-                            "Vericiguat": "ESC_HF_2021 §5.4.3, IIbB + VICTORIA",
-                            "Ivabradine": "ESC_HF_2021 §5.4.2, IIaB + SHIFT",
-                            "Hydralazine": "ESC_HF_2021 §5.4.4, IIaB + A-HeFT",
-                            "Fer IV": "ESC_HF_2023 Rec Table 5, IA/IIaA"
+                            "Traitement fondamental": "ESC_HF_2026 Rec Table 5 : BB I A, IEC/ARNI I A, switch → ARNI I B1, ARA2 si intolérance I A, ARM I A, iSGLT2 I A",
+                            "Diurétique de l'anse": "ESC_HF_2026 Rec Table 5, I A (posologie dynamique selon la volémie)",
+                            "Digoxine / digitoxine": "ESC_HF_2026 Rec Table 5, IIa B1",
+                            "Ivabradine": "ESC_HF_2026 Rec Table 5, IIa B1 (IIa C si BB non toléré) + SHIFT",
+                            "Hydralazine": "ESC_HF_2026 Rec Table 5, IIa B2 / IIb C + A-HeFT",
+                            "Vericiguat": "ESC_HF_2026 Rec Table 5, IIb B1 + VICTORIA",
+                            "Fer IV": "ESC_HF_2026 Rec Table 19, I B1 / IIa B1"
                   },
                   "EVITER": {
-                            "AINS": "ESC_HF_2021 §5.12 + STOPP H2",
-                            "Diltiazem": "STOPP H4",
-                            "Dronedarone": "ANDROMEDA",
-                            "Moxonidine": "MOXCON"
+                            "AINS": "ESC_HF_2026 Rec Table 22, III B2 + STOPP H2",
+                            "Diltiazem": "ESC_HF_2026 §9.2 et §9.3 (contre-indiqués dans l'IC à FE réduite) + STOPP H4",
+                            "Dronedarone": "ESC_HF_2026 §9.1 (à éviter dans l'IC à FE réduite) + ANDROMEDA",
+                            "Moxonidine": "ESC_HF_2026 §9.3 (contre-indiquée) + MOXCON",
+                            "Glitazones / saxagliptine": "ESC_HF_2026 §10.2 (contre-indiquées)",
+                            "Alpha-bloquant": "ESC_HF_2026 §9.3 (non recommandé pour l'HTA dans l'IC à FE réduite)"
                   }
         },
 
         TRAITEMENTS: {
             INITIER: [
                 {
-                    classe: "Quadrithérapie fondamentale (4 piliers)",
+                    classe: "Traitement médical fondamental (4 piliers)",
                     composants: [
-                        { rang: 1, classe: "IEC/ARA2 ou ARNI (Sacubitril-Valsartan)", niveau: "IA (IEC/ARA2) / IB (ARNI)", note: "IEC/ARA2 = classe IA ; ARNI = classe IB (remplacement de l'IEC). ARNI préféré si toléré (PARADIGM-HF). SWITCH IEC/ARA2 → sacubitril/valsartan recommandé si le HFrEF reste symptomatique malgré un IEC/ARA2 à dose maximale tolérée (START3-B9) ; washout de 36h après l'IEC avant d'introduire l'ARNI." },
-                        { rang: 2, classe: "Bêtabloquant (Bisoprolol, Carvédilol, Nébivolol, Métoprolol succinate)", niveau: "IA", note: "Initier à faible dose, titrer toutes les 2 semaines. CI si FC < 50 ou BAV 2-3." },
-                        { rang: 3, classe: "ARM (Spironolactone ou Éplérénone)", niveau: "IA", note: "Si K+ < 5.0 et DFG > 30. Éplérénone si gynécomastie sous spironolactone." },
-                        { rang: 4, classe: "iSGLT2 (Dapagliflozine ou Empagliflozine)", niveau: "IA", note: "Bénéfice indépendant du diabète. Peut être initié en premier. Initier si DFG ≥ 20 mL/min et poursuivre même si DFG descend < 20 en cours de traitement (KDIGO 2024 + DAPA-HF/EMPEROR-Reduced ; bénéfice cardio-rénal maintenu). Ne pas initier si DFG < 20." }
+                        { rang: 1, classe: "IEC ou ARNI (Sacubitril-Valsartan) ; ARA2 si IEC et ARNI non tolérés", niveau: "I A (IEC/ARNI) / I B1 (passage IEC-ARA2 → ARNI) / I A (ARA2 si intolérance)", note: "Passer d'un IEC ou ARA2 à l'ARNI est recommandé si l'IC reste symptomatique. Washout de 36 h après l'IEC avant l'ARNI. Sacubitril-valsartan : départ 24/26 mg ×2 possible si hypotension, IEC-naïf ou DFG 30-60 (ESC 2026, table des doses)." },
+                        { rang: 2, classe: "Bêtabloquant (Bisoprolol, Carvédilol, Nébivolol, Métoprolol succinate)", niveau: "I A", note: "Chez le patient stable. Débuter bas (bisoprolol 1,25 mg), titrer. CI si FC < 50 ou BAV 2-3." },
+                        { rang: 3, classe: "ARM stéroïdien (Spironolactone ou Éplérénone)", niveau: "I A", note: "À FE réduite, la preuve repose sur les ARM stéroïdiens. Spironolactone 12,5 mg en départ si fonction rénale ou kaliémie le justifient. K+ < 5,0 et DFG > 30 avant introduction." },
+                        { rang: 4, classe: "iSGLT2 (Dapagliflozine ou Empagliflozine)", niveau: "I A", note: "Indépendamment de la FEVG et du diabète. Initier si DFG ≥ 20 mL/min ; poursuivre même si le DFG descend en dessous (DAPA-HF/DELIVER poolés : bénéfice maintenu)." }
                     ],
-                    indication: "TOUS les patients HFrEF (FEVG ≤ 40%) symptomatiques (NYHA II-IV)",
-                    strategie: "Initiation rapide et simultanée des 4 piliers (STRONG-HF : high-intensity care dans les 2 semaines post-hospitalisation)"
+                    indication: "Tous les patients symptomatiques à FEVG < 50 % (la FEVG 41-49 % rejoint la FE réduite en 2026 ; pas d'essai dédié des BB/IEC/ARNI/ARA2 dans cette tranche)",
+                    strategie: "Titration au moins toutes les 1 à 2 semaines guidée par symptômes, constantes et biologie (I C) ; poursuite aux doses maximales tolérées même si la FEVG s'améliore (I C). Une baisse de DFG à l'introduction n'impose pas l'arrêt : hausse de créatinine < 50 % acceptée tant que DFG > 15."
                 },
                 {
-                    classe: "Vericiguat",
-                    indication: "Post-décompensation récente malgré quadrithérapie optimale",
-                    condition: "NYHA II-IV, FEVG < 45%, BNP élevé, événement IC récent",
-                    niveau_preuve: "IIbB",
-                    bio_pre_requis: ["BIO_028"]
+                    classe: "Diurétique de l'anse — posologie dynamique",
+                    indication: "Signes ou symptômes de congestion : adapter la dose à l'état volémique",
+                    niveau_preuve: "I A"
+                },
+                {
+                    classe: "Digoxine ou digitoxine",
+                    indication: "IC à FE réduite symptomatique avec FEVG ≤ 40 % malgré un traitement fondamental optimal, pour réduire les hospitalisations",
+                    condition: "Titrer sur la concentration plasmatique ; digoxine 62,5 µg/j au départ (ESC 2026, table des doses)",
+                    niveau_preuve: "IIa B1"
                 },
                 {
                     classe: "Ivabradine",
-                    indication: "Si FC ≥ 70 bpm en rythme sinusal malgré bêtabloquant à dose maximale tolérée",
-                    condition: "Rythme sinusal uniquement",
-                    niveau_preuve: "IIaB"
+                    indication: "FEVG ≤ 35 %, rythme sinusal, FC de repos > 70/min, sous traitement fondamental aux doses maximales tolérées",
+                    condition: "IIa C si le bêtabloquant n'est pas toléré",
+                    niveau_preuve: "IIa B1"
+                },
+                {
+                    classe: "Vericiguat",
+                    indication: "IC à FE réduite symptomatique avec FEVG < 45 % malgré un traitement fondamental optimal",
+                    niveau_preuve: "IIb B1",
+                    bio_pre_requis: ["BIO_028"]
                 },
                 {
                     classe: "Hydralazine + Dinitrate d'isosorbide",
-                    indication: "Si intolérance IEC/ARA2/ARNI (ex : toux, angiœdème, hyperkaliémie)",
-                    niveau_preuve: "IIaB"
+                    indication: "Patients noirs (auto-déclarés) à FEVG ≤ 40 % en plus du traitement fondamental (IIa B2) ; intolérance à l'ARNI, l'IEC et l'ARA2 (IIb C)",
+                    niveau_preuve: "IIa B2 / IIb C"
                 },
                 {
                     classe: "Fer IV (Carboxymaltose ferrique ou Dérisomaltose ferrique)",
-                    indication: "Carence martiale (Ferritine < 100 OU Ferritine 100-299 + CST < 20%)",
-                    condition: "Avec ou sans anémie",
-                    niveau_preuve: "IA",
-                    note: "Réduction hospitalisations IC (méta-analyses). Réévaluer tous les 3-6 mois."
+                    indication: "Carence martiale : soulager les symptômes et améliorer la qualité de vie (I B1) ; réduire les hospitalisations pour IC (IIa B1)",
+                    condition: "Définition retenue par l'ESC 2026 : CST (TSAT) < 20 %. L'ancienne définition (ferritine < 100, ou 100-299 avec CST < 20 %) inclut des patients non carencés.",
+                    niveau_preuve: "I B1 / IIa B1",
+                    note: "Les essais (FAIR-HF, CONFIRM-HF, AFFIRM-AHF, IRONMAN) portaient sur une FEVG < 40-45 %."
                 }
             ],
             EVITER: [
-                { classe: "AINS", raison: "CI absolue — rétention hydrosodée, décompensation, néphrotoxicité", gravite: "CONTRE-INDICATION" },
-                { classe: "Diltiazem / Vérapamil", raison: "Inotrope négatif → aggravation IC", gravite: "CONTRE-INDICATION" },
-                { classe: "Dronedarone", raison: "Surmortalité dans HFrEF (ANDROMEDA)", gravite: "CONTRE-INDICATION" },
-                { classe: "Moxonidine", raison: "Surmortalité (MOXCON)", gravite: "CONTRE-INDICATION" },
-                { classe: "Thiazolidinediones", raison: "Rétention hydrosodée", gravite: "CONTRE-INDICATION" },
-                { classe: "Triple blocage SRAA (IEC + ARA2 + ARM)", raison: "Hyperkaliémie et IRA", gravite: "CONTRE-INDICATION" },
-                { classe: "Saxagliptine, Alogliptine", raison: "Signal d'augmentation hospitalisation IC", gravite: "DECONSEILLE" }
+                { classe: "AINS et inhibiteurs de la COX-2", raison: "Aggravation de l'IC et hospitalisations (ESC 2026, III B2)", gravite: "CONTRE-INDICATION" },
+                { classe: "Diltiazem / Vérapamil", raison: "Inotrope négatif — contre-indiqués dans l'IC à FE réduite (ESC 2026)", gravite: "CONTRE-INDICATION" },
+                { classe: "Dronédarone, flécaïnide, propafénone", raison: "Moins bons résultats dans l'IC à FE réduite — à éviter (ESC 2026) ; l'amiodarone reste l'antiarythmique de la cardioversion pharmacologique", gravite: "CONTRE-INDICATION" },
+                { classe: "Moxonidine", raison: "Surmortalité (MOXCON) — contre-indiquée (ESC 2026)", gravite: "CONTRE-INDICATION" },
+                { classe: "Thiazolidinediones (glitazones)", raison: "Environ +30 % d'hospitalisations pour IC — contre-indiquées (ESC 2026)", gravite: "CONTRE-INDICATION" },
+                { classe: "Saxagliptine", raison: "Environ +30 % d'hospitalisations pour IC — contre-indiquée (ESC 2026)", gravite: "CONTRE-INDICATION" },
+                { classe: "Alpha-bloquant (doxazosine, prazosine) pour l'HTA", raison: "Non recommandé pour traiter l'HTA dans l'IC à FE réduite ; peut être poursuivi pour une HBP en l'absence d'hypotension (ESC 2026)", gravite: "DECONSEILLE" },
+                { classe: "Triple blocage SRAA (IEC + ARA2 + ARM)", raison: "Hyperkaliémie et IRA (ESC 2021)", gravite: "CONTRE-INDICATION" }
             ]
         },
 
         BIOLOGIE: {
-            SURVEILLANCE_CIBLE: ["BIO_028", "BIO_034", "BIO_001", "BIO_002", "BIO_003", "BIO_004", "BIO_009", "BIO_020"],
+            SURVEILLANCE_CIBLE: ["BIO_028", "BIO_034", "BIO_001", "BIO_002", "BIO_003", "BIO_004", "BIO_009", "BIO_020", "BIO_047"],
             REGLES: [
                 {
                     bio: "BIO_028",
@@ -304,14 +324,14 @@ const PATHOLOGY_RULES_DB = {
                     frequence: "À chaque titration, puis trimestriel si stable"
                 },
                 {
-                    bio: "BIO_020",
-                    nom: "Ferritine",
+                    bio: "BIO_047",
+                    nom: "Coefficient de saturation de la transferrine (CST)",
                     seuils: {
-                        carence: { max: 100, action: "Fer IV indiqué (Class I)" },
-                        carence_relative: { condition: "100-299 + CST < 20%", action: "Fer IV indiqué" }
+                        carence: { max: 20, action: "Carence martiale (définition ESC 2026) : fer IV — I B1 (symptômes, qualité de vie), IIa B1 (hospitalisations)" }
                     },
                     frequence: "Tous les 3-6 mois",
-                    bio_associee: "BIO_009"
+                    bio_associee: "BIO_020",
+                    note: "La ferritine seule identifie mal la carence (sensible à l'inflammation) : l'ESC 2026 retient le CST < 20 %."
                 }
             ],
             TITRATION_MONITORING: {
@@ -355,18 +375,21 @@ const PATHOLOGY_RULES_DB = {
 
     "PAT_003": {
         ID: "PAT_003",
+        // ESC 2026 : FE préservée = FEVG ≥ 50 %. Traitement fondamental : iSGLT2 ET ARM
+        // (stéroïdien ou non stéroïdien — finérénone, FINEARTS-HF), tous deux I A.
         NOM: "Insuffisance Cardiaque FE Préservée (HFpEF)",
-        REFERENCE: "ESC 2023 Update | EMPEROR-Preserved | DELIVER | TOPCAT | STEP-HFpEF | SUMMIT",
+        REFERENCE: "ESC 2026 HF Guidelines (Eur Heart J 2026;47:5346-5457) | EMPEROR-Preserved | DELIVER | FINEARTS-HF | STEP-HFpEF | SUMMIT",
         SOURCES_EBM: {
                   "INITIER": {
-                            "iSGLT2": "ESC_HF_2023 Rec Table 2, IA + EMPEROR-Preserved + DELIVER",
-                            "Diurétique": "ESC_HF_2021 §5.3, IC",
-                            "ARM": "ESC_HF_2021 §6.2, IIbB + TOPCAT",
-                            "GLP-1": "STEP_HFpEF, IIaB",
-                            "Tirzépatide": "SUMMIT, IIaB"
+                            "iSGLT2": "ESC_HF_2026 Rec Table 5, I A + EMPEROR-Preserved + DELIVER",
+                            "ARM": "ESC_HF_2026 Rec Table 5, I A (méta-analyse spironolactone + finérénone) + FINEARTS-HF",
+                            "Diurétique de l'anse": "ESC_HF_2026 Rec Table 5, I A (posologie dynamique)",
+                            "IEC / ARA2 / ARNI": "ESC_HF_2026 Rec Table 5, IIb C",
+                            "Sémaglutide / tirzépatide": "ESC_HF_2026 Rec Table 18, IIa B1 + STEP-HFpEF + SUMMIT"
                   },
                   "EVITER": {
-                            "AINS": "ESC_HF_2021 §5.12 + STOPP_START_V3 H2"
+                            "AINS": "ESC_HF_2026 Rec Table 22, III B2 + STOPP_START_V3 H2",
+                            "Glitazones / saxagliptine": "ESC_HF_2026 §10.2 (contre-indiquées)"
                   }
         },
 
@@ -374,38 +397,38 @@ const PATHOLOGY_RULES_DB = {
             INITIER: [
                 {
                     classe: "iSGLT2 (Dapagliflozine, Empagliflozine)",
-                    indication: "Recommandé pour réduire les hospitalisations pour IC (Class I, LOE A - ESC 2023)",
-                    condition: "DFG ≥ 20 mL/min pour initiation ; poursuivre même si DFG descend < 20 en cours de traitement (KDIGO 2024 — bénéfice cardio-rénal maintenu)",
-                    note: "EMPEROR-Preserved + DELIVER : bénéfice confirmé sur tout le spectre FEVG > 40%",
-                    niveau_preuve: "IA"
+                    indication: "IC symptomatique quelle que soit la FEVG : réduit les hospitalisations pour IC ou le décès CV",
+                    condition: "Initier si DFG ≥ 20 mL/min ; poursuivre même si le DFG descend en dessous en cours de traitement",
+                    niveau_preuve: "I A"
                 },
                 {
-                    classe: "Diurétiques",
-                    indication: "Symptomatique — soulagement de la congestion",
-                    niveau_preuve: "IC"
+                    classe: "ARM (Spironolactone ou Finérénone)",
+                    indication: "IC symptomatique quelle que soit la FEVG : réduit les hospitalisations pour IC ou le décès CV. À FE préservée, ARM stéroïdien ou non stéroïdien (finérénone, FINEARTS-HF)",
+                    condition: "K+ < 5,0 et DFG > 30 avant introduction. Finérénone : 10 mg puis 20 mg si DFG ≤ 60 ; 20 mg puis 40 mg si DFG > 60 (ESC 2026, table des doses). Baisse initiale du DFG attendue (−2,9 mL/min sous finérénone) : ne pas interrompre pour cela",
+                    niveau_preuve: "I A"
                 },
                 {
-                    classe: "ARM (Spironolactone)",
-                    indication: "Peut être considéré (TOPCAT : bénéfice en sous-groupe Americas)",
-                    niveau_preuve: "IIbB",
-                    condition: "Si K+ < 5.0 et DFG > 30"
+                    classe: "Diurétique de l'anse — posologie dynamique",
+                    indication: "Signes ou symptômes de congestion : adapter la dose à l'état volémique",
+                    niveau_preuve: "I A"
                 },
                 {
-                    classe: "GLP-1 RA (Sémaglutide)",
-                    indication: "En cas d'obésité + HFpEF (STEP-HFpEF : amélioration symptômes et capacité fonctionnelle)",
-                    condition: "IMC ≥ 30 + HFpEF",
-                    niveau_preuve: "IIaB"
+                    classe: "IEC / ARA2 / ARNI",
+                    indication: "Peuvent être envisagés pour réduire les hospitalisations pour IC",
+                    niveau_preuve: "IIb C"
                 },
                 {
-                    classe: "Tirzépatide (agoniste GIP/GLP-1)",
-                    indication: "HFpEF + obésité : SUMMIT (NEJM 2024) — réduction du critère composite décès CV / aggravation de l'IC et amélioration de la qualité de vie (KCCQ)",
-                    condition: "IMC ≥ 30 + HFpEF",
-                    note: "Surveiller la tolérance digestive et la dénutrition/sarcopénie chez le sujet âgé fragile (perte de poids marquée). Réduire la dose des sulfamides/insuline associés (risque d'hypoglycémie).",
-                    niveau_preuve: "IIaB"
+                    classe: "Sémaglutide ou Tirzépatide",
+                    indication: "IC symptomatique, FEVG ≥ 45 % et IMC ≥ 30 kg/m², diabète ou non : perte de poids, capacité d'effort et qualité de vie (STEP-HFpEF, SUMMIT)",
+                    condition: "IMC ≥ 30",
+                    note: "Chez le sujet âgé fragile, surveiller la tolérance digestive, la dénutrition et la sarcopénie (perte de poids marquée) ; réduire sulfamides et insuline associés (hypoglycémie). Baisse aiguë possible du DFG, effet rénal protecteur à long terme.",
+                    niveau_preuve: "IIa B1"
                 }
             ],
             EVITER: [
-                { classe: "AINS", raison: "Rétention hydrosodée", gravite: "CONTRE-INDICATION" }
+                { classe: "AINS et inhibiteurs de la COX-2", raison: "Aggravation de l'IC et hospitalisations (ESC 2026, III B2)", gravite: "CONTRE-INDICATION" },
+                { classe: "Thiazolidinediones (glitazones)", raison: "Environ +30 % d'hospitalisations pour IC — contre-indiquées (ESC 2026)", gravite: "CONTRE-INDICATION" },
+                { classe: "Saxagliptine", raison: "Environ +30 % d'hospitalisations pour IC — contre-indiquée (ESC 2026)", gravite: "CONTRE-INDICATION" }
             ]
         },
 

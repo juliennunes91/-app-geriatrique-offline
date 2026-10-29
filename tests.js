@@ -1397,6 +1397,25 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!est, `${d} n'est pas un diuretique`);
         }
     });
+    test('Recos IC (onglet guidelines) : ESC 2026, classes relues dans le texte integral', () => {
+        // L'onglet « Recos » citait encore ESC 2021 + 2023 alors que les regles geriatriques
+        // (IN_B07, IN_B11) etaient deja passees a l'ESC 2026 : les deux onglets se
+        // contredisaient (ARM en IIb B dans l'un, en I A dans l'autre, a FE preservee).
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const P = JSON.parse(require('vm').runInContext('JSON.stringify({ r: PATHOLOGY_RULES_DB.PAT_002, p: PATHOLOGY_RULES_DB.PAT_003, g: GUIDELINE_INDEX.ESC_HF_2026 })', sandbox));
+        assert.ok(/ESC 2026/.test(P.r.REFERENCE) && /ESC 2026/.test(P.p.REFERENCE) && /5346/.test(P.g.ref), 'reference ESC 2026');
+        assert.ok(/FEVG < 50 %/.test(P.r.TRAITEMENTS.INITIER[0].indication), 'FE reduite = FEVG < 50 % (la FE moderement alteree disparait)');
+        const niv = (pat, re) => (pat.TRAITEMENTS.INITIER.find(t => re.test(t.classe)) || {}).niveau_preuve;
+        assert.strictEqual(niv(P.p, /^ARM/), 'I A', 'FE preservee : ARM (dont finerenone) en I A');
+        assert.ok(/Finérénone/.test(P.p.TRAITEMENTS.INITIER.find(t => /^ARM/.test(t.classe)).classe), 'finerenone citee a FE preservee');
+        assert.strictEqual(niv(P.p, /Sémaglutide/), 'IIa B1', 'GLP-1 / tirzepatide : IIa B1 (Table 18)');
+        assert.strictEqual(niv(P.r, /Vericiguat/), 'IIb B1', 'vericiguat IIb B1');
+        assert.strictEqual(niv(P.r, /Digoxine/), 'IIa B1', 'digoxine : nouvelle recommandation IIa B1');
+        const fer = P.r.BIOLOGIE.REGLES.find(r => r.bio === 'BIO_047');
+        assert.ok(fer && fer.seuils.carence.max === 20, 'carence martiale definie par le CST < 20 % (Table 19)');
+        assert.ok(P.r.TRAITEMENTS.EVITER.some(e => /AINS/.test(e.classe) && /III B2/.test(e.raison)), 'AINS : III B2');
+        assert.ok(!JSON.stringify(P.r.TRAITEMENTS).includes('ESC 2023') && !JSON.stringify(P.p.TRAITEMENTS).includes('ESC 2023'), 'plus de classe tiree de 2023');
+    });
     test('OCR : une capture de logiciel de prescription ne fabrique pas de medicaments fantomes', () => {
         // Capture reelle : 4 medicaments, 24 reconnus. « mois » (posologie) designait
         // l'ibandronate et le denosumab, via des fragments de princeps decoupes sur « / » ;

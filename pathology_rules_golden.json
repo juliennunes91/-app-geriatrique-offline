@@ -2,36 +2,41 @@
  "PAT_002": {
   "nom": "Insuffisance Cardiaque FE Réduite (HFrEF)",
   "initier": [
+   "Digoxine ou digitoxine",
+   "Diurétique de l'anse — posologie dynamique",
    "Fer IV (Carboxymaltose ferrique ou Dérisomaltose ferrique)",
    "Hydralazine + Dinitrate d'isosorbide",
    "Ivabradine",
-   "Quadrithérapie fondamentale (4 piliers)",
+   "Traitement médical fondamental (4 piliers)",
    "Vericiguat"
   ],
   "eviter": [
-   "AINS",
+   "AINS et inhibiteurs de la COX-2",
+   "Alpha-bloquant (doxazosine, prazosine) pour l'HTA",
    "Diltiazem / Vérapamil",
-   "Dronedarone",
+   "Dronédarone, flécaïnide, propafénone",
    "Moxonidine",
-   "Saxagliptine, Alogliptine",
-   "Thiazolidinediones",
+   "Saxagliptine",
+   "Thiazolidinediones (glitazones)",
    "Triple blocage SRAA (IEC + ARA2 + ARM)"
   ],
-  "reference": "ESC 2021 + 2023 Update | ACC ECDP 2024 | PARADIGM-HF | DAPA-HF | EMPEROR-Reduced"
+  "reference": "ESC 2026 HF Guidelines (Eur Heart J 2026;47:5346-5457) | PARADIGM-HF | DAPA-HF | EMPEROR-Reduced | STRONG-HF"
  },
  "PAT_003": {
   "nom": "Insuffisance Cardiaque FE Préservée (HFpEF)",
   "initier": [
-   "ARM (Spironolactone)",
-   "Diurétiques",
-   "GLP-1 RA (Sémaglutide)",
-   "Tirzépatide (agoniste GIP/GLP-1)",
+   "ARM (Spironolactone ou Finérénone)",
+   "Diurétique de l'anse — posologie dynamique",
+   "IEC / ARA2 / ARNI",
+   "Sémaglutide ou Tirzépatide",
    "iSGLT2 (Dapagliflozine, Empagliflozine)"
   ],
   "eviter": [
-   "AINS"
+   "AINS et inhibiteurs de la COX-2",
+   "Saxagliptine",
+   "Thiazolidinediones (glitazones)"
   ],
-  "reference": "ESC 2023 Update | EMPEROR-Preserved | DELIVER | TOPCAT | STEP-HFpEF | SUMMIT"
+  "reference": "ESC 2026 HF Guidelines (Eur Heart J 2026;47:5346-5457) | EMPEROR-Preserved | DELIVER | FINEARTS-HF | STEP-HFpEF | SUMMIT"
  },
  "PAT_004": {
   "nom": "Syndrome Coronarien Chronique (SCC)",
