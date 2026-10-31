@@ -1,5 +1,23 @@
 # GeriaAssist — Instructions projet
 
+## Mémoire du projet
+
+Le dossier `context/` est la mémoire durable du projet. **Lire `context/etat-avancement.md`
+en début de session.**
+
+Mettre à jour `context/` sans attendre qu'on le demande :
+- avant chaque commit ;
+- après toute décision d'architecture ou de règle clinique ;
+- avant une compaction ou en fin de session.
+
+Fichiers :
+- `etat-avancement.md` : où on en est, prochaines étapes (à **réécrire**, pas à empiler) ;
+- `decisions.md` : date, décision, raison (ajout en fin de fichier) ;
+- `pieges.md` : bugs rencontrés et solutions.
+
+Rester concis : idées clés, pas de journal détaillé. Le détail de chaque chantier vit dans
+les sections ci-dessous ; `context/` dit où l'on en est et pourquoi.
+
 ## Architecture dual-UI
 
 Ce projet maintient **deux interfaces utilisateur en parallèle**, partageant le même backend JavaScript :
