@@ -1244,6 +1244,36 @@ qui redisaient une autre.
   sur les données, jamais sur la ressemblance des textes. Deux IEC, sans interaction
   déclarée entre eux, gardent leur doublon.
 
+## Dossier du 03/11 : la synthèse comptait double, les scores parlaient d'un autre patient
+
+F 78 ans, TAG chronique, bromazépam + oxazépam + miansérine + aspirine, sans FA ; BZD et
+miansérine assumées. Quatre défauts, tous d'agrégation ou d'affichage hors de propos :
+
+- **Une paire, deux « interactions critiques ».** Chaque côté de la paire écrivait sa ligne
+  au registre (« BROMAZEPAM ↔ OXAZEPAM », puis « OXAZEPAM ↔ BROMAZEPAM ») : la synthèse en
+  listait deux et le bandeau comptait deux « danger ». `_pairesCritiquesVues` : une paire
+  déjà inscrite ne l'est plus. L'onglet Interactions repliait déjà la paire ; le registre non.
+- **Une alerte assumée comptée « danger ».** `_sevAffichee` rendait `danger` pour un score
+  ≥ 60 et, sinon, retombait sur la sévérité **déclarée** — si bien qu'une règle `danger`
+  plafonnée sous la bande rouge par l'assomption (carte orange, score 59) était recomptée
+  critique. Le bandeau annonçait « HAUT risque — 4 danger » au-dessus d'une seule carte
+  rouge. Désormais une règle déclarée `danger` affichée hors de la bande rouge prend la
+  couleur de son affichage. Rien n'est abaissé sans assomption (le test le vérifie).
+- **Deux cartes REMEDIES pour une consigne.** `EV_REM_01` et `SUP_REM_10` : même condition
+  (≥ 5 médicaments), même conseil (réévaluer chaque traitement une fois par an) ; le PDF les
+  fusionnait déjà, pas l'écran — l'utilisateur devait « assumer » deux fois. `SUP_REM_10`
+  retiré, son contenu repris dans `EV_REM_01`, dont le titre ne dit plus « **sans**
+  réévaluation » : l'application voit cinq lignes, jamais l'absence de réévaluation.
+- **Quatre scores d'anticoagulation sans objet.** L'onglet Scores affichait CHA₂DS₂-VA,
+  HAS-BLED, ORBIT-AF et DOACscore à tout patient — dont « Anticoagulation recommandée » sur
+  le seul âge, chez une patiente **sans FA**. CHA₂DS₂-VA ne sort plus qu'en cas de FA
+  (`PAT_006`), les trois scores de saignement qu'en cas de FA **ou** d'anticoagulant
+  prescrit — la règle que les puces de la synthèse appliquaient déjà. Au passage, la clé
+  `DOAC` de `SCORES_CONFIG` était déclarée deux fois (la seconde écrasait la première).
+
+Point laissé ouvert : RISQ-PATH et Tisdale (deux scores de risque QT) sortent aussi sans
+médicament allongeant le QT — à arbitrer.
+
 ## Formes galéniques : une DCI, deux médicaments
 
 Certaines molécules recouvrent deux produits que tout oppose. La saisie doit donc

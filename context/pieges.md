@@ -37,3 +37,12 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
 - Conteneur réinitialisé → dépôt vide : `git fetch origin main && git checkout -B main origin/main`.
 - Proxy : sites d'éditeurs (OUP…) bloqués → demander le PDF à l'utilisateur.
 - Fichiers téléversés : copier dans un dossier dédié, lire avec `python3 -I`.
+
+## Synthèse (03/11)
+- Repli d'une paire dans l'onglet ≠ repli au registre : chaque côté écrivait sa ligne →
+  `_pairesCritiquesVues`.
+- `_sevAffichee` retombait sur la sévérité déclarée sous le seuil rouge : une alerte assumée
+  redevenait « danger » au bandeau.
+- Fusion faite au PDF seulement (`FUSIONS_RAPPORT`) = redondance qui reste à l'écran.
+- Pour inspecter l'état interne d'un cas : `analyzeCase(...)._synthData` (banner,
+  toRemoveFiltered, interactCritical) ; le sandbox n'a pas de console.

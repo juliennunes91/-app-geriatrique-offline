@@ -25,3 +25,11 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   mêlées, appariement par sous-chaîne, chiffres mal attribués.
 - **31/10/2026** — Mémoire durable du projet dans `context/`, mise à jour avant chaque
   commit. — Résister aux plantages et aux compactions de conversation.
+- **03/11/2026** — Le registre de synthèse inscrit la sévérité **affichée** jusque dans le
+  cas d'une alerte assumée (plafonnée sous le rouge) ; une paire d'interaction n'est inscrite
+  qu'une fois. — Le bandeau doit résumer l'écran, pas la déclaration.
+- **03/11/2026** — Scores d'anticoagulation conditionnés : CHA₂DS₂-VA si FA, HAS-BLED /
+  ORBIT-AF / DOACscore si FA ou anticoagulant. — Un score sans objet affirme une conduite
+  fausse (« anticoagulation recommandée » sans FA).
+- **03/11/2026** — Deux règles de même condition et même conseil : on en retire une plutôt
+  que de les fusionner au rendu (`SUP_REM_10` → `EV_REM_01`).

@@ -13,8 +13,7 @@
    "danger | Sulfamide à longue demi-vie (glibenclamide, chlorpropamide, glimépiride)",
    "danger | Tricyclique (TCA) en 1ère ligne pour dépression",
    "info | Action immédiate",
-   "info | Polypharmacie sans réévaluation (REMEDIES)",
-   "info | Réévaluation annuelle de chaque traitement chronique",
+   "info | Polypharmacie (≥ 5 médicaments) : réévaluation annuelle de chaque traitement",
    "warning | Antidépresseur chez patient chuteur",
    "warning | Aspirine en prévention primaire cardiovasculaire",
    "warning | DIAZEPAM — Déconseillé Dépression (sujet âgé / Late-Life Depression)",
@@ -107,13 +106,9 @@
    "success | Posologies : TROPATEPINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 4 point(s)",
-   "warning | DOACscore : 0 point(s)",
-   "warning | ORBIT-AF : 0 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -153,14 +148,10 @@
    "success | Posologies : LITHIUM"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 3 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 24/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 3 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -188,13 +179,9 @@
    "success | Posologies : CLOZAPINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 3",
-   "info | CHA₂DS₂-VA : 1 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 0 point(s)",
-   "warning | ORBIT-AF : 0 point(s)",
    "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -222,13 +209,9 @@
    "success | Posologies : SERTRALINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -261,12 +244,8 @@
    "success | Posologies : RISPERIDONE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 47/100 — RISQUE MODÉRÉ"
   ],
@@ -298,13 +277,9 @@
    "success | Posologies : FUROSEMIDE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 16/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 2 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -372,14 +347,10 @@
    "success | Posologies : METFORMINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 26/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 1 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -417,14 +388,10 @@
   ],
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 12/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Dossier nécessitant vigilance"
@@ -455,12 +422,8 @@
   ],
   "alertes-scores": [
    "danger | Child-Pugh : Classe C",
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 1 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 0 point(s)",
-   "warning | ORBIT-AF : 0 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
@@ -494,14 +457,10 @@
    "success | Posologies : RISPERIDONE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 4",
    "danger | Score PIM Global : 70/100 — RISQUE ÉLEVÉ",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -530,12 +489,8 @@
    "success | Posologies : HALOPERIDOL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score de Tisdale : 4 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 51/100 — RISQUE MODÉRÉ"
   ],
@@ -617,12 +572,8 @@
    "success | Posologies : HALOPERIDOL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 13 point(s)",
    "info | Score de Tisdale : 9 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 2 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
   ],
@@ -659,13 +610,9 @@
    "success | Posologies : RAMIPRIL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 2 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -685,14 +632,10 @@
    "success | Posologies : CHOLECALCIFEROL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "success | Aucune action majeure identifiée",
@@ -718,14 +661,10 @@
   ],
   "alertes-scores": [
    "danger | CFS : 7/9 — Sévèrement fragile",
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 10/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 1 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -751,12 +690,8 @@
    "success | Posologies : DIAZEPAM"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 1 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 0 point(s)",
-   "warning | ORBIT-AF : 0 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 56/100 — RISQUE MODÉRÉ"
   ],
@@ -781,13 +716,9 @@
    "success | Posologies : PALIPERIDONE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score PIM Global : 11/100 — ACCEPTABLE",
    "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -811,13 +742,9 @@
    "success | Posologies : VALPROATE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 0 point(s)",
    "danger | Score ACB : 3",
-   "info | CHA₂DS₂-VA : 0 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 0 point(s)",
-   "warning | ORBIT-AF : 0 point(s)",
    "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -839,14 +766,10 @@
   ],
   "alertes-usage": [],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "info | Actions de réévaluation suggérées"
@@ -872,14 +795,10 @@
    "success | Posologies : TIOTROPIUM"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 10/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 1 point(s)"
   ],
   "alertes-synthese": [
    "warning | Dossier nécessitant vigilance"
@@ -914,14 +833,10 @@
    "success | Posologies : OXYBUTYNINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 9",
    "danger | Score PIM Global : 68/100 — RISQUE ÉLEVÉ",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -940,14 +855,10 @@
    "success | Posologies : AMLODIPINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 1 point(s)"
   ],
   "alertes-synthese": [
    "success | Aucune action majeure identifiée",
@@ -980,17 +891,13 @@
    "success | Posologies : VERAPAMIL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
-   "danger | Dossier à HAUT risque"
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_B05": {
@@ -1009,14 +916,10 @@
    "success | Posologies : ACEBUTOLOL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 9/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -1076,13 +979,9 @@
    "success | Posologies : FUROSEMIDE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -1112,13 +1011,9 @@
    "success | Posologies : HYDROCHLOROTHIAZIDE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -1151,13 +1046,9 @@
    "success | Posologies : HYDROCHLOROTHIAZIDE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -1190,14 +1081,10 @@
    "success | Posologies : SPIRONOLACTONE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 3 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1232,14 +1119,10 @@
    "success | Posologies : SILDENAFIL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 4 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 29/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1272,14 +1155,10 @@
    "success | Posologies : CELECOXIB"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 3 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -1307,12 +1186,8 @@
    "success | Posologies : NIFEDIPINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score de Tisdale : 4 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
    "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
@@ -1347,12 +1222,8 @@
    "success | Posologies : DRONEDARONE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 6 point(s)",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 52/100 — RISQUE MODÉRÉ"
   ],
@@ -1384,13 +1255,9 @@
    "success | Posologies : FLECAINIDE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 9 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -1429,13 +1296,9 @@
    "success | Posologies : VERAPAMIL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -1455,14 +1318,10 @@
   ],
   "alertes-usage": [],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "info | Actions de réévaluation suggérées"
@@ -1493,7 +1352,6 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 14/100 — ACCEPTABLE",
@@ -1535,7 +1393,6 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 2 point(s)",
@@ -1619,7 +1476,6 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 22/100 — RISQUE FAIBLE",
@@ -1647,12 +1503,8 @@
    "success | Posologies : DIPYRIDAMOLE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 2 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
@@ -1688,13 +1540,9 @@
    "success | Posologies : VENLAFAXINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 4",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -1731,13 +1579,9 @@
    "success | Posologies : CITALOPRAM"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 3",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 8 point(s)",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -1761,13 +1605,9 @@
    "success | Posologies : ALPRAZOLAM"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score PIM Global : 62/100 — RISQUE ÉLEVÉ",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -1798,13 +1638,9 @@
    "success | Posologies : ZOLPIDEM"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 51/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -1835,14 +1671,10 @@
    "success | Posologies : DONÉPÉZIL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 18/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1870,14 +1702,10 @@
    "success | Posologies : MEMANTINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 16/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -1907,13 +1735,9 @@
    "success | Posologies : LEVODOPA"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 3",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 41/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -1941,14 +1765,10 @@
    "success | Posologies : MEPROBAMATE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 4",
    "danger | Score PIM Global : 69/100 — RISQUE ÉLEVÉ",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1976,14 +1796,10 @@
   ],
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 6 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 14/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2006,14 +1822,10 @@
    "success | Posologies : DOXEPINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 3",
    "danger | Score PIM Global : 62/100 — RISQUE ÉLEVÉ",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2034,14 +1846,10 @@
   ],
   "alertes-usage": [],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Dossier nécessitant vigilance"
@@ -2061,14 +1869,10 @@
   ],
   "alertes-usage": [],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "info | Actions de réévaluation suggérées"
@@ -2088,14 +1892,10 @@
   ],
   "alertes-usage": [],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "info | Actions de réévaluation suggérées"
@@ -2124,7 +1924,6 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 18/100 — RISQUE FAIBLE",
@@ -2154,12 +1953,8 @@
    "success | Posologies : COLCHICINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 2 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 53/100 — RISQUE MODÉRÉ"
   ],
@@ -2185,14 +1980,10 @@
    "success | Posologies : METFORMINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 18/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2217,13 +2008,9 @@
    "success | Posologies : SPIRONOLACTONE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 2 point(s)",
    "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -2248,13 +2035,9 @@
    "success | Posologies : NITROFURANTOINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 2 point(s)",
    "warning | Score PIM Global : 57/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -2286,14 +2069,10 @@
    "success | Posologies : METHOTREXATE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 4 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 16/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -2318,14 +2097,10 @@
   ],
   "alertes-usage": [],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 6 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 4 point(s)",
-   "warning | ORBIT-AF : 4 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2347,14 +2122,10 @@
   ],
   "alertes-usage": [],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2384,13 +2155,9 @@
    "success | Posologies : OMEPRAZOLE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -2419,14 +2186,10 @@
    "success | Posologies : VERAPAMIL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 7/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2454,13 +2217,9 @@
    "success | Posologies : METOCLOPRAMIDE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 52/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -2488,14 +2247,10 @@
    "success | Posologies : ACIDE ACETYLSALICYLIQUE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 9/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2523,14 +2278,10 @@
    "success | Posologies : AMINOPHYLLINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 9/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2560,12 +2311,8 @@
    "success | Posologies : TIOTROPIUM"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 38/100 — RISQUE MODÉRÉ"
   ],
@@ -2594,13 +2341,9 @@
    "success | Posologies : CELECOXIB"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 43/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -2629,14 +2372,10 @@
    "success | Posologies : CELECOXIB"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 24/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2668,13 +2407,9 @@
    "success | Posologies : METHOCARBAMOL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 3",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -2704,13 +2439,9 @@
    "success | Posologies : OXYBUTYNINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 3",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -2737,14 +2468,10 @@
    "success | Posologies : MIRABEGRON"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 7/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2773,14 +2500,10 @@
    "success | Posologies : PROPRANOLOL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 4 point(s)",
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 32/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2805,14 +2528,10 @@
    "success | Posologies : LEVOTHYROXINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 10/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2838,14 +2557,10 @@
    "success | Posologies : INSULINE ASPART"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 27/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 3 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2874,14 +2589,10 @@
   ],
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 16/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2901,14 +2612,10 @@
   ],
   "alertes-usage": [],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 0/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "info | Actions de réévaluation suggérées"
@@ -2937,12 +2644,8 @@
    "success | Posologies : ZOLPIDEM"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
   ],
@@ -2978,14 +2681,10 @@
    "success | Posologies : HYDROXYZINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 5",
    "danger | Score PIM Global : 66/100 — RISQUE ÉLEVÉ",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3017,14 +2716,10 @@
    "success | Posologies : DOXAZOSINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3054,13 +2749,9 @@
    "success | Posologies : OXYBUTYNINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 3",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -3085,13 +2776,9 @@
    "success | Posologies : NEFOPAM"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2"
   ],
   "alertes-synthese": [
@@ -3126,14 +2813,10 @@
   ],
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 11/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 3 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3159,14 +2842,10 @@
   ],
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 10/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3204,14 +2883,10 @@
    "success | Posologies : TRAMADOL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 34/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3227,8 +2902,7 @@
    "danger | Triple whammy : AINS + IEC/ARA2 + diurétique — risque IRA",
    "info | Action immédiate",
    "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
-   "info | Polypharmacie sans réévaluation (REMEDIES)",
-   "info | Réévaluation annuelle de chaque traitement chronique",
+   "info | Polypharmacie (≥ 5 médicaments) : réévaluation annuelle de chaque traitement",
    "warning | Cascades iatrogéniques détectées",
    "warning | Constipation opioïde / anticholinergique — prophylaxie laxative requise",
    "warning | Deux classes pourvoyeuses de chutes associées",
@@ -3263,14 +2937,10 @@
    "success | Posologies : MORPHINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 43/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3302,13 +2972,9 @@
    "success | Posologies : VENLAFAXINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 34/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2"
   ],
   "alertes-synthese": [
@@ -3334,14 +3000,10 @@
    "success | Posologies : TIANEPTINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 24/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3370,13 +3032,9 @@
    "success | Posologies : SERTRALINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
@@ -3400,13 +3058,9 @@
    "success | Posologies : PREDNISONE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -3434,14 +3088,10 @@
    "success | Posologies : METHOTREXATE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 16/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3473,14 +3123,10 @@
    "success | Posologies : METHOTREXATE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 29/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3506,7 +3152,6 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 11/100 — ACCEPTABLE",
@@ -3537,14 +3182,10 @@
    "success | Posologies : ATORVASTATINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 9/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3574,14 +3215,10 @@
   ],
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 13/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3606,14 +3243,10 @@
    "success | Posologies : MEBEVERINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 7/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3638,14 +3271,10 @@
    "success | Posologies : PENTOXIFYLLINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 27/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3671,14 +3300,10 @@
    "success | Posologies : SCOPOLAMINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
    "danger | Score ACB : 4",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 32/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3703,14 +3328,10 @@
    "success | Posologies : SUCRALFATE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 9/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3745,13 +3366,9 @@
    "success | Posologies : PHENYTOINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 25/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -3791,7 +3408,6 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 8 point(s)",
    "info | Score PIM Global : 25/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
@@ -3835,12 +3451,8 @@
    "success | Posologies : FUROSEMIDE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score de Tisdale : 6 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
    "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
@@ -3881,7 +3493,6 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 8 point(s)",
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOACscore : 1 point(s)",
@@ -3913,13 +3524,9 @@
    "success | Posologies : MACROGOL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 14/100 — ACCEPTABLE",
    "info | Score de Tisdale : 3 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -3942,14 +3549,10 @@
    "success | Posologies : METHOTREXATE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 9/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3974,14 +3577,10 @@
    "success | Posologies : TERBINAFINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 10/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -4010,14 +3609,10 @@
    "success | Posologies : RAMIPRIL"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 3 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 10/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 3 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 1 point(s)"
   ],
   "alertes-synthese": [
    "warning | Dossier nécessitant vigilance"
@@ -4047,7 +3642,6 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
@@ -4076,14 +3670,10 @@
    "success | Posologies : AMOXICILLINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 6/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 1 point(s)",
-   "warning | DOACscore : 2 point(s)",
-   "warning | ORBIT-AF : 2 point(s)"
+   "info | Score de Tisdale : 1 point(s)"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -4104,14 +3694,10 @@
    "success | Posologies : AMOXICILLINE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 1 point(s)",
-   "info | CHA₂DS₂-VA : 2 point(s)",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 2/100 — ACCEPTABLE",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | DOACscore : 1 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "success | Aucune action majeure identifiée",

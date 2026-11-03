@@ -468,11 +468,6 @@ function buildPdfContent() {
             ids: ['EV_B07', 'EV_B08'],
             titre: "Furosémide — préciser l'indication",
             texte: "Le diurétique de l'anse n'est recommandé ni en première intention dans l'hypertension artérielle, ni pour des œdèmes des membres inférieurs isolés en l'absence d'insuffisance cardiaque, hépatique ou rénale et de syndrome néphrotique. Documenter l'indication retenue ; si elle ne tient pas, préférer la surélévation des jambes et la contention veineuse."
-        },
-        {
-            ids: ['EV_REM_01', 'SUP_REM_10'],
-            titre: 'Réévaluation annuelle de la totalité de l\'ordonnance',
-            texte: "Au-delà de cinq médicaments, chaque traitement chronique doit être réévalué au moins une fois par an : l'indication est-elle toujours présente, et le bénéfice attendu justifie-t-il encore le risque ? Rechercher en particulier les prescriptions en cascade."
         }
     ];
     const idAlerte = (a) => {

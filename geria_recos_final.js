@@ -2461,8 +2461,12 @@ const GERIA_RECOS_DB = {
             sources: ["REMEDIES"],
             ref_code: "REMEDIES-1",
             section: "Prévention",
-            titre: "Polypharmacie sans réévaluation (REMEDIES)",
-            message: "REMEDIES : ≥ 5 médicaments — réévaluation systématique de chaque traitement chronique au moins 1 fois/an. Rechercher les prescriptions en cascade et les médicaments sans bénéfice attendu.",
+            // Titre : l'application voit cinq lignes, pas l'absence de réévaluation —
+            // « sans réévaluation » affirmait un fait qu'aucune saisie ne porte.
+            // Absorbe SUP_REM_10 (même condition, même conseil : deux cartes, deux
+            // « assumer » pour une seule consigne).
+            titre: "Polypharmacie (≥ 5 médicaments) : réévaluation annuelle de chaque traitement",
+            message: "REMEDIES : au-delà de cinq médicaments, chaque traitement chronique doit être réévalué au moins une fois par an — l'indication est-elle toujours présente, le bénéfice attendu justifie-t-il encore le risque ? Rechercher les prescriptions en cascade et les médicaments sans bénéfice attendu.",
             severite: "info",
             condition: {
                 polypharmacie: true,
@@ -4581,13 +4585,8 @@ const RECOS_SUPPLEMENT = [
         condition: { type: "manual_review" },
         alternatives: "Choisir un seul anticoagulant. Si relais nécessaire (ex. AVK → AOD), pas de chevauchement au-delà de 24-48 h selon le profil pharmacocinétique."
     },
-    {
-        id: "SUP_REM_10", sources: ["REMEDIES"],
-        titre: "Réévaluation annuelle de chaque traitement chronique",
-        message: "REMEDIES : Chaque médicament chronique doit être réévalué au minimum 1 fois/an. Pour chaque molécule, se poser la question : l'indication est-elle toujours présente ? Le bénéfice justifie-t-il les risques ?",
-        severite: "info",
-        condition: { polypharmacie: true, seuil: 5 }
-    },
+    // SUP_REM_10 (« Réévaluation annuelle de chaque traitement chronique ») retiré :
+    // même condition et même conseil qu'EV_REM_01, qui l'absorbe.
 
     // EU(7)-PIM supplémentaires — molécules spécifiques
     {

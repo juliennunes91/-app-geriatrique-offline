@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 31/10/2026 — **version 3.93**, `BUILD_ID` `20261029-ddi-predictor`,
-cache `geriaassist-v141`. Dernier commit applicatif : `0a54440`.*
+*Dernière mise à jour : 03/11/2026 — **version 3.94**, `BUILD_ID` `20261103-redondances-synthese`,
+cache `geriaassist-v142`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,10 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **3.94** (03/11) — Dossier réel (F 78 ans, TAG chronique, 2 BZD + miansérine) : une paire
+  BZD comptée une fois dans « interactions critiques » ; une alerte assumée n'est plus
+  recomptée « danger » au bandeau ; `SUP_REM_10` absorbé par `EV_REM_01` ; scores
+  d'anticoagulation affichés seulement si FA (CHA₂DS₂-VA) ou FA/anticoagulant (saignement).
 - **3.93** (29/10) — Interactions PK refondues : `ddi_merged_V2.js` supprimé, `ddi_pk.js`
   généré depuis DDI-Predictor (extraction 280 × 170 fournie par l'utilisateur, accord de
   M. Tod) + valeurs mesurées sourcées. Appariement exact, une carte par sens, couleur FDA,
@@ -124,7 +128,7 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-**Rien en cours.** Tout est commité et poussé (`660b0b5` puis ce fichier).
+**Rien en cours** une fois le commit 3.94 poussé (vérifier `git status`).
 
 ---
 
@@ -146,6 +150,11 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 7. `global_score` : la moyenne des scores d'alerte remonte quand on retire des alertes
    informatives — formule à arbitrer.
 8. Pas de paramètre « bicarbonate plasmatique » dans `MASTER_DB.BIOLOGIE`.
+9. Onglet Scores : RISQ-PATH et Tisdale (risque QT) sortent sans médicament allongeant le
+   QT — même question que les scores d'anticoagulation (corrigés en 3.94), à arbitrer.
+10. Onglet Suivi (tableau croisé) : des cellules de fréquence affichent un texte d'un autre
+   paramètre (ASAT/PNN « TSH/6-8sem post-modif… », natrémie « à l'introduction d'un ISRS »
+   sous miansérine) — vu sur le dossier du 03/11, non traité.
 
 ---
 

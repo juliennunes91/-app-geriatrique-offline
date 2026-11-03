@@ -1121,7 +1121,9 @@ const TITRE_TERRAIN = [
 // Le terrain n'est un PRÉREQUIS que s'il suit un marqueur de condition. « Risque de
 // délirium » énonce une conséquence, pas un prérequis — d'où ce filtre.
 const TITRE_PRECONDITION = /(chez|si\b|avec|en cas de|dans (la|le|l')|sous|\+)\s/i;
-const TITRE_COMPTE = ['acb_cumul', 'acb_seuil', 'acb_fort_min', 'qt_check', 'med_keys_2', 'med_keys_3'];
+// `seuil` (avec `polypharmacie`) : le moteur compte les lignes de l'ordonnance — ou les
+// molécules résolues par `med_keys` — et exige ce nombre (checkRuleOptimized).
+const TITRE_COMPTE = ['acb_cumul', 'acb_seuil', 'acb_fort_min', 'qt_check', 'med_keys_2', 'med_keys_3', 'seuil'];
 
 // Cas RELUS et acceptés. Toute NOUVELLE entrée doit être arbitrée, pas ajoutée d'office.
 const TITRE_ALLOWLIST = new Map([

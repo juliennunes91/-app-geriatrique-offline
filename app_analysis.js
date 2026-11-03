@@ -131,11 +131,6 @@ const SCORES_CONFIG = {
         seuils: { modere: 3, haut: 4 },
         conclusions: { 0: 'Risque faible (2.4%/an)', modere: 'Risque modéré (4.7%/an)', haut: 'Risque hémorragique élevé (7.3%/an)' }
     },
-    DOAC: {
-        label: 'DOACscore', desc: 'Risque de saignement majeur sous AOD', border: 'warning',
-        seuils: { modere: 4, haut: 7 },
-        conclusions: { 0: 'Risque faible de saignement majeur', modere: 'Risque modéré — surveillance rapprochée', haut: 'Risque élevé — réévaluer bénéfice/risque AOD' }
-    },
     RISQ_PATH: {
         label: 'RISQ-PATH', desc: 'Risque d\'allongement du QT', border: 'primary',
         seuils: { modere: 5, haut: 10 },
@@ -1435,7 +1430,14 @@ function analyserPrescription() {
             // sous les yeux — s'aligner sur la déclaration le ferait mentir. Corollaire
             // utile : une alerte ASSUMÉE, dont le score est plafonné sous la bande rouge,
             // cesse d'être comptée comme critique, ce qui est exactement l'intention.
-            const _sevAffichee = a => (a.triage && a.triage.priority === 1) ? 'danger' : (a.severite || 'warning');
+            // Une règle déclarée `danger` mais affichée sous la bande rouge (plafond d'une
+            // alerte ASSUMÉE) reprend la couleur de son affichage : retomber sur la
+            // déclaration la recomptait « danger » dans le bandeau, sous une carte orange.
+            const _sevAffichee = a => {
+                if (a.triage && a.triage.priority === 1) return 'danger';
+                if (a.severite === 'danger' && a.triage) return a.triage.color === 'info' ? 'info' : 'warning';
+                return a.severite || 'warning';
+            };
             eviterFinal.forEach(a => {
                 const sev = _sevAffichee(a);
                 // Les alertes INFORMATIVES ne sont pas inscrites au registre par
@@ -1493,6 +1495,14 @@ function analyserPrescription() {
             addAlert('alertes-scores', `<div class="alert alert-light border border-${cfg.border} mb-2 shadow-sm"><strong class="text-${cfg.border}">${cfg.label} : ${score} point(s)</strong>${tooltip} <em class="text-muted small">— ${cfg.desc}</em><br><small class="text-muted">${details.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${dangerClass}">${conc}</small></div>`);
         };
 
+        // Scores d'anticoagulation : ils n'ont d'objet que dans la FA (CHA₂DS₂-VA) ou
+        // sous anticoagulant (HAS-BLED, ORBIT-AF, DOACscore). Affichés à tout patient,
+        // ils annonçaient « Anticoagulation recommandée » chez une patiente de 78 ans
+        // SANS fibrillation atriale — sur son seul âge — et trois risques de saignement
+        // « sous anticoagulant » à qui n'en reçoit pas. Même règle que les puces de la
+        // synthèse, qui ne les montraient déjà qu'en cas de FA.
+        const _fa = activeComorbs.includes('PAT_006');
+        const _anticoagule = patientHasMedClass('anticoagulant');
         // CHA₂DS₂-VA (ESC 2024 — sexe retiré du calcul)
         let scoreCha = 0; let ttCha = [];
         if(patientAge >= SA.cha_75) { scoreCha += 2; ttCha.push("Âge ≥75 (+2)"); } else if(patientAge >= SA.cha_65) { scoreCha += 1; ttCha.push("Âge ≥65 (+1)"); }
@@ -1502,7 +1512,7 @@ function analyserPrescription() {
         if(activeComorbs.includes('PAT_008')) { scoreCha += 2; ttCha.push("ATCD AVC (+2)"); }
         if(activeComorbs.some(c=>['PAT_004','PAT_007'].includes(c))) { scoreCha += 1; ttCha.push("Vasc (+1)"); }
         let chaConc = scoreCha === 0 ? SC.CHA2DS2.conclusions[0] : (scoreCha === 1 ? SC.CHA2DS2.conclusions[1] : SC.CHA2DS2.conclusions.haut);
-        addAlert('alertes-scores', `<div class="alert alert-light border border-${SC.CHA2DS2.border} mb-2 shadow-sm"><strong class="text-${SC.CHA2DS2.border}">${SC.CHA2DS2.label} : ${scoreCha} point(s)</strong> <em class="text-muted small">— ${SC.CHA2DS2.desc}</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreCha >= SC.CHA2DS2.seuils.haut ? 'danger' : 'success'}">${chaConc}</small></div>`);
+        if (_fa) addAlert('alertes-scores', `<div class="alert alert-light border border-${SC.CHA2DS2.border} mb-2 shadow-sm"><strong class="text-${SC.CHA2DS2.border}">${SC.CHA2DS2.label} : ${scoreCha} point(s)</strong> <em class="text-muted small">— ${SC.CHA2DS2.desc}</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreCha >= SC.CHA2DS2.seuils.haut ? 'danger' : 'success'}">${chaConc}</small></div>`);
 
         // HAS-BLED
         let scoreHas = 0; let ttHas = [];
@@ -1510,7 +1520,7 @@ function analyserPrescription() {
         if(activeComorbs.includes('PAT_008')) { scoreHas += 1; ttHas.push("ATCD AVC (+1)"); }
         if(patientAge > SA.has_65) { scoreHas += 1; ttHas.push("Âge >65 (+1)"); }
         if(patientHasMedClass('ains') || patientHasMedClass('antiagreg')) { scoreHas += 1; ttHas.push("AINS/AAS (+1)"); }
-        renderScore(SC.HAS_BLED, scoreHas, ttHas);
+        if (_fa || _anticoagule) renderScore(SC.HAS_BLED, scoreHas, ttHas);
 
         // ORBIT-AF
         let scoreOrbit = 0; let ttOrbit = [];
@@ -1519,7 +1529,7 @@ function analyserPrescription() {
         if(isChecked('chkSaignement') || isChecked('chkAspirineForte')) { scoreOrbit += 2; ttOrbit.push("Saignement (+2)"); }
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < SB.irc_orbit) { scoreOrbit += 1; ttOrbit.push("DFG <60 (+1)"); }
         if(patientHasMedClass('antiagreg')) { scoreOrbit += 1; ttOrbit.push("Antiagrégant (+1)"); }
-        renderScore(SC.ORBIT, scoreOrbit, ttOrbit);
+        if (_fa || _anticoagule) renderScore(SC.ORBIT, scoreOrbit, ttOrbit);
 
         // DOACscore (Hijazi et al. 2023 — risque de saignement majeur sous AOD)
         let scoreDoac = 0; let ttDoac = [];
@@ -1535,7 +1545,7 @@ function analyserPrescription() {
         if(activeComorbs.some(c=>['PAT_016','PAT_016a','PAT_016b'].includes(c))) { scoreDoac += 1; ttDoac.push("Diabète (+1)"); }
         if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < SB.anemia_M) || (sexe === 'F' && bioValues['BIO_009'] < SB.anemia_F))) { scoreDoac += 1; ttDoac.push("Anémie (+1)"); }
         if(activeComorbs.some(c=>['PAT_002','PAT_003'].includes(c))) { scoreDoac += 1; ttDoac.push("IC (+1)"); }
-        renderScore(SC.DOAC, scoreDoac, ttDoac);
+        if (_fa || _anticoagule) renderScore(SC.DOAC, scoreDoac, ttDoac);
 
         // RISQ-PATH
         let scoreRisq = 0; let ttRisq = [];
@@ -3652,12 +3662,19 @@ function analyserPrescription() {
         // une « interaction critique » (synthèse, bandeau, PDF) : elle est relevée à part,
         // avec le motif — même traitement que les alertes du moteur, plafonnées sous la
         // bande rouge. Elle reste au registre des médicaments, en orange.
+        // Chaque côté de la paire écrit son propre texte (« A ↔ B », puis « B ↔ A ») :
+        // la synthèse comptait deux « interactions critiques » pour une seule
+        // association, et le bandeau autant de « danger ». Une paire, une ligne.
+        const _pairesCritiquesVues = new Set();
         _regInteractDiffere.forEach(r => {
             const assumee = p => _pairesAssumees.has(p);
             const dangerActif = r.groupes.some(g => g.danger && !g.paires.every(assumee));
             if (!r.surveillanceSeule) _regAddMed(r.dci, 'interact', { text: `Interaction ${r.flatList}`, severity: dangerActif ? 'danger' : 'warning' });
             r.groupes.forEach(g => {
                 if (!g.danger || g.paires.every(assumee)) return;
+                const nouvelles = g.paires.filter(p => !_pairesCritiquesVues.has(p));
+                if (!nouvelles.length) return;
+                nouvelles.forEach(p => _pairesCritiquesVues.add(p));
                 _regAddDomain('interact', { text: g.text, severity: 'danger' });
             });
         });

@@ -2053,6 +2053,33 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/SIMVASTATINE : exposition/.test(auc(['Clarithromycine', 'Simvastatine'])),
             'paire documentee : le ratio sort toujours');
     });
+    test('Dossier 03/11 : redondances de la synthese et des scores', () => {
+        // F 78 ans, TAG chronique, bromazepam + oxazepam + mianserine + aspirine, sans FA.
+        const cas = extra => analyzeCase(Object.assign({ age: 78, sexe: 'F', comorbs: ['PAT_017', 'PAT_064'],
+            flags: ['chkPsyChronique', 'chkTAGChronique'],
+            meds: ['Bromazepam', 'Acide acetylsalicylique', 'Levothyroxine', 'Alverine', 'Mianserine', 'Oxazepam', 'Cholecalciferol', 'Paracetamol'],
+            precisions: { Oxazepam: { duree: 'longue' } } }, extra));
+        const assume = cas({ assumees: [{ cle: 'id:EV_D08', motif: 'stable' }, { cle: 'id:EV_SFGG_AD_04', motif: 'stable' }] });
+        const sd = assume._synthData;
+        // 1. Une paire, une ligne : BROMAZEPAM ↔ OXAZEPAM n'est pas deux interactions.
+        assert.strictEqual(sd.interactCritical.length, 1, JSON.stringify(sd.interactCritical));
+        // 2. Une alerte assumee (affichee orange) n'est plus comptee « danger » au bandeau.
+        assert.ok(!sd.toRemoveFiltered.some(r => r.severity === 'danger'), JSON.stringify(sd.toRemoveFiltered.map(r => [r.dci, r.severity])));
+        assert.strictEqual(sd.banner.nbDanger, 1, 'seul le cumul BZD reste critique');
+        // Sans assomption, le BZD >= 4 semaines reste rouge : on n'a rien abaisse.
+        assert.ok(cas({})._synthData.toRemoveFiltered.some(r => r.severity === 'danger'), 'non assume : toujours danger');
+        // 3. Une seule carte « reevaluation annuelle » (EV_REM_01 absorbe SUP_REM_10).
+        const ev = assume._html['alertes-eviter'] || '';
+        assert.ok(/id:EV_REM_01/.test(ev) && !/id:SUP_REM_10/.test(ev), 'une consigne, une carte');
+        assert.ok(!/sans réévaluation/.test(ev), 'le titre ne presume plus l\'absence de reevaluation');
+        // 4. Scores d'anticoagulation : sans FA ni anticoagulant, ils n'ont pas d'objet.
+        const sc = assume._html['alertes-scores'] || '';
+        assert.ok(!/CHA₂DS₂-VA|HAS-BLED|ORBIT-AF|DOACscore/.test(sc), 'pas de score d\'anticoagulation sans FA ni anticoagulant');
+        const fa = cas({ comorbs: ['PAT_006'] })._html['alertes-scores'] || '';
+        assert.ok(/CHA₂DS₂-VA/.test(fa) && /HAS-BLED/.test(fa), 'FA : les scores reviennent');
+        const aod = cas({ meds: ['Apixaban'] })._html['alertes-scores'] || '';
+        assert.ok(!/CHA₂DS₂-VA/.test(aod) && /DOACscore/.test(aod), 'sous AOD sans FA codee : scores de saignement seulement');
+    });
     test('AUC (ddi_pk.js) : mesure, prediction et valeur heritee ne sont jamais confondues', () => {
         const auc = (meds, flags) => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds, flags })._html['alertes-auc'] || '';
         // Erythromycine + simvastatine : etude mesuree (Kantola 1998) ET prediction.
