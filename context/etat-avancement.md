@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.01**, `BUILD_ID` `20261104-t4-dossiers-anciens`,
-cache `geriaassist-v149`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.10**, `BUILD_ID` `20261104-imputabilite-correcteurs`,
+cache `geriaassist-v150`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,11 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.10** (04/11) — Biologie ↔ correcteur : listes d'imputabilité lisibles (découpage,
+  termes en DCI, matcheur sans sous-chaîne, DCI prescrite affichée) ; surcorrection signalée
+  (ASE/Hb, vitamine D > 150, thyroïde sous traitement, hypo-uricémiant sans goutte) ;
+  `EV_J09` ne juge plus l'indication sur la TSH sous traitement ; conduites hyponatrémie,
+  hypercalcémie, vitamine D réécrites sur ESE 2014, SfE 2016, GRIO.
 - **4.01** (04/11) — Relecture de 3.94-4.00 : un dossier JSON d'avant 3.97 (T4/T3 totales en
   nmol/L) n'est plus relu comme T4L/T3L — valeur non reprise, ressaisie demandée.
 - **4.00** (04/11) — Suivi : la ligne « Bilan lipidique » montre le LDL saisi.
@@ -145,7 +150,10 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 **Rien en cours.** Décisions biologie du 04/11 livrées (3.97 à 4.01).
 
 Non vérifié sur source (à ne pas présenter comme sourcé) : bornes T4L 12-22 / T3L 3,1-6,8
-(choix de l'utilisateur) ; 99ᵉ percentile hs-cTnI 16/34 ng/L non retrouvé par recherche.
+(choix de l'utilisateur) ; 99ᵉ percentile hs-cTnI 16/34 ng/L non retrouvé par recherche ;
+GRIO 2019 (« doses faibles, intervalles courts ») lu par source secondaire, grio.org bloqué.
+Non traité : bicarbonate plasmatique absent ; chélateurs du phosphore (sévélamer) absents de
+la base ; fer oral sur ferritine haute = seule alerte générique « réponse non vérifiée ».
 
 
 ---

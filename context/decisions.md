@@ -46,3 +46,10 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **04/11/2026** — Une valeur de dossier dont la grandeur a changé de définition (T4/T3
   totales → libres) n'est pas reprise sans marqueur d'unité ; ressaisie demandée. — Un
   chiffre ancien relu dans la nouvelle unité affirme un diagnostic faux.
+- **04/11/2026** — Imputabilité biologique : on affiche la DCI prescrite, jamais le terme de
+  la liste ; un terme ne désigne un médicament que par classe déclarée ou recherche ≥ 4 car.
+  hors classe déclarée ; tout terme mort est motivé dans le test. — Listes muettes et faux
+  amis (cétirizine « IEC », Lokelma « potassium »).
+- **04/11/2026** — Un correcteur prescrit est jugé aussi sur la surcorrection (ASE/Hb,
+  vitamine D, thyroïde) ; une règle ne déduit pas l'indication d'une valeur mesurée sous
+  traitement (`EV_J09`). — Le dossier ne montre que l'état actuel.

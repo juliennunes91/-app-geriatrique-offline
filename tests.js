@@ -912,7 +912,7 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
     // (fourchette bio = tableau de critères). Ne doit pas frapper l'hypothyroïdie patente.
     test('EV_J09 : lévothyroxine + TSH infraclinique (6) → alerte', () => {
         const lt = { age: 72, sexe: 'F', comorbs: ['PAT_017'], meds: ['Levothyroxine'] };
-        const re = /Lévothyroxine pour hypothyroïdie infraclinique/i;
+        const re = /Lévothyroxine avec TSH entre 4 et 10/i;
         assert.ok(has(analyzeCase({ ...lt, bio: { tsh: 6 } }), re), 'TSH 6 doit déclencher');
         assert.ok(!has(analyzeCase({ ...lt, bio: { tsh: 12 } }), re), 'TSH 12 (patent) ne doit PAS');
         assert.ok(!has(analyzeCase({ ...lt, bio: { tsh: 1.5 } }), re), 'TSH 1.5 (équilibré) ne doit PAS');
@@ -1972,7 +1972,7 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.strictEqual(bio.filter(t => /Anémie/i.test(t)).length, 1,
             'une seule entree « anemie » — SYND_005 est absorbe par l\'encart d\'orientation');
         const hb = r._html['alertes-bio'] || '';
-        assert.ok(/Imputabilité iatrogène à considérer/.test(hb) && /ANTICOAGULANT/i.test(hb),
+        assert.ok(/Imputabilité iatrogène à considérer/.test(hb) && /APIXABAN/.test(hb) && !/ANTICOAGULANTS/.test(hb),
             'l\'imputabilite iatrogene de SYND_005 est conservee, c\'est sa seule part propre');
         // « (Générique) » est une nomenclature interne : elle ne doit sortir par AUCUN
         // chemin — ni titre d'alerte, ni registre, ni synthese, ni rapport.
@@ -2085,6 +2085,59 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/CHA₂DS₂-VA/.test(fa) && /HAS-BLED/.test(fa), 'FA : les scores reviennent');
         const aod = cas({ meds: ['Apixaban'] })._html['alertes-scores'] || '';
         assert.ok(!/CHA₂DS₂-VA/.test(aod) && /DOACscore/.test(aod), 'sous AOD sans FA codee : scores de saignement seulement');
+    });
+    test('Imputabilite des syndromes biologiques : chaque terme designe un medicament de la base, ou son absence est motivee', () => {
+        // Une liste d'imputabilite que le moteur ne sait pas lire n'impute jamais rien, en
+        // silence : « IPP long cours », « Vitamine D excessive », « Sulfonylurees (Glibenclamide »
+        // coupe a la virgule. Les termes restants sans medicament sont NOMMES ici avec leur motif.
+        const HORS_BASE = {
+            'Alcool': 'cause non medicamenteuse', 'Deshydratation': 'cause non medicamenteuse',
+            'Regimes inappropries iatrogenes': 'cause non medicamenteuse', 'Produits de contraste': 'non prescrits en ville',
+            'Chimiotherapies': 'absentes de la base', 'Chimiotherapie': 'absente de la base', 'Immunotherapies': 'absentes de la base',
+            'Immunotherapies anti-PD1': 'absentes de la base', 'CTLA-4': 'absent de la base', 'Interferon': 'absent de la base',
+            'Sunitinib': 'absent', 'Ipilimumab': 'absent', 'Nivolumab': 'absent', 'Cisplatine': 'absent', 'Cyclophosphamide': 'absent',
+            'Doxorubicine': 'absente', 'Quinine': 'absente', 'Abciximab': 'absent', 'Nicotinamide': 'absent', 'Retinoides': 'absents',
+            'Contraceptifs oraux': 'absents', 'Contraceptifs oestroprogestatifs': 'absents', 'Thalidomide': 'absent', 'Lenalidomide': 'absent',
+            'Cardiotoxicite iatrogene : 5-Fluorouracile': 'absent', 'Trastuzumab': 'absent', 'Cocaine': 'non prescrit', 'AZT': 'zidovudine absente',
+            'Chloramphenicol': 'absent', 'Propofol haute dose': 'absent', 'Laxatifs phosphates': 'absents',
+            'Methotrexate haute dose': 'depend de la precision mtx_haute_dose, non d\'un nom'
+        };
+        const vm = require('vm'); const { sandbox } = require('./oracle_harness').loadApp();
+        const morts = JSON.parse(vm.runInContext(`(function(){ const r = []; const M = Object.values(MASTER_DB.MEDICAMENTS); const sauf = activeMeds.splice(0);
+            for (const s of Object.values(MASTER_DB.SYNDROMES)) { if (!s.IMPUTABILITE_FREQ || s.ID_SYNDROME >= 'SYND_043') continue;
+                for (const t of termesImputabilite(s.IMPUTABILITE_FREQ)) {
+                    const n = M.filter(m => { activeMeds.length = 0; activeMeds.push({ dci: m.dci, classe: m.classe || '' }); return medsImputables([t]).length > 0; }).length;
+                    if (!n) r.push(t); } }
+            activeMeds.length = 0; sauf.forEach(x => activeMeds.push(x)); return JSON.stringify(r); })()`, sandbox));
+        const sansAccent = x => x.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/œ/g, 'oe');
+        const inexpliques = [...new Set(morts.map(sansAccent))].filter(t => !HORS_BASE[t]);
+        assert.deepStrictEqual(inexpliques, [], 'termes d\'imputabilite qui ne designent aucun medicament');
+        assert.deepStrictEqual(JSON.parse(vm.runInContext(`JSON.stringify(termesImputabilite('Glibenclamide, Gliclazide (sulfonylurees, a), Insuline/Glinides'))`, sandbox)),
+            ['Glibenclamide', 'Gliclazide', 'Insuline', 'Glinides'], 'virgule entre parentheses : pas un separateur');
+    });
+    test('Correcteur prescrit et biologie : la surcorrection est imputee, et seule la DCI prescrite est nommee', () => {
+        const bio = c => String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 50 }, c))._html['alertes-bio'] || '').replace(/<[^>]+>/g, ' ');
+        assert.ok(/Hypokaliémie[\s\S]{0,200}CYCLOSILICATE/.test(bio({ meds: ['Cyclosilicate de zirconium sodique'], bio: { patientK: 3.2 } })), 'hypokaliemie sous chelateur du potassium : imputee');
+        assert.ok(!/CYCLOSILICATE/.test(bio({ meds: ['Cyclosilicate de zirconium sodique'], bio: { patientK: 5.8 } })), 'hyperkaliemie : le chelateur n\'est pas impute');
+        assert.ok(/CETIRIZINE/.test('') || !/Imputabilit/.test(bio({ meds: ['Cetirizine'], bio: { patientK: 5.8 } })), 'cetirizine n\'est pas un IEC');
+        const vitD = bio({ meds: ['Cholecalciferol'], bio: { bioCa: 2.8 } });
+        assert.ok(/Imputabilité iatrogène détectée :\s*CHOLECALCIFEROL\s/.test(vitD) && !/CALCITRIOL/.test(vitD), 'hypercalcemie sous vitamine D : la DCI prescrite, pas un terme de la liste');
+        assert.ok(/CARBONATE DE CALCIUM/.test(bio({ meds: ['Carbonate de calcium'], bio: { bioCa: 2.8 } })), 'hypercalcemie sous calcium : imputee');
+        assert.ok(!/furosémide pour calciurie/i.test(bio({ bio: { bioCa: 2.9 } })), 'pas de furosemide systematique dans l\'hypercalcemie');
+        assert.ok(/Surdosage en vitamine D[\s\S]{0,200}CHOLECALCIFEROL/.test(bio({ meds: ['Cholecalciferol'], bio: { bioVitD: 160 } })), 'intoxication vitamine D > 150 ng/mL');
+        assert.ok(/antithyroïdien de synthèse[\s\S]{0,80}réduire la dose/.test(bio({ meds: ['Carbimazole'], bio: { bioTsh: 8, bioT4: 9 } })), 'hypothyroidie sous ATS : reduire l\'ATS, pas ajouter de levothyroxine');
+        assert.ok(/substitution insuffisante/.test(bio({ meds: ['Levothyroxine'], bio: { bioTsh: 9 } })), 'TSH haute sous levothyroxine : sous-dosage');
+        assert.ok(/surdosage — réduire la dose/.test(bio({ meds: ['Levothyroxine'], bio: { bioTsh: 0.05 } })), 'TSH freinee sous levothyroxine : surdosage');
+        assert.ok(/🚨 Hémoglobine au-dessus de la cible sous ASE/.test(bio({ meds: ['Darbepoetine alfa'], comorbs: ['PAT_029'], dfg: 25, bio: { bioHb: 13.5 } })), 'ASE et Hb > 13 : rouge (KDIGO 3.6)');
+        assert.ok(/⚠️ Hémoglobine au-dessus de la cible sous ASE/.test(bio({ meds: ['Darbepoetine alfa'], comorbs: ['PAT_029'], dfg: 25, bio: { bioHb: 12 } })), 'ASE et Hb > 11,5 : orange (KDIGO 3.5.1)');
+        assert.ok(!/au-dessus de la cible/.test(bio({ meds: ['Darbepoetine alfa'], comorbs: ['PAT_029'], dfg: 25, bio: { bioHb: 11 } })), 'Hb dans la cible : rien');
+        const sansGoutte = bio({ bio: { bioUric: 600 } });
+        assert.ok(/Hyperuricémie sans goutte déclarée/.test(sansGoutte) && !/Colchicine/.test(sansGoutte), 'sans goutte : ni accès goutteux ni colchicine');
+        assert.ok(/Colchicine/.test(bio({ bio: { bioUric: 600 }, comorbs: ['PAT_024'] })), 'goutte declaree : conduite de la goutte');
+        assert.ok(/Hypo-uricémiant sans goutte déclarée/.test(bio({ meds: ['Allopurinol'] })), 'allopurinol sans goutte : indication demandee');
+        assert.ok(/GLIMEPIRIDE/.test(bio({ meds: ['Glimepiride'], comorbs: ['PAT_001'], bio: { bioGly: 0.5 } })), 'sulfonyluree imputee dans l\'hypoglycemie');
+        const eviter = String(analyzeCase({ age: 82, sexe: 'F', meds: ['Levothyroxine'], bio: { bioTsh: 9 } })._html['alertes-eviter'] || '');
+        assert.ok(/vérifier l(&#39;|')indication initiale/.test(eviter) && /ne pas arrêter/.test(eviter) && !/traiter uniquement si TSH/.test(eviter), 'EV_J09 ne juge pas l\'indication sur la TSH mesuree sous traitement');
     });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait

@@ -2398,7 +2398,7 @@
  "cov_EV_J04_EV_J09": {
   "alertes-eviter": [
    "info | Réévaluation planifiée",
-   "warning | Lévothyroxine pour hypothyroïdie infraclinique (TSH < 10)",
+   "warning | Lévothyroxine avec TSH entre 4 et 10 : vérifier l'indication initiale",
    "warning | iSGLT2 + Hypotension symptomatique"
   ],
   "alertes-initier": [],

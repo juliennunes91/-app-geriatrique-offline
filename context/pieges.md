@@ -66,3 +66,11 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
 ## Migration (04/11)
 - Changer l'unité d'un champ casse les dossiers JSON et la session déjà enregistrés :
   marquer l'unité à l'export, écarter à la relecture ce qui n'est pas marqué.
+
+## Imputabilité (04/11)
+- `split(',')` coupe dans les parenthèses → `termesImputabilite()`.
+- Une conduite qui dit « diurétique de l'anse » est effacée par
+  `CONDUITE_CLAUSES_CONDITIONNELLES` si le patient n'en reçoit pas, même pour dire « n'en
+  donnez pas ».
+- Mesurer la résolution d'un terme avec `patientHasMedClass` réel (activeMeds remplacé),
+  pas avec une réimplémentation.

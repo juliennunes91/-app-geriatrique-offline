@@ -1855,6 +1855,74 @@ message demande de la ressaisir (`_champsUniteObsolete`, `app_core.js`).
 - `BIO_027` (bilan lipidique) n'a pas de champ propre (saisie en LDL / HDL / TG) : depuis
   4.00, la ligne du Suivi montre le **LDL**, HDL et TG en infobulle.
 
+## Biologie ↔ médicament correcteur — l'imputabilité doit pouvoir se lire
+
+Question posée (04/11) : le lien pathologie / biologie / correcteur tient-il ? Vérifié dans
+les deux sens sur dossiers fictifs : anomalie sans correcteur (conduite, bilan), correcteur
+prescrit sur une valeur normale ou inverse (surcorrection). Le premier sens tenait ; le
+second était presque muet.
+
+**Les listes `IMPUTABILITE_FREQ` de `MASTER_DB.SYNDROMES` n'imputaient pas ce qu'elles
+nommaient.** Trois défauts cumulés :
+
+1. **Découpage** à chaque virgule, y compris DANS une parenthèse : « Sulfonylurées
+   (Glibenclamide, Gliclazide) » donnait « Sulfonylurées (Glibenclamide », qui ne désigne
+   rien. `termesImputabilite()` (`utils.js`) ne coupe qu'hors parenthèses, sur `,` et `/`.
+2. **Termes rédigés comme de la prose** — « IPP long cours », « Vitamine D excessive »,
+   « Laxatifs stimulants », « Antipaludéens » (pluriel absent du libellé) : jamais résolus.
+   Ils nomment désormais les DCI ou une clé déclarée, la nuance passe entre parenthèses.
+3. **Matcheur par sous-chaîne** : `patientHasMedClass` cherchait le terme n'importe où dans
+   la DCI et le libellé. « iec » est dans « allerg-IE-Chez » (cétirizine), « ipp » dans
+   « alternative au carbonate si IPP » (pidolate de calcium), « potassium » dans
+   « chélateur du potassium » (Lokelma imputé dans une hyperkaliémie), « azt » dans
+   aztréonam. Désormais `matchesDrugClass` d'abord ; la recherche brute ne sert qu'aux
+   termes ≥ 4 caractères qui ne sont pas une classe déclarée. Seules pertes réelles —
+   Entresto et amiloride/triamtérène dans l'hyperkaliémie — sont nommées explicitement.
+
+**On affiche la DCI prescrite, pas le terme de la liste** (`medsImputables()`,
+`app_core.js`) : sous cholécalciférol seul, le terme « calcitriol », cité par le libellé du
+cholécalciférol, faisait lire un médicament non prescrit.
+
+Ajouts aux listes : hypokaliémie ← résines et cyclosilicate ; hypothyroïdie ←
+antithyroïdiens ; hypercalcémie ← vitamine D (5 formes) et sels de calcium ;
+hyperkaliémie ← finérénone, AINS, héparines (hypoaldostéronisme), ciclosporine,
+tacrolimus. **Retiré** : « ICa dihydropyridines » de la décompensation cardiaque — les DHP
+sont neutres dans l'IC (ESC), l'œdème qu'elles donnent n'est pas une rétention.
+
+Invariant : tout terme d'imputabilité (syndromes < `SYND_043`, les suivants ne sont pas
+évalués par `checkBioSyndrome`) résout au moins un médicament, ou figure dans
+`HORS_BASE` du test avec son motif (molécule absente, cause non médicamenteuse).
+
+**Surcorrection, désormais signalée** :
+- **ASE et Hb > 11,5** (orange) / **> 13** (rouge) — KDIGO Anémie 2012, 3.5.1 (2C) et 3.6
+  (1A). L'encart d'anémie ne sortait que sur une Hb basse.
+- **25-OH D > 150 ng/mL** — intoxication (Endocrine Society, Holick 2011) ; rouge si
+  hypercalcémie associée.
+- **Thyroïde sous traitement** : hypothyroïdie sous antithyroïdien → réduire l'ATS, ne pas
+  ajouter de lévothyroxine ; TSH haute sous lévothyroxine → observance, prise à jeun,
+  interactions (calcium, fer, IPP), puis majoration ; TSH freinée → surdosage.
+- **`EV_J09`** (STOPP J9) se déclenchait sur la TSH mesurée **sous** traitement et disait
+  « aucune preuve de bénéfice » : une substitution insuffisante d'hypothyroïdie avérée y
+  était lue comme un traitement inutile. Énoncé comme règle de choix : vérifier
+  l'indication initiale, ne pas arrêter si l'hypothyroïdie était avérée.
+- **Urate** : sans goutte (`PAT_024`) déclarée, la carte « Accès goutteux » et sa colchicine
+  ne sortent plus — « hyperuricémie sans goutte déclarée » (ACR 2020 : pas d'hypo-uricémiant
+  dans l'hyperuricémie asymptomatique). Hypo-uricémiant sans goutte → l'indication est
+  demandée, pas devinée.
+
+**Conduites réécrites sur leur source** :
+- Hyponatrémie : bilan (osmolalités, natriurèse, volémie, TSH, cortisol) ; restriction
+  hydrique seulement en SIADH ou hypervolémie ; 10 mmol/L les 24 premières heures puis
+  8/24 h (ESE/ESICM/ERBP 2014). Elle était proposée d'emblée, y compris à l'hypovolémique.
+- Hypercalcémie : PTH, 25-OH D, phosphore, électrophorèse ; pas de furosémide
+  systématique (Society for Endocrinology 2016). **Piège** : écrire « diurétique de l'anse »
+  dans cette conduite la fait effacer par `CONDUITE_CLAUSES_CONDITIONNELLES` chez un patient
+  qui n'en reçoit pas — la phrase dit « furosémide ».
+- Vitamine D : ampoules de 100 000 UI **espacées de 15 jours** (GRIO 2011), non hebdomadaires ;
+  doses faibles et intervalles courts (GRIO 2019, relevé par source secondaire — grio.org
+  non joignable depuis la session) ; pas de bolus massif (Sanders, JAMA 2010).
+- Hypomagnésémie : 0,50-0,69 est « modérée », « sévère » sous 0,50 (Manuel MSD).
+
 ## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
 
 `_bioStatusBadge` ne connaissait que **six** paramètres et rendait un badge VERT « OK »

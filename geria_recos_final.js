@@ -1543,14 +1543,14 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3"],
             ref_code: "STOPP3-J9",
             section: "Endocrine",
-            titre: "Lévothyroxine pour hypothyroïdie infraclinique (TSH < 10)",
-            message: "Lévothyroxine pour hypothyroïdie infraclinique (T4L normale, TSH élevée mais < 10 mUI/L) : aucune preuve de bénéfice, risque de thyrotoxicose iatrogène. Ne concerne PAS l'hypothyroïdie patente (TSH > 10) où la substitution est justifiée.",
+            titre: "Lévothyroxine avec TSH entre 4 et 10 : vérifier l'indication initiale",
+            message: "La TSH mesurée SOUS traitement ne dit pas quelle était l'indication. Si la lévothyroxine a été instaurée pour une hypothyroïdie infraclinique (T4L normale, TSH < 10 mUI/L), STOPP v3 la juge sans bénéfice prouvé chez le sujet âgé, avec un risque de thyrotoxicose iatrogène. Si l'hypothyroïdie était avérée, cette TSH signe au contraire une substitution insuffisante : ne pas arrêter.",
             severite: "warning",
             condition: {
                 med_keys: ["levothyroxine"],
                 bio: { "BIO_019": [{ op: ">=", val: 4 }, { op: "<", val: 10 }] }
             },
-            alternatives: "Surveillance TSH semestrielle, traiter uniquement si TSH > 10 ou symptômes"
+            alternatives: "Retrouver la TSH et la T4L d'avant traitement : hypothyroïdie infraclinique → discuter l'arrêt sous contrôle de la TSH ; hypothyroïdie avérée → ajuster la dose"
         },
         {
             id: "EV_J10",

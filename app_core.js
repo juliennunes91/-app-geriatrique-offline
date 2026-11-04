@@ -1305,11 +1305,36 @@ window.imprimerSynthese = function(mode) {
     w.document.close();
 };
 
+// Le matcheur de classes d'abord : il porte les exclusions declarees. La recherche
+// brute dans le libelle ne sert qu'aux termes qui ne sont PAS des classes declarees,
+// et jamais sous 4 caracteres — « iec » se trouvait dans « allerg-IE-Chez » (cetirizine),
+// « ipp » dans « alternative au carbonate si IPP » (pidolate de calcium), « potassium »
+// dans « chelateur du potassium » (Lokelma impute dans une hyperkaliemie).
 const patientHasMedClass = (classOrDci) => {
-    let t = sanitizeText(classOrDci);
+    const t = sanitizeText(classOrDci);
+    const declaree = (typeof _ALIAS_EXACT_INDEX !== 'undefined' && _ALIAS_EXACT_INDEX.has(t))
+        || (typeof DRUG_CLASSES !== 'undefined' && Object.prototype.hasOwnProperty.call(DRUG_CLASSES, t));
     return activeMeds.some(m => {
-        let mDci = sanitizeText(m.dci); let mClasse = sanitizeText(m.classe);
-        if(mDci.includes(t) || mClasse.includes(t)) return true;
-        return matchesDrugClass(mDci, mClasse, t);
+        const mDci = sanitizeText(m.dci), mClasse = sanitizeText(m.classe);
+        if (matchesDrugClass(mDci, mClasse, t)) return true;
+        if (t.length < 4 || declaree) return false;
+        return mDci.includes(t) || mClasse.includes(t);
     });
+};
+// Les medicaments PRESCRITS que designe une liste d'imputabilite — c'est leur DCI qu'on
+// affiche, jamais le terme de la liste : sous cholecalciferol seul, le terme « calcitriol »
+// (cite par le libelle du cholecalciferol) faisait lire un medicament non prescrit.
+const medsImputables = (termes) => {
+    const out = [];
+    (termes || []).forEach(t => {
+        const ts = sanitizeText(t);
+        const declaree = (typeof _ALIAS_EXACT_INDEX !== 'undefined' && _ALIAS_EXACT_INDEX.has(ts))
+            || (typeof DRUG_CLASSES !== 'undefined' && Object.prototype.hasOwnProperty.call(DRUG_CLASSES, ts));
+        activeMeds.forEach(m => {
+            const d = sanitizeText(m.dci), k = sanitizeText(m.classe);
+            const ok = matchesDrugClass(d, k, ts) || (ts.length >= 4 && !declaree && (d.includes(ts) || k.includes(ts)));
+            if (ok && !out.includes(m.dci)) out.push(m.dci);
+        });
+    });
+    return out;
 };

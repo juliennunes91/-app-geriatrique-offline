@@ -217,6 +217,21 @@ const cleAttributJs = (cle) => String(cle || '')
     .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;');
 
+// Liste d'imputabilite d'un syndrome (« A, B (precision, detail), C/D ») -> termes
+// cherches dans l'ordonnance. Les virgules et barres A L'INTERIEUR d'une parenthese
+// ne separent rien : « Sulfonylurees (Glibenclamide, Gliclazide) » coupe a la virgule
+// donnait « Sulfonylurees (Glibenclamide », qui ne designait aucun medicament.
+const termesImputabilite = (liste) => {
+    const out = []; let prof = 0, cur = '';
+    for (const ch of String(liste || '')) {
+        if (ch === '(') prof++;
+        if (ch === ')') prof = Math.max(0, prof - 1);
+        if ((ch === ',' || ch === '/') && prof === 0) { out.push(cur); cur = ''; } else cur += ch;
+    }
+    out.push(cur);
+    return out.map(x => x.replace(/\s*\([^)]*\)/g, '').trim()).filter(Boolean);
+};
+
 const nomPathoAffiche = (nom) => String(nom || '').replace(/\s*\((?:Générique|Generique)\)\s*$/i, '').trim();
 
 const comorbsAffichables = (liste) => {

@@ -1812,7 +1812,7 @@ function analyserPrescription() {
         try {
             let s = MASTER_DB.SYNDROMES[syndId]; if(!s) return;
             let causes = [];
-            if(s.IMPUTABILITE_FREQ) s.IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(x=>x).forEach(c => { if(patientHasMedClass(c)) causes.push(c); });
+            if(s.IMPUTABILITE_FREQ) causes = medsImputables(termesImputabilite(s.IMPUTABILITE_FREQ));
             let imputStr = causes.length > 0 ? `<br><em>Imputabilité iatrogène détectée :</em> <b>${causes.join(', ').toUpperCase()}</b>` : '';
             // Sévérité : par défaut depuis la base (GRAVITE), surchargeable par valeur (opts.severe).
             let isSevere = (typeof opts.severe === 'boolean') ? opts.severe
@@ -1994,6 +1994,20 @@ function analyserPrescription() {
         }
     }
 
+    // --- Hémoglobine au-dessus de la cible sous agent stimulant l'érythropoïèse ---
+    // L'encart d'anémie ne sort que si l'Hb est basse : sous ASE, c'est l'Hb HAUTE qui est
+    // le risque (AVC, thrombose — TREAT, CHOIR). KDIGO Anémie 2012 : ne pas maintenir
+    // au-delà de 11,5 g/dL (3.5.1, 2C), jamais intentionnellement au-delà de 13 (3.6, 1A).
+    {
+        const hbA = bioValues['BIO_009'];
+        const aseH = (activeMeds || []).filter(m => matchesDrugClass(sanitizeText(m.dci), sanitizeText(m.classe || ''), 'epoetine')).map(m => m.dci);
+        if (aseH.length && hbA > 11.5) {
+            const haut = hbA > 13;
+            addAlert('alertes-bio', `<div class="alert alert-${haut ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${haut ? '🚨' : '⚠️'} Hémoglobine au-dessus de la cible sous ASE</strong> (Hb ${hbA} g/dL — ${escapeHtml(aseH.join(', ').toUpperCase())})
+                <br><small>${haut ? "Au-delà de 13 g/dL : suspendre ou réduire l'ASE — excès d'AVC et de thromboses (KDIGO Anémie 2012, 3.6, 1A)." : "Ne pas maintenir l'Hb au-delà de 11,5 g/dL sous ASE : réduire la dose plutôt que suspendre (KDIGO Anémie 2012, 3.5.1, 2C)."}</small></div>`, 'bio');
+        }
+    }
+
     // --- SYND_008 : Insuffisance Rénale Fonctionnelle (Urée/Créat > 100) ---
     if (bioValues['BIO_007'] > 0 && bioValues['BIO_003'] > 0) {
         let ratioUreCreat = (bioValues['BIO_007'] * 1000) / bioValues['BIO_003'];
@@ -2048,11 +2062,17 @@ function analyserPrescription() {
             let isOvert = (t4 > 0 && t4 < T4L_BAS) || tsh > 10;
             let thyroSev = isOvert ? 'danger' : 'warning';
             let thyroCauses = [];
-            let hypoTerms = MASTER_DB.SYNDROMES['SYND_013'] && MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
-            hypoTerms.forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
+            let hypoTerms = MASTER_DB.SYNDROMES['SYND_013'] && MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ ? termesImputabilite(MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ) : [];
+            thyroCauses = medsImputables(hypoTerms);
             let thyroImput = thyroCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${thyroCauses.join(', ').toUpperCase()}</b>` : '';
             let thyroLabel = isOvert ? (thyroCauses.length > 0 ? 'Hypothyroïdie iatrogène avérée' : 'Hypothyroïdie avérée') : (thyroCauses.length > 0 ? 'Hypothyroïdie iatrogène subclinique' : 'Hypothyroïdie subclinique');
-            let thyroConc = isOvert ? 'Traitement substitutif par lévothyroxine recommandé. Débuter 12.5-25 µg/j chez le sujet âgé, titrer par paliers de 12.5 µg toutes les 6-8 semaines.' : (tsh > 10 ? 'TSH > 10 — substitution recommandée même si subclinique.' : 'TSH 4-10 — à contrôler à 6-8 semaines, substituer si symptômes ou progression.');
+            const _ats = medsImputables(['carbimazole', 'thiamazole', 'propylthiouracile']);
+            const _levo = medsImputables(['levothyroxine', 'liothyronine']);
+            let thyroConc = _ats.length
+                ? `Sous antithyroïdien de synthèse (${_ats.join(', ')}) : surdosage le plus probable — réduire la dose (sauf schéma « bloquer-substituer » décidé par l'endocrinologue), contrôle TSH et T4L à 4-6 semaines (ETA 2018). Ne pas ajouter de lévothyroxine d'emblée.`
+                : _levo.length
+                ? `Sous ${_levo.join(', ')} : substitution insuffisante — vérifier l'observance, la prise à jeun et à distance du calcium, du fer et des IPP, puis augmenter par paliers de 12,5 à 25 µg ; contrôle TSH à 6-8 semaines.`
+                : isOvert ? 'Traitement substitutif par lévothyroxine recommandé. Débuter 12.5-25 µg/j chez le sujet âgé, titrer par paliers de 12.5 µg toutes les 6-8 semaines.' : (tsh > 10 ? 'TSH > 10 — substitution recommandée même si subclinique.' : 'TSH 4-10 — à contrôler à 6-8 semaines, substituer si symptômes ou progression.');
             addAlert('alertes-bio', `<div class="alert alert-${thyroSev} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4L ' + t4 + ' pmol/L' : ''})${thyroImput}<br><em>Conduite :</em> ${thyroConc}</div>`, 'bio');
         } else if (tsh < 0.4 && tsh > 0) {
             // Hyperthyroïdie (SYND_012, ou SYND_019 si thyrotoxicose sévère) : alerte
@@ -2060,10 +2080,11 @@ function analyserPrescription() {
             let isOvert = (t4 > 0 && t4 > T4L_HAUT) || (t3 > 0 && t3 > T3L_HAUT);
             let thyroLabel = isOvert ? 'Hyperthyroïdie avérée' : 'Hyperthyroïdie subclinique';
             let thyroCauses = [];
-            let hyperTerms = MASTER_DB.SYNDROMES['SYND_012'] && MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
-            hyperTerms.forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
+            let hyperTerms = MASTER_DB.SYNDROMES['SYND_012'] && MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ ? termesImputabilite(MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ) : [];
+            thyroCauses = medsImputables(hyperTerms);
+            const _levoH = medsImputables(['levothyroxine', 'liothyronine']);
             let thyroImput = thyroCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${thyroCauses.join(', ').toUpperCase()}</b>` : '';
-            addAlert('alertes-bio', `<div class="alert alert-${isOvert ? 'danger' : 'warning'} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4L ' + t4 + ' pmol/L' : ''}${t3 > 0 ? ', T3L ' + t3 + ' pmol/L' : ''})<br>${thyroImput}<em>Conduite :</em> ${isOvert ? 'Avis endocrino, rechercher cause (Basedow, nodule toxique, amiodarone). Risque FA et ostéoporose.' : 'Contrôle à 6-8 semaines, ECG (risque FA), densitométrie si post-ménopause.'}</div>`, 'bio');
+            addAlert('alertes-bio', `<div class="alert alert-${isOvert ? 'danger' : 'warning'} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4L ' + t4 + ' pmol/L' : ''}${t3 > 0 ? ', T3L ' + t3 + ' pmol/L' : ''})<br>${thyroImput}<em>Conduite :</em> ${_levoH.length ? `Sous ${_levoH.join(', ')} : surdosage — réduire la dose par paliers de 12,5 à 25 µg, contrôle TSH à 6-8 semaines ; chez le sujet âgé, une TSH freinée expose à la FA et à l'ostéoporose.` : isOvert ? 'Avis endocrino, rechercher cause (Basedow, nodule toxique, amiodarone). Risque FA et ostéoporose.' : 'Contrôle à 6-8 semaines, ECG (risque FA), densitométrie si post-ménopause.'}</div>`, 'bio');
         }
     }
 
@@ -2080,7 +2101,28 @@ function analyserPrescription() {
     // --- SYND_016 : Hyperuricémie (> 420 µmol/L H, > 360 F) ---
     {
         let seuilUric = (sexe === 'M') ? 420 : 360;
-        if (bioValues['BIO_008'] > seuilUric) checkBioSyndrome('SYND_016', true);
+        const uric = bioValues['BIO_008'];
+        const goutte = activeComorbs.includes('PAT_024');
+        const hypoUric = medsImputables(['allopurinol', 'febuxostat']);
+        if (uric > seuilUric) {
+            // La conduite de SYND_016 (colchicine, AINS, hypo-uricémiant) est celle de la
+            // GOUTTE. Sans goutte déclarée, un urate élevé n'est pas un accès goutteux, et
+            // l'hyperuricémie asymptomatique ne se traite pas (ACR 2020, recommandation
+            // conditionnelle contre le traitement hypo-uricémiant).
+            if (goutte) checkBioSyndrome('SYND_016', true);
+            else {
+                const s16 = checkBioSyndrome('SYND_016', true, { rendre: false }) || {};
+                addAlert('alertes-bio', `<div class="alert alert-info shadow-sm"><strong>ℹ️ Hyperuricémie sans goutte déclarée</strong> (${uric} µmol/L)${s16.imputStr || ''}
+                    <br><small>Une hyperuricémie asymptomatique ne se traite pas par hypo-uricémiant (ACR 2020, recommandation conditionnelle) ; colchicine et allopurinol relèvent de la goutte avérée. Rechercher une cause médicamenteuse${hypoUric.length ? '' : ' ; déclarer la goutte si elle existe'}.</small></div>`, 'bio');
+            }
+        }
+        // Un hypo-uricémiant sans goutte déclarée : l'indication n'est pas au dossier.
+        // On ne la devine pas (lithiase urique, prévention d'une lyse tumorale existent) :
+        // on la demande, comme EV_D22 pour un agoniste dopaminergique.
+        if (hypoUric.length && !goutte) {
+            addAlert('alertes-bio', `<div class="alert alert-info shadow-sm"><strong>ℹ️ Hypo-uricémiant sans goutte déclarée</strong> (${escapeHtml(hypoUric.join(', '))})
+                <br><small>Préciser l'indication — goutte, lithiase urique, prévention d'une lyse tumorale. Une hyperuricémie asymptomatique n'en est pas une (ACR 2020).${uric > 0 ? ` Uricémie ${uric} µmol/L.` : ''}</small></div>`, 'bio');
+        }
     }
 
     // --- SYND_017 : Hypoglycémie (Glycémie < 3.9 mmol/L) ---
@@ -2121,12 +2163,12 @@ function analyserPrescription() {
         checkBioSyndrome('SYND_021', true, { severe, labelOverride: `Hypercalcémie ${grade} — ${caLabel}` });
     }
 
-    // --- SYND_022 : Hypomagnésémie — graduée (légère 0.70-0.75 / sévère 0.50-0.70 / critique < 0.50) ---
+    // --- SYND_022 : Hypomagnésémie — graduée (légère 0.70-0.75 / modérée 0.50-0.70 / sévère < 0.50, Manuel MSD) ---
     {
         const mg = bioValues['BIO_006'];
         if (mg > 0 && mg < 0.75) {
             const severe = mg < 0.50;
-            const grade = mg < 0.50 ? 'critique (< 0.50 — risque torsades)' : mg < 0.70 ? 'sévère (0.50-0.69)' : 'légère (0.70-0.74)';
+            const grade = mg < 0.50 ? 'critique (< 0.50 — risque torsades)' : mg < 0.70 ? 'modérée (0.50-0.69)' : 'légère (0.70-0.74)';
             checkBioSyndrome('SYND_022', true, { severe, labelOverride: `Hypomagnésémie ${grade} — Mg ${mg} mmol/L` });
         }
     }
@@ -2136,6 +2178,16 @@ function analyserPrescription() {
 
     // --- SYND_024 : Sepsis Biologique (PCT > 2 ng/mL) ---
     if (bioValues['BIO_032'] > 2) checkBioSyndrome('SYND_024', true);
+
+    // --- Surdosage en vitamine D : intoxication au-delà de 150 ng/mL (375 nmol/L) ---
+    // (Endocrine Society, Holick JCEM 2011). Le seuil est celui de la toxicité, non d'une
+    // cible : on ne signale pas un taux élevé mais sans danger.
+    if (bioValues['BIO_023'] > 150) {
+        const vitD = medsImputables(['cholecalciferol', 'ergocalciferol', 'calcifediol', 'calcitriol', 'alfacalcidol']);
+        const hyperCa = caEval > 2.65;
+        addAlert('alertes-bio', `<div class="alert alert-${hyperCa ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${hyperCa ? '🚨' : '⚠️'} Surdosage en vitamine D</strong> (25-OH D ${bioValues['BIO_023']} ng/mL — intoxication au-delà de 150)${vitD.length ? `<br><em>Imputabilité iatrogène détectée :</em> <b>${escapeHtml(vitD.join(', ').toUpperCase())}</b>` : ''}
+            <br><small>Suspendre la supplémentation ; contrôler calcémie, phosphorémie et fonction rénale${hyperCa ? ' — hypercalcémie associée' : ''} (Endocrine Society, Holick 2011).</small></div>`, 'bio');
+    }
 
     // --- SYND_025 : Carence en Vitamine D Sévère (< 10 ng/mL) ---
     if (bioValues['BIO_023'] > 0 && bioValues['BIO_023'] < 10) checkBioSyndrome('SYND_025', true);
