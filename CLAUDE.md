@@ -1688,7 +1688,9 @@ nombre qui SUIT le libellé sur SA ligne, avant tout intervalle entre parenthès
   **jamais** appliquée : la ligne est montrée en rouge, décochée et désactivée.
 - « G/l » d'un compte cellulaire est un **giga**, pas des grammes : les paramètres de
   comptage ont leur propre table d'unités, la casse n'est pas un indice.
-- Volontairement **non importés** : T4/T3 (libre ou totale ?), D-dimères (FEU/DDU), TCA
+- T4 / T3 importées **seulement en fraction libre et en pmol/L** (« T4 libre », « T4L »,
+  « FT4 ») ; une T4 totale n'entre jamais.
+- Volontairement **non importés** : D-dimères (FEU/DDU), TCA
   (ratio ou secondes), albuminurie, et le **DFG du laboratoire** — affiché, jamais appliqué,
   GeriaAssist le recalcule depuis la créatinine.
 - Valeur **censurée** (« < 0,05 ») : bornée, pas mesurée — montrée, non appliquée. Même
@@ -1842,6 +1844,12 @@ Abbott ; 52 = rule-in hs-cTnT). Sélecteur **`bioTropoReactif`** (deux UIs) : hs
 ≥ 52). Non déclaré : signalement au-delà de 14 ng/L, sans graduation, et demande du réactif.
 C'est un **réglage du laboratoire** : déclaré dans `PREFERENCES` (survit à « Nouveau »),
 mémorisé en `localStorage` (`geria-tropo-reactif`), et pris dans le hash de mémoïsation.
+
+**Dossiers enregistrés avant 3.97** : leur `bioT4`/`bioT3` est une fraction TOTALE en
+nmol/L (≈ 100 pour une T4 normale), qui relue en pmol/L libre annoncerait une
+hyperthyroïdie. L'export porte désormais `unites: { bioT4, bioT3 }` ; à la relecture
+(fichier JSON comme session), une valeur sans ce marqueur n'est **pas reprise** et un
+message demande de la ressaisir (`_champsUniteObsolete`, `app_core.js`).
 
 **Points restants** :
 - `BIO_027` (bilan lipidique) n'a pas de champ propre (saisie en LDL / HDL / TG) : depuis

@@ -2103,6 +2103,15 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             const h = require('fs').readFileSync(require('path').join(__dirname, f), 'utf8');
             assert.ok(/T4 libre[\s\S]{0,120}pmol\/L[\s\S]{0,200}id="bioT4"/.test(h), f + ' : champ T4 libre en pmol/L');
         }
+        // Un dossier JSON d'avant 3.97 porte une T4 TOTALE en nmol/L (≈ 100) : relue en
+        // pmol/L libre, elle annoncerait une hyperthyroidie. Elle n'est pas reprise.
+        const vm = require('vm'); const { sandbox } = require('./oracle_harness').loadApp();
+        const ecartes = d => JSON.stringify(vm.runInContext('_champsUniteObsolete(' + JSON.stringify(d) + ')', sandbox));
+        assert.strictEqual(ecartes({ fields: { bioT4: '100', bioT3: '2', bioTsh: '1' } }), '["bioT4","bioT3"]', 'ancien dossier : T4/T3 ecartees');
+        assert.strictEqual(ecartes({ fields: { bioT4: '', bioTsh: '1' } }), '[]', 'champ vide : rien a ecarter');
+        assert.strictEqual(ecartes({ fields: { bioT4: '15' }, unites: { bioT4: 'pmol/L libre', bioT3: 'pmol/L libre' } }), '[]', 'dossier recent : repris');
+        const src = require('fs').readFileSync(require('path').join(__dirname, 'app_core.js'), 'utf8');
+        assert.ok(/unites:\s*\{\s*bioT4:\s*'pmol\/L libre',\s*bioT3:\s*'pmol\/L libre'/.test(src), 'l\'export porte le marqueur d\'unite');
     });
     test('Phosphore : code canonique BIO_048, bornes, et hypophosphatemie graduee', () => {
         // Le phosphore etait saisi et lu par SYND_040 sans code dans MASTER_DB.BIOLOGIE :

@@ -62,3 +62,7 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
 - loinc.org et l'API NLM ne sont pas joignables depuis la session : vérifier les codes par
   recherche web (findacode, loinc.org en résultat).
 - Lanceur de test isolé : remplacer `__dirname` par le chemin du dépôt.
+
+## Migration (04/11)
+- Changer l'unité d'un champ casse les dossiers JSON et la session déjà enregistrés :
+  marquer l'unité à l'export, écarter à la relecture ce qui n'est pas marqué.

@@ -63,6 +63,9 @@ function _collectPatientData() {
         version: '0.45',
         date: new Date().toISOString(),
         fields, checkboxes,
+        // Unite des champs dont la grandeur a change : un dossier sans ce marqueur
+        // date d'avant 3.97, ou bioT4/bioT3 etaient des fractions TOTALES en nmol/L.
+        unites: { bioT4: 'pmol/L libre', bioT3: 'pmol/L libre' },
         comorbs: [...activeComorbs],
         // `precisions` EST une donnee clinique, pas un detail d'affichage : c'est elle
         // qui distingue le methotrexate hebdomadaire de l'oncologique, le macrogol de
@@ -85,13 +88,30 @@ function _collectPatientData() {
     };
 }
 
+// Champs d'un dossier enregistre dans une unite qui n'est plus celle du champ.
+// Une valeur sans unite connue n'est jamais reprise : 100 nmol/L de T4 totale (normale)
+// relue comme 100 pmol/L de T4 libre annoncerait une hyperthyroidie.
+function _champsUniteObsolete(data) {
+    const f = (data && data.fields) || {}, u = (data && data.unites) || {};
+    return ['bioT4', 'bioT3'].filter(id =>
+        String(f[id] == null ? '' : f[id]).trim() !== '' && u[id] !== 'pmol/L libre');
+}
+window._champsUniteObsolete = _champsUniteObsolete;
+
 function _restorePatientData(data) {
     if (!data || !data.fields) return;
     // Reset first
     resetPatient();
     // Restore form fields
+    const _ecartes = _champsUniteObsolete(data);
     for (const [id, val] of Object.entries(data.fields)) {
+        if (_ecartes.includes(id)) continue;
         const el = document.getElementById(id); if (el) el.value = val;
+    }
+    if (_ecartes.length && typeof alert === 'function') {
+        alert('Dossier enregistré avant la version 3.97 : la T4/T3 y était la fraction TOTALE '
+            + '(nmol/L), le champ attend désormais la fraction LIBRE (pmol/L). Valeur(s) non '
+            + 'reprise(s) — à ressaisir depuis le compte rendu du laboratoire.');
     }
     // Restore checkboxes
     if (data.checkboxes) {

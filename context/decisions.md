@@ -43,3 +43,6 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **04/11/2026** — T4/T3 saisies en fraction libre (pmol/L), bornes T4L 12-22, T3L 3,1-6,8
   (choix de l'utilisateur) ; troponine : sélecteur de réactif ; phosphore : code canonique +
   alerte d'hypophosphatémie ; LDL affiché sur la ligne lipides. — Décisions de l'utilisateur.
+- **04/11/2026** — Une valeur de dossier dont la grandeur a changé de définition (T4/T3
+  totales → libres) n'est pas reprise sans marqueur d'unité ; ressaisie demandée. — Un
+  chiffre ancien relu dans la nouvelle unité affirme un diagnostic faux.

@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.00**, `BUILD_ID` `20261104-ldl-suivi`,
-cache `geriaassist-v148`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.01**, `BUILD_ID` `20261104-t4-dossiers-anciens`,
+cache `geriaassist-v149`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,8 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.01** (04/11) — Relecture de 3.94-4.00 : un dossier JSON d'avant 3.97 (T4/T3 totales en
+  nmol/L) n'est plus relu comme T4L/T3L — valeur non reprise, ressaisie demandée.
 - **4.00** (04/11) — Suivi : la ligne « Bilan lipidique » montre le LDL saisi.
 - **3.99** (04/11) — Troponine : sélecteur de réactif (hs-cTnI Abbott 16/34, rule-in 64 ;
   hs-cTnT Roche 14, rule-in 52), réglage mémorisé.
@@ -140,7 +142,10 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-**Rien en cours.** Décisions biologie du 04/11 toutes livrées (3.97 à 4.00).
+**Rien en cours.** Décisions biologie du 04/11 livrées (3.97 à 4.01).
+
+Non vérifié sur source (à ne pas présenter comme sourcé) : bornes T4L 12-22 / T3L 3,1-6,8
+(choix de l'utilisateur) ; 99ᵉ percentile hs-cTnI 16/34 ng/L non retrouvé par recherche.
 
 
 ---
