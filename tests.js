@@ -2153,6 +2153,40 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const nonMed = JSON.parse(vm.runInContext(`JSON.stringify(Object.values(MASTER_DB.SYNDROMES).filter(s => /\\b(Alcool|Déshydratation|Régimes)\\b/.test(s.IMPUTABILITE_FREQ || '')).map(s => s.ID_SYNDROME))`, sandbox));
         assert.deepStrictEqual(nonMed, [], 'une cause non medicamenteuse va dans CAUSES_AUTRES, pas dans la liste cherchee dans l\'ordonnance');
     });
+    test('Pieges d\'interpretation de la biologie : chacun sort sur sa circonstance, et seulement elle', () => {
+        const bio = c => String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'] }, c))._html['alertes-bio'] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+        const piege = (c, re) => re.test(bio(c));
+        // HbA1c
+        assert.ok(piege({ bio: { bioHba1c: 8, bioFer: 15, bioHb: 10.5 } }, /🔎 HbA1c 8 % possiblement surestimée par la carence martiale/), 'carence martiale : HbA1c surestimee (English 2015)');
+        assert.ok(piege({ bio: { bioHba1c: 6.5, bioHb: 11 }, meds: ['Darbepoetine alfa'], dfg: 20 }, /🔎 HbA1c 6.5 % peu fiable : agent stimulant/), 'ASE et IRC : HbA1c peu fiable');
+        assert.ok(!piege({ bio: { bioHba1c: 7, bioHb: 13 } }, /🔎 HbA1c/), 'sans anemie ni IRC : pas de piege');
+        // Natremie et glycemie (Hillier 1999)
+        assert.ok(piege({ bio: { patientNa: 128, bioGly: 25 } }, /🔎 Natrémie à corriger pour la glycémie : ≈ 136.3 mmol\/L/), 'Na corrigee = Na + 2,4 x (gly - 5,6) / 5,6');
+        assert.ok(!piege({ bio: { patientNa: 128, bioGly: 6 } }, /🔎 Natrémie à corriger/), 'glycemie normale : pas de correction');
+        // Pseudo-hyperkaliemie
+        assert.ok(piege({ bio: { patientK: 5.8, bioPlaq: 650 } }, /🔎 Hyperkaliémie à recontrôler : pseudo-hyperkaliémie possible \(plaquettes 650/), 'thrombocytose');
+        assert.ok(!piege({ bio: { patientK: 5.8, bioPlaq: 250 } }, /pseudo-hyperkaliémie/), 'plaquettes normales : rien');
+        // D-dimeres ajustes a l'age (ADJUST-PE)
+        assert.ok(piege({ bio: { bioDdim: 700 } }, /🔎 D-dimères 700 µg\/L sous le seuil ajusté à l'âge \(820/), '82 ans : seuil 820');
+        assert.ok(!piege({ bio: { bioDdim: 900 } }, /seuil ajusté/), 'au-dessus du seuil ajuste : pas de piege');
+        // TSH, age et maladie aigue
+        assert.ok(piege({ age: 84, bio: { bioTsh: 6.5 } }, /🔎 TSH 6.5 mUI\/L dans les valeurs observées à 84 ans/), 'TSH et age (Surks 2007)');
+        assert.ok(!piege({ age: 84, bio: { bioTsh: 6.5 }, meds: ['Levothyroxine'] }, /valeurs observées/), 'sous levothyroxine : la TSH est une cible, pas un depistage');
+        assert.ok(!piege({ age: 84, bio: { bioTsh: 8.5 } }, /valeurs observées/), 'au-dessus du 97,5e percentile : pas d\'excuse d\'age');
+        assert.ok(piege({ bio: { bioTsh: 6.5, bioCrp: 180 } }, /🔎 TSH 6.5 mUI\/L dosée pendant une maladie aiguë/), 'maladie non thyroidienne');
+        // Creatinine et masse musculaire (KDIGO 2024)
+        assert.ok(piege({ age: 85, bio: { bioCreat: 60, patientBmi: 19 } }, /🔎 DFG estimé possiblement surestimé : IMC 19/), 'IMC < 22 a 70 ans et plus : cystatine C (KDIGO 2024)');
+        assert.ok(!piege({ age: 85, bio: { bioCreat: 60, patientBmi: 26 } }, /DFG estimé possiblement surestimé/), 'IMC normal : rien');
+        // Hemoconcentration
+        assert.ok(piege({ bio: { patientNa: 150, bioHb: 13 } }, /🔎 Hémoglobine et albumine à relire après réhydratation/), 'hemoconcentration');
+        // Dans les cartes existantes, pas une carte de plus
+        assert.ok(piege({ bio: { bioTropo: 40, bioTropoReactif: 'cTnT' }, dfg: 20 }, /Troponine[\s\S]{0,400}Piège d'interprétation : insuffisance rénale \(DFG 20\)/), 'troponine et IRC dans la carte troponine');
+        assert.ok(piege({ bio: { bioDigox: 1.4 }, meds: ['Digoxine'] }, /au moins 8 h après la dernière prise/), 'digoxinemie : moment du prelevement (RCP)');
+        assert.ok(piege({ bio: { bioB12: 300, bioVgm: 105, bioHb: 10 } }, /Une B12 normale n(&#39;|')exclut pas une carence/), 'B12 normale et macrocytose (BSH 2014)');
+        // Un piege est informatif : il ne change aucune gravite
+        const h = String(analyzeCase({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'], bio: { patientK: 5.8, bioPlaq: 650 } })._html['alertes-bio'] || '');
+        assert.ok(/<div class="alert alert-info[^"]*"[^>]*>(?:(?!<div class="alert)[\s\S]){0,800}🔎 Hyperkaliémie à recontrôler/.test(h), 'carte informative');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :

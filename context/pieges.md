@@ -74,3 +74,9 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   donnez pas ».
 - Mesurer la résolution d'un terme avec `patientHasMedClass` réel (activeMeds remplacé),
   pas avec une réimplémentation.
+
+## Pièges de biologie (04/11)
+- Le golden ne fige **pas** les cartes informatives (signature = `danger`/`warning`), et aucun
+  dossier du panel ne déclenche un piège : ils ne sont gardés que par leur test dédié.
+- Des boutons (« assumer ») s'insèrent entre `<div class="alert">` et `<strong>` : une
+  regex de test doit tolérer ce qui les sépare.

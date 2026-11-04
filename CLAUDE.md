@@ -1938,6 +1938,40 @@ Invariant : tout terme d'imputabilité (syndromes < `SYND_043`, les suivants ne 
   `IMPUTABILITE_FREQ`, que le moteur cherche dans l'ordonnance (un test l'interdit) ;
   elles sont affichées telles quelles sous « Autres causes à rechercher ».
 
+## Pièges d'interprétation de la biologie (4.20) — point bibliographique
+
+Un chiffre juste peut être mal lu. Bloc « PIÈGES D'INTERPRÉTATION » de `app_analysis.js`
+(après la digoxinémie). **Doctrine** : un piège ne sort que si le dossier réunit la valeur
+ET la circonstance qui la fausse ; carte **informative** (🔎), jamais une gravité ; le
+**titre porte le message entier**, le PDF ne gardant que le titre d'une carte informative.
+Quand une carte existe déjà pour le paramètre, le piège y est écrit plutôt qu'ajouté
+(troponine, digoxinémie, B12 dans l'encart d'anémie).
+
+| Piège | Déclencheur | Référence | Vérification |
+|---|---|---|---|
+| HbA1c surestimée | HbA1c + ferritine < 30 (ou CST < 20 sans ferritine ≥ 100) | English, *Diabetologia* 2015;58:1409 (revue systématique : carence martiale → HbA1c ↑ ; normalisation jusqu'à 6 mois) | résumé + presse |
+| HbA1c peu fiable (souvent ↓) | HbA1c + ASE, DFG < 30 ou anémie non carentielle | ADA *Standards of Care* (renouvellement érythrocytaire, ASE, dialyse, transfusion) ; English 2015 | éditions 2023-2024 citées par sources secondaires |
+| Hyponatrémie de translocation | Na < 135 et glycémie > 11 mmol/L ; Na corrigée = Na + 2,4 × (gly − 5,6)/5,6 | Hillier, *Am J Med* 1999;106:399 (facteur 2,4 ; le 1,6 classique sous-corrige) | résumé |
+| Pseudo-hyperkaliémie | K > 5 et plaquettes > 500 G/L ou leucocytes > 100 G/L | Šálek, *Biochem Med* 2018 ; seuils approximatifs (séries de cas) | sources secondaires |
+| D-dimères ajustés à l'âge | 500 < D-dimères ≤ âge × 10 µg/L FEU, âge ≥ 50 | Righini, ADJUST-PE, *JAMA* 2014;311:1117 | résumés concordants |
+| TSH et âge | TSH 4 → 5,9 (70-79 ans) ou → 7,5 (≥ 80 ans), sans traitement thyroïdien, T4L non basse | Surks & Hollowell, *JCEM* 2007;92:4575 (NHANES III, 97,5ᵉ percentile 5,9 et 7,49) | résumé |
+| TSH en maladie aiguë | TSH anormale et CRP > 100 ou PCT > 2 | AACE/ATA (doser en hospitalisation seulement sur forte suspicion) | revue citant les recos |
+| DFG surestimé (faible masse musculaire) | créatinine dosée, âge ≥ 70, IMC < 22 (seuil GLIM ≥ 70 ans) | KDIGO 2024 (cystatine C quand la créatinine est prise en défaut) | sources secondaires |
+| Hémoconcentration | Na > 145 ou urée/créatinine > 100, avec Hb ou albumine dosée | physiologie — aucun chiffre propre | — |
+| Troponine et IRC | troponine > 99ᵉ percentile et DFG < 30 | ESC 2023 SCA ; méta-analyse *EHJ-ACVC* (spécificité d'un dosage isolé ↓ en IRC) | guideline non lue en texte intégral |
+| Digoxinémie précoce | toute digoxinémie signalée | RCP français (Hémigoxine/Digoxine Nativelle) : **≥ 8 h** après la prise — les sources américaines disent 6 h | RCP (copie tiers) |
+| B12 normale et macrocytose | B12 ≥ 150 pmol/L dans l'encart macrocytaire | BSH, Devalia, *Br J Haematol* 2014;166:496 (acide méthylmalonique en 2ᵉ ligne ; pas de seuil universel) | résumé |
+
+**Déjà traités ailleurs** : calcémie corrigée par l'albumine (Payne) ; ferritine et
+inflammation (seuil carentiel à 100 si CRP élevée, encart d'anémie) ; albumine ≠ dénutrition
+(GLIM) ; NT-proBNP et facteurs confondants (`SYND_029`) ; troponine selon le réactif.
+
+**Non retenus, faute de déclencheur ou de source vérifiée** : interférence de la biotine
+sur les immunodosages (aucune biotine en base) ; NT-proBNP abaissé par l'obésité ;
+imprécision de la calcémie corrigée (calcium ionisé) — attribution non vérifiée ;
+pseudo-hyponatrémie des hypertriglycéridémies et paraprotéinémies (dépend de la méthode du
+laboratoire) ; hémolyse du prélèvement (seul le laboratoire la voit).
+
 ## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
 
 `_bioStatusBadge` ne connaissait que **six** paramètres et rendait un badge VERT « OK »

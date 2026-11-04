@@ -1980,7 +1980,8 @@ function analyserPrescription() {
                 cadre = `Anémie macrocytaire (VGM ${vgmA} fL).`;
                 conduite = "L'enquête commence par les carences vitaminiques, non par le bilan martial : B12 et folates d'abord, puis TSH, consommation d'alcool, médicaments (méthotrexate, hydroxyurée, antiépileptiques) et, si tout revient normal, syndrome myélodysplasique. "
                     + phrase('Compléter par :', vitam)
-                    + (_dose(b12) ? ` B12 ${b12}.` : '') + (_dose(b9) ? ` Folates ${b9}.` : '');
+                    + (_dose(b12) ? ` B12 ${b12}.` : '') + (_dose(b9) ? ` Folates ${b9}.` : '')
+                    + (_dose(b12) && b12 >= 150 ? ' Une B12 normale n\'exclut pas une carence : acide méthylmalonique en seconde ligne si la clinique l\'évoque, et ne pas retarder le traitement devant des signes neurologiques (BSH, Devalia 2014).' : '');
             } else {
                 cadre = `Anémie normocytaire (VGM ${vgmA} fL).`;
                 conduite = "C'est le sous-type le moins spécifique : inflammation, insuffisance rénale, hémolyse, atteinte médullaire, ou carence débutante avant que le VGM ne bouge. Les réticulocytes tranchent entre origine centrale et périphérique. "
@@ -2361,7 +2362,9 @@ function analyserPrescription() {
                 ? `> 14 ng/L (réactif non précisé : préciser hs-cTnI ou hs-cTnT pour interpréter)`
                 : severe ? `${R.nom} ≥ ${R.ruleIn} ng/L (rule-in ESC 0h/1h)`
                 : `${R.nom} > 99e percentile (${R.p99} ng/L)`;
-            checkBioSyndrome('SYND_036', true, { severe, labelOverride: `Troponine ${grade} — ${tn} ng/L` });
+            const dfgT = bioValues['BIO_004'];
+            checkBioSyndrome('SYND_036', true, { severe, labelOverride: `Troponine ${grade} — ${tn} ng/L`,
+                bilan: (dfgT > 0 && dfgT < 30) ? `<br><em>Piège d'interprétation :</em> insuffisance rénale (DFG ${dfgT}) — une élévation chronique est fréquente, un dosage isolé est peu spécifique : juger sur la cinétique de deux dosages (ESC 2023, syndromes coronariens aigus).` : '' });
         }
     }
 
@@ -2434,8 +2437,90 @@ function analyserPrescription() {
             const digImput = digCauses.length > 0 ? `<br><em>Interactions augmentant la digoxinémie :</em> <b>${digCauses.join(', ').toUpperCase()}</b>` : '';
             const irc = bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 50 ? `<br><em>Facteur de risque :</em> IRC (DFG ${bioValues['BIO_004']} ml/min) — accumulation rénale.` : '';
             addAlert('alertes-bio', `<div class="alert alert-${cls} shadow-sm"><strong>${icon} Digoxinémie ${grade} — ${dig} ng/mL</strong>${digImput}${irc}
-                <br><em>Cible ESC 2021 sujet âgé :</em> 0.5-0.9 ng/mL.
+                <br><em>Cible ESC 2021 sujet âgé :</em> 0.5-0.9 ng/mL. <em>Piège :</em> la valeur n'est interprétable qu'à l'équilibre et prélevée au moins 8 h après la dernière prise (RCP) — un prélèvement plus précoce la surestime.
                 <br><em>Conduite :</em> ${dig > 1.2 ? 'Arrêt transitoire digoxine, ECG (BAV, arythmie), contrôler K+/Mg, doser à 24-48h. Fab anti-digoxine si toxicité menaçante.' : 'Réduire dose de 25 %, contrôler digoxinémie à 1 semaine, surveiller fonction rénale et K+.'}</div>`, 'bio');
+        }
+    }
+
+    // =====================================================================
+    // PIÈGES D'INTERPRÉTATION — un chiffre juste peut être mal lu.
+    // Chaque piège ne sort que si le dossier le réunit (valeur ET circonstance), en carte
+    // informative : il ne change aucune gravité, il dit comment lire. Le titre porte le
+    // message entier, puisque le rapport PDF ne garde que le titre d'une carte informative.
+    // =====================================================================
+    {
+        const piege = (titre, texte) => addAlert('alertes-bio', `<div class="alert alert-info shadow-sm"><strong>🔎 ${titre}</strong><br><small>${texte}</small></div>`, 'bio');
+        const v = id => bioValues[id];
+        const hbP = v('BIO_009'), ferP = v('BIO_020'), cstP = v('BIO_047'), dfgP = v('BIO_004');
+        const seuilHbP = sexe === 'M' ? 13 : 12;
+        const ase = medsImputables(['epoetine']);
+
+        // HbA1c : elle mesure la glycation sur la durée de vie des hématies. Tout ce qui
+        // allonge cette durée la surestime, tout ce qui la raccourcit la sous-estime.
+        const a1c = v('BIO_026');
+        if (a1c > 0) {
+            const ferriprive = (ferP > 0 && ferP < 30) || (cstP > 0 && cstP < 20 && !(ferP >= 100));
+            const raisons = [];
+            if (ase.length) raisons.push(`agent stimulant l'érythropoïèse (${ase.join(', ')})`);
+            if (dfgP > 0 && dfgP < 30) raisons.push(`insuffisance rénale (DFG ${dfgP})`);
+            if (hbP > 0 && hbP < seuilHbP && !ferriprive) raisons.push(`anémie (Hb ${hbP} g/dL)`);
+            if (ferriprive) {
+                piege(`HbA1c ${a1c} % possiblement surestimée par la carence martiale`,
+                    "La carence en fer allonge la durée de vie des hématies et élève l'HbA1c sans hyperglycémie : ne pas intensifier le traitement sur ce seul chiffre ; s'appuyer sur les glycémies, et ne relire l'HbA1c qu'après correction de la carence — la normalisation des indices érythrocytaires peut prendre jusqu'à 6 mois (English, Diabetologia 2015).");
+            } else if (raisons.length) {
+                piege(`HbA1c ${a1c} % peu fiable : ${raisons.join(', ')}`,
+                    "Un renouvellement accéléré ou perturbé des hématies fausse l'HbA1c, le plus souvent vers le bas — c'est alors l'hypoglycémie qu'elle masque. Juger l'équilibre sur les glycémies capillaires, la mesure continue du glucose ou la fructosamine (ADA, Standards of Care ; English, Diabetologia 2015).");
+            }
+        }
+
+        // Hyponatrémie de translocation : le glucose attire l'eau hors des cellules.
+        const naP = v('BIO_002'), glyP = v('BIO_025');
+        if (naP > 0 && naP < 135 && glyP > 11) {
+            const naCorr = Math.round((naP + 2.4 * (glyP - 5.6) / 5.6) * 10) / 10;
+            piege(`Natrémie à corriger pour la glycémie : ≈ ${naCorr} mmol/L`,
+                `Glycémie ${glyP} mmol/L : la natrémie baisse d'environ 2,4 mmol/L par 5,6 mmol/L de glucose au-dessus de la normale (Hillier, Am J Med 1999 ; le facteur classique de 1,6 la sous-corrige). Une hyponatrémie qui disparaît après correction ne relève pas d'un bilan d'hyponatrémie.`);
+        }
+
+        // Pseudo-hyperkaliémie : le potassium sort des plaquettes ou des leucocytes dans le tube.
+        const kP = v('BIO_001'), plqP = v('BIO_010'), gbP = v('BIO_011');
+        if (kP > 5.0 && (plqP > 500 || gbP > 100)) {
+            piege(`Hyperkaliémie à recontrôler : pseudo-hyperkaliémie possible (${plqP > 500 ? `plaquettes ${plqP} G/L` : `leucocytes ${gbP} G/L`})`,
+                "Une thrombocytose ou une hyperleucocytose marquées libèrent du potassium pendant la coagulation du prélèvement. Avant de traiter un patient sans signe ECG, recontrôler sur plasma (tube hépariné) ou sang total, sans garrot prolongé (Šálek, Biochem Med 2018).");
+        }
+
+        // D-dimères : le seuil s'ajuste à l'âge après 50 ans (âge × 10 µg/L FEU).
+        const ddP = v('BIO_033');
+        if (ddP > 500 && patientAge >= 50 && ddP <= patientAge * 10) {
+            piege(`D-dimères ${ddP} µg/L sous le seuil ajusté à l'âge (${patientAge * 10} µg/L)`,
+                "Au-delà de 50 ans, le seuil d'exclusion de l'embolie pulmonaire est l'âge × 10 µg/L (ADJUST-PE, Righini, JAMA 2014) — valable seulement si la probabilité clinique n'est pas forte, et pour un dosage dont le seuil standard est 500 µg/L FEU.");
+        }
+
+        // TSH : elle monte avec l'âge, et une maladie aiguë la dérègle.
+        const tshP = v('BIO_019'), t4P = v('BIO_T4');
+        const traiteThyro = medsImputables(['levothyroxine', 'liothyronine', 'carbimazole', 'thiamazole', 'propylthiouracile']).length > 0;
+        const p975 = patientAge >= 80 ? 7.5 : patientAge >= 70 ? 5.9 : null;
+        const aigu = v('BIO_024') > 100 || v('BIO_032') > 2;
+        if (tshP > 0 && aigu && (tshP > 4 || tshP < 0.4)) {
+            piege(`TSH ${tshP} mUI/L dosée pendant une maladie aiguë : à recontrôler après guérison`,
+                "Une infection ou une inflammation sévère perturbent TSH et hormones thyroïdiennes sans maladie de la thyroïde (syndrome de maladie non thyroïdienne). Ne pas instaurer ni modifier un traitement sur ce dosage ; le refaire à distance (AACE/ATA).");
+        } else if (tshP > 4 && p975 && tshP <= p975 && !traiteThyro && !(t4P > 0 && t4P < 12)) {
+            piege(`TSH ${tshP} mUI/L dans les valeurs observées à ${patientAge} ans`,
+                `Chez les sujets de ${patientAge >= 80 ? '80 ans et plus' : '70 à 79 ans'} indemnes de maladie thyroïdienne, le 97,5ᵉ percentile de la TSH est ${String(p975).replace('.', ',')} mUI/L (NHANES III, Surks, JCEM 2007) : une TSH modérément élevée isolée, T4L normale, n'est pas en soi une hypothyroïdie infraclinique. Recontrôler avant de conclure.`);
+        }
+
+        // Créatinine et masse musculaire : peu de muscle, peu de créatinine, DFG surestimé.
+        const imcP = getVal('patientBmi');
+        if (v('BIO_003') > 0 && patientAge >= 70 && imcP > 0 && imcP < 22) {
+            piege(`DFG estimé possiblement surestimé : IMC ${imcP}, faible masse musculaire probable`,
+                "La créatinine dépend de la masse musculaire : chez le sujet âgé maigre ou sarcopénique, elle reste basse et l'estimation du DFG est trop favorable — d'où des posologies trop fortes. Doser la cystatine C et utiliser l'équation créatinine-cystatine (KDIGO 2024). Seuil d'IMC : critère GLIM du sujet de 70 ans et plus.");
+        }
+
+        // Hémoconcentration : une déshydratation masque une anémie ou une hypoalbuminémie.
+        const ureeP = v('BIO_007'), creatP = v('BIO_003');
+        const deshydrate = naP > 145 || (ureeP > 0 && creatP > 0 && (ureeP * 1000) / creatP > 100);
+        if (deshydrate && (hbP > 0 || v('BIO_035') > 0)) {
+            piege("Hémoglobine et albumine à relire après réhydratation (hémoconcentration probable)",
+                `${naP > 145 ? `Natrémie ${naP} mmol/L` : 'Rapport urée/créatinine élevé'} : la contraction du volume plasmatique élève l'hémoglobine et l'albumine. Une anémie ou une hypoalbuminémie peuvent n'apparaître qu'une fois le patient réhydraté.`);
         }
     }
 

@@ -56,3 +56,6 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **04/11/2026** — Trouble ionique : on affiche les ions associés dosés et on demande les
   autres (+ ECG) ; les causes non médicamenteuses ont leur champ (`CAUSES_AUTRES`), jamais la
   liste d'imputabilité. — Demande de l'utilisateur (hypophosphatémie → Mg, K, ECG).
+- **04/11/2026** — Pièges d'interprétation : carte informative, seulement si valeur ET
+  circonstance réunies, titre autoportant (PDF) ; écrit dans la carte existante quand il y en
+  a une. — Dire comment lire sans ajouter de bruit ni de gravité.

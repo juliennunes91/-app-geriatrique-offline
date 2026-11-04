@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.11**, `BUILD_ID` `20261104-bilan-associe`,
-cache `geriaassist-v151`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.20**, `BUILD_ID` `20261104-pieges-biologie`,
+cache `geriaassist-v152`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,10 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.20** (04/11) — Pièges d'interprétation de la biologie (12, sourcés, cartes 🔎 informatives
+  sur circonstance réunie) : HbA1c et anémie/ASE/IRC, Na et glycémie, pseudo-hyperkaliémie,
+  D-dimères ajustés, TSH et âge / maladie aiguë, DFG et masse musculaire, hémoconcentration,
+  troponine et IRC, digoxinémie ≥ 8 h, B12 normale. Tableau biblio dans `CLAUDE.md`.
 - **4.11** (04/11) — Trouble ionique : « Bilan associé » (ions dosés lus, non dosés demandés,
   ECG) ; causes non médicamenteuses par syndrome (`CAUSES_AUTRES`).
 - **4.10** (04/11) — Biologie ↔ correcteur : listes d'imputabilité lisibles (découpage,
@@ -149,9 +153,8 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-**En cours** : module « pièges d'interprétation de la biologie » (HbA1c et anémie, pseudo-
-hyponatrémie, pseudo-hyperkaliémie, D-dimères ajustés à l'âge, TSH et âge, créatinine et
-masse musculaire, troponine et IRC, digoxinémie) — demande de l'utilisateur du 04/11.
+**Rien en cours.** Pièges non retenus et leur motif : section « Pièges d'interprétation »
+de `CLAUDE.md`.
 
 Non vérifié sur source (à ne pas présenter comme sourcé) : bornes T4L 12-22 / T3L 3,1-6,8
 (choix de l'utilisateur) ; 99ᵉ percentile hs-cTnI 16/34 ng/L non retrouvé par recherche ;
