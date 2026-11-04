@@ -70,3 +70,5 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **04/11/2026** — Urines (osmolalité, natriurèse) sans bornes propres, lues dans la carte
   d'hyponatrémie selon l'arbre ESE 2014 ; le SIADH n'est nommé qu'après exclusion (diurétique,
   TSH, cortisol, DFG). Non importées du PDF. — Demande de l'utilisateur.
+- **04/11/2026** — Éosinophiles (PNE) ajoutés, importés du PDF ; une éosinophilie isolée se
+  tait quand une association plus précise (DRESS, NIA) l'explique. — Demande de l'utilisateur.

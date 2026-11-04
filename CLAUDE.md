@@ -2001,6 +2001,15 @@ Hunter 2003), hématome sous-dural (chutes + anticoagulant + troubles cognitifs,
 ictère cholestatique apyrétique avec amaigrissement, hypercalcémie + PAL osseuses — qui fait
 alors taire le piège « PAL osseuses » du lot 2 (un fait, une carte).
 
+**Éosinophiles (4.70)** — champ `bioPne` (G/L, `BIO_051`, LOINC 26449-9, borne haute 0,5 —
+ICOG-EO), deux interfaces, export, reset, hash, **import PDF** (libellé ancré « polynucléaires
+éosinophiles », lignes en % écartées comme pour les PNN). Trois associations : **DRESS**
+(PNE ≥ 0,7 + molécule à risque + fièvre ≥ 38,5 ou cytolyse, RegiSCAR — minocycline exclue de
+la liste, sa clé capte les autres tétracyclines par le libellé), **néphrite interstitielle
+aiguë** (PNE > 0,5 + atteinte rénale **sans IRC déclarée** + IPP/AINS/bêtalactamine…),
+**éosinophilie isolée** (graduée à 1,5 ; anguillulose à écarter sous corticoïde), qui se tait
+quand DRESS ou NIA a parlé — et nomme alors la molécule à risque de DRESS à surveiller.
+
 **Biologie urinaire et SIADH (4.50)** — deux champs, `bioOsmU` (osmolalité urinaire,
 mOsm/kg, `BIO_049`, LOINC 2695-5) et `bioNaU` (natriurèse sur échantillon, mmol/L,
 `BIO_050`, LOINC 2955-3), dans les deux interfaces, l'export JSON, `resetPatient()` et le

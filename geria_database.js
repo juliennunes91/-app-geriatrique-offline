@@ -349,6 +349,13 @@ const MASTER_DB = {
             "NOM_STANDARD": "Natriurèse (sodium urinaire)",
             "UNITE": "mmol/L",
             "SYNONYMES": "Natriurese, Sodium urinaire, UNa, Na urinaire, Hyponatremie, SIADH"
+        },
+        "BIO_051": {
+            "ID_BIO": "BIO_051",
+            "LOINC": "26449-9",
+            "NOM_STANDARD": "Polynucléaires éosinophiles",
+            "UNITE": "G/L",
+            "SYNONYMES": "PNE, Eosinophiles, Eosinophilie, Hypereosinophilie, DRESS"
         }
     },
     "PATHOLOGIES": {

@@ -126,7 +126,8 @@ const BIO_NORMES = {
     BIO_009: { f: { bas: 12, haut: 16.5 }, h: { bas: 13, haut: 18 } },   // Hémoglobine g/dL — seuils OMS
     BIO_010: { bas: 150,  haut: 400 },                                   // Plaquettes G/L
     BIO_011: { bas: 4,    haut: 10 },                                    // Leucocytes G/L
-    BIO_012: { bas: 1.5,  haut: 7 },                                     // PNN G/L
+    BIO_012: { bas: 1.5,  haut: 7 },
+    BIO_051: { haut: 0.5 },                                              // PNE G/L — éosinophilie > 0,5 (ICOG-EO, Valent 2012)                                     // PNN G/L
     BIO_013: { haut: 45 },                                               // ASAT UI/L
     BIO_014: { haut: 35 },                                               // ALAT UI/L
     BIO_015: { f: { haut: 40 }, h: { haut: 60 } },                       // GGT UI/L

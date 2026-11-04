@@ -622,6 +622,7 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'BIO_041': getBioVal('bioChlore'),
         'BIO_042': getBioVal('bioOsm'),
         'BIO_049': getBioVal('bioOsmU'), 'BIO_050': getBioVal('bioNaU'),
+        'BIO_051': getBioVal('bioPne'),
         'BIO_043': getBioVal('bioPrealb'),
         'BIO_044': _convertDigoxToNgMl(getBioVal('bioDigox'), _getUnit('bioDigoxUnit', 'ng/mL')),
         'BIO_045': getBioVal('bioTca'),
@@ -1087,7 +1088,7 @@ function _computeAnalysisHash() {
 const _HASH_NUMERIC_FIELDS = [
     'patientDFG', 'patientK', 'patientNa',
     'bioCreat', 'bioCa', 'bioMg', 'bioUree', 'bioUric', 'bioHb', 'bioPlaq',
-    'bioGb', 'bioPnn', 'bioAsat', 'bioAlat', 'bioGgt', 'bioPal', 'bioBili',
+    'bioGb', 'bioPnn', 'bioPne', 'bioAsat', 'bioAlat', 'bioGgt', 'bioPal', 'bioBili',
     'bioCpk', 'bioTsh', 'bioFer', 'bioB12', 'bioB9', 'bioVitD', 'bioCrp',
     'bioGly', 'bioHba1c', 'bioLdl', 'bioHdl', 'bioTg', 'bioBnp', 'bioInr', 'bioQtc',
     'bioPct', 'bioLithium', 'bioDdim', 'bioTropo', 'bioLipase', 'bioAlbumSg',
@@ -2813,6 +2814,22 @@ function analyserPrescription() {
                 quand() { return ca > 2.65 && borne('BIO_016', 'haut') && !borne('BIO_015', 'haut'); },
                 titre: () => "Hypercalcémie avec phosphatases alcalines osseuses : atteinte osseuse ?",
                 texte: () => "PAL élevées et GGT normale situent l'élévation dans l'os (ACG, Kwo 2017). Avec une hypercalcémie : métastases osseuses, hyperparathyroïdie avec ostéite, maladie de Paget immobilisée. Le myélome, lui, donne typiquement des PAL normales malgré des lésions lytiques." }
+            ,
+            // ----- Éosinophiles (4.70) — une éosinophilie se lit avec ce qui l'accompagne -----
+            {   id: 'dress', severite: 'warning',
+                meds: () => medsImputables(['allopurinol', 'carbamazepine', 'oxcarbazepine', 'lamotrigine', 'phenytoine', 'phenobarbital', 'cotrimoxazole', 'vancomycine']),
+                quand() { return v('BIO_051') >= 0.7 && this.meds().length > 0 && (temp >= 38.5 || borne('BIO_013', 'haut') || borne('BIO_014', 'haut')); },
+                titre() { return `Éosinophilie (${v('BIO_051')} G/L)${temp >= 38.5 ? ', fièvre' : ''}${(borne('BIO_013', 'haut') || borne('BIO_014', 'haut')) ? ', cytolyse' : ''} sous ${this.meds().join(', ')} : DRESS ?`; },
+                texte: () => "Le score RegiSCAR (Kardaun 2013) compte l'éosinophilie (1 point de 0,7 à 1,5 G/L, 2 au-delà), la fièvre, l'éruption, les adénopathies, les lymphocytes atypiques et l'atteinte d'organe (foie, rein, poumon, cœur). Le délai est de plusieurs semaines après l'introduction : rechercher l'éruption, et arrêter le médicament suspect sans attendre le score complet." },
+            {   id: 'nia', severite: 'info',
+                meds: () => medsImputables(['ipp', 'ains', 'penicilline', 'cephalosporine', 'allopurinol', 'rifampicine']),
+                quand() { return borne('BIO_051', 'haut') && !comorb('PAT_029') && (borne('BIO_003', 'haut') || (dfg > 0 && dfg < 60)) && this.meds().length > 0; },
+                titre() { return `Atteinte rénale avec éosinophilie sous ${this.meds().join(', ')} : néphrite interstitielle aiguë médicamenteuse ?`; },
+                texte: () => "Les néphrites interstitielles aiguës sont surtout médicamenteuses — antibiotiques, AINS et, de plus en plus, IPP (Praga, Nephrol Dial Transplant 2015). L'éosinophilie manque souvent : son absence n'écarte rien. Suspendre le médicament suspect ; avis néphrologique (sédiment, protéinurie, biopsie selon l'évolution)." },
+            {   id: 'eosinophilie', severite: 'info',
+                quand() { return borne('BIO_051', 'haut') && !ASSOCIATIONS_BIO.some(x => (x.id === 'dress' || x.id === 'nia') && x.quand()); },
+                titre: () => v('BIO_051') >= 1.5 ? `Hyperéosinophilie (${v('BIO_051')} G/L)` : `Éosinophilie (${v('BIO_051')} G/L)`,
+                texte: () => `${v('BIO_051') >= 1.5 ? "Au-delà de 1,5 G/L de façon persistante, c'est une hyperéosinophilie, à explorer même sans symptôme (ICOG-EO, Valent 2012). " : "Seuil : 0,5 G/L (ICOG-EO, Valent 2012). "}Causes à rechercher : médicament (toute molécule récente), parasitose, allergie, insuffisance surrénale, cancer ou hémopathie.${(() => { const d = ASSOCIATIONS_BIO.find(x => x.id === 'dress').meds(); return d.length ? ` Sous ${d.join(', ')}, surveiller l'apparition d'un DRESS : fièvre, éruption, cytolyse.` : ''; })()}${medsImputables(['corticoide']).length ? ' Sous corticoïde, une éosinophilie est inattendue : écarter une anguillulose (sérologie, ou ivermectine si exposition), dont la corticothérapie peut faire une forme maligne.' : ''}` }
         ];
         ASSOCIATIONS_BIO.forEach(a => {
             const c = a.criteres ? a.criteres() : null;

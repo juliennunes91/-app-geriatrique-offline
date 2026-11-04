@@ -2285,6 +2285,21 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const os = run({ bio: { bioCa: 2.9, bioPal: 300, bioGgt: 30 } });
         assert.ok(/data-association="hyperca_os"/.test(os) && !/🔎 Phosphatases alcalines/.test(os), 'hypercalcemie + PAL osseuses : une carte, pas deux');
     });
+    test('Eosinophiles (PNE) : champ, borne, DRESS, nephrite interstitielle, eosinophilie isolee', () => {
+        const run = c => String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'] }, c))._html['alertes-bio'] || '');
+        const ids = c => [...run(c).matchAll(/data-association="([a-z_]+)"/g)].map(m => m[1]);
+        assert.deepStrictEqual(ids({ meds: ['Allopurinol'], bio: { bioPne: 1.8, bioTemp: 38.7 } }), ['dress'], 'DRESS seul, sans carte eosinophilie en doublon');
+        assert.ok(/surveiller l'apparition d'un DRESS/.test(run({ meds: ['Allopurinol'], bio: { bioPne: 1.8 } })), 'sans fievre ni cytolyse : eosinophilie, DRESS a surveiller');
+        assert.ok(!ids({ bio: { bioPne: 1.8, bioTemp: 38.7 } }).includes('dress'), 'sans medicament a risque : pas de DRESS');
+        assert.deepStrictEqual(ids({ meds: ['Omeprazole'], bio: { bioPne: 0.9, bioCreat: 180 }, dfg: 30 }), ['nia'], 'nephrite interstitielle sous IPP');
+        assert.ok(!ids({ meds: ['Omeprazole'], comorbs: ['PAT_029'], bio: { bioPne: 0.9, bioCreat: 180 }, dfg: 30 }).includes('nia'), 'IRC declaree : pas de NIA presumee');
+        assert.ok(/Hyperéosinophilie \(2 G\/L\)[\s\S]*anguillulose/.test(run({ meds: ['Prednisolone'], bio: { bioPne: 2 } })), 'sous corticoide : anguillulose a ecarter');
+        assert.deepStrictEqual(ids({ bio: { bioPne: 0.3 } }), [], 'PNE normaux : rien');
+        const vm = require('vm'); const { sandbox } = require('./oracle_harness').loadApp();
+        assert.strictEqual(vm.runInContext("bioAnormal('BIO_051', 0.8, 'F').sens", sandbox), 'haut', 'borne 0,5 G/L');
+        for (const f of ['index.html', 'index_modern.html']) assert.ok(/id="bioPne"/.test(require('fs').readFileSync(require('path').join(__dirname, f), 'utf8')), f + ' : champ PNE');
+        assert.ok(/#bioPne/.test(require('fs').readFileSync(require('path').join(__dirname, 'app_core.js'), 'utf8')), 'PNE exporte');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :
@@ -2412,7 +2427,8 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             BIO_046: '14959-1',
             BIO_048: '14879-1',
             BIO_049: '2695-5',
-            BIO_050: '2955-3'
+            BIO_050: '2955-3',
+            BIO_051: '26449-9'
         };
         const B = JSON.parse(vm.runInContext('JSON.stringify(Object.fromEntries(Object.entries(MASTER_DB.BIOLOGIE).map(([k,v])=>[k,v.LOINC])))', require('./oracle_harness').loadApp().sandbox));
         assert.deepStrictEqual(B, attendu);

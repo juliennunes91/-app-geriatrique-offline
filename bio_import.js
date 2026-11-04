@@ -77,6 +77,7 @@
         { champ: 'bioPlaq', nom: 'Plaquettes', unite: 'G/L', motifs: [/^(plaquettes|numeration plaquettaire)$/], unites: COMPTE },
         { champ: 'bioGb', nom: 'Leucocytes', unite: 'G/L', motifs: [/^(leucocytes|globules blancs)$/], unites: COMPTE },
         { champ: 'bioPnn', nom: 'Polynucléaires neutrophiles', unite: 'G/L', motifs: [/^(polynucleaires neutrophiles|neutrophiles)$/], unites: COMPTE },
+        { champ: 'bioPne', nom: 'Polynucléaires éosinophiles', unite: 'G/L', motifs: [/^(polynucleaires eosinophiles|eosinophiles)$/], unites: COMPTE },
         { champ: 'bioRetic', nom: 'Réticulocytes', unite: 'G/L', motifs: [/^reticulocytes$/], unites: COMPTE },
         { champ: 'bioFer', nom: 'Ferritine', unite: 'µg/L', motifs: [/^ferritine(mie)?$/], unites: { 'ug/l': 1, 'ng/ml': 1 } },
         { champ: 'bioCst', nom: 'Coefficient de saturation de la transferrine', unite: '%', motifs: [/^(cst|coefficient de saturation( de la transferrine)?)$/], unites: { '%': 1 } },
