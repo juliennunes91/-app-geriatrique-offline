@@ -2023,12 +2023,18 @@ function analyserPrescription() {
     }
 
     // --- SYND_012/013 : Dysthyroïdie (TSH + T4/T3) ---
+    // T4 et T3 LIBRES, en pmol/L — ce que rendent les laboratoires. Le champ était en
+    // nmol/L (fraction totale, seuils 60 / 120) : une T4 libre normale saisie (ex. 15)
+    // était lue « < 60 » et faisait annoncer une hypothyroïdie AVÉRÉE au lieu de
+    // subclinique. Bornes de signalement retenues : T4L 12-22, T3L 3,1-6,8 pmol/L ;
+    // l'intervalle du laboratoire prévaut (il dépend du réactif).
+    const T4L_BAS = 12, T4L_HAUT = 22, T3L_HAUT = 6.8;
     let tsh = bioValues['BIO_019']; let t4 = bioValues['BIO_T4']; let t3 = bioValues['BIO_T3'];
     if (tsh > 0) {
         if (tsh > 4.0) {
             // Hypothyroïdie (SYND_013) : alerte détaillée custom ci-dessous (pas de
             // checkBioSyndrome générique, qui ferait un doublon d'affichage ET de comptage).
-            let isOvert = (t4 > 0 && t4 < 60) || tsh > 10;
+            let isOvert = (t4 > 0 && t4 < T4L_BAS) || tsh > 10;
             let thyroSev = isOvert ? 'danger' : 'warning';
             let thyroCauses = [];
             let hypoTerms = MASTER_DB.SYNDROMES['SYND_013'] && MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_013'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
@@ -2036,17 +2042,17 @@ function analyserPrescription() {
             let thyroImput = thyroCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${thyroCauses.join(', ').toUpperCase()}</b>` : '';
             let thyroLabel = isOvert ? (thyroCauses.length > 0 ? 'Hypothyroïdie iatrogène avérée' : 'Hypothyroïdie avérée') : (thyroCauses.length > 0 ? 'Hypothyroïdie iatrogène subclinique' : 'Hypothyroïdie subclinique');
             let thyroConc = isOvert ? 'Traitement substitutif par lévothyroxine recommandé. Débuter 12.5-25 µg/j chez le sujet âgé, titrer par paliers de 12.5 µg toutes les 6-8 semaines.' : (tsh > 10 ? 'TSH > 10 — substitution recommandée même si subclinique.' : 'TSH 4-10 — à contrôler à 6-8 semaines, substituer si symptômes ou progression.');
-            addAlert('alertes-bio', `<div class="alert alert-${thyroSev} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4 ' + t4 + ' nmol/L' : ''})${thyroImput}<br><em>Conduite :</em> ${thyroConc}</div>`, 'bio');
+            addAlert('alertes-bio', `<div class="alert alert-${thyroSev} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4L ' + t4 + ' pmol/L' : ''})${thyroImput}<br><em>Conduite :</em> ${thyroConc}</div>`, 'bio');
         } else if (tsh < 0.4 && tsh > 0) {
             // Hyperthyroïdie (SYND_012, ou SYND_019 si thyrotoxicose sévère) : alerte
             // détaillée custom ci-dessous (pas de checkBioSyndrome générique = doublon).
-            let isOvert = (t4 > 0 && t4 > 120) || (t3 > 0 && t3 > 2.7);
+            let isOvert = (t4 > 0 && t4 > T4L_HAUT) || (t3 > 0 && t3 > T3L_HAUT);
             let thyroLabel = isOvert ? 'Hyperthyroïdie avérée' : 'Hyperthyroïdie subclinique';
             let thyroCauses = [];
             let hyperTerms = MASTER_DB.SYNDROMES['SYND_012'] && MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ ? MASTER_DB.SYNDROMES['SYND_012'].IMPUTABILITE_FREQ.split(',').map(x=>x.trim().replace(/\s*\(.*?\)/g, '')).filter(Boolean) : [];
             hyperTerms.forEach(d => { if(patientHasMedClass(d)) thyroCauses.push(d); });
             let thyroImput = thyroCauses.length > 0 ? `<br><em>Imputabilité iatrogène :</em> <b>${thyroCauses.join(', ').toUpperCase()}</b>` : '';
-            addAlert('alertes-bio', `<div class="alert alert-${isOvert ? 'danger' : 'warning'} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4 ' + t4 + ' nmol/L' : ''}${t3 > 0 ? ', T3 ' + t3 + ' nmol/L' : ''})<br>${thyroImput}<em>Conduite :</em> ${isOvert ? 'Avis endocrino, rechercher cause (Basedow, nodule toxique, amiodarone). Risque FA et ostéoporose.' : 'Contrôle à 6-8 semaines, ECG (risque FA), densitométrie si post-ménopause.'}</div>`, 'bio');
+            addAlert('alertes-bio', `<div class="alert alert-${isOvert ? 'danger' : 'warning'} shadow-sm"><strong>${isOvert ? '🚨' : '⚠️'} ${thyroLabel}</strong> (TSH ${tsh} mUI/L${t4 > 0 ? ', T4L ' + t4 + ' pmol/L' : ''}${t3 > 0 ? ', T3L ' + t3 + ' pmol/L' : ''})<br>${thyroImput}<em>Conduite :</em> ${isOvert ? 'Avis endocrino, rechercher cause (Basedow, nodule toxique, amiodarone). Risque FA et ostéoporose.' : 'Contrôle à 6-8 semaines, ECG (risque FA), densitométrie si post-ménopause.'}</div>`, 'bio');
         }
     }
 

@@ -1819,12 +1819,15 @@ Corrigé :
   libellés osmolalité et TCA alignés. Un test vérifie la parité min/max/step de tous les
   champs biologiques.
 
+**T4 / T3 libres (3.97)** : le champ était en nmol/L (fraction TOTALE, seuils 60 / 120 et
+2,7) alors que les laboratoires rendent la **T4 libre en pmol/L** ; une T4L normale (15)
+était lue « < 60 » et faisait annoncer une **hypothyroïdie avérée**. Les deux champs sont
+désormais T4 libre / T3 libre en pmol/L, bornes de signalement **T4L 12-22, T3L 3,1-6,8**
+(choix du prescripteur — l'intervalle du laboratoire prévaut ; attribution à un réactif non
+vérifiée, ne pas l'écrire). L'import PDF lit « T4 libre / T4L / FT4 » et « T3 libre / FT3 »
+en pmol/L seulement ; une T4 totale n'y entre jamais.
+
 **Points ouverts, non tranchés** :
-- **T4 / T3** : le champ est en nmol/L (fraction TOTALE, seuils 60 / 120 et 2,7), alors que
-  les laboratoires français rendent le plus souvent la **T4 libre en pmol/L** (≈ 12-22). Une
-  T4L normale saisie dans ce champ (ex. 15) est lue « < 60 » : avec une TSH > 4, l'alerte
-  annonce une **hypothyroïdie avérée** au lieu de subclinique. À décider : champ en T4 libre,
-  ou sélecteur d'unité libre/totale.
 - **Troponine** : seuils 16/34 ng/L (99ᵉ percentile hs-cTnI par sexe) et « rule-in » 52 ng/L
   (hs-cTnT, algorithme ESC 0h/1h) — deux réactifs différents. Le seuil dépend du réactif du
   laboratoire, comme le dit déjà la section des bornes.

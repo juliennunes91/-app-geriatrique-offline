@@ -40,3 +40,6 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **04/11/2026** — Les codes LOINC de `MASTER_DB.BIOLOGIE` sont figés par un test après
   vérification ; un seuil de syndrome est comparé dans l'unité où il est écrit (conversion
   explicite). — 13 codes faux, et une alerte TG décalée par une confusion g/L ↔ mmol/L.
+- **04/11/2026** — T4/T3 saisies en fraction libre (pmol/L), bornes T4L 12-22, T3L 3,1-6,8
+  (choix de l'utilisateur) ; troponine : sélecteur de réactif ; phosphore : code canonique +
+  alerte d'hypophosphatémie ; LDL affiché sur la ligne lipides. — Décisions de l'utilisateur.

@@ -55,8 +55,10 @@
     // facteur vers l'unité de GeriaAssist. `selectUnite` : champ à unité choisie, dont on
     // positionne le sélecteur au lieu de convertir.
     //
-    // Volontairement ABSENTS : T4 et T3 (le champ ne dit pas si c'est la fraction libre,
-    // en pmol/L, ou totale, en nmol/L), D-dimères (unités FEU / DDU non interchangeables),
+    // T4 et T3 : le champ est en fraction LIBRE (pmol/L) ; seuls les libellés qui disent
+    // « libre » sont lus — une T4 totale (nmol/L) n'a pas d'unité acceptée et reste
+    // montrée en rouge, non appliquée.
+    // Volontairement ABSENTS : D-dimères (unités FEU / DDU non interchangeables),
     // TCA (ratio ou secondes), albuminurie (24 h ou rapport sur créatinine), et le DFG du
     // laboratoire — GeriaAssist le recalcule depuis la créatinine (CKD-EPI dès 75 ans).
     const BIO_IMPORT_PARAMS = [
@@ -93,6 +95,8 @@
         { champ: 'bioGly', nom: 'Glycémie', unite: 'mmol/L', motifs: [/^(glycemie|glucose|glycemie a jeun)$/], unites: { 'mmol/l': 1, 'g/l': 5.551, 'mg/dl': 0.05551 } },
         { champ: 'bioHba1c', nom: 'HbA1c', unite: '%', motifs: [/^(hba1c|hemoglobine glyquee)$/], unites: { '%': 1 } },
         { champ: 'bioTsh', nom: 'TSH', unite: 'mUI/L', motifs: [/^(tsh|tsh us|tshus|tsh ultrasensible|thyreostimuline)$/], unites: { 'mui/l': 1, 'mu/l': 1, 'uui/ml': 1, 'uu/ml': 1 } },
+        { champ: 'bioT4', nom: 'T4 libre', unite: 'pmol/L', motifs: [/^(t4 libre|t4l|ft4|thyroxine libre)$/], unites: { 'pmol/l': 1 } },
+        { champ: 'bioT3', nom: 'T3 libre', unite: 'pmol/L', motifs: [/^(t3 libre|t3l|ft3|triiodothyronine libre)$/], unites: { 'pmol/l': 1 } },
         { champ: 'bioLdl', nom: 'LDL-cholestérol', unite: 'g/L', motifs: [/^(ldl|ldl-?c|ldl-? ?cholesterol|cholesterol ldl)( calcule)?$/], unites: { 'g/l': 1, 'mmol/l': 0.3866, 'mg/dl': 0.01 } },
         { champ: 'bioHdl', nom: 'HDL-cholestérol', unite: 'g/L', motifs: [/^(hdl|hdl-?c|hdl-? ?cholesterol|cholesterol hdl)$/], unites: { 'g/l': 1, 'mmol/l': 0.3866, 'mg/dl': 0.01 } },
         { champ: 'bioTg', nom: 'Triglycérides', unite: 'g/L', motifs: [/^triglycerides?$/], unites: { 'g/l': 1, 'mmol/l': 0.8854, 'mg/dl': 0.01 } },

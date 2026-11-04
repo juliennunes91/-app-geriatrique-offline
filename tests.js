@@ -1662,6 +1662,11 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.strictEqual(r.identite.sexe, 'F');
         assert.strictEqual(B.ageA('1945-04-03', '2026-04-02'), 80, 'l\'age change au jour anniversaire');
         assert.strictEqual(B.datePrelevement('Edition du 03-09-2026'), null, 'sans prelevement mentionne, aucune date');
+        // T4 et T3 : le champ est en fraction LIBRE (pmol/L). Une T4 totale n'y entre jamais.
+        assert.strictEqual(seule('T4 libre', '14,2', 'pmol/L').valeurCible, 14.2, 'T4 libre en pmol/L lue');
+        assert.strictEqual(seule('FT3', '4,1', 'pmol/L').champ, 'bioT3', 'FT3 → T3 libre');
+        assert.strictEqual(seule('T4 libre', '1,1', 'ng/dL').statut, 'unite', 'unite non convertie : montree, non appliquee');
+        assert.strictEqual(seule('Thyroxine totale', '95', 'nmol/L'), undefined, 'la T4 totale n\'est pas la T4 libre');
         // Les deux interfaces exposent chaque champ cible, et chaque option d'unite.
         for (const f of ['index.html', 'index_modern.html']) {
             const html = fs.readFileSync(f, 'utf8');
@@ -2079,6 +2084,24 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/CHA₂DS₂-VA/.test(fa) && /HAS-BLED/.test(fa), 'FA : les scores reviennent');
         const aod = cas({ meds: ['Apixaban'] })._html['alertes-scores'] || '';
         assert.ok(!/CHA₂DS₂-VA/.test(aod) && /DOACscore/.test(aod), 'sous AOD sans FA codee : scores de saignement seulement');
+    });
+    test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
+        // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
+        // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :
+        // T4L 12-22, T3L 3,1-6,8 pmol/L (choix du prescripteur ; le laboratoire prevaut).
+        const lecture = b => {
+            const h = String(analyzeCase({ age: 80, sexe: 'F', bio: b, meds: ['Paracetamol'] })._html['alertes-bio'] || '').replace(/<[^>]+>/g, ' ');
+            const m = h.match(/Hyp[eo]r?thyroïdie (avérée|subclinique)/); return m ? m[0] : '';
+        };
+        assert.strictEqual(lecture({ bioTsh: 7, bioT4: 15 }), 'Hypothyroïdie subclinique');
+        assert.strictEqual(lecture({ bioTsh: 7, bioT4: 9 }), 'Hypothyroïdie avérée');
+        assert.strictEqual(lecture({ bioTsh: 0.1, bioT4: 18 }), 'Hyperthyroïdie subclinique');
+        assert.strictEqual(lecture({ bioTsh: 0.1, bioT4: 30 }), 'Hyperthyroïdie avérée');
+        assert.strictEqual(lecture({ bioTsh: 0.1, bioT3: 8 }), 'Hyperthyroïdie avérée');
+        for (const f of ['index.html', 'index_modern.html']) {
+            const h = require('fs').readFileSync(require('path').join(__dirname, f), 'utf8');
+            assert.ok(/T4 libre[\s\S]{0,120}pmol\/L[\s\S]{0,200}id="bioT4"/.test(h), f + ' : champ T4 libre en pmol/L');
+        }
     });
     test('Biologie : codes LOINC verifies (le code designe bien l\'analyte et l\'unite du parametre)', () => {
         // 13 codes sur 47 designaient un autre analyte (CPK = cholesterol total ; vitamine D
