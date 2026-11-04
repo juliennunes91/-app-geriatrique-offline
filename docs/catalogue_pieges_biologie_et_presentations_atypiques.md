@@ -1,6 +1,6 @@
 # Pièges d'interprétation de la biologie et présentations atypiques du sujet âgé
 
-Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.30).
+Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.40).
 
 **Statut**
 - ✅ **implémenté** : l'application le signale quand le dossier réunit la valeur et la circonstance ;
@@ -143,6 +143,36 @@ Aucune entrée ne change une gravité : un piège dit **comment lire**, pas quoi
 | 5.22 | **Effet indésirable pris pour une maladie nouvelle** (cascade de prescription) | | ✅ (cascades iatrogènes) | — | — |
 | 5.23 | **Syndrome sérotoninergique, malin des neuroleptiques, intoxication anticholinergique** | confusion fébrile mise sur le compte d'une infection | ✅ en partie (`SYND_043`, charge anticholinergique) | — | — |
 | 5.24 | **Hypothermie** | confusion, bradycardie ; sepsis grave sans fièvre | 📚 | — | NV |
+
+## 6. Associations et triades — ce que plusieurs anomalies disent ensemble
+
+Une anomalie isolée oriente peu ; leur réunion désigne un diagnostic. Chaque association
+détectée porte sa sévérité dans une table déclarée (`ASSOCIATIONS_BIO`, `app_analysis.js`) :
+**une suspicion n'est jamais rouge**, le texte dit quoi faire.
+
+| # | Association | Déclencheur | Statut | Référence | Vérif. |
+|---|---|---|---|---|---|
+| 6.1 | **CRAB → myélome** | ≥ 2 de : Ca > 2,75 ; insuffisance rénale (créat > 177 ou DFG < 40) **non expliquée par une IRC déclarée** ; Hb < 10 | ✅ orange | IMWG, Rajkumar, *Lancet Oncol* 2014 | S |
+| 6.2 | **Hypercalcémie + phosphore bas → hyperparathyroïdie primaire** | Ca > 2,65 et P < 0,80 | ✅ info | 5ᵉ atelier international (Bilezikian 2022) ; NICE NG132 | S |
+| 6.3 | **Lyse tumorale biologique** | cancer déclaré + ≥ 2 de urate ≥ 476, K ≥ 6, P ≥ 1,45, Ca ≤ 1,75 | ✅ orange | Cairo-Bishop | S |
+| 6.4 | **Angiocholite (triade de Charcot incomplète)** | T ≥ 38 °C, CRP ≥ 10 ou leucocytose + bilirubine ≥ 34 ou PAL/GGT > 1,5 N | ✅ orange | Tokyo Guidelines 2018 | S |
+| 6.5 | **Syndrome malin des neuroleptiques** | T > 38 °C + CPK ≥ 4 N + antipsychotique ou métoclopramide | ✅ orange | Gurrera, *J Clin Psychiatry* 2011 | R |
+| 6.6 | **Syndrome hyperglycémique hyperosmolaire** | glycémie ≥ 33,3 et 2 × Na + glucose > 300 | ✅ orange | ADA/EASD, *Diabetes Care* 2024 | R |
+| 6.7 | **Hyponatrémie non hypotonique** | Na < 135 et osmolalité ≥ 275 | ✅ info | ESE/ESICM/ERBP 2014 | R |
+| 6.8 | **Trou osmolaire** | mesurée − (2 × Na + glucose + urée) > 10 | ✅ info | Kraut, *Am J Kidney Dis* 2011 | S |
+| 6.9 | **Hypokaliémie + HTA sans diurétique → hyperaldostéronisme** | K < 3,5, HTA déclarée, aucun diurétique | ✅ info | Endocrine Society, Funder 2016 (mise à jour 2025) | R |
+| 6.10 | **Hyponatrémie + hyperkaliémie → insuffisance surrénale** | Na < 135, K > 5, sans médicament hyperkaliémiant ni DFG < 30 | ✅ info | Endocrine Society, Bornstein 2016 | R |
+| 6.11 | **BRASH** (bradycardie, insuffisance rénale, ralentisseur nodal, choc, hyperkaliémie) | K > 5, bradycardie déclarée, DFG < 60, bêtabloquant/vérapamil/diltiazem/digoxine/amiodarone | ✅ orange | Farkas, *J Emerg Med* 2020 | R |
+| 6.12 | **Anémie + thrombopénie → microangiopathie thrombotique** | anémie, plaquettes < 150, leucocytes non bas | ✅ info | BSH, Scully 2023 | S |
+| 6.13 | **Profil biologique d'alcoolisation** | ASAT/ALAT ≥ 2 avec GGT haute ou VGM > 100 | ✅ info (non spécifique, dit) | revues ; ratio non spécifique | S |
+| 6.14 | **Encéphalopathie de Wernicke** | alcool + confusion + dénutrition (2 critères de Caine sur 4) | ✅ orange | EFNS, Galvin 2010 | R |
+| 6.15 | **Triade de Hakim → hydrocéphalie à pression normale** | chutes + incontinence + troubles cognitifs | ✅ info | critères internationaux 2005 / japonais | S |
+| 6.16 | Hémolyse : anémie + réticulocytes hauts + bilirubine | seuil de réticulocytes non sourcé | 🔜 | BSH AIHA 2017 | NV |
+| 6.17 | Rhabdomyolyse + IRA + hyperkaliémie | CPK, créatinine, K | 🔜 (`SYND_002` couvre la CPK) | — | NV |
+| 6.18 | SIADH | exige osmolalité et natriurèse urinaires | 🔜 (pas de champ urinaire) | ESE 2014 | R |
+| 6.19 | Syndrome sérotoninergique (critères de Hunter) | signes neuromusculaires cliniques | 📚 (`SYND_043` : association de médicaments) | — | NV |
+| 6.20 | Hyperthyroïdie + FA | TSH basse et FA | 📚 (dans la carte thyroïdienne) | — | — |
+| 6.21 | Triade de Whipple (hypoglycémie documentée) | symptômes + glycémie basse + correction | 📚 | — | NV |
 
 ---
 

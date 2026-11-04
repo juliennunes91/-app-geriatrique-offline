@@ -83,3 +83,6 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
 - Le cliquet `runCouleurCodeeEnDurAudit` compte les `alert-info` littéraux : une famille de
   cartes de même nature partage UNE fonction de rendu (`_piegeBio`), sinon chaque lot l'use.
 - `cmd &` dans un appel Bash survit, mais préférer `run_in_background` pour être notifié.
+- Un critère d'association déjà expliqué par une comorbidité déclarée fait du bruit (CRAB
+  sur l'anémie de l'IRC) : mesurer chaque nouvelle association sur le panel.
+- Chevron `<` brut dans un titre de carte : casse la clé de masquage ; l'écrire en lettres.

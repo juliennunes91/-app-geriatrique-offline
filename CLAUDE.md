@@ -1979,6 +1979,19 @@ lithiémie (12 h, tube hépariné au lithium) et hyponatrémie + chutes (Rennebo
 dans leurs cartes. Catalogue complet, statut et niveau de vérification de chaque source :
 `docs/catalogue_pieges_biologie_et_presentations_atypiques.md` (95 entrées).
 
+**Associations évocatrices (4.40)** — `ASSOCIATIONS_BIO` (`app_analysis.js`), table
+déclarée : chaque entrée porte `severite`, et la couleur en découle par concaténation
+(`'alert-' + severite`) — jamais un littéral, le cliquet des couleurs l'exige. **Une suspicion
+n'est jamais rouge.** Quinze entrées : CRAB (IMWG 2014), hyperparathyroïdie (Ca haut + P
+bas), lyse tumorale (Cairo-Bishop, **seulement si cancer déclaré** — l'IRC seule réunit K et
+P hauts), angiocholite (Tokyo 2018), syndrome malin des neuroleptiques (Gurrera 2011), SHH
+(ADA/EASD 2024), hyponatrémie non hypotonique et trou osmolaire, hyperaldostéronisme,
+insuffisance surrénale, BRASH, microangiopathie, profil d'alcoolisation, Wernicke (EFNS
+2010), triade de Hakim. Piège rencontré : **CRAB sortait sur l'anémie de l'IRC connue** —
+le critère rénal ne compte que sans `PAT_029` déclarée. Un chevron brut dans un titre
+(« Hb < 10 ») casse la clé de masquage : l'écrire en toutes lettres. Chaque association est
+testée dans les deux sens (combinaison → sort ; un élément manquant → ne sort pas).
+
 **Déjà traités ailleurs** : calcémie corrigée par l'albumine (Payne) ; ferritine et
 inflammation (seuil carentiel à 100 si CRP élevée, encart d'anémie) ; albumine ≠ dénutrition
 (GLIM) ; NT-proBNP et facteurs confondants (`SYND_029`) ; troponine selon le réactif.

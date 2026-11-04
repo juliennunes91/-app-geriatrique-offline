@@ -63,3 +63,7 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   troubles cognitifs), jamais par l'âge seul ; deux lectures d'un même chiffre ne sortent
   pas ensemble (hémorragie digestive l'emporte sur hémoconcentration quand il y a anémie). —
   Éviter un en-tête qui sortirait chez tout le monde.
+- **04/11/2026** — Association de signes = table déclarée avec sévérité par entrée, couleur
+  dérivée ; suspicion plafonnée à l'orange ; un critère expliqué par une pathologie déclarée
+  ne compte pas (IRC dans CRAB). — Éviter de présumer un myélome chez tout insuffisant rénal
+  anémique.

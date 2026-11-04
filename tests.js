@@ -2222,6 +2222,32 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const h = String(analyzeCase({ age: 82, sexe: 'F', meds: ['Paracetamol'], bio: { bioPal: 250, bioGgt: 25 } })._html['alertes-bio'] || '');
         assert.ok(/<div class="alert alert-info[^"]*"[^>]*>(?:(?!<div class="alert)[\s\S]){0,800}🔎 Phosphatases alcalines/.test(h), 'carte informative');
     });
+    test('Associations evocatrices : chacune sort sur sa COMBINAISON, jamais sur un seul element', () => {
+        const ids = c => { const raw = String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'] }, c))._html['alertes-bio'] || ''); return [...raw.matchAll(/data-association="([a-z_]+)"/g)].map(m => m[1]); };
+        const oui = (c, id) => assert.ok(ids(c).includes(id), id + ' doit sortir : ' + JSON.stringify(c));
+        const non = (c, id) => assert.ok(!ids(c).includes(id), id + ' ne doit PAS sortir : ' + JSON.stringify(c));
+        oui({ bio: { bioCa: 2.9, bioHb: 9, bioCreat: 200 }, dfg: 25 }, 'crab'); non({ bio: { bioCa: 2.9 } }, 'crab');
+        non({ comorbs: ['PAT_029'], bio: { bioHb: 9, bioCreat: 250 }, dfg: 20 }, 'crab'); // anemie de l'IRC connue : pas un myelome presume
+        oui({ bio: { bioCa: 2.8, bioPhos: 0.6 } }, 'hpt'); non({ bio: { bioCa: 2.8, bioPhos: 1.0 } }, 'hpt');
+        oui({ comorbs: ['PAT_020'], bio: { patientK: 6.2, bioPhos: 1.8 } }, 'lyse'); non({ bio: { patientK: 6.2, bioPhos: 1.8 } }, 'lyse');
+        oui({ bio: { bioTemp: 38.5, bioBili: 60 } }, 'angiocholite'); non({ bio: { bioBili: 60 } }, 'angiocholite');
+        oui({ meds: ['Haloperidol'], bio: { bioTemp: 38.6, bioCpk: 900 } }, 'smn'); non({ bio: { bioTemp: 38.6, bioCpk: 900 } }, 'smn');
+        oui({ bio: { bioGly: 40, patientNa: 150 } }, 'shh'); non({ bio: { bioGly: 20, patientNa: 140 } }, 'shh');
+        oui({ bio: { patientNa: 128, bioOsm: 290 } }, 'na_non_hypo'); non({ bio: { patientNa: 128, bioOsm: 260 } }, 'na_non_hypo');
+        oui({ bio: { patientNa: 140, bioGly: 5, bioUree: 6, bioOsm: 320 } }, 'trou_osm'); non({ bio: { patientNa: 140, bioGly: 5, bioUree: 6, bioOsm: 292 } }, 'trou_osm');
+        oui({ comorbs: ['PAT_005'], meds: ['Amlodipine'], bio: { patientK: 3.1 } }, 'aldo'); non({ comorbs: ['PAT_005'], meds: ['Hydrochlorothiazide'], bio: { patientK: 3.1 } }, 'aldo');
+        oui({ bio: { patientNa: 130, patientK: 5.6 } }, 'surrenale'); non({ meds: ['Ramipril'], bio: { patientNa: 130, patientK: 5.6 } }, 'surrenale');
+        oui({ meds: ['Bisoprolol'], flags: ['chkBrady'], dfg: 35, bio: { patientK: 5.6 } }, 'brash'); non({ meds: ['Bisoprolol'], dfg: 35, bio: { patientK: 5.6 } }, 'brash');
+        oui({ bio: { bioHb: 9, bioPlaq: 80, bioGb: 7 } }, 'mat'); non({ bio: { bioHb: 9, bioPlaq: 80, bioGb: 2 } }, 'mat');
+        oui({ bio: { bioAsat: 120, bioAlat: 50, bioGgt: 200 } }, 'alcool_bio'); non({ bio: { bioAsat: 120, bioAlat: 100, bioGgt: 200 } }, 'alcool_bio');
+        oui({ flags: ['chkAlcool', 'chkDelirium', 'chkAnorexie'] }, 'wernicke'); non({ flags: ['chkDelirium', 'chkAnorexie'] }, 'wernicke');
+        oui({ flags: ['chkChutes', 'chkIncontinence', 'chkMci'] }, 'hakim'); non({ flags: ['chkChutes', 'chkIncontinence'] }, 'hakim');
+        // La couleur vient de la severite declaree : une suspicion n'est jamais rouge.
+        const raw = String(analyzeCase({ age: 82, sexe: 'F', dfg: 25, meds: ['Paracetamol'], bio: { bioCa: 2.9, bioHb: 9, bioCreat: 200 } })._html['alertes-bio'] || '');
+        assert.ok(/class="alert alert-warning border-warning[^"]*" data-association="crab"/.test(raw), 'CRAB en orange');
+        assert.ok(!/alert-danger[^"]*" data-association=/.test(raw), 'aucune association en rouge');
+        assert.ok(!/maskGeriaAlert\('tt:[^']*</.test(raw), 'aucun chevron brut dans une cle de masquage');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :

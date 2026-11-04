@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.30**, `BUILD_ID` `20261104-pieges-atypiques`,
-cache `geriaassist-v153`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.40**, `BUILD_ID` `20261104-associations-bio`,
+cache `geriaassist-v154`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,10 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.40** (04/11) — Associations évocatrices (table `ASSOCIATIONS_BIO`, 15 entrées : CRAB,
+  hyperparathyroïdie, lyse, angiocholite, SMN, SHH, hyponatrémie non hypotonique, trou
+  osmolaire, hyperaldostéronisme, insuffisance surrénale, BRASH, MAT, alcool, Wernicke,
+  Hakim) ; catalogue porté à 116 entrées.
 - **4.30** (04/11) — Pièges lot 2 (créatinine et sécrétion tubulaire, pseudothrombopénie,
   leucocytose cortisonique, PAL osseuses, ASAT musculaires, hémorragie digestive, ferritine,
   PCT, NT-proBNP/obésité, T4L/héparine, TSH/corticoïdes, fièvre gériatrique) et présentations

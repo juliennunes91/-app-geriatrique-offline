@@ -2658,6 +2658,96 @@ function analyserPrescription() {
         }
     }
 
+    // =====================================================================
+    // ASSOCIATIONS ÉVOCATRICES — plusieurs anomalies qui, RÉUNIES, désignent un
+    // diagnostic qu'aucune n'évoque seule (CRAB du myélome, lyse tumorale, angiocholite,
+    // syndrome malin des neuroleptiques, BRASH, triade de Hakim…). Table déclarée : chaque
+    // entrée porte sa sévérité, et la couleur en découle (jamais un littéral). Une
+    // association est une SUSPICION : « warning » au plus, le texte dit quoi faire.
+    // =====================================================================
+    {
+        const v = id => bioValues[id];
+        const dose = id => v(id) > 0;
+        const borne = (id, sens) => { const x = v(id); const a = x > 0 && typeof bioAnormal === 'function' ? bioAnormal(id, x, sexe) : null; return !!(a && a.sens === sens); };
+        const hautX = (id, k) => { const n = (typeof BIO_NORMES !== 'undefined') ? BIO_NORMES[id] : null; const h = n ? (n.haut != null ? n.haut : ((sexe === 'M' ? n.h : n.f) || {}).haut) : null; return h != null && v(id) > k * h; };
+        const ctx = c => ctxClinique.includes(c);
+        const comorb = (...ids) => ids.some(i => activeComorbs.includes(i));
+        const ca = caEval, na = v('BIO_002'), k = v('BIO_001'), gly = v('BIO_025'), hb = v('BIO_009'), dfg = v('BIO_004');
+        const anemie = hb > 0 && hb < (sexe === 'M' ? 13 : 12);
+        const temp = v('BIO_TEMP');
+        const ASSOCIATIONS_BIO = [
+            {   id: 'crab', severite: 'warning',
+                criteres: () => [ca > 2.75 && 'calcémie > 2,75', !comorb('PAT_029') && (v('BIO_003') > 177 || (dfg > 0 && dfg < 40)) && 'insuffisance rénale inexpliquée', (hb > 0 && hb < 10) && 'Hb inférieure à 10 g/dL'].filter(Boolean),
+                quand(c) { return c.length >= 2; },
+                titre: c => `Critères CRAB réunis (${c.join(', ')}) : rechercher un myélome`,
+                texte: () => "Hypercalcémie, insuffisance rénale, anémie et lésions osseuses sont les atteintes d'organe du myélome (IMWG, Rajkumar, Lancet Oncol 2014). Électrophorèse et immunofixation des protéines sériques, dosage des chaînes légères libres ; non spécifiques isolément, elles le deviennent associées. Une insuffisance rénale chronique déclarée n'est pas comptée : avec l'anémie, elle s'explique d'abord par elle-même." },
+            {   id: 'hpt', severite: 'info',
+                quand() { return ca > 2.65 && dose('BIO_048') && v('BIO_048') < 0.80; },
+                titre: () => "Hypercalcémie avec phosphore bas : hyperparathyroïdie primaire probable",
+                texte: () => "La PTH fait baisser le phosphore par son effet phosphaturique. Doser la PTH en même temps qu'une calcémie : normale ou haute, elle signe une hyperparathyroïdie ; effondrée, elle oriente vers une cause tumorale (PTHrp) ou la vitamine D (5ᵉ atelier international, Bilezikian 2022 ; NICE NG132)." },
+            {   id: 'lyse', severite: 'warning',
+                criteres: () => [v('BIO_008') >= 476 && 'urate ≥ 476 µmol/L', k >= 6 && 'K ≥ 6', v('BIO_048') >= 1.45 && 'phosphore ≥ 1,45', (ca > 0 && ca <= 1.75) && 'calcémie ≤ 1,75'].filter(Boolean),
+                quand(c) { return comorb('PAT_020') && c.length >= 2; },
+                titre: c => `Lyse tumorale biologique possible (${c.join(', ')})`,
+                texte: () => "Deux anomalies ou plus parmi urate, potassium, phosphore et calcium définissent la lyse tumorale biologique (Cairo-Bishop) dans les jours qui entourent un traitement anticancéreux. Hydratation, hypo-uricémiant, ECG et suivi rapproché de la créatinine ; l'insuffisance rénale chronique seule peut réunir hyperkaliémie et hyperphosphatémie." },
+            {   id: 'angiocholite', severite: 'warning',
+                quand() { const A = temp >= 38 || v('BIO_024') >= 10 || v('BIO_011') > 10; const B = v('BIO_017') >= 34 || hautX('BIO_016', 1.5) || hautX('BIO_015', 1.5); return A && B; },
+                titre: () => "Inflammation et cholestase associées : suspicion d'angiocholite",
+                texte: () => "Les critères de suspicion de Tokyo 2018 sont réunis (inflammation systémique + cholestase biologique). Chez le sujet âgé la douleur et la fièvre manquent souvent : imagerie des voies biliaires sans attendre." },
+            {   id: 'smn', severite: 'warning',
+                quand() { return temp > 38 && hautX('BIO_018', 4) && medsImputables(['antipsychotique', 'metoclopramide']).length > 0; },
+                titre: () => `Fièvre, CPK élevées et ${medsImputables(['antipsychotique', 'metoclopramide']).join(', ')} : syndrome malin des neuroleptiques ?`,
+                texte: () => "Fièvre > 38 °C et CPK ≥ 4 fois la normale sous antagoniste dopaminergique font partie des critères du consensus international (Gurrera, J Clin Psychiatry 2011), avec rigidité et trouble de la conscience. Urgence : arrêt de l'antagoniste dopaminergique, réhydratation, surveillance rénale. Même tableau à l'arrêt brutal d'un antiparkinsonien." },
+            {   id: 'shh', severite: 'warning',
+                quand() { return gly >= 33.3 && na > 0 && (2 * na + gly) > 300; },
+                titre: () => `Glycémie ${gly} mmol/L et osmolalité efficace ${Math.round(2 * na + gly)} mOsm/kg : syndrome hyperosmolaire ?`,
+                texte: () => "Glycémie ≥ 33,3 mmol/L (600 mg/dL) et osmolalité efficace (2 × Na + glucose) > 300 mOsm/kg sont deux des critères du syndrome hyperglycémique hyperosmolaire (ADA/EASD 2024), avec l'absence de cétose et d'acidose franches à vérifier. Le sujet âgé y arrive par une soif émoussée." },
+            {   id: 'na_non_hypo', severite: 'info',
+                quand() { return na > 0 && na < 135 && v('BIO_042') >= 275; },
+                titre: () => `Hyponatrémie avec osmolalité ${v('BIO_042')} mOsm/kg : non hypotonique`,
+                texte: () => "Une hyponatrémie n'est hypotonique que sous 275 mOsm/kg (ESE/ESICM/ERBP 2014). Au-delà : translocation (hyperglycémie, mannitol) ou pseudohyponatrémie (hypertriglycéridémie, paraprotéine avec électrode indirecte). Ni restriction hydrique ni bilan de SIADH avant d'avoir tranché." },
+            {   id: 'trou_osm', severite: 'info',
+                ecart: () => Math.round(v('BIO_042') - (2 * na + gly + v('BIO_007'))),
+                quand() { return dose('BIO_042') && na > 0 && gly > 0 && dose('BIO_007') && this.ecart() > 10; },
+                titre() { return `Trou osmolaire de ${this.ecart()} mOsm/kg`; },
+                texte: () => "Osmolalité mesurée supérieure de plus de 10 mOsm/kg à la calculée (2 × Na + glucose + urée) : une substance osmotique non dosée est présente — éthanol, mannitol, glycérol, ou alcool toxique (méthanol, éthylène glycol) ; l'insuffisance rénale et le choc l'élargissent aussi (Kraut, Am J Kidney Dis 2011). Un trou normal n'exclut pas une intoxication vue tard." },
+            {   id: 'aldo', severite: 'info',
+                quand() { return k > 0 && k < 3.5 && comorb('PAT_005') && medsImputables(['diuretique']).length === 0; },
+                titre: () => "Hypokaliémie chez un hypertendu sans diurétique : rechercher un hyperaldostéronisme primaire",
+                texte: () => "Le dépistage par le rapport aldostérone/rénine est recommandé chez l'hypertendu hypokaliémique (Endocrine Society, Funder 2016 ; la mise à jour 2025 l'étend à tout hypertendu). Corriger la kaliémie avant le dosage, qui l'interprète." },
+            {   id: 'surrenale', severite: 'info',
+                quand() { return na > 0 && na < 135 && k > 5.0 && !(dfg > 0 && dfg < 30) && medsImputables(['iec', 'ara2', 'sacubitril', 'spironolactone', 'eplerenone', 'finerenone', 'amiloride', 'triamterene', 'trimethoprime', 'ains', 'heparine', 'potassium']).length === 0; },
+                titre: () => "Hyponatrémie et hyperkaliémie sans médicament ni insuffisance rénale pour les expliquer : insuffisance surrénale ?",
+                texte: () => `Cette association fait partie des signes qui doivent faire doser cortisol et ACTH (Endocrine Society, Bornstein 2016)${medsImputables(['corticoide']).length ? ' — corticothérapie au dossier : penser à une insuffisance corticotrope à la décroissance ou à l\'arrêt' : ', surtout après l\'arrêt d\'une corticothérapie'}. Urgence si hypotension, vomissements ou fièvre.` },
+            {   id: 'brash', severite: 'warning',
+                quand() { return k > 5.0 && ctx('bradycardie') && dfg > 0 && dfg < 60 && medsImputables(['betabloquant', 'verapamil', 'diltiazem', 'digoxine', 'amiodarone']).length > 0; },
+                titre: () => `Bradycardie, hyperkaliémie, insuffisance rénale et ${medsImputables(['betabloquant', 'verapamil', 'diltiazem', 'digoxine', 'amiodarone']).join(', ')} : syndrome BRASH ?`,
+                texte: () => "Hyperkaliémie même modérée et ralentisseur du nœud auriculo-ventriculaire s'aggravent l'un l'autre : la bradycardie abaisse le débit rénal, qui majore la kaliémie et l'accumulation du ralentisseur (Farkas, J Emerg Med 2020). Traiter l'hyperkaliémie, suspendre le ralentisseur, restaurer la perfusion rénale." },
+            {   id: 'mat', severite: 'info',
+                quand() { return anemie && v('BIO_010') > 0 && v('BIO_010') < 150 && !(v('BIO_011') > 0 && v('BIO_011') < 4); },
+                titre: () => `Anémie et thrombopénie (${v('BIO_010')} G/L) : rechercher des schizocytes`,
+                texte: () => `Une microangiopathie thrombotique (purpura thrombotique thrombocytopénique, syndrome hémolytique et urémique) associe anémie hémolytique mécanique et thrombopénie${(dfg > 0 && dfg < 60) ? ', ici avec une atteinte rénale' : ''}. Frottis (schizocytes), LDH, haptoglobine, réticulocytes, test de Coombs ; c'est une urgence (BSH, Scully 2023).` },
+            {   id: 'alcool_bio', severite: 'info',
+                quand() { const a = v('BIO_013'), l = v('BIO_014'); return a > 0 && l > 0 && a / l >= 2 && borne('BIO_013', 'haut') && (borne('BIO_015', 'haut') || v('BIO_039') > 100); },
+                titre: () => `ASAT/ALAT ≥ 2 avec ${v('BIO_039') > 100 ? 'macrocytose' : 'GGT élevée'} : profil évocateur d'une consommation d'alcool`,
+                texte: () => `${ctx('alcool') ? 'Cohérent avec la consommation déclarée. ' : 'Aucune consommation déclarée : l\'aborder. '}Le rapport ASAT/ALAT ≥ 2 n'est pas spécifique (cirrhose de toute cause, foie de choc) et une ALAT au-delà de 500 UI/L oriente ailleurs ; GGT et VGM s'y ajoutent sans le rendre certain.` },
+            {   id: 'wernicke', severite: 'warning',
+                quand() { return ctx('alcool') && ctx('delirium') && (ctx('denutrition') || ctx('anorexie')); },
+                titre: () => "Alcool, confusion et dénutrition : encéphalopathie de Wernicke à évoquer",
+                texte: () => "Chez le consommateur d'alcool, deux signes sur quatre suffisent (carence d'apport, signes oculaires, syndrome cérébelleux, confusion ou trouble mnésique) : thiamine 200 mg trois fois par jour, de préférence IV, AVANT tout apport glucosé (EFNS, Galvin 2010)." },
+            {   id: 'hakim', severite: 'info',
+                quand() { return ctx('chutes') && ctx('incontinence') && (ctx('mci') || comorb('PAT_010', 'PAT_011', 'PAT_012', 'PAT_013', 'PAT_041', 'PAT_042', 'PAT_043')); },
+                titre: () => "Chutes, troubles cognitifs et incontinence : penser à l'hydrocéphalie à pression normale",
+                texte: () => "La triade de Hakim (trouble de la marche, troubles cognitifs, troubles urinaires) n'a pas à être complète : les critères internationaux exigent le trouble de la marche et un autre signe, les critères japonais deux des trois. Imagerie cérébrale ; c'est une cause de démence accessible à un traitement." }
+        ];
+        ASSOCIATIONS_BIO.forEach(a => {
+            const c = a.criteres ? a.criteres() : null;
+            if (!a.quand(c)) return;
+            const cls = 'alert-' + a.severite + (a.severite === 'info' ? '' : ' border-' + a.severite);
+            addAlert('alertes-bio', `<div class="alert ${cls} shadow-sm" data-association="${a.id}"><strong>🧩 ${a.titre(c)}</strong><br><small>${a.texte(c)}</small></div>`, 'bio');
+        });
+    }
+
     // --- TCA (BIO_045) — surveillance HNF (cible 1.5-2.5 vs témoin) ---
     {
         const tca = bioValues['BIO_045'];
