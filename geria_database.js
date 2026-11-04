@@ -328,6 +328,13 @@ const MASTER_DB = {
             "NOM_STANDARD": "Albuminurie / Protéinurie (RAC ou mg/24h)",
             "UNITE": "mg/24h (ou mg/g RAC)",
             "SYNONYMES": "Albuminurie, Microalbuminurie, Proteinurie, Protéinurie, RAC, Rapport albumine creatinine urinaire, ACR, Albumine urinaire"
+        },
+        "BIO_048": {
+            "ID_BIO": "BIO_048",
+            "LOINC": "14879-1",
+            "NOM_STANDARD": "Phosphatémie",
+            "UNITE": "mmol/L",
+            "SYNONYMES": "Phosphore, Phosphate, Phosphatemie, Phosphorémie, Phosphore sérique, P"
         }
     },
     "PATHOLOGIES": {
@@ -1468,7 +1475,7 @@ const MASTER_DB = {
         "SYND_040": {
             "ID_SYNDROME": "SYND_040",
             "NOM_SYNDROME": "Désordre Phospho-Calcique de l'IRC",
-            "BIO_CIBLE": "BIO_005, BIO_004",
+            "BIO_CIBLE": "BIO_048, BIO_004",
             "CONDITION": "Phosphore > 1.45 mmol/L + DFG < 45 mL/min",
             "GRAVITE": "Modérée",
             "IMPUTABILITE_FREQ": "Laxatifs phosphatés, Vitamine D active excessive (surdosage alphacalcidol/calcitriol)",

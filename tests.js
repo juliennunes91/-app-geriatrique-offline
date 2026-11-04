@@ -2103,6 +2103,24 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(/T4 libre[\s\S]{0,120}pmol\/L[\s\S]{0,200}id="bioT4"/.test(h), f + ' : champ T4 libre en pmol/L');
         }
     });
+    test('Phosphore : code canonique BIO_048, bornes, et hypophosphatemie graduee', () => {
+        // Le phosphore etait saisi et lu par SYND_040 sans code dans MASTER_DB.BIOLOGIE :
+        // ni borne, ni ligne de suivi, et SYND_040 designait la calcemie comme cible.
+        const vm = require('vm'); const { sandbox } = require('./oracle_harness').loadApp();
+        assert.strictEqual(vm.runInContext('MASTER_DB.BIOLOGIE.BIO_048.UNITE', sandbox), 'mmol/L');
+        assert.strictEqual(vm.runInContext('MASTER_DB.SYNDROMES.SYND_040.BIO_CIBLE', sandbox), 'BIO_048, BIO_004');
+        assert.strictEqual(vm.runInContext("bioAnormal('BIO_048', 0.6, 'F').sens", sandbox), 'bas');
+        const bio = (p, meds) => String(analyzeCase({ age: 82, sexe: 'F', bio: { bioPhos: p }, meds: meds || ['Paracetamol'] })._html['alertes-bio'] || '');
+        assert.ok(/alert-info[^>]*>[\s\S]{0,250}Hypophosphatémie légère/.test(bio(0.75)), 'legere (0,65-0,80) : informative');
+        assert.ok(/alert-warning[^>]*>[\s\S]{0,250}Hypophosphatémie modérée/.test(bio(0.5)), 'moderee (0,32-0,65) : orange');
+        assert.ok(/alert-danger[^>]*>[\s\S]{0,250}Hypophosphatémie sévère/.test(bio(0.25)), 'severe (< 0,32) : rouge');
+        assert.ok(!/Hypophosphatémie/.test(bio(1.0)), 'normale : rien');
+        assert.ok(/renutrition/.test(bio(0.5)), 'le syndrome de renutrition est nomme');
+        assert.ok(/aluminium/.test(bio(0.5, ['Phosphate d\'aluminium'])) && !/aluminium/.test(bio(0.5)), 'imputabilite : seulement si prescrit');
+        const irc = analyzeCase({ age: 82, sexe: 'F', dfg: 30, comorbs: ['PAT_029'], bio: { bioPhos: 1.8 }, meds: ['Paracetamol'] });
+        assert.ok(/Phospho-Calcique/i.test(irc._html['alertes-bio'] || ''), 'SYND_040 lu sur BIO_048');
+        assert.ok(/Phosphatémie/.test(irc._html['alertes-suivi'] || ''), 'ligne de suivi dans la MRC');
+    });
     test('Biologie : codes LOINC verifies (le code designe bien l\'analyte et l\'unite du parametre)', () => {
         // 13 codes sur 47 designaient un autre analyte (CPK = cholesterol total ; vitamine D
         // = calcitriol ; osmolalite = LDH ; CST = capacite totale de fixation), une autre
@@ -2158,7 +2176,8 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             BIO_044: '10535-3',
             BIO_045: '63561-5',
             BIO_047: '2502-3',
-            BIO_046: '14959-1'
+            BIO_046: '14959-1',
+            BIO_048: '14879-1'
         };
         const B = JSON.parse(vm.runInContext('JSON.stringify(Object.fromEntries(Object.entries(MASTER_DB.BIOLOGIE).map(([k,v])=>[k,v.LOINC])))', require('./oracle_harness').loadApp().sandbox));
         assert.deepStrictEqual(B, attendu);

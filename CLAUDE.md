@@ -1827,13 +1827,19 @@ désormais T4 libre / T3 libre en pmol/L, bornes de signalement **T4L 12-22, T3L
 vérifiée, ne pas l'écrire). L'import PDF lit « T4 libre / T4L / FT4 » et « T3 libre / FT3 »
 en pmol/L seulement ; une T4 totale n'y entre jamais.
 
+**Phosphore (3.98)** : saisi et lu par `SYND_040` sans code canonique (même cas que le CST
+avant `BIO_047`), et `SYND_040` désignait la calcémie comme cible. Code **`BIO_048`**
+(Phosphatémie, mmol/L, LOINC 14879-1), bornes 0,80-1,45, ligne de suivi dans la MRC,
+`SYND_040` lu sur `BIO_048`. L'alias `BIO_PHOS` reste pour les lectures existantes.
+**Hypophosphatémie** graduée (Manuel MSD : légère 0,65-0,80 informative, modérée 0,32-0,65
+orange, sévère < 0,32 rouge) : elle nomme d'abord le **syndrome de renutrition** (patient
+dénutri réalimenté, NICE CG32), et n'impute que ce que l'ordonnance porte — sels d'aluminium
+(phosphate d'aluminium, sucralfate : chélation digestive) et diurétiques.
+
 **Points ouverts, non tranchés** :
 - **Troponine** : seuils 16/34 ng/L (99ᵉ percentile hs-cTnI par sexe) et « rule-in » 52 ng/L
   (hs-cTnT, algorithme ESC 0h/1h) — deux réactifs différents. Le seuil dépend du réactif du
   laboratoire, comme le dit déjà la section des bornes.
-- **Phosphore** : saisi (`BIO_PHOS`, lu par `SYND_040`) mais sans code canonique dans
-  `MASTER_DB.BIOLOGIE` (même situation que le CST avant `BIO_047`) ; `SYND_040` déclare
-  `BIO_CIBLE: BIO_005` (calcium).
 - `BIO_027` (bilan lipidique) n'a pas de champ propre : la saisie passe par LDL / HDL / TG,
   la colonne « Valeur » de l'onglet Suivi reste vide.
 

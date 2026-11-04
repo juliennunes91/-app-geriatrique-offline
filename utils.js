@@ -157,7 +157,8 @@ const BIO_NORMES = {
     BIO_044: { bas: 0.5,  haut: 0.9 },                                   // Digoxinémie ng/mL — cible gériatrique
     BIO_045: { bas: 0.8,  haut: 1.2 },                                   // TCA ratio
     BIO_046: { haut: 30 },                                               // Albuminurie mg/24h
-    BIO_047: { bas: 20 }                                                 // CST % — seuil de carence martiale (ESC 2026)
+    BIO_047: { bas: 20 },                                                // CST % — seuil de carence martiale (ESC 2026)
+    BIO_048: { bas: 0.80, haut: 1.45 }                                   // Phosphatémie mmol/L (adulte)
 };
 
 /**

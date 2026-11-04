@@ -623,6 +623,9 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         // desormais son code canonique BIO_047 ; l'alias historique est conserve
         // pour les lectures existantes.
         'BIO_CST': getBioVal('bioCst'), 'BIO_047': getBioVal('bioCst'), 'BIO_PHOS': getBioVal('bioPhos'),
+        // Le phosphore était saisi et lu (SYND_040) sans code canonique : aucune borne,
+        // aucune ligne de suivi, et SYND_040 désignait la calcémie comme paramètre cible.
+        'BIO_048': getBioVal('bioPhos'),
         'BIO_TEMP': getBioVal('bioTemp'),
         'BIO_T4': getBioVal('bioT4'), 'BIO_T3': getBioVal('bioT3')
     };
@@ -2276,7 +2279,33 @@ function analyserPrescription() {
     if (bioValues['BIO_037'] > 2) checkBioSyndrome('SYND_038', true);
 
     // --- SYND_040 : Désordre Phospho-Calcique IRC (Phosphore > 1.45 + DFG < 45) ---
-    if (bioValues['BIO_PHOS'] > 1.45 && bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 45) checkBioSyndrome('SYND_040', true);
+    if (bioValues['BIO_048'] > 1.45 && bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 45) checkBioSyndrome('SYND_040', true);
+
+    // --- Hypophosphatémie — graduée (légère 0,65-0,80 / modérée 0,32-0,65 / sévère < 0,32 mmol/L,
+    //     Manuel MSD « Hypophosphatémie ») ---
+    // Chez le sujet âgé, la cause à ne pas manquer est le SYNDROME DE RENUTRITION : le
+    // patient dénutri que l'on réalimente (orale, entérale, parentérale) consomme son phosphore
+    // au moment où l'insuline repart (NICE CG32). L'imputabilité ne cite que des molécules
+    // vérifiables à l'ordonnance : sels d'aluminium (chélation digestive) et diurétiques.
+    {
+        const p = bioValues['BIO_048'];
+        if (p > 0 && p < 0.80) {
+            const grade = p < 0.32 ? 'sévère' : p < 0.65 ? 'modérée' : 'légère';
+            const cls = p < 0.32 ? 'alert-danger' : p < 0.65 ? 'alert-warning' : 'alert-info';
+            const imput = [];
+            if (patientHasMedClass('phosphate d\'aluminium') || patientHasMedClass('sucralfate')) imput.push('sel d\'aluminium (chélation digestive du phosphore)');
+            if (patientHasMedClass('diuretique')) imput.push('diurétique');
+            const conduite = p < 0.32
+                ? 'Risque de faiblesse musculaire, d\'insuffisance respiratoire, de rhabdomyolyse et de troubles du rythme : supplémentation intraveineuse sous surveillance, contrôle du calcium, du potassium et du magnésium.'
+                : p < 0.65
+                    ? 'Supplémentation orale en phosphore ; contrôle à quelques jours avec potassium et magnésium.'
+                    : 'Contrôle ; rechercher une carence d\'apport ou en vitamine D, un alcoolisme.';
+            addAlert('alertes-bio', `<div class="alert ${cls} shadow-sm"><strong>${p < 0.32 ? '🚨' : '⚠️'} Hypophosphatémie ${grade} — P ${p} mmol/L</strong>`
+                + `<br><em>À éliminer d'abord :</em> un syndrome de renutrition (patient dénutri réalimenté — surveiller phosphore, potassium et magnésium les premiers jours).`
+                + (imput.length ? `<br><em>Imputabilité iatrogène :</em> <b>${escapeHtml(imput.join(', '))}</b>` : '')
+                + `<br><em>Conduite :</em> ${conduite}</div>`, 'bio');
+        }
+    }
 
     // --- SYND_041 : Neutropénie Fébrile sous Chimiothérapie (PNN < 1.0 + T > 38.3°C) ---
     if (bioValues['BIO_012'] > 0 && bioValues['BIO_012'] < 1.0 && bioValues['BIO_TEMP'] > 38.3) checkBioSyndrome('SYND_041', true);
@@ -4008,6 +4037,7 @@ function analyserPrescription() {
             'BIO_046': 'Annuel si HTA/diabète/IRC (KDIGO 2022)',
             'BIO_CST': 'Annuel',
             'BIO_PHOS': 'Annuel',
+            'BIO_048': 'Annuel',
             'BIO_T4': 'Selon TSH',
             'BIO_T3': 'Selon TSH'
         };

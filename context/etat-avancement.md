@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 3.97**, `BUILD_ID` `20261104-t4-libre`,
-cache `geriaassist-v145`.*
+*Dernière mise à jour : 04/11/2026 — **version 3.98**, `BUILD_ID` `20261104-phosphore`,
+cache `geriaassist-v146`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,8 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **3.98** (04/11) — Phosphore : code canonique `BIO_048`, bornes 0,80-1,45, suivi MRC,
+  alerte d'hypophosphatémie graduée (renutrition, sels d'aluminium, diurétiques).
 - **3.97** (04/11) — T4 et T3 en fraction LIBRE (pmol/L), bornes 12-22 / 3,1-6,8 ; import PDF
   de la T4L/T3L.
 - **3.96** (04/11) — Audit de cohérence de la biologie : 13 codes LOINC corrigés, seuil
@@ -135,8 +137,7 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-Décisions utilisateur du 04/11 à livrer, un commit chacune : **phosphore** (code canonique
-`BIO_048` + alerte d'hypophosphatémie 0,80 / 0,65 / 0,32 mmol/L, MSD) ; **troponine** (sélecteur
+Décisions utilisateur du 04/11 restant à livrer, un commit chacune : **troponine** (sélecteur
 hs-cTnI Abbott 16/34 + rule-in 64 / hs-cTnT Roche 14 + rule-in 52) ; **LDL** affiché sur la
 ligne « Bilan lipidique » du Suivi.
 
@@ -161,8 +162,7 @@ ligne « Bilan lipidique » du Suivi.
 7. `global_score` : la moyenne des scores d'alerte remonte quand on retire des alertes
    informatives — formule à arbitrer.
 8. Pas de paramètre « bicarbonate plasmatique » dans `MASTER_DB.BIOLOGIE`.
-10. Troponine : seuils de deux réactifs mêlés (hs-cTnI 16/34, hs-cTnT 52). Phosphore sans code
-   canonique (`BIO_PHOS`), `SYND_040` cible `BIO_005`.
+10. Troponine : seuils de deux réactifs mêlés (hs-cTnI 16/34, hs-cTnT 52).
 
 ---
 

@@ -1429,6 +1429,7 @@ const PATHO_BIO_MONITOR = [
         BIO_004: { f: "Selon le stade : G3a tous les 6 mois, G3b tous les 3 mois, G4-5 tous les 1 à 3 mois" },
         BIO_001: { f: "Selon le stade : G3a tous les 6 mois, G3b tous les 3 mois, G4-5 tous les 1 à 3 mois" },
         BIO_005: { f: "Selon le stade (bilan phosphocalcique dès G3b)" },
+        BIO_048: { f: "Selon le stade (bilan phosphocalcique dès G3b)" },
         BIO_009: { f: "Selon le stade (anémie rénale dès G3)" },
         BIO_023: { f: "" } } },
     { id: "BIO_MON_THYROID", pathos: ["PAT_017", "PAT_018"], source: "ETA_2023", parametres: {
