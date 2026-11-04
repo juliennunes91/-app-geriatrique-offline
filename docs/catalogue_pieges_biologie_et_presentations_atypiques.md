@@ -1,6 +1,6 @@
 # Pièges d'interprétation de la biologie et présentations atypiques du sujet âgé
 
-Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.50).
+Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.60).
 
 **Statut**
 - ✅ **implémenté** : l'application le signale quand le dossier réunit la valeur et la circonstance ;
@@ -167,12 +167,23 @@ détectée porte sa sévérité dans une table déclarée (`ASSOCIATIONS_BIO`, `
 | 6.13 | **Profil biologique d'alcoolisation** | ASAT/ALAT ≥ 2 avec GGT haute ou VGM > 100 | ✅ info (non spécifique, dit) | revues ; ratio non spécifique | S |
 | 6.14 | **Encéphalopathie de Wernicke** | alcool + confusion + dénutrition (2 critères de Caine sur 4) | ✅ orange | EFNS, Galvin 2010 | R |
 | 6.15 | **Triade de Hakim → hydrocéphalie à pression normale** | chutes + incontinence + troubles cognitifs | ✅ info | critères internationaux 2005 / japonais | S |
-| 6.16 | Hémolyse : anémie + réticulocytes hauts + bilirubine | seuil de réticulocytes non sourcé | 🔜 | BSH AIHA 2017 | NV |
-| 6.17 | Rhabdomyolyse + IRA + hyperkaliémie | CPK, créatinine, K | 🔜 (`SYND_002` couvre la CPK) | — | NV |
+| 6.16 | **Hémolyse** | anémie + réticulocytes et bilirubine au-dessus des bornes | ✅ info | BSH, Hill 2017 | S |
+| 6.17 | **Rhabdomyolyse avec atteinte rénale** | CPK > 5 N + créatinine haute ou DFG < 60 (± K > 5 : ECG) | ✅ orange | Bosch, *NEJM* 2009 | S |
 | 6.18 | SIADH (diagnostic d'exclusion) | hyponatrémie hypotonique, Uosm > 100, natriurèse > 30 sans diurétique ; hypothyroïdie, insuffisance surrénale et rénale à écarter | ✅ (champs `bioOsmU`, `bioNaU`, dans la carte d'hyponatrémie) | ESE/ESICM/ERBP 2014 | R |
 | 6.19 | Syndrome sérotoninergique (critères de Hunter) | signes neuromusculaires cliniques | 📚 (`SYND_043` : association de médicaments) | — | NV |
 | 6.20 | Hyperthyroïdie + FA | TSH basse et FA | 📚 (dans la carte thyroïdienne) | — | — |
 | 6.21 | Triade de Whipple (hypoglycémie documentée) | symptômes + glycémie basse + correction | 📚 | — | NV |
+| 6.22 | **Agranulocytose médicamenteuse** | PNN < 1,0, ou < 1,5 avec fièvre, sous antithyroïdien ou clozapine | ✅ orange | ATA 2016 ; RCP clozapine | S |
+| 6.23 | **Crise thyrotoxique** | TSH < 0,1, T4L/T3L hautes + fièvre ou confusion | ✅ orange | ATA 2016 (score de Burch-Wartofsky) | S |
+| 6.24 | **Coma myxœdémateux** | hypothyroïdie avérée + confusion + hypothermie < 35 °C, Na < 130 ou hypoglycémie | ✅ orange | Popoveniuc 2014 (score) | S |
+| 6.25 | **Atteinte hépatique aiguë avec coagulopathie** | ASAT ou ALAT > 3 N + INR > 1,5 sans anticoagulant ; confusion → insuffisance hépatique aiguë ; paracétamol → N-acétylcystéine | ✅ orange | EASL, Wendon 2017 | S |
+| 6.26 | **Diabète insipide** (néphrogénique sous lithium) | Na > 145 + osmolalité urinaire < plasmatique (mesurée ou calculée) | ✅ orange | revues de cas ; prévalence 20-40 % sous lithium prolongé | S |
+| 6.27 | **Syndrome sérotoninergique** | ≥ 2 agents sérotoninergiques + fièvre > 38 °C ou confusion → chercher le clonus | ✅ orange | Hunter, Dunkley *QJM* 2003 | R |
+| 6.28 | **Hématome sous-dural** | chutes + anticoagulant ou antiagrégant hors aspirine + troubles cognitifs ou confusion | ✅ info | NICE NG232, 2023 | S |
+| 6.29 | **Ictère cholestatique apyrétique avec amaigrissement** | bilirubine ≥ 34 + PAL/GGT > 1,5 N, sans fièvre, dénutrition ou anorexie | ✅ info | ACG, Kwo 2017 | S |
+| 6.30 | **Hypercalcémie + PAL osseuses** | Ca > 2,65 + PAL haute, GGT normale (remplace alors le piège « PAL osseuses ») | ✅ info | ACG, Kwo 2017 | S |
+| 6.31 | DRESS (fièvre, éosinophilie, cytolyse sous allopurinol, carbamazépine…) | pas de champ éosinophiles | 🔜 | RegiSCAR | NV |
+| 6.32 | Acidose lactique sous metformine | lactates + metformine + DFG < 30 | ✅ en partie (imputabilité de `SYND_038`) | RCP metformine | — |
 
 ---
 

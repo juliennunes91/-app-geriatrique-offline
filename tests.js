@@ -2265,6 +2265,26 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const src = require('fs').readFileSync(require('path').join(__dirname, 'app_core.js'), 'utf8');
         assert.ok(/#bioOsmU, #bioNaU/.test(src), 'les deux champs partent dans l\'export JSON');
     });
+    test('Associations evocatrices (lot 2) : chacune sur sa combinaison, jamais sur un element seul', () => {
+        const run = c => String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'] }, c))._html['alertes-bio'] || '');
+        const ids = c => [...run(c).matchAll(/data-association="([a-z_]+)"/g)].map(m => m[1]);
+        const oui = (c, id) => assert.ok(ids(c).includes(id), id + ' doit sortir : ' + JSON.stringify(c));
+        const non = (c, id) => assert.ok(!ids(c).includes(id), id + ' ne doit PAS sortir : ' + JSON.stringify(c));
+        oui({ bio: { bioHb: 9, bioRetic: 180, bioBili: 45 } }, 'hemolyse'); non({ bio: { bioHb: 9, bioRetic: 180 } }, 'hemolyse');
+        oui({ bio: { bioCpk: 5000, bioCreat: 160 }, dfg: 35 }, 'rhabdo_ira'); non({ bio: { bioCpk: 5000, bioCreat: 70 }, dfg: 80 }, 'rhabdo_ira');
+        oui({ meds: ['Carbimazole'], bio: { bioPnn: 0.4 } }, 'agranulocytose'); oui({ meds: ['Carbimazole'], bio: { bioPnn: 1.2, bioTemp: 38.4 } }, 'agranulocytose');
+        non({ bio: { bioPnn: 0.4 } }, 'agranulocytose'); non({ meds: ['Carbimazole'], bio: { bioPnn: 1.2 } }, 'agranulocytose');
+        oui({ bio: { bioTsh: 0.01, bioT4: 45, bioTemp: 38.8 } }, 'crise_thyro'); non({ bio: { bioTsh: 0.01, bioT4: 45 } }, 'crise_thyro');
+        oui({ flags: ['chkDelirium'], bio: { bioTsh: 40, bioT4: 5, bioTemp: 34.5 } }, 'myxoedeme'); non({ bio: { bioTsh: 40, bioT4: 5, bioTemp: 34.5 } }, 'myxoedeme');
+        oui({ flags: ['chkDelirium'], bio: { bioAlat: 900, bioAsat: 700, bioInr: 2.2 } }, 'ihaigue'); non({ meds: ['Warfarine'], bio: { bioAlat: 900, bioInr: 2.2 } }, 'ihaigue');
+        assert.ok(/N-acétylcystéine/.test(run({ meds: ['Paracetamol'], bio: { bioAlat: 900, bioInr: 2.2 } })), 'sous paracetamol : N-acetylcysteine nommee');
+        oui({ meds: ['Lithium'], bio: { patientNa: 152, bioOsmU: 180 } }, 'diabete_insipide'); non({ meds: ['Lithium'], bio: { patientNa: 152, bioOsmU: 700 } }, 'diabete_insipide');
+        oui({ meds: ['Sertraline', 'Tramadol'], bio: { bioTemp: 38.5 } }, 'serotoninergique'); non({ meds: ['Sertraline'], bio: { bioTemp: 38.5 } }, 'serotoninergique');
+        oui({ meds: ['Apixaban'], flags: ['chkChutes', 'chkMci'] }, 'hsd'); non({ flags: ['chkChutes', 'chkMci'] }, 'hsd');
+        oui({ flags: ['chkAnorexie'], bio: { bioBili: 90, bioPal: 400 } }, 'ictere_aeg'); non({ flags: ['chkAnorexie'], bio: { bioBili: 90, bioPal: 400, bioTemp: 38.6 } }, 'ictere_aeg');
+        const os = run({ bio: { bioCa: 2.9, bioPal: 300, bioGgt: 30 } });
+        assert.ok(/data-association="hyperca_os"/.test(os) && !/🔎 Phosphatases alcalines/.test(os), 'hypercalcemie + PAL osseuses : une carte, pas deux');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :

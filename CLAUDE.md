@@ -1991,6 +1991,15 @@ insuffisance surrénale, BRASH, microangiopathie, profil d'alcoolisation, Wernic
 le critère rénal ne compte que sans `PAT_029` déclarée. Un chevron brut dans un titre
 (« Hb < 10 ») casse la clé de masquage : l'écrire en toutes lettres. Chaque association est
 testée dans les deux sens (combinaison → sort ; un élément manquant → ne sort pas).
+**Lot 2 (4.60)**, douze de plus : hémolyse (BSH 2017), rhabdomyolyse avec atteinte rénale
+(Bosch 2009), agranulocytose sous antithyroïdien ou clozapine (ATA 2016), crise
+thyrotoxique, coma myxœdémateux (Popoveniuc 2014), atteinte hépatique aiguë avec
+coagulopathie **hors anticoagulant** (EASL 2017 ; N-acétylcystéine nommée sous
+paracétamol), diabète insipide (urines moins concentrées que le plasma, mesuré ou calculé ;
+lithium nommé), syndrome sérotoninergique (≥ 2 agents + fièvre ou confusion → clonus,
+Hunter 2003), hématome sous-dural (chutes + anticoagulant + troubles cognitifs, NICE NG232),
+ictère cholestatique apyrétique avec amaigrissement, hypercalcémie + PAL osseuses — qui fait
+alors taire le piège « PAL osseuses » du lot 2 (un fait, une carte).
 
 **Biologie urinaire et SIADH (4.50)** — deux champs, `bioOsmU` (osmolalité urinaire,
 mOsm/kg, `BIO_049`, LOINC 2695-5) et `bioNaU` (natriurèse sur échantillon, mmol/L,

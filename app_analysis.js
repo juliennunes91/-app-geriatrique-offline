@@ -2597,7 +2597,8 @@ function analyserPrescription() {
         }
 
         // Phosphatases alcalines : foie ou os.
-        if (haut('BIO_016') && normal('BIO_015')) {
+        // Avec une hypercalcémie, l'association « hypercalcémie + PAL osseuses » le dit déjà.
+        if (haut('BIO_016') && normal('BIO_015') && !(caEval > 2.65)) {
             piege(`Phosphatases alcalines élevées (${v('BIO_016')} UI/L) avec GGT normale : origine osseuse probable`,
                 "La GGT est spécifique du foie : normale, elle oriente une élévation des PAL vers l'os (fracture en consolidation, maladie de Paget, métastases osseuses, ostéomalacie et carence en vitamine D) plutôt que vers une cholestase (ACG, Kwo 2017).");
         }
@@ -2762,6 +2763,56 @@ function analyserPrescription() {
                 quand() { return ctx('chutes') && ctx('incontinence') && (ctx('mci') || comorb('PAT_010', 'PAT_011', 'PAT_012', 'PAT_013', 'PAT_041', 'PAT_042', 'PAT_043')); },
                 titre: () => "Chutes, troubles cognitifs et incontinence : penser à l'hydrocéphalie à pression normale",
                 texte: () => "La triade de Hakim (trouble de la marche, troubles cognitifs, troubles urinaires) n'a pas à être complète : les critères internationaux exigent le trouble de la marche et un autre signe, les critères japonais deux des trois. Imagerie cérébrale ; c'est une cause de démence accessible à un traitement." }
+            ,
+            // ----- Lot 2 (4.60) -----
+            {   id: 'hemolyse', severite: 'info',
+                quand() { return anemie && borne('BIO_038', 'haut') && borne('BIO_017', 'haut'); },
+                titre: () => "Anémie régénérative avec bilirubine élevée : hémolyse ?",
+                texte: () => `Réticulocytes ${v('BIO_038')} G/L et bilirubine ${v('BIO_017')} µmol/L. Compléter par LDH (parfois normale), haptoglobine, bilirubine non conjuguée et test direct à l'antiglobuline — dont la positivité fortuite est fréquente à l'hôpital ; penser à une hémolyse médicamenteuse (BSH, Hill 2017). Un saignement récent donne aussi des réticulocytes hauts, sans bilirubine.` },
+            {   id: 'rhabdo_ira', severite: 'warning',
+                quand() { return hautX('BIO_018', 5) && (borne('BIO_003', 'haut') || (dfg > 0 && dfg < 60)); },
+                titre: () => `CPK ${v('BIO_018')} UI/L avec atteinte rénale : rhabdomyolyse compliquée ?`,
+                texte: () => `L'insuffisance rénale aiguë est la complication la plus grave de la rhabdomyolyse et en aggrave nettement le pronostic (Bosch, NEJM 2009)${k > 5 ? ` — kaliémie ${k} mmol/L : ECG` : ''}. Hydratation, arrêt des statines et fibrates, recherche d'une chute avec station au sol prolongée ; surveillance de la créatinine, du potassium, du phosphore et du calcium.` },
+            {   id: 'agranulocytose', severite: 'warning',
+                meds: () => medsImputables(['carbimazole', 'thiamazole', 'propylthiouracile', 'clozapine']),
+                quand() { const pnn = v('BIO_012'); return this.meds().length > 0 && pnn > 0 && (pnn < 1.0 || (pnn < 1.5 && temp >= 38)); },
+                titre() { return `Neutropénie (PNN ${v('BIO_012')} G/L)${temp >= 38 ? ' fébrile' : ''} sous ${this.meds().join(', ')} : agranulocytose médicamenteuse ?`; },
+                texte: () => "Sous antithyroïdien de synthèse, toute fièvre ou angine impose une numération avec formule, et une agranulocytose l'arrêt immédiat du médicament et une antibiothérapie à large spectre si fièvre (ATA 2016). La clozapine a sa propre surveillance des PNN et ses seuils d'arrêt (RCP)." },
+            {   id: 'crise_thyro', severite: 'warning',
+                quand() { const tsh = v('BIO_019'); return tsh > 0 && tsh < 0.1 && (v('BIO_T4') > 22 || v('BIO_T3') > 6.8) && (temp >= 38 || ctx('delirium')); },
+                titre: () => `Thyrotoxicose avec ${temp >= 38 ? 'fièvre' : 'confusion'} : crise thyrotoxique ?`,
+                texte: () => `Fièvre, troubles de conscience, tachycardie ou FA${comorb('PAT_006') ? ' (déclarée)' : ''}, insuffisance cardiaque et troubles digestifs composent le score de Burch-Wartofsky, qui fonde le diagnostic (ATA 2016). Urgence : bêtabloquant, antithyroïdien, corticoïde, traitement du facteur déclenchant (infection, iode, arrêt d'un antithyroïdien).` },
+            {   id: 'myxoedeme', severite: 'warning',
+                quand() { const tsh = v('BIO_019'), t4 = v('BIO_T4'); const averee = (tsh > 10) || (tsh > 4 && t4 > 0 && t4 < 12); return averee && ctx('delirium') && ((temp > 0 && temp < 35) || (na > 0 && na < 130) || (gly > 0 && gly < 3.9)); },
+                titre: () => "Hypothyroïdie avérée, confusion et hypothermie, hyponatrémie ou hypoglycémie : coma myxœdémateux ?",
+                texte: () => "Altération de la conscience, hypothermie, hyponatrémie, hypoglycémie, hypotension et bradycardie sont les éléments du score diagnostique de Popoveniuc (2014) ; le « coma » est souvent une simple confusion chez le sujet âgé. Urgence : lévothyroxine IV, hydrocortisone avant elle tant qu'une insuffisance surrénale n'est pas écartée, réchauffement passif." },
+            {   id: 'ihaigue', severite: 'warning',
+                quand() { const inr = v('BIO_030'); return inr > 1.5 && medsImputables(['anticoagulant']).length === 0 && (hautX('BIO_013', 3) || hautX('BIO_014', 3)); },
+                titre: () => `Cytolyse avec INR ${v('BIO_030')} sans anticoagulant : atteinte hépatique aiguë avec coagulopathie`,
+                texte: () => `${ctx('delirium') ? "Avec la confusion déclarée, la définition de l'insuffisance hépatique aiguë est réunie (INR > 1,5 et encéphalopathie). " : "Une encéphalopathie, même discrète, ferait parler d'insuffisance hépatique aiguë. "}Avis hépatologique précoce (EASL, Wendon 2017)${medsImputables(['paracetamol']).length ? ' ; sous paracétamol : N-acétylcystéine sans attendre la paracétamolémie' : ''}.` },
+            {   id: 'diabete_insipide', severite: 'warning',
+                posm: () => v('BIO_042') > 0 ? v('BIO_042') : (na > 0 ? 2 * na + (gly || 0) + (v('BIO_007') || 0) : 0),
+                quand() { const u = v('BIO_049'); return na > 145 && u > 0 && this.posm() > 0 && u < this.posm(); },
+                titre() { return `Hypernatrémie avec urines moins concentrées que le plasma (${v('BIO_049')} contre ${Math.round(this.posm())} mOsm/kg) : diabète insipide ?`; },
+                texte: () => `Une hypernatrémie s'accompagne normalement d'urines concentrées ; des urines diluées signent un défaut de concentration rénale${medsImputables(['lithium']).length ? ' — sous lithium, un diabète insipide néphrogénique touche 20 à 40 % des traitements prolongés' : ''}. La réponse à la desmopressine sépare la forme centrale de la néphrogénique ; en attendant, ne pas restreindre l'eau.` },
+            {   id: 'serotoninergique', severite: 'warning',
+                meds: () => medsImputables(['isrs', 'irsn', 'tramadol', 'linezolide', 'mirtazapine', 'trazodone', 'fentanyl', 'methadone', 'sumatriptan', 'selegiline', 'rasagiline', 'moclobemide', 'iproniazide', 'lithium']),
+                quand() { return this.meds().length >= 2 && (temp > 38 || ctx('delirium')); },
+                titre() { return `${temp > 38 ? 'Fièvre' : 'Confusion'} sous ${this.meds().join(' + ')} : syndrome sérotoninergique ?`; },
+                texte: () => "Les critères de Hunter (Dunkley, QJM 2003) exigent un agent sérotoninergique et un signe neuromusculaire : clonus spontané, inductible ou oculaire avec agitation ou sueurs, tremblement avec hyperréflexie, ou hypertonie avec fièvre > 38 °C. Rechercher le clonus aux membres inférieurs ; arrêter les agents en cause." },
+            {   id: 'hsd', severite: 'info',
+                meds: () => medsImputables(['anticoagulant', 'clopidogrel', 'ticagrelor', 'prasugrel']),
+                quand() { return ctx('chutes') && this.meds().length > 0 && (ctx('delirium') || ctx('mci') || comorb('PAT_010', 'PAT_011', 'PAT_012', 'PAT_013', 'PAT_041', 'PAT_042', 'PAT_043')); },
+                titre() { return `Chutes sous ${this.meds().join(', ')} avec troubles cognitifs ou confusion : hématome sous-dural ?`; },
+                texte: () => "Un hématome sous-dural chronique se révèle par un fléchissement cognitif ou de la marche après une chute parfois oubliée. Après un traumatisme crânien sous anticoagulant ou antiagrégant autre que l'aspirine seule, NICE (NG232, 2023) recommande d'envisager un scanner cérébral dans les 8 heures ; à distance, devant un déclin inexpliqué." },
+            {   id: 'ictere_aeg', severite: 'info',
+                quand() { return v('BIO_017') >= 34 && (hautX('BIO_016', 1.5) || hautX('BIO_015', 1.5)) && !(temp >= 38) && (ctx('denutrition') || ctx('anorexie')); },
+                titre: () => "Ictère cholestatique sans fièvre avec amaigrissement ou anorexie : obstacle tumoral à écarter",
+                texte: () => "Un ictère indolore et apyrétique avec altération de l'état général évoque d'abord un obstacle bilio-pancréatique. La cholestase se documente par l'échographie puis, selon elle, scanner ou bili-IRM (ACG, Kwo 2017)." },
+            {   id: 'hyperca_os', severite: 'info',
+                quand() { return ca > 2.65 && borne('BIO_016', 'haut') && !borne('BIO_015', 'haut'); },
+                titre: () => "Hypercalcémie avec phosphatases alcalines osseuses : atteinte osseuse ?",
+                texte: () => "PAL élevées et GGT normale situent l'élévation dans l'os (ACG, Kwo 2017). Avec une hypercalcémie : métastases osseuses, hyperparathyroïdie avec ostéite, maladie de Paget immobilisée. Le myélome, lui, donne typiquement des PAL normales malgré des lésions lytiques." }
         ];
         ASSOCIATIONS_BIO.forEach(a => {
             const c = a.criteres ? a.criteres() : null;

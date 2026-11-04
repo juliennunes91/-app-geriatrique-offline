@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.50**, `BUILD_ID` `20261104-urines-siadh`,
-cache `geriaassist-v155`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.60**, `BUILD_ID` `20261104-associations-lot2`,
+cache `geriaassist-v156`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.60** (04/11) — Associations lot 2 (12) : hémolyse, rhabdomyolyse + IRA, agranulocytose,
+  crise thyrotoxique, coma myxœdémateux, atteinte hépatique aiguë, diabète insipide,
+  syndrome sérotoninergique, hématome sous-dural, ictère + AEG, hypercalcémie + PAL osseuses.
 - **4.50** (04/11) — Champs urinaires (osmolalité, natriurèse) et lecture de l'hyponatrémie selon
   l'arbre ESE 2014, SIADH en diagnostic d'exclusion.
 - **4.40** (04/11) — Associations évocatrices (table `ASSOCIATIONS_BIO`, 15 entrées : CRAB,
