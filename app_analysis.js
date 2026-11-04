@@ -1088,7 +1088,7 @@ const _HASH_NUMERIC_FIELDS = [
     // Child-Pugh manuel (utilisé si cpManual=1)
     'cpBili', 'cpAlb', 'cpTp', 'cpAscite', 'cpEnceph'
 ];
-const _HASH_SELECT_FIELDS = ['bioB12Unit', 'bioB9Unit', 'bioVitDUnit', 'bioDigoxUnit'];
+const _HASH_SELECT_FIELDS = ['bioB12Unit', 'bioB9Unit', 'bioVitDUnit', 'bioDigoxUnit', 'bioTropoReactif'];
 if (typeof window !== 'undefined') { window._HASH_NUMERIC_FIELDS = _HASH_NUMERIC_FIELDS; window._HASH_SELECT_FIELDS = _HASH_SELECT_FIELDS; }
 
 function analyserPrescription() {
@@ -2258,15 +2258,27 @@ function analyserPrescription() {
         if (ddim > seuilDdim) checkBioSyndrome('SYND_035', true);
     }
 
-    // --- SYND_036 : Syndrome Coronarien Aigu — Troponine hs sexe-spécifique (ESC 2023) ---
-    // 99e percentile : F > 16 ng/L, H > 34 ng/L. Seuil "rule-in SCA" : > 52 ng/L (cohorte mixte).
+    // --- SYND_036 : Troponine hs — les seuils dépendent du RÉACTIF ---
+    // Les anciens seuils mêlaient deux dosages : 99e percentile hs-cTnI (Abbott Architect,
+    // F 16 / H 34 ng/L) et « rule-in » de l'algorithme ESC 0h/1h pour la hs-cTnT (Roche, 52).
+    // Réactif déclaré (`bioTropoReactif`) :
+    //   hs-cTnI Abbott : 99e percentile F 16 / H 34 ng/L ; rule-in ESC 0h/1h ≥ 64 ng/L ;
+    //   hs-cTnT Roche  : 99e percentile 14 ng/L ;          rule-in ESC 0h/1h ≥ 52 ng/L.
+    // Non déclaré : on signale au-delà du plus bas des 99e percentiles (14 ng/L) sans graduer
+    // de « rule-in », et on demande le réactif — un seuil d'un autre dosage serait faux.
     {
         const tn = bioValues['BIO_034'];
-        const seuilSexe = (sexe === 'F') ? 16 : 34;
-        if (tn > seuilSexe) {
-            const severe = tn > 52;
-            const grade = tn > 52 ? `rule-in SCA (> 52 ng/L)` : `élévation > 99e percentile ${sexe} (> ${seuilSexe} ng/L)`;
-            checkBioSyndrome('SYND_036', true, { severe, labelOverride: `Troponine hs ${grade} — ${tn} ng/L` });
+        const reactif = (document.getElementById('bioTropoReactif') || {}).value || '';
+        const R = reactif === 'cTnI' ? { nom: 'hs-cTnI', p99: sexe === 'F' ? 16 : 34, ruleIn: 64 }
+            : reactif === 'cTnT' ? { nom: 'hs-cTnT', p99: 14, ruleIn: 52 }
+            : { nom: '', p99: 14, ruleIn: null };
+        if (tn > R.p99) {
+            const severe = R.ruleIn != null && tn >= R.ruleIn;
+            const grade = !R.nom
+                ? `> 14 ng/L (réactif non précisé : préciser hs-cTnI ou hs-cTnT pour interpréter)`
+                : severe ? `${R.nom} ≥ ${R.ruleIn} ng/L (rule-in ESC 0h/1h)`
+                : `${R.nom} > 99e percentile (${R.p99} ng/L)`;
+            checkBioSyndrome('SYND_036', true, { severe, labelOverride: `Troponine ${grade} — ${tn} ng/L` });
         }
     }
 

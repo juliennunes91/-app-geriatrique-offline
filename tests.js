@@ -1517,7 +1517,8 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const PREFERENCES = {
             prefSkipPrecisions: 'reglage utilisateur', prefSkipMaskConfirm: 'reglage utilisateur',
             spcDisplayAccordion: 'mode d\'affichage', spcDisplayModal: 'mode d\'affichage',
-            suiviModeCroix: 'mode d\'affichage', suiviModeMed: 'mode d\'affichage'
+            suiviModeCroix: 'mode d\'affichage', suiviModeMed: 'mode d\'affichage',
+            bioTropoReactif: 'reglage du laboratoire (le reactif ne change pas d\'un patient a l\'autre)'
         };
         const core = fs.readFileSync('app_core.js', 'utf8');
         const i = core.indexOf('window.resetPatient = function');
@@ -2120,6 +2121,24 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const irc = analyzeCase({ age: 82, sexe: 'F', dfg: 30, comorbs: ['PAT_029'], bio: { bioPhos: 1.8 }, meds: ['Paracetamol'] });
         assert.ok(/Phospho-Calcique/i.test(irc._html['alertes-bio'] || ''), 'SYND_040 lu sur BIO_048');
         assert.ok(/Phosphatémie/.test(irc._html['alertes-suivi'] || ''), 'ligne de suivi dans la MRC');
+    });
+    test('Troponine : les seuils suivent le reactif declare (hs-cTnI Abbott / hs-cTnT Roche)', () => {
+        // Les seuils melaient deux dosages (16/34 = hs-cTnI ; 52 = rule-in hs-cTnT).
+        const lecture = (tn, reactif, sexe) => {
+            const h = String(analyzeCase({ age: 80, sexe: sexe || 'F', bio: { bioTropo: tn, bioTropoReactif: reactif || '' }, meds: ['Paracetamol'] })._html['alertes-bio'] || '').replace(/<[^>]+>/g, ' ');
+            const m = h.match(/Troponine [^—]*— [0-9.]+ ng\/L/); return m ? m[0] : '';
+        };
+        assert.ok(/hs-cTnT > 99e percentile \(14/.test(lecture(20, 'cTnT')), 'cTnT : 99e percentile 14');
+        assert.ok(/hs-cTnT ≥ 52/.test(lecture(55, 'cTnT')), 'cTnT : rule-in 52');
+        assert.strictEqual(lecture(20, 'cTnI', 'H'), '', 'cTnI homme : 20 < 34, rien');
+        assert.ok(/hs-cTnI > 99e percentile \(16/.test(lecture(20, 'cTnI', 'F')), 'cTnI femme : 99e percentile 16');
+        assert.ok(/hs-cTnI > 99e/.test(lecture(55, 'cTnI', 'H')), 'cTnI : 55 < 64, pas encore rule-in');
+        assert.ok(/hs-cTnI ≥ 64/.test(lecture(70, 'cTnI', 'H')), 'cTnI : rule-in 64');
+        assert.ok(/réactif non précisé/.test(lecture(55, '')), 'reactif non declare : on le demande, sans graduer');
+        for (const f of ['index.html', 'index_modern.html']) {
+            const h = require('fs').readFileSync(require('path').join(__dirname, f), 'utf8');
+            assert.ok(/id="bioTropoReactif"[^>]*onchange="setTropoReactif\(this\.value\)"[\s\S]{0,120}value="cTnI"[\s\S]{0,80}value="cTnT"/.test(h), f + ' : selecteur de reactif');
+        }
     });
     test('Biologie : codes LOINC verifies (le code designe bien l\'analyte et l\'unite du parametre)', () => {
         // 13 codes sur 47 designaient un autre analyte (CPK = cholesterol total ; vitamine D
@@ -3482,16 +3501,17 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(/alert-danger/.test(htmlLi17), 'Li=1.7 → surdosage (danger)');
     });
 
-    test('Tier 5 — troponine sexe-spécifique (F > 16 / H > 34) + rule-in SCA > 52', () => {
+    test('Tier 5 — troponine : seuils du reactif hs-cTnI (F > 16 / H > 34, rule-in >= 64)', () => {
+        // Seuils propres au reactif Abbott hs-cTnI ; les seuils hs-cTnT et le cas « reactif
+        // non precise » sont verifies par le test « Troponine : les seuils suivent le reactif ».
         const { analyzeCase } = require('./oracle_harness');
-        const tF = tn => (analyzeCase({ age: 75, sexe: 'F', bio: { tropo: tn } })['alertes-bio'] || []).map(a => a.titre).join(' | ');
-        const tH = tn => (analyzeCase({ age: 75, sexe: 'M', bio: { tropo: tn } })['alertes-bio'] || []).map(a => a.titre).join(' | ');
-        assert.ok(!/Troponine/i.test(tF(15)), 'F tn=15 ne doit PAS déclencher (seuil F = 16)');
-        assert.ok(/Troponine/i.test(tF(20)), 'F tn=20 doit déclencher');
-        assert.ok(!/Troponine/i.test(tH(30)), 'H tn=30 ne doit PAS déclencher (seuil H = 34)');
-        assert.ok(/Troponine/i.test(tH(40)), 'H tn=40 doit déclencher');
-        const html60 = (analyzeCase({ age: 75, sexe: 'M', bio: { tropo: 60 } })._html || {})['alertes-bio'] || '';
-        assert.ok(/alert-danger/.test(html60), 'Troponine > 52 (rule-in SCA) → danger');
+        const cas = (sexe, tn) => analyzeCase({ age: 75, sexe, bio: { tropo: tn, bioTropoReactif: 'cTnI' } });
+        const t = (sexe, tn) => (cas(sexe, tn)['alertes-bio'] || []).map(a => a.titre).join(' | ');
+        assert.ok(!/Troponine/i.test(t('F', 15)), 'F tn=15 ne doit PAS declencher (seuil F = 16)');
+        assert.ok(/Troponine/i.test(t('F', 20)), 'F tn=20 doit declencher');
+        assert.ok(!/Troponine/i.test(t('M', 30)), 'H tn=30 ne doit PAS declencher (seuil H = 34)');
+        assert.ok(/Troponine/i.test(t('M', 40)), 'H tn=40 doit declencher');
+        assert.ok(/alert-danger/.test((cas('M', 70)._html || {})['alertes-bio'] || ''), 'hs-cTnI >= 64 (rule-in) : danger');
     });
 
     test('Tier 5 — digoxinémie : alerte si > 0.9 ng/mL, danger si > 1.2 (ESC 2021)', () => {

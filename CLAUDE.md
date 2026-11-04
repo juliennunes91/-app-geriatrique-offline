@@ -1836,10 +1836,14 @@ orange, sévère < 0,32 rouge) : elle nomme d'abord le **syndrome de renutrition
 dénutri réalimenté, NICE CG32), et n'impute que ce que l'ordonnance porte — sels d'aluminium
 (phosphate d'aluminium, sucralfate : chélation digestive) et diurétiques.
 
+**Troponine (3.99)** : les seuils mêlaient deux dosages (16/34 = 99ᵉ percentile hs-cTnI
+Abbott ; 52 = rule-in hs-cTnT). Sélecteur **`bioTropoReactif`** (deux UIs) : hs-cTnI Abbott
+(99ᵉ percentile F 16 / H 34, rule-in ESC 0h/1h ≥ 64 ng/L) ou hs-cTnT Roche (14, rule-in
+≥ 52). Non déclaré : signalement au-delà de 14 ng/L, sans graduation, et demande du réactif.
+C'est un **réglage du laboratoire** : déclaré dans `PREFERENCES` (survit à « Nouveau »),
+mémorisé en `localStorage` (`geria-tropo-reactif`), et pris dans le hash de mémoïsation.
+
 **Points ouverts, non tranchés** :
-- **Troponine** : seuils 16/34 ng/L (99ᵉ percentile hs-cTnI par sexe) et « rule-in » 52 ng/L
-  (hs-cTnT, algorithme ESC 0h/1h) — deux réactifs différents. Le seuil dépend du réactif du
-  laboratoire, comme le dit déjà la section des bornes.
 - `BIO_027` (bilan lipidique) n'a pas de champ propre : la saisie passe par LDL / HDL / TG,
   la colonne « Valeur » de l'onglet Suivi reste vide.
 

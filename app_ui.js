@@ -851,8 +851,18 @@ function setGeriaPref(key, value) {
     // Refléter sur tous les checkboxes correspondants (les 2 UI peuvent cohabiter en mémoire)
     document.querySelectorAll('input[data-geria-pref="' + key + '"]').forEach(cb => { cb.checked = !!value; });
 }
+// Réactif de troponine du laboratoire : un réglage, pas une donnée du patient — il survit à
+// « Nouveau patient » et d'une session à l'autre (les seuils hs-cTnI et hs-cTnT diffèrent).
+function setTropoReactif(v) {
+    try { localStorage.setItem('geria-tropo-reactif', v || ''); } catch (e) { /* stockage indisponible */ }
+    document.querySelectorAll('#bioTropoReactif').forEach(s => { s.value = v || ''; });
+}
 function initGeriaPrefs() {
     loadGeriaPrefs();
+    try {
+        const r = localStorage.getItem('geria-tropo-reactif');
+        if (r) document.querySelectorAll('#bioTropoReactif').forEach(s => { s.value = r; });
+    } catch (e) { /* idem */ }
     Object.keys(window.geriaPrefs).forEach(k => {
         document.querySelectorAll('input[data-geria-pref="' + k + '"]').forEach(cb => { cb.checked = !!window.geriaPrefs[k]; });
     });
