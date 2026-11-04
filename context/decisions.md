@@ -33,3 +33,7 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   fausse (« anticoagulation recommandée » sans FA).
 - **03/11/2026** — Deux règles de même condition et même conseil : on en retire une plutôt
   que de les fusionner au rendu (`SUP_REM_10` → `EV_REM_01`).
+- **04/11/2026** — Une fréquence de surveillance biologique conditionnelle à un traitement
+  ne sort que s'il est prescrit (`si_med` : classe déclarée ou DCI exacte ; `si_comorb`).
+  Scores QT conditionnés comme ceux d'anticoagulation. — Le plan ne doit parler que du
+  traitement en cours.

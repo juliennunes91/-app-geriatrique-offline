@@ -1547,6 +1547,12 @@ function analyserPrescription() {
         if(activeComorbs.some(c=>['PAT_002','PAT_003'].includes(c))) { scoreDoac += 1; ttDoac.push("IC (+1)"); }
         if (_fa || _anticoagule) renderScore(SC.DOAC, scoreDoac, ttDoac);
 
+        // Scores de risque QT : ils guident la prescription d'un médicament allongeant
+        // le QT. Sans médicament à risque QT, sans QTc mesuré ni QT long déclaré, ils
+        // n'ont pas d'objet — même règle que les scores d'anticoagulation (3.94), et ils
+        // sortaient chez tout le monde sur le seul âge et le seul sexe.
+        const _qtPertinent = (globalQT_CountKR + globalQT_CountCR_PR) > 0
+            || bioValues['BIO_031'] > 0 || isChecked('chkLqts');
         // RISQ-PATH
         let scoreRisq = 0; let ttRisq = [];
         if(patientAge >= SA.risq_65) { scoreRisq += 1; ttRisq.push("Âge ≥65 (+1)"); }
@@ -1560,7 +1566,7 @@ function analyserPrescription() {
         if(activeComorbs.includes('PAT_006')) { scoreRisq += 1; ttRisq.push("FA (+1)"); }
         if(['PAT_010','PAT_011','PAT_012','PAT_013','PAT_014'].some(c=>activeComorbs.includes(c))) { scoreRisq += 1; ttRisq.push("Démence/Park (+1)"); }
         if(globalQT_CountKR > 0) { scoreRisq += (3 * globalQT_CountKR); ttRisq.push(`Médoc QT (+${3*globalQT_CountKR})`); }
-        renderScore(SC.RISQ_PATH, scoreRisq, ttRisq);
+        if (_qtPertinent) renderScore(SC.RISQ_PATH, scoreRisq, ttRisq);
 
         // Tisdale
         let scoreTisdale = 0; let ttTisdale = [];
@@ -1570,7 +1576,7 @@ function analyserPrescription() {
         if(bioValues['BIO_001'] > 0 && bioValues['BIO_001'] <= SB.hypoK) { scoreTisdale += 2; ttTisdale.push("HypoK (+2)"); }
         if(bioValues['BIO_031'] >= SB.qtc_prolonge) { scoreTisdale += 2; ttTisdale.push("QTc ≥450 (+2)"); }
         if(globalQT_CountKR > 0) { scoreTisdale += 3; ttTisdale.push("Médoc QT (+3)"); }
-        renderScore(SC.TISDALE, scoreTisdale, ttTisdale);
+        if (_qtPertinent) renderScore(SC.TISDALE, scoreTisdale, ttTisdale);
 
         // Charge Anticholinergique — Boustani 2008 ACB Scale (révisée AGS Beers 2023)
         // Seuils retenus :
@@ -3836,10 +3842,29 @@ function analyserPrescription() {
         // Initialiser le plan bio unifié
         const bioPlan = _registry._bioPlan || {};
 
+        // Une fréquence de surveillance qui ne vaut que SOUS un traitement (« sous ATS »,
+        // « si clozapine », « à l'introduction d'un ISRS ») n'a pas sa place au plan d'un
+        // patient qui ne le reçoit pas. `si_med` : classe DÉCLARÉE ou DCI exacte — jamais
+        // une sous-chaîne (« fludrocortisone » contient « cortisone »).
+        const _cleClasse = (typeof DRUG_CLASSES !== 'undefined')
+            ? new Set(Object.entries(DRUG_CLASSES).flatMap(([id, d]) => [id, ...((d && d.aliases) || [])].map(x => sanitizeText(x))))
+            : new Set();
+        const _siMed = (cle) => {
+            const k = sanitizeText(cle);
+            return (activeMeds || []).some(m => {
+                const d = sanitizeText(m.dci);
+                if (d === k) return true;
+                if (!_cleClasse.has(k)) return false;
+                try { return matchesDrugClass(d, sanitizeText(m.classe || ''), k); } catch (e) { return false; }
+            });
+        };
+        const _siComorb = (liste) => liste.some(p => activeComorbs.includes(p));
+        const _regleRetenue = (r) => (!r.si_med || r.si_med.some(_siMed)) && (!r.si_comorb || _siComorb(r.si_comorb));
+
         // Source 2: PATHO_BIO_MONITOR (via getRequiredBioMonitoring)
         if (typeof getRequiredBioMonitoring === 'function' && activeComorbs.length > 0) {
             try {
-                const bioMonitors = getRequiredBioMonitoring(activeComorbs);
+                const bioMonitors = getRequiredBioMonitoring(activeComorbs, _siMed);
                 for (const [bioId, data] of Object.entries(bioMonitors)) {
                     if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
                     data.pathos.forEach((p, i) => {
@@ -3865,13 +3890,20 @@ function analyserPrescription() {
                 const rule = PATHOLOGY_RULES_DB[patId];
                 if (!rule || !rule.BIOLOGIE) return;
                 let patName = (typeof nomPathoAffiche === 'function') ? nomPathoAffiche(rule.NOM || patId) : (rule.NOM || patId);
+                // Un paramètre dont la seule règle de la pathologie est conditionnelle à
+                // un traitement absent n'est pas une cible de cette pathologie chez CE
+                // patient : la natrémie du TAG n'a d'objet que sous ISRS.
+                const _conditionnelsAbsents = new Set((rule.BIOLOGIE.REGLES || [])
+                    .filter(r => r && r.bio && (r.si_med || r.si_comorb) && !_regleRetenue(r)).map(r => r.bio));
                 (rule.BIOLOGIE.SURVEILLANCE_CIBLE || []).forEach(bioId => {
+                    if (_conditionnelsAbsents.has(bioId)) return;
                     if (!bioPlan[bioId]) bioPlan[bioId] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
                     if (!bioPlan[bioId].pathos.includes(patName)) bioPlan[bioId].pathos.push(patName);
                 });
                 // Fréquences explicites définies dans BIOLOGIE.REGLES (ex: ECG annuel démence)
                 (rule.BIOLOGIE.REGLES || []).forEach(r => {
                     if (!r || !r.bio || !r.frequence) return;
+                    if (!_regleRetenue(r)) return;
                     if (!bioPlan[r.bio]) bioPlan[r.bio] = { meds: [], pathos: [], freqs: [], sources: [], freqByOrigin: {} };
                     if (!bioPlan[r.bio].pathos.includes(patName)) bioPlan[r.bio].pathos.push(patName);
                     if (!bioPlan[r.bio].freqs.includes(r.frequence)) bioPlan[r.bio].freqs.push(r.frequence);
@@ -3932,7 +3964,9 @@ function analyserPrescription() {
             'BIO_015': 'Annuel',
             'BIO_016': 'Annuel',
             'BIO_017': 'Annuel',
-            'BIO_018': 'À l\'introduction statine/fibrate, puis à la demande',
+            // Valeur PAR DÉFAUT : elle s'applique à toute origine, donc ne nomme aucun
+            // traitement (la statine a sa propre règle, conditionnée par `si_med`).
+            'BIO_018': 'À la demande (myalgies, faiblesse musculaire)',
             'BIO_019': 'Annuel',
             'BIO_020': 'Annuel',
             'BIO_021': 'Annuel',

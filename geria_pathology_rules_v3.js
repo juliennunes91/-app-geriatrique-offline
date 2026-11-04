@@ -555,7 +555,7 @@ const PATHOLOGY_RULES_DB = {
                     seuils: {
                         alerte: { min: 850, note: "Rechercher rhabdomyolyse si statine (surtout + fibrate ou macrolide)" }
                     },
-                    frequence: "À l'instauration de la statine, puis si myalgies",
+                    si_med: ["statine"], frequence: "À l'instauration de la statine, puis si myalgies",
                     syndrome_declenche: "SYND_002"
                 }
             ]
@@ -757,10 +757,10 @@ const PATHOLOGY_RULES_DB = {
                         alerte: { min_h: 450, min_f: 460, note: "Réévaluer médicaments allongeant le QT" },
                         critique: { min: 500, note: "Arrêt immédiat du médicament suspect, avis cardio" }
                     },
-                    frequence: "Avant et après introduction antiarythmique, puis semestriel sous amiodarone",
+                    si_med: ["antiarythmique"], frequence: "Avant et après introduction antiarythmique, puis semestriel sous amiodarone",
                     syndrome_declenche: "SYND_003"
                 },
-                {
+                { si_med: ["digoxine"],
                     bio: "BIO_044",
                     nom: "Digoxinémie",
                     frequence: "Dosage 6-8 h après prise, à ≥ 7 jours de toute modification de dose ou de DFG. Annuel si DFG stable, trimestriel si DFG < 45 ou poly-médication.",
@@ -780,10 +780,10 @@ const PATHOLOGY_RULES_DB = {
                         supra: { min: 4.0, action: "Adapter dose AVK, Vitamine K si > 5 sans saignement" },
                         critique: { min: 8.0, action: "PPSB + Vitamine K IV si saignement" }
                     },
-                    frequence: "Tous les 8-28 jours sous AVK selon stabilité",
+                    si_med: ["avk"], frequence: "Tous les 8-28 jours sous AVK selon stabilité",
                     syndrome_declenche: "SYND_027"
                 },
-                {
+                { si_med: ["amiodarone"],
                     bio: "BIO_019",
                     nom: "TSH",
                     frequence: "Tous les 6 mois sous amiodarone (risque hypo/hyperthyroïdie)",
@@ -939,7 +939,7 @@ const PATHOLOGY_RULES_DB = {
                     bio: "BIO_026",
                     nom: "HbA1c",
                     seuils: { cible: { max: 7.0, note: "Contrôle glycémique = ralentit progression AOMI" } },
-                    frequence: "Trimestriel si diabétique"
+                    si_comorb: ["PAT_016", "PAT_016a", "PAT_016b"], frequence: "Trimestriel si diabétique"
                 },
                 {
                     bio: "BIO_003",
@@ -1174,7 +1174,7 @@ const PATHOLOGY_RULES_DB = {
             SURVEILLANCE_CIBLE: ["BIO_001", "BIO_002", "BIO_003", "BIO_019", "BIO_025", "BIO_009"],
             REGLES: [
                 { bio: "BIO_002", nom: "Natrémie", seuils: { bas: { max: 130, note: "Hyponatrémie = cause fréquente (thiazidiques, ISRS)" } }, frequence: "Mensuel lors des ajustements, puis trimestriel", syndrome: "SYND_009" },
-                { bio: "BIO_001", nom: "Kaliémie", seuils: { bas: { max: 3.5, note: "Hypokaliémie sous fludrocortisone" } }, frequence: "J7-J14 après introduction fludrocortisone, puis mensuel x3", syndrome: "SYND_011" },
+                { bio: "BIO_001", nom: "Kaliémie", seuils: { bas: { max: 3.5, note: "Hypokaliémie sous fludrocortisone" } }, si_med: ["fludrocortisone"], frequence: "J7-J14 après introduction fludrocortisone, puis mensuel x3", syndrome: "SYND_011" },
                 { bio: "BIO_019", nom: "TSH", note: "Exclure hypothyroïdie (cause traitable) et insuffisance surrénale", frequence: "Bilan étiologique initial" },
                 { bio: "BIO_025", nom: "Glycémie", note: "Hypoglycémie post-prandiale = diagnostic différentiel", frequence: "Bilan initial" },
                 { bio: "BIO_009", nom: "Hémoglobine", seuils: { bas: { max: 10, note: "Anémie aggrave l'hypotension orthostatique" } }, frequence: "Bilan initial puis semestriel" }
@@ -1273,7 +1273,7 @@ const PATHOLOGY_RULES_DB = {
                 { bio: "BIO_031", nom: "QTc/ECG", frequence: "Avant IAChE, puis annuel", note: "IAChE = risque bradycardie. CI si BAV 2-3 ou FC < 50.", seuils: { alerte: { fc_min: 50, note: "Bradycardie → réduire ou arrêter IAChE" } } },
                 { bio: "BIO_019", frequence: "Annuel", note: "Dépistage hypothyroïdie (aggrave cognition)" },
                 { bio: "BIO_021", frequence: "Annuel", note: "Carence B12 fréquente chez le sujet âgé" },
-                { bio: "BIO_002", frequence: "Trimestriel si diurétique ou ISRS", note: "Hyponatrémie chronique = confusion", syndrome: "SYND_009" }
+                { si_med: ["diuretique", "isrs"], bio: "BIO_002", frequence: "Trimestriel si diurétique ou ISRS", note: "Hyponatrémie chronique = confusion", syndrome: "SYND_009" }
             ]
         },
 
@@ -1323,7 +1323,7 @@ const PATHOLOGY_RULES_DB = {
                 { bio: "BIO_031", frequence: "ECG avant IAChE, à 1 mois, puis annuel", note: "Bradycardie, BAV" },
                 { bio: "BIO_019", frequence: "Annuel" },
                 { bio: "BIO_021", frequence: "Annuel" },
-                { bio: "BIO_003", frequence: "Semestriel si mémantine (élimination rénale)" }
+                { si_med: ["memantine"], bio: "BIO_003", frequence: "Semestriel si mémantine (élimination rénale)" }
             ]
         },
         DECOMPENSATION_BIO: {
@@ -1421,11 +1421,11 @@ const PATHOLOGY_RULES_DB = {
         BIOLOGIE: {
             SURVEILLANCE_CIBLE: ["BIO_019", "BIO_009", "BIO_002", "BIO_013", "BIO_014", "BIO_031"],
             REGLES: [
-                { bio: "BIO_002", nom: "Natrémie", frequence: "À 1 mois post-introduction ISRS, puis trimestrielle", seuils: { bas: { max: 130, note: "Hyponatrémie sous ISRS (SIADH) — fréquente chez sujet âgé. Si < 130 : arrêt ISRS, switch trazodone." } }, syndrome: "SYND_009" },
+                { si_med: ["isrs"], bio: "BIO_002", nom: "Natrémie", frequence: "À 1 mois post-introduction ISRS, puis trimestrielle", seuils: { bas: { max: 130, note: "Hyponatrémie sous ISRS (SIADH) — fréquente chez sujet âgé. Si < 130 : arrêt ISRS, switch trazodone." } }, syndrome: "SYND_009" },
                 { bio: "BIO_019", nom: "TSH", frequence: "Bilan étiologique initial (exclure pseudodémence hypothyroïdienne)", note: "Hypothyroïdie peut mimer DFT (apathie, ralentissement)" },
                 { bio: "BIO_009", nom: "Hémoglobine", frequence: "Annuel", note: "Anémie aggrave fatigue et apathie — corriger si < 11 g/dL" },
-                { bio: "BIO_013", nom: "ASAT", frequence: "Si valproate introduit (mensuel x3 puis trimestriel)", note: "Hépatotoxicité valproate", syndrome: "SYND_001" },
-                { bio: "BIO_031", nom: "QTc", frequence: "Avant et 1 mois après introduction quétiapine ou citalopram > 20 mg/j", note: "Allongement QT — surveillance ECG", syndrome: "SYND_003" }
+                { si_med: ["valproate"], bio: "BIO_013", nom: "ASAT", frequence: "Si valproate introduit (mensuel x3 puis trimestriel)", note: "Hépatotoxicité valproate", syndrome: "SYND_001" },
+                { si_med: ["quetiapine", "citalopram"], bio: "BIO_031", nom: "QTc", frequence: "Avant et 1 mois après introduction quétiapine ou citalopram > 20 mg/j", note: "Allongement QT — surveillance ECG", syndrome: "SYND_003" }
             ]
         }
     },
@@ -1518,8 +1518,8 @@ const PATHOLOGY_RULES_DB = {
                 { bio: "BIO_025", nom: "Glycémie", frequence: "Annuel", note: "Surveiller sous agonistes DA (rare dysrégulation)" },
                 { bio: "BIO_009", nom: "Hémoglobine", frequence: "Semestriel", note: "Anémie aggrave asthénie et hypotension orthostatique" },
                 { bio: "BIO_031", nom: "ECG/QTc", frequence: "Avant dompéridone, puis annuel", note: "Dompéridone allonge QTc. CI si QTc > 450 ms." },
-                { bio: "BIO_012", nom: "PNN", frequence: "Hebdomadaire x18 sem, puis mensuel si clozapine", note: "Agranulocytose 1-2%. Arrêt si PNN < 1.5 G/L.", syndrome: "SYND_014" },
-                { bio: "BIO_013", nom: "ASAT", frequence: "Semestriel si tolcapone/entacapone", note: "Hépatotoxicité rare sous iCOMT (surtout tolcapone)", syndrome: "SYND_001" },
+                { si_med: ["clozapine"], bio: "BIO_012", nom: "PNN", frequence: "Hebdomadaire x18 sem, puis mensuel si clozapine", note: "Agranulocytose 1-2%. Arrêt si PNN < 1.5 G/L.", syndrome: "SYND_014" },
+                { si_med: ["tolcapone", "entacapone"], bio: "BIO_013", nom: "ASAT", frequence: "Semestriel si tolcapone/entacapone", note: "Hépatotoxicité rare sous iCOMT (surtout tolcapone)", syndrome: "SYND_001" },
                 { bio: "BIO_003", nom: "Créatinine/DFG", frequence: "Semestriel", note: "Adaptation amantadine (CI si DFG < 30), mémantine si démence associée" }
             ]
         },
@@ -1601,10 +1601,10 @@ const PATHOLOGY_RULES_DB = {
         BIOLOGIE: {
             SURVEILLANCE_CIBLE: ["BIO_002", "BIO_009", "BIO_010", "BIO_013", "BIO_014", "BIO_021", "BIO_023"],
             REGLES: [
-                { bio: "BIO_002", frequence: "Tous les 3-6 mois sous CBZ/OXC", note: "Risque hyponatrémie (SIADH)", syndrome: "SYND_009" },
-                { bio: "BIO_013", frequence: "Semestriel sous valproate", note: "Hépatotoxicité", syndrome: "SYND_001" },
-                { bio: "BIO_010", frequence: "Semestriel sous valproate", note: "Thrombopénie dose-dépendante" },
-                { bio: "BIO_023", frequence: "Annuel sous inducteurs", note: "Carence Vit D accélérée sous phénytoïne/CBZ/phéno" },
+                { si_med: ["carbamazepine", "oxcarbazepine"], bio: "BIO_002", frequence: "Tous les 3-6 mois sous CBZ/OXC", note: "Risque hyponatrémie (SIADH)", syndrome: "SYND_009" },
+                { si_med: ["valproate"], bio: "BIO_013", frequence: "Semestriel sous valproate", note: "Hépatotoxicité", syndrome: "SYND_001" },
+                { si_med: ["valproate"], bio: "BIO_010", frequence: "Semestriel sous valproate", note: "Thrombopénie dose-dépendante" },
+                { si_med: ["carbamazepine", "oxcarbazepine", "phenytoine", "phenobarbital", "primidone"], bio: "BIO_023", frequence: "Annuel sous inducteurs", note: "Carence Vit D accélérée sous phénytoïne/CBZ/phéno" },
                 { bio: "BIO_021", frequence: "Annuel", note: "Carence B12 si antiépileptique au long cours" }
             ]
         }
@@ -1873,7 +1873,7 @@ const PATHOLOGY_RULES_DB = {
                     nom: "Créatinine/DFG",
                     frequence: "Semestriel si DFG stable, trimestriel si DFG < 45 ou après changement thérapeutique"
                 },
-                {
+                { si_med: ["metformine"],
                     bio: "BIO_021",
                     nom: "Vitamine B12",
                     frequence: "Annuel si metformine au long cours (malabsorption B12)",
@@ -1953,7 +1953,7 @@ const PATHOLOGY_RULES_DB = {
                         coma_myxoedeme: { min: 50, condition: "+ confusion/hypothermie", action: "Urgence réanimation, LT4 IV", syndrome: "SYND_013" }
                     }
                 },
-                { bio: "BIO_027", frequence: "6 mois après normalisation TSH", note: "Dyslipidémie résolutive si hypothyroïdie corrigée" },
+                { si_med: ["levothyroxine"], bio: "BIO_027", frequence: "6 mois après normalisation TSH", note: "Dyslipidémie résolutive si hypothyroïdie corrigée" },
                 { bio: "BIO_009", frequence: "Annuel", note: "Anémie macrocytaire associée (Biermer)" }
             ]
         },
@@ -1996,8 +1996,8 @@ const PATHOLOGY_RULES_DB = {
         BIOLOGIE: {
             SURVEILLANCE_CIBLE: ["BIO_019", "BIO_011", "BIO_012", "BIO_013", "BIO_014", "BIO_031"],
             REGLES: [
-                { bio: "BIO_019", frequence: "Toutes les 4-6 semaines sous ATS × 3 mois, puis trimestriel", seuils: { cible: "TSH normale (peut rester basse longtemps, doser aussi FT4)", tempete: { condition: "TSH < 0.01 + FT4 > 50 + fièvre + tachycardie", action: "URGENCE VITALE — réanimation" }, syndrome: "SYND_019" } },
-                {
+                { si_med: ["antithyroidien"], bio: "BIO_019", frequence: "Toutes les 4-6 semaines sous ATS × 3 mois, puis trimestriel", seuils: { cible: "TSH normale (peut rester basse longtemps, doser aussi FT4)", tempete: { condition: "TSH < 0.01 + FT4 > 50 + fièvre + tachycardie", action: "URGENCE VITALE — réanimation" }, syndrome: "SYND_019" } },
+                { si_med: ["antithyroidien"],
                     bio: "BIO_012",
                     nom: "PNN",
                     frequence: "Avant ATS, puis toutes les 2-4 semaines × 3 mois, puis si fièvre/angine",
@@ -2006,7 +2006,7 @@ const PATHOLOGY_RULES_DB = {
                     syndrome: "SYND_014"
                 },
                 { bio: "BIO_013", frequence: "Avant ATS, puis mensuel × 3 mois, puis trimestriel", seuils: { alerte: "> 3N → arrêt ATS, avis hépato" }, syndrome: "SYND_001" },
-                { bio: "BIO_031", frequence: "Si FA + hyperthyroïdie", note: "FA thyrotoxique = anticoagulation selon CHA₂DS₂-VA + correction thyroïdienne", syndrome: "SYND_003" }
+                { si_comorb: ["PAT_006"], bio: "BIO_031", frequence: "Si FA + hyperthyroïdie", note: "FA thyrotoxique = anticoagulation selon CHA₂DS₂-VA + correction thyroïdienne", syndrome: "SYND_003" }
             ]
         },
         DECOMPENSATION_BIO: {
@@ -2051,9 +2051,9 @@ const PATHOLOGY_RULES_DB = {
             SURVEILLANCE_CIBLE: ["BIO_027", "BIO_013", "BIO_014", "BIO_018", "BIO_025", "BIO_019", "BIO_036"],
             REGLES: [
                 { bio: "BIO_027", frequence: "6-8 sem post-introduction, puis annuel" },
-                { bio: "BIO_013", frequence: "Avant statine, puis si myalgies ou > 6 mois", seuils: { alerte: "> 3N → arrêt statine" }, syndrome: "SYND_001" },
-                { bio: "BIO_018", frequence: "Si myalgies sous statine", seuils: { alerte: "> 4-5N → arrêt statine", critique: "> 10N → rhabdomyolyse, hydratation urgente" }, syndrome: "SYND_002" },
-                { bio: "BIO_025", frequence: "Annuel sous statine haute dose (signal hyperglycémie)" },
+                { si_med: ["statine"], bio: "BIO_013", frequence: "Avant statine, puis si myalgies ou > 6 mois", seuils: { alerte: "> 3N → arrêt statine" }, syndrome: "SYND_001" },
+                { si_med: ["statine"], bio: "BIO_018", frequence: "Si myalgies sous statine", seuils: { alerte: "> 4-5N → arrêt statine", critique: "> 10N → rhabdomyolyse, hydratation urgente" }, syndrome: "SYND_002" },
+                { si_med: ["statine"], bio: "BIO_025", frequence: "Annuel sous statine haute dose (signal hyperglycémie)" },
                 { bio: "BIO_019", frequence: "Bilan initial (exclure hypothyroïdie = cause dyslipidémie)" },
                 { bio: "BIO_036", frequence: "Si TG > 10 mmol/L", note: "Lipasémie = dépistage pancréatite aiguë" }
             ]
@@ -2181,9 +2181,9 @@ const PATHOLOGY_RULES_DB = {
             REGLES: [
                 { bio: "BIO_009", frequence: "Si saignement aigu → urgent, puis semestriel si antithrombotique", syndrome: "SYND_005" },
                 { bio: "BIO_020", frequence: "Si anémie ferriprive récurrente", syndrome: "SYND_006" },
-                { bio: "BIO_006", frequence: "Si IPP > 6 mois", seuils: { bas: { max: 0.75, note: "Arrêter IPP ou supplémenter Mg" } }, syndrome: "SYND_022" },
-                { bio: "BIO_021", frequence: "Si IPP > 12 mois", note: "Malabsorption B12 (achlorhydrie)", syndrome: "SYND_007" },
-                { bio: "BIO_005", frequence: "Annuel si IPP > 12 mois", note: "Hypocalcémie indirecte (via hypoMg)" }
+                { si_med: ["ipp"], bio: "BIO_006", frequence: "Si IPP > 6 mois", seuils: { bas: { max: 0.75, note: "Arrêter IPP ou supplémenter Mg" } }, syndrome: "SYND_022" },
+                { si_med: ["ipp"], bio: "BIO_021", frequence: "Si IPP > 12 mois", note: "Malabsorption B12 (achlorhydrie)", syndrome: "SYND_007" },
+                { si_med: ["ipp"], bio: "BIO_005", frequence: "Annuel si IPP > 12 mois", note: "Hypocalcémie indirecte (via hypoMg)" }
             ]
         },
         DECOMPENSATION_BIO: {
@@ -2281,8 +2281,8 @@ const PATHOLOGY_RULES_DB = {
                 { bio: "BIO_009", frequence: "Annuel", seuils: { haut: { min: 18, note: "Polyglobulie si hypoxémie chronique → discuter OLD + saignée" }, bas: { max: 12, note: "Anémie = facteur d'aggravation de la dyspnée" } } },
                 { bio: "BIO_024", frequence: "Lors de chaque exacerbation", note: "CRP guide l'indication d'antibiothérapie (CRP > 20 mg/L = probable infection bactérienne)", syndrome: "SYND_023" },
                 { bio: "BIO_001", frequence: "Si exacerbation sous nébulisations β2-agonistes + corticoïdes", syndrome: "SYND_011" },
-                { bio: "BIO_013", frequence: "Trimestriel si azithromycine au long cours", note: "Hépatotoxicité rare", syndrome: "SYND_001" },
-                { bio: "BIO_031", frequence: "Avant azithromycine/roflumilast + si association QT", syndrome: "SYND_003" }
+                { si_med: ["azithromycine"], bio: "BIO_013", frequence: "Trimestriel si azithromycine au long cours", note: "Hépatotoxicité rare", syndrome: "SYND_001" },
+                { si_med: ["azithromycine", "roflumilast"], bio: "BIO_031", frequence: "Avant azithromycine/roflumilast + si association QT", syndrome: "SYND_003" }
             ]
         },
         DECOMPENSATION_BIO: {
@@ -2380,7 +2380,7 @@ const PATHOLOGY_RULES_DB = {
             SURVEILLANCE_CIBLE: ["BIO_023", "BIO_005", "BIO_016", "BIO_003", "BIO_004"],
             REGLES: [
                 { bio: "BIO_023", frequence: "Avant traitement, puis annuel", seuils: { cible: { min: 30, note: "ng/mL — objectif ≥ 30" }, carence: { max: 10, note: "Charge Vit D 100 000 UI/sem x4" } }, syndrome: "SYND_025" },
-                { bio: "BIO_005", frequence: "Avant et 2-4 semaines après introduction dénosumab/BP IV", seuils: { alerte: { max: 2.0, note: "Corriger AVANT traitement" } }, syndrome: "SYND_020" }
+                { si_med: ["denosumab", "acide zoledronique", "ibandronate"], bio: "BIO_005", frequence: "Avant et 2-4 semaines après introduction dénosumab/BP IV", seuils: { alerte: { max: 2.0, note: "Corriger AVANT traitement" } }, syndrome: "SYND_020" }
             ]
         }
     },
@@ -2863,7 +2863,7 @@ const PATHOLOGY_RULES_DB = {
         BIOLOGIE: {
             SURVEILLANCE_CIBLE: ["BIO_002", "BIO_001", "BIO_019", "BIO_003", "BIO_031", "BIO_009", "BIO_013", "BIO_014"],
             REGLES: [
-                {
+                { si_med: ["isrs", "irsn", "antidepresseur"],
                     bio: "BIO_002",
                     nom: "Natrémie",
                     frequence: "Avant introduction puis J7-J14, M1, trimestriel × 1 an si antidépresseur sérotoninergique (SFGG/SF3PA/SFPC 2026 items 15-16)",
@@ -2874,10 +2874,10 @@ const PATHOLOGY_RULES_DB = {
                     },
                     syndrome_declenche: "SYND_009"
                 },
-                { bio: "BIO_001", nom: "Kaliémie", frequence: "Avant introduction citalopram/escitalopram (CI si hypoK+ < 3.5 — item 30) ; annuelle ensuite si pas de diurétique" },
+                { si_med: ["citalopram", "escitalopram"], bio: "BIO_001", nom: "Kaliémie", frequence: "Avant introduction citalopram/escitalopram (CI si hypoK+ < 3.5 — item 30) ; annuelle ensuite si pas de diurétique" },
                 { bio: "BIO_019", frequence: "Annuel (TSH pour exclure cause thyroïdienne — item 5)" },
                 { bio: "BIO_003", nom: "Créatinine/DFG", frequence: "Avant introduction puis annuel — item 7", note: "Adapter posologie selon DFG (items 34-37)" },
-                { bio: "BIO_013", nom: "ASAT/ALAT", frequence: "Avant introduction agomélatine/duloxétine puis M3, M6, M12 ; à la demande pour autres antidépresseurs", note: "Si > 3N ou TP < 50 % → arrêt agomélatine/duloxétine/miansérine (item 38)" },
+                { si_med: ["agomelatine", "duloxetine"], bio: "BIO_013", nom: "ASAT/ALAT", frequence: "Avant introduction agomélatine/duloxétine puis M3, M6, M12 ; à la demande pour autres antidépresseurs", note: "Si > 3N ou TP < 50 % → arrêt agomélatine/duloxétine/miansérine (item 38)" },
                 {
                     bio: "BIO_031",
                     nom: "QTc",
@@ -2886,7 +2886,7 @@ const PATHOLOGY_RULES_DB = {
                     seuils: { alerte: { min: 470, action: "Réduire dose" }, critique: { min: 500, action: "Arrêt + switch sertraline/mirtazapine + scope" } },
                     syndrome_declenche: "SYND_051"
                 },
-                { bio: "BIO_009", nom: "NFS", frequence: "Avant miansérine ; en urgence si fièvre/angine sous miansérine (item 21 — risque agranulocytose ANSM)" }
+                { si_med: ["mianserine"], bio: "BIO_009", nom: "NFS", frequence: "Avant miansérine ; en urgence si fièvre/angine sous miansérine (item 21 — risque agranulocytose ANSM)" }
             ]
         },
         DECOMPENSATION_BIO: {
@@ -3118,8 +3118,8 @@ const PATHOLOGY_RULES_DB = {
             REGLES: [
                 { bio: "BIO_003", frequence: "Créatinine avant AOD/HBPM, puis trimestrielle (clearance — ajustement dose)" },
                 { bio: "BIO_009", frequence: "Hb avant introduction puis si suspicion saignement" },
-                { bio: "BIO_010", frequence: "Plaquettes 2x/sem (J5-J21) sous HBPM ou HNF — TIH" },
-                { bio: "BIO_030", frequence: "INR 2x/sem puis mensuel UNIQUEMENT si AVK choisi (CI AOD ou pas d'option HBPM long cours). Pas de surveillance INR pour AOD ou HBPM seuls." }
+                { si_med: ["heparine"], bio: "BIO_010", frequence: "Plaquettes 2x/sem (J5-J21) sous HBPM ou HNF — TIH" },
+                { si_med: ["avk"], bio: "BIO_030", frequence: "INR 2x/sem puis mensuel UNIQUEMENT si AVK choisi (CI AOD ou pas d'option HBPM long cours). Pas de surveillance INR pour AOD ou HBPM seuls." }
             ]
         }
     },
@@ -3163,7 +3163,7 @@ const PATHOLOGY_RULES_DB = {
             REGLES: [
                 { bio: "BIO_035", frequence: "Albumine trimestrielle (marqueur nutritionnel lent)", syndrome: "SYND_033" },
                 { bio: "BIO_023", frequence: "Vitamine D semestrielle", syndrome: "SYND_025" },
-                { bio: "BIO_018", frequence: "CPK si myalgies sous statine" },
+                { si_med: ["statine"], bio: "BIO_018", frequence: "CPK si myalgies sous statine" },
                 { bio: "BIO_024", frequence: "CRP (la sarcopénie s'aggrave en inflammation)" }
             ]
         }
@@ -3253,7 +3253,7 @@ const PATHOLOGY_RULES_DB = {
             REGLES: [
                 { bio: "BIO_003", frequence: "Créatinine (recherche obstacle si rétention)", syndrome: "SYND_015" },
                 { bio: "BIO_004", frequence: "DFG (adapter diurétiques)" },
-                { bio: "BIO_002", frequence: "Natrémie (si diurétiques associés)" }
+                { si_med: ["diuretique"], bio: "BIO_002", frequence: "Natrémie (si diurétiques associés)" }
             ]
         }
     },
@@ -3389,7 +3389,7 @@ const PATHOLOGY_RULES_DB = {
         BIOLOGIE: {
             SURVEILLANCE_CIBLE: ["BIO_002", "BIO_019", "BIO_031"],
             REGLES: [
-                { bio: "BIO_002", nom: "Natrémie", seuils: { bas: { max: 130, note: "Hyponatrémie sous ISRS/IRSN (SIADH) — fréquente chez sujet âgé. Si < 130 : arrêt ISRS, switch buspirone ou autre classe." } }, frequence: "Avant introduction ISRS puis à 1 mois (pic SIADH), puis trimestrielle si stable", syndrome: "SYND_009" },
+                { bio: "BIO_002", nom: "Natrémie", seuils: { bas: { max: 130, note: "Hyponatrémie sous ISRS/IRSN (SIADH) — fréquente chez sujet âgé. Si < 130 : arrêt ISRS, switch buspirone ou autre classe." } }, si_med: ["isrs"], frequence: "Avant introduction ISRS puis à 1 mois (pic SIADH), puis trimestrielle si stable", syndrome: "SYND_009" },
                 { bio: "BIO_019", nom: "TSH", frequence: "Bilan étiologique initial systématique", note: "Exclure hyperthyroïdie (cause d'anxiété traitable). TSH < 0.4 + symptômes anxiété → bilan thyroïdien complet" },
                 { bio: "BIO_031", nom: "QTc", frequence: "ECG avant escitalopram > 10 mg/j ou citalopram > 20 mg/j (à éviter chez âgé), à 1 mois, puis annuel", note: "Allongement QT dose-dépendant — adapter dose ou switch sertraline (profil QT favorable)", syndrome: "SYND_003" }
             ]
@@ -3461,10 +3461,10 @@ const PATHOLOGY_RULES_DB = {
         BIOLOGIE: {
             SURVEILLANCE_CIBLE: ["BIO_029", "BIO_019", "BIO_003", "BIO_005"],
             REGLES: [
-                { bio: "BIO_029", nom: "Lithiémie", frequence: "À J5 de toute modification de dose, puis trimestrielle si stable. Mensuelle si DFG borderline ou polymédication.", seuils: { cible_geriatrique: { min: 0.4, max: 0.8, note: "Cible âgé 0.4-0.8 mmol/L (vs 0.6-1.0 adulte) — meilleure tolérance, efficacité préservée (Sajatovic 2015)" }, alerte: { min: 1.0, note: "Surdosage : tremblements, troubles digestifs, somnolence — réduire dose 25-50%" }, toxique: { min: 1.5, note: "Toxicité aiguë : confusion, ataxie, fasciculations, troubles ECG — arrêt + hydratation IV + dialyse si > 2.5 ou symptômes graves" } }, syndrome: "SYND_028" },
-                { bio: "BIO_019", nom: "TSH", frequence: "Avant introduction lithium, puis semestrielle (annuelle si stable)", note: "Hypothyroïdie sous lithium (10-30%) — supplémenter LT4, ne pas arrêter lithium si efficace" },
-                { bio: "BIO_003", nom: "Créatinine/DFG", frequence: "Trimestrielle sous lithium (mensuelle si DFG < 60 ou diurétiques associés)", note: "Néphrotoxicité lithium (diabète insipide, IRC). DFG < 30 = relais nécessaire (valproate, lamotrigine)" },
-                { bio: "BIO_005", nom: "Calcémie", frequence: "Annuelle sous lithium", note: "Hypercalcémie/hyperparathyroïdie sous lithium long cours (10-15%)" }
+                { si_med: ["lithium"], bio: "BIO_029", nom: "Lithiémie", frequence: "À J5 de toute modification de dose, puis trimestrielle si stable. Mensuelle si DFG borderline ou polymédication.", seuils: { cible_geriatrique: { min: 0.4, max: 0.8, note: "Cible âgé 0.4-0.8 mmol/L (vs 0.6-1.0 adulte) — meilleure tolérance, efficacité préservée (Sajatovic 2015)" }, alerte: { min: 1.0, note: "Surdosage : tremblements, troubles digestifs, somnolence — réduire dose 25-50%" }, toxique: { min: 1.5, note: "Toxicité aiguë : confusion, ataxie, fasciculations, troubles ECG — arrêt + hydratation IV + dialyse si > 2.5 ou symptômes graves" } }, syndrome: "SYND_028" },
+                { si_med: ["lithium"], bio: "BIO_019", nom: "TSH", frequence: "Avant introduction lithium, puis semestrielle (annuelle si stable)", note: "Hypothyroïdie sous lithium (10-30%) — supplémenter LT4, ne pas arrêter lithium si efficace" },
+                { si_med: ["lithium"], bio: "BIO_003", nom: "Créatinine/DFG", frequence: "Trimestrielle sous lithium (mensuelle si DFG < 60 ou diurétiques associés)", note: "Néphrotoxicité lithium (diabète insipide, IRC). DFG < 30 = relais nécessaire (valproate, lamotrigine)" },
+                { si_med: ["lithium"], bio: "BIO_005", nom: "Calcémie", frequence: "Annuelle sous lithium", note: "Hypercalcémie/hyperparathyroïdie sous lithium long cours (10-15%)" }
             ]
         }
     },
@@ -3753,9 +3753,9 @@ const PATHOLOGY_RULES_DB = {
         BIOLOGIE: {
             SURVEILLANCE_CIBLE: ["BIO_006", "BIO_021", "BIO_005", "BIO_009", "BIO_020"],
             REGLES: [
-                { bio: "BIO_006", frequence: "Si IPP > 6 mois", seuils: { bas: { max: 0.75, note: "HypoMg sous IPP — supplémenter Mg PO ou arrêter IPP" } }, syndrome: "SYND_022" },
-                { bio: "BIO_021", frequence: "Si IPP > 12 mois", note: "Carence B12 par achlorhydrie — supplémenter si < 200 pg/mL", syndrome: "SYND_007" },
-                { bio: "BIO_005", frequence: "Annuel si IPP > 12 mois", note: "Hypocalcémie indirecte (via hypoMg) ; surveillance ostéoporose si IPP + corticoïdes ou inhibiteur aromatase" },
+                { si_med: ["ipp"], bio: "BIO_006", frequence: "Si IPP > 6 mois", seuils: { bas: { max: 0.75, note: "HypoMg sous IPP — supplémenter Mg PO ou arrêter IPP" } }, syndrome: "SYND_022" },
+                { si_med: ["ipp"], bio: "BIO_021", frequence: "Si IPP > 12 mois", note: "Carence B12 par achlorhydrie — supplémenter si < 200 pg/mL", syndrome: "SYND_007" },
+                { si_med: ["ipp"], bio: "BIO_005", frequence: "Annuel si IPP > 12 mois", note: "Hypocalcémie indirecte (via hypoMg) ; surveillance ostéoporose si IPP + corticoïdes ou inhibiteur aromatase" },
                 { bio: "BIO_009", frequence: "Si saignement aigu (méléna/hématémèse) → urgent ; sinon dépistage anémie 6-12 mois si symptômes atypiques", syndrome: "SYND_005" },
                 { bio: "BIO_020", frequence: "Si anémie (Hb < 12)", note: "Rechercher saignement digestif occulte sur RGO compliqué (œsophagite ulcérée, EBO, sténose)", syndrome: "SYND_006" }
             ]
@@ -3809,8 +3809,8 @@ const PATHOLOGY_RULES_DB = {
         BIOLOGIE: {
             SURVEILLANCE_CIBLE: ["BIO_004", "BIO_003"],
             REGLES: [
-                { bio: "BIO_004", frequence: "Avant et sous AINS / gabapentinoïde", note: "Éviter ou adapter les AINS si DFG < 50 ; adapter gabapentine/prégabaline selon le DFG" },
-                { bio: "BIO_003", frequence: "Sous AINS au long cours", note: "Surveiller la fonction rénale (néphrotoxicité des AINS chez le sujet âgé)" }
+                { si_med: ["ains", "gabapentine", "pregabaline"], bio: "BIO_004", frequence: "Avant et sous AINS / gabapentinoïde", note: "Éviter ou adapter les AINS si DFG < 50 ; adapter gabapentine/prégabaline selon le DFG" },
+                { si_med: ["ains"], bio: "BIO_003", frequence: "Sous AINS au long cours", note: "Surveiller la fonction rénale (néphrotoxicité des AINS chez le sujet âgé)" }
             ]
         }
     },
@@ -3868,7 +3868,7 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_025", "BIO_027", "BIO_031", "BIO_029", "BIO_019"], REGLES: [
-            { bio: "BIO_029", nom: "Lithémie", frequence: "Si lithium : J5 puis trimestrielle", note: "Cible 0,4-0,8 mmol/L chez l'âgé" }
+            { si_med: ["lithium"], bio: "BIO_029", nom: "Lithémie", frequence: "Si lithium : J5 puis trimestrielle", note: "Cible 0,4-0,8 mmol/L chez l'âgé" }
         ] }
     },
     "PAT_057": {
@@ -3915,7 +3915,7 @@ const PATHOLOGY_RULES_DB = {
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_029", "BIO_019", "BIO_004", "BIO_009"], REGLES: [
             { bio: "BIO_029", nom: "Lithémie", frequence: "J5 de toute modification, puis trimestrielle", note: "Cible âgé 0,4-0,8 mmol/L ; toxicité ≥ 1,5" },
-            { bio: "BIO_004", nom: "DFG", frequence: "Trimestrielle sous lithium", note: "Néphrotoxicité lithium long cours" }
+            { si_med: ["lithium"], bio: "BIO_004", nom: "DFG", frequence: "Trimestrielle sous lithium", note: "Néphrotoxicité lithium long cours" }
         ] }
     },
     "PAT_059": {
@@ -3937,7 +3937,7 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_029", "BIO_019", "BIO_004"], REGLES: [
-            { bio: "BIO_029", nom: "Lithémie", frequence: "Si lithium : trimestrielle", note: "Cible âgé 0,4-0,8 mmol/L" }
+            { si_med: ["lithium"], bio: "BIO_029", nom: "Lithémie", frequence: "Si lithium : trimestrielle", note: "Cible âgé 0,4-0,8 mmol/L" }
         ] }
     },
     "PAT_060": {
@@ -4004,7 +4004,7 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_031", "BIO_002"], REGLES: [
-            { bio: "BIO_031", nom: "QTc (ECG)", frequence: "Si ISRS à forte dose (citalopram/escitalopram)", note: "Allongement QT dose-dépendant" }
+            { si_med: ["citalopram", "escitalopram"], bio: "BIO_031", nom: "QTc (ECG)", frequence: "Si ISRS à forte dose (citalopram/escitalopram)", note: "Allongement QT dose-dépendant" }
         ] }
     },
     "PAT_063": {
@@ -4026,7 +4026,7 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_002", "BIO_031"], REGLES: [
-            { bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction d'un ISRS", note: "Hyponatrémie" }
+            { si_med: ["isrs"], bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction d'un ISRS", note: "Hyponatrémie" }
         ] }
     },
     "PAT_064": {
@@ -4048,7 +4048,7 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_002", "BIO_031"], REGLES: [
-            { bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction d'un ISRS", note: "Hyponatrémie" }
+            { si_med: ["isrs"], bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction d'un ISRS", note: "Hyponatrémie" }
         ] }
     },
     "PAT_065": {
@@ -4070,7 +4070,7 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_002"], REGLES: [
-            { bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction d'un ISRS", note: "Hyponatrémie" }
+            { si_med: ["isrs"], bio: "BIO_002", nom: "Natrémie", frequence: "À l'introduction d'un ISRS", note: "Hyponatrémie" }
         ] }
     },
     "PAT_066": {
@@ -4092,7 +4092,7 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_031"], REGLES: [
-            { bio: "BIO_031", nom: "QTc (ECG)", frequence: "Si antipsychotique prescrit", note: "Limiter la polypharmacie QT-allongeante" }
+            { si_med: ["antipsychotique"], bio: "BIO_031", nom: "QTc (ECG)", frequence: "Si antipsychotique prescrit", note: "Limiter la polypharmacie QT-allongeante" }
         ] }
     },
     "PAT_067": {
@@ -4137,7 +4137,7 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_031", "BIO_013", "BIO_014"], REGLES: [
-            { bio: "BIO_031", nom: "QTc (ECG)", frequence: "Baseline puis annuel sous méthadone", note: "Allongement QT dose-dépendant — risque de torsades" }
+            { si_med: ["methadone"], bio: "BIO_031", nom: "QTc (ECG)", frequence: "Baseline puis annuel sous méthadone", note: "Allongement QT dose-dépendant — risque de torsades" }
         ] }
     },
     "PAT_069": {
@@ -4159,7 +4159,7 @@ const PATHOLOGY_RULES_DB = {
             ]
         },
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_025", "BIO_027", "BIO_031"], REGLES: [
-            { bio: "BIO_025", nom: "Glycémie", frequence: "Baseline, 3 mois, annuelle si antipsychotique", note: "Syndrome métabolique" }
+            { si_med: ["antipsychotique"], bio: "BIO_025", nom: "Glycémie", frequence: "Baseline, 3 mois, annuelle si antipsychotique", note: "Syndrome métabolique" }
         ] }
     }
 };

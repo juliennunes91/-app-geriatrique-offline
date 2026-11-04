@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 03/11/2026 — **version 3.94**, `BUILD_ID` `20261103-redondances-synthese`,
-cache `geriaassist-v142`.*
+*Dernière mise à jour : 04/11/2026 — **version 3.95**, `BUILD_ID` `20261104-suivi-conditionnel`,
+cache `geriaassist-v143`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **3.95** (04/11) — Onglet Suivi : `PATHO_BIO_MONITOR` réécrit paramètre par paramètre,
+  60 règles bio de pathologie conditionnées (`si_med` / `si_comorb`), défaut CPK neutre ;
+  RISQ-PATH / Tisdale seulement si médicament QT, QTc saisi ou QT long.
 - **3.94** (03/11) — Dossier réel (F 78 ans, TAG chronique, 2 BZD + miansérine) : une paire
   BZD comptée une fois dans « interactions critiques » ; une alerte assumée n'est plus
   recomptée « danger » au bandeau ; `SUP_REM_10` absorbé par `EV_REM_01` ; scores
@@ -150,11 +153,6 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 7. `global_score` : la moyenne des scores d'alerte remonte quand on retire des alertes
    informatives — formule à arbitrer.
 8. Pas de paramètre « bicarbonate plasmatique » dans `MASTER_DB.BIOLOGIE`.
-9. Onglet Scores : RISQ-PATH et Tisdale (risque QT) sortent sans médicament allongeant le
-   QT — même question que les scores d'anticoagulation (corrigés en 3.94), à arbitrer.
-10. Onglet Suivi (tableau croisé) : des cellules de fréquence affichent un texte d'un autre
-   paramètre (ASAT/PNN « TSH/6-8sem post-modif… », natrémie « à l'introduction d'un ISRS »
-   sous miansérine) — vu sur le dossier du 03/11, non traité.
 
 ---
 

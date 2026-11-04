@@ -1271,8 +1271,37 @@ miansérine assumées. Quatre défauts, tous d'agrégation ou d'affichage hors d
   prescrit — la règle que les puces de la synthèse appliquaient déjà. Au passage, la clé
   `DOAC` de `SCORES_CONFIG` était déclarée deux fois (la seconde écrasait la première).
 
-Point laissé ouvert : RISQ-PATH et Tisdale (deux scores de risque QT) sortent aussi sans
-médicament allongeant le QT — à arbitrer.
+RISQ-PATH et Tisdale (scores de risque QT) suivent la même règle depuis 3.95 : ils ne
+sortent qu'en présence d'un médicament à risque QT établi ou possible (ou conditionnel
+dont la condition est réunie), d'un QTc saisi ou d'un QT long déclaré.
+
+## Une fréquence de surveillance qui suppose un traitement ne sort pas sans lui
+
+Même dossier, onglet Suivi : la ligne **ASAT** affichait « TSH/6-8 sem post-modif, PNN/2-4
+sem sous ATS », la **PNN** sortait chez une hypothyroïdienne sous lévothyroxine, la
+**natrémie** du TAG réclamait un contrôle « à l'introduction d'un ISRS » sous miansérine,
+et la **CPK** « à l'introduction statine/fibrate » sans statine. Trois causes :
+
+- **`PATHO_BIO_MONITOR`** (`geria_integration_module.js`) portait **une** chaîne de
+  fréquence par pathologie, recopiée sur tous ses paramètres. Réécrite **paramètre par
+  paramètre** (`parametres: { BIO_xxx: { f, si_med } }`) ; `getRequiredBioMonitoring`
+  reçoit le prédicat `aMed`. Sans lui, aucun paramètre conditionnel n'est retenu. La TSH
+  « si immunothérapie » du cancer est retirée : aucune immunothérapie n'existe en base.
+- **60 règles `BIOLOGIE.REGLES`** de `PATHOLOGY_RULES_DB` dont la fréquence n'a de sens
+  que sous un traitement (« sous ATS », « si clozapine », « sous lithium », « si IPP »…)
+  portent désormais `si_med` (ou `si_comorb` : « trimestriel si diabétique », « si FA »).
+  Non satisfaite, la règle ne sort pas, et le paramètre est aussi retiré de la
+  `SURVEILLANCE_CIBLE` de cette pathologie — la natrémie du TAG n'a d'objet que sous ISRS.
+  Les fréquences **mixtes** (« annuel minimum, plus fréquent si AOD ») restent telles
+  quelles : elles valent sans le traitement.
+- La **fréquence par défaut** de la CPK nommait la statine. Une valeur par défaut
+  s'applique à toute origine : elle ne nomme aucun traitement.
+
+**Clé de condition = classe DÉCLARÉE ou DCI exacte, jamais une sous-chaîne** (`_siMed`,
+`app_analysis.js`) : `fludrocortisone` contient `cortisone`, et `bisphosphonate` n'est pas
+une classe déclarée (il ne résolvait que par le libellé) — les DCI sont nommées. Deux
+molécules visées sont absentes de la base (fludrocortisone, tolcapone) : leur règle ne
+sort donc jamais, ce qui est juste tant qu'on ne peut pas les prescrire.
 
 ## Formes galéniques : une DCI, deux médicaments
 

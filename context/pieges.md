@@ -46,3 +46,12 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
 - Fusion faite au PDF seulement (`FUSIONS_RAPPORT`) = redondance qui reste à l'écran.
 - Pour inspecter l'état interne d'un cas : `analyzeCase(...)._synthData` (banner,
   toRemoveFiltered, interactCritical) ; le sandbox n'a pas de console.
+
+## Suivi biologique (04/11)
+- Une fréquence par RÈGLE recopiée sur chacun de ses paramètres → texte de la TSH sur la
+  ligne ASAT. Une fréquence par PARAMÈTRE.
+- `_freqShortLabel` recopie le texte brut quand il n'y trouve pas de rythme : un texte faux
+  se voit tel quel dans la cellule.
+- Clé de condition par sous-chaîne : `fludrocortisone` ⊃ `cortisone` ; `bisphosphonate`
+  n'est pas une classe déclarée. → classe déclarée ou DCI exacte.
+- Harnais : la bio se passe par identifiant de champ (`bioQtc`), pas par `BIO_031`.

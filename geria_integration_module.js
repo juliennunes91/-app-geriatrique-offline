@@ -1399,181 +1399,76 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
 // biologiques requis pour chaque pathologie active du patient.
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// Une fréquence PAR PARAMÈTRE, et la condition de traitement qui la rend vraie.
+// Chaque règle portait une seule chaîne (« TSH/6-8sem post-modif, PNN/2-4sem sous ATS »)
+// recopiée sur tous ses paramètres : la ligne ASAT de l'onglet Suivi affichait la
+// consigne de la TSH, et la PNN sous antithyroïdien sortait chez une hypothyroïdienne
+// sous lévothyroxine. `si_med` : classes déclarées ou DCI exactes — le paramètre n'est
+// retenu que si l'une est prescrite (voir `pkSiMed` côté analyse). Un paramètre sans
+// fréquence connue garde « » : il est rattaché à la pathologie, sans échéance inventée.
 const PATHO_BIO_MONITOR = [
-    {
-        "id": "BIO_MON_IC",
-        "pathos": [
-            "PAT_002",
-            "PAT_003"
-        ],
-        "bio": [
-            "BIO_028",
-            "BIO_001",
-            "BIO_002",
-            "BIO_003",
-            "BIO_009"
-        ],
-        "frequence": "Trimestriel + post-titration",
-        "source": "ESC_HF_2023"
-    },
-    {
-        "id": "BIO_MON_FA",
-        "pathos": [
-            "PAT_006"
-        ],
-        "bio": [
-            "BIO_031",
-            "BIO_030",
-            "BIO_019",
-            "BIO_003"
-        ],
-        "frequence": "DFG/10 mois sous DOAC, TSH/6m sous amiodarone",
-        "source": "ESC_AF_2024"
-    },
-    {
-        "id": "BIO_MON_DT2",
-        "pathos": [
-            "PAT_016",
-            "PAT_016a",
-            "PAT_016b"
-        ],
-        "bio": [
-            "BIO_026",
-            "BIO_025",
-            "BIO_003",
-            "BIO_004",
-            "BIO_021"
-        ],
-        "frequence": "HbA1c/3-6m, DFG/6m, B12/an si metformine",
-        "source": "ADA_2025"
-    },
-    {
-        "id": "BIO_MON_MRC",
-        "pathos": [
-            "PAT_029"
-        ],
-        "bio": [
-            "BIO_003",
-            "BIO_004",
-            "BIO_001",
-            "BIO_005",
-            "BIO_009",
-            "BIO_023"
-        ],
-        "frequence": "Selon stade: G3a/6m, G3b/3m, G4-5/1-3m",
-        "source": "KDIGO_CKD_2024"
-    },
-    {
-        "id": "BIO_MON_THYROID",
-        "pathos": [
-            "PAT_017",
-            "PAT_018"
-        ],
-        "bio": [
-            "BIO_019",
-            "BIO_012",
-            "BIO_013"
-        ],
-        "frequence": "TSH/6-8sem post-modif, PNN/2-4sem sous ATS",
-        "source": "ETA_2023"
-    },
-    {
-        "id": "BIO_MON_EPILEPSIE",
-        "pathos": [
-            "PAT_015"
-        ],
-        "bio": [
-            "BIO_002",
-            "BIO_013",
-            "BIO_010",
-            "BIO_023"
-        ],
-        "frequence": "Na/3-6m sous CBZ/OXC, BH/6m sous VPA",
-        "source": "ILAE_2024"
-    },
-    {
-        "id": "BIO_MON_PARKINSON",
-        "pathos": [
-            "PAT_014"
-        ],
-        "bio": [
-            "BIO_002",
-            "BIO_012",
-            "BIO_031",
-            "BIO_013"
-        ],
-        "frequence": "PNN/hebdo si clozapine, QTc si dompéridone",
-        "source": "DGN_PD_2024"
-    },
-    {
-        "id": "BIO_MON_GOUTTE",
-        "pathos": [
-            "PAT_024"
-        ],
-        "bio": [
-            "BIO_008",
-            "BIO_003",
-            "BIO_004"
-        ],
-        "frequence": "Uricémie/1-3m titration, DFG/6m",
-        "source": "EULAR_2023"
-    },
-    {
-        "id": "BIO_MON_OSTEO",
-        "pathos": [
-            "PAT_025"
-        ],
-        "bio": [
-            "BIO_023",
-            "BIO_005",
-            "BIO_003"
-        ],
-        "frequence": "VitD+Ca avant BP, Ca J14-28 post-dénosumab",
-        "source": "IOF_2024"
-    },
-    {
-        "id": "BIO_MON_CANCER",
-        "pathos": [
-            "PAT_020"
-        ],
-        "bio": [
-            "BIO_012",
-            "BIO_010",
-            "BIO_009",
-            "BIO_019",
-            "BIO_034",
-            "BIO_035"
-        ],
-        "frequence": "NFS pré-cure, TSH si immunothérapie",
-        "source": "ESMO_2024"
-    },
-    {
-        "id": "BIO_MON_DYSLIP",
-        "pathos": [
-            "PAT_019"
-        ],
-        "bio": [
-            "BIO_027",
-            "BIO_018",
-            "BIO_013"
-        ],
-        "frequence": "LDL/6-8sem, CPK si myalgies",
-        "source": "ESC_DYSLIP_2019"
-    },
-    {
-        "id": "BIO_MON_AOMI",
-        "pathos": [
-            "PAT_007"
-        ],
-        "bio": [
-            "BIO_027",
-            "BIO_009",
-            "BIO_003",
-            "BIO_026"
-        ],
-        "frequence": "LDL/annuel, Hb/6m si antithrombotique",
-        "source": "ESC_PAD_2024"
-    }
+    { id: "BIO_MON_IC", pathos: ["PAT_002", "PAT_003"], source: "ESC_HF_2023", parametres: {
+        BIO_028: { f: "Trimestriel, et après chaque titration" },
+        BIO_001: { f: "Trimestriel, et après chaque titration" },
+        BIO_002: { f: "Trimestriel, et après chaque titration" },
+        BIO_003: { f: "Trimestriel, et après chaque titration" },
+        BIO_009: { f: "Trimestriel, et après chaque titration" } } },
+    { id: "BIO_MON_FA", pathos: ["PAT_006"], source: "ESC_AF_2024", parametres: {
+        BIO_031: { f: "Avant et après introduction d'un antiarythmique", si_med: ["antiarythmique"] },
+        BIO_030: { f: "Tous les 8 à 28 jours sous AVK selon la stabilité", si_med: ["avk"] },
+        BIO_019: { f: "Tous les 6 mois sous amiodarone", si_med: ["amiodarone"] },
+        BIO_003: { f: "Sous AOD : intervalle en mois = DFG / 10", si_med: ["aod"] } } },
+    { id: "BIO_MON_DT2", pathos: ["PAT_016", "PAT_016a", "PAT_016b"], source: "ADA_2025", parametres: {
+        BIO_026: { f: "Tous les 3 à 6 mois" },
+        BIO_025: { f: "Tous les 3 à 6 mois" },
+        BIO_003: { f: "Semestriel" },
+        BIO_004: { f: "Semestriel" },
+        BIO_021: { f: "Annuel sous metformine", si_med: ["metformine"] } } },
+    { id: "BIO_MON_MRC", pathos: ["PAT_029"], source: "KDIGO_CKD_2024", parametres: {
+        BIO_003: { f: "Selon le stade : G3a tous les 6 mois, G3b tous les 3 mois, G4-5 tous les 1 à 3 mois" },
+        BIO_004: { f: "Selon le stade : G3a tous les 6 mois, G3b tous les 3 mois, G4-5 tous les 1 à 3 mois" },
+        BIO_001: { f: "Selon le stade : G3a tous les 6 mois, G3b tous les 3 mois, G4-5 tous les 1 à 3 mois" },
+        BIO_005: { f: "Selon le stade (bilan phosphocalcique dès G3b)" },
+        BIO_009: { f: "Selon le stade (anémie rénale dès G3)" },
+        BIO_023: { f: "" } } },
+    { id: "BIO_MON_THYROID", pathos: ["PAT_017", "PAT_018"], source: "ETA_2023", parametres: {
+        BIO_019: { f: "6 à 8 semaines après chaque modification de dose" },
+        BIO_012: { f: "Toutes les 2 à 4 semaines sous antithyroïdien de synthèse", si_med: ["antithyroidien"] },
+        BIO_013: { f: "Si signe d'appel sous antithyroïdien de synthèse", si_med: ["antithyroidien"] } } },
+    { id: "BIO_MON_EPILEPSIE", pathos: ["PAT_015"], source: "ILAE_2024", parametres: {
+        BIO_002: { f: "Tous les 3 à 6 mois sous carbamazépine ou oxcarbazépine", si_med: ["carbamazepine", "oxcarbazepine"] },
+        BIO_013: { f: "Semestriel sous valproate", si_med: ["valproate"] },
+        BIO_010: { f: "Semestriel sous valproate", si_med: ["valproate"] },
+        BIO_023: { f: "Annuel sous inducteur enzymatique", si_med: ["carbamazepine", "oxcarbazepine", "phenytoine", "phenobarbital", "primidone"] } } },
+    { id: "BIO_MON_PARKINSON", pathos: ["PAT_014"], source: "DGN_PD_2024", parametres: {
+        BIO_012: { f: "Hebdomadaire 18 semaines sous clozapine, puis mensuel", si_med: ["clozapine"] },
+        BIO_031: { f: "Avant et sous dompéridone", si_med: ["domperidone"] },
+        BIO_013: { f: "Semestriel sous entacapone ou tolcapone", si_med: ["entacapone", "tolcapone"] } } },
+    { id: "BIO_MON_GOUTTE", pathos: ["PAT_024"], source: "EULAR_2023", parametres: {
+        BIO_008: { f: "Tous les 1 à 3 mois pendant la titration, puis semestriel" },
+        BIO_003: { f: "Semestriel" },
+        BIO_004: { f: "Semestriel" } } },
+    { id: "BIO_MON_OSTEO", pathos: ["PAT_025"], source: "IOF_2024", parametres: {
+        BIO_023: { f: "Avant traitement anti-ostéoporotique, puis annuel" },
+        BIO_005: { f: "Avant, puis 2 à 4 semaines après dénosumab ou bisphosphonate IV", si_med: ["denosumab", "acide zoledronique", "ibandronate"] },
+        BIO_003: { f: "Avant bisphosphonate", si_med: ["acide zoledronique", "alendronate", "ibandronate", "risedronate"] } } },
+    // TSH « si immunothérapie » retirée : aucune immunothérapie n'existe en base, la
+    // condition est invérifiable et la consigne sortait chez tout patient cancéreux.
+    { id: "BIO_MON_CANCER", pathos: ["PAT_020"], source: "ESMO_2024", parametres: {
+        BIO_012: { f: "Avant chaque cure de chimiothérapie" },
+        BIO_010: { f: "Avant chaque cure de chimiothérapie" },
+        BIO_009: { f: "Avant chaque cure de chimiothérapie" },
+        BIO_034: { f: "" },
+        BIO_035: { f: "" } } },
+    { id: "BIO_MON_DYSLIP", pathos: ["PAT_019"], source: "ESC_DYSLIP_2019", parametres: {
+        BIO_027: { f: "6 à 8 semaines après introduction ou modification, puis annuel" },
+        BIO_018: { f: "Si myalgies sous statine", si_med: ["statine"] },
+        BIO_013: { f: "Avant statine, puis si myalgies", si_med: ["statine"] } } },
+    { id: "BIO_MON_AOMI", pathos: ["PAT_007"], source: "ESC_PAD_2024", parametres: {
+        BIO_027: { f: "Annuel" },
+        BIO_009: { f: "Semestriel sous antithrombotique", si_med: ["antiagregant", "anticoagulant"] },
+        BIO_003: { f: "" },
+        BIO_026: { f: "" } } }
 ];
 
 
@@ -1595,16 +1490,20 @@ const PATHO_BIO_MONITOR = [
  * Pour une liste de pathologies actives, retourne les BIO à surveiller
  * avec fréquences et sources.
  */
-function getRequiredBioMonitoring(activePathoList) {
+// `aMed(cle)` : vrai si une molécule de la classe (ou de cette DCI) est prescrite. Sans
+// lui, aucun paramètre conditionnel n'est retenu — on n'affirme pas un traitement.
+function getRequiredBioMonitoring(activePathoList, aMed) {
     let bioMap = {}; // BIO_xxx → { frequences: [], sources: [], pathos: [] }
-    
+    const _aMed = typeof aMed === 'function' ? aMed : () => false;
+
     PATHO_BIO_MONITOR.forEach(rule => {
         const relevant = rule.pathos.some(p => activePathoList.includes(p));
         if (!relevant) return;
-        
-        rule.bio.forEach(bioId => {
+
+        Object.entries(rule.parametres || {}).forEach(([bioId, prm]) => {
+            if (prm.si_med && !prm.si_med.some(_aMed)) return;
             if (!bioMap[bioId]) bioMap[bioId] = { frequences: [], sources: [], pathos: [] };
-            bioMap[bioId].frequences.push(rule.frequence);
+            bioMap[bioId].frequences.push(prm.f || '');
             bioMap[bioId].sources.push(rule.source);
             rule.pathos.filter(p => activePathoList.includes(p)).forEach(p => {
                 if (!bioMap[bioId].pathos.includes(p)) bioMap[bioId].pathos.push(p);

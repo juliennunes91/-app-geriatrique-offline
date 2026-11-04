@@ -2080,6 +2080,32 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const aod = cas({ meds: ['Apixaban'] })._html['alertes-scores'] || '';
         assert.ok(!/CHA₂DS₂-VA/.test(aod) && /DOACscore/.test(aod), 'sous AOD sans FA codee : scores de saignement seulement');
     });
+    test('Suivi biologique : une frequence conditionnelle a un traitement absent ne sort pas', () => {
+        const suivi = (o) => String(analyzeCase(Object.assign({ age: 78, sexe: 'F' }, o))._html['alertes-suivi'] || '');
+        const ligne = (h, nom) => { const m = h.match(new RegExp('bio-row-name">' + nom + '<\\/td>([\\s\\S]*?)<\\/tr>')); return m ? m[1] : null; };
+        // Hypothyroidie sous levothyroxine : ni PNN ni ASAT (consigne propre aux ATS),
+        // et la ligne ASAT ne porte plus le texte de la TSH.
+        const hypo = suivi({ comorbs: ['PAT_017'], meds: ['Levothyroxine'] });
+        assert.ok(!/TSH\/6-8sem|PNN\/2-4sem/.test(hypo), 'plus de chaine composite recopiee sur chaque parametre');
+        assert.strictEqual(ligne(hypo, 'PNN \\(Neutrophiles\\)'), null, 'PNN : seulement sous antithyroidien');
+        // Hyperthyroidie : la PNN revient sous carbimazole.
+        assert.ok(ligne(suivi({ comorbs: ['PAT_018'], meds: ['Carbimazole'] }), 'PNN \\(Neutrophiles\\)') !== null, 'sous ATS : PNN');
+        // TAG chronique : « a l'introduction d'un ISRS » ne sort pas sans ISRS.
+        const tag = suivi({ comorbs: ['PAT_064'], flags: ['chkPsyChronique', 'chkTAGChronique'], meds: ['Bromazepam'] });
+        assert.ok(!/introduction d'un ISRS/.test(tag), 'pas de consigne ISRS sans ISRS');
+        assert.ok(/introduction d'un ISRS/.test(suivi({ comorbs: ['PAT_064'], flags: ['chkPsyChronique', 'chkTAGChronique'], meds: ['Sertraline'] })), 'sous ISRS : la consigne revient');
+        // La valeur par defaut de la CPK ne nomme plus la statine.
+        assert.ok(!/statine\/fibrate/.test(suivi({ comorbs: ['PAT_017'], meds: ['Levothyroxine'] })), 'defaut CPK neutre');
+        // Une cle de condition est une classe declaree ou une DCI exacte — jamais une sous-chaine.
+        const fludro = suivi({ comorbs: ['PAT_009'], meds: ['Cortisone'] });
+        assert.ok(!/fludrocortisone/.test(fludro), 'la cortisone ne declenche pas la regle de la fludrocortisone');
+    });
+    test('Scores QT : sans medicament a risque QT, ni QTc ni QT long, RISQ-PATH et Tisdale ne sortent pas', () => {
+        const sc = (o) => String(analyzeCase(Object.assign({ age: 80, sexe: 'F' }, o))._html['alertes-scores'] || '');
+        assert.ok(!/RISQ-PATH|Score de Tisdale/.test(sc({ meds: ['Bromazepam', 'Paracetamol'] })), 'sans objet');
+        assert.ok(/RISQ-PATH/.test(sc({ meds: ['Citalopram'] })) && /Score de Tisdale/.test(sc({ meds: ['Citalopram'] })), 'medicament QT : les scores reviennent');
+        assert.ok(/RISQ-PATH/.test(sc({ meds: ['Paracetamol'], bio: { bioQtc: 470 } })), 'QTc saisi : les scores reviennent');
+    });
     test('AUC (ddi_pk.js) : mesure, prediction et valeur heritee ne sont jamais confondues', () => {
         const auc = (meds, flags) => analyzeCase({ age: 80, sexe: 'F', dfg: 70, meds, flags })._html['alertes-auc'] || '';
         // Erythromycine + simvastatine : etude mesuree (Kantola 1998) ET prediction.
