@@ -290,6 +290,14 @@ function _renderSuiviCross(bioPlan, bioValues, sexe) {
         let bioName = (MASTER_DB.BIOLOGIE && MASTER_DB.BIOLOGIE[bioId]) ? MASTER_DB.BIOLOGIE[bioId].NOM_STANDARD : bioId;
         let val = bioValues[bioId];
         let valStr = val > 0 ? `<b>${val}</b>` : '<span class="text-muted">—</span>';
+        // « Bilan lipidique » (BIO_027) n'a pas de champ propre : la saisie se fait en LDL,
+        // HDL et triglycérides. La ligne montre le LDL, cible des recommandations, et les
+        // deux autres en infobulle — sans quoi la colonne restait vide, bilan saisi ou non.
+        if (bioId === 'BIO_027' && bioValues['BIO_027_LDL'] > 0) {
+            const autres = [bioValues['BIO_027_HDL'] > 0 ? 'HDL ' + bioValues['BIO_027_HDL'] + ' g/L' : '',
+                            bioValues['BIO_027_TG'] > 0 ? 'TG ' + bioValues['BIO_027_TG'] + ' g/L' : ''].filter(Boolean).join(', ');
+            valStr = `<b title="${escapeHtml(autres)}">LDL ${bioValues['BIO_027_LDL']}</b>`;
+        }
         let status = _bioStatusBadge(bioId, val, sexe);
 
         // Fréquence globale la plus stricte

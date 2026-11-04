@@ -2140,6 +2140,12 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(/id="bioTropoReactif"[^>]*onchange="setTropoReactif\(this\.value\)"[\s\S]{0,120}value="cTnI"[\s\S]{0,80}value="cTnT"/.test(h), f + ' : selecteur de reactif');
         }
     });
+    test('Suivi : la ligne « Bilan lipidique » montre le LDL saisi', () => {
+        const ligne = bio => (String(analyzeCase({ age: 80, sexe: 'F', comorbs: ['PAT_019'], bio, meds: ['Atorvastatine'] })._html['alertes-suivi'] || '')
+            .match(/Bilan Lipidique<\/td>\s*<td class="bio-val">([\s\S]*?)<\/td>/) || [])[1] || '';
+        assert.ok(/LDL 1.3/.test(ligne({ bioLdl: 1.3, bioTg: 2.1 })) && /TG 2.1 g\/L/.test(ligne({ bioLdl: 1.3, bioTg: 2.1 })), 'LDL affiche, TG en infobulle');
+        assert.ok(/—/.test(ligne({})), 'sans bilan : tiret');
+    });
     test('Biologie : codes LOINC verifies (le code designe bien l\'analyte et l\'unite du parametre)', () => {
         // 13 codes sur 47 designaient un autre analyte (CPK = cholesterol total ; vitamine D
         // = calcitriol ; osmolalite = LDH ; CST = capacite totale de fixation), une autre

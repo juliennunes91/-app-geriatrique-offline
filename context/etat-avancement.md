@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 3.99**, `BUILD_ID` `20261104-troponine-reactif`,
-cache `geriaassist-v147`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.00**, `BUILD_ID` `20261104-ldl-suivi`,
+cache `geriaassist-v148`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,7 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.00** (04/11) — Suivi : la ligne « Bilan lipidique » montre le LDL saisi.
 - **3.99** (04/11) — Troponine : sélecteur de réactif (hs-cTnI Abbott 16/34, rule-in 64 ;
   hs-cTnT Roche 14, rule-in 52), réglage mémorisé.
 - **3.98** (04/11) — Phosphore : code canonique `BIO_048`, bornes 0,80-1,45, suivi MRC,
@@ -139,8 +140,7 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-Décision utilisateur du 04/11 restant à livrer : **LDL** affiché sur la ligne « Bilan
-lipidique » du Suivi.
+**Rien en cours.** Décisions biologie du 04/11 toutes livrées (3.97 à 4.00).
 
 
 ---

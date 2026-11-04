@@ -1843,9 +1843,9 @@ Abbott ; 52 = rule-in hs-cTnT). Sélecteur **`bioTropoReactif`** (deux UIs) : hs
 C'est un **réglage du laboratoire** : déclaré dans `PREFERENCES` (survit à « Nouveau »),
 mémorisé en `localStorage` (`geria-tropo-reactif`), et pris dans le hash de mémoïsation.
 
-**Points ouverts, non tranchés** :
-- `BIO_027` (bilan lipidique) n'a pas de champ propre : la saisie passe par LDL / HDL / TG,
-  la colonne « Valeur » de l'onglet Suivi reste vide.
+**Points restants** :
+- `BIO_027` (bilan lipidique) n'a pas de champ propre (saisie en LDL / HDL / TG) : depuis
+  4.00, la ligne du Suivi montre le **LDL**, HDL et TG en infobulle.
 
 ## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
 
