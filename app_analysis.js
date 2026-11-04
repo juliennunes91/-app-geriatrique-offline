@@ -1230,7 +1230,29 @@ function analyserPrescription() {
         else { let el = document.getElementById(targetId); if(el) el.innerHTML += htmlStr; }
         if(countKey) counts[countKey]++;
     };
+    // Onglet Bio rangé en trois rubriques, dans cet ordre : ce qui est anormal
+    // (syndromes, bilan associé, lecture urinaire), ce que plusieurs anomalies disent
+    // ENSEMBLE (associations 🧩), puis comment lire (pièges 🔎). Ce qui n'est pas une
+    // carte (date du bilan, en tête) reste en tête. L'en-tête de rubrique n'a ni classe
+    // `alert` ni `<strong>` : il n'est ni compté, ni masquable, ni relu par les exports.
+    // Une rubrique seule ne reçoit pas d'en-tête : il n'y aurait rien à distinguer.
+    const _rubriquesBio = (parts) => {
+        const tete = [], syndromes = [], associations = [], pieges = [];
+        parts.forEach(p => {
+            const s = String(p);
+            if (!/class="alert/.test(s)) tete.push(s);
+            else if (/data-rubrique="anomalie"/.test(s)) syndromes.push(s); // anomalie isolée, rendue par la table
+            else if (/data-association=/.test(s)) associations.push(s);
+            else if (/<strong[^>]*>\s*🔎/.test(s)) pieges.push(s);
+            else syndromes.push(s);
+        });
+        const groupes = [['Anomalies et syndromes', syndromes], ['Associations évocatrices', associations], ["Pièges d'interprétation", pieges]].filter(g => g[1].length);
+        if (groupes.length < 2) return parts;
+        const entete = t => `<div class="bio-rubrique" style="font-size:0.72rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#0f766e;border-bottom:1px solid #99f6e4;margin:14px 0 6px;padding-bottom:2px;">${t}</div>`;
+        return tete.concat(...groupes.map(([t, l]) => [entete(t)].concat(l)));
+    };
     const flushAlerts = () => {
+        if (_htmlBuffers['alertes-bio'] && _htmlBuffers['alertes-bio'].length) _htmlBuffers['alertes-bio'] = _rubriquesBio(_htmlBuffers['alertes-bio']);
         for(const [id, parts] of Object.entries(_htmlBuffers)) {
             if(parts.length === 0) continue;
             let el = document.getElementById(id);
@@ -2826,7 +2848,7 @@ function analyserPrescription() {
                 quand() { return borne('BIO_051', 'haut') && !comorb('PAT_029') && (borne('BIO_003', 'haut') || (dfg > 0 && dfg < 60)) && this.meds().length > 0; },
                 titre() { return `Atteinte rénale avec éosinophilie sous ${this.meds().join(', ')} : néphrite interstitielle aiguë médicamenteuse ?`; },
                 texte: () => "Les néphrites interstitielles aiguës sont surtout médicamenteuses — antibiotiques, AINS et, de plus en plus, IPP (Praga, Nephrol Dial Transplant 2015). L'éosinophilie manque souvent : son absence n'écarte rien. Suspendre le médicament suspect ; avis néphrologique (sédiment, protéinurie, biopsie selon l'évolution)." },
-            {   id: 'eosinophilie', severite: 'info',
+            {   id: 'eosinophilie', severite: 'info', rubrique: 'anomalie',
                 quand() { return borne('BIO_051', 'haut') && !ASSOCIATIONS_BIO.some(x => (x.id === 'dress' || x.id === 'nia') && x.quand()); },
                 titre: () => v('BIO_051') >= 1.5 ? `Hyperéosinophilie (${v('BIO_051')} G/L)` : `Éosinophilie (${v('BIO_051')} G/L)`,
                 texte: () => `${v('BIO_051') >= 1.5 ? "Au-delà de 1,5 G/L de façon persistante, c'est une hyperéosinophilie, à explorer même sans symptôme (ICOG-EO, Valent 2012). " : "Seuil : 0,5 G/L (ICOG-EO, Valent 2012). "}Causes à rechercher : médicament (toute molécule récente), parasitose, allergie, insuffisance surrénale, cancer ou hémopathie.${(() => { const d = ASSOCIATIONS_BIO.find(x => x.id === 'dress').meds(); return d.length ? ` Sous ${d.join(', ')}, surveiller l'apparition d'un DRESS : fièvre, éruption, cytolyse.` : ''; })()}${medsImputables(['corticoide']).length ? ' Sous corticoïde, une éosinophilie est inattendue : écarter une anguillulose (sérologie, ou ivermectine si exposition), dont la corticothérapie peut faire une forme maligne.' : ''}` }
@@ -2847,7 +2869,7 @@ function analyserPrescription() {
             const c = a.criteres ? a.criteres() : null;
             if (!a.quand(c)) return;
             const cls = 'alert-' + a.severite + (a.severite === 'info' ? '' : ' border-' + a.severite);
-            addAlert('alertes-bio', `<div class="alert ${cls} shadow-sm" data-association="${a.id}"><strong>🧩 ${a.titre(c)}</strong><br><small>${a.texte(c)}</small></div>`, 'bio');
+            addAlert('alertes-bio', `<div class="alert ${cls} shadow-sm" data-association="${a.id}"${a.rubrique ? ` data-rubrique="${a.rubrique}"` : ''}><strong>🧩 ${a.titre(c)}</strong><br><small>${a.texte(c)}</small></div>`, 'bio');
         });
     }
 

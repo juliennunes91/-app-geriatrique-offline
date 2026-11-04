@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.71**, `BUILD_ID` `20261104-nephrotique`,
-cache `geriaassist-v158`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.80**, `BUILD_ID` `20261104-bio-rubriques`,
+cache `geriaassist-v159`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,8 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.80** (04/11) — Onglet Bio en trois rubriques : anomalies et syndromes, associations,
+  pièges d'interprétation.
 - **4.71** (04/11) — Syndrome néphrotique (albuminurie de rang néphrotique + albuminémie < 30).
 - **4.70** (04/11) — Champ éosinophiles (PNE) : DRESS, néphrite interstitielle aiguë,
   éosinophilie / hyperéosinophilie ; importé du PDF.
@@ -219,5 +221,6 @@ la base ; fer oral sur ferritine haute = seule alerte générique « réponse no
   bloque les sites d'éditeurs — demander les PDF à l'utilisateur ; un conteneur
   réinitialisé se répare par `git fetch origin main && git checkout -B main origin/main`.
 
-**Question ouverte (04/11)** : regrouper l'onglet Bio en rubriques (syndromes / associations /
-pièges) ou créer un onglet dédié — demandé à l'utilisateur.
+**Point à trancher** : le PDF de synthèse n'inclut aucune carte de l'onglet Bio (seulement le
+plan biologique) — à proposer à l'utilisateur si les associations rouges/orange doivent y
+figurer.

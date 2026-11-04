@@ -2010,6 +2010,17 @@ aiguë** (PNE > 0,5 + atteinte rénale **sans IRC déclarée** + IPP/AINS/bêtal
 **éosinophilie isolée** (graduée à 1,5 ; anguillulose à écarter sous corticoïde), qui se tait
 quand DRESS ou NIA a parlé — et nomme alors la molécule à risque de DRESS à surveiller.
 
+**Onglet Bio en trois rubriques (4.80)** — `_rubriquesBio()` (`app_analysis.js`), appliqué au
+tampon de `alertes-bio` dans `flushAlerts` : « Anomalies et syndromes » (cartes de syndrome,
+bilan associé, lecture urinaire, et les associations marquées `rubrique: 'anomalie'` —
+l'éosinophilie isolée), « Associations évocatrices » (`data-association`), « Pièges
+d'interprétation » (titre 🔎). Ce qui n'est pas une carte reste en tête. L'en-tête
+(`.bio-rubrique`, styles en ligne pour les deux interfaces) n'a ni classe `alert` ni
+`<strong>` : ni compté, ni masquable, ni relu par l'export texte. **Pas d'en-tête quand une
+seule rubrique est remplie.** Le regroupement précède la mémoïsation. Le « rapport complet »
+imprimable recopie l'onglet, rubriques comprises ; **le PDF de synthèse n'inclut pas l'onglet
+Bio** (choix ancien, écrit dans `buildPdfContent`) — seul son plan biologique y figure.
+
 **Syndrome néphrotique (4.71)** — albuminurie ≥ 2200 (équivalent de 3,5 g/j de protéinurie)
 + albuminémie < 30 g/L (KDIGO 2021) → orange, causes du sujet âgé (extramembraneuse et
 cancer, amylose → électrophorèse/immunofixation/chaînes légères, diabète, AINS nommé) ;

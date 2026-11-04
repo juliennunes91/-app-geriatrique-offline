@@ -72,3 +72,5 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   TSH, cortisol, DFG). Non importées du PDF. — Demande de l'utilisateur.
 - **04/11/2026** — Éosinophiles (PNE) ajoutés, importés du PDF ; une éosinophilie isolée se
   tait quand une association plus précise (DRESS, NIA) l'explique. — Demande de l'utilisateur.
+- **04/11/2026** — Onglet Bio en rubriques (anomalies / associations / pièges) plutôt qu'un
+  onglet de plus ; pas d'en-tête pour une rubrique seule. — Choix de l'utilisateur (option 1).

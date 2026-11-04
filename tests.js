@@ -2309,6 +2309,18 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(/sans syndrome néphrotique complet/.test(run({ bio: { bioAlbuminurie: 3000, bioAlbumSg: 38 } })), 'albuminemie normale : rang nephrotique seul');
         assert.deepStrictEqual(ids({ bio: { bioAlbuminurie: 500, bioAlbumSg: 22 } }), [], 'albuminurie moderee : rien');
     });
+    test('Onglet Bio : trois rubriques (anomalies, associations, pieges), en-tetes seulement s\'il y a a distinguer', () => {
+        const ordre = c => { const h = String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'] }, c))._html['alertes-bio'] || ''); const r = []; const re = /class="bio-rubrique"[^>]*>([^<]+)<|<strong[^>]*>\s*(🔎|🧩|⚠️|🚨|ℹ️)/g; let m; while ((m = re.exec(h))) r.push(m[1] ? '#' + m[1] : m[2]); return r; };
+        const o = ordre({ bio: { patientNa: 128, bioGly: 25, bioCa: 2.8, bioPhos: 0.6, bioPne: 0.9 } });
+        const iA = o.indexOf('#Anomalies et syndromes'), iB = o.indexOf('#Associations évocatrices'), iC = o.indexOf("#Pièges d'interprétation");
+        assert.ok(iA === 0 && iA < iB && iB < iC, 'rubriques dans l\'ordre : ' + o.join(' '));
+        assert.ok(o.slice(iA + 1, iB).every(x => x !== '🔎'), 'aucun piege dans les anomalies');
+        assert.ok(o.slice(iB + 1, iC).every(x => x === '🧩'), 'seulement des associations dans leur rubrique');
+        assert.ok(o.slice(iC + 1).every(x => x === '🔎'), 'seulement des pieges dans la leur');
+        const eo = String(analyzeCase({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'], bio: { patientNa: 128, bioGly: 25, bioPne: 0.9 } })._html['alertes-bio'] || '');
+        assert.ok(eo.indexOf('data-association="eosinophilie"') < eo.indexOf("Pièges d'interprétation") && !/Associations évocatrices/.test(eo), 'eosinophilie isolee : rangee avec les anomalies');
+        assert.deepStrictEqual(ordre({ bio: { patientNa: 128 } }).filter(x => x[0] === '#'), [], 'une seule rubrique : pas d\'en-tete');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :
