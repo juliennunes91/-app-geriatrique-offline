@@ -2010,6 +2010,11 @@ aiguë** (PNE > 0,5 + atteinte rénale **sans IRC déclarée** + IPP/AINS/bêtal
 **éosinophilie isolée** (graduée à 1,5 ; anguillulose à écarter sous corticoïde), qui se tait
 quand DRESS ou NIA a parlé — et nomme alors la molécule à risque de DRESS à surveiller.
 
+**Syndrome néphrotique (4.71)** — albuminurie ≥ 2200 (équivalent de 3,5 g/j de protéinurie)
++ albuminémie < 30 g/L (KDIGO 2021) → orange, causes du sujet âgé (extramembraneuse et
+cancer, amylose → électrophorèse/immunofixation/chaînes légères, diabète, AINS nommé) ;
+albuminurie de rang néphrotique seule → info, albuminémie demandée ou dite normale.
+
 **Biologie urinaire et SIADH (4.50)** — deux champs, `bioOsmU` (osmolalité urinaire,
 mOsm/kg, `BIO_049`, LOINC 2695-5) et `bioNaU` (natriurèse sur échantillon, mmol/L,
 `BIO_050`, LOINC 2955-3), dans les deux interfaces, l'export JSON, `resetPatient()` et le

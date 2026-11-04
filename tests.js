@@ -2300,6 +2300,15 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         for (const f of ['index.html', 'index_modern.html']) assert.ok(/id="bioPne"/.test(require('fs').readFileSync(require('path').join(__dirname, f), 'utf8')), f + ' : champ PNE');
         assert.ok(/#bioPne/.test(require('fs').readFileSync(require('path').join(__dirname, 'app_core.js'), 'utf8')), 'PNE exporte');
     });
+    test('Syndrome nephrotique : albuminurie de rang nephrotique ET albuminemie < 30 g/L (KDIGO 2021)', () => {
+        const run = c => String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'] }, c))._html['alertes-bio'] || '');
+        const ids = c => [...run(c).matchAll(/data-association="([a-z_]+)"/g)].map(m => m[1]);
+        assert.deepStrictEqual(ids({ bio: { bioAlbuminurie: 4000, bioAlbumSg: 22 } }), ['nephrotique'], 'syndrome complet');
+        assert.ok(/sous Ibuprofene, cause médicamenteuse possible/.test(run({ meds: ['Ibuprofene'], bio: { bioAlbuminurie: 4000, bioAlbumSg: 22 } })), 'AINS nomme');
+        assert.deepStrictEqual(ids({ bio: { bioAlbuminurie: 3000 } }), ['nephrotique_rang'], 'albuminemie non dosee : la demander');
+        assert.ok(/sans syndrome néphrotique complet/.test(run({ bio: { bioAlbuminurie: 3000, bioAlbumSg: 38 } })), 'albuminemie normale : rang nephrotique seul');
+        assert.deepStrictEqual(ids({ bio: { bioAlbuminurie: 500, bioAlbumSg: 22 } }), [], 'albuminurie moderee : rien');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :

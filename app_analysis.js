@@ -2830,6 +2830,18 @@ function analyserPrescription() {
                 quand() { return borne('BIO_051', 'haut') && !ASSOCIATIONS_BIO.some(x => (x.id === 'dress' || x.id === 'nia') && x.quand()); },
                 titre: () => v('BIO_051') >= 1.5 ? `Hyperéosinophilie (${v('BIO_051')} G/L)` : `Éosinophilie (${v('BIO_051')} G/L)`,
                 texte: () => `${v('BIO_051') >= 1.5 ? "Au-delà de 1,5 G/L de façon persistante, c'est une hyperéosinophilie, à explorer même sans symptôme (ICOG-EO, Valent 2012). " : "Seuil : 0,5 G/L (ICOG-EO, Valent 2012). "}Causes à rechercher : médicament (toute molécule récente), parasitose, allergie, insuffisance surrénale, cancer ou hémopathie.${(() => { const d = ASSOCIATIONS_BIO.find(x => x.id === 'dress').meds(); return d.length ? ` Sous ${d.join(', ')}, surveiller l'apparition d'un DRESS : fièvre, éruption, cytolyse.` : ''; })()}${medsImputables(['corticoide']).length ? ' Sous corticoïde, une éosinophilie est inattendue : écarter une anguillulose (sérologie, ou ivermectine si exposition), dont la corticothérapie peut faire une forme maligne.' : ''}` }
+            ,
+            // ----- Syndrome néphrotique (4.71) -----
+            {   id: 'nephrotique', severite: 'warning',
+                quand() { return v('BIO_046') >= 2200 && v('BIO_035') > 0 && v('BIO_035') < 30; },
+                titre: () => `Albuminurie ${v('BIO_046')} mg/g et albuminémie ${v('BIO_035')} g/L : syndrome néphrotique`,
+                texte: () => `Protéinurie de rang néphrotique (≥ 3,5 g/j, soit environ 2,2 g/g d'albuminurie) avec albuminémie < 30 g/L, le plus souvent œdèmes et hypercholestérolémie (KDIGO 2021). Chez le sujet âgé, d'abord glomérulonéphrite extramembraneuse (cancer associé à rechercher), amylose (électrophorèse, immunofixation, chaînes légères libres), néphropathie diabétique, lésions glomérulaires minimes${medsImputables(['ains']).length ? ` — sous ${medsImputables(['ains']).join(', ')}, cause médicamenteuse possible` : ''}. Avis néphrologique (biopsie) ; le risque thromboembolique est majoré.` },
+            {   id: 'nephrotique_rang', severite: 'info',
+                quand() { return v('BIO_046') >= 2200 && !(v('BIO_035') > 0 && v('BIO_035') < 30); },
+                titre: () => `Albuminurie de rang néphrotique (${v('BIO_046')} mg/g)${v('BIO_035') > 0 ? ` avec albuminémie ${v('BIO_035')} g/L` : ''}`,
+                texte: () => v('BIO_035') > 0
+                    ? "L'albuminémie n'est pas abaissée : protéinurie de rang néphrotique sans syndrome néphrotique complet (KDIGO 2021). Elle reste une atteinte glomérulaire à explorer — avis néphrologique."
+                    : "Au-delà d'environ 2,2 g/g, l'albuminurie est de rang néphrotique : doser l'albuminémie pour savoir si un syndrome néphrotique est constitué (< 30 g/L, KDIGO 2021)." }
         ];
         ASSOCIATIONS_BIO.forEach(a => {
             const c = a.criteres ? a.criteres() : null;

@@ -1,6 +1,6 @@
 # Pièges d'interprétation de la biologie et présentations atypiques du sujet âgé
 
-Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.70).
+Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.71).
 
 **Statut**
 - ✅ **implémenté** : l'application le signale quand le dossier réunit la valeur et la circonstance ;
@@ -185,6 +185,7 @@ détectée porte sa sévérité dans une table déclarée (`ASSOCIATIONS_BIO`, `
 | 6.31 | **DRESS** | PNE ≥ 0,7 + médicament à risque (allopurinol, carbamazépine, oxcarbazépine, lamotrigine, phénytoïne, phénobarbital, cotrimoxazole, vancomycine) + fièvre ≥ 38,5 °C ou cytolyse | ✅ orange (champ `bioPne`, 4.70) | RegiSCAR, Kardaun 2013 | S |
 | 6.33 | **Néphrite interstitielle aiguë médicamenteuse** | PNE > 0,5 + atteinte rénale sans IRC déclarée + IPP, AINS, pénicilline, céphalosporine, allopurinol ou rifampicine | ✅ info | Praga, *Nephrol Dial Transplant* 2015 | S |
 | 6.34 | **Éosinophilie / hyperéosinophilie** | PNE > 0,5 (≥ 1,5 : hyperéosinophilie) hors DRESS et NIA ; sous corticoïde, anguillulose à écarter | ✅ info | ICOG-EO, Valent 2012 ; CATMAT (anguillulose) | S |
+| 6.36 | **Syndrome néphrotique** | albuminurie ≥ 2200 (mg/g ou mg/24 h) + albuminémie < 30 g/L ; sinon « rang néphrotique » (albuminémie à doser ou normale) | ✅ orange / info | KDIGO 2021 (glomérulopathies) | S |
 | 6.35 | Emboles de cholestérol (éosinophilie + insuffisance rénale après geste endovasculaire ou sous anticoagulant) | pas de champ « geste récent » | 🔜 | — | NV |
 | 6.32 | Acidose lactique sous metformine | lactates + metformine + DFG < 30 | ✅ en partie (imputabilité de `SYND_038`) | RCP metformine | — |
 
