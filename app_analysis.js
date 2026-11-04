@@ -2044,7 +2044,8 @@ function analyserPrescription() {
         if (na > 0 && na < 135) {
             const severe = na < 125;
             const grade = na < 125 ? 'sévère (< 125)' : na < 130 ? 'modérée (125-129)' : 'légère (130-134)';
-            checkBioSyndrome('SYND_009', true, { severe, labelOverride: `Hyponatrémie ${grade} — Na ${na} mmol/L` });
+            checkBioSyndrome('SYND_009', true, { severe, labelOverride: `Hyponatrémie ${grade} — Na ${na} mmol/L`,
+                bilan: ctxClinique.includes('chutes') ? `<br><em>Chutes déclarées :</em> même légère et chronique, l'hyponatrémie s'associe aux chutes, à l'instabilité et aux troubles de l'attention (Renneboog, Am J Med 2006) — la corriger fait partie de la prévention des chutes.` : '' });
         }
     }
 
@@ -2269,7 +2270,8 @@ function analyserPrescription() {
         if (li > 0.8) {
             const severe = li > 1.2;
             const grade = li > 2.0 ? 'sévère (> 2.0 — toxicité, néphrotoxicité)' : li > 1.5 ? 'surdosage (1.5-2.0)' : li > 1.2 ? 'toxique sujet âgé (> 1.2)' : 'vigilance (> 0.8 — limite haute sujet âgé)';
-            checkBioSyndrome('SYND_028', true, { severe, labelOverride: `Lithiémie ${grade} — ${li} mEq/L` });
+            checkBioSyndrome('SYND_028', true, { severe, labelOverride: `Lithiémie ${grade} — ${li} mEq/L`,
+                bilan: `<br><em>Piège d'interprétation :</em> lithiémie interprétable seulement 12 h après la dernière prise ; un prélèvement sur tube hépariné au lithium la fausse vers le haut — une valeur inattendue se recontrôle sur tube sec avant de traiter une intoxication.` });
         }
     }
 
@@ -2442,6 +2444,9 @@ function analyserPrescription() {
         }
     }
 
+    // Une seule fonction d'affichage pour les deux lots de pièges : carte informative,
+    // gravité fixe par nature (un piège dit comment lire, il ne gradue rien).
+    const _piegeBio = (titre, texte) => addAlert('alertes-bio', `<div class="alert alert-info shadow-sm"><strong>🔎 ${titre}</strong><br><small>${texte}</small></div>`, 'bio');
     // =====================================================================
     // PIÈGES D'INTERPRÉTATION — un chiffre juste peut être mal lu.
     // Chaque piège ne sort que si le dossier le réunit (valeur ET circonstance), en carte
@@ -2449,7 +2454,7 @@ function analyserPrescription() {
     // message entier, puisque le rapport PDF ne garde que le titre d'une carte informative.
     // =====================================================================
     {
-        const piege = (titre, texte) => addAlert('alertes-bio', `<div class="alert alert-info shadow-sm"><strong>🔎 ${titre}</strong><br><small>${texte}</small></div>`, 'bio');
+        const piege = _piegeBio;
         const v = id => bioValues[id];
         const hbP = v('BIO_009'), ferP = v('BIO_020'), cstP = v('BIO_047'), dfgP = v('BIO_004');
         const seuilHbP = sexe === 'M' ? 13 : 12;
@@ -2517,10 +2522,139 @@ function analyserPrescription() {
 
         // Hémoconcentration : une déshydratation masque une anémie ou une hypoalbuminémie.
         const ureeP = v('BIO_007'), creatP = v('BIO_003');
-        const deshydrate = naP > 145 || (ureeP > 0 && creatP > 0 && (ureeP * 1000) / creatP > 100);
+        // Rapport urée/créatinine très élevé AVEC anémie : c'est l'hémorragie digestive haute
+        // qu'il faut évoquer (lot 2), pas une Hb faussement haute — on ne dit pas les deux.
+        const ratioP = (ureeP > 0 && creatP > 0) ? (ureeP * 1000) / creatP : 0;
+        const saignementProbable = ratioP > 121 && hbP > 0 && hbP < seuilHbP;
+        const deshydrate = naP > 145 || (ratioP > 100 && !saignementProbable);
         if (deshydrate && (hbP > 0 || v('BIO_035') > 0)) {
             piege("Hémoglobine et albumine à relire après réhydratation (hémoconcentration probable)",
                 `${naP > 145 ? `Natrémie ${naP} mmol/L` : 'Rapport urée/créatinine élevé'} : la contraction du volume plasmatique élève l'hémoglobine et l'albumine. Une anémie ou une hypoalbuminémie peuvent n'apparaître qu'une fois le patient réhydraté.`);
+        }
+    }
+
+    // =====================================================================
+    // PIÈGES D'INTERPRÉTATION (lot 2) et PRÉSENTATIONS ATYPIQUES du sujet âgé.
+    // Même doctrine que le lot 1 : valeur ET circonstance réunies, carte informative,
+    // titre autoportant. Une présentation atypique s'arme sur un CONTEXTE déclaré
+    // (confusion, chutes, troubles cognitifs légers) — jamais sur l'âge seul.
+    // =====================================================================
+    {
+        const piege = _piegeBio;
+        const v = id => bioValues[id];
+        const haut = id => { const x = v(id); const a = x > 0 && typeof bioAnormal === 'function' ? bioAnormal(id, x, sexe) : null; return !!(a && a.sens === 'haut'); };
+        const normal = id => { const x = v(id); return x > 0 && typeof bioAnormal === 'function' && !bioAnormal(id, x, sexe); };
+        const ctx = c => ctxClinique.includes(c);
+        const creat = v('BIO_003'), uree = v('BIO_007'), hb = v('BIO_009');
+
+        // Créatinine qui monte sans que le DFG baisse : sécrétion tubulaire bloquée.
+        const secretion = medsImputables(['trimethoprime', 'cotrimoxazole', 'cimetidine', 'cobicistat', 'ritonavir']);
+        if (creat > 0 && secretion.length) {
+            piege(`Créatinine possiblement majorée sans baisse du DFG réel (${secretion.join(', ')})`,
+                "Ces molécules bloquent la sécrétion tubulaire de la créatinine (transporteurs OCT2/MATE) : la créatinine monte et le DFG estimé baisse alors que la filtration est inchangée, de façon réversible à l'arrêt. Ne pas conclure à une insuffisance rénale aiguë sur ce seul chiffre ; l'urée, la diurèse et la cystatine C aident à trancher (Lepist, Kidney Int 2014 ; German, J Acquir Immune Defic Syndr 2012).");
+        }
+        const fibrate = medsImputables(['fenofibrate']);
+        if (creat > 0 && fibrate.length) {
+            piege("Créatinine majorée de façon réversible par le fénofibrate",
+                "Dans l'étude FIELD, la créatinine a augmenté d'environ 10 µmol/L sous fénofibrate et s'est normalisée à l'arrêt : ce n'est pas une néphrotoxicité. Un DFG estimé abaissé sous fénofibrate surestime l'atteinte rénale (Davis, Diabetologia 2011).");
+        }
+
+        // Pseudothrombopénie à l'EDTA : agrégats in vitro.
+        const plq = v('BIO_010');
+        if (plq > 0 && plq < 100 && !(hb > 0 && hb < 10) && !(v('BIO_011') > 0 && v('BIO_011') < 2)) {
+            piege(`Thrombopénie isolée (${plq} G/L) : écarter une pseudothrombopénie avant toute décision`,
+                "Les anticorps dépendants de l'EDTA agrègent les plaquettes dans le tube et l'automate les compte trop bas (environ 0,1 % des patients). Avant d'arrêter un anticoagulant ou un antiagrégant, demander la recherche d'agrégats sur frottis et un recomptage sur tube citraté.");
+        }
+
+        // Leucocytose sous corticoïdes : démargination des neutrophiles.
+        const cortico = medsImputables(['corticoide']);
+        if (v('BIO_011') > 10 && cortico.length) {
+            piege(`Leucocytose sous corticoïde (${cortico.join(', ')}) : pas forcément une infection`,
+                "Les corticoïdes élèvent les neutrophiles dès le premier jour et pendant tout le traitement, même à faible dose. Une déviation à gauche (plus de 6 % de formes jeunes) oriente plutôt vers une infection (Shoenfeld, Am J Med 1981).");
+        }
+
+        // Phosphatases alcalines : foie ou os.
+        if (haut('BIO_016') && normal('BIO_015')) {
+            piege(`Phosphatases alcalines élevées (${v('BIO_016')} UI/L) avec GGT normale : origine osseuse probable`,
+                "La GGT est spécifique du foie : normale, elle oriente une élévation des PAL vers l'os (fracture en consolidation, maladie de Paget, métastases osseuses, ostéomalacie et carence en vitamine D) plutôt que vers une cholestase (ACG, Kwo 2017).");
+        }
+
+        // ASAT d'origine musculaire.
+        if (haut('BIO_013') && haut('BIO_018') && !(v('BIO_014') > v('BIO_013'))) {
+            piege("ASAT élevées avec CPK élevées : origine musculaire possible",
+                "L'ASAT n'est pas spécifique du foie (muscle, hématies) ; l'ALAT l'est davantage. Une ASAT prédominante avec des CPK élevées après une chute, un effort ou sous statine évoque le muscle plutôt qu'une hépatopathie (ACG, Kwo 2017).");
+        }
+
+        // Rapport urée/créatinine élevé et anémie : hémorragie digestive haute.
+        const ratioUC = (uree > 0 && creat > 0) ? (uree * 1000) / creat : 0;
+        if (ratioUC > 121 && hb > 0 && hb < (sexe === 'M' ? 13 : 12)) {
+            const antithrombo = medsImputables(['anticoagulant', 'antiagregant', 'ains']);
+            piege("Urée disproportionnée à la créatinine avec anémie : penser à une hémorragie digestive haute",
+                `Le sang digéré est une charge protéique : un rapport urée/créatinine élevé (équivalent d'un rapport BUN/créatinine > 30) multiplie par 7,5 la probabilité d'une hémorragie digestive haute (Srygley, JAMA 2012)${antithrombo.length ? ` — sous ${antithrombo.join(', ')}` : ''}. Rechercher un méléna ; la déshydratation donne le même rapport sans anémie.`);
+        }
+
+        // Hyperferritinémie sans surcharge.
+        const fer = v('BIO_020'), cst = v('BIO_047');
+        if (haut('BIO_020') && cst > 0 && cst < 45) {
+            piege(`Ferritine élevée (${fer} µg/L) avec saturation de la transferrine à ${cst} % : pas de surcharge en fer`,
+                "La surcharge se lit sur la saturation de la transferrine (> 45 %), pas sur la ferritine seule (EASL, hémochromatose 2022). Une ferritine haute avec une saturation normale relève le plus souvent de l'inflammation, de l'alcool, d'un syndrome métabolique ou d'une cytolyse.");
+        }
+
+        // Procalcitonine et insuffisance rénale.
+        const pct = v('BIO_032'), dfg = v('BIO_004');
+        if (pct > 0.5 && pct < 2 && dfg > 0 && dfg < 30) {
+            piege(`Procalcitonine ${pct} ng/mL peu spécifique en insuffisance rénale avancée`,
+                "En dialyse, jusqu'à 44 % des patients sans infection bactérienne ont une procalcitonine entre 0,6 et 1,5 ng/mL ; les seuils proposés varient de 0,5 à 15 ng/mL (revue systématique, 2022). Juger sur la clinique et la cinétique plutôt que sur une valeur isolée.");
+        }
+
+        // NT-proBNP et obésité.
+        const bnp = v('BIO_028'), imc = getVal('patientBmi');
+        if (bnp > 0 && imc >= 30) {
+            const red = imc >= 40 ? 40 : imc >= 35 ? 30 : 25;
+            piege(`NT-proBNP ${bnp} pg/mL à lire avec l'obésité (IMC ${imc}) : seuils d'exclusion abaissés de ${red} %`,
+                "L'obésité abaisse les peptides natriurétiques : un NT-proBNP « normal » exclut moins bien l'insuffisance cardiaque. La Heart Failure Association de l'ESC propose d'abaisser les seuils de 25, 30 et 40 % pour un IMC de 30-34,9, 35-39,9 et ≥ 40.");
+        }
+
+        // T4 libre et héparine : lipolyse in vitro.
+        const heparine = medsImputables(['heparine']);
+        if (v('BIO_T4') > 22 && heparine.length) {
+            piege(`T4 libre élevée sous héparine (${heparine.join(', ')}) : artefact possible`,
+                "L'héparine libère une lipase qui produit, dans le tube, des acides gras libres déplaçant la T4 de ses protéines de liaison : la T4 libre mesurée est faussement élevée, surtout si les triglycérides sont hauts et le dosage différé (Jaume, Thyroid 1996). Contrôler à distance de l'injection avant de conclure à une hyperthyroïdie.");
+        }
+
+        // TSH abaissée par les corticoïdes.
+        if (v('BIO_019') > 0 && v('BIO_019') < 0.4 && cortico.length && !(v('BIO_T4') > 22) && !(v('BIO_T3') > 6.8)) {
+            piege(`TSH basse sous corticoïde (${cortico.join(', ')}) avec T4L non élevée : effet médicamenteux probable`,
+                "Glucocorticoïdes, agonistes dopaminergiques et analogues de la somatostatine freinent la sécrétion de TSH sans hyperthyroïdie ni hypothyroïdie centrale cliniquement significative (Haugen, Best Pract Res Clin Endocrinol Metab 2009). Ne pas traiter le chiffre ; recontrôler après la corticothérapie.");
+        }
+
+        // Température : la fièvre du sujet âgé commence plus bas, et peut manquer.
+        const t = v('BIO_TEMP'), crp = v('BIO_024');
+        if (t >= 37.8 && t < 38) {
+            piege(`Température ${t} °C : c'est une fièvre chez le sujet âgé`,
+                "Définition gériatrique (IDSA, High 2009) : une mesure orale > 37,8 °C, des mesures répétées > 37,2 °C (orale) ou > 37,5 °C (rectale), ou une hausse de plus de 1,1 °C par rapport à la température habituelle. La température de base baisse avec l'âge et la fragilité.");
+        } else if (t > 0 && t < 37.8 && (crp > 50 || pct >= 0.5)) {
+            piege("Syndrome inflammatoire sans fièvre : une infection reste possible",
+                `${crp > 50 ? `CRP ${crp} mg/L` : `Procalcitonine ${pct} ng/mL`} avec ${t} °C. Chez le sujet âgé, la fièvre manque ou reste modérée dans 20 à 30 % des infections sévères (Norman, Clin Infect Dis 2000) ; l'infection peut se révéler par une confusion, une chute ou un déclin fonctionnel.`);
+        }
+
+        // Présentation atypique : confusion aiguë.
+        if (ctx('delirium')) {
+            const params = [['BIO_002', 'natrémie'], ['BIO_005', 'calcémie'], ['BIO_025', 'glycémie'], ['BIO_003', 'créatinine'], ['BIO_009', 'hémoglobine'], ['BIO_024', 'CRP']];
+            const manque = params.filter(([id]) => !(v(id) > 0)).map(([, l]) => l);
+            const pistes = ['globe vésical', ctx('constipation_chronique') || medsImputables(['opioide']).length ? 'fécalome (constipation ou opioïde au dossier)' : 'fécalome', 'douleur non exprimée', 'infection sans fièvre', 'syndrome coronarien sans douleur', 'hypoxie'];
+            piege(`Confusion aiguë : bilan de première intention${manque.length ? ` — manquent ${manque.join(', ')}` : ' complet'}`,
+                `HAS 2009 : ionogramme, urée, créatinine, calcémie, glycémie capillaire, hémogramme, CRP, saturation en oxygène, bandelette urinaire et ECG ; le médicament est le premier suspect (introduction, changement de dose, sevrage). Causes souvent silencieuses : ${pistes.join(', ')}. Une bactériurie seule, sans signe urinaire ni fièvre, n'explique pas une confusion et ne se traite pas (IDSA, bactériurie asymptomatique 2019).`);
+        }
+
+        // Présentation atypique : troubles cognitifs légers déclarés.
+        if (ctx('mci')) {
+            const params = [['BIO_019', 'TSH'], ['BIO_021', 'vitamine B12'], ['BIO_005', 'calcémie'], ['BIO_002', 'natrémie'], ['BIO_025', 'glycémie'], ['BIO_009', 'hémoglobine']];
+            const manque = params.filter(([id]) => !(v(id) > 0)).map(([, l]) => l);
+            if (manque.length) {
+                piege(`Troubles cognitifs : causes curables à écarter — manquent ${manque.join(', ')}`,
+                    "Le bilan initial d'un trouble cognitif (HAS 2011) recherche ce qui se traite : hypothyroïdie, carence en B12 ou en folates, hypercalcémie, hyponatrémie, dysglycémie, anémie ; puis la dépression et les médicaments à charge anticholinergique.");
+            }
         }
     }
 

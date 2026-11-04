@@ -2187,6 +2187,41 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const h = String(analyzeCase({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'], bio: { patientK: 5.8, bioPlaq: 650 } })._html['alertes-bio'] || '');
         assert.ok(/<div class="alert alert-info[^"]*"[^>]*>(?:(?!<div class="alert)[\s\S]){0,800}🔎 Hyperkaliémie à recontrôler/.test(h), 'carte informative');
     });
+    test('Pieges (lot 2) et presentations atypiques : chacun sur sa circonstance, aucun sans elle', () => {
+        const bio = c => String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'] }, c))._html['alertes-bio'] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+        const oui = (c, re, m) => assert.ok(re.test(bio(c)), m);
+        const non = (c, re, m) => assert.ok(!re.test(bio(c)), m);
+        oui({ meds: ['Cotrimoxazole'], bio: { bioCreat: 140 } }, /🔎 Créatinine possiblement majorée sans baisse du DFG réel \(Cotrimoxazole\)/, 'secretion tubulaire (cotrimoxazole)');
+        non({ bio: { bioCreat: 140 } }, /sécrétion tubulaire/, 'sans inhibiteur : rien');
+        oui({ meds: ['Fenofibrate'], bio: { bioCreat: 110 } }, /🔎 Créatinine majorée de façon réversible par le fénofibrate/, 'fenofibrate (FIELD)');
+        oui({ bio: { bioPlaq: 60, bioHb: 13, bioGb: 7 } }, /🔎 Thrombopénie isolée \(60 G\/L\)/, 'pseudothrombopenie : thrombopenie isolee');
+        non({ bio: { bioPlaq: 60, bioHb: 8 } }, /pseudothrombopénie/, 'bicytopenie : pas un artefact presume');
+        oui({ meds: ['Prednisolone'], bio: { bioGb: 15 } }, /🔎 Leucocytose sous corticoïde \(Prednisolone\)/, 'leucocytose cortisonique (Shoenfeld 1981)');
+        oui({ bio: { bioPal: 250, bioGgt: 25 } }, /🔎 Phosphatases alcalines élevées \(250 UI\/L\) avec GGT normale/, 'PAL osseuses');
+        non({ bio: { bioPal: 250, bioGgt: 120 } }, /origine osseuse/, 'GGT elevee : cholestase, pas l\'os');
+        oui({ bio: { bioAsat: 90, bioAlat: 40, bioCpk: 900 } }, /🔎 ASAT élevées avec CPK élevées/, 'ASAT musculaire');
+        const hd = bio({ meds: ['Apixaban'], bio: { bioUree: 20, bioCreat: 90, bioHb: 9 } });
+        assert.ok(/🔎 Urée disproportionnée à la créatinine avec anémie[\s\S]{0,400}sous Apixaban/.test(hd) && !/hémoconcentration/.test(hd), 'uree/creat + anemie : hemorragie digestive, pas hemoconcentration');
+        oui({ bio: { bioUree: 20, bioCreat: 90, bioHb: 14 } }, /hémoconcentration/, 'meme rapport sans anemie : hemoconcentration');
+        oui({ bio: { bioFer: 600, bioCst: 25 } }, /🔎 Ferritine élevée \(600 µg\/L\) avec saturation de la transferrine à 25 %/, 'hyperferritinemie sans surcharge (EASL 2022)');
+        non({ bio: { bioFer: 600, bioCst: 60 } }, /pas de surcharge/, 'saturation > 45 % : on ne dit pas « pas de surcharge »');
+        oui({ bio: { bioPct: 1 }, dfg: 20 }, /🔎 Procalcitonine 1 ng\/mL peu spécifique/, 'PCT et IRC');
+        oui({ bio: { bioBnp: 300, patientBmi: 36 } }, /seuils d'exclusion abaissés de 30 %/, 'NT-proBNP et obesite');
+        oui({ meds: ['Enoxaparine'], bio: { bioT4: 26 } }, /🔎 T4 libre élevée sous héparine/, 'T4L et heparine');
+        oui({ meds: ['Prednisolone'], bio: { bioTsh: 0.2 } }, /🔎 TSH basse sous corticoïde/, 'TSH et corticoides');
+        non({ meds: ['Prednisolone'], bio: { bioTsh: 0.2, bioT4: 30 } }, /TSH basse sous corticoïde/, 'T4L haute : vraie hyperthyroidie possible, pas d\'excuse medicamenteuse');
+        oui({ bio: { bioTemp: 37.9 } }, /🔎 Température 37.9 °C : c'est une fièvre chez le sujet âgé/, 'fievre geriatrique (IDSA 2009)');
+        oui({ bio: { bioTemp: 37, bioCrp: 120 } }, /🔎 Syndrome inflammatoire sans fièvre/, 'infection sans fievre');
+        oui({ flags: ['chkDelirium'] }, /🔎 Confusion aiguë : bilan de première intention — manquent natrémie, calcémie, glycémie, créatinine, hémoglobine, CRP/, 'bilan de la confusion (HAS 2009)');
+        oui({ flags: ['chkDelirium'], meds: ['Morphine'] }, /fécalome \(constipation ou opioïde au dossier\)/, 'fecalome nomme sous opioide');
+        non({ bio: { patientNa: 140 } }, /Confusion aiguë/, 'sans confusion declaree : rien');
+        oui({ flags: ['chkMci'], bio: { bioTsh: 2 } }, /🔎 Troubles cognitifs : causes curables à écarter — manquent vitamine B12/, 'troubles cognitifs (HAS 2011)');
+        oui({ meds: ['Lithium'], bio: { bioLithium: 1.4 } }, /Lithiémie[\s\S]{0,400}tube hépariné au lithium/, 'lithiemie : tube et horaire');
+        oui({ flags: ['chkChutes'], bio: { patientNa: 132 } }, /Chutes déclarées : même légère et chronique, l'hyponatrémie/, 'hyponatremie et chutes (Renneboog 2006)');
+        non({ bio: { patientNa: 132 } }, /Chutes déclarées/, 'sans chute declaree : rien');
+        const h = String(analyzeCase({ age: 82, sexe: 'F', meds: ['Paracetamol'], bio: { bioPal: 250, bioGgt: 25 } })._html['alertes-bio'] || '');
+        assert.ok(/<div class="alert alert-info[^"]*"[^>]*>(?:(?!<div class="alert)[\s\S]){0,800}🔎 Phosphatases alcalines/.test(h), 'carte informative');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :

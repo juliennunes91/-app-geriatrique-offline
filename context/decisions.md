@@ -59,3 +59,7 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **04/11/2026** — Pièges d'interprétation : carte informative, seulement si valeur ET
   circonstance réunies, titre autoportant (PDF) ; écrit dans la carte existante quand il y en
   a une. — Dire comment lire sans ajouter de bruit ni de gravité.
+- **04/11/2026** — Présentation atypique : armée par un contexte déclaré (confusion, chutes,
+  troubles cognitifs), jamais par l'âge seul ; deux lectures d'un même chiffre ne sortent
+  pas ensemble (hémorragie digestive l'emporte sur hémoconcentration quand il y a anémie). —
+  Éviter un en-tête qui sortirait chez tout le monde.

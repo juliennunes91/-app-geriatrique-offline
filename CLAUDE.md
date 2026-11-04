@@ -1962,6 +1962,23 @@ Quand une carte existe déjà pour le paramètre, le piège y est écrit plutôt
 | Digoxinémie précoce | toute digoxinémie signalée | RCP français (Hémigoxine/Digoxine Nativelle) : **≥ 8 h** après la prise — les sources américaines disent 6 h | RCP (copie tiers) |
 | B12 normale et macrocytose | B12 ≥ 150 pmol/L dans l'encart macrocytaire | BSH, Devalia, *Br J Haematol* 2014;166:496 (acide méthylmalonique en 2ᵉ ligne ; pas de seuil universel) | résumé |
 
+**Lot 2 (4.30) et présentations atypiques** — même doctrine ; une présentation atypique
+s'arme sur un **contexte déclaré** (confusion, chutes, troubles cognitifs légers), jamais sur
+l'âge seul. Créatinine majorée sans baisse du DFG (triméthoprime, cimétidine, cobicistat,
+ritonavir — Lepist 2014, German 2012 ; fénofibrate — FIELD) ; pseudothrombopénie à l'EDTA
+(thrombopénie isolée < 100) ; leucocytose sous corticoïde (Shoenfeld 1981) ; PAL élevées et
+GGT normale = os, ASAT + CPK = muscle (ACG, Kwo 2017) ; urée/créatinine > 121 (≈ BUN/Cr
+> 30) **avec anémie** = hémorragie digestive haute (Srygley 2012) — et alors la carte
+« hémoconcentration » se tait ; hyperferritinémie avec saturation < 45 % (EASL 2022) ; PCT
+en IRC < 30 ; NT-proBNP et obésité (HFA : −25/−30/−40 %) ; T4L sous héparine (Jaume 1996) ;
+TSH basse sous corticoïde (Haugen 2009) ; fièvre gériatrique ≥ 37,8 °C (IDSA 2009) ;
+inflammation sans fièvre (Norman 2000) ; **confusion** → bilan HAS 2009 avec les dosages
+manquants nommés, causes silencieuses (globe, fécalome, douleur, SCA, hypoxie), bactériurie
+seule non traitée (IDSA 2019) ; **troubles cognitifs légers** → causes curables (HAS 2011) ;
+lithiémie (12 h, tube hépariné au lithium) et hyponatrémie + chutes (Renneboog 2006) écrites
+dans leurs cartes. Catalogue complet, statut et niveau de vérification de chaque source :
+`docs/catalogue_pieges_biologie_et_presentations_atypiques.md` (95 entrées).
+
 **Déjà traités ailleurs** : calcémie corrigée par l'albumine (Payne) ; ferritine et
 inflammation (seuil carentiel à 100 si CRP élevée, encart d'anémie) ; albumine ≠ dénutrition
 (GLIM) ; NT-proBNP et facteurs confondants (`SYND_029`) ; troponine selon le réactif.

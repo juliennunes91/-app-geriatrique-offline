@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.20**, `BUILD_ID` `20261104-pieges-biologie`,
-cache `geriaassist-v152`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.30**, `BUILD_ID` `20261104-pieges-atypiques`,
+cache `geriaassist-v153`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,11 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.30** (04/11) — Pièges lot 2 (créatinine et sécrétion tubulaire, pseudothrombopénie,
+  leucocytose cortisonique, PAL osseuses, ASAT musculaires, hémorragie digestive, ferritine,
+  PCT, NT-proBNP/obésité, T4L/héparine, TSH/corticoïdes, fièvre gériatrique) et présentations
+  atypiques (confusion HAS 2009, troubles cognitifs HAS 2011, hyponatrémie et chutes) ;
+  catalogue de 95 entrées dans `docs/`.
 - **4.20** (04/11) — Pièges d'interprétation de la biologie (12, sourcés, cartes 🔎 informatives
   sur circonstance réunie) : HbA1c et anémie/ASE/IRC, Na et glycémie, pseudo-hyperkaliémie,
   D-dimères ajustés, TSH et âge / maladie aiguë, DFG et masse musculaire, hémoconcentration,
@@ -153,8 +158,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-**Rien en cours.** Pièges non retenus et leur motif : section « Pièges d'interprétation »
-de `CLAUDE.md`.
+**Rien en cours.** Suite possible : champs manquants listés en fin de
+`docs/catalogue_pieges_biologie_et_presentations_atypiques.md` (2ᵉ créatinine datée, FC,
+ECBU, arrêt de corticothérapie, heure de prélèvement) ; entrées « NV » à vérifier.
 
 Non vérifié sur source (à ne pas présenter comme sourcé) : bornes T4L 12-22 / T3L 3,1-6,8
 (choix de l'utilisateur) ; 99ᵉ percentile hs-cTnI 16/34 ng/L non retrouvé par recherche ;

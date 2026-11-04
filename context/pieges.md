@@ -80,3 +80,6 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   dossier du panel ne déclenche un piège : ils ne sont gardés que par leur test dédié.
 - Des boutons (« assumer ») s'insèrent entre `<div class="alert">` et `<strong>` : une
   regex de test doit tolérer ce qui les sépare.
+- Le cliquet `runCouleurCodeeEnDurAudit` compte les `alert-info` littéraux : une famille de
+  cartes de même nature partage UNE fonction de rendu (`_piegeBio`), sinon chaque lot l'use.
+- `cmd &` dans un appel Bash survit, mais préférer `run_in_background` pour être notifié.
