@@ -232,7 +232,7 @@
                         <summary class="fw-bold text-success" style="cursor: pointer;">🧮 Paramètres cliniques pour Scores</summary>
                         <div class="row g-2 mt-2">
                             <div class="col-6"><label class="small text-muted fw-bold">Score Fragilité (CFS)</label><select id="scoreCFS" class="form-select form-select-sm" onchange="checkFrail()"><option value="0">Non évalué</option><option value="1">1 - Très en forme</option><option value="2">2 - En forme</option><option value="3">3 - Gère bien</option><option value="4">4 - Vulnérable</option><option value="5">5 - Légèrement fragile</option><option value="6">6 - Modérément fragile</option><option value="7">7 - Sévèrement fragile</option><option value="8">8 - Très sév. fragile</option><option value="9">9 - Phase terminale</option></select></div>
-                            <div class="col-6"><label class="small text-muted fw-bold">QTc de base (ms)</label><input type="number" id="bioQtc" class="form-control form-control-sm" placeholder="ex: 430"></div>
+                            <div class="col-6"><label class="small text-muted fw-bold">QTc de base (ms)</label><input type="number" min="300" max="700" id="bioQtc" class="form-control form-control-sm" placeholder="ex: 430"></div>
 
                             <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Score de Child-Pugh (si hépatopathie)</h6>
                             <div class="col-12 mb-2"><label class="small text-muted fw-bold">Classe Child-Pugh (saisie directe si bio indisponible)</label><select id="cpManual" class="form-select form-select-sm" onchange="toggleCpDetails(this.value)"><option value="0">— Calcul automatique (remplir les items ci-dessous) —</option><option value="A">Child-Pugh A (5-6 pts) — Compensée</option><option value="B">Child-Pugh B (7-9 pts) — Modérée</option><option value="C">Child-Pugh C (10-15 pts) — Sévère / Décompensée</option></select></div>
@@ -548,7 +548,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version <span id="appVersion">3.95</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version <span id="appVersion">3.96</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>

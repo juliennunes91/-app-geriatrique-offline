@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 3.95**, `BUILD_ID` `20261104-suivi-conditionnel`,
-cache `geriaassist-v143`.*
+*Dernière mise à jour : 04/11/2026 — **version 3.96**, `BUILD_ID` `20261104-bio-coherence`,
+cache `geriaassist-v144`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,8 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **3.96** (04/11) — Audit de cohérence de la biologie : 13 codes LOINC corrigés, seuil
+  triglycérides de `SYND_030` comparé en mmol/L, bornes de saisie alignées entre UIs.
 - **3.95** (04/11) — Onglet Suivi : `PATHO_BIO_MONITOR` réécrit paramètre par paramètre,
   60 règles bio de pathologie conditionnées (`si_med` / `si_comorb`), défaut CPK neutre ;
   RISQ-PATH / Tisdale seulement si médicament QT, QTc saisi ou QT long.
@@ -153,6 +155,10 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 7. `global_score` : la moyenne des scores d'alerte remonte quand on retire des alertes
    informatives — formule à arbitrer.
 8. Pas de paramètre « bicarbonate plasmatique » dans `MASTER_DB.BIOLOGIE`.
+9. **T4/T3** : champ en nmol/L (totale) alors que les labos rendent la T4 libre en pmol/L →
+   fausse « hypothyroïdie avérée » si T4L saisie. Décision utilisateur attendue.
+10. Troponine : seuils de deux réactifs mêlés (hs-cTnI 16/34, hs-cTnT 52). Phosphore sans code
+   canonique (`BIO_PHOS`), `SYND_040` cible `BIO_005`.
 
 ---
 

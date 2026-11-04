@@ -2080,6 +2080,86 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const aod = cas({ meds: ['Apixaban'] })._html['alertes-scores'] || '';
         assert.ok(!/CHA₂DS₂-VA/.test(aod) && /DOACscore/.test(aod), 'sous AOD sans FA codee : scores de saignement seulement');
     });
+    test('Biologie : codes LOINC verifies (le code designe bien l\'analyte et l\'unite du parametre)', () => {
+        // 13 codes sur 47 designaient un autre analyte (CPK = cholesterol total ; vitamine D
+        // = calcitriol ; osmolalite = LDH ; CST = capacite totale de fixation), une autre
+        // expression (reticulocytes en pourcentage au lieu de G/L ; D-dimeres DDU au lieu de
+        // FEU ; TCA en secondes au lieu du ratio ; TP en secondes au lieu du taux) ou
+        // n'existaient pas (QTc 8636-5, folates 2283-6, lactates 2519-9). Table figee : un code
+        // ne change qu'apres verification sur loinc.org.
+        const vm = require('vm');
+        const attendu = {
+            BIO_001: '2823-3',
+            BIO_002: '2951-2',
+            BIO_003: '2160-0',
+            BIO_004: '98979-8',
+            BIO_005: '17861-6',
+            BIO_006: '19123-9',
+            BIO_007: '22664-7',
+            BIO_008: '3084-1',
+            BIO_009: '718-7',
+            BIO_010: '777-3',
+            BIO_011: '6690-2',
+            BIO_012: '751-8',
+            BIO_013: '1920-8',
+            BIO_014: '1742-6',
+            BIO_015: '2324-2',
+            BIO_016: '6768-6',
+            BIO_017: '1975-2',
+            BIO_018: '2157-6',
+            BIO_019: '3016-3',
+            BIO_020: '2276-4',
+            BIO_021: '2132-9',
+            BIO_022: '2284-8',
+            BIO_023: '62292-8',
+            BIO_024: '1988-5',
+            BIO_025: '14771-0',
+            BIO_026: '4548-4',
+            BIO_027: '24331-1',
+            BIO_028: '33762-6',
+            BIO_029: '14334-7',
+            BIO_030: '6301-6',
+            BIO_031: '8636-3',
+            BIO_032: '33959-8',
+            BIO_033: '48065-7',
+            BIO_034: '89579-7',
+            BIO_035: '1751-7',
+            BIO_036: '3040-3',
+            BIO_037: '2524-7',
+            BIO_038: '14196-0',
+            BIO_039: '787-2',
+            BIO_040: '5894-1',
+            BIO_041: '2075-0',
+            BIO_042: '2692-2',
+            BIO_043: '14338-8',
+            BIO_044: '10535-3',
+            BIO_045: '63561-5',
+            BIO_047: '2502-3',
+            BIO_046: '14959-1'
+        };
+        const B = JSON.parse(vm.runInContext('JSON.stringify(Object.fromEntries(Object.entries(MASTER_DB.BIOLOGIE).map(([k,v])=>[k,v.LOINC])))', require('./oracle_harness').loadApp().sandbox));
+        assert.deepStrictEqual(B, attendu);
+        assert.strictEqual(new Set(Object.values(B)).size, Object.keys(B).length, 'un code LOINC par parametre');
+    });
+    test('Biologie : le seuil des triglycerides (SYND_030) est compare dans SON unite', () => {
+        // SYND_030 : TG > 5.6 mmol/L (ESC/EAS 2019) ; le champ est en g/L (1 mmol/L = 0.8854 g/L).
+        const tg = v => /Hypertriglycéridémie/.test(analyzeCase({ age: 80, sexe: 'F', bio: { bioTg: v }, meds: ['Paracetamol'] })._html['alertes-bio'] || '');
+        assert.ok(tg(5.0), '5.0 g/L = 5.65 mmol/L : au-dessus du seuil');
+        assert.ok(!tg(4.9), '4.9 g/L = 5.53 mmol/L : en dessous');
+    });
+    test('Biologie : les deux interfaces bornent chaque champ de la meme facon', () => {
+        // L'import PDF decoche toute valeur hors des bornes min/max du champ : une borne
+        // absente d'une seule interface y laissait passer une erreur d'unite.
+        const fs = require('fs');
+        const code = fs.readFileSync(__dirname + '/app_analysis.js', 'utf8');
+        const ids = [...code.matchAll(/'BIO_[0-9A-Z_]+':\s*(?:_convert\w+\()?getBioVal\('(\w+)'\)/g)].map(m => m[1]);
+        assert.ok(ids.length > 40, 'table des champs introuvable (' + ids.length + ')');
+        const html = [fs.readFileSync(__dirname + '/index.html', 'utf8'), fs.readFileSync(__dirname + '/index_modern.html', 'utf8')];
+        const attr = (h, id, n) => { const m = h.match(new RegExp('<input[^>]*id="' + id + '"[^>]*>')); const a = m && m[0].match(new RegExp(' ' + n + '="([^"]*)"')); return a ? a[1] : ''; };
+        const ecarts = [];
+        [...new Set(ids)].forEach(id => ['min', 'max', 'step'].forEach(n => { if (attr(html[0], id, n) !== attr(html[1], id, n)) ecarts.push(id + '.' + n); }));
+        assert.deepStrictEqual(ecarts, []);
+    });
     test('Suivi biologique : une frequence conditionnelle a un traitement absent ne sort pas', () => {
         const suivi = (o) => String(analyzeCase(Object.assign({ age: 78, sexe: 'F' }, o))._html['alertes-suivi'] || '');
         const ligne = (h, nom) => { const m = h.match(new RegExp('bio-row-name">' + nom + '<\\/td>([\\s\\S]*?)<\\/tr>')); return m ? m[1] : null; };

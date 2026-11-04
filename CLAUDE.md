@@ -1792,6 +1792,48 @@ mots (« settings », « print »).
 - Test Playwright : interface moderne en `file://`, réseau coupé — zéro requête externe,
   fond « surface » appliqué, polices chargées, icône rendue comme un glyphe.
 
+## Audit de cohérence de la biologie (04/11/2026)
+
+Audit croisé de toute la base : référentiel `MASTER_DB.BIOLOGIE` (47 paramètres), champs de
+saisie des deux interfaces, conversions de saisie et d'import, `BIO_NORMES`, seuils des règles
+(`condition.bio`, `BIOLOGIE.REGLES`), seuils écrits en dur dans `app_analysis.js`, définitions
+des syndromes. **Cohérent** : toute référence `BIO_xxx` existe ; chaque seuil est dans l'unité
+de son paramètre ; les facteurs de l'import PDF et de la saisie (B12 1,355 ; folates 0,441 ;
+digoxine 1,28) sont justes ; calcium corrigé (Payne) et gradations conformes aux syndromes.
+
+Corrigé :
+- **13 codes LOINC sur 47 étaient faux** — vérifiés un à un : CPK portait le code du
+  cholestérol total (2093-3 → 2157-6), vitamine D celui du **calcitriol** (1649-3 → 62292-8,
+  25-OH D2+D3), osmolalité celui de la **LDH** (2532-0 → 2692-2), CST celui de la capacité
+  totale de fixation (2500-7 → 2502-3) ; réticulocytes en %, D-dimères en DDU, TCA en
+  secondes, TP en secondes alors que l'unité de la base est G/L, FEU, ratio, % (→ 14196-0,
+  48065-7, 63561-5, 5894-1) ; urée en azote uréique (→ 22664-7) ; DFG en MDRD (→ 98979-8,
+  CKD-EPI 2021) ; trois codes **inexistants** (QTc 8636-5 → 8636-3, folates 2283-6 → 2284-8,
+  lactates 2519-9 → 2524-7). Les LOINC ne sont lus par aucun code (métadonnées), mais un
+  export interopérable les emporterait. Table figée par un test.
+- **Triglycérides** : `SYND_030` est défini « TG > 5,6 **mmol/L** » (ESC/EAS 2019) ; le code
+  comparait 5,6 au champ saisi en **g/L** — l'alerte sortait à 6,3 mmol/L. Conversion
+  explicite (1 mmol/L = 0,8854 g/L).
+- **Bornes de saisie** : B12 et folates sans min/max dans l'interface moderne (l'import PDF
+  s'en sert pour décocher une erreur d'unité) ; QTc borné 300-700 ms dans les deux ;
+  libellés osmolalité et TCA alignés. Un test vérifie la parité min/max/step de tous les
+  champs biologiques.
+
+**Points ouverts, non tranchés** :
+- **T4 / T3** : le champ est en nmol/L (fraction TOTALE, seuils 60 / 120 et 2,7), alors que
+  les laboratoires français rendent le plus souvent la **T4 libre en pmol/L** (≈ 12-22). Une
+  T4L normale saisie dans ce champ (ex. 15) est lue « < 60 » : avec une TSH > 4, l'alerte
+  annonce une **hypothyroïdie avérée** au lieu de subclinique. À décider : champ en T4 libre,
+  ou sélecteur d'unité libre/totale.
+- **Troponine** : seuils 16/34 ng/L (99ᵉ percentile hs-cTnI par sexe) et « rule-in » 52 ng/L
+  (hs-cTnT, algorithme ESC 0h/1h) — deux réactifs différents. Le seuil dépend du réactif du
+  laboratoire, comme le dit déjà la section des bornes.
+- **Phosphore** : saisi (`BIO_PHOS`, lu par `SYND_040`) mais sans code canonique dans
+  `MASTER_DB.BIOLOGIE` (même situation que le CST avant `BIO_047`) ; `SYND_040` déclare
+  `BIO_CIBLE: BIO_005` (calcium).
+- `BIO_027` (bilan lipidique) n'a pas de champ propre : la saisie passe par LDL / HDL / TG,
+  la colonne « Valeur » de l'onglet Suivi reste vide.
+
 ## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
 
 `_bioStatusBadge` ne connaissait que **six** paramètres et rendait un badge VERT « OK »

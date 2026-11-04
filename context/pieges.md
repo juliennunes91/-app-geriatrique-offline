@@ -55,3 +55,10 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
 - Clé de condition par sous-chaîne : `fludrocortisone` ⊃ `cortisone` ; `bisphosphonate`
   n'est pas une classe déclarée. → classe déclarée ou DCI exacte.
 - Harnais : la bio se passe par identifiant de champ (`bioQtc`), pas par `BIO_031`.
+
+## Biologie (04/11)
+- Un seuil recopié d'une définition (« TG > 5,6 mmol/L ») comparé à un champ dans une autre
+  unité (g/L) : vérifier l'unité du champ, pas seulement le chiffre.
+- loinc.org et l'API NLM ne sont pas joignables depuis la session : vérifier les codes par
+  recherche web (findacode, loinc.org en résultat).
+- Lanceur de test isolé : remplacer `__dirname` par le chemin du dépôt.

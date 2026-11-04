@@ -37,3 +37,6 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   ne sort que s'il est prescrit (`si_med` : classe déclarée ou DCI exacte ; `si_comorb`).
   Scores QT conditionnés comme ceux d'anticoagulation. — Le plan ne doit parler que du
   traitement en cours.
+- **04/11/2026** — Les codes LOINC de `MASTER_DB.BIOLOGIE` sont figés par un test après
+  vérification ; un seuil de syndrome est comparé dans l'unité où il est écrit (conversion
+  explicite). — 13 codes faux, et une alerte TG décalée par une confusion g/L ↔ mmol/L.

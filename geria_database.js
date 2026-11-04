@@ -23,7 +23,7 @@ const MASTER_DB = {
         },
         "BIO_004": {
             "ID_BIO": "BIO_004",
-            "LOINC": "33914-3",
+            "LOINC": "98979-8",
             "NOM_STANDARD": "Clairance (DFG)",
             "UNITE": "ml/min",
             "SYNONYMES": "DFG, DFGe, Clairance, Fonction rénale, Rénal"
@@ -44,7 +44,7 @@ const MASTER_DB = {
         },
         "BIO_007": {
             "ID_BIO": "BIO_007",
-            "LOINC": "3094-0",
+            "LOINC": "22664-7",
             "NOM_STANDARD": "Urée",
             "UNITE": "mmol/L",
             "SYNONYMES": "Urémie, BUN"
@@ -121,7 +121,7 @@ const MASTER_DB = {
         },
         "BIO_018": {
             "ID_BIO": "BIO_018",
-            "LOINC": "2093-3",
+            "LOINC": "2157-6",
             "NOM_STANDARD": "CPK",
             "UNITE": "UI/L",
             "SYNONYMES": "Créatine kinase, CK, Rhabdomyolyse, Myalgies, Myopathie"
@@ -149,14 +149,14 @@ const MASTER_DB = {
         },
         "BIO_022": {
             "ID_BIO": "BIO_022",
-            "LOINC": "2283-6",
+            "LOINC": "2284-8",
             "NOM_STANDARD": "Vitamine B9",
             "UNITE": "nmol/L",
             "SYNONYMES": "Folates, Acide folique, B9"
         },
         "BIO_023": {
             "ID_BIO": "BIO_023",
-            "LOINC": "1649-3",
+            "LOINC": "62292-8",
             "NOM_STANDARD": "Vitamine D",
             "UNITE": "ng/mL",
             "SYNONYMES": "25-OH Vitamine D, Calcifédiol"
@@ -212,7 +212,7 @@ const MASTER_DB = {
         },
         "BIO_031": {
             "ID_BIO": "BIO_031",
-            "LOINC": "8636-5",
+            "LOINC": "8636-3",
             "NOM_STANDARD": "QTc (ECG)",
             "UNITE": "ms",
             "SYNONYMES": "ECG, Espace QT, Allongement QT, Torsades de pointes, Arythmie"
@@ -226,7 +226,7 @@ const MASTER_DB = {
         },
         "BIO_033": {
             "ID_BIO": "BIO_033",
-            "LOINC": "48058-2",
+            "LOINC": "48065-7",
             "NOM_STANDARD": "D-Dimères",
             "UNITE": "µg/L FEU",
             "SYNONYMES": "D-Dimeres, MTEV, Embolie pulmonaire, TVP, Coagulation"
@@ -254,14 +254,14 @@ const MASTER_DB = {
         },
         "BIO_037": {
             "ID_BIO": "BIO_037",
-            "LOINC": "2519-9",
+            "LOINC": "2524-7",
             "NOM_STANDARD": "Lactatémie",
             "UNITE": "mmol/L",
             "SYNONYMES": "Lactates, Acide lactique, Lactate, Choc, Acidose lactique"
         },
         "BIO_038": {
             "ID_BIO": "BIO_038",
-            "LOINC": "17849-1",
+            "LOINC": "14196-0",
             "NOM_STANDARD": "Réticulocytes",
             "UNITE": "×10⁹/L",
             "SYNONYMES": "Reticulocytes, Régénération médullaire, Réponse anémie, NFS"
@@ -275,7 +275,7 @@ const MASTER_DB = {
         },
         "BIO_040": {
             "ID_BIO": "BIO_040",
-            "LOINC": "5902-2",
+            "LOINC": "5894-1",
             "NOM_STANDARD": "TP (Taux de Prothrombine)",
             "UNITE": "%",
             "SYNONYMES": "TP, Prothrombine, Temps de Quick, Hémostase"
@@ -289,7 +289,7 @@ const MASTER_DB = {
         },
         "BIO_042": {
             "ID_BIO": "BIO_042",
-            "LOINC": "2532-0",
+            "LOINC": "2692-2",
             "NOM_STANDARD": "Osmolalité plasmatique",
             "UNITE": "mOsm/kg",
             "SYNONYMES": "Osmolalite, Osmolarité, Deshydratation"
@@ -310,14 +310,14 @@ const MASTER_DB = {
         },
         "BIO_045": {
             "ID_BIO": "BIO_045",
-            "LOINC": "14979-9",
+            "LOINC": "63561-5",
             "NOM_STANDARD": "TCA (Temps de Céphaline Activée)",
             "UNITE": "ratio (vs témoin)",
             "SYNONYMES": "TCA, aPTT, APTT, Heparine non fractionnee, HNF, Cephaline, Hemostase"
         },
         "BIO_047": {
             "ID_BIO": "BIO_047",
-            "LOINC": "2500-7",
+            "LOINC": "2502-3",
             "NOM_STANDARD": "Coefficient de saturation de la transferrine (CST)",
             "UNITE": "%",
             "SYNONYMES": "CST, Saturation de la transferrine, TSAT, Coefficient de saturation, Carence martiale"

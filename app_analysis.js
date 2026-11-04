@@ -2212,7 +2212,11 @@ function analyserPrescription() {
     }
 
     // --- SYND_030 : Dyslipidémie / Hypertriglycéridémie Sévère ---
-    if (bioValues['BIO_027_TG'] > 5.6) checkBioSyndrome('SYND_030', true);
+    // Le seuil de SYND_030 est écrit en mmol/L (« TG > 5.6 mmol/L », ESC/EAS 2019 — soit
+    // 500 mg/dL) ; le champ est saisi en g/L. Comparer 5.6 au champ brut déclenchait à
+    // 5.6 g/L, soit 6.3 mmol/L. Conversion : 1 mmol/L de triglycérides = 0.8854 g/L
+    // (trioléine, 885.4 g/mol — même facteur que l'import PDF).
+    if (bioValues['BIO_027_TG'] / 0.8854 > 5.6) checkBioSyndrome('SYND_030', true);
 
     // --- SYND_031 : Cholestase Biologique (GGT > 3N ou PAL > 2N) ---
     if ((bioValues['BIO_015'] > 150 || bioValues['BIO_016'] > 135)) checkBioSyndrome('SYND_031', true);
