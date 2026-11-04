@@ -74,3 +74,5 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   tait quand une association plus précise (DRESS, NIA) l'explique. — Demande de l'utilisateur.
 - **04/11/2026** — Onglet Bio en rubriques (anomalies / associations / pièges) plutôt qu'un
   onglet de plus ; pas d'en-tête pour une rubrique seule. — Choix de l'utilisateur (option 1).
+- **04/11/2026** — PDF de synthèse : pas de cartes de l'onglet Bio (urgences comprises), pour
+  le moment. — Choix de l'utilisateur.

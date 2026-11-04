@@ -221,6 +221,6 @@ la base ; fer oral sur ferritine haute = seule alerte générique « réponse no
   bloque les sites d'éditeurs — demander les PDF à l'utilisateur ; un conteneur
   réinitialisé se répare par `git fetch origin main && git checkout -B main origin/main`.
 
-**Point à trancher** : le PDF de synthèse n'inclut aucune carte de l'onglet Bio (seulement le
-plan biologique) — à proposer à l'utilisateur si les associations rouges/orange doivent y
-figurer.
+**Tranché (04/11)** : le PDF de synthèse reste sans cartes de l'onglet Bio (seul le plan
+biologique y figure) — refus de l'utilisateur « pour le moment » ; ne pas le reproposer sans
+nouvelle demande.
