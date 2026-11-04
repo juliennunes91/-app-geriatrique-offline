@@ -2139,6 +2139,20 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const eviter = String(analyzeCase({ age: 82, sexe: 'F', meds: ['Levothyroxine'], bio: { bioTsh: 9 } })._html['alertes-eviter'] || '');
         assert.ok(/vérifier l(&#39;|')indication initiale/.test(eviter) && /ne pas arrêter/.test(eviter) && !/traiter uniquement si TSH/.test(eviter), 'EV_J09 ne juge pas l\'indication sur la TSH mesuree sous traitement');
     });
+    test('Trouble ionique : bilan associe (dose / a doser), ECG, et causes non medicamenteuses', () => {
+        const bio = b => String(analyzeCase({ age: 82, sexe: 'F', dfg: 60, bio: b, meds: ['Paracetamol'] })._html['alertes-bio'] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+        const p = bio({ bioPhos: 0.5 });
+        assert.ok(/Hypophosphatémie[\s\S]*Bilan associé : kaliémie non dosée — à doser ; magnésémie non dosée — à doser ; calcémie non dosée — à doser ; ECG\./.test(p), 'hypophosphatemie : K, Mg, Ca demandes et ECG');
+        assert.ok(/Hypophosphatémie[\s\S]{0,400}Autres causes à rechercher : alcool/.test(p), 'causes non medicamenteuses de l\'hypophosphatemie');
+        const leg = bio({ bioPhos: 0.75, patientK: 4.0, bioMg: 0.85 });
+        assert.ok(/kaliémie 4 ; magnésémie 0.85 ; calcémie non dosée — à doser\./.test(leg), 'legere, K et Mg normaux : valeurs affichees, pas d\'ECG');
+        assert.ok(/kaliémie 3.1 \(basse\)[\s\S]{0,120}; ECG\./.test(bio({ bioPhos: 0.75, patientK: 3.1, bioMg: 0.85 })), 'legere mais hypokaliemie : ECG');
+        assert.ok(/Hypokaliémie[\s\S]{0,300}Bilan associé : magnésémie non dosée — à doser ; ECG/.test(bio({ patientK: 2.8 })), 'hypokaliemie < 3 : Mg et ECG');
+        assert.ok(/Hyponatrémie[\s\S]{0,200}Autres causes à rechercher :[^<]*insuffisance surrénale/.test(bio({ patientNa: 124 })), 'hyponatremie : causes non medicamenteuses');
+        const vm = require('vm'); const { sandbox } = require('./oracle_harness').loadApp();
+        const nonMed = JSON.parse(vm.runInContext(`JSON.stringify(Object.values(MASTER_DB.SYNDROMES).filter(s => /\\b(Alcool|Déshydratation|Régimes)\\b/.test(s.IMPUTABILITE_FREQ || '')).map(s => s.ID_SYNDROME))`, sandbox));
+        assert.deepStrictEqual(nonMed, [], 'une cause non medicamenteuse va dans CAUSES_AUTRES, pas dans la liste cherchee dans l\'ordonnance');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :

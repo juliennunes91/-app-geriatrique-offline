@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.10**, `BUILD_ID` `20261104-imputabilite-correcteurs`,
-cache `geriaassist-v150`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.11**, `BUILD_ID` `20261104-bilan-associe`,
+cache `geriaassist-v151`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,8 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.11** (04/11) — Trouble ionique : « Bilan associé » (ions dosés lus, non dosés demandés,
+  ECG) ; causes non médicamenteuses par syndrome (`CAUSES_AUTRES`).
 - **4.10** (04/11) — Biologie ↔ correcteur : listes d'imputabilité lisibles (découpage,
   termes en DCI, matcheur sans sous-chaîne, DCI prescrite affichée) ; surcorrection signalée
   (ASE/Hb, vitamine D > 150, thyroïde sous traitement, hypo-uricémiant sans goutte) ;
@@ -147,7 +149,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-**Rien en cours.** Décisions biologie du 04/11 livrées (3.97 à 4.01).
+**En cours** : module « pièges d'interprétation de la biologie » (HbA1c et anémie, pseudo-
+hyponatrémie, pseudo-hyperkaliémie, D-dimères ajustés à l'âge, TSH et âge, créatinine et
+masse musculaire, troponine et IRC, digoxinémie) — demande de l'utilisateur du 04/11.
 
 Non vérifié sur source (à ne pas présenter comme sourcé) : bornes T4L 12-22 / T3L 3,1-6,8
 (choix de l'utilisateur) ; 99ᵉ percentile hs-cTnI 16/34 ng/L non retrouvé par recherche ;

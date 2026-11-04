@@ -1923,6 +1923,21 @@ Invariant : tout terme d'imputabilité (syndromes < `SYND_043`, les suivants ne 
   non joignable depuis la session) ; pas de bolus massif (Sanders, JAMA 2010).
 - Hypomagnésémie : 0,50-0,69 est « modérée », « sévère » sous 0,50 (Manuel MSD).
 
+### Bilan associé et causes non médicamenteuses (4.11)
+
+- **`_bilanAssocie()`** (`app_analysis.js`) : un trouble ionique en cache souvent un autre —
+  hypophosphatémie, hypokaliémie et hypomagnésémie vont ensemble dans la renutrition et
+  l'alcoolisme, et une hypokaliémie ne se corrige pas tant que le magnésium manque. La ligne
+  « Bilan associé » montre la valeur **dosée** avec sa lecture, et **demande** ce qui ne
+  l'est pas. ECG quand le trouble n'est plus léger ou qu'un autre ion est bas :
+  hypophosphatémie → K, Mg, Ca (+ ECG si P < 0,65 ou K/Mg bas) ; hypokaliémie → Mg (+ ECG
+  si K < 3) ; hypocalcémie → Mg, vitamine D (+ ECG si < 2,0) ; hypomagnésémie → K, Ca
+  (+ ECG si < 0,5 ou K bas).
+- **`CAUSES_AUTRES`** (`MASTER_DB.SYNDROMES`) : alcool, déshydratation, renutrition,
+  insuffisance surrénale… L'ordonnance n'explique pas tout. Ces causes ne vont **pas** dans
+  `IMPUTABILITE_FREQ`, que le moteur cherche dans l'ordonnance (un test l'interdit) ;
+  elles sont affichées telles quelles sous « Autres causes à rechercher ».
+
 ## Bornes biologiques (`BIO_NORMES`, `bioAnormal()` dans `utils.js`)
 
 `_bioStatusBadge` ne connaissait que **six** paramètres et rendait un badge VERT « OK »

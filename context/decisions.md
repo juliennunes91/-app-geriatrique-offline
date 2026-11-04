@@ -53,3 +53,6 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **04/11/2026** — Un correcteur prescrit est jugé aussi sur la surcorrection (ASE/Hb,
   vitamine D, thyroïde) ; une règle ne déduit pas l'indication d'une valeur mesurée sous
   traitement (`EV_J09`). — Le dossier ne montre que l'état actuel.
+- **04/11/2026** — Trouble ionique : on affiche les ions associés dosés et on demande les
+  autres (+ ECG) ; les causes non médicamenteuses ont leur champ (`CAUSES_AUTRES`), jamais la
+  liste d'imputabilité. — Demande de l'utilisateur (hypophosphatémie → Mg, K, ECG).

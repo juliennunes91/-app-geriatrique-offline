@@ -1806,6 +1806,22 @@ function analyserPrescription() {
         return out ? out.charAt(0).toUpperCase() + out.slice(1) : 'Surveillance';
     };
 
+    // Bilan associé : un trouble ionique en cache souvent un autre (hypophosphatémie,
+    // hypokaliémie et hypomagnésémie vont ensemble dans la renutrition et l'alcoolisme ;
+    // l'hypokaliémie ne se corrige pas tant que le magnésium manque). On montre ce qui est
+    // DOSÉ avec sa lecture, et on demande ce qui ne l'est pas — jamais l'inverse.
+    const _bilanAssocie = (params, ecg) => {
+        const parts = params.map(([id, lib]) => {
+            const v = bioValues[id];
+            if (!(v > 0)) return `${lib} non dosée — à doser`;
+            const a = (typeof bioAnormal === 'function') ? bioAnormal(id, v, sexe) : null;
+            return `${lib} ${v}${a ? (a.sens === 'bas' ? ' (basse)' : ' (élevée)') : ''}`;
+        });
+        if (ecg) parts.push(ecg);
+        return `<br><em>Bilan associé :</em> ${parts.join(' ; ')}.`;
+    };
+    const _bas = id => { const v = bioValues[id]; const a = v > 0 && typeof bioAnormal === 'function' ? bioAnormal(id, v, sexe) : null; return !!(a && a.sens === 'bas'); };
+
     const checkBioSyndrome = (syndId, conditionRemplie, opts) => {
         if(!conditionRemplie) return;
         opts = opts || {};
@@ -1814,6 +1830,10 @@ function analyserPrescription() {
             let causes = [];
             if(s.IMPUTABILITE_FREQ) causes = medsImputables(termesImputabilite(s.IMPUTABILITE_FREQ));
             let imputStr = causes.length > 0 ? `<br><em>Imputabilité iatrogène détectée :</em> <b>${causes.join(', ').toUpperCase()}</b>` : '';
+            // Causes non médicamenteuses : l'ordonnance n'explique pas tout. Elles ne sont pas
+            // dans la liste d'imputabilité (que le moteur cherche dans l'ordonnance) mais dans
+            // leur propre champ, affiché tel quel.
+            const autresStr = s.CAUSES_AUTRES ? `<br><em>Autres causes à rechercher :</em> ${escapeHtml(s.CAUSES_AUTRES)}` : '';
             // Sévérité : par défaut depuis la base (GRAVITE), surchargeable par valeur (opts.severe).
             let isSevere = (typeof opts.severe === 'boolean') ? opts.severe
                 : (String(s.GRAVITE).includes('Sévère') || String(s.GRAVITE).includes('Severe'));
@@ -1824,8 +1844,8 @@ function analyserPrescription() {
             // la conduite de SYND_005 (« bilan martial, réticulocytes, VGM ») est le
             // doublon de l'encart d'orientation, tandis que son imputabilité iatrogène
             // ne l'est pas : on récupère la seconde et on laisse tomber la première.
-            if (opts.rendre === false) return { nom, causes, imputStr, isSevere };
-            addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${nom}</strong>${imputStr}<br><small>${_conduitePertinente(s.CONDUITE_IMMEDIATE) || 'Surveillance'}</small></div>`, 'bio');
+            if (opts.rendre === false) return { nom, causes, imputStr, autresStr, isSevere };
+            addAlert('alertes-bio', `<div class="alert alert-${isSevere ? 'danger alert-stopp' : 'warning border-warning'} shadow-sm"><strong>${isSevere ? '🚨' : '⚠️'} ${nom}</strong>${imputStr}${autresStr}${opts.bilan || ''}<br><small>${_conduitePertinente(s.CONDUITE_IMMEDIATE) || 'Surveillance'}</small></div>`, 'bio');
         } catch(e) { GeriaLog.warn('Erreur syndrome bio:', e.message); }
     };
 
@@ -2043,7 +2063,8 @@ function analyserPrescription() {
         if (k > 0 && k < 3.5) {
             const severe = k < 3.0;
             const grade = k < 2.5 ? 'critique (< 2.5 — risque arythmie/torsades)' : k < 3.0 ? 'sévère (2.5-2.9)' : 'légère (3.0-3.4)';
-            checkBioSyndrome('SYND_011', true, { severe, labelOverride: `Hypokaliémie ${grade} — K ${k} mmol/L` });
+            checkBioSyndrome('SYND_011', true, { severe, labelOverride: `Hypokaliémie ${grade} — K ${k} mmol/L`,
+                bilan: _bilanAssocie([['BIO_006', 'magnésémie']], (k < 3.0 || _bas('BIO_006')) ? 'ECG (ondes U, troubles du rythme)' : '') });
         }
     }
 
@@ -2153,7 +2174,8 @@ function analyserPrescription() {
     if (caEval > 0 && caEval < 2.20) {
         const severe = caEval < 1.9;
         const grade = caEval < 1.9 ? 'symptomatique (< 1.9)' : caEval < 2.0 ? 'modérée (< 2.0)' : 'légère (2.0-2.19)';
-        checkBioSyndrome('SYND_020', true, { severe, labelOverride: `Hypocalcémie ${grade} — ${caLabel}` });
+        checkBioSyndrome('SYND_020', true, { severe, labelOverride: `Hypocalcémie ${grade} — ${caLabel}`,
+            bilan: _bilanAssocie([['BIO_006', 'magnésémie'], ['BIO_023', 'vitamine D']], caEval < 2.0 ? 'ECG (allongement du QT)' : '') });
     }
 
     // --- SYND_021 : Hypercalcémie — graduée (légère 2.65-3.0 / sévère 3.0-3.5 / crise > 3.5) ---
@@ -2169,7 +2191,8 @@ function analyserPrescription() {
         if (mg > 0 && mg < 0.75) {
             const severe = mg < 0.50;
             const grade = mg < 0.50 ? 'critique (< 0.50 — risque torsades)' : mg < 0.70 ? 'modérée (0.50-0.69)' : 'légère (0.70-0.74)';
-            checkBioSyndrome('SYND_022', true, { severe, labelOverride: `Hypomagnésémie ${grade} — Mg ${mg} mmol/L` });
+            checkBioSyndrome('SYND_022', true, { severe, labelOverride: `Hypomagnésémie ${grade} — Mg ${mg} mmol/L`,
+                bilan: _bilanAssocie([['BIO_001', 'kaliémie'], ['BIO_005', 'calcémie']], (mg < 0.5 || _bas('BIO_001')) ? 'ECG (QT, torsades de pointes)' : '') });
         }
     }
 
@@ -2371,10 +2394,15 @@ function analyserPrescription() {
                 ? 'Risque de faiblesse musculaire, d\'insuffisance respiratoire, de rhabdomyolyse et de troubles du rythme : supplémentation intraveineuse sous surveillance, contrôle du calcium, du potassium et du magnésium.'
                 : p < 0.65
                     ? 'Supplémentation orale en phosphore ; contrôle à quelques jours avec potassium et magnésium.'
-                    : 'Contrôle ; rechercher une carence d\'apport ou en vitamine D, un alcoolisme.';
+                    : 'Contrôle ; rechercher une carence d\'apport.';
             addAlert('alertes-bio', `<div class="alert ${cls} shadow-sm"><strong>${p < 0.32 ? '🚨' : '⚠️'} Hypophosphatémie ${grade} — P ${p} mmol/L</strong>`
                 + `<br><em>À éliminer d'abord :</em> un syndrome de renutrition (patient dénutri réalimenté — surveiller phosphore, potassium et magnésium les premiers jours).`
                 + (imput.length ? `<br><em>Imputabilité iatrogène :</em> <b>${escapeHtml(imput.join(', '))}</b>` : '')
+                + `<br><em>Autres causes à rechercher :</em> alcool, alcalose respiratoire, carence en vitamine D, hyperparathyroïdie, correction d'une hyperglycémie par l'insuline`
+                // Kaliémie et magnésémie baissent avec le phosphore (renutrition, alcool) : on
+                // les demande, et l'ECG dès que le trouble n'est plus léger ou qu'un autre ion manque.
+                + _bilanAssocie([['BIO_001', 'kaliémie'], ['BIO_006', 'magnésémie'], ['BIO_005', 'calcémie']],
+                    (p < 0.65 || _bas('BIO_001') || _bas('BIO_006')) ? 'ECG' : '')
                 + `<br><em>Conduite :</em> ${conduite}</div>`, 'bio');
         }
     }
