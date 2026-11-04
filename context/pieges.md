@@ -86,3 +86,5 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
 - Un critère d'association déjà expliqué par une comorbidité déclarée fait du bruit (CRAB
   sur l'anémie de l'IRC) : mesurer chaque nouvelle association sur le panel.
 - Chevron `<` brut dans un titre de carte : casse la clé de masquage ; l'écrire en lettres.
+- Avant d'ajouter une association, chercher dans l'onglet Bio du même dossier une carte qui la
+  dit déjà (torsades ⊂ carte QTc ; TIH < 100 ⊂ SYND_004) : un fait, une carte.

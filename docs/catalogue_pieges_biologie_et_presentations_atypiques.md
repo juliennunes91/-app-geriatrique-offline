@@ -1,6 +1,6 @@
 # Pièges d'interprétation de la biologie et présentations atypiques du sujet âgé
 
-Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.71).
+Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.90).
 
 **Statut**
 - ✅ **implémenté** : l'application le signale quand le dossier réunit la valeur et la circonstance ;
@@ -186,6 +186,16 @@ détectée porte sa sévérité dans une table déclarée (`ASSOCIATIONS_BIO`, `
 | 6.33 | **Néphrite interstitielle aiguë médicamenteuse** | PNE > 0,5 + atteinte rénale sans IRC déclarée + IPP, AINS, pénicilline, céphalosporine, allopurinol ou rifampicine | ✅ info | Praga, *Nephrol Dial Transplant* 2015 | S |
 | 6.34 | **Éosinophilie / hyperéosinophilie** | PNE > 0,5 (≥ 1,5 : hyperéosinophilie) hors DRESS et NIA ; sous corticoïde, anguillulose à écarter | ✅ info | ICOG-EO, Valent 2012 ; CATMAT (anguillulose) | S |
 | 6.36 | **Syndrome néphrotique** | albuminurie ≥ 2200 (mg/g ou mg/24 h) + albuminémie < 30 g/L ; sinon « rang néphrotique » (albuminémie à doser ou normale) | ✅ orange / info | KDIGO 2021 (glomérulopathies) | S |
+| 6.37 | **Hypoperfusion / sepsis** | lactates > 2 + PCT ≥ 2, CRP > 100 ou température ≥ 38 ou < 36 °C | ✅ orange | Sepsis-3 (Singer 2016) ; SSC 2021 | S |
+| 6.38 | **« Triple whammy » avec atteinte rénale** | AINS + IEC/ARA2/sacubitril + diurétique + créatinine haute ou DFG < 60 | ✅ orange | Lapi, *BMJ* 2013 | R |
+| 6.39 | **Surdosage en AVK avec anémie** | AVK + INR ≥ 4 + anémie ; conduite selon l'INR | ✅ orange | HAS 2008 | S |
+| 6.40 | **Pancréatite biliaire** | lipase > 3 N + ALAT > 3 N (VPP 95 %) | ✅ orange | Tenner 1994 ; ACG 2024 | S |
+| 6.41 | **Pancréatite hypercalcémique** | lipase > 3 N + Ca > 2,65 | ✅ info | ACG 2024 | S |
+| 6.42 | **Thrombopénie sous héparine (100-150 G/L)** | → score 4T ; sous 100, la carte « thrombopénie sévère » le porte | ✅ info | ASH 2018 | R |
+| 6.43 | **Surcharge en fer** | CST > 45 % (F) / 50 % (H) + ferritine > 300 → génotypage HFE | ✅ info | EASL 2022 | R |
+| 6.44 | **Ostéomalacie** | 25-OH D < 12 ng/mL (30 nmol/L) + PAL osseuses | ✅ info | Munns 2016 (seuil) | S |
+| 6.45 | **Préalbumine et inflammation** (piège) | préalbumine < 0,2 g/L + CRP > 10 | ✅ info, rubrique pièges | ASPEN, Evans 2021 | R |
+| 6.46 | Torsades : QTc long + K, Mg ou Ca bas | déjà porté par la carte QTc (`SYND_003`) et l'onglet Éviter | — volontairement pas d'association | AHA/ACCF, Drew 2010 | S |
 | 6.35 | Emboles de cholestérol (éosinophilie + insuffisance rénale après geste endovasculaire ou sous anticoagulant) | pas de champ « geste récent » | 🔜 | — | NV |
 | 6.32 | Acidose lactique sous metformine | lactates + metformine + DFG < 30 | ✅ en partie (imputabilité de `SYND_038`) | RCP metformine | — |
 

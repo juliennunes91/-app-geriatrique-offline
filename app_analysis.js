@@ -2621,7 +2621,8 @@ function analyserPrescription() {
 
         // Phosphatases alcalines : foie ou os.
         // Avec une hypercalcémie, l'association « hypercalcémie + PAL osseuses » le dit déjà.
-        if (haut('BIO_016') && normal('BIO_015') && !(caEval > 2.65)) {
+        // Avec une hypercalcémie ou une carence profonde en vitamine D, une association le dit déjà.
+        if (haut('BIO_016') && normal('BIO_015') && !(caEval > 2.65) && !(v('BIO_023') > 0 && v('BIO_023') < 12)) {
             piege(`Phosphatases alcalines élevées (${v('BIO_016')} UI/L) avec GGT normale : origine osseuse probable`,
                 "La GGT est spécifique du foie : normale, elle oriente une élévation des PAL vers l'os (fracture en consolidation, maladie de Paget, métastases osseuses, ostéomalacie et carence en vitamine D) plutôt que vers une cholestase (ACG, Kwo 2017).");
         }
@@ -2864,12 +2865,54 @@ function analyserPrescription() {
                 texte: () => v('BIO_035') > 0
                     ? "L'albuminémie n'est pas abaissée : protéinurie de rang néphrotique sans syndrome néphrotique complet (KDIGO 2021). Elle reste une atteinte glomérulaire à explorer — avis néphrologique."
                     : "Au-delà d'environ 2,2 g/g, l'albuminurie est de rang néphrotique : doser l'albuminémie pour savoir si un syndrome néphrotique est constitué (< 30 g/L, KDIGO 2021)." }
+            ,
+            // ----- Lot 3 (4.90) -----
+            {   id: 'sepsis_lactates', severite: 'warning',
+                quand() { return v('BIO_037') > 2 && (v('BIO_032') >= 2 || v('BIO_024') > 100 || temp >= 38 || (temp > 0 && temp < 36)); },
+                titre: () => `Lactates ${v('BIO_037')} mmol/L avec syndrome infectieux ou inflammatoire : hypoperfusion ?`,
+                texte: () => `Au-delà de 2 mmol/L, les lactates font partie de la définition du choc septique quand des vasopresseurs sont nécessaires (Sepsis-3, Singer 2016) ; les recommandations de la Surviving Sepsis Campaign (2021) les font doser et recontrôler. Pression artérielle, diurèse, marbrures, conscience${medsImputables(['metformine']).length ? ' — la metformine élève aussi les lactates, surtout si le DFG baisse' : ''}.` },
+            {   id: 'triple_whammy', severite: 'warning',
+                meds: () => [medsImputables(['ains']), medsImputables(['iec', 'ara2', 'sacubitril']), medsImputables(['diuretique'])],
+                quand() { const [a, b, c] = this.meds(); return a.length && b.length && c.length && (borne('BIO_003', 'haut') || (dfg > 0 && dfg < 60)); },
+                titre() { return `Atteinte rénale sous AINS + bloqueur du SRAA + diurétique (${this.meds().flat().join(', ')}) : « triple whammy »`; },
+                texte: () => "L'association triple augmente le risque d'insuffisance rénale aiguë (rapport des taux 1,31), surtout dans les 30 premiers jours (Lapi, BMJ 2013) ; la double association ne l'augmente pas. Arrêter l'AINS en premier, suspendre transitoirement le bloqueur du SRAA et le diurétique en cas de déshydratation, contrôler créatinine et kaliémie." },
+            {   id: 'avk_saignement', severite: 'warning',
+                quand() { return medsImputables(['avk']).length > 0 && v('BIO_030') >= 4 && anemie; },
+                titre: () => `INR ${v('BIO_030')} sous ${medsImputables(['avk']).join(', ')} avec anémie : saignement à rechercher`,
+                texte: () => `${v('BIO_030') >= 10 ? "INR ≥ 10 : arrêt de l'AVK et vitamine K" : v('BIO_030') >= 6 ? "INR entre 6 et 10 sans saignement : sauter une prise, vitamine K 1 à 2 mg per os, INR le lendemain" : "INR au-dessus de la cible : sauter une prise ou réduire la dose"} (HAS 2008). Une anémie associée fait d'abord rechercher un saignement ; s'il est grave, hospitalisation, vitamine K et concentré de complexe prothrombinique sans attendre l'INR.` },
+            // (Pas d'entrée « torsades » : la carte QTc de SYND_003 demande déjà de corriger K et
+            // Mg, et l'onglet Éviter porte le risque de torsade — un fait, une carte.)
+            {   id: 'pancreatite_biliaire', severite: 'warning',
+                quand() { return hautX('BIO_036', 3) && hautX('BIO_014', 3); },
+                titre: () => `Lipase > 3 N et ALAT > 3 N : pancréatite d'origine biliaire probable`,
+                texte: () => "Au cours d'une pancréatite aiguë, une ALAT au moins triplée a une valeur prédictive positive de 95 % pour l'origine lithiasique (Tenner, Am J Gastroenterol 1994) : échographie des voies biliaires (ACG 2024), et discuter la cholécystectomie à distance." },
+            {   id: 'pancreatite_ca', severite: 'info',
+                quand() { return hautX('BIO_036', 3) && ca > 2.65; },
+                titre: () => "Lipase > 3 N avec hypercalcémie : pancréatite hypercalcémique ?",
+                texte: () => "L'hypercalcémie est une cause de pancréatite aiguë, que le bilan étiologique recherche avec les lipides (ACG 2024) ; en chercher elle-même la cause (PTH, cancer, vitamine D)." },
+            {   id: 'tih', severite: 'info',
+                // Sous 100 G/L, la carte « thrombopénie sévère » (SYND_004) porte déjà la TIH sous héparine.
+                quand() { const plq = v('BIO_010'); return plq >= 100 && plq < 150 && medsImputables(['heparine']).length > 0; },
+                titre: () => `Thrombopénie (${v('BIO_010')} G/L) sous ${medsImputables(['heparine']).join(', ')} : calculer le score 4T`,
+                texte: () => "Le score 4T (ampleur de la chute, délai depuis l'introduction, thrombose, autre cause) fixe la probabilité de thrombopénie induite par l'héparine : faible (≤ 3), ni test ni changement d'anticoagulant ; intermédiaire ou forte, dosage des anticorps anti-PF4 et anticoagulant non hépariné (ASH 2018)." },
+            {   id: 'hemochromatose', severite: 'info',
+                quand() { const cst = v('BIO_047'); return cst > (sexe === 'M' ? 50 : 45) && v('BIO_020') > 300; },
+                titre: () => `Saturation de la transferrine ${v('BIO_047')} % et ferritine ${v('BIO_020')} µg/L : surcharge en fer possible`,
+                texte: () => "Une saturation élevée avec une ferritine augmentée fait rechercher une hémochromatose (génotypage HFE, mutation C282Y) — EASL 2022 ; la ferritine seule, sans saturation élevée, relève plutôt de l'inflammation, de l'alcool ou d'un syndrome métabolique." },
+            {   id: 'osteomalacie', severite: 'info',
+                quand() { return v('BIO_023') > 0 && v('BIO_023') < 12 && borne('BIO_016', 'haut') && !borne('BIO_015', 'haut'); },
+                titre: () => `Carence profonde en vitamine D (${v('BIO_023')} ng/mL) avec PAL osseuses : ostéomalacie ?`,
+                texte: () => "Sous 30 nmol/L (12 ng/mL), la carence est franche (consensus de Munns 2016) ; associée à des phosphatases alcalines d'origine osseuse, elle évoque une ostéomalacie, cause de douleurs osseuses, de faiblesse musculaire proximale et de chutes. Recharge en vitamine D et apports calciques, contrôle des PAL." },
+            {   id: 'prealbumine', severite: 'info', rubrique: 'piege',
+                quand() { return borne('BIO_043', 'bas') && v('BIO_024') > 10; },
+                titre: () => `Préalbumine ${v('BIO_043')} g/L avec CRP ${v('BIO_024')} mg/L : abaissée par l'inflammation, pas un marqueur de dénutrition`,
+                texte: () => "Albumine et préalbumine reflètent l'inflammation plutôt que l'état nutritionnel et ne doivent pas servir de marqueurs nutritionnels (ASPEN, Evans 2021) ; elles gardent une valeur pronostique. Le diagnostic de dénutrition repose sur la perte de poids, l'IMC, la masse musculaire et les apports (GLIM)." }
         ];
         ASSOCIATIONS_BIO.forEach(a => {
             const c = a.criteres ? a.criteres() : null;
             if (!a.quand(c)) return;
             const cls = 'alert-' + a.severite + (a.severite === 'info' ? '' : ' border-' + a.severite);
-            addAlert('alertes-bio', `<div class="alert ${cls} shadow-sm" data-association="${a.id}"${a.rubrique ? ` data-rubrique="${a.rubrique}"` : ''}><strong>🧩 ${a.titre(c)}</strong><br><small>${a.texte(c)}</small></div>`, 'bio');
+            addAlert('alertes-bio', `<div class="alert ${cls} shadow-sm" data-association="${a.id}"${a.rubrique ? ` data-rubrique="${a.rubrique}"` : ''}><strong>${a.rubrique === 'piege' ? '🔎' : '🧩'} ${a.titre(c)}</strong><br><small>${a.texte(c)}</small></div>`, 'bio');
         });
     }
 

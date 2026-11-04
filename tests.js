@@ -2321,6 +2321,27 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(eo.indexOf('data-association="eosinophilie"') < eo.indexOf("Pièges d'interprétation") && !/Associations évocatrices/.test(eo), 'eosinophilie isolee : rangee avec les anomalies');
         assert.deepStrictEqual(ordre({ bio: { patientNa: 128 } }).filter(x => x[0] === '#'), [], 'une seule rubrique : pas d\'en-tete');
     });
+    test('Associations evocatrices (lot 3) : chacune sur sa combinaison, sans doublon d\'une carte existante', () => {
+        const run = c => String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60, meds: ['Paracetamol'] }, c))._html['alertes-bio'] || '');
+        const ids = c => [...run(c).matchAll(/data-association="([a-z_]+)"/g)].map(m => m[1]);
+        const oui = (c, id) => assert.ok(ids(c).includes(id), id + ' doit sortir : ' + JSON.stringify(c));
+        const non = (c, id) => assert.ok(!ids(c).includes(id), id + ' ne doit PAS sortir : ' + JSON.stringify(c));
+        oui({ bio: { bioLact: 3.5, bioPct: 5 } }, 'sepsis_lactates'); non({ bio: { bioLact: 3.5 } }, 'sepsis_lactates');
+        oui({ meds: ['Ibuprofene', 'Ramipril', 'Furosemide'], bio: { bioCreat: 160 }, dfg: 35 }, 'triple_whammy'); non({ meds: ['Ibuprofene', 'Ramipril'], bio: { bioCreat: 160 }, dfg: 35 }, 'triple_whammy');
+        oui({ meds: ['Warfarine'], bio: { bioInr: 7, bioHb: 8.5 } }, 'avk_saignement'); non({ meds: ['Warfarine'], bio: { bioInr: 7, bioHb: 13 } }, 'avk_saignement');
+        assert.ok(/vitamine K 1 à 2 mg per os/.test(run({ meds: ['Warfarine'], bio: { bioInr: 7, bioHb: 8.5 } })), 'INR 6-10 : conduite HAS 2008');
+        oui({ bio: { bioLipase: 900, bioAlat: 300 } }, 'pancreatite_biliaire'); non({ bio: { bioLipase: 900, bioAlat: 40 } }, 'pancreatite_biliaire');
+        oui({ bio: { bioLipase: 900, bioCa: 2.9 } }, 'pancreatite_ca'); non({ bio: { bioLipase: 100, bioCa: 2.9 } }, 'pancreatite_ca');
+        oui({ meds: ['Enoxaparine'], bio: { bioPlaq: 110 } }, 'tih'); non({ bio: { bioPlaq: 110 } }, 'tih');
+        assert.ok(!ids({ meds: ['Enoxaparine'], bio: { bioPlaq: 80 } }).includes('tih') && /4T/.test(run({ meds: ['Enoxaparine'], bio: { bioPlaq: 80 } })), 'sous 100 G/L : la carte de thrombopenie porte deja la TIH');
+        oui({ bio: { bioCst: 70, bioFer: 800 } }, 'hemochromatose'); non({ bio: { bioCst: 25, bioFer: 800 } }, 'hemochromatose');
+        const os = run({ bio: { bioVitD: 8, bioPal: 250, bioGgt: 20 } });
+        assert.ok(/data-association="osteomalacie"/.test(os) && !/🔎 Phosphatases alcalines/.test(os), 'osteomalacie : une carte, pas deux');
+        const pa = run({ bio: { bioPrealb: 0.12, bioCrp: 80 } });
+        assert.ok(/data-association="prealbumine"/.test(pa) && /<strong[^>]*>🔎 Préalbumine/.test(pa) && pa.indexOf('Préalbumine') > pa.indexOf("Pièges d'interprétation") - 1, 'prealbumine : rangee comme piege'); non({ bio: { bioPrealb: 0.12, bioCrp: 3 } }, 'prealbumine');
+        const qt = ids({ bio: { bioQtc: 520, patientK: 3.1 } });
+        assert.ok(!qt.includes('torsades'), 'pas de carte torsades : la carte QTc le dit deja');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :

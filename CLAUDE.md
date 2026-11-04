@@ -2010,6 +2010,16 @@ aiguë** (PNE > 0,5 + atteinte rénale **sans IRC déclarée** + IPP/AINS/bêtal
 **éosinophilie isolée** (graduée à 1,5 ; anguillulose à écarter sous corticoïde), qui se tait
 quand DRESS ou NIA a parlé — et nomme alors la molécule à risque de DRESS à surveiller.
 
+**Associations, lot 3 (4.90)** — hypoperfusion/sepsis (lactates + PCT, CRP ou température),
+« triple whammy » avec atteinte rénale (Lapi 2013 ; la double association n'en est pas un),
+surdosage en AVK avec anémie (conduite HAS 2008 selon l'INR), pancréatite biliaire (ALAT
+> 3 N, Tenner 1994) et hypercalcémique, thrombopénie 100-150 G/L sous héparine (score 4T,
+ASH 2018), surcharge en fer (EASL 2022), ostéomalacie (Munns 2016), préalbumine et
+inflammation — **rangée en piège** : une entrée de la table peut porter `rubrique: 'piege'`
+(icône 🔎, rubrique des pièges) ou `rubrique: 'anomalie'`. Écartés comme doublons : une
+association « torsades » (la carte QTc de `SYND_003` demande déjà de corriger K et Mg) et la
+TIH sous 100 G/L (portée par `SYND_004`) ; l'ostéomalacie fait taire le piège « PAL osseuses ».
+
 **Onglet Bio en trois rubriques (4.80)** — `_rubriquesBio()` (`app_analysis.js`), appliqué au
 tampon de `alertes-bio` dans `flushAlerts` : « Anomalies et syndromes » (cartes de syndrome,
 bilan associé, lecture urinaire, et les associations marquées `rubrique: 'anomalie'` —

@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.80**, `BUILD_ID` `20261104-bio-rubriques`,
-cache `geriaassist-v159`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.90**, `BUILD_ID` `20261104-associations-lot3`,
+cache `geriaassist-v160`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.90** (04/11) — Associations lot 3 (9) : sepsis/lactates, triple whammy, AVK + anémie,
+  pancréatites biliaire et hypercalcémique, TIH 100-150, hémochromatose, ostéomalacie,
+  préalbumine (piège).
 - **4.80** (04/11) — Onglet Bio en trois rubriques : anomalies et syndromes, associations,
   pièges d'interprétation.
 - **4.71** (04/11) — Syndrome néphrotique (albuminurie de rang néphrotique + albuminémie < 30).
