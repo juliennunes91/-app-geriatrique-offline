@@ -52,7 +52,7 @@ window.importerPatientJSON = function() {
 
 function _collectPatientData() {
     const fields = {};
-    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #bioDate, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
+    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #bioDate, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioOsmU, #bioNaU, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
         if (el) fields[el.id] = el.value;
     });
     const checkboxes = {};
@@ -1108,7 +1108,7 @@ window.resetPatient = function() {
         'bioDigox': '', 'bioDigoxUnit': 'ng/mL', 'bioTca': '',
         'bioVitDUnit': 'ng/mL',
         'scoreCFS': '0', 'bioQtc': '',
-        'bioTp': '', 'bioChlore': '', 'bioOsm': '', 'bioPrealb': '', 'bioAlbuminurie': '',
+        'bioTp': '', 'bioChlore': '', 'bioOsm': '', 'bioOsmU': '', 'bioNaU': '', 'bioPrealb': '', 'bioAlbuminurie': '',
         'bioVgm': '', 'bioRetic': '',
         // La date du bilan appartient au dossier precedent : la laisser en place
         // ferait dater les valeurs du suivant d'un prelevement qui n'est pas le sien.

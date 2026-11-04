@@ -1992,6 +1992,19 @@ le critère rénal ne compte que sans `PAT_029` déclarée. Un chevron brut dans
 (« Hb < 10 ») casse la clé de masquage : l'écrire en toutes lettres. Chaque association est
 testée dans les deux sens (combinaison → sort ; un élément manquant → ne sort pas).
 
+**Biologie urinaire et SIADH (4.50)** — deux champs, `bioOsmU` (osmolalité urinaire,
+mOsm/kg, `BIO_049`, LOINC 2695-5) et `bioNaU` (natriurèse sur échantillon, mmol/L,
+`BIO_050`, LOINC 2955-3), dans les deux interfaces, l'export JSON, `resetPatient()` et le
+hash. **Pas de bornes de signalement** : une valeur urinaire n'a de sens que rapportée à la
+natrémie. Lus par `_lectureUrinaire()` dans la carte d'hyponatrémie (un fait, une carte),
+selon l'arbre ESE/ESICM/ERBP 2014 : rien de dosé → les demander ; Uosm ≤ 100 → excès d'eau
+(pas un SIADH) ; Uosm > 100 sans natriurèse → la demander ; natriurèse ≤ 30 → volume
+circulant efficace bas ; > 30 sous diurétique → ininterprétable, le diurétique d'abord ;
+> 30 sans diurétique → SIADH probable si euvolémie, **après** hypothyroïdie (TSH lue ou
+demandée), insuffisance surrénale (cortisol à doser) et insuffisance rénale (DFG lu). Rien
+n'est dit si l'osmolalité plasmatique est ≥ 275 : la carte « non hypotonique » prend le
+relais. Non importés par l'import PDF (risque de confusion sang/urine sur un même libellé).
+
 **Déjà traités ailleurs** : calcémie corrigée par l'albumine (Payne) ; ferritine et
 inflammation (seuil carentiel à 100 si CRP élevée, encart d'anémie) ; albumine ≠ dénutrition
 (GLIM) ; NT-proBNP et facteurs confondants (`SYND_029`) ; troponine selon le réactif.

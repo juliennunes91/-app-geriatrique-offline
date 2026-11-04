@@ -335,6 +335,20 @@ const MASTER_DB = {
             "NOM_STANDARD": "Phosphatémie",
             "UNITE": "mmol/L",
             "SYNONYMES": "Phosphore, Phosphate, Phosphatemie, Phosphorémie, Phosphore sérique, P"
+        },
+        "BIO_049": {
+            "ID_BIO": "BIO_049",
+            "LOINC": "2695-5",
+            "NOM_STANDARD": "Osmolalité urinaire",
+            "UNITE": "mOsm/kg",
+            "SYNONYMES": "Osmolalite urinaire, Osmolarite urinaire, Uosm, Hyponatremie, SIADH"
+        },
+        "BIO_050": {
+            "ID_BIO": "BIO_050",
+            "LOINC": "2955-3",
+            "NOM_STANDARD": "Natriurèse (sodium urinaire)",
+            "UNITE": "mmol/L",
+            "SYNONYMES": "Natriurese, Sodium urinaire, UNa, Na urinaire, Hyponatremie, SIADH"
         }
     },
     "PATHOLOGIES": {

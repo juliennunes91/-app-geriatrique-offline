@@ -1,6 +1,6 @@
 # Pièges d'interprétation de la biologie et présentations atypiques du sujet âgé
 
-Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.40).
+Catalogue de référence pour GeriaAssist — état au 04/11/2026 (version 4.50).
 
 **Statut**
 - ✅ **implémenté** : l'application le signale quand le dossier réunit la valeur et la circonstance ;
@@ -169,7 +169,7 @@ détectée porte sa sévérité dans une table déclarée (`ASSOCIATIONS_BIO`, `
 | 6.15 | **Triade de Hakim → hydrocéphalie à pression normale** | chutes + incontinence + troubles cognitifs | ✅ info | critères internationaux 2005 / japonais | S |
 | 6.16 | Hémolyse : anémie + réticulocytes hauts + bilirubine | seuil de réticulocytes non sourcé | 🔜 | BSH AIHA 2017 | NV |
 | 6.17 | Rhabdomyolyse + IRA + hyperkaliémie | CPK, créatinine, K | 🔜 (`SYND_002` couvre la CPK) | — | NV |
-| 6.18 | SIADH | exige osmolalité et natriurèse urinaires | 🔜 (pas de champ urinaire) | ESE 2014 | R |
+| 6.18 | SIADH (diagnostic d'exclusion) | hyponatrémie hypotonique, Uosm > 100, natriurèse > 30 sans diurétique ; hypothyroïdie, insuffisance surrénale et rénale à écarter | ✅ (champs `bioOsmU`, `bioNaU`, dans la carte d'hyponatrémie) | ESE/ESICM/ERBP 2014 | R |
 | 6.19 | Syndrome sérotoninergique (critères de Hunter) | signes neuromusculaires cliniques | 📚 (`SYND_043` : association de médicaments) | — | NV |
 | 6.20 | Hyperthyroïdie + FA | TSH basse et FA | 📚 (dans la carte thyroïdienne) | — | — |
 | 6.21 | Triade de Whipple (hypoglycémie documentée) | symptômes + glycémie basse + correction | 📚 | — | NV |
@@ -182,7 +182,7 @@ Par ordre d'intérêt clinique :
 
 1. **Date de chaque créatinine** (deux valeurs) → insuffisance rénale aiguë, DFG non interprétable (3.10).
 2. **Fréquence cardiaque** → QTc de Fridericia (3.35).
-3. **ECBU / bandelette urinaire** → bactériurie asymptomatique (4.3).
+3. **ECBU / bandelette urinaire** → bactériurie asymptomatique (4.3). *(Osmolalité et natriurèse urinaires : ajoutées en 4.50.)*
 4. **Corticothérapie arrêtée récemment** (précision) → insuffisance surrénale (5.18).
 5. **Heure de prélèvement** (lithium, digoxine, aminosides, vancomycine) → 1.9-1.11.
 6. **Globules rouges, RDW** → trait thalassémique, carence mixte (3.21-3.22).

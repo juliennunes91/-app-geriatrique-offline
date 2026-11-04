@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 04/11/2026 — **version 4.40**, `BUILD_ID` `20261104-associations-bio`,
-cache `geriaassist-v154`.*
+*Dernière mise à jour : 04/11/2026 — **version 4.50**, `BUILD_ID` `20261104-urines-siadh`,
+cache `geriaassist-v155`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -99,6 +99,8 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 4. Historique des livraisons (récent → ancien)
 
+- **4.50** (04/11) — Champs urinaires (osmolalité, natriurèse) et lecture de l'hyponatrémie selon
+  l'arbre ESE 2014, SIADH en diagnostic d'exclusion.
 - **4.40** (04/11) — Associations évocatrices (table `ASSOCIATIONS_BIO`, 15 entrées : CRAB,
   hyperparathyroïdie, lyse, angiocholite, SMN, SHH, hyponatrémie non hypotonique, trou
   osmolaire, hyperaldostéronisme, insuffisance surrénale, BRASH, MAT, alcool, Wernicke,
@@ -164,7 +166,7 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 **Rien en cours.** Suite possible : champs manquants listés en fin de
 `docs/catalogue_pieges_biologie_et_presentations_atypiques.md` (2ᵉ créatinine datée, FC,
-ECBU, arrêt de corticothérapie, heure de prélèvement) ; entrées « NV » à vérifier.
+ECBU (urines : osmolalité et natriurèse faites en 4.50), arrêt de corticothérapie, heure de prélèvement) ; entrées « NV » à vérifier.
 
 Non vérifié sur source (à ne pas présenter comme sourcé) : bornes T4L 12-22 / T3L 3,1-6,8
 (choix de l'utilisateur) ; 99ᵉ percentile hs-cTnI 16/34 ng/L non retrouvé par recherche ;

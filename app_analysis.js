@@ -621,6 +621,7 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         'BIO_040': getBioVal('bioTp'),
         'BIO_041': getBioVal('bioChlore'),
         'BIO_042': getBioVal('bioOsm'),
+        'BIO_049': getBioVal('bioOsmU'), 'BIO_050': getBioVal('bioNaU'),
         'BIO_043': getBioVal('bioPrealb'),
         'BIO_044': _convertDigoxToNgMl(getBioVal('bioDigox'), _getUnit('bioDigoxUnit', 'ng/mL')),
         'BIO_045': getBioVal('bioTca'),
@@ -1091,7 +1092,7 @@ const _HASH_NUMERIC_FIELDS = [
     'bioGly', 'bioHba1c', 'bioLdl', 'bioHdl', 'bioTg', 'bioBnp', 'bioInr', 'bioQtc',
     'bioPct', 'bioLithium', 'bioDdim', 'bioTropo', 'bioLipase', 'bioAlbumSg',
     'bioLact', 'bioCst', 'bioPhos', 'bioTemp', 'bioT4', 'bioT3', 'bioTp', 'bioTca',
-    'bioChlore', 'bioOsm', 'bioPrealb', 'bioAlbuminurie',
+    'bioChlore', 'bioOsm', 'bioOsmU', 'bioNaU', 'bioPrealb', 'bioAlbuminurie',
     'bioDigox', 'bioVgm', 'bioRetic',
     // Child-Pugh manuel (utilisé si cpManual=1)
     'cpBili', 'cpAlb', 'cpTp', 'cpAscite', 'cpEnceph'
@@ -2044,8 +2045,30 @@ function analyserPrescription() {
         if (na > 0 && na < 135) {
             const severe = na < 125;
             const grade = na < 125 ? 'sévère (< 125)' : na < 130 ? 'modérée (125-129)' : 'légère (130-134)';
+            // Lecture urinaire (arbre de l'ESE/ESICM/ERBP 2014) — seulement si l'hyponatrémie
+            // est hypotonique ou d'osmolalité inconnue : au-delà de 275 mOsm/kg, la carte
+            // « hyponatrémie non hypotonique » prend le relais et l'urine ne tranche rien.
+            const _lectureUrinaire = () => {
+                const posm = bioValues['BIO_042'], uosm = bioValues['BIO_049'], una = bioValues['BIO_050'];
+                if (posm >= 275) return '';
+                const pref = '<br><em>Urines :</em> ';
+                if (!(uosm > 0) && !(una > 0)) return pref + "osmolalité et natriurèse urinaires non dosées — à doser sur un échantillon prélevé en même temps que la natrémie, avant toute correction (ESE 2014).";
+                if (uosm > 0 && uosm <= 100) return pref + `osmolalité urinaire ${uosm} mOsm/kg (≤ 100) : urines diluées, excès d'eau relatif — potomanie ou apports pauvres en solutés (« tea and toast »). Ce n'est pas un SIADH (ESE 2014).`;
+                if (!(una > 0)) return pref + `osmolalité urinaire ${uosm} mOsm/kg (> 100) : doser la natriurèse pour poursuivre (ESE 2014).`;
+                const lu = uosm > 0 ? `osmolalité ${uosm} mOsm/kg, ` : 'osmolalité urinaire non dosée, ';
+                if (una <= 30) return pref + `${lu}natriurèse ${una} mmol/L (≤ 30) : volume circulant efficace bas — pertes digestives ou déshydratation, insuffisance cardiaque, cirrhose (ESE 2014).`;
+                const diu = medsImputables(['diuretique']);
+                if (diu.length) return pref + `${lu}natriurèse ${una} mmol/L (> 30) sous ${escapeHtml(diu.join(', '))} : ininterprétable sous diurétique — le diurétique lui-même est la première cause à retenir (ESE 2014).`;
+                const tsh = bioValues['BIO_019'], dfgU = bioValues['BIO_004'];
+                const ecarter = [
+                    tsh > 0 ? (tsh > 10 ? `hypothyroïdie (TSH ${tsh} : à traiter d'abord)` : `hypothyroïdie (TSH ${tsh}, écartée)`) : 'hypothyroïdie (TSH à doser)',
+                    'insuffisance surrénale (cortisol à doser)',
+                    dfgU > 0 ? (dfgU < 30 ? `insuffisance rénale (DFG ${dfgU} : perte rénale de sel possible)` : `insuffisance rénale (DFG ${dfgU}, écartée)`) : 'insuffisance rénale (créatinine à doser)'
+                ];
+                return pref + `${lu}natriurèse ${una} mmol/L (> 30), sans diurétique : SIADH probable si le patient est euvolémique, après avoir écarté ${ecarter.join(', ')}. Autres causes de natriurèse élevée : vomissements, perte rénale de sel (ESE 2014).`;
+            };
             checkBioSyndrome('SYND_009', true, { severe, labelOverride: `Hyponatrémie ${grade} — Na ${na} mmol/L`,
-                bilan: ctxClinique.includes('chutes') ? `<br><em>Chutes déclarées :</em> même légère et chronique, l'hyponatrémie s'associe aux chutes, à l'instabilité et aux troubles de l'attention (Renneboog, Am J Med 2006) — la corriger fait partie de la prévention des chutes.` : '' });
+                bilan: _lectureUrinaire() + (ctxClinique.includes('chutes') ? `<br><em>Chutes déclarées :</em> même légère et chronique, l'hyponatrémie s'associe aux chutes, à l'instabilité et aux troubles de l'attention (Renneboog, Am J Med 2006) — la corriger fait partie de la prévention des chutes.` : '') });
         }
     }
 

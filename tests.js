@@ -2248,6 +2248,23 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!/alert-danger[^"]*" data-association=/.test(raw), 'aucune association en rouge');
         assert.ok(!/maskGeriaAlert\('tt:[^']*</.test(raw), 'aucun chevron brut dans une cle de masquage');
     });
+    test('Hyponatremie : lecture urinaire (osmolalite, natriurese) selon l\'arbre ESE 2014, SIADH en dernier', () => {
+        const u = c => { const h = String(analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 70, meds: ['Paracetamol'] }, c))._html['alertes-bio'] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' '); const m = h.match(/Urines : ([^.]*\.[^.]*)/); return m ? m[1] : ''; };
+        assert.ok(/non dosées — à doser/.test(u({ bio: { patientNa: 126 } })), 'rien de dose : on demande les deux');
+        assert.ok(/\(≤ 100\) : urines diluées/.test(u({ bio: { patientNa: 126, bioOsmU: 80 } })), 'Uosm <= 100 : exces d\'eau');
+        assert.ok(/doser la natriurèse/.test(u({ bio: { patientNa: 126, bioOsmU: 400 } })), 'Uosm > 100 sans natriurese : la demander');
+        assert.ok(/\(≤ 30\) : volume circulant efficace bas/.test(u({ bio: { patientNa: 126, bioOsmU: 400, bioNaU: 15 } })), 'UNa <= 30 : hypovolemie efficace');
+        assert.ok(/ininterprétable sous diurétique/.test(u({ meds: ['Hydrochlorothiazide'], bio: { patientNa: 126, bioOsmU: 400, bioNaU: 60 } })), 'UNa > 30 sous diuretique : ininterpretable');
+        const siadh = u({ bio: { patientNa: 126, bioOsmU: 400, bioNaU: 60, bioTsh: 2 } });
+        assert.ok(/SIADH probable si le patient est euvolémique/.test(siadh) && /TSH 2, écartée/.test(siadh) && /cortisol à doser/.test(siadh), 'SIADH : diagnostic d\'exclusion, TSH lue, cortisol demande');
+        assert.strictEqual(u({ bio: { patientNa: 126, bioOsm: 290, bioOsmU: 400, bioNaU: 60 } }), '', 'hyponatremie non hypotonique : l\'urine ne tranche rien');
+        for (const f of ['index.html', 'index_modern.html']) {
+            const h = require('fs').readFileSync(require('path').join(__dirname, f), 'utf8');
+            assert.ok(/id="bioOsmU"/.test(h) && /id="bioNaU"/.test(h), f + ' : les deux champs urinaires');
+        }
+        const src = require('fs').readFileSync(require('path').join(__dirname, 'app_core.js'), 'utf8');
+        assert.ok(/#bioOsmU, #bioNaU/.test(src), 'les deux champs partent dans l\'export JSON');
+    });
     test('Thyroide : T4 et T3 LIBRES (pmol/L) — une T4L normale ne fait pas une hypothyroidie averee', () => {
         // Le champ etait en nmol/L (T4 totale, seuil 60) : une T4L normale saisie (15) etait
         // lue « < 60 » et faisait annoncer une hypothyroidie AVEREE. Bornes retenues :
@@ -2373,7 +2390,9 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             BIO_045: '63561-5',
             BIO_047: '2502-3',
             BIO_046: '14959-1',
-            BIO_048: '14879-1'
+            BIO_048: '14879-1',
+            BIO_049: '2695-5',
+            BIO_050: '2955-3'
         };
         const B = JSON.parse(vm.runInContext('JSON.stringify(Object.fromEntries(Object.entries(MASTER_DB.BIOLOGIE).map(([k,v])=>[k,v.LOINC])))', require('./oracle_harness').loadApp().sandbox));
         assert.deepStrictEqual(B, attendu);
