@@ -299,9 +299,18 @@ function removeComorb(val) {
     for (let i = activeComorbs.length - 1; i >= 0; i--) if (activeComorbs[i] === val) activeComorbs.splice(i, 1);
     renderTags();
 }
+// Retirer un médicament après une analyse laissait tous les onglets — synthèse comprise —
+// sur l'ordonnance précédente jusqu'au prochain clic sur « Lancer l'analyse » : l'écran
+// montrait une pastille en moins et des alertes sur la molécule retirée. Comme pour la
+// suspension, l'analyse est relancée — seulement si une analyse est déjà affichée.
+function _reanalyserSiAffichee() {
+    if (typeof _lastAnalysisResult !== 'undefined' && _lastAnalysisResult && typeof analyserPrescription === 'function') analyserPrescription();
+    else if (typeof window.conciliationSync === 'function') window.conciliationSync();
+}
 function removeMed(dci) {
     for (let i = activeMeds.length - 1; i >= 0; i--) if (activeMeds[i].dci === dci) activeMeds.splice(i, 1);
     renderTags();
+    _reanalyserSiAffichee();
 }
 function toggleSuspend(dci) {
     let idx = activeMeds.findIndex(m => m.dci === dci);
@@ -419,10 +428,32 @@ function _medPrecisionSpec(med) {
     return { key: key, fields: MED_PRECISION_FIELDS[key] || [] };
 }
 function _medPrecisionEsc(e) { if (e.key === 'Escape') closeMedPrecisionModal(); }
-function closeMedPrecisionModal() {
+// File d'attente des précisions. Un import (OCR, texte libre, dossier) ajoute plusieurs
+// médicaments d'affilée, et chaque ajout ouvrait sa modale en FERMANT la précédente : seul
+// le dernier médicament de la liste se voyait demander sa précision, les autres partaient
+// en silence sur la forme par défaut (la plus exposante). Les ouvertures automatiques sont
+// donc mises en file et présentées l'une après l'autre ; « Passer tout » vide la file.
+const _precisionsEnAttente = [];
+let _precisionsTotal = 0;
+function _retirerOverlayPrecision() {
     const o = document.getElementById('medPrecisionOverlay');
     if (o && o.remove) o.remove();
     if (document.removeEventListener) document.removeEventListener('keydown', _medPrecisionEsc);
+}
+function closeMedPrecisionModal(opts) {
+    _retirerOverlayPrecision();
+    if (opts && opts.tout) _precisionsEnAttente.length = 0;
+    // Suivante de la file, si elle est toujours à l'ordonnance.
+    while (_precisionsEnAttente.length) {
+        const dci = _precisionsEnAttente.shift();
+        if (activeMeds.some(m => m.dci === dci)) { openMedPrecisionModal(dci, { _suite: true }); return; }
+    }
+    _precisionsTotal = 0;
+}
+function _comptePrecisions() {
+    const total = Math.max(_precisionsTotal, 1 + _precisionsEnAttente.length);
+    if (total <= 1) return '';
+    return 'Médicament ' + (total - _precisionsEnAttente.length) + ' sur ' + total + ' à préciser';
 }
 function openMedPrecisionModal(dci, opts) {
     const med = activeMeds.find(m => m.dci === dci);
@@ -434,7 +465,18 @@ function openMedPrecisionModal(dci, opts) {
     // force l'ouverture (opts.force = true).
     const forced = opts && opts.force;
     if (!forced && typeof geriaPrefs === 'object' && geriaPrefs && geriaPrefs.skipPrecisionsModal) return;
-    closeMedPrecisionModal();
+    const ouverte = document.getElementById('medPrecisionOverlay');
+    if (!forced && !(opts && opts._suite) && ouverte) {
+        // Une précision est déjà demandée : celle-ci attend son tour.
+        if (!_precisionsEnAttente.includes(dci)) { _precisionsEnAttente.push(dci); _precisionsTotal++; }
+        const compte = ouverte.querySelector('[data-precision-compte]');
+        if (compte) compte.textContent = _comptePrecisions();
+        const tout = ouverte.querySelector('[data-precision-tout]');
+        if (tout) tout.style.display = '';
+        return;
+    }
+    if (!(opts && opts._suite)) { if (!ouverte) _precisionsTotal = 1; }
+    _retirerOverlayPrecision();
     const prec = med.precisions || {};
     const overlay = document.createElement('div');
     overlay.id = 'medPrecisionOverlay';
@@ -444,7 +486,10 @@ function openMedPrecisionModal(dci, opts) {
     card.style.cssText = 'background:#fff;color:#1e293b;max-width:420px;width:100%;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.3);padding:20px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;';
     const h = document.createElement('div'); h.style.cssText = 'font-weight:700;font-size:15px;margin-bottom:4px;'; h.textContent = 'Préciser la prescription';
     const sub = document.createElement('div'); sub.style.cssText = 'font-size:13px;color:#64748b;margin-bottom:14px;'; sub.textContent = med.label || med.dci;
-    card.appendChild(h); card.appendChild(sub);
+    const compte = document.createElement('div'); compte.setAttribute('data-precision-compte', '');
+    compte.style.cssText = 'font-size:12px;color:#0f766e;font-weight:600;margin-bottom:2px;';
+    compte.textContent = _comptePrecisions();
+    card.appendChild(compte); card.appendChild(h); card.appendChild(sub);
     const controls = {};
     spec.fields.forEach(fk => {
         const def = PRECISION_FIELD_DEFS[fk]; if (!def) return;
@@ -465,17 +510,24 @@ function openMedPrecisionModal(dci, opts) {
     const btns = document.createElement('div'); btns.style.cssText = 'display:flex;gap:8px;justify-content:flex-end;margin-top:8px;';
     const skip = document.createElement('button'); skip.type = 'button'; skip.textContent = 'Passer';
     skip.style.cssText = 'padding:8px 14px;border:1px solid #cbd5e1;background:#fff;color:#475569;border-radius:8px;cursor:pointer;font-size:14px;';
-    skip.addEventListener('click', closeMedPrecisionModal);
+    skip.addEventListener('click', () => closeMedPrecisionModal());
+    const skipAll = document.createElement('button'); skipAll.type = 'button'; skipAll.textContent = 'Passer tout';
+    skipAll.setAttribute('data-precision-tout', '');
+    skipAll.title = 'Ne pas préciser les médicaments restants (ils restent modifiables par ✎)';
+    skipAll.style.cssText = 'padding:8px 14px;border:1px solid #cbd5e1;background:#fff;color:#475569;border-radius:8px;cursor:pointer;font-size:14px;margin-right:auto;';
+    if (!_precisionsEnAttente.length) skipAll.style.display = 'none';
+    skipAll.addEventListener('click', () => closeMedPrecisionModal({ tout: true }));
     const save = document.createElement('button'); save.type = 'button'; save.textContent = 'Enregistrer';
     save.style.cssText = 'padding:8px 14px;border:0;background:#0d9488;color:#fff;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;';
     save.addEventListener('click', () => {
         const p = {};
         spec.fields.forEach(fk => { const v = controls[fk].value; if (v !== '' && v != null) p[fk] = (PRECISION_FIELD_DEFS[fk].type === 'number') ? parseFloat(String(v).replace(',', '.')) : v; });
         med.precisions = Object.keys(p).length ? p : undefined;
-        closeMedPrecisionModal(); renderTags();
+        renderTags();
         if (typeof analyserPrescription === 'function') analyserPrescription();
+        closeMedPrecisionModal();
     });
-    btns.appendChild(skip); btns.appendChild(save); card.appendChild(btns);
+    btns.appendChild(skipAll); btns.appendChild(skip); btns.appendChild(save); card.appendChild(btns);
     overlay.appendChild(card);
     overlay.addEventListener('click', e => { if (e.target === overlay) closeMedPrecisionModal(); });
     if (document.addEventListener) document.addEventListener('keydown', _medPrecisionEsc);

@@ -42,7 +42,8 @@ const OcrModule = (() => {
         'voie', 'orale', 'oral', 'patch', 'sachet', 'sirop', 'collyre', 'creme', 'pommade', 'forme', 'formes', 'faible',
         'dose', 'generique', 'generiques', 'mois', 'jour', 'jours', 'semaine', 'semaines', 'avec', 'sans', 'pour', 'dans',
         'chez', 'seul', 'adulte', 'enfant', 'retard', 'unidose', 'ampoule', 'flacon', 'stylo', 'poudre', 'suspension',
-        'goutte', 'gouttes', 'matin', 'soir', 'nuit', 'midi', 'pendant', 'besoin', 'acide', 'sodium', 'calcium']);
+        'goutte', 'gouttes', 'matin', 'soir', 'nuit', 'midi', 'pendant', 'besoin', 'acide', 'sodium', 'calcium',
+        'vitamine', 'vitamines']);
     const _norm = s => sanitizeText(String(s || '')).replace(/[0-9]+/g, '');
     // Noms de marque d'un champ princeps : listes séparées par « / », « ; », « | » ou une
     // virgule NON décimale ; chaque segment est lu comme un nom (avant toute parenthèse
@@ -80,18 +81,35 @@ const OcrModule = (() => {
 
     // Candidats : mots et suites de deux ou trois mots d'une MÊME ligne (« ACIDE FOLIQUE »),
     // chiffres retirés (« GABAPENTINE100 »).
+    // Corrections de lecture propres à une ligne de prescription, appliquées AVANT le
+    // découpage en mots (constatées : « Forxiga » et « rispéridone » non reconnus) :
+    //   - un mot coupé en fin de ligne (« RISPERI-\nDONE ») est recollé ;
+    //   - un chiffre entre deux lettres est une lettre mal lue (« F0RXIGA », « R1SPERIDONE ») ;
+    //   - le dosage collé au nom (« FORXIGA10mg ») est détaché : les chiffres étant retirés
+    //     ensuite, il restait « forxigamg », qui ne désigne rien.
+    const _LETTRE_LUE = { '0': 'o', '1': 'i', '5': 's', '8': 'b' };
+    function _corrigerLecture(texte) {
+        return String(texte || '')
+            .replace(/([A-Za-zÀ-ÿ]{2,})-[ \t]*[\r\n]+[ \t]*([a-zà-ÿA-ZÀ-Ý]{2,})/g, '$1$2')
+            .replace(/([A-Za-zÀ-ÿ]{3,})(\d+(?:[.,]\d+)?\s*(?:mg|g|ml|µg|ug|mcg|ui|%))(?![A-Za-zÀ-ÿ])/gi, '$1 $2')
+            .replace(/([A-Za-zÀ-ÿ])([0158])(?=[A-Za-zÀ-ÿ])/g, (m, a, d) => a + (a === a.toUpperCase() ? _LETTRE_LUE[d].toUpperCase() : _LETTRE_LUE[d]))
+            .replace(/([A-Za-zÀ-ÿ]{3,})(\d)/g, '$1 $2');
+    }
     function _extractCandidates(rawText) {
         const candidates = [];
         const seen = new Set();
-        String(rawText || '').split(/[\n\r]+/).forEach(line => {
-            const mots = line.split(/[\s,;:()\[\]\/|]+/).map(_norm).filter(w => w.length >= 2);
+        _corrigerLecture(rawText).split(/[\n\r]+/).forEach(line => {
+            const mots = line.split(/[\s,;:()\[\]\/|]+/).map(_norm).filter(w => w.length >= 1);
             for (let i = 0; i < mots.length; i++) {
                 for (let n = 1; n <= 3 && i + n <= mots.length; n++) {
                     const clean = mots.slice(i, i + n).join('');
                     if (clean.length < 4 || seen.has(clean)) continue;
                     if (n === 1 && MOTS_GENERIQUES.has(clean)) continue;
                     seen.add(clean);
-                    candidates.push({ original: line.trim().split(/\s+/).slice(i, i + n).join(' '), clean });
+                    // Une lettre isolée (« B » de « B12 ») peut compléter un nom exact
+                    // (« Vitamine B12 ») mais n'autorise pas de faute de lecture : « VITAMINE D »
+                    // serait à une lettre de « Vitamine B ».
+                    candidates.push({ original: line.trim().split(/\s+/).slice(i, i + n).join(' '), clean, flou: mots.slice(i, i + n).every(w => w.length >= 2) });
                 }
             }
         });
@@ -111,11 +129,14 @@ const OcrModule = (() => {
             if (!ex || ex.score < score) matches.set(k, { dci: term.dci, princeps: term.princeps, data: term.data, score, matchedText: cand.original });
         };
         for (const cand of candidates) {
-            const hits = exact.get(cand.clean);
+            // DCI française d'une molécule enregistrée sous son nom international : la base
+            // écrit « Dapagliflozin », l'ordonnance « DAPAGLIFLOZINE ». La forme française est
+            // une correspondance EXACTE, pas une faute de lecture.
+            const hits = exact.get(cand.clean) || (cand.clean.length >= 8 && /ine$/.test(cand.clean) ? exact.get(cand.clean.slice(0, -1)) : null);
             if (hits) { hits.forEach(t => retenir(t, 100, cand)); continue; }
             // Faute de lecture : une lettre sur un mot long (≥ 7), deux sur un très long (≥ 11).
             const c = cand.clean;
-            if (c.length < 7) continue;
+            if (c.length < 7 || cand.flou === false) continue;
             for (const t of longs) {
                 if (Math.abs(t.clean.length - c.length) > 2) continue;
                 const d = levenshtein(c, t.clean);
@@ -243,5 +264,5 @@ const OcrModule = (() => {
         }
     }
 
-    return { init, recognize, processImage, terminate, _matchMedications, _extractCandidates, _marques };
+    return { init, recognize, processImage, terminate, _matchMedications, _extractCandidates, _marques, _corrigerLecture };
 })();

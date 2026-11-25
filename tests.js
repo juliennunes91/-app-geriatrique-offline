@@ -1448,6 +1448,25 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const faute = R('GABAPENTlNE 300 mg');
         assert.ok(faute.some(x => x[0] === 'Gabapentine' && x[1] < 80), 'GABAPENTlNE (l pour I) : propose, non coche d\'office');
     });
+    test('OCR : dosage colle, chiffre lu pour une lettre, DCI francaise, mot coupe — reconnus exactement', () => {
+        // Signalement : Forxiga et risperidone non lus sur une capture. Lectures FICTIVES
+        // reproduisant les defauts courants de Tesseract sur un logiciel de prescription.
+        const { sandbox } = require('./oracle_harness').loadApp();
+        const vm = require('vm');
+        vm.runInContext(`MASTER_DB.MEDICAMENTS.forEach(m => { const k = sanitizeText(m.dci); if (k) unifiedMedsMap.set(k, { dci_pure: m.dci, princeps: m.princeps || '', db_ref: m }); });`, sandbox);
+        vm.runInContext(fs.readFileSync('ocr_module.js', 'utf8'), sandbox);
+        const R = txt => JSON.parse(vm.runInContext(`JSON.stringify(OcrModule._matchMedications(OcrModule._extractCandidates(${JSON.stringify(txt)})).map(m => [m.dci, m.score]))`, sandbox));
+        const exact = (txt, dci) => assert.deepStrictEqual(R(txt), [[dci, 100]], txt);
+        exact('FORXIGA10mg, cpr', 'Dapagliflozin');          // dosage colle au nom
+        exact('F0RXIGA 10 mg', 'Dapagliflozin');             // 0 lu pour O
+        exact('DAPAGLIFLOZINE 10 mg', 'Dapagliflozin');      // DCI francaise, base en DCI internationale
+        exact('RISPERIDONE1mg ARROW', 'Risperidone');
+        exact('R1SPERIDONE 0,5 mg', 'Risperidone');          // 1 lu pour I
+        exact('RISPERI-\nDONE 1 mg', 'Risperidone');         // mot coupe en fin de ligne
+        exact('VITAMINE B12 1000 µg, amp', 'Cyanocobalamine');
+        // « Vitamine » seul n'est pas un nom de marque, et une lettre isolee n'autorise pas de faute.
+        assert.deepStrictEqual(R('VITAMINE D3 BON 200 000 UI'), [], 'vitamine D ne devient pas la B12');
+    });
     test('runIntegrationTerrainAudit — une regle du module d\'integration ne sort pas sur la seule molecule si elle affirme un terrain', () => {
         // 60 regles n'avaient que med_keys pour condition alors que leur message affirmait un
         // terrain (« antecedent de cancer du sein », « glaucome a angle ferme »…) : elles

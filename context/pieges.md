@@ -88,3 +88,13 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
 - Chevron `<` brut dans un titre de carte : casse la clé de masquage ; l'écrire en lettres.
 - Avant d'ajouter une association, chercher dans l'onglet Bio du même dossier une carte qui la
   dit déjà (torsades ⊂ carte QTc ; TIH < 100 ⊂ SYND_004) : un fait, une carte.
+- Modale ouverte par chaque `selectMed` : un import multiple fermait la précédente, seul le
+  dernier médicament était demandé. File d'attente (`_precisionsEnAttente`, `app_ui.js`).
+- OCR : un chiffre retiré par `_norm` laissait l'unité collée (« FORXIGA10mg » → « forxigamg »).
+  Détacher le dosage AVANT de corriger les chiffres entre lettres, sinon « RISPERIDONE1mg »
+  devient « RISPERIDONEImg ». « Vitamine » figurait comme marque de la cyanocobalamine :
+  toute « VITAMINE D » était lue B12.
+- Grille « Avis pharma » remplie au chargement puis seulement sur clic : additive, elle
+  gardait les médicaments retirés, et le hash de mémoïsation l'ignorait.
+- Playwright : le nom d'un médicament de la grille est dans `input.value`, pas dans
+  `textContent` — lire le modèle, pas le DOM.

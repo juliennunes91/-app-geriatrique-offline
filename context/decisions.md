@@ -76,3 +76,9 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   onglet de plus ; pas d'en-tête pour une rubrique seule. — Choix de l'utilisateur (option 1).
 - **04/11/2026** — PDF de synthèse : pas de cartes de l'onglet Bio (urgences comprises), pour
   le moment. — Choix de l'utilisateur.
+- **25/11/2026** — Grille « Avis pharma » : une ligne reprise automatiquement et jamais
+  touchée suit l'ordonnance (retirée avec le médicament) ; une ligne travaillée par le
+  pharmacien n'est jamais supprimée, elle est signalée « retiré de l'ordonnance » /
+  « suspendu ». — Signalement : médicament retiré toujours présent dans la synthèse pharma.
+- **25/11/2026** — Retirer un médicament relance l'analyse si une analyse est affichée (comme
+  la suspension). — Même signalement.

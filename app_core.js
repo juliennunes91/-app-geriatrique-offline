@@ -578,7 +578,9 @@ function buildPdfContent() {
         </div>`;
     }
 
-    // Synthèse pharmaceutique (onglet « Avis pharma ») — 2ᵉ position
+    // Synthèse pharmaceutique (onglet « Avis pharma ») — 2ᵉ position, alignée sur
+    // l'ordonnance au moment de l'export.
+    if (typeof window.conciliationSync === 'function') window.conciliationSync();
     if (window.conciliationData && window.conciliationData.includeInPdf && typeof window.buildConciliationReportBlock === 'function') {
         html += window.buildConciliationReportBlock();
     }

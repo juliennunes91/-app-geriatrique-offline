@@ -1079,6 +1079,10 @@ function _computeAnalysisHash() {
     parts.push('assum:' + (window._justifiedAlerts
         ? [...window._justifiedAlerts.entries()].map(e => e[0] + '=' + (e[1] && e[1].motif || '')).sort().join(',')
         : ''));
+    // La synthèse pharmaceutique (onglet « Avis pharma ») est recopiée dans la synthèse :
+    // sans elle dans le hash, une ligne modifiée ou retirée y restait sous sa forme
+    // précédente tant que l'ordonnance ne changeait pas.
+    parts.push('concil:' + (window.conciliationData ? JSON.stringify([window.conciliationData.includeInPdf, window.conciliationData.discussion, window.conciliationData.lignes]) : ''));
     return parts.join('|');
 }
 
@@ -1103,6 +1107,9 @@ if (typeof window !== 'undefined') { window._HASH_NUMERIC_FIELDS = _HASH_NUMERIC
 
 function analyserPrescription() {
     if (typeof MASTER_DB === 'undefined') return;
+    // La grille « Avis pharma » suit l'ordonnance AVANT le calcul du hash : un médicament
+    // retiré ne doit pas survivre dans la synthèse pharmaceutique recopiée au rapport.
+    if (typeof window !== 'undefined' && typeof window.conciliationSync === 'function') window.conciliationSync();
 
     // Memoization : skip si rien n'a changé
     const hash = _computeAnalysisHash();

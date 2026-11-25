@@ -60,20 +60,50 @@
         if (wrap) { conciliationAutofill(); renderConciliationTab(); }
     }
 
-    // ---- 3. Pré-remplissage best-effort (non destructif) -------------------
-    // Ajoute chaque médicament actif absent de la grille (statut « Maintien »).
-    // Ne touche jamais une ligne existante (saisie utilisateur préservée).
+    // ---- 3. Synchronisation avec l'ordonnance ------------------------------
+    // La grille n'était qu'ADDITIVE : remplie au chargement (ordonnance vide) puis sur
+    // demande, elle gardait les lignes d'un médicament retiré de l'ordonnance — et le
+    // rapport de synthèse, qui l'inclut par défaut, proposait de « maintenir » un
+    // traitement que l'analyse ne comptait plus. Elle suit désormais l'ordonnance :
+    //   - un médicament actif absent de la grille est ajouté (« Maintien », auto) ;
+    //   - une ligne reprise AUTOMATIQUEMENT et jamais touchée, dont le médicament a quitté
+    //     l'ordonnance, est retirée ;
+    //   - une ligne que le pharmacien a travaillée (statut, posologie, commentaire) n'est
+    //     JAMAIS supprimée : elle est signalée « retiré de l'ordonnance » (ou « suspendu »),
+    //     la décision lui revient.
+    // Appelée à chaque analyse et par le bouton « Actualiser depuis l'ordonnance ».
+    const _norm = s => String(s || '').trim().toLowerCase();
+    function _intacte(l) {
+        return l.auto && l.statut === 'maintien' && !l.posologie && !l.commentaire && !l.substitutVers;
+    }
     function conciliationAutofill() {
         const d = window.conciliationData;
         if (typeof activeMeds === 'undefined' || !Array.isArray(activeMeds)) return;
-        const norm = s => String(s || '').trim().toLowerCase();
-        const present = new Set(d.lignes.map(l => norm(l.medicament)));
+        const actifs = new Set(activeMeds.map(m => _norm(m.dci || m.label)).filter(Boolean));
+        const suspendus = new Set((Array.isArray(window.suspendedMeds) ? window.suspendedMeds : []).map(m => _norm(m.dci || m.label)).filter(Boolean));
+        for (let i = d.lignes.length - 1; i >= 0; i--) {
+            const l = d.lignes[i];
+            const k = _norm(l.medicament);
+            if (!l.origine && l.auto) l.origine = k;                // nom repris de l'ordonnance
+            const ref = l.origine || '';
+            if (!ref || actifs.has(ref)) { delete l.horsOrdonnance; continue; }
+            if (_intacte(l) && !suspendus.has(ref)) { d.lignes.splice(i, 1); continue; }
+            l.horsOrdonnance = suspendus.has(ref) ? 'suspendu' : 'retire';
+        }
+        const present = new Set(d.lignes.map(l => l.origine || _norm(l.medicament)));
         activeMeds.forEach(m => {
             const nom = m.dci || m.label || '';
-            if (!nom || present.has(norm(nom))) return;
-            d.lignes.push(_newLine({ medicament: nom, statut: 'maintien', auto: true }));
-            present.add(norm(nom));
+            if (!nom || present.has(_norm(nom))) return;
+            const l = _newLine({ medicament: nom, statut: 'maintien', auto: true });
+            l.origine = _norm(nom);
+            d.lignes.push(l);
+            present.add(_norm(nom));
         });
+    }
+    function conciliationSync() {
+        if (!window.conciliationData) return;
+        conciliationAutofill();
+        if (document.getElementById('conciliation-container')) renderConciliationTab();
     }
 
     // ---- 4. Utilitaires -----------------------------------------------------
@@ -100,7 +130,7 @@
             <div class="row g-2">
                 <div class="col-md-4"><label class="fw-bold small">Date de la synthèse</label><input type="date" class="form-control form-control-sm" value="${_esc(d.dateConcil)}" oninput="window.conciliationSet('dateConcil',this.value)"></div>
                 <div class="col-md-5"><label class="fw-bold small">Type / contexte</label><input type="text" class="form-control form-control-sm" placeholder="Entrée / Sortie / Transfert — optionnel" value="${_esc(d.type)}" oninput="window.conciliationSet('type',this.value)"></div>
-                <div class="col-md-3 d-flex align-items-end"><button type="button" class="btn btn-sm btn-outline-primary w-100" onclick="window.conciliationAutofillRefresh()" title="Reprendre les médicaments de l'ordonnance saisie">Pré-remplir depuis l'ordonnance</button></div>
+                <div class="col-md-3 d-flex align-items-end"><button type="button" class="btn btn-sm btn-outline-primary w-100" onclick="window.conciliationAutofillRefresh()" title="Ajoute les médicaments ajoutés à l'ordonnance, retire ceux qui l'ont quittée (les lignes complétées sont conservées et signalées)">🔄 Actualiser depuis l'ordonnance</button></div>
             </div>
             <div class="form-check mt-3">
                 <input type="checkbox" class="form-check-input" id="concilIncludePdf" ${d.includeInPdf ? 'checked' : ''} onchange="window.conciliationSet('includeInPdf',this.checked)">
@@ -119,10 +149,11 @@
                     <th style="width:36px;"></th>
                 </tr></thead><tbody>`;
         if (!d.lignes.length) {
-            html += `<tr><td colspan="6" class="text-center text-muted small py-3">Aucune ligne. Cliquez « Ajouter une ligne » ou « Pré-remplir depuis l'ordonnance ».</td></tr>`;
+            html += `<tr><td colspan="6" class="text-center text-muted small py-3">Aucune ligne. Cliquez « Ajouter une ligne » ou « Actualiser depuis l'ordonnance ».</td></tr>`;
         }
         d.lignes.forEach((l, i) => {
-            const autoTag = l.auto ? ' <span class="badge bg-info-subtle text-info border border-info" title="Repris de l’ordonnance — modifiable">auto</span>' : '';
+            const autoTag = (l.auto ? ' <span class="badge bg-info-subtle text-info border border-info" title="Repris de l’ordonnance — modifiable">auto</span>' : '')
+                + (l.horsOrdonnance ? ' <span class="badge" style="background:#fef3c7;color:#92400e;border:1px solid #f59e0b;" data-hors-ordonnance title="Ligne conservée parce qu’elle a été complétée : la supprimer si elle n’a plus lieu d’être">' + (l.horsOrdonnance === 'suspendu' ? 'suspendu' : 'retiré de l’ordonnance') + '</span>' : '');
             html += `<tr>
                 <td class="text-muted small">${i + 1}</td>
                 <td><input type="text" class="form-control form-control-sm" value="${_esc(l.medicament)}" oninput="window.conciliationSetLine(${l.id},'medicament',this.value)">${autoTag}</td>
@@ -172,10 +203,8 @@
         if (i >= 0) a.splice(i, 1);
         renderConciliationTab();
     };
-    window.conciliationAutofillRefresh = function () {
-        conciliationAutofill();
-        renderConciliationTab();
-    };
+    window.conciliationAutofillRefresh = conciliationSync;
+    window.conciliationSync = conciliationSync;
 
     // ---- 7. Sérialisation pour export/import JSON --------------------------
     window.conciliationSerialize = function () { return JSON.parse(JSON.stringify(window.conciliationData || _emptyData())); };
@@ -270,7 +299,7 @@
         const _td = 'border:1px solid #ccd3da;padding:5px 7px;line-height:1.55;vertical-align:top;';
         const rows = d.lignes.map((l, i) => `<tr>
             <td style="${_td}">${i + 1}</td>
-            <td style="${_td}">${_esc(l.medicament)}${l.statut === 'substitution' && l.substitutVers ? ' <strong>&rarr;</strong> ' + _esc(l.substitutVers) : ''}</td>
+            <td style="${_td}">${_esc(l.medicament)}${l.horsOrdonnance ? ' <em style="color:#92400e;">(' + (l.horsOrdonnance === 'suspendu' ? 'suspendu' : 'retiré de l’ordonnance') + ')</em>' : ''}${l.statut === 'substitution' && l.substitutVers ? ' <strong>&rarr;</strong> ' + _esc(l.substitutVers) : ''}</td>
             <td style="${_td}">${_esc(l.posologie)}</td>
             <td style="${_td}font-weight:700;">${_esc(statutLbl(l.statut))}</td>
             <td style="${_td}color:#5a636c;">${_esc(l.commentaire)}</td>

@@ -78,6 +78,37 @@ L'export PDF GeriaAssist intègre l'annexe PAAM si l'utilisateur a coché « Inc
 la PAAM dans l'export PDF » (toggle dans l'onglet). Un bouton **Export PDF PAAM
 seul** génère un PDF dédié (annexe 1 du document du CH).
 
+## Onglet « Avis pharma » — la grille suit l'ordonnance
+
+`app_conciliation.js` (identifiants `conciliation*` historiques). La grille était
+**additive** : remplie au chargement (ordonnance vide), puis seulement sur clic. Un
+médicament retiré y restait en « Maintien », et le rapport de synthèse, qui l'inclut par
+défaut, le proposait encore. `conciliationSync()` est appelée **à chaque analyse** (avant le
+hash), à l'export PDF et par le bouton « 🔄 Actualiser depuis l'ordonnance » :
+
+- médicament actif absent → ligne ajoutée (`auto`, `origine` = nom normalisé) ;
+- ligne `auto` **intacte** (Maintien, sans posologie ni commentaire) dont le médicament a
+  quitté l'ordonnance → retirée ;
+- ligne **travaillée** → jamais supprimée, signalée `horsOrdonnance` (« retiré de
+  l'ordonnance » / « suspendu »), y compris dans le rapport.
+
+La grille entre dans le hash de mémoïsation. `removeMed()` relance l'analyse si une analyse
+est déjà affichée (`_reanalyserSiAffichee`), comme `toggleSuspend()`. Couvert par Playwright,
+validé par mutation.
+
+**Modales de précision en file** : un import (OCR, texte libre) appelle `selectMed` plusieurs
+fois, et chaque ouverture fermait la précédente — seul le dernier médicament se voyait
+demander sa précision. Les ouvertures automatiques attendent leur tour
+(`_precisionsEnAttente`), la modale annonce « Médicament 2 sur 3 », « Passer tout » vide la
+file. Le clic explicite sur ✎ (`force`) passe devant.
+
+**OCR — corrections de lecture** (`_corrigerLecture`, `ocr_module.js`), avant découpage :
+mot coupé en fin de ligne recollé ; dosage collé détaché (« FORXIGA10mg ») **avant** de lire
+un chiffre entre deux lettres comme une lettre (« F0RXIGA », « R1SPERIDONE ») ; DCI française
+en « -ine » appariée à la DCI internationale de la base (« DAPAGLIFLOZINE » → Dapagliflozin),
+exacte. « Vitamine » est un mot générique — il faisait lire toute vitamine D comme B12 ; une
+lettre isolée (« B » de « B12 ») complète un nom exact mais n'autorise aucune faute.
+
 ## Onglet Vaccination
 
 Relevé du carnet vaccinal du sujet âgé. Module dédié : `app_vaccination.js` (chargé

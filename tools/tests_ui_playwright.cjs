@@ -392,6 +392,51 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
                 `Modopar et Stalevo figurent parmi les choix : ${dopa.join(' | ')}`);
         });
 
+        // Import de plusieurs médicaments d'affilée (OCR, texte libre) : chaque ajout ouvrait
+        // sa modale de précision en FERMANT la précédente — seul le dernier était demandé.
+        // Puis : un médicament retiré restait dans la grille « Avis pharma », recopiée au rapport.
+        const lot = await page.evaluate(() => {
+            const r = {};
+            resetPatient();
+            if (typeof geriaPrefs === 'object' && geriaPrefs) geriaPrefs.skipPrecisionsModal = false;
+            document.getElementById('patientAge').value = 85;
+            document.getElementById('patientDFG').value = 60;
+            const prend = k => unifiedMedsMap.get(k);
+            ['omeprazole', 'lorazepam', 'furosemide'].forEach(k => selectMed(prend(k)));
+            const ov = () => document.getElementById('medPrecisionOverlay');
+            const lire = () => ov() ? ov().textContent : null;
+            r.premiere = lire();
+            [...ov().querySelectorAll('button')].find(b => b.textContent === 'Passer').click();
+            r.deuxieme = lire();
+            [...ov().querySelectorAll('button')].find(b => b.textContent === 'Passer tout').click();
+            r.apresTout = lire();
+            analyserPrescription();
+            const sansAccent = t => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            const grille = () => sansAccent(((document.getElementById('conciliation-container') || {}).textContent) || '');
+            r.grilleAvant = window.conciliationData.lignes.map(l => sansAccent(l.medicament)).join(' | ');
+            // Une ligne travaillée par le pharmacien, une ligne laissée telle quelle.
+            const lf = window.conciliationData.lignes.find(l => /lorazepam/i.test(l.medicament));
+            window.conciliationSetLine(lf.id, 'commentaire', 'decroissance en cours');
+            removeMed(activeMeds.find(m => /furosemide/i.test(m.dci)).dci);
+            removeMed(activeMeds.find(m => /lorazepam/i.test(m.dci)).dci);
+            r.grilleApres = grille();
+            r.lignes = window.conciliationData.lignes.map(l => [sansAccent(l.medicament), l.horsOrdonnance || '']);
+            r.synthese = sansAccent((document.getElementById('alertes-synthese') || {}).innerHTML || '');
+            return r;
+        });
+        test('Plusieurs médicaments ajoutés d\'affilée : chacun se voit demander sa précision', () => {
+            ok(lot.premiere && /1 sur 3/.test(lot.premiere), `la première modale annonce la file : ${lot.premiere}`);
+            ok(lot.deuxieme && /2 sur 3/.test(lot.deuxieme), `« Passer » ouvre la suivante : ${lot.deuxieme}`);
+            ok(lot.apresTout === null, '« Passer tout » vide la file');
+        });
+        test('Un médicament retiré quitte la synthèse pharmaceutique ; une ligne complétée est signalée, pas supprimée', () => {
+            ok(/Furosemide/i.test(lot.grilleAvant), `préalable : la grille suit l'ordonnance : ${lot.grilleAvant}`);
+            ok(!lot.lignes.some(l => /furosemide/i.test(l[0])), `ligne intacte retirée : ${JSON.stringify(lot.lignes)}`);
+            ok(lot.lignes.some(l => /lorazepam/i.test(l[0]) && l[1] === 'retire'), `ligne complétée conservée et signalée : ${JSON.stringify(lot.lignes)}`);
+            ok(/retire de l’ordonnance/.test(lot.grilleApres), 'le signalement est visible');
+            ok(!/Furosemide/i.test(lot.synthese), 'la synthèse relancée ne nomme plus le médicament retiré');
+        });
+
         // Import d'un bilan PDF : un compte rendu FICTIF est imprimé en PDF par Chromium,
         // puis relu par pdf.js dans l'application — le chemin réel, worker compris.
         const os = require('os');
