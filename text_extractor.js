@@ -109,7 +109,10 @@
         'À': 'a', 'Â': 'a', 'Ä': 'a', 'Á': 'a',
         'É': 'e', 'È': 'e', 'Ê': 'e', 'Ë': 'e',
         'Î': 'i', 'Ï': 'i', 'Ô': 'o', 'Ö': 'o',
-        'Ù': 'u', 'Û': 'u', 'Ü': 'u', 'Ç': 'c'
+        'Ù': 'u', 'Û': 'u', 'Ü': 'u', 'Ç': 'c',
+        // Apostrophes typographiques : « Maladie d’Alzheimer » copiée d'un courrier ne
+        // reconnaissait pas « Maladie d'Alzheimer ». Un caractère pour un (positions gardées).
+        '\u2019': "'", '\u2018': "'", '\u02BC': "'", '\u00B4': "'"
     };
     function norm(s) {
         if (!s) return '';
@@ -119,6 +122,32 @@
             out += ACCENTS[c] !== undefined ? ACCENTS[c] : c.toLowerCase();
         }
         return out;
+    }
+
+    // === Cases cliniques (contextes) — ce ne sont pas des pathologies de MASTER_DB ===
+    // Chutes, prothèses, sonde, constipation chronique sont des CASES À COCHER : l'index des
+    // pathologies ne pouvait pas les trouver, et « chutes à répétition » ou « Prothèse Hanche
+    // dte » restaient sans proposition. Table déclarée, motifs sur le texte normalisé.
+    // « PTH » seul est aussi la parathormone : il ne vaut prothèse qu'avec un côté.
+    const COTE = '(?:droite?|dte|dr|gauche|gche|bilaterale?s?|d|g)';
+    const CASES_CLINIQUES = [
+        { id: 'chkChutes', label: 'Chutes à répétition', motifs: [/chutes? (?:a|de) repetition/, /chutes? (?:repetees?|multiples|recidivantes?|itératives?|iteratives?)/, /\bchuteu(?:r|se)\b/, /\bchutes? frequentes?/] },
+        { id: 'chkPTH', label: 'Prothèse de hanche', motifs: [/protheses? (?:totales? )?(?:de |d'|de la )?hanches?/, /arthroplastie (?:totale )?(?:de |d'|de la )?hanche/, new RegExp('\\bpth (?:' + COTE + ')\\b'), /\bpih\b/] },
+        { id: 'chkPTG', label: 'Prothèse de genou', motifs: [/protheses? (?:totales? |unicompartimentales? )?(?:de |du |d')?genoux?/, /arthroplastie (?:totale )?(?:de |du )?genou/, new RegExp('\\bptg (?:' + COTE + ')\\b'), /\bpug\b/] },
+        { id: 'chkPTE', label: 'Prothèse d\'épaule', motifs: [/protheses? (?:totales? |inversees? )?(?:de |d'|de l')?epaules?/, new RegExp('\\bpte (?:' + COTE + ')\\b')] },
+        { id: 'chkSAD', label: 'Sonde urinaire à demeure', motifs: [/sondes? (?:urinaires?|vesicales?) a demeure/, /\bsad\b/, /sondage (?:urinaire )?a demeure/] },
+        { id: 'chkConstipation', label: 'Constipation chronique', motifs: [/constipation (?:chronique|opiniatre|ancienne|habituelle)/] }
+    ];
+    function findCaseHits(text) {
+        const n = norm(text);
+        const hits = [];
+        CASES_CLINIQUES.forEach(c => {
+            for (const re of c.motifs) {
+                const m = new RegExp(re.source, 'g').exec(n);
+                if (m) { hits.push({ start: m.index, end: m.index + m[0].length, match: text.slice(m.index, m.index + m[0].length), target: { id: c.id, label: c.label }, source: 'exact', confidence: 100 }); return; }
+            }
+        });
+        return hits;
     }
 
     // === Construction de l'index de recherche depuis MASTER_DB ===
@@ -557,7 +586,7 @@
 
     // === API principale ===
     function extract(text, MASTER_DB) {
-        const empty = { meds: [], pathologies: [], biology: [], allergies: [], ambiguous: [], abbreviations: [], conflicts: [], stoppedMeds: [] };
+        const empty = { meds: [], pathologies: [], biology: [], cases: [], allergies: [], ambiguous: [], abbreviations: [], conflicts: [], stoppedMeds: [] };
         if (!text || !MASTER_DB) return empty;
         const idx = buildIndex(MASTER_DB);
 
@@ -653,6 +682,7 @@
             return h;
         };
         const allPatho = pathoHits.map(h => annotate(h, 'patho'));
+        const allCases = findCaseHits(text).map(h => { h.negated = isNegated(text, h.start); if (h.negated) h.confidence = 80; return h; });
         const allMed = medHits.map(h => annotate(h, 'med'));
         const allBio = bioHits.map(h => annotate(h, 'bio'));
 
@@ -698,6 +728,7 @@
             meds: finalMed,
             stoppedMeds: stoppedMeds,
             biology: finalBio,
+            cases: allCases,
             allergies: allergyHits,
             ambiguous: ambiguousHits,
             abbreviations: abbrHits,
@@ -708,7 +739,10 @@
     // === Application des résultats acceptés à l'état patient ===
     // ctx = { selectComorb(id), selectMed(dci), setBioValue(code, value), already: {comorbs:Set, meds:Set} }
     function applyResults(accepted, ctx) {
-        const summary = { comorbs: 0, meds: 0, bio: 0, skipped: 0 };
+        const summary = { comorbs: 0, meds: 0, bio: 0, cases: 0, skipped: 0 };
+        (accepted.cases || []).forEach(c => {
+            if (ctx.setCase && ctx.setCase(c.target.id)) summary.cases++; else summary.skipped++;
+        });
         (accepted.pathologies || []).forEach(p => {
             if (ctx.already && ctx.already.comorbs && ctx.already.comorbs.has(p.target.id)) { summary.skipped++; return; }
             if (ctx.selectComorb) { ctx.selectComorb(p.target.id); summary.comorbs++; }
@@ -724,5 +758,5 @@
         return summary;
     }
 
-    global.GeriaTextExtractor = { extract, applyResults, MEDICAL_ABBREVIATIONS, _buildIndex: buildIndex, _norm: norm };
+    global.GeriaTextExtractor = { extract, applyResults, MEDICAL_ABBREVIATIONS, CASES_CLINIQUES, _buildIndex: buildIndex, _norm: norm };
 })(typeof window !== 'undefined' ? window : globalThis);

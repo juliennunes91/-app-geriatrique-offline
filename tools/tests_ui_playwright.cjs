@@ -437,6 +437,22 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             ok(!/Furosemide/i.test(lot.synthese), 'la synthèse relancée ne nomme plus le médicament retiré');
         });
 
+        // Import de texte libre : les CASES cliniques (chutes, prothèses) sont proposées et
+        // cochées à l'application — elles ne sont pas des pathologies de la base.
+        const texte = await page.evaluate(() => {
+            resetPatient();
+            document.getElementById('extractorText').value = 'Maladie d’Alzheimer, chutes à répétition, Prothèse Hanche dte.';
+            GeriaExtractorUI.run();
+            const groupe = /Cases cliniques/.test(document.getElementById('extractorResults').textContent);
+            GeriaExtractorUI.apply();
+            return { groupe, pth: document.getElementById('chkPTH').checked, chutes: document.getElementById('chkChutes').checked, alz: activeComorbs.includes('PAT_011') };
+        });
+        test('Texte libre : chutes et prothèse de hanche sont proposées et cochées', () => {
+            ok(texte.groupe, 'le groupe « Cases cliniques » est rendu');
+            ok(texte.pth && texte.chutes, `cases cochées : PTH ${texte.pth}, chutes ${texte.chutes}`);
+            ok(texte.alz, 'Alzheimer (apostrophe typographique) ajouté');
+        });
+
         // Import d'un bilan PDF : un compte rendu FICTIF est imprimé en PDF par Chromium,
         // puis relu par pdf.js dans l'application — le chemin réel, worker compris.
         const os = require('os');

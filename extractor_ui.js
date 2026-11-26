@@ -38,7 +38,8 @@
     }
 
     function alreadyIn() {
-        const out = { comorbs: new Set(), meds: new Set() };
+        const out = { comorbs: new Set(), meds: new Set(), cases: new Set() };
+        try { ((typeof GeriaTextExtractor !== 'undefined' && GeriaTextExtractor.CASES_CLINIQUES) || []).forEach(c => { const e = document.getElementById(c.id); if (e && e.checked) out.cases.add(c.id); }); } catch (e) { /* */ }
         try { (typeof activeComorbs !== 'undefined' ? activeComorbs : []).forEach(c => out.comorbs.add(c)); } catch (e) { /* */ }
         try { (typeof activeMeds !== 'undefined' ? activeMeds : []).forEach(m => out.meds.add(String(m.dci || m.label || '').toLowerCase())); } catch (e) { /* */ }
         return out;
@@ -50,12 +51,15 @@
             const id = `extr_${kind}_${i}`;
             const negated = !!h.negated;
             const inPatient = (kind === 'patho' && present.comorbs.has(h.target.id))
+                || (kind === 'case' && present.cases.has(h.target.id))
                 || (kind === 'med' && present.meds.has(String(h.target.dci || '').toLowerCase()))
                 || (kind === 'allergy');  // allergies non auto-appliquées (signalement seulement)
             // Construction du libellé principal
             let label;
             if (kind === 'patho') {
                 label = `${esc(h.target.label)} <small style="color:#6c757d">[${h.target.id}]</small>`;
+            } else if (kind === 'case') {
+                label = `${esc(h.target.label)} <small style="color:#6c757d">(case à cocher)</small>`;
             } else if (kind === 'med') {
                 const p = h.posology;
                 const poso = p ? ` <span style="color:#0d6efd;font-weight:600;">${p.dose}${esc(p.unite)}${p.frequence ? ' ×' + p.frequence : ''}${p.periode ? '/' + esc(p.periode) : ''}</span>` : '';
@@ -143,7 +147,7 @@
         _lastResults = GeriaTextExtractor.extract(text, MASTER_DB);
         const present = alreadyIn();
         const r = _lastResults;
-        const total = (r.pathologies || []).length + (r.meds || []).length + (r.biology || []).length + (r.allergies || []).length;
+        const total = (r.pathologies || []).length + (r.cases || []).length + (r.meds || []).length + (r.biology || []).length + (r.allergies || []).length;
         if (total === 0) {
             container.innerHTML = '<div style="color:#6c757d;font-size:13px;padding:6px;">Aucune entité détectée.</div>';
             return;
@@ -158,6 +162,7 @@
             renderAmbiguous(r.ambiguous, text),
             `<div style="font-size:12px;color:#6c757d;padding:4px 0 8px;">${total2} entité(s) détectée(s) — décochez les indésirables, puis « Appliquer la sélection ».</div>`,
             renderGroup('🩺 Pathologies', r.pathologies, 'patho', text, present),
+            renderGroup('☑️ Cases cliniques', r.cases, 'case', text, present),
             renderGroup('💊 Médicaments', r.meds, 'med', text, present),
             stoppedHtml,
             renderGroup('🧪 Biologie', r.biology, 'bio', text, present),
@@ -194,13 +199,14 @@
     function applySelected() {
         if (!_lastResults) return;
         const r = _lastResults;
-        const accepted = { pathologies: [], meds: [], biology: [] };
+        const accepted = { pathologies: [], meds: [], biology: [], cases: [] };
         document.querySelectorAll('#extractorResults input[type="checkbox"]').forEach(cb => {
             if (!cb.checked || cb.disabled) return;
             const kind = cb.dataset.kind, idx = +cb.dataset.idx;
             if (kind === 'patho' && r.pathologies[idx]) accepted.pathologies.push(r.pathologies[idx]);
             else if (kind === 'med' && r.meds[idx]) accepted.meds.push(r.meds[idx]);
             else if (kind === 'bio' && r.biology[idx]) accepted.biology.push(r.biology[idx]);
+            else if (kind === 'case' && r.cases && r.cases[idx]) accepted.cases.push(r.cases[idx]);
         });
         // Ambiguïtés résolues par radio
         const ambByGroup = {};
@@ -243,6 +249,14 @@
                     }
                 } catch (e) { console.warn('selectMed failed for', dci, e); }
             },
+            // Cocher la case comme le ferait l'utilisateur : son `onchange` déroule une
+            // éventuelle cascade et relance l'analyse.
+            setCase: function (id) {
+                const el = document.getElementById(id); if (!el || el.checked) return false;
+                el.checked = true;
+                try { if (typeof el.onchange === 'function') el.onchange(); el.dispatchEvent(new Event('change', { bubbles: true })); } catch (e) { /* */ }
+                return true;
+            },
             setBioValue: function (code, value) {
                 const inputId = BIO_INPUT_BY_CODE[code]; if (!inputId) return;
                 const el = document.getElementById(inputId); if (!el) return;
@@ -266,7 +280,7 @@
             const stoppedLine = (r.stoppedMeds && r.stoppedMeds.length)
                 ? ` 🛑 ${r.stoppedMeds.length} arrêt(s) détecté(s) (signalés en synthèse, non appliqués).`
                 : '';
-            const banner = `<div style="background:#d1e7dd;color:#0f5132;padding:6px 10px;border-radius:6px;margin-bottom:8px;font-size:13px;">✅ Appliqué : ${summary.comorbs} pathologie(s), ${summary.meds} médicament(s), ${summary.bio} bio${summary.skipped ? ` (${summary.skipped} ignoré(s) car déjà présents)` : ''}.${stoppedLine}</div>`;
+            const banner = `<div style="background:#d1e7dd;color:#0f5132;padding:6px 10px;border-radius:6px;margin-bottom:8px;font-size:13px;">✅ Appliqué : ${summary.comorbs} pathologie(s), ${summary.cases || 0} case(s) clinique(s), ${summary.meds} médicament(s), ${summary.bio} bio${summary.skipped ? ` (${summary.skipped} ignoré(s) car déjà présents)` : ''}.${stoppedLine}</div>`;
             note.innerHTML = banner + note.innerHTML;
         }
         // Rafraîchir les tags patient si la fonction est dispo

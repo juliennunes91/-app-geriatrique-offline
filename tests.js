@@ -3184,6 +3184,20 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(findM(r, 'Paracetamol'), 'Doliprane non résolu en Paracetamol');
     });
 
+    test('Cases cliniques : chutes, prothèses, sonde, constipation — et « d’Alzheimer » typographique', () => {
+        // Signalement : sur une observation reelle, ni « chutes a repetition » ni « Prothese
+        // Hanche dte » n'etaient proposes (ce sont des cases a cocher, pas des pathologies),
+        // et l'apostrophe typographique faisait manquer la maladie d'Alzheimer. Texte FICTIF.
+        const r = extract('Résidente de 86 ans, maladie d’Alzheimer (MMS 12/30), chutes à répétition, HTA, constipation chronique, Prothèse Hanche dte. PTG gauche.');
+        const cas = id => (r.cases || []).find(h => h.target.id === id);
+        assert.ok(findP(r, 'PAT_011'), 'Alzheimer avec apostrophe typographique');
+        ['chkChutes', 'chkPTH', 'chkConstipation', 'chkPTG'].forEach(id => assert.ok(cas(id) && !cas(id).negated, id + ' propose'));
+        // « PTH » sans cote est la parathormone ; une negation reste une negation.
+        assert.ok(!(extract('PTH 45 pg/mL').cases || []).length, 'PTH dosee : pas une prothese');
+        const nie = (extract('Pas de chutes à répétition.').cases || [])[0];
+        assert.ok(nie && nie.negated, 'negation reconnue');
+    });
+
     test('Négation : « Pas de diabète » → diabète marqué négé', () => {
         const r = extract('HTA stable. Pas de diabète. Bisoprolol 5 mg.');
         const d = findP(r, 'PAT_016');

@@ -109,6 +109,19 @@ en « -ine » appariée à la DCI internationale de la base (« DAPAGLIFLOZINE �
 exacte. « Vitamine » est un mot générique — il faisait lire toute vitamine D comme B12 ; une
 lettre isolée (« B » de « B12 ») complète un nom exact mais n'autorise aucune faute.
 
+## Import de texte libre — les cases cliniques aussi (4.93)
+
+`text_extractor.js` ne cherchait que les pathologies de `MASTER_DB.PATHOLOGIES`. Or chutes,
+prothèses, sonde à demeure, constipation chronique sont des **cases à cocher** : « chutes à
+répétition » et « Prothèse Hanche dte » d'une observation réelle restaient sans proposition.
+Table déclarée `CASES_CLINIQUES` (id de case, libellé, motifs sur le texte normalisé), groupe
+« ☑️ Cases cliniques » dans l'aperçu, application par `setCase` (coche + `change`), négation
+lue comme pour les pathologies. **« PTH » seul est aussi la parathormone** : il ne vaut
+prothèse qu'avec un côté (« PTH droite ») ; « prothèse … hanche » suffit.
+
+Même texte : l'apostrophe typographique (« Maladie d’Alzheimer », U+2019) faisait manquer la
+pathologie — `norm()` la ramène à l'apostrophe droite, un caractère pour un.
+
 ## Onglet Vaccination
 
 Relevé du carnet vaccinal du sujet âgé. Module dédié : `app_vaccination.js` (chargé

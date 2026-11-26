@@ -100,3 +100,5 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   `textContent` — lire le modèle, pas le DOM.
 - Un score réimplémenté de mémoire dérive : HAS-BLED comptait le DFG < 50, le DOAC Score
   l'âge à 1 point et citait le mauvais auteur. Relire la table de la publication avant d'écrire.
+- Extracteur de texte : « PTH » est à la fois la prothèse et la parathormone (exiger un côté) ;
+  l'apostrophe ’ copiée d'un courrier ne correspond pas à ' de la base.
