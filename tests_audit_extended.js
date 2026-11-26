@@ -318,7 +318,14 @@ function runExtendedAudits(test, assert) {
         ['CHA₂DS₂-VA H66 FA seule = 1', { age: 66, sexe: 'M', dfg: 80, comorbs: ['PAT_006'], meds: [] }, /CHA.{0,14}: (\d+)/, 1],
         ['CHA₂DS₂-VA F90 FA+AVC = 4 (âge2+AVC2, sans-sexe)', { age: 90, sexe: 'F', dfg: 60, comorbs: ['PAT_006', 'PAT_008'], meds: [] }, /CHA.{0,14}: (\d+)/, 4],
         ['CHA₂DS₂-VA F90 FA+AVC+HTA = 5', { age: 90, sexe: 'F', dfg: 60, comorbs: ['PAT_006', 'PAT_008', 'PAT_005'], meds: [] }, /CHA.{0,14}: (\d+)/, 5],
-        ['HAS-BLED F84 HTA+IRC = 2', { age: 84, sexe: 'F', dfg: 40, comorbs: ['PAT_006', 'PAT_005'], meds: [] }, /HAS-BLED : (\d+)/, 2],
+        // HAS-BLED (Pisters 2010) : le rein compte sur dialyse, greffe ou créatinine ≥ 200 µmol/L,
+        // l'HTA seulement non contrôlée. Une IRC modérée et une HTA traitée ne comptent pas.
+        ['HAS-BLED F84 HTA+DFG 40 = 1 (âge seul)', { age: 84, sexe: 'F', dfg: 40, comorbs: ['PAT_006', 'PAT_005'], meds: [] }, /HAS-BLED : (\d+)/, 1],
+        ['HAS-BLED F84 créat 210 + HTA non contrôlée = 3', { age: 84, sexe: 'F', dfg: 20, bio: { bioCreat: 210 }, flags: ['chkHtaNonControlee'], comorbs: ['PAT_006', 'PAT_005'], meds: [] }, /HAS-BLED : (\d+)/, 3],
+        // DOAC Score (Aggarwal, Circulation 2023) : l'âge pèse de 2 à 5 points.
+        ['DOAC Score H91 DFG 33 HTA DT2 = 8', { age: 91, sexe: 'M', dfg: 33, comorbs: ['PAT_006', 'PAT_005', 'PAT_016b'], meds: ['Apixaban'] }, /DOAC Score : (\d+)/, 8],
+        ['DOAC Score F72 DFG 70 double antiagrégation = 6', { age: 72, sexe: 'F', dfg: 70, comorbs: ['PAT_006'], meds: ['Apixaban', 'Acide acetylsalicylique', 'Clopidogrel'] }, /DOAC Score : (\d+)/, 6],
+        ['DOAC Score plafonné à 10', { age: 85, sexe: 'F', dfg: 20, flags: ['chkSaignement', 'chkFoie'], comorbs: ['PAT_006', 'PAT_005'], meds: ['Apixaban'] }, /DOAC Score : (\d+)/, 10],
     ];
     VECTEURS.forEach(([label, c, re, exp]) => {
         test('Score vecteur — ' + label, () => {

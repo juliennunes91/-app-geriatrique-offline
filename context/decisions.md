@@ -82,3 +82,5 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   « suspendu ». — Signalement : médicament retiré toujours présent dans la synthèse pharma.
 - **25/11/2026** — Retirer un médicament relance l'analyse si une analyse est affichée (comme
   la suspension). — Même signalement.
+- **26/11/2026** — Scores de saignement calculés selon leur publication d'origine (Pisters
+  2010, Aggarwal 2023) ; un DOAC Score élevé ne conclut pas à l'arrêt de l'AOD (ESC 2024).

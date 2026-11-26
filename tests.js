@@ -147,18 +147,19 @@ test('64M → 0 (age<65)', () => assert.strictEqual(calcCHA2DS2(64, 'M', []), 0)
 // ============================================================================
 console.log('\n🧪 Score HAS-BLED (partiel)');
 
-function calcHASBLED(age, dfg, hasAVC, hasAINS) {
+// Critère rénal de Pisters 2010 : dialyse, greffe ou créatinine ≥ 200 µmol/L — pas un DFG.
+function calcHASBLED(age, creat, hasAVC, hasAINS) {
     let score = 0;
-    if (dfg > 0 && dfg < 50) score += 1;
+    if (creat >= 200) score += 1;
     if (hasAVC) score += 1;
     if (age > 65) score += 1;
     if (hasAINS) score += 1;
     return score;
 }
 
-test('80 ans DFG 30 AVC → 3 (IRC+AVC+age)', () => assert.strictEqual(calcHASBLED(80, 30, true, false), 3));
-test('60 ans DFG 80 pas AVC → 0', () => assert.strictEqual(calcHASBLED(60, 80, false, false), 0));
-test('70 ans DFG 45 AINS → 3', () => assert.strictEqual(calcHASBLED(70, 45, false, true), 3));
+test('80 ans creatinine 210 AVC → 3 (rein+AVC+age)', () => assert.strictEqual(calcHASBLED(80, 210, true, false), 3));
+test('80 ans creatinine 167 (DFG 33) → 1 : une IRC moderee ne compte pas', () => assert.strictEqual(calcHASBLED(80, 167, false, false), 1));
+test('60 ans creatinine 80 pas AVC → 0', () => assert.strictEqual(calcHASBLED(60, 80, false, false), 0));
 
 // ============================================================================
 // 6. SCORES_CONFIG THRESHOLDS
@@ -2099,11 +2100,11 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!/sans réévaluation/.test(ev), 'le titre ne presume plus l\'absence de reevaluation');
         // 4. Scores d'anticoagulation : sans FA ni anticoagulant, ils n'ont pas d'objet.
         const sc = assume._html['alertes-scores'] || '';
-        assert.ok(!/CHA₂DS₂-VA|HAS-BLED|ORBIT-AF|DOACscore/.test(sc), 'pas de score d\'anticoagulation sans FA ni anticoagulant');
+        assert.ok(!/CHA₂DS₂-VA|HAS-BLED|ORBIT-AF|DOAC Score/.test(sc), 'pas de score d\'anticoagulation sans FA ni anticoagulant');
         const fa = cas({ comorbs: ['PAT_006'] })._html['alertes-scores'] || '';
         assert.ok(/CHA₂DS₂-VA/.test(fa) && /HAS-BLED/.test(fa), 'FA : les scores reviennent');
         const aod = cas({ meds: ['Apixaban'] })._html['alertes-scores'] || '';
-        assert.ok(!/CHA₂DS₂-VA/.test(aod) && /DOACscore/.test(aod), 'sous AOD sans FA codee : scores de saignement seulement');
+        assert.ok(!/CHA₂DS₂-VA/.test(aod) && /DOAC Score/.test(aod), 'sous AOD sans FA codee : scores de saignement seulement');
     });
     test('Imputabilite des syndromes biologiques : chaque terme designe un medicament de la base, ou son absence est motivee', () => {
         // Une liste d'imputabilite que le moteur ne sait pas lire n'impute jamais rien, en

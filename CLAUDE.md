@@ -1302,6 +1302,22 @@ miansérine assumées. Quatre défauts, tous d'agrégation ou d'affichage hors d
   prescrit — la règle que les puces de la synthèse appliquaient déjà. Au passage, la clé
   `DOAC` de `SCORES_CONFIG` était déclarée deux fois (la seconde écrasait la première).
 
+**Scores de saignement relus sur leur publication (4.92)** — dossier réel, H 91 ans sous
+apixaban, DFG 33, créatinine 167 µmol/L :
+
+- **HAS-BLED** (Pisters, *Chest* 2010) comptait un point de « rein » sur un DFG < 50 : le
+  critère est la **dialyse, la greffe ou une créatinine ≥ 200 µmol/L**. L'HTA ne compte que
+  **non contrôlée** (PAS > 160, `chkHtaNonControlee`) ; foie (`PAT_034`), saignement ou
+  anémie, alcool sont désormais lus. Les deux implémentations (onglet Scores, pastille de
+  la synthèse) avaient divergé : une seule fonction, `scoreHasBled()`.
+- **DOAC Score** : attribué à « Hijazi 2023 », il cotait l'âge ≥ 75 à **1 point**. C'est le
+  score d'Aggarwal (*Circulation* 2023;148:936) : âge 2 à 5 points, DFG 30-60 +1 / < 30 +2,
+  IMC < 18,5, AVC, diabète, HTA, aspirine +2 / double antiagrégation +3, AINS, saignement
+  +3, hépatopathie +2, plafond 10 ; catégories 0-3 / 4-5 / 6-7 / 8-9 / 10. Ce dossier passe
+  de 3 (« risque faible ») à 8 (élevé). La conclusion le dit sans pousser à l'arrêt :
+  corriger les facteurs modifiables, le score ne justifie pas à lui seul l'arrêt (ESC 2024).
+  `scoreDoacAggarwal()`. Vecteurs figés dans `tests_audit_extended.js`, validés par mutation.
+
 RISQ-PATH et Tisdale (scores de risque QT) suivent la même règle depuis 3.95 : ils ne
 sortent qu'en présence d'un médicament à risque QT établi ou possible (ou conditionnel
 dont la condition est réunie), d'un QTc saisi ou d'un QT long déclaré.

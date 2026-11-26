@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 25/11/2026 — **version 4.91**, `BUILD_ID` `20261125-precisions-ocr-avis-pharma`,
-cache `geriaassist-v161`.*
+*Dernière mise à jour : 26/11/2026 — **version 4.92**, `BUILD_ID` `20261126-scores-saignement`,
+cache `geriaassist-v162`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **4.92** (26/11) — HAS-BLED (critère rénal = créatinine ≥ 200 / dialyse ; HTA non
+  contrôlée) et DOAC Score (Aggarwal 2023, âge 2-5 points) recalculés sur leur publication.
 
 - **4.91** (25/11) — Trois signalements d'usage : file d'attente des modales de précision
   (import de plusieurs médicaments) ; OCR (dosage collé, chiffre lu pour une lettre, DCI

@@ -115,6 +115,44 @@ function reconcileAlertClusters(alertes) {
 // =========================================================
 // SCORES_CONFIG — Seuils externalisés (modifiable sans toucher la logique)
 // =========================================================
+// HAS-BLED (Pisters, Chest 2010;138:1093). Le critère rénal est la dialyse, la greffe ou une
+// créatinine ≥ 200 µmol/L — PAS un DFG < 50, qui faisait compter un point à toute IRC
+// modérée. L'HTA ne compte que NON CONTRÔLÉE (PAS > 160). L'INR labile ne concerne que les
+// AVK et n'est pas saisi.
+function scoreHasBled(bioValues, age, sexe) {
+    let score = 0; const detail = [];
+    const ajoute = (c, lib) => { if (c) { score += 1; detail.push(lib + ' (+1)'); } };
+    const anemie = bioValues['BIO_009'] > 0 && bioValues['BIO_009'] < (sexe === 'M' ? 13 : 12);
+    ajoute(isChecked('chkHtaNonControlee'), 'HTA non contrôlée');
+    ajoute(isChecked('chkDialyse') || bioValues['BIO_003'] >= SCORES_CONFIG.BIO.creat_has, 'Rein (dialyse ou créatinine ≥ 200 µmol/L)');
+    ajoute(activeComorbs.includes('PAT_034'), 'Hépatopathie');
+    ajoute(activeComorbs.includes('PAT_008'), 'ATCD AVC');
+    ajoute(isChecked('chkSaignement') || anemie, anemie && !isChecked('chkSaignement') ? 'Prédisposition au saignement (anémie)' : 'Saignement');
+    ajoute(age > SCORES_CONFIG.AGE.has_65, 'Âge > 65');
+    ajoute(patientHasMedClass('ains') || patientHasMedClass('antiagregant'), 'Antiagrégant/AINS');
+    ajoute(isChecked('chkAlcool'), 'Alcool');
+    return { score, detail };
+}
+// DOAC Score (Aggarwal, Circulation 2023;148:936). Le DFG employé est celui de la saisie.
+function scoreDoacAggarwal(bioValues, age) {
+    let score = 0; const detail = [];
+    const ajoute = (n, lib) => { score += n; detail.push(lib + ' (+' + n + ')'); };
+    if (age >= 80) ajoute(5, 'Âge ≥ 80'); else if (age >= 75) ajoute(4, 'Âge 75-79'); else if (age >= 70) ajoute(3, 'Âge 70-74'); else if (age >= 65) ajoute(2, 'Âge 65-69');
+    const dfg = bioValues['BIO_004'];
+    if (dfg > 0 && dfg < 30) ajoute(2, 'DFG < 30'); else if (dfg > 0 && dfg <= 60) ajoute(1, 'DFG 30-60');
+    const imc = getVal('patientBmi');
+    if (imc > 0 && imc < 18.5) ajoute(1, 'IMC < 18,5');
+    if (activeComorbs.includes('PAT_008')) ajoute(1, 'ATCD AVC/AIT');
+    if (activeComorbs.some(c => ['PAT_016', 'PAT_016a', 'PAT_016b'].includes(c))) ajoute(1, 'Diabète');
+    if (activeComorbs.includes('PAT_005')) ajoute(1, 'HTA');
+    const nbAap = (activeMeds || []).filter(m => matchesDrugClass(sanitizeText(m.dci), m.classe || '', 'antiagregant')).length;
+    if (nbAap >= 2) ajoute(3, 'Double antiagrégation'); else if (nbAap === 1) ajoute(2, 'Antiagrégant');
+    if (patientHasMedClass('ains')) ajoute(1, 'AINS');
+    if (isChecked('chkSaignement')) ajoute(3, 'ATCD de saignement');
+    if (activeComorbs.includes('PAT_034')) ajoute(2, 'Hépatopathie');
+    return { score: Math.min(score, 10), detail };
+}
+
 const SCORES_CONFIG = {
     CHA2DS2: {
         label: 'CHA₂DS₂-VA', desc: 'Risque thromboembolique dans la FA (ESC 2024)', border: 'info',
@@ -141,17 +179,24 @@ const SCORES_CONFIG = {
         seuils: { modere: 7, haut: 11 },
         conclusions: { 0: 'Risque faible', modere: 'Risque modéré — ECG quotidien recommandé', haut: 'Risque élevé de TdP — monitoring ECG continu' }
     },
+    // DOAC Score — Aggarwal R. et al., Circulation 2023;148:936-946 (dérivé de RE-LY, validé
+    // dans GARFIELD-AF). La version précédente était attribuée à « Hijazi 2023 » et
+    // cotait l'âge ≥ 75 à 1 point au lieu de 4 à 5 : un nonagénaire sortait en « risque faible ».
+    // Catégories : très faible 0-3, faible 4-5, modéré 6-7, élevé 8-9, très élevé 10.
     DOAC: {
-        label: 'DOACscore', desc: 'Risque de saignement majeur sous AOD (Hijazi 2023)', border: 'warning',
-        seuils: { modere: 4, haut: 7 },
-        conclusions: { 0: 'Risque faible de saignement majeur', modere: 'Risque modéré — surveillance rapprochée', haut: 'Risque élevé — réévaluer bénéfice/risque AOD' }
+        label: 'DOAC Score', desc: 'Risque de saignement majeur sous AOD (Aggarwal, Circulation 2023)', border: 'warning',
+        seuils: { faible: 4, modere: 6, haut: 8, tres_haut: 10 },
+        conclusions: { 0: 'Risque très faible de saignement majeur', faible: 'Risque faible de saignement majeur', modere: 'Risque modéré de saignement majeur',
+                       haut: 'Risque élevé — corriger les facteurs modifiables (antiagrégant, AINS) ; ne justifie pas à lui seul l\'arrêt de l\'AOD (ESC 2024)',
+                       tres_haut: 'Risque très élevé — corriger les facteurs modifiables ; ne justifie pas à lui seul l\'arrêt de l\'AOD (ESC 2024)' }
     },
     // Seuils biologiques pour les scores
     BIO: {
         anemia_M: 13, anemia_F: 12,   // g/dL
         hypoK: 3.5,                     // mmol/L
         hypoCa: 2.15,                   // mmol/L
-        irc_has: 50, irc_orbit: 60, irc_severe: 30, // ml/min DFG
+        creat_has: 200, // µmol/L — HAS-BLED « A » : dialyse, greffe ou créatinine ≥ 200 (Pisters 2010)
+        irc_orbit: 60, irc_severe: 30, // ml/min DFG
         qtc_prolonge: 450               // ms
     },
     AGE: {
@@ -1520,17 +1565,19 @@ function analyserPrescription() {
         // Helper rendu score (avec tooltip explicatif)
         const SCORE_TOOLTIPS = {
             CHA2DS2: 'IC +1 | HTA +1 | Âge≥75 +2 | Diabète +1 | AVC/AIT +2 | Vasculaire +1 | Âge 65-74 +1. Source: ESC 2024 (sexe retiré).',
-            HAS_BLED: 'HTA +1 | IRC (DFG<50) +1 | AVC +1 | Saignement +1 | INR labile +1 | Âge>65 +1 | Alcool +1 | Méd. antiagrég/AINS +1. Source: Pisters 2010.',
+            HAS_BLED: 'HTA non contrôlée (PAS > 160) +1 | Rein (dialyse, greffe, créatinine ≥ 200 µmol/L) +1 | Foie (cirrhose ou bilirubine > 2 N avec transaminases > 3 N) +1 | AVC +1 | Saignement ou prédisposition (anémie) +1 | INR labile +1 | Âge > 65 +1 | Antiagrégant/AINS +1 | Alcool +1. Source: Pisters 2010.',
             ORBIT: 'Âge≥75 +1 | Anémie +2 | Saignement +2 | DFG<60 +1 | Antiagrégant +1. Source: O\'Brien 2015.',
             RISQ_PATH: 'Âge≥65 +1 | Femme +1 | Obésité +1 | HypoK +2 | HypoCa +2 | IRC sévère +2 | Inflammation +1 | Cardiopathie +1 | FA +1 | Démence +1 | Méd QT(KR) +3. Source: Tisdale 2013 adapté.',
             TISDALE: 'Âge≥68 +1 | Femme +1 | Diurétique +1 | HypoK +2 | QTc≥450 +2 | Méd QT +3 | Sepsis +2 | IC +3. Source: Tisdale 2013.',
-            DOAC: 'Âge≥75 +1 | DFG 30-49 +1 | DFG<30 +2 | Poids<60kg +1 | ATCD saignement +1 | Antiagrégant +1 | AINS +1 | Diabète +1 | Anémie +1 | IC +1. Source: Hijazi 2023.'
+            DOAC: 'Âge 65-69 +2 | 70-74 +3 | 75-79 +4 | ≥ 80 +5 | DFG 30-60 +1 | DFG < 30 +2 | IMC < 18,5 +1 | AVC/AIT/embolie +1 | Diabète +1 | HTA +1 | Aspirine +2 | Double antiagrégation +3 | AINS +1 | ATCD de saignement +3 | Hépatopathie +2 (plafond 10). Source: Aggarwal, Circulation 2023.'
         };
         const renderScore = (cfg, score, details) => {
             let conc = cfg.conclusions[0];
             let dangerClass = 'success';
-            if (cfg.seuils.haut && score >= cfg.seuils.haut) { conc = cfg.conclusions.haut; dangerClass = 'danger'; }
+            if (cfg.seuils.tres_haut && score >= cfg.seuils.tres_haut) { conc = cfg.conclusions.tres_haut; dangerClass = 'danger'; }
+            else if (cfg.seuils.haut && score >= cfg.seuils.haut) { conc = cfg.conclusions.haut; dangerClass = 'danger'; }
             else if (cfg.seuils.modere && score >= cfg.seuils.modere) { conc = cfg.conclusions.modere; dangerClass = 'muted'; }
+            else if (cfg.seuils.faible && score >= cfg.seuils.faible) { conc = cfg.conclusions.faible; }
             const tipKey = Object.keys(SCORES_CONFIG).find(k => SCORES_CONFIG[k] === cfg) || '';
             const tipText = SCORE_TOOLTIPS[tipKey] || '';
             const tooltip = tipText ? ` <span class="score-tooltip" tabindex="0"><span class="badge bg-light text-dark border" style="font-size:0.6em; cursor:help;">?</span><span class="score-tip-text">${escapeHtml(tipText)}</span></span>` : '';
@@ -1557,11 +1604,8 @@ function analyserPrescription() {
         if (_fa) addAlert('alertes-scores', `<div class="alert alert-light border border-${SC.CHA2DS2.border} mb-2 shadow-sm"><strong class="text-${SC.CHA2DS2.border}">${SC.CHA2DS2.label} : ${scoreCha} point(s)</strong> <em class="text-muted small">— ${SC.CHA2DS2.desc}</em><br><small class="text-muted">${ttCha.join(', ') || 'Aucun'}</small><br><small class="fw-bold text-${scoreCha >= SC.CHA2DS2.seuils.haut ? 'danger' : 'success'}">${chaConc}</small></div>`);
 
         // HAS-BLED
-        let scoreHas = 0; let ttHas = [];
-        if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < SB.irc_has) { scoreHas += 1; ttHas.push("IRC (+1)"); }
-        if(activeComorbs.includes('PAT_008')) { scoreHas += 1; ttHas.push("ATCD AVC (+1)"); }
-        if(patientAge > SA.has_65) { scoreHas += 1; ttHas.push("Âge >65 (+1)"); }
-        if(patientHasMedClass('ains') || patientHasMedClass('antiagreg')) { scoreHas += 1; ttHas.push("AINS/AAS (+1)"); }
+        const _hb = scoreHasBled(bioValues, patientAge, sexe);
+        let scoreHas = _hb.score; let ttHas = _hb.detail;
         if (_fa || _anticoagule) renderScore(SC.HAS_BLED, scoreHas, ttHas);
 
         // ORBIT-AF
@@ -1573,20 +1617,9 @@ function analyserPrescription() {
         if(patientHasMedClass('antiagreg')) { scoreOrbit += 1; ttOrbit.push("Antiagrégant (+1)"); }
         if (_fa || _anticoagule) renderScore(SC.ORBIT, scoreOrbit, ttOrbit);
 
-        // DOACscore (Hijazi et al. 2023 — risque de saignement majeur sous AOD)
-        let scoreDoac = 0; let ttDoac = [];
-        if(patientAge >= SA.orbit_75) { scoreDoac += 1; ttDoac.push("Âge ≥75 (+1)"); }
-        let dfgDoac = bioValues['BIO_004'];
-        if(dfgDoac > 0 && dfgDoac < 30) { scoreDoac += 2; ttDoac.push("DFG <30 (+2)"); }
-        else if(dfgDoac > 0 && dfgDoac < 50) { scoreDoac += 1; ttDoac.push("DFG 30-49 (+1)"); }
-        let poidsDoac = getVal('patientPoids');
-        if(poidsDoac > 0 && poidsDoac < 60) { scoreDoac += 1; ttDoac.push("Poids <60kg (+1)"); }
-        if(isChecked('chkSaignement')) { scoreDoac += 1; ttDoac.push("ATCD saignement (+1)"); }
-        if(patientHasMedClass('antiagregant')) { scoreDoac += 1; ttDoac.push("Antiagrégant (+1)"); }
-        if(patientHasMedClass('ains')) { scoreDoac += 1; ttDoac.push("AINS (+1)"); }
-        if(activeComorbs.some(c=>['PAT_016','PAT_016a','PAT_016b'].includes(c))) { scoreDoac += 1; ttDoac.push("Diabète (+1)"); }
-        if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < SB.anemia_M) || (sexe === 'F' && bioValues['BIO_009'] < SB.anemia_F))) { scoreDoac += 1; ttDoac.push("Anémie (+1)"); }
-        if(activeComorbs.some(c=>['PAT_002','PAT_003'].includes(c))) { scoreDoac += 1; ttDoac.push("IC (+1)"); }
+        // DOAC Score (Aggarwal, Circulation 2023)
+        const _dc = scoreDoacAggarwal(bioValues, patientAge);
+        let scoreDoac = _dc.score; let ttDoac = _dc.detail;
         if (_fa || _anticoagule) renderScore(SC.DOAC, scoreDoac, ttDoac);
 
         // Scores de risque QT : ils guident la prescription d'un médicament allongeant
@@ -5284,13 +5317,8 @@ function analyserPrescription() {
                 pushChip(`CHA₂DS₂-VA ${cha}`, cha >= 2 ? 'danger' : (cha >= 1 ? 'warning' : 'success'), 'ESC 2024 — anticoag si ≥2');
             }
             // HAS-BLED
-            let hb = 0;
-            if (bioValues && bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < 50) hb += 1;
-            if (activeComorbs.includes('PAT_008')) hb += 1;
-            if (patientAge > 65) hb += 1;
-            const hasAINS = (activeMeds || []).some(m => /ains|ibuprof|naprox|diclof|ketoprof/i.test(m.dci + ' ' + (m.classe || '')));
-            const hasAAS = (activeMeds || []).some(m => /aspirine|acetylsali|clopidogrel|prasug|ticagre/i.test(m.dci));
-            if (hasAINS || hasAAS) hb += 1;
+            // Même calcul que l'onglet Scores : deux implémentations avaient divergé.
+            const hb = scoreHasBled(bioValues || {}, patientAge, sexe).score;
             if (activeComorbs.includes('PAT_006')) {
                 pushChip(`HAS-BLED ${hb}`, hb >= 3 ? 'danger' : (hb >= 1 ? 'warning' : 'success'), 'Pisters 2010 — risque hémorragique sous anticoag');
             }

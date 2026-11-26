@@ -61,11 +61,11 @@
    "success | Posologies : IBUPROFENE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 3 point(s)",
+   "danger | HAS-BLED : 2 point(s)",
    "danger | Score ACB : 5",
    "danger | Score PIM Global : 69/100 — RISQUE ÉLEVÉ",
    "info | CHA₂DS₂-VA : 4 point(s)",
-   "warning | DOACscore : 7 point(s)",
+   "warning | DOAC Score : 10 point(s)",
    "warning | ORBIT-AF : 3 point(s)"
   ],
   "alertes-synthese": [
@@ -305,7 +305,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 14/100 — ACCEPTABLE",
-   "warning | DOACscore : 2 point(s)",
+   "warning | DOAC Score : 8 point(s)",
    "warning | ORBIT-AF : 3 point(s)"
   ],
   "alertes-synthese": [
@@ -513,7 +513,7 @@
    "info | CHA₂DS₂-VA : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 14/100 — ACCEPTABLE",
-   "warning | DOACscore : 2 point(s)",
+   "warning | DOAC Score : 8 point(s)",
    "warning | ORBIT-AF : 3 point(s)"
   ],
   "alertes-synthese": [
@@ -913,7 +913,7 @@
    "info | RISQ-PATH : 6 point(s)",
    "info | Score ACB : 0",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
+   "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score PIM Global : 42/100 — RISQUE MODÉRÉ"
   ],
@@ -1295,10 +1295,10 @@
    "success | Posologies : ACIDE ACETYLSALICYLIQUE"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
+   "danger | HAS-BLED : 3 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 14/100 — ACCEPTABLE",
-   "warning | DOACscore : 3 point(s)",
+   "warning | DOAC Score : 10 point(s)",
    "warning | ORBIT-AF : 4 point(s)"
   ],
   "alertes-synthese": [
@@ -1336,7 +1336,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 2 point(s)",
    "info | Score ACB : 0",
-   "warning | DOACscore : 3 point(s)",
+   "warning | DOAC Score : 9 point(s)",
    "warning | ORBIT-AF : 2 point(s)",
    "warning | Score PIM Global : 37/100 — RISQUE MODÉRÉ"
   ],
@@ -1374,7 +1374,7 @@
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 14/100 — ACCEPTABLE",
-   "warning | DOACscore : 1 point(s)",
+   "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
@@ -1418,7 +1418,7 @@
    "info | Score ACB : 0",
    "info | Score PIM Global : 22/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
+   "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
@@ -1843,10 +1843,10 @@
    "success | Posologies : RIVAROXABAN"
   ],
   "alertes-scores": [
-   "danger | HAS-BLED : 2 point(s)",
+   "danger | HAS-BLED : 1 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 18/100 — RISQUE FAIBLE",
-   "warning | DOACscore : 3 point(s)",
+   "warning | DOAC Score : 7 point(s)",
    "warning | ORBIT-AF : 2 point(s)"
   ],
   "alertes-synthese": [
@@ -3012,7 +3012,7 @@
    "info | Score ACB : 0",
    "info | Score PIM Global : 11/100 — ACCEPTABLE",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
+   "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
   ],
   "alertes-synthese": [
@@ -3257,7 +3257,7 @@
    "info | RISQ-PATH : 8 point(s)",
    "info | Score PIM Global : 25/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
+   "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],
@@ -3341,7 +3341,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | RISQ-PATH : 8 point(s)",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | DOACscore : 1 point(s)",
+   "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 2",
    "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
@@ -3481,7 +3481,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
    "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
-   "warning | DOACscore : 1 point(s)",
+   "warning | DOAC Score : 5 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
   ],

@@ -98,3 +98,5 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   gardait les médicaments retirés, et le hash de mémoïsation l'ignorait.
 - Playwright : le nom d'un médicament de la grille est dans `input.value`, pas dans
   `textContent` — lire le modèle, pas le DOM.
+- Un score réimplémenté de mémoire dérive : HAS-BLED comptait le DFG < 50, le DOAC Score
+  l'âge à 1 point et citait le mauvais auteur. Relire la table de la publication avant d'écrire.
