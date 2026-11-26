@@ -1540,8 +1540,11 @@ commun. Les candidates sont lues **dans le DOM rendu** — les boutons « ✓ as
 moteur et blocs rédigés posent déjà, avec leur clé : un seul chemin pour les quatre
 familles de clés, aucune liste parallèle. **Rien n'est coché d'avance** : assumer reste une
 décision. Le point d'entrée (« ✓ Assumer plusieurs… (N) », dès deux candidates) est
-**injecté par le code** en tête des onglets éviter, interactions, bio et ANSM — les deux
-interfaces le reçoivent sans synchronisation manuelle ; il est posé avant la
+**injecté par le code** en tête de **tous** les onglets de résultats qui comptent au moins
+deux candidates (Initier, Guidelines, Posologies, Suivi… — la liste n'en retenait que quatre,
+et l'utilisateur ne voyait la barre que sous « Éviter »), et la **synthèse** porte une barre
+« tous onglets » (`justifyGeriaAlertsEnMasse(null)`, titres préfixés de leur onglet) — les deux
+interfaces le reçoivent sans synchronisation manuelle ; classe `no-print` (rapport imprimable) ; il est posé avant la
 mémoïsation pour survivre à un résultat restauré du cache, et ne porte ni classe `alert`
 ni `<strong>` (ni compté, ni masquable). Dans le PDF, les décisions sont **regroupées par
 motif** : un motif commun s'écrit une fois, suivi des titres qu'il couvre. Couvert par

@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 26/11/2026 — **version 4.93**, `BUILD_ID` `20261126-texte-cases-cliniques`,
-cache `geriaassist-v163`.*
+*Dernière mise à jour : 26/11/2026 — **version 4.94**, `BUILD_ID` `20261126-assumer-tous-onglets`,
+cache `geriaassist-v164`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **4.94** (26/11) — « Assumer plusieurs » dans tous les onglets de résultats, et barre
+  « tous onglets » en tête de la synthèse.
 
 - **4.93** (26/11) — Import de texte : cases cliniques proposées (chutes, PTH/PTG/PTE, SAD,
   constipation chronique) ; apostrophe typographique normalisée (« d’Alzheimer »).

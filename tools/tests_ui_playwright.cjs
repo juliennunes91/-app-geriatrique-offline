@@ -334,6 +334,9 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             _lastAnalysisHash = null; analyserPrescription();
             const barre = document.querySelector('#alertes-eviter .geria-assumer-masse button');
             r.barre = barre ? barre.textContent : null;
+            // Tous les onglets, pas seulement « Éviter » : l'onglet Initier et la synthèse.
+            r.ongletsAvecBarre = [...document.querySelectorAll('.geria-assumer-masse')].map(b => b.parentElement && b.parentElement.id);
+            r.toutesOnglets = _alertesAssumables(null).length;
             const n = _alertesAssumables('alertes-eviter').length;
             r.candidates = n;
             justifyGeriaAlertsEnMasse('alertes-eviter');
@@ -357,10 +360,26 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             return r;
         });
         const pdfMasse = enTexte(masse.pdf), pdfInter = enTexte(masse.pdfInteraction);
+        // Onglet Initier : deux omissions (FA sans bêtabloquant, Alzheimer sans IAChE).
+        const initier = await page.evaluate(() => {
+            resetPatient();
+            document.getElementById('patientAge').value = 91;
+            document.getElementById('patientDFG').value = 33;
+            ['PAT_006', 'PAT_011'].forEach(c => activeComorbs.push(c));
+            const m = MASTER_DB.MEDICAMENTS.find(x => x.dci === 'Apixaban');
+            activeMeds.push({ dci: m.dci, classe: m.classe, label: m.dci, core_id: 'apixaban', albumine: 0, db_ref: m });
+            _lastAnalysisHash = null; analyserPrescription();
+            return { n: _alertesAssumables('alertes-initier').length, barre: !!document.querySelector('#alertes-initier .geria-assumer-masse button') };
+        });
+        test('« Assumer plusieurs » existe aussi dans l\'onglet Initier', () => {
+            ok(initier.n >= 2 && initier.barre, `candidates ${initier.n}, barre ${initier.barre}`);
+        });
 
         test('On peut assumer plusieurs alertes d\'un coup, avec un motif commun', () => {
             ok(masse.barre && /Assumer plusieurs/.test(masse.barre), `la barre est posée dans l'onglet : ${masse.barre}`);
             ok(masse.candidates >= 2, `au moins deux candidates : ${masse.candidates}`);
+            ok(masse.ongletsAvecBarre.includes('alertes-synthese'), `la synthèse porte la barre « tous onglets » : ${masse.ongletsAvecBarre.join(', ')}`);
+            ok(masse.toutesOnglets > masse.candidates, `« tous onglets » couvre plus que l'onglet Éviter : ${masse.toutesOnglets} > ${masse.candidates}`);
             ok(masse.aucuneCocheeDavance, 'rien n\'est coché d\'avance — assumer reste une décision');
             ok(masse.assumees === masse.candidates, `toutes les cochées sont assumées : ${masse.assumees}/${masse.candidates}`);
             ok(masse.motifsIdentiques, 'le motif commun est porté par chacune');

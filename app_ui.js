@@ -1026,7 +1026,15 @@ function resetJustifiedAlerts() {
 // blocs rédigés sur place posent déjà, avec leur clé. Un seul chemin pour les quatre
 // familles de clés (`id:`, `rc:`, `tt:`, `gl:`), aucune liste parallèle à maintenir.
 // Rien n'est coché d'avance : assumer reste une décision, pas un réglage par défaut.
-const _ONGLETS_ASSUMABLES = ['alertes-eviter', 'alertes-interact', 'alertes-bio', 'alertes-ansm'];
+// Tous les onglets de résultats portent des boutons « ✓ assumer » (règles START de
+// l'onglet Initier, recommandations des sociétés savantes, posologies…) : la liste ne
+// retenait que quatre onglets, si bien que la barre n'apparaissait en pratique que sous
+// « Éviter ». La synthèse reçoit en plus une barre qui couvre TOUS les onglets.
+const _ONGLETS_ASSUMABLES = ['alertes-eviter', 'alertes-initier', 'alertes-interact', 'alertes-ansm', 'alertes-auc',
+    'alertes-bio', 'alertes-usage', 'alertes-suivi', 'alertes-guidelines', 'alertes-scores'];
+const _LIBELLE_ONGLET = { 'alertes-eviter': 'Éviter', 'alertes-initier': 'Initier', 'alertes-interact': 'Interactions',
+    'alertes-ansm': 'ANSM', 'alertes-auc': 'AUC', 'alertes-bio': 'Bio', 'alertes-usage': 'Posologies',
+    'alertes-suivi': 'Suivi', 'alertes-guidelines': 'Guidelines', 'alertes-scores': 'Scores' };
 const _RE_BOUTON_ASSUMER = /justifyGeriaAlert\('((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\)/;
 const _desechapperJs = s => String(s || '').replace(/\\(.)/g, '$1');
 
@@ -1060,7 +1068,7 @@ function justifyGeriaAlertsEnMasse(ongletId) {
     const card = document.createElement('div');
     card.style.cssText = 'background:#fff;color:#1e293b;max-width:560px;width:100%;max-height:88vh;display:flex;flex-direction:column;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.3);padding:20px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;';
     const h = document.createElement('div'); h.style.cssText = 'font-weight:700;font-size:15px;margin-bottom:4px;';
-    h.textContent = 'Assumer plusieurs alertes';
+    h.textContent = ongletId ? 'Assumer plusieurs alertes' : 'Assumer plusieurs alertes — tous les onglets';
     const expl = document.createElement('div'); expl.style.cssText = 'font-size:12px;color:#475569;margin-bottom:10px;line-height:1.45;';
     expl.textContent = "Cochez les alertes qui relèvent d'une même décision. Elles restent affichées et leur surveillance est maintenue ; le motif commun figurera dans le rapport, une fois pour toutes.";
     card.appendChild(h); card.appendChild(expl);
@@ -1077,7 +1085,8 @@ function justifyGeriaAlertsEnMasse(ongletId) {
         const l = document.createElement('label');
         l.style.cssText = 'display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:4px 0;cursor:pointer;border-bottom:1px dashed #f1f5f9;';
         const cb = document.createElement('input'); cb.type = 'checkbox'; cb.style.marginTop = '3px';
-        const t = document.createElement('span'); t.textContent = c.titre;
+        const t = document.createElement('span');
+        t.textContent = (!ongletId && _LIBELLE_ONGLET[c.onglet] ? '[' + _LIBELLE_ONGLET[c.onglet] + '] ' : '') + c.titre;
         l.appendChild(cb); l.appendChild(t); liste.appendChild(l);
         return { c, cb };
     });
@@ -1130,11 +1139,22 @@ function _barreAssumerEnMasse() {
         if (ancienne && ancienne.remove) ancienne.remove();
         const n = _alertesAssumables(id).length;
         if (n < 2) return;
-        el.insertAdjacentHTML('afterbegin', `<div class="geria-assumer-masse" style="display:flex;justify-content:flex-end;margin:0 0 6px 0;">`
+        el.insertAdjacentHTML('afterbegin', `<div class="geria-assumer-masse no-print" style="display:flex;justify-content:flex-end;margin:0 0 6px 0;">`
             + `<button type="button" onclick="if(typeof justifyGeriaAlertsEnMasse==='function')justifyGeriaAlertsEnMasse('${id}');return false;" `
             + `style="font-size:12px;padding:3px 10px;border:1px solid #0d9488;color:#0d9488;background:#fff;border-radius:999px;cursor:pointer;" `
             + `title="Assumer plusieurs alertes de cet onglet avec un motif commun">✓ Assumer plusieurs… (${n})</button></div>`);
     });
+    // Synthèse : une barre pour l'ensemble des onglets.
+    const syn = document.getElementById('alertes-synthese');
+    if (syn && typeof syn.querySelector === 'function' && typeof syn.insertAdjacentHTML === 'function') {
+        const ancienne = syn.querySelector('.geria-assumer-masse');
+        if (ancienne && ancienne.remove) ancienne.remove();
+        const n = _alertesAssumables(null).length;
+        if (n >= 2) syn.insertAdjacentHTML('afterbegin', `<div class="geria-assumer-masse no-print" style="display:flex;justify-content:flex-end;margin:0 0 6px 0;">`
+            + `<button type="button" onclick="if(typeof justifyGeriaAlertsEnMasse==='function')justifyGeriaAlertsEnMasse(null);return false;" `
+            + `style="font-size:12px;padding:3px 10px;border:1px solid #0d9488;color:#0d9488;background:#fff;border-radius:999px;cursor:pointer;" `
+            + `title="Assumer en une fois des alertes de tous les onglets, avec un motif commun">✓ Assumer plusieurs… tous onglets (${n})</button></div>`);
+    }
 }
 window.justifyGeriaAlertsEnMasse = justifyGeriaAlertsEnMasse;
 window._barreAssumerEnMasse = _barreAssumerEnMasse;
