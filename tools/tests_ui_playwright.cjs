@@ -508,6 +508,25 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             ok(texte.alz, 'Alzheimer (apostrophe typographique) ajouté');
         });
 
+        // OCR d'une capture d'écran de logiciel de prescription en petite police (9 px,
+        // bandeaux colorés) — capture FICTIVE. Sans prétraitement, Tesseract y lisait
+        // « DOUPRANE » et « FORNIGA » ; agrandie et passée en niveaux de gris, elle rend ses
+        // sept médicaments, tous reconnus exactement.
+        const cap = await nav.newPage({ viewport: { width: 1280, height: 420 }, deviceScaleFactor: 1 });
+        await cap.setContent(require('fs').readFileSync(path.join(RACINE, 'tools/data/capture_prescription_fictive.html'), 'utf8'));
+        const capPng = (await cap.screenshot()).toString('base64');
+        await cap.close();
+        const ocrCap = await page.evaluate(async d => {
+            const r = await OcrModule.recognize('data:image/png;base64,' + d);
+            return r.medications.map(m => [m.dci, m.score]);
+        }, capPng);
+        test('OCR : une capture en petite police rend ses sept médicaments, tous exacts', () => {
+            const attendus = ['Acide acetylsalicylique', 'Acide folique', 'Dapagliflozin', 'Oxazepam', 'Paracetamol', 'Pregabaline', 'Risperidone'];
+            const lus = ocrCap.filter(x => x[1] === 100).map(x => x[0]).sort();
+            ok(JSON.stringify(lus) === JSON.stringify(attendus), `lus exactement : ${lus.join(', ')}`);
+            ok(ocrCap.length === attendus.length, `aucun faux positif : ${ocrCap.map(x => x.join(':')).join(', ')}`);
+        });
+
         // Import d'un bilan PDF : un compte rendu FICTIF est imprimé en PDF par Chromium,
         // puis relu par pdf.js dans l'application — le chemin réel, worker compris.
         const os = require('os');

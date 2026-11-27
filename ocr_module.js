@@ -226,11 +226,44 @@ const OcrModule = (() => {
         finally { _initializing = false; }
     }
 
+    // ── Prétraitement d'une capture d'écran ──────────────────────────────────────────
+    // Une capture de logiciel de prescription est écrite en 8 à 11 px : Tesseract, réglé
+    // pour des caractères bien plus grands, y lisait « DOUPRANE » pour Doliprane et
+    // « FORNIGA » pour Forxiga. L'image est agrandie (interpolation lissée) jusqu'à une
+    // largeur d'environ 4 500 px, passée en niveaux de gris, et son contraste étiré —
+    // ce qui aplatit aussi les bandeaux colorés (rouge, jaune, vert) du logiciel. La
+    // binarisation est laissée à Tesseract (Otsu), qui la fait mieux sur une image propre.
+    async function _pretraiter(source) {
+        if (typeof document === 'undefined' || typeof Image === 'undefined') return source;
+        const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = source; });
+        const w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+        if (!w || !h) return source;
+        const f = Math.max(1, Math.min(4, 4500 / w));
+        if (f < 1.3) return source;                      // déjà grande : photo, scan
+        const c = document.createElement('canvas');
+        c.width = Math.round(w * f); c.height = Math.round(h * f);
+        const ctx = c.getContext('2d');
+        ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        const d = ctx.getImageData(0, 0, c.width, c.height), px = d.data;
+        let min = 255, max = 0;
+        for (let k = 0; k < px.length; k += 4) {
+            const g = 0.299 * px[k] + 0.587 * px[k + 1] + 0.114 * px[k + 2];
+            px[k] = g; if (g < min) min = g; if (g > max) max = g;
+        }
+        const e = max > min ? 255 / (max - min) : 1;
+        for (let k = 0; k < px.length; k += 4) { const g = (px[k] - min) * e; px[k] = px[k + 1] = px[k + 2] = g; }
+        ctx.putImageData(d, 0, 0);
+        return c.toDataURL('image/png');
+    }
+
     // Run OCR on image and extract medications
     async function recognize(imageSource, onProgress) {
         if (!_ready) await init(onProgress);
         if (onProgress) onProgress('Analyse de l\'image...', 0.97);
-        const result = await _worker.recognize(imageSource);
+        let source = imageSource;
+        try { source = await _pretraiter(imageSource); } catch (e) { source = imageSource; }
+        const result = await _worker.recognize(source);
         const rawText = result.data.text;
         if (onProgress) onProgress('Recherche des médicaments...', 0.99);
         const candidates = _extractCandidates(rawText);

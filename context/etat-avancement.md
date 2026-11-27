@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 26/11/2026 — **version 4.97**, `BUILD_ID` `20261127-douleur`,
-cache `geriaassist-v167`.*
+*Dernière mise à jour : 26/11/2026 — **version 4.98**, `BUILD_ID` `20261127-ocr-pretraitement`,
+cache `geriaassist-v168`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **4.98** (27/11) — OCR : prétraitement des captures en petite police (agrandissement,
+  niveaux de gris, contraste) — 0 → 7 médicaments exacts sur la capture fictive en 9 px.
 
 - **4.97** (27/11) — Douleur : statut déclaré + EN/EVA + Algoplus, en synthèse, PDF et
   export ; trois règles (sans antalgique, sous antalgique, troubles cognitifs).

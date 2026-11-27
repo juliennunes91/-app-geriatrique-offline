@@ -106,3 +106,5 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   saignement (STOPP C2 rouge, ORBIT +2). Vérifier ce qu'un contexte AFFIRME avant de le partager.
 - Alias de classe contenant une clé générique (« laxatifdelest » ⊃ « laxatif ») : la Passe 2
   détourne la clé vers la nouvelle classe seule. Relire rule_keys_golden après tout ajout.
+- OCR d'une capture d'écran : la police de 9 px est le vrai problème, pas l'appariement.
+  Agrandir (~4 500 px de large) avant Tesseract ; mesurer sur capture FICTIVE.

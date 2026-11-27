@@ -1885,6 +1885,18 @@ rappel reste ≥ 99 % sur toutes les DCI et premières marques de la base ; vali
 (l'ancien algorithme échoue). « VIT B12 » (collyre) n'est pas reconnu : la cyanocobalamine
 de la base est la forme systémique, et l'apparier serait une erreur.
 
+### Prétraitement d'une capture d'écran (4.98)
+
+Une capture de logiciel de prescription est écrite en **8 à 11 px** : Tesseract y lisait
+« DOUPRANE », « FORNIGA », « AIDE FOLIQUE ». `_pretraiter()` (`ocr_module.js`) agrandit
+l'image (interpolation lissée) jusqu'à ~4 500 px de large (facteur ≤ 4, rien au-dessous de
+×1,3 : une photo ou un scan est laissé tel quel), la passe en niveaux de gris et étire son
+contraste — ce qui aplatit aussi les bandeaux colorés. La binarisation reste à Tesseract.
+Mesuré sur une capture **fictive** (`tools/data/capture_prescription_fictive.html`, 9 px) :
+**0 → 7** médicaments lus exactement, aucun faux positif ; 3 500 px n'en rendait que 6.
+Test Playwright, validé par mutation. Une capture réelle porte identité, NIR et date de
+naissance : elle ne sert jamais de donnée de test.
+
 ### L'interface moderne est locale, elle aussi
 
 Elle chargeait Tailwind depuis `cdn.tailwindcss.com` (compilé dans le navigateur à chaque
