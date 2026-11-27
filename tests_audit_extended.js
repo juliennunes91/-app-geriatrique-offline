@@ -141,6 +141,8 @@ const PANEL = {
     'cov_EV_SF07': {"age":82,"sexe":"F","cfs":8,"flags":["patientFragile"],"bio":{"patientDFG":60},"meds":["Fumarate ferreux"]},
     'cov_EV_SYND_043_EV_SYND_043b': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Tramadol","Citalopram","Linezolide"]},
     'cov_EV_SYND_044_EV_SYND_045': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Diazepam","Morphine","Celecoxib","Benazepril","Altizide"]},
+    'cov_EV_L01': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Oxycodone","Macrogol"],"precisions":{"Oxycodone":{"indication":"legere"}}},
+    'cov_SUP_BZD_OPIO_01': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Diazepam","Morphine","Macrogol"],"precisions":{"Diazepam":{"dose":30},"Morphine":{"dose":20}}},
     'cov_EV_SFGG_AD_02_EV_SFGG_AD_04': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Sertraline","Venlafaxine","Mianserine"]},
     'cov_EV_SFGG_AD_05_EV_SFGG_AD_06': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Agomelatine","Tianeptine"]},
     'cov_EV_SFGG_AD_07': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Sertraline","Ibuprofene"]},

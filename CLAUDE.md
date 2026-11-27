@@ -1032,6 +1032,29 @@ relu sur résumé) — ou sur BPCO / apnées du sommeil (`SUP_GABA_01`). Opioïd
 reste rouge (encadré FDA 2016). L'onglet recommandations de la douleur chronique séparait mal
 les deux : corrigé. Ce sont des repères de risque, **jamais une table de rotation**.
 
+## Benzodiazépine + opioïde : la dose aussi (5.40)
+
+« 5 mg de Seresta + 1 mg de morphine » sortait en rouge partout : 26 entrées de fiche en
+`danger`, `EV_SYND_044` en `danger`, et le thésaurus replié sous la carte (Micromedex
+« INTERACTION MAJEURE ») la remettait en rouge même regradée. Park (*BMJ* 2015) : sous opioïde,
+HR 1,69 de 10 à 20 mg/j d'équivalent diazépam, 2,34 de 20 à 30 ; aucun effet significatif de la
+BZD à la dose d'opioïde la plus faible.
+
+- `EV_SYND_044` et les fiches : `warning`. Rouge = **`SUP_BZD_OPIO_01`**, sur contexte
+  `bzd_opioide_dose_elevee` (équiv. diazépam > `SEUIL_DIAZEPAM_ELEVE` = 20, MME ≥ 50, `PAT_023`
+  ou `PAT_052`) ; `EV_SYND_044` se tait alors (une carte, pas deux).
+- **Plafond de carte** (`_plafondSedatif`, `app_analysis.js`) : une paire bzd↔opioïde ou
+  gabapentinoïde↔opioïde (familles de précision, jamais le texte) sans le contexte de dose élevée
+  reste orange **quelle que soit la source** — fiche, ANSM, Micromedex — au collecteur et au
+  repli. Le texte officiel reste affiché ; la carte dit si les doses sont sous les repères ou
+  **manquantes** (une dose inconnue n'est pas une dose faible : elle est demandée). Opioïde +
+  opioïde n'est pas concerné.
+- Même dossier, trois autres rouges discutables : `EV_L01` (STOPP L1) exige désormais la
+  **douleur légère déclarée** — sans intensité, `SUP_OPIO_01` (info) la demande ; `EV_D08`
+  lit enfin la **durée** de la fenêtre de précision (< 1 mois → `bzd_duree_breve`), titre
+  « (ou durée non précisée) » ; `EV_L02` + `EV_SYND_048` (« sans laxatif ») fusionnés
+  (`GRP_OPIOID_LAXATIF`) ; protocoles de déprescription guidée en `info`.
+
 ## Le chiffre mesuré parle du patient, la sévérité déclarée n'en sait rien
 
 Une interaction dont le dommage est une **anomalie biologique** ne se juge pas pareillement

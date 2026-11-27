@@ -349,6 +349,9 @@ const DIAZEPAM_10MG = { diazepam: 10, alprazolam: 0.5, bromazepam: 5, clonazepam
 //   prégabaline > 300 mg/j (Gomes, Ann Intern Med 2018 : aOR 2,51 à forte dose — seuil relu
 //   sur résumé). Repères de risque, pas des contre-indications.
 const SEUIL_MME_ELEVE = 50, SEUIL_GABAPENTINE_ELEVE = 900, SEUIL_PREGABALINE_ELEVE = 300;
+// Benzodiazépine + opioïde : > 20 mg/j d'équivalent diazépam (Park, BMJ 2015, tableau 3 :
+// HR 2,34 à 20-30 mg/j, 1,69 à 10-20 mg/j, par rapport à ≤ 10 mg/j).
+const SEUIL_DIAZEPAM_ELEVE = 20;
 function dosesSedatives(meds) {
     const out = { mme: { total: 0, detail: [], inconnus: [], sansEquivalent: [] }, diazepam: { total: 0, detail: [], inconnus: [] }, gaba: [] };
     const fam = m => (typeof medPrecisionFamily === 'function') ? medPrecisionFamily(m.classe, m.dci) : null;

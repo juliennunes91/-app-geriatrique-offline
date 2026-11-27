@@ -110,3 +110,8 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   Agrandir (~4 500 px de large) avant Tesseract ; mesurer sur capture FICTIVE.
 - Une paire décrite depuis ses deux fiches prend la gravité la PLUS FORTE : une seule fiche
   en danger suffit à rendre l'interaction critique. Harmoniser toutes les fiches de la paire.
+- Le thésaurus replié sous une carte la rend rouge (« Micromedex INTERACTION MAJEURE ») même
+  quand la fiche est regradée : un plafond de gravité doit valoir pour TOUTES les lectures de
+  la paire, au moment du repli, pas seulement sur l'entrée de la fiche.
+- Une précision demandée et lue par personne (durée de BZD) : vérifier qu'un champ de la
+  fenêtre de précision produit bien un contexte lu par une règle.

@@ -750,14 +750,17 @@ const GERIA_RECOS_DB = {
             // Le titre disait « ou Z-drug » ; la condition, le message et le critère STOPP
             // (D8) ne visent que les benzodiazépines — les Z-drugs ont leur propre critère
             // (D11, deux semaines et non quatre).
-            titre: "Benzodiazépine ≥ 4 semaines",
+            // La durée se déclare à l'ajout (précision « durée ») : < 1 mois la fait taire.
+            // Non déclarée, la règle sort — et le titre le dit, au lieu d'affirmer une durée.
+            titre: "Benzodiazépine ≥ 4 semaines (ou durée non précisée)",
             message: "Benzodiazépine ≥ 4 semaines sans indication de prolongation : sédation prolongée, confusion, altération de l'équilibre, chutes, accidents de la route. PIM selon toutes les listes (Beers, PRISCUS, EU(7)-PIM, FORTA-D, PIM-Check, STOPPFrail). Sevrage progressif obligatoire.",
             severite: "danger",
             condition: {
                 // `benzodiazepine_stricte` et non `benzodiazepine`, qui résout aussi les
                 // hypnotiques Z : une zopiclone sortait ici ET sous EV_D11.
                 med_keys: ["benzodiazepine_stricte", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "prazepam", "nordazepam", "clobazam", "clonazepam", "nitrazepam", "lormetazepam", "temazepam", "midazolam"],
-                comorbs_absent: ["PAT_030"]
+                comorbs_absent: ["PAT_030"],
+                contexte_clinique_absent: ["bzd_duree_breve"]
             },
             alternatives: "Sevrage progressif (réduction 25% toutes les 2-4 semaines), TCC insomnie, mélatonine LP si insomnie"
         },
@@ -1740,13 +1743,17 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS"],
             ref_code: "STOPP3-L1",
             section: "Antalgiques",
-            titre: "Opioïde fort sans palier antalgique ni douleur sévère documentés",
-            message: "Opioïde fort (morphine, oxycodone, fentanyl, buprénorphine, méthadone, péthidine) prescrit sans que la sévérité de la douleur soit documentée, hors cancer et hors soins palliatifs : vérifier le respect de l'échelle OMS (paliers 1 et 2 essayés avant le palier 3). Si la douleur est sévère, le préciser sur la ligne du médicament désarme cette alerte. Note : le tramadol est un opioïde de palier 2 (faible) selon l'OMS, traité séparément.",
+            // STOPP v3 L1 : opioïde fort en première intention d'une douleur LÉGÈRE. La règle
+            // sortait en rouge sur toute ligne d'opioïde fort dont l'intensité n'était pas
+            // déclarée « sévère » — morphine 1 mg/j comprise. Elle exige désormais la douleur
+            // légère déclarée ; sans intensité, SUP_OPIO_01 (info) la demande.
+            titre: "Opioïde fort pour une douleur légère",
+            message: "Opioïde fort (morphine, oxycodone, fentanyl, buprénorphine, méthadone, péthidine) prescrit pour une douleur déclarée légère, hors cancer et hors soins palliatifs : les antalgiques de palier 1 (paracétamol) sont à essayer d'abord (STOPP v3 L1). Note : le tramadol est un opioïde de palier 2 (faible) selon l'OMS, traité séparément.",
             severite: "danger",
             condition: {
                 med_keys: ["morphine", "oxycodone", "fentanyl", "buprenorphine", "methadone", "pethidine"],
                 comorbs_absent: ["PAT_020", "PAT_030"],
-                contexte_clinique_absent: ["douleur_severe"]
+                contexte_clinique: ["douleur_legere"]
             },
             alternatives: "Paracétamol en premier, AINS si non CI, palier 2 avant palier 3"
         },
@@ -2203,10 +2210,13 @@ const GERIA_RECOS_DB = {
             sources: ["FDA", "BEERS"],
             ref_code: "SYND-044-RESPIR",
             section: "Interaction critique",
-            titre: "Risque de dépression respiratoire — BZD/Z-drug + opioïde (FDA Black Box 2016)",
-            message: "SYND_044 : Association BZD/Z-drug + opioïde fort = FDA Black Box (mortalité x4). Synergie GABA/µ-opioïde → dépression respiratoire, surdose fatale. Gabapentinoïdes (gabapentine, prégabaline) aggravent encore le risque.",
-            severite: "danger",
+            titre: "Benzodiazépine ou hypnotique Z + opioïde — dépression respiratoire (encadré FDA 2016)",
+            message: "Association à éviter si possible (encadré FDA 2016). Le risque est dose-dépendant : sous opioïde, décès par surdose ×1,69 entre 10 et 20 mg/j d'équivalent diazépam et ×2,34 entre 20 et 30 mg/j, par rapport à ≤ 10 mg/j (Park, BMJ 2015) ; il croît aussi avec la dose d'opioïde. Préciser les doses (✎) : l'alerte passe au rouge à dose élevée ou sur terrain respiratoire (équivalents dans l'onglet Scores).",
+            // Signalement 5.40 : 5 mg d'oxazépam + 1 mg de morphine sortaient en rouge. Orange par
+            // défaut ; le rouge passe à SUP_BZD_OPIO_01 (dose élevée, terrain respiratoire).
+            severite: "warning",
             condition: {
+                contexte_clinique_absent: ["bzd_opioide_dose_elevee"],
                 med_keys: ["diazepam", "lorazepam", "oxazepam", "alprazolam", "clonazepam", "bromazepam", "midazolam", "zopiclone", "zolpidem", "eszopiclone"],
                 med_keys_2: ["morphine", "oxycodone", "fentanyl", "hydromorphone", "tramadol", "codeine", "methadone", "tapentadol", "buprenorphine"]
             },
@@ -4399,6 +4409,28 @@ const RECOS_SUPPLEMENT = [
         }
     },
     {
+        // Benzodiazépine/Z + opioïde à dose élevée ou sur terrain respiratoire (5.40).
+        id: "SUP_BZD_OPIO_01", sources: ["FDA", "CDC"],
+        titre: "Benzodiazépine et opioïde à dose élevée ou sur terrain respiratoire — dépression respiratoire",
+        message: "Association benzodiazépine (ou hypnotique Z) + opioïde avec équivalent diazépam > 20 mg/j, équivalent morphine ≥ 50 mg/j, ou BPCO / apnées du sommeil. Sous opioïde, le risque de décès par surdose est ×2,34 entre 20 et 30 mg/j d'équivalent diazépam et ×3,06 au-delà de 40 mg/j (Park, BMJ 2015) ; ×2,95 entre 50 et 100 mg/j d'équivalent morphine sous benzodiazépine. Réduire l'un des deux (décroissance progressive de la benzodiazépine), surveiller vigilance et respiration ; naloxone à disposition de l'entourage.",
+        severite: "danger",
+        condition: { med_keys: ["benzodiazepine", "zolpidem", "zopiclone"], med_keys_2: ["opioide"], contexte_clinique: ["bzd_opioide_dose_elevee"] },
+        alternatives: "Décroissance de la benzodiazépine ; dose minimale d'opioïde."
+    },
+    {
+            id: "SUP_OPIO_01",
+            sources: ["STOPP3"],
+            severite: "info",
+            titre: "Opioïde fort : intensité de la douleur non précisée",
+            message: "L'intensité de la douleur qui motive l'opioïde fort n'est pas déclarée. STOPP v3 L1 ne le reproche qu'en première intention d'une douleur légère : préciser l'intensité sur la ligne du médicament (✎), et la réévaluer (EN, Algoplus).",
+            condition: {
+                med_keys: ["morphine", "oxycodone", "fentanyl", "buprenorphine", "methadone", "pethidine"],
+                comorbs_absent: ["PAT_020", "PAT_030"],
+                contexte_clinique_absent: ["douleur_legere", "douleur_moderee", "douleur_severe"]
+            },
+            alternatives: ""
+        },
+        {
         // Maladie aiguë / sepsis : médicaments à suspendre temporairement (« sick day rules »).
         // EV_N07 porte déjà AINS, aminosides, IEC/ARA2 ; restaient la metformine (acidose
         // lactique — RCP : déshydratation, infection grave, choc), les iSGLT2 (acidocétose
@@ -5303,10 +5335,22 @@ const CROSS_REF_GROUPS = [
         group_id: "GRP_OPIOID",
         theme: "Opioïdes chez le sujet âgé",
         merged_sources: ["STOPP3", "BEERS", "PRISCUS", "FORTA", "EU7PIM"],
-        rule_ids: ["EV_L01", "EV_L02", "EV_H09", "EV_K07"],
+        rule_ids: ["EV_L01", "EV_H09", "EV_K07"],
         pim_dict_keys: ["tramadol", "codeine", "morphine", "oxycodone", "fentanyl", "buprenorphine", "pethidine"],
         fusion_strategy: "distinct_context",
         note: "L1=1ère intention douleur légère, L2=sans laxatif, H9=arthrose, K7=chutes. FORTA différencie les molécules (péthidine=D, morphine/oxycodone/buprénorphine=A)."
+    },
+
+    // Deux règles, une consigne : « opioïde sans laxatif ». STOPP L2 (info) et SYND_048
+    // (ESMO) sortaient en deux cartes côte à côte. Une carte, la plus grave pour base.
+    {
+        group_id: "GRP_OPIOID_LAXATIF",
+        theme: "Opioïde sans laxatif",
+        merged_sources: ["STOPP3", "ESMO"],
+        rule_ids: ["EV_SYND_048", "EV_L02"],
+        pim_dict_keys: [],
+        fusion_strategy: "merge_display",
+        note: "L2 et SYND_048 disent la même conduite : laxatif prophylactique sous opioïde régulier."
     },
 
     // ========================================================================

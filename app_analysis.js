@@ -782,6 +782,11 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         const _ds = dosesSedatives(activeMeds);
         const _opio = activeMeds.some(m => typeof medPrecisionFamily === 'function' && medPrecisionFamily(m.classe, m.dci) === 'opioide');
         if (_ds.gaba.length && _opio && (_ds.mme.total >= SEUIL_MME_ELEVE || _ds.gaba.some(g => g.elevee))) ctxClinique.push("gaba_opioide_dose_elevee");
+        // Benzodiazépine/Z + opioïde : même logique (Park 2015 ; CDC 2022), plus le terrain
+        // respiratoire (BPCO, apnées du sommeil).
+        const _bzd = activeMeds.some(m => typeof medPrecisionFamily === 'function' && medPrecisionFamily(m.classe, m.dci) === 'bzd');
+        if (_bzd && _opio && (_ds.mme.total >= SEUIL_MME_ELEVE || _ds.diazepam.total > SEUIL_DIAZEPAM_ELEVE
+            || activeComorbs.includes('PAT_023') || activeComorbs.includes('PAT_052'))) ctxClinique.push("bzd_opioide_dose_elevee");
     }
     // Douleur déclarée non contrôlée par le clinicien (le statut, pas un score : cf. utils.js).
     if (getStr('douleurStatut') === 'non_controlee') ctxClinique.push("douleur_non_controlee");
@@ -912,6 +917,7 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
             if (fam === 'cortico' && p.duree === 'courte') ctxClinique.push('cortico_duree_breve');
             if (fam === 'opioide' && p.indication === 'severe') ctxClinique.push('douleur_severe');
             if (fam === 'opioide' && p.indication === 'legere') ctxClinique.push('douleur_legere');
+            if (fam === 'opioide' && p.indication === 'moderee') ctxClinique.push('douleur_moderee');
             if (fam === 'ipp' && p.duree === 'courte') ctxClinique.push('ipp_duree_breve');
             // Gabapentinoïde : STOPP v3 L5 vise la douleur NON neuropathique — c'est
             // l'indication déclarée qui le dit, jamais la seule molécule.
@@ -990,6 +996,9 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
                 }
             }
             if (fam === 'opioide' && p.duree === 'courte') ctxClinique.push('opioide_duree_breve');
+            // STOPP D8 vise la benzodiazépine ≥ 4 semaines : une durée déclarée < 1 mois
+            // la fait taire. La précision était demandée et lue par personne.
+            if (fam === 'bzd' && p.duree === 'courte') ctxClinique.push('bzd_duree_breve');
             if (fam === 'digoxine' && p.duree === 'courte') ctxClinique.push('digoxine_duree_breve');
             if (fam === 'metoclopramide' && p.duree === 'courte') ctxClinique.push('metoclopramide_duree_breve');
             if (fam === 'loperamide' && p.duree === 'courte') ctxClinique.push('loperamide_duree_breve');
@@ -3415,7 +3424,7 @@ function analyserPrescription() {
             deprescriptionGuides.push({
                 meds: bzdMeds.map(m => m.dci.toUpperCase()).join(', '),
                 classe: 'Benzodiazépines / Z-drugs',
-                color: 'danger',
+                color: 'info',
                 protocol: `<b>Protocole de sevrage :</b> Réduction de 25% de la dose tous les 15 jours. Si dose faible : passage à demi-dose pendant 2 semaines puis arrêt.
                     <br>Si BZD à demi-vie longue (diazépam, clorazépate) → switch vers BZD demi-vie courte (oxazépam, lorazépam) avant sevrage.
                     <br><em>Alternatives :</em> Mélatonine LP 2mg, hygiène du sommeil, TCC-I. Ne pas substituer par un antihistaminique (charge anticholinergique).`,
@@ -3429,7 +3438,7 @@ function analyserPrescription() {
             deprescriptionGuides.push({
                 meds: opioidMeds.map(m => m.dci.toUpperCase()).join(', '),
                 classe: 'Opioïdes',
-                color: 'danger',
+                color: 'info',
                 protocol: `<b>Réévaluation systématique :</b> Évaluer le bénéfice antalgique (EVA). Si douleur non cancéreuse chronique > 3 mois, envisager sevrage progressif.
                     <br>Réduction de 10% de la dose totale par semaine. Surveiller syndrome de sevrage (agitation, diarrhée, myalgies).
                     <br><em>Alternatives :</em> Paracétamol, TENS, kinésithérapie, duloxétine (si douleur neuropathique).`,
@@ -3837,6 +3846,43 @@ function analyserPrescription() {
             { motif: /hyponatr|siadh/i,                     bio: 'BIO_002', nom: 'natrémie', unite: 'mmol/L' },
             { motif: /hypokali|hypokali[ée]mi|cumul hypok/i, bio: 'BIO_001', nom: 'kaliémie', unite: 'mmol/L' }
         ];
+        // ── Associations sédatives : le risque respiratoire dépend de la DOSE ──────────
+        // Benzodiazépine (ou Z) + opioïde, gabapentinoïde + opioïde : le surrisque de décès
+        // croît avec la dose de chacun (Park, BMJ 2015 ; Gomes, PLoS Med 2017 et Ann Intern
+        // Med 2018). Oxazépam 5 mg + morphine 1 mg n'est pas la même ordonnance qu'oxazépam
+        // 60 mg + morphine 60 mg. La gravité de la PAIRE est plafonnée en orange tant que
+        // le contexte « dose élevée ou terrain respiratoire » (calculé dans
+        // `_buildPatientContext`, porté aussi par SUP_BZD_OPIO_01 / SUP_GABA_01/03) est
+        // absent. Toutes les sources sont plafonnées — fiche, thésaurus ANSM, Micromedex —
+        // sans que leur texte soit réécrit. Paire déclarée par FAMILLE de précision, jamais
+        // par le texte de l'entrée : opioïde + opioïde n'est pas concerné.
+        const _famPrecision = (dci) => {
+            const am = activeMeds.find(x => sanitizeText(x.dci) === sanitizeText(dci));
+            return (am && typeof medPrecisionFamily === 'function') ? medPrecisionFamily(am.classe, am.dci) : null;
+        };
+        const _PAIRES_SEDATIVES = [
+            { a: 'bzd', b: 'opioide', ctx: 'bzd_opioide_dose_elevee' },
+            { a: 'gabapentinoide', b: 'opioide', ctx: 'gaba_opioide_dose_elevee' }
+        ];
+        const _plafondSedatif = (dciA, dciB) => {
+            const fa = _famPrecision(dciA), fb = _famPrecision(dciB);
+            const p = _PAIRES_SEDATIVES.find(x => (fa === x.a && fb === x.b) || (fa === x.b && fb === x.a));
+            if (!p) return null;
+            return { plafonne: !ctxClinique.includes(p.ctx) };
+        };
+        // La note dit ce qui est SU : doses déclarées sous les repères, ou doses manquantes.
+        // Une dose non renseignée n'est pas une dose faible — elle est demandée, et la
+        // carte reste orange comme pour toute association sédative non qualifiée.
+        const _noteSedative = (() => {
+            let ds = null;
+            try { ds = dosesSedatives(activeMeds); } catch (e) { ds = null; }
+            const manquantes = ds ? [...ds.mme.inconnus, ...ds.diazepam.inconnus,
+                ...ds.gaba.filter(x => x.dose == null).map(x => x.dci)] : [];
+            const tete = manquantes.length
+                ? `Dose non renseignée (${manquantes.join(', ')}) : à préciser (✎) pour situer le risque.`
+                : `Doses déclarées sous les repères de risque.`;
+            return `${tete} Rouge au-delà de 20 mg/j d'équivalent diazépam, à partir de 50 mg/j d'équivalent morphine, de 900 mg/j de gabapentine ou au-delà de 300 mg/j de prégabaline, ou sur BPCO / apnées du sommeil. En deçà : vigilance (sédation, chutes, fréquence respiratoire), pas interaction critique — voir « Doses équivalentes des sédatifs » (onglet Scores).`;
+        })();
         const _moduleParBiologie = (classe, commentaire, severite, bioVals, sexePatient) => {
             if (severite !== 'danger') return { severite, note: '' };
             const texte = `${classe} ${commentaire}`;
@@ -4099,7 +4145,12 @@ function analyserPrescription() {
                             // La gradation ne retombe que depuis `warning` : un risque
                             // d'initiation peut être un vrai danger, et le plafond ne
                             // doit jamais effacer celui-là.
-                            const sevFinale = (instauration && mod.severite === 'warning') ? 'info' : mod.severite;
+                            let sevFinale = (instauration && mod.severite === 'warning') ? 'info' : mod.severite;
+                            // Plafond sédatif : seulement si TOUTES les paires de l'entrée
+                            // sont sédatives et sous les repères de dose.
+                            const plaf = newMatched.map(x => _plafondSedatif(ref.dci, x.interactor));
+                            const plafonne = plaf.every(p => p && p.plafonne);
+                            if (plafonne && sevFinale === 'danger') sevFinale = 'warning';
                             foundGroups.push({
                                 classe: entry.classe || '',
                                 matched: newMatched,
@@ -4110,7 +4161,8 @@ function analyserPrescription() {
                                 commentaire: entry.commentaire || '',
                                 via: entry._via || '',
                                 severite: sevFinale,
-                                sevBrute: mod.severite,
+                                sevBrute: plafonne && mod.severite === 'danger' ? 'warning' : mod.severite,
+                                plafondSedatif: plafonne,
                                 noteBio: mod.note
                             });
                         }
@@ -4153,6 +4205,7 @@ function analyserPrescription() {
                             // Confiné à la mise en route seulement si les DEUX lectures le disent.
                             porteur.instauration = porteur.instauration && g.instauration;
                             porteur.sevBrute = _plusFort(porteur.sevBrute, g.sevBrute);
+                            porteur.plafondSedatif = porteur.plafondSedatif && g.plafondSedatif;
                             porteur.severite = (porteur.instauration && porteur.sevBrute === 'warning') ? 'info' : porteur.sevBrute;
                             return false;
                         });
@@ -4326,7 +4379,9 @@ function analyserPrescription() {
             if (!porteur) continue;
             (porteur.ansm = porteur.ansm || []).push(data);
             // Le thésaurus peut être plus sévère que la base : c'est lui qui l'emporte.
-            if (data.isDanger) { porteur.sevBrute = 'danger'; porteur.severite = 'danger'; }
+            // Sauf paire sédative sous les repères de dose : le plafond vaut pour toutes
+            // les lectures, le texte officiel reste affiché tel quel.
+            if (data.isDanger && !porteur.plafondSedatif) { porteur.sevBrute = 'danger'; porteur.severite = 'danger'; }
             _ansmReplieesIci.add(pair);
         }
         _cartesV2.forEach(({ ref, groupes }) => {
@@ -4368,7 +4423,9 @@ function analyserPrescription() {
                 const lib = _libelleInteraction(g);
                 const tt = lib.complet ? ` title="Libellé complet de l'entrée : ${escapeHtml(lib.complet)}"` : '';
                 const via = g.via ? `<br><span class="small text-muted">Porté par la ${escapeHtml(g.via.toLowerCase())} déclarée dans l'association.</span>` : '';
-                return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}${ciAutre}${via}${nb}${reco}${phase}${autre}${ansm}</li>`;
+                const dose = g.plafondSedatif
+                    ? `<br><span class="small text-muted">${escapeHtml(_noteSedative)}</span>` : '';
+                return `<li><b${tt}>${escapeHtml(lib.texte)}</b> → ${drugs}${com}${ciAutre}${via}${nb}${reco}${phase}${dose}${autre}${ansm}</li>`;
             }).join('');
             // Refléter la gravité maximale dans le TITRE (et pas seulement dans le
             // détail déplié) : une contre-indication absolue doit être visible au

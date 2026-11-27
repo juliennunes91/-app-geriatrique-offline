@@ -4,7 +4,6 @@
    "danger | AINS + DFG < 50",
    "danger | Antiagrégant seul en remplacement de l'anticoagulant dans la FA",
    "danger | Antidépresseurs tricycliques chez le sujet âgé",
-   "danger | Benzodiazépines / Z-drugs : DIAZEPAM",
    "danger | Benzodiazépines chez le sujet âgé",
    "danger | Citalopram > 20 mg ou Escitalopram > 10 mg ou TCA en cas d'arythmie / QT prolongé / hypokaliémie",
    "danger | Digoxine ≥ 125 µg/j au long cours + DFG < 30",
@@ -12,6 +11,7 @@
    "danger | Sulfamide à longue demi-vie (glibenclamide, chlorpropamide, glimépiride)",
    "danger | Tricyclique (TCA) en 1ère ligne pour dépression",
    "info | Action immédiate",
+   "info | Benzodiazépines / Z-drugs : DIAZEPAM",
    "info | Polypharmacie (≥ 5 médicaments) : réévaluation annuelle de chaque traitement",
    "warning | Antidépresseur chez patient chuteur",
    "warning | Aspirine en prévention primaire cardiovasculaire",
@@ -387,7 +387,7 @@
  "hepatopathie": {
   "alertes-eviter": [
    "danger | Benzodiazépine / opioïde + cirrhose sévère (Child-Pugh B ou C)",
-   "danger | Benzodiazépine ≥ 4 semaines",
+   "danger | Benzodiazépine ≥ 4 semaines (ou durée non précisée)",
    "info | Action immédiate",
    "info | Paracétamol et hépatopathie : plafonner la dose, sans l'arrêter",
    "warning | DIAZEPAM — Déconseillé Hépatopathie chronique / Cirrhose"
@@ -647,7 +647,7 @@
  },
  "usage_alcool": {
   "alertes-eviter": [
-   "danger | Benzodiazépine ≥ 4 semaines",
+   "danger | Benzodiazépine ≥ 4 semaines (ou durée non précisée)",
    "danger | Médicament sédatif + alcool excessif",
    "info | Action immédiate"
   ],
@@ -1528,9 +1528,9 @@
  },
  "cov_EV_D09_EV_D10": {
   "alertes-eviter": [
-   "danger | Benzodiazépines / Z-drugs : ALPRAZOLAM",
    "danger | Benzodiazépines chez le sujet âgé",
-   "info | Action immédiate"
+   "info | Action immédiate",
+   "info | Benzodiazépines / Z-drugs : ALPRAZOLAM"
   ],
   "alertes-initier": [],
   "alertes-bio": [],
@@ -1555,9 +1555,9 @@
   "alertes-eviter": [
    "danger | Antipsychotique comme hypnotique (sauf psychose ou SCPD)",
    "danger | Benzodiazépine ≥ 2 semaines pour insomnie",
-   "danger | Benzodiazépines / Z-drugs : ZOLPIDEM",
    "danger | Hypnotique Z ≥ 2 semaines pour insomnie",
    "info | Action immédiate",
+   "info | Benzodiazépines / Z-drugs : ZOLPIDEM",
    "warning | Deux classes pourvoyeuses de chutes associées"
   ],
   "alertes-initier": [],
@@ -2186,10 +2186,10 @@
  },
  "cov_EV_G03_EV_G04": {
   "alertes-eviter": [
-   "danger | Benzodiazépines / Z-drugs : ALPRAZOLAM",
    "danger | Benzodiazépines chez le sujet âgé",
    "danger | TIOTROPIUM — CI Glaucome à angle fermé",
    "info | Action immédiate",
+   "info | Benzodiazépines / Z-drugs : ALPRAZOLAM",
    "warning | LAMA + Glaucome à angle fermé / obstruction vésicale"
   ],
   "alertes-initier": [
@@ -2276,11 +2276,11 @@
  "cov_EV_H09_EV_BEERS_03": {
   "alertes-eviter": [
    "danger | Opioïde au long cours pour arthrose",
-   "danger | Opioïde fort sans palier antalgique ni douleur sévère documentés",
-   "danger | Opioïdes : BUPRENORPHINE",
    "info | Action immédiate",
+   "info | Opioïde fort : intensité de la douleur non précisée",
+   "info | Opioïde quotidien régulier sans laxatif co-prescrit",
+   "info | Opioïdes : BUPRENORPHINE",
    "warning | Myorelaxants à éviter (méthocarbamol, tizanidine, baclofène systémique)",
-   "warning | Opioïde quotidien régulier sans laxatif co-prescrit",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
@@ -2303,7 +2303,7 @@
    "info | Doses équivalentes des sédatifs",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2506,10 +2506,10 @@
  },
  "cov_EV_K03_EV_K04": {
   "alertes-eviter": [
-   "danger | Benzodiazépines / Z-drugs : ZOLPIDEM",
    "danger | Vasodilatateur chez patient chuteur / hypotension orthostatique",
    "danger | Z-drugs (zolpidem, zopiclone)",
-   "info | Action immédiate"
+   "info | Action immédiate",
+   "info | Benzodiazépines / Z-drugs : ZOLPIDEM"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",
@@ -2573,10 +2573,10 @@
   "alertes-eviter": [
    "danger | Alpha-bloquant antihypertenseur chez patient chuteur",
    "danger | Opioïde chez patient chuteur",
-   "danger | Opioïde fort sans palier antalgique ni douleur sévère documentés",
-   "danger | Opioïdes : BUPRENORPHINE",
    "info | Action immédiate",
-   "warning | Opioïde quotidien régulier sans laxatif co-prescrit"
+   "info | Opioïde fort : intensité de la douleur non précisée",
+   "info | Opioïde quotidien régulier sans laxatif co-prescrit",
+   "info | Opioïdes : BUPRENORPHINE"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",
@@ -2598,7 +2598,7 @@
    "info | Doses équivalentes des sédatifs",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 25/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
@@ -2729,13 +2729,12 @@
  "cov_EV_SYND_043_EV_SYND_043b": {
   "alertes-eviter": [
    "danger | CI ABSOLUE : Linézolide + ISRS/IRSN/Tramadol/IMAO",
-   "danger | Opioïdes : TRAMADOL",
    "danger | Risque de syndrome sérotoninergique — association sérotoninergique + tramadol/IMAO/linézolide",
    "info | Action immédiate",
-   "warning | Constipation opioïde / anticholinergique — prophylaxie laxative requise",
+   "info | Opioïdes : TRAMADOL",
    "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Médicament à risque QT établi — ECG, kaliémie et magnésémie",
-   "warning | Opioïde quotidien régulier sans laxatif co-prescrit"
+   "warning | Opioïde sans laxatif"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",
@@ -2761,7 +2760,7 @@
    "info | Doses équivalentes des sédatifs",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 34/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
@@ -2770,21 +2769,20 @@
  },
  "cov_EV_SYND_044_EV_SYND_045": {
   "alertes-eviter": [
-   "danger | Benzodiazépine ≥ 4 semaines",
-   "danger | Benzodiazépines / Z-drugs : DIAZEPAM",
-   "danger | Opioïde fort sans palier antalgique ni douleur sévère documentés",
-   "danger | Opioïdes : MORPHINE",
-   "danger | Risque de dépression respiratoire — BZD/Z-drug + opioïde (FDA Black Box 2016)",
+   "danger | Benzodiazépine ≥ 4 semaines (ou durée non précisée)",
    "danger | Triple whammy : AINS + IEC/ARA2 + diurétique — risque IRA",
    "info | Action immédiate",
+   "info | Benzodiazépines / Z-drugs : DIAZEPAM",
    "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
+   "info | Opioïde fort : intensité de la douleur non précisée",
+   "info | Opioïdes : MORPHINE",
    "info | Polypharmacie (≥ 5 médicaments) : réévaluation annuelle de chaque traitement",
+   "warning | Benzodiazépine ou hypnotique Z + opioïde — dépression respiratoire (encadré FDA 2016)",
    "warning | Cascades iatrogéniques détectées",
-   "warning | Constipation opioïde / anticholinergique — prophylaxie laxative requise",
    "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Diurétique sans ionogramme de surveillance",
    "warning | IEC/ARA2 sans contrôle créatinine/K+ post-initiation",
-   "warning | Opioïde quotidien régulier sans laxatif co-prescrit"
+   "warning | Opioïde sans laxatif"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",
@@ -2795,7 +2793,7 @@
   "alertes-interact": [
    "danger | Co-prescription à risque : ALTIZIDE",
    "danger | Co-prescription à risque : CELECOXIB",
-   "danger | Co-prescription à risque : DIAZEPAM"
+   "warning | Co-prescription à risque : DIAZEPAM"
   ],
   "alertes-suivi": [
    "info | Tableau croisé — Surveillance biologique",
@@ -2815,10 +2813,77 @@
   "alertes-scores": [
    "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 41/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
+  ]
+ },
+ "cov_EV_L01": {
+  "alertes-eviter": [
+   "danger | Opioïde fort pour une douleur légère",
+   "info | Action immédiate",
+   "info | Opioïdes : OXYCODONE",
+   "warning | Cascades iatrogéniques détectées"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "warning | Co-prescription à risque : OXYCODONE"
+  ],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | MACROGOL — Alertes cliniques",
+   "warning | OXYCODONE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : MACROGOL",
+   "success | Posologies : OXYCODONE"
+  ],
+  "alertes-scores": [
+   "info | Doses équivalentes des sédatifs",
+   "info | Score ACB : 0",
+   "info | Score PIM Global : 24/100 — RISQUE FAIBLE"
+  ],
+  "alertes-synthese": [
+   "danger | Dossier avec alertes critiques"
+  ]
+ },
+ "cov_SUP_BZD_OPIO_01": {
+  "alertes-eviter": [
+   "danger | Benzodiazépine et opioïde à dose élevée ou sur terrain respiratoire — dépression respiratoire",
+   "danger | Benzodiazépine ≥ 4 semaines (ou durée non précisée)",
+   "info | Action immédiate",
+   "info | Benzodiazépines / Z-drugs : DIAZEPAM",
+   "info | Opioïde fort : intensité de la douleur non précisée",
+   "info | Opioïdes : MORPHINE",
+   "warning | Cascades iatrogéniques détectées",
+   "warning | Deux classes pourvoyeuses de chutes associées"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "danger | Co-prescription à risque : DIAZEPAM",
+   "warning | Co-prescription à risque : MORPHINE"
+  ],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | DIAZEPAM — Alertes cliniques",
+   "warning | MACROGOL — Alertes cliniques",
+   "warning | MORPHINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : DIAZEPAM",
+   "success | Posologies : MACROGOL",
+   "success | Posologies : MORPHINE"
+  ],
+  "alertes-scores": [
+   "info | Doses équivalentes des sédatifs",
+   "warning | Score ACB : 2",
+   "warning | Score PIM Global : 35/100 — RISQUE MODÉRÉ"
+  ],
+  "alertes-synthese": [
+   "danger | Dossier avec alertes critiques"
   ]
  },
  "cov_EV_SFGG_AD_02_EV_SFGG_AD_04": {

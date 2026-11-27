@@ -936,13 +936,27 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Prednisone'], precisions: { prednisone: { duree: 'courte' } } }), re), 'durée courte → désarmé');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Prednisone'], precisions: { prednisone: { duree: 'longue' } } }), re), 'durée longue → alerte');
     });
-    test('Précisions : douleur sévère désarme EV_L01 (opioïde fort)', () => {
-        // Titre reformule : la regle se declenche quand la severite n'est PAS documentee,
-        // pas sur une « douleur legere » qui n'etait jamais saisie.
-        const re = /Opioïde fort sans palier antalgique ni douleur sévère documentés/i;
-        assert.ok(has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'] }), re), 'sans précision → alerte (défaut)');
-        assert.ok(!has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'severe' } } }), re), 'douleur sévère → désarmé');
-        assert.ok(has(analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: { morphine: { indication: 'legere' } } }), re), 'douleur légère → alerte');
+    test('Précisions : EV_L01 (STOPP L1) ne sort que sur douleur légère déclarée ; SUP_OPIO_01 demande l\'intensité', () => {
+        // 5.40 : morphine 1 mg/j sortait en rouge « sans palier ni douleur sévère documentés ».
+        // STOPP L1 vise la première intention d'une douleur LÉGÈRE : sans intensité, on la demande.
+        const l1 = x => /id:EV_L01/.test(x._html['alertes-eviter']), o1 = x => /id:SUP_OPIO_01/.test(x._html['alertes-eviter']);
+        const c = ind => analyzeCase({ age: 80, sexe: 'M', meds: ['Morphine'], precisions: ind ? { morphine: { indication: ind } } : {} });
+        assert.ok(!l1(c(null)) && o1(c(null)), 'sans précision : pas de rouge, intensité demandée');
+        assert.ok(l1(c('legere')) && !o1(c('legere')), 'douleur légère : STOPP L1');
+        ['moderee', 'severe'].forEach(i => assert.ok(!l1(c(i)) && !o1(c(i)), i + ' : rien'));
+        assert.ok(!o1(analyzeCase({ age: 80, sexe: 'M', comorbs: ['PAT_030'], meds: ['Morphine'] })), 'palliatif : rien à demander');
+    });
+    test('Précisions : durée < 1 mois désarme EV_D08 (benzodiazépine ≥ 4 semaines)', () => {
+        const d8 = x => /id:EV_D08/.test(x._html['alertes-eviter']);
+        const c = du => analyzeCase({ age: 82, sexe: 'F', meds: ['Oxazepam'], precisions: du ? { oxazepam: { duree: du } } : {} });
+        assert.ok(d8(c(null)), 'non précisée : sort (le titre le dit)');
+        assert.ok(!d8(c('courte')), '< 1 mois : désarmé');
+        assert.ok(d8(c('longue')), '> 3 mois : sort');
+    });
+    test('Opioïde sans laxatif : STOPP L2 et SYND_048 en une seule carte', () => {
+        const r = analyzeCase({ age: 82, sexe: 'F', meds: ['Morphine'] });
+        const n = (r._html['alertes-eviter'].match(/<strong>[^<]*(sans laxatif|prophylaxie laxative)/g) || []).length;
+        assert.strictEqual(n, 1, 'une carte, pas deux');
     });
     test('Précisions : l\'indication du diurétique départage EV_B07 et EV_B08', () => {
         // STOPP v3 consacre DEUX criteres au diuretique de l'anse, que seule
@@ -1479,6 +1493,24 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             && ((/zepam|zolpidem|zopiclone|clobazam|clorazepate/i.test(m.dci) && (e.dcis || []).some(x => /pregabaline|gabapentine/.test(x)))
              || (/^(Pregabaline|Gabapentine)$/.test(m.dci) && (e.dcis || []).some(x => /zepam|zolpidem|zopiclone/.test(x))))).map(e => m.dci + ' : ' + e.classe)))`, sandbox));
         assert.deepStrictEqual(dangers, [], 'paire notee danger : ' + dangers.join(' ; '));
+    });
+
+    test('Benzodiazepine + opioide : rouge selon la dose ou le terrain, pas sur 5 mg d\'oxazepam + 1 mg de morphine', () => {
+        // Signalement 5.40. Park (BMJ 2015) : le surrisque croit avec la dose des deux.
+        const { analyzeCase } = require('./oracle_harness');
+        const r = (pr, co) => analyzeCase({ age: 85, sexe: 'F', dfg: 60, comorbs: co || [], meds: ['Oxazepam', 'Morphine'], precisions: pr });
+        const carte = x => (x._html['alertes-interact'].match(/<div class="alert (alert-\w+)/) || [])[1];
+        const crit = x => /Interactions? critiques?/i.test(x._html['alertes-synthese']);
+        const sup = x => /id:SUP_BZD_OPIO_01/.test(x._html['alertes-eviter']), s44 = x => /id:EV_SYND_044/.test(x._html['alertes-eviter']);
+        const faible = r({ Oxazepam: { dose: 5 }, Morphine: { dose: 1 } });
+        assert.strictEqual(carte(faible), 'alert-warning', 'faible dose : carte orange');
+        assert.ok(!crit(faible) && !sup(faible) && s44(faible), 'faible dose : vigilance, pas critique');
+        assert.strictEqual(carte(r({})), 'alert-warning', 'dose inconnue : orange, dose demandee');
+        assert.ok(/Dose non renseign/.test(r({})._html['alertes-interact']), 'la dose manquante est dite');
+        [[{ Oxazepam: { dose: 60 }, Morphine: { dose: 1 } }], [{ Oxazepam: { dose: 5 }, Morphine: { dose: 60 } }], [{ Oxazepam: { dose: 5 }, Morphine: { dose: 1 } }, ['PAT_023']]]
+            .forEach(([pr, co], i) => { const x = r(pr, co); assert.strictEqual(carte(x), 'alert-danger', 'cas rouge ' + i); assert.ok(sup(x) && !s44(x), 'une regle rouge, pas deux ' + i); });
+        // Opioide + opioide (fiche tramadol) n'est pas une paire sedative : pas de plafond.
+        assert.strictEqual(carte(analyzeCase({ age: 85, sexe: 'F', meds: ['Tramadol', 'Morphine'] })), 'alert-danger', 'opioide + opioide inchange');
     });
 
     test('Douleur : le statut declare est lu, affiche, et arme les regles dans les deux sens', () => {

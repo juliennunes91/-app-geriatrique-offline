@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 26/11/2026 — **version 5.30**, `BUILD_ID` `20261127-audit-cases-lot1`,
-cache `geriaassist-v174`.*
+*Dernière mise à jour : 27/11/2026 — **version 5.40**, `BUILD_ID` `20261127-bzd-opioide`,
+cache `geriaassist-v175`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,11 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **5.40** (27/11) — BZD + opioïde selon la dose (orange ; rouge `SUP_BZD_OPIO_01` si équiv.
+  diazépam > 20, MME ≥ 50, BPCO/SAOS — Park BMJ 2015) ; plafond de la carte d'interaction pour
+  les paires sédatives ; STOPP L1 sur douleur légère déclarée ; durée de BZD lue ; L2 + SYND_048
+  fusionnés ; protocoles de déprescription en informatif.
 
 - **5.30** (27/11) — Audit des cases, lot 1 corrigé : HTA non contrôlée, Child-Pugh,
   encéphalopathie, QT/dose citalopram, MTEV en cours, FC/PAS/PAS debout, sepsis, paracétamol.

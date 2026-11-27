@@ -96,3 +96,9 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **27/11/2026** — Audit lot 1 : paracétamol en posologie (pas d'éviction) dans la cirrhose ;
   antécédent de MTEV ≠ indication d'anticoagulation ; constantes FC/PAS saisies (une mesure vaut
   une case). — Arbitrages confiés par l'utilisateur.
+- **27/11/2026** — BZD/Z + opioïde : orange par défaut (dose faible ou inconnue), rouge à dose
+  élevée (équiv. diazépam > 20 mg/j, MME ≥ 50) ou BPCO/SAOS. La carte d'interaction est plafonnée
+  pour les paires sédatives (toutes sources), texte ANSM inchangé. — « 5 mg de Seresta + 1 mg de
+  morphine en rouge ? un peu de pragmatisme ».
+- **27/11/2026** — STOPP L1 ne sort que sur douleur légère déclarée ; sans intensité, elle est
+  demandée (info). Protocoles de déprescription : informatifs (un mode d'emploi, pas un verdict).
