@@ -836,7 +836,8 @@
   ],
   "eviter": [
    "AINS au long cours",
-   "Coprescription opioïde + benzodiazépine ou gabapentinoïde",
+   "Coprescription opioïde + benzodiazépine",
+   "Coprescription opioïde + gabapentinoïde à dose élevée ou sur BPCO / apnées du sommeil",
    "Opioïdes forts en 1ère intention (douleur non cancéreuse chronique)"
   ],
   "reference": "HAS 2023 (douleur chronique) | SFETD 2024 | OMS (paliers antalgiques) | STOPP/START v3 | Beers 2023"

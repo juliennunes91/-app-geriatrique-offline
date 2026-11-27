@@ -65,6 +65,7 @@
    "danger | Score ACB : 5",
    "danger | Score PIM Global : 69/100 — RISQUE ÉLEVÉ",
    "info | CHA₂DS₂-VA : 4 point(s)",
+   "info | Doses équivalentes des sédatifs",
    "warning | DOAC Score : 10 point(s)",
    "warning | ORBIT-AF : 3 point(s)"
   ],
@@ -408,6 +409,7 @@
   ],
   "alertes-scores": [
    "danger | Child-Pugh : Classe C",
+   "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
@@ -664,6 +666,7 @@
    "success | Posologies : DIAZEPAM"
   ],
   "alertes-scores": [
+   "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 56/100 — RISQUE MODÉRÉ"
   ],
@@ -1542,6 +1545,7 @@
   ],
   "alertes-scores": [
    "danger | Score PIM Global : 62/100 — RISQUE ÉLEVÉ",
+   "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -2205,6 +2209,7 @@
    "success | Posologies : TIOTROPIUM"
   ],
   "alertes-scores": [
+   "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 1",
    "warning | Score PIM Global : 38/100 — RISQUE MODÉRÉ"
   ],
@@ -2296,6 +2301,7 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 3",
+   "info | Doses équivalentes des sédatifs",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
    "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
@@ -2590,6 +2596,7 @@
    "success | Posologies : DOXAZOSINE"
   ],
   "alertes-scores": [
+   "info | Doses équivalentes des sédatifs",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
@@ -2650,6 +2657,7 @@
    "success | Posologies : NEFOPAM"
   ],
   "alertes-scores": [
+   "info | Doses équivalentes des sédatifs",
    "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
    "warning | Score ACB : 2"
   ],
@@ -2751,6 +2759,7 @@
    "success | Posologies : TRAMADOL"
   ],
   "alertes-scores": [
+   "info | Doses équivalentes des sédatifs",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
    "info | Score PIM Global : 34/100 — RISQUE FAIBLE",
@@ -2805,6 +2814,7 @@
    "success | Posologies : MORPHINE"
   ],
   "alertes-scores": [
+   "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 2",
    "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],

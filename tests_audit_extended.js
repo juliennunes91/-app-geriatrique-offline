@@ -348,7 +348,7 @@ function runExtendedAudits(test, assert) {
             'ADA', 'NICE', 'EFNS',
             // Dispositifs implantés : sonde à demeure (SUP_SAD_01), prothèse articulaire
             // (SUP_PROTH_01).
-            'SPILF', 'SF2H', 'ANSM_DENT', 'HCSP']);
+            'SPILF', 'SF2H', 'ANSM_DENT', 'HCSP', 'CDC']);
         const bad = JSON.parse(vm.runInContext(`(function(){
             const out=new Set(); const scan=arr=>(arr||[]).forEach(r=>(r.sources||[]).forEach(s=>out.add(s)));
             scan(GERIA_RECOS_DB.EVITER);scan(GERIA_RECOS_DB.INITIER);scan(RECOS_SUPPLEMENT);

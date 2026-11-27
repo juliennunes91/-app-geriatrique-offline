@@ -983,6 +983,29 @@ se déclare à l'ajout (précision `indication_gaba`, famille `gabapentinoide`, 
 `EV_L05` ne sort que sur « autre ». Non renseignée, `SUP_GABA_02` (info) la **demande** sans
 la présumer, et se tait si une épilepsie (`PAT_015`) ou un TAG (`PAT_044`/`PAT_064`) est déclaré.
 
+## Dépression respiratoire : une question de dose (5.20)
+
+Le risque des associations sédatives dépend des doses, que GeriaAssist ne connaissait pas. Elles
+se saisissent dans la fenêtre de précision — opioïdes (mg/j ; **fentanyl en µg/h**, champ
+`dose_patch`), benzodiazépines (famille `bzd`, dose ajoutée), gabapentinoïdes — et
+`dosesSedatives()` (`utils.js`) en tire des **repères**, affichés dans l'onglet Scores
+(« Doses équivalentes des sédatifs », avec les doses manquantes nommées) :
+
+- équivalent **morphine orale** : facteurs CDC 2022 (codéine 0,15 ; tramadol 0,2 ; oxycodone
+  1,5 ; hydromorphone 5 ; tapentadol 0,4 ; méthadone 4,7 ; fentanyl µg/h × 2,4) ; la
+  buprénorphine n'a pas d'équivalent CDC et est dite telle ;
+- équivalent **diazépam** : table d'Ashton (diazépam 10 = alprazolam 0,5 = bromazépam 5 =
+  clonazépam 0,5 = lorazépam 1 = oxazépam 20) ; hypnotiques Z écartés (sources divergentes).
+  Il est affiché, sans seuil : aucune source ne fixe de seuil respiratoire en diazépam.
+
+**Gabapentinoïde + opioïde** : orange par défaut (11 fiches harmonisées, un test interdit le
+retour au rouge) ; rouge par `SUP_GABA_03` quand la dose est élevée — équivalent morphine
+≥ 50 mg/j (CDC 2022), gabapentine ≥ 900 mg/j (Gomes, *PLoS Med* 2017 : non significatif en
+dessous), prégabaline > 300 mg/j (Gomes, *Ann Intern Med* 2018 : aOR 2,51 contre 1,52 ; seuil
+relu sur résumé) — ou sur BPCO / apnées du sommeil (`SUP_GABA_01`). Opioïde + benzodiazépine
+reste rouge (encadré FDA 2016). L'onglet recommandations de la douleur chronique séparait mal
+les deux : corrigé. Ce sont des repères de risque, **jamais une table de rotation**.
+
 ## Le chiffre mesuré parle du patient, la sévérité déclarée n'en sait rien
 
 Une interaction dont le dommage est une **anomalie biologique** ne se juge pas pareillement

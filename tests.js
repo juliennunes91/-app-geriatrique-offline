@@ -1375,6 +1375,32 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Gabapentinoide + opioide : orange par defaut, rouge a dose elevee ; equivalents de dose', () => {
+        const { analyzeCase, loadApp } = require('./oracle_harness');
+        const vm = require('vm'); const { sandbox } = loadApp();
+        const eq = meds => JSON.parse(vm.runInContext(`JSON.stringify(dosesSedatives(${JSON.stringify(meds)}.map(x => Object.assign({}, MASTER_DB.MEDICAMENTS.find(m => m.dci === x[0]), { precisions: x[1] }))))`, sandbox));
+        // Facteurs CDC 2022 et table d'Ashton.
+        assert.strictEqual(eq([['Oxycodone', { dose: 20 }], ['Tramadol', { dose: 100 }]]).mme.total, 50, 'oxycodone 20 x 1,5 + tramadol 100 x 0,2');
+        assert.strictEqual(eq([['Fentanyl', { dose_patch: 25 }]]).mme.total, 60, 'fentanyl 25 µg/h x 2,4');
+        assert.strictEqual(eq([['Oxazepam', { dose: 20 }], ['Lorazepam', { dose: 1 }]]).diazepam.total, 20, 'oxazepam 20 = lorazepam 1 = diazepam 10');
+        assert.deepStrictEqual(eq([['Buprenorphine', {}]]).mme.sansEquivalent, ['Buprenorphine'], 'buprenorphine : sans equivalent CDC');
+        const r = c => analyzeCase(Object.assign({ age: 91, sexe: 'M', dfg: 50 }, c));
+        const rouge = x => /id:SUP_GABA_03/.test(x._html['alertes-eviter']);
+        const crit = x => /Interactions critiques/.test(x._html['alertes-synthese']);
+        const bas = r({ meds: ['Pregabaline', 'Morphine'], precisions: { Pregabaline: { dose: 50 }, Morphine: { dose: 20 } } });
+        assert.ok(!rouge(bas) && !crit(bas), 'faibles doses : vigilance, pas critique');
+        assert.ok(!rouge(r({ meds: ['Pregabaline', 'Morphine'] })) && !crit(r({ meds: ['Pregabaline', 'Morphine'] })), 'doses inconnues : orange, doses demandees');
+        assert.ok(rouge(r({ meds: ['Pregabaline', 'Morphine'], precisions: { Morphine: { dose: 60 } } })), 'morphine 60 mg/j : rouge');
+        assert.ok(rouge(r({ meds: ['Gabapentine', 'Tramadol'], precisions: { Gabapentine: { dose: 900 } } })), 'gabapentine 900 mg/j : rouge');
+        assert.ok(rouge(r({ meds: ['Pregabaline', 'Codeine'], precisions: { Pregabaline: { dose: 450 } } })), 'pregabaline 450 mg/j : rouge');
+        assert.ok(!rouge(r({ meds: ['Pregabaline', 'Codeine'], precisions: { Pregabaline: { dose: 300 } } })), 'pregabaline 300 mg/j : pas encore « > 300 »');
+        // Aucune fiche ne note la paire gabapentinoide + opioide en danger.
+        const dangers = JSON.parse(vm.runInContext(`JSON.stringify(MASTER_DB.MEDICAMENTS.flatMap(m => (m.ddi_interact_v2 || []).filter(e => e.severite === 'danger'
+            && ((/^(Pregabaline|Gabapentine)$/.test(m.dci) && (e.dcis || []).some(x => /morphine|oxycodone|tramadol|codeine|fentanyl/.test(x)))
+             || (/morphine|oxycodone|tramadol|codeine|fentanyl|buprenorphine|tapentadol|hydromorphone/i.test(m.dci) && (e.dcis || []).some(x => /pregabaline|gabapentine/.test(x))))).map(e => m.dci)))`, sandbox));
+        assert.deepStrictEqual(dangers, [], 'paire notee danger : ' + dangers.join(', '));
+    });
+
     test('Asplenie : pathologie, penicilline V, recommandations et lecture du texte', () => {
         const { analyzeCase, loadApp } = require('./oracle_harness');
         const vm = require('vm'); const { sandbox } = loadApp();
@@ -1413,7 +1439,8 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             assert.ok(!crit(r({ meds: ['Pregabaline', b] })), 'pregabaline + ' + b + ' : pas critique');
             assert.ok(!crit(r({ meds: ['Gabapentine', b] })), 'gabapentine + ' + b + ' : pas critique');
         });
-        assert.ok(crit(r({ meds: ['Pregabaline', 'Morphine'] })), 'gabapentinoide + opioide : reste critique');
+        // Depuis 5.20, gabapentinoide + opioide n'est rouge qu'a dose elevee (voir le test dedie).
+        assert.ok(/id:SUP_GABA_03/.test(r({ meds: ['Pregabaline', 'Morphine'], precisions: { Morphine: { dose: 60 } } })._html['alertes-eviter']), 'gabapentinoide + opioide a dose elevee : rouge');
         const gaba = x => /id:SUP_GABA_01/.test(x._html['alertes-eviter']);
         assert.ok(gaba(r({ meds: ['Pregabaline', 'Oxazepam'], comorbs: ['PAT_023'] })), 'BPCO : danger porte par SUP_GABA_01');
         assert.ok(gaba(r({ meds: ['Gabapentine', 'Zopiclone'], comorbs: ['PAT_052'] })), 'SAOS : idem');

@@ -333,6 +333,52 @@ function douleurDeclaree() {
     return { statut, libelle, scores, texte: 'Douleur : ' + libelle + (scores.length ? ' (' + scores.join(', ') + ')' : '') };
 }
 
+// ── Doses équivalentes des sédatifs (dépression respiratoire) ─────────────────────
+// Calculées depuis la dose saisie dans la fenêtre de précision (mg/j ; µg/h pour un patch
+// de fentanyl). Ce sont des REPÈRES de risque, jamais des tables de rotation d'opioïdes.
+//   Opioïdes — équivalent morphine orale (mg/j), CDC 2022 (MMWR Recomm Rep 71(RR-3)) ;
+//   la buprénorphine n'y figure pas : elle est dite « sans équivalent retenu ».
+//   Benzodiazépines — dose équivalente à 10 mg de diazépam, table d'Ashton (2007) ; les
+//   hypnotiques Z sont écartés, les sources divergent (Ashton contre NHS Scotland).
+const MME_FACTEURS = { morphine: 1, codeine: 0.15, tramadol: 0.2, oxycodone: 1.5, hydromorphone: 5, tapentadol: 0.4, methadone: 4.7 };
+const MME_FENTANYL_PATCH = 2.4;            // µg/h → mg/j d'équivalent morphine (CDC 2022)
+const DIAZEPAM_10MG = { diazepam: 10, alprazolam: 0.5, bromazepam: 5, clonazepam: 0.5, lorazepam: 1, oxazepam: 20 };
+// Seuils de dose « élevée » pour l'association gabapentinoïde + opioïde :
+//   ≥ 50 mg/j d'équivalent morphine (CDC 2022 : réévaluer avant de franchir 50) ;
+//   gabapentine ≥ 900 mg/j (Gomes, PLoS Med 2017 : aOR 1,56-1,58 au-delà, NS en dessous) ;
+//   prégabaline > 300 mg/j (Gomes, Ann Intern Med 2018 : aOR 2,51 à forte dose — seuil relu
+//   sur résumé). Repères de risque, pas des contre-indications.
+const SEUIL_MME_ELEVE = 50, SEUIL_GABAPENTINE_ELEVE = 900, SEUIL_PREGABALINE_ELEVE = 300;
+function dosesSedatives(meds) {
+    const out = { mme: { total: 0, detail: [], inconnus: [], sansEquivalent: [] }, diazepam: { total: 0, detail: [], inconnus: [] }, gaba: [] };
+    const fam = m => (typeof medPrecisionFamily === 'function') ? medPrecisionFamily(m.classe, m.dci) : null;
+    (meds || []).forEach(m => {
+        const d = sanitizeText(m.dci), p = m.precisions || {};
+        const f = fam(m);
+        if (f === 'opioide') {
+            if (d === 'fentanyl') {
+                if (Number(p.dose_patch) > 0) { const v = Number(p.dose_patch) * MME_FENTANYL_PATCH; out.mme.total += v; out.mme.detail.push({ dci: m.dci, dose: p.dose_patch + ' µg/h', equiv: Math.round(v) }); }
+                else out.mme.inconnus.push(m.dci);
+            } else if (MME_FACTEURS[d] != null) {
+                if (Number(p.dose) > 0) { const v = Number(p.dose) * MME_FACTEURS[d]; out.mme.total += v; out.mme.detail.push({ dci: m.dci, dose: p.dose + ' mg/j', equiv: Math.round(v) }); }
+                else out.mme.inconnus.push(m.dci);
+            } else out.mme.sansEquivalent.push(m.dci);
+        }
+        if (DIAZEPAM_10MG[d] != null) {
+            if (Number(p.dose) > 0) { const v = Number(p.dose) * 10 / DIAZEPAM_10MG[d]; out.diazepam.total += v; out.diazepam.detail.push({ dci: m.dci, dose: p.dose + ' mg/j', equiv: Math.round(v * 10) / 10 }); }
+            else out.diazepam.inconnus.push(m.dci);
+        }
+        if (d === 'gabapentine' || d === 'pregabaline') {
+            const dose = Number(p.dose) > 0 ? Number(p.dose) : null;
+            const seuil = d === 'gabapentine' ? SEUIL_GABAPENTINE_ELEVE : SEUIL_PREGABALINE_ELEVE;
+            out.gaba.push({ dci: m.dci, dose, elevee: dose != null && (d === 'gabapentine' ? dose >= seuil : dose > seuil), seuil });
+        }
+    });
+    out.mme.total = Math.round(out.mme.total);
+    out.diazepam.total = Math.round(out.diazepam.total * 10) / 10;
+    return out;
+}
+
 // Deux cases cliniques ne décrivent pas le patient mais UN médicament : la dose d'aspirine
 // et le schéma d'insuline. Les poser dans la liste des paramètres cliniques obligeait à les
 // chercher loin de la ligne qu'elles qualifient ; elles sont donc demandées dans la fenêtre

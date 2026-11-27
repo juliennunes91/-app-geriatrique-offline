@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 26/11/2026 — **version 5.10**, `BUILD_ID` `20261127-asplenie`,
-cache `geriaassist-v172`.*
+*Dernière mise à jour : 26/11/2026 — **version 5.20**, `BUILD_ID` `20261127-doses-sedatifs`,
+cache `geriaassist-v173`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **5.20** (27/11) — Doses des sédatifs : équivalents morphine (CDC 2022) et diazépam (Ashton),
+  gabapentinoïde + opioïde orange par défaut, rouge à dose élevée (`SUP_GABA_03`).
 
 - **5.10** (27/11) — Asplénie : PAT_070, recommandations, fiche pénicilline V, SUP_ASPL_01.
 

@@ -3783,7 +3783,8 @@ const PATHOLOGY_RULES_DB = {
             "EVITER": {
                 "AINS au long cours": "STOPP H3/H6 — risque digestif, rénal et cardiovasculaire chez le sujet âgé",
                 "Opioïdes forts en 1ère intention pour douleur non cancéreuse chronique": "SFETD/STOPP — bénéfice incertain, risque de chutes/confusion/dépendance",
-                "Coprescription opioïde + benzodiazépine/gabapentinoïde": "FDA/SFETD — dépression respiratoire"
+                "Coprescription opioïde + benzodiazépine": "Encadré FDA 2016 — dépression respiratoire",
+                "Coprescription opioïde + gabapentinoïde à dose élevée ou sur terrain respiratoire": "Mise en garde FDA 2019 ; Gomes 2017-2018 (risque dose-dépendant)"
             }
         },
         TRAITEMENTS: {
@@ -3803,7 +3804,8 @@ const PATHOLOGY_RULES_DB = {
             EVITER: [
                 { classe: "AINS au long cours", raison: "Risque digestif, rénal, cardiovasculaire (STOPP H3/H6)", gravite: "À éviter" },
                 { classe: "Opioïdes forts en 1ère intention (douleur non cancéreuse chronique)", raison: "Bénéfice incertain, chutes, confusion, dépendance", gravite: "À éviter" },
-                { classe: "Coprescription opioïde + benzodiazépine ou gabapentinoïde", raison: "Dépression respiratoire (FDA Black Box)", gravite: "Danger" }
+                { classe: "Coprescription opioïde + benzodiazépine", raison: "Dépression respiratoire (encadré FDA 2016)", gravite: "Danger" },
+                { classe: "Coprescription opioïde + gabapentinoïde à dose élevée ou sur BPCO / apnées du sommeil", raison: "Dépression respiratoire, risque dose-dépendant (mise en garde FDA 2019 ; Gomes 2017-2018) — association courante dans la douleur neuropathique, à titrer", gravite: "Prudence" }
             ]
         },
         BIOLOGIE: {

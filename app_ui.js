@@ -346,7 +346,7 @@ const MED_PRECISION_FIELDS = {
     cortico: ['duree', 'dose'],
     opioide: ['indication', 'dose'],
     ipp: ['duree'],
-    bzd: ['duree'],
+    bzd: ['duree', 'dose'],
     ains: ['voie', 'duree'],
     fer: ['duree', 'dose'],
     calcium: ['dose'],
@@ -383,6 +383,7 @@ const PRECISION_FIELD_DEFS = {
     indication: { label: 'Indication / intensité de la douleur', type: 'select',
         options: [['', 'Non précisé'], ['legere', 'Douleur légère'], ['moderee', 'Douleur modérée'], ['severe', 'Douleur sévère']] },
     dose: { label: 'Posologie (mg/jour)', type: 'number', placeholder: 'ex. 10' },
+    dose_patch: { label: 'Dispositif transdermique (µg/h)', type: 'number', placeholder: 'ex. 12' },
     composition: { label: 'Composition du dispositif inhalé', type: 'select',
         options: [['', 'Non précisé (traité comme molécule seule)'],
                   ['seul', 'Molécule seule (ex. Incruse, Onbrez, Pulmicort)'],
@@ -454,6 +455,8 @@ function _medPrecisionSpec(med) {
     if (!med) return null;
     const key = (typeof medPrecisionFamily === 'function') ? medPrecisionFamily(med.classe, med.dci) : null;
     if (!key) return null;
+    // Le fentanyl se prescrit en dispositif transdermique : sa dose se dit en µg/h.
+    if (key === 'opioide' && /fentanyl/i.test(med.dci || '')) return { key: key, fields: ['indication', 'dose_patch'] };
     return { key: key, fields: MED_PRECISION_FIELDS[key] || [] };
 }
 function _medPrecisionEsc(e) { if (e.key === 'Escape') closeMedPrecisionModal(); }

@@ -90,3 +90,6 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   est affiché mais n'est jamais converti en « non contrôlée ».
 - **27/11/2026** — Gabapentinoïde + BZD : vigilance (warning) ; danger réservé au terrain
   respiratoire (BPCO, SAOS) et à l'association avec un opioïde. — Signalement utilisateur.
+- **27/11/2026** — Gabapentinoïde + opioïde : orange par défaut, rouge si dose élevée (MME ≥ 50,
+  gabapentine ≥ 900, prégabaline > 300) ou terrain respiratoire. Équivalent diazépam affiché sans
+  seuil (aucune source). — Demande utilisateur après point biblio.

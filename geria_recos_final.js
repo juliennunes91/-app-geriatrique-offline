@@ -4383,6 +4383,16 @@ const RECOS_SUPPLEMENT = [
         }
     },
     {
+        // Gabapentinoïde + opioïde : orange par défaut (fiches) ; rouge quand les doses
+        // déclarées sont élevées — le sur-risque mesuré est dose-dépendant.
+        id: "SUP_GABA_03", sources: ["FDA", "CDC"],
+        titre: "Gabapentinoïde et opioïde à dose élevée — dépression respiratoire",
+        message: "Association gabapentinoïde + opioïde à dose élevée (équivalent morphine orale ≥ 50 mg/j, gabapentine ≥ 900 mg/j ou prégabaline > 300 mg/j). Le sur-risque de décès lié aux opioïdes est dose-dépendant : gabapentine aOR 1,56-1,58 au-delà de 900 mg/j, non significatif en dessous (Gomes, PLoS Med 2017) ; prégabaline aOR 2,51 à forte dose contre 1,52 à dose faible ou modérée (Gomes, Ann Intern Med 2018). Réduire la dose de l'un des deux, titrer lentement, adapter le gabapentinoïde au DFG, surveiller vigilance et respiration. Équivalents détaillés dans l'onglet Scores.",
+        severite: "danger",
+        condition: { med_keys: ["pregabaline", "gabapentine"], med_keys_2: ["opioide"], contexte_clinique: ["gaba_opioide_dose_elevee"] },
+        alternatives: "Doses minimales efficaces ; réévaluer la nécessité de l'opioïde ou du gabapentinoïde."
+    },
+    {
         // Asplénie sans antibioprophylaxie : à DISCUTER (info), pas une omission certaine —
         // la prophylaxie peut s'arrêter après 2 ans sans infection grave ni immunodépression.
         id: "SUP_ASPL_01", sources: ["HCSP", "SPILF"],

@@ -473,6 +473,25 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             ok(doul.reset, 'statut et score purgés');
         });
 
+        // Doses des sédatifs : la fenêtre de précision les demande, dans la bonne unité.
+        const fen = await page.evaluate(() => {
+            resetPatient();
+            const lire = dci => {
+                const m = MASTER_DB.MEDICAMENTS.find(x => x.dci === dci);
+                activeMeds.push({ dci: m.dci, classe: m.classe, label: m.dci, core_id: sanitizeText(m.dci), albumine: 0, db_ref: m });
+                openMedPrecisionModal(m.dci, { force: true });
+                const t = (document.getElementById('medPrecisionOverlay') || {}).textContent || '';
+                closeMedPrecisionModal({ tout: true });
+                return t;
+            };
+            return { fentanyl: lire('Fentanyl'), oxazepam: lire('Oxazepam'), pregabaline: lire('Pregabaline') };
+        });
+        test('Les doses des sédatifs sont demandées à l\'ajout, dans leur unité', () => {
+            ok(/µg\/h/.test(fen.fentanyl), 'fentanyl : dispositif en µg/h');
+            ok(/mg\/jour/.test(fen.oxazepam), 'benzodiazépine : posologie');
+            ok(/mg\/jour/.test(fen.pregabaline) && /Indication du gabapentinoïde/.test(fen.pregabaline), 'gabapentinoïde : indication et dose');
+        });
+
         // Aspirine : la dose est demandée à l'ajout, et la case clinique suit la réponse.
         const asp = await page.evaluate(() => {
             resetPatient();

@@ -751,6 +751,14 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(_declare('chkConstipation')) ctxClinique.push("constipation_chronique");
     if(_declare('chkDysphagie')) ctxClinique.push("dysphagie");
     if(_declare('chkArthrose')) ctxClinique.push("arthrose");
+    // Gabapentinoïde + opioïde à dose élevée (équivalent morphine ≥ 50 mg/j, gabapentine
+    // ≥ 900 mg/j, prégabaline > 300 mg/j) : le sur-risque de dépression respiratoire et de
+    // décès est dose-dépendant (Gomes 2017, 2018 ; CDC 2022). Doses issues des précisions.
+    if (typeof dosesSedatives === 'function') {
+        const _ds = dosesSedatives(activeMeds);
+        const _opio = activeMeds.some(m => typeof medPrecisionFamily === 'function' && medPrecisionFamily(m.classe, m.dci) === 'opioide');
+        if (_ds.gaba.length && _opio && (_ds.mme.total >= SEUIL_MME_ELEVE || _ds.gaba.some(g => g.elevee))) ctxClinique.push("gaba_opioide_dose_elevee");
+    }
     // Douleur déclarée non contrôlée par le clinicien (le statut, pas un score : cf. utils.js).
     if (getStr('douleurStatut') === 'non_controlee') ctxClinique.push("douleur_non_controlee");
     if(_declare('chkChutes')) ctxClinique.push("chutes");
@@ -1736,6 +1744,30 @@ function analyserPrescription() {
             <strong class="text-${scoreCIA_global >= 3 ? 'danger' : (scoreCIA_global >= 1 ? 'warning' : 'success')}">Score CIA : ${scoreCIA_global}</strong> <em class="text-muted small">— Charge sédative/cognitive cumulée</em><br>
             <small class="text-muted">${ciaInterp}${ciaMeds.length > 0 ? ' — ' + ciaMeds.join(', ') : ''}</small>
         </div>`);
+
+        // --- Doses équivalentes des sédatifs (opioïdes, benzodiazépines, gabapentinoïdes) ---
+        // Repères de risque calculés depuis les doses saisies (✎) — jamais une table de
+        // rotation. Ne sort que si un de ces médicaments est prescrit.
+        if (typeof dosesSedatives === 'function') {
+            const ds = dosesSedatives(activeMeds);
+            const lignes = [];
+            if (ds.mme.detail.length || ds.mme.inconnus.length || ds.mme.sansEquivalent.length) {
+                let t = ds.mme.detail.length ? `Équivalent morphine orale : <b>${ds.mme.total} mg/j</b> (${ds.mme.detail.map(x => escapeHtml(x.dci) + ' ' + escapeHtml(x.dose) + ' → ' + x.equiv).join(' ; ')})` : 'Équivalent morphine orale : non calculé';
+                if (ds.mme.total >= SEUIL_MME_ELEVE) t += ` — au-delà de ${SEUIL_MME_ELEVE} mg/j (CDC 2022 : réévaluer)`;
+                if (ds.mme.inconnus.length) t += ` — dose à préciser (✎) : ${escapeHtml(ds.mme.inconnus.join(', '))}`;
+                if (ds.mme.sansEquivalent.length) t += ` — sans équivalent retenu par la CDC : ${escapeHtml(ds.mme.sansEquivalent.join(', '))}`;
+                lignes.push(t);
+            }
+            if (ds.diazepam.detail.length || ds.diazepam.inconnus.length) {
+                let t = ds.diazepam.detail.length ? `Équivalent diazépam : <b>${String(ds.diazepam.total).replace('.', ',')} mg/j</b> (${ds.diazepam.detail.map(x => escapeHtml(x.dci) + ' ' + escapeHtml(x.dose)).join(' ; ')} — table d'Ashton, approximative)` : 'Équivalent diazépam : non calculé';
+                if (ds.diazepam.inconnus.length) t += ` — dose à préciser (✎) : ${escapeHtml(ds.diazepam.inconnus.join(', '))}`;
+                lignes.push(t);
+            }
+            ds.gaba.forEach(g => lignes.push(`${escapeHtml(g.dci)} : ${g.dose != null ? g.dose + ' mg/j' + (g.elevee ? ` — dose élevée (repère ${g.dci === 'Gabapentine' ? '≥ ' : '> '}${g.seuil} mg/j)` : '') : 'dose à préciser (✎)'}`));
+            if (lignes.length) addAlert('alertes-scores', `<div class="alert alert-light border mb-2 shadow-sm">
+                <strong>Doses équivalentes des sédatifs</strong> <em class="text-muted small">— repères de risque de dépression respiratoire, pas une table de rotation</em><br>
+                <small class="text-muted">${lignes.join('<br>')}</small></div>`);
+        }
 
         // =========================================================
         // SCREENINGS GÉRIATRIQUES STANDARDISÉS
