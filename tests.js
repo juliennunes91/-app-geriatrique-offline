@@ -1449,6 +1449,23 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         const faute = R('GABAPENTlNE 300 mg');
         assert.ok(faute.some(x => x[0] === 'Gabapentine' && x[1] < 80), 'GABAPENTlNE (l pour I) : propose, non coche d\'office');
     });
+    test('Aspirine et insuline : la precision saisie a l\'ajout vaut la case clinique, et une dose n\'est pas un saignement', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const ids = r => new Set((r._html['alertes-eviter'].match(/id:[A-Z_0-9]+/g) || []).map(x => x.slice(3)));
+        const asp = dose => ids(analyzeCase({ age: 80, sexe: 'F', comorbs: ['PAT_006'], meds: ['Acide acetylsalicylique', 'Apixaban'],
+            precisions: dose ? { 'Acide acetylsalicylique': { dose } } : {} }));
+        assert.ok(asp(300).has('EV_C01'), 'aspirine 300 mg/j precisee : STOPP C1');
+        assert.ok(!asp(75).has('EV_C01') && !asp(null).has('EV_C01'), '75 mg/j ou non precisee : rien');
+        // STOPP C2 parle d'un saignement ou d'une diathese : la dose d'aspirine ne l'arme pas.
+        assert.ok(!asp(300).has('EV_C02'), 'aspirine forte : pas de « risque hemorragique significatif »');
+        const caseSeule = ids(analyzeCase({ age: 80, sexe: 'F', comorbs: ['PAT_006'], meds: ['Acide acetylsalicylique', 'Apixaban'], flags: ['chkAspirineForte'] }));
+        assert.ok(caseSeule.has('EV_C01') && !caseSeule.has('EV_C02'), 'meme lecture par la case');
+        const ins = (meds, schema) => ids(analyzeCase({ age: 80, sexe: 'F', comorbs: ['PAT_016b'], meds, precisions: { 'Insuline lispro': { schema_insuline: schema } } }));
+        assert.ok(ins(['Insuline lispro'], 'sliding').has('EV_BEERS_02'), 'lispro seule en sliding scale : Beers');
+        assert.ok(!ins(['Insuline lispro', 'Insuline glargine'], 'sliding').has('EV_BEERS_02'), 'une basale dement « seule »');
+        assert.ok(!ins(['Insuline lispro'], 'basal_bolus').has('EV_BEERS_02'), 'basal-bolus : rien');
+    });
+
     test('OCR : dosage colle, chiffre lu pour une lettre, DCI francaise, mot coupe — reconnus exactement', () => {
         // Signalement : Forxiga et risperidone non lus sur une capture. Lectures FICTIVES
         // reproduisant les defauts courants de Tesseract sur un logiciel de prescription.

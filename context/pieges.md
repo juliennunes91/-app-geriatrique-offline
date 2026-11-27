@@ -102,3 +102,5 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   l'âge à 1 point et citait le mauvais auteur. Relire la table de la publication avant d'écrire.
 - Extracteur de texte : « PTH » est à la fois la prothèse et la parathormone (exiger un côté) ;
   l'apostrophe ’ copiée d'un courrier ne correspond pas à ' de la base.
+- La case « aspirine > 100 mg/j » poussait atcd_hemorragie : une dose déclarée devenait un
+  saignement (STOPP C2 rouge, ORBIT +2). Vérifier ce qu'un contexte AFFIRME avant de le partager.

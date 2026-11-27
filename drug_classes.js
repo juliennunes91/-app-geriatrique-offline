@@ -839,6 +839,11 @@ function medPrecisionFamily(classe, dci) {
     // ne pas recommander un corticoïde inhalé déjà contenu dans le dispositif, et repérer
     // un LABA sans corticoïde inhalé dans l'asthme.
     if (/inhal[ée]|\bICS\b|\bLAMA\b|\bLABA\b|\buLABA\b/i.test(cl)) return 'inhale';
+    // Aspirine : la dose sépare l'antiagrégant (75-100 mg/j) de l'antalgique (STOPP C1).
+    if (/^acide ac[eé]tylsalicylique$|^aspirine$/i.test(d)) return 'aspirine';
+    // Insuline rapide ou humaine : seule, en doses de correction, c'est le « sliding scale »
+    // de Beers 2023. Les basales n'ont pas la question.
+    if (/^insuline\s+(aspart|lispro|glulisine|humaine)$/i.test(d)) return 'insuline';
     if (/corticoïde|corticoide|glucocorticoïde/i.test(cl) && !/inhalé|\bICS\b/i.test(cl)) return 'cortico';
     if (/opio[iï]de|opiac/i.test(cl) && !/antidiarrh|antidépresseur/i.test(cl)) return 'opioide';
     if (/pompe à protons|pompe a protons|\(IPP\)/i.test(cl)) return 'ipp';

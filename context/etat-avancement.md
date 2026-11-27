@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 26/11/2026 — **version 4.94**, `BUILD_ID` `20261126-assumer-tous-onglets`,
-cache `geriaassist-v164`.*
+*Dernière mise à jour : 26/11/2026 — **version 4.95**, `BUILD_ID` `20261127-precision-aspirine-insuline`,
+cache `geriaassist-v165`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **4.95** (27/11) — Dose d'aspirine et schéma d'insuline demandés à l'ajout ; une dose
+  d'aspirine n'arme plus l'antécédent hémorragique.
 
 - **4.94** (26/11) — « Assumer plusieurs » dans tous les onglets de résultats, et barre
   « tous onglets » en tête de la synthèse.

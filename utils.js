@@ -316,6 +316,28 @@ const dispositifsDeclares = () => DISPOSITIFS.filter(d => {
     return !!(el && el.checked);
 });
 
+// Deux cases cliniques ne décrivent pas le patient mais UN médicament : la dose d'aspirine
+// et le schéma d'insuline. Les poser dans la liste des paramètres cliniques obligeait à les
+// chercher loin de la ligne qu'elles qualifient ; elles sont donc demandées dans la fenêtre
+// de précision, à l'ajout du médicament. Un fait, deux chemins de saisie, le même état : la
+// précision vaut la case (et la coche, pour que l'écran le montre).
+const _INSULINE_BASALE = /^insuline(degludec|detemir|glargine)$/;
+const CASE_PRECISION = {
+    chkAspirineForte: {
+        med: m => sanitizeText(m.dci) === 'acideacetylsalicylique',
+        vrai: (p) => Number(p.dose) > 100
+    },
+    chkInsulineSlidingScale: {
+        med: m => /^insuline/.test(sanitizeText(m.dci)) && !_INSULINE_BASALE.test(sanitizeText(m.dci)),
+        // « Seule » : une insuline basale prescrite à côté dément le schéma déclaré.
+        vrai: (p, meds) => p.schema_insuline === 'sliding' && !(meds || []).some(x => _INSULINE_BASALE.test(sanitizeText(x.dci)))
+    }
+};
+function caseParPrecision(chkId, meds) {
+    const c = CASE_PRECISION[chkId];
+    return !!c && (meds || []).some(m => c.med(m) && m.precisions && c.vrai(m.precisions, meds));
+}
+
 const CASE_PATHOLOGIE = {
         'chkAvc': 'PAT_008', 'chkAtcdUlcere': 'PAT_021', 'chkDialyse': 'PAT_029',
         'chkPalliatif': 'PAT_030', 'chkDepression': 'PAT_032', 'chkGlaucome': 'PAT_033',

@@ -307,8 +307,24 @@ function _reanalyserSiAffichee() {
     if (typeof _lastAnalysisResult !== 'undefined' && _lastAnalysisResult && typeof analyserPrescription === 'function') analyserPrescription();
     else if (typeof window.conciliationSync === 'function') window.conciliationSync();
 }
+// La case qui qualifie un médicament (dose d'aspirine, schéma d'insuline) suit sa précision :
+// cochée quand la précision l'affirme, décochée quand elle la dément ou quand plus aucun
+// médicament concerné n'est prescrit — une case « aspirine > 100 mg/j » sans aspirine ne
+// décrit plus rien.
+function _refleterCasesPrecision() {
+    if (typeof CASE_PRECISION === 'undefined') return;
+    Object.entries(CASE_PRECISION).forEach(([id, c]) => {
+        const e = document.getElementById(id); if (!e) return;
+        const concernes = activeMeds.filter(c.med);
+        let v = e.checked;
+        if (!concernes.length) v = false;
+        else if (concernes.some(m => m.precisions && Object.keys(m.precisions).length)) v = caseParPrecision(id, activeMeds);
+        if (v !== e.checked) { e.checked = v; if (typeof e.onchange === 'function') e.onchange(); }
+    });
+}
 function removeMed(dci) {
     for (let i = activeMeds.length - 1; i >= 0; i--) if (activeMeds[i].dci === dci) activeMeds.splice(i, 1);
+    _refleterCasesPrecision();
     renderTags();
     _reanalyserSiAffichee();
 }
@@ -356,7 +372,9 @@ const MED_PRECISION_FIELDS = {
     macrogol: ['indication_peg'],
     terbinafine: ['voie_terbinafine'],
     amphotericine: ['voie_ampho'],
-    levodopa: ['association_dopa']
+    levodopa: ['association_dopa'],
+    aspirine: ['dose'],
+    insuline: ['schema_insuline']
 };
 const PRECISION_FIELD_DEFS = {
     duree: { label: 'Durée de traitement', type: 'select',
@@ -418,6 +436,10 @@ const PRECISION_FIELD_DEFS = {
     association_dopa: { label: 'Association de la lévodopa', type: 'select',
         options: [['', 'Non précisée (partenaires non analysés)']].concat(
             Object.entries(typeof DOPA_ASSOCIATIONS !== 'undefined' ? DOPA_ASSOCIATIONS : {}).map(([k, v]) => [k, 'Lévodopa ' + v.libelle])) },
+    schema_insuline: { label: 'Schéma d\'insuline', type: 'select',
+        options: [['', 'Non précisé'],
+                  ['basal_bolus', 'En complément d\'une insuline basale (basal-bolus)'],
+                  ['sliding', 'Seule, en doses de correction (« sliding scale »), sans basale']] },
     digox_recent: { label: 'Digoxinémie contrôlée (cible 0,5-0,9 ng/mL) ?', type: 'select',
         options: [['', 'Non précisé'], ['oui', 'Oui — dans la cible'], ['non', 'Non / hors cible']] }
 };
@@ -523,6 +545,7 @@ function openMedPrecisionModal(dci, opts) {
         const p = {};
         spec.fields.forEach(fk => { const v = controls[fk].value; if (v !== '' && v != null) p[fk] = (PRECISION_FIELD_DEFS[fk].type === 'number') ? parseFloat(String(v).replace(',', '.')) : v; });
         med.precisions = Object.keys(p).length ? p : undefined;
+        _refleterCasesPrecision();
         renderTags();
         if (typeof analyserPrescription === 'function') analyserPrescription();
         closeMedPrecisionModal();
@@ -590,6 +613,7 @@ const _RESUME_PRECISION = {
     mtx_schema:     { faible: 'faible dose hebdo.', haute: 'haute dose' },
     indication_peg: { constipation: 'constipation', preparation: 'préparation colique' },
     association_dopa: Object.fromEntries(Object.entries(typeof DOPA_ASSOCIATIONS !== 'undefined' ? DOPA_ASSOCIATIONS : {}).map(([k, v]) => [k, v.court])),
+    schema_insuline: { basal_bolus: 'basal-bolus', sliding: 'sliding scale seule' },
     indication_diu: { ic: 'insuffisance cardiaque', irc: 'surcharge IRC', cirrhose: 'ascite',
                       nephrotique: 'syndrome néphrotique', hta: 'HTA', oedemes: 'œdèmes isolés' }
 };

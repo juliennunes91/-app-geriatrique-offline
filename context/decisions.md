@@ -84,3 +84,5 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   la suspension). — Même signalement.
 - **26/11/2026** — Scores de saignement calculés selon leur publication d'origine (Pisters
   2010, Aggarwal 2023) ; un DOAC Score élevé ne conclut pas à l'arrêt de l'AOD (ESC 2024).
+- **27/11/2026** — Les cases qui qualifient un médicament se demandent dans sa fenêtre de
+  précision ; la case reste comme second chemin de saisie, synchronisée.

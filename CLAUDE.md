@@ -301,6 +301,22 @@ survivre) ; tout conteneur `alertes-*` y est vidé. Un champ ajouté sans y pens
 le test. Validé par mutation. Le scénario réel (analyse puis « Nouveau ») est rejoué dans
 Chromium par `tools/tests_ui_playwright.cjs`.
 
+## Une case qui qualifie un médicament se demande avec le médicament (4.95)
+
+« Aspirine > 100 mg/j » et « insuline sliding scale seule » étaient deux cases des
+paramètres cliniques, loin de la ligne qu'elles qualifient. Elles sont désormais demandées
+dans la fenêtre de précision : **posologie** pour l'aspirine (famille `aspirine`), **schéma**
+pour une insuline rapide ou humaine (`schema_insuline` : basal-bolus / correction seule).
+`CASE_PRECISION` + `caseParPrecision()` (`utils.js`) rendent la précision équivalente à la
+case dans `_declare()` ; `_refleterCasesPrecision()` (`app_ui.js`) coche ou décoche la case
+pour que l'écran le montre, et la décoche quand plus aucun médicament concerné n'est
+prescrit. « Seule » : une insuline basale prescrite à côté dément le schéma déclaré.
+
+**Défaut trouvé au passage** : la case aspirine poussait aussi `risque_hemorragique` et
+`atcd_hemorragie` et comptait 2 points « saignement » dans ORBIT-AF. Une dose n'est pas un
+saignement : STOPP C2 sortait en rouge (« saignement spontané récent »), ainsi que les règles
+ISRS + anticoagulant « après hémorragie majeure ». Elle n'arme plus que STOPP C1.
+
 ## Une précision est une donnée clinique, pas un détail d'affichage
 
 `_collectPatientData()` sérialisait `{dci, classe, label, core_id}` — **sans

@@ -456,6 +456,25 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             ok(!/Furosemide/i.test(lot.synthese), 'la synthèse relancée ne nomme plus le médicament retiré');
         });
 
+        // Aspirine : la dose est demandée à l'ajout, et la case clinique suit la réponse.
+        const asp = await page.evaluate(() => {
+            resetPatient();
+            if (typeof geriaPrefs === 'object' && geriaPrefs) geriaPrefs.skipPrecisionsModal = false;
+            selectMed(unifiedMedsMap.get('acideacetylsalicylique'));
+            const ov = document.getElementById('medPrecisionOverlay');
+            const champ = ov && ov.querySelector('input[type=number]');
+            if (champ) champ.value = '300';
+            if (ov) [...ov.querySelectorAll('button')].find(b => b.textContent === 'Enregistrer').click();
+            const apres = document.getElementById('chkAspirineForte').checked;
+            removeMed(activeMeds.find(m => /acetylsal/i.test(m.dci)).dci);
+            return { champ: !!champ, apres, retrait: document.getElementById('chkAspirineForte').checked };
+        });
+        test('Aspirine : la dose est demandée à l\'ajout et coche la case « > 100 mg/j »', () => {
+            ok(asp.champ, 'la fenêtre de précision demande la posologie');
+            ok(asp.apres, 'dose 300 mg/j : la case est cochée');
+            ok(!asp.retrait, 'aspirine retirée : la case est décochée');
+        });
+
         // Import de texte libre : les CASES cliniques (chutes, prothèses) sont proposées et
         // cochées à l'application — elles ne sont pas des pathologies de la base.
         const texte = await page.evaluate(() => {

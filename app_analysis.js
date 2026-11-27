@@ -736,11 +736,16 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         chkUsageAlcool: 'PAT_067', chkUsageSubstances: 'PAT_068', chkTSADI: 'PAT_069'
     };
     const _declare = (chkId) => isChecked(chkId)
-        || (!!CASE_EQUIVALENTE[chkId] && activeComorbs.includes(CASE_EQUIVALENTE[chkId]));
+        || (!!CASE_EQUIVALENTE[chkId] && activeComorbs.includes(CASE_EQUIVALENTE[chkId]))
+        || (typeof caseParPrecision === 'function' && caseParPrecision(chkId, activeMeds));
     if(_declare('chkBrady')) ctxClinique.push("bradycardie");
     if(_declare('chkIncontinence')) ctxClinique.push("incontinence");
     if(_declare('chkStenoseAortique')) ctxClinique.push("stenose_aortique");
-    if(_declare('chkSaignement') || _declare('chkAspirineForte')) { ctxClinique.push("risque_hemorragique"); ctxClinique.push("atcd_hemorragie"); }
+    // Une dose d'aspirine n'est pas un saignement : déclarer « aspirine > 100 mg/j » faisait
+    // affirmer un antécédent d'hémorragie (STOPP C2 en rouge, « saignement spontané récent »,
+    // ISRS + anticoagulant « après hémorragie majeure », ORBIT-AF +2). Elle n'arme plus que
+    // sa propre règle (STOPP C1, contexte dose_aspirine_elevee).
+    if(_declare('chkSaignement')) { ctxClinique.push("risque_hemorragique"); ctxClinique.push("atcd_hemorragie"); }
     if(_declare('chkHbp')) ctxClinique.push("hbp");
     if(_declare('chkDepression')) ctxClinique.push("depression");
     if(_declare('chkConstipation')) ctxClinique.push("constipation_chronique");
@@ -1612,7 +1617,7 @@ function analyserPrescription() {
         let scoreOrbit = 0; let ttOrbit = [];
         if(patientAge >= SA.orbit_75) { scoreOrbit += 1; ttOrbit.push("Âge ≥75 (+1)"); }
         if(bioValues['BIO_009'] > 0 && ((sexe === 'M' && bioValues['BIO_009'] < SB.anemia_M) || (sexe === 'F' && bioValues['BIO_009'] < SB.anemia_F))) { scoreOrbit += 2; ttOrbit.push("Anémie (+2)"); }
-        if(isChecked('chkSaignement') || isChecked('chkAspirineForte')) { scoreOrbit += 2; ttOrbit.push("Saignement (+2)"); }
+        if(isChecked('chkSaignement')) { scoreOrbit += 2; ttOrbit.push("Saignement (+2)"); }
         if(bioValues['BIO_004'] > 0 && bioValues['BIO_004'] < SB.irc_orbit) { scoreOrbit += 1; ttOrbit.push("DFG <60 (+1)"); }
         if(patientHasMedClass('antiagreg')) { scoreOrbit += 1; ttOrbit.push("Antiagrégant (+1)"); }
         if (_fa || _anticoagule) renderScore(SC.ORBIT, scoreOrbit, ttOrbit);
