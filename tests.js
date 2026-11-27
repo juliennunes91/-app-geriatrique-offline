@@ -1375,6 +1375,29 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Gabapentinoide + benzodiazepine : vigilance, pas interaction critique — sauf terrain respiratoire', () => {
+        // Signalement : pregabaline + Seresta sortait en « interaction critique ». La fiche
+        // pregabaline notait la paire en danger, la moitie des benzodiazepines en warning.
+        const { analyzeCase, loadApp } = require('./oracle_harness');
+        const r = c => analyzeCase(Object.assign({ age: 91, sexe: 'M', dfg: 50 }, c));
+        const crit = x => /Interactions critiques/.test(x._html['alertes-synthese']);
+        ['Oxazepam', 'Clonazepam', 'Lormetazepam'].forEach(b => {
+            assert.ok(!crit(r({ meds: ['Pregabaline', b] })), 'pregabaline + ' + b + ' : pas critique');
+            assert.ok(!crit(r({ meds: ['Gabapentine', b] })), 'gabapentine + ' + b + ' : pas critique');
+        });
+        assert.ok(crit(r({ meds: ['Pregabaline', 'Morphine'] })), 'gabapentinoide + opioide : reste critique');
+        const gaba = x => /id:SUP_GABA_01/.test(x._html['alertes-eviter']);
+        assert.ok(gaba(r({ meds: ['Pregabaline', 'Oxazepam'], comorbs: ['PAT_023'] })), 'BPCO : danger porte par SUP_GABA_01');
+        assert.ok(gaba(r({ meds: ['Gabapentine', 'Zopiclone'], comorbs: ['PAT_052'] })), 'SAOS : idem');
+        assert.ok(!gaba(r({ meds: ['Pregabaline', 'Oxazepam'] })), 'sans terrain : pas de regle');
+        // Coherence : aucune fiche ne note encore la paire gabapentinoide + benzodiazepine en danger.
+        const { sandbox } = loadApp();
+        const dangers = JSON.parse(require('vm').runInContext(`JSON.stringify(MASTER_DB.MEDICAMENTS.flatMap(m => (m.ddi_interact_v2 || []).filter(e => e.severite === 'danger'
+            && ((/zepam|zolpidem|zopiclone|clobazam|clorazepate/i.test(m.dci) && (e.dcis || []).some(x => /pregabaline|gabapentine/.test(x)))
+             || (/^(Pregabaline|Gabapentine)$/.test(m.dci) && (e.dcis || []).some(x => /zepam|zolpidem|zopiclone/.test(x))))).map(e => m.dci + ' : ' + e.classe)))`, sandbox));
+        assert.deepStrictEqual(dangers, [], 'paire notee danger : ' + dangers.join(' ; '));
+    });
+
     test('Douleur : le statut declare est lu, affiche, et arme les regles dans les deux sens', () => {
         const { analyzeCase } = require('./oracle_harness');
         const r = c => analyzeCase(Object.assign({ age: 86, sexe: 'F' }, c));

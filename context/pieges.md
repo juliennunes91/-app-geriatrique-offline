@@ -108,3 +108,5 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   détourne la clé vers la nouvelle classe seule. Relire rule_keys_golden après tout ajout.
 - OCR d'une capture d'écran : la police de 9 px est le vrai problème, pas l'appariement.
   Agrandir (~4 500 px de large) avant Tesseract ; mesurer sur capture FICTIVE.
+- Une paire décrite depuis ses deux fiches prend la gravité la PLUS FORTE : une seule fiche
+  en danger suffit à rendre l'interaction critique. Harmoniser toutes les fiches de la paire.

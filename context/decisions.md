@@ -88,3 +88,5 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   précision ; la case reste comme second chemin de saisie, synchronisée.
 - **27/11/2026** — Douleur : le statut est déclaré par le clinicien ; un score (EN, Algoplus)
   est affiché mais n'est jamais converti en « non contrôlée ».
+- **27/11/2026** — Gabapentinoïde + BZD : vigilance (warning) ; danger réservé au terrain
+  respiratoire (BPCO, SAOS) et à l'association avec un opioïde. — Signalement utilisateur.

@@ -948,6 +948,23 @@ antireflux. Remède habituel — la classe `supplement_calcique` existe pour **d
 molécules, ce qui les fait entrer dans `_ALL_DCIS_SET` et impose ensuite le match EXACT.
 Même famille que `paracetamol` ⊂ « alternative paracétamol ».
 
+## Gabapentinoïde + benzodiazépine : vigilance, pas interaction critique (5.00)
+
+Prégabaline + oxazépam sortait en « interaction critique » (synthèse, bandeau). La paire était
+notée `danger` côté prégabaline et gabapentine, et selon la benzodiazépine tantôt `warning`
+(oxazépam, lorazépam, diazépam…) tantôt `danger` (clobazam, clonazépam, nitrazépam…) — la
+carte prenant la lecture la plus forte, le hasard de la fiche décidait. Le thésaurus ANSM range
+ces « autres médicaments sédatifs » au niveau « à prendre en compte » ; la mise en garde FDA
+de décembre 2019 vise la dépression respiratoire **sur terrain à risque**.
+
+- toutes les fiches notent la paire `warning` (sédation, chutes, troubles cognitifs) ; un test
+  interdit qu'une fiche la remette en `danger` ;
+- le rouge passe à `SUP_GABA_01` : gabapentinoïde + benzodiazépine, hypnotique ou opioïde
+  **avec BPCO (`PAT_023`) ou apnées du sommeil (`PAT_052`)** ;
+- gabapentinoïde + opioïde reste `danger` (mortalité mesurée, Gomes) ;
+- « FDA Black Box » était inexact : c'est une mise en garde ajoutée au RCP, pas un encadré
+  noir. Libellés corrigés.
+
 ## Le chiffre mesuré parle du patient, la sévérité déclarée n'en sait rien
 
 Une interaction dont le dommage est une **anomalie biologique** ne se juge pas pareillement

@@ -4380,6 +4380,21 @@ const RECOS_SUPPLEMENT = [
         }
     },
     {
+        // Gabapentinoïde + sédatif : la co-prescription seule est une vigilance (orange, fiche
+        // du médicament). Le danger tient au TERRAIN respiratoire visé par la mise en garde
+        // FDA de décembre 2019 : BPCO, apnées du sommeil.
+        id: "SUP_GABA_01", sources: ["FDA", "ANSM"],
+        titre: "Gabapentinoïde et sédatif sur terrain respiratoire à risque — dépression respiratoire",
+        message: "Prégabaline ou gabapentine associée à une benzodiazépine, un hypnotique ou un opioïde, chez un patient porteur d'une BPCO ou d'apnées du sommeil : c'est le terrain de la mise en garde FDA de décembre 2019 (dépression respiratoire grave, plus fréquente chez le sujet âgé). Réduire ou arrêter l'un des deux, à la dose minimale efficace, et surveiller la vigilance et la fréquence respiratoire.",
+        severite: "danger",
+        condition: {
+            med_keys: ["pregabaline", "gabapentine"],
+            med_keys_2: ["benzodiazepine", "zolpidem", "zopiclone", "opioide"],
+            comorbs_any: ["PAT_023", "PAT_052"]
+        },
+        alternatives: "Décroissance de la benzodiazépine ; adapter le gabapentinoïde au DFG."
+    },
+    {
         // Douleur déclarée non contrôlée par le clinicien, et aucun antalgique prescrit.
         id: "SUP_DOUL_01", sources: ["HAS", "SFGG"],
         titre: "Douleur non contrôlée sans antalgique prescrit",
