@@ -1375,6 +1375,20 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Gabapentinoide : STOPP L5 suit l\'indication declaree, jamais la seule molecule', () => {
+        // Signalement : douleur chronique cochee, la pregabaline sortait « hors douleur
+        // neuropathique ». EV_L05 ne verifiait que la molecule.
+        const { analyzeCase, loadApp } = require('./oracle_harness');
+        const ids = c => new Set((analyzeCase(Object.assign({ age: 85, sexe: 'F' }, c))._html['alertes-eviter'].match(/id:(EV_L05|SUP_GABA_02)/g) || []).map(x => x.slice(3)));
+        const sans = ids({ meds: ['Pregabaline'], comorbs: ['PAT_054'] });
+        assert.ok(!sans.has('EV_L05') && sans.has('SUP_GABA_02'), 'non precisee : demandee, pas affirmee');
+        assert.strictEqual(ids({ meds: ['Pregabaline'], precisions: { Pregabaline: { indication_gaba: 'neuropathique' } } }).size, 0, 'neuropathique : rien');
+        assert.ok(ids({ meds: ['Gabapentine'], precisions: { Gabapentine: { indication_gaba: 'autre' } } }).has('EV_L05'), 'autre : STOPP L5');
+        assert.strictEqual(ids({ meds: ['Gabapentine'], comorbs: ['PAT_015'] }).size, 0, 'epilepsie declaree : rien a demander');
+        const { sandbox } = loadApp();
+        assert.strictEqual(require('vm').runInContext(`medPrecisionFamily('', 'Pregabaline')`, sandbox), 'gabapentinoide', 'la fenetre de precision le demande');
+    });
+
     test('Gabapentinoide + benzodiazepine : vigilance, pas interaction critique — sauf terrain respiratoire', () => {
         // Signalement : pregabaline + Seresta sortait en « interaction critique ». La fiche
         // pregabaline notait la paire en danger, la moitie des benzodiazepines en warning.

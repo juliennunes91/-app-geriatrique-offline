@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 26/11/2026 — **version 5.00**, `BUILD_ID` `20261127-gabapentinoides-bzd`,
-cache `geriaassist-v170`.*
+*Dernière mise à jour : 26/11/2026 — **version 5.01**, `BUILD_ID` `20261127-gabapentinoide-indication`,
+cache `geriaassist-v171`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **5.01** (27/11) — Gabapentinoïde : indication demandée à l'ajout ; STOPP L5 ne sort que
+  sur « autre », l'indication manquante est demandée (info).
 
 - **5.00** (27/11) — Gabapentinoïde + benzodiazépine : orange (fiches harmonisées) ; rouge
   seulement sur BPCO/SAOS (`SUP_GABA_01`) ; opioïde inchangé.

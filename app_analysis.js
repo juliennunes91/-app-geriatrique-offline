@@ -881,6 +881,10 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
             if (fam === 'opioide' && p.indication === 'severe') ctxClinique.push('douleur_severe');
             if (fam === 'opioide' && p.indication === 'legere') ctxClinique.push('douleur_legere');
             if (fam === 'ipp' && p.duree === 'courte') ctxClinique.push('ipp_duree_breve');
+            // Gabapentinoïde : STOPP v3 L5 vise la douleur NON neuropathique — c'est
+            // l'indication déclarée qui le dit, jamais la seule molécule.
+            if (fam === 'gabapentinoide' && p.indication_gaba) ctxClinique.push('gaba_indication_precisee');
+            if (fam === 'gabapentinoide' && p.indication_gaba === 'autre') ctxClinique.push('gaba_hors_neuropathique');
             // Antipsychotique durée brève → désarme EV_D05 (durée > 3 mois / 12 sem)
             if (fam === 'antipsychotique' && p.duree === 'courte') ctxClinique.push('antipsychotique_duree_breve');
             // REMEDIES « long cours » — durée brève désarme la suggestion de déprescription

@@ -965,6 +965,13 @@ de décembre 2019 vise la dépression respiratoire **sur terrain à risque**.
 - « FDA Black Box » était inexact : c'est une mise en garde ajoutée au RCP, pas un encadré
   noir. Libellés corrigés.
 
+**Indication du gabapentinoïde (5.01)** — `EV_L05` (STOPP v3 L5, « gabapentinoïde pour douleur
+non neuropathique ») ne vérifiait que la molécule : une prégabaline prescrite pour une douleur
+neuropathique, une épilepsie ou un TAG sortait « hors douleur neuropathique ». L'indication
+se déclare à l'ajout (précision `indication_gaba`, famille `gabapentinoide`, avec la dose) ;
+`EV_L05` ne sort que sur « autre ». Non renseignée, `SUP_GABA_02` (info) la **demande** sans
+la présumer, et se tait si une épilepsie (`PAT_015`) ou un TAG (`PAT_044`/`PAT_064`) est déclaré.
+
 ## Le chiffre mesuré parle du patient, la sévérité déclarée n'en sait rien
 
 Une interaction dont le dommage est une **anomalie biologique** ne se juge pas pareillement

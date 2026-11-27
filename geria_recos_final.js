@@ -1765,10 +1765,13 @@ const GERIA_RECOS_DB = {
             ref_code: "STOPP3-L5",
             section: "Antalgiques",
             titre: "Gabapentinoïde pour douleur non neuropathique",
-            message: "Gabapentinoïde (gabapentine, prégabaline) pour douleur non neuropathique : manque de preuve d'efficacité.",
+            message: "Gabapentinoïde (gabapentine, prégabaline) prescrit pour une douleur non neuropathique (indication déclarée) : manque de preuve d'efficacité, au prix de la sédation, des chutes et des troubles cognitifs.",
             severite: "warning",
+            // L'indication est déclarée à l'ajout du médicament : sans elle, la règle
+            // affirmait « non neuropathique » chez tout patient sous prégabaline.
             condition: {
-                med_keys: ["gabapentine", "pregabaline"]
+                med_keys: ["gabapentine", "pregabaline"],
+                contexte_clinique: "gaba_hors_neuropathique"
             },
             alternatives: "Réserver aux douleurs neuropathiques documentées"
         },
@@ -4378,6 +4381,20 @@ const RECOS_SUPPLEMENT = [
             med_keys: ["terbinafine"],
             contexte_clinique_absent: ["terbinafine_topique"]
         }
+    },
+    {
+        // Indication non déclarée : on la DEMANDE, on ne l'affirme pas (STOPP v3 L5 ne vise
+        // que la douleur non neuropathique). Muette si l'épilepsie ou un TAG est déclaré.
+        id: "SUP_GABA_02", sources: ["STOPP3"],
+        titre: "Gabapentinoïde : préciser l'indication (douleur neuropathique, épilepsie, TAG)",
+        message: "STOPP v3 (L5) déconseille les gabapentinoïdes dans la douleur non neuropathique, où ils n'ont pas fait la preuve de leur efficacité. L'indication n'étant pas renseignée, elle n'est pas présumée : la préciser dans la fenêtre du médicament (✎).",
+        severite: "info",
+        condition: {
+            med_keys: ["gabapentine", "pregabaline"],
+            contexte_clinique_absent: ["gaba_indication_precisee"],
+            comorbs_absent: ["PAT_015", "PAT_044", "PAT_064"]
+        },
+        alternatives: "Douleur nociceptive : paracétamol ; douleur neuropathique : gabapentinoïde ou duloxétine adaptés au DFG."
     },
     {
         // Gabapentinoïde + sédatif : la co-prescription seule est une vigilance (orange, fiche

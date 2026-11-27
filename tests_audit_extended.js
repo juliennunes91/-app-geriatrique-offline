@@ -136,7 +136,7 @@ const PANEL = {
     'cov_EV_K05_EV_K06': {"age":82,"sexe":"F","flags":["chkChutes"],"bio":{"patientDFG":60},"meds":["Carbamazepine","Hydroxyzine"]},
     'cov_EV_K07_EV_K09': {"age":82,"sexe":"F","flags":["chkChutes"],"bio":{"patientDFG":60},"meds":["Buprenorphine","Doxazosine"]},
     'cov_EV_K10_EV_K12': {"age":82,"sexe":"F","flags":["chkChutes"],"bio":{"patientDFG":60},"meds":["Alfuzosine","Oxybutynine"]},
-    'cov_EV_L05_EV_L06': {"age":82,"sexe":"F","flags":["chkAnorexie"],"bio":{"patientDFG":60},"meds":["Gabapentine","Nefopam"]},
+    'cov_EV_L05_EV_L06': {"age":82,"sexe":"F","flags":["chkAnorexie"],"bio":{"patientDFG":60},"meds":["Gabapentine","Nefopam"],"precisions":{"Gabapentine":{"indication_gaba":"autre"}}},
     'cov_EV_SF01_EV_SF02': {"age":82,"sexe":"F","cfs":8,"comorbs":["PAT_009"],"flags":["patientFragile"],"bio":{"patientDFG":60},"meds":["Atorvastatine","Altizide"]},
     'cov_EV_SF07': {"age":82,"sexe":"F","cfs":8,"flags":["patientFragile"],"bio":{"patientDFG":60},"meds":["Fumarate ferreux"]},
     'cov_EV_SYND_043_EV_SYND_043b': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Tramadol","Citalopram","Linezolide"]},

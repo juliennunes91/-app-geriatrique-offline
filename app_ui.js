@@ -374,6 +374,7 @@ const MED_PRECISION_FIELDS = {
     amphotericine: ['voie_ampho'],
     levodopa: ['association_dopa'],
     aspirine: ['dose'],
+    gabapentinoide: ['indication_gaba', 'dose'],
     insuline: ['schema_insuline']
 };
 const PRECISION_FIELD_DEFS = {
@@ -436,6 +437,12 @@ const PRECISION_FIELD_DEFS = {
     association_dopa: { label: 'Association de la lévodopa', type: 'select',
         options: [['', 'Non précisée (partenaires non analysés)']].concat(
             Object.entries(typeof DOPA_ASSOCIATIONS !== 'undefined' ? DOPA_ASSOCIATIONS : {}).map(([k, v]) => [k, 'Lévodopa ' + v.libelle])) },
+    indication_gaba: { label: 'Indication du gabapentinoïde', type: 'select',
+        options: [['', 'Non précisée'],
+                  ['neuropathique', 'Douleur neuropathique'],
+                  ['epilepsie', 'Épilepsie'],
+                  ['tag', 'Trouble anxieux généralisé (prégabaline)'],
+                  ['autre', 'Autre : douleur non neuropathique, insomnie…']] },
     schema_insuline: { label: 'Schéma d\'insuline', type: 'select',
         options: [['', 'Non précisé'],
                   ['basal_bolus', 'En complément d\'une insuline basale (basal-bolus)'],
@@ -614,6 +621,7 @@ const _RESUME_PRECISION = {
     indication_peg: { constipation: 'constipation', preparation: 'préparation colique' },
     association_dopa: Object.fromEntries(Object.entries(typeof DOPA_ASSOCIATIONS !== 'undefined' ? DOPA_ASSOCIATIONS : {}).map(([k, v]) => [k, v.court])),
     schema_insuline: { basal_bolus: 'basal-bolus', sliding: 'sliding scale seule' },
+    indication_gaba: { neuropathique: 'douleur neuropathique', epilepsie: 'épilepsie', tag: 'TAG', autre: 'hors douleur neuropathique' },
     indication_diu: { ic: 'insuffisance cardiaque', irc: 'surcharge IRC', cirrhose: 'ascite',
                       nephrotique: 'syndrome néphrotique', hta: 'HTA', oedemes: 'œdèmes isolés' }
 };
