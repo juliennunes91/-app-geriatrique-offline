@@ -983,6 +983,15 @@ const MASTER_DB = {
             "SYNONYMES": "TSA, autisme, trouble envahissant du développement, déficience intellectuelle, handicap intellectuel, autism spectrum disorder",
             "BIO_SURVEILLANCE": "BIO_025, BIO_027, BIO_031, BIO_002, BIO_003",
             "SYND_RISQUE": "SYND_004, SYND_013"
+        },
+        "PAT_070": {
+            "ID_PATHO": "PAT_070",
+            "CIM_10": "D73.0",
+            "NOM_STANDARD": "Asplénie / splénectomie",
+            "CATEGORIE": "Infectiologie / Immunité",
+            "SYNONYMES": "Asplénie, Splénectomie, Splénectomisé, Splénectomisée, Hyposplénisme, Asplénie fonctionnelle",
+            "BIO_SURVEILLANCE": "BIO_011, BIO_024",
+            "SYND_RISQUE": ""
         }
     },
     "SYNDROMES": {
@@ -3502,6 +3511,35 @@ const MASTER_DB = {
                     "atb_terminale": "",
                     "notes_cliniques": "Tricyclique tétracyclique : profil similaire amitriptyline. ACB élevé, EPS possibles, cardiotoxicité. À ÉVITER chez âgé (Beers 2023, STOPP/START v3 D1).",
                     "source": "RCP Defanyl | HAS Depression 2017 ; Beers 2023"
+          },
+          {
+                    "dci": "Phenoxymethylpenicilline",
+                    "princeps": "Oracilline",
+                    "classe": "Antibiotique pénicilline V (phénoxyméthylpénicilline, voie orale) — prophylaxie de l'asplénie, angine streptococcique",
+                    "poso_hab": "Prophylaxie de l'asplénie (adulte) : 1 MUI x 2/j. Curatif (angine streptococcique) : 1 MUI x 3/j pendant 10 jours.",
+                    "poso_ger": "Même posologie chez le sujet âgé. Prophylaxie de l'asplénie : au moins 2 ans après la splénectomie, prolongée en cas d'infection grave antérieure ou d'immunodépression associée (recommandations HCSP relayées par la SPILF).",
+                    "poso_ren": "Élimination rénale : insuffisance rénale sévère, se référer au RCP.",
+                    "acb": 0,
+                    "cia": 0,
+                    "scores": {"qt":0,"sero":0,"saign":0,"chute":0,"sedat":0,"hypoG":0},
+                    "bhe": "",
+                    "albumine": "80",
+                    "qt_risque": "",
+                    "ddi_interact": "Méthotrexate (élimination rénale diminuée par les pénicillines : toxicité hématologique), AVK (déséquilibre de l'INR sous antibiotique), allergie aux pénicillines (contre-indication).",
+                    "ddi_interact_v2": [
+                              { "classe": "MÉTHOTREXATE — élimination diminuée par les pénicillines", "dcis": ["methotrexate"], "commentaire": "Compétition à la sécrétion tubulaire : majoration de la toxicité hématologique du méthotrexate. Surveillance de la NFS et de la fonction rénale.", "severite": "warning" },
+                              { "classe": "AVK — déséquilibre de l'INR sous antibiotique", "dcis": ["warfarine", "fluindione", "acenocoumarol"], "commentaire": "Contrôler l'INR à l'introduction et à l'arrêt de l'antibiotique.", "severite": "info" }
+                    ],
+                    "suivi_initial": "Vérifier l'absence d'allergie aux bêtalactamines",
+                    "suivi_periodique": "Observance (inobservance fréquente en prophylaxie au long cours) | Fièvre : consultation en urgence malgré la prophylaxie",
+                    "alerte_clinique": "Asplénie : toute fièvre est une urgence (infection fulminante à pneumocoque, méningocoque, Haemophilus) — la prophylaxie ne dispense pas d'une antibiothérapie présomptive.",
+                    "bio_cible": [],
+                    "atb_legere": "",
+                    "atb_moderee": "",
+                    "atb_severe": "",
+                    "atb_terminale": "",
+                    "notes_cliniques": "Allergie aux bêtalactamines : macrolide en alternative pour la prophylaxie.",
+                    "source": "RCP Oracilline | HCSP — vaccination et prévention chez l'asplénique (relayé SPILF/SFLS 2019) — extraits relus par source secondaire"
           },
           {
                     "dci": "Amoxicilline",

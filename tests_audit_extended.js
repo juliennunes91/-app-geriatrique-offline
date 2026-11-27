@@ -348,7 +348,7 @@ function runExtendedAudits(test, assert) {
             'ADA', 'NICE', 'EFNS',
             // Dispositifs implantés : sonde à demeure (SUP_SAD_01), prothèse articulaire
             // (SUP_PROTH_01).
-            'SPILF', 'SF2H', 'ANSM_DENT']);
+            'SPILF', 'SF2H', 'ANSM_DENT', 'HCSP']);
         const bad = JSON.parse(vm.runInContext(`(function(){
             const out=new Set(); const scan=arr=>(arr||[]).forEach(r=>(r.sources||[]).forEach(s=>out.add(s)));
             scan(GERIA_RECOS_DB.EVITER);scan(GERIA_RECOS_DB.INITIER);scan(RECOS_SUPPLEMENT);
@@ -707,6 +707,9 @@ function runCollisionAudit(test, assert) {
         'chlorpheniramine::dexchlorpheniramine', 'dexchlorpheniramine::chlorpheniramine',
         'dexchlorpheniramine::pheniramine',                              // antihistaminiques -phéniramine
         'loratadine::desloratadine',                                     // loratadine ↔ métabolite actif
+        // Association fixe : l'Augmentin CONTIENT de l'amoxicilline — l'asplénique qui le reçoit
+        // est couvert contre le pneumocoque (SUP_ASPL_01, med_absent).
+        'amoxicilline::amoxicillineacideclavulanique',
         'metronidazole::spiramycinemetronidazole',                       // association
         'piperacillinetazobactam::piperacilline',                        // association ↔ composant
         'valproate::divalproatedesodium',                                // sel de valproate

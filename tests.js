@@ -1375,6 +1375,20 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Asplenie : pathologie, penicilline V, recommandations et lecture du texte', () => {
+        const { analyzeCase, loadApp } = require('./oracle_harness');
+        const vm = require('vm'); const { sandbox } = loadApp();
+        const ids = c => ((c._html['alertes-eviter'] || '') + (c._html['alertes-initier'] || '')).match(/id:SUP_ASPL_01/g) || [];
+        const sans = analyzeCase({ age: 80, sexe: 'F', comorbs: ['PAT_070'] });
+        assert.ok(ids(sans).length, 'asplenie sans prophylaxie : a discuter');
+        assert.ok(/Pénicilline V/.test(sans._html['alertes-guidelines'] || ''), 'onglet recommandations');
+        assert.strictEqual(ids(analyzeCase({ age: 80, sexe: 'F', comorbs: ['PAT_070'], meds: ['Phenoxymethylpenicilline'] })).length, 0, 'sous Oracilline : rien');
+        assert.ok(vm.runInContext(`matchesDrugClass('phenoxymethylpenicilline', sanitizeText(MASTER_DB.MEDICAMENTS.find(m => m.dci === 'Phenoxymethylpenicilline').classe), 'antibiotique')`, sandbox), 'un antibiotique');
+        vm.runInContext(require('fs').readFileSync('text_extractor.js', 'utf8'), sandbox);
+        const r = JSON.parse(vm.runInContext(`JSON.stringify(GeriaTextExtractor.extract('Néphrectomie et splénectomie en 2023.', MASTER_DB))`, sandbox));
+        assert.ok(r.pathologies.some(h => h.target.id === 'PAT_070'), '« splénectomie » lu comme asplenie');
+    });
+
     test('Gabapentinoide : STOPP L5 suit l\'indication declaree, jamais la seule molecule', () => {
         // Signalement : douleur chronique cochee, la pregabaline sortait « hors douleur
         // neuropathique ». EV_L05 ne verifiait que la molecule.

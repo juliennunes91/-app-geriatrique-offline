@@ -4383,6 +4383,16 @@ const RECOS_SUPPLEMENT = [
         }
     },
     {
+        // Asplénie sans antibioprophylaxie : à DISCUTER (info), pas une omission certaine —
+        // la prophylaxie peut s'arrêter après 2 ans sans infection grave ni immunodépression.
+        id: "SUP_ASPL_01", sources: ["HCSP", "SPILF"],
+        titre: "Asplénie : antibioprophylaxie par pénicilline V à discuter",
+        message: "Asplénie déclarée sans pénicilline V. Recommandation HCSP : pénicilline V 1 MUI x 2/j au moins 2 ans après la splénectomie, au-delà en cas d'infection grave antérieure ou d'immunodépression. Vérifier les vaccinations (pneumocoque, méningocoques ACWY et B, Haemophilus, grippe — onglet Vaccination) et que le patient sait que toute fièvre est une urgence.",
+        severite: "info",
+        condition: { comorbs: ["PAT_070"], med_absent: ["phenoxymethylpenicilline", "amoxicilline"] },
+        alternatives: "Pénicilline V (Oracilline) 1 MUI x 2/j ; macrolide si allergie aux bêtalactamines."
+    },
+    {
         // Indication non déclarée : on la DEMANDE, on ne l'affirme pas (STOPP v3 L5 ne vise
         // que la douleur non neuropathique). Muette si l'épilepsie ou un TAG est déclaré.
         id: "SUP_GABA_02", sources: ["STOPP3"],

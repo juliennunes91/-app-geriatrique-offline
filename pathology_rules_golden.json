@@ -997,5 +997,14 @@
    "Polypharmacie psychotrope / fortes doses"
   ],
   "reference": "HAS TSA 2018 | NICE | Maudsley 14e éd."
+ },
+ "PAT_070": {
+  "nom": "Asplénie / splénectomie",
+  "initier": [
+   "Pénicilline V (phénoxyméthylpénicilline) 1 MUI x 2/j",
+   "Vaccinations pneumocoque, méningocoques ACWY et B, Hib, grippe"
+  ],
+  "eviter": [],
+  "reference": "HCSP — vaccinations des personnes immunodéprimées ou aspléniques (2012-2014) et antibioprophylaxie (2015), relayés SPILF/SFLS 2019 | Calendrier vaccinal en vigueur"
  }
 }

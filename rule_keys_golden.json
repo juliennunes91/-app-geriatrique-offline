@@ -127,6 +127,10 @@
  "amoxapine": [
   "Amoxapine"
  ],
+ "amoxicilline": [
+  "Amoxicilline",
+  "Amoxicilline + acide clavulanique"
+ ],
  "antiagreg": [
   "Acide acetylsalicylique",
   "Clopidogrel",
@@ -207,6 +211,7 @@
   "Ofloxacine",
   "Oritavancine",
   "Oxacilline",
+  "Phenoxymethylpenicilline",
   "Piperacilline",
   "Piperacilline + tazobactam",
   "Pivmecillinam",
@@ -1484,6 +1489,9 @@
  ],
  "phenobarbital": [
   "Phenobarbital"
+ ],
+ "phenoxymethylpenicilline": [
+  "Phenoxymethylpenicilline"
  ],
  "phenytoine": [
   "Phenytoine"

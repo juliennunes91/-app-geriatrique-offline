@@ -4161,6 +4161,32 @@ const PATHOLOGY_RULES_DB = {
         BIOLOGIE: { SURVEILLANCE_CIBLE: ["BIO_025", "BIO_027", "BIO_031"], REGLES: [
             { si_med: ["antipsychotique"], bio: "BIO_025", nom: "Glycémie", frequence: "Baseline, 3 mois, annuelle si antipsychotique", note: "Syndrome métabolique" }
         ] }
+    },
+    "PAT_070": {
+        ID: "PAT_070", NOM: "Asplénie / splénectomie",
+        REFERENCE: "HCSP — vaccinations des personnes immunodéprimées ou aspléniques (2012-2014) et antibioprophylaxie (2015), relayés SPILF/SFLS 2019 | Calendrier vaccinal en vigueur",
+        SOURCES_EBM: {
+            "INITIER": {
+                "Pénicilline V (Oracilline) 1 MUI x 2/j": "HCSP 2015 — au moins 2 ans après la splénectomie, au-delà si infection grave antérieure ou immunodépression",
+                "Vaccins pneumococcique, méningococciques (ACWY et B), Haemophilus influenzae b, grippe annuelle": "HCSP — selon le calendrier vaccinal en vigueur",
+                "Éducation : carte d'asplénique, fièvre = urgence": "HCSP/SPILF"
+            },
+            "EVITER": {
+                "Vaccins vivants atténués si immunodépression associée": "HCSP"
+            }
+        },
+        TRAITEMENTS: {
+            PRINCIPES: [
+                { note: "Le risque est l'infection fulminante à bactérie encapsulée (pneumocoque surtout, méningocoque, Haemophilus), toute la vie et maximal les premières années. Trois mesures : vaccination, antibioprophylaxie, éducation — toute fièvre est une urgence et justifie une antibiothérapie présomptive, même sous prophylaxie." },
+                { note: "Vaccinations selon le calendrier vaccinal en vigueur (les schémas pneumococciques ont changé) : pneumocoque, méningocoques ACWY et B, Haemophilus influenzae b, grippe chaque année. Les vérifier dans l'onglet Vaccination." }
+            ],
+            INITIER: [
+                { classe: "Pénicilline V (phénoxyméthylpénicilline) 1 MUI x 2/j", indication: "Prophylaxie au moins 2 ans après splénectomie (au-delà si infection grave antérieure ou immunodépression)", note: "Macrolide si allergie aux bêtalactamines ; observance médiocre au long cours", niveau_preuve: "C" },
+                { classe: "Vaccinations pneumocoque, méningocoques ACWY et B, Hib, grippe", indication: "Tout asplénique", note: "Schémas selon le calendrier vaccinal en vigueur", niveau_preuve: "B" }
+            ],
+            EVITER: []
+        },
+        BIOLOGIE: { SURVEILLANCE_CIBLE: [], REGLES: [] }
     }
 };
 
@@ -4233,7 +4259,8 @@ const PATHO_SYNDROME_MAP = {
     "PAT_066": ["SYND_004"],
     "PAT_067": ["SYND_001", "SYND_004"],
     "PAT_068": ["SYND_013", "SYND_004"],
-    "PAT_069": ["SYND_004", "SYND_013"]
+    "PAT_069": ["SYND_004", "SYND_013"],
+    "PAT_070": []
 };
 
 const PATHO_MED_INTERDITS = {

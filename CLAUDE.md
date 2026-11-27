@@ -506,6 +506,17 @@ Trois règles : `SUP_DOUL_01` sans aucun antalgique, `SUP_DOUL_02` sous antalgiq
 (réévaluer prise, mécanisme, palier — START v3), `SUP_DOUL_03` avec troubles cognitifs
 (cause d'agitation et de confusion, Algoplus ; SFGG 2024). Validées par mutation.
 
+## Asplénie (5.10)
+
+Pathologie **`PAT_070`** « Asplénie / splénectomie » (CIM-10 D73.0 ; synonymes splénectomie,
+hyposplénisme — lue par l'import de texte), avec son entrée de recommandations : pénicilline V
+1 MUI x 2/j au moins 2 ans après la splénectomie (au-delà si infection grave ou
+immunodépression), vaccinations pneumocoque, méningocoques ACWY et B, Hib, grippe **selon le
+calendrier en vigueur** (les schémas pneumococciques ont changé : ne pas les figer), fièvre =
+urgence. Fiche **`Phenoxymethylpenicilline`** (Oracilline). `SUP_ASPL_01` (info) : asplénie
+sans pénicilline V ni amoxicilline → prophylaxie **à discuter**, pas omission certaine.
+Sources HCSP lues par source secondaire (SPILF/SFLS 2019, Vidal) : rapport HCSP non joint.
+
 ## Dispositifs implantés : sonde à demeure, prothèses articulaires
 
 Quatre cases dans « Habitudes de vie & État général » (deux UIs) : `chkSAD`, `chkPTH`,
