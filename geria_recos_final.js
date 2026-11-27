@@ -4380,6 +4380,43 @@ const RECOS_SUPPLEMENT = [
         }
     },
     {
+        // Douleur déclarée non contrôlée par le clinicien, et aucun antalgique prescrit.
+        id: "SUP_DOUL_01", sources: ["HAS", "SFGG"],
+        titre: "Douleur non contrôlée sans antalgique prescrit",
+        message: "La douleur est déclarée non contrôlée et l'ordonnance ne porte aucun antalgique. Préciser son mécanisme (nociceptif, neuropathique, mixte) et sa cause, qui se traite d'abord. Le paracétamol en prise systématique est la première intention chez le sujet âgé (au plus 3 g/j) ; les AINS sont à éviter (Beers 2023, STOPP/START v3).",
+        severite: "warning",
+        condition: {
+            contexte_clinique: ["douleur_non_controlee"],
+            med_absent: ["paracetamol", "opioide", "ains", "nefopam", "gabapentine", "pregabaline", "duloxetine", "amitriptyline"]
+        },
+        alternatives: "Paracétamol systématique ; traitement du mécanisme neuropathique adapté au DFG ; mesures non médicamenteuses."
+    },
+    {
+        // Douleur non contrôlée SOUS antalgique : c'est le traitement qu'il faut revoir.
+        id: "SUP_DOUL_02", sources: ["HAS", "SFGG", "STOPP3"],
+        titre: "Douleur non contrôlée sous traitement antalgique — réévaluer",
+        message: "La douleur reste non contrôlée sous le traitement en place. Vérifier la prise (systématique plutôt qu'à la demande, horaires, dose du paracétamol), le mécanisme (une douleur neuropathique répond mal aux antalgiques usuels), puis passer au palier suivant : START v3 retient un opioïde fort pour une douleur modérée à sévère quand le paracétamol, les AINS ou les opioïdes faibles sont insuffisants. Rechercher une cause aggravante (fécalome, rétention, escarre, fracture).",
+        severite: "warning",
+        condition: {
+            contexte_clinique: ["douleur_non_controlee"],
+            med_keys: ["paracetamol", "opioide", "ains", "nefopam", "gabapentine", "pregabaline", "duloxetine", "amitriptyline"]
+        },
+        alternatives: "Réévaluation à chaque palier avec la même échelle (EN/EVA, ou Algoplus si la communication verbale est altérée)."
+    },
+    {
+        // Douleur non contrôlée chez un patient aux troubles cognitifs : elle s'exprime
+        // par le comportement, et c'est là qu'on la cherche avant tout psychotrope.
+        id: "SUP_DOUL_03", sources: ["HAS", "SFGG"],
+        titre: "Douleur non contrôlée et troubles cognitifs — cause d'agitation ou de confusion",
+        message: "Chez le patient aux troubles cognitifs, une douleur non contrôlée s'exprime par l'agitation, l'opposition, la confusion ou le repli : la traiter vient avant tout psychotrope (recommandations SFGG / FCM / SF3PA 2024 sur les symptômes psycho-comportementaux). L'auto-évaluation devient peu fiable : échelle comportementale Algoplus, un score ≥ 2 signant une douleur probable (Rat, Eur J Pain 2011).",
+        severite: "info",
+        condition: {
+            contexte_clinique: ["douleur_non_controlee"],
+            contexte_clinique_any: ["demence", "trouble_neurocognitif_majeur", "delirium", "spc_agitation"]
+        },
+        alternatives: "Évaluation Algoplus répétée ; antalgique d'épreuve et réévaluation du comportement."
+    },
+    {
         // Laxatif de lest et déglutition : le mucilage gonfle au contact de l'eau.
         id: "SUP_LEST_01", sources: ["ANSM"],
         titre: "Laxatif de lest et troubles de la déglutition — contre-indiqué",

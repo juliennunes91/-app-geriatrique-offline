@@ -480,6 +480,22 @@ règles.** Un test vérifie que le macrogol reste un « laxatif ».
 Sources lues par **extraits de recherche** (RCP ANSM, BDPM et Vidal injoignables depuis la
 session) : à relire au RCP avant de tenir les formulations pour définitives.
 
+## Douleur : contrôlée ou non (4.97)
+
+Rien ne disait si la douleur était contrôlée. Champ **`douleurStatut`** (non évaluée /
+absente / présente, contrôlée / non contrôlée) et deux scores facultatifs, **`douleurEN`**
+(EN/EVA 0-10) et **`douleurAlgoplus`** (0-5), dans « Gériatrie & Syndromes » des deux UIs ;
+export JSON, `resetPatient()`, hash. `douleurDeclaree()` (`utils.js`) est le point de passage
+unique de la synthèse, de l'export texte et du PDF — et **l'absence d'évaluation est dite**
+(« Douleur : non évaluée »), comme la date du bilan.
+
+**Le statut est une déclaration, le score une mesure** : seul `non_controlee` produit le
+contexte `douleur_non_controlee`. Un Algoplus ≥ 2 dit « douleur probable » (Rat 2011), pas
+« douleur non contrôlée sous ce traitement » — il est affiché, jamais inféré en statut.
+Trois règles : `SUP_DOUL_01` sans aucun antalgique, `SUP_DOUL_02` sous antalgique
+(réévaluer prise, mécanisme, palier — START v3), `SUP_DOUL_03` avec troubles cognitifs
+(cause d'agitation et de confusion, Algoplus ; SFGG 2024). Validées par mutation.
+
 ## Dispositifs implantés : sonde à demeure, prothèses articulaires
 
 Quatre cases dans « Habitudes de vie & État général » (deux UIs) : `chkSAD`, `chkPTH`,

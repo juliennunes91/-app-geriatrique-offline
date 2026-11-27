@@ -1375,6 +1375,23 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Douleur : le statut declare est lu, affiche, et arme les regles dans les deux sens', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const r = c => analyzeCase(Object.assign({ age: 86, sexe: 'F' }, c));
+        const ids = x => new Set(((x._html['alertes-eviter'] || '') + (x._html['alertes-initier'] || '')).match(/id:SUP_DOUL_0\d/g) || []);
+        const nc = { douleurStatut: 'non_controlee', douleurEN: 6 };
+        assert.ok(ids(r({ bio: nc })).has('id:SUP_DOUL_01'), 'non controlee sans antalgique');
+        const sous = ids(r({ bio: nc, meds: ['Paracetamol'] }));
+        assert.ok(sous.has('id:SUP_DOUL_02') && !sous.has('id:SUP_DOUL_01'), 'sous antalgique : reevaluer, pas « sans antalgique »');
+        assert.ok(ids(r({ bio: nc, comorbs: ['PAT_010', 'PAT_011'], flags: ['chkDemence', 'demTypeMA'] })).has('id:SUP_DOUL_03'), 'troubles cognitifs');
+        assert.strictEqual(ids(r({ bio: { douleurStatut: 'controlee', douleurEN: 2 }, meds: ['Paracetamol'] })).size, 0, 'controlee : rien');
+        // Un score seul ne vaut pas declaration : Algoplus 3 sans statut n'arme rien.
+        assert.strictEqual(ids(r({ bio: { douleurAlgoplus: 3 } })).size, 0, 'score sans statut : pas de regle');
+        const syn = x => (x._html['alertes-synthese'].match(/Douleur : [^<]*/) || [''])[0];
+        assert.strictEqual(syn(r({ bio: nc })), 'Douleur : non contrôlée (EN/EVA 6/10)');
+        assert.strictEqual(syn(r({})), 'Douleur : non évaluée', 'l\'absence d\'evaluation est DITE');
+    });
+
     test('Laxatifs de lest (ispaghul, sterculia) : fiches completes, risques mecaniques dans les deux sens', () => {
         const { analyzeCase, loadApp } = require('./oracle_harness');
         const vm = require('vm');

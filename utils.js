@@ -316,6 +316,23 @@ const dispositifsDeclares = () => DISPOSITIFS.filter(d => {
     return !!(el && el.checked);
 });
 
+// ── Douleur ──────────────────────────────────────────────────────────────────────
+// Le statut est une DÉCLARATION du clinicien (non évaluée / absente / contrôlée / non
+// contrôlée) ; les scores la documentent mais ne la remplacent pas : un Algoplus ≥ 2 dit
+// « douleur probable » (Rat, Eur J Pain 2011), pas « douleur non contrôlée sous ce
+// traitement ». Point de passage unique pour la synthèse, l'export texte et le PDF.
+const DOULEUR_LIBELLES = { absente: 'absente', controlee: 'présente, contrôlée', non_controlee: 'non contrôlée' };
+function douleurDeclaree() {
+    if (typeof document === 'undefined') return null;
+    const v = id => { const e = document.getElementById(id); return e ? String(e.value || '').trim() : ''; };
+    const statut = v('douleurStatut'), en = v('douleurEN'), algo = v('douleurAlgoplus');
+    const scores = [];
+    if (en !== '' && !isNaN(parseFloat(en))) scores.push('EN/EVA ' + parseFloat(en) + '/10');
+    if (algo !== '' && !isNaN(parseFloat(algo))) scores.push('Algoplus ' + parseFloat(algo) + '/5');
+    const libelle = DOULEUR_LIBELLES[statut] || (scores.length ? 'statut non renseigné' : 'non évaluée');
+    return { statut, libelle, scores, texte: 'Douleur : ' + libelle + (scores.length ? ' (' + scores.join(', ') + ')' : '') };
+}
+
 // Deux cases cliniques ne décrivent pas le patient mais UN médicament : la dose d'aspirine
 // et le schéma d'insuline. Les poser dans la liste des paramètres cliniques obligeait à les
 // chercher loin de la ligne qu'elles qualifient ; elles sont donc demandées dans la fenêtre

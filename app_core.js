@@ -52,7 +52,7 @@ window.importerPatientJSON = function() {
 
 function _collectPatientData() {
     const fields = {};
-    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #bioDate, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioPne, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioOsmU, #bioNaU, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
+    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #bioDate, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioPne, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioOsmU, #bioNaU, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #douleurStatut, #douleurEN, #douleurAlgoplus, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
         if (el) fields[el.id] = el.value;
     });
     const checkboxes = {};
@@ -295,6 +295,8 @@ function buildSyntheseText() {
     {
         const dispo = (typeof dispositifsDeclares === 'function') ? dispositifsDeclares() : [];
         if (dispo.length) lines.push('Porteur de : ' + dispo.map(d => d.libelle).join(', '));
+        const dl = (typeof douleurDeclaree === 'function') ? douleurDeclaree() : null;
+        if (dl) lines.push(dl.texte);
     }
     lines.push('');
 
@@ -694,6 +696,8 @@ function buildPdfContent() {
     {
         const dispo = (typeof dispositifsDeclares === 'function') ? dispositifsDeclares() : [];
         if (dispo.length) html += `<div style="${S.body}margin-top:4px;">Porteur de : ${escapeHtml(dispo.map(d => d.libelle).join(', '))}</div>`;
+        const dl = (typeof douleurDeclaree === 'function') ? douleurDeclaree() : null;
+        if (dl) html += `<div style="${S.body}margin-top:4px;${dl.statut === 'non_controlee' ? 'font-weight:600;color:#b45309;' : ''}">${escapeHtml(dl.texte)}</div>`;
     }
     html += `</div>`;
 
@@ -1117,6 +1121,7 @@ window.resetPatient = function() {
         'bioDate': '',
         'cpManual': '0', 'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1',
         'psyOnsetAge': '',
+        'douleurStatut': '', 'douleurEN': '', 'douleurAlgoplus': '',
         'bioB12Unit': 'pmol/L', 'bioB9Unit': 'nmol/L',
         // Texte libre importé et commentaire au prescripteur : ils appartiennent au dossier
         // précédent — le commentaire partirait dans le PDF du patient suivant.

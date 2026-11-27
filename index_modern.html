@@ -638,6 +638,7 @@
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkConstipation" class="accent-secondary"><span>Constipation chronique sévère</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkDysphagie" class="accent-secondary"><span>Dysphagie / Troubles de déglutition</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkArthrose" class="accent-secondary"><span>Arthrose / douleur arthrosique chronique</span></label>
+                            <div class="flex flex-wrap items-center gap-1 py-1"><label class="text-[11px] font-semibold" for="douleurStatut">Douleur</label><select id="douleurStatut" class="px-1 py-1 text-[10px] border border-outline-variant rounded bg-surface-container-low focus:outline-none" onchange="if(typeof analyserPrescription==='function')analyserPrescription()"><option value="">Non évaluée</option><option value="absente">Absente</option><option value="controlee">Présente, contrôlée</option><option value="non_controlee">Non contrôlée</option></select><label class="text-[11px] text-on-surface-variant" for="douleurEN">EN/EVA</label><input type="number" id="douleurEN" min="0" max="10" step="1" placeholder="0-10" class="w-16 px-1.5 py-0.5 text-[11px] border border-outline-variant rounded bg-surface-container-low"><label class="text-[11px] text-on-surface-variant" for="douleurAlgoplus">Algoplus</label><input type="number" id="douleurAlgoplus" min="0" max="5" step="1" placeholder="0-5" class="w-16 px-1.5 py-0.5 text-[11px] border border-outline-variant rounded bg-surface-container-low"></div>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkGlaucome" class="accent-secondary"><span>Glaucome à angle fermé</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkStenoseAortique" class="accent-secondary"><span>Sténose aortique serrée symptomatique</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAspirineForte" class="accent-secondary"><span>Aspirine &gt; 100 mg/j (Dose élevée) <small class="text-on-surface-variant">— ou dose saisie à l'ajout</small></span></label>
@@ -973,7 +974,7 @@
 
 <!-- Footer -->
 <footer class="fixed bottom-0 text-[0.68rem] text-on-surface-variant bg-surface-container-lowest/92 px-3 py-1 border-t border-r border-outline-variant rounded-tr-md z-40 leading-tight max-w-[420px] pointer-events-none no-print" style="backdrop-filter:blur(4px); left:16rem;">
-    version <span id="appVersion">4.96</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
+    version <span id="appVersion">4.97</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
     Merci aux testeurs (Dr Juliette Muffet)<br>
     <em>Outil d'aide à la décision pharmaco-clinique. Résultats à valider par l'utilisateur.</em>
 </footer>

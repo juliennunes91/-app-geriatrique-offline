@@ -751,6 +751,8 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(_declare('chkConstipation')) ctxClinique.push("constipation_chronique");
     if(_declare('chkDysphagie')) ctxClinique.push("dysphagie");
     if(_declare('chkArthrose')) ctxClinique.push("arthrose");
+    // Douleur déclarée non contrôlée par le clinicien (le statut, pas un score : cf. utils.js).
+    if (getStr('douleurStatut') === 'non_controlee') ctxClinique.push("douleur_non_controlee");
     if(_declare('chkChutes')) ctxClinique.push("chutes");
     if(_declare('chkInstitution')) ctxClinique.push("institution");
     if(_declare('chkConfine')) ctxClinique.push("confinement");
@@ -1149,10 +1151,12 @@ const _HASH_NUMERIC_FIELDS = [
     'bioLact', 'bioCst', 'bioPhos', 'bioTemp', 'bioT4', 'bioT3', 'bioTp', 'bioTca',
     'bioChlore', 'bioOsm', 'bioOsmU', 'bioNaU', 'bioPrealb', 'bioAlbuminurie',
     'bioDigox', 'bioVgm', 'bioRetic',
+    // Scores de douleur : affichés en synthèse et dans les règles de douleur.
+    'douleurEN', 'douleurAlgoplus',
     // Child-Pugh manuel (utilisé si cpManual=1)
     'cpBili', 'cpAlb', 'cpTp', 'cpAscite', 'cpEnceph'
 ];
-const _HASH_SELECT_FIELDS = ['bioB12Unit', 'bioB9Unit', 'bioVitDUnit', 'bioDigoxUnit', 'bioTropoReactif'];
+const _HASH_SELECT_FIELDS = ['bioB12Unit', 'bioB9Unit', 'bioVitDUnit', 'bioDigoxUnit', 'bioTropoReactif', 'douleurStatut'];
 if (typeof window !== 'undefined') { window._HASH_NUMERIC_FIELDS = _HASH_NUMERIC_FIELDS; window._HASH_SELECT_FIELDS = _HASH_SELECT_FIELDS; }
 
 function analyserPrescription() {
@@ -5296,7 +5300,8 @@ function analyserPrescription() {
             const moreComorbs = nbComorbs > 5 ? ` +${nbComorbs - 5}` : '';
             const comorbStr = comorbLabels.length ? comorbLabels.join(', ') + moreComorbs : 'aucune comorbidité saisie';
             const dispo = (typeof dispositifsDeclares === 'function') ? dispositifsDeclares().map(d => d.libelle) : [];
-            const dispoStr = dispo.length ? '<br><span class="small text-muted">Porteur de : ' + escapeHtml(dispo.join(', ')) + '</span>' : '';
+            const dispoStr = (dispo.length ? '<br><span class="small text-muted">Porteur de : ' + escapeHtml(dispo.join(', ')) + '</span>' : '')
+                + ((typeof douleurDeclaree === 'function' && douleurDeclaree()) ? '<br><span class="small ' + (douleurDeclaree().statut === 'non_controlee' ? 'fw-semibold" style="color:#b45309;' : 'text-muted') + '">' + escapeHtml(douleurDeclaree().texte) + '</span>' : '');
             return `<div class="card mb-2 shadow-sm" style="border-left:4px solid #0d6efd;">
                 <div class="card-body py-2 px-3">
                     <strong>${sexeLabel} ${ageStr}${fragLabel}</strong>

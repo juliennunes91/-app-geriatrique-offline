@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 26/11/2026 — **version 4.96**, `BUILD_ID` `20261127-laxatifs-lest`,
-cache `geriaassist-v166`.*
+*Dernière mise à jour : 26/11/2026 — **version 4.97**, `BUILD_ID` `20261127-douleur`,
+cache `geriaassist-v167`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **4.97** (27/11) — Douleur : statut déclaré + EN/EVA + Algoplus, en synthèse, PDF et
+  export ; trois règles (sans antalgique, sous antalgique, troubles cognitifs).
 
 - **4.96** (27/11) — Laxatifs de lest (ispaghul, sterculia) : fiches, classe `mucilage`,
   trois règles mécaniques (dysphagie, opioïde, confinement).
@@ -196,7 +199,10 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-**Rien en cours.** Suite possible : champs manquants listés en fin de
+**En cours : audit logique de chaque case clinique** (demande du 27/11, multi-sessions) —
+pour chaque case : contexte produit, règles lectrices, liens médicament / posologie /
+biologie / pathologie, trous et contradictions. Inventaire automatique amorcé (script de
+session, à verser dans `tools/`). Ensuite : Suite possible : champs manquants listés en fin de
 `docs/catalogue_pieges_biologie_et_presentations_atypiques.md` (2ᵉ créatinine datée, FC,
 ECBU (urines : osmolalité et natriurèse faites en 4.50), arrêt de corticothérapie, heure de prélèvement) ; entrées « NV » à vérifier.
 

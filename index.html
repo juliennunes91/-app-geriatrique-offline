@@ -285,6 +285,7 @@
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkConstipation"><label class="form-check-label small">Constipation chronique sévère</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkDysphagie"><label class="form-check-label small">Dysphagie / Troubles de déglutition</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkArthrose"><label class="form-check-label small">Arthrose / douleur arthrosique chronique</label></div>
+                                <div class="d-flex flex-wrap align-items-center gap-1 my-1"><label class="small fw-semibold mb-0" for="douleurStatut">Douleur</label><select id="douleurStatut" class="form-select form-select-sm" style="max-width:150px;" onchange="if(typeof analyserPrescription==='function')analyserPrescription()"><option value="">Non évaluée</option><option value="absente">Absente</option><option value="controlee">Présente, contrôlée</option><option value="non_controlee">Non contrôlée</option></select><label class="small text-muted mb-0" for="douleurEN">EN/EVA</label><input type="number" id="douleurEN" class="form-control form-control-sm" style="max-width:62px;" min="0" max="10" step="1" placeholder="0-10"><label class="small text-muted mb-0" for="douleurAlgoplus">Algoplus</label><input type="number" id="douleurAlgoplus" class="form-control form-control-sm" style="max-width:62px;" min="0" max="5" step="1" placeholder="0-5"></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkGlaucome"><label class="form-check-label small">Glaucome à angle fermé</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkStenoseAortique"><label class="form-check-label small">Sténose aortique serrée symptomatique</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAspirineForte"><label class="form-check-label small">Aspirine &gt; 100 mg/j (Dose élevée) <small class="text-muted">— ou dose saisie à l'ajout</small></label></div>
@@ -551,7 +552,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version <span id="appVersion">4.96</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version <span id="appVersion">4.97</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>

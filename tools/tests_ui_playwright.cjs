@@ -456,6 +456,23 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             ok(!/Furosemide/i.test(lot.synthese), 'la synthèse relancée ne nomme plus le médicament retiré');
         });
 
+        // Douleur : le statut déclaré parvient au rapport, et « Nouveau » l'efface.
+        const doul = await page.evaluate(() => {
+            resetPatient();
+            document.getElementById('patientAge').value = 86;
+            document.getElementById('douleurStatut').value = 'non_controlee';
+            document.getElementById('douleurEN').value = '7';
+            _lastAnalysisHash = null; analyserPrescription();
+            const pdf = buildPdfContent();
+            const texte = (typeof pdf === 'string' ? pdf : (pdf && pdf.innerHTML) || '');
+            resetPatient();
+            return { pdf: /Douleur : non contrôlée \(EN\/EVA 7\/10\)/.test(texte), reset: document.getElementById('douleurStatut').value === '' && document.getElementById('douleurEN').value === '' };
+        });
+        test('La douleur déclarée figure au rapport, et « Nouveau » l\'efface', () => {
+            ok(doul.pdf, 'le rapport porte « Douleur : non contrôlée (EN/EVA 7/10) »');
+            ok(doul.reset, 'statut et score purgés');
+        });
+
         // Aspirine : la dose est demandée à l'ajout, et la case clinique suit la réponse.
         const asp = await page.evaluate(() => {
             resetPatient();
