@@ -41,6 +41,10 @@ absent) — **A** arbitrage clinique requis avant correction.
 | ATCD de saignement | Lu par HAS-BLED, ORBIT, DOAC Score et `EV_C02`/`EV_C12` — cohérent depuis 4.92/4.95. | — |
 | QT long congénital | Cohérent : `EV_N05` lit le risque QT de chaque molécule. | — |
 
+**État : corrigé en 5.30** (arbitrages A tranchés par l'utilisateur : « corrige les problèmes
+de l'audit »). Restent ouverts : la durée d'association antiagrégant + anticoagulant après
+stent, et la case « post-arrêt cardiaque / cardioversion », qui mêle deux situations.
+
 **Corrections proposées (lot 1)**, par ordre de sécurité :
 
 1. `EV_H02`, `EV_I06` : exiger `hta_non_controlee`. *(défaut pur)*

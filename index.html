@@ -146,6 +146,9 @@
                         <div class="col-3"><label class="fw-bold small">Sexe</label><select id="patientSexe" class="form-select px-1" onchange="calculerDFG()"><option value="F">F</option><option value="M">M</option></select></div>
                         <div class="col-3"><label class="fw-bold small" for="patientPoids">Poids <span class="fw-normal text-muted">(kg)</span></label><input type="number" id="patientPoids" class="form-control px-1" min="20" max="300" oninput="calculerDFG()"></div>
                         <div class="col-3"><label class="fw-bold small">IMC <span class="fw-normal text-muted">(kg/m²)</span></label><input type="number" id="patientBmi" class="form-control px-1"></div>
+                        <div class="col-4"><label class="fw-bold small" for="patientFC">FC <span class="fw-normal text-muted">(bpm)</span></label><input type="number" id="patientFC" class="form-control px-1" min="20" max="250" placeholder="repos"></div>
+                        <div class="col-4"><label class="fw-bold small" for="patientPAS">PAS couché <span class="fw-normal text-muted">(mmHg)</span></label><input type="number" id="patientPAS" class="form-control px-1" min="50" max="300"></div>
+                        <div class="col-4"><label class="fw-bold small" for="patientPASdebout">PAS debout <span class="fw-normal text-muted">(3 min)</span></label><input type="number" id="patientPASdebout" class="form-control px-1" min="40" max="300"></div>
                         
                         <div class="col-4"><label class="fw-bold small text-primary" for="bioCreat">Créat <span class="fw-normal text-secondary">(µmol/L)</span></label><input type="number" id="bioCreat" class="form-control border-primary" min="0" max="2000" oninput="calculerDFG()"></div>
                         <div class="col-8">
@@ -261,6 +264,7 @@
                                 <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Antécédents Cardiovasculaires</h6>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkAvc"><label class="form-check-label small">ATCD d'AVC / AIT</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkTvp"><label class="form-check-label small">ATCD d'EP / TVP</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkMtevActive"><label class="form-check-label small">MTEV en cours de traitement (&lt; 6 mois) ou récidivante</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSaignement"><label class="form-check-label small">ATCD de Saignement majeur</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkBrady"><label class="form-check-label small">Bradycardie sévère (< 45 bpm)</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkHtaNonControlee"><label class="form-check-label small">HTA non contrôlée (>160 mmHg)</label></div>
@@ -552,7 +556,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version <span id="appVersion">5.20</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version <span id="appVersion">5.30</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>

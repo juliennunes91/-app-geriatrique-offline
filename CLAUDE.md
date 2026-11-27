@@ -517,6 +517,32 @@ urgence. Fiche **`Phenoxymethylpenicilline`** (Oracilline). `SUP_ASPL_01` (info)
 sans pénicilline V ni amoxicilline → prophylaxie **à discuter**, pas omission certaine.
 Sources HCSP lues par source secondaire (SPILF/SFLS 2019, Vidal) : rapport HCSP non joint.
 
+## Audit des cases cliniques — lot 1 corrigé (5.30)
+
+`docs/audit_cases_cliniques.md` (méthode, constats) ; inventaire généré par
+`node tools/inventaire_cases.cjs`. Doctrine : **le titre d'une règle dit le terrain que sa
+condition vérifie** — sinon on ajoute la question, jamais on ne devine.
+
+- `EV_H02` (AINS) et `EV_I06` (mirabégron) exigent l'**HTA non contrôlée** (case, ou PAS
+  mesurée ≥ 160) : ils sortaient en rouge sur toute HTA.
+- `EV_N01` n'évince plus le **paracétamol** dans l'hépatopathie ; `SUP_FOIE_01` (info) en dit
+  la posologie (2-3 g/j, 2 g/j si décompensée, alcool, dénutrition — BASL 2022).
+- `EV_N02` « cirrhose sévère » = **Child-Pugh B ou C** (contexte `child_pugh_bc`, calculé dans
+  `_buildPatientContext` avec la même règle que la carte Scores : saisie manuelle, sinon cinq
+  items, hépatopathie cochée sans score = C par prudence) ; `IN_M02` exige l'**encéphalopathie**
+  (item du score, contexte `encephalopathie_hepatique`).
+- `EV_SFGG_AD_03` : terrain `terrain_qt` (FA, bradycardie, QTc ≥ 470, K⁺ < 3,5 — item 30
+  SFGG/SF3PA/SFPC 2026) ; la dose de citalopram/escitalopram se déclare (famille `isrs_qt`) et
+  ≤ 20 / ≤ 10 mg fait taire la règle (`isrs_qt_dose_basse`).
+- `IN_M01` : un **antécédent** de MTEV n'est pas une indication d'anticoagulation — case
+  `chkMtevActive` « MTEV en cours de traitement (< 6 mois) ou récidivante » (deux UIs).
+- **Constantes** `patientFC`, `patientPAS`, `patientPASdebout` (deux UIs, export, reset, hash) :
+  FC < 50 → `bradycardie` (STOPP B4), FC < 60 → `fc_inf_60` (STOPP D17, `EV_D17` lit l'un ou
+  l'autre) ; PAS ≥ 160 → `hta_non_controlee` ; chute ≥ 20 mmHg au lever → hypotension
+  orthostatique déclarée (`PAT_009`, comme le pont Child-Pugh → `PAT_034`).
+- `SUP_SEPSIS_01` (« sick day rules ») : metformine, iSGLT2, diurétiques, sulfamides
+  hypoglycémiants à suspendre en maladie aiguë (EV_N07 couvrait AINS, aminosides, IEC/ARA2).
+
 ## Dispositifs implantés : sonde à demeure, prothèses articulaires
 
 Quatre cases dans « Habitudes de vie & État général » (deux UIs) : `chkSAD`, `chkPTH`,

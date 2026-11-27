@@ -877,7 +877,8 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["donepezil", "rivastigmine", "galantamine"],
-                contexte_clinique: "bradycardie"
+                // Seuil propre au critère D17 : < 60/min (FC mesurée), ou bradycardie déclarée.
+                contexte_clinique_any: ["bradycardie", "fc_inf_60"]
             },
             alternatives: "Mémantine si indication, réévaluation du bénéfice"
         },
@@ -1337,12 +1338,15 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3"],
             ref_code: "STOPP3-H2",
             section: "Musculo",
-            titre: "AINS + HTA sévère (PAS > 170 et/ou PAD > 100)",
-            message: "AINS avec HTA sévère (PAS > 170 et/ou PAD > 100 mmHg de façon persistante) : exacerbation de l'HTA.",
+            titre: "AINS + HTA non contrôlée",
+            message: "AINS avec HTA sévère ou non contrôlée (STOPP v3 H2 : PAS > 170 et/ou PAD > 100 mmHg de façon persistante ; case cochée ou PAS mesurée ≥ 160) : exacerbation de l'HTA.",
             severite: "danger",
+            // Audit 5.30 : la seule HTA déclarée faisait sortir cette alerte rouge sur toute HTA,
+            // contrôlée comprise. Elle exige désormais l'HTA non contrôlée (case ou mesure).
             condition: {
                 med_keys: ["ains"],
-                comorbs: ["PAT_005"]
+                comorbs: ["PAT_005"],
+                contexte_clinique: ["hta_non_controlee"]
             },
             alternatives: "Paracétamol, topiques, opioïdes faibles"
         },
@@ -1459,12 +1463,13 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3"],
             ref_code: "STOPP3-I6",
             section: "Urogénital",
-            titre: "Mirabégron + HTA sévère ou labile",
-            message: "Mirabégron avec HTA sévère ou labile : exacerbation de l'HTA.",
+            titre: "Mirabégron + HTA non contrôlée",
+            message: "Mirabégron avec HTA sévère ou labile (STOPP v3 I6) : exacerbation de l'HTA.",
             severite: "warning",
             condition: {
                 med_keys: ["mirabegron"],
-                comorbs: ["PAT_005"]
+                comorbs: ["PAT_005"],
+                contexte_clinique: ["hta_non_controlee"]
             },
             alternatives: "Rééducation périnéale, antimuscarinique si pas de CI"
         },
@@ -2125,7 +2130,10 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["citalopram", "escitalopram", "amitriptyline", "clomipramine", "imipramine", "doxepine"],
-                comorbs_any: ["PAT_006", "PAT_035"]
+                // Audit 5.30 : terrain = arythmie, bradycardie, QTc ≥ 470 ms ou hypokaliémie mesurés ;
+                // une dose de citalopram ≤ 20 mg / escitalopram ≤ 10 mg déclarée la fait taire.
+                contexte_clinique: ["terrain_qt"],
+                contexte_clinique_absent: ["isrs_qt_dose_basse"]
             },
             alternatives: "Switch vers sertraline (1ère intention sans cardio-toxicité — item 29) ou mirtazapine (orexigène/insomnie). Vortioxétine si bénéfice cognitif recherché (item 47)."
         },
@@ -2498,10 +2506,12 @@ const GERIA_RECOS_DB = {
             ref_code: "HEPATO-1",
             section: "Hépatologie",
             titre: "Médicament hépatotoxique + hépatopathie chronique / cirrhose",
-            message: "Médicament hépatotoxique (paracétamol > 2 g/j, statine à forte dose, méthotrexate, amiodarone, valproate) avec hépatopathie chronique ou cirrhose (PAT_034) : risque d'aggravation de l'insuffisance hépatique.",
+            message: "Médicament hépatotoxique (méthotrexate, amiodarone, valproate) avec hépatopathie chronique ou cirrhose : risque d'aggravation de l'insuffisance hépatique.",
             severite: "danger",
+            // Audit 5.30 : le paracétamol en est retiré — dans la cirrhose c'est l'antalgique de
+            // référence, à dose plafonnée (SUP_FOIE_01) : une POSOLOGIE, pas une éviction.
             condition: {
-                med_keys: ["paracetamol", "methotrexate", "amiodarone", "valproate", "acide valproique"],
+                med_keys: ["methotrexate", "amiodarone", "valproate", "acide valproique"],
                 comorbs: ["PAT_034"]
             },
             alternatives: "Réduction de dose paracétamol (max 2 g/j), alternatives non hépatotoxiques, surveillance bio hépatique rapprochée"
@@ -2511,12 +2521,13 @@ const GERIA_RECOS_DB = {
             sources: ["BEERS", "STOPP3"],
             ref_code: "HEPATO-2",
             section: "Hépatologie",
-            titre: "Benzodiazépine / opioïde + cirrhose sévère",
+            titre: "Benzodiazépine / opioïde + cirrhose sévère (Child-Pugh B ou C)",
             message: "Benzodiazépines et opioïdes = PIM du sujet âgé (Beers 2023 ; alerte renforcée sur la co-prescription BZD + opioïde) et sédatifs à éviter selon STOPP v3. En cas de cirrhose sévère, risque spécifique majoré : encéphalopathie hépatique et sédation prolongée par réduction du métabolisme hépatique (consensus hépatologique AASLD/EASL ; Beers 2023 ne comporte pas de critère médicament–maladie propre à la cirrhose).",
             severite: "danger",
             condition: {
                 med_keys: ["benzodiazepine", "diazepam", "lorazepam", "oxazepam", "alprazolam", "bromazepam", "clorazepate", "opioid", "morphine", "oxycodone", "fentanyl", "tramadol", "codeine"],
-                contexte_clinique: "hepatopathie"
+                // « Sévère » : Child-Pugh B ou C (hépatopathie cochée sans score = C par prudence).
+                contexte_clinique: ["hepatopathie", "child_pugh_bc"]
             },
             alternatives: "Éviter BZD/opioïdes, privilégier lactulose pour encéphalopathie, paracétamol ≤ 2 g/j pour douleur"
         },
@@ -3357,10 +3368,13 @@ const GERIA_RECOS_DB = {
             ref_code: "START-MTEV1",
             section: "Cardiovasculaire",
             titre: "Anticoagulant pour MTEV (TVP/EP) documentée",
-            message: "Anticoagulation par AOD ou AVK pour maladie thromboembolique veineuse (TVP/EP) documentée, en l'absence de contre-indication hémorragique majeure.",
+            message: "MTEV (TVP/EP) en cours de traitement ou récidivante sans anticoagulant à l'ordonnance, en l'absence de contre-indication hémorragique majeure. Un antécédent ancien de MTEV provoquée n'est pas une indication en soi.",
             severite: "warning",
+            // Audit 5.30 : sortait sur tout ANTÉCÉDENT de MTEV ; exige la case « MTEV en cours
+            // de traitement (< 6 mois) ou récidivante ».
             condition: {
                 comorbs: ["PAT_036"],
+                contexte_clinique: ["mtev_active"],
                 med_absent: ["apixaban", "rivaroxaban", "dabigatran", "edoxaban", "warfarine", "fluindione", "acenocoumarol", "heparine", "enoxaparine", "tinzaparine", "fondaparinux"]
             },
             alternatives: "AOD (apixaban 5 mg x2, rivaroxaban 20 mg) ou AVK si CI AOD"
@@ -3371,10 +3385,12 @@ const GERIA_RECOS_DB = {
             ref_code: "START-HEPATO1",
             section: "Hépatologie",
             titre: "Lactulose / rifaximine pour encéphalopathie hépatique (cirrhose)",
-            message: "Lactulose ou rifaximine pour prévention/traitement de l'encéphalopathie hépatique chez patient cirrhotique (PAT_034).",
+            message: "Encéphalopathie hépatique déclarée (item du score de Child-Pugh) sans lactulose ni rifaximine : traitement et prévention secondaire de l'encéphalopathie.",
             severite: "info",
+            // Audit 5.30 : sortait sur toute hépatopathie ; exige l'encéphalopathie déclarée.
             condition: {
                 comorbs: ["PAT_034"],
+                contexte_clinique: ["encephalopathie_hepatique"],
                 med_absent: ["lactulose", "rifaximine"]
             },
             alternatives: "Lactulose 15-30 mL x3/j ± rifaximine 550 mg x2/j"
@@ -4381,6 +4397,27 @@ const RECOS_SUPPLEMENT = [
             med_keys: ["terbinafine"],
             contexte_clinique_absent: ["terbinafine_topique"]
         }
+    },
+    {
+        // Maladie aiguë / sepsis : médicaments à suspendre temporairement (« sick day rules »).
+        // EV_N07 porte déjà AINS, aminosides, IEC/ARA2 ; restaient la metformine (acidose
+        // lactique — RCP : déshydratation, infection grave, choc), les iSGLT2 (acidocétose
+        // euglycémique — ANSM), les diurétiques et les sulfamides hypoglycémiants.
+        id: "SUP_SEPSIS_01", sources: ["ANSM"],
+        titre: "Maladie aiguë : médicaments à suspendre temporairement",
+        message: "Sepsis ou maladie aiguë déclarée : suspendre temporairement la metformine (acidose lactique — RCP : déshydratation, infection grave, choc ; doser les lactates), l'inhibiteur du SGLT2 (acidocétose, y compris à glycémie normale — ANSM), et discuter les diurétiques (déshydratation, insuffisance rénale aiguë) et les sulfamides hypoglycémiants (hypoglycémie si les apports chutent). Reprise à la guérison, fonction rénale contrôlée.",
+        severite: "warning",
+        condition: { contexte_clinique: ["sepsis"], med_keys: ["metformine", "isglt2", "dapagliflozin", "empagliflozin", "canagliflozin", "ertugliflozin", "diuretique", "gliclazide", "glimepiride", "glibenclamide"] },
+        alternatives: "Insuline transitoire si nécessaire ; reprise progressive après la phase aiguë."
+    },
+    {
+        // Paracétamol dans l'hépatopathie : une posologie, pas une éviction (audit 5.30).
+        id: "SUP_FOIE_01", sources: ["BASL"],
+        titre: "Paracétamol et hépatopathie : plafonner la dose, sans l'arrêter",
+        message: "Dans l'hépatopathie chronique et la cirrhose, le paracétamol reste l'antalgique de référence (les AINS y sont contre-indiqués). Le plafonner : 2 à 3 g/j selon la sévérité, 2 g/j en cas de cirrhose décompensée, d'alcoolisation active, de dénutrition ou de faible poids (position BASL 2022 ; revues de pratique).",
+        severite: "info",
+        condition: { med_keys: ["paracetamol"], comorbs: ["PAT_034"] },
+        alternatives: "Paracétamol ≤ 2 g/j si cirrhose décompensée ; éviter AINS."
     },
     {
         // Gabapentinoïde + opioïde : orange par défaut (fiches) ; rouge quand les doses

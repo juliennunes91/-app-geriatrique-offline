@@ -2,7 +2,6 @@
  "geriatrique_polymed_STOPP": {
   "alertes-eviter": [
    "danger | AINS + DFG < 50",
-   "danger | AINS + HTA sévère (PAS > 170 et/ou PAD > 100)",
    "danger | Antiagrégant seul en remplacement de l'anticoagulant dans la FA",
    "danger | Antidépresseurs tricycliques chez le sujet âgé",
    "danger | Benzodiazépines / Z-drugs : DIAZEPAM",
@@ -19,6 +18,7 @@
    "warning | DIAZEPAM — Déconseillé Dépression (sujet âgé / Late-Life Depression)",
    "warning | Deux classes pourvoyeuses de chutes associées",
    "warning | Digoxine en 1ère ligne pour FA (contrôle de fréquence > 3 mois)",
+   "warning | IBUPROFENE — Déconseillé Hypertension Artérielle (HTA)",
    "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
   ],
   "alertes-initier": [
@@ -386,15 +386,13 @@
  },
  "hepatopathie": {
   "alertes-eviter": [
-   "danger | Benzodiazépine / opioïde + cirrhose sévère",
+   "danger | Benzodiazépine / opioïde + cirrhose sévère (Child-Pugh B ou C)",
    "danger | Benzodiazépine ≥ 4 semaines",
-   "danger | Médicament hépatotoxique + hépatopathie chronique / cirrhose",
    "info | Action immédiate",
+   "info | Paracétamol et hépatopathie : plafonner la dose, sans l'arrêter",
    "warning | DIAZEPAM — Déconseillé Hépatopathie chronique / Cirrhose"
   ],
-  "alertes-initier": [
-   "info | Lactulose / rifaximine pour encéphalopathie hépatique (cirrhose)"
-  ],
+  "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [],
   "alertes-suivi": [
@@ -524,6 +522,7 @@
  },
  "QT_polypharmacie": {
   "alertes-eviter": [
+   "danger | Citalopram > 20 mg ou Escitalopram > 10 mg ou TCA en cas d'arythmie / QT prolongé / hypokaliémie",
    "danger | Flupentixol, fluphénazine, halopéridol > 2 mg/j",
    "danger | Médicament allongeant le QTc + QTc déjà prolongé",
    "info | Action immédiate",
@@ -2345,7 +2344,7 @@
  "cov_EV_I06_IN_I01": {
   "alertes-eviter": [
    "info | Réévaluation planifiée",
-   "warning | Mirabégron + HTA sévère ou labile"
+   "warning | Mirabégron + HTA non contrôlée"
   ],
   "alertes-initier": [
    "info | Alpha-1 bloquant sélectif pour HBP symptomatique",

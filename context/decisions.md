@@ -93,3 +93,6 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **27/11/2026** — Gabapentinoïde + opioïde : orange par défaut, rouge si dose élevée (MME ≥ 50,
   gabapentine ≥ 900, prégabaline > 300) ou terrain respiratoire. Équivalent diazépam affiché sans
   seuil (aucune source). — Demande utilisateur après point biblio.
+- **27/11/2026** — Audit lot 1 : paracétamol en posologie (pas d'éviction) dans la cirrhose ;
+  antécédent de MTEV ≠ indication d'anticoagulation ; constantes FC/PAS saisies (une mesure vaut
+  une case). — Arbitrages confiés par l'utilisateur.

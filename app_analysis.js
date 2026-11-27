@@ -751,6 +751,30 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(_declare('chkConstipation')) ctxClinique.push("constipation_chronique");
     if(_declare('chkDysphagie')) ctxClinique.push("dysphagie");
     if(_declare('chkArthrose')) ctxClinique.push("arthrose");
+    // ── Audit des cases, lot 1 (5.30) ─────────────────────────────────────────────
+    // MTEV : un ANTÉCÉDENT n'est pas une indication d'anticoagulation en cours ; seule la
+    // MTEV en cours de traitement ou récidivante l'est (IN_M01).
+    if(isChecked('chkMtevActive')) ctxClinique.push("mtev_active");
+    // Constantes mesurées. FC < 50 : la bradycardie de STOPP B4 ; FC < 60 : le seuil des
+    // inhibiteurs de l'acétylcholinestérase (STOPP D17). PAS ≥ 160 : HTA non contrôlée, le
+    // seuil de la case. Chute de PAS ≥ 20 mmHg au lever : hypotension orthostatique,
+    // déclarée comme la pathologie — un fait mesuré vaut un fait coché.
+    { const fc = getVal('patientFC'), pas = getVal('patientPAS'), pasD = getVal('patientPASdebout');
+      if (fc > 0 && fc < 50) ctxClinique.push("bradycardie");
+      if (fc > 0 && fc < 60) ctxClinique.push("fc_inf_60");
+      if (pas >= 160) ctxClinique.push("hta_non_controlee");
+      if (pas > 0 && pasD > 0 && pas - pasD >= 20 && !activeComorbs.includes("PAT_009")) activeComorbs.push("PAT_009"); }
+    // Child-Pugh : même règle que la carte de l'onglet Scores (saisie manuelle, sinon les cinq
+    // items ; hépatopathie cochée sans score = classe C par prudence). « Cirrhose sévère » =
+    // classe B ou C ; l'encéphalopathie est l'item du score, pas la seule hépatopathie.
+    { const man = getStr('cpManual'); let cp = null;
+      if (man && man !== '0') cp = man;
+      else if (_declare('chkFoie')) { const sc = getVal('cpBili') + getVal('cpAlb') + getVal('cpTp') + getVal('cpAscite') + getVal('cpEnceph'); cp = sc >= 6 ? (sc <= 6 ? 'A' : (sc <= 9 ? 'B' : 'C')) : 'C'; }
+      if (cp === 'B' || cp === 'C') ctxClinique.push("child_pugh_bc");
+      if ((cp || _declare('chkFoie')) && getVal('cpEnceph') >= 2) ctxClinique.push("encephalopathie_hepatique"); }
+    // QT : arythmie, bradycardie, QTc ≥ 470 ms ou hypokaliémie (SFGG/SF3PA/SFPC 2026, item 30).
+    { const qtc = getVal('bioQtc'), k = getVal('patientK');
+      if (activeComorbs.includes('PAT_006') || activeComorbs.includes('PAT_035') || _declare('chkBrady') || qtc >= 470 || (k > 0 && k < 3.5)) ctxClinique.push("terrain_qt"); }
     // Gabapentinoïde + opioïde à dose élevée (équivalent morphine ≥ 50 mg/j, gabapentine
     // ≥ 900 mg/j, prégabaline > 300 mg/j) : le sur-risque de dépression respiratoire et de
     // décès est dose-dépendant (Gomes 2017, 2018 ; CDC 2022). Doses issues des précisions.
@@ -892,6 +916,8 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
             // Gabapentinoïde : STOPP v3 L5 vise la douleur NON neuropathique — c'est
             // l'indication déclarée qui le dit, jamais la seule molécule.
             if (fam === 'gabapentinoide' && p.indication_gaba) ctxClinique.push('gaba_indication_precisee');
+            // Citalopram ≤ 20 mg / escitalopram ≤ 10 mg déclarés : sous le seuil de l'item 30.
+            if (fam === 'isrs_qt' && Number(p.dose) > 0 && Number(p.dose) <= (/^escitalopram/i.test(m.dci) ? 10 : 20)) ctxClinique.push('isrs_qt_dose_basse');
             if (fam === 'gabapentinoide' && p.indication_gaba === 'autre') ctxClinique.push('gaba_hors_neuropathique');
             // Antipsychotique durée brève → désarme EV_D05 (durée > 3 mois / 12 sem)
             if (fam === 'antipsychotique' && p.duree === 'courte') ctxClinique.push('antipsychotique_duree_breve');
@@ -1113,7 +1139,7 @@ function _computeAnalysisHash() {
     parts.push(getVal('psyOnsetAge'));
     _HASH_SELECT_FIELDS.forEach(id => { const el = document.getElementById(id); parts.push(el ? el.value : ''); });
     // Inclure toutes les checkboxes cliniques
-    ['chkStent','chkAlcool','chkAnorexie','chkTabac','chkAvc','chkTvp','chkSaignement',
+    ['chkStent','chkAlcool','chkAnorexie','chkTabac','chkAvc','chkTvp','chkMtevActive','chkSaignement',
      'chkBrady','chkHtaNonControlee','chkArret','chkScaAigu','chkLqts','chkDialyse',
      'chkFoie','chkSepsis','chkPalliatif','chkAtcdUlcere','chkChutes','chkDepression',
      'chkInstitution','chkConfine','chkSAD','chkPTH','chkPTG','chkPTE',
@@ -1165,6 +1191,9 @@ const _HASH_NUMERIC_FIELDS = [
     'bioDigox', 'bioVgm', 'bioRetic',
     // Scores de douleur : affichés en synthèse et dans les règles de douleur.
     'douleurEN', 'douleurAlgoplus',
+    // Constantes : FC (bradycardie mesurée), PAS couché et debout (HTA non contrôlée,
+    // hypotension orthostatique mesurée).
+    'patientFC', 'patientPAS', 'patientPASdebout',
     // Child-Pugh manuel (utilisé si cpManual=1)
     'cpBili', 'cpAlb', 'cpTp', 'cpAscite', 'cpEnceph'
 ];

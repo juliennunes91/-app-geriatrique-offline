@@ -52,7 +52,7 @@ window.importerPatientJSON = function() {
 
 function _collectPatientData() {
     const fields = {};
-    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #bioCreat, #patientDFG, #dfgMethodSelect, #bioDate, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioPne, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioOsmU, #bioNaU, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #douleurStatut, #douleurEN, #douleurAlgoplus, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
+    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #patientFC, #patientPAS, #patientPASdebout, #bioCreat, #patientDFG, #dfgMethodSelect, #bioDate, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioPne, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioOsmU, #bioNaU, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #douleurStatut, #douleurEN, #douleurAlgoplus, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
         if (el) fields[el.id] = el.value;
     });
     const checkboxes = {};
@@ -1122,6 +1122,7 @@ window.resetPatient = function() {
         'cpManual': '0', 'cpBili': '1', 'cpAlb': '1', 'cpTp': '1', 'cpAscite': '1', 'cpEnceph': '1',
         'psyOnsetAge': '',
         'douleurStatut': '', 'douleurEN': '', 'douleurAlgoplus': '',
+        'patientFC': '', 'patientPAS': '', 'patientPASdebout': '',
         'bioB12Unit': 'pmol/L', 'bioB9Unit': 'nmol/L',
         // Texte libre importé et commentaire au prescripteur : ils appartiennent au dossier
         // précédent — le commentaire partirait dans le PDF du patient suivant.
@@ -1138,7 +1139,7 @@ window.resetPatient = function() {
     // 4. Décocher toutes les checkboxes
     const checkboxes = [
         'chkStent', 'chkAlcool', 'chkAnorexie', 'chkTabac',
-        'chkAvc', 'chkTvp', 'chkSaignement', 'chkBrady', 'chkHtaNonControlee',
+        'chkAvc', 'chkTvp', 'chkMtevActive', 'chkSaignement', 'chkBrady', 'chkHtaNonControlee',
         'chkArret', 'chkScaAigu', 'chkLqts',
         'chkDialyse', 'chkFoie', 'chkSepsis',
         'chkPalliatif', 'chkAtcdUlcere', 'chkChutes', 'chkDepression',

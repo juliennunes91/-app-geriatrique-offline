@@ -87,7 +87,7 @@ const PANEL = {
     'cov_EV_FORTA_02_EV_PIM_01': {"age":82,"sexe":"F","comorbs":["PAT_002"],"bio":{"patientDFG":60},"meds":["Digoxine","Dronedarone"]},
     'cov_EV_PIM_02_EV_N05': {"age":82,"sexe":"F","comorbs":["PAT_002"],"flags":["chkLqts"],"bio":{"patientDFG":60},"meds":["Flecainide","Citalopram"]},
     'cov_EV_N08_EV_N09': {"age":82,"sexe":"F","flags":["chkBrady","chkArret"],"bio":{"patientDFG":60},"meds":["Acebutolol","Digoxine","Verapamil"]},
-    'cov_IN_M01': {"age":82,"sexe":"F","comorbs":["PAT_036"],"bio":{"patientDFG":60},"meds":[]},
+    'cov_IN_M01': {"age":82,"sexe":"F","comorbs":["PAT_036"],"flags":["chkMtevActive"],"bio":{"patientDFG":60},"meds":[]},
     'cov_EV_C01_EV_C02': {"age":82,"sexe":"F","flags":["chkAspirineForte","chkSaignement"],"bio":{"patientDFG":60},"meds":["Acide acetylsalicylique","Acenocoumarol"]},
     'cov_EV_C06_EV_C10': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Ticlopidine","Celecoxib","Acenocoumarol"]},
     'cov_EV_C11_EV_C13': {"age":82,"sexe":"F","comorbs":["PAT_006"],"bio":{"patientDFG":60},"meds":["Acenocoumarol","Dabigatran","Diltiazem"]},
@@ -126,7 +126,7 @@ const PANEL = {
     'cov_EV_H06_EV_H07': {"age":82,"sexe":"F","comorbs":["PAT_024"],"bio":{"patientDFG":60},"meds":["Celecoxib","Beclometasone"]},
     'cov_EV_H09_EV_BEERS_03': {"age":82,"sexe":"F","flags":["chkArthrose"],"bio":{"patientDFG":60},"meds":["Buprenorphine","Methocarbamol"]},
     'cov_EV_I04_EV_I05': {"age":82,"sexe":"F","comorbs":["PAT_009"],"flags":["chkConstipation"],"bio":{"patientDFG":60},"meds":["Oxybutynine","Alfuzosine"]},
-    'cov_EV_I06_IN_I01': {"age":82,"sexe":"F","comorbs":["PAT_005"],"flags":["chkHbp"],"bio":{"patientDFG":60},"meds":["Mirabegron"]},
+    'cov_EV_I06_IN_I01': {"age":82,"sexe":"F","comorbs":["PAT_005"],"flags":["chkHbp","chkHtaNonControlee"],"bio":{"patientDFG":60},"meds":["Mirabegron"]},
     'cov_EV_J02_EV_J03': {"age":82,"sexe":"F","comorbs":["PAT_002","PAT_016"],"bio":{"patientDFG":60},"meds":["Pioglitazone","Propranolol"]},
     'cov_EV_J04_EV_J09': {"age":82,"sexe":"F","comorbs":["PAT_009"],"bio":{"patientDFG":60,"bioTsh":4},"meds":["Canagliflozin","Levothyroxine"]},
     'cov_EV_J10_EV_BEERS_02': {"age":82,"sexe":"F","flags":["chkInsulineSlidingScale"],"bio":{"patientDFG":60},"meds":["Desmopressine","Insuline aspart"]},
@@ -348,7 +348,7 @@ function runExtendedAudits(test, assert) {
             'ADA', 'NICE', 'EFNS',
             // Dispositifs implantés : sonde à demeure (SUP_SAD_01), prothèse articulaire
             // (SUP_PROTH_01).
-            'SPILF', 'SF2H', 'ANSM_DENT', 'HCSP', 'CDC']);
+            'SPILF', 'SF2H', 'ANSM_DENT', 'HCSP', 'CDC', 'BASL']);
         const bad = JSON.parse(vm.runInContext(`(function(){
             const out=new Set(); const scan=arr=>(arr||[]).forEach(r=>(r.sources||[]).forEach(s=>out.add(s)));
             scan(GERIA_RECOS_DB.EVITER);scan(GERIA_RECOS_DB.INITIER);scan(RECOS_SUPPLEMENT);

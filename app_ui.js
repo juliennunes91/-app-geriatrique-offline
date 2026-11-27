@@ -375,6 +375,7 @@ const MED_PRECISION_FIELDS = {
     levodopa: ['association_dopa'],
     aspirine: ['dose'],
     gabapentinoide: ['indication_gaba', 'dose'],
+    isrs_qt: ['dose'],
     insuline: ['schema_insuline']
 };
 const PRECISION_FIELD_DEFS = {

@@ -855,6 +855,8 @@ function medPrecisionFamily(classe, dci) {
     // Gabapentinoïdes : STOPP v3 L5 vise leur emploi HORS douleur neuropathique ; épilepsie
     // et trouble anxieux généralisé (prégabaline) sont d'autres indications reconnues.
     if (/^(pr[eé]gabaline|gabapentine)$/i.test(d)) return 'gabapentinoide';
+    // Citalopram / escitalopram : le risque QT dépend de la dose (> 20 / > 10 mg chez l'âgé).
+    if (/^(es)?citalopram$/i.test(d)) return 'isrs_qt';
     // Insuline rapide ou humaine : seule, en doses de correction, c'est le « sliding scale »
     // de Beers 2023. Les basales n'ont pas la question.
     if (/^insuline\s+(aspart|lispro|glulisine|humaine)$/i.test(d)) return 'insuline';

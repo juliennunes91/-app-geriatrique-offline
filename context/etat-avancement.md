@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 26/11/2026 — **version 5.20**, `BUILD_ID` `20261127-doses-sedatifs`,
-cache `geriaassist-v173`.*
+*Dernière mise à jour : 26/11/2026 — **version 5.30**, `BUILD_ID` `20261127-audit-cases-lot1`,
+cache `geriaassist-v174`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **5.30** (27/11) — Audit des cases, lot 1 corrigé : HTA non contrôlée, Child-Pugh,
+  encéphalopathie, QT/dose citalopram, MTEV en cours, FC/PAS/PAS debout, sepsis, paracétamol.
 
 - **5.20** (27/11) — Doses des sédatifs : équivalents morphine (CDC 2022) et diazépam (Ashton),
   gabapentinoïde + opioïde orange par défaut, rouge à dose élevée (`SUP_GABA_03`).

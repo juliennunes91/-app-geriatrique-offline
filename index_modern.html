@@ -394,6 +394,18 @@
                     <input type="number" id="patientBmi" class="w-full px-2.5 py-1.5 text-xs border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
                 </div>
                 <div>
+                    <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5" for="patientFC">FC <span class="font-normal opacity-60">(bpm)</span></label>
+                    <input type="number" id="patientFC" min="20" max="250" placeholder="repos" class="w-full px-2.5 py-1.5 text-xs border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5" for="patientPAS">PAS couché <span class="font-normal opacity-60">(mmHg)</span></label>
+                    <input type="number" id="patientPAS" min="50" max="300" class="w-full px-2.5 py-1.5 text-xs border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-on-surface-variant mb-0.5" for="patientPASdebout">PAS debout <span class="font-normal opacity-60">(3 min)</span></label>
+                    <input type="number" id="patientPASdebout" min="40" max="300" class="w-full px-2.5 py-1.5 text-xs border border-outline-variant rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40">
+                </div>
+                <div>
                     <label class="block text-[11px] font-semibold text-secondary mb-0.5" for="bioCreat">Créat <span class="font-normal opacity-70">(µmol/L)</span></label>
                     <input type="number" id="bioCreat" min="0" max="2000" oninput="calculerDFG()" class="w-full px-2.5 py-1.5 text-xs border-2 border-secondary/40 rounded-lg bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary">
                 </div>
@@ -612,6 +624,7 @@
                         <div class="space-y-1">
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkAvc" class="accent-secondary"><span>ATCD d'AVC / AIT</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkTvp" class="accent-secondary"><span>ATCD d'EP / TVP</span></label>
+                            <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkMtevActive" class="accent-secondary"><span>MTEV en cours de traitement (&lt; 6 mois) ou récidivante</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkSaignement" class="accent-secondary"><span>ATCD de Saignement majeur</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkBrady" class="accent-secondary"><span>Bradycardie sévère (&lt; 45 bpm)</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkHtaNonControlee" class="accent-secondary"><span>HTA non contrôlée (&gt;160 mmHg)</span></label>
@@ -974,7 +987,7 @@
 
 <!-- Footer -->
 <footer class="fixed bottom-0 text-[0.68rem] text-on-surface-variant bg-surface-container-lowest/92 px-3 py-1 border-t border-r border-outline-variant rounded-tr-md z-40 leading-tight max-w-[420px] pointer-events-none no-print" style="backdrop-filter:blur(4px); left:16rem;">
-    version <span id="appVersion">5.20</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
+    version <span id="appVersion">5.30</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
     Merci aux testeurs (Dr Juliette Muffet)<br>
     <em>Outil d'aide à la décision pharmaco-clinique. Résultats à valider par l'utilisateur.</em>
 </footer>

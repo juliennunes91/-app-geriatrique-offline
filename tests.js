@@ -1375,6 +1375,34 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Audit des cases, lot 1 : chaque regle verifie le terrain que son titre affirme', () => {
+        const { analyzeCase } = require('./oracle_harness');
+        const a = (c, id) => new RegExp('id:' + id + '\\b').test(((x => (x._html['alertes-eviter'] || '') + (x._html['alertes-initier'] || ''))(analyzeCase(Object.assign({ age: 82, sexe: 'F' }, c)))));
+        // [description, dossier, regle, attendu]
+        const cas = [
+            ['HTA controlee + AINS', { comorbs: ['PAT_005'], meds: ['Ibuprofene'] }, 'EV_H02', false],
+            ['HTA + PAS mesuree 175 + AINS', { comorbs: ['PAT_005'], bio: { patientPAS: 175 }, meds: ['Ibuprofene'] }, 'EV_H02', true],
+            ['HTA controlee + mirabegron', { comorbs: ['PAT_005'], meds: ['Mirabegron'] }, 'EV_I06', false],
+            ['cirrhose + paracetamol : pas d\'eviction', { comorbs: ['PAT_034'], flags: ['chkFoie'], meds: ['Paracetamol'] }, 'EV_N01', false],
+            ['cirrhose + paracetamol : posologie', { comorbs: ['PAT_034'], flags: ['chkFoie'], meds: ['Paracetamol'] }, 'SUP_FOIE_01', true],
+            ['Child A + benzodiazepine', { comorbs: ['PAT_034'], bio: { cpManual: 'A' }, meds: ['Oxazepam'] }, 'EV_N02', false],
+            ['Child C + benzodiazepine', { comorbs: ['PAT_034'], bio: { cpManual: 'C' }, meds: ['Oxazepam'] }, 'EV_N02', true],
+            ['cirrhose sans encephalopathie', { comorbs: ['PAT_034'], flags: ['chkFoie'] }, 'IN_M02', false],
+            ['cirrhose avec encephalopathie', { comorbs: ['PAT_034'], flags: ['chkFoie'], bio: { cpEnceph: 2 } }, 'IN_M02', true],
+            ['FA + citalopram 10 mg', { comorbs: ['PAT_006'], meds: ['Citalopram'], precisions: { Citalopram: { dose: 10 } } }, 'EV_SFGG_AD_03', false],
+            ['FA + citalopram dose inconnue', { comorbs: ['PAT_006'], meds: ['Citalopram'] }, 'EV_SFGG_AD_03', true],
+            ['citalopram + QTc 480 mesure', { meds: ['Citalopram'], bio: { bioQtc: 480 } }, 'EV_SFGG_AD_03', true],
+            ['antecedent de MTEV seul', { comorbs: ['PAT_036'], flags: ['chkTvp'] }, 'IN_M01', false],
+            ['MTEV en cours', { comorbs: ['PAT_036'], flags: ['chkTvp', 'chkMtevActive'] }, 'IN_M01', true],
+            ['FC 55 + donepezil', { bio: { patientFC: 55 }, meds: ['Donepezil'] }, 'EV_D17', true],
+            ['FC 55 + bisoprolol (seuil B4 : 50)', { bio: { patientFC: 55 }, meds: ['Bisoprolol'] }, 'EV_B04', false],
+            ['sepsis + metformine', { flags: ['chkSepsis'], meds: ['Metformine'] }, 'SUP_SEPSIS_01', true],
+            ['metformine sans maladie aigue', { meds: ['Metformine'] }, 'SUP_SEPSIS_01', false]
+        ];
+        const faux = cas.filter(([, c, id, att]) => a(c, id) !== att).map(([d, , id, att]) => `${d} : ${id} attendu ${att}`);
+        assert.deepStrictEqual(faux, [], faux.join(' ; '));
+    });
+
     test('Gabapentinoide + opioide : orange par defaut, rouge a dose elevee ; equivalents de dose', () => {
         const { analyzeCase, loadApp } = require('./oracle_harness');
         const vm = require('vm'); const { sandbox } = loadApp();
