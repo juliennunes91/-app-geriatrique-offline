@@ -1375,6 +1375,28 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
             meds: ['Acebutolol', 'Digoxine', 'Verapamil'] })['alertes-interact'] || [];
         assert.ok(ci.some(a => /CI ABSOLUE/.test(a.titre)), `la CI absolue survit au repli : ${ci.map(a => a.titre).join(' | ')}`);
     });
+    test('Laxatifs de lest (ispaghul, sterculia) : fiches completes, risques mecaniques dans les deux sens', () => {
+        const { analyzeCase, loadApp } = require('./oracle_harness');
+        const vm = require('vm');
+        const { sandbox } = loadApp();
+        const fiches = JSON.parse(vm.runInContext(`JSON.stringify(MASTER_DB.MEDICAMENTS.filter(m => ['Ispaghul', 'Sterculia'].includes(m.dci)))`, sandbox));
+        assert.strictEqual(fiches.length, 2, 'deux fiches');
+        fiches.forEach(f => {
+            ['princeps', 'classe', 'poso_hab', 'poso_ger', 'poso_ren', 'alerte_clinique', 'source'].forEach(k => assert.ok(f[k], f.dci + ' : ' + k));
+            assert.ok(vm.runInContext(`matchesDrugClass(sanitizeText(${JSON.stringify(f.dci)}), ${JSON.stringify(f.classe)}, 'mucilage')`, sandbox), f.dci + ' dans la classe mucilage');
+        });
+        const ids = c => new Set((analyzeCase(Object.assign({ age: 85, sexe: 'F' }, c))._html['alertes-eviter'].match(/id:SUP_LEST_0\d/g) || []).map(x => x.slice(3)));
+        assert.ok(ids({ meds: ['Ispaghul'], flags: ['chkDysphagie'] }).has('SUP_LEST_01'), 'dysphagie : contre-indication');
+        assert.ok(ids({ meds: ['Ispaghul', 'Oxycodone'] }).has('SUP_LEST_02'), 'sous opioide : obstruction');
+        assert.ok(ids({ meds: ['Sterculia'], flags: ['chkConfine'] }).has('SUP_LEST_03'), 'confine : apport hydrique');
+        assert.strictEqual(ids({ meds: ['Ispaghul'] }).size, 0, 'seul, sans terrain : rien');
+        // Un laxatif de lest n'est ni osmotique ni stimulant : les classes voisines ne le captent pas.
+        assert.ok(!vm.runInContext(`matchesDrugClass('ispaghul', 'Laxatif de lest (mucilage, fibres solubles)', 'macrogol')`, sandbox), 'pas un macrogol');
+        // Et la cle generique « laxatif » garde TOUS les laxatifs : un alias contenant le mot la
+        // detournait vers les seuls mucilages.
+        assert.ok(vm.runInContext(`matchesDrugClass('macrogol', sanitizeText(MASTER_DB.MEDICAMENTS.find(m => m.dci === 'Macrogol').classe), 'laxatif')`, sandbox), 'macrogol reste un laxatif');
+    });
+
     test('Bicarbonate de sodium, Kayexalate, Lokelma : fiches completes et interactions', () => {
         const vm = require('vm');
         const { sandbox } = require('./oracle_harness').loadApp();

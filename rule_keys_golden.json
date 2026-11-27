@@ -1331,6 +1331,10 @@
  "moxonidine": [
   "Moxonidine"
  ],
+ "mucilage": [
+  "Ispaghul",
+  "Sterculia"
+ ],
  "mycophenolate": [
   "Mycophenolate"
  ],
@@ -1409,6 +1413,20 @@
   "Ondansetron"
  ],
  "opioid": [
+  "Buprenorphine",
+  "Codeine",
+  "Dihydrocodeine",
+  "Fentanyl",
+  "Hydromorphone",
+  "Methadone",
+  "Morphine",
+  "Oxycodone",
+  "Pethidine",
+  "Poudre d'opium",
+  "Tapentadol",
+  "Tramadol"
+ ],
+ "opioide": [
   "Buprenorphine",
   "Codeine",
   "Dihydrocodeine",

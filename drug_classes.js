@@ -95,6 +95,17 @@ const DRUG_CLASSES = {
         classeMatch: [],
         dcis: ['polystyrenesulfonatedesodium', 'cyclosilicatedezirconiumsodique']
     },
+    // Laxatifs de lest (mucilages) : ni osmotiques, ni stimulants. Leur risque est
+    // mécanique — gonflement dans l'eau : obstruction œsophagienne en cas de dysphagie,
+    // fécalome si l'apport hydrique manque ou si un opioïde ralentit le transit.
+    // Aucun alias ne doit CONTENIR « laxatif » : la Passe 2 de matchesDrugClass rattache
+    // une clé à toute classe dont un alias la contient, et la clé générique « laxatif »
+    // ne résolvait plus que les deux mucilages (macrogol, lactulose, bisacodyl perdus).
+    mucilage: {
+        aliases: ['mucilage', 'mucilages'],
+        classeMatch: [],
+        dcis: ['ispaghul', 'sterculia']
+    },
     supplement_calcique: {
         aliases: ['supplementcalcique', 'supplementationcalcique', 'selsdecalcium',
                   'seldecalcium', 'calcium', 'carbonatedecalcium', 'pidolatedecalcium',

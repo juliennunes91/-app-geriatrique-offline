@@ -4380,6 +4380,33 @@ const RECOS_SUPPLEMENT = [
         }
     },
     {
+        // Laxatif de lest et déglutition : le mucilage gonfle au contact de l'eau.
+        id: "SUP_LEST_01", sources: ["ANSM"],
+        titre: "Laxatif de lest et troubles de la déglutition — contre-indiqué",
+        message: "Le mucilage (ispaghul, sterculia) gonfle au contact de l'eau : en cas de troubles de la déglutition, il expose à l'obstruction de l'œsophage. Le RCP de l'ispaghul le contre-indique en cas de difficultés de déglutition, de maladie de l'œsophage ou du cardia.",
+        severite: "danger",
+        condition: { med_keys: ["mucilage"], contexte_clinique: ["dysphagie"] },
+        alternatives: "Macrogol (sachet dilué), adapté aux troubles de la déglutition avec la texture prescrite."
+    },
+    {
+        // Laxatif de lest et ralentisseur du transit : l'association expose au fécalome.
+        id: "SUP_LEST_02", sources: ["ANSM"],
+        titre: "Laxatif de lest sous opioïde ou lopéramide — risque d'obstruction",
+        message: "Un laxatif de lest augmente le volume des selles ; associé à un médicament qui ralentit le transit (opioïde, lopéramide), il expose à l'obstruction intestinale et au fécalome — le RCP de l'ispaghul demande une surveillance. Il ne prévient pas la constipation induite par les opioïdes.",
+        severite: "warning",
+        condition: { med_keys: ["mucilage"], med_keys_2: ["opioide", "loperamide"] },
+        alternatives: "Sous opioïde régulier : macrogol en prévention systématique (STOPP/START v3 K2), naloxégol si constipation réfractaire."
+    },
+    {
+        // Laxatif de lest chez le patient confiné : apport hydrique et mobilité manquent.
+        id: "SUP_LEST_03", sources: ["ANSM"],
+        titre: "Laxatif de lest chez un patient confiné au lit — apport hydrique à vérifier",
+        message: "Pris avec une quantité insuffisante de liquide, le mucilage peut causer une obstruction de l'œsophage ou un fécalome (RCP de l'ispaghul). Chez le patient alité ou confiné, l'apport hydrique et la mobilité manquent souvent : vérifier que chaque prise est accompagnée d'un grand verre d'eau, et ne pas la donner au coucher.",
+        severite: "warning",
+        condition: { med_keys: ["mucilage"], contexte_clinique: ["confinement"] },
+        alternatives: "Macrogol si l'apport hydrique ne peut être garanti."
+    },
+    {
         // La préparation colique n'est pas une posologie du même médicament : c'est un
         // autre acte. Deux à quatre litres avalés en quelques heures chez un sujet âgé
         // exposent à la déshydratation, à l'hyponatrémie et à l'hypokaliémie ; en cas de

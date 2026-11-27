@@ -461,6 +461,25 @@ Trois fiches (`Bicarbonate de sodium`, `Polystyrene sulfonate de sodium`,
 - Point ouvert : pas de paramètre « bicarbonate plasmatique » dans `MASTER_DB.BIOLOGIE`,
   donc pas de champ ni d'alerte sur la cible de 22 mmol/L — le suivi est écrit en clair.
 
+## Laxatifs de lest : ispaghul, sterculia (4.96)
+
+Deux fiches (`Ispaghul` — Spagulax, Psylia, Transilane, psyllium ; `Sterculia` — Normafibe,
+ex-Normacol granulés), classe **`mucilage`**. Leur risque est **mécanique** (le mucilage
+gonfle au contact de l'eau), d'où trois règles qui ne sortent que sur un terrain :
+`SUP_LEST_01` dysphagie (contre-indication du RCP de l'ispaghul, rouge), `SUP_LEST_02` sous
+opioïde ou lopéramide (obstruction, fécalome ; ne prévient pas la constipation des opioïdes),
+`SUP_LEST_03` patient confiné (apport hydrique). Interactions d'absorption : espacer de
+30 min à 1 h (lévothyroxine en orange, digoxine, AVK, carbamazépine, antidiabétiques).
+
+**Piège de la Passe 2** : un premier alias `laxatifdelest` CONTENAIT « laxatif » ; la clé
+générique `laxatif` (EV_SYND_048, opioïde sans laxatif) ne résolvait plus que les deux
+mucilages — macrogol, lactulose et bisacodyl sortaient de la clé. Révélé par
+`rule_keys_golden.json`. **Aucun alias ne doit contenir une clé générique employée par les
+règles.** Un test vérifie que le macrogol reste un « laxatif ».
+
+Sources lues par **extraits de recherche** (RCP ANSM, BDPM et Vidal injoignables depuis la
+session) : à relire au RCP avant de tenir les formulations pour définitives.
+
 ## Dispositifs implantés : sonde à demeure, prothèses articulaires
 
 Quatre cases dans « Habitudes de vie & État général » (deux UIs) : `chkSAD`, `chkPTH`,

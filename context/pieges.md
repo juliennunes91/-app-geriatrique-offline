@@ -104,3 +104,5 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   l'apostrophe ’ copiée d'un courrier ne correspond pas à ' de la base.
 - La case « aspirine > 100 mg/j » poussait atcd_hemorragie : une dose déclarée devenait un
   saignement (STOPP C2 rouge, ORBIT +2). Vérifier ce qu'un contexte AFFIRME avant de le partager.
+- Alias de classe contenant une clé générique (« laxatifdelest » ⊃ « laxatif ») : la Passe 2
+  détourne la clé vers la nouvelle classe seule. Relire rule_keys_golden après tout ajout.
