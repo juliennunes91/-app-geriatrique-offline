@@ -347,6 +347,35 @@
                 for (let k = start; k < end; k++) alreadyTaken[k] = 1;
             }
         }
+        // Expressions de plusieurs mots (« troubles du sommeil ») : la tolérance ne
+        // portait que sur un mot isolé, si bien que « Troubls du sommeil » d'une observation
+        // réelle n'était pas lu. On compare mot à mot une fenêtre de même longueur : une
+        // faute permise sur un mot d'au moins 6 lettres (deux dès 9), les mots courts
+        // (« du », « de ») exacts.
+        const mots = []; const motRe = /[a-z][a-z']*/g; let mm;
+        while ((mm = motRe.exec(normText))) mots.push({ t: mm[0], s: mm.index, e: mm.index + mm[0].length });
+        const multi = items.filter(it => /\s/.test(it.normTerm) && it.normTerm.length >= 8);
+        for (const it of multi) {
+            const parts = it.normTerm.split(/\s+/);
+            if (parts.length > 4) continue;
+            for (let i = 0; i + parts.length <= mots.length; i++) {
+                let total = 0, ok = true;
+                for (let j = 0; j < parts.length && ok; j++) {
+                    const a = mots[i + j].t, b = parts[j];
+                    if (a === b) continue;
+                    if (b.length < 6) { ok = false; break; }
+                    const d = levenshtein(a, b);
+                    if (d > (b.length >= 9 ? 2 : 1)) ok = false; else total += d;
+                }
+                if (!ok || total === 0) continue;
+                const start = mots[i].s, end = mots[i + parts.length - 1].e;
+                let overlap = false;
+                for (let k = start; k < end; k++) if (alreadyTaken[k]) { overlap = true; break; }
+                if (overlap) continue;
+                hits.push({ start, end, match: text.slice(start, end), target: it.target, source: 'fuzzy', fuzzyDistance: total });
+                for (let k = start; k < end; k++) alreadyTaken[k] = 1;
+            }
+        }
         return hits;
     }
 

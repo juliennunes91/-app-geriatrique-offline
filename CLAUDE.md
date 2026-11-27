@@ -122,6 +122,16 @@ prothèse qu'avec un côté (« PTH droite ») ; « prothèse … hanche » suff
 Même texte : l'apostrophe typographique (« Maladie d’Alzheimer », U+2019) faisait manquer la
 pathologie — `norm()` la ramène à l'apostrophe droite, un caractère pour un.
 
+**Observation de 4.99** (seule l'ostéoporose était lue) : la pathologie « Cancer / Tumeur
+solide » n'avait pour synonymes que « cancer, néoplasie, tumeur » — carcinome,
+adénocarcinome, sarcome, mélanome, métastase ajoutés ; « douleurs neuropathiques » rejoint
+« Douleur chronique » (`PAT_054`) ; et la tolérance aux fautes ne portait que sur un mot isolé,
+si bien que « Troubls du sommeil » échappait à « troubles du sommeil ». `findFuzzyHits`
+compare désormais aussi les **expressions** mot à mot (une faute par mot de 6 lettres et
+plus, deux dès 9, mots courts exacts) ; la lecture est proposée en « fuzzy », non exacte.
+Restent non lus, faute de pathologie en base : néphrectomie (rein unique), **splénectomie
+(asplénie — vaccinations)**.
+
 ## Onglet Vaccination
 
 Relevé du carnet vaccinal du sujet âgé. Module dédié : `app_vaccination.js` (chargé

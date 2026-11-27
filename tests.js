@@ -3254,6 +3254,17 @@ console.log('\n🧪 GeriaTextExtractor — POC Tier 1');
         assert.ok(nie && nie.negated, 'negation reconnue');
     });
 
+    test('Observation : carcinome, douleurs neuropathiques, faute dans une expression', () => {
+        // Signalement : seule l'osteoporose etait lue. Texte FICTIF de meme facture.
+        const r = extract('Résident de 90 ans. Néphrectomie gauche sur adénocarcinome rénal. Douleurs neuropathiques plexus brachial G. Troubls du sommeil. Ostéoporose diffuse. Exérèse carcinome épidermoïde avant-bras.');
+        ['PAT_020', 'PAT_054', 'PAT_027', 'PAT_025'].forEach(id => assert.ok(findP(r, id), id + ' lu'));
+        const ins = findP(r, 'PAT_027');
+        assert.ok(ins.source === 'fuzzy', '« Troubls du sommeil » : propose avec faute, pas « exact »');
+        // Une expression exacte ne doit pas etre lue deux fois, ni une expression sans faute marquee floue.
+        assert.ok(findP(extract('Troubles du sommeil.'), 'PAT_027').source !== 'fuzzy', 'sans faute : exact');
+        assert.ok(!findP(extract('Troubles du transit.'), 'PAT_027'), 'pas de tolerance sur le mot qui porte le sens');
+    });
+
     test('Négation : « Pas de diabète » → diabète marqué négé', () => {
         const r = extract('HTA stable. Pas de diabète. Bisoprolol 5 mg.');
         const d = findP(r, 'PAT_016');

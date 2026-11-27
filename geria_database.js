@@ -548,7 +548,7 @@ const MASTER_DB = {
             "CIM_10": "C80",
             "NOM_STANDARD": "Cancer / Tumeur solide",
             "CATEGORIE": "Oncologie",
-            "SYNONYMES": "CANCER, Néoplasie, Tumeur",
+            "SYNONYMES": "CANCER, Néoplasie, Tumeur, Néoplasme, Tumeur maligne, Carcinome, Adénocarcinome, Sarcome, Mélanome, Métastase, Métastases",
             "BIO_SURVEILLANCE": "BIO_009, BIO_010, BIO_011, BIO_012, BIO_024, BIO_032, BIO_033, BIO_034, BIO_035",
             "SYND_RISQUE": "SYND_037, SYND_041, SYND_035, SYND_036, SYND_033, SYND_004"
         },
@@ -845,7 +845,7 @@ const MASTER_DB = {
             "CIM_10": "R52.2",
             "NOM_STANDARD": "Douleur chronique",
             "CATEGORIE": "Douleur",
-            "SYNONYMES": "Douleur chronique, douleur persistante, douleur chronique rebelle, douleur chronique non cancéreuse, chronic pain",
+            "SYNONYMES": "Douleur chronique, douleur persistante, douleur chronique rebelle, douleur chronique non cancéreuse, chronic pain, Douleur neuropathique, Douleurs neuropathiques, Douleurs chroniques",
             "BIO_SURVEILLANCE": "BIO_004, BIO_003",
             "SYND_RISQUE": ""
         },
