@@ -102,3 +102,5 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   morphine en rouge ? un peu de pragmatisme ».
 - **27/11/2026** — STOPP L1 ne sort que sur douleur légère déclarée ; sans intensité, elle est
   demandée (info). Protocoles de déprescription : informatifs (un mode d'emploi, pas un verdict).
+- **27/11/2026** — START F1 (IPP) ne sort que sur RGO déclaré : l'antécédent d'ulcère seul,
+  sans gastrotoxique, n'est pas une indication d'IPP au long cours. — Audit lot 2.

@@ -57,10 +57,26 @@ stent, et la case « post-arrêt cardiaque / cardioversion », qui mêle deux si
 6. `IN_M01` : remplacer par une question « MTEV en cours de traitement / ancienne ». **A**
 7. Champs à créer : fréquence cardiaque, pression artérielle (couché/debout). **A**
 
+## Lot 2 — gériatrie et syndromes (12 cases)
+
+| Case | Constat | Type | Suite |
+|---|---|---|---|
+| Arthrose | `EV_H03` « AINS > 3 mois, paracétamol **non essayé** » sortait sous paracétamol (vérifié : arthrose + ibuprofène + paracétamol) ; durée inconnue affirmée « > 3 mois ». | D | corrigé 5.50 (`med_absent` paracétamol, titre « ou durée non précisée ») |
+| Arthrose | `EV_H09` « opioïde **au long cours** » sur durée inconnue. | D | titre corrigé 5.50 |
+| HBP / rétention | `EV_D01` (tricyclique) nommait rétention, constipation et chutes dans son titre ; sa condition ne lisait que des comorbidités (vérifié : HBP + amitriptyline → rien). | D / T | 5.50 : titre ramené au vérifié ; `SUP_TCA_01` (HBP, constipation chronique) ; chutes déjà portées par `EV_K08` |
+| HBP / rétention | `EV_G03` « LAMA + glaucome / **obstruction vésicale** » ne lisait que le glaucome (vérifié : HBP + tiotropium → rien). | D | 5.50 : `contexte_clinique_any` glaucome, hbp |
+| Incontinence | `EV_B10` « diurétique de l'anse **pour HTA** » sortait avec l'indication « insuffisance cardiaque » déclarée. | D | 5.50 : se tait sur indication de surcharge ou d'œdèmes |
+| Incontinence | Beers 2023 : doxazosine, prazosine, térazosine à éviter chez la femme incontinente — aucune règle. | T | 5.50 : `SUP_INC_01` (warning, femme) |
+| ATCD d'ulcère | `IN_F01` « IPP pour **RGO** sévère ou sténose peptique » sortait sur l'ulcère seul, sans gastrotoxique (vérifié). Un ulcère guéri n'est pas une indication d'IPP au long cours ; le RGO existe en base (`PAT_053`). | D | 5.50 : lit `PAT_053` |
+| Insomnie / hypnotique Z | `EV_D11` « Z ≥ 2 semaines » sur durée inconnue ; la durée « < 1 mois » de la fenêtre de précision ne départage pas deux semaines. | D / A | titre corrigé ; **A** : ajouter « < 2 semaines » aux durées ? |
+| Sténose aortique | `EV_B20` « antihypertenseur (hors IEC/ARA2) » sort sur un diurétique déclaré pour insuffisance cardiaque (vérifié). Le diurétique y est un traitement de la congestion, à manier prudemment, pas un antihypertenseur. | A | à trancher : faire taire le diurétique de surcharge ? |
+| Palliatif, chutes, institution, confinement, constipation, dysphagie, glaucome | Cohérents : chaque lecteur vérifie ce que son titre nomme. | — | — |
+
+**État : corrigé en 5.50.** Restent ouverts (arbitrages) : durée « < 2 semaines » pour les
+hypnotiques Z ; diurétique de surcharge dans la sténose aortique.
+
 ## Lots suivants
 
-- Lot 2 — gériatrie et syndromes (palliatif, ulcère, chutes, institution, confinement,
-  incontinence, HBP, constipation, dysphagie, arthrose, glaucome, sténose aortique).
 - Lot 3 — troubles cognitifs et SPC (cases lues par le code, pas par les règles : à auditer
   dans `_spcAlerte` et les encarts).
 - Lot 4 — psychiatrie (aiguë et chronique) ; habitudes de vie (alcool, tabac, dénutrition).

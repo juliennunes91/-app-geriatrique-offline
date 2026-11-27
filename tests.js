@@ -953,6 +953,26 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!d8(c('courte')), '< 1 mois : désarmé');
         assert.ok(d8(c('longue')), '> 3 mois : sort');
     });
+    test('Audit lot 2 : chaque règle vérifie le terrain que son titre nomme', () => {
+        const ev = c => { const r = analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60 }, c)); return r._html['alertes-eviter'] + r._html['alertes-initier']; };
+        // EV_H03 : « paracétamol non essayé »
+        assert.ok(/id:EV_H03/.test(ev({ flags: ['chkArthrose'], meds: ['Ibuprofene'] })), 'arthrose + AINS seul : H3');
+        assert.ok(!/id:EV_H03/.test(ev({ flags: ['chkArthrose'], meds: ['Ibuprofene', 'Paracetamol'] })), 'paracétamol prescrit : il est essayé');
+        // EV_G03 : obstruction vésicale
+        assert.ok(/id:EV_G03/.test(ev({ flags: ['chkHbp'], meds: ['Tiotropium'] })), 'LAMA + HBP');
+        // EV_B10 : « pour HTA »
+        const b10 = ind => ev({ flags: ['chkIncontinence'], comorbs: ['PAT_005'], meds: ['Furosemide'], precisions: ind ? { Furosemide: { indication_diu: ind } } : {} });
+        assert.ok(/id:EV_B10/.test(b10(null)) && /id:EV_B10/.test(b10('hta')), 'indication HTA ou inconnue : B10');
+        assert.ok(!/id:EV_B10/.test(b10('ic')), 'insuffisance cardiaque déclarée : pas « pour HTA »');
+        // SUP_TCA_01 (dans la carte des tricycliques)
+        assert.ok(/rétention aiguë/.test(ev({ flags: ['chkHbp'], meds: ['Amitriptyline'] })), 'tricyclique + HBP');
+        // SUP_INC_01 : femme seulement
+        assert.ok(/id:SUP_INC_01/.test(ev({ flags: ['chkIncontinence'], meds: ['Doxazosine'] })), 'femme incontinente + doxazosine');
+        assert.ok(!/id:SUP_INC_01/.test(ev({ sexe: 'M', flags: ['chkIncontinence'], meds: ['Doxazosine'] })), 'homme : non');
+        // IN_F01 : RGO, pas l'ulcère seul
+        assert.ok(!/id:IN_F01/.test(ev({ comorbs: ['PAT_021'] })), 'ulcère seul : pas d\'IPP au long cours');
+        assert.ok(/id:IN_F01/.test(ev({ comorbs: ['PAT_053'] })), 'RGO sans IPP : START F1');
+    });
     test('Opioïde sans laxatif : STOPP L2 et SYND_048 en une seule carte', () => {
         const r = analyzeCase({ age: 82, sexe: 'F', meds: ['Morphine'] });
         const n = (r._html['alertes-eviter'].match(/<strong>[^<]*(sans laxatif|prophylaxie laxative)/g) || []).length;
@@ -3151,12 +3171,12 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
     // EV_H03/EV_H09 : indication arthrose portée par le contexte clinique (chkArthrose)
     // après remplacement des comorbidités pendantes PAT_054/PAT_055 (inexistantes).
     test('EV_H03 : AINS pour arthrose seulement si contexte arthrose coché', () => {
-        const re = /AINS .*mois pour arthrose/i;
+        const re = /AINS .*pour arthrose/i;
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Ibuprofene'], flags: ['chkArthrose'] }), re), 'AINS + arthrose → oui');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Ibuprofene'] }), re), 'AINS sans contexte → non');
     });
     test('EV_H09 : opioïde pour arthrose, sauf cancer/palliatif', () => {
-        const re = /Opio[ïi]de au long cours pour arthrose/i;
+        const re = /Opio[ïi]de au long cours.*pour arthrose/i;
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Tramadol'], flags: ['chkArthrose'] }), re), 'opioïde + arthrose → oui');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Tramadol'] }), re), 'opioïde sans contexte → non');
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Tramadol'], comorbs: ['PAT_030'], flags: ['chkArthrose'] }), re), 'palliatif → non');

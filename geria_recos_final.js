@@ -276,7 +276,9 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["furosemide", "bumetanide"],
                 comorbs: ["PAT_005"],
-                contexte_clinique: "incontinence"
+                contexte_clinique: "incontinence",
+                // « pour HTA » : une indication de surcharge ou d'œdèmes déclarée le dément.
+                contexte_clinique_absent: ["diuretique_indication_surcharge", "diuretique_indication_oedemes"]
             },
             alternatives: "Autre classe antihypertensive"
         },
@@ -651,8 +653,11 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS", "PRISCUS", "FORTA"],
             ref_code: "STOPP3-D1",
             section: "SNC",
-            titre: "Antidépresseur tricyclique + démence / glaucome / rétention urinaire / constipation / chutes / hypotension orthostatique",
-            message: "Antidépresseur tricyclique avec démence, glaucome à angle fermé, troubles conductifs cardiaques, HBP avec symptômes urinaires, rétention urinaire, constipation chronique, chutes récentes ou hypotension orthostatique : risque d'aggravation. PIM selon Beers, PRISCUS et FORTA-D.",
+            // Audit lot 2 : le titre nommait rétention, constipation et chutes, que la condition
+            // ne vérifiait pas (seules des comorbidités). Rétention et constipation sont portées
+            // par SUP_TCA_01 (cases), les chutes par EV_K08.
+            titre: "Antidépresseur tricyclique + démence / glaucome à angle fermé / hypotension orthostatique",
+            message: "Antidépresseur tricyclique avec démence, glaucome à angle fermé ou hypotension orthostatique : effet anticholinergique et alpha-bloquant, risque d'aggravation (confusion, crise de glaucome, chute). PIM selon Beers, PRISCUS et FORTA-D.",
             severite: "danger",
             condition: {
                 med_keys: ["antidepresseur tricyclique", "amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "maprotiline", "amoxapine", "dosulepine"],
@@ -797,7 +802,7 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS", "PRISCUS", "EU7PIM"],
             ref_code: "STOPP3-D11",
             section: "SNC",
-            titre: "Hypnotique Z ≥ 2 semaines pour insomnie",
+            titre: "Hypnotique Z ≥ 2 semaines pour insomnie (ou durée non précisée)",
             message: "Z-drug (zolpidem, zopiclone, zaleplon) ≥ 2 semaines pour insomnie : chutes, fractures. PIM selon Beers, PRISCUS.",
             severite: "danger",
             condition: {
@@ -1281,7 +1286,8 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 med_keys: ["tiotropium", "aclidinium", "umeclidinium", "glycopyrronium"],
-                comorbs_any: ["PAT_033"]
+                // Le titre nomme l'obstruction vésicale : la case HBP / rétention la déclare.
+                contexte_clinique_any: ["glaucome", "hbp"]
             },
             alternatives: "LABA seul"
         },
@@ -1358,12 +1364,14 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS"],
             ref_code: "STOPP3-H3",
             section: "Musculo",
-            titre: "AINS > 3 mois pour arthrose (paracétamol non essayé)",
+            titre: "AINS > 3 mois (ou durée non précisée) pour arthrose, sans paracétamol",
             message: "AINS au long cours (> 3 mois) pour douleur d'arthrose quand le paracétamol n'a pas été essayé : les antalgiques simples sont préférables et habituellement aussi efficaces.",
             severite: "warning",
             condition: {
                 med_keys: ["ains"],
                 contexte_clinique: "arthrose",
+                // STOPP H3 : « paracétamol non essayé » — prescrit, il l'est.
+                med_absent: ["paracetamol"],
                 // Désarmée si la cure d'AINS est courte (poussée arthrosique).
                 contexte_clinique_absent: ["ains_duree_breve"]
             },
@@ -1403,7 +1411,7 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS"],
             ref_code: "STOPP3-H9",
             section: "Musculo",
-            titre: "Opioïde au long cours pour arthrose",
+            titre: "Opioïde au long cours (ou durée non précisée) pour arthrose",
             message: "Opioïde au long cours pour l'arthrose : manque de preuve d'efficacité, effets indésirables graves (chutes, constipation, confusion, dépendance).",
             severite: "warning",
             condition: {
@@ -3037,11 +3045,13 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3"],
             ref_code: "START3-F1",
             section: "Gastro",
+            // Audit lot 2 : sortait sur l'ULCÈRE (PAT_021) seul, sans gastrotoxique — un ulcère
+            // guéri n'est pas une indication d'IPP au long cours. START F1 vise le RGO (PAT_053).
             titre: "IPP pour RGO sévère ou sténose peptique",
             message: "IPP pour reflux gastro-œsophagien sévère ou sténose peptique de l'œsophage.",
             severite: "warning",
             condition: {
-                comorbs: ["PAT_021"],
+                comorbs: ["PAT_053"],
                 med_absent: ["ipp", "omeprazole", "esomeprazole", "lansoprazole", "pantoprazole", "rabeprazole"]
             },
             alternatives: "Oméprazole 20 mg, ésoméprazole 20 mg, pantoprazole 20 mg"
@@ -4431,6 +4441,33 @@ const RECOS_SUPPLEMENT = [
             alternatives: ""
         },
         {
+            id: "SUP_TCA_01",
+            sources: ["STOPP3", "BEERS"],
+            severite: "danger",
+            titre: "Antidépresseur tricyclique + HBP / rétention urinaire ou constipation chronique",
+            message: "Antidépresseur tricyclique chez un patient porteur d'une HBP symptomatique, d'un antécédent de rétention urinaire ou d'une constipation chronique : l'effet anticholinergique expose à la rétention aiguë et au fécalome (STOPP v3 D1, Beers 2023).",
+            condition: {
+                med_keys: ["antidepresseur tricyclique", "amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "maprotiline", "amoxapine", "dosulepine"],
+                contexte_clinique_any: ["hbp", "constipation_chronique"]
+            },
+            alternatives: "ISRS (sertraline, escitalopram) ou mirtazapine"
+        },
+        {
+            id: "SUP_INC_01",
+            sources: ["BEERS"],
+            severite: "warning",
+            titre: "Alpha-bloquant non sélectif chez une femme incontinente",
+            message: "Doxazosine, prazosine ou térazosine chez une femme atteinte d'incontinence urinaire : aggravation de l'incontinence — à éviter (Beers 2023, interactions médicament-maladie). L'œstrogène systémique, que Beers cite aussi, est porté par une règle dédiée.",
+            condition: {
+                sexe: "F",
+                med_keys: ["doxazosine", "prazosine", "terazosine"],
+                // Par la pathologie (case ou liste) : la contre-indication « Prudence
+                // incontinence » de la même molécule est alors absorbée sous cette carte.
+                comorbs: ["PAT_039"]
+            },
+            alternatives: "Autre antihypertenseur selon le terrain (IEC/ARA2, inhibiteur calcique)"
+        },
+        {
         // Maladie aiguë / sepsis : médicaments à suspendre temporairement (« sick day rules »).
         // EV_N07 porte déjà AINS, aminosides, IEC/ARA2 ; restaient la metformine (acidose
         // lactique — RCP : déshydratation, infection grave, choc), les iSGLT2 (acidocétose
@@ -5153,7 +5190,7 @@ const CROSS_REF_GROUPS = [
         group_id: "GRP_TCA",
         theme: "Antidépresseurs tricycliques chez le sujet âgé",
         merged_sources: ["STOPP3", "BEERS", "PRISCUS", "FORTA", "EU7PIM"],
-        rule_ids: ["EV_D01", "EV_D02", "EV_FORTA_03", "EV_FORTA_04"],
+        rule_ids: ["EV_D01", "SUP_TCA_01", "EV_D02", "EV_FORTA_03", "EV_FORTA_04"],
         pim_dict_keys: ["amitriptyline", "clomipramine", "imipramine", "doxepine", "trimipramine", "nortriptyline", "maprotiline", "dosulepine"],
         fusion_strategy: "merge_display",  // fusionner en une alerte unique si mêmes meds détectés
         note: "EV_D01 (TCA + comorbidités) et EV_D02 (TCA en 1ère intention) couvrent des contextes différents. EV_FORTA_03/04 sont des cas particuliers (amitriptyline, doxépine) — à absorber dans l'alerte TCA générale avec mention spécifique."

@@ -543,6 +543,23 @@ condition vérifie** — sinon on ajoute la question, jamais on ne devine.
 - `SUP_SEPSIS_01` (« sick day rules ») : metformine, iSGLT2, diurétiques, sulfamides
   hypoglycémiants à suspendre en maladie aiguë (EV_N07 couvrait AINS, aminosides, IEC/ARA2).
 
+## Audit des cases cliniques — lot 2 corrigé (5.50)
+
+Gériatrie et syndromes. Même doctrine que le lot 1 (titre = terrain vérifié) :
+
+- `EV_H03` (STOPP H3, « paracétamol non essayé ») se tait sous paracétamol ; `EV_H03`,
+  `EV_H09`, `EV_D11` disent « (ou durée non précisée) » quand la durée n'est pas déclarée.
+- `EV_D01` (tricyclique) ne nomme plus que démence / glaucome / hypotension orthostatique ;
+  **`SUP_TCA_01`** (HBP, constipation chronique) rejoint `GRP_TCA` — une carte ; les chutes
+  restent à `EV_K08`.
+- `EV_G03` (LAMA) lit aussi l'HBP (`contexte_clinique_any`).
+- `EV_B10` (« diurétique pour HTA » + incontinence) se tait sur indication de surcharge ou
+  d'œdèmes déclarée.
+- **`SUP_INC_01`** (Beers 2023) : doxazosine, prazosine, térazosine chez la femme
+  incontinente (condition `sexe: "F"`) ; l'œstrogène systémique reste à `SUP_STOP_049`.
+- `IN_F01` (START F1, RGO) lit `PAT_053` et non plus l'ulcère (`PAT_021`) : un ulcère guéri
+  n'est pas une indication d'IPP au long cours.
+
 ## Dispositifs implantés : sonde à demeure, prothèses articulaires
 
 Quatre cases dans « Habitudes de vie & État général » (deux UIs) : `chkSAD`, `chkPTH`,

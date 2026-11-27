@@ -1555,7 +1555,7 @@
   "alertes-eviter": [
    "danger | Antipsychotique comme hypnotique (sauf psychose ou SCPD)",
    "danger | Benzodiazépine ≥ 2 semaines pour insomnie",
-   "danger | Hypnotique Z ≥ 2 semaines pour insomnie",
+   "danger | Hypnotique Z ≥ 2 semaines pour insomnie (ou durée non précisée)",
    "info | Action immédiate",
    "info | Benzodiazépines / Z-drugs : ZOLPIDEM",
    "warning | Deux classes pourvoyeuses de chutes associées"
@@ -2075,9 +2075,7 @@
    "warning | Médicament constipant + constipation chronique"
   ],
   "alertes-initier": [
-   "info | Laxatif osmotique pour constipation chronique bénigne",
-   "info | Réévaluation planifiée",
-   "warning | IPP pour RGO sévère ou sténose peptique"
+   "info | Laxatif osmotique pour constipation chronique bénigne"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -2092,7 +2090,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 7/100 — ACCEPTABLE"
+   "info | Score PIM Global : 6/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2218,14 +2216,13 @@
  },
  "cov_EV_H01_EV_H03": {
   "alertes-eviter": [
-   "danger | AINS > 3 mois pour arthrose (paracétamol non essayé)",
+   "danger | AINS > 3 mois (ou durée non précisée) pour arthrose, sans paracétamol",
    "danger | CELECOXIB — CI Ulcère Gastro-Duodénal (UGD)",
    "info | Action immédiate"
   ],
   "alertes-initier": [
    "info | Réévaluation planifiée",
-   "warning | IPP avec AINS (cure courte ou prolongée)",
-   "warning | IPP pour RGO sévère ou sténose peptique"
+   "warning | IPP avec AINS (cure courte ou prolongée)"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -2238,7 +2235,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "warning | Score PIM Global : 43/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2275,7 +2272,7 @@
  },
  "cov_EV_H09_EV_BEERS_03": {
   "alertes-eviter": [
-   "danger | Opioïde au long cours pour arthrose",
+   "danger | Opioïde au long cours (ou durée non précisée) pour arthrose",
    "info | Action immédiate",
    "info | Opioïde fort : intensité de la douleur non précisée",
    "info | Opioïde quotidien régulier sans laxatif co-prescrit",
@@ -2817,6 +2814,60 @@
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
+  ]
+ },
+ "cov_SUP_TCA_01": {
+  "alertes-eviter": [
+   "danger | Antidépresseurs tricycliques chez le sujet âgé",
+   "info | Action immédiate",
+   "info | Mesure de la TA couché-debout — au moins deux médicaments hypotenseurs ou orthostatiques (≥ 75 ans)",
+   "warning | Risque de délirium — anticholinergique fort chez le sujet âgé"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [
+   "warning | Co-prescription à risque : IMIPRAMINE"
+  ],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | IMIPRAMINE — Alertes cliniques",
+   "warning | TAMSULOSINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : IMIPRAMINE",
+   "success | Posologies : TAMSULOSINE"
+  ],
+  "alertes-scores": [
+   "danger | Score ACB : 3",
+   "info | RISQ-PATH : 1 point(s)",
+   "info | Score de Tisdale : 1 point(s)",
+   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+  ],
+  "alertes-synthese": [
+   "danger | Dossier avec alertes critiques"
+  ]
+ },
+ "cov_SUP_INC_01": {
+  "alertes-eviter": [
+   "info | Réévaluation planifiée",
+   "warning | Alpha-bloquant non sélectif chez une femme incontinente"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | DOXAZOSINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : DOXAZOSINE"
+  ],
+  "alertes-scores": [
+   "info | Score ACB : 0",
+   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
+  ],
+  "alertes-synthese": [
+   "warning | Actions de réévaluation suggérées"
   ]
  },
  "cov_EV_L01": {
