@@ -75,8 +75,68 @@ stent, et la case « post-arrêt cardiaque / cardioversion », qui mêle deux si
 **État : corrigé en 5.50.** Restent ouverts (arbitrages) : durée « < 2 semaines » pour les
 hypnotiques Z ; diurétique de surcharge dans la sténose aortique.
 
-## Lots suivants
+## Lot 3 — troubles cognitifs, SPC, MCI, MBI
 
-- Lot 3 — troubles cognitifs et SPC (cases lues par le code, pas par les règles : à auditer
-  dans `_spcAlerte` et les encarts).
-- Lot 4 — psychiatrie (aiguë et chronique) ; habitudes de vie (alcool, tabac, dénutrition).
+| Case | Constat | Type | Suite |
+|---|---|---|---|
+| Démence + insomnie | `EV_D09` « BZD **pour agitation/SCPD** » sortait en rouge sur la zopiclone (clé `benzodiazepine` = apparentés compris), sous l'encart SPC qui la retient 14-28 j à 3,75 mg (SFGG 2024) ; l'indication « agitation » n'était pas déclarée. | D | corrigé 5.60 : `benzodiazepine_stricte`, titre au vérifié |
+| Démence parkinsonienne (`PAT_014`) | Absente de `EV_D01`, `EV_D09`, `EV_D14`, `EV_I01` (vérifié : DP + oxybutynine → pas de règle démence). | T | 5.60 |
+| MCI (`PAT_043`) | Lu par aucune règle. Beers 2023 vise « démence **ou trouble cognitif** » pour les anticholinergiques. | T | 5.60 : `EV_D14`, `EV_I01` |
+| Delirium | `EV_D14` titrait « démence ou delirium » sans lire `PAT_048` ; et le contexte `delirium` ne naissait que de la case (`isChecked`), pas de la liste. | D | 5.60 : `_declare`, `PAT_048` dans `EV_D14` |
+| IAChE + bradycardie | `EV_D17`, `EV_D18`, `SUP_INT_008` : trois cartes (deux rouges) pour une conduite. | D | 5.60 : `GRP_IACHE_BRADY` |
+| Alzheimer | `IN_D03` propose un IAChE « Alzheimer **léger à modéré** » : aucun MMSE n'est saisi. | D / A | titre « stade à vérifier » ; **A** : champ MMSE ? et IAChE déremboursés en France (HAS 2016, 2018) — garder la proposition START ? |
+| SPC, MBI | Lus par le code (`_spcAlerte`, encarts) : cohérents à l'essai (apathie sous ISRS, sommeil sous zopiclone, MBI). | — | — |
+
+## Lot 4 — psychiatrie, habitudes de vie
+
+| Case | Constat | Type | Suite |
+|---|---|---|---|
+| Catatonie | `EV_D08` sortait en rouge sur le lorazépam — qui est le traitement de première ligne de la catatonie. | D | 5.60 |
+| Trouble bipolaire | Antidépresseur seul, sans thymorégulateur : aucune règle (vérifié : bipolaire + sertraline → rien). CANMAT/ISBD 2018 : pas de monothérapie dans le type I. | T | 5.60 : `SUP_BIP_01` (warning) |
+| Trouble de l'usage de l'alcool | Produit bien `alcool` : `EV_N03`, `EV_N04`, `IN_N01` lus (vérifié). | — | — |
+| SAOS (case) | Équivalente à `PAT_052` : `SUP_BZD_OPIO_01` sort (vérifié). | — | — |
+| Psychose chronique + chutes | `EV_K02` requalifié « traitement de fond — surveiller » (recontextualisation). | — | — |
+| TCSP | Aucun lecteur. Prodrome de synucléinopathie ; les antidépresseurs peuvent l'aggraver. | A | règle à créer ? (source à arrêter) |
+| Tabac, dénutrition, IMC < 18,5 | Cohérents. | — | — |
+
+**État : lots 3 et 4 corrigés en 5.60.**
+
+---
+
+## Rapport final — ce qui reste à trancher
+
+Quatre lots, 83 cases de l'inventaire ; corrigé en 5.30, 5.40 (doses des sédatifs), 5.50 et 5.60. Les
+défauts purs (titre affirmant un terrain non vérifié, chemin de saisie ignoré, carte en double)
+sont tous corrigés. Restent les points qui demandent une **décision clinique** ou une **donnée
+nouvelle** — rien n'y a été deviné.
+
+### A. Arbitrages cliniques
+
+| # | Question | Ce que fait l'application aujourd'hui | Options |
+|---|---|---|---|
+| A1 | **IAChE** (`IN_D03`) : les proposer dans l'Alzheimer alors qu'ils sont déremboursés en France (HAS, SMR insuffisant, 2018) ? | Propose (START v3), titre « stade à vérifier » | garder / informatif / retirer |
+| A2 | **Stade de la démence** : aucun MMSE saisi, donc « léger à modéré » (`IN_D03`) et « démence sévère » (`EV_SF06`) ne se vérifient pas | Ne vérifie pas | ajouter un champ MMSE (ou stade) |
+| A3 | **Hypnotique Z ≥ 2 semaines** (`EV_D11`) : la durée « < 1 mois » ne départage pas deux semaines | Sort si durée non « courte » | ajouter « < 2 semaines » aux durées |
+| A4 | **Sténose aortique** (`EV_B20`) : un diurétique prescrit pour insuffisance cardiaque y sort comme « antihypertenseur » (danger) | Sort | faire taire le diurétique de surcharge déclaré |
+| A5 | **Stent récent sous anticoagulant** : durée de la trithérapie / bithérapie non abordée | Rien | règle à écrire (ESC 2023 SCA / 2024 FA) |
+| A6 | Case **« post-arrêt cardiaque / cardioversion »** : deux situations sans rapport | Une case | scinder (anticoagulation péri-cardioversion) |
+| A7 | **TCSP** (trouble du comportement en sommeil paradoxal) : lu par aucune règle | Rien | règle (antidépresseurs aggravants ; prodrome de synucléinopathie) — source à arrêter |
+| A8 | **Score PIM global** : la moyenne remonte quand on retire des alertes informatives | Inchangé | changer la statistique (maximum, somme pondérée) |
+
+### B. Données manquantes (champ ou molécule)
+
+- Bicarbonate plasmatique (`MASTER_DB.BIOLOGIE`) ; chélateurs du phosphore (sévélamer) ;
+  agents stimulant l'érythropoïèse pour `IN_E03` (clés mortes).
+- Durée de l'association antiagrégant + anticoagulant (A5) ; MMSE (A2).
+
+### C. Questions posées, jamais lues (`runContexteOrphelinAudit`, « CONSTAT OUVERT »)
+
+- 7 symptômes psycho-comportementaux et 5 items MBI : lus par le **code** (encarts), pas par
+  les règles — cohérents à l'essai (lot 3), l'audit les compte toujours comme orphelins.
+- Albuminémie < 30 g/L : partiellement lue (`SUP_ALB_01`).
+
+### D. Sources lues indirectement (à relire au texte intégral)
+
+- Beers 2023, interactions médicament-maladie (incontinence de la femme) : source secondaire.
+- CANMAT/ISBD 2018 (antidépresseur dans la bipolarité) : de mémoire, à vérifier au texte.
+- HCSP asplénie, GRIO 2019, laxatifs de lest (RCP) : sources secondaires (déjà signalé).

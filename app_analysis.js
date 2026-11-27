@@ -883,7 +883,8 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(_declare('chkUsageSubstances'))     _pushPsy(["trouble_usage_substances", "addiction"], ["psychiatrie_primaire_chronique"]);
     if(_declare('chkTSADI'))               _pushPsy(["tsa_di"], ["psychiatrie_primaire_chronique"]);
     if(isChecked('chkAntipsyLAI'))          ctxClinique.push("antipsychotique_lai");
-    if(isChecked('chkDelirium')) {
+    // Un fait, deux chemins : le delirium déclaré par la liste (PAT_048) produit le même contexte.
+    if(_declare('chkDelirium')) {
         ctxClinique.push("delirium", "confusion");
         if(isChecked('delHyper')) ctxClinique.push("delirium_hyperactif");
         else if(isChecked('delHypo')) ctxClinique.push("delirium_hypoactif");

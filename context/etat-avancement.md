@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 27/11/2026 — **version 5.50**, `BUILD_ID` `20261127-audit-cases-lot2`,
-cache `geriaassist-v176`.*
+*Dernière mise à jour : 27/11/2026 — **version 5.60**, `BUILD_ID` `20261127-audit-cases-lot34`,
+cache `geriaassist-v177`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,10 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **5.60** (27/11) — Audit des cases, lots 3-4 : D09 sans Z, démence parkinsonienne / MCI / delirium dans
+  les règles anticholinergiques, IAChE + bradycardie en une carte, catatonie, bipolarité (`SUP_BIP_01`).
+  Audit terminé : arbitrages restants en fin de `docs/audit_cases_cliniques.md`.
 
 - **5.50** (27/11) — Audit des cases, lot 2 : H3 sous paracétamol, tricyclique + HBP/constipation
   (`SUP_TCA_01`), LAMA + HBP, B10 selon l'indication, Beers incontinence (`SUP_INC_01`), START F1 sur RGO.
@@ -227,12 +231,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-**En cours : audit logique de chaque case clinique** (demande du 27/11, multi-sessions) —
-pour chaque case : contexte produit, règles lectrices, liens médicament / posologie /
-biologie / pathologie, trous et contradictions. Inventaire automatique amorcé (script de
-session, à verser dans `tools/`). Ensuite : Suite possible : champs manquants listés en fin de
-`docs/catalogue_pieges_biologie_et_presentations_atypiques.md` (2ᵉ créatinine datée, FC,
-ECBU (urines : osmolalité et natriurèse faites en 4.50), arrêt de corticothérapie, heure de prélèvement) ; entrées « NV » à vérifier.
+**Audit des cases cliniques : terminé (5.30 → 5.60).** Restent les arbitrages A1-A8 et les
+données manquantes listés en fin de `docs/audit_cases_cliniques.md` — à soumettre à
+l'utilisateur, rien n'y a été deviné.
 
 Non vérifié sur source (à ne pas présenter comme sourcé) : bornes T4L 12-22 / T3L 3,1-6,8
 (choix de l'utilisateur) ; 99ᵉ percentile hs-cTnI 16/34 ng/L non retrouvé par recherche ;

@@ -661,7 +661,7 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["antidepresseur tricyclique", "amitriptyline", "clomipramine", "imipramine", "doxepine", "nortriptyline", "trimipramine", "maprotiline", "amoxapine", "dosulepine"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042", "PAT_009", "PAT_033"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_014", "PAT_041", "PAT_042", "PAT_009", "PAT_033"]
             },
             alternatives: "ISRS (sertraline, escitalopram) ou mirtazapine"
         },
@@ -765,7 +765,8 @@ const GERIA_RECOS_DB = {
                 // hypnotiques Z : une zopiclone sortait ici ET sous EV_D11.
                 med_keys: ["benzodiazepine_stricte", "diazepam", "bromazepam", "lorazepam", "oxazepam", "alprazolam", "clorazepate", "prazepam", "nordazepam", "clobazam", "clonazepam", "nitrazepam", "lormetazepam", "temazepam", "midazolam"],
                 comorbs_absent: ["PAT_030"],
-                contexte_clinique_absent: ["bzd_duree_breve"]
+                // Catatonie : la benzodiazépine (lorazépam) EST le traitement de première ligne.
+                contexte_clinique_absent: ["bzd_duree_breve", "catatonie"]
             },
             alternatives: "Sevrage progressif (réduction 25% toutes les 2-4 semaines), TCC insomnie, mélatonine LP si insomnie"
         },
@@ -774,12 +775,16 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3"],
             ref_code: "STOPP3-D9",
             section: "SNC",
-            titre: "Benzodiazépine pour agitation/SCPD dans la démence",
+            // Audit lot 3 : la clé `benzodiazepine` captait les hypnotiques Z, pour lesquels la
+            // SFGG 2024 retient la zopiclone 3,75 mg sur 14-28 jours dans le sommeil de la
+            // démence — l'encart SPC le disait sous la même carte rouge. Le titre affirmait
+            // aussi l'indication (« pour agitation ») que rien ne déclare.
+            titre: "Benzodiazépine chez le patient dément (agitation, SCPD : aucune efficacité démontrée)",
             message: "Benzodiazépine pour agitation comportementale ou symptômes non cognitifs de la démence : aucune preuve d'efficacité, risque de chutes et de sédation paradoxale.",
             severite: "danger",
             condition: {
-                med_keys: ["benzodiazepine"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"]
+                med_keys: ["benzodiazepine_stricte"],
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_014", "PAT_041", "PAT_042"]
             },
             alternatives: "Approche non pharmacologique, trazodone faible dose si nécessaire"
         },
@@ -843,12 +848,12 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS"],
             ref_code: "STOPP3-D14",
             section: "SNC",
-            titre: "Anticholinergique puissant + Démence ou Delirium",
+            titre: "Anticholinergique puissant + démence, trouble cognitif léger ou delirium",
             message: "Médicament à effet anticholinergique puissant (tricycliques, antipsychotiques type chlorpromazine/clozapine/thioridazine, antihistaminiques H1 1ère gén., antispasmodiques urinaires, hyoscine, procyclidine, benzatropine, tizanidine) avec démence ou delirium : exacerbation des troubles cognitifs.",
             severite: "danger",
             condition: {
                 acb_check: true,
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_014", "PAT_041", "PAT_042", "PAT_043", "PAT_048"]
             },
             alternatives: "Médicaments à faible charge anticholinergique"
         },
@@ -1432,12 +1437,12 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "BEERS"],
             ref_code: "STOPP3-I1",
             section: "Urogénital",
-            titre: "Antimuscarinique systémique + Démence",
+            titre: "Antimuscarinique systémique + démence ou trouble cognitif léger",
             message: "Antimuscarinique systémique avec démence ou trouble cognitif chronique : confusion accrue, agitation. PIM selon Beers.",
             severite: "danger",
             condition: {
                 med_keys: ["oxybutynine", "tolterodine", "solifenacine", "fesoterodine", "trospium", "flavoxate", "darifenacine"],
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_014", "PAT_041", "PAT_042", "PAT_043"]
             },
             alternatives: "Mirabégron (si pas d'HTA sévère), rééducation périnéale"
         },
@@ -2931,7 +2936,7 @@ const GERIA_RECOS_DB = {
             sources: ["STOPP3", "FORTA"],
             ref_code: "START3-D3",
             section: "SNC",
-            titre: "Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré",
+            titre: "Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré (stade à vérifier)",
             message: "Inhibiteur de l'acétylcholinestérase (donépézil, rivastigmine, galantamine) pour maladie d'Alzheimer légère à modérée.",
             severite: "warning",
             condition: {
@@ -4468,6 +4473,19 @@ const RECOS_SUPPLEMENT = [
             alternatives: "Autre antihypertenseur selon le terrain (IEC/ARA2, inhibiteur calcique)"
         },
         {
+            id: "SUP_BIP_01",
+            sources: ["CANMAT"],
+            severite: "warning",
+            titre: "Antidépresseur sans thymorégulateur dans un trouble bipolaire",
+            message: "Antidépresseur prescrit sans thymorégulateur ni antipsychotique à visée thymique chez un patient bipolaire : risque de virage maniaque ou mixte et d'accélération des cycles. Dans le trouble bipolaire de type I, l'antidépresseur en monothérapie n'est pas recommandé (CANMAT/ISBD 2018) ; dans le type II, il peut se discuter en seconde ligne (sertraline, venlafaxine), sous surveillance.",
+            condition: {
+                med_keys: ["antidepresseur", "isrs", "irsn", "mirtazapine", "mianserine", "venlafaxine", "duloxetine", "antidepresseur tricyclique", "agomelatine", "vortioxetine"],
+                med_absent: ["lithium", "valproate", "divalproate", "valpromide", "lamotrigine", "carbamazepine", "quetiapine", "olanzapine", "aripiprazole", "risperidone"],
+                contexte_clinique: ["trouble_bipolaire"]
+            },
+            alternatives: "Associer un thymorégulateur (lithium, valproate, lamotrigine) ou un antipsychotique validé dans la dépression bipolaire (quétiapine)"
+        },
+        {
         // Maladie aiguë / sepsis : médicaments à suspendre temporairement (« sick day rules »).
         // EV_N07 porte déjà AINS, aminosides, IEC/ARA2 ; restaient la metformine (acidose
         // lactique — RCP : déshydratation, infection grave, choc), les iSGLT2 (acidocétose
@@ -5307,10 +5325,22 @@ const CROSS_REF_GROUPS = [
         group_id: "GRP_IACHE",
         theme: "IAChE / Mémantine — Surveillance et déprescription",
         merged_sources: ["STOPP3", "FORTA", "STOPPFRAIL", "REMEDIES", "PIM_CHECK"],
-        rule_ids: ["EV_D17", "EV_D18", "EV_D19", "EV_SF06", "SUP_PIMC_06", "SUP_REM_03"],
+        rule_ids: ["EV_D19", "EV_SF06", "SUP_PIMC_06", "SUP_REM_03"],
         pim_dict_keys: ["donepezil", "rivastigmine", "galantamine", "memantine"],
         fusion_strategy: "distinct_context",
         note: "D17=bradycardie, D18=bradycardisant, D19=épilepsie, SF06=démence sévère, PIMC_06=ECG, REM_03=sans bénéfice. Contextes différents mais toutes les sources se complètent."
+    },
+
+    // Bradycardie sous IAChE : STOPP D17 (bradycardie), D18 (bradycardisant) et REMEDIES
+    // (bêtabloquant + IAChE) sortaient en trois cartes, deux rouges, pour une conduite.
+    {
+        group_id: "GRP_IACHE_BRADY",
+        theme: "Inhibiteur de l'acétylcholinestérase et bradycardie",
+        merged_sources: ["STOPP3", "REMEDIES"],
+        rule_ids: ["EV_D17", "EV_D18", "SUP_INT_008"],
+        pim_dict_keys: [],
+        fusion_strategy: "merge_display",
+        note: "Une conduite : ECG, réduire ou arrêter le bradycardisant ou l'IAChE."
     },
 
     // ========================================================================

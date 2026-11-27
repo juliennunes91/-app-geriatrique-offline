@@ -417,8 +417,8 @@
  },
  "demence_SCPD": {
   "alertes-eviter": [
-   "danger | Anticholinergique puissant + Démence ou Delirium",
-   "danger | Antimuscarinique systémique + Démence",
+   "danger | Anticholinergique puissant + démence, trouble cognitif léger ou delirium",
+   "danger | Antimuscarinique systémique + démence ou trouble cognitif léger",
    "danger | Antipsychotique chez patient dément — durée et réévaluation",
    "danger | Oxybutynine (toutes formes)",
    "info | Action immédiate",
@@ -1452,7 +1452,7 @@
  },
  "cov_EV_D01_EV_D03": {
   "alertes-eviter": [
-   "danger | Anticholinergique puissant + Démence ou Delirium",
+   "danger | Anticholinergique puissant + démence, trouble cognitif léger ou delirium",
    "danger | Antidépresseurs tricycliques chez le sujet âgé",
    "danger | IRSN + HTA sévère",
    "info | Action immédiate",
@@ -1586,10 +1586,8 @@
   "alertes-eviter": [
    "danger | ACEBUTOLOL — CI Bradycardie",
    "danger | Bradycardisants + Bradycardie / BAV",
-   "danger | Inhibiteur acétylcholinestérase + bradycardisant",
-   "danger | Inhibiteur de l'acétylcholinestérase + bradycardie < 60 / BAV",
+   "danger | Inhibiteur de l'acétylcholinestérase et bradycardie",
    "info | Action immédiate",
-   "warning | Bêtabloquant + Inhibiteur acétylcholinestérase : bradycardie",
    "warning | DONÉPÉZIL — Prudence Bradycardie",
    "warning | Inhibiteur acétylcholinestérase sans ECG de référence"
   ],
@@ -1608,7 +1606,7 @@
   "alertes-scores": [
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 18/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 17/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
@@ -1787,7 +1785,7 @@
   "alertes-initier": [
    "info | Réévaluation planifiée",
    "warning | ISRS (ou IRSNA / prégabaline) pour trouble anxieux généralisé persistant et sévère",
-   "warning | Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré"
+   "warning | Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré (stade à vérifier)"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -2861,6 +2859,57 @@
   ],
   "alertes-usage": [
    "success | Posologies : DOXAZOSINE"
+  ],
+  "alertes-scores": [
+   "info | Score ACB : 0",
+   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
+  ],
+  "alertes-synthese": [
+   "warning | Actions de réévaluation suggérées"
+  ]
+ },
+ "cov_EV_D09": {
+  "alertes-eviter": [
+   "danger | Benzodiazépine chez le patient dément (agitation, SCPD : aucune efficacité démontrée)",
+   "info | Action immédiate",
+   "info | Benzodiazépines / Z-drugs : LORAZEPAM"
+  ],
+  "alertes-initier": [
+   "info | Réévaluation planifiée",
+   "warning | Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré (stade à vérifier)"
+  ],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | LORAZEPAM — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : LORAZEPAM"
+  ],
+  "alertes-scores": [
+   "info | Doses équivalentes des sédatifs",
+   "info | Score ACB : 0",
+   "warning | Score PIM Global : 48/100 — RISQUE MODÉRÉ"
+  ],
+  "alertes-synthese": [
+   "danger | Dossier avec alertes critiques"
+  ]
+ },
+ "cov_SUP_BIP_01": {
+  "alertes-eviter": [
+   "info | Réévaluation planifiée",
+   "warning | Antidépresseur sans thymorégulateur dans un trouble bipolaire"
+  ],
+  "alertes-initier": [],
+  "alertes-bio": [],
+  "alertes-interact": [],
+  "alertes-suivi": [
+   "info | Tableau croisé — Surveillance biologique",
+   "warning | SERTRALINE — Alertes cliniques"
+  ],
+  "alertes-usage": [
+   "success | Posologies : SERTRALINE"
   ],
   "alertes-scores": [
    "info | Score ACB : 0",

@@ -143,6 +143,8 @@ const PANEL = {
     'cov_EV_SYND_044_EV_SYND_045': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Diazepam","Morphine","Celecoxib","Benazepril","Altizide"]},
     'cov_SUP_TCA_01': {"age":82,"sexe":"M","flags":["chkHbp"],"bio":{"patientDFG":60},"meds":["Imipramine","Tamsulosine"]},
     'cov_SUP_INC_01': {"age":82,"sexe":"F","flags":["chkIncontinence"],"bio":{"patientDFG":60},"meds":["Doxazosine"]},
+    'cov_EV_D09': {"age":84,"sexe":"F","comorbs":["PAT_010","PAT_011"],"bio":{"patientDFG":60},"meds":["Lorazepam"],"precisions":{"Lorazepam":{"duree":"courte"}}},
+    'cov_SUP_BIP_01': {"age":78,"sexe":"M","comorbs":["PAT_046"],"bio":{"patientDFG":60},"meds":["Sertraline"]},
     'cov_EV_L01': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Oxycodone","Macrogol"],"precisions":{"Oxycodone":{"indication":"legere"}}},
     'cov_SUP_BZD_OPIO_01': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Diazepam","Morphine","Macrogol"],"precisions":{"Diazepam":{"dose":30},"Morphine":{"dose":20}}},
     'cov_EV_SFGG_AD_02_EV_SFGG_AD_04': {"age":82,"sexe":"F","bio":{"patientDFG":60},"meds":["Sertraline","Venlafaxine","Mianserine"]},

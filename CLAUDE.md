@@ -560,6 +560,23 @@ Gériatrie et syndromes. Même doctrine que le lot 1 (titre = terrain vérifié)
 - `IN_F01` (START F1, RGO) lit `PAT_053` et non plus l'ulcère (`PAT_021`) : un ulcère guéri
   n'est pas une indication d'IPP au long cours.
 
+## Audit des cases cliniques — lots 3 et 4 corrigés (5.60)
+
+Rapport final et arbitrages restants : fin de `docs/audit_cases_cliniques.md`.
+
+- `EV_D09` (BZD chez le dément) : `benzodiazepine_stricte` — la zopiclone n'y tombe plus
+  (SFGG 2024 la retient 14-28 j à 3,75 mg) ; titre au terrain vérifié. Fusionnée sous la carte
+  BZD (`GRP_BZD_GENERAL`) : un test lit son **message**, pas son identifiant.
+- **Démence parkinsonienne `PAT_014`** ajoutée à `EV_D01`, `EV_D09`, `EV_D14`, `EV_I01` ;
+  **MCI `PAT_043`** à `EV_D14`, `EV_I01` (Beers : « dementia or cognitive impairment ») ;
+  **delirium `PAT_048`** à `EV_D14`, dont le titre le nommait. Le contexte `delirium` naît du
+  fait (`_declare`), plus de la seule case.
+- IAChE + bradycardie : `EV_D17`, `EV_D18`, `SUP_INT_008` en une carte (`GRP_IACHE_BRADY`).
+- `IN_D03` : « stade à vérifier » (aucun MMSE saisi).
+- **Catatonie** : `EV_D08` se tait (le lorazépam en est le traitement).
+- **`SUP_BIP_01`** (CANMAT/ISBD 2018) : antidépresseur sans thymorégulateur dans un trouble
+  bipolaire.
+
 ## Dispositifs implantés : sonde à demeure, prothèses articulaires
 
 Quatre cases dans « Habitudes de vie & État général » (deux UIs) : `chkSAD`, `chkPTH`,

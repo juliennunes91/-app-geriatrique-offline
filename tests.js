@@ -973,6 +973,30 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!/id:IN_F01/.test(ev({ comorbs: ['PAT_021'] })), 'ulcère seul : pas d\'IPP au long cours');
         assert.ok(/id:IN_F01/.test(ev({ comorbs: ['PAT_053'] })), 'RGO sans IPP : START F1');
     });
+    test('Audit lots 3-4 : troubles cognitifs, delirium, catatonie, bipolarité', () => {
+        const ev = c => { const r = analyzeCase(Object.assign({ age: 82, sexe: 'F', dfg: 60 }, c)); return r._html['alertes-eviter'] + r._html['alertes-initier']; };
+        const MA = { comorbs: ['PAT_010', 'PAT_011'], flags: ['chkDemence', 'demTypeMA'] };
+        // EV_D09 : benzodiazépine stricte, pas la zopiclone (SFGG 2024 la retient 14-28 j)
+        // EV_D09 sort fusionné sous la carte BZD (GRP_BZD_GENERAL) : on lit son message.
+        assert.ok(!/sédation paradoxale/.test(ev(Object.assign({ meds: ['Zopiclone'] }, MA))), 'zopiclone : pas EV_D09');
+        assert.ok(/sédation paradoxale/.test(ev(Object.assign({ meds: ['Lorazepam'] }, MA))), 'lorazépam : EV_D09');
+        // Démence parkinsonienne et MCI : anticholinergiques (Beers « dementia or cognitive impairment »)
+        assert.ok(/id:EV_D14|id:EV_I01/.test(ev({ comorbs: ['PAT_014'], meds: ['Oxybutynine'] })), 'démence parkinsonienne + oxybutynine');
+        assert.ok(/id:EV_D14|id:EV_I01/.test(ev({ comorbs: ['PAT_043'], meds: ['Oxybutynine'] })), 'MCI + oxybutynine');
+        // Delirium déclaré par la liste : même contexte que la case
+        assert.ok(/id:EV_D14/.test(ev({ comorbs: ['PAT_048'], meds: ['Quetiapine'] })), 'delirium déclaré par la liste + anticholinergique');
+        // IAChE + bradycardie : une carte
+        const br = ev({ comorbs: ['PAT_010', 'PAT_011'], bio: { patientFC: 48 }, meds: ['Donepezil', 'Bisoprolol'] });
+        const nIache = (br.match(/<strong>[^<]*(acétylcholinestérase|IAChE)[^<]*(bradycard)/gi) || []).length;
+        assert.ok(nIache <= 1, 'IAChE + bradycardie : une seule carte (' + nIache + ')');
+        // Catatonie : le lorazépam est le traitement
+        assert.ok(!/id:EV_D08/.test(ev({ comorbs: ['PAT_047'], meds: ['Lorazepam'] })), 'catatonie : pas EV_D08');
+        assert.ok(/id:EV_D08/.test(ev({ meds: ['Lorazepam'] })), 'sans catatonie : EV_D08');
+        // Bipolarité : antidépresseur sans thymorégulateur
+        assert.ok(/id:SUP_BIP_01/.test(ev({ comorbs: ['PAT_046'], meds: ['Sertraline'] })), 'bipolaire + sertraline seule');
+        assert.ok(!/id:SUP_BIP_01/.test(ev({ comorbs: ['PAT_046'], meds: ['Sertraline', 'Lithium'] })), 'sous lithium : non');
+        assert.ok(!/id:SUP_BIP_01/.test(ev({ meds: ['Sertraline'] })), 'sans bipolarité : non');
+    });
     test('Opioïde sans laxatif : STOPP L2 et SYND_048 en une seule carte', () => {
         const r = analyzeCase({ age: 82, sexe: 'F', meds: ['Morphine'] });
         const n = (r._html['alertes-eviter'].match(/<strong>[^<]*(sans laxatif|prophylaxie laxative)/g) || []).length;

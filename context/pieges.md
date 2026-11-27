@@ -115,3 +115,5 @@ Bug → solution. Le détail est dans la section correspondante de `CLAUDE.md`.
   la paire, au moment du repli, pas seulement sur l'entrée de la fiche.
 - Une précision demandée et lue par personne (durée de BZD) : vérifier qu'un champ de la
   fenêtre de précision produit bien un contexte lu par une règle.
+- Une règle membre d'un groupe `merge_display` n'expose plus son identifiant dans le HTML :
+  la tester par son message, et lui donner un patient de couverture où elle est la plus grave.

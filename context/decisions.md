@@ -104,3 +104,7 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   demandée (info). Protocoles de déprescription : informatifs (un mode d'emploi, pas un verdict).
 - **27/11/2026** — START F1 (IPP) ne sort que sur RGO déclaré : l'antécédent d'ulcère seul,
   sans gastrotoxique, n'est pas une indication d'IPP au long cours. — Audit lot 2.
+- **27/11/2026** — Catatonie : la BZD est le traitement, STOPP D8 se tait. Bipolarité :
+  antidépresseur sans thymorégulateur signalé (warning, CANMAT/ISBD 2018). — Audit lot 4.
+- **27/11/2026** — MCI et démence parkinsonienne entrent dans les règles anticholinergiques de la
+  démence (Beers 2023 : « dementia or cognitive impairment »). — Audit lot 3.
