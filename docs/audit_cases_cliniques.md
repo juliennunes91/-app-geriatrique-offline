@@ -101,6 +101,26 @@ hypnotiques Z ; diurétique de surcharge dans la sténose aortique.
 
 **État : lots 3 et 4 corrigés en 5.60.**
 
+## Lot 5 — cases jamais examinées (28/11/2026)
+
+Recoupement de l'inventaire (85 cases) avec ce rapport : dix cases n'avaient été relues dans
+aucun lot. Tabac, sonde à demeure, prothèses, SPC et MBI l'avaient été dans leur propre chantier.
+
+| Case | Constat | Type | Suite |
+|---|---|---|---|
+| ATCD AVC / AIT | `IN_C02` proposait un antiagrégant sous anticoagulant (FA + AVC sous apixaban), à rebours de STOPP C4. | D | 5.82 : `med_absent` AOD/AVK |
+| ATCD AVC / AIT | La case vaut `PAT_008` (CIM-10 I63, **ischémique**) : un AVC hémorragique coché ici reçoit statine et antiagrégant proposés. | A | libellé « AVC ischémique / AIT » ? |
+| Soins palliatifs | `frailty_exclude` ne lisait que CFS ≥ 7 / case fragile : `IN_B02` (titré « sauf fin de vie ») proposait une statine en soins palliatifs. | D | 5.82 : `finDeVie` |
+| Soins palliatifs | `IN_C02` propose encore un antiagrégant en prévention secondaire. | A | se taire en fin de vie ? |
+| ATCD EP / TVP | `SUP_STOP_010` et `011` affirmaient « premier épisode, > 6 / 12 mois, sans facteur persistant » (rien n'est saisi), sortaient ensemble, y compris sur MTEV en cours et sous AOD pour FA. | D | 5.82 : une règle, informative, muette sur `mtev_active` et FA |
+| Sliding scale | Case cochée + insuline basale prescrite : deux cartes (`EV_BEERS_02`, `SUP_STOP_053`) annonçant « sans basale ». | D | 5.82 : la basale dément la case ; `SUP_STOP_053` en quarantaine |
+| Dépression | `EV_SFGG_AD_08` titre un tricyclique « en 1ère ligne » : l'application ne voit pas la ligne (famille `EV_D21`). | D | à reformuler en règle de choix |
+| Dépression | `IN_D02` (START) et `IN_SFGG_AD_01` (sertraline) : deux cartes pour « initier un antidépresseur ». | D | fusion ? |
+| DLFT | IAChE dans la DLFT : aucune règle (inefficaces, aggravation comportementale possible). | T / A | source à arrêter |
+| FA (hors case, vu au passage) | `IN_B10` propose un bêtabloquant sous diltiazem, vérapamil ou digoxine. | D | `med_absent` à compléter |
+| Institution, confiné | `IN_H05` (vitamine D) cohérent. | — | — |
+| ESPT, TSA / DI | Produisent `psychiatrie_primaire_chronique`, lu par `SUP_PSYC_*` : cohérent. | — | — |
+
 ---
 
 ## Rapport final — ce qui reste à trancher

@@ -2424,7 +2424,6 @@
   "alertes-eviter": [
    "danger | Desmopressine pour incontinence/pollakiurie",
    "info | Action immédiate",
-   "warning | Insuline en schéma « sliding scale » seule (sans basale)",
    "warning | Insuline sliding scale seule (sans basale)"
   ],
   "alertes-initier": [],

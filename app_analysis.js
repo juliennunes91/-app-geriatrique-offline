@@ -58,6 +58,12 @@
 // Revue éditoriale fine (volume d'alertes par thème) → curation_supplement_review.csv.
 const SUPPLEMENT_QUARANTINE = new Set([
     'SUP_CAUT_073', 'SUP_PIMC_08', 'SUP_STOP_078', 'SUP_STOP_043', 'SUP_STOP_050',
+    // SUP_STOP_053 (insuline « sliding scale » seule) : même condition et même conduite
+    // qu'EV_BEERS_02 — deux cartes pour un fait (audit des cases, lot 5).
+    'SUP_STOP_053',
+    // SUP_STOP_011 (anticoagulant prolongé après EP) : fusionné dans SUP_STOP_010 — la base
+    // ne distingue pas TVP et EP (une seule case « ATCD d'EP / TVP »), les deux sortaient ensemble.
+    'SUP_STOP_011',
     // Clés malformées et/ou dose/forme non détectable.
     // (SUP_STOP_025 « fer oral fortes doses » a été RAVIVÉ après que l'extracteur
     // de texte libre injecte dose_fer_elevee dans le contexte clinique quand la
@@ -799,7 +805,9 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(_declare('chkPalliatif')) ctxClinique.push("palliatif", "esperance_vie_reduite", "stoppfrail");
     if(_declare('chkAtcdUlcere')) ctxClinique.push("atcd_ulcere", "atcd_hemorragie_digestive");
     if(_declare('chkAspirineForte')) ctxClinique.push("dose_aspirine_elevee");
-    if(_declare('chkInsulineSlidingScale')) ctxClinique.push("sliding_scale");
+    // « Seule (sans basale) » : une insuline basale à l'ordonnance dément la case, comme elle
+    // dément la précision (CASE_PRECISION, utils.js). Le contexte ne naît pas d'une contradiction.
+    if(_declare('chkInsulineSlidingScale') && !(typeof activeMeds !== 'undefined' && activeMeds.some(m => m && _INSULINE_BASALE.test(sanitizeText(m.dci || ''))))) ctxClinique.push("sliding_scale");
     // L'albuminémie n'est PAS un critère de dénutrition : le cadre GLIM la traite comme
     // un marqueur d'INFLAMMATION et de pronostic. Le contexte s'appelait
     // `denutrition_severe`, ce qui faisait dire à la donnée ce qu'elle ne dit pas.
@@ -1453,6 +1461,9 @@ function analyserPrescription() {
         // le seul chemin de saisie — c'est le même défaut que les contextes, un niveau
         // plus bas.
         fragiliteSevere: (getVal('scoreCFS') >= ((typeof CLINICAL_THRESHOLDS !== 'undefined' && CLINICAL_THRESHOLDS.CFS_FRAGILITE_SEVERE) || 6)) || isChecked('chkPalliatif') || activeComorbs.includes('PAT_030'),
+        // Soins palliatifs / espérance de vie < 1 an (deux chemins de saisie) : lu par
+        // `frailty_exclude`, comme la fragilité CFS ≥ 7.
+        finDeVie: isChecked('chkPalliatif') || activeComorbs.includes('PAT_030'),
         scoreACB_global: scoreACB_global,
         contexte_clinique: ctxClinique
     };

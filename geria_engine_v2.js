@@ -427,7 +427,9 @@ const GeriaEngineV2 = (() => {
         // Symétrique : exclut la règle si le patient est fragile (utile pour les START
         // dont le bénéfice s'effondre en fin de vie ou fragilité sévère — STOPPFrail v2,
         // ex. statine prévention 2° si EV < 1-2 ans).
-        if (c.frailty_exclude === true && ctx.isFragile) return false;
+        // Soins palliatifs / espérance de vie < 1 an : population même de STOPPFrail. Le
+        // bénéfice de ces omissions demande des années (statine, anti-résorptif…).
+        if (c.frailty_exclude === true && (ctx.isFragile || ctx.finDeVie)) return false;
         if (c.acb_cumul && c.acb_seuil) {
             if (!ctx.scoreACB_global || ctx.scoreACB_global < c.acb_seuil) return false;
             // Exiger au moins 2 médicaments avec ACB ≥ 2 (anticholinergique cliniquement significatif)

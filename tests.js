@@ -1020,6 +1020,23 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!/id:SUP_TCSP_01/.test(tout({ flags: ['chkTcsp'], meds: ['Bupropion'] })), 'TCSP + bupropion : non');
         assert.ok(!/id:SUP_TCSP_01/.test(tout({ meds: ['Sertraline'] })), 'sans TCSP : non');
     });
+    test('Audit des cases, lot 5 (5.82) : AVC sous anticoagulant, palliatif, MTEV, sliding scale', () => {
+        const ids = c => [...new Set((Object.values(analyzeCase(Object.assign({ age: 84, sexe: 'F', dfg: 55 }, c))._html).join(' ')
+            .match(/id:[A-Z_0-9]+/g) || []))].map(x => x.slice(3));
+        const a = (c, id) => ids(c).includes(id);
+        assert.ok(!a({ flags: ['chkAvc'], comorbs: ['PAT_006'], meds: ['Apixaban'] }, 'IN_C02'), 'AVC + FA sous apixaban : pas d\'antiagrégant proposé');
+        assert.ok(a({ flags: ['chkAvc'], meds: ['Paracetamol'] }, 'IN_C02'), 'AVC sans antithrombotique : antiagrégant proposé');
+        assert.ok(!a({ flags: ['chkPalliatif', 'chkAvc'], meds: ['Paracetamol'] }, 'IN_B02'), 'palliatif (case) : pas de statine proposée');
+        assert.ok(!a({ comorbs: ['PAT_030'], flags: ['chkAvc'], meds: ['Paracetamol'] }, 'IN_B02'), 'palliatif (liste) : idem');
+        assert.ok(a({ flags: ['chkAvc'], meds: ['Paracetamol'] }, 'IN_B02'), 'hors palliatif : statine proposée');
+        const mtev = c => ids(c).filter(x => /SUP_STOP_01[01]/.test(x));
+        assert.deepStrictEqual(mtev({ flags: ['chkTvp'], meds: ['Apixaban'] }), ['SUP_STOP_010'], 'ATCD MTEV sous AOD : une carte');
+        assert.deepStrictEqual(mtev({ flags: ['chkTvp', 'chkMtevActive'], meds: ['Apixaban'] }), [], 'MTEV en cours : rien');
+        assert.deepStrictEqual(mtev({ flags: ['chkTvp'], comorbs: ['PAT_006'], meds: ['Apixaban'] }), [], 'FA : autre indication, rien');
+        const ss = meds => ids({ flags: ['chkInsulineSlidingScale'], comorbs: ['PAT_016'], meds }).filter(x => /EV_BEERS_02|SUP_STOP_053/.test(x));
+        assert.deepStrictEqual(ss(['Insuline lispro']), ['EV_BEERS_02'], 'sliding scale seule : une carte');
+        assert.deepStrictEqual(ss(['Insuline lispro', 'Insuline glargine']), [], 'basale prescrite : la case est démentie');
+    });
     test('Score PIM global (5.81) : retirer une alerte informative ne l\'aggrave pas, en ajouter une grave l\'aggrave', () => {
         const { loadApp } = require('./oracle_harness');
         const vm = require('vm'); const { sandbox } = loadApp();
@@ -3149,7 +3166,7 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!has(tw, /Medicaments nefrotoxiques/i), 'SUP_STOP_078 (doublon) retiré');
     });
     test('Anticoag prolongé TVP/EP : seulement en contexte MTEV (pas pour la FA)', () => {
-        const reTvp = /Anticoagulant prolonge premier episode TVP/i;
+        const reTvp = /Anticoagulant et antécédent de MTEV/i;
         assert.ok(!has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'] }), reTvp), 'AOD seul (FA) → non');
         assert.ok(has(analyzeCase({ age: 80, sexe: 'F', meds: ['Apixaban'], flags: ['chkTvp'] }), reTvp), 'AOD + MTEV → oui');
     });

@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 28/11/2026 — **version 5.81**, `BUILD_ID` `20261128-score-pim-saturant`,
-cache `geriaassist-v180`.*
+*Dernière mise à jour : 28/11/2026 — **version 5.82**, `BUILD_ID` `20261128-audit-cases-lot5`,
+cache `geriaassist-v181`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,10 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **5.82** (28/11) — Audit des cases, lot 5 (10 cases jamais relues) : IN_C02 muet sous
+  anticoagulant, palliatif dans `frailty_exclude`, MTEV (SUP_STOP_010/011 fusionnés, info),
+  sliding scale démentie par une basale. Arbitrages ouverts en fin de `docs/audit_cases_cliniques.md`.
 
 - **5.81** (28/11) — A8 : score PIM global, la moyenne des alertes remplacée par une somme
   saturante (critiques score/100, importantes score/200, informatives 0).
@@ -242,7 +246,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 **Arbitrages de l'audit** : A1, A2, A4, A6, A7 livrés en 5.70, A5 en 5.80. **A3 abandonné**
 (hypnotiques Z : l'utilisateur ne veut pas de durée « < 2 semaines » — sevrage refusé en
-institution). **A8 livré en 5.81** (somme saturante). Tous les arbitrages de l'audit sont clos.
+institution). **A8 livré en 5.81** (somme saturante). **Lot 5** (5.82) : arbitrages ouverts — libellé AVC
+ischémique, IN_C02 en fin de vie, EV_SFGG_AD_08 « 1ère ligne », fusion IN_D02/IN_SFGG_AD_01,
+IAChE dans la DLFT, IN_B10 sous diltiazem/digoxine.
 ESC 2023 SCA lue par source secondaire (revue Storey, ICR 2024 ; ESC CardioPractice) : la
 prolongation de la trithérapie à 1 mois et le schéma de l'angioplastie programmée ne sont
 pas codés, faute de texte vérifié.

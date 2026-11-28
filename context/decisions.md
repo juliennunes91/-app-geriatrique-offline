@@ -122,3 +122,5 @@ Format : date — décision — raison. Ajouter en fin de fichier.
 - **28/11/2026** — Score PIM global (5.81) : somme saturante des alertes non informatives au
   lieu de la moyenne, qui faisait monter le score quand on retirait une alerte informative.
   — « Trouve une solution intelligente », proposition acceptée.
+- **28/11/2026** — `frailty_exclude` lit aussi les soins palliatifs / EV < 1 an (`finDeVie`) :
+  STOPPFrail vise d'abord cette population. — Lot 5 de l'audit (IN_B02 titré « sauf fin de vie »).

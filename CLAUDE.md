@@ -595,6 +595,15 @@ Rapport final et arbitrages restants : fin de `docs/audit_cases_cliniques.md`.
   Source `AASM_RBD` (Howell, JCSM 2023) lue par abstract et communiqué seulement : les classes
   nommées ne sont **pas vérifiées au texte intégral** — d'où l'informatif.
 
+## Audit des cases cliniques — lot 5 (5.82)
+
+Dix cases n'avaient été relues dans aucun lot (recoupement inventaire ↔ rapport). Corrigé :
+`IN_C02` ne propose plus d'antiagrégant sous AOD/AVK ; **`frailty_exclude` lit `finDeVie`**
+(soins palliatifs, case ou `PAT_030`), pas seulement CFS ≥ 7 ; `SUP_STOP_010` absorbe `011`,
+devient informative, se tait sur MTEV en cours/récidivante et sur FA ; la case « sliding scale »
+est démentie par une insuline basale prescrite (contexte non produit), `SUP_STOP_053` en
+quarantaine (doublon d'`EV_BEERS_02`). Arbitrages restants : fin de `docs/audit_cases_cliniques.md`.
+
 ## Anticoagulant oral + antiagrégant après SCA ou angioplastie (5.80)
 
 La case « stent récent (< 6 mois) » ne permettait de juger aucune durée. Champ **`dateAngioplastie`**
@@ -2533,8 +2542,8 @@ réévaluation des psychotropes en place, pas vers une nouvelle prescription.
 
 ## Fragilité sévère (`frailty_exclude`)
 
-Ne s'active qu'à **CFS ≥ 7** ou case « patient fragile » cochée — le seuil de
-STOPPFrail, pas la fragilité modérée. Porté par les omissions dont le bénéfice
+Ne s'active qu'à **CFS ≥ 7**, case « patient fragile » cochée, ou **soins palliatifs**
+(`finDeVie`, depuis 5.82) — le seuil de STOPPFrail, pas la fragilité modérée. Porté par les omissions dont le bénéfice
 demande des années : `IN_B02` (statine), `IN_H04` (anti-résorptif), `IN_E04` et
 `IN_J01` (néphroprotection). **Ne pas** l'étendre à la vitamine D (`IN_H03`,
 `IN_H05` — STOPPFrail la conserve pour la prévention des chutes), ni aux vaccins

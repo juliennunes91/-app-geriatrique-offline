@@ -171,17 +171,23 @@ const RECOS_SUPPLEMENT_INTEGRATION = [
         ],
         "ref_code": "STOPP3-C8",
         "section": "Coagulation",
-        "titre": "Anticoagulant prolonge premier episode TVP",
-        "message": "Premier episode de TVP >6 mois sans facteur de risque persistant — Pas de benefice prouve au-dela de 6 mois. Risque hemorragique continu",
-        "severite": "warning",
+        // Lot 5 de l'audit : le titre affirmait « premier épisode », « > 6 mois », « sans facteur
+        // persistant » — rien de cela n'est saisi. La règle DEMANDE (info), se tait sur une MTEV
+        // en cours ou récidivante (chkMtevActive) et devant une FA, autre indication déclarée.
+        // SUP_STOP_011 (EP > 12 mois) y est fusionnée : une seule case « ATCD d'EP / TVP ».
+        "titre": "Anticoagulant et antécédent de MTEV : durée et caractère provoqué à vérifier",
+        "message": "Anticoagulant oral chez un patient aux antécédents de TVP ou d'EP, sans MTEV en cours ni récidivante déclarée. STOPP : après un premier épisode sans facteur de risque persistant, pas de bénéfice démontré au-delà de 6 mois pour une TVP, de 12 mois pour une EP ; le risque hémorragique, lui, continue. L'application ne connaît ni la date ni le caractère provoqué de l'épisode.",
+        "severite": "info",
         "condition": {
             "med_keys": [
                 "aod",
                 "avk"
             ],
-            "contexte_clinique": ["mtev"]
+            "contexte_clinique": ["mtev"],
+            "contexte_clinique_absent": ["mtev_active"],
+            "comorbs_absent": ["PAT_006"]
         },
-        "alternatives": "Reevaluer a 6 mois le rapport benefice/risque de la poursuite de l'anticoagulation",
+        "alternatives": "Vérifier la date et le caractère provoqué de l'épisode ; réévaluer la poursuite (à 6 mois pour une TVP, 12 mois pour une EP). Si poursuite justifiée, discuter la dose réduite d'AOD (rivaroxaban 10 mg, apixaban 2,5 mg x 2).",
         "nb_sources": 8
     },
     {

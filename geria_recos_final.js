@@ -2893,7 +2893,9 @@ const GERIA_RECOS_DB = {
             severite: "warning",
             condition: {
                 comorbs_any: ["PAT_004", "PAT_007", "PAT_008"],
-                med_absent: ["antiagreg", "acide acetylsalicylique", "clopidogrel", "prasugrel", "ticagrelor"]
+                // Sous anticoagulant oral (FA + AVC, par exemple), l'anticoagulant seul est la
+                // règle : proposer un antiagrégant contredisait STOPP C4 (EV_C04). Lot 5 de l'audit.
+                med_absent: ["antiagreg", "acide acetylsalicylique", "clopidogrel", "prasugrel", "ticagrelor", "aod", "avk"]
             },
             alternatives: "Aspirine 75-100 mg ou clopidogrel 75 mg"
         },
