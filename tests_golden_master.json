@@ -63,7 +63,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 2 point(s)",
    "danger | Score ACB : 5",
-   "danger | Score PIM Global : 69/100 — RISQUE ÉLEVÉ",
+   "danger | Score PIM Global : 83/100 — RISQUE ÉLEVÉ",
    "info | CHA₂DS₂-VA : 4 point(s)",
    "info | Doses équivalentes des sédatifs",
    "warning | DOAC Score : 10 point(s)",
@@ -106,9 +106,9 @@
   ],
   "alertes-scores": [
    "info | RISQ-PATH : 4 point(s)",
-   "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 4 point(s)",
-   "warning | Score ACB : 1"
+   "warning | Score ACB : 1",
+   "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -149,8 +149,8 @@
   "alertes-scores": [
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 24/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 3 point(s)"
+   "info | Score de Tisdale : 3 point(s)",
+   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -179,9 +179,9 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 3",
+   "danger | Score PIM Global : 74/100 — RISQUE ÉLEVÉ",
    "info | RISQ-PATH : 1 point(s)",
-   "info | Score de Tisdale : 1 point(s)",
-   "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
+   "info | Score de Tisdale : 1 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -209,7 +209,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 38/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -241,8 +241,8 @@
    "success | Posologies : RISPERIDONE"
   ],
   "alertes-scores": [
-   "warning | Score ACB : 1",
-   "warning | Score PIM Global : 47/100 — RISQUE MODÉRÉ"
+   "danger | Score PIM Global : 64/100 — RISQUE ÉLEVÉ",
+   "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -272,7 +272,7 @@
    "success | Posologies : FUROSEMIDE"
   ],
   "alertes-scores": [
-   "info | Score PIM Global : 16/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 28/100 — RISQUE FAIBLE",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -305,7 +305,7 @@
    "danger | HAS-BLED : 2 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 14/100 — ACCEPTABLE",
+   "info | Score PIM Global : 27/100 — RISQUE FAIBLE",
    "warning | DOAC Score : 8 point(s)",
    "warning | ORBIT-AF : 3 point(s)"
   ],
@@ -339,7 +339,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 26/100 — RISQUE FAIBLE"
+   "info | Score PIM Global : 21/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -378,7 +378,7 @@
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 12/100 — ACCEPTABLE"
+   "info | Score PIM Global : 26/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "warning | Dossier nécessitant vigilance"
@@ -409,7 +409,7 @@
    "danger | Child-Pugh : Classe C",
    "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -442,7 +442,7 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 4",
-   "danger | Score PIM Global : 70/100 — RISQUE ÉLEVÉ"
+   "danger | Score PIM Global : 80/100 — RISQUE ÉLEVÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -471,10 +471,10 @@
    "success | Posologies : HALOPERIDOL"
   ],
   "alertes-scores": [
+   "danger | Score PIM Global : 64/100 — RISQUE ÉLEVÉ",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score de Tisdale : 4 point(s)",
-   "warning | Score ACB : 1",
-   "warning | Score PIM Global : 51/100 — RISQUE MODÉRÉ"
+   "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -512,7 +512,7 @@
    "danger | HAS-BLED : 2 point(s)",
    "info | CHA₂DS₂-VA : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 14/100 — ACCEPTABLE",
+   "info | Score PIM Global : 29/100 — RISQUE FAIBLE",
    "warning | DOAC Score : 8 point(s)",
    "warning | ORBIT-AF : 3 point(s)"
   ],
@@ -553,10 +553,10 @@
    "success | Posologies : HALOPERIDOL"
   ],
   "alertes-scores": [
+   "danger | Score PIM Global : 65/100 — RISQUE ÉLEVÉ",
    "info | RISQ-PATH : 13 point(s)",
    "info | Score de Tisdale : 9 point(s)",
-   "warning | Score ACB : 1",
-   "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
+   "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -591,7 +591,7 @@
    "success | Posologies : RAMIPRIL"
   ],
   "alertes-scores": [
-   "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 28/100 — RISQUE FAIBLE",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -639,7 +639,7 @@
   "alertes-scores": [
    "danger | CFS : 7/9 — Sévèrement fragile",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 10/100 — ACCEPTABLE"
+   "info | Score PIM Global : 5/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -665,9 +665,9 @@
    "success | Posologies : DIAZEPAM"
   ],
   "alertes-scores": [
+   "danger | Score PIM Global : 64/100 — RISQUE ÉLEVÉ",
    "info | Doses équivalentes des sédatifs",
-   "warning | Score ACB : 1",
-   "warning | Score PIM Global : 56/100 — RISQUE MODÉRÉ"
+   "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -691,7 +691,7 @@
   ],
   "alertes-scores": [
    "info | RISQ-PATH : 1 point(s)",
-   "info | Score PIM Global : 11/100 — ACCEPTABLE",
+   "info | Score PIM Global : 10/100 — ACCEPTABLE",
    "info | Score de Tisdale : 1 point(s)",
    "warning | Score ACB : 1"
   ],
@@ -768,7 +768,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 10/100 — ACCEPTABLE"
+   "info | Score PIM Global : 15/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "warning | Dossier nécessitant vigilance"
@@ -804,7 +804,7 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 9",
-   "danger | Score PIM Global : 68/100 — RISQUE ÉLEVÉ"
+   "danger | Score PIM Global : 80/100 — RISQUE ÉLEVÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -858,7 +858,7 @@
   ],
   "alertes-scores": [
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -881,7 +881,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 9/100 — ACCEPTABLE"
+   "info | Score PIM Global : 5/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -917,7 +917,7 @@
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score PIM Global : 42/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 55/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -941,7 +941,7 @@
    "success | Posologies : FUROSEMIDE"
   ],
   "alertes-scores": [
-   "info | Score PIM Global : 14/100 — ACCEPTABLE",
+   "info | Score PIM Global : 17/100 — RISQUE FAIBLE",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -972,7 +972,7 @@
   ],
   "alertes-scores": [
    "info | RISQ-PATH : 5 point(s)",
-   "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 26/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
    "warning | Score ACB : 1"
   ],
@@ -1006,7 +1006,7 @@
    "success | Posologies : HYDROCHLOROTHIAZIDE"
   ],
   "alertes-scores": [
-   "info | Score PIM Global : 15/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 28/100 — RISQUE FAIBLE",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -1040,7 +1040,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 33/100 — RISQUE FAIBLE"
+   "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1076,7 +1076,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 29/100 — RISQUE FAIBLE"
+   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1110,7 +1110,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 30/100 — RISQUE FAIBLE"
+   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -1138,8 +1138,8 @@
    "success | Posologies : NIFEDIPINE"
   ],
   "alertes-scores": [
-   "warning | Score ACB : 2",
-   "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
+   "danger | Score PIM Global : 65/100 — RISQUE ÉLEVÉ",
+   "warning | Score ACB : 2"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque",
@@ -1172,10 +1172,10 @@
    "success | Posologies : DRONEDARONE"
   ],
   "alertes-scores": [
+   "danger | Score PIM Global : 65/100 — RISQUE ÉLEVÉ",
    "info | RISQ-PATH : 6 point(s)",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | Score ACB : 1",
-   "warning | Score PIM Global : 52/100 — RISQUE MODÉRÉ"
+   "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1205,10 +1205,10 @@
    "success | Posologies : FLECAINIDE"
   ],
   "alertes-scores": [
+   "danger | Score PIM Global : 60/100 — RISQUE ÉLEVÉ",
    "info | RISQ-PATH : 9 point(s)",
    "info | Score ACB : 0",
-   "info | Score de Tisdale : 5 point(s)",
-   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
+   "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1246,8 +1246,8 @@
    "success | Posologies : VERAPAMIL"
   ],
   "alertes-scores": [
-   "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
-   "warning | Score ACB : 1"
+   "warning | Score ACB : 1",
+   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -1299,7 +1299,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 14/100 — ACCEPTABLE",
+   "info | Score PIM Global : 28/100 — RISQUE FAIBLE",
    "warning | DOAC Score : 10 point(s)",
    "warning | ORBIT-AF : 4 point(s)"
   ],
@@ -1340,7 +1340,7 @@
    "info | Score ACB : 0",
    "warning | DOAC Score : 9 point(s)",
    "warning | ORBIT-AF : 2 point(s)",
-   "warning | Score PIM Global : 37/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -1375,7 +1375,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | CHA₂DS₂-VA : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 14/100 — ACCEPTABLE",
+   "info | Score PIM Global : 26/100 — RISQUE FAIBLE",
    "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
   ],
@@ -1418,10 +1418,10 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 22/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOAC Score : 6 point(s)",
-   "warning | ORBIT-AF : 1 point(s)"
+   "warning | ORBIT-AF : 1 point(s)",
+   "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -1444,7 +1444,7 @@
   ],
   "alertes-scores": [
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -1479,9 +1479,9 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 4",
+   "danger | Score PIM Global : 65/100 — RISQUE ÉLEVÉ",
    "info | RISQ-PATH : 4 point(s)",
-   "info | Score de Tisdale : 2 point(s)",
-   "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
+   "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1518,9 +1518,9 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 3",
+   "danger | Score PIM Global : 75/100 — RISQUE ÉLEVÉ",
    "info | RISQ-PATH : 8 point(s)",
-   "info | Score de Tisdale : 5 point(s)",
-   "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
+   "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -1543,7 +1543,7 @@
    "success | Posologies : ALPRAZOLAM"
   ],
   "alertes-scores": [
-   "danger | Score PIM Global : 62/100 — RISQUE ÉLEVÉ",
+   "danger | Score PIM Global : 65/100 — RISQUE ÉLEVÉ",
    "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 1"
   ],
@@ -1575,8 +1575,8 @@
    "success | Posologies : ZOLPIDEM"
   ],
   "alertes-scores": [
-   "info | Score ACB : 0",
-   "warning | Score PIM Global : 51/100 — RISQUE MODÉRÉ"
+   "danger | Score PIM Global : 60/100 — RISQUE ÉLEVÉ",
+   "info | Score ACB : 0"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1606,7 +1606,7 @@
   "alertes-scores": [
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 17/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 29/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
@@ -1636,7 +1636,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 16/100 — RISQUE FAIBLE"
+   "info | Score PIM Global : 23/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -1669,7 +1669,7 @@
    "danger | Score ACB : 3",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score de Tisdale : 5 point(s)",
-   "warning | Score PIM Global : 41/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 55/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1697,7 +1697,7 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 4",
-   "danger | Score PIM Global : 69/100 — RISQUE ÉLEVÉ"
+   "danger | Score PIM Global : 80/100 — RISQUE ÉLEVÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1727,7 +1727,7 @@
    "danger | CFS : 8/9 — Très sévèrement fragile",
    "info | RISQ-PATH : 6 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 14/100 — ACCEPTABLE",
+   "info | Score PIM Global : 20/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
@@ -1752,7 +1752,7 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 3",
-   "danger | Score PIM Global : 62/100 — RISQUE ÉLEVÉ"
+   "danger | Score PIM Global : 73/100 — RISQUE ÉLEVÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1845,7 +1845,7 @@
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 18/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 25/100 — RISQUE FAIBLE",
    "warning | DOAC Score : 7 point(s)",
    "warning | ORBIT-AF : 2 point(s)"
   ],
@@ -1923,7 +1923,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -1980,7 +1980,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 16/100 — RISQUE FAIBLE"
+   "info | Score PIM Global : 28/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -2059,8 +2059,8 @@
    "success | Posologies : OMEPRAZOLE"
   ],
   "alertes-scores": [
-   "info | Score ACB : 0",
-   "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
+   "danger | Score PIM Global : 60/100 — RISQUE ÉLEVÉ",
+   "info | Score ACB : 0"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2087,7 +2087,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 6/100 — ACCEPTABLE"
+   "info | Score PIM Global : 5/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2116,7 +2116,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "warning | Score PIM Global : 52/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2144,7 +2144,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 9/100 — ACCEPTABLE"
+   "info | Score PIM Global : 12/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2173,7 +2173,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 9/100 — ACCEPTABLE"
+   "info | Score PIM Global : 14/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2205,7 +2205,7 @@
   "alertes-scores": [
    "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 38/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2232,7 +2232,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 51/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2261,7 +2261,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 24/100 — RISQUE FAIBLE"
+   "info | Score PIM Global : 27/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2297,7 +2297,7 @@
    "info | Doses équivalentes des sédatifs",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 55/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2329,7 +2329,7 @@
    "danger | Score ACB : 3",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 59/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2357,7 +2357,7 @@
   "alertes-scores": [
    "info | RISQ-PATH : 3 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 7/100 — ACCEPTABLE",
+   "info | Score PIM Global : 8/100 — ACCEPTABLE",
    "info | Score de Tisdale : 2 point(s)"
   ],
   "alertes-synthese": [
@@ -2388,7 +2388,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 32/100 — RISQUE FAIBLE"
+   "warning | Score PIM Global : 45/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2414,7 +2414,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 10/100 — ACCEPTABLE"
+   "info | Score PIM Global : 9/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2441,7 +2441,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 27/100 — RISQUE FAIBLE"
+   "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2471,7 +2471,7 @@
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 16/100 — RISQUE FAIBLE"
+   "info | Score PIM Global : 23/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2522,7 +2522,7 @@
   ],
   "alertes-scores": [
    "warning | Score ACB : 1",
-   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 50/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2557,7 +2557,7 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 5",
-   "danger | Score PIM Global : 66/100 — RISQUE ÉLEVÉ"
+   "danger | Score PIM Global : 80/100 — RISQUE ÉLEVÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2592,8 +2592,8 @@
    "info | Doses équivalentes des sédatifs",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 25/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 2 point(s)"
+   "info | Score de Tisdale : 2 point(s)",
+   "warning | Score PIM Global : 42/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2626,7 +2626,7 @@
    "danger | Score ACB : 3",
    "info | RISQ-PATH : 2 point(s)",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 59/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2651,7 +2651,7 @@
   ],
   "alertes-scores": [
    "info | Doses équivalentes des sédatifs",
-   "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
    "warning | Score ACB : 2"
   ],
   "alertes-synthese": [
@@ -2687,7 +2687,7 @@
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 11/100 — ACCEPTABLE"
+   "info | Score PIM Global : 22/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2714,7 +2714,7 @@
   "alertes-scores": [
    "danger | CFS : 8/9 — Très sévèrement fragile",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 10/100 — ACCEPTABLE"
+   "info | Score PIM Global : 13/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2754,8 +2754,8 @@
    "info | Doses équivalentes des sédatifs",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 33/100 — RISQUE FAIBLE",
-   "info | Score de Tisdale : 5 point(s)"
+   "info | Score de Tisdale : 5 point(s)",
+   "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -2805,9 +2805,9 @@
    "success | Posologies : MORPHINE"
   ],
   "alertes-scores": [
+   "danger | Score PIM Global : 60/100 — RISQUE ÉLEVÉ",
    "info | Doses équivalentes des sédatifs",
-   "warning | Score ACB : 2",
-   "warning | Score PIM Global : 41/100 — RISQUE MODÉRÉ"
+   "warning | Score ACB : 2"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -2838,7 +2838,7 @@
    "danger | Score ACB : 3",
    "info | RISQ-PATH : 1 point(s)",
    "info | Score de Tisdale : 1 point(s)",
-   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 58/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -2861,7 +2861,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 35/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2909,7 +2909,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 35/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -2976,7 +2976,7 @@
   "alertes-scores": [
    "info | Doses équivalentes des sédatifs",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 35/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 49/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3009,9 +3009,9 @@
   ],
   "alertes-scores": [
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score PIM Global : 34/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | Score ACB : 2"
+   "warning | Score ACB : 2",
+   "warning | Score PIM Global : 48/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3037,7 +3037,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 24/100 — RISQUE FAIBLE"
+   "info | Score PIM Global : 23/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3067,7 +3067,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "warning | Score PIM Global : 39/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 38/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3090,7 +3090,7 @@
    "success | Posologies : PREDNISONE"
   ],
   "alertes-scores": [
-   "info | Score PIM Global : 14/100 — ACCEPTABLE",
+   "info | Score PIM Global : 13/100 — ACCEPTABLE",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -3119,7 +3119,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 16/100 — RISQUE FAIBLE"
+   "info | Score PIM Global : 28/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3152,7 +3152,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 29/100 — RISQUE FAIBLE"
+   "warning | Score PIM Global : 44/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3180,7 +3180,7 @@
    "danger | HAS-BLED : 1 point(s)",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 11/100 — ACCEPTABLE",
+   "info | Score PIM Global : 10/100 — ACCEPTABLE",
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)"
@@ -3241,7 +3241,7 @@
    "danger | CFS : 8/9 — Très sévèrement fragile",
    "info | RISQ-PATH : 5 point(s)",
    "info | Score ACB : 0",
-   "info | Score PIM Global : 13/100 — ACCEPTABLE",
+   "info | Score PIM Global : 18/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)"
   ],
   "alertes-synthese": [
@@ -3268,7 +3268,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 7/100 — ACCEPTABLE"
+   "info | Score PIM Global : 5/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3294,7 +3294,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 27/100 — RISQUE FAIBLE"
+   "info | Score PIM Global : 26/100 — RISQUE FAIBLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3321,7 +3321,7 @@
   ],
   "alertes-scores": [
    "danger | Score ACB : 4",
-   "info | Score PIM Global : 32/100 — RISQUE FAIBLE"
+   "warning | Score PIM Global : 41/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"
@@ -3347,7 +3347,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 9/100 — ACCEPTABLE"
+   "info | Score PIM Global : 8/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3383,9 +3383,9 @@
   ],
   "alertes-scores": [
    "info | RISQ-PATH : 2 point(s)",
-   "info | Score PIM Global : 25/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 2 point(s)",
-   "warning | Score ACB : 1"
+   "warning | Score ACB : 1",
+   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3425,11 +3425,11 @@
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
    "info | RISQ-PATH : 8 point(s)",
-   "info | Score PIM Global : 25/100 — RISQUE FAIBLE",
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score ACB : 1"
+   "warning | Score ACB : 1",
+   "warning | Score PIM Global : 40/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3470,7 +3470,7 @@
    "info | RISQ-PATH : 5 point(s)",
    "info | Score de Tisdale : 6 point(s)",
    "warning | Score ACB : 2",
-   "warning | Score PIM Global : 36/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 53/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3509,12 +3509,12 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
+   "danger | Score PIM Global : 60/100 — RISQUE ÉLEVÉ",
    "info | RISQ-PATH : 8 point(s)",
    "info | Score de Tisdale : 5 point(s)",
    "warning | DOAC Score : 6 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
-   "warning | Score ACB : 2",
-   "warning | Score PIM Global : 46/100 — RISQUE MODÉRÉ"
+   "warning | Score ACB : 2"
   ],
   "alertes-synthese": [
    "danger | Dossier à HAUT risque"
@@ -3540,7 +3540,7 @@
    "success | Posologies : MACROGOL"
   ],
   "alertes-scores": [
-   "info | Score PIM Global : 14/100 — ACCEPTABLE",
+   "info | Score PIM Global : 17/100 — RISQUE FAIBLE",
    "warning | Score ACB : 1"
   ],
   "alertes-synthese": [
@@ -3564,7 +3564,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 9/100 — ACCEPTABLE"
+   "info | Score PIM Global : 5/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3590,7 +3590,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 10/100 — ACCEPTABLE"
+   "info | Score PIM Global : 9/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3620,7 +3620,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 10/100 — ACCEPTABLE"
+   "info | Score PIM Global : 13/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Dossier nécessitant vigilance"
@@ -3650,7 +3650,7 @@
   ],
   "alertes-scores": [
    "danger | HAS-BLED : 1 point(s)",
-   "info | Score PIM Global : 30/100 — RISQUE FAIBLE",
+   "info | Score PIM Global : 29/100 — RISQUE FAIBLE",
    "warning | DOAC Score : 5 point(s)",
    "warning | ORBIT-AF : 1 point(s)",
    "warning | Score ACB : 1"
@@ -3677,7 +3677,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 6/100 — ACCEPTABLE"
+   "info | Score PIM Global : 0/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "warning | Actions de réévaluation suggérées"
@@ -3699,7 +3699,7 @@
   ],
   "alertes-scores": [
    "info | Score ACB : 0",
-   "info | Score PIM Global : 2/100 — ACCEPTABLE"
+   "info | Score PIM Global : 0/100 — ACCEPTABLE"
   ],
   "alertes-synthese": [
    "success | Aucune action majeure identifiée",

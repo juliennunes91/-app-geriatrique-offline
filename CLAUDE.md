@@ -1428,13 +1428,15 @@ scène ne l'était pas.
    molécule ce classement n'a rien à classer, et le cumul orthostatique qui motive la
    mesure n'est pas constitué. 46 → 13 patients (41 % → 12 %).
 
-   **Effet de bord à connaître, non corrigé** : `global_score` (`geria_engine_v2.js`)
-   compte pour 30 % la **moyenne** des scores d'alerte. Retirer une entrée informative,
-   donc à score bas, **remonte** cette moyenne : 28 dossiers du panel gagnent 1 à 3
-   points, et deux changent de bande (`cov_EV_B01_EV_B02` 34 → 35, `cov_EV_FORTA_04`
-   59 → 62). Rendre l'application plus sobre rend donc le dossier plus grave — une
-   moyenne n'est pas la bonne statistique ici. La formule n'est pas touchée : elle
-   déplacerait la moitié du panel et c'est un arbitrage à part.
+   **Effet de bord corrigé en 5.81** : `global_score` (`geria_engine_v2.js`) comptait pour
+   30 % la **moyenne** des scores d'alerte — retirer une entrée informative, à score bas,
+   **remontait** le score (28 dossiers du panel). Rendre l'application plus sobre rendait le
+   dossier plus grave. La composante est désormais une **somme saturante** :
+   `30 × (1 − Π(1 − wᵢ))`, wᵢ = score/100 pour une alerte critique, score/200 pour une
+   importante, 0 pour une informative. Ajouter une alerte ne fait jamais baisser le score,
+   retirer une informative ne le change pas, la composante plafonne à 30, et une seule
+   alerte critique vaut ce que valait la moyenne (60 → 18 points). Une alerte assumée,
+   plafonnée sous la bande rouge, pèse moitié moins. Test « Score PIM global (5.81) ».
 3. **Une `raison` de contre-indication nommait un traitement absent.** Dans la démence, la
    clause « anticholinergique » se motive par « aggravation cognitive — antagonisme du
    traitement pro-cholinergique » : sans anticholinestérasique, la seconde moitié décrit un

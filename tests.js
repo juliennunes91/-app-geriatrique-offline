@@ -1020,6 +1020,19 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!/id:SUP_TCSP_01/.test(tout({ flags: ['chkTcsp'], meds: ['Bupropion'] })), 'TCSP + bupropion : non');
         assert.ok(!/id:SUP_TCSP_01/.test(tout({ meds: ['Sertraline'] })), 'sans TCSP : non');
     });
+    test('Score PIM global (5.81) : retirer une alerte informative ne l\'aggrave pas, en ajouter une grave l\'aggrave', () => {
+        const { loadApp } = require('./oracle_harness');
+        const vm = require('vm'); const { sandbox } = loadApp();
+        const al = (score, priority) => ({ score, triage: { priority }, titre: 't' });
+        const sc = all => vm.runInContext(`GeriaEngineV2.computeDashboard({ all: ${JSON.stringify(all)} },
+            { activeMeds: [{ dci: 'Qwqwqwq' }, { dci: 'Wqwqwqw' }], scoreACB_global: 0 }).global_score`, sandbox);
+        const base = [al(70, 1), al(40, 2)];
+        assert.strictEqual(sc(base.concat([al(10, 3), al(15, 3)])), sc(base), 'les informatives ne changent rien (la moyenne les faisait baisser)');
+        assert.ok(sc(base.concat([al(65, 1)])) > sc(base), 'une alerte critique de plus aggrave');
+        assert.ok(sc(base.concat([al(35, 2)])) >= sc(base), 'une alerte importante de plus n\'allège jamais');
+        const beaucoup = Array.from({ length: 40 }, () => al(90, 1));
+        assert.ok(sc(beaucoup) <= 30 + 0, 'la composante d\'alertes plafonne à 30 (sans PIM, ACB ni polypharmacie)');
+    });
     test('Anticoagulant oral + antiagrégant après SCA ou angioplastie (5.80) : la durée se juge sur la date', () => {
         const j = n => new Date(Date.now() - n * 86400000).toISOString().slice(0, 10);
         const ids = c => {

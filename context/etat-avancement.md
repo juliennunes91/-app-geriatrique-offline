@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 28/11/2026 — **version 5.80**, `BUILD_ID` `20261128-aco-antiagregant`,
-cache `geriaassist-v179`.*
+*Dernière mise à jour : 28/11/2026 — **version 5.81**, `BUILD_ID` `20261128-score-pim-saturant`,
+cache `geriaassist-v180`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **5.81** (28/11) — A8 : score PIM global, la moyenne des alertes remplacée par une somme
+  saturante (critiques score/100, importantes score/200, informatives 0).
 
 - **5.80** (28/11) — A5 : champ `dateAngioplastie`, `SUP_ATC_01`→`05` (ACO + antiagrégant après
   SCA/angioplastie, ESC 2023 SCA) ; EV_C04 / SUP_PIMC_09 muets dans la fenêtre recommandée.
@@ -239,8 +242,7 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 **Arbitrages de l'audit** : A1, A2, A4, A6, A7 livrés en 5.70, A5 en 5.80. **A3 abandonné**
 (hypnotiques Z : l'utilisateur ne veut pas de durée « < 2 semaines » — sevrage refusé en
-institution). **A8 accepté** (score PIM global : somme saturante des alertes non
-informatives au lieu de la moyenne) — à coder en commit séparé.
+institution). **A8 livré en 5.81** (somme saturante). Tous les arbitrages de l'audit sont clos.
 ESC 2023 SCA lue par source secondaire (revue Storey, ICR 2024 ; ESC CardioPractice) : la
 prolongation de la trithérapie à 1 mois et le schéma de l'angioplastie programmée ne sont
 pas codés, faute de texte vérifié.

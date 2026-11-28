@@ -637,17 +637,25 @@ const GeriaEngineV2 = (() => {
         const informatifs = allAlerts.filter(a => a.triage.priority === 3);
         
         // Score PIM global (0-100)
-        // Pondéré : ratio meds PIM, score moyen des alertes, ACB
+        // Pondéré : ratio meds PIM, charge d'alertes (somme saturante), ACB
         let globalScore = 0;
         if (totalMeds > 0) {
             const ratioMedsPIM = medsWithPIM.size / totalMeds;
-            const avgAlertScore = allAlerts.length > 0 ? allAlerts.reduce((s, a) => s + a.score, 0) / allAlerts.length : 0;
+            // Charge d'alertes : somme SATURANTE, non une moyenne. La moyenne remontait quand
+            // on retirait une alerte informative (score bas) — rendre l'analyse plus sobre
+            // rendait le dossier plus grave. Ici chaque alerte critique pèse score/100, chaque
+            // alerte importante score/200, les informatives rien : ajouter une alerte ne
+            // fait jamais baisser le score, retirer une informative ne le change pas, et la
+            // composante plafonne à 30. Une seule alerte critique vaut ce que valait la
+            // moyenne (score 60 → 18 points).
+            const _poids = a => a.triage.priority === 1 ? a.score / 100 : (a.triage.priority === 2 ? a.score / 200 : 0);
+            const chargeAlertes = 1 - allAlerts.reduce((p, a) => p * (1 - Math.min(0.95, Math.max(0, _poids(a)))), 1);
             const acbPenalty = Math.min((ctx.scoreACB_global || 0) * 5, 20);
             const polyPenalty = totalMeds >= 10 ? 15 : (totalMeds >= 5 ? 8 : 0);
             
             globalScore = Math.round(
                 ratioMedsPIM * 30 +          // 30% = ratio médicaments PIM
-                (avgAlertScore / 100) * 30 +  // 30% = sévérité moyenne des alertes
+                chargeAlertes * 30 +          // 0-30 = charge d'alertes (somme saturante)
                 acbPenalty +                   // 0-20 = charge anticholinergique
                 polyPenalty                    // 0-15 = polypharmacie
             );
@@ -1159,6 +1167,7 @@ const GeriaEngineV2 = (() => {
         getTriageLevel,
         renderDashboard,
         renderAlertesTriees,
+        computeDashboard,
         
         // Accès aux stats internes (debug)
         getIndexStats: () => ({

@@ -119,3 +119,6 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   recommandée. — Choix de l'utilisateur après point biblio.
 - **28/11/2026** — Hypnotiques Z : pas de durée « < 2 semaines » ni de plan de sevrage (A3
   abandonné) : en institution le sevrage est refusé, les patients veulent dormir.
+- **28/11/2026** — Score PIM global (5.81) : somme saturante des alertes non informatives au
+  lieu de la moyenne, qui faisait monter le score quand on retirait une alerte informative.
+  — « Trouve une solution intelligente », proposition acceptée.

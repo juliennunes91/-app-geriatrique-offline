@@ -116,12 +116,12 @@ nouvelle** — rien n'y a été deviné.
 |---|---|---|---|
 | A1 | **IAChE** (`IN_D03`) : les proposer dans l'Alzheimer alors qu'ils sont déremboursés en France (HAS, SMR insuffisant, 2018) ? | Propose (START v3), titre « stade à vérifier » | garder / informatif / retirer |
 | A2 | **Stade de la démence** : aucun MMSE saisi, donc « léger à modéré » (`IN_D03`) et « démence sévère » (`EV_SF06`) ne se vérifient pas | Ne vérifie pas | ajouter un champ MMSE (ou stade) |
-| A3 | **Hypnotique Z ≥ 2 semaines** (`EV_D11`) : la durée « < 1 mois » ne départage pas deux semaines | Sort si durée non « courte » | ajouter « < 2 semaines » aux durées |
+| A3 | **Hypnotique Z ≥ 2 semaines** (`EV_D11`) : la durée « < 1 mois » ne départage pas deux semaines | Sort si durée non « courte » | **Écarté** par le prescripteur (sevrage refusé en institution) |
 | A4 | **Sténose aortique** (`EV_B20`) : un diurétique prescrit pour insuffisance cardiaque y sort comme « antihypertenseur » (danger) | Sort | faire taire le diurétique de surcharge déclaré |
 | A5 | **Stent récent sous anticoagulant** : durée de la trithérapie / bithérapie non abordée | **Corrigé en 5.80** : champ `dateAngioplastie`, `SUP_ATC_01`→`05` (ESC 2023 SCA) | — |
 | A6 | Case **« post-arrêt cardiaque / cardioversion »** : deux situations sans rapport | Une case | scinder (anticoagulation péri-cardioversion) |
 | A7 | **TCSP** (trouble du comportement en sommeil paradoxal) : lu par aucune règle | Rien | règle (antidépresseurs aggravants ; prodrome de synucléinopathie) — source à arrêter |
-| A8 | **Score PIM global** : la moyenne remonte quand on retire des alertes informatives | Inchangé | changer la statistique (maximum, somme pondérée) |
+| A8 | **Score PIM global** : la moyenne remonte quand on retire des alertes informatives | **Corrigé en 5.81** : somme saturante | — |
 
 ### B. Données manquantes (champ ou molécule)
 
