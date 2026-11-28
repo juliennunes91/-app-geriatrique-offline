@@ -939,6 +939,35 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
             return !(surcharge && matchesDrugClass(d, c, 'diuretique'));
         });
         if (_ahHorsSurcharge) ctxClinique.push("antihypertenseur_hors_surcharge");
+
+        // Anticoagulant oral + antiagrégant après SCA ou angioplastie (ESC 2023 SCA) :
+        // la conduite dépend du NOMBRE d'antithrombotiques et du DÉLAI depuis
+        // l'événement. Seuls l'aspirine et les inhibiteurs de P2Y12 comptent ici.
+        const _mc = (m, k) => m && matchesDrugClass(sanitizeText(m.dci || ''), sanitizeText(m.classe || ''), k);
+        const _aco = activeMeds.some(m => _mc(m, 'aod') || _mc(m, 'avk'));
+        const _asp = activeMeds.some(m => _mc(m, 'aspirine'));
+        const _p2y12 = activeMeds.filter(m => ['clopidogrel', 'prasugrel', 'ticagrelor'].some(k => _mc(m, k))).length;
+        const _nAap = (_asp ? 1 : 0) + _p2y12;
+        if (_aco && _nAap >= 2 && _asp && _p2y12) ctxClinique.push("tritherapie_antithrombotique");
+        else if (_aco && _nAap === 1) ctxClinique.push("bitherapie_aco_antiagregant");
+    }
+    // Délai depuis le SCA ou l'angioplastie. Une date absente, invalide ou postérieure au
+    // jour de l'analyse n'est pas un délai : rien n'est inféré, la date est demandée.
+    {
+        const _ds = getStr('dateAngioplastie');
+        const _t = _ds ? Date.parse(_ds + 'T00:00:00') : NaN;
+        const _j = isNaN(_t) ? NaN : Math.floor((Date.now() - _t) / 86400000);
+        if (isNaN(_j) || _j < 0) {
+            ctxClinique.push("coro_date_absente");
+            // Case « stent récent » ou « SCA récent » sans date : l'association est
+            // présumée dans sa fenêtre — on ne reproche pas un schéma recommandé.
+            if (_declare('chkStent') || _declare('chkScaAigu')) ctxClinique.push("antithrombotique_coro_justifie");
+        } else {
+            if (_j <= 365) ctxClinique.push("antithrombotique_coro_justifie");
+            if (_j > 30) ctxClinique.push("coro_delai_sup_un_mois");
+            if (_j >= 183 && _j <= 365) ctxClinique.push("coro_delai_six_douze_mois");
+            if (_j > 365) ctxClinique.push("coro_delai_sup_douze_mois");
+        }
     }
     if (typeof activeMeds !== 'undefined' && Array.isArray(activeMeds)) {
         activeMeds.forEach(m => {
@@ -1177,6 +1206,7 @@ function _computeAnalysisHash() {
     // Sélecteurs d'unité (changent la valeur convertie B12/B9) + scoreCFS.
     parts.push(getVal('scoreCFS'));
     parts.push(getVal('scoreMMSE'));
+    parts.push(getStr('dateAngioplastie'));
     // Âge de début psychiatrique (Item 5) — gate la chronicité, donc l'analyse.
     parts.push(getVal('psyOnsetAge'));
     _HASH_SELECT_FIELDS.forEach(id => { const el = document.getElementById(id); parts.push(el ? el.value : ''); });

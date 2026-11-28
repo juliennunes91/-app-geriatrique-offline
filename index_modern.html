@@ -636,6 +636,8 @@
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkCardioversion" class="accent-secondary"><span>Cardioversion de FA récente (&lt; 4 sem) ou programmée</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkScaAigu" class="accent-secondary"><span>Syndrome Coronarien Aigu (IDM récent)</span></label>
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkStent" class="accent-secondary"><span>Stent coronaire récent (&lt; 6 mois)</span></label>
+                            <label class="block text-[11px] font-semibold text-secondary mb-0.5" for="dateAngioplastie">Date de l'angioplastie ou du SCA</label>
+                            <input type="date" id="dateAngioplastie" title="Sous anticoagulant oral, la durée de l'association avec un antiagrégant se juge sur ce délai (ESC 2023)." class="w-full px-2 py-1 text-[11px] border border-outline-variant rounded bg-surface-container-low focus:outline-none">
                             <label class="flex items-center gap-2 text-[11px] cursor-pointer"><input type="checkbox" id="chkLqts" class="accent-secondary"><span>Syndrome du QT Long Congénital</span></label>
                         </div>
                         <p class="text-[10px] font-bold text-secondary mb-2 mt-3">Insuffisances d'Organes &amp; État Aigu</p>
@@ -992,7 +994,7 @@
 
 <!-- Footer -->
 <footer class="fixed bottom-0 text-[0.68rem] text-on-surface-variant bg-surface-container-lowest/92 px-3 py-1 border-t border-r border-outline-variant rounded-tr-md z-40 leading-tight max-w-[420px] pointer-events-none no-print" style="backdrop-filter:blur(4px); left:16rem;">
-    version <span id="appVersion">5.70</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
+    version <span id="appVersion">5.80</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
     Merci aux testeurs (Dr Juliette Muffet)<br>
     <em>Outil d'aide à la décision pharmaco-clinique. Résultats à valider par l'utilisateur.</em>
 </footer>

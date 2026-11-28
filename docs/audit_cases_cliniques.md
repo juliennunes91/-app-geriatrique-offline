@@ -118,7 +118,7 @@ nouvelle** — rien n'y a été deviné.
 | A2 | **Stade de la démence** : aucun MMSE saisi, donc « léger à modéré » (`IN_D03`) et « démence sévère » (`EV_SF06`) ne se vérifient pas | Ne vérifie pas | ajouter un champ MMSE (ou stade) |
 | A3 | **Hypnotique Z ≥ 2 semaines** (`EV_D11`) : la durée « < 1 mois » ne départage pas deux semaines | Sort si durée non « courte » | ajouter « < 2 semaines » aux durées |
 | A4 | **Sténose aortique** (`EV_B20`) : un diurétique prescrit pour insuffisance cardiaque y sort comme « antihypertenseur » (danger) | Sort | faire taire le diurétique de surcharge déclaré |
-| A5 | **Stent récent sous anticoagulant** : durée de la trithérapie / bithérapie non abordée | Rien | règle à écrire (ESC 2023 SCA / 2024 FA) |
+| A5 | **Stent récent sous anticoagulant** : durée de la trithérapie / bithérapie non abordée | **Corrigé en 5.80** : champ `dateAngioplastie`, `SUP_ATC_01`→`05` (ESC 2023 SCA) | — |
 | A6 | Case **« post-arrêt cardiaque / cardioversion »** : deux situations sans rapport | Une case | scinder (anticoagulation péri-cardioversion) |
 | A7 | **TCSP** (trouble du comportement en sommeil paradoxal) : lu par aucune règle | Rien | règle (antidépresseurs aggravants ; prodrome de synucléinopathie) — source à arrêter |
 | A8 | **Score PIM global** : la moyenne remonte quand on retire des alertes informatives | Inchangé | changer la statistique (maximum, somme pondérée) |
@@ -127,7 +127,7 @@ nouvelle** — rien n'y a été deviné.
 
 - Bicarbonate plasmatique (`MASTER_DB.BIOLOGIE`) ; chélateurs du phosphore (sévélamer) ;
   agents stimulant l'érythropoïèse pour `IN_E03` (clés mortes).
-- Durée de l'association antiagrégant + anticoagulant (A5) ; MMSE (A2).
+- Durée de l'association antiagrégant + anticoagulant (A5) et MMSE (A2) : ajoutés (5.80, 5.70).
 
 ### C. Questions posées, jamais lues (`runContexteOrphelinAudit`, « CONSTAT OUVERT »)
 

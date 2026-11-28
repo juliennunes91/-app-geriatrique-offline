@@ -1,7 +1,7 @@
 # État d'avancement — GeriaAssist
 
-*Dernière mise à jour : 28/11/2026 — **version 5.70**, `BUILD_ID` `20261128-arbitrages-audit`,
-cache `geriaassist-v178`.*
+*Dernière mise à jour : 28/11/2026 — **version 5.80**, `BUILD_ID` `20261128-aco-antiagregant`,
+cache `geriaassist-v179`.*
 
 > **Reprise après plantage** : lire ce fichier en entier, puis `decisions.md` et
 > `pieges.md`. Vérifier l'état réel avec `git log --oneline -5` et `git status` : tout ce
@@ -98,6 +98,9 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 ---
 
 ## 4. Historique des livraisons (récent → ancien)
+
+- **5.80** (28/11) — A5 : champ `dateAngioplastie`, `SUP_ATC_01`→`05` (ACO + antiagrégant après
+  SCA/angioplastie, ESC 2023 SCA) ; EV_C04 / SUP_PIMC_09 muets dans la fenêtre recommandée.
 
 - **5.70** (28/11) — Arbitrages A1, A2, A4, A6, A7 de l'audit : IN_D03 retiré, champ MMSE,
   B20 muet sur diurétique de surcharge, case cardioversion séparée (`SUP_CV_01`), règle TCSP.
@@ -234,10 +237,13 @@ dans le même commit ; section `CLAUDE.md` ; mise à jour de `context/`.
 
 ## 5. En cours
 
-**Arbitrages de l'audit** : A1, A2, A4, A6, A7 livrés en 5.70. Restent, proposés à
-l'utilisateur et **non codés** : A3 (hypnotiques Z et durée, HAS 2015), A5 (stent +
-anticoagulant, ESC — texte intégral non lu), A8 (score PIM global : la moyenne remplacée
-par une somme saturante des alertes non informatives).
+**Arbitrages de l'audit** : A1, A2, A4, A6, A7 livrés en 5.70, A5 en 5.80. **A3 abandonné**
+(hypnotiques Z : l'utilisateur ne veut pas de durée « < 2 semaines » — sevrage refusé en
+institution). **A8 accepté** (score PIM global : somme saturante des alertes non
+informatives au lieu de la moyenne) — à coder en commit séparé.
+ESC 2023 SCA lue par source secondaire (revue Storey, ICR 2024 ; ESC CardioPractice) : la
+prolongation de la trithérapie à 1 mois et le schéma de l'angioplastie programmée ne sont
+pas codés, faute de texte vérifié.
 
 Non vérifié sur source (à ne pas présenter comme sourcé) : bornes T4L 12-22 / T3L 3,1-6,8
 (choix de l'utilisateur) ; 99ᵉ percentile hs-cTnI 16/34 ng/L non retrouvé par recherche ;

@@ -112,3 +112,10 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   MMSE ajouté. Diurétique de surcharge ≠ antihypertenseur dans la sténose aortique. Case
   cardioversion séparée de l'arrêt cardiaque. TCSP sous antidépresseur : règle informative. —
   Arbitrages du prescripteur sur le rapport final de l'audit.
+- **28/11/2026** — ACO + antiagrégant après SCA/angioplastie (5.80) : la durée se juge sur une
+  DATE saisie (`dateAngioplastie`), pas sur la case « < 6 mois ». Trithérapie ≤ 1 semaine,
+  bithérapie ≤ 12 mois (arrêt envisageable dès 6), puis ACO seul ; ticagrelor/prasugrel exclus
+  de la trithérapie (ESC 2023 SCA). STOPP C4 et PIM-Check se taisent dans la fenêtre
+  recommandée. — Choix de l'utilisateur après point biblio.
+- **28/11/2026** — Hypnotiques Z : pas de durée « < 2 semaines » ni de plan de sevrage (A3
+  abandonné) : en institution le sevrage est refusé, les patients veulent dormir.

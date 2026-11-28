@@ -595,6 +595,27 @@ Rapport final et arbitrages restants : fin de `docs/audit_cases_cliniques.md`.
   Source `AASM_RBD` (Howell, JCSM 2023) lue par abstract et communiqué seulement : les classes
   nommées ne sont **pas vérifiées au texte intégral** — d'où l'informatif.
 
+## Anticoagulant oral + antiagrégant après SCA ou angioplastie (5.80)
+
+La case « stent récent (< 6 mois) » ne permettait de juger aucune durée. Champ **`dateAngioplastie`**
+(date de l'angioplastie ou du SCA, deux UIs, export, reset, hash ; harnais
+`analyzeCase({dateAngioplastie})`). `app_analysis.js` compte les antithrombotiques — aspirine et
+inhibiteurs de P2Y12 seulement — et le délai (contextes sans chiffre, l'audit INV-M ne lit pas
+les chiffres) : `tritherapie_antithrombotique`, `bitherapie_aco_antiagregant`,
+`coro_date_absente`, `coro_delai_sup_un_mois`, `coro_delai_six_douze_mois`,
+`coro_delai_sup_douze_mois`, `antithrombotique_coro_justifie` (≤ 12 mois, ou case stent/SCA
+cochée sans date). Une date future ou invalide vaut absence de date.
+
+Règles (ESC 2023 SCA, clé `ESC_ACS`) : `SUP_ATC_01` ticagrelor/prasugrel en trithérapie (III C,
+rouge) ; `SUP_ATC_02` trithérapie > 1 mois (défaut ≤ 1 semaine, orange) ; `SUP_ATC_03` trithérapie
+sans date (info, la demande) ; `SUP_ATC_04` bithérapie > 12 mois (ACO seul, classe I ; AFIRE —
+rouge, comme STOPP C4 qu'elle remplace alors) ; `SUP_ATC_05` bithérapie 6-12 mois (arrêt
+envisageable, IIb B, info). **`EV_C04` et `SUP_PIMC_09` se taisent** dans la fenêtre
+recommandée (ils reprochaient le schéma ESC) et au-delà de 12 mois (une carte). L'ESC a été lue
+par **source secondaire** (Storey, *ICR* 2024, citations mot pour mot ; ESC CardioPractice) : la
+prolongation de la trithérapie à 1 mois et le schéma de l'angioplastie programmée ne sont pas
+codés.
+
 ## Dispositifs implantés : sonde à demeure, prothèses articulaires
 
 Quatre cases dans « Habitudes de vie & État général » (deux UIs) : `chkSAD`, `chkPTH`,

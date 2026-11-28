@@ -182,6 +182,7 @@ function analyzeCase(caseObj) {
     if (caseObj.dfg != null) setInput('patientDFG', caseObj.dfg);
     if (caseObj.cfs != null) setInput('scoreCFS', caseObj.cfs);
     if (caseObj.mmse != null) setInput('scoreMMSE', caseObj.mmse);
+    if (caseObj.dateAngioplastie != null) setInput('dateAngioplastie', caseObj.dateAngioplastie);
     setInput('patientFragile', undefined, !!caseObj.fragile);
 
     const bio = caseObj.bio || {};

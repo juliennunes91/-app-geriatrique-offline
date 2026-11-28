@@ -347,7 +347,7 @@ function runExtendedAudits(test, assert) {
         // typos (« STPOP », « BERS »…). Liste calée sur le corpus réel.
         const KNOWN = new Set(['STOPP3', 'STOPP', 'START', 'BEERS', 'FORTA', 'PRISCUS', 'EU7PIM', 'STOPPFRAIL', 'REMEDIES', 'PIM_CHECK',
             'Pharmacovigilance', 'ANSM', 'EMA', 'FDA', 'HAS', 'Maudsley', 'CANMAT', 'KDIGO', 'GOLD', 'SFGG', 'CredibleMeds',
-            'ESC', 'ESC_HTN_2024', 'ESC_HF', 'ESC_AF', 'AASM_RBD', 'ESMO', 'ACR', 'IOF', 'ICI', 'ERC', 'ATA 2014/ETA 2013', 'ATA 2016/ETA 2018', 'ILAE 2022',
+            'ESC', 'ESC_HTN_2024', 'ESC_HF', 'ESC_AF', 'ESC_ACS', 'AASM_RBD', 'ESMO', 'ACR', 'IOF', 'ICI', 'ERC', 'ATA 2014/ETA 2013', 'ATA 2016/ETA 2018', 'ILAE 2022',
             'SFGG_SF3PA_SFPC_2026', 'SFGG_FCM_SF3PA_2024_SPC',
             // Ajouts 2026 : omissions iSGLT2 (IN_E05), sevrage tabagique BPCO (IN_G03),
             // thiamine dans le trouble de l'usage de l'alcool (IN_N01).

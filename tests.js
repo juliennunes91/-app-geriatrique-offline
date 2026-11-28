@@ -1020,6 +1020,26 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!/id:SUP_TCSP_01/.test(tout({ flags: ['chkTcsp'], meds: ['Bupropion'] })), 'TCSP + bupropion : non');
         assert.ok(!/id:SUP_TCSP_01/.test(tout({ meds: ['Sertraline'] })), 'sans TCSP : non');
     });
+    test('Anticoagulant oral + antiagrégant après SCA ou angioplastie (5.80) : la durée se juge sur la date', () => {
+        const j = n => new Date(Date.now() - n * 86400000).toISOString().slice(0, 10);
+        const ids = c => {
+            const h = Object.values(analyzeCase(Object.assign({ age: 82, sexe: 'M', dfg: 60, comorbs: ['PAT_006'] }, c))._html).join('');
+            return ['SUP_ATC_01', 'SUP_ATC_02', 'SUP_ATC_03', 'SUP_ATC_04', 'SUP_ATC_05', 'EV_C04', 'SUP_PIMC_09']
+                .filter(id => h.includes('id:' + id)).join(' ');
+        };
+        const tri = ['Apixaban', 'Aspirine', 'Clopidogrel'], bi = ['Apixaban', 'Clopidogrel'];
+        assert.strictEqual(ids({ meds: ['Apixaban', 'Aspirine', 'Ticagrelor'], dateAngioplastie: j(5) }), 'SUP_ATC_01', 'ticagrelor en trithérapie');
+        assert.strictEqual(ids({ meds: tri, dateAngioplastie: j(10) }), '', 'trithérapie à J10 : dans la fenêtre, rien à reprocher');
+        assert.strictEqual(ids({ meds: tri, dateAngioplastie: j(60) }), 'SUP_ATC_02', 'trithérapie à 2 mois');
+        assert.ok(/SUP_ATC_03/.test(ids({ meds: tri })), 'trithérapie sans date : la date est demandée');
+        assert.strictEqual(ids({ meds: bi, dateAngioplastie: j(90) }), '', 'bithérapie à 3 mois : schéma recommandé, EV_C04/PIMC_09 se taisent');
+        assert.strictEqual(ids({ meds: bi, dateAngioplastie: j(200) }), 'SUP_ATC_05', 'bithérapie à 6-12 mois : arrêt envisageable');
+        assert.strictEqual(ids({ meds: bi, dateAngioplastie: j(500) }), 'SUP_ATC_04', 'bithérapie > 12 mois : une carte, celle qui porte la conduite datée');
+        assert.strictEqual(ids({ meds: bi, flags: ['chkStent'] }), '', 'case stent récent sans date : pas de reproche');
+        assert.ok(/EV_C04/.test(ids({ meds: bi })) && /EV_C04/.test(ids({ meds: bi, dateAngioplastie: j(-20) })),
+            'sans date ni case (ou date future) : STOPP C4 inchangé');
+        assert.strictEqual(ids({ meds: ['Apixaban'], dateAngioplastie: j(500) }), '', 'anticoagulant seul : rien');
+    });
     test('Opioïde sans laxatif : STOPP L2 et SYND_048 en une seule carte', () => {
         const r = analyzeCase({ age: 82, sexe: 'F', meds: ['Morphine'] });
         const n = (r._html['alertes-eviter'].match(/<strong>[^<]*(sans laxatif|prophylaxie laxative)/g) || []).length;

@@ -32,6 +32,7 @@ const GERIA_RECOS_DB = {
         "REMEDIES":  { nom: "REMEDIES",              annee: 2020, ref: "McIntosh J. et al., Expert Opin Drug Saf 2020" },
         "ESC_HF":    { nom: "ESC 2021/2023 IC",      annee: 2023, ref: "McDonagh TA et al., Eur Heart J 2021 + 2023 Focused Update | PARADIGM-HF | DAPA-HF | EMPEROR-Reduced | STRONG-HF" },
         "AASM_RBD":  { nom: "AASM 2023 TCSP",        annee: 2023, ref: "Howell M et al., J Clin Sleep Med 2023;19(4):769-810 (doi 10.5664/jcsm.10426)" },
+        "ESC_ACS":   { nom: "ESC 2023 SCA",          annee: 2023, ref: "Byrne RA et al., 2023 ESC Guidelines for the management of acute coronary syndromes, Eur Heart J 2023;44:3720-3826 (doi 10.1093/eurheartj/ehad191) | AUGUSTUS (Lopes, NEJM 2019;380:1509) | AFIRE (Yasuda, NEJM 2019;381:1103)" },
         "ESC_AF":    { nom: "ESC 2024 AF",           annee: 2024, ref: "Van Gelder IC et al., Eur Heart J 2024 AF-CARE Guidelines" },
         "ADA":       { nom: "ADA Standards of Care", annee: 2025, ref: "American Diabetes Association Standards of Care in Diabetes 2025" },
         "KDIGO":     { nom: "KDIGO CKD",             annee: 2024, ref: "KDIGO 2024 Clinical Practice Guideline for CKD Evaluation and Management" },
@@ -518,7 +519,11 @@ const GERIA_RECOS_DB = {
                 // Le titre affirme « dans FA » : la comorbidite doit donc etre cochee.
                 // Sans elle, la regle affirmait un contexte non verifie et doublonnait
                 // SUP_PIMC_09 (cas general, mieux documente).
-                comorbs: ["PAT_006"]
+                comorbs: ["PAT_006"],
+                // Muette dans la fenêtre où l'association est le schéma recommandé
+                // (SCA ou angioplastie ≤ 12 mois, ou case « récent » sans date), et
+                // au-delà de 12 mois, où SUP_ATC_04 porte la conduite datée.
+                contexte_clinique_absent: ["antithrombotique_coro_justifie", "coro_delai_sup_douze_mois"]
             },
             alternatives: "Anticoagulant seul si FA sans stent récent"
         },
@@ -4549,6 +4554,47 @@ const RECOS_SUPPLEMENT = [
         condition: { contexte_clinique: "cardioversion_fa", med_absent: ["anticoagulant", "aod", "avk"] },
         alternatives: "AOD à dose adaptée au DFG (ou AVK) ; vérifier la date de la cardioversion avec le cardiologue."
     },
+    // ── Anticoagulant oral + antiagrégant après SCA ou angioplastie (ESC 2023 SCA, 5.80) ──
+    // Contextes calculés dans app_analysis.js : nombre d'antithrombotiques (aspirine et
+    // inhibiteurs de P2Y12 seulement) et délai depuis `dateAngioplastie`.
+    {
+        id: "SUP_ATC_01", sources: ["ESC_ACS"],
+        titre: "Trithérapie anticoagulant oral + aspirine + ticagrelor ou prasugrel",
+        message: "ESC 2023 SCA : le ticagrelor et le prasugrel ne sont pas recommandés dans une trithérapie antithrombotique (classe III, niveau C). L'inhibiteur de P2Y12 de la trithérapie et de la bithérapie qui la suit est le clopidogrel.",
+        severite: "danger",
+        condition: { med_keys: ["ticagrelor", "prasugrel"], contexte_clinique: "tritherapie_antithrombotique" },
+        alternatives: "Remplacer le ticagrelor ou le prasugrel par le clopidogrel, en lien avec le cardiologue."
+    },
+    {
+        id: "SUP_ATC_02", sources: ["ESC_ACS"],
+        titre: "Trithérapie antithrombotique plus d'un mois après le SCA ou l'angioplastie",
+        message: "ESC 2023 SCA : chez le patient qui requiert un anticoagulant oral, la trithérapie (anticoagulant + aspirine + clopidogrel) dure jusqu'à 1 semaine par défaut, puis l'aspirine est arrêtée : anticoagulant + clopidogrel jusqu'à 12 mois, puis anticoagulant seul. Dans AUGUSTUS, l'aspirine ajoutée augmentait les saignements (16,1 % contre 9,0 % à 6 mois) sans réduire les événements ischémiques.",
+        severite: "warning",
+        condition: { med_keys: ["aspirine"], contexte_clinique: ["tritherapie_antithrombotique", "coro_delai_sup_un_mois"] },
+        alternatives: "Arrêter l'aspirine (anticoagulant + clopidogrel), après avis du cardiologue si le risque ischémique a fait prolonger la trithérapie."
+    },
+    {
+        id: "SUP_ATC_03", sources: ["ESC_ACS"],
+        titre: "Trithérapie antithrombotique : date de l'angioplastie ou du SCA à préciser",
+        message: "Anticoagulant oral + aspirine + inhibiteur de P2Y12. ESC 2023 SCA : trithérapie jusqu'à 1 semaine par défaut, puis anticoagulant + clopidogrel jusqu'à 12 mois, puis anticoagulant seul. Sans la date de l'événement, la durée ne peut pas être jugée : la renseigner dans les paramètres cardiovasculaires.",
+        severite: "info",
+        condition: { med_keys: ["aspirine"], contexte_clinique: ["tritherapie_antithrombotique", "coro_date_absente"] }
+    },
+    {
+        id: "SUP_ATC_04", sources: ["ESC_ACS"],
+        titre: "Anticoagulant oral + antiagrégant plus de 12 mois après le SCA ou l'angioplastie",
+        message: "ESC 2023 SCA : au-delà de 12 mois, l'anticoagulant oral se poursuit seul (classe I). Dans AFIRE (FA et coronaropathie stable plus d'un an après revascularisation), le rivaroxaban seul était non inférieur à l'association sur les événements et réduisait les saignements majeurs (1,6 % contre 2,8 % par an) ; l'essai a été arrêté pour surmortalité dans le bras association.",
+        severite: "danger",
+        condition: { med_keys: ["aspirine", "clopidogrel", "prasugrel", "ticagrelor"], contexte_clinique: ["bitherapie_aco_antiagregant", "coro_delai_sup_douze_mois"] },
+        alternatives: "Arrêter l'antiagrégant et poursuivre l'anticoagulant seul, sauf indication propre de l'antiagrégant posée par le cardiologue."
+    },
+    {
+        id: "SUP_ATC_05", sources: ["ESC_ACS"],
+        titre: "Anticoagulant oral + antiagrégant entre 6 et 12 mois après le SCA ou l'angioplastie : arrêt de l'antiagrégant envisageable",
+        message: "ESC 2023 SCA : la bithérapie anticoagulant + antiagrégant se poursuit jusqu'à 12 mois, mais l'arrêt de l'antiagrégant dès 6 mois, en poursuivant l'anticoagulant, peut être envisagé (classe IIb, niveau B).",
+        severite: "info",
+        condition: { med_keys: ["aspirine", "clopidogrel", "prasugrel", "ticagrelor"], contexte_clinique: ["bitherapie_aco_antiagregant", "coro_delai_six_douze_mois"] }
+    },
     {
         // Indication non déclarée : on la DEMANDE, on ne l'affirme pas (STOPP v3 L5 ne vise
         // que la douleur non neuropathique). Muette si l'épilepsie ou un TAG est déclaré.
@@ -4717,7 +4763,10 @@ const RECOS_SUPPLEMENT = [
         titre: "Anticoagulant + antiagrégant sans indication documentée de double thérapie",
         message: "PIM-Check : Association anticoagulant + antiagrégant — risque hémorragique majeur. Justification de la double thérapie nécessaire (stent récent ?).",
         severite: "danger",
-        condition: { med_keys: ["anticoag", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "acenocoumarol", "warfarine", "fluindione"], med_keys_2: ["antiagreg", "acide acetylsalicylique", "clopidogrel"] },
+        condition: { med_keys: ["anticoag", "apixaban", "rivaroxaban", "dabigatran", "edoxaban", "acenocoumarol", "warfarine", "fluindione"], med_keys_2: ["antiagreg", "acide acetylsalicylique", "clopidogrel"],
+            // Indication documentée (SCA/angioplastie ≤ 12 mois) : le titre deviendrait faux.
+            // Au-delà de 12 mois, SUP_ATC_04 porte la conduite datée — une carte.
+            contexte_clinique_absent: ["antithrombotique_coro_justifie", "coro_delai_sup_douze_mois"] },
         alternatives: "Réévaluer l'indication : si SCA < 12 mois ou stent récent < 6-12 mois → maintenir (ESC 2024). Sinon, arrêter l'antiagrégant (priorité anticoag en FA) ou l'anticoag selon le bilan bénéfice/risque hémorragique."
     },
     {
