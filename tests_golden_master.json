@@ -1784,8 +1784,7 @@
   "alertes-eviter": [],
   "alertes-initier": [
    "info | Réévaluation planifiée",
-   "warning | ISRS (ou IRSNA / prégabaline) pour trouble anxieux généralisé persistant et sévère",
-   "warning | Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré (stade à vérifier)"
+   "warning | ISRS (ou IRSNA / prégabaline) pour trouble anxieux généralisé persistant et sévère"
   ],
   "alertes-bio": [],
   "alertes-interact": [],
@@ -2874,10 +2873,7 @@
    "info | Action immédiate",
    "info | Benzodiazépines / Z-drugs : LORAZEPAM"
   ],
-  "alertes-initier": [
-   "info | Réévaluation planifiée",
-   "warning | Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré (stade à vérifier)"
-  ],
+  "alertes-initier": [],
   "alertes-bio": [],
   "alertes-interact": [],
   "alertes-suivi": [
@@ -2890,7 +2886,7 @@
   "alertes-scores": [
    "info | Doses équivalentes des sédatifs",
    "info | Score ACB : 0",
-   "warning | Score PIM Global : 48/100 — RISQUE MODÉRÉ"
+   "warning | Score PIM Global : 57/100 — RISQUE MODÉRÉ"
   ],
   "alertes-synthese": [
    "danger | Dossier avec alertes critiques"

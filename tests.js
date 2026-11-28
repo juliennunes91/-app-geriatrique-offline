@@ -997,6 +997,29 @@ console.log('\n🧪 Oracle — bio_strict (START à condition bio)');
         assert.ok(!/id:SUP_BIP_01/.test(ev({ comorbs: ['PAT_046'], meds: ['Sertraline', 'Lithium'] })), 'sous lithium : non');
         assert.ok(!/id:SUP_BIP_01/.test(ev({ meds: ['Sertraline'] })), 'sans bipolarité : non');
     });
+    test('Arbitrages de l\'audit (5.70) : sténose aortique, cardioversion, IAChE, MMSE, TCSP', () => {
+        const tout = c => Object.values(analyzeCase(Object.assign({ age: 84, sexe: 'F', dfg: 60 }, c))._html).join('');
+        // A4 — un diurétique de surcharge n'est pas un antihypertenseur dans STOPP B20
+        const sa = (meds, precisions) => /id:EV_B20/.test(tout({ flags: ['chkStenoseAortique'], comorbs: ['PAT_002'], meds, precisions: precisions || {} }));
+        assert.ok(!sa(['Furosemide'], { Furosemide: { indication_diu: 'ic' } }), 'furosémide pour IC : pas B20');
+        assert.ok(sa(['Furosemide'], { Furosemide: { indication_diu: 'hta' } }), 'furosémide pour HTA : B20');
+        assert.ok(sa(['Furosemide']), 'indication non précisée : B20 (forme la plus exposante)');
+        assert.ok(sa(['Furosemide', 'Bisoprolol'], { Furosemide: { indication_diu: 'ic' } }), 'bêtabloquant associé : B20 reste');
+        // A6 — cardioversion séparée de l'arrêt cardiaque
+        assert.ok(/id:SUP_CV_01/.test(tout({ flags: ['chkCardioversion'], comorbs: ['PAT_006'], meds: ['Bisoprolol'] })), 'cardioversion sans ACO');
+        assert.ok(!/id:SUP_CV_01/.test(tout({ flags: ['chkCardioversion'], comorbs: ['PAT_006'], meds: ['Apixaban'] })), 'cardioversion sous AOD');
+        assert.ok(!/id:EV_N09/.test(tout({ flags: ['chkCardioversion'], meds: ['Verapamil', 'Apixaban'] })), 'cardioversion : pas la prudence post-arrêt');
+        assert.ok(/id:EV_N09/.test(tout({ flags: ['chkArret'], meds: ['Verapamil'] })), 'post-arrêt + vérapamil');
+        // A1 — IAChE déremboursés : plus de proposition START
+        assert.ok(!/id:IN_D03/.test(tout({ comorbs: ['PAT_010', 'PAT_011'] })), 'Alzheimer : pas IN_D03');
+        // A2 — MMSE saisi ≥ 10 : STOPPFrail « démence sévère » se tait
+        const sf = mmse => /id:EV_SF06/.test(tout({ fragile: true, comorbs: ['PAT_010', 'PAT_011'], meds: ['Memantine'], mmse }));
+        assert.ok(sf(undefined) && sf(6) && !sf(18), 'EV_SF06 : non saisi / 6 → sort ; 18 → non');
+        // A7 — TCSP sous antidépresseur
+        assert.ok(/id:SUP_TCSP_01/.test(tout({ flags: ['chkTcsp'], meds: ['Sertraline'] })), 'TCSP + sertraline');
+        assert.ok(!/id:SUP_TCSP_01/.test(tout({ flags: ['chkTcsp'], meds: ['Bupropion'] })), 'TCSP + bupropion : non');
+        assert.ok(!/id:SUP_TCSP_01/.test(tout({ meds: ['Sertraline'] })), 'sans TCSP : non');
+    });
     test('Opioïde sans laxatif : STOPP L2 et SYND_048 en une seule carte', () => {
         const r = analyzeCase({ age: 82, sexe: 'F', meds: ['Morphine'] });
         const n = (r._html['alertes-eviter'].match(/<strong>[^<]*(sans laxatif|prophylaxie laxative)/g) || []).length;

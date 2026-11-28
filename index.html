@@ -238,6 +238,7 @@
                         <summary class="fw-bold text-success" style="cursor: pointer;">🧮 Paramètres cliniques pour Scores</summary>
                         <div class="row g-2 mt-2">
                             <div class="col-6"><label class="small text-muted fw-bold">Score Fragilité (CFS)</label><select id="scoreCFS" class="form-select form-select-sm" onchange="checkFrail()"><option value="0">Non évalué</option><option value="1">1 - Très en forme</option><option value="2">2 - En forme</option><option value="3">3 - Gère bien</option><option value="4">4 - Vulnérable</option><option value="5">5 - Légèrement fragile</option><option value="6">6 - Modérément fragile</option><option value="7">7 - Sévèrement fragile</option><option value="8">8 - Très sév. fragile</option><option value="9">9 - Phase terminale</option></select></div>
+                            <div class="col-6"><label class="small text-muted fw-bold">MMSE (/30)</label><input type="number" min="0" max="30" step="1" id="scoreMMSE" class="form-control form-control-sm" placeholder="non évalué"></div>
                             <div class="col-6"><label class="small text-muted fw-bold">QTc de base (ms)</label><input type="number" min="300" max="700" id="bioQtc" class="form-control form-control-sm" placeholder="ex: 430"></div>
 
                             <h6 class="small fw-bold text-primary border-bottom pb-1 mt-3 mb-2">Score de Child-Pugh (si hépatopathie)</h6>
@@ -268,7 +269,8 @@
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkSaignement"><label class="form-check-label small">ATCD de Saignement majeur</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkBrady"><label class="form-check-label small">Bradycardie sévère (< 45 bpm)</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkHtaNonControlee"><label class="form-check-label small">HTA non contrôlée (>160 mmHg)</label></div>
-                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkArret"><label class="form-check-label small">Post-Arrêt Cardiaque / Cardioversion FA</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkArret"><label class="form-check-label small">Post-arrêt cardiaque</label></div>
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="chkCardioversion"><label class="form-check-label small">Cardioversion de FA récente (&lt; 4 sem) ou programmée</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkScaAigu"><label class="form-check-label small">Syndrome Coronarien Aigu (IDM récent)</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkStent"><label class="form-check-label small">Stent coronaire récent (&lt; 6 mois)</label></div>
                                 <div class="form-check"><input type="checkbox" class="form-check-input" id="chkLqts"><label class="form-check-label small">Syndrome du QT Long Congénital</label></div>
@@ -556,7 +558,7 @@
             </div>
         </div>
         <footer class="version-footer">
-            version <span id="appVersion">5.60</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
+            version <span id="appVersion">5.70</span> — créé par Dr Julien Nunes à l'aide de l'IA<br>
             Merci aux testeurs (Dr Juliette Muffet)<br>
             <em>Ce logiciel est un outil d'aide à la décision pharmaco-clinique. Tout résultat issu d'une utilisation dans un cadre professionnel doit impérativement être validé par l'utilisateur.</em>
         </footer>

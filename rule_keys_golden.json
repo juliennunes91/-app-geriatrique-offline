@@ -244,6 +244,19 @@
   "Tinzaparine",
   "Warfarine"
  ],
+ "anticoagulant": [
+  "Acenocoumarol",
+  "Apixaban",
+  "Dabigatran",
+  "Dalteparine",
+  "Edoxaban",
+  "Enoxaparine",
+  "Fluindione",
+  "Fondaparinux",
+  "Rivaroxaban",
+  "Tinzaparine",
+  "Warfarine"
+ ],
  "antidepresseur": [
   "Agomelatine",
   "Amitriptyline",
@@ -412,6 +425,12 @@
   "Tiapride",
   "Trifluoperazine",
   "Zuclopenthixol"
+ ],
+ "aod": [
+  "Apixaban",
+  "Dabigatran",
+  "Edoxaban",
+  "Rivaroxaban"
  ],
  "apixaban": [
   "Apixaban"

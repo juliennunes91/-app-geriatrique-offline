@@ -31,6 +31,7 @@ const GERIA_RECOS_DB = {
         "STOPPFRAIL":{ nom: "STOPPFrail v2",         annee: 2021, ref: "Curtin D. et al., Age Ageing 2021" },
         "REMEDIES":  { nom: "REMEDIES",              annee: 2020, ref: "McIntosh J. et al., Expert Opin Drug Saf 2020" },
         "ESC_HF":    { nom: "ESC 2021/2023 IC",      annee: 2023, ref: "McDonagh TA et al., Eur Heart J 2021 + 2023 Focused Update | PARADIGM-HF | DAPA-HF | EMPEROR-Reduced | STRONG-HF" },
+        "AASM_RBD":  { nom: "AASM 2023 TCSP",        annee: 2023, ref: "Howell M et al., J Clin Sleep Med 2023;19(4):769-810 (doi 10.5664/jcsm.10426)" },
         "ESC_AF":    { nom: "ESC 2024 AF",           annee: 2024, ref: "Van Gelder IC et al., Eur Heart J 2024 AF-CARE Guidelines" },
         "ADA":       { nom: "ADA Standards of Care", annee: 2025, ref: "American Diabetes Association Standards of Care in Diabetes 2025" },
         "KDIGO":     { nom: "KDIGO CKD",             annee: 2024, ref: "KDIGO 2024 Clinical Practice Guideline for CKD Evaluation and Management" },
@@ -426,7 +427,11 @@ const GERIA_RECOS_DB = {
             severite: "danger",
             condition: {
                 med_keys: ["antihypertenseur", "inhibiteur calcique", "betabloquant", "diuretique"],
-                contexte_clinique: "stenose_aortique"
+                contexte_clinique: "stenose_aortique",
+                // Un diurétique déclaré pour une surcharge (IC, IRC, ascite, néphrotique)
+                // n'est pas un antihypertenseur ici : il faut au moins une molécule
+                // prescrite pour baisser la pression (contexte calculé par molécule).
+                contexte_clinique_any: ["antihypertenseur_hors_surcharge"]
             },
             alternatives: "Évaluation pour TAVI/SAVR en priorité ; si non candidat : IEC/ARA2 avec titration très prudente"
         },
@@ -2057,7 +2062,9 @@ const GERIA_RECOS_DB = {
             condition: {
                 med_keys: ["donepezil", "rivastigmine", "galantamine", "memantine"],
                 fragile: true,
-                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"]
+                comorbs_any: ["PAT_010", "PAT_011", "PAT_012", "PAT_013", "PAT_041", "PAT_042"],
+                // MMSE saisi ≥ 10 : la démence n'est pas sévère au sens du critère.
+                contexte_clinique_absent: ["mmse_non_severe"]
             },
             alternatives: "Arrêt progressif avec surveillance, soins de support"
         },
@@ -2651,7 +2658,7 @@ const GERIA_RECOS_DB = {
             ref_code: "ARRET-1",
             section: "Cardiovasculaire",
             titre: "Médicament inotrope négatif + post-arrêt cardiaque",
-            message: "Médicament inotrope négatif (vérapamil, diltiazem, bêtabloquant à forte dose) en phase post-arrêt cardiaque ou post-cardioversion FA récente : risque hémodynamique.",
+            message: "Inhibiteur calcique bradycardisant (vérapamil, diltiazem), inotrope négatif, en phase post-arrêt cardiaque : risque hémodynamique.",
             severite: "warning",
             condition: {
                 med_keys: ["verapamil", "diltiazem"],
@@ -2931,20 +2938,11 @@ const GERIA_RECOS_DB = {
             },
             alternatives: "Sertraline 25 mg/j × 1 sem puis 50 mg/j ; titration 25-50 mg/1-2 sem. Cible thérapeutique en 4-12 sem. Mirtazapine 15-45 mg/j si insomnie/dénutrition (item 12)."
         },
-        {
-            id: "IN_D03",
-            sources: ["STOPP3", "FORTA"],
-            ref_code: "START3-D3",
-            section: "SNC",
-            titre: "Inhibiteur acétylcholinestérase pour Alzheimer léger à modéré (stade à vérifier)",
-            message: "Inhibiteur de l'acétylcholinestérase (donépézil, rivastigmine, galantamine) pour maladie d'Alzheimer légère à modérée.",
-            severite: "warning",
-            condition: {
-                comorbs: ["PAT_011"],
-                med_absent: ["donepezil", "rivastigmine", "galantamine"]
-            },
-            alternatives: "Donépézil 5→10 mg, rivastigmine patch, galantamine LP"
-        },
+        // IN_D03 (START v3 D3, IAChE dans l'Alzheimer léger à modéré) RETIRÉ en 5.70 :
+        // donépézil, rivastigmine, galantamine sont déremboursés en France depuis le
+        // 1er août 2018 (SMR jugé insuffisant par la HAS, 2016). Arbitrage du prescripteur :
+        // l'application ne propose plus de les initier. L'onglet des recommandations
+        // (EAN 2023) reste une lecture de la littérature, non une proposition.
         {
             id: "IN_D04",
             sources: ["STOPP3"],
@@ -4525,6 +4523,31 @@ const RECOS_SUPPLEMENT = [
         severite: "info",
         condition: { comorbs: ["PAT_070"], med_absent: ["phenoxymethylpenicilline", "amoxicilline"] },
         alternatives: "Pénicilline V (Oracilline) 1 MUI x 2/j ; macrolide si allergie aux bêtalactamines."
+    },
+    {
+        // TCSP (PAT_050, case chkTcsp) : lu par aucune règle jusqu'en 5.70. Les
+        // antidépresseurs sérotoninergiques et tricycliques peuvent induire ou aggraver un
+        // TCSP ; l'AASM 2023 distingue le TCSP isolé, secondaire et médicamenteux, toutes ses
+        // recommandations sont conditionnelles. Texte intégral NON relu (abstract et
+        // communiqué seulement) : informatif, la réévaluation est proposée, pas imposée.
+        id: "SUP_TCSP_01", sources: ["AASM_RBD"],
+        titre: "TCSP sous antidépresseur : rôle aggravant à envisager",
+        message: "Trouble du comportement en sommeil paradoxal déclaré chez un patient sous antidépresseur sérotoninergique ou tricyclique, classes connues pour induire ou aggraver le TCSP. Rechercher la chronologie (TCSP apparu ou aggravé après l'introduction) et discuter la réévaluation de l'antidépresseur si l'indication le permet. Un TCSP isolé est aussi un marqueur prodromique de synucléinopathie (maladie de Parkinson, maladie à corps de Lewy) : suivi neurologique, et prudence avec les neuroleptiques.",
+        severite: "info",
+        condition: { comorbs: ["PAT_050"], med_keys: ["isrs", "irsn", "antidepresseur tricyclique", "mirtazapine"] },
+        alternatives: "Sécuriser l'environnement de sommeil ; mélatonine à libération immédiate en première intention chez le sujet âgé, le clonazépam exposant aux chutes et à la confusion."
+    },
+    {
+        // Cardioversion de FA (case scindée de l'arrêt cardiaque en 5.70). ESC 2024 AF :
+        // anticoagulation thérapeutique au moins 3 semaines avant une cardioversion
+        // programmée (ou ETO), et au moins 4 semaines après, QUEL QUE SOIT le score
+        // CHA2DS2-VA (classe I) — le risque thromboembolique de la procédure est propre.
+        id: "SUP_CV_01", sources: ["ESC_AF"],
+        titre: "Cardioversion de FA sans anticoagulant prescrit",
+        message: "Cardioversion de FA récente ou programmée, sans anticoagulant à l'ordonnance. ESC 2024 : anticoagulation thérapeutique au moins 3 semaines avant une cardioversion programmée (ou échographie transœsophagienne excluant un thrombus) et au moins 4 semaines après, quel que soit le score CHA2DS2-VA ; au-delà, selon le score.",
+        severite: "danger",
+        condition: { contexte_clinique: "cardioversion_fa", med_absent: ["anticoagulant", "aod", "avk"] },
+        alternatives: "AOD à dose adaptée au DFG (ou AVK) ; vérifier la date de la cardioversion avec le cardiologue."
     },
     {
         // Indication non déclarée : on la DEMANDE, on ne l'affirme pas (STOPP v3 L5 ne vise

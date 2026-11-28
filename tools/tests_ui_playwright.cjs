@@ -360,12 +360,13 @@ const MOTIF = 'Seconde ligne après échec de la rispéridone.';
             return r;
         });
         const pdfMasse = enTexte(masse.pdf), pdfInter = enTexte(masse.pdfInteraction);
-        // Onglet Initier : deux omissions (FA sans bêtabloquant, Alzheimer sans IAChE).
+        // Onglet Initier : plusieurs omissions (FA, BPCO sans bronchodilatateur). L'Alzheimer
+        // sans IAChE n'en est plus une depuis 5.70 (IN_D03 retire, IAChE derembourses).
         const initier = await page.evaluate(() => {
             resetPatient();
             document.getElementById('patientAge').value = 91;
             document.getElementById('patientDFG').value = 33;
-            ['PAT_006', 'PAT_011'].forEach(c => activeComorbs.push(c));
+            ['PAT_006', 'PAT_023'].forEach(c => activeComorbs.push(c));
             const m = MASTER_DB.MEDICAMENTS.find(x => x.dci === 'Apixaban');
             activeMeds.push({ dci: m.dci, classe: m.classe, label: m.dci, core_id: 'apixaban', albumine: 0, db_ref: m });
             _lastAnalysisHash = null; analyserPrescription();

@@ -181,6 +181,7 @@ function analyzeCase(caseObj) {
     if (caseObj.poids != null) setInput('patientPoids', caseObj.poids);
     if (caseObj.dfg != null) setInput('patientDFG', caseObj.dfg);
     if (caseObj.cfs != null) setInput('scoreCFS', caseObj.cfs);
+    if (caseObj.mmse != null) setInput('scoreMMSE', caseObj.mmse);
     setInput('patientFragile', undefined, !!caseObj.fragile);
 
     const bio = caseObj.bio || {};

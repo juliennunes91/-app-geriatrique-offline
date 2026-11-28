@@ -819,6 +819,19 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
     if(_declare('chkPTH') || _declare('chkPTG') || _declare('chkPTE')) ctxClinique.push("prothese_articulaire");
     if(_declare('chkSepsis')) ctxClinique.push("sepsis");
     if(_declare('chkArret')) ctxClinique.push("arret_cardiaque");
+    // MMSE saisi (5.70) : sans lui, « démence sévère (MMSE < 10) » ne se vérifiait pas.
+    // Un champ vide n'est pas un score : rien n'est inféré.
+    {
+        const _mmseEl = (typeof document !== 'undefined') && document.getElementById('scoreMMSE');
+        const _mmseTxt = _mmseEl ? String(_mmseEl.value || '').trim() : '';
+        const _mmse = _mmseTxt === '' ? NaN : Number(_mmseTxt.replace(',', '.'));
+        // Seul le palier « non sévère » est lu (EV_SF06) ; un MMSE < 10 ne produit pas
+        // de contexte propre : la règle sort déjà, faute de preuve contraire.
+        if (!isNaN(_mmse) && _mmse >= 10 && _mmse <= 30) ctxClinique.push("mmse_non_severe");
+    }
+    // Cardioversion : situation distincte de l'arrêt cardiaque (case scindée en 5.70) —
+    // elle appelle l'anticoagulation péri-procédurale, pas une prudence hémodynamique.
+    if(_declare('chkCardioversion')) ctxClinique.push("cardioversion_fa");
     if(_declare('chkLqts')) ctxClinique.push("qt_long_congenital");
 
     // Troubles cognitifs & neuropsychocomportementaux (SFGG 2024 SPC)
@@ -908,6 +921,24 @@ function _buildPatientContext(patientAge, sexe, isFragile) {
         activeMeds.forEach(m => {
             if (/\bu?LABA\b/i.test(m && m.classe || '')) ctxClinique.push('laba_associe');
         });
+        // Sténose aortique (STOPP B20) : un diurétique prescrit pour une SURCHARGE
+        // (insuffisance cardiaque, rénale, hépatique, syndrome néphrotique) n'y est pas
+        // un antihypertenseur — il traite la congestion, que la sténose aggrave. Le
+        // critère ne vise que les molécules prescrites pour baisser la pression. Ce
+        // contexte dit qu'il en reste au moins une ; il est calculé molécule par
+        // molécule, sans quoi un bêtabloquant associé au diurétique se tairait aussi.
+        const _ahCles = ['iec', 'ara2', 'inhibiteurcalcique', 'diuretique', 'betabloquant'];
+        const _ahHorsSurcharge = activeMeds.some(m => {
+            if (!m) return false;
+            const d = sanitizeText(m.dci || ''), c = sanitizeText(m.classe || '');
+            if (/voietopique/.test(c)) return false;
+            const ah = c.includes('hypertens') || _ahCles.some(k => matchesDrugClass(d, c, k));
+            if (!ah) return false;
+            const ind = m.precisions && m.precisions.indication_diu;
+            const surcharge = ind && ind !== 'hta' && ind !== 'oedemes';
+            return !(surcharge && matchesDrugClass(d, c, 'diuretique'));
+        });
+        if (_ahHorsSurcharge) ctxClinique.push("antihypertenseur_hors_surcharge");
     }
     if (typeof activeMeds !== 'undefined' && Array.isArray(activeMeds)) {
         activeMeds.forEach(m => {
@@ -1145,12 +1176,13 @@ function _computeAnalysisHash() {
     _HASH_NUMERIC_FIELDS.forEach(id => parts.push(getVal(id)));
     // Sélecteurs d'unité (changent la valeur convertie B12/B9) + scoreCFS.
     parts.push(getVal('scoreCFS'));
+    parts.push(getVal('scoreMMSE'));
     // Âge de début psychiatrique (Item 5) — gate la chronicité, donc l'analyse.
     parts.push(getVal('psyOnsetAge'));
     _HASH_SELECT_FIELDS.forEach(id => { const el = document.getElementById(id); parts.push(el ? el.value : ''); });
     // Inclure toutes les checkboxes cliniques
     ['chkStent','chkAlcool','chkAnorexie','chkTabac','chkAvc','chkTvp','chkMtevActive','chkSaignement',
-     'chkBrady','chkHtaNonControlee','chkArret','chkScaAigu','chkLqts','chkDialyse',
+     'chkBrady','chkHtaNonControlee','chkArret','chkCardioversion','chkScaAigu','chkLqts','chkDialyse',
      'chkFoie','chkSepsis','chkPalliatif','chkAtcdUlcere','chkChutes','chkDepression',
      'chkInstitution','chkConfine','chkSAD','chkPTH','chkPTG','chkPTE',
      'chkIncontinence','chkHbp','chkConstipation','chkDysphagie','chkGlaucome',

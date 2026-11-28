@@ -52,7 +52,7 @@ window.importerPatientJSON = function() {
 
 function _collectPatientData() {
     const fields = {};
-    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #patientFC, #patientPAS, #patientPASdebout, #bioCreat, #patientDFG, #dfgMethodSelect, #bioDate, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioPne, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioOsmU, #bioNaU, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #douleurStatut, #douleurEN, #douleurAlgoplus, #scoreCFS, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
+    document.querySelectorAll('#patientNom, #patientAge, #patientSexe, #patientPoids, #patientBmi, #patientFC, #patientPAS, #patientPASdebout, #bioCreat, #patientDFG, #dfgMethodSelect, #bioDate, #patientK, #patientNa, #bioAlbumSg, #bioUree, #bioMg, #bioCa, #bioUric, #bioHb, #bioPlaq, #bioFer, #bioCst, #bioB12, #bioB12Unit, #bioB9, #bioB9Unit, #bioVitD, #bioVitDUnit, #bioCpk, #bioAsat, #bioAlat, #bioPal, #bioGgt, #bioTsh, #bioT4, #bioT3, #bioBnp, #bioLdl, #bioHdl, #bioTg, #bioCrp, #bioGb, #bioPnn, #bioPne, #bioInr, #bioGly, #bioHba1c, #bioBili, #bioPhos, #bioLact, #bioPct, #bioLithium, #bioLipase, #bioDdim, #bioTropo, #bioTemp, #bioDigox, #bioDigoxUnit, #bioTp, #bioTca, #bioChlore, #bioOsm, #bioOsmU, #bioNaU, #bioPrealb, #bioAlbuminurie, #bioVgm, #bioRetic, #douleurStatut, #douleurEN, #douleurAlgoplus, #scoreCFS, #scoreMMSE, #bioQtc, #cpManual, #cpBili, #cpAlb, #cpTp, #cpAscite, #cpEnceph').forEach(el => {
         if (el) fields[el.id] = el.value;
     });
     const checkboxes = {};
@@ -1113,7 +1113,7 @@ window.resetPatient = function() {
         'bioPct': '', 'bioLithium': '', 'bioLipase': '', 'bioDdim': '', 'bioTropo': '', 'bioTemp': '',
         'bioDigox': '', 'bioDigoxUnit': 'ng/mL', 'bioTca': '',
         'bioVitDUnit': 'ng/mL',
-        'scoreCFS': '0', 'bioQtc': '',
+        'scoreCFS': '0', 'scoreMMSE': '', 'bioQtc': '',
         'bioTp': '', 'bioChlore': '', 'bioOsm': '', 'bioOsmU': '', 'bioNaU': '', 'bioPrealb': '', 'bioAlbuminurie': '',
         'bioVgm': '', 'bioRetic': '',
         // La date du bilan appartient au dossier precedent : la laisser en place
@@ -1140,7 +1140,7 @@ window.resetPatient = function() {
     const checkboxes = [
         'chkStent', 'chkAlcool', 'chkAnorexie', 'chkTabac',
         'chkAvc', 'chkTvp', 'chkMtevActive', 'chkSaignement', 'chkBrady', 'chkHtaNonControlee',
-        'chkArret', 'chkScaAigu', 'chkLqts',
+        'chkArret', 'chkCardioversion', 'chkScaAigu', 'chkLqts',
         'chkDialyse', 'chkFoie', 'chkSepsis',
         'chkPalliatif', 'chkAtcdUlcere', 'chkChutes', 'chkDepression',
         'chkIncontinence', 'chkHbp', 'chkConstipation', 'chkDysphagie',

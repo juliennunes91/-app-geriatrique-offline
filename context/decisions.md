@@ -108,3 +108,7 @@ Format : date — décision — raison. Ajouter en fin de fichier.
   antidépresseur sans thymorégulateur signalé (warning, CANMAT/ISBD 2018). — Audit lot 4.
 - **27/11/2026** — MCI et démence parkinsonienne entrent dans les règles anticholinergiques de la
   démence (Beers 2023 : « dementia or cognitive impairment »). — Audit lot 3.
+- **28/11/2026** — IAChE déremboursés : plus de proposition d'initiation (IN_D03 retiré). Champ
+  MMSE ajouté. Diurétique de surcharge ≠ antihypertenseur dans la sténose aortique. Case
+  cardioversion séparée de l'arrêt cardiaque. TCSP sous antidépresseur : règle informative. —
+  Arbitrages du prescripteur sur le rapport final de l'audit.

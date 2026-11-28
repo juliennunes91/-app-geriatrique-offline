@@ -577,6 +577,24 @@ Rapport final et arbitrages restants : fin de `docs/audit_cases_cliniques.md`.
 - **`SUP_BIP_01`** (CANMAT/ISBD 2018) : antidépresseur sans thymorégulateur dans un trouble
   bipolaire.
 
+## Arbitrages de l'audit tranchés par le prescripteur (5.70)
+
+- **A4 sténose aortique** (`EV_B20`) : un diurétique déclaré pour une SURCHARGE (`indication_diu`
+  ic / irc / cirrhose / néphrotique) n'y est plus un antihypertenseur. Contexte
+  `antihypertenseur_hors_surcharge`, calculé **molécule par molécule** (`app_analysis.js`) : un
+  bêtabloquant associé garde l'alerte. Indication non précisée → forme la plus exposante (sort).
+- **A6** : `chkArret` = post-arrêt cardiaque seul (`EV_N09`) ; **`chkCardioversion`** (deux UIs,
+  reset, hash) → `cardioversion_fa` → `SUP_CV_01` (danger) sans anticoagulant (ESC 2024 AF :
+  ≥ 3 sem avant, ≥ 4 sem après, quel que soit le CHA2DS2-VA).
+- **A1** : `IN_D03` (START D3, IAChE) **retiré** — déremboursés en France depuis 08/2018.
+  L'onglet guidelines (EAN 2023) reste une lecture de la littérature.
+- **A2** : champ **`scoreMMSE`** (0-30, deux UIs, reset, export, hash ; le PAAM le lisait déjà
+  sans qu'il existe). MMSE ≥ 10 saisi → `mmse_non_severe` fait taire `EV_SF06` (un nom de
+  contexte ne porte pas de chiffre : l'audit INV-M ne lit que `[a-zA-Z_]`). Vide = non évalué, rien n'est inféré. Harnais : `analyzeCase({mmse})`.
+- **A7** : `SUP_TCSP_01` (info) — TCSP (`PAT_050`) sous ISRS, IRSN, tricyclique ou mirtazapine.
+  Source `AASM_RBD` (Howell, JCSM 2023) lue par abstract et communiqué seulement : les classes
+  nommées ne sont **pas vérifiées au texte intégral** — d'où l'informatif.
+
 ## Dispositifs implantés : sonde à demeure, prothèses articulaires
 
 Quatre cases dans « Habitudes de vie & État général » (deux UIs) : `chkSAD`, `chkPTH`,
